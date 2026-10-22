@@ -1,0 +1,81 @@
+task_packet:
+  task_id: nba2k22-project-memory-baseline-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  exact_base_sha: 8bdae1700ecd3ed47d2ad197cca86ace388083bb
+  parent_branch: task/nba2k22-source-refresh-20261022
+  current_master_at_dispatch: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+  branch: task/nba2k22-project-memory-baseline-01
+  risk_tier: T2_semantic
+  objective: >-
+    Deliver an OS-governed NBA2K22 domain development baseline, current engineering
+    capability and historical task ledger, future task backlog, authority index,
+    planning-model entry, and cross-window recovery contract. Do not overstate
+    historical audits as current native acceptance or migrate production data.
+  source_evidence:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/CODEX_HANDOFF.md
+    - planned_roadmap_branch: task/nba2k22-os-onboarding-roadmap-20261022@309161201627dc517ad65450eb34d053ac7ab7b4
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/README.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_WINDOW_HANDOFF_TEMPLATE_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PLANNING_MODEL_ENTRY_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+    - 01_os/07_content/_runs/run-20261022-nba2k22-project-memory-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261022-nba2k22-project-memory-001/verification_plan.json
+  required_tests: [PLAN_AND_TASK_DAG, LEDGER_EVIDENCE_LINKS, DOC_AUTHORITY_LINKS]
+  prohibitions:
+    - modify_shared_os_core
+    - edit_business_code_or_production_database
+    - access_DCR_without_fresh_explicit_Human_permission
+    - modify_live_game_or_save
+    - publish_to_master_or_merge
+    - overwrite_source_refresh_or_planning_branches
+    - fabricate_independent_acceptance_or_live_proof
+  big_task: false
+  completion_pointer_ref: 01_os/07_content/_runs/run-20261022-nba2k22-project-memory-001/completion_pointer.json
+  publisher:
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+  verification_profile:
+    independent_reviewer: separate_session_required
+    local_managed_verification: not_run_without_separate_DCR_permission
+  executor_profile:
+    provider: OpenAI
+    surface: ChatGPT_GitHub_connector
+    model: GPT-6
+    authority: routing_only
+    model_routing_validator: not_run_no_local_runtime
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Build durable NBA2K22 project facts and task memory, bound historical proof and
+    explain which OS-governed work must happen next.
+  implementation_or_review_method: >-
+    Pin source-refresh SHA and FINAL-CODEX 40-family JSON; preserve research/engineering/
+    published/executed verification axes, import dependency-checked planning artifacts,
+    and validate machine-readable references against the branch tree.
+  supportability_rationale: >-
+    The imported branch includes source code, 40-family audit evidence, R-series research
+    and AG-NATIVE fixture modules; the absence of accepted production match-history
+    requires explicit provenance and maturity labels, not a blanket DONE status.
+  feasibility_rationale: >-
+    All requested outputs are text/JSON files within domain-owned paths on one new
+    descendant task branch; GitHub's API supports remote-only deterministic validation
+    without game process, DCR, production data, or protected master writes.
+  task_constraints_and_boundaries:
+    - Architecture design remains V2 target, not production DDL approval.
+    - Write knowledge index only; independent reviewer will evaluate classifications.
+    - Subsequent task launches and merges remain separate Human/OS decisions.
+  stop_or_return_conditions:
+    - Material source contradiction that prevents classification.
+    - Any path outside allowed_changed_paths or new protected action.
+    - Required local OS managed verification cannot be honestly claimed.
