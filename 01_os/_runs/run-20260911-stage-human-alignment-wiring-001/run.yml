@@ -4,9 +4,11 @@ task_id: os-v2-stage-human-alignment-wiring-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---core
 branch: claude/stage-human-alignment-wiring-001
 base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
-status: architecture_active
+status: implementation_active
+lifecycle: candidate_pending_validation
 risk_tier: T2_semantic
-current_phase: architecture_before_implementation
+current_phase: W6_implementation_and_semantic_coverage
+execution_handover_ref: 06_执行/W6执行接任与覆盖核对_v1.md
 Human_authorization_ref: 01_任务输入/Human授权_v1.yml
 task_packet_ref: 01_任务输入/任务包_v1.yml
 
@@ -30,9 +32,11 @@ target_gap:
   consequence: per-stage Human plan acceptance and completion acceptance are not enforced by workflow progression
 
 architecture_gate:
-  canonical_implementation_allowed_now: false
+  canonical_implementation_allowed_now: true
   Human_decision_required_before_runner_coding: true
   gate_id: HG1
+  decision_status: satisfied_by_recorded_HG1_decisions
+  decision_ref: 03_方案设计/Human架构裁决_职责边界与委托空间_v1.yml
 
 next_expected_artifacts:
   - 02_信息收集/当前强制点实测_v1.yml

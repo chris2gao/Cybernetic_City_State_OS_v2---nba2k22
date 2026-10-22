@@ -41,7 +41,8 @@ what_the_gate_decides:
 
 what_the_mechanism_decides_when_this_gate_asks: >-
   validate_stage_acceptance_context, in stage_collaborative_deliberation, is the single owner and
-  every comparison lives there. It requires a foreground, explicit, current Human with an
+  acceptance semantics live there; the gate retains physical reference, ancestry and tree comparisons.
+  It requires a record declaring a foreground, explicit, current Human interaction with an
   affirmative disposition; a structurally valid authority commitment; a task id and a stage id
   that are present and correct, so omission is a refusal rather than a skipped check; a decision
   type that distinguishes a plan acceptance from a completion acceptance, so one cannot be filed
@@ -51,7 +52,9 @@ what_the_mechanism_decides_when_this_gate_asks: >-
   contract allows for that stage, approval-as-basis being prohibited; a verification document that
   is a verified result for this task, stage and output rather than merely a blob sitting where it
   was declared; and a base stage receipt, resolved through deliberation_receipt_ref, whose
-  exact_candidate_version can at least be a commit id. The gate compares nothing.
+  exact_candidate_version can at least be a commit id. Typed receipt content and actual
+  candidate-bound task scope/action/decision checks reuse the mechanism's strong-entry helpers.
+  The gate does not duplicate those acceptance predicates. A declaration is not Human authentication.
 
 what_each_of_those_cost_before_it_was_reached: >-
   Reached is the operative word: these are the mechanism's own checks, and the failure was calling
@@ -109,10 +112,16 @@ exact_claim:
     that picks a convenient one narrows the governance history it will be judged against.
 
 entries:
-- path: 01_os/06_execution/workflow/publication_gate/{workflow_publication_gate.py,test_publication_gate.py}
+- path: 01_os/06_execution/workflow/publication_gate/{workflow_publication_gate.py,test_publication_gate.py,test_acceptance_owner_values.py,test_source_reading.py,test_decision_sources.py}
   purpose: >-
     the gate implementation and its synthetic-Git cases. Each negative case asserts an exit code
     and a failure reason, so a refusal for the wrong cause cannot pass as a refusal.
+    test_acceptance_owner_values.py checks partial record/content predicates, plus rejection when
+    the public entry lacks repository/candidate; its pure contexts do not prove full scope acceptance.
+    test_source_reading.py isolates real-Git source failure/absence, file-mode and YAML ambiguity
+    probes; test_decision_sources.py exercises explicit decision sources and unknown deferrals
+    through the real publication CLI. Registered probes may expose outstanding failures; their
+    existence alone is not a passing verdict.
   loader: Python, invoked by a publication caller or by hand
   loader_class: in_repo_program
   discovery: referenced from this registry and from the caller that invokes it

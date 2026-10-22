@@ -250,6 +250,25 @@ STAGE_MODEL_COMPLETENESS_FIELDS = (
 )
 
 
+def _model_value_present(value: Any) -> bool:
+    """The existing task-scope value shape, shared by both acceptance paths."""
+    return _scope_string(value) or isinstance(value, (dict, list)) and bool(value)
+
+
+def _completion_summary_error(summary: dict[str, Any]) -> str:
+    """Content obligations shared by task-scope and published completion records."""
+    if not _scope_string(summary.get("actual_result")):
+        return "actual_result_required"
+    for field in CLOSURE_FIELDS:
+        if field not in summary:
+            return f"closure_field_absent:{field}"
+        if summary[field] is None:
+            return f"closure_field_null:{field}"
+        if not _model_value_present(summary[field]):
+            return f"closure_field_empty:{field}"
+    return ""
+
+
 def validate_common_model_completeness(model: dict[str, Any]) -> int:
     """Presence and disposition of every common Current Model field.
 
@@ -258,16 +277,8 @@ def validate_common_model_completeness(model: dict[str, Any]) -> int:
     considered and found empty. A present-but-null value fails: it is neither a
     value nor a disposition.
     """
-    for field in SUBSTANTIVE_COMMON_FIELDS:
-        if field not in model:
-            return 16
-        if not model.get(field):
-            return 16
-    for field in NULLABLE_COMMON_FIELDS:
-        if field not in model:
-            return 16
-        value = model.get(field)
-        if value is None or value == "":
+    for field in SUBSTANTIVE_COMMON_FIELDS + NULLABLE_COMMON_FIELDS:
+        if not _model_value_present(model.get(field)):
             return 16
     for field in LISTED_COMMON_FIELDS:
         if field not in model:
@@ -337,6 +348,8 @@ def resolve_profile(profile_id_and_version: Any, repo_root: Path | None = None,
 def validate_effective_stage_model(
     data: dict[str, Any], model: dict[str, Any], repo_root: Path | None = None,
     profile_set: dict[str, Any] | None = None,
+    *, expected_stage_id: str | None = None,
+    _validated_task_scope: bool = False,
 ) -> int:
     """effective_current_stage_model = common_task_stage_model + this profile's
     required_model_fields.
@@ -349,7 +362,16 @@ def validate_effective_stage_model(
     receipt = data.get("receipt")
     reference = receipt.get("profile_id_and_version") if isinstance(receipt, dict) else None
     try:
-        profile = resolve_profile(reference, repo_root, profile_set)
+        if expected_stage_id is not None:
+            # The publication context has an independent stage identity and the
+            # candidate's profile set. Consume the strict owner's existing
+            # collection, version and identity checks rather than reimplementing
+            # only the selected profile's name comparison here.
+            profile = _scope_profile(profile_set, expected_stage_id, reference)
+        else:
+            profile = resolve_profile(reference, repo_root, profile_set)
+    except TaskScopeError as exc:
+        return exc.code
     except Exception:
         return 11
     if profile is None:
@@ -370,12 +392,12 @@ def validate_effective_stage_model(
         disposition = element.get("disposition")
         if disposition not in ALLOWED_ELEMENT_DISPOSITIONS:
             return 16
-        if disposition == REPRESENTED and element.get("value") in (None, "", [], {}):
+        if disposition == REPRESENTED and not _model_value_present(element.get("value")):
             return 16
-        if disposition == EXPLICITLY_IRRELEVANT and not element.get("reason_and_scope"):
+        if disposition == EXPLICITLY_IRRELEVANT and not _scope_string(element.get("reason_and_scope")):
             return 16
         if disposition == UNKNOWN_DISPOSED:
-            code = validate_deferred_unknown(element)
+            code = validate_deferred_unknown(element, _validated_task_scope=_validated_task_scope)
             if code:
                 return code
     return 0
@@ -712,10 +734,11 @@ def _same_ref(left: Any, right: Any) -> bool:
     return all(left[k] == right[k] for k in keys)
 
 
-def validate_stage_acceptance_context(
+def _validate_stage_acceptance_records(
     context: Any, *, synthetic_authority_context: bool = False,
+    _validated_task_scope: bool = False,
 ) -> tuple[int, str]:
-    """One stage acceptance, judged against the exact objects it claims to accept.
+    """Record/content checks only; the public entry also validates real task scope.
 
     This replaced validate_standalone_acceptance_record, which was a weaker entry
     that answered a narrower question and let its PASS be read as "the stage was
@@ -732,8 +755,8 @@ def validate_stage_acceptance_context(
     should have been automatic.
 
     The caller assembles the context from exact Git objects at the candidate and
-    consumes the verdict. It does not compare anything itself; every comparison
-    below belongs to this mechanism, and a publication gate that restated them
+    consumes the verdict. It does not decide these acceptance semantics; comparisons
+    below belong to this mechanism, and a publication gate that restated them
     would be the second definition this file exists to prevent.
 
     Nothing here is a new rule or a new field. The identity, decision type and
@@ -826,7 +849,8 @@ def validate_stage_acceptance_context(
         if not isinstance(profile_set, dict):
             return 11, "profile_set_unreadable"
         code = validate_effective_stage_model(
-            {"receipt": context.get("receipt")}, model, profile_set=profile_set)
+            {"receipt": context.get("receipt")}, model, profile_set=profile_set,
+            expected_stage_id=context["stage_id"], _validated_task_scope=_validated_task_scope)
         if code:
             return code, "effective_stage_model"
     else:
@@ -871,11 +895,9 @@ def validate_stage_acceptance_context(
                     "status": "verified"}
         if recorded != expected:
             return 14, "verification_document_is_not_a_verified_result_for_this_stage"
-        for field in CLOSURE_FIELDS:
-            if field not in record:
-                return 14, f"closure_field_absent:{field}"
-            if record.get(field) is None:
-                return 14, f"closure_field_null:{field}"
+        summary_error = _completion_summary_error(record)
+        if summary_error:
+            return 14, summary_error
 
     receipt = context.get("receipt")
     code = validate_base_stage_receipt(receipt)
@@ -902,8 +924,57 @@ def validate_stage_acceptance_context(
     # claimed here, and the claim is limited to that.
     if not _is_object_id(receipt.get("exact_candidate_version")):
         return 17, "receipt_exact_candidate_version_is_not_a_commit_id"
+    try:
+        _typed_receipt_contents(receipt)
+    except TaskScopeError as exc:
+        return exc.code, str(exc)
 
     return 0, ""
+
+
+def validate_stage_acceptance_context(
+    context: Any, *, repo_root: Path | None = None, candidate: str | None = None,
+    synthetic_authority_context: bool = False,
+) -> tuple[int, str]:
+    """Public acceptance entry: records AND actual candidate-bound task scope.
+
+    No serialized field can waive scope validation. The private record helper is
+    deliberately not a publication verdict. Its deferred-unknown branch may omit
+    the historical actor-label test only because this entry runs the stronger
+    packet/action/decision-source checks before returning success.
+    """
+    if not isinstance(context, dict) or repo_root is None or candidate is None:
+        return 11, "explicit_repository_and_candidate_required"
+    source = task_scope_support()
+    try:
+        source.same_json(context, context)
+        code, reason = _validate_stage_acceptance_records(
+            context, synthetic_authority_context=synthetic_authority_context,
+            _validated_task_scope=True)
+        if code:
+            return code, reason
+        repo = repo_root.resolve()
+        scope = context.get("task_scope")
+        packet, action = _scope_task_authority(scope, repo, candidate, source)
+        _scope_require(scope["task_id"] == context["task_id"]
+                       and scope["stage_id"] == context["stage_id"], 13, "acceptance_scope_identity_mismatch")
+        if context["phase"] == "plan":
+            model = context["model"]
+            _scope_require("Human_confirmation" not in model, 11, "mixed_legacy_confirmation")
+            profile = _scope_profile(context["profile_set"], scope["stage_id"],
+                                     context["receipt"]["profile_id_and_version"])
+            # M/P binding was checked against independently resolved Git refs.
+            # Do not overwrite a stored model field with HEAD to manufacture a
+            # single-instance candidate equality for this multi-node history.
+            _scope_model_contents({"current_model": model}, candidate, scope, profile,
+                                  repo, packet, action, source, context["contract"])
+        return 0, ""
+    except TaskScopeError as exc:
+        return exc.code, str(exc)
+    except (ValueError, UnicodeError, TypeError, KeyError, RecursionError) as exc:
+        return 11, f"scope_input_invalid:{type(exc).__name__}"
+    except (source.VerificationError, OSError) as exc:
+        return 13, f"scope_source_failure:{exc}"
 
 
 def validate_human_authority(
@@ -1428,18 +1499,14 @@ def _scope_completion(model: dict[str, Any], repo: Path, candidate: str,
     if completion.get("progression_requested") is True:
         _scope_require(model.get("current_exact_output_version") == candidate
                        and completion.get("bound_output_version") == candidate, 12, "completion_binding_required")
-        _scope_require(_scope_string(completion.get("actual_result")), 14, "actual_result_required")
         _scope_require("verification_result" in completion, 14, "verification_result_required")
         # Binding an output version and a verification record proves what was
         # produced and that some record says it verified. It does not say whether
         # the result matched the plan it was authorised against, what moved, what
         # risk is left, or what the next stage inherits. none_material is a real
         # answer for each; absent and null are not.
-        for field in CLOSURE_FIELDS:
-            _scope_require(field in completion, 14, "closure_field_required:" + field)
-            value = completion[field]
-            _scope_require(_scope_string(value) or isinstance(value, (dict, list)) and bool(value),
-                           14, "closure_field_empty:" + field)
+        summary_error = _completion_summary_error(completion)
+        _scope_require(not summary_error, 14, summary_error)
     if "verification_result" in completion:
         ref = completion["verification_result"]
         _scope_keys(ref, {"commit", "path", "blob_sha"}, "verification_reference_required")
@@ -1460,11 +1527,19 @@ def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
     _scope_require("Human_confirmation" not in model, 11, "mixed_legacy_confirmation")
     for field in SUBSTANTIVE_COMMON_FIELDS + NULLABLE_COMMON_FIELDS:
         value = model.get(field)
-        _scope_require((_scope_string(value) or isinstance(value, (dict, list)) and bool(value)),
+        _scope_require(_model_value_present(value),
                        16, "common_model_field_required:" + field)
     _scope_require(model.get("task_id") == scope["task_id"] and model.get("stage_id") == scope["stage_id"],
                    13, "model_task_stage_mismatch")
     _scope_require(model["current_exact_model_version"] == candidate, 12, "model_candidate_mismatch")
+    _scope_model_contents(data, candidate, scope, profile, repo, packet, action, source, contract)
+
+
+def _scope_model_contents(data: dict[str, Any], candidate: str, scope: dict[str, Any],
+                          profile: dict[str, Any], repo: Path, packet: dict[str, Any],
+                          action: dict[str, Any], source: Any, contract: dict[str, Any]) -> None:
+    """Readiness and decision content independent of a single-instance version binding."""
+    model = data["current_model"]
     for owner, field in ((model, "open_load_bearing_items"), (model, "ordinary_local_choices"),
                          (data, "inquiry_items")):
         if field not in owner and field != "open_load_bearing_items":
@@ -1501,7 +1576,7 @@ def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
         _scope_require(disposition in ALLOWED_ELEMENT_DISPOSITIONS, 16, "stage_disposition_invalid")
         if disposition == REPRESENTED:
             value = element.get("value")
-            _scope_require(_scope_string(value) or isinstance(value, (list, dict)) and bool(value),
+            _scope_require(_model_value_present(value),
                            16, "stage_value_required")
         elif disposition == EXPLICITLY_IRRELEVANT:
             _scope_require(_scope_string(element.get("reason_and_scope")), 16, "irrelevance_scope_required")
@@ -1517,8 +1592,8 @@ def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
             _scope_require(code == 0, code, "unknown_not_disposed")
 
 
-def _scope_receipt(data: dict[str, Any], scope: dict[str, Any], profile: dict[str, Any]) -> None:
-    receipt = data.get("receipt")
+def _typed_receipt_contents(receipt: Any) -> None:
+    """Shared receipt types/base gates, independent of the version referent."""
     _scope_require(isinstance(receipt, dict), 17, "receipt_required")
     result = receipt.get("validator_mode_and_exit_code")
     _scope_require(isinstance(result, dict) and type(result.get("exit_code")) is int
@@ -1536,6 +1611,11 @@ def _scope_receipt(data: dict[str, Any], scope: dict[str, Any], profile: dict[st
     _scope_require(_scope_strings(receipt.get("main_mechanism_ref")), 17, "receipt_mechanism_required")
     code = validate_base_stage_receipt(receipt)
     _scope_require(code == 0, code, "base_receipt_failed")
+
+
+def _scope_receipt(data: dict[str, Any], scope: dict[str, Any], profile: dict[str, Any]) -> None:
+    receipt = data.get("receipt")
+    _typed_receipt_contents(receipt)
     _scope_require(receipt["exact_candidate_version"] == scope["candidate"], 12, "receipt_candidate_mismatch")
     if "seven_stage_child" in data:
         _scope_require(type(data["seven_stage_child"]) is bool, 11, "typed_child_flag")
@@ -1560,6 +1640,96 @@ def _scope_receipt(data: dict[str, Any], scope: dict[str, Any], profile: dict[st
     _scope_require(code == 0, code, "completion_pointer_failed")
 
 
+def _scope_task_authority(scope: Any, repo: Path, candidate: str, source: Any) -> tuple[dict, dict]:
+    """Existing packet/action/source gate, shared without a second definition."""
+    _scope_require(Path(source.git(repo, "rev-parse", "--show-toplevel").decode("utf-8").strip()).resolve() == repo,
+                   13, "repository_root_required")
+    source.candidate_id(repo, candidate)
+    _scope_keys(scope, {"schema_version", "task_id", "candidate", "task_packet", "action_id", "stage_id", "paths"},
+                "task_scope_schema")
+    _scope_require(type(scope["schema_version"]) is int and scope["schema_version"] == 1, 11, "task_scope_version")
+    _scope_require(scope["candidate"] == candidate, 12, "expected_candidate_mismatch")
+    for field in ("task_id", "action_id", "stage_id"):
+        _scope_require(_scope_string(scope[field]), 11, "scope_identity_required")
+    _scope_require(_scope_strings(scope["paths"]) and all(_scope_path(p) for p in scope["paths"]),
+                   11, "scope_paths_invalid")
+    raw = _scope_blob(repo, candidate, scope["task_packet"], source)
+    normalized = source.normalize_packet(source.load_yaml_text(raw.decode("utf-8")))
+    _scope_require(normalized.source_format == "wrapped_v1", 11, "canonical_wrapped_packet_required")
+    packet = normalized.body
+    _scope_require(packet["task_id"] == scope["task_id"], 13, "packet_task_mismatch")
+    source.candidate_id(repo, packet["exact_base_sha"])
+    source.git(repo, "merge-base", "--is-ancestor", packet["exact_base_sha"], candidate)
+    allowed = packet["allowed_changed_paths"]
+    _scope_require(all(_scope_path(p, pattern=True) for p in allowed), 11, "packet_allowlist_invalid")
+    changed = source.git(repo, "diff", "--name-only", "--no-renames", "-z", packet["exact_base_sha"], candidate).decode("utf-8").split("\0")
+    _scope_require(all(_scope_path(p) and _scope_allowed(p, allowed) for p in changed if p), 15, "candidate_outside_allowlist")
+    actions = packet.get("stage_actions")
+    _scope_require(isinstance(actions, list) and bool(actions), 11, "stage_actions_required")
+    policy_raw = source.tracked_blob(repo, candidate, "01_os/05_registry/repository_publisher_authority_v1.yml")
+    policy = source.load_yaml_text(policy_raw.decode("utf-8"))
+    _scope_require(isinstance(policy, dict) and isinstance(policy.get("confirmation_bound_actions"), dict),
+                   11, "publisher_policy_required")
+    protected = set(policy["confirmation_bound_actions"])
+    known = {"publish_or_merge_to_master", "force_push", "rewrite_published_history", "delete_master_or_repository",
+             "change_repository_visibility_or_credentials", "activate_runtime_scheduler_or_coordinator",
+             "access_secrets_credentials_or_key_material"}
+    _scope_require(protected == known and policy.get("core_history_rewrite") == "prohibited_regardless_of_confirmation",
+                   15, "unrecognized_protected_policy")
+    ids = []
+    for action in actions:
+        required_action = {"action_id", "kind", "target", "expected_target_head", "stage_ids", "paths", "confirmation"}
+        _scope_require(isinstance(action, dict) and required_action <= set(action)
+                       and set(action) <= required_action | {"covered_decision_ids"}, 11, "stage_action_schema")
+        if "covered_decision_ids" in action:
+            _scope_require(_scope_strings(action["covered_decision_ids"], nonempty=False), 11, "decision_coverage_list_required")
+        _scope_require(_scope_string(action["action_id"]) and _scope_string(action["target"]), 11, "action_identity_required")
+        _scope_require(_scope_string(action["kind"]) and action["kind"] in known | {"ordinary_task_work"}, 15, "action_kind_unknown")
+        head = action["expected_target_head"]
+        _scope_require(head is None or isinstance(head, str) and re.fullmatch(r"[0-9a-f]{40}", head) is not None,
+                       11, "expected_target_head_invalid")
+        if action["kind"] in {"publish_or_merge_to_master", "force_push", "delete_master_or_repository"}:
+            _scope_require(head is not None, 15, "expected_target_head_required")
+        _scope_require(_scope_strings(action["stage_ids"]) and _scope_strings(action["paths"]), 11, "action_lists_required")
+        _scope_require(set(action["stage_ids"]) <= TASK_SCOPE_STAGES, 16, "unknown_action_stage")
+        _scope_require(all(_scope_path(p) and _scope_allowed(p, allowed) for p in action["paths"]), 15, "action_outside_scope")
+        for path in action["paths"]:
+            _scope_candidate_path(repo, candidate, path, source)
+        ids.append(action["action_id"])
+    _scope_require(len(set(ids)) == len(ids), 11, "duplicate_action_ids")
+    selected = [a for a in actions if a["action_id"] == scope["action_id"]]
+    _scope_require(len(selected) == 1, 15, "planned_action_missing")
+    action = selected[0]
+    _scope_require(scope["stage_id"] in action["stage_ids"] and scope["paths"] == action["paths"], 15, "action_scope_mismatch")
+    _scope_require(action["kind"] not in packet["prohibitions"] and action["action_id"] not in packet["prohibitions"],
+                   15, "packet_action_prohibited")
+    if action["kind"] == "ordinary_task_work":
+        branch = packet["branch"]
+        _scope_require(branch != "master" and not branch.startswith("refs/") and _scope_path(branch), 15, "nonmaster_task_branch_required")
+        _scope_require(action["target"] == "refs/heads/" + branch and action["confirmation"] is None
+                       and action["expected_target_head"] is None,
+                       15, "ordinary_target_or_confirmation_invalid")
+    else:
+        _scope_require(action["kind"] != "rewrite_published_history", 15, "core_history_rewrite_prohibited")
+        if action["kind"] == "force_push":
+            source.candidate_id(repo, action["expected_target_head"])
+            source.git(repo, "merge-base", "--is-ancestor", action["expected_target_head"], candidate)
+        confirmation = action["confirmation"]
+        keys = {"actor_class", "kind", "source_ref", "task_id", "action_id", "exact_base_sha", "target", "expected_target_head",
+                "stage_ids", "paths", "stale", "revoked"}
+        _scope_keys(confirmation, keys, "simple_confirmation_required")
+        _scope_require(confirmation["actor_class"] == "current_Human" and confirmation["kind"] == "explicit_statement"
+                       and confirmation["stale"] is False and confirmation["revoked"] is False, 15, "confirmation_not_current")
+        for field, expected in {"task_id": packet["task_id"], "action_id": action["action_id"], "exact_base_sha": packet["exact_base_sha"],
+                                "target": action["target"], "expected_target_head": action["expected_target_head"],
+                                "stage_ids": action["stage_ids"], "paths": action["paths"]}.items():
+            _scope_require(confirmation[field] == expected, 15, "confirmation_scope_mismatch:" + field)
+        recorded = source.load_yaml_text(_scope_blob(repo, candidate, confirmation["source_ref"], source).decode("utf-8"))
+        expected = {k: v for k, v in confirmation.items() if k != "source_ref"}
+        _scope_require(source.same_json(recorded, expected), 15, "confirmation_source_mismatch")
+    return packet, action
+
+
 def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: str | None) -> int:
     """Validate declared stage/action readiness, not execute or authenticate it.
 
@@ -1577,92 +1747,8 @@ def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: s
                           "readiness_basis", "stage_profile_id_and_version"}
         _scope_require(set(data) <= allowed_fields, 11, "unknown_instance_fields")
         repo = repo_root.resolve()
-        _scope_require(Path(source.git(repo, "rev-parse", "--show-toplevel").decode("utf-8").strip()).resolve() == repo,
-                       13, "repository_root_required")
-        source.candidate_id(repo, candidate)
         scope = data.get("task_scope")
-        _scope_keys(scope, {"schema_version", "task_id", "candidate", "task_packet", "action_id", "stage_id", "paths"},
-                    "task_scope_schema")
-        _scope_require(type(scope["schema_version"]) is int and scope["schema_version"] == 1, 11, "task_scope_version")
-        _scope_require(scope["candidate"] == candidate, 12, "expected_candidate_mismatch")
-        for field in ("task_id", "action_id", "stage_id"):
-            _scope_require(_scope_string(scope[field]), 11, "scope_identity_required")
-        _scope_require(_scope_strings(scope["paths"]) and all(_scope_path(p) for p in scope["paths"]),
-                       11, "scope_paths_invalid")
-        raw = _scope_blob(repo, candidate, scope["task_packet"], source)
-        normalized = source.normalize_packet(source.load_yaml_text(raw.decode("utf-8")))
-        _scope_require(normalized.source_format == "wrapped_v1", 11, "canonical_wrapped_packet_required")
-        packet = normalized.body
-        _scope_require(packet["task_id"] == scope["task_id"], 13, "packet_task_mismatch")
-        source.candidate_id(repo, packet["exact_base_sha"])
-        source.git(repo, "merge-base", "--is-ancestor", packet["exact_base_sha"], candidate)
-        allowed = packet["allowed_changed_paths"]
-        _scope_require(all(_scope_path(p, pattern=True) for p in allowed), 11, "packet_allowlist_invalid")
-        changed = source.git(repo, "diff", "--name-only", "--no-renames", "-z", packet["exact_base_sha"], candidate).decode("utf-8").split("\0")
-        _scope_require(all(_scope_path(p) and _scope_allowed(p, allowed) for p in changed if p), 15, "candidate_outside_allowlist")
-        actions = packet.get("stage_actions")
-        _scope_require(isinstance(actions, list) and bool(actions), 11, "stage_actions_required")
-        policy_raw = source.tracked_blob(repo, candidate, "01_os/05_registry/repository_publisher_authority_v1.yml")
-        policy = source.load_yaml_text(policy_raw.decode("utf-8"))
-        _scope_require(isinstance(policy, dict) and isinstance(policy.get("confirmation_bound_actions"), dict),
-                       11, "publisher_policy_required")
-        protected = set(policy["confirmation_bound_actions"])
-        known = {"publish_or_merge_to_master", "force_push", "rewrite_published_history", "delete_master_or_repository",
-                 "change_repository_visibility_or_credentials", "activate_runtime_scheduler_or_coordinator",
-                 "access_secrets_credentials_or_key_material"}
-        _scope_require(protected == known and policy.get("core_history_rewrite") == "prohibited_regardless_of_confirmation",
-                       15, "unrecognized_protected_policy")
-        ids = []
-        for action in actions:
-            required_action = {"action_id", "kind", "target", "expected_target_head", "stage_ids", "paths", "confirmation"}
-            _scope_require(isinstance(action, dict) and required_action <= set(action)
-                           and set(action) <= required_action | {"covered_decision_ids"}, 11, "stage_action_schema")
-            if "covered_decision_ids" in action:
-                _scope_require(_scope_strings(action["covered_decision_ids"], nonempty=False), 11, "decision_coverage_list_required")
-            _scope_require(_scope_string(action["action_id"]) and _scope_string(action["target"]), 11, "action_identity_required")
-            _scope_require(_scope_string(action["kind"]) and action["kind"] in known | {"ordinary_task_work"}, 15, "action_kind_unknown")
-            head = action["expected_target_head"]
-            _scope_require(head is None or isinstance(head, str) and re.fullmatch(r"[0-9a-f]{40}", head) is not None,
-                           11, "expected_target_head_invalid")
-            if action["kind"] in {"publish_or_merge_to_master", "force_push", "delete_master_or_repository"}:
-                _scope_require(head is not None, 15, "expected_target_head_required")
-            _scope_require(_scope_strings(action["stage_ids"]) and _scope_strings(action["paths"]), 11, "action_lists_required")
-            _scope_require(set(action["stage_ids"]) <= TASK_SCOPE_STAGES, 16, "unknown_action_stage")
-            _scope_require(all(_scope_path(p) and _scope_allowed(p, allowed) for p in action["paths"]), 15, "action_outside_scope")
-            for path in action["paths"]:
-                _scope_candidate_path(repo, candidate, path, source)
-            ids.append(action["action_id"])
-        _scope_require(len(set(ids)) == len(ids), 11, "duplicate_action_ids")
-        selected = [a for a in actions if a["action_id"] == scope["action_id"]]
-        _scope_require(len(selected) == 1, 15, "planned_action_missing")
-        action = selected[0]
-        _scope_require(scope["stage_id"] in action["stage_ids"] and scope["paths"] == action["paths"], 15, "action_scope_mismatch")
-        _scope_require(action["kind"] not in packet["prohibitions"] and action["action_id"] not in packet["prohibitions"],
-                       15, "packet_action_prohibited")
-        if action["kind"] == "ordinary_task_work":
-            branch = packet["branch"]
-            _scope_require(branch != "master" and not branch.startswith("refs/") and _scope_path(branch), 15, "nonmaster_task_branch_required")
-            _scope_require(action["target"] == "refs/heads/" + branch and action["confirmation"] is None
-                           and action["expected_target_head"] is None,
-                           15, "ordinary_target_or_confirmation_invalid")
-        else:
-            _scope_require(action["kind"] != "rewrite_published_history", 15, "core_history_rewrite_prohibited")
-            if action["kind"] == "force_push":
-                source.candidate_id(repo, action["expected_target_head"])
-                source.git(repo, "merge-base", "--is-ancestor", action["expected_target_head"], candidate)
-            confirmation = action["confirmation"]
-            keys = {"actor_class", "kind", "source_ref", "task_id", "action_id", "exact_base_sha", "target", "expected_target_head",
-                    "stage_ids", "paths", "stale", "revoked"}
-            _scope_keys(confirmation, keys, "simple_confirmation_required")
-            _scope_require(confirmation["actor_class"] == "current_Human" and confirmation["kind"] == "explicit_statement"
-                           and confirmation["stale"] is False and confirmation["revoked"] is False, 15, "confirmation_not_current")
-            for field, expected in {"task_id": packet["task_id"], "action_id": action["action_id"], "exact_base_sha": packet["exact_base_sha"],
-                                    "target": action["target"], "expected_target_head": action["expected_target_head"],
-                                    "stage_ids": action["stage_ids"], "paths": action["paths"]}.items():
-                _scope_require(confirmation[field] == expected, 15, "confirmation_scope_mismatch:" + field)
-            recorded = source.load_yaml_text(_scope_blob(repo, candidate, confirmation["source_ref"], source).decode("utf-8"))
-            expected = {k: v for k, v in confirmation.items() if k != "source_ref"}
-            _scope_require(source.same_json(recorded, expected), 15, "confirmation_source_mismatch")
+        packet, action = _scope_task_authority(scope, repo, candidate, source)
         _scope_require(_scope_string(data.get("activation_mode")) and data["activation_mode"] in {"dormant", "full", "incremental"}, 11, "activation_mode_invalid")
         if data["activation_mode"] == "dormant":
             _scope_require(_scope_string(data.get("dormant_reason")), 16, "dormant_reason_required")

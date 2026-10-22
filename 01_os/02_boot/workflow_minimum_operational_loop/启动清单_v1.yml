@@ -17,12 +17,13 @@ mechanism_preconditions:
   stage_collaborative_deliberation_activation_state: 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
   stage_collaborative_deliberation_runtime_guard: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py
   stage_collaborative_deliberation_validator: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+  committed_stage_history_gate: 01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
 default_deliberation_route: dormant
 create_live_session_by_default: false
 canonical_live_instance_state: prohibited
 commands:
   static: python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static <repo-root>
-  validate: python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py validate <run-root>
+  validate: python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py validate <run-root> --repo-root <repo-root> --candidate <40-character-commit>
   materialize_pilot: python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py materialize-pilot
     <repo-root> <output-root>
 failure_policy: fail_closed_on_missing_malformed_stale_unfrozen_unauthorized_or_unreviewed

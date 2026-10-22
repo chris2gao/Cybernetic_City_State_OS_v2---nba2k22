@@ -31,7 +31,7 @@ entries:
   cache_dirs: []
   failure_surfacing: next workflow boot
   deletion_rule: protected
-- path: 01_os/06_execution/workflow/minimum_operational_loop/{README.md,run_minimum_operational_loop.py,test_minimum_operational_loop.py}
+- path: 01_os/06_execution/workflow/minimum_operational_loop/{README.md,run_minimum_operational_loop.py,test_minimum_operational_loop.py,test_committed_minimum_loop.py}
   purpose: 七阶段统一 loader、validator、pilot materializer 与回归测试
   loader: Python and OS workflow execution entry
   loader_class: in_repo_program
@@ -50,6 +50,14 @@ entries:
   cache_dirs: []
   failure_surfacing: next static or pilot validation
   deletion_rule: protected
+committed_run_validation:
+  candidate_required: exact_40_character_commit
+  structure_source: candidate_regular_Git_blobs_not_mutable_checkout
+  acceptance_history_delegate: 01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py
+  acceptance_semantics_owner: 01_os/03_mechanisms/stage_collaborative_deliberation
+  judge_source: runner_installation_not_candidate_repository
+  uses_publication_boundary_exemption: false
+  scope: explicitly_requested_single_run_not_whole_branch_publication
 runtime_roots:
   shared_os_development: 01_os/_runs/<run-id>/
   domain_workflow: 01_os/07_content/_runs/<run-id>/

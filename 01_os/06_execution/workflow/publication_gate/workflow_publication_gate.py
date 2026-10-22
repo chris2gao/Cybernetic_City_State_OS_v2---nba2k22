@@ -160,10 +160,8 @@ class Findings:
 
 
 # -- git access ---------------------------------------------------------------
-# Implemented here rather than imported. task_discipline/packet_input and
-# task_discipline/managed_verification are forbidden paths for this task, and
-# depending on a module this task may not modify would couple the gate to
-# something it cannot fix.
+# Physical Git composition stays here. Shared input readers remain read-only
+# dependencies; a forbidden write path is not a prohibition on importing it.
 
 
 def _git_try(repo: Path, *args: str) -> tuple[int, bytes, str]:
@@ -231,28 +229,29 @@ def _blob_at(repo: Path, commit: str, path: str) -> str | None:
     already produced a wrong answer here once, when a namespace cutover re-added
     every path and made every run report the same date.
     """
-    proc = subprocess.run(
-        ["git", "--no-optional-locks", "-C", str(repo), "ls-tree", "-z", commit, "--", path],
-        capture_output=True, check=False)
-    if proc.returncode != 0:
-        return None
-    out = proc.stdout.decode("utf-8", "replace").strip("\0").strip()
+    out = _git(repo, "ls-tree", "-z", commit, "--", f":(literal){path}")
     if not out:
         return None
-    meta = out.split("\t", 1)[0].split()
-    if len(meta) < 3 or meta[1] != "blob":
-        return None
-    return meta[2]
+    rows = out.rstrip(b"\0").split(b"\0")
+    _require(len(rows) == 1 and b"\t" in rows[0], REF, f"ambiguous_tree_entry:{path}")
+    metadata, actual_path = rows[0].split(b"\t", 1)
+    meta = metadata.split()
+    _require(actual_path == path.encode("utf-8") and len(meta) == 3,
+             REF, f"tree_entry_mismatch:{path}")
+    _require(meta[0] in (b"100644", b"100755") and meta[1] == b"blob",
+             REF, f"regular_git_blob_required:{path}")
+    return meta[2].decode("ascii")
 
 
 def _load_yaml_at(repo: Path, commit: str, path: str):
-    import yaml
     blob = _blob_at(repo, commit, path)
     if blob is None:
         return None
     raw = _git(repo, "cat-file", "blob", blob)
     try:
-        return yaml.safe_load(raw.decode("utf-8"))
+        return _load_mechanism().task_scope_support().load_yaml_text(raw.decode("utf-8"))
+    except GateError:
+        raise
     except Exception as exc:  # noqa: BLE001 - an unreadable file is a fact about it
         raise GateError(REF, f"unreadable:{path}:{type(exc).__name__}") from exc
 
@@ -500,7 +499,7 @@ def _exact(repo: Path, ref: Any, where: str) -> dict:
 
 
 def _acceptance_context(repo: Path, candidate: str, node: StageNodes, control: dict,
-                        task_id: str, phase: str) -> dict:
+                        task_id: str, phase: str, run_doc: dict) -> dict:
     """Assemble what one stage acceptance claims to accept, from candidate objects.
 
     Resolution only. Every reference is read at its own commit and checked against
@@ -546,7 +545,25 @@ def _acceptance_context(repo: Path, candidate: str, node: StageNodes, control: d
                                "blob_sha": receipt_ref.get("blob_sha")},
                         f"{node.stage_id} deliberation_receipt_ref")
 
+    # Scope paths are authored once, by the packet's selected action. Resolve
+    # that source rather than requiring a second path declaration in run.yml.
+    # Selection only assembles content: the owner validates the packet, action
+    # uniqueness, stages, paths and authority before it can accept the context.
+    packet_ref = run_doc.get("task_packet_ref")
+    packet_path, packet_blob = _ref_pair(packet_ref, "run.yml task_packet_ref")
+    _blob_must_match(repo, candidate, packet_path, packet_blob, "task_packet_ref")
+    packet_doc = _load_yaml_at(repo, candidate, packet_path)
+    packet = packet_doc.get("task_packet") if isinstance(packet_doc, dict) else None
+    actions = packet.get("stage_actions") if isinstance(packet, dict) else None
+    selected = [a for a in actions if isinstance(a, dict)
+                and a.get("action_id") == control.get("action_id")] if isinstance(actions, list) else []
+    action_paths = selected[0].get("paths") if len(selected) == 1 else None
+
     context = {"task_id": task_id, "stage_id": node.stage_id, "phase": phase,
+               "task_scope": {"schema_version": 1, "task_id": task_id, "candidate": candidate,
+                              "task_packet": packet_ref,
+                              "action_id": control.get("action_id"), "stage_id": node.stage_id,
+                              "paths": action_paths},
                "record": record, "record_ref": record_ref,
                "receipt": _load_yaml_at(repo, receipt_at["commit"], receipt_at["path"]),
                "contract": _load_yaml_at(repo, candidate, PROFILE_CONTRACT),
@@ -620,8 +637,9 @@ def _check_acceptance(repo: Path, candidate: str, nodes: list[StageNodes],
     for node in nodes:
         control = controls[node.stage_id]
         for phase in ("plan", "completion"):
-            context = _acceptance_context(repo, candidate, node, control, task_id, phase)
-            code, reason = mech.validate_stage_acceptance_context(context)
+            context = _acceptance_context(repo, candidate, node, control, task_id, phase, run_doc)
+            code, reason = mech.validate_stage_acceptance_context(context, repo_root=repo,
+                                                                   candidate=candidate)
             _require(code == 0, ACCEPT,
                      f"{node.stage_id}: {phase} acceptance was refused by the deliberation "
                      f"mechanism ({reason}, exit {code}). The record is at "

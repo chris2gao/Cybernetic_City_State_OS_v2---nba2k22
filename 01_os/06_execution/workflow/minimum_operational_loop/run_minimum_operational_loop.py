@@ -10,6 +10,7 @@ CONTRACT_PATH="01_os/01_workflow/实现/七阶段最小运行契约_v1.yml"
 BOOT_PATH="01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml"
 REGISTRY_PATH="01_os/05_registry/workflow_minimum_operational_loop_v1.yml"
 RUNNER_PATH="01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py"
+HISTORY_GATE_PATH="01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py"
 PILOT_PATH="01_os/06_execution/workflow/minimum_operational_loop/fixtures/pilot_cross_platform_path_guard"
 ACTIVE_STATE_PATH="01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml"
 RUNTIME_GUARD_PATH="01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py"
@@ -40,7 +41,7 @@ def run_subvalidator(cmd:list[str],cwd:Path)->int:
 
 def validate_static(repo_root:Path,run_subvalidators:bool=True)->tuple[int,list[str]]:
     required=[CONTRACT_PATH,BOOT_PATH,REGISTRY_PATH,PILOT_PATH+"/manifest.yml",ACTIVE_STATE_PATH,
-              RUNTIME_GUARD_PATH,DELIBERATION_VALIDATOR_PATH,CONTEXT_VALIDATOR_PATH]
+              RUNTIME_GUARD_PATH,DELIBERATION_VALIDATOR_PATH,CONTEXT_VALIDATOR_PATH,HISTORY_GATE_PATH]
     missing=[p for p in required if not (repo_root/p).exists()]
     if missing:return 20,[f"missing:{p}" for p in missing]
     try:
@@ -124,7 +125,7 @@ def load_deliberation_validator(repo_root:Path):
     module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
 
 def compose_instance(run_root:Path,art:dict,sid:str,run_doc:dict,candidate:str)->dict:
-    """Resolve stage_control refs and assemble the canonical instance.
+    """Historical single-instance adapter; not the committed-run validation path.
 
     This function locates and arranges. It decides nothing. Whether the model is
     complete, whether a feasibility basis holds, whether a Human disposition is
@@ -173,9 +174,9 @@ def validate_deliberation(repo_root:Path|None,run_root:Path,art:dict,sid:str,
     if code:return 34,f"deliberation_instance_rejected:{sid}:mechanism_exit_{code}"
     return 0,""
 
-def payload_schemas(repo_root:Path)->dict[str,dict]:
+def payload_schemas(repo_root:Path,read_yaml=load_yaml)->dict[str,dict]:
     """Read required fields from the same canonical schemas checked by static."""
-    contract=load_yaml(repo_root/CONTRACT_PATH)
+    contract=read_yaml(repo_root/CONTRACT_PATH)
     if not isinstance(contract,dict):raise ValueError("contract_mapping")
     stages=contract.get("stage_order")
     if not isinstance(stages,list) or any(not isinstance(x,dict) for x in stages):
@@ -184,7 +185,7 @@ def payload_schemas(repo_root:Path)->dict[str,dict]:
         raise ValueError("schema_stage_order")
     schemas={}
     for item in stages:
-        schema=load_yaml(repo_root/item["schema_path"])
+        schema=read_yaml(repo_root/item["schema_path"])
         if not isinstance(schema,dict) or schema.get("stage_id")!=item["stage_id"] or schema.get("artifact_kind")!=item["artifact_kind"]:
             raise ValueError("schema_binding")
         fields=schema.get("payload_required_fields")
@@ -252,19 +253,85 @@ def validate_run(run_root:Path,repo_root:Path|None=None,candidate:str|None=None)
     if candidate is None:
         return 41,["deliberation_not_validated:no_candidate:"
                    "full validation requires the commit the run is judged at"]
-    repo_root=repo_root if repo_root is not None else Path(__file__).resolve().parents[4]
-    try:schemas=payload_schemas(repo_root)
-    except (OSError,ValueError,TypeError,KeyError,yaml.YAMLError,RecursionError) as exc:
-        return 33,[f"payload_schema_source:{type(exc).__name__}"]
-    try:return _validate_run(run_root,schemas,repo_root,candidate)
-    except (OSError,ValueError,TypeError,KeyError,AttributeError,yaml.YAMLError,RecursionError) as exc:
-        return 33,[f"artifact_structure:{type(exc).__name__}"]
+    repo_root=(repo_root if repo_root is not None else Path(__file__).resolve().parents[4]).resolve()
+    try:
+        source=CommittedRunSource(repo_root,candidate)
+        run_root=run_root.absolute()
+        run_rel=run_root.relative_to(repo_root).as_posix()
+        schemas=payload_schemas(repo_root,source.load_yaml)
+        code,findings=_validate_run(run_root,schemas,repo_root,source=source)
+        if code:return code,findings
+    except Exception as exc:
+        # Failure to read the candidate never becomes a structural-only pass.
+        return 33,[f"committed_run_source_or_structure:{type(exc).__name__}:{exc}"]
+    gate=source.gate
+    findings=gate.Findings()
+    try:
+        # No publication boundary exemption here: the Human explicitly asked to
+        # validate this run. The existing history gate resolves M/P/W/C and calls
+        # the semantic owner for each acceptance. It is not reimplemented here.
+        code=gate.gate_run(repo_root,candidate,run_rel,None,findings)
+        if code:return 34,[f"publication_gate_exit_{code}",*findings.summary()]
+        return 0,findings.summary()
+    except gate.GateError as exc:
+        return 34,[f"publication_gate_exit_{exc.code}:{exc.reason}"]
+    except Exception as exc:
+        return 34,[f"publication_gate_unreadable:{type(exc).__name__}"]
+
+
+class CommittedRunSource:
+    """Read only exact regular Git blobs; checkout bytes are not candidate data.
+
+    The installed owner already has strict Git source helpers. Reusing
+    them is permitted; their source files remain outside this task's write scope.
+    Cache bytes only to avoid asking Git repeatedly for the same immutable blob.
+    """
+    def __init__(self,repo_root:Path,candidate:str):
+        installation=Path(__file__).resolve().parents[4]
+        owner=load_deliberation_validator(installation)
+        self.support=owner.task_scope_support()
+        self.support.candidate_id(repo_root,candidate)
+        actual=self.support.git(repo_root,"rev-parse","--show-toplevel").decode("utf-8").strip()
+        if Path(actual).resolve()!=repo_root:raise ValueError("repository_root_required")
+        gate_path=installation/HISTORY_GATE_PATH
+        spec=importlib.util.spec_from_file_location("minimum_loop_history_gate",gate_path)
+        if spec is None or spec.loader is None:raise RuntimeError("publication_gate_unavailable")
+        self.gate=importlib.util.module_from_spec(spec)
+        sys.modules[spec.name]=self.gate
+        spec.loader.exec_module(self.gate)
+        self.repo=repo_root
+        self.candidate=candidate
+        self.cache={}
+
+    def read_bytes(self,path:Path)->bytes:
+        # Do not resolve candidate paths through symlinks in the mutable checkout.
+        rel=path.absolute().relative_to(self.repo).as_posix()
+        if rel not in self.cache:
+            self.cache[rel]=self.support.tracked_blob(self.repo,self.candidate,rel)
+        return self.cache[rel]
+
+    def load_yaml(self,path:Path)->Any:
+        # Workflow schemas have integer exit-code keys. The task-packet YAML
+        # subset forbids those, so it is not the schema language for this reader.
+        doc=yaml.safe_load(self.read_bytes(path).decode("utf-8"))
+        self.support.same_json(doc,doc)
+        return doc
+
+    def is_file(self,path:Path)->bool:
+        self.read_bytes(path)  # absent, symlink or unreadable means source failure
+        return True
+
+    def sha256(self,path:Path)->str:
+        return hashlib.sha256(self.read_bytes(path)).hexdigest()
 
 def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
-                  candidate:str|None=None)->tuple[int,list[str]]:
+                  candidate:str|None=None,source:CommittedRunSource|None=None)->tuple[int,list[str]]:
+    read_yaml=source.load_yaml if source is not None else load_yaml
+    is_file=source.is_file if source is not None else Path.is_file
+    digest=source.sha256 if source is not None else sha256_file
     manifest_path=run_root/"manifest.yml"
-    if not manifest_path.is_file():return 30,["manifest"]
-    try:manifest=load_yaml(manifest_path)
+    if not is_file(manifest_path):return 30,["manifest"]
+    try:manifest=read_yaml(manifest_path)
     except Exception as exc:return 33,[f"manifest_parse:{type(exc).__name__}:{exc}"]
     if not isinstance(manifest,dict):return 33,["manifest_mapping"]
     if manifest.get("schema_version")!="citystate.workflow.run_manifest.v1":return 33,["manifest_schema"]
@@ -277,10 +344,10 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
     artifacts={};paths={};hashes={}
     for item in entries:
         sid,rel=item.get("stage_id"),item.get("path","");path=run_root/rel
-        if not path.is_file():return 30,[f"{sid}:{rel}"]
-        actual=sha256_file(path)
+        if not is_file(path):return 30,[f"{sid}:{rel}"]
+        actual=digest(path)
         if item.get("sha256")!=actual:return 31,[f"{sid}:{rel}"]
-        try:art=load_yaml(path)
+        try:art=read_yaml(path)
         except Exception as exc:return 33,[f"{sid}:{type(exc).__name__}:{exc}"]
         if not isinstance(art,dict):return 33,[f"artifact_mapping:{sid}"]
         if item.get("artifact_version")!=art.get("artifact_version"):return 32,[f"manifest_version:{sid}"]
@@ -296,7 +363,7 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
       EXPECTED_STAGE_IDS[6]:[EXPECTED_STAGE_IDS[2],EXPECTED_STAGE_IDS[3],EXPECTED_STAGE_IDS[5]]}
     kinds=dict(zip(EXPECTED_STAGE_IDS,["requirement_package","evidence_package","result_package","frozen_test_package","step_package","execution_package","verification_package"]))
     run_id=manifest.get("run_id")
-    run_doc=load_yaml(run_root/"run.yml") if (run_root/"run.yml").is_file() else {}
+    run_doc=read_yaml(run_root/"run.yml") if is_file(run_root/"run.yml") else {}
     if not isinstance(run_doc,dict):run_doc={}
     deliberation_notes:list[str]=[]
     for sid in EXPECTED_STAGE_IDS:
@@ -312,9 +379,12 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
             return 33,[f"identity:{sid}"]
         # One owner for the deliberation verdict. The runner composes and consumes;
         # it does not judge. A nonzero from the mechanism stops the run here.
-        code,note=validate_deliberation(repo_root,run_root,art,sid,run_doc,candidate)
-        if code:return code,[note]
-        if note:deliberation_notes.append(note)
+        if source is None:
+            code,note=validate_deliberation(repo_root,run_root,art,sid,run_doc,candidate)
+            if code:return code,[note]
+            if note:deliberation_notes.append(note)
+        # Exact-candidate callers consume the history gate once after all
+        # structural checks. They never use the historical single-instance adapter.
         refs=art.get("input_refs",[])
         if not isinstance(refs,list):return 32,[f"refs:{sid}"]
         by_id={x.get("stage_id"):x for x in refs if isinstance(x,dict)}
@@ -422,8 +492,8 @@ def main()->int:
     parser.add_argument("--json-output",action="store_true");parser.add_argument("--skip-subvalidators",action="store_true",help=argparse.SUPPRESS)
     parser.add_argument("--repo-root",type=Path,default=None)
     parser.add_argument("--candidate",default=None,
-                        help="the commit this run is being judged at. Without it the deliberation "
-                             "instance cannot be composed and is reported as not validated")
+                        help="exact commit whose run artifacts and acceptance history are judged; "
+                             "required for full validation, independent of dirty checkout bytes")
     args=parser.parse_args()
     if args.command=="static":code,findings=validate_static(Path(args.target),not args.skip_subvalidators)
     elif args.command=="validate":code,findings=validate_run(Path(args.target),args.repo_root,args.candidate)

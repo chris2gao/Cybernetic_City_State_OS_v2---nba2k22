@@ -253,11 +253,11 @@ def stage_receipt(sid: str, candidate_version: str) -> dict:
         # "stage_receipt.v1", which is a different schema, and passed: the object
         # existed at the declared blob and nobody asked what schema it was.
         "receipt_schema_version": "stage_collaborative_deliberation.stage_receipt.v1",
-        "mechanism_version": "stage_collaborative_deliberation.v1",
-        "active_contract_version": "阶段profile契约_v1",
-        "boot_manifest_version": "fixture-boot-1",
-        "registry_version": "fixture-registry-1",
-        "loader_version": "fixture-loader-1",
+        "mechanism_version": 1,
+        "active_contract_version": 1,
+        "boot_manifest_version": 1,
+        "registry_version": 1,
+        "loader_version": 1,
         # resolve_profile parses the part after @ as an integer version, so this
         # is "@1" and not "@v1". A reference that does not resolve means the
         # stage's obligations are unknown, which the mechanism refuses.
@@ -266,12 +266,12 @@ def stage_receipt(sid: str, candidate_version: str) -> dict:
         "missing_partial_or_stale_paths": [],
         "trigger_evaluation_result_ref": f"{RUN}/{sid}/model.yml",
         "activation_mode_or_dormant_reason": "active",
-        "main_mechanism_ref": "01_os/03_mechanisms/stage_collaborative_deliberation",
+        "main_mechanism_ref": ["01_os/03_mechanisms/stage_collaborative_deliberation"],
         "detail_granularity_evaluation_result": "sufficient",
         "open_detail_divergence_event_refs": [],
         "deferred_detail_record_refs": [],
         "gate_results": {"start": "pass", "completion": "pass"},
-        "validator_mode_and_exit_code": {"mode": "full", "exit_code": 0},
+        "validator_mode_and_exit_code": {"mode": "instance", "exit_code": 0},
         "exact_candidate_version": candidate_version,
         "created_by_actor_ref": "gate-fixture",
         "created_at": "2026-09-13T00:00:00Z",
@@ -314,7 +314,9 @@ class Chain:
                  completion_mutators: dict | None = None,
                  model_mutators: dict | None = None,
                  receipt_mutators: dict | None = None,
-                 verification_mutators: dict | None = None):
+                 verification_mutators: dict | None = None,
+                 profile_set: dict | None = None,
+                 packet_mutator=None):
         """The mutators change a stage's acceptance record as it is written.
 
         Structural cases have to be built into the chain, not edited afterwards.
@@ -349,8 +351,29 @@ class Chain:
         # is refused rather than judged against whatever the checkout happens to
         # have.
         write(self.repo, PROFILE_CONTRACT_PATH, PROFILE_CONTRACT_DOC)
-        write(self.repo, PROFILE_SET_PATH, PROFILE_SET_DOC)
+        write(self.repo, PROFILE_SET_PATH, PROFILE_SET_DOC if profile_set is None else profile_set)
+        policy_path = "01_os/05_registry/repository_publisher_authority_v1.yml"
+        write(self.repo, policy_path,
+              (HERE.parents[3] / policy_path).read_text(encoding="utf-8"))
         self.boundary = commit(self.repo, "boundary")
+        # Synthetic scope only: allow canonical schemas copied by the runner
+        # integration fixture as well as this run. No production authority is made.
+        self.packet = {
+            "task_id": TASK_ID, "branch": "fixture", "exact_base_sha": self.boundary,
+            "allowed_changed_paths": ["01_os/**"],
+            "required_tests": ["synthetic-gate-check"], "prohibitions": [],
+            "stage_actions": [
+                {"action_id": f"act-{i + 1}", "kind": "ordinary_task_work",
+                 "target": "refs/heads/fixture", "expected_target_head": None,
+                 "stage_ids": [sid], "paths": [RUN], "confirmation": None}
+                for i, sid in enumerate(STAGES)],
+        }
+        if packet_mutator is not None:
+            packet_mutator(self.packet)
+        packet_path = f"{RUN}/task_packet.yml"
+        self.packet_ref = {"path": packet_path, "blob_sha": write(
+            self.repo, packet_path, {"task_packet": self.packet})}
+        commit(self.repo, "synthetic task scope")
         self.stages: dict[str, dict] = {}
         self.controls: dict[str, dict] = {}
         self.receipts: dict[str, dict] = {}
@@ -425,6 +448,7 @@ class Chain:
             # A plan record copied here is refused on its decision type alone.
             comp_record = accepted(
                 sid, COMPLETION_DECISION,
+                actual_result=f"Produced the synthetic {sid} output and recorded verification.",
                 bound_output_version=w,
                 verification_result={"commit": ver_commit,
                                      "path": f"{d}/verification.yml",
@@ -462,6 +486,7 @@ class Chain:
               {"artifacts": [{"stage_id": s, "path": f} for s, f in zip(STAGES, FILES)]})
         write(self.repo, f"{RUN}/run.yml",
               {"task_id": TASK_ID, "base_sha": self.boundary_child(),
+               "task_packet_ref": self.packet_ref,
                "final_stage_completion_commit": prev_c})
         self.head = commit(self.repo, "run identity")
 
@@ -1025,6 +1050,18 @@ class AcceptanceCases(unittest.TestCase):
         self.assertEqual(code, 13, joined)
         self.assertIn("not strict ancestry", joined, joined)
 
+    def test_completion_actual_result_missing_is_refused(self):
+        code, findings = self.chain(completion=lambda r: r.pop("actual_result")).run_gate()
+        self.assertMechanismRefused(code, findings, "completion", "actual_result_required", 14)
+
+    def test_completion_boolean_actual_result_is_refused(self):
+        code, findings = self.chain(completion={"actual_result": True}).run_gate()
+        self.assertMechanismRefused(code, findings, "completion", "actual_result_required", 14)
+
+    def test_completion_empty_risk_is_refused(self):
+        code, findings = self.chain(completion={"residual_risk": []}).run_gate()
+        self.assertMechanismRefused(code, findings, "completion", "closure_field_empty:residual_risk", 14)
+
     def test_completion_record_missing_a_closure_field_is_refused(self):
         code, findings = self.chain(
             completion=lambda r: r.pop("residual_risk")).run_gate()
@@ -1083,6 +1120,146 @@ class AcceptanceCases(unittest.TestCase):
         """Stage 01 judged against stage 05's obligations is not stage 01 judged."""
         code, findings = self.chain(
             receipt={"profile_id_and_version": f"{STAGES[4]}@1"}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_wrong_profile_with_its_matching_fields_is_refused(self):
+        """Changing both sides of the field check must not change stage identity."""
+        def replace_elements(model):
+            model["stage_specific_model_elements"] = stage_elements(STAGES[4])
+        code, findings = self.chain(
+            receipt={"profile_id_and_version": f"{STAGES[4]}@1"},
+            model=replace_elements).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_boolean_solution_is_refused_through_gate(self):
+        code, findings = self.chain(model={"proposed_method_or_solution": True}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "current_model_completeness", 16)
+
+    def test_task_packet_reference_is_required(self):
+        chain = self.chain()
+        chain.rewrite_run(lambda doc: doc.pop("task_packet_ref", None))
+        code, findings = chain.run_gate()
+        self.assertEqual(code, 11, findings)
+        self.assertIn("task_packet_ref", " | ".join(findings))
+
+    def test_paths_come_from_each_selected_packet_action(self):
+        def per_stage_paths(packet):
+            for sid, action in zip(STAGES, packet["stage_actions"]):
+                action["paths"] = [f"{RUN}/{sid}"]
+        chain = Chain(self.tmp, packet_mutator=per_stage_paths)
+        code, findings = chain.run_gate()
+        self.assertEqual(code, 0, findings)
+
+    def test_dormant_stage_with_complete_model_and_acceptances_passes(self):
+        chain = self.chain(receipt={"activation_mode_or_dormant_reason": "dormant: triggers absent"})
+        chain.embedded[STAGES[0]]["route"] = "dormant"
+        chain.rewrite_artifact(STAGES[0], lambda control: None)
+        code, findings = chain.run_gate()
+        self.assertEqual(code, 0, findings)
+
+    def test_ordinary_local_choice_needs_no_additional_human_checkpoint(self):
+        chain = self.chain(model={"ordinary_local_choices": [
+            {"description": "Choose a reversible local representation inside the approved scope.",
+             "requires_Human_confirmation": False}]})
+        code, findings = chain.run_gate()
+        self.assertEqual(code, 0, findings)
+
+    def test_receipt_boolean_exit_is_not_zero(self):
+        def boolean_exit(receipt):
+            receipt["validator_mode_and_exit_code"]["exit_code"] = False
+        code, findings = self.chain(receipt=boolean_exit).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "receipt_validator_result_invalid", 17)
+
+    def test_load_bearing_item_needs_a_bound_decision(self):
+        code, findings = self.chain(model={"open_load_bearing_items": [
+            {"load_bearing": True, "disposition": "resolved",
+             "Human_basis": {"actor_class": "current_Human", "kind": "explicit_statement"}}
+        ]}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "decision_basis_required", 15)
+
+    def test_unresolved_item_is_not_ready(self):
+        code, findings = self.chain(model={"open_load_bearing_items": [
+            {"load_bearing": False, "disposition": "unresolved"}
+        ]}).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "substantive_readiness_failed", 16)
+
+    def decision_chain(self, covered=True):
+        def packet(doc):
+            doc["stage_actions"][0]["covered_decision_ids"] = ["choice-1"] if covered else []
+
+        def model(doc, chain):
+            doc["open_load_bearing_items"] = [{
+                "load_bearing": True, "disposition": "resolved", "decision_id": "choice-1",
+                "Human_basis": {"kind": "current_task_scope", "decision_id": "choice-1",
+                                "task_packet": json_round(chain.packet_ref), "action_id": "act-1"}}]
+
+        return Chain(self.tmp, packet_mutator=packet, model_mutators={STAGES[0]: model})
+
+    def test_exact_packet_decision_coverage_passes(self):
+        code, findings = self.decision_chain().run_gate()
+        self.assertEqual(code, 0, findings)
+        self.assertEqual(findings, [f"{RUN}: seven stages chained, separated and accepted"])
+
+    def test_uncovered_packet_decision_is_refused(self):
+        code, findings = self.decision_chain(covered=False).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "decision_not_covered", 15)
+
+    def test_whitespace_stage_value_is_refused_through_gate(self):
+        def blank(model):
+            model["stage_specific_model_elements"][STAGE_FIELDS[STAGES[0]][0]]["value"] = " \t"
+        code, findings = self.chain(model=blank).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_complete_canonical_profiles_pass(self):
+        # Input obligations come from the actual contract, never a production
+        # validator helper. The expected verdict remains the explicit zero below.
+        profiles = yaml.safe_load((HERE.parents[3] / PROFILE_SET_PATH).read_text(encoding="utf-8"))
+        self.assertEqual({p["profile_id"] for p in profiles["profiles"]}, set(STAGES))
+        mutations = {}
+        for profile in profiles["profiles"]:
+            elements = {field: {"disposition": "represented_with_supported_value",
+                                "value": f"synthetic supported value for {field}"}
+                        for field in profile["required_model_fields"]}
+            mutations[profile["profile_id"]] = (
+                lambda model, chain, fields=elements:
+                    model.update(stage_specific_model_elements=json_round(fields)))
+        code, findings = Chain(self.tmp, model_mutators=mutations, profile_set=profiles).run_gate()
+        self.assertEqual(code, 0, findings)
+
+    def test_wrong_profile_with_both_stages_fields_is_refused(self):
+        """No missing field can explain this refusal; the profile is wrong."""
+        def add_other_elements(model):
+            model["stage_specific_model_elements"].update(stage_elements(STAGES[4]))
+        code, findings = self.chain(
+            receipt={"profile_id_and_version": f"{STAGES[4]}@1"},
+            model=add_other_elements).run_gate()
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def profile_set_case(self, mutate):
+        chain = self.chain()
+        profiles = json_round(PROFILE_SET_DOC)
+        mutate(profiles)
+        write(chain.repo, PROFILE_SET_PATH, profiles)
+        chain.head = commit(chain.repo, "mutate candidate profile set")
+        return chain.run_gate()
+
+    def test_profile_with_empty_required_fields_is_refused(self):
+        code, findings = self.profile_set_case(
+            lambda doc: doc["profiles"][0].update(required_model_fields=[]))
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+
+    def test_duplicate_profile_identity_is_refused(self):
+        # Retain seven entries so a count check alone cannot explain the failure.
+        def duplicate(doc):
+            doc["profiles"][1] = json_round(doc["profiles"][0])
+        code, findings = self.profile_set_case(duplicate)
+        self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
+        self.assertIn(f": {STAGES[0]}: plan acceptance", " | ".join(findings))
+
+    def test_profile_with_repeated_required_field_is_refused(self):
+        def duplicate(doc):
+            doc["profiles"][0]["required_model_fields"].append(STAGE_FIELDS[STAGES[0]][0])
+        code, findings = self.profile_set_case(duplicate)
         self.assertMechanismRefused(code, findings, "plan", "effective_stage_model", 16)
 
     # -- the receipt is this schema's receipt --------------------------------
