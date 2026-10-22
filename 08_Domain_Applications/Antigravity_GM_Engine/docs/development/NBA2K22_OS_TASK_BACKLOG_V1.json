@@ -1,0 +1,265 @@
+{
+  "schema_version": "nba2k22.os_development_backlog.v1",
+  "reference_date": "2026-10-22",
+  "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "domain_root": "08_Domain_Applications/Antigravity_GM_Engine/",
+  "os_run_root": "01_os/07_content/_runs/",
+  "source_of_truth": "docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md",
+  "source_refresh_candidate": {
+    "branch": "task/nba2k22-source-refresh-20261022",
+    "commit": "8bdae1700ecd3ed47d2ad197cca86ace388083bb",
+    "master_integration": "pending_review_and_Human_decision"
+  },
+  "rules": {
+    "this_file_is_plan_not_authorization": true,
+    "task_launch_uses_fresh_remote_master": true,
+    "os_packet_and_routing_per_task": true,
+    "independent_review_separate_session": true,
+    "DCR_requires_specific_priori_Human_permission": true,
+    "production_game_modifications_require_Human_approval": true
+  },
+  "tasks": [
+    {
+      "id": "OS-BASELINE-01",
+      "priority": "G0",
+      "title": "接收业务迁移候选并做OS集成决定",
+      "depends_on": [],
+      "state": "candidate_pending_independent_review",
+      "execution_route_hint": "Gemini scoped repair / independent reviewer / Human",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "schema docs, AG assets, Codex audit preserved under new master; OS review and Human merger decision",
+      "deliverable_summary": "migration acceptance/handoff receipt",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-ARCH-01",
+      "priority": "P0",
+      "title": "建立完整世界/存档/身份/时间概念模型",
+      "depends_on": [
+        "OS-BASELINE-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex architecture; GPT independent review",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "ER, identity collisions/season forks, event vs observation semantics, source and potential boundary documented",
+      "deliverable_summary": "concept ER; identity/time ADR; invariants; open unknowns",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "NATIVE-ACCEPT-01",
+      "priority": "P0",
+      "title": "独立验收AG01B–01D原生GAME/StatBank/生涯数据链",
+      "depends_on": [
+        "OS-BASELINE-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex native verification",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "real layout/bounds, game/team/player identity, negative cases and field-by-field evidence; unknown retained",
+      "deliverable_summary": "evidence matrix; minimal reproducible tests; blocked issues",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-SCHEMA-01",
+      "priority": "P0",
+      "title": "逻辑关系模型/物理SQLite候选架构/数据迁移方案",
+      "depends_on": [
+        "WORLD-DATA-ARCH-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex data architect",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "DDL with keys, FKs, provenance, versioning; topology alternatives and migration map; fixture queries",
+      "deliverable_summary": "logical schema; candidate DDL; ADR; mapping",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-PROTOTYPE-01",
+      "priority": "P0",
+      "title": "隔离fixture的纵向业务数据库原型",
+      "depends_on": [
+        "WORLD-DATA-SCHEMA-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex implementation",
+      "risk_hint": "T1_standard",
+      "acceptance_gate": "replay real safe fixtures, identify conflicts, isolated side-effect-free DB and queries",
+      "deliverable_summary": "prototype schema; tests; CLI",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-INGEST-01",
+      "priority": "P0",
+      "title": "Native→版本解码→身份核对→校验→暂存新链路",
+      "depends_on": [
+        "NATIVE-ACCEPT-01",
+        "WORLD-DATA-PROTOTYPE-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex implementation, Gemini evidence support",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "native source provenance; invalid or missing facts fail closed; bounded staged data",
+      "deliverable_summary": "ingest adapters; manifest; tests",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-PUBLISH-01",
+      "priority": "P0",
+      "title": "带崩溃恢复和跨档隔离的长期事实发布",
+      "depends_on": [
+        "WORLD-DATA-INGEST-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex implementation",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "idempotence, no overwrite of history, generation scope, incomplete cohort blocked",
+      "deliverable_summary": "publication pipeline; rollback; fault tests",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-QUERY-01",
+      "priority": "P1",
+      "title": "角色安全的世界事实查询API",
+      "depends_on": [
+        "WORLD-DATA-PUBLISH-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex implementation",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "GM_SANITIZED, source/time binding, per-role authorization; Query view aligns dataset",
+      "deliverable_summary": "typed DTO; SQL/view; privacy negative tests",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-MIGRATION-01",
+      "priority": "P1",
+      "title": "旧双库/历史数据shadow迁移和双轨对账",
+      "depends_on": [
+        "WORLD-DATA-QUERY-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex migration",
+      "risk_hint": "T3_high_risk_if_real_production_cutover",
+      "acceptance_gate": "old data preserved read-only; no hidden fake history; reversible cutover requires Human",
+      "deliverable_summary": "migration map; dryrun; shadow diff; rollback",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-COVERAGE-01",
+      "priority": "P1",
+      "title": "UI/R07全字段覆盖与缺口分级",
+      "depends_on": [
+        "NATIVE-ACCEPT-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Gemini source discovery, Codex critical verification",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "original game UI field by field proven/unknown; prioritize coach finance morale injuries G-League rookie",
+      "deliverable_summary": "coverage matrix; field evidence; task candidates",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-DATA-E2E-01",
+      "priority": "P1",
+      "title": "实机只读到查询的端到端一致性演示",
+      "depends_on": [
+        "WORLD-DATA-PUBLISH-01",
+        "WORLD-DATA-QUERY-01",
+        "WORLD-DATA-MIGRATION-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex E2E, independent reviewer",
+      "risk_hint": "T3_high_risk_when_live_save_or_production_involved",
+      "acceptance_gate": "read-only game permitted by Human; game→Box→season consistency, world-id and recovery",
+      "deliverable_summary": "E2E receipt; reports; decision",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-ACTION-ADAPTER-01",
+      "priority": "P2",
+      "title": "旧有限审批执行器适配新世界身份",
+      "depends_on": [
+        "WORLD-DATA-E2E-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "Codex safety engineering",
+      "risk_hint": "T3_high_risk_when_game_write",
+      "acceptance_gate": "per-action player approval, game readback, unknown action HOLD; no new write authority",
+      "deliverable_summary": "action adapter; approval/checks; tests",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "WORLD-ACTOR-DATA-01",
+      "priority": "P2",
+      "title": "GM/Coach/Player角色查询与数据可见性合同",
+      "depends_on": [
+        "WORLD-DATA-E2E-01",
+        "WORLD-DATA-COVERAGE-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "GPT architecture and Codex DTO design",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "data quality, permission scope, derived/native separation; no personality implementation",
+      "deliverable_summary": "role DTOs; access contract; readiness metrics",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "COACH-AGENT-01",
+      "priority": "LATER",
+      "title": "独立教练人格和比赛策略系统",
+      "depends_on": [
+        "WORLD-ACTOR-DATA-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "separate product architecture",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "future independent Human-scoped dispatch; no fixed-threshold fake personality",
+      "deliverable_summary": "deferred separate task",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "PLAYER-AGENT-01",
+      "priority": "LATER",
+      "title": "独立球员人格和职业生涯自主选择",
+      "depends_on": [
+        "WORLD-ACTOR-DATA-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "separate product architecture",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "future independent Human-scoped dispatch; no hidden potential leakage",
+      "deliverable_summary": "deferred separate task",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    },
+    {
+      "id": "GM-OPERATIONS-VNEXT",
+      "priority": "LATER",
+      "title": "升级30队GM数据驱动运营",
+      "depends_on": [
+        "WORLD-ACTOR-DATA-01"
+      ],
+      "state": "planned_not_dispatched",
+      "execution_route_hint": "GM plus separate engineering",
+      "risk_hint": "T2_semantic",
+      "acceptance_gate": "future scope after role contracts and confirmed operational sources",
+      "deliverable_summary": "deferred separate task",
+      "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
+      "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"
+    }
+  ]
+}
