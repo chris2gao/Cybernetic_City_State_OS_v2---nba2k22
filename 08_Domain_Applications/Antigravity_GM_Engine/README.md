@@ -1,5 +1,8 @@
 # NBA 2K22 Antigravity 外部总经理引擎 (External GM Engine)
 
+> **OS治理下的NBA2K22项目开发知识入口（2026-10-22，候选）**：[正式开发基线](docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) · [开发规划模型入口](docs/development/NBA2K22_PLANNING_MODEL_ENTRY_V1.md) · [40族能力与交付总账](docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json) · [历史开发任务索引](docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json) · [16项后续工作Backlog](docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json) · [文档权威/上下文恢复](docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md)。本业务树以OS仓库为写入目标；历史旧仓库URL只作固定SHA来源。**研究已发现/代码已实现/生产已发布/真实游戏验收分别标记**，任何进程写入及DCR本地访问均须玩家另行批准。该知识入口与业务刷新均处任务候选分支，尚未自动进入master。
+
+
 > **OS 纳管状态（2026-10-22）**：本项目已正式迁入 **Cybernetic City-State OS v2** 系统，作为 `08_Domain_Applications/Antigravity_GM_Engine` 领域应用纳管。
 > **新官方仓库**：[chris2gao/Cybernetic_City_State_OS_v2---nba2k22](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22)（分支：`master`）
 > **最新数据架构纲领**：[平行世界数据架构 V2 蓝图](docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)（全面允许重构双 SQLite、采集容器与 Schema）
