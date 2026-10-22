@@ -1,0 +1,37 @@
+task_id: os-v2-project-closeout-integration-inventory-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T1_standard
+exact_base_sha: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+starting_candidate: c947c3978e1b6379a90c92a04044daf332aeb751
+branch: codex/project-closeout-20261022
+objective: Commit approved local documentation, integrate the completed W6 lineage into master, and list all remaining unmerged local and live remote branches with evidence of their work in chronological order for Human decision.
+Human_confirmation:
+  master_integration: current_Human_confirmed
+  source: current_Human_request_to_commit_local_repository_to_main_branch
+  local_document_routing: move_archives_into_existing_01_os_task_records_and_adjust_references
+  images: retain_gpt_pre_jpg_locally_do_not_publish
+allowed_changed_paths:
+  - CLAUDE.md
+  - CORE_MANIFEST.yml
+  - 09_task_lifecycle/README.md
+  - 09_task_lifecycle/20260915_模型作者位的证据完整性失效_待验证假说_v1.md
+  - 01_os/_runs/run-20260911-stage-human-alignment-wiring-001/**
+  - 01_os/_runs/run-20261022-project-closeout-001/**
+source_evidence:
+  - current_local_Git_state_and_current_Human_instructions
+  - c947c3978e1b6379a90c92a04044daf332aeb751
+verification_plan: bounded_diff_and_record_checks_plus_registered_publication_hook_and_remote_readback
+required_tests: []
+verification_limits: No new functional development, expanded test suite or independent review is introduced by this closeout.
+required_completion_pointer: 08_结论/completion_pointer_v1.yml
+prohibitions:
+  - publish_gpt_pre_images
+  - merge_other_inventory_branches_without_Human_selection
+  - delete_branches_or_rewrite_history
+  - access_secrets_or_credentials
+  - activate_runtime_or_scheduler
+publisher:
+  principal_binding: local_authenticated
+  publication_transport: local_git
+  source_branch_publication: task_scope_default
+  master_integration_confirmation: current_Human_confirmed

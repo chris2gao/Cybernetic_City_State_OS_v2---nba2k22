@@ -26,7 +26,12 @@ fixed initialization bundle. Never default-preload `01_os/_runs/**`.
 retained global infrastructure — this file, `AGENTS.md`,
 `AGENT_WORKING_DISCIPLINE.md`, `GEMINI.md`, `README.md`, `CORE_MANIFEST.yml`,
 `.githooks/` — and nothing else is a current startup surface. Physical legacy
-retirement is complete. Do not recreate a retired path or restore a dependency on
+retirement is complete.
+
+Task-specific root-cause analyses, handovers and unverified hypotheses stay in
+their existing `01_os/_runs/<run>/` records; they do not create another root-level
+archive or startup surface. Read them only when the current task routes you there.
+Do not recreate a retired path or restore a dependency on
 one. Shared communication handoff behavior is defined only in `AGENTS.md`.
 
 Your role, model and reasoning level come from the current Human request and any
