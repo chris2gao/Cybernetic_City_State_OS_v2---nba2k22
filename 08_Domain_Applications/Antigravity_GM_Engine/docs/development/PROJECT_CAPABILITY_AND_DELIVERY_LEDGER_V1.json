@@ -1,0 +1,2664 @@
+{
+  "schema_version": "nba2k22.project_capability_ledger.v1",
+  "as_of": "2026-10-22",
+  "scope": "Index based on pinned source-refresh candidate; requires future owner review, not fresh live game retest.",
+  "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "branch_evidence": {
+    "source_refresh": "8bdae1700ecd3ed47d2ad197cca86ace388083bb",
+    "codex_audit": "d1038811ecee3a6b35a5d9c4787c67bf65456438",
+    "native_research": "21d62ec9e04b86a1f737c1500ea2f41c34583215"
+  },
+  "source_of_truth": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+  "rules": {
+    "one_source_of_truth_for_40_family_axes": true,
+    "ledger_does_not_override_audit": true,
+    "research_complete_ne_prod_complete": true,
+    "old_snapshot_potential_not_masked": true,
+    "new_reader_not_auto_published": true,
+    "capability_status_is_not_OS_run_lifecycle": true,
+    "absence_in_reviewed_file_not_absence_in_game": true
+  },
+  "counts": {
+    "families": 40,
+    "audit_status_distribution": {
+      "UNMERGED_BRANCH_CANDIDATE": 3,
+      "REFERENCE_OR_UNKNOWN": 13,
+      "PRIOR_BATCH_PARTIAL": 16,
+      "IMPLEMENTED_UNPUBLISHED": 7,
+      "SOURCE_ONLY_BLOCKED": 1
+    },
+    "ledger_workstreams": 11
+  },
+  "capabilities": [
+    {
+      "id": "F01",
+      "capability": "赛程、对阵及GameID",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "UNMERGED_BRANCH_CANDIDATE",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/match_history_reader.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b",
+          "database/match_history_schema.sql@b4e17e1419b1cf9105f0a68dba7719e4d407104b",
+          "scripts/query_match_history.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_IMPLEMENTED_IN_MAIN",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G01",
+        "D06-G04"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "Unplayed games are omitted; GameID/date/status and root layout unverified.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/0",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F02",
+      "capability": "逐场球员及球队Game Logs",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "UNMERGED_BRANCH_CANDIDATE",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/match_history_reader.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b",
+          "database/match_history_schema.sql@b4e17e1419b1cf9105f0a68dba7719e4d407104b",
+          "scripts/query_match_history.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_IMPLEMENTED_IN_MAIN",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G01",
+        "D06-G14"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "Candidate produces player/team rows only for accepted final games; no current sealed match tables or identity-safe history query.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/1",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F03",
+      "capability": "逐场双方Box与比赛细节",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "UNMERGED_BRANCH_CANDIDATE",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/match_history_reader.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b",
+          "database/match_history_schema.sql@b4e17e1419b1cf9105f0a68dba7719e4d407104b",
+          "scripts/query_match_history.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_IMPLEMENTED_IN_MAIN",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G01",
+        "D06-G03"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "Candidate Box decoder has no runtime receipt, ignores InUse and lacks bounds/coherence checks; advanced values derived.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/2",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F04",
+      "capability": "投篮图、热区及出手类型",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [],
+        "entrypoints_count": 0,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_IMPLEMENTED_IN_MAIN",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G01",
+        "D06-G02"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "Box totals are not shot coordinates, zones, play-by-play or event stream. Branch does not implement ShotChart.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/3",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F05",
+      "capability": "球队赛季统计与战绩",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/source_extensions.py",
+          "src/gm_data_access/query.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: team_stats,teams",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G01"
+      ],
+      "dev28_candidate_package": [
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "30 current-snapshot team totals/record rows; no mode-specific per-game proof. Derived metrics must retain formulas/denominators.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/4",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F06",
+      "capability": "球员赛季累计与每场指标",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/source_extensions.py",
+          "src/gm_data_access/query.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: players; season_totals projection in code",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G01"
+      ],
+      "dev28_candidate_package": [
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "466 roster rows but only 396 observed stat records in ingest metrics. Missing totals remain NULL; no Game Logs from subtraction.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/5",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F07",
+      "capability": "全球球员模型池及新秀身份",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/historical_rookies.py",
+          "src/gm_data_access/query.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: pool",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G06",
+        "D06-G11"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "3383 models, 789 historical rookie models in manifest; pool slot/tag is batch-local, not permanent person ID or actual loaded draft class.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/6",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F08",
+      "capability": "30队名单归属与人数核验",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/roster_association_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/approved_trade_executor.py",
+          "src/gm_data_access/query.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: players,teams",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "PRIOR_APPROVED_BOUND_SCOPE",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G07",
+        "D06-G08"
+      ],
+      "dev28_candidate_package": [
+        "D28-4",
+        "D28-5"
+      ],
+      "risk_or_blocker": "30 teams/466 current roster rows; role/minute decisions differ from roster-pointer edits. No unrestricted transfer/roster API.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/7",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F09",
+      "capability": "教练19项默认设置、POE与体系",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/coach_tactics_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "scripts/coaching_batch.py",
+          "src/coaching_batch_executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: coaching",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "PRIOR_APPROVED_BOUND_SCOPE: legacy coaching; DEV14 integrated engine not fresh live acceptance",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "HISTORICAL_REPORT: 14 native write/readback, 13 direct UI; Freelance native enum; Tempo UI unknown",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G09"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "19 default fields captured; ordinary DEV14 GM controls 18 excluding free BookID. Five Sim fields disabled; Tempo native-raw meaning not UI-certified; BenchDepth observed samples not caps.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/8",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F10",
+      "capability": "整体防守与对手Gameplan",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/coach_tactics_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/coaching_overall.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/plan.py"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: defense; personal_defense view empty",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "POLICY_BLOCKED: ordinary GM OVERALL; IMPLEMENTED_NOT_LIVE_VALIDATED: DEV14 PERSONAL; PRIOR_APPROVED_BOUND_SCOPE: legacy overall",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "HISTORICAL_OVERALL_BULK_UI_EVIDENCE; personal target-current UI unknown",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G09"
+      ],
+      "dev28_candidate_package": [
+        "D28-4",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Legacy overall bulk writes every present record. DEV14 GM OVERALL read-only; PERSONAL requires unique defender/matchup IDs and separate approval. No current personal_defense objects in old batch.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/9",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F11",
+      "capability": "Playbook、战术与Freelance",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/coach_tactics_profile.json",
+          "config/state_io_native/player.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/team_book.py"
+        ],
+        "entrypoints_count": 4,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: coaching book/system/Freelance; native_books/tactics absent",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED: own-book slot engine; POLICY_BLOCKED: unrestricted BookID",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G09"
+      ],
+      "dev28_candidate_package": [
+        "D28-1",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Own-team named 68-slot edit and event-bound rebind code exist. Play CRC/name/type/12 category/2D semantics are separate; 4 ordered player PlayTypes are not 4 Freelance slots. Per-CRC exact semantics incomplete.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/10",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F12",
+      "capability": "ACE及真实战术执行反馈",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/coach_tactics_profile.json"
+        ],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py"
+        ],
+        "entrypoints_count": 1,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NO_ACTUAL_AI_EVENT_PROJECTION",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G09"
+      ],
+      "dev28_candidate_package": [
+        "D28-1",
+        "D28-3"
+      ],
+      "risk_or_blocker": "Settings and BPTI references do not observe actual ACE choices, counters or causal tactic effectiveness.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/11",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F13",
+      "capability": "个人属性、耐久、潜力数据",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/player_potential_mask.py",
+          "src/gm_data_access/query.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "CODE_PROJECTION: attributes; default query avoids hidden Potential",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "POLICY_BLOCKED: general abilities/Potential; IMPLEMENTED_NOT_LIVE_VALIDATED: rotation.intangibles",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G10"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Stamina/durability ratings are not current health. Potential in new staged sources is masked to 1 NOT_GAME_OBSERVED; old archive excluded. Ordinary ability/badge changes prohibited; Intangibles only narrow 25..99 exception.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/12",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F14",
+      "capability": "球员倾向及个人PlayTypes",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/player.json"
+        ],
+        "static_registry": "PARTIAL_REGISTERED_NOT_COMPLETE_FAMILY",
+        "runtime_evidence": "PLAYER_REPORTED_NATIVE_TESTED; unified engine historical synthetic acceptance only",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/plan.py",
+          "src/gm_state_io/executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "API_PRESENT_NO_SELECTED_BATCH_ROWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G09"
+      ],
+      "dev28_candidate_package": [
+        "D28-1",
+        "D28-5"
+      ],
+      "risk_or_blocker": "99 native byte slots, 48 named writable, 51 RAW read-only. Four ordered nibble PlayTypes plus Initiator; current sealed native domain empty. CRC classification must not be inferred from player enum.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/13",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F15",
+      "capability": "球队/个人训练设置",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/training.json"
+        ],
+        "static_registry": "PARTIAL_REGISTERED_NOT_COMPLETE_FAMILY",
+        "runtime_evidence": "PLAYER_REPORTED_NATIVE_TESTED; unified engine historical synthetic acceptance only",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/plan.py",
+          "src/gm_state_io/executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "API_PRESENT_NO_SELECTED_BATCH_ROWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G10"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Team training6/player flags5 implemented. Mentor discovered/read-only adapter pending; raw history offsets are not decoded time-series or observed training results.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/14",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F16",
+      "capability": "实时体力、疲劳及伤病",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/training.json",
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PROFILE_CANDIDATE_ONLY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/adapters.py"
+        ],
+        "entrypoints_count": 1,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_OBSERVED_IN_SELECTED_SAFE_VIEWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G10"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "Fatigue/history offsets are static candidates; injury frequency/recovery settings and stamina rating do not supply timestamped current fatigue/injury.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/15",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F17",
+      "capability": "自然成长与退化历史",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/training.json"
+        ],
+        "static_registry": "PROFILE_CANDIDATE_ONLY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/adapters.py"
+        ],
+        "entrypoints_count": 1,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NO_VERIFIED_NATURAL_PROGRESS_HISTORY_VIEW",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G10",
+        "D06-G14"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "Legacy player_growth_history has 5 rows, without review certifying natural game progression; OVR/attribute history offsets are not decoded current pipeline.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/16",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F18",
+      "capability": "Loyalty/财务偏好/人格徽章参考",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [],
+        "entrypoints_count": 0,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_FOUND_IN_REVIEWED_SAFE_PROJECTIONS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G10"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Research motivation/personality fields are not certified model personality, contract preference or current subjective intent. Coach/Player personalities require separate task.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/17",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F19",
+      "capability": "合同条款、选项与Bird状态",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/source_extensions.py",
+          "src/approved_signing_executor.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: salary/years_left; contract JSON projection in code",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "SOURCE_ONLY; POLICY_BLOCKED: signing gates false",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G07",
+        "D06-G17"
+      ],
+      "dev28_candidate_package": [
+        "D28-4",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Six salary slots/options/Bird observed historically; exact expiry, year roll, extension and signing eligibility not proven. Contract read is not validated write.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/18",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F20",
+      "capability": "球队薪资与市场可支出能力",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_data_access/finance.py",
+          "src/source_extensions.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: finance,finance_semantics",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G17"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-4",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Cash raw preserved; signed32 only hypothesis. Cap/tax configured and budget/room semantics unresolved; finance workbench estimates not observed spend permission.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/19",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F21",
+      "capability": "自由市场与真实签约",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "SOURCE_ONLY_BLOCKED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "CONTRACT_LAYOUT_PRESENT_NOT_VALIDATED_SIGNING",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/approved_signing_executor.py",
+          "src/gm_core/offseason.py",
+          "src/offseason_research.py"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NO_CERTIFIED_FREE_AGENT_ELIGIBILITY_PROJECTION; roster/contract facts queryable",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "SOURCE_ONLY; POLICY_BLOCKED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G07",
+        "D06-G17"
+      ],
+      "dev28_candidate_package": [
+        "D28-4"
+      ],
+      "risk_or_blocker": "Both signing gates false; synthetic offseason only. Expiry/phase/FA directory/native AI signing containment and save persistence remain unknown. No claim external system has fully blocked native player movement.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/20",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F22",
+      "capability": "普通球员交易与审批执行",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/roster_association_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/approved_trade_executor.py",
+          "src/trade_request.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: roster/ownership facts; no execution inferred",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "PRIOR_APPROVED_BOUND_SCOPE",
+        "save_reload": "PARTIAL_HISTORICAL_RESTART_REPORT: original transfers retained; post-count-repair save/reload NOT_VERIFIED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "PLAYER_CONFIRMED_CHI_DET_HISTORICAL; DAL_HOU_UI_PENDING",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G08"
+      ],
+      "dev28_candidate_package": [
+        "D28-4"
+      ],
+      "risk_or_blocker": "ownership_transfer_v2 supports scoped ordinary transfers, simple picks, roster counters and replay guard. Existing initial receipts v1 plus count repair and player CHI/DET acceptance; do not generalize to FA, overlapping trades or all contracts.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/21",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F23",
+      "capability": "简单选秀权权属及V4规则",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/gameplay_policy.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/draft_assets.py",
+          "src/approved_trade_executor.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: picks; trade_eligible uses legacy window",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "PRIOR_APPROVED_BOUND_SCOPE_WITH_POLICY_CODE_MISMATCH",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G08"
+      ],
+      "dev28_candidate_package": [
+        "D28-4"
+      ],
+      "risk_or_blocker": "V4 cancels fixed 3-draft cap; trade_window still next_year+3. 504 raw records / 300 verified future simple picks not proof all 5 years tradable. Report guard locations, no repair.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/22",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F24",
+      "capability": "Draft Class导入、轮回与真实选秀",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/gameplay_policy.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/historical_rookies.py",
+          "src/draft_engine.py",
+          "src/extract_live_draft_class.py"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: historical pool; loaded draft/selection absent",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "SOURCE_ONLY; NO_APPROVED_VALIDATED_DRAFT_INJECTOR",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G06",
+        "D06-G11"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-4"
+      ],
+      "risk_or_blocker": "1984–2020 cycle is player rule, not Eras feature. get_draft_class catalog/old candidate extractor not current approved injection. Sanitized raw Potential cannot feed native injection.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/23",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F25",
+      "capability": "Scouting、Mock Draft及不完全信息",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [],
+        "entrypoints_count": 0,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NO_CERTIFIED_SCOUTING_MOCK_PROJECTION",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G11"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Staff ratings and pool knowledge are not scout progress, fog-of-war reports or native mock draft; no unrestricted information for future roles.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/24",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F26",
+      "capability": "员工、职位、薪资及雇聘",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/memory_field_profile.json"
+        ],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/source_extensions.py",
+          "src/gm_data_access/query.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: staff",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED: staff hiring",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G17"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-4",
+        "D28-5"
+      ],
+      "risk_or_blocker": "1470 raw staff rows; export counts1458 accepted observations, 1230 unmapped slots not free-agent coaches. Role reciprocal links supported; hire/fire/payroll executor absent.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/25",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F27",
+      "capability": "Setup、Game Speed与世界设置",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/world.json",
+          "config/state_io_native/settings.json"
+        ],
+        "static_registry": "PARTIAL_REGISTERED_NOT_COMPLETE_FAMILY",
+        "runtime_evidence": "PLAYER_REPORTED_NATIVE_TESTED; unified engine historical synthetic acceptance only",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/plan.py",
+          "src/gm_state_io/executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "API_PRESENT_NO_SELECTED_BATCH_ROWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G02"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "World/settings dedupe by native slot RVA+offset; 50 fields total, not complete menu. Valid uint/float codec range is not verified UI semantic range. Current batch no world objects.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/26",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F28",
+      "capability": "日历Simulation引擎设置",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/world.json",
+          "config/state_io_native/settings.json",
+          "config/coach_tactics_profile.json"
+        ],
+        "static_registry": "PARTIAL_REGISTERED_NOT_COMPLETE_FAMILY",
+        "runtime_evidence": "PLAYER_REPORTED_NATIVE_TESTED; unified engine historical synthetic acceptance only",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/plan.py",
+          "src/gm_state_io/executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "API_PRESENT_NO_SELECTED_BATCH_ROWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED: registered subset; POLICY_BLOCKED: five Coach Sim",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G02"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Some sim/calendar world settings registered, five Coach Sim fields GM_CONTROL_DISABLED; no complete simulation engine parameter/effect certification.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/27",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F29",
+      "capability": "3D Gameplay与USER/CPU滑块",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/court.json"
+        ],
+        "static_registry": "PARTIAL_REGISTERED_NOT_COMPLETE_FAMILY",
+        "runtime_evidence": "PLAYER_REPORTED_NATIVE_TESTED; unified engine historical synthetic acceptance only",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/plan.py",
+          "src/gm_state_io/executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "API_PRESENT_NO_SELECTED_BATCH_ROWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G02"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Only 4 modified_sliders registered, USER/CPU and mirror table paths present. Profile defaults/proposals and community rationales not current observed values or complete gameplay slider coverage.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/28",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F30",
+      "capability": "Normalize Stats/Minutes与统计冲突",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/world.json",
+          "config/state_io_native/settings.json"
+        ],
+        "static_registry": "PARTIAL_REGISTERED_NOT_COMPLETE_FAMILY",
+        "runtime_evidence": "PLAYER_REPORTED_NATIVE_TESTED; unified engine historical synthetic acceptance only",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py",
+          "src/gm_state_io/adapters.py",
+          "src/gm_state_io/codec.py",
+          "src/gm_state_io/plan.py",
+          "src/gm_state_io/executor.py"
+        ],
+        "entrypoints_count": 5,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "API_PRESENT_NO_SELECTED_BATCH_ROWS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "IMPLEMENTED_NOT_LIVE_VALIDATED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G03"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-3"
+      ],
+      "risk_or_blocker": "Only one physical normalize_stats slot (offset0x600) survives dedupe. Separate Normalize Stats/Minutes mapping and effects UNKNOWN; do not duplicate a physical field or label both verified.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/29",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F31",
+      "capability": "3D、SimCast、QuickSim模式事实",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/match_history_reader.py@b4e17e1419b1cf9105f0a68dba7719e4d407104b"
+        ],
+        "entrypoints_count": 1,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NO_CERTIFIED_MODE_ID_QUERY",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G02"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "WasSimulated bit alone cannot certify 3D vs SimCast vs calendar QuickSim. No captured mode-specific evidence.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/30",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F32",
+      "capability": "游戏时间、阶段、数据批次身份",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_data_access/snapshots.py",
+          "src/gm_state_io/capture_files.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: source_binding.game_date",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G04"
+      ],
+      "dev28_candidate_package": [
+        "D28-3"
+      ],
+      "risk_or_blocker": "game_date=2021-12-12 is USER_CONFIRMED; no native date/phase source. New source stamps save_instance/generation in code; old selected manifest has neither. Branch header/date remains unverified.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/31",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F33",
+      "capability": "奖项、名人堂与历届获奖者",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [],
+        "entrypoints_count": 0,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_FOUND_IN_REVIEWED_SAFE_PROJECTIONS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G12",
+        "D06-G14"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Awards/HOF research includes unsourced candidates; no audited current native ledger.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/32",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F34",
+      "capability": "NBA纪录、生涯纪录及队史",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [],
+        "entrypoints_count": 0,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_FOUND_IN_REVIEWED_SAFE_PROJECTIONS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G13",
+        "D06-G14"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Career/team/game record dimensions and refresh lifetime not observed in pipeline.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/33",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F35",
+      "capability": "社交媒体、实力榜和新闻",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [],
+        "entrypoints_count": 0,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_FOUND_IN_REVIEWED_SAFE_PROJECTIONS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G15"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Social/news/power-ranking concepts include cross-version reference; no unmodded PC22 source or safe Media projection.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/34",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F36",
+      "capability": "League Rule Changes与生效规则",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/state_io_native/world.json"
+        ],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/registry.py"
+        ],
+        "entrypoints_count": 1,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "NOT_FOUND_IN_REVIEWED_SAFE_PROJECTIONS",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G16"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Registered world rules/settings do not certify offseason rule-change proposals, vote/effective phase or complete native menu.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/35",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F37",
+      "capability": "Save、Autosave、重载和SteamCloud",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "IMPLEMENTED_UNPUBLISHED",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "HOST_LIFECYCLE_NOT_GAME_SAVE_API",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_state_io/workspace.py",
+          "src/gm_state_io/lifecycle.py",
+          "src/gm_state_io/capture_files.py"
+        ],
+        "entrypoints_count": 3,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "CODE: native_context; selected batch unavailable",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED: game saving/cloud executor",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G05",
+        "D06-G19"
+      ],
+      "dev28_candidate_package": [
+        "D28-3",
+        "D28-4"
+      ],
+      "risk_or_blocker": "One-save directories, ACTIVE workspace and generation/lease/recovery exist. They do not operate or certify game Save/autosave/cloud persistence. Old batch legacy identity must not be silently upgraded.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/36",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F38",
+      "capability": "历史比赛、交易、选秀跨年留存",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "NOT_FOUND_IN_REVIEWED_REGISTRY",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/gm_data_access/snapshots.py"
+        ],
+        "entrypoints_count": 1,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "HISTORICAL_EXPLICIT_BATCH_ACCESS_ONLY",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_IMPLEMENTED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G14"
+      ],
+      "dev28_candidate_package": [
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "Sealed historical snapshots preserve past captures; team_season_history/staff_dynasty_history are empty in selected DB; no continuous 100-season game/trade/draft history.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/37",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F39",
+      "capability": "外挂全量采集/SQLite/发布与重发",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "PRIOR_BATCH_PARTIAL",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [],
+        "static_registry": "PARTIAL_PROFILE_OR_SOURCE_LAYOUT",
+        "runtime_evidence": "HISTORICAL_BATCH_OBSERVATION; not present-process proof",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "scripts/run_data_update.ps1",
+          "src/auto_pipeline_ingest.py",
+          "src/export_web_gm.py",
+          "src/gm_state_io/capture_files.py"
+        ],
+        "entrypoints_count": 4,
+        "formal_batch_capture": {
+          "status": "PARTIAL_REAL_CAPTURE_PRESENT_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "SELECTED_SNAPSHOT_QUERY_OBSERVED: snapshot-bound views; production GM gate blocks old batch",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "NOT_APPLICABLE_TO_GAME_WRITE; PLAYER_TRIGGER_REQUIRED",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G04",
+        "D06-G05"
+      ],
+      "dev28_candidate_package": [
+        "D28-3",
+        "D28-5"
+      ],
+      "risk_or_blocker": "full_verified_v1 + timestamp publication already exists. Oct18 coaching actually published; later DEV14 native objects/mask not demonstrated in this latest batch. No new capture, remote download or publish audit performed.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/38",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    },
+    {
+      "id": "F40",
+      "capability": "三套时间轴、历史参考和历史重力",
+      "source": "FINAL_CODEX_AUDIT_20261021",
+      "audit_category": "REFERENCE_OR_UNKNOWN",
+      "source_maturity": {
+        "research_reference": "R07_RESEARCH_REFERENCE_ONLY",
+        "native_profile_paths": [
+          "config/gameplay_policy.json"
+        ],
+        "static_registry": "PLAYER_POLICY_NOT_NATIVE_FEATURE",
+        "runtime_evidence": "NOT_FOUND_IN_REVIEWED_EVIDENCE",
+        "native_post_audit_evidence": "AG_NATIVE_01_TO_01D_CANDIDATE_NOT_INCLUDED_IN_AUDIT"
+      },
+      "engineering_maturity": {
+        "implementation_paths": [
+          "src/historical_rookies.py",
+          "src/draft_engine.py"
+        ],
+        "entrypoints_count": 2,
+        "formal_batch_capture": {
+          "status": "NOT_OBSERVED_IN_SELECTED_BATCH",
+          "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+          "note": "Historical captured snapshot, not current live game; no fresh capture performed"
+        },
+        "model_query": {
+          "status": "PARTIAL: historical catalog query; no native worldline fact API",
+          "production_gm_eligibility": "BLOCKED_FOR_SELECTED_UNMASKED_HISTORICAL_BATCH",
+          "note": "Query availability is independent of write policy and player authorization. Owner audit reads are not GM acceptance."
+        },
+        "bounded_execution": "POLICY_BLOCKED_WITHOUT_SPECIFIC_EXCEPTION",
+        "save_reload": "UNKNOWN_NO_TARGET_SAVE_RELOAD_PROOF_REVIEWED"
+      },
+      "verification_maturity": {
+        "historical_audit_static_and_selected_snapshot": "HIGH",
+        "current_live_game": "NOT_OBSERVED",
+        "native_semantics": "LIMITED_TO_REFERENCED_EVIDENCE",
+        "ui_evidence": "UNKNOWN_CURRENT_TARGET_UI",
+        "post_audit_codex_acceptance": "NOT_ASSESSED_IN_THIS_LEDGER"
+      },
+      "related_legacy_gaps": [
+        "D06-G18"
+      ],
+      "dev28_candidate_package": [
+        "D28-2",
+        "D28-4"
+      ],
+      "risk_or_blocker": "Real basketball/game history/worldline fiction separated; historical gravity only concrete player exception; old growth automation not authority. No independent Coach/Player/Media implementation authorized.",
+      "next_action": "Preserve multi-axis source evidence, confirm scope in dedicated OS task before promoting to production.",
+      "evidence_refs": [
+        {
+          "type": "machine_audit",
+          "path": "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+          "json_pointer": "/families/39",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        },
+        {
+          "type": "audit_narrative",
+          "path": "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+          "sha_or_commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+        }
+      ]
+    }
+  ],
+  "workstreams": [
+    {
+      "id": "DEV14",
+      "title": "统一Native Registry/codec/双库批次与存档代际",
+      "source_paths": [
+        "src/gm_state_io/",
+        "docs/development_reviews/DEV14_ACCEPTANCE.md",
+        "docs/development_reviews/DEV14_ACCEPTANCE.json"
+      ],
+      "status": "ENGINEERING_BASE_EXISTS_WITH_HISTORICAL_EVIDENCE",
+      "limit": "历史生产批可能缺GM_SANITIZED标记，未认证为当前生产可用"
+    },
+    {
+      "id": "DEV10-M0",
+      "title": "封存SQLite的M0只读查询",
+      "source_paths": [
+        "src/gm_data_access/query.py",
+        "docs/development_reviews/DEV_20261018_10_M0_SQLITE_ACCESS_ACCEPTANCE.md"
+      ],
+      "status": "REVIEWED_HISTORICAL_QUERY_CAPABILITY",
+      "limit": "实体查询可用性取决于封存快照与脱敏，不能宣称全部域有记录"
+    },
+    {
+      "id": "DEV10-M1-M2",
+      "title": "财务情景与策略知识层",
+      "source_paths": [
+        "src/gm_core/finance_scenarios.py",
+        "docs/development_reviews/DEV10_M1_M2_CLOSEOUT.md"
+      ],
+      "status": "HISTORICAL_ENGINEERING_DELIVERY_DOCUMENTED",
+      "limit": "财务公式和输入源需分开核验"
+    },
+    {
+      "id": "DEV10-M3",
+      "title": "GM组合/阵容及策略相关开发",
+      "source_paths": [
+        "docs/development_reviews/DEV10_M3A_ACCEPTANCE.md",
+        "docs/development_reviews/DEV10_M3B_ACCEPTANCE.md",
+        "docs/development_reviews/DEV10_M3_DESIGN_REVIEW.md"
+      ],
+      "status": "HISTORICAL_ACCEPTANCE_DOCUMENTS_EXIST",
+      "limit": "Coach配置联动与生产运行须按具体文件证据复验"
+    },
+    {
+      "id": "DEV06-DEV07",
+      "title": "教练参数、战术与全量采集联动",
+      "source_paths": [
+        "docs/development_reviews/DEV_20261017_06_COACHING_EXECUTOR_ACCEPTANCE.md",
+        "docs/development_reviews/DEV_20261017_07_COACHING_SOURCE_PUBLICATION_ACCEPTANCE.md"
+      ],
+      "status": "PARTIAL_HISTORICAL_RUNTIME_AND_IMPLEMENTATION_EVIDENCE",
+      "limit": "教练参数控制不是独立Coach人格，部分值真实UI语义仍未证"
+    },
+    {
+      "id": "BPTI",
+      "title": "篮球战术与理念知识",
+      "source_paths": [
+        "web_gm/knowledge/bpti/",
+        "src/gm_core/bpti.py"
+      ],
+      "status": "RESEARCH_AND_APPLICATION_COMPONENTS_PRESENT",
+      "limit": "篮球知识不是实际比赛战术事件或效果证明"
+    },
+    {
+      "id": "DEV29-R01-R07",
+      "title": "游戏机制40功能族/694引用条目的研究",
+      "source_paths": [
+        "docs/game_mechanics/PROGRESS.md",
+        "docs/development_reviews/DEV29_R07_TARGETED_INDEPENDENT_RECHECK_AND_DEV29_CLOSURE_20261021.md"
+      ],
+      "status": "RESEARCH_CLOSED",
+      "limit": "研究结案不等于原生I/O完成；40族不等于40个已开发API"
+    },
+    {
+      "id": "AG-NATIVE-01-01D",
+      "title": "Getter/ROSTERDATA/比赛Box/赛季历史的原生逆向",
+      "source_paths": [
+        "research/native_access/AG_NATIVE_01/",
+        "research/native_access/AG_NATIVE_01B/",
+        "research/native_access/AG_NATIVE_01C/",
+        "research/native_access/AG_NATIVE_01D/"
+      ],
+      "status": "RESEARCH_FIXTURES_AND_DECODERS_DELIVERED_PENDING_CODEX_REVIEW",
+      "limit": "Curry16场18指标fixture复现不等于238场完整实机复审或正式库集成"
+    },
+    {
+      "id": "FINAL-CODEX",
+      "title": "Native I/O能力矩阵与20缺口对账",
+      "source_paths": [
+        "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+        "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json"
+      ],
+      "status": "AUDIT_DOCUMENTED_NOT_NATIVE_ACCEPTANCE",
+      "limit": "历史主线0eaf44f4基准，尚未包含后续AG01D研究成熟度"
+    },
+    {
+      "id": "WORLD-DATA-V2",
+      "title": "平行世界数据平台目标架构",
+      "source_paths": [
+        "docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md"
+      ],
+      "status": "DESIGN_DIRECTION_NOT_IMPLEMENTED",
+      "limit": "旧双库可以重构，概念关系与DDL尚未验收"
+    },
+    {
+      "id": "INDEPENDENT-COACH-PLAYER",
+      "title": "独立教练/球员人格",
+      "source_paths": [
+        "docs/PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md"
+      ],
+      "status": "NOT_IMPLEMENTED_PRODUCT_OBJECTIVES",
+      "limit": "现有Coach设置和PLAYER原生记录不是独立人格主体"
+    }
+  ]
+}
