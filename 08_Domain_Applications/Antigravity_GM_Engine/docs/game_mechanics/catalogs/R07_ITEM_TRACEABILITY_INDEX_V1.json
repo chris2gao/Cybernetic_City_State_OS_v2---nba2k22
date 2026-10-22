@@ -1,0 +1,115 @@
+{
+  "schema_id": "DEV29_R07_ITEM_TRACEABILITY_INDEX_V1",
+  "created_at": "2026-10-21",
+  "target": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "task": "R07_CROSS_RESEARCH_ROLE_OBSERVABLE_ACTION_EVIDENCE_MATRIX",
+  "research_only": true,
+  "definition": "Index of heterogeneous existing catalog rows and 12 guide topics, NOT 694 native fields, menu buttons, confirmed data points, or independently verified external claims",
+  "status": "R07_INDEX_PUBLISHED_PENDING_INDEPENDENT_REVIEW",
+  "sources_frozen_at_main_retrieval": true,
+  "original_rows_read_only_references": true,
+  "not_native_memory_dump": true,
+  "item_count": 694,
+  "group_counts": {
+    "K04_ROLE_CAPABILITY_RESEARCH_V1.json#capabilities": 10,
+    "K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json#capabilities": 11,
+    "K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json#capabilities": 8,
+    "PLAYER_FIELD_AND_RIGHTS_MATRIX.json#entries": 109,
+    "R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#native_slots": 99,
+    "R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json#native_motivations": 3,
+    "R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json#personality_candidates": 21,
+    "R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json#other_native_dynamic_concepts": 4,
+    "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json#staff.native_fields": 13,
+    "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json#roster_native_layout": 14,
+    "R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json#data_research_rows": 54,
+    "R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json#action_research_rows": 63,
+    "R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json#registry_candidates": 86,
+    "R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json#player_facing_menu_concepts": 118,
+    "R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json#fields": 31,
+    "R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json#fields": 38
+  },
+  "manual_guide_topics": 12,
+  "six_axis_model": [
+    "mechanism_knowledge",
+    "game_information_visibility",
+    "native_structure_or_locator",
+    "current_save_readback",
+    "batch_captured",
+    "model_queryable",
+    "approved_write_and_postsave"
+  ],
+  "source_verification_policy": "Original catalog source IDs are preserved and their presence in SOURCES.md was checked; no individual external evidence claim promoted to direct verification by R07; unsourced candidates remain unsourced",
+  "current_save_readback_count_verified_by_this_research": 0,
+  "newly_authorized_write_operations": 0,
+  "role_views": "Potential consumer categories ONLY; no actual ACL/personality/decision program",
+  "index_format": "SHARDED_MANIFEST_V1",
+  "index_user_instructions": "Read this manifest first; retrieve each part_path and iterate items. No single file is a complete record set. All 694 items across parts are heterogenous research concepts, not native PC22 verified fields.",
+  "shard_count": 7,
+  "parts": [
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_01_V1.json",
+      "item_count": 100,
+      "first_ref_id": "R07.0001",
+      "last_ref_id": "R07.0100",
+      "utf8_char_count": 192741
+    },
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_02_V1.json",
+      "item_count": 100,
+      "first_ref_id": "R07.0101",
+      "last_ref_id": "R07.0200",
+      "utf8_char_count": 196047
+    },
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_03_V1.json",
+      "item_count": 100,
+      "first_ref_id": "R07.0201",
+      "last_ref_id": "R07.0300",
+      "utf8_char_count": 185871
+    },
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_04_V1.json",
+      "item_count": 100,
+      "first_ref_id": "R07.0301",
+      "last_ref_id": "R07.0400",
+      "utf8_char_count": 195476
+    },
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_05_V1.json",
+      "item_count": 100,
+      "first_ref_id": "R07.0401",
+      "last_ref_id": "R07.0500",
+      "utf8_char_count": 188242
+    },
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_06_V1.json",
+      "item_count": 100,
+      "first_ref_id": "R07.0501",
+      "last_ref_id": "R07.0600",
+      "utf8_char_count": 179290
+    },
+    {
+      "path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_PART_07_V1.json",
+      "item_count": 94,
+      "first_ref_id": "R07.0601",
+      "last_ref_id": "R07.0694",
+      "utf8_char_count": 166358
+    }
+  ],
+  "read_verification": "ALL_SEVEN_SHARDS_READBACK_VERIFIED_AFTER_INITIAL_SPLIT",
+  "source_lineage_update": "Each shard now preserves original raw references as well as SRC-#### and project/other source paths; seven R06C originals with sources=[] remain distinct from project-only references",
+  "quality_note": "Some entry source IDs are syntactically present in SOURCES.md but not re-verified for direct semantic support; do not promote to TARGET_PC22_UI or RUNTIME VERIFIED.",
+  "manual_topic_identity_semantics": {
+    "total_manual_guide_topics": 12,
+    "literal_guide_topic_mentions": 10,
+    "generated_guide_topic_aliases": 2,
+    "generated_alias_ref_ids": [
+      "R07.0007",
+      "R07.0010"
+    ],
+    "authoritative_locations": "Each generated alias in R07_ITEM_TRACEABILITY_PART_01_V1.json carries origin_guide_heading, origin_guide_section_number, and origin_verbatim_topic_term.",
+    "not_native_field_or_source_json_primary_key": true,
+    "source_review": "docs/development_reviews/DEV29_R07_INDEPENDENT_REVIEW_20261021.md"
+  },
+  "targeted_catalog_repair_status": "SUBMITTED_FOR_INDEPENDENT_RECHECK_NOT_FINAL_ACCEPTANCE"
+}

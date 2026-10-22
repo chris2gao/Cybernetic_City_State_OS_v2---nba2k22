@@ -1,0 +1,233 @@
+{
+  "schema_id": "NBA2K22_NATIVE_OBJECT_CATALOG_V1",
+  "game_version": "NBA2K22 PC Steam (Current)",
+  "root_class": "ROSTERDATA",
+  "root_relative_shift": {
+    "description": "Historical calibrated player-pool root is located at ROSTERDATA + 0x08. Native C++ member getter offsets are 8 bytes less than calibrated root offsets.",
+    "calibrated_root_offset_delta": 8
+  },
+  "core_objects": {
+    "PLAYER": {
+      "object_type": "PLAYER",
+      "description": "Complete NBA/Historical player record including bio, ratings, tendencies, contracts, badges, and relational indices.",
+      "root_offset": 32,
+      "root_offset_hex": "0x020",
+      "native_descriptor_offset": "0x018",
+      "stride": 1264,
+      "stride_hex": "0x4F0",
+      "typical_count": 3390,
+      "codec_kind": "PLAYER",
+      "primary_key": "slot_index",
+      "relations": {
+        "TEAM": {
+          "target_type": "TEAM",
+          "relation_type": "MANY_TO_ONE",
+          "source_field_offset": 96,
+          "source_field_offset_hex": "0x060",
+          "source_field_size": 8,
+          "resolution_method": "POINTER_OR_ID_MATCH"
+        },
+        "PLAYER_STATS": {
+          "target_type": "PLAYER_STATS",
+          "relation_type": "ONE_TO_ONE",
+          "source_field_offset": 252,
+          "source_field_offset_hex": "0x0FC",
+          "source_field_size": 2,
+          "resolution_method": "ARRAY_INDEX",
+          "sentinel_null_value": 65535
+        }
+      }
+    },
+    "TEAM": {
+      "object_type": "TEAM",
+      "description": "Team franchise struct including city, name, abbreviation, roster count, payroll, budget, coach pointers, and season stats index.",
+      "root_offset": 144,
+      "root_offset_hex": "0x090",
+      "native_descriptor_offset": "0x088",
+      "stride": 4696,
+      "stride_hex": "0x1258",
+      "typical_count": 219,
+      "core_nba_count": 30,
+      "codec_kind": "TEAM",
+      "primary_key": "team_index",
+      "relations": {
+        "TEAM_STATS": {
+          "target_type": "TEAM_STATS",
+          "relation_type": "ONE_TO_ONE",
+          "source_field_offset": 3712,
+          "source_field_offset_hex": "0xE80",
+          "source_field_size": 2,
+          "resolution_method": "ARRAY_INDEX",
+          "sentinel_null_value": 65535
+        },
+        "STAFF": {
+          "target_type": "STAFF",
+          "relation_type": "ONE_TO_MANY",
+          "source_slots": {
+            "head_coach": "0xCE8",
+            "assistant_coach": "0xCF0",
+            "scout": "0xCF8",
+            "trainer": "0xD00",
+            "general_manager": "0xD08",
+            "owner": "0xD10",
+            "cfo": "0xD18",
+            "assistant_gm": "0xD20"
+          },
+          "resolution_method": "POINTER_MATCH"
+        },
+        "WAIVED_SALARY": {
+          "target_type": "WAIVED_SALARY",
+          "relation_type": "ONE_TO_MANY",
+          "target_link_offset": "0x08",
+          "resolution_method": "TARGET_POINTER_MATCH"
+        },
+        "DRAFT_ASSETS": {
+          "target_type": "DRAFT_ASSETS",
+          "relation_type": "ONE_TO_MANY",
+          "target_link_offsets": {
+            "current_owner": "0x00",
+            "original_owner": "0x08"
+          },
+          "resolution_method": "TARGET_POINTER_MATCH"
+        }
+      }
+    },
+    "STAFF": {
+      "object_type": "STAFF",
+      "description": "Staff personnel record including head coaches, assistants, front office, ratings, systems, and salary.",
+      "root_offset": 320,
+      "root_offset_hex": "0x140",
+      "native_descriptor_offset": "0x138",
+      "native_getter_rva": "0xF3C13D",
+      "stride": 352,
+      "stride_hex": "0x160",
+      "typical_count": 1470,
+      "codec_kind": "STAFF",
+      "primary_key": "staff_index",
+      "relations": {
+        "TEAM": {
+          "target_type": "TEAM",
+          "relation_type": "MANY_TO_ONE",
+          "source_field_offset": 24,
+          "source_field_offset_hex": "0x018",
+          "source_field_size": 8,
+          "resolution_method": "POINTER_MATCH"
+        }
+      }
+    },
+    "PLAYER_STATS": {
+      "object_type": "PLAYER_STATS",
+      "description": "Player season totals array storing games, minutes, points, field goals, rebounds, assists, advanced and award bitfields.",
+      "root_offset": 400,
+      "root_offset_hex": "0x190",
+      "native_descriptor_offset": "0x188",
+      "stride": 48,
+      "stride_hex": "0x030",
+      "typical_count": 9773,
+      "codec_kind": "PLAYER_STATS",
+      "primary_key": "stats_index"
+    },
+    "TEAM_STATS": {
+      "object_type": "TEAM_STATS",
+      "description": "Team season totals array storing wins, losses, points scored, points allowed, field goals, shooting, possession, and opponent stats.",
+      "root_offset": 464,
+      "root_offset_hex": "0x1D0",
+      "native_descriptor_offset": "0x1C8",
+      "stride": 62,
+      "stride_hex": "0x03E",
+      "typical_count": 2964,
+      "codec_kind": "TEAM_STATS",
+      "primary_key": "stats_index"
+    },
+    "DRAFT_ASSETS": {
+      "object_type": "DRAFT_ASSETS",
+      "description": "Future and historical draft pick assets storing holding team, original team, draft year, round, and pick index.",
+      "root_offset": 688,
+      "root_offset_hex": "0x2B0",
+      "native_descriptor_offset": "0x2A8",
+      "native_getter_rva": "0xF3C95D",
+      "stride": 32,
+      "stride_hex": "0x020",
+      "typical_count": 504,
+      "codec_kind": "DRAFT_ASSETS",
+      "primary_key": "asset_index",
+      "relations": {
+        "TEAM": {
+          "target_type": "TEAM",
+          "relation_type": "MANY_TO_ONE",
+          "source_field_offset": 0,
+          "source_field_offset_hex": "0x000",
+          "source_field_size": 8,
+          "resolution_method": "POINTER_MATCH"
+        }
+      }
+    },
+    "WAIVED_SALARY": {
+      "object_type": "WAIVED_SALARY",
+      "description": "Waived and dead money contract structures charged against team cap space across multiple years.",
+      "root_offset": 992,
+      "root_offset_hex": "0x3E0",
+      "native_descriptor_offset": "0x3D8",
+      "native_getter_rva": "0xF3C7AD",
+      "stride": 136,
+      "stride_hex": "0x088",
+      "typical_count": 222,
+      "codec_kind": "WAIVED_SALARY",
+      "primary_key": "waived_index",
+      "relations": {
+        "TEAM": {
+          "target_type": "TEAM",
+          "relation_type": "MANY_TO_ONE",
+          "source_field_offset": 8,
+          "source_field_offset_hex": "0x008",
+          "source_field_size": 8,
+          "resolution_method": "POINTER_MATCH"
+        }
+      }
+    }
+  },
+  "native_code_evidence": [
+    {
+      "symbol": "ROSTERDATA::GetDraftDataByIndex",
+      "module_rva": "0xF3C95D",
+      "length": 19,
+      "machine_hex": "3b98a0020000731448c1e305480398a8020000",
+      "disassembly": [
+        "cmp ebx, [rax + 0x2A8] ; Check index against count",
+        "jnb error_label       ; Jump if index >= count (bounds check)",
+        "shl rbx, 5            ; Multiply index by 32 (stride 0x20)",
+        "add rbx, [rax + 0x2B0] ; Add array base pointer",
+        "mov rax, rbx          ; Return record pointer"
+      ],
+      "verified_in_process": true
+    },
+    {
+      "symbol": "ROSTERDATA::GetStaffDataByIndex",
+      "module_rva": "0xF3C13D",
+      "length": 19,
+      "machine_hex": "3b983001000073174869db6001000048039838010000",
+      "disassembly": [
+        "cmp ebx, [rax + 0x130] ; Check index against count",
+        "jnb error_label       ; Bounds check",
+        "imul rbx, rbx, 352    ; Multiply index by 352 (stride 0x160)",
+        "add rbx, [rax + 0x138] ; Add array base pointer",
+        "mov rax, rbx          ; Return record pointer"
+      ],
+      "verified_in_process": true
+    },
+    {
+      "symbol": "ROSTERDATA::GetWaivedSalaryByIndex",
+      "module_rva": "0xF3C7AD",
+      "length": 19,
+      "machine_hex": "3b98d003000073174869db88000000480398d8030000",
+      "disassembly": [
+        "cmp ebx, [rax + 0x3D0] ; Check index against count",
+        "jnb error_label       ; Bounds check",
+        "imul rbx, rbx, 136    ; Multiply index by 136 (stride 0x88)",
+        "add rbx, [rax + 0x3D8] ; Add array base pointer",
+        "mov rax, rbx          ; Return record pointer"
+      ],
+      "verified_in_process": true
+    }
+  ]
+}

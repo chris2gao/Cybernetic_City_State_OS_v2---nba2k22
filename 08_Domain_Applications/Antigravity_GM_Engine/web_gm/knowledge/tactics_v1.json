@@ -1,0 +1,900 @@
+{
+  "schema_version": 1,
+  "version": "gm_knowledge_v1",
+  "cards": [
+    {
+      "card_id": "PNR_PRIMARY",
+      "version": 1,
+      "title": "持球挡拆",
+      "tags": [
+        "pick_and_roll",
+        "offense"
+      ],
+      "basketball_principle": "基础：掩护者掩护后顺下接应（JR_PNR）。设计需要：持球组织/终结、掩护终结点和外线接应角色；优先查控球、传球、终结与投射能力。代价/反例：持球过度集中、顺下和其他内线占同一区域，换防后缺乏错位处理。",
+      "required_roles": [
+        "primary_handler",
+        "roller",
+        "spacing_outlet"
+      ],
+      "required_abilities": [
+        "passing",
+        "ball_handling",
+        "finishing",
+        "shooting"
+      ],
+      "counters_and_weaknesses": [
+        "Handler dependence",
+        "Congested roll lane"
+      ],
+      "opportunity_cost": [
+        "Handler dependence",
+        "Congested roll lane"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEOffense",
+          "semantic_label": "PICK_AND_ROLL_OFFENSE",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "JR_PNR",
+          "url": "https://jr.nba.com/pick-and-roll/",
+          "section": "definition",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`POEOffense=PICK_AND_ROLL_OFFENSE`直接枚举；Playbook/Freelance按已加载名称选择，不保证所有回合都调用挡拆。观察：球队助攻失误、核心实际出场和投篮表现；缺挡拆专属PPP时不以总进攻效率冒充。"
+      ]
+    },
+    {
+      "card_id": "SPACING",
+      "version": 1,
+      "title": "空间与接应",
+      "tags": [
+        "spacing",
+        "offense"
+      ],
+      "basketball_principle": "基础：移动应配合队友位置与时机（WABC_L1）。设计需要：能牵制防守的投射及接球决策，不能只数球员名义位置。代价/反例：为射手牺牲护框和篮板；投射差的阵容照搬五外可能无效。",
+      "required_roles": [
+        "shooting_outlet",
+        "interior_finisher"
+      ],
+      "required_abilities": [
+        "shooting",
+        "passing"
+      ],
+      "counters_and_weaknesses": [
+        "Rebounding/rim-protection tradeoff",
+        "Nonshooters cannot create gravity by system name"
+      ],
+      "opportunity_cost": [
+        "Rebounding/rim-protection tradeoff",
+        "Nonshooters cannot create gravity by system name"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "ActiveSystem",
+          "semantic_label": "PACE_AND_SPACE",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEOffense",
+          "semantic_label": "GET_SHOOTERS_OPEN",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "WABC_L1",
+          "url": "https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-level-manuals-level-1-eng.pdf",
+          "section": "PDF297–301,316–318",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`ActiveSystem=PACE_AND_SPACE/PERIMETER`、`POEOffense=GET_SHOOTERS_OPEN`是候选；体系熟练度/比赛成效未据此认证。观察：投射能力、出手结构（有数据时）、篮板及人员互补；“空间米数”当前不可观测。"
+      ]
+    },
+    {
+      "card_id": "MOTION_CUT",
+      "version": 1,
+      "title": "传切与无球移动",
+      "tags": [
+        "motion",
+        "passing",
+        "offense"
+      ],
+      "basketball_principle": "基础：传球后切入要阅读防守和队友（WABC_L1；SAS_MOVEMENT为单个例子）。设计需要：多个传球点、终结/投射接应，降低单一持球者负担。代价/反例：决策能力不足时失误增加，复杂体系不适合所有阵容。",
+      "required_roles": [
+        "multiple_decision_makers",
+        "cutter",
+        "shooting_outlet"
+      ],
+      "required_abilities": [
+        "passing",
+        "finishing",
+        "shooting"
+      ],
+      "counters_and_weaknesses": [
+        "Turnovers",
+        "Complexity may exceed roster capability"
+      ],
+      "opportunity_cost": [
+        "Turnovers",
+        "Complexity may exceed roster capability"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "RunPlayTendency",
+          "semantic_label": null,
+          "mapping_status": "SCALAR_CONTEXT",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "PlaybookID",
+          "semantic_label": null,
+          "mapping_status": "DYNAMIC_CATALOG",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "WABC_L1",
+          "url": "https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-level-manuals-level-1-eng.pdf",
+          "section": "PDF297–301,316–318",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        },
+        {
+          "source_id": "SAS_MOVEMENT",
+          "url": "https://www.nba.com/watch/video/channels/playoffs/2014/04/30/0041300145-dal-sas-play6.nba",
+          "section": "2014 one play example",
+          "fact_scope": "REAL_NBA_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：具名Playbook/Freelance与`RunPlayTendency`；没有“传切成功率”写入字段。观察：助攻/失误与各角色输出，不能从助攻增加单独认定体系因果。核心只有一个可组织点时考虑更简单挡拆。"
+      ]
+    },
+    {
+      "card_id": "TRANSITION",
+      "version": 1,
+      "title": "转换进攻与退防取舍",
+      "tags": [
+        "transition",
+        "offense",
+        "rebounding"
+      ],
+      "basketball_principle": "设计假设：有推进和终结资源时考虑快攻机会，同时保留退防和篮板责任；该卡不是本轮已测战术效果。代价：过早前冲可能损失防守篮板，过度冲抢进攻篮板可能暴露退防。",
+      "required_roles": [
+        "rebounder",
+        "advancer",
+        "transition_finisher"
+      ],
+      "required_abilities": [
+        "speed",
+        "passing",
+        "finishing"
+      ],
+      "counters_and_weaknesses": [
+        "Defensive rebounding cost",
+        "Offensive crash versus retreat tradeoff"
+      ],
+      "opportunity_cost": [
+        "Defensive rebounding cost",
+        "Offensive crash versus retreat tradeoff"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEDefense3",
+          "semantic_label": "RUN_IN_TRANSITION",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEOffense3",
+          "semantic_label": "LIMIT_TRANSITION",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "LOCAL_COACH",
+          "url": "web_gm/manuals/GM_COACHING_OPERATIONS.md",
+          "section": "current project capabilities and player experience",
+          "fact_scope": "PROJECT_EVIDENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PROJECT_HYPOTHESIS",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`POEDefense3=RUN_IN_TRANSITION`、`POEOffense3=LIMIT_TRANSITION/CRASH_OFFENSIVE_BOARDS`，按不同端分别选择；不能把两者当同一开关，也不能把Tempo当其替代。观察：篮板和球队效率；缺转换回合率时标不可验证。"
+      ]
+    },
+    {
+      "card_id": "POST_HUB",
+      "version": 1,
+      "title": "低位与高低位枢纽",
+      "tags": [
+        "post",
+        "offense",
+        "passing"
+      ],
+      "basketball_principle": "基础：低位切入可利用错位，内外球员需联动（WABC_L2）。设计需要：可靠内线终结/传球点及外线接应。代价/反例：持球停滞、空间收缩，对手夹击时无人处理球。",
+      "required_roles": [
+        "post_finisher",
+        "post_passer",
+        "spacing_outlet"
+      ],
+      "required_abilities": [
+        "post_scoring",
+        "passing",
+        "shooting"
+      ],
+      "counters_and_weaknesses": [
+        "Spacing compression",
+        "Stagnation against doubles"
+      ],
+      "opportunity_cost": [
+        "Spacing compression",
+        "Stagnation against doubles"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEOffense",
+          "semantic_label": "FEED_THE_POST",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "ActiveSystem",
+          "semantic_label": "POST",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "WABC_L2",
+          "url": "https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-manual-level-2-eng.pdf",
+          "section": "PDF294–295",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`POEOffense=FEED_THE_POST`、`ActiveSystem=POST`及具名手册；不声称设置后每回合一定进入某个人。观察：内线能力和全队助攻失误、效率；低位专属回合缺失时不编造。"
+      ]
+    },
+    {
+      "card_id": "SWITCH",
+      "version": 1,
+      "title": "换防",
+      "tags": [
+        "switch",
+        "defense",
+        "screen"
+      ],
+      "basketball_principle": "基础：换防是处理掩护的一种方式（WABC_L1）。设计需要：可承担不同对位的防守资源，尤其检查弱点是否会被反复针对。代价/反例：错位低位、篮板丢失，不能因为有多个侧翼就自动全换。",
+      "required_roles": [
+        "versatile_defender",
+        "rebounder"
+      ],
+      "required_abilities": [
+        "perimeter_defense",
+        "interior_defense",
+        "rebounding"
+      ],
+      "counters_and_weaknesses": [
+        "Post mismatches",
+        "Defensive rebounding cost"
+      ],
+      "opportunity_cost": [
+        "Post mismatches",
+        "Defensive rebounding cost"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseOnBall",
+          "semantic_label": "SWITCH",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "OffballScreenDefense",
+          "semantic_label": "SWITCH",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "WABC_L1",
+          "url": "https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-level-manuals-level-1-eng.pdf",
+          "section": "PDF297–301,316–318",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`ScreenDefenseOnBall=SWITCH`（当前raw3）和有条件的`OffballScreenDefense=SWITCH`；两个字段作用不同。对手整体组设置不能给某个球员例外规则。观察：对手构成、现有防守/篮板能力；实际换防回合效果缺失。"
+      ]
+    },
+    {
+      "card_id": "DROP_CONCEPT",
+      "version": 1,
+      "title": "沉退护框思路",
+      "tags": [
+        "drop",
+        "defense",
+        "screen"
+      ],
+      "basketball_principle": "设计假设：优先保留内线护框，允许一部分外围处理空间；需要内线防守资源和持球防守追赶能力。主要代价是对手持球投射与中距离空间。这是篮球适配假设，不是已认证的2K“Drop”功能。",
+      "required_roles": [
+        "rim_protector",
+        "screen_navigator"
+      ],
+      "required_abilities": [
+        "interior_defense",
+        "perimeter_defense"
+      ],
+      "counters_and_weaknesses": [
+        "Pull-up shooting conceded",
+        "NO_HEDGE is not a certified DROP enum"
+      ],
+      "opportunity_cost": [
+        "Pull-up shooting conceded",
+        "NO_HEDGE is not a certified DROP enum"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseHedge",
+          "semantic_label": "NO_HEDGE",
+          "mapping_status": "HYPOTHESIS",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseOnBall",
+          "semantic_label": "GO_OVER",
+          "mapping_status": "HYPOTHESIS",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "LOCAL_COACH",
+          "url": "web_gm/manuals/GM_COACHING_OPERATIONS.md",
+          "section": "current project capabilities and player experience",
+          "fact_scope": "PROJECT_EVIDENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PROJECT_HYPOTHESIS",
+        "native_mapping": "HYPOTHESIS",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：当前`ScreenDefenseHedge`目录没有名为DROP的枚举。`NO_HEDGE`加`GO_OVER/GO_UNDER`只能标 `HYPOTHESIS`候选，不能标直接等价；`GO_UNDER`更不能自动当沉退。缺乏更明确映射时只返回方向，仍可比较直接可用的其他防守方式。"
+      ]
+    },
+    {
+      "card_id": "HEDGE_RECOVER",
+      "version": 1,
+      "title": "延阻与回位",
+      "tags": [
+        "hedge",
+        "defense",
+        "screen"
+      ],
+      "basketball_principle": "基础：大个临时外扩为持球防守者争取恢复位置的时间（WABC_L1）。设计需要：横移/回位和后方协防资源。代价/反例：顺下和弱侧空位、夹击被分球。",
+      "required_roles": [
+        "mobile_big",
+        "help_defender"
+      ],
+      "required_abilities": [
+        "lateral_movement",
+        "defensive_awareness"
+      ],
+      "counters_and_weaknesses": [
+        "Roller and weak-side exposure",
+        "Recovery demands"
+      ],
+      "opportunity_cost": [
+        "Roller and weak-side exposure",
+        "Recovery demands"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseHedge",
+          "semantic_label": "SOFT_HEDGE",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseHedge",
+          "semantic_label": "HARD_HEDGE",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "WABC_L1",
+          "url": "https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-level-manuals-level-1-eng.pdf",
+          "section": "PDF297–301,316–318",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`ScreenDefenseHedge=SOFT_HEDGE/HARD_HEDGE`、配合`ScreenDefenseOnBall=GO_OVER`；原生标签存在不证明理想回位一定发生。观察：对手持球人与顺下/外线组合、己方防守能力；不将抢断增加等同防守变好。"
+      ]
+    },
+    {
+      "card_id": "SCREEN_ROUTE",
+      "version": 1,
+      "title": "绕上、绕下与ICE",
+      "tags": [
+        "screen",
+        "defense"
+      ],
+      "basketball_principle": "基础：掩护处理可以从不同路线恢复对球防守（WABC_L1）。设计需要：按对手投射/突破威胁选择，不能统一套用一个路线。代价：绕下放投，绕上需要身后保护；ICE的具体效果仍需本局观察。",
+      "required_roles": [
+        "screen_navigator",
+        "interior_support"
+      ],
+      "required_abilities": [
+        "perimeter_defense",
+        "interior_defense"
+      ],
+      "counters_and_weaknesses": [
+        "Under concedes shooting",
+        "Over requires support"
+      ],
+      "opportunity_cost": [
+        "Under concedes shooting",
+        "Over requires support"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseOnBall",
+          "semantic_label": "GO_OVER",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseOnBall",
+          "semantic_label": "GO_UNDER",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "ScreenDefenseOnBall",
+          "semantic_label": "ICE",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "WABC_L1",
+          "url": "https://assets.fiba.basketball/image/upload/documents-corporate-wabc-coaching-level-manuals-level-1-eng.pdf",
+          "section": "PDF297–301,316–318",
+          "fact_scope": "BASKETBALL_REFERENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PRIMARY_REFERENCE_WITH_PROJECT_INFERENCE",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`ScreenDefenseOnBall=GO_OVER/GO_UNDER/ICE`直接枚举名称；OnBall5独立字段，不未经依据将其解释为“只对中锋”。整体组缺少逐人区分时，以对手整体主要威胁权衡，不伪造单人指令。"
+      ]
+    },
+    {
+      "card_id": "HELP_ROTATE",
+      "version": 1,
+      "title": "协防与保护射手",
+      "tags": [
+        "help",
+        "defense"
+      ],
+      "basketball_principle": "设计假设：协防可以补突破/内线短板，但会消耗弱侧覆盖。检查对手外线威胁及己方恢复能力，不能单纯把协防拉满。机会成本：底角/外线空位和篮板位置。",
+      "required_roles": [
+        "help_defender",
+        "recovery_defender"
+      ],
+      "required_abilities": [
+        "defensive_awareness",
+        "lateral_movement"
+      ],
+      "counters_and_weaknesses": [
+        "Weak-side shooting conceded",
+        "Full help is not always better"
+      ],
+      "opportunity_cost": [
+        "Weak-side shooting conceded",
+        "Full help is not always better"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "HelpDefense",
+          "semantic_label": null,
+          "mapping_status": "SCALAR_CONTEXT",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "PreRotate",
+          "semantic_label": null,
+          "mapping_status": "NATIVE_BOOL",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "VS_OPPONENT_DEFENSE",
+          "field": "StayAttached",
+          "semantic_label": null,
+          "mapping_status": "FIELD_CONTEXT",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "LOCAL_COACH",
+          "url": "web_gm/manuals/GM_COACHING_OPERATIONS.md",
+          "section": "current project capabilities and player experience",
+          "fact_scope": "PROJECT_EVIDENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PROJECT_HYPOTHESIS",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：全队`HelpDefense`与对手`OnballHelp/ScreenHelp/TagOnRoll/StayAttached/PreRotate`各自查字典，不能共用通用raw。PreRotate为0/1，其余按独立枚举。观察：阵容能力和对手构成；缺少轮转追踪，保持效果假设。"
+      ]
+    },
+    {
+      "card_id": "BOARDS_BALANCE",
+      "version": 1,
+      "title": "篮板与阵容平衡",
+      "tags": [
+        "rebounding",
+        "transition"
+      ],
+      "basketball_principle": "设计假设：篮板职责与转换、空间同时权衡，避免为单项统计牺牲整体。需要篮板资源和可回防的外线；小阵容不自动代表差，双塔不自动代表好。",
+      "required_roles": [
+        "rebounder",
+        "transition_defender"
+      ],
+      "required_abilities": [
+        "rebounding",
+        "speed"
+      ],
+      "counters_and_weaknesses": [
+        "Transition exposure",
+        "Spacing versus size"
+      ],
+      "opportunity_cost": [
+        "Transition exposure",
+        "Spacing versus size"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEOffense3",
+          "semantic_label": "CRASH_OFFENSIVE_BOARDS",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "POEDefense3",
+          "semantic_label": "CRASH_DEFENSIVE_BOARDS",
+          "mapping_status": "NATIVE_ENUM",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "LOCAL_COACH",
+          "url": "web_gm/manuals/GM_COACHING_OPERATIONS.md",
+          "section": "current project capabilities and player experience",
+          "fact_scope": "PROJECT_EVIDENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PROJECT_HYPOTHESIS",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "UNMEASURED"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`POEOffense3`与`POEDefense3`分别作用于两端；可选CRASH或中性项。观察：现有球队篮板和相关能力，缺投篮分布/回合数时不编造精确篮板机会率。"
+      ]
+    },
+    {
+      "card_id": "ROTATION_CONTEXT",
+      "version": 1,
+      "title": "轮换深度与自然成长环境",
+      "tags": [
+        "rotation",
+        "development"
+      ],
+      "basketball_principle": "项目依据：玩家经验与LOCAL_COACH。设计需要：平衡主力负荷、替补质量与年轻球员机会；不能把多用替补写成必然成长或健康改善。已知伤病/疲劳来源不足，不估固定风险百分比。",
+      "required_roles": [
+        "core_contributor",
+        "reliable_reserve",
+        "developing_player"
+      ],
+      "required_abilities": [
+        "observed_role_fit"
+      ],
+      "counters_and_weaknesses": [
+        "Immediate competition versus opportunities",
+        "No fixed growth or health formula"
+      ],
+      "opportunity_cost": [
+        "Immediate competition versus opportunities",
+        "No fixed growth or health formula"
+      ],
+      "observable_signals": [
+        "Observed player abilities",
+        "Season statistics with sample context",
+        "Roster role complementarity"
+      ],
+      "unavailable_signals": [
+        "Play-type PPP and tracking data unless newly observed",
+        "Causal win/growth uplift"
+      ],
+      "native_links": [
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "BenchDepth",
+          "semantic_label": null,
+          "mapping_status": "PLAYER_COUNT",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        },
+        {
+          "scope": "COACH_DEFAULT",
+          "field": "BenchUtilization",
+          "semantic_label": null,
+          "mapping_status": "SCALAR_CONTEXT",
+          "evidence_ref": "config/coach_tactics_profile.json",
+          "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required"
+        }
+      ],
+      "reference_sources": [
+        {
+          "source_id": "LOCAL_COACH",
+          "url": "web_gm/manuals/GM_COACHING_OPERATIONS.md",
+          "section": "current project capabilities and player experience",
+          "fact_scope": "PROJECT_EVIDENCE"
+        }
+      ],
+      "confidence": {
+        "basketball": "PROJECT_HYPOTHESIS",
+        "native_mapping": "FIELD_CATALOG_REFERENCE",
+        "in_game_effect": "PLAYER_OBSERVED_GENERAL"
+      },
+      "game_version_scope": "NBA2K22_PC_CURRENT_GEN_PROJECT",
+      "status": "REFERENCE_OR_HYPOTHESIS",
+      "superseded_by": null,
+      "implementation_notes": [
+        "原生关联：`BenchDepth`是人数上限、`BenchUtilization`是替补使用倾向；不指定球员个人分钟。观察实际场均分钟及未来同口径能力变化，因果保持审慎；不追加为选值而做的比赛/保存实验。"
+      ]
+    }
+  ]
+}

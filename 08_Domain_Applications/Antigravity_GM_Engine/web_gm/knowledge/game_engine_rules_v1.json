@@ -1,0 +1,385 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "rule_id": "PHASE_TRIGGER",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "采集、GM决策、游戏执行分别由玩家触发",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`config/gameplay_policy.json`；EXTERNAL_PLAYER_APPROVED；开发不能自动推进阶段",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "FULL_CAPTURE",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "所有新生产更新走全量已认证来源",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`AGENTS.md` 全量政策；没有单来源更新开发任务",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "STATIC_FACTS",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "M0从同批静态双库按需读取，小结果/聚合；角色名参数不是认证",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`src/gm_data_access/`、`docs/GM_SQLITE_QUERY_ACCESS.md`；实现已合并，Web连接延后",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "COACH_DEFAULT_19",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "19默认字段可提案、经明确批准受控执行",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`config/coach_tactics_profile.json`、`docs/40_COACHING_EXECUTION_RUNBOOK.md`；模板/策略不等于批准",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "OVERALL_DEFENSE_18",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "针对指定对手整体组批改18字段，保留对象及未选字段",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`coaching_overall.py`及同批字典；不是逐人防守/任意内存槽接口",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "TEMPO_RAW",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "原生Tempo raw开放；UI含义/效果未知",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "玩家明确选择，见GM教练手册；不能自动翻译成PACE或百分比",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "ROTATION_INDIRECT",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "BenchDepth/BenchUtilization可间接影响轮换；个人分钟由AI安排",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`web_gm/manuals/GM_COACHING_OPERATIONS.md`；不开发锁分钟和循环补写",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "NATURAL_GROWTH",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "玩家经验支持教练对自然成长有影响；无具体增幅公式",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "同手册及gameplay_policy；训练、普通能力/倾向/徽章编辑均排除",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "TRADE_SIMPLE",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "普通球员转队和简单选秀权有受控执行路径；合同不随普通交易重写",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`docs/37_APPROVED_TRADE_EXECUTOR.md`、标准v2执行器；名单计数/身份/回执机制复用",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "TRADE_ECONOMY",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "外挂经营决策不由原生CPU报价或原生薪资匹配自动否决",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "DEV10 V1 M1玩家方向；这不是无限预算授权，独立经济规则需版本化",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "PICKS_THREE_DRAFTS",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "简单年/轮/原队/现主队，只交易接下来三届未完成选秀",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "gameplay_policy、`q_picks.trade_eligible`；现实保护/互换不复制进玩法",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "SIGNING_FINAL_CONTRACT",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "GM先确定球员、目标队和逐年合同；本地执行不重新谈判",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`docs/38_APPROVED_SIGNING_EXECUTION.md`；源码未实机验收，两个开关False",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "OFFSEASON_SIM",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "已有离线竞价核心只接synthetic输入",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`src/gm_core/offseason.py:plan`实际入口检查；不是生产到期池或已实现的全联盟流动封锁",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "OFFSEASON_EXPIRY",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "年限为1、无NBA归属都不足以认证真正到期/可签对象",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "休赛期P0报告、M0的EXPIRY_NOT_CERTIFIED；研究资格不等于执行资格",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "SALARY_SLOTS",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "六槽金额为现有31位字段；未来赛季映射/延期/选项时点部分未知",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "memory_field_profile与P0；M1允许显式假设情景，不把假设写回来源",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "CASH_SEMANTICS",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "raw cash保留；signed32仅假设；预算差/工资帽差不是可签资金",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "`src/gm_data_access/finance.py`；本轮不追加现金实测或修正",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "NATIVE_FINANCE",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "cap/tax模板是配置参考，预算/收入周期不足以认证完整财务资格",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "P0、finance_semantics；未知项只限制依赖它的结论",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "STAFF",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "同批员工与8岗位可读；完整雇佣/换岗写回未验收",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "docs34能力表；2K次世代MySTAFF不能充当PC认证",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    },
+    {
+      "rule_id": "HISTORY",
+      "version": 1,
+      "applies_to": {
+        "game": "NBA2K22_PC_CURRENT_GEN",
+        "career": "PROJECT_SCOPE",
+        "season": "SEE_EVIDENCE",
+        "phase": "SEE_CLAIM"
+      },
+      "claim": "1984–2020顺序新秀循环；历史线参考不覆盖本局事实",
+      "scope": "PROJECT_RULE_OR_IMPLEMENTATION_STATUS",
+      "source_evidence": "gameplay_policy、docs26；历史重力人物定制独立立项，普通GM不改属性",
+      "confidence": "PROJECT_EVIDENCE_WITH_EXPLICIT_LIMITATIONS",
+      "native_field": null,
+      "can_observe": "SEE_EVIDENCE",
+      "can_execute": "SEE_CURRENT_CAPABILITY_TABLE_NOT_AN_APPROVAL",
+      "execution_condition": "Specific player approval and applicable executor readiness",
+      "source_id": "LOCAL_RULES",
+      "superseded_by": null
+    }
+  ]
+}

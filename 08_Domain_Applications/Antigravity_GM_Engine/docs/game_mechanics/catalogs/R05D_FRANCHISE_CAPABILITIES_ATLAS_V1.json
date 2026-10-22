@@ -1,0 +1,1945 @@
+{
+  "schema_id": "DEV29_R05D_FRANCHISE_MECHANICS_INTEGRATED_CAPABILITY_ATLAS_V1",
+  "published_on": "2026-10-21",
+  "status": "R05_D_RESEARCH_PUBLISHED_WITH_PC22_NATIVE_CAPABILITY_GAPS",
+  "mode": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "is_agent_algorithm": false,
+  "is_game_executor": false,
+  "no_live_game_write": true,
+  "provenance": [
+    "PC22_PROJECT_NATIVE_REGISTERED",
+    "PC22_PROJECT_ARCHIVED_READ",
+    "SAME_GAME_2K22_OTHER_PLATFORM",
+    "SERIES_2K20_21_23",
+    "REAL_NBA_2021_22_CBA",
+    "PROJECT_BUSINESS_POLICY",
+    "UNVERIFIED_TARGET_PC22_UI_OR_EFFECT"
+  ],
+  "primary_research_catalogs": [
+    "docs/game_mechanics/catalogs/R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+    "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+    "docs/game_mechanics/catalogs/R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+  ],
+  "source_registry": "docs/game_mechanics/SOURCES.md SRC-0114..0162",
+  "visual_registry": "docs/game_mechanics/visuals/EXTERNAL_VISUALS.md",
+  "policy_id": "PLAYER_RULES_20261021_V4",
+  "pick_trade_rule": {
+    "status": "PLAYER_CONFIRMED_UPDATED_20261021",
+    "asset_type": "SIMPLE_YEAR_ROUND_ORIGINAL_TEAM_CURRENT_OWNER",
+    "protection_conditions": "NOT_USED",
+    "swap_rights": "NOT_USED",
+    "maximum_future_drafts": null,
+    "window": "NO_ADDITIONAL_WORLD_RULE_YEAR_LIMIT__REQUIRE_VERIFIED_NATIVE_ASSET_AND_EXECUTOR_SUPPORT",
+    "year_source": "VERIFIED_NEXT_DRAFT_YEAR_FROM_CURRENT_BATCH",
+    "ownership_source": "VERIFIED_CURRENT_BATCH_MEMORY_RECORDS",
+    "game_writes": "SEPARATE_SPECIFIC_PLAYER_APPROVAL_REQUIRED",
+    "known_native_read_horizon_drafts": 5,
+    "known_native_read_horizon_is_world_rule_cap": false,
+    "game_trade_legality": "DEPENDENT_ON_VERIFIED_ACTUAL_GAME_RULES_AND_EXECUTOR_CAPABILITY",
+    "legacy_three_year_code_status": "PENDING_CODEX_ALIGNMENT_NOT_EXECUTABLE_FOR_4TH_5TH_DRAFT_UNTIL_VALIDATED",
+    "policy_change_note": "Removed former NEXT_THREE artificial trade cap at explicit player request 2026-10-21; not replaced by a fixed five-year world-rule cap; SIMPLE picks/no swaps/no protections/human approval unchanged.",
+    "comment": "PICK_FIFTH_YEAR_NATIVE_READ_IS_NOT_BUSINESS_RULE_CEILING; CODE_STILL_LIMITS_THREE",
+    "three_year_rule_removed": true
+  },
+  "studied_action_rows": 63,
+  "action_research_rows": [
+    {
+      "id": "FA.UFA",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "free agent unconstrained matching?",
+      "game_menu_evidence": "REAL_CBA_RESEARCH; PC22_RUNTIME_STATUS_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.RFA",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "qualifying offer and actual matching rights",
+      "game_menu_evidence": "REAL_CBA_RESEARCH; 2K22_GAMING_BUG_REPORTED",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.BIRD",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "own free-agent cap exception",
+      "game_menu_evidence": "17FIELD_BIRD_YEARS_NE_ELIGIBILITY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.EARLY_BIRD",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "limited own free-agent cap exception",
+      "game_menu_evidence": "PC22_NATIVE_ELIGIBILITY_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.NON_BIRD",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "limited own free-agent cap exception",
+      "game_menu_evidence": "PC22_NATIVE_ELIGIBILITY_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.CAP_HOLD",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "unsigned FA team salary reservation",
+      "game_menu_evidence": "2K22_MENU_GAME_CONTEXT_OBSERVED; PROJECT_NATIVE_FIELD_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.RENOUNCE_RIGHTS",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "remove selected cap hold and possibly renounce associated own-player rights",
+      "game_menu_evidence": "2K22_OLDGEN_VS_NEXTGEN_MENU_DIFFERENCE; PROJECT_NATIVE_WRITE_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.QUALIFYING_OFFER",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "RFA precondition and potential one year contract",
+      "game_menu_evidence": "NATIVE_PHASE_AND_PERSISTENCE_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.PLAYER_OPTION",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "player decides option year",
+      "game_menu_evidence": "NATIVE_ENUM_REGISTERED_ACTUAL_OFFSEASON_STATE_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.TEAM_OPTION",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "team decides option year",
+      "game_menu_evidence": "NATIVE_ENUM_REGISTERED_ACTUAL_OFFSEASON_STATE_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.FLAT_CONTRACT",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "same salary each year",
+      "game_menu_evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.FRONT_CONTRACT",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "declining salary contract",
+      "game_menu_evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.BACK_CONTRACT",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "increasing salary contract",
+      "game_menu_evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.BIRD_CONTRACT_CURVE",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "higher available raises to own Bird free agents",
+      "game_menu_evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.HARDSHIP",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "emergency roster contract category",
+      "game_menu_evidence": "PROJECT_NATIVE_CONTRACT_TYPE_ENUM",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.TWO_WAY",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "two-way player rights",
+      "game_menu_evidence": "PROJECT_NATIVE_CONTRACT_TYPE_ENUM_WITH_REAL_2021_CONTEXT",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.SALARY_CAP_EXCEPTION",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "eligible cap override and method",
+      "game_menu_evidence": "NBA_REAL_CBA_REFERENCE_PC22_EXACT_SUPPORTED_LIST_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.TPE",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "trade player exception",
+      "game_menu_evidence": "NBA_REAL_CBA_REFERENCE; 2K22_NEXTGEN_UI_RENOUNCE_REPORT",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "FA.NO_TRADE",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "contract clause in source profile",
+      "game_menu_evidence": "NATIVE_FLAG_EXISTS_EFFECT_AND_WAIVER_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.BIRD_YEARS",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "tenure years",
+      "game_menu_evidence": "NATIVE_FIELD_EXISTS_NOT_FORCE_MATCH_RFA",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ]
+    },
+    {
+      "id": "FA.APRON",
+      "domain": "FREE_AGENCY_AND_CONTRACT",
+      "description": "triggered hard-cap / exception constraints not all transactions",
+      "game_menu_evidence": "SECONDARY_2021_VALUE; 2K22_APPLICABILITY_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "UNKNOWN_UNLESS_IN_NATIVE_ENUM",
+      "native_executor": "CURRENT_FA_SIGNING_NOT_VALIDATED",
+      "source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ]
+    },
+    {
+      "id": "TRADE.TRADE_AI_VALIDITY",
+      "domain": "TRADING",
+      "description": "Trade Logic",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.CPU_TRADE_RESPONSE_DIFFICULTY",
+      "domain": "TRADING",
+      "description": "Trade Negotiation Difficulty",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.NATIVE_TRADE_SALARY_RULE_FILTER",
+      "domain": "TRADING",
+      "description": "Financial Trade Rules",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.NEW_CONTRACT_WAIT_FOR_TRADE",
+      "domain": "TRADING",
+      "description": "Recently Signed Restrictions",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE_2022_CURRENTGEN_REPORT",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.RETRADE_OR_SALARY_AGGREGATION_RESTRICTION",
+      "domain": "TRADING",
+      "description": "Recently Traded Restrictions",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.ROOKIE_TRANSACTION_RESTRICTION",
+      "domain": "TRADING",
+      "description": "Rookie Signing Restrictions",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.TRADE_WINDOW_CLOSURE",
+      "domain": "TRADING",
+      "description": "Trade Deadline",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.FUTURE_FIRST_ROUND_CONSECUTIVE_RESTRICTION",
+      "domain": "TRADING",
+      "description": "Stepien Rule",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.FORCE_TRADE_IN_NATIVE_UI",
+      "domain": "TRADING",
+      "description": "Trade Override",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.CPU_INITIATES_OFFERS_TO_USER",
+      "domain": "TRADING",
+      "description": "CPU Trade Offers",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.CPU_TEAMS_AUTONOMOUS_TRADES",
+      "domain": "TRADING",
+      "description": "CPU-CPU Trades",
+      "game_menu_evidence": "2K22_FRANCHISE_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.PLAYER_PICK_SEARCH_FOR_OFFERS",
+      "domain": "TRADING",
+      "description": "Trade Finder",
+      "game_menu_evidence": "OLD_SERIES_WIKI_2K22_COMMUNITY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.AVAILABLE_ASSETS_AND_MARKET_LIST",
+      "domain": "TRADING",
+      "description": "Trade Block",
+      "game_menu_evidence": "2K22_SERIES_REFERENCE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.SELECT_PLAYERS_OR_PICKS_AND_MAKE_OFFER",
+      "domain": "TRADING",
+      "description": "Propose Trade",
+      "game_menu_evidence": "OLD_SERIES_WIKI_CURRENTGEN_COMMUNITY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.SEARCH_FOR_PLAYER_TO_TRADE",
+      "domain": "TRADING",
+      "description": "Player Finder",
+      "game_menu_evidence": "OLD_SERIES_WIKI",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ]
+    },
+    {
+      "id": "TRADE.MULTI_PARTY_AGGREGATION",
+      "domain": "TRADING",
+      "description": "Three-Team Trade",
+      "game_menu_evidence": "PC_2K22_COMMUNITY_COMMENT",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "BOUNDED_TRADE_OWNERSHIP_ONLY_NOT_UNIVERSAL_CBA_OR_MENU_EXECUTOR",
+      "source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0132"
+      ]
+    },
+    {
+      "id": "SCOUT.PROSPECT_SCOUTING",
+      "domain": "SCOUTING",
+      "description": "Prospect Scouting",
+      "game_menu_evidence": "NBA2K22_MYLEAGUE_ARTICLE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "SCOUT.SCOUTING_COMPLETION",
+      "domain": "SCOUTING",
+      "description": "Scouting completion",
+      "game_menu_evidence": "SERIES_COMMUNITY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0152",
+        "SRC-0153"
+      ]
+    },
+    {
+      "id": "SCOUT.PROJECTED_OVR_AND_LETTER_POTENTIAL_GRADE",
+      "domain": "SCOUTING",
+      "description": "Projected OVR and letter Potential Grade",
+      "game_menu_evidence": "SAME_ERA_COMMUNITY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149",
+        "SRC-0154",
+        "SRC-0155"
+      ]
+    },
+    {
+      "id": "SCOUT.DRAFTEXPRESS_RANK",
+      "domain": "SCOUTING",
+      "description": "DraftExpress Rank",
+      "game_menu_evidence": "2K22_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "SCOUT.2K_RANKING",
+      "domain": "SCOUTING",
+      "description": "2K ranking",
+      "game_menu_evidence": "2K22_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "SCOUT.NBA_COM_RANKING",
+      "domain": "SCOUTING",
+      "description": "NBA.com ranking",
+      "game_menu_evidence": "2K22_GUIDE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "SCOUT.AUTO_VS_MANUAL_SCOUTING",
+      "domain": "SCOUTING",
+      "description": "Auto vs Manual Scouting",
+      "game_menu_evidence": "OLDSERIES_AND_2022_COMMUNITY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0151",
+        "SRC-0152"
+      ]
+    },
+    {
+      "id": "SCOUT.DOMESTIC_AND_FOREIGN_SCOUTS",
+      "domain": "SCOUTING",
+      "description": "Domestic and Foreign scouts",
+      "game_menu_evidence": "NBA2K22_NEXTGEN_ONLY",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145"
+      ]
+    },
+    {
+      "id": "SCOUT.BIG_BOARD_VS_MOCK_DRAFT",
+      "domain": "SCOUTING",
+      "description": "Big Board vs Mock Draft",
+      "game_menu_evidence": "REAL_NBA_MEDIA_NOT_NATIVE",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0158"
+      ]
+    },
+    {
+      "id": "SCOUT.SCOUTING_TRIP_PERIODIC_REFRESH",
+      "domain": "SCOUTING",
+      "description": "Scouting trip / periodic refresh",
+      "game_menu_evidence": "2015_MYLEAGUE_OLDER",
+      "current_setting": null,
+      "valid_options": "UNKNOWN",
+      "native_executor": "NO_SCOUTING_MODIFIER_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0153"
+      ]
+    },
+    {
+      "id": "DRAFT.AUTO_GENERATED_DRAFT_CLASS",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "AUTO_GENERATED_DRAFT_CLASS",
+      "game_menu_evidence": "2K22_OFFLINE_GUIDE",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "DRAFT.HISTORIC_DRAFT_CLASS",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "HISTORIC_DRAFT_CLASS",
+      "game_menu_evidence": "2K22_OFFLINE_GUIDE",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "DRAFT.USER_CREATED_DRAFT_CLASS",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "USER_CREATED_DRAFT_CLASS",
+      "game_menu_evidence": "2K22_OFFLINE_GUIDE",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149",
+        "SRC-0150"
+      ]
+    },
+    {
+      "id": "DRAFT.CREATE_EDIT_DRAFT_CLASS",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "CREATE_EDIT_DRAFT_CLASS",
+      "game_menu_evidence": "2K22_OFFLINE_GUIDE",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0149"
+      ]
+    },
+    {
+      "id": "DRAFT.SCOUTING_PROSPECT_CLASS_REPLACEMENT",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "SCOUTING_PROSPECT_CLASS_REPLACEMENT",
+      "game_menu_evidence": "2K22_ONLINE_COMMUNITY_2022",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0150"
+      ]
+    },
+    {
+      "id": "DRAFT.EXPORT_IMPORT_PLAYER_DNA",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "EXPORT_IMPORT_PLAYER_DNA",
+      "game_menu_evidence": "CROSS_VERSION_AND_2K22_2022_COMMUNITY",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0156"
+      ]
+    },
+    {
+      "id": "DRAFT.DRAFT_LOTTERY_ORDER",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "DRAFT_LOTTERY_ORDER",
+      "game_menu_evidence": "REAL_NBA_2022_AND_GAME_SERIES",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_REPORTED_EXACT_PC22_ENUM_UNVERIFIED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0157"
+      ]
+    },
+    {
+      "id": "DRAFT.PREDRAFT_WORKOUTS_COMBINE",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "PREDRAFT_WORKOUTS_COMBINE",
+      "game_menu_evidence": "REAL_NBA_2022_NOT_VERIFIED_GAME_PC",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_NOT_CONFIRMED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0159"
+      ]
+    },
+    {
+      "id": "DRAFT.DRAFT_RESULTS_AND_RIGHTS",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "DRAFT_RESULTS_AND_RIGHTS",
+      "game_menu_evidence": "PROJECT_FUTURE_PICK_NATIVE_VERIFIED_DRAFT_OUTCOME_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_NOT_CONFIRMED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "PROJECT_DRAFT_PROFILE"
+      ]
+    },
+    {
+      "id": "DRAFT.ROOKIE_CONTRACT_STASH",
+      "domain": "DRAFT_CLASS_AND_DRAFT",
+      "description": "ROOKIE_CONTRACT_STASH",
+      "game_menu_evidence": "PROJECT_PLAYER_CONTRACT_STATIC_VERIFIED_PROCESS_UNKNOWN",
+      "current_setting": null,
+      "valid_options": "GAME_CHOICE_NOT_CONFIRMED",
+      "native_executor": "NO_DRAFT_INJECTION_OR_DRAFT_RESULT_EXECUTOR_CERTIFIED",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "PROJECT_CONTRACT_PROFILE"
+      ]
+    },
+    {
+      "id": "STAFF.HIRE",
+      "domain": "STAFF_MARKET",
+      "description": "Hire a staff member",
+      "game_menu_evidence": "OFFICIAL_2K22_NEXTGEN_ROLE_CANDIDATE_AND_PC22_PROFILE",
+      "current_setting": null,
+      "valid_options": "EXACT_PC22_UI_OPTIONS_UNKNOWN",
+      "native_executor": "STAFF_READ_ONLY_NO_CONFIRMED_HIRE_FIRE_WRITE",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145",
+        "PROJECT_MEMORY_FIELD_PROFILE"
+      ]
+    },
+    {
+      "id": "STAFF.FIRE",
+      "domain": "STAFF_MARKET",
+      "description": "Fire staff",
+      "game_menu_evidence": "OFFICIAL_2K22_NEXTGEN_ROLE_CANDIDATE_AND_PC22_PROFILE",
+      "current_setting": null,
+      "valid_options": "EXACT_PC22_UI_OPTIONS_UNKNOWN",
+      "native_executor": "STAFF_READ_ONLY_NO_CONFIRMED_HIRE_FIRE_WRITE",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145",
+        "PROJECT_MEMORY_FIELD_PROFILE"
+      ]
+    },
+    {
+      "id": "STAFF.EXTEND",
+      "domain": "STAFF_MARKET",
+      "description": "Extend staff contract",
+      "game_menu_evidence": "OFFICIAL_2K22_NEXTGEN_ROLE_CANDIDATE_AND_PC22_PROFILE",
+      "current_setting": null,
+      "valid_options": "EXACT_PC22_UI_OPTIONS_UNKNOWN",
+      "native_executor": "STAFF_READ_ONLY_NO_CONFIRMED_HIRE_FIRE_WRITE",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145",
+        "PROJECT_MEMORY_FIELD_PROFILE"
+      ]
+    },
+    {
+      "id": "STAFF.VIEW_POOL",
+      "domain": "STAFF_MARKET",
+      "description": "View available staff",
+      "game_menu_evidence": "OFFICIAL_2K22_NEXTGEN_ROLE_CANDIDATE_AND_PC22_PROFILE",
+      "current_setting": null,
+      "valid_options": "EXACT_PC22_UI_OPTIONS_UNKNOWN",
+      "native_executor": "STAFF_READ_ONLY_NO_CONFIRMED_HIRE_FIRE_WRITE",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145",
+        "PROJECT_MEMORY_FIELD_PROFILE"
+      ]
+    },
+    {
+      "id": "STAFF.ADJUST_BUDGET",
+      "domain": "STAFF_MARKET",
+      "description": "Select staff budget if mode supports",
+      "game_menu_evidence": "OFFICIAL_2K22_NEXTGEN_ROLE_CANDIDATE_AND_PC22_PROFILE",
+      "current_setting": null,
+      "valid_options": "EXACT_PC22_UI_OPTIONS_UNKNOWN",
+      "native_executor": "STAFF_READ_ONLY_NO_CONFIRMED_HIRE_FIRE_WRITE",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145",
+        "PROJECT_MEMORY_FIELD_PROFILE"
+      ]
+    },
+    {
+      "id": "STAFF.ASSIGN_ROLE",
+      "domain": "STAFF_MARKET",
+      "description": "Assign staff to role",
+      "game_menu_evidence": "OFFICIAL_2K22_NEXTGEN_ROLE_CANDIDATE_AND_PC22_PROFILE",
+      "current_setting": null,
+      "valid_options": "EXACT_PC22_UI_OPTIONS_UNKNOWN",
+      "native_executor": "STAFF_READ_ONLY_NO_CONFIRMED_HIRE_FIRE_WRITE",
+      "source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "source_ids": [
+        "SRC-0145",
+        "PROJECT_MEMORY_FIELD_PROFILE"
+      ]
+    }
+  ],
+  "crossdomain_effects": [
+    {
+      "id": "C01_CONTRACT_SALARY_TO_FINANCE",
+      "related": [
+        "K07_PLAYER_CONTRACT",
+        "K07_TEAM_FINANCE"
+      ],
+      "input": "CURRENT_SEASON_SALARY_SLOTS_AND_TEAM_TOTAL",
+      "unverified": "SIX_SALARY_SLOT_SEASON_MAPPING_CAP_HOLDS_AND_PAID_PAYROLL_DISTINCTIONS",
+      "action_effect": "PAYROLL_PROXY_NOT_SIGNABLE_CAP_SPACE"
+    },
+    {
+      "id": "C02_CONTRACT_OPTIONS_TO_FREE_AGENCY",
+      "related": [
+        "K07_PLAYER_CONTRACT",
+        "FREE_AGENCY_AND_CONTRACT"
+      ],
+      "input": "YEARS_LEFT_PLAYER_TEAM_OPTION_QO_RIGHTS_BIRD",
+      "unverified": "EXACT_OFFSEASON_PHASE_AND_NATIVE_OPTION_EXERCISE_AND_RFA_OUTCOME",
+      "action_effect": "SIGNED_CONTRACT_REQUIRES_GAME_RELOAD_READBACK"
+    },
+    {
+      "id": "C03_TRADE_TO_ROSTER",
+      "related": [
+        "TRADING",
+        "K07_K08_ROSTER_AND_PICKS"
+      ],
+      "input": "PLAYER_TEAM_AND_CONTRACT_TEAM_AND_RECIPROCAL_TEAM_ROSTER_SLOTS",
+      "unverified": "MULTIPARTY_AND_TWO_WAY_SUPPORT",
+      "action_effect": "PARTIAL_TEAM_REFERENCE_WRITE_MAY_CORRUPT_ROSTER"
+    },
+    {
+      "id": "C04_TRADE_TO_CAP",
+      "related": [
+        "TRADING",
+        "K07_TEAM_FINANCE"
+      ],
+      "input": "OUTGOING_SALARIES_INCOMING_SALARIES_TAX_STATUS",
+      "unverified": "PC22_REAL_FINANCIAL_RULE_ENABLED_AND_COMPLETE_CBA_ENGINE",
+      "action_effect": "CBA_MATCHING_REFERENCE_NOT_GAME_EVALUATOR"
+    },
+    {
+      "id": "C05_TRADE_TO_PICKS",
+      "related": [
+        "TRADING",
+        "K07_K08_ROSTER_AND_PICKS"
+      ],
+      "input": "NATIVE_PICK_YEAR_ROUND_ORIGINAL_OWNER_CURRENT_OWNER_NEXT_DRAFT_YEAR",
+      "unverified": "4TH_5TH_DRAFT_RUNTIME_OLD_THREE_YEAR_REJECTION",
+      "action_effect": "POLICY_HAS_NO_THREE_YEAR_CAP_IMPLEMENTATION_STILL_DOES"
+    },
+    {
+      "id": "C06_PICK_TO_DRAFT_CLASS",
+      "related": [
+        "K07_K08_ROSTER_AND_PICKS",
+        "DRAFT_CLASS_AND_DRAFT"
+      ],
+      "input": "GAME_DRAFT_YEAR_VS_HISTORICAL_CLASS_YEAR",
+      "unverified": "DRAFT_LOTTERY_ORDER_AND_DRAFT_OUTCOME_NATIVE_WRITE",
+      "action_effect": "CHANGING_PICK_OWNER_DOES_NOT_CHANGE_HISTORIC_DRAFT_CLASS"
+    },
+    {
+      "id": "C07_SCOUT_TO_DRAFT",
+      "related": [
+        "SCOUTING",
+        "DRAFT_CLASS_AND_DRAFT"
+      ],
+      "input": "SCOUT_PROGRESS_RANK_ESTIMATES_PERSON_ID",
+      "unverified": "REPORT_ACCURACY_AND_CURRENT_SCOUTING_REFRESH",
+      "action_effect": "SCOUTED_GRADE_IS_NOT_TRUE_POTENTIAL"
+    },
+    {
+      "id": "C08_STAFF_SCOUT_TO_DRAFT",
+      "related": [
+        "K09_STAFF",
+        "SCOUTING"
+      ],
+      "input": "HEAD_SCOUT_ROLE_SCOUTING_GRADE_BUDGET",
+      "unverified": "EXACT_SCOUTING_GRADE_IMPACT_ON_PROGRESS_ACCURACY",
+      "action_effect": "NO_GUARANTEED_100_PERCENT_REPORT_CORRECTNESS"
+    },
+    {
+      "id": "C09_STAFF_TRAINING_TO_PLAYER_GROWTH",
+      "related": [
+        "K09_STAFF",
+        "K06_TRAINING"
+      ],
+      "input": "TRAINER_AND_COACH_GRADES_NATURAL_DEVELOPMENT",
+      "unverified": "PC22_COEFFICIENTS_SIM_3D_INJURY_RECOVERY",
+      "action_effect": "NO_EDITOR_INDUCED_ABILITY_BADGE_BOOSTS"
+    },
+    {
+      "id": "C10_TEAM_BUDGET_TO_STAFF",
+      "related": [
+        "K07_TEAM_FINANCE",
+        "K09_STAFF"
+      ],
+      "input": "STAFF_BUDGET_STAFF_SALARY_YEARS_LEFT",
+      "unverified": "CASH_VS_STAFF_BUDGET_HIRE_COSTS_AND_PC22_EXACT_UI",
+      "action_effect": "STAFF_SALARY_NOT_IDENTICAL_TO_PLAYER_PAYROLL"
+    },
+    {
+      "id": "C11_FRANCHISE_HISTORY_TO_GAME_TIME",
+      "related": [
+        "ALL"
+      ],
+      "input": "SAVE_ID_BATCH_ID_GAME_DATE_HISTORY_DRAFT_COMPLETION",
+      "unverified": "AUTO_GAME_CALENDAR_AND_HISTORIC_DRAFT_COMPLETION",
+      "action_effect": "NO_WALL_CLOCK_DATE_DRIVEN_GAME_YEAR_CHANGES"
+    },
+    {
+      "id": "C12_GAME_FACT_TO_ROLE_INFORMATION",
+      "related": [
+        "ALL"
+      ],
+      "input": "VERIFIED_CURRENT_SAVE_SOURCE_WITH_PLAYER_POTENTIAL_MASKED",
+      "unverified": "ALL_NATIVE_SOURCE_AVAILABILITY",
+      "action_effect": "RESEARCH_DOES_NOT_DEFINE_ROLE_BEHAVIOR_OR_EXECUTION_PERMISSION"
+    }
+  ],
+  "open_pc22_gaps": [
+    {
+      "key": "G01_TRUE_CAP_SPACE_AND_CBA",
+      "domain": "FINANCE",
+      "evidence": "UNKNOWN_PC22_NATIVE",
+      "impact": "CAP_PROXY_CANNOT_VALIDATE_SIGNINGS"
+    },
+    {
+      "key": "G02_FA_POOL_CONTRACT_OPTIONS_RUNTIME",
+      "domain": "CONTRACT",
+      "evidence": "PARTIAL_ARCHIVED_DATA",
+      "impact": "FA_CANDIDATE_AND_LIFECYCLE_UNKNOWN"
+    },
+    {
+      "key": "G03_SIGNING_NATIVE_EXECUTOR",
+      "domain": "CONTRACT",
+      "evidence": "UNVALIDATED_FALSE",
+      "impact": "NO_LIVE_SIGNING_WRITE"
+    },
+    {
+      "key": "G04_NATIVE_PICK_HORIZON_AND_POLICY_MISMATCH",
+      "domain": "DRAFT_PICKS",
+      "evidence": "5_READ_WITH_3_CODE_CAP; NO_POLICY_CAP",
+      "impact": "FOURTH_FIFTH_REJECTED_UNTIL_CODEX_ALIGNED"
+    },
+    {
+      "key": "G05_PC22_TRADE_SLIDER_UI_EXACT_VALUES",
+      "domain": "TRADE",
+      "evidence": "COMMUNITY_CROSSGEN",
+      "impact": "TRADE_RULES_AND_EFFECTS_UNVERIFIED"
+    },
+    {
+      "key": "G06_BOUNDED_TRADE_COMPLEXITY",
+      "domain": "TRADE",
+      "evidence": "APPROVED_EXECUTOR_SUBSET",
+      "impact": "TWO_WAY_MULTITEAM_SIGN_TRADE_NOT_SUPPORTED"
+    },
+    {
+      "key": "G07_STAFF_HIRE_FIRE_WRITE_AND_SLOTS",
+      "domain": "STAFF",
+      "evidence": "13_NATIVE_FIELDS_READ; NEXTGEN_17_SLOT_SEPARATE",
+      "impact": "NO_CERTIFIED_PC22_EMPLOYMENT_CHANGES"
+    },
+    {
+      "key": "G08_SCOUTING_PROGRESS_ESTIMATE_ACCURACY",
+      "domain": "SCOUT",
+      "evidence": "2K22_GUIDES_OLDER_FORUM",
+      "impact": "NO_PROVEN_PC22_FIELDS_OR_NUMERIC_EFFECTS"
+    },
+    {
+      "key": "G09_DRAFT_CLASS_IMPORT_AND_NATIVE_TARGET_SLOTS",
+      "domain": "DRAFT",
+      "evidence": "ROOKIE_POOL_READ_AVAILABLE_NATIVE_TARGET_NOT_VALIDATED",
+      "impact": "NO_CERTIFIED_DRAFT_PLAYER_INJECTION"
+    },
+    {
+      "key": "G10_DRAFT_LOTTERY_RESULT_TO_PICK_RIGHTS",
+      "domain": "DRAFT",
+      "evidence": "NATIVE_OWNERSHIP_SEPARATE_FROM_DRAFT_OUTCOME",
+      "impact": "NO_CONFIRMED_GAME_DRAFT_RESULT_READBACK"
+    },
+    {
+      "key": "G11_PROTECTED_OR_SWAPPED_OLD_NATIVE_PICKS",
+      "domain": "DRAFT_PICKS",
+      "evidence": "NO_NEW_PROTECTIONS_OR_SWAPS_WORLD_POLICY",
+      "impact": "EXISTING_GAME_CONDITIONS_MUST_NOT_BE_SILENTLY_CLEARED"
+    },
+    {
+      "key": "G12_GAME_SEASON_DATES_AND_SAVE_PERSISTENCE",
+      "domain": "CROSS_DOMAIN",
+      "evidence": "LATEST_GAME_CALENDAR_UNKNOWN",
+      "impact": "ALL_PHASE_BOUND_EXECUTION_REQUIRES_VERIFIED_TIME"
+    }
+  ],
+  "implementation_handoff": {
+    "not_part_of_this_research": true,
+    "owner": "CODEX_ONLY_WHEN_PLAYER_REQUESTS_DEVELOPMENT",
+    "existing_three_year_code_files": [
+      "src/draft_assets.py",
+      "src/gm_core/calculations.py",
+      "src/gm_core/trades.py",
+      "src/approved_trade_executor.py"
+    ],
+    "ensure_no_new_artificial_five_year_cap": true,
+    "normal_player_ability_edits": "FORBIDDEN",
+    "specific_game_write_approval": "MANDATORY",
+    "no_cpu_personality_talk_models": "NO_AGENT_DESIGN"
+  },
+  "next_topic": "R06_K05_K10_K11_GAMEPLAY_RULES_HISTORY_MEDIA_SAVE_MECHANICS_RESEARCH_NOT_STARTED",
+  "observed_or_candidate_data_rows": 54,
+  "data_research_rows": [
+    {
+      "id": "PLAYER.contract.bird_years",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x356",
+        "bit_start": 6,
+        "width": 4
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.original_contract_years",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x341",
+        "bit_start": 4,
+        "width": 3
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.years_left_on_contract",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x32E",
+        "bit_start": 2,
+        "width": 4
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_option",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x317",
+        "bit_start": 4,
+        "width": 2
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.no_trade",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x346",
+        "bit_start": 4,
+        "width": 1
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.extension_length",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x341",
+        "bit_start": 7,
+        "width": 3
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.extension_option",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x342",
+        "bit_start": 2,
+        "width": 2
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.extension_no_trade",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x31C",
+        "bit_start": 5,
+        "width": 1
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_year_1",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x1A4",
+        "bit_start": 0,
+        "width": 31
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_year_2",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x1A8",
+        "bit_start": 0,
+        "width": 31
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_year_3",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x1AC",
+        "bit_start": 0,
+        "width": 31
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_year_4",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x1B0",
+        "bit_start": 0,
+        "width": 31
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_year_5",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x1B4",
+        "bit_start": 0,
+        "width": 31
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_year_6",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x1B8",
+        "bit_start": 0,
+        "width": 31
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.contract_type",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x344",
+        "bit_start": 3,
+        "width": 3
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.euro_stash_years_left",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x293",
+        "bit_start": 5,
+        "width": 2
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "PLAYER.contract.two_way_days_left",
+      "domain": "K07_PLAYER_CONTRACT",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json",
+      "status": "REGISTERED_NO_R05_REALTIME_READ",
+      "current_value": null,
+      "format": {
+        "offset": "0x15F",
+        "bit_start": 2,
+        "width": 6
+      },
+      "effects": "GAME_CONTRACT_EFFECTS_REQUIRE_VALIDATION",
+      "menu_or_executability": "SIGNING_EXECUTOR_UNVALIDATED",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.total_salary",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_NATIVE_READ_CANDIDATE",
+      "source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "status": "TEAM_NATIVE_CANDIDATE_NATIVE_READ_REPORTED",
+      "current_value": null,
+      "format": {
+        "offset": "0xCBC"
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.payroll",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_NATIVE_READ_CANDIDATE",
+      "source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "status": "TEAM_NATIVE_CANDIDATE_NATIVE_READ_REPORTED",
+      "current_value": null,
+      "format": {
+        "offset": "0xFF4"
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.cash",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_NATIVE_READ_CANDIDATE",
+      "source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "status": "TEAM_NATIVE_CANDIDATE_ENCODING_UNVERIFIED",
+      "current_value": null,
+      "format": {
+        "offset": "0x1010"
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.budget",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_NATIVE_READ_CANDIDATE",
+      "source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "status": "TEAM_NATIVE_CANDIDATE_UNIT_UNVERIFIED",
+      "current_value": null,
+      "format": {
+        "offset": "0x1014"
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.staff_budget",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_DERIVED_OR_UNVERIFIED_CANDIDATE",
+      "source": "src/gm_core/finance.py",
+      "status": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "format": {
+        "offset": null
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.fan_interest",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_DERIVED_OR_UNVERIFIED_CANDIDATE",
+      "source": "src/gm_core/finance.py",
+      "status": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "format": {
+        "offset": null
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.ticket_courtside",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_DERIVED_OR_UNVERIFIED_CANDIDATE",
+      "source": "src/gm_core/finance.py",
+      "status": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "format": {
+        "offset": null
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.ticket_lower",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_DERIVED_OR_UNVERIFIED_CANDIDATE",
+      "source": "src/gm_core/finance.py",
+      "status": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "format": {
+        "offset": null
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.ticket_upper",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_DERIVED_OR_UNVERIFIED_CANDIDATE",
+      "source": "src/gm_core/finance.py",
+      "status": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "format": {
+        "offset": null
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM_FINANCE.monthly_gate_revenue",
+      "domain": "K07_TEAM_FINANCE",
+      "type": "PROJECT_DERIVED_OR_UNVERIFIED_CANDIDATE",
+      "source": "src/gm_core/finance.py",
+      "status": "PROJECT_FINANCE_MODULE_FIELD_WINDOW_UNVERIFIED",
+      "current_value": null,
+      "format": {
+        "offset": null
+      },
+      "effects": "FINANCIAL_METRIC_NOT_SPENDABLE_SALARY_CAP_SPACE",
+      "menu_or_executability": "CURRENT_GAME_FINANCE_REFRESH_AND_VALIDITY_UNKNOWN",
+      "original_source_catalog": "R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json"
+    },
+    {
+      "id": "TEAM.roster.regular_ptr_array",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x00",
+        "storage": "15 * uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.regular_count",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0xCB1",
+        "storage": "uint8"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.two_way_ptrs",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0xA8 and 0xB0",
+        "storage": "2 * uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.two_way_count",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x1047 low 2 bits",
+        "storage": "2bit"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.active_ptr_array",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0xD0",
+        "storage": "13 * uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.active_count",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x1047 high 4 bits",
+        "storage": "4bit"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.reserved",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x78..0xA7",
+        "storage": "6 * uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "TEAM.roster.other_lineup_refs",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0xD28..0xE67",
+        "storage": "40 * uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "PLAYER.current_team_ptr",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x60",
+        "storage": "uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "PLAYER.contract_team_ptr",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0xA8",
+        "storage": "uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "DRAFT_ASSET.current_owner_ptr",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x00",
+        "storage": "uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "DRAFT_ASSET.original_owner_ptr",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x08",
+        "storage": "uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "DRAFT_ASSET.assigned_player_ptr",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x10",
+        "storage": "uint64"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "DRAFT_ASSET.metadata",
+      "domain": "K07_K08_ROSTER_AND_PICKS",
+      "type": "PROJECT_NATIVE_LAYOUT",
+      "source": "config/roster_association_profile.json OR config/draft_asset_profile.json",
+      "status": "NATIVE_PROFILE_PARTLY_LIVE_ACCEPTED_BOUNDED_OPERATIONS",
+      "current_value": null,
+      "format": {
+        "offset": "0x1C",
+        "storage": "uint32"
+      },
+      "effects": "MUST_PRESERVE_ROSTER_COUNTS_CURRENT_CONTRACT_TEAM_AND_PICK_OWNER",
+      "menu_or_executability": "SOME_BOUNDED_APPROVED_TRADES_ONLY",
+      "original_source_catalog": "R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.position",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x10E",
+        "bit_start": 2,
+        "width": 3
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.years_left",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x112",
+        "bit_start": 0,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.salary",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0xF8",
+        "bit_start": 0,
+        "width": 24
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.offense",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x100",
+        "bit_start": 0,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.defense",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x100",
+        "bit_start": 4,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.potential",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x108",
+        "bit_start": 4,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.contracts",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x102",
+        "bit_start": 0,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.trading",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x102",
+        "bit_start": 4,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.scouting",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x101",
+        "bit_start": 4,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.training",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x101",
+        "bit_start": 0,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.business",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x103",
+        "bit_start": 0,
+        "width": 4
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.preferred_system",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x10A",
+        "bit_start": 0,
+        "width": 3
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    },
+    {
+      "id": "STAFF.active_system",
+      "domain": "K09_STAFF",
+      "type": "STATIC_NATIVE_REGISTERED",
+      "source": "config/memory_field_profile.json AND src/source_extensions.py",
+      "status": "STAFF_SOURCE_READER_EXISTS_ACTUAL_CURRENT_POOL_NOT_IN_R05",
+      "current_value": null,
+      "format": {
+        "offset": "0x10B",
+        "bit_start": 4,
+        "width": 3
+      },
+      "effects": "EXACT_GAMERULE_IMPACT_UNVERIFIED",
+      "menu_or_executability": "HIRES_FIRES_CONTRACT_WRITES_NOT_CERTIFIED",
+      "original_source_catalog": "R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json"
+    }
+  ],
+  "data_evidence_note": "54 heterogeneous observed/registered/candidate rows: 17 PLAYER CONTRACT static, 10 finance known/candidate, 14 roster/pick native profiles, 13 STAFF static; not all 54 are verified live game facts."
+}

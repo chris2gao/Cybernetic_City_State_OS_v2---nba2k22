@@ -1,0 +1,278 @@
+{
+  "system_info": {
+    "module_name": "NBA2K22.exe",
+    "base_address": "0x140000000",
+    "slot_training": "0x0632B480",
+    "slot_franchise": "0x0632B478",
+    "roster_getter_rva": "0x011D5DE0"
+  },
+  "enums": {
+    "positions": {
+      "0": {
+        "code": "POINT_GUARD",
+        "name_zh": "控球后卫 (PG)",
+        "abbr": "PG"
+      },
+      "1": {
+        "code": "SHOOTING_GUARD",
+        "name_zh": "得分后卫 (SG)",
+        "abbr": "SG"
+      },
+      "2": {
+        "code": "SMALL_FORWARD",
+        "name_zh": "小前锋 (SF)",
+        "abbr": "SF"
+      },
+      "3": {
+        "code": "POWER_FORWARD",
+        "name_zh": "大前锋 (PF)",
+        "abbr": "PF"
+      },
+      "4": {
+        "code": "CENTER",
+        "name_zh": "中锋 (C)",
+        "abbr": "C"
+      },
+      "5": {
+        "code": "NONE",
+        "name_zh": "无位置 (None)",
+        "abbr": "NONE"
+      }
+    },
+    "player_types": {
+      "0": {
+        "code": "ALL_AROUND",
+        "name_zh": "全能型",
+        "name_en": "All-Around",
+        "desc": "均衡发展各项能力与属性"
+      },
+      "1": {
+        "code": "TWO_WAY",
+        "name_zh": "攻防兼备型",
+        "name_en": "Two-Way",
+        "desc": "侧重攻防两端全面压制 (3D侧翼/攻守核心)"
+      },
+      "2": {
+        "code": "OFFENSIVE",
+        "name_zh": "进攻型",
+        "name_en": "Offensive",
+        "desc": "侧重得分、投射、突破与进攻武器库"
+      },
+      "3": {
+        "code": "DEFENSIVE",
+        "name_zh": "防守型",
+        "name_en": "Defensive",
+        "desc": "侧重外线施压、拦截与内线护框"
+      },
+      "4": {
+        "code": "ATHLETIC",
+        "name_zh": "运动型",
+        "name_en": "Athletic",
+        "desc": "侧重速度、弹跳、爆发力与转换快攻"
+      },
+      "5": {
+        "code": "REBOUNDING",
+        "name_zh": "篮板型",
+        "name_en": "Rebounding",
+        "desc": "侧重卡位、拼抢进攻与防守篮板"
+      },
+      "6": {
+        "code": "PLAYMAKING",
+        "name_zh": "组织型",
+        "name_en": "Playmaking",
+        "desc": "侧重控运节奏、传球视野与阵地策应"
+      },
+      "7": {
+        "code": "OUTSIDE",
+        "name_zh": "外线型",
+        "name_en": "Outside",
+        "desc": "侧重外线三分投射、中距离急停与空间拉开"
+      },
+      "8": {
+        "code": "INSIDE",
+        "name_zh": "内线型",
+        "name_en": "Inside",
+        "desc": "侧重低位背身单打、篮下终结与对抗"
+      }
+    },
+    "intensities": {
+      "0": {
+        "code": "REST",
+        "name_zh": "休息",
+        "name_en": "Rest"
+      },
+      "1": {
+        "code": "VERY_LOW",
+        "name_zh": "极低",
+        "name_en": "Very Low"
+      },
+      "2": {
+        "code": "LOW",
+        "name_zh": "低",
+        "name_en": "Low"
+      },
+      "3": {
+        "code": "MEDIUM",
+        "name_zh": "中等",
+        "name_en": "Medium"
+      },
+      "4": {
+        "code": "HIGH",
+        "name_zh": "高",
+        "name_en": "High"
+      },
+      "5": {
+        "code": "VERY_HIGH",
+        "name_zh": "极高",
+        "name_en": "Very High"
+      }
+    },
+    "badge_levels": {
+      "0": {
+        "name_zh": "无",
+        "name_en": "None"
+      },
+      "1": {
+        "name_zh": "青铜",
+        "name_en": "Bronze"
+      },
+      "2": {
+        "name_zh": "白银",
+        "name_en": "Silver"
+      },
+      "3": {
+        "name_zh": "黄金",
+        "name_en": "Gold"
+      },
+      "4": {
+        "name_zh": "名人堂",
+        "name_en": "Hall of Fame (HOF)"
+      }
+    }
+  },
+  "structures": {
+    "team_training": {
+      "stride": 88,
+      "max_teams": 36,
+      "offsets": {
+        "percentage_per_focus": "0x00",
+        "profile_per_focus": "0x0C",
+        "points_per_subfocus": "0x0F",
+        "intensity_history": "0x35",
+        "intensity_history_point_count": {
+          "offset": "0x53",
+          "start_bit": 0,
+          "width": 5
+        },
+        "home_intensity": {
+          "offset": "0x53",
+          "start_bit": 5,
+          "width": 3
+        },
+        "away_intensity": {
+          "offset": "0x54",
+          "start_bit": 0,
+          "width": 3
+        },
+        "automate_intensity": {
+          "offset": "0x54",
+          "start_bit": 3,
+          "width": 1
+        },
+        "rest_before_b2b": {
+          "offset": "0x54",
+          "start_bit": 4,
+          "width": 1
+        },
+        "rest_after_b2b": {
+          "offset": "0x54",
+          "start_bit": 5,
+          "width": 1
+        },
+        "injury_recovery": {
+          "offset": "0x54",
+          "start_bit": 6,
+          "width": 1
+        }
+      }
+    },
+    "player_training": {
+      "stride": 796,
+      "array_offset": "0xC60",
+      "max_players": 786,
+      "offsets": {
+        "player_id": "0x00",
+        "points": "0x04",
+        "percentage_per_focus": "0xF0",
+        "profile_per_focus": "0xFC",
+        "points_per_subfocus": "0xFF",
+        "overall_history": "0x125",
+        "attribute_value_history": "0x12D",
+        "progressive_fatigue_history": "0x2F5",
+        "intensity_history": "0x2FA",
+        "flags": {
+          "offset": "0x318",
+          "intensity_history_point_count": {
+            "start_bit": 0,
+            "width": 5
+          },
+          "progressive_fatigue_history_point_count": {
+            "start_bit": 5,
+            "width": 3
+          },
+          "position": {
+            "start_bit": 8,
+            "width": 3
+          },
+          "player_type": {
+            "start_bit": 11,
+            "width": 5
+          },
+          "intensity": {
+            "start_bit": 16,
+            "width": 3
+          },
+          "injury_recovery": {
+            "start_bit": 19,
+            "width": 1
+          },
+          "is_intensity_overriden": {
+            "start_bit": 20,
+            "width": 1
+          }
+        }
+      }
+    },
+    "mentorship_manager": {
+      "relative_team_offset": "0x132A8",
+      "size": 960,
+      "offsets": {
+        "team_id": "0x00",
+        "is_first_badge": "0x04",
+        "num_relations": "0x08",
+        "relations_array": "0x0C"
+      },
+      "relation_entry": {
+        "stride": 204,
+        "offsets": {
+          "mentee_id": "0x00",
+          "mentor_id": "0x04",
+          "duration_days": "0x08",
+          "compatibility": "0x0C",
+          "num_badges": "0x14",
+          "badges_array": "0x18"
+        },
+        "badge_slot": {
+          "stride": 20,
+          "offsets": {
+            "type_id": "0x00",
+            "level": "0x04",
+            "is_active": "0x08",
+            "progression": "0x0C",
+            "date_last_checked": "0x10"
+          }
+        }
+      }
+    }
+  }
+}

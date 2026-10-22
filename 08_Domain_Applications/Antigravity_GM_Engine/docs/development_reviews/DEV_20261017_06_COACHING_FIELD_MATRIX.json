@@ -1,0 +1,936 @@
+{
+  "schema_version": 1,
+  "task_id": "DEV_20261017_06",
+  "codec_version": "NATIVE_COACH_POE_V1",
+  "native_evidence": {
+    "status": "VERIFIED_CURRENT_PROCESS_NATIVE_METADATA",
+    "evidence_version": "DEV_20261017_06_NATIVE_V1",
+    "coach_field_count": 142,
+    "defense_field_count": 18,
+    "module_timestamp": 1652287197,
+    "module_image_size": 115056640
+  },
+  "default_coach_fields": {
+    "POEDefense": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "13": "PROTECT_PAINT",
+        "14": "NEUTRAL_DEFENSE_FOCUS",
+        "15": "LIMIT_PERIMETER_SHOTS"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER"
+    },
+    "POEDefense2": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 5,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "16": "PLAY_CONSERVATIVE",
+        "17": "NEUTRAL_DEFENSE_TEMPO",
+        "18": "PLAY_PHYSICAL"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER"
+    },
+    "POEDefense3": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 10,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "19": "CRASH_DEFENSIVE_BOARDS",
+        "20": "NEUTRAL_DEFENSE_REBOUND",
+        "21": "RUN_IN_TRANSITION"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER"
+    },
+    "POEOffense": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 15,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "1": "GET_TO_BASKET",
+        "2": "GET_SHOOTERS_OPEN",
+        "3": "FEED_THE_POST",
+        "4": "PICK_AND_ROLL_OFFENSE",
+        "5": "NEUTRAL_OFFENSE_FOCUS",
+        "6": "RUN_OFFENSE_THROUGH_SCORER"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER"
+    },
+    "POEOffense2": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 20,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "7": "PATIENT_OFFENSE",
+        "8": "NEUTRAL_OFFENSE_TEMPO",
+        "9": "SHOOT_AT_WILL"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "editor_cache_hazard": "OPEN_EDITOR_LATER_REVERTED_7_TO_8",
+      "editor_closed_test": "HELD_STABLE_WITH_EDITOR_CLOSED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER"
+    },
+    "POEOffense3": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 25,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "10": "CRASH_OFFENSIVE_BOARDS",
+        "11": "NEUTRAL_OFFENSE_REBOUND",
+        "12": "LIMIT_TRANSITION"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER"
+    },
+    "SimPace": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 3,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "RUNTIME_WRITE_AND_ROLLBACK_VERIFIED_PERSISTENCE_PENDING",
+      "enum": {
+        "0": "VERYLOW",
+        "1": "LOW",
+        "2": "AVERAGE",
+        "3": "HIGH",
+        "4": "VERYHIGH"
+      },
+      "enum_rva": 80283392,
+      "memory_write_test": "PHI_2_TO_4_AND_ROLLBACK_VERIFIED",
+      "ui_test": "NOT_THE_PLAYERS_POE_OFFENSIVE_TEMPO_OPTION",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "SimPress": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 2,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "SimHelpDef": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 5,
+      "width": 2,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "SimOffReb": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 7,
+      "width": 2,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "SimDefReb": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 9,
+      "width": 2,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "PreferredSystem": {
+      "offset": 264,
+      "storage_bytes": 4,
+      "start_bit": 16,
+      "width": 4,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": {
+        "0": "BALANCED",
+        "1": "GRIT_AND_GRIND",
+        "2": "PACE_AND_SPACE",
+        "3": "PERIMETER",
+        "4": "POST",
+        "5": "TRIANGLE",
+        "6": "SEVEN_SECONDS",
+        "7": "DEFENSE"
+      },
+      "enum_rva": 80283712,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "ActiveSystem": {
+      "offset": 264,
+      "storage_bytes": 4,
+      "start_bit": 28,
+      "width": 4,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": {
+        "0": "BALANCED",
+        "1": "GRIT_AND_GRIND",
+        "2": "PACE_AND_SPACE",
+        "3": "PERIMETER",
+        "4": "POST",
+        "5": "TRIANGLE",
+        "6": "SEVEN_SECONDS",
+        "7": "DEFENSE"
+      },
+      "enum_rva": 80283712,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "PlaybookID": {
+      "offset": 264,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 8,
+      "writable": true,
+      "production_enabled": false,
+      "readiness": "SAFE_WRITE_PENDING",
+      "enum": "LOADED_PLAYBOOKS",
+      "enum_rva": 80283648,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "BenchDepth": {
+      "offset": 222,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "RunPlayTendency": {
+      "offset": 224,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "ZoneUsage": {
+      "offset": 226,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "BenchUtilization": {
+      "offset": 312,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "Tempo": {
+      "offset": 328,
+      "storage_bytes": 4,
+      "start_bit": 9,
+      "width": 8,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "HelpDefense": {
+      "offset": 328,
+      "storage_bytes": 4,
+      "start_bit": 17,
+      "width": 8,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "FreelanceType": {
+      "offset": 252,
+      "storage_bytes": 4,
+      "start_bit": 25,
+      "width": 6,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": 80194800,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "FreelanceType2": {
+      "offset": 328,
+      "storage_bytes": 4,
+      "start_bit": 26,
+      "width": 6,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": 80194800,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "FreelanceType3": {
+      "offset": 348,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 6,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": 80194800,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    },
+    "FreelanceType4": {
+      "offset": 348,
+      "storage_bytes": 4,
+      "start_bit": 9,
+      "width": 6,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "LOCATED_READ_ONLY",
+      "enum": null,
+      "enum_rva": 80194800,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED"
+    }
+  },
+  "defensive_fields": {
+    "PressureOnball": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 3,
+      "mask": "0x7",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "089d6de7",
+        "2": "a91e9f17",
+        "3": "ccde4204",
+        "4": "d4b9356b"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    },
+    "PressureOffball": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 3,
+      "mask": "0x38",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "089d6de7",
+        "2": "6ce44260",
+        "3": "a91e9f17",
+        "4": "ccde4204",
+        "5": "e21fffde"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    },
+    "ForceDirection": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0xc0",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "6e78dd49",
+        "2": "302a4f0a"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null
+      }
+    },
+    "ScreenDefenseOnBall": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 3,
+      "mask": "0x700",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e",
+        "4": "5de8c684"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    },
+    "ScreenDefenseHedge": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 11,
+      "width": 3,
+      "mask": "0x3800",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "1cfa4242",
+        "2": "7f66d741",
+        "3": "f7c5d5d3",
+        "4": "2a1f3569",
+        "5": "5d910492"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    },
+    "OffballScreenDefense": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 14,
+      "width": 2,
+      "mask": "0xc000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null
+      }
+    },
+    "PostDefense": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 16,
+      "width": 3,
+      "mask": "0x70000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "09afa046",
+        "2": "5de1fc62",
+        "3": "80be0fb8",
+        "4": "d1996a24"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    },
+    "DoubleTeamPerimeter": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 19,
+      "width": 2,
+      "mask": "0x180000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e0237942",
+        "2": "886ef5e7",
+        "3": "25187b0c"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null
+      }
+    },
+    "DoubleTeamPost": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 21,
+      "width": 3,
+      "mask": "0xe00000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e0237942",
+        "2": "41d1dc71",
+        "3": "886ef5e7",
+        "4": "aaf5b304"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    },
+    "ScreenDefenseOnBall5": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 24,
+      "width": 3,
+      "mask": "0x7000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e",
+        "4": "5de8c684"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null
+      }
+    },
+    "ScreenDefenseHedge5": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 27,
+      "width": 3,
+      "mask": "0x38000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "1cfa4242",
+        "2": "7f66d741",
+        "3": "f7c5d5d3",
+        "4": "2a1f3569",
+        "5": "5d910492"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      }
+    },
+    "SwitchRule": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 30,
+      "width": 2,
+      "mask": "0xc0000000",
+      "native_enum_name_crc32": {
+        "0": "2f8e7735",
+        "1": "660df31b",
+        "2": "5de99f12",
+        "3": "ee9ee584"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null,
+        "3": null
+      }
+    },
+    "OnballHelp": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 2,
+      "mask": "0x300000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "3e12b118",
+        "2": "d2435ffd"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null
+      }
+    },
+    "ScreenHelp": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 2,
+      "width": 2,
+      "mask": "0xc00000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "3e12b118",
+        "2": "d2435ffd"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null
+      }
+    },
+    "ExtendPressure": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 4,
+      "width": 2,
+      "mask": "0x3000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null
+      }
+    },
+    "TagOnRoll": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0xc000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null
+      }
+    },
+    "StayAttached": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 2,
+      "mask": "0x30000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": null,
+        "1": null,
+        "2": null
+      }
+    },
+    "PreRotate": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 10,
+      "width": 1,
+      "mask": "0x40000000000",
+      "native_enum_name_crc32": {},
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {}
+    }
+  },
+  "gameplan": {
+    "codec": "gameplan_codec.py",
+    "status": "MATCHUP_EXECUTION_BLOCKED_NOT_ACTIVATED",
+    "observed_teams": 30,
+    "observed_records": 870,
+    "rotations": "READ_ONLY_CAPTURE_LOCAL_IDS_NOT_VERIFIED_FOR_WRITES",
+    "is_in_use_zero_records_observed": 870,
+    "activation_semantics": "UNVERIFIED_ZERO_DOES_NOT_ESTABLISH_DISABLED_OR_ENABLED"
+  },
+  "playbooks": {
+    "observed_loaded": 84,
+    "observed_selectable": 82,
+    "count_is_not_a_constant": true,
+    "shared_crc_slots": "READ_ONLY_NO_WRITER"
+  },
+  "effect_status": "SIM_EFFECT_PENDING_PLAYER_MONTH",
+  "local_coaching_source_integrated_into_production_pipeline": false,
+  "acceptance_scope": "MEMORY_RUNTIME_FIRST_COMPUTER_USE_OPTIONAL_PLAYER_CONFIRMED",
+  "philadelphia_six_field_runtime_acceptance": {
+    "status": "SIX_FIELD_SHARED_BLOCK_RUNTIME_VERIFIED_AND_RESTORED",
+    "team_id": 0,
+    "abbreviation": "PHI",
+    "fields": [
+      "POEOffense",
+      "POEOffense2",
+      "POEOffense3",
+      "POEDefense",
+      "POEDefense2",
+      "POEDefense3"
+    ],
+    "writes": 1,
+    "storage_bytes": 4,
+    "reserved_bits_30_31_unchanged": true,
+    "all_30_full_coach_records_restored": true,
+    "playbook_contents_unchanged": true,
+    "persistence_verified": false,
+    "scope": "HISTORICAL_INITIAL_PHI_RUNTIME_STAGE_ONLY; later persistence evidence is separate"
+  },
+  "write_preconditions": [
+    "SPECIFIC_EXTERNAL_PLAYER_APPROVAL",
+    "PLAYER_CONFIRMED_COACH_EDITOR_CLOSED",
+    "CURRENT_PROCESS_OWNER_ROSTER_AND_FULL_SHARED_BLOCK_MATCH"
+  ],
+  "actual_new_process_verified": true,
+  "production_enabled_fields": [
+    "POEOffense",
+    "POEOffense2",
+    "POEOffense3",
+    "POEDefense",
+    "POEDefense2",
+    "POEDefense3"
+  ],
+  "formal_game_execution_performed": false,
+  "final_restoration": {
+    "status": "ALL_30_KNOWN_COACH_VALUES_RESTORED",
+    "abbreviation": "IND",
+    "restored_values": {
+      "POEOffense": 5,
+      "POEOffense2": 8,
+      "POEOffense3": 11,
+      "POEDefense": 14,
+      "POEDefense2": 17,
+      "POEDefense3": 20
+    },
+    "old_pid_rejected_before_rw_handle": true,
+    "fresh_process_recalibrated": true,
+    "shared_block_writes": 1,
+    "all_30_coach_24_known_fields_match_original": true,
+    "other_29_full_coach_records_unchanged": true,
+    "non_target_bits_unchanged": true,
+    "loaded_playbook_contents_unchanged": true,
+    "gameplan_write_attempts": 0,
+    "editor_closed_player_confirmed": true,
+    "restoration_in_memory_verified": true,
+    "restored_save_confirmation_pending": false,
+    "saved_restoration_read_only_verified": false,
+    "saved_restoration_followup": "PLAYER_EXPLICITLY_STOPPED_FURTHER_REPETITIVE_SAVE_RELOAD_TESTS",
+    "whole_save_restoration_claimed": false
+  },
+  "ai_indiana_restart_verification": {
+    "status": "SIX_POE_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+    "new_process": true,
+    "process_creation_time_changed": true,
+    "all_context_identities_match": true,
+    "playbook_contents_unchanged": true,
+    "team_id": 20,
+    "abbreviation": "IND",
+    "targets": {
+      "POEOffense": 2,
+      "POEOffense2": 7,
+      "POEOffense3": 10,
+      "POEDefense": 13,
+      "POEDefense2": 16,
+      "POEDefense3": 19
+    },
+    "all_six_persisted": true,
+    "other_known_coach_values_unchanged": true,
+    "player_ui_confirmation": "ALL_SIX_MATCHED_AFTER_AI_TEAM_SWITCHED_TO_PLAYER_CONTROL",
+    "mode": "READ_ONLY_NO_WRITE_HANDLE"
+  }
+}

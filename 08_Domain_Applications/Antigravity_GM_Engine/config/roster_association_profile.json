@@ -1,0 +1,44 @@
+{
+  "profile_version": "roster_associations_v1",
+  "game": "NBA2K22",
+  "status": "NATIVE_CODE_AND_LIVE_RELATION_VERIFIED_CHI_DET_PLAYER_ACCEPTED",
+  "regular_roster": {
+    "offset": 0,
+    "capacity": 15,
+    "pointer_bytes": 8,
+    "count_offset": 3249,
+    "count_bytes": 1
+  },
+  "reserved_roster_slots": {
+    "offset": 120,
+    "slots": 6
+  },
+  "two_way_roster": {
+    "offset": 168,
+    "capacity": 2,
+    "count_offset": 4167,
+    "start_bit": 0,
+    "bits": 2
+  },
+  "active_roster": {
+    "offset": 208,
+    "capacity": 13,
+    "pointer_bytes": 8,
+    "count_offset": 4167,
+    "start_bit": 4,
+    "bits": 4
+  },
+  "evidence": "NBA2K22 Tools local transfer/remove/count code; exact NBA2K22 executable active count/index sequence; live 30 NBA team pointer/count relations. See docs/37_APPROVED_TRADE_EXECUTOR.md. No cross-version offsets.",
+  "code_evidence": [
+    {
+      "name": "native_regular_roster_count_read",
+      "module_rva": 8896172,
+      "expected_hex": "410fb686b10c0000"
+    },
+    {
+      "name": "native_active_count_indexes_active_pointer_array",
+      "module_rva": 9326758,
+      "expected_hex": "8b8e44100000c1e91c8d41ff83f80c770a4d8bb4cec8000000"
+    }
+  ]
+}

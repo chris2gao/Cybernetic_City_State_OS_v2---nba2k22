@@ -1,0 +1,79 @@
+{
+  "issue": {
+    "actual": "规划已登记，工程尚未实施；本事件时间仅为规划引用整理时间",
+    "affected_capability": "POSTSEASON_CAPTURE_INTERFACE",
+    "category": "DEVELOPMENT_FEATURE_CANDIDATE",
+    "confidence": "RESEARCH",
+    "evidence_interpretation": "OPERATOR_SUPPLIED_REFERENCES_NOT_M4_LIVE_VERIFICATION",
+    "evidence_refs": [
+      "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+      "docs/development_tasks/DEV_20261020_20_M4_SYSTEM_EVOLUTION_ENGINE_IMPLEMENTATION_V1.md"
+    ],
+    "expected": "未来独立采集工程；本轮不采集、不扩充游戏来源",
+    "finding_kind": "RESEARCH",
+    "fingerprint": "a5bb834b34b7b9973f2de0c914265d9a9cbc9d7713dc1df3004bfad040d4390d",
+    "first_seen": "2026-10-20T13:42:21.080095+00:00",
+    "first_source": {
+      "producer": "PLAYER_DEV19_DEV20_ROADMAP",
+      "source_stage": "MANUAL_RESEARCH"
+    },
+    "issue_id": "DEV-a5bb834b34b7b9973f2d",
+    "known_limits": [
+      "未来规划需求，不是发现的Bug，不自动启动任务或游戏操作"
+    ],
+    "last_seen": "2026-10-20T13:42:21.080095+00:00",
+    "latest_confidence": "RESEARCH",
+    "latest_evidence_refs": [
+      "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+      "docs/development_tasks/DEV_20261020_20_M4_SYSTEM_EVOLUTION_ENGINE_IMPLEMENTATION_V1.md"
+    ],
+    "latest_source": {
+      "producer": "PLAYER_DEV19_DEV20_ROADMAP",
+      "source_stage": "MANUAL_RESEARCH"
+    },
+    "next_review_trigger": "玩家在M系列工程完成后单独触发规划或批准实现",
+    "occurrences": 1,
+    "player_decision_ref": "玩家M4任务：此项明确后置，仅允许登记规划任务指针",
+    "proposed_owner": "玩家后续指定的研究/Antigravity/Codex窗口",
+    "related_issue_ids": [],
+    "repro_steps": [
+      "阅读已批准记录的规划指针；不是故障复现"
+    ],
+    "revision": 1,
+    "roadmap_note": "未来独立采集工程；本轮不采集、不扩充游戏来源",
+    "root_cause_key": "POSTSEASON_BOX_SCORE_CAPTURE",
+    "scope": {
+      "kind": "SYSTEM"
+    },
+    "severity": "P2",
+    "status": "DEFERRED",
+    "title": "季后赛逐场、球员与高阶统计采集接口"
+  },
+  "history": {
+    "rows": [
+      {
+        "event_key": "ingest:99521530ab31a8be43bf0c22e877160c9b7664ed41684e1a0aa18fbcf7fd2671",
+        "kind": "OBSERVATION",
+        "revision": 1,
+        "occurred_at": "2026-10-20T13:42:21.080095+00:00",
+        "recorded_at": "2026-10-20T13:46:59.995717+00:00",
+        "source": {
+          "producer": "PLAYER_DEV19_DEV20_ROADMAP",
+          "source_stage": "MANUAL_RESEARCH"
+        },
+        "confidence": "RESEARCH",
+        "evidence_refs": [
+          "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+          "docs/development_tasks/DEV_20261020_20_M4_SYSTEM_EVOLUTION_ENGINE_IMPLEMENTATION_V1.md"
+        ],
+        "status_change": null,
+        "player_decision_ref": "玩家M4任务：此项明确后置，仅允许登记规划任务指针"
+      }
+    ],
+    "row_count": 1,
+    "next_cursor": null,
+    "truncated": false,
+    "evidence_watermark": 4,
+    "execution_authorized": false
+  }
+}

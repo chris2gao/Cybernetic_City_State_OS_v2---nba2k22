@@ -1,0 +1,17 @@
+{
+  "template_version": 2,
+  "description": "Reusable clean database template. Live rosters, finances, staff observations, and memory addresses are captured from the selected game save at bootstrap or ingestion time.",
+  "default_season_year": 2022,
+  "salary_cap": 112414000,
+  "luxury_tax_threshold": 136606000,
+  "first_apron": 143002000,
+  "historical_draft_class_year": 1984,
+  "gameplay_policy_path": "config/gameplay_policy.json",
+  "historical_rookie_classifier": {
+    "source": "raw player-pool structure",
+    "offset": "0x70",
+    "mask": "0xE0",
+    "value": "0xE0",
+    "persist_decoded_flag": false
+  }
+}

@@ -1,0 +1,502 @@
+{
+  "schema_id": "DEV29_R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1",
+  "date": "2026-10-21",
+  "status": "R06_B_RESEARCH_PUBLISHED_WITH_PC22_UI_AND_HISTORY_GAPS",
+  "target": "NBA2K22_PC_CURRENTGEN_OFFLINE_MYLEAGUE",
+  "research_only": true,
+  "modify_game": false,
+  "develop_agents": false,
+  "authority_separation": [
+    "GAME_NATIVE_FACT",
+    "PROJECT_POLICY",
+    "REAL_NBA_HISTORICAL_REFERENCE",
+    "MEDIA_REPORT_OR_OPINION",
+    "OTHER_VERSION_CAPABILITY"
+  ],
+  "worldline": {
+    "game_start_season": "2021-22",
+    "first_target_draft_class": 1984,
+    "last_target_draft_class": 2020,
+    "cycle": true,
+    "advance_on": "APPROVED_COMPLETED_DRAFT_ONLY",
+    "native_eras_feature": null,
+    "era_reference_is_external": true,
+    "native_eras_pc22_status": "UNKNOWN_NOT_NATIVE_VERIFIED; 2K23 nextgen Eras cannot be presumed an NBA2K22 PC feature"
+  },
+  "fields": [
+    {
+      "id": "K10.ERA_MODE_2K23",
+      "label": "历史Era原生开局",
+      "classification": "CROSS_VERSION_ONLY",
+      "version_scope": "NBA2K23_NEXTGEN",
+      "sources": [
+        "SRC-0174"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "PC22 ERAWORLD Native not supported by source"
+    },
+    {
+      "id": "K10.PROJECT_DRAFT_ROTATION",
+      "label": "1984–2020选秀轮回",
+      "classification": "PROJECT_POLICY",
+      "version_scope": "EXTERNAL",
+      "sources": [
+        "PROJECT_RULES_20261021_V4"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "advance only after approved actual draft"
+    },
+    {
+      "id": "K10.HISTORIC_DRAFT_PICKER",
+      "label": "Historic Draft Class初始选择",
+      "classification": "KNOWN_IN_SERIES",
+      "version_scope": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0176"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "current save UI/readback unknown"
+    },
+    {
+      "id": "K10.DRAFT_PROSPECT_SCOUTING",
+      "label": "Prospect Scouting当前届名单",
+      "classification": "KNOWN_IN_SERIES",
+      "version_scope": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0176"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "identity and loaded class version unknown"
+    },
+    {
+      "id": "K10.PAST_MVPS",
+      "label": "历届MVP",
+      "classification": "PLAYER_REPORTED_PC22",
+      "version_scope": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0178"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "retention and native read unknown"
+    },
+    {
+      "id": "K10.PAST_RULE_CHANGES",
+      "label": "过去规则变化",
+      "classification": "PLAYER_REPORTED_PC22",
+      "version_scope": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0178"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "voting/state unknown"
+    },
+    {
+      "id": "K10.RETIRED_JERSEYS",
+      "label": "历史退役球衣",
+      "classification": "PLAYER_REPORTED_PC22",
+      "version_scope": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0178"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "per team details unknown"
+    },
+    {
+      "id": "K10.HALL_OF_FAME",
+      "label": "名人堂入选历史",
+      "classification": "PLAYER_REPORTED_PC22_AMBIGUOUS",
+      "version_scope": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0178"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "location and all induction history unknown"
+    },
+    {
+      "id": "K10.MVP",
+      "label": "常规赛MVP",
+      "classification": "KNOWN_IN_SERIES",
+      "version_scope": "NBA2K20_23",
+      "sources": [
+        "SRC-0178"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "SRC-0178 reports Past MVPs menu, not current target save MVP record or comprehensive yearly award detail",
+      "source_audit_status": "SRC_0178_SUPPORTS_PAST_MVPS_MENU_ONLY_NOT_SEASON_RESULT_CAPTURE"
+    },
+    {
+      "id": "K10.ROOKIE_OF_YEAR",
+      "label": "ROY",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.DEF_PLAYER_YEAR",
+      "label": "DPOY",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.SIXTH_MAN",
+      "label": "Sixth Man",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.MOST_IMPROVED",
+      "label": "MIP",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.COACH_OF_YEAR",
+      "label": "COY",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.FINALS_MVP",
+      "label": "FMVP",
+      "classification": "CROSS_VERSION_DISCUSSION",
+      "version_scope": "NBA2K19",
+      "sources": [
+        "SRC-0186"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "PC22 display/current winner unknown"
+    },
+    {
+      "id": "K10.ALL_NBA",
+      "label": "All-NBA teams",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.ALL_DEFENSIVE",
+      "label": "All-Defensive teams",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.ALL_ROOKIE",
+      "label": "All-Rookie teams",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.ALL_STAR",
+      "label": "All-Star selection",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.CHAMPIONS",
+      "label": "赛季冠军历史",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "version_scope": "NBA2K20_23",
+      "sources": [],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "No directly matching source in R06-B: specific NBA2K22 menu/award category and game data remain unverified",
+      "source_audit_status": "DIRECT_SUPPORT_NOT_ESTABLISHED"
+    },
+    {
+      "id": "K10.NBA_RECORDS",
+      "label": "NBA历史纪录",
+      "classification": "CROSS_VERSION_MENU_REPORT",
+      "version_scope": "NBA2K21_23_MYLEAGUE",
+      "sources": [
+        "SRC-0179"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "PC22 exact menu unknown"
+    },
+    {
+      "id": "K10.TEAM_RECORDS",
+      "label": "球队记录",
+      "classification": "CROSS_VERSION_MENU_REPORT",
+      "version_scope": "NBA2K20_23",
+      "sources": [
+        "SRC-0180"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "PC22 per-franchise history unknown"
+    },
+    {
+      "id": "K10.CAREER_RECORD",
+      "label": "生涯记录",
+      "classification": "CROSS_VERSION_MENU_REPORT",
+      "version_scope": "NBA2K21_23",
+      "sources": [
+        "SRC-0180"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "current native record data unavailable"
+    },
+    {
+      "id": "K10.SEASON_RECORD",
+      "label": "单季记录",
+      "classification": "CROSS_VERSION_MENU_REPORT",
+      "version_scope": "NBA2K21_23",
+      "sources": [
+        "SRC-0180"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "current native record data unavailable"
+    },
+    {
+      "id": "K10.PLAYOFF_RECORD",
+      "label": "季后赛纪录",
+      "classification": "CROSS_VERSION_MENU_REPORT",
+      "version_scope": "NBA2K21_23",
+      "sources": [
+        "SRC-0180"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "current native record data unavailable"
+    },
+    {
+      "id": "K10.SOCIAL_FEED",
+      "label": "社交媒体消息",
+      "classification": "PC22_MOD_RESOURCE_INDIRECT",
+      "version_scope": "NBA2K22_PC_MYLEAGUE",
+      "sources": [
+        "SRC-0181"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "original UI and custom publishing unverified"
+    },
+    {
+      "id": "K10.POWER_RANKINGS",
+      "label": "实力榜",
+      "classification": "PC22_MOD_RESOURCE_INDIRECT",
+      "version_scope": "NBA2K22_PC_MYLEAGUE",
+      "sources": [
+        "SRC-0181"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "ranking algorithm/values unknown"
+    },
+    {
+      "id": "K10.MOCK_DRAFT_MEDIA",
+      "label": "模拟选秀媒体",
+      "classification": "PC22_MOD_RESOURCE_INDIRECT",
+      "version_scope": "NBA2K22_PC_MYLEAGUE",
+      "sources": [
+        "SRC-0181"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "mock not actual pick"
+    },
+    {
+      "id": "K10.RULE_PROPOSALS",
+      "label": "规则提案与投票",
+      "classification": "KNOWN_IN_SERIES",
+      "version_scope": "NBA2K15_20_MYLEAGUE",
+      "sources": [
+        "SRC-0182"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "PC22 current options unknown"
+    },
+    {
+      "id": "K10.ACTIVE_RULES",
+      "label": "生效规则/历史",
+      "classification": "CROSS_VERSION_UI_REPORT",
+      "version_scope": "NBA2K20_MYLEAGUE",
+      "sources": [
+        "SRC-0183"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "PC22 current rule legality unknown"
+    },
+    {
+      "id": "K10.ERA_PRESENTATION",
+      "label": "时代球馆/服饰/电视滤镜",
+      "classification": "CROSS_VERSION_ONLY",
+      "version_scope": "NBA2K23_NEXTGEN",
+      "sources": [
+        "SRC-0174"
+      ],
+      "target_pc22_current_value": null,
+      "pc22_native_read_verified_in_R06B": false,
+      "project_captured_in_R06B": false,
+      "gm_queryable_in_R06B": false,
+      "unknown_or_limit": "do not describe as PC22 native feature"
+    }
+  ],
+  "field_count": 31,
+  "sources": [
+    "SRC-0174",
+    "SRC-0175",
+    "SRC-0176",
+    "SRC-0177",
+    "SRC-0178",
+    "SRC-0179",
+    "SRC-0180",
+    "SRC-0181",
+    "SRC-0182",
+    "SRC-0183",
+    "SRC-0184",
+    "SRC-0185",
+    "SRC-0186"
+  ],
+  "gaps": [
+    "PC22_HISTORY_MENUS_PIXEL_AND_CONTROLLER_NOT_CONFIRMED",
+    "PC22_AWARD_TYPE_ENUM_AND_PAST_WINNERS_NOT_CAPTURED",
+    "PC22_RECORD_SCOPE_AND_HISTORIC_RETENTION_NOT_CAPTURED",
+    "PC22_MEDIA_ORIGINAL_UI_AND_MESSAGE_PROVENANCE_NOT_CAPTURED",
+    "PC22_RULE_PROPOSAL_MENU_ENUM_AND_SAVE_EFFECT_NOT_CAPTURED",
+    "PC22_HISTORIC_DRAFT_YEAR_IDENTITY_SOURCE_AND_SAVE_NOT_CAPTURED",
+    "GAME_SEASON_VS_EXTERNAL_DRAFT_YEAR_VS_REFERENCE_ERA_REQUIRE_DISTINCT_TIMELINES",
+    "NBA2K23_MY_NBA_ERAS_NOT_PC22_NATIVE",
+    "NO_NEW_NATIVE_MEMORY_OR_SAVE_WRITE_TESTS"
+  ],
+  "next": "R06_C_SEASON_PHASE_ADVANCEMENT_SAVE_PERSISTENCE_RESEARCH",
+  "catalog_item_semantics": "31 FEATURE_AND_INFORMATION_RESEARCH_CONCEPTS; NOT 31 NATIVE_MEMORY_FIELDS_OR_SQLITE_COLUMNS",
+  "default_capture_status": "CANDIDATE_ONLY_NO_TARGET_SAVE_RUNTIME_READBACK",
+  "sources_semantics": "sources[] are directly supportive references; [] means UNSOURCED candidate; source list at top is document bibliography only",
+  "source_audit": {
+    "date": "2026-10-21",
+    "basis": "DEV29_R06B_CROSS_WINDOW_RESEARCH_QUALITY_REVIEW_20261021.md",
+    "repaired_target_count": 10,
+    "affected_ids": [
+      "K10.ROOKIE_OF_YEAR",
+      "K10.DEF_PLAYER_YEAR",
+      "K10.SIXTH_MAN",
+      "K10.MOST_IMPROVED",
+      "K10.COACH_OF_YEAR",
+      "K10.ALL_NBA",
+      "K10.ALL_DEFENSIVE",
+      "K10.ALL_ROOKIE",
+      "K10.ALL_STAR",
+      "K10.CHAMPIONS"
+    ],
+    "review_outcome": "TARGETED_SOURCE_MAPPING_REPAIRED_PENDING_INDEPENDENT_REVIEW"
+  }
+}

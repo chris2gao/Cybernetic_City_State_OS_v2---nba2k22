@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "task": "DEV-20261018-10_V2_M0",
+  "status": "IMPLEMENTED_LOCAL",
+  "verified_at": "2026-10-19T05:19:54.352907+00:00",
+  "source_binding": {
+    "career_id": "mc_haliburton_2021",
+    "snapshot_id": "2021-2022_M02_DEC12_FULL_20261018",
+    "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+    "game_date": "2021-12-12",
+    "data_updated_at": "2026-10-18T12:12:13.170996+00:00",
+    "publication_status": "PUBLISHED_CURRENT",
+    "audit": "PASS_VERIFIED",
+    "query_version": "gm_sqlite_m0_v1",
+    "purpose": "production",
+    "production_gm_eligible": true
+  },
+  "checks": [
+    {
+      "check": "status",
+      "passed": true,
+      "row_count": 0,
+      "truncated": false
+    },
+    {
+      "check": "SAS_roster",
+      "passed": true,
+      "row_count": 15,
+      "truncated": false
+    },
+    {
+      "check": "SAS_staff_8_roles",
+      "passed": true,
+      "row_count": 8,
+      "truncated": false
+    },
+    {
+      "check": "Popovich",
+      "passed": true,
+      "row_count": 5,
+      "truncated": false
+    },
+    {
+      "check": "candidates",
+      "passed": true,
+      "row_count": 3,
+      "truncated": true
+    },
+    {
+      "check": "1984_Jordan",
+      "passed": true,
+      "row_count": 1,
+      "truncated": false
+    },
+    {
+      "check": "unrostered",
+      "passed": true,
+      "row_count": 3,
+      "truncated": true
+    },
+    {
+      "check": "contracts_attributes",
+      "passed": true,
+      "row_count": 1,
+      "truncated": true
+    },
+    {
+      "check": "coaching_19",
+      "passed": true,
+      "row_count": 1,
+      "truncated": false
+    },
+    {
+      "check": "opponent_18",
+      "passed": true,
+      "row_count": 1,
+      "truncated": false
+    },
+    {
+      "check": "picks",
+      "passed": true,
+      "row_count": 7,
+      "truncated": false
+    },
+    {
+      "check": "team_aggregate",
+      "passed": true,
+      "row_count": 30,
+      "truncated": false
+    },
+    {
+      "check": "roster_count",
+      "passed": true,
+      "row_count": 1,
+      "truncated": false,
+      "minimal_evidence": [
+        {
+          "n": 466
+        }
+      ]
+    },
+    {
+      "check": "finance_semantics",
+      "passed": true,
+      "row_count": 11,
+      "truncated": false
+    },
+    {
+      "check": "cash_issues",
+      "passed": true,
+      "row_count": 4,
+      "truncated": false,
+      "minimal_evidence": [
+        {
+          "team": "CLE",
+          "cash": 4288804119,
+          "cash_signed32_hypothesis": -6163177,
+          "financial_eligibility": "UNKNOWN"
+        },
+        {
+          "team": "NOP",
+          "cash": 4290109259,
+          "cash_signed32_hypothesis": -4858037,
+          "financial_eligibility": "UNKNOWN"
+        },
+        {
+          "team": "ORL",
+          "cash": 4291474586,
+          "cash_signed32_hypothesis": -3492710,
+          "financial_eligibility": "UNKNOWN"
+        },
+        {
+          "team": "UTA",
+          "cash": 4293156901,
+          "cash_signed32_hypothesis": -1810395,
+          "financial_eligibility": "UNKNOWN"
+        }
+      ]
+    },
+    {
+      "check": "read_only_rejection",
+      "passed": true,
+      "expected_rejection": "INVALID_SQL"
+    }
+  ],
+  "no_game_process": true,
+  "no_capture_or_publication": true,
+  "three_web_roles": {
+    "WEB_ANALYTICS": {
+      "status": "DEFERRED_BY_PLAYER_NOT_TESTED",
+      "blocking_delivery": false
+    },
+    "WEB_GM": {
+      "status": "DEFERRED_BY_PLAYER_NOT_TESTED",
+      "blocking_delivery": false
+    },
+    "WEB_DEVELOPMENT": {
+      "status": "DEFERRED_BY_PLAYER_NOT_TESTED",
+      "blocking_delivery": false
+    }
+  },
+  "unit_tests": {
+    "command": "python -B -m unittest discover -s tests -p test_gm_data_access.py -v",
+    "passed": 24
+  },
+  "export_hook_tests": {
+    "command": "python -B -m unittest discover -s tests -p test_coaching_export_integration.py -v",
+    "passed": 5
+  },
+  "finance_semantics": [
+    {
+      "field": "total_salary",
+      "offset": "0xCBC",
+      "encoding": "uint32",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "CURRENT_TEAM_TOTAL_LABEL; aggregation not independently reconciled",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "payroll",
+      "offset": "0xFF4",
+      "encoding": "uint32",
+      "unit": "UNKNOWN",
+      "time_scope": "PAYROLL_LABEL_ONLY; payment period and aggregation UNKNOWN",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "budget",
+      "offset": "0x1014",
+      "encoding": "uint32",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "OPERATING_BUDGET_LABEL; replenishment period UNKNOWN",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "staff_budget",
+      "offset": "0x1018",
+      "encoding": "uint32",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "STAFF_BUDGET_LABEL; replenishment period UNKNOWN",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "cash",
+      "offset": "0x1010",
+      "encoding": "uint32",
+      "unit": "UNKNOWN",
+      "time_scope": "SIGNEDNESS_AND_UI_MEANING_UNVERIFIED; preserve raw uint32",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "monthly_gate_revenue",
+      "offset": "0xFD8",
+      "encoding": "uint32",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "TIME_WINDOW_UNKNOWN; column name does not prove monthly revenue",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "merch_revenue",
+      "offset": "0xFDC",
+      "encoding": "uint32",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "TIME_WINDOW_UNKNOWN",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "media_revenue",
+      "offset": "0xFE4",
+      "encoding": "uint32",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "TIME_WINDOW_UNKNOWN",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "salary_current_year",
+      "offset": "player profile contract_year_1",
+      "encoding": "31-bit masked unsigned",
+      "unit": "USD",
+      "time_scope": "CURRENT_CONTRACT_SLOT; offseason transition not certified",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "contract_year_1..6",
+      "offset": "config/memory_field_profile.json",
+      "encoding": "31-bit masked unsigned",
+      "unit": "USD",
+      "time_scope": "SIX_OBSERVED_SALARY_SLOTS; not certified future cap commitments",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    },
+    {
+      "field": "staff_salary",
+      "offset": "staff profile vitals.salary",
+      "encoding": "native field profile",
+      "unit": "USD_AS_CAPTURED",
+      "time_scope": "STAFF_SALARY_LABEL; payment period UNKNOWN",
+      "evidence": "OBSERVED_RAW_SEMANTICS_PARTIAL",
+      "financial_eligibility": "UNKNOWN",
+      "usable_as_signing_capacity": false,
+      "evidence_file": "src/auto_pipeline_ingest.py; config/memory_field_profile.json"
+    }
+  ],
+  "player_override": "Web connections are deferred until after implementation, not a delivery gate; never claim M0_CONSUMER_ACCEPTED",
+  "os_acl_execution": "SCRIPT_PROVIDED_NOT_RUN_NO_CONSUMER_ACCOUNT_REQUESTED",
+  "scope": "M0_ONLY_NO_GAME_PROCESS_NO_PRODUCTION_CAPTURE_NO_GAME_DATA_PUBLICATION_NO_M1_M4"
+}

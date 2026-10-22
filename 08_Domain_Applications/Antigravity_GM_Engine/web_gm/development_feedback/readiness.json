@@ -1,0 +1,192 @@
+{
+  "version": "M4_SYSTEM_EVOLUTION_V1",
+  "as_of": "2026-10-20T13:42:21.080095+00:00",
+  "generated_at": "2026-10-20T13:47:00.776644+00:00",
+  "engineering": {
+    "M0": {
+      "status": "COMPLETE_MAIN",
+      "evidence_refs": [
+        "docs/development_reviews/DEV_20261018_10_M0_SQLITE_ACCESS_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    },
+    "M1": {
+      "status": "COMPLETE_MAIN",
+      "evidence_refs": [
+        "docs/development_reviews/DEV10_M1_FINANCE_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    },
+    "M2": {
+      "status": "COMPLETE_MAIN",
+      "evidence_refs": [
+        "docs/development_reviews/DEV10_M2_KNOWLEDGE_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    },
+    "M3A": {
+      "status": "COMPLETE_MAIN",
+      "evidence_refs": [
+        "docs/development_reviews/DEV10_M3A_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    },
+    "M3B": {
+      "status": "COMPLETE_MAIN",
+      "evidence_refs": [
+        "docs/development_reviews/DEV10_M3B_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    },
+    "M3_T": {
+      "status": "COMPLETE_MAIN",
+      "evidence_refs": [
+        "docs/development_reviews/M3_T_IMPLEMENTATION_AND_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    },
+    "M4": {
+      "status": "COMPLETE_BRANCH",
+      "evidence_refs": [
+        "docs/development_reviews/M4_SYSTEM_EVOLUTION_IMPLEMENTATION_AND_ACCEPTANCE.md"
+      ],
+      "notes": "本地工程证据；本次M4未重跑旧集合，不代表正式生产或Web验收"
+    }
+  },
+  "pr4": {
+    "status": "MERGED",
+    "evidence_refs": [
+      "https://github.com/chris2gao/nba2k22-gm-engine/pull/4"
+    ],
+    "notes": "本任务开始前已读取GitHub实际MERGED状态；基线5a49d71",
+    "merge_commit": "504a4c0656bad0e890c3783c89c656fca5b2e647"
+  },
+  "gates": {
+    "web_DEVELOPMENT": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "玩家将真实连接留到工程完成后；没有连接验收记录"
+    },
+    "web_ANALYTICS": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "玩家将真实连接留到工程完成后；没有连接验收记录"
+    },
+    "web_GM": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "玩家将真实连接留到工程完成后；没有连接验收记录"
+    },
+    "sanitized_production_capture": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "尚无本次已脱敏新生产批次证据，不因代码部署而确认"
+    },
+    "gm_consumed_sanitized_batch": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "未有真实GM消费新脱敏批次证据；旧M02不供GM"
+    },
+    "actual_30_team_research": {
+      "status": "UNASSESSED",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "真实30队正式评估0队；合成研究不计入"
+    },
+    "GSW_SAS_OKC_no_write_rehearsal": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "旧M02历史离线接口演练不等于新脱敏来源/V4正式经营演练"
+    },
+    "issue6_fix": {
+      "status": "DEFERRED",
+      "evidence_refs": [
+        "https://github.com/chris2gao/nba2k22-gm-engine/issues/6"
+      ],
+      "notes": "Issue #6已有合成报告；完整目录生产路径有已知阻断风险，尚未修复，未重测"
+    },
+    "BPTI_before_new_save": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "DEV19为玩家明确的正式新档前置工程；M4不实施"
+    },
+    "postseason_capture_interface": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "接口后续另行授权；未运行新采集"
+    },
+    "dual_engine_calibrator_interface": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "后续独立实现；首个季后赛真实年度校准不能提前声称已完成"
+    },
+    "player_V4_switch_and_new_save": {
+      "status": "PENDING",
+      "evidence_refs": [
+        "docs/development_tasks/DEV_20261020_19_BPTI_BASKETBALL_PHILOSOPHY_AND_TACTICAL_INTELLIGENCE_MASTER_PLAN_V1.md",
+        "docs/34_BASELINE_CURRENT_STATE.md"
+      ],
+      "notes": "没有玩家批准GM V4规则切换或正式新档；V3继续生效"
+    }
+  },
+  "blocked_conditions": [
+    "web_DEVELOPMENT",
+    "web_ANALYTICS",
+    "web_GM",
+    "sanitized_production_capture",
+    "gm_consumed_sanitized_batch",
+    "actual_30_team_research",
+    "GSW_SAS_OKC_no_write_rehearsal",
+    "issue6_fix",
+    "BPTI_before_new_save",
+    "postseason_capture_interface",
+    "dual_engine_calibrator_interface",
+    "player_V4_switch_and_new_save",
+    "M4_engineering_integration"
+  ],
+  "issue6_local_record": {
+    "issue_id": "DEV-5600dd26e1086b0b0f45",
+    "revision": 1,
+    "category": "OTHER_VERIFIED_ENGINEERING_ISSUE",
+    "title": "DEV14完整Registry字段目录被误识别为PLAYER Potential镜像",
+    "severity": "P1",
+    "status": "DEFERRED",
+    "finding_kind": "ENGINEERING_EVIDENCE",
+    "first_seen": "2026-10-20T10:20:13+00:00",
+    "last_seen": "2026-10-20T10:20:13+00:00",
+    "occurrences": 1,
+    "proposed_owner": "DEV14窗口①或另行批准的独立开发模型"
+  },
+  "engineering_status": "M4_ENGINEERING_COMPLETE",
+  "delivery_status": "M4_ENGINEERING_COMPLETE_AWAITING_PLAYER",
+  "gm_status": "GM_V4_NOT_ENABLED",
+  "activation": "PLAYER_SEPARATE_TASK_REQUIRED_NO_AUTOMATIC_SWITCH",
+  "evidence_basis": "DATED_REFERENCES_NOT_LIVE_WEB_GAME_OR_GITHUB_PROBES",
+  "scope": "ENGINEERING_ONLY_NO_TEAM_PERFORMANCE_OR_SIMULATION_CALIBRATION"
+}

@@ -1,0 +1,864 @@
+{
+  "schema_id": "DEV29_R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1",
+  "research_batch": "R04-C",
+  "created_at": "2026-10-21",
+  "status": "R04_C_RESEARCH_PUBLISHED_WITH_NATIVE_MOTIVATION_GAPS",
+  "artifact_kind": "RESEARCH_KNOWLEDGE_ONLY_NOT_EXECUTOR",
+  "target_game": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "source_evidence_policy": "2K20_23_FRANCHISE_MECHANISMS_REUSABLE_BUT_NATIVE_PC22_BIT_LAYOUT_AND_GAME_EFFECT_SEPARATE",
+  "canon_authority": "GAME_NBA2K22_FOR_TRUE_WORLD_EVENTS; EXTERNAL_SQLITE_FOR_PRIVATE_ROLE_BELIEFS_AND_NEGOTIATION",
+  "game_write_policy": "HUMAN_APPROVAL_REQUIRED; ORDINARY_ABILITY_POTENTIAL_BADGE_EDITS_FORBIDDEN",
+  "read_pipeline": "READ_ACTUAL_SOURCE_BATCH_BEFORE_ROLE_OBSERVE; ARCHIVE_NOT_CURRENT_SAVE",
+  "native_profile_check": "config/memory_field_profile.json has 17 contract fields but no labeled motivations",
+  "source_range": "SRC-0091..0105",
+  "personality_reference_counts": {
+    "r04a": 20,
+    "new_discovered": "Warm Weather Fan",
+    "cumulative_candidate": 21,
+    "developer_confirmed_free_agent_tiebreaker_in_2k20": 3,
+    "pc22_native_id_verified": 0
+  },
+  "native_motivations": [
+    {
+      "key": "Loyalty",
+      "display_labels": [
+        "Loyalty"
+      ],
+      "chinese": "忠诚/留队偏好",
+      "origin": "2K22_ARCHIVED_INSTALLED_ROSTER_HTML",
+      "sources": [
+        "SRC-0092",
+        "SRC-0093",
+        "SRC-0096",
+        "SRC-0097"
+      ],
+      "range": [
+        0,
+        100
+      ],
+      "actionable_dimensions": [
+        "STAY",
+        "RE_SIGN",
+        "EXPLORE_FA",
+        "TRADE_REQUEST",
+        "COUNTER_OFFER"
+      ],
+      "cannot_infer": "Loyalty high never leaves; historical preference is not current belief",
+      "engine_effect": "COMMUNITY_REPORTED_OLDER_SERIES_FREE_AGENCY_SENSITIVITY; NBA2K22_CODE_NOT_PROVEN",
+      "native_offset": null,
+      "native_profile_name": null,
+      "pc22_native_ui_status": "NOT_PIXEL_VERIFIED",
+      "current_save_player_value": null,
+      "sampled_archive_examples": [
+        {
+          "player": "Joel Embiid",
+          "v": 80,
+          "roster": "2021-09 2K22 archived",
+          "source": "SRC-0093"
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "v": 100,
+          "roster": "2021-09 2K22 archived",
+          "source": "SRC-0093"
+        }
+      ],
+      "value_is_probability": false,
+      "native_write": "NOT_APPROVED; NOT_DISCOVERED; ROLE_PROPOSED_CHANGES_NEED_PLAYER_CONSENT_AND_REAL_USER_APPROVAL",
+      "persistence": "GAME_SOURCE_UNKNOWN_CURRENT_BATCH",
+      "external_agent_interpretation": "CAN_USE_AS_BELIEF_EVIDENCE_WITH_DATE_AND_SOURCE_NOT_OBLIGATION",
+      "visibility": [
+        "PLAYER_IF_CURRENT_VALUE_DISCLOSED",
+        "GM_IF_LEGITIMATELY_CAPTURED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "override_risk": "ORIGINAL_GAME_FA_ENGINE_MAY_READ_THIS; DO_NOT_USE_AS_EXTERNAL_MEMORY_SLOT"
+    },
+    {
+      "key": "Playing for a Winner",
+      "display_labels": [
+        "Playing for a winner",
+        "Play For Winner",
+        "Play for Win"
+      ],
+      "chinese": "争冠与赢球诉求",
+      "origin": "2K22_ARCHIVED_INSTALLED_ROSTER_HTML",
+      "sources": [
+        "SRC-0092",
+        "SRC-0093",
+        "SRC-0096"
+      ],
+      "range": [
+        0,
+        100
+      ],
+      "actionable_dimensions": [
+        "PRIORITIZE_COMPETITIVE_TEAM",
+        "ACCEPT_LESS_FOR_ROLE",
+        "STAY_FOR_FAMILY_OR_CITY",
+        "REJECT_ILL_FIT_TEAM"
+      ],
+      "cannot_infer": "Winner rating equals odds of signing for contender or willingness to discount salary",
+      "engine_effect": "OLDER_SERIES_COMMUNITY_REPORTED; 2K22_EXACT_WEIGHT_UNKNOWN",
+      "native_offset": null,
+      "native_profile_name": null,
+      "pc22_native_ui_status": "NOT_PIXEL_VERIFIED",
+      "current_save_player_value": null,
+      "sampled_archive_examples": [
+        {
+          "player": "Joel Embiid",
+          "v": 15,
+          "roster": "2021-09 2K22 archived",
+          "source": "SRC-0093"
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "v": 50,
+          "roster": "2021-09 2K22 archived",
+          "source": "SRC-0093"
+        }
+      ],
+      "value_is_probability": false,
+      "native_write": "NOT_APPROVED; NOT_DISCOVERED; ROLE_PROPOSED_CHANGES_NEED_PLAYER_CONSENT_AND_REAL_USER_APPROVAL",
+      "persistence": "GAME_SOURCE_UNKNOWN_CURRENT_BATCH",
+      "external_agent_interpretation": "CAN_USE_AS_BELIEF_EVIDENCE_WITH_DATE_AND_SOURCE_NOT_OBLIGATION",
+      "visibility": [
+        "PLAYER_IF_CURRENT_VALUE_DISCLOSED",
+        "GM_IF_LEGITIMATELY_CAPTURED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "override_risk": "ORIGINAL_GAME_FA_ENGINE_MAY_READ_THIS; DO_NOT_USE_AS_EXTERNAL_MEMORY_SLOT"
+    },
+    {
+      "key": "Financial Security",
+      "display_labels": [
+        "Financial security",
+        "Financial Security",
+        "Financial Importance"
+      ],
+      "chinese": "收入/合同保障诉求",
+      "origin": "2K22_ARCHIVED_INSTALLED_ROSTER_HTML",
+      "sources": [
+        "SRC-0092",
+        "SRC-0093",
+        "SRC-0096"
+      ],
+      "range": [
+        0,
+        100
+      ],
+      "actionable_dimensions": [
+        "PRIORITIZE_GUARANTEED_TOTAL_MONEY",
+        "REQUEST_MORE_YEARS",
+        "REQUEST_PLAYER_OPTION",
+        "TAKE_DISCOUNT",
+        "TEST_MARKET"
+      ],
+      "cannot_infer": "Money-only player has to take highest annual nominal offer; not same as Finance Savvy tax location badge",
+      "engine_effect": "OLDER_SERIES_COMMUNITY_REPORTED; 2K22_EXACT_WEIGHT_UNKNOWN",
+      "native_offset": null,
+      "native_profile_name": null,
+      "pc22_native_ui_status": "NOT_PIXEL_VERIFIED",
+      "current_save_player_value": null,
+      "sampled_archive_examples": [
+        {
+          "player": "Joel Embiid",
+          "v": 70,
+          "roster": "2021-09 2K22 archived",
+          "source": "SRC-0093"
+        },
+        {
+          "player": "Tyrese Haliburton",
+          "v": 30,
+          "roster": "2021-09 2K22 archived",
+          "source": "SRC-0093"
+        }
+      ],
+      "value_is_probability": false,
+      "native_write": "NOT_APPROVED; NOT_DISCOVERED; ROLE_PROPOSED_CHANGES_NEED_PLAYER_CONSENT_AND_REAL_USER_APPROVAL",
+      "persistence": "GAME_SOURCE_UNKNOWN_CURRENT_BATCH",
+      "external_agent_interpretation": "CAN_USE_AS_BELIEF_EVIDENCE_WITH_DATE_AND_SOURCE_NOT_OBLIGATION",
+      "visibility": [
+        "PLAYER_IF_CURRENT_VALUE_DISCLOSED",
+        "GM_IF_LEGITIMATELY_CAPTURED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "override_risk": "ORIGINAL_GAME_FA_ENGINE_MAY_READ_THIS; DO_NOT_USE_AS_EXTERNAL_MEMORY_SLOT"
+    }
+  ],
+  "personality_candidates": [
+    {
+      "ref": "PERSONALITY_REFERENCE_01",
+      "badge_label": "Alpha Dog",
+      "name_zh": "核心领袖",
+      "source_ids": [
+        "SRC-0092",
+        "SRC-0098"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Can rally teammates; older badge glossary has situational effects but no confirmed PC22 formula",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_02",
+      "badge_label": "Extremely Confident",
+      "name_zh": "高度自信",
+      "source_ids": [
+        "SRC-0092",
+        "SRC-0098"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Personality descriptor of very high self-belief; precise game effect unknown",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_03",
+      "badge_label": "Finance Savvy",
+      "name_zh": "税务精明",
+      "source_ids": [
+        "SRC-0091",
+        "SRC-0098"
+      ],
+      "version_provenance": "DEVELOPER_NBA2K20_FRANCHISE_MECHANISM",
+      "meaning": "Prefers tax-efficient location",
+      "known_behavior": "Tax-location tie-break preference in 2K20 dev blog, DISTINCT from Financial Security",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "POSSIBLE_GAME_FA_PREFERENCE_EFFECT_DO_NOT_REPURPOSE_NATIVE_BADGE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_04",
+      "badge_label": "Friendly",
+      "name_zh": "友善外向",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Outgoing and usually well liked; precise chemistry formula not verified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_05",
+      "badge_label": "Media Ringmaster",
+      "name_zh": "媒体型人物",
+      "source_ids": [
+        "SRC-0091",
+        "SRC-0098"
+      ],
+      "version_provenance": "DEVELOPER_NBA2K20_FRANCHISE_MECHANISM",
+      "meaning": "Prefers big markets and press visibility",
+      "known_behavior": "Max-contract free agency big-market tiebreaker in 2K20 dev blog",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "POSSIBLE_GAME_FA_PREFERENCE_EFFECT_DO_NOT_REPURPOSE_NATIVE_BADGE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_06",
+      "badge_label": "Unpredictable",
+      "name_zh": "难以预测",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Erratic behavior personality descriptor; does not force trade/refusal",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_07",
+      "badge_label": "Expressive",
+      "name_zh": "表达欲强",
+      "source_ids": [
+        "SRC-0092",
+        "SRC-0098"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Expressive personal style; media/role effect not quantified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_08",
+      "badge_label": "Keep It Real",
+      "name_zh": "更接受直率沟通",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Reacts to blunt feedback in older series glossary; 2K22 effect unverified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_09",
+      "badge_label": "Pat My Back",
+      "name_zh": "偏好鼓励",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "May prefer reassurance in old series; exact player-communication influence unverified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_10",
+      "badge_label": "Low Ego",
+      "name_zh": "低自我中心",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Lower ego descriptor; not automatic wage discount",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_11",
+      "badge_label": "High Work Ethic",
+      "name_zh": "高训练投入",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Work effort descriptor; fatigue/injury formula not verified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_12",
+      "badge_label": "Legendary Work Ethic",
+      "name_zh": "极高训练投入",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Strong work effort descriptor; does not ensure faster progression",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_13",
+      "badge_label": "Reserved",
+      "name_zh": "内敛",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Reserved social style; native 2K22 personality category unverified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_14",
+      "badge_label": "Laid Back",
+      "name_zh": "随和",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Relaxed style; exact behavioral consequence unverified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_15",
+      "badge_label": "All-Time Great",
+      "name_zh": "历史地位追求",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Legacy ambition descriptor in older series; native effect unknown",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_16",
+      "badge_label": "On Court Coach",
+      "name_zh": "场上指导者",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Leadership/organizing identity; category and native effect pending",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_17",
+      "badge_label": "Championship DNA",
+      "name_zh": "冠军气质",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Experience/competitiveness identity; does not guarantee championship",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_18",
+      "badge_label": "Hardened",
+      "name_zh": "心理韧性",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Resilience descriptor; injury and morale effect unverified",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_19",
+      "badge_label": "Enforcer",
+      "name_zh": "强硬派",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Physical style descriptor; game effect and personality classification pending",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_20",
+      "badge_label": "Clutch Performer",
+      "name_zh": "关键时刻型",
+      "source_ids": [
+        "SRC-0098",
+        "SRC-0105"
+      ],
+      "version_provenance": "CROSS_SERIES_GLOSSARY_OR_2K22_COMMUNITY_CUSTOM_ROSTER",
+      "meaning": "Clutch label; verify whether Personality vs gameplay badge in PC22",
+      "known_behavior": "UNKNOWN_BEYOND_LABEL",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "UNKNOWN_GAME_EFFECT_DO_NOT_REPURPOSE"
+    },
+    {
+      "ref": "PERSONALITY_REFERENCE_21",
+      "badge_label": "Warm Weather Fan",
+      "name_zh": "温暖气候偏好",
+      "source_ids": [
+        "SRC-0091",
+        "SRC-0098"
+      ],
+      "version_provenance": "DEVELOPER_NBA2K20_FRANCHISE_MECHANISM",
+      "meaning": "Prefers warm climate",
+      "known_behavior": "Warm-climate tiebreaker in 2K20 dev blog",
+      "native_id": null,
+      "pc22_exact_native_presence": "UNVERIFIED_IN_PROJECT",
+      "pc22_engine_effect": "UNKNOWN_NOT_ASSUMED_EQUAL_2K20",
+      "badge_tier": "NO_TIER_ASSUMED",
+      "game_world_state_must_be_captured": true,
+      "normal_game_write": "FORBIDDEN_UNLESS_INDEPENDENT_HISTORYLINE_EXCEPTION_WITH_HUMAN_APPROVAL",
+      "role_semantic": "INITIAL_BELIEF_CLUE_NOT_PERSONALITY_DETERMINISM",
+      "media_visibility": "PUBLIC_IF_GAME_OR_CHARACTER_PUBLICLY_DISCLOSED_ONLY",
+      "double_effect_risk": "POSSIBLE_GAME_FA_PREFERENCE_EFFECT_DO_NOT_REPURPOSE_NATIVE_BADGE"
+    }
+  ],
+  "other_native_dynamic_concepts": [
+    {
+      "id": "MORALE",
+      "label": "Player Morale",
+      "source": [
+        "SRC-0091",
+        "SRC-0094",
+        "SRC-0100"
+      ],
+      "evidence": "2K20 dev blog dynamic equilibrium; 2K22 PS4 conflicting community reports",
+      "native_current_state": "UNKNOWN",
+      "stage": "SEASON_DYNAMIC",
+      "roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "interests": [
+        "ROLE_SATISFACTION",
+        "WINNING",
+        "CONTRACT",
+        "MINUTES_EXPECTATIONS"
+      ],
+      "not_equivalent_to": "CHEMISTRY_OR_ACTUAL_TRADE_REQUEST"
+    },
+    {
+      "id": "CHEMISTRY",
+      "label": "Team Chemistry",
+      "source": [
+        "SRC-0091",
+        "SRC-0100"
+      ],
+      "evidence": "2K20 dev blog distinct team equilibrium",
+      "native_current_state": "UNKNOWN",
+      "stage": "SEASON_DYNAMIC",
+      "roles": [
+        "COACH",
+        "GM",
+        "PLAYER_TEAM_VIEW"
+      ],
+      "interests": [
+        "WORK_ETHIC_MIX",
+        "ROSTER_TENURE",
+        "TEAM_RESULTS"
+      ],
+      "not_equivalent_to": "ANY_INDIVIDUAL_MORALE"
+    },
+    {
+      "id": "CONTRACT_THOUGHT",
+      "label": "Interested/Explore Free Agency/Insulted",
+      "source": [
+        "SRC-0094",
+        "SRC-0095",
+        "SRC-0100"
+      ],
+      "evidence": "Observed reported 2K22 interest and FA negotiation states",
+      "native_current_state": "UNKNOWN",
+      "stage": "EXTENSION_OR_FA",
+      "roles": [
+        "PLAYER",
+        "GM"
+      ],
+      "interests": [
+        "TEST_MARKET",
+        "REJECT",
+        "COUNTER"
+      ],
+      "not_equivalent_to": "PROVEN_NPC_UNIVERSAL_RULE"
+    },
+    {
+      "id": "ROLE",
+      "label": "Star/Starter/Sixth/Role/Bench/Prospect",
+      "source": [
+        "SRC-0105"
+      ],
+      "evidence": "Older MyGM wiki roster role taxonomy",
+      "native_current_state": "UNKNOWN_PC22_MENU",
+      "stage": "ROSTER_MANAGEMENT",
+      "roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "interests": [
+        "MINUTES",
+        "STARTING",
+        "PLAY_TYPES"
+      ],
+      "not_equivalent_to": "EXACT_AI_MINUTES_CONTROL"
+    }
+  ],
+  "external_role_choice_lexicon": [
+    {
+      "id": "SEEK_CONTRACT",
+      "roles": [
+        "PLAYER"
+      ],
+      "native_component": "NONE_UNTIL_APPROVED_CONTRACT_PROPOSAL",
+      "possible_response": [
+        "PROPOSE",
+        "COUNTER",
+        "ACCEPT",
+        "REJECT",
+        "WITHDRAW",
+        "WAIT_FA"
+      ],
+      "world_guard": [
+        "REAL_CONTRACT_ELIGIBILITY",
+        "TEAM_CAP",
+        "HUMAN_APPROVAL",
+        "FINAL_READBACK"
+      ]
+    },
+    {
+      "id": "CONDITIONAL_SIGNING",
+      "roles": [
+        "PLAYER",
+        "GM"
+      ],
+      "native_component": "EXTERNAL_EVENT_NOT_NATIVE_GAME_BUTTON",
+      "possible_response": [
+        "ASK_FOR_ROSTER_CHANGE",
+        "OFFER_ROLE",
+        "DEBATE",
+        "REJECT",
+        "NEGOTIATE_MULTIPLE_TEAMS"
+      ],
+      "world_guard": [
+        "NO_DIRECT_GM_MUTATION_UNTIL_USER_APPROVED",
+        "TERMS_NOT_GUARANTEED_IN_AI_ROTATION"
+      ]
+    },
+    {
+      "id": "ASK_TRADE",
+      "roles": [
+        "PLAYER",
+        "GM"
+      ],
+      "native_component": "EXTERNAL_PLAYER_INTENT; GAME_NATIVE_TRADE_ONLY_IF_APPROVED",
+      "possible_response": [
+        "REQUEST",
+        "COUNTER",
+        "REJECT",
+        "SHOP",
+        "HOLD"
+      ],
+      "world_guard": [
+        "TRADE_LEGALITY",
+        "ROSTER_CAP",
+        "PLAYER_AGENCY",
+        "HUMAN_APPROVAL"
+      ]
+    },
+    {
+      "id": "TRAINING_OR_INJURY_REFUSAL",
+      "roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "native_component": "TRAINING_REGISTERED_SELECT_FIELDS; FUTURE_PLAYER_CONSENT_EXTERNAL",
+      "possible_response": [
+        "REQUEST_REST",
+        "REFUSE_HIGH_INTENSITY",
+        "ACCEPT_RISK",
+        "OFFER_ALTERNATIVE"
+      ],
+      "world_guard": [
+        "GAME_HEALTH_FACTS_MUST_BE_REAL",
+        "NO_DIRECT_DURABILITY_OR_ABILITY_EDITS",
+        "APPROVAL"
+      ]
+    },
+    {
+      "id": "PUBLIC_STATEMENT",
+      "roles": [
+        "PLAYER",
+        "COACH",
+        "GM",
+        "MEDIA"
+      ],
+      "native_component": "EXTERNAL_PUBLISHED_EVENT",
+      "possible_response": [
+        "SPEAK",
+        "SILENCE",
+        "DENY",
+        "CRITICIZE",
+        "RETRACT"
+      ],
+      "world_guard": [
+        "PUBLIC_VS_PRIVATE_PROVENANCE",
+        "NO_FABRICATED_GAME_NATIVE_QUOTE"
+      ]
+    },
+    {
+      "id": "FREE_AGENCY_COMPETITION",
+      "roles": [
+        "GM",
+        "PLAYER"
+      ],
+      "native_component": "CURRENT_PROJECT_EXTERNAL_FA_AUCTION_REQUIRES_SEPARATE_EXECUTOR",
+      "possible_response": [
+        "BID",
+        "COUNTER",
+        "REJECT",
+        "ACCEPT",
+        "WITHDRAW"
+      ],
+      "world_guard": [
+        "GAME_DATE_PHASE",
+        "FINANCES",
+        "CONTRACT_RIGHTS",
+        "REAL_USER_APPROVAL"
+      ]
+    }
+  ],
+  "observability_rules": {
+    "player": "Own current contractual game facts and private external preferences; no inferred native values",
+    "gm": "Only legally captured values, official game status and offers",
+    "coach": "Role and tactical availability plus disclosed concerns; no mind reading",
+    "media": "Only public factual events and explicitly labelled rumors; not private negotiations"
+  },
+  "pitfalls": [
+    "Finance Savvy != Financial Security",
+    "2K20 morale equilibrium not certified unchanged in PC22",
+    "ATD MyNBA Event Generator is external not game native",
+    "2K22 PS4 player unhappiness despite success does not imply universal bug",
+    "ARCHIVED 0-100 ratings not current game data",
+    "Badge labels do not imply badge tiers or quantified effects",
+    "Real player approval is distinct from simulated player consent"
+  ],
+  "next_batch": "R04-D PLAYER_NATIVE_EXTERNAL_DUAL_SEMANTICS_AND_ROLE_INTERACTION_ATLAS"
+}

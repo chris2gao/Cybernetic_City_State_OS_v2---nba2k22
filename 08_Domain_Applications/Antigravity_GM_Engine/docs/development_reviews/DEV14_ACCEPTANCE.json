@@ -1,0 +1,99 @@
+{
+  "task": "DEV14_V1.1_A_B_C_D",
+  "branch": "codex/dev14-state-io",
+  "base_commit": "635ff2a",
+  "scope": "ENGINEERING_SYNTHETIC_STATIC_ONLY",
+  "tests": {
+    "status": "PASS",
+    "tests_run": 119,
+    "failures": 0,
+    "errors": 0,
+    "suites": {
+      "test_state_io.py": 19,
+      "test_coaching_batch.py": 20,
+      "test_coaching_safety.py": 38,
+      "test_coaching_source.py": 13,
+      "test_coaching_export_integration.py": 5,
+      "test_gm_data_access.py": 24
+    },
+    "seconds": 59.599,
+    "no_live_game_tests": true
+  },
+  "static_m02": {
+    "status": "STATIC_M02_READ_ONLY_VERIFIED",
+    "source": {
+      "career_id": "mc_haliburton_2021",
+      "snapshot_id": "2021-2022_M02_DEC12_FULL_20261018",
+      "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+      "game_date": "2021-12-12",
+      "data_updated_at": "2026-10-18T12:12:13.170996+00:00",
+      "publication_status": "PUBLISHED_CURRENT",
+      "audit": "PASS_VERIFIED",
+      "query_version": "gm_sqlite_m0_v1",
+      "purpose": "production",
+      "production_gm_eligible": true
+    },
+    "teams": [
+      {
+        "n": 30
+      }
+    ],
+    "coach_sample": [
+      {
+        "team_id": 0,
+        "team": "PHI"
+      }
+    ],
+    "new_domains_in_existing_batch": {
+      "world": false,
+      "gameplay": false,
+      "tactics": false,
+      "tendency": false,
+      "training": false,
+      "personal_defense": false
+    },
+    "registry_version": "94fcae08011be1a81428b8c73e84c252a706f519b2644b09de44d42da993f75c",
+    "registry_domains": {
+      "tactics": {
+        "registered": 30,
+        "writable": 25
+      },
+      "defense": {
+        "registered": 36,
+        "writable": 36
+      },
+      "tendency": {
+        "registered": 99,
+        "writable": 48
+      },
+      "gameplay": {
+        "registered": 4,
+        "writable": 4
+      },
+      "world": {
+        "registered": 50,
+        "writable": 50
+      },
+      "training": {
+        "registered": 12,
+        "writable": 11
+      }
+    },
+    "game_handles": 0,
+    "facts_or_published_modified": false
+  },
+  "syntax": {
+    "python_ast_files": 25,
+    "powershell_parse_files": 2,
+    "status": "PASS_SCRIPTS_NOT_EXECUTED"
+  },
+  "supplemental": {
+    "two_save_facts_pool_approval_isolation": "PASS_1_TARGETED_TEST_AFTER_FULL_SUITE"
+  },
+  "native_evidence": "EXISTING_COACH_ACCEPTANCE_AND_PLAYER_REPORTED_ANTIGRAVITY_TESTED_MODULES",
+  "game_writes": 0,
+  "production_capture_run": false,
+  "production_data_published": false,
+  "gm_v4_enabled": false,
+  "merge_performed": false
+}

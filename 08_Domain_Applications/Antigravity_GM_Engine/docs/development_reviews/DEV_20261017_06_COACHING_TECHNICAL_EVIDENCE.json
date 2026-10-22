@@ -1,0 +1,256 @@
+{
+  "task_id": "DEV_20261017_06",
+  "native_evidence": {
+    "status": "VERIFIED_CURRENT_PROCESS_NATIVE_METADATA",
+    "evidence_version": "DEV_20261017_06_NATIVE_V1",
+    "coach_field_count": 142,
+    "defense_field_count": 18,
+    "module_timestamp": 1652287197,
+    "module_image_size": 115056640
+  },
+  "memory_verification": {
+    "status": "LIVE_MEMORY_WRITE_READBACK_AND_ROLLBACK_VERIFIED",
+    "all_30_coach_records_restored": true,
+    "loaded_playbook_contents_unchanged": true,
+    "results": [
+      {
+        "team_id": 20,
+        "abbreviation": "IND",
+        "field": "POEOffense",
+        "before": 5,
+        "target": 2,
+        "execution_status": "EXECUTED_VERIFIED",
+        "idempotent": true,
+        "writes": 1,
+        "ui_verified": false,
+        "save_reload_verified": false
+      },
+      {
+        "team_id": 29,
+        "abbreviation": "GS",
+        "field": "POEOffense",
+        "before": 5,
+        "target": 2,
+        "execution_status": "EXECUTED_VERIFIED",
+        "idempotent": true,
+        "writes": 1,
+        "ui_verified": false,
+        "save_reload_verified": false
+      }
+    ],
+    "persistence": "NOT_VERIFIED",
+    "effect_status": "SIM_EFFECT_PENDING_PLAYER_MONTH",
+    "scope": "HISTORICAL_INITIAL_IND_GS_RUNTIME_STAGE; later IND save/UI evidence is separate"
+  },
+  "blockers": [],
+  "philadelphia_six_field_runtime_acceptance": {
+    "status": "SIX_FIELD_SHARED_BLOCK_RUNTIME_VERIFIED_AND_RESTORED",
+    "team_id": 0,
+    "abbreviation": "PHI",
+    "fields": [
+      "POEOffense",
+      "POEOffense2",
+      "POEOffense3",
+      "POEDefense",
+      "POEDefense2",
+      "POEDefense3"
+    ],
+    "writes": 1,
+    "storage_bytes": 4,
+    "reserved_bits_30_31_unchanged": true,
+    "all_30_full_coach_records_restored": true,
+    "playbook_contents_unchanged": true,
+    "persistence_verified": false,
+    "scope": "HISTORICAL_INITIAL_PHI_RUNTIME_STAGE_ONLY"
+  },
+  "acceptance_scope": "MEMORY_RUNTIME_FIRST_COMPUTER_USE_OPTIONAL_PLAYER_CONFIRMED",
+  "optional_ui_component_status": "CAPTURE_TIMEOUT_NOT_A_RUNTIME_IMPLEMENTATION_GATE",
+  "philadelphia_actual_process_restart": {
+    "new_process": true,
+    "process_creation_time_changed": true,
+    "native_evidence": {
+      "status": "VERIFIED_CURRENT_PROCESS_NATIVE_METADATA",
+      "evidence_version": "DEV_20261017_06_NATIVE_V1",
+      "coach_field_count": 142,
+      "defense_field_count": 18,
+      "module_timestamp": 1652287197,
+      "module_image_size": 115056640
+    },
+    "all_context_identities_match": true,
+    "playbook_contents_unchanged": true,
+    "team_id": 0,
+    "abbreviation": "PHI",
+    "coach_identity_matches": true,
+    "before_raw": 5,
+    "after_restart_raw": 2,
+    "expected_after_restart": 2,
+    "persistent": true,
+    "decoded_field_changes": {
+      "PHI": {
+        "POEOffense": {
+          "before": 5,
+          "after": 2
+        }
+      }
+    },
+    "mode": "READ_ONLY_NO_WRITE_HANDLE"
+  },
+  "editor_closed_stability": {
+    "status": "HELD_STABLE_WITH_EDITOR_CLOSED",
+    "field": "POEOffense2",
+    "before_raw": 8,
+    "after_raw": 7,
+    "short_stability_reads": [
+      7,
+      7,
+      7,
+      7,
+      7
+    ],
+    "player_confirmed_interface_context": "COACH_GAMEPLAN_CLOSED_CALENDAR",
+    "other_29_coach_records_unchanged": true,
+    "gameplan_write_attempts": 0
+  },
+  "ai_indiana_six_field_write": {
+    "status": "EXECUTED_UI_SAVE_RESTART_AND_RESTORATION_VERIFIED",
+    "abbreviation": "IND",
+    "team_id": 20,
+    "coach": {
+      "team_id": 20,
+      "staff_slot": 18,
+      "first_name": "Rick",
+      "last_name": "Carlisle",
+      "role": "HEAD_COACH",
+      "identity_tag": "fd9aa8e2e37d1d746b6245cc8d1f85deb99bfbebdccfd6cdf28bbb73659f96a2"
+    },
+    "control_state_source": "PLAYER_CONFIRMED_AI_CONTROLLED_AT_WRITE",
+    "targets": {
+      "POEOffense": 2,
+      "POEOffense2": 7,
+      "POEOffense3": 10,
+      "POEDefense": 13,
+      "POEDefense2": 16,
+      "POEDefense3": 19
+    },
+    "before_values": {
+      "POEOffense": 5,
+      "POEOffense2": 8,
+      "POEOffense3": 11,
+      "POEDefense": 14,
+      "POEDefense2": 17,
+      "POEDefense3": 20
+    },
+    "philadelphia_restoration": "ROLLED_BACK",
+    "all_24_known_phi_fields_restored": true,
+    "other_29_full_coach_records_unchanged": true,
+    "shared_block_writes": 1,
+    "reserved_bits_preserved": true,
+    "gameplan_write_attempts": 0,
+    "held_for_player_confirmation": false,
+    "interface_precondition": "PLAYER_CONFIRMED_COACH_EDITOR_CLOSED_BEFORE_EXECUTION",
+    "player_confirmed_all_six": true
+  },
+  "gameplan_changes_observed_without_executor_writes": {
+    "team_id": 0,
+    "abbreviation": "PHI",
+    "modified_records": 2,
+    "changed_field_counts": {
+      "POEOffense": 2
+    },
+    "is_in_use_before": {
+      "0": 29
+    },
+    "is_in_use_after": {
+      "0": 29
+    },
+    "executor_gameplan_write_attempts": 0,
+    "cause": "NOT_PROVEN_UI_OR_SAVE_PROCESSING_BETWEEN_SNAPSHOTS"
+  },
+  "player_manual_confirmation": {
+    "PHI_POEOffense_2": true,
+    "PHI_POEOffense_restored_5": true,
+    "PHI_POEOffense2_7_after_editor_closed": true,
+    "all_teams_and_selected_opponent_views_reported_by_player": true,
+    "wording_correction": "all teams, not all players",
+    "AI_IND_all_six": true
+  },
+  "production_enabled_fields": [
+    "POEOffense",
+    "POEOffense2",
+    "POEOffense3",
+    "POEDefense",
+    "POEDefense2",
+    "POEDefense3"
+  ],
+  "formal_game_execution_performed": false,
+  "remaining_unverified_modules": [
+    "SIM_FIELD_SAVE_ACCEPTANCE",
+    "SYSTEM_SELECTION_WRITE_ACCEPTANCE",
+    "PLAYBOOK_SELECTION_WRITE_ACCEPTANCE",
+    "SLIDER_UNITS_AND_WRITE_ACCEPTANCE",
+    "GAMEPLAN_ACTIVATION_AND_DEFENSIVE_ROTATION_WRITE_SEMANTICS",
+    "PRODUCTION_SOURCE_INTEGRATION",
+    "MULTI_TEAM_ATOMIC_BATCH"
+  ],
+  "historical_philadelphia_held_test_state": {
+    "team_id": 0,
+    "abbreviation": "PHI",
+    "field": "POEOffense",
+    "before_raw": 5,
+    "after_raw": 2,
+    "before_label": "NEUTRAL_OFFENSE_FOCUS",
+    "after_label": "GET_SHOOTERS_OPEN",
+    "scope": "HISTORICAL_TEMPORARY_HOLD_SINCE_RESTORED",
+    "bytes_written": 4,
+    "other_29_coach_records_unchanged": true
+  },
+  "ai_indiana_restart_verification": {
+    "status": "SIX_POE_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+    "new_process": true,
+    "process_creation_time_changed": true,
+    "all_context_identities_match": true,
+    "playbook_contents_unchanged": true,
+    "team_id": 20,
+    "abbreviation": "IND",
+    "targets": {
+      "POEOffense": 2,
+      "POEOffense2": 7,
+      "POEOffense3": 10,
+      "POEDefense": 13,
+      "POEDefense2": 16,
+      "POEDefense3": 19
+    },
+    "all_six_persisted": true,
+    "other_known_coach_values_unchanged": true,
+    "player_ui_confirmation": "ALL_SIX_MATCHED_AFTER_AI_TEAM_SWITCHED_TO_PLAYER_CONTROL",
+    "mode": "READ_ONLY_NO_WRITE_HANDLE"
+  },
+  "final_restoration": {
+    "status": "ALL_30_KNOWN_COACH_VALUES_RESTORED",
+    "abbreviation": "IND",
+    "restored_values": {
+      "POEOffense": 5,
+      "POEOffense2": 8,
+      "POEOffense3": 11,
+      "POEDefense": 14,
+      "POEDefense2": 17,
+      "POEDefense3": 20
+    },
+    "old_pid_rejected_before_rw_handle": true,
+    "fresh_process_recalibrated": true,
+    "shared_block_writes": 1,
+    "all_30_coach_24_known_fields_match_original": true,
+    "other_29_full_coach_records_unchanged": true,
+    "non_target_bits_unchanged": true,
+    "loaded_playbook_contents_unchanged": true,
+    "gameplan_write_attempts": 0,
+    "editor_closed_player_confirmed": true,
+    "restoration_in_memory_verified": true,
+    "restored_save_confirmation_pending": false,
+    "saved_restoration_read_only_verified": false,
+    "saved_restoration_followup": "PLAYER_EXPLICITLY_STOPPED_FURTHER_REPETITIVE_SAVE_RELOAD_TESTS",
+    "whole_save_restoration_claimed": false
+  },
+  "current_held_test_changes": [],
+  "gameplan_boundary": "Executor wrote no Gameplan records. Player UI/save operations changed some PHI raw opponent POE bytes; full-save byte restoration is not claimed. IsInUse zero remains semantically unverified."
+}

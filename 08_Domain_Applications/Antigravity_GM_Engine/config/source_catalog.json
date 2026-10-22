@@ -1,0 +1,277 @@
+{
+  "schema_version": 2,
+  "capture_profile": "full_verified_v1",
+  "trigger_mode": "PLAYER_INITIATED_ONLY",
+  "deterministic_state_io": {
+    "task": "DEV14_V1.1",
+    "status": "IMPLEMENTED_ON_DEV14_BRANCH_NOT_REAL_PRODUCTION_CAPTURED",
+    "entrypoint": "scripts/gm_state_io.py",
+    "registry": "src/gm_state_io/registry.py",
+    "native_provenance": "config/state_io_native/provenance.json",
+    "observed_source": "state_io_captures/state_io_objects/observed_setting_values",
+    "control_database": "database/saves/<save_id>/gm_control.sqlite (generation paths via save_context)",
+    "capture": "EXISTING_full_verified_v1_SAME_RO_SESSION_ONLY",
+    "consumer": "EXISTING_M0_STATIC_SNAPSHOT_BOUNDED_DOMAINS",
+    "domains": ["world", "gameplay", "tactics", "tendency", "training", "personal_defense", "rotation"],
+    "approval_trust": "MANUAL_OPERATOR_TRUST_ONLY_PLAYER_CHAT_APPROVAL_OPERATOR_ATTESTED_OPTIONAL_REVIEW",
+    "rotation_bias": {"field_key": "rotation.intangibles", "target_kind": "PLAYER_ROTATION_OVR_BIAS", "profile": "memory_field_profile.fields.PLAYER.intangibles", "display_range": [25, 99], "native_byte": "0x440", "codec": "config.rating_to_raw"},
+    "gm_policy": "PERSONAL_DEFENSE_ONLY_OWN_TEAM_NAMED_BOOK_TEAM_BOOK_REBIND_REQUIRES_SEPARATE_HUMAN_EVENT_CONFIRMATION",
+    "capability": "Native write evidence is retained from existing profiles/player-reported Antigravity tests; DEV14 integration was verified synthetically only.",
+    "not_adapted": ["mentor relationship/count/badge grant", "51 unnamed tendency byte semantics", "remaining gameplay/world/curve catalogs not supplied with supported layouts"],
+    "manual": "docs/DEV14_STATE_IO_RUNBOOK.md"
+  },
+  "player_potential_mask": {
+    "version": "potential_v1",
+    "source_role": "GM_SANITIZED",
+    "value": 1,
+    "evidence": "NOT_GAME_OBSERVED",
+    "automatic_stage": "AFTER_RAW_CAPTURE_CHECKS_BEFORE_FILE_INSTALL_HASH_EXPORT_ARCHIVE",
+    "module": "src/player_potential_mask.py",
+    "unknown_mirrors": "FAIL_CLOSED",
+    "native_injection": "SANITIZED_PLAYER_POOL_NOT_NATIVE_INJECTION_SOURCE",
+    "historical_policy": "SEALED_OLD_BATCHES_UNCHANGED_EXCLUDED_FROM_GM_NO_UNMASKED_REPUBLISH",
+    "manual": "docs/DEV15_ROTATION_AND_POTENTIAL_RUNBOOK.md"
+  },
+  "consumer_access": {
+    "task": "DEV-20261018-10_V2_M0",
+    "entrypoint": "scripts/gm_data_query.py",
+    "snapshot_preparation": "scripts/gm_data_snapshot.py",
+    "mode": "AUDITED_STATIC_TWO_DATABASE_READ_ONLY",
+    "new_game_source": false,
+    "web_connections": "DEFERRED_BY_PLAYER_NOT_TESTED_NOT_BLOCKING_DELIVERY",
+    "finance_semantics": "RAW_PRESERVED_SIGNED_CASH_HYPOTHESIS_UNVERIFIED",
+    "manual": "docs/GM_SQLITE_QUERY_ACCESS.md"
+  },
+  "game_calendar_detection": "NOT_OBSERVED_USER_DATE_OR_EXPLICIT_CURRENT_DATE_UNKNOWN",
+  "career_identity_detection": "NOT_IMPLEMENTED_EXPLICIT_SAVE_ID_REQUIRED",
+  "offseason_development": {
+    "task": "DEV_20261017_04",
+    "status": "P0_PARTIAL_REAL_GAME_NOT_VERIFIED",
+    "offline_planner": "scripts/offseason_plan.py",
+    "offline_planner_status": "SYNTHETIC_SOURCE_ONLY_NOT_RUN_NOT_TESTED",
+    "research_entry": "scripts/offseason_research.py",
+    "research_scope": "Explicit archived field inventory only; no live capture, expiry certification or game writes.",
+    "production_source": "NOT_IMPLEMENTED",
+    "contract_transition_semantics": "NOT_VERIFIED",
+    "native_ai_signing_control": "NOT_VERIFIED",
+    "review": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md"
+  },
+  "development_only_sources": [
+    {
+      "id": "coaching_tactics_local",
+      "status": "VERIFIED_READ_ONLY_DEVELOPMENT_SOURCE",
+      "entrypoint": "scripts/coaching_snapshot.py",
+      "profile": "config/coach_tactics_profile.json",
+      "production_capture_integration": false,
+      "development_capture_integration": "IMPLEMENTED_ON_MAIN_REAL_PRODUCTION_RUN_PENDING",
+      "scope": "Native coach defaults, opponent gameplans, defense and rotation capture-local references. Does not refresh full_verified_v1 sources or timestamps.",
+      "production_execution_enabled_fields": [
+        "POEOffense",
+        "POEOffense2",
+        "POEOffense3",
+        "POEDefense",
+        "POEDefense2",
+        "POEDefense3",
+        "PreferredSystem",
+        "ActiveSystem",
+        "PlaybookID",
+        "BenchDepth",
+        "RunPlayTendency",
+        "ZoneUsage",
+        "BenchUtilization",
+        "Tempo",
+        "HelpDefense",
+        "FreelanceType",
+        "FreelanceType2",
+        "FreelanceType3",
+        "FreelanceType4"
+      ],
+      "execution_field_notes": "Native Tempo raw read/write is player-approved; UI meaning is unconfirmed. Other coaches' observed values are practical references, not target whitelists. Execution capability is not deployment or approval of a concrete batch.",
+      "execution_approval": "SPECIFIC_EXTERNAL_PLAYER_APPROVAL_AND_EDITOR_CLOSED_REQUIRED"
+    }
+  ],
+  "execution_interfaces": {
+    "approved_trade_executor": "scripts/execute_approved_trades.py",
+    "status": "OWNERSHIP_TRANSFER_V2_ENABLED_CHI_DET_PLAYER_ACCEPTED",
+    "roster_count_profile": "config/roster_association_profile.json",
+    "count_read_evidence": "Current NBA2K22 native code, installed NBA2K22 Tools, and all 30 team pointer/count relations. Reading is not complete write certification.",
+    "incident_repair": "scripts/repair_approved_roster_counts.py",
+    "incident_repair_scope": "Three evidenced CHI/DET count bytes only; no player/pick replay or finance writes.",
+    "review": "docs/37_APPROVED_TRADE_EXECUTOR.md",
+    "database_update_in_this_task": false,
+    "approved_signing_executor": "scripts/execute_approved_signing.py",
+    "signing_status": "SOURCE_ONLY_NOT_RUN_NOT_TESTED_EXECUTION_DISABLED",
+    "signing_review": "docs/38_APPROVED_SIGNING_EXECUTION.md",
+    "scope": "Execute GM-approved trades and signing results only; all business decisions remain external."
+  },
+  "player_confirmed_scope": {
+    "contract_requirement": "CURRENT_ROSTER_PLAYER_SALARIES_ONLY",
+    "contract_scope_confirmed_at": "2026-10-17",
+    "excluded_contract_work": ["guaranteed_amounts", "dead_cap", "exceptions", "cap_holds", "complete_real_world_CBA_ledger"],
+    "previously_observed_contract_clauses": "May remain as observations; not required for completion of the salary capture task.",
+    "age_requirement": "Prefer the in-game age field; date-derived age is not a substitute for observed in-game age. Unresolved fields may remain explicit gaps."
+  },
+  "field_notes": {
+    "team_monthly_stats.poe_*": "LEGACY_UNVERIFIED raw TEAM bytes; tactical semantics revoked by DEV06. Never reuse these names as native COACHDATA POE or assign a new meaning to historical batches.",
+    "coaching_snapshot": "Independent engineering CLI does not refresh production source timestamps. PR #1 merged the same-RO-session ingestion/audit/SQLite/export hook into main (2509b3b). First player-triggered full production capture and publication completed on 2026-10-18; see coaching_tactics.first_production below. Historical batches are not backfilled.",
+    "team_monthly_stats.monthly_gate_revenue": "Direct offset value; the revenue aggregation window has not been independently established. The legacy column name does not prove it is monthly revenue.",
+    "season_rules": "Configured and versioned rules, not observations of an in-game CBA ledger.",
+    "monthly_snapshot": "A capture label is not evidence that game results for a month were acquired. Game date comes from the player's explicit trigger.",
+    "player_age": "Observed birth date; exact age is calculated only with a player-confirmed game date. Unknown date leaves age NULL.",
+    "season_statistics": "Current indexed season totals from roster descriptors; per-game and shooting percentages are deterministic Python calculations, not monthly observations.",
+    "overall_rating": "NOT_OBSERVED. Player reported MC Haliburton displays locked 60 and Curry 96; these samples are discovery clues, not a complete memory data source.",
+    "contract_ledger": "Player requirement is current-roster salaries only, already captured. Six 31-bit salary fields and previously decoded clauses remain available; guarantees, dead cap, exceptions, cap holds and a complete real-world CBA ledger are outside the current requested scope.",
+    "staff_identity": "Capture-local staff slot and reciprocal team-role links; not a cross-save permanent ID.",
+    "player_pool_identity": "Legacy model slot uses calibrated roster root as origin; slot zero is the roster directory. Read descriptor count plus root slot; never stop at a blank name."
+  },
+  "sources": [
+    {
+      "id": "state_io_native",
+      "status": "IMPLEMENTED_DEV14_BRANCH_PRODUCTION_CAPTURE_NOT_TRIGGERED",
+      "capture_adapter": "gm_state_io.capture_bridge",
+      "capture_mode": "SAME_FULL_VERIFIED_V1_READ_ONLY_SESSION",
+      "required": false,
+      "query_domains": ["world", "gameplay", "tactics", "tendency", "training", "personal_defense"],
+      "source_status": "PER_DOMAIN_OBSERVED_OR_EXPLICIT_NOT_OBSERVED",
+      "legacy_batches": "NOT_BACKFILLED",
+      "approval": "PER_SAVE_INSTANCE_GENERATION_BATCH_DECISION_ACTIONS_DIGEST_EXTERNAL_PLAYER_APPROVAL"
+    },
+    {
+      "id": "coaching_tactics",
+      "status": "FIRST_PRODUCTION_CAPTURED_AND_PUBLISHED",
+      "scope": "Same capture-session 30 head coaches: 19 default fields; per-owner opponent overall bulk-defense observations. Five Sim fields are read-only GM_CONTROL_DISABLED. No individual matchup or rotation writer.",
+      "current_capture": "Hook in auto_pipeline_ingest.py on main; player-triggered full update only",
+      "tables": ["coaching_source_captures", "coaching_team_observations"],
+      "export_files": ["coaching/teams.json", "coaching/field_dictionary.json", "coaching/opponents/index.json", "coaching/opponents/<TEAM>.json"],
+      "audit": "Same RO source session and later same-process source audit; missing/ambiguous teams fail before new publication",
+      "historical_batches": "No backfill; absent source remains NOT_OBSERVED_IN_THIS_BATCH",
+      "deployed_to_main": true,
+      "first_production": {
+        "save_id": "mc_haliburton_2021",
+        "snapshot_id": "2021-2022_M02_DEC12_FULL_20261018",
+        "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+        "game_date": "2021-12-12",
+        "game_date_provenance": "USER_CONFIRMED",
+        "data_updated_at": "2026-10-18T12:12:13.170996+00:00",
+        "uploaded_at": "2026-10-18T12:14:23.439960+00:00",
+        "upload_status": "UPLOADED",
+        "publication_commit": "a84e1b522e66d189f77f28f2f84947f9bee35b84",
+        "source_coverage_status": "VERIFIED_OBSERVED_SAME_BATCH",
+        "audit_verdict": "PASS_VERIFIED",
+        "gm_data_reader": "PASS_30_TEAMS_AND_SELECTED_OPPONENT",
+        "chatgpt_web_connection_verified": false
+      },
+      "recommended_events": ["player_requested_full_update", "post_approved_coaching_execution"]
+    },
+    {
+      "id": "global_players",
+      "status": "VERIFIED_PARTIAL_FIELDS",
+      "scope": "Complete live descriptor array; valid names, draft metadata, position, DOB, 55 attributes including potential, six salary fields and contract clauses. Raw structs retained; no OVR.",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "new_career",
+        "season_start",
+        "roster_import",
+        "draft_post"
+      ],
+      "identity": "slot identifies a model version within this pool, not a stable person across roster versions"
+    },
+    {
+      "id": "staff_pool",
+      "status": "VERIFIED_RECIPROCAL_TEAM_ROLES",
+      "scope": "Complete roster staff descriptor slots; named occupied entries and all 8 staff roles per NBA team. Unknown team pointers are unmapped, not assumed free agents.",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "season_start",
+        "staff_change",
+        "monthly_close"
+      ],
+      "identity": "slot and name only; persistent staff identity pending"
+    },
+    {
+      "id": "team_state",
+      "status": "VERIFIED_OBSERVED_FIELDS",
+      "scope": "30 core teams; finances, ticket values, chemistry, interest. Historical poe_* bytes remain raw LEGACY_UNVERIFIED observations; coaching semantics revoked.",
+      "legacy_tactical_semantics": "LEGACY_UNVERIFIED_NOT_COACHING_FACTS",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "monthly_close",
+        "checkpoint",
+        "post_transaction",
+        "season_start"
+      ]
+    },
+    {
+      "id": "active_rosters_contracts",
+      "status": "VERIFIED_PARTIAL_FIELDS",
+      "scope": "30 rosters; identity, position, DOB, date-dependent age, 55 attributes, six annual salary amounts, options, type and no-trade. Full CBA ledger incomplete.",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "monthly_close",
+        "post_transaction",
+        "draft_post",
+        "season_start"
+      ]
+    },
+    {
+      "id": "games_box_scores_standings",
+      "status": "VERIFIED_PARTIAL_SEASON_TOTALS",
+      "scope": "30-team current-season wins/losses and counting totals; current indexed player season totals where available. No game logs, schedule, exact tie-break rankings or monthly splits.",
+      "recommended_events": [
+        "game_complete",
+        "monthly_close"
+      ]
+    },
+    {
+      "id": "injuries_availability_rotations",
+      "status": "NOT_OBSERVED",
+      "scope": "injuries, fatigue, availability, rotation minutes and depth charts",
+      "recommended_events": [
+        "game_complete",
+        "monthly_close",
+        "post_transaction"
+      ]
+    },
+    {
+      "id": "full_player_models",
+      "status": "VERIFIED_PARTIAL_ATTRIBUTES",
+      "scope": "55 decoded attributes including potential and raw full model records. Overall, full badges/tendencies/animations and development history are not certified.",
+      "recommended_events": [
+        "season_start",
+        "monthly_close",
+        "roster_import"
+      ]
+    },
+    {
+      "id": "draft_picks_assets_free_agency",
+      "status": "VERIFIED_SIMPLE_FUTURE_PICKS",
+      "scope": "Native NBA2K22 getter signatures verify current/original owner semantics; packed year/round and complete future draft coverage checked each capture. Only next three uncompleted annual drafts are tradeable under player rules. No protection or swap conditions; no automatic execution or full CBA certification. Legacy batches remain candidates.",
+      "recommended_events": [
+        "post_transaction",
+        "draft_pre",
+        "draft_post",
+        "season_start"
+      ]
+    },
+    {
+      "id": "historical_draft_catalog",
+      "status": "VERIFIED_CLASSIFIER",
+      "scope": "historical rookie classification from raw[0x70] & 0xE0 == 0xE0; target slot injection remains separate and unverified",
+      "recommended_events": [
+        "roster_import",
+        "draft_pre"
+      ]
+    },
+    {
+      "id": "rules_worldlines_decisions",
+      "status": "CONFIGURED_NOT_MEMORY_TRUTH",
+      "scope": "versioned season rules, historical/real-world references, approved fictional branches, proposals, approval and execution receipts",
+      "recommended_events": [
+        "new_career",
+        "season_start",
+        "approved_decision",
+        "external_reference_update"
+      ]
+    }
+  ]
+}

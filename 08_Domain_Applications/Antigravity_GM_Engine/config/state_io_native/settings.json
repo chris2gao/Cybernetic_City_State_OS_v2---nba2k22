@@ -1,0 +1,528 @@
+{
+  "version": "1.0.0",
+  "description": "NBA 2K22 终极联盟 (MyLEAGUE) 全局设置与滑块原生内存字段注册表",
+  "slots": {
+    "SLOT_SETTINGS": {
+      "rva": "0x0632B4B0",
+      "description": "比赛与实机全局设置控制器 (Game Settings Controller)"
+    },
+    "SLOT_TRADE": {
+      "rva": "0x0632B498",
+      "description": "联盟规则、交易、CBA财务、伤病、士气与模拟器控制器 (Trade & League Rules Controller)"
+    },
+    "SLOT_SLIDERS": {
+      "rva": "0x0632B4A0",
+      "description": "游戏拟真对抗滑块矩阵 (TUNEDATA_SAVED, 126组双侧对抗参数)"
+    },
+    "SLOT_FRANCHISE": {
+      "rva": "0x0632B478",
+      "description": "终极联盟根对象指针 (Franchise Root Pointer)"
+    }
+  },
+  "fields": {
+    "game_settings": {
+      "quarter_length": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0x14",
+        "type": "uint32",
+        "min": 1,
+        "max": 12,
+        "default": 12,
+        "name_zh": "实机比赛单节时间",
+        "unit": "分钟"
+      },
+      "game_speed": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0x00",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.5,
+        "name_zh": "游戏速度",
+        "unit": "系数 (0.50=50)"
+      },
+      "free_throw_difficulty": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0x60",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.5,
+        "name_zh": "罚球难度",
+        "unit": "系数 (0.50=50)"
+      },
+      "shot_clock": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0x74",
+        "type": "uint32",
+        "min": 12,
+        "max": 60,
+        "default": 24,
+        "name_zh": "进攻时限 (24秒进攻时间)",
+        "unit": "秒"
+      },
+      "foul_out": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0xA0",
+        "type": "uint32",
+        "min": 2,
+        "max": 8,
+        "default": 6,
+        "name_zh": "犯规出局次数限制",
+        "unit": "次"
+      },
+      "injuries_enabled": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0xF0",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "伤病全局开关",
+        "unit": "0=关闭, 1=开启"
+      }
+    },
+    "simulation": {
+      "sim_quarter_length": {
+        "slot": "SLOT_TRADE",
+        "offset": "0xB4",
+        "type": "uint32",
+        "min": 1,
+        "max": 12,
+        "default": 12,
+        "name_zh": "日历模拟单节时长",
+        "unit": "分钟"
+      },
+      "normalize_stats": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x600",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "出场时间与数据规格化至12分钟",
+        "unit": "0=关闭, 1=开启"
+      }
+    },
+    "trade_rules": {
+      "cpu_cpu_trades": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x170",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 0,
+        "name_zh": "电脑球队间自主交易开关 (防乱交易核心)",
+        "unit": "0=关闭, 1=开启"
+      },
+      "trade_override": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x168",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "强制交易覆盖开关 (Trade Override)",
+        "unit": "0=关闭, 1=开启"
+      },
+      "trade_deadline": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x16C",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "交易截止日开关",
+        "unit": "0=关闭, 1=开启"
+      },
+      "financial_trade_rules": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x160",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "财务交易薪资匹配限制",
+        "unit": "0=关闭, 1=开启"
+      },
+      "recently_signed_rule": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x154",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "刚签约球员不可交易限制 (90天规则)",
+        "unit": "0=关闭, 1=开启"
+      },
+      "recently_traded_rule": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x158",
+        "type": "uint32",
+        "min": 0,
+        "max": 1,
+        "default": 1,
+        "name_zh": "刚交易球员不可再打包限制 (60天规则)",
+        "unit": "0=关闭, 1=开启"
+      },
+      "trade_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x174",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "玩家交易谈判难度",
+        "unit": "0~100"
+      },
+      "cpu_trade_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x178",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "电脑球队发起交易频率",
+        "unit": "0~100"
+      },
+      "blockbuster_trade_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x17C",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "重磅轰动级交易发生频率",
+        "unit": "0~100"
+      },
+      "untouchable_threshold": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x184",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "非卖品保护门槛",
+        "unit": "0~100"
+      }
+    },
+    "contracts": {
+      "contract_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x210",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "自由球员合同谈判难度",
+        "unit": "0~100"
+      },
+      "player_non_financial_ambitions": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x214",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "球员非经济偏好因素 (争冠/忠诚)",
+        "unit": "0~100"
+      },
+      "min_contract_rating": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x218",
+        "type": "uint32",
+        "min": 50,
+        "max": 99,
+        "default": 50,
+        "name_zh": "底薪球员起评分数",
+        "unit": "能力值 (50~99)"
+      },
+      "max_contract_rating": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x21C",
+        "type": "uint32",
+        "min": 70,
+        "max": 99,
+        "default": 40,
+        "name_zh": "顶薪起评分数门槛",
+        "unit": "能力值 (70~99)"
+      },
+      "player_potential_factor": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x220",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 60,
+        "name_zh": "潜力在薪资要价中的权重",
+        "unit": "0~100"
+      },
+      "player_durability_factor": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x224",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 20,
+        "name_zh": "耐用度在薪资要价中的权重",
+        "unit": "0~100"
+      },
+      "player_fame_factor": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x22C",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "声望知名度在薪资要价中的加成",
+        "unit": "0~100"
+      },
+      "cpu_interest_in_resigning": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x234",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "电脑母队提前续约自家球员倾向",
+        "unit": "0~100"
+      }
+    },
+    "injuries_and_morale": {
+      "user_injury_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x24C",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 65,
+        "name_zh": "玩家球队伤病发生频率",
+        "unit": "0~100"
+      },
+      "cpu_injury_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x250",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "电脑球队伤病发生频率",
+        "unit": "0~100"
+      },
+      "user_injury_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x254",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "玩家球队伤病负面影响严重度",
+        "unit": "0~100"
+      },
+      "cpu_injury_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x258",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "电脑球队伤病负面影响严重度",
+        "unit": "0~100"
+      },
+      "injury_severity": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x25C",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 30,
+        "name_zh": "伤病严重程度滑块 (大伤 vs 小伤)",
+        "unit": "0~100"
+      },
+      "injury_duration": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x260",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "伤病恢复持续周期",
+        "unit": "0~100"
+      },
+      "career_ending_injury_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x264",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 5,
+        "name_zh": "生涯报销退役大伤频率",
+        "unit": "0~100"
+      },
+      "morale_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x238",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "更衣室士气波动难度",
+        "unit": "0~100"
+      },
+      "morale_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x23C",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "低士气对赛场表现负面影响",
+        "unit": "0~100"
+      },
+      "chemistry_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x240",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "球队化学反应建立难度",
+        "unit": "0~100"
+      },
+      "chemistry_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x244",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "化学反应对攻防配合加成幅度",
+        "unit": "0~100"
+      }
+    },
+    "progression": {
+      "training_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x268",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "日常训练综合效果",
+        "unit": "0~100"
+      },
+      "offseason_progression_rate": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x26C",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "年轻球员休赛期成长速率",
+        "unit": "0~100"
+      },
+      "regression_rate": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x274",
+        "type": "uint32",
+        "min": 0,
+        "max": 100,
+        "default": 50,
+        "name_zh": "年长球员衰退速率",
+        "unit": "0~100"
+      }
+    },
+    "gameplay_sliders": {
+      "game_difficulty_preset": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x00",
+        "type": "uint32",
+        "min": 0,
+        "max": 4,
+        "default": 4,
+        "name_zh": "游戏难度预设 (0=职业, 1=全明星, 2=超级巨星, 3=自定义, 4=名人堂)",
+        "unit": "0~4"
+      },
+      "speed_with_ball_min_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x37C",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.4,
+        "name_zh": "持球速度最低项 (USER)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "speed_with_ball_min_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x380",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.4,
+        "name_zh": "持球速度最低项 (CPU)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "speed_with_ball_max_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x374",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.7,
+        "name_zh": "持球速度最高项 (USER)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "speed_with_ball_max_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x378",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.7,
+        "name_zh": "持球速度最高项 (CPU)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "acceleration_with_ball_min_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x39C",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.4,
+        "name_zh": "控球加速度最低项 (USER)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "acceleration_with_ball_min_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x3A0",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.4,
+        "name_zh": "控球加速度最低项 (CPU)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "speed_without_ball_min_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x36C",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.35,
+        "name_zh": "无球速度最低项 (USER)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      },
+      "speed_without_ball_min_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x370",
+        "type": "float",
+        "min": 0.0,
+        "max": 1.0,
+        "default": 0.35,
+        "name_zh": "无球速度最低项 (CPU)",
+        "unit": "0.0~1.0 (UI 0~100)"
+      }
+    }
+  }
+}

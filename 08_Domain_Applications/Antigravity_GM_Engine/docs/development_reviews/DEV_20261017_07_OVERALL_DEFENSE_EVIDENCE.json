@@ -1,0 +1,61 @@
+{
+  "status": "ISOLATED_TECHNICAL_BULK_UI_WRITE_AND_CONDITIONAL_RESTORE_ACCEPTED",
+  "development_task": "DEV-20261017-07 V2",
+  "owner_team_id": 0,
+  "owner_abbreviation": "PHI",
+  "opponent_team_id": 20,
+  "opponent_abbreviation": "IND",
+  "ui_scope": "Opponent overall-defense page is intrinsically overall; no All selector exists in this PC UI",
+  "storage": "UI_BULK_ALL_PRESENT_MATCHUPS",
+  "present_entries": 14,
+  "layout": {
+    "mode": "UI_BULK_ALL_PRESENT_MATCHUPS",
+    "entry_start": 100,
+    "entry_stride": 12,
+    "entry_count": 23
+  },
+  "field": "PressureOnball",
+  "before_raw": 0,
+  "before_ui": "自动",
+  "after_raw": 1,
+  "after_ui": "间隔",
+  "ui_observation": "Player changed AUTO to GAP, restored AUTO, then exited editor",
+  "commit_flag": {
+    "before_edit": 0,
+    "during_edit": 0,
+    "after_exit": 1,
+    "policy": "SET_IS_IN_USE_1_AFTER_BULK_FIELDS_AS_OBSERVED_ON_UI_EXIT",
+    "limitation": "Do not infer 0 means disabled. Write policy reproduces observed UI commit; no separate inheritance enum was found."
+  },
+  "program_write": {
+    "status": "COMMITTED_VERIFIED_IN_MEMORY",
+    "changed_entries": 14,
+    "player_confirmed_ui": "已显示为间隔，已退出",
+    "other_28_opponents_changed": 0,
+    "other_29_teams_changed": 0,
+    "coach_default_bytes_changed": 0,
+    "assignment_or_empty_slot_bytes_changed": 0
+  },
+  "conditional_restore": {
+    "status": "ROLLED_BACK_VERIFIED_IN_MEMORY",
+    "all_captured_coach_and_manager_bytes_equal_pre_write": true
+  },
+  "native_fields": 18,
+  "native_enum_fields": 17,
+  "native_boolean_fields": [
+    "PreRotate"
+  ],
+  "native_boolean_evidence": {
+    "format_hex": "0x250a0100",
+    "base_kind": 5,
+    "packed_flag": 32,
+    "offset": 4,
+    "start_bit": 10,
+    "width": 1
+  },
+  "per_field_ui_labels": "Only PressureOnball AUTO/GAP directly paired in this probe; other names retain native labels until paired with the PC UI",
+  "game_save_persistence": "NOT_TESTED_NOT_REQUIRED_BY_V2",
+  "gameplay_effect": "NOT_TESTED_NOT_REQUIRED_BY_V2",
+  "writes_to_formal_save": false,
+  "runtime_addresses_or_pid_published": false
+}

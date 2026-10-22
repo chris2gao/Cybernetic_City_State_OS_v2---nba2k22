@@ -1,0 +1,1220 @@
+{
+  "schema_version": 1,
+  "codec_version": "NATIVE_COACH_POE_V1",
+  "evidence_version": "DEV_20261017_07_NATIVE_AND_ISOLATED_V2_PARTIAL",
+  "policy_id": "PLAYER_RULES_20261017_V3",
+  "effect_status": "SIM_EFFECT_PENDING_PLAYER_MONTH",
+  "native": {
+    "coach_type_rva": 80284224,
+    "gameplan_type_rva": 82879168,
+    "defense_type_rva": 82878976,
+    "playbook_type_rva": 87901360,
+    "roster_getter_rva": 18701792,
+    "franchise_load_rva": 6278620,
+    "franchise_teams_offset": 1691600,
+    "franchise_team_stride": 81520,
+    "franchise_capacity": 36,
+    "gameplan_start": 4,
+    "gameplan_capacity": 35,
+    "gameplan_stride": 880,
+    "playbook_count_offset": 352,
+    "playbook_pointer_offset": 360,
+    "playbook_end_offset": 376,
+    "playbook_stride": 360,
+    "play_slots": 68
+  },
+  "fields": {
+    "POEDefense": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "13": "PROTECT_PAINT",
+        "14": "NEUTRAL_DEFENSE_FOCUS",
+        "15": "LIMIT_PERIMETER_SHOTS"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER",
+      "gm_control_enabled": true
+    },
+    "POEDefense2": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 5,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "16": "PLAY_CONSERVATIVE",
+        "17": "NEUTRAL_DEFENSE_TEMPO",
+        "18": "PLAY_PHYSICAL"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER",
+      "gm_control_enabled": true
+    },
+    "POEDefense3": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 10,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "19": "CRASH_DEFENSIVE_BOARDS",
+        "20": "NEUTRAL_DEFENSE_REBOUND",
+        "21": "RUN_IN_TRANSITION"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER",
+      "gm_control_enabled": true
+    },
+    "POEOffense": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 15,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "1": "GET_TO_BASKET",
+        "2": "GET_SHOOTERS_OPEN",
+        "3": "FEED_THE_POST",
+        "4": "PICK_AND_ROLL_OFFENSE",
+        "5": "NEUTRAL_OFFENSE_FOCUS",
+        "6": "RUN_OFFENSE_THROUGH_SCORER"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER",
+      "gm_control_enabled": true
+    },
+    "POEOffense2": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 20,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "7": "PATIENT_OFFENSE",
+        "8": "NEUTRAL_OFFENSE_TEMPO",
+        "9": "SHOOT_AT_WILL"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "editor_cache_hazard": "OPEN_EDITOR_LATER_REVERTED_7_TO_8",
+      "editor_closed_test": "HELD_STABLE_WITH_EDITOR_CLOSED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER",
+      "gm_control_enabled": true
+    },
+    "POEOffense3": {
+      "offset": 316,
+      "storage_bytes": 4,
+      "start_bit": 25,
+      "width": 5,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "10": "CRASH_OFFENSIVE_BOARDS",
+        "11": "NEUTRAL_OFFENSE_REBOUND",
+        "12": "LIMIT_TRANSITION"
+      },
+      "enum_rva": 80284096,
+      "memory_write_test": "VERIFIED_PHI_AND_AI_IND_SIX_FIELD_SHARED_BLOCK",
+      "ui_test": "PLAYER_CONFIRMED_AI_IND_ALL_SIX_AFTER_CONTROL_SWITCH",
+      "save_reload_test": "AI_IND_ALL_SIX_PERSISTED_AFTER_ACTUAL_NEW_PROCESS",
+      "process_restart_test": "FRESH_NATIVE_RECALIBRATION_AND_STALE_PLAN_REJECTION_BEFORE_RW_VERIFIED",
+      "restoration_test": "ALL_30_KNOWN_COACH_FIELDS_RESTORED_IN_MEMORY_FINAL_SAVE_RECHECK_WAIVED_BY_PLAYER",
+      "gm_control_enabled": true
+    },
+    "SimPace": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 3,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "GM_CONTROL_DISABLED",
+      "enum": {
+        "0": "VERYLOW",
+        "1": "LOW",
+        "2": "AVERAGE",
+        "3": "HIGH",
+        "4": "VERYHIGH"
+      },
+      "enum_rva": 80283392,
+      "memory_write_test": "PHI_2_TO_4_AND_ROLLBACK_VERIFIED",
+      "ui_test": "NOT_THE_PLAYERS_POE_OFFENSIVE_TEMPO_OPTION",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": false
+    },
+    "SimPress": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 2,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "GM_CONTROL_DISABLED",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": false
+    },
+    "SimHelpDef": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 5,
+      "width": 2,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "GM_CONTROL_DISABLED",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": false
+    },
+    "SimOffReb": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 7,
+      "width": 2,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "GM_CONTROL_DISABLED",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": false
+    },
+    "SimDefReb": {
+      "offset": 244,
+      "storage_bytes": 4,
+      "start_bit": 9,
+      "width": 2,
+      "writable": false,
+      "production_enabled": false,
+      "readiness": "GM_CONTROL_DISABLED",
+      "enum": {
+        "0": "LOW",
+        "1": "AVERAGE",
+        "2": "HIGH"
+      },
+      "enum_rva": 80283456,
+      "memory_write_test": "NOT_RUN",
+      "ui_test": "NOT_VERIFIED",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": false
+    },
+    "PreferredSystem": {
+      "offset": 264,
+      "storage_bytes": 4,
+      "start_bit": 16,
+      "width": 4,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "BALANCED",
+        "1": "GRIT_AND_GRIND",
+        "2": "PACE_AND_SPACE",
+        "3": "PERIMETER",
+        "4": "POST",
+        "5": "TRIANGLE",
+        "6": "SEVEN_SECONDS",
+        "7": "DEFENSE"
+      },
+      "enum_rva": 80283712,
+      "memory_write_test": "PHI_THREE_FIELDS_ONE_MASKED_SHARED_BLOCK_AND_MIXED_OVERALL_BATCH_VERIFIED",
+      "ui_test": "NATIVE_PREFERENCE_ENUM_AND_INDEPENDENT_RAW_VERIFIED_DIRECT_UI_NOT_VIEWED_PLAYER_STOPPED_REDUNDANT_MENU_TESTS",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE"
+    },
+    "ActiveSystem": {
+      "offset": 264,
+      "storage_bytes": 4,
+      "start_bit": 28,
+      "width": 4,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "BALANCED",
+        "1": "GRIT_AND_GRIND",
+        "2": "PACE_AND_SPACE",
+        "3": "PERIMETER",
+        "4": "POST",
+        "5": "TRIANGLE",
+        "6": "SEVEN_SECONDS",
+        "7": "DEFENSE"
+      },
+      "enum_rva": 80283712,
+      "memory_write_test": "PHI_THREE_FIELDS_ONE_MASKED_SHARED_BLOCK_AND_MIXED_OVERALL_BATCH_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_POST_4_MAINLY_INSIDE_TO_PERIMETER_3_MAINLY_OUTSIDE",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE"
+    },
+    "PlaybookID": {
+      "offset": 264,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": "LOADED_PLAYBOOKS",
+      "enum_rva": 80283648,
+      "memory_write_test": "PHI_THREE_FIELDS_ONE_MASKED_SHARED_BLOCK_AND_MIXED_OVERALL_BATCH_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_76ERS_TO_BUCKS_DYNAMIC_NAMED_DIRECTORY",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE"
+    },
+    "BenchDepth": {
+      "offset": 222,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "PHI_FIVE_SLIDER_ONE_BATCH_MASKED_WRITE_AND_JOURNAL_RESTORE_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_ALL_FIVE_TARGET_VALUES_THEN_EXITED_EDITOR",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "ui_label_zh": "板凳深度",
+      "ui_unit": "ROTATION_PLAYER_COUNT_LIMIT",
+      "range_evidence": "UI_ENDPOINTS_UNKNOWN_NOT_INFERRED_FROM_TEST_VALUES_9_AND_10",
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE",
+      "target_policy": "PLAYER_REQUESTED_NO_TEST_VALUE_WHITELIST_NATIVE_INTEGER_FORMAT_ONLY",
+      "gm_guidance": "Rotation player-count limit; choose from the observed roster and intended rotation. The test sample 9..10 is not a game maximum."
+    },
+    "RunPlayTendency": {
+      "offset": 224,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "PHI_FIVE_SLIDER_ONE_BATCH_MASKED_WRITE_AND_JOURNAL_RESTORE_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_ALL_FIVE_TARGET_VALUES_THEN_EXITED_EDITOR",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "ui_label_zh": "执行战术频率",
+      "raw_range": [
+        0,
+        100
+      ],
+      "ui_unit": "PERCENTAGE_TENDENCY",
+      "range_evidence": "PLAYER_CONFIRMED_CURRENT_PC_UI_0_TO_100_20261017",
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE",
+      "observation_raw_range": [
+        0,
+        100
+      ]
+    },
+    "ZoneUsage": {
+      "offset": 226,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "PHI_FIVE_SLIDER_ONE_BATCH_MASKED_WRITE_AND_JOURNAL_RESTORE_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_ALL_FIVE_TARGET_VALUES_THEN_EXITED_EDITOR",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "ui_label_zh": "区域联防频率",
+      "raw_range": [
+        0,
+        100
+      ],
+      "ui_unit": "PERCENTAGE_TENDENCY",
+      "range_evidence": "PLAYER_CONFIRMED_CURRENT_PC_UI_0_TO_100_20261017",
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE",
+      "observation_raw_range": [
+        0,
+        100
+      ]
+    },
+    "BenchUtilization": {
+      "offset": 312,
+      "storage_bytes": 1,
+      "start_bit": 0,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "PHI_FIVE_SLIDER_ONE_BATCH_MASKED_WRITE_AND_JOURNAL_RESTORE_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_ALL_FIVE_TARGET_VALUES_THEN_EXITED_EDITOR",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "ui_label_zh": "替补球员使用率",
+      "raw_range": [
+        0,
+        100
+      ],
+      "ui_unit": "PERCENTAGE_TENDENCY",
+      "range_evidence": "PLAYER_CONFIRMED_CURRENT_PC_UI_0_TO_100_20261017",
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE",
+      "observation_raw_range": [
+        0,
+        100
+      ]
+    },
+    "Tempo": {
+      "offset": 328,
+      "storage_bytes": 4,
+      "start_bit": 9,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_NATIVE_RAW_UI_MEANING_UNCONFIRMED",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "NO_LIVE_TEMPO_WRITE_NATIVE_LAYOUT_AND_OFFLINE_MASK_CODEC_VERIFIED",
+      "ui_test": "UI_MAPPING_UNCONFIRMED_PLAYER_APPROVED_NATIVE_RAW_INTERFACE",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "ui_label_zh": null,
+      "ui_unit": "UNKNOWN_NATIVE_RAW_INTEGER",
+      "semantic_status": "NATIVE_NAME_ONLY_UI_AND_GAMEPLAY_EFFECT_UNCONFIRMED",
+      "target_policy": "PLAYER_APPROVED_NATIVE_RAW_INTERFACE_NATIVE_INTEGER_FORMAT_ONLY",
+      "gm_guidance": "Native Tempo raw value only. UI meaning and gameplay effect are unconfirmed; do not label as the verified offensive tempo POE, SimPace, percentage, or lineup factor. Native storage bounds are not observed UI endpoints or recommended values.",
+      "observed_reference": {
+        "provenance": "PRIOR_READ_ONLY_OBSERVATION_SAME_ISOLATED_MYLEAGUE_SAVE",
+        "scope": "Eight sampled head coaches; not a new capture or formal save current facts",
+        "count": 8,
+        "observed_min": 40,
+        "observed_max": 95,
+        "coaches": [
+          {
+            "team": "PHI",
+            "coach": "Doc Rivers",
+            "raw": 80
+          },
+          {
+            "team": "LAC",
+            "coach": "Tyronn Lue",
+            "raw": 75
+          },
+          {
+            "team": "MIA",
+            "coach": "Erik Spoelstra",
+            "raw": 50
+          },
+          {
+            "team": "NY",
+            "coach": "Tom Thibodeau",
+            "raw": 55
+          },
+          {
+            "team": "IND",
+            "coach": "Rick Carlisle",
+            "raw": 60
+          },
+          {
+            "team": "TOR",
+            "coach": "Nick Nurse",
+            "raw": 40
+          },
+          {
+            "team": "SA",
+            "coach": "Gregg Popovich",
+            "raw": 70
+          },
+          {
+            "team": "GS",
+            "coach": "Steve Kerr",
+            "raw": 95
+          }
+        ],
+        "practical_scale": {
+          "min": 0,
+          "max": 100,
+          "status": "INFERRED_REFERENCE_NOT_VERIFIED_UI_ENDPOINTS"
+        },
+        "guidance": "Use observed coach values as practical references. Neither sample endpoints nor inferred scale is an execution whitelist."
+      }
+    },
+    "HelpDefense": {
+      "offset": 328,
+      "storage_bytes": 4,
+      "start_bit": 17,
+      "width": 8,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": null,
+      "enum_rva": null,
+      "memory_write_test": "PHI_FIVE_SLIDER_ONE_BATCH_MASKED_WRITE_AND_JOURNAL_RESTORE_VERIFIED",
+      "ui_test": "PLAYER_CONFIRMED_ALL_FIVE_TARGET_VALUES_THEN_EXITED_EDITOR",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "ui_label_zh": "协防",
+      "raw_range": [
+        0,
+        100
+      ],
+      "ui_unit": "PERCENTAGE_TENDENCY",
+      "range_evidence": "PLAYER_CONFIRMED_CURRENT_PC_UI_0_TO_100_20261017",
+      "restoration_test": "ALL_30_COACH_AND_MANAGER_RAW_BLOCKS_MATCH_PREWRITE",
+      "observation_raw_range": [
+        0,
+        100
+      ]
+    },
+    "FreelanceType": {
+      "offset": 252,
+      "storage_bytes": 4,
+      "start_bit": 25,
+      "width": 6,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "DEFAULT",
+        "1": "TWO_MAN",
+        "2": "THREE_MAN",
+        "3": "THREE_OUT",
+        "4": "WNBA_THREE_OUT",
+        "5": "FOUR_OUT",
+        "6": "BUCKS_2018",
+        "7": "CLIPPERS_2018",
+        "8": "DENVER_2018",
+        "9": "HAWKS_2018",
+        "10": "JAZZ",
+        "11": "MAVERICKS_2018",
+        "12": "PELICANS_2018",
+        "13": "PHILLY_ELBOW",
+        "14": "PISTON_SNAP",
+        "15": "SPURS_2018",
+        "16": "WARRIORS",
+        "17": "FLIP_PUSH",
+        "18": "FLOW",
+        "19": "FORTY_THREE",
+        "20": "FOURTEEN",
+        "21": "PACE",
+        "22": "POINT_FREELANCE",
+        "23": "PRINCESTON_CHIN",
+        "24": "SEVEN_SECONDS",
+        "25": "SLICE",
+        "26": "SWING",
+        "27": "TRIANGLE",
+        "28": "TWENTY_ONE_DELAY",
+        "29": "BULLS_88",
+        "30": "CELTICS_86",
+        "31": "EIGHTY",
+        "32": "FREELANCE_ONE",
+        "33": "FREELANCE_TWO"
+      },
+      "enum_rva": 80194800,
+      "memory_write_test": "NO_LIVE_FREELANCE_WRITE_NATIVE_LAYOUT_AND_OFFLINE_MASK_CODEC_VERIFIED",
+      "ui_test": "DIRECT_IN_GAME_SLOT_PAGE_NOT_VIEWED_PLAYER_REQUESTED_NO_REDUNDANT_UI_TESTS",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "readiness_evidence": "VERIFIED_NATIVE_FIELD_LAYOUT_AND_COMPLETE_ENUM_CRC_CATALOG_ORDERED_SLOT_CODEC",
+      "target_policy": "COMPLETE_VERIFIED_NATIVE_ENUM_NOT_TEST_VALUE_WHITELIST"
+    },
+    "FreelanceType2": {
+      "offset": 328,
+      "storage_bytes": 4,
+      "start_bit": 26,
+      "width": 6,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "DEFAULT",
+        "1": "TWO_MAN",
+        "2": "THREE_MAN",
+        "3": "THREE_OUT",
+        "4": "WNBA_THREE_OUT",
+        "5": "FOUR_OUT",
+        "6": "BUCKS_2018",
+        "7": "CLIPPERS_2018",
+        "8": "DENVER_2018",
+        "9": "HAWKS_2018",
+        "10": "JAZZ",
+        "11": "MAVERICKS_2018",
+        "12": "PELICANS_2018",
+        "13": "PHILLY_ELBOW",
+        "14": "PISTON_SNAP",
+        "15": "SPURS_2018",
+        "16": "WARRIORS",
+        "17": "FLIP_PUSH",
+        "18": "FLOW",
+        "19": "FORTY_THREE",
+        "20": "FOURTEEN",
+        "21": "PACE",
+        "22": "POINT_FREELANCE",
+        "23": "PRINCESTON_CHIN",
+        "24": "SEVEN_SECONDS",
+        "25": "SLICE",
+        "26": "SWING",
+        "27": "TRIANGLE",
+        "28": "TWENTY_ONE_DELAY",
+        "29": "BULLS_88",
+        "30": "CELTICS_86",
+        "31": "EIGHTY",
+        "32": "FREELANCE_ONE",
+        "33": "FREELANCE_TWO"
+      },
+      "enum_rva": 80194800,
+      "memory_write_test": "NO_LIVE_FREELANCE_WRITE_NATIVE_LAYOUT_AND_OFFLINE_MASK_CODEC_VERIFIED",
+      "ui_test": "DIRECT_IN_GAME_SLOT_PAGE_NOT_VIEWED_PLAYER_REQUESTED_NO_REDUNDANT_UI_TESTS",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "readiness_evidence": "VERIFIED_NATIVE_FIELD_LAYOUT_AND_COMPLETE_ENUM_CRC_CATALOG_ORDERED_SLOT_CODEC",
+      "target_policy": "COMPLETE_VERIFIED_NATIVE_ENUM_NOT_TEST_VALUE_WHITELIST"
+    },
+    "FreelanceType3": {
+      "offset": 348,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 6,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "DEFAULT",
+        "1": "TWO_MAN",
+        "2": "THREE_MAN",
+        "3": "THREE_OUT",
+        "4": "WNBA_THREE_OUT",
+        "5": "FOUR_OUT",
+        "6": "BUCKS_2018",
+        "7": "CLIPPERS_2018",
+        "8": "DENVER_2018",
+        "9": "HAWKS_2018",
+        "10": "JAZZ",
+        "11": "MAVERICKS_2018",
+        "12": "PELICANS_2018",
+        "13": "PHILLY_ELBOW",
+        "14": "PISTON_SNAP",
+        "15": "SPURS_2018",
+        "16": "WARRIORS",
+        "17": "FLIP_PUSH",
+        "18": "FLOW",
+        "19": "FORTY_THREE",
+        "20": "FOURTEEN",
+        "21": "PACE",
+        "22": "POINT_FREELANCE",
+        "23": "PRINCESTON_CHIN",
+        "24": "SEVEN_SECONDS",
+        "25": "SLICE",
+        "26": "SWING",
+        "27": "TRIANGLE",
+        "28": "TWENTY_ONE_DELAY",
+        "29": "BULLS_88",
+        "30": "CELTICS_86",
+        "31": "EIGHTY",
+        "32": "FREELANCE_ONE",
+        "33": "FREELANCE_TWO"
+      },
+      "enum_rva": 80194800,
+      "memory_write_test": "NO_LIVE_FREELANCE_WRITE_NATIVE_LAYOUT_AND_OFFLINE_MASK_CODEC_VERIFIED",
+      "ui_test": "DIRECT_IN_GAME_SLOT_PAGE_NOT_VIEWED_PLAYER_REQUESTED_NO_REDUNDANT_UI_TESTS",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "readiness_evidence": "VERIFIED_NATIVE_FIELD_LAYOUT_AND_COMPLETE_ENUM_CRC_CATALOG_ORDERED_SLOT_CODEC",
+      "target_policy": "COMPLETE_VERIFIED_NATIVE_ENUM_NOT_TEST_VALUE_WHITELIST"
+    },
+    "FreelanceType4": {
+      "offset": 348,
+      "storage_bytes": 4,
+      "start_bit": 9,
+      "width": 6,
+      "writable": true,
+      "production_enabled": true,
+      "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+      "enum": {
+        "0": "DEFAULT",
+        "1": "TWO_MAN",
+        "2": "THREE_MAN",
+        "3": "THREE_OUT",
+        "4": "WNBA_THREE_OUT",
+        "5": "FOUR_OUT",
+        "6": "BUCKS_2018",
+        "7": "CLIPPERS_2018",
+        "8": "DENVER_2018",
+        "9": "HAWKS_2018",
+        "10": "JAZZ",
+        "11": "MAVERICKS_2018",
+        "12": "PELICANS_2018",
+        "13": "PHILLY_ELBOW",
+        "14": "PISTON_SNAP",
+        "15": "SPURS_2018",
+        "16": "WARRIORS",
+        "17": "FLIP_PUSH",
+        "18": "FLOW",
+        "19": "FORTY_THREE",
+        "20": "FOURTEEN",
+        "21": "PACE",
+        "22": "POINT_FREELANCE",
+        "23": "PRINCESTON_CHIN",
+        "24": "SEVEN_SECONDS",
+        "25": "SLICE",
+        "26": "SWING",
+        "27": "TRIANGLE",
+        "28": "TWENTY_ONE_DELAY",
+        "29": "BULLS_88",
+        "30": "CELTICS_86",
+        "31": "EIGHTY",
+        "32": "FREELANCE_ONE",
+        "33": "FREELANCE_TWO"
+      },
+      "enum_rva": 80194800,
+      "memory_write_test": "NO_LIVE_FREELANCE_WRITE_NATIVE_LAYOUT_AND_OFFLINE_MASK_CODEC_VERIFIED",
+      "ui_test": "DIRECT_IN_GAME_SLOT_PAGE_NOT_VIEWED_PLAYER_REQUESTED_NO_REDUNDANT_UI_TESTS",
+      "save_reload_test": "NOT_VERIFIED",
+      "process_restart_test": "NOT_VERIFIED",
+      "gm_control_enabled": true,
+      "readiness_evidence": "VERIFIED_NATIVE_FIELD_LAYOUT_AND_COMPLETE_ENUM_CRC_CATALOG_ORDERED_SLOT_CODEC",
+      "target_policy": "COMPLETE_VERIFIED_NATIVE_ENUM_NOT_TEST_VALUE_WHITELIST"
+    }
+  },
+  "poe_enum": {
+    "0": "NO_PREFERENCE",
+    "1": "GET_TO_BASKET",
+    "2": "GET_SHOOTERS_OPEN",
+    "3": "FEED_THE_POST",
+    "4": "PICK_AND_ROLL_OFFENSE",
+    "5": "NEUTRAL_OFFENSE_FOCUS",
+    "6": "RUN_OFFENSE_THROUGH_SCORER",
+    "7": "PATIENT_OFFENSE",
+    "8": "NEUTRAL_OFFENSE_TEMPO",
+    "9": "SHOOT_AT_WILL",
+    "10": "CRASH_OFFENSIVE_BOARDS",
+    "11": "NEUTRAL_OFFENSE_REBOUND",
+    "12": "LIMIT_TRANSITION",
+    "13": "PROTECT_PAINT",
+    "14": "NEUTRAL_DEFENSE_FOCUS",
+    "15": "LIMIT_PERIMETER_SHOTS",
+    "16": "PLAY_CONSERVATIVE",
+    "17": "NEUTRAL_DEFENSE_TEMPO",
+    "18": "PLAY_PHYSICAL",
+    "19": "CRASH_DEFENSIVE_BOARDS",
+    "20": "NEUTRAL_DEFENSE_REBOUND",
+    "21": "RUN_IN_TRANSITION"
+  },
+  "blocked": {
+    "matchup": "MATCHUP_EXECUTION_BLOCKED_NOT_ACTIVATED",
+    "rotations": "PLAYER_IDENTITY_AND_ROTATION_CONSTRAINTS_UNVERIFIED",
+    "playbook_content": "SHARED_PLAYBOOK_CONTENT_READ_ONLY",
+    "sliders": "NATIVE_STORAGE_VERIFIED_UI_RANGE_PENDING",
+    "in_game": "IN_GAME_TEMPORARY_DEFERRED"
+  },
+  "acceptance_scope": "MEMORY_RUNTIME_FIRST_COMPUTER_USE_OPTIONAL_PLAYER_CONFIRMED",
+  "write_preconditions": [
+    "SPECIFIC_EXTERNAL_PLAYER_APPROVAL",
+    "PLAYER_CONFIRMED_COACH_EDITOR_CLOSED",
+    "CURRENT_PROCESS_OWNER_ROSTER_AND_FULL_SHARED_BLOCK_MATCH"
+  ],
+  "acceptance_status": "CORE_SIX_POE_READY_SPECIFIC_EXTERNAL_PLAYER_APPROVAL_REQUIRED",
+  "development_spec": "DEV_20261017_07_COACHING_GM_CLOSED_LOOP_V2",
+  "gm_default_fields": [
+    "POEDefense",
+    "POEDefense2",
+    "POEDefense3",
+    "POEOffense",
+    "POEOffense2",
+    "POEOffense3",
+    "PreferredSystem",
+    "ActiveSystem",
+    "PlaybookID",
+    "BenchDepth",
+    "RunPlayTendency",
+    "ZoneUsage",
+    "BenchUtilization",
+    "Tempo",
+    "HelpDefense",
+    "FreelanceType",
+    "FreelanceType2",
+    "FreelanceType3",
+    "FreelanceType4"
+  ],
+  "freelance_slot_order": [
+    "FreelanceType",
+    "FreelanceType2",
+    "FreelanceType3",
+    "FreelanceType4"
+  ],
+  "opponent_overall_defense": {
+    "scope": "VS_OPPONENT_DEFENSE",
+    "production_enabled": true,
+    "readiness": "EXECUTOR_IMPLEMENTED_READY_FOR_PLAYER_APPROVAL",
+    "record_selector": {
+      "mode": "UI_BULK_ALL_PRESENT_MATCHUPS",
+      "entry_start": 100,
+      "entry_stride": 12,
+      "entry_count": 23
+    },
+    "activation_policy": "SET_IS_IN_USE_1_AFTER_BULK_FIELDS_AS_OBSERVED_ON_UI_EXIT",
+    "evidence": "DEV07 PHI vs IND: UI AUTO→GAP changed all 14 present matchup settings only; UI exit marked IsInUse 0→1. Program batch GAP displayed by player; journal rollback AUTO restored every captured coach/manager byte to its pre-write baseline. No gameplay effect or game-save persistence claim."
+  },
+  "defensive_fields": {
+    "PressureOnball": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 3,
+      "mask": "0x7",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "089d6de7",
+        "2": "a91e9f17",
+        "3": "ccde4204",
+        "4": "d4b9356b"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GAP",
+        "2": "MODERATE",
+        "3": "TIGHT",
+        "4": "SMOTHER"
+      }
+    },
+    "PressureOffball": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 3,
+      "mask": "0x38",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "089d6de7",
+        "2": "6ce44260",
+        "3": "a91e9f17",
+        "4": "ccde4204",
+        "5": "e21fffde"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GAP",
+        "2": "LEAVE",
+        "3": "MODERATE",
+        "4": "TIGHT",
+        "5": "DENY_BALL"
+      }
+    },
+    "ForceDirection": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0xc0",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "6e78dd49",
+        "2": "302a4f0a"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "MIDDLE",
+        "2": "BASELINE"
+      }
+    },
+    "ScreenDefenseOnBall": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 3,
+      "mask": "0x700",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e",
+        "4": "5de8c684"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GO_OVER",
+        "2": "GO_UNDER",
+        "3": "SWITCH",
+        "4": "ICE"
+      }
+    },
+    "ScreenDefenseHedge": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 11,
+      "width": 3,
+      "mask": "0x3800",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "1cfa4242",
+        "2": "7f66d741",
+        "3": "f7c5d5d3",
+        "4": "2a1f3569",
+        "5": "5d910492"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "NO_HEDGE",
+        "2": "SOFT_HEDGE",
+        "3": "HARD_HEDGE",
+        "4": "DOUBLE",
+        "5": "CATCH_HEDGE"
+      }
+    },
+    "OffballScreenDefense": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 14,
+      "width": 2,
+      "mask": "0xc000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GO_OVER",
+        "2": "GO_UNDER",
+        "3": "SWITCH"
+      }
+    },
+    "PostDefense": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 16,
+      "width": 3,
+      "mask": "0x70000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "09afa046",
+        "2": "5de1fc62",
+        "3": "80be0fb8",
+        "4": "d1996a24"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "FRONT",
+        "2": "BEHIND",
+        "3": "THREE_QUARTERS_TOP",
+        "4": "THREE_QUARTERS_BOTTOM"
+      }
+    },
+    "DoubleTeamPerimeter": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 19,
+      "width": 2,
+      "mask": "0x180000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e0237942",
+        "2": "886ef5e7",
+        "3": "25187b0c"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "MANUAL",
+        "2": "ON_CATCH",
+        "3": "ON_DRIVE"
+      }
+    },
+    "DoubleTeamPost": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 21,
+      "width": 3,
+      "mask": "0xe00000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e0237942",
+        "2": "41d1dc71",
+        "3": "886ef5e7",
+        "4": "aaf5b304"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "MANUAL",
+        "2": "DIG",
+        "3": "ON_CATCH",
+        "4": "ON_DRIBBLE"
+      }
+    },
+    "ScreenDefenseOnBall5": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 24,
+      "width": 3,
+      "mask": "0x7000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e",
+        "4": "5de8c684"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GO_OVER",
+        "2": "GO_UNDER",
+        "3": "SWITCH",
+        "4": "ICE"
+      }
+    },
+    "ScreenDefenseHedge5": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 27,
+      "width": 3,
+      "mask": "0x38000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "1cfa4242",
+        "2": "7f66d741",
+        "3": "f7c5d5d3",
+        "4": "2a1f3569",
+        "5": "5d910492"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "NO_HEDGE",
+        "2": "SOFT_HEDGE",
+        "3": "HARD_HEDGE",
+        "4": "DOUBLE",
+        "5": "CATCH_HEDGE"
+      }
+    },
+    "SwitchRule": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 30,
+      "width": 2,
+      "mask": "0xc0000000",
+      "native_enum_name_crc32": {
+        "0": "2f8e7735",
+        "1": "660df31b",
+        "2": "5de99f12",
+        "3": "ee9ee584"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "SWITCH_AUTO",
+        "1": "SWITCH_ALL",
+        "2": "SWITCH_BIGS",
+        "3": "SWITCH_GUARDS"
+      }
+    },
+    "OnballHelp": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 2,
+      "mask": "0x300000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "3e12b118",
+        "2": "d2435ffd"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "HELP",
+        "2": "NO_HELP"
+      }
+    },
+    "ScreenHelp": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 2,
+      "width": 2,
+      "mask": "0xc00000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "3e12b118",
+        "2": "d2435ffd"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "HELP",
+        "2": "NO_HELP"
+      }
+    },
+    "ExtendPressure": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 4,
+      "width": 2,
+      "mask": "0x3000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "YES",
+        "2": "NO"
+      }
+    },
+    "TagOnRoll": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0xc000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "YES",
+        "2": "NO"
+      }
+    },
+    "StayAttached": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 2,
+      "mask": "0x30000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "YES",
+        "2": "NO"
+      }
+    },
+    "PreRotate": {
+      "native_boolean": true,
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 10,
+      "width": 1,
+      "mask": "0x40000000000",
+      "native_enum_name_crc32": {},
+      "readiness": "NATIVE_MASK_ENUM_AND_OVERALL_BULK_EXECUTOR_VERIFIED",
+      "production_enabled": true,
+      "native_enum_labels": {}
+    }
+  },
+  "enum_label_evidence": "MATCHED_CURRENT_NATIVE_ENUM_CRCS_TO_SAME_PE_VERSION_EXECUTABLE_STRINGS",
+  "player_value_policy": "GM_CHOOSES_FROM_OBSERVED_ROSTER_AND_COMPLETE_KNOWN_NATIVE_DOMAIN_NO_TEST_SAMPLE_CAPS"
+}

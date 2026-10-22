@@ -1,0 +1,254 @@
+{
+  "schema_id": "DEV29_R03_HEALTH_EVENTS_AND_ROLE_RIGHTS_RESEARCH_V1",
+  "artifact_type": "RESEARCH_INPUTS_ONLY_NOT_EXECUTOR",
+  "current_project": "nba2k22-gm-engine",
+  "research_stage": "R03-B/C",
+  "status": "RESEARCH_COMPLETE_WITH_NATIVE_DATA_GAPS_PENDING_USER_REVIEW",
+  "native_game": "NBA2K22",
+  "target_platform": "PC_CURRENT_GEN",
+  "cross_generation_principle": "FRANCHISE_MECHANISMS_REUSABLE; PC_UI_ENUM_RUNTIME_CAPTURE_SEPARATELY_VERIFIED",
+  "role_types": [
+    "GM",
+    "COACH",
+    "PLAYER",
+    "MEDIA"
+  ],
+  "character_agency": "NO_MANDATED_OPTIMUM; ACTORS_MAY_DECLINE_NEGOTIATE_MAKE_MISTAKES",
+  "privacy": "ROLE_BELIEFS_PRIVATE; MEDIA_PUBLIC_FACTS_ONLY",
+  "game_write_authority": "PLAYER_EXPLICIT_APPROVAL_EVERY_ACTUAL_GAME_MODIFICATION",
+  "required_provenance": [
+    "save_id",
+    "game_date",
+    "source_batch_id",
+    "game_execution_mode",
+    "player_native_id",
+    "evidence_level"
+  ],
+  "progress_pointer": "docs/game_mechanics/reviews/R03_COMPLETENESS_AUDIT_V1.md",
+  "capabilities": [
+    {
+      "id": "K06.INJURY_EVENT",
+      "read_fields": [
+        "player_id",
+        "game_id_or_training_event",
+        "injury_type",
+        "body_part",
+        "reported_severity",
+        "estimated_days_left",
+        "event_time"
+      ],
+      "game_source_status": "NOT_VERIFIED_AS_CURRENT_BATCH_QUERY",
+      "game_version_evidence": [
+        "SRC-0060",
+        "SRC-0061"
+      ],
+      "role_observers": [
+        "PLAYER_OWN_STATUS",
+        "COACH_AVAILABILITY_WHEN_KNOWN",
+        "GM_TEAM_STATUS_WHEN_KNOWN",
+        "MEDIA_PUBLIC_STATUS_ONLY"
+      ],
+      "choices": [
+        "REQUEST_MEDICAL_CLARIFICATION",
+        "PROPOSE_REHAB",
+        "REJECT_EARLY_RETURN",
+        "REQUEST_PLAYING_OPPORTUNITY"
+      ],
+      "risk": "no game-captured injury fact => do not invent game news",
+      "agent_action_native_status": "NO_APPROVED_INJURY_EDIT"
+    },
+    {
+      "id": "K06.SIM_VS_PLAYED_INJURY",
+      "read_fields": [
+        "game_execution_mode",
+        "injury_onset_during_game",
+        "injury_record_after_game"
+      ],
+      "game_source_status": "COMMUNITY_CONFLICTING_2K22_NOT_MEASURED_PC",
+      "game_version_evidence": [
+        "SRC-0060",
+        "SRC-0061"
+      ],
+      "role_observers": [
+        "COACH_IF_OBSERVED",
+        "GM_IF_CAPTURED",
+        "PLAYER_IF_SELF_OBSERVED",
+        "MEDIA_IF_REPORTED"
+      ],
+      "choices": [
+        "INTERPRET_DIFFERENT_GAME_MODES",
+        "REQUEST_SAME_MODE_SAMPLE"
+      ],
+      "risk": "do not infer zero injury risk from zero played-game injury",
+      "agent_action_native_status": "RESEARCH_ONLY"
+    },
+    {
+      "id": "K06.INJURY_RECOVERY",
+      "read_fields": [
+        "injury_initial_estimate",
+        "injury_remaining_days",
+        "actual_return_date",
+        "team_injury_recovery_setting",
+        "player_injury_recovery_setting"
+      ],
+      "game_source_status": "TEAM_PLAYER_RECOVERY_FLAGS_REGISTERED; OUTCOME_HISTORY_UNVERIFIED",
+      "game_version_evidence": [
+        "SRC-0063",
+        "SRC-0064"
+      ],
+      "role_observers": [
+        "PLAYER_OWN_STATUS",
+        "COACH_TEAM_ELIGIBILITY",
+        "GM_TEAM_ELIGIBILITY",
+        "MEDIA_DISCLOSED_ONLY"
+      ],
+      "choices": [
+        "REQUEST_MORE_RECOVERY_TIME",
+        "PROPOSE_RETURN",
+        "REQUEST_REHAB_FOCUS",
+        "REFUSE_HIGH_INTENSITY"
+      ],
+      "risk": "estimated duration not guaranteed actual return; don't write injury days",
+      "agent_action_native_status": "ONLY_REGISTERED_TRAINING_CONTROLS_AFTER_HUMAN_APPROVAL"
+    },
+    {
+      "id": "K06.FATIGUE_TIMESCALES",
+      "read_fields": [
+        "live_in_game_stamina",
+        "current_progressive_fatigue",
+        "progressive_fatigue_history",
+        "training_intensity_history",
+        "recent_minutes_window"
+      ],
+      "game_source_status": "NATIVE_LAYOUT_KNOWN; CURRENT_VALUE_NOT_VERIFIED",
+      "game_version_evidence": [
+        "SRC-0049",
+        "SRC-0052",
+        "SRC-0069"
+      ],
+      "role_observers": [
+        "PLAYER_IF_AVAILABLE",
+        "COACH_IF_AVAILABLE",
+        "GM_IF_AVAILABLE"
+      ],
+      "choices": [
+        "REQUEST_REST",
+        "MAINTAIN_LOAD",
+        "REQUEST_CURRENT_DATA",
+        "TRADE_OFF_GAME_TIME"
+      ],
+      "risk": "static native memory layout cannot be presented as time-stamped data",
+      "agent_action_native_status": "NO_FATIGUE_RAW_WRITE"
+    },
+    {
+      "id": "K06.DURABILITY_RISK",
+      "read_fields": [
+        "body_part_durability_if_R04_verified",
+        "historical_injury_events_if_captured"
+      ],
+      "game_source_status": "NOT_FULLY_CATALOGUED_R04_PENDING",
+      "game_version_evidence": [
+        "SRC-0061",
+        "SRC-0064"
+      ],
+      "role_observers": [
+        "PLAYER_PRIVATE_HEALTH_IF_MODELED",
+        "COACH_IF_DISCLOSED",
+        "GM_IF_DISCLOSED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "choices": [
+        "ACCEPT_RISK",
+        "REQUEST_REST",
+        "REQUEST_NEW_ROLE",
+        "WITHDRAW"
+      ],
+      "risk": "no edit to durability to trigger narrative injury",
+      "agent_action_native_status": "NORMAL_ABILITY_EDIT_PROHIBITED"
+    },
+    {
+      "id": "K06.MEDICAL_STAFF",
+      "read_fields": [
+        "staff_position",
+        "trainer_rating_if_captured",
+        "medical_specialties_nextgen_only"
+      ],
+      "game_source_status": "PC_VISIBLE_TRAINER_REPORTED; EXACT_EFFECT_UNKNOWN",
+      "game_version_evidence": [
+        "SRC-0064",
+        "SRC-0058"
+      ],
+      "role_observers": [
+        "GM_HIRING_STATUS",
+        "COACH_TEAM_SUPPORT",
+        "PLAYER_DISCLOSED_QUALITY",
+        "MEDIA_PUBLIC_HIRING_ONLY"
+      ],
+      "choices": [
+        "REQUEST_STAFF_HIRING",
+        "DEBATE_BUDGET",
+        "REJECT_TEAM_CAPABILITY_CLAIM"
+      ],
+      "risk": "next-gen multi-position medical hierarchy not automatically PC hiring menu",
+      "agent_action_native_status": "STAFF_HIRING_EXECUTOR_NOT_CONFIRMED_FOR_THIS_RESEARCH"
+    },
+    {
+      "id": "K06.MENTOR_RELATIONSHIP",
+      "read_fields": [
+        "mentee_id",
+        "mentor_id",
+        "duration_days",
+        "compatibility",
+        "badge_slot_progression_if_decoded"
+      ],
+      "game_source_status": "MENTORSHIP_LAYOUT_DISCOVERED_READONLY_ADAPTER_PENDING",
+      "game_version_evidence": [
+        "SRC-0065",
+        "SRC-0066",
+        "SRC-0067",
+        "SRC-0068",
+        "SRC-0070"
+      ],
+      "role_observers": [
+        "PLAYER_OWN_ROLE_IF_DISCLOSED",
+        "COACH_IF_TEAM_CONTEXT",
+        "GM_IF_DISCLOSED"
+      ],
+      "choices": [
+        "REQUEST_MENTOR",
+        "DECLINE_MENTOR",
+        "COUNTER_OTHER_MENTOR",
+        "REQUEST_VERIFIED_BADGE_DIFF"
+      ],
+      "risk": "game crashes reported for some combinations; do not directly edit badges",
+      "agent_action_native_status": "NOT_AUTHORIZED_ENGAGEMENT_ONLY"
+    },
+    {
+      "id": "K06.NATURAL_PROGRESSION",
+      "read_fields": [
+        "player_attribute_snapshots",
+        "game_progression_event_if_present",
+        "badge_diff_if_measured"
+      ],
+      "game_source_status": "DIFFERENT_GAME_SNAPSHOTS_NEEDED; GM_POTENTIAL_MASKED",
+      "game_version_evidence": [
+        "SRC-0071",
+        "SRC-0065"
+      ],
+      "role_observers": [
+        "PLAYER_OWN_PROGRESS_IF_KNOWN",
+        "COACH_ROSTER_FACTS",
+        "GM_SANITIZED_PERMISSIONS",
+        "MEDIA_PUBLIC_GROWTH_ONLY"
+      ],
+      "choices": [
+        "KEEP_TRAINING",
+        "REQUEST_FOCUS_CHANGE",
+        "REVIEW_MENTOR",
+        "PUBLICLY_REVISE_EXPECTATIONS"
+      ],
+      "risk": "no inferred hidden potential and no direct ability/badge increases",
+      "agent_action_native_status": "NATIVE_ENGINE_OWNS_GROWTH"
+    }
+  ]
+}

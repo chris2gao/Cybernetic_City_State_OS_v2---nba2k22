@@ -1,0 +1,789 @@
+{
+  "schema_id": "DEV29_R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1",
+  "version": "1.0",
+  "date": "2026-10-21",
+  "status": "R05_A_RESEARCH_PUBLISHED_WITH_FINANCE_EXECUTION_GAPS",
+  "scope": "RESEARCH_K07_K08_NATIVE_FACTS_CHOICES_EFFECTS_NOT_MODEL_RULES",
+  "mode": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "career_rule": "2021_22_START_HISTORICAL_DRAFT_1984_2020_CYCLE",
+  "behavior_policy": "DO_NOT_DESIGN_PERSONA_GOALS_OFFERS_OR_NEGOTIATION_ALGORITHMS",
+  "data_provenance_levels": [
+    "REAL_NBA_2021_REFERENCE",
+    "2K22_CROSS_GEN_PLAYER_OBSERVED",
+    "PROJECT_NATIVE_PROFILE_ONLY",
+    "PROJECT_HISTORICAL_ARCHIVE_READ",
+    "DERIVED_SCENARIO_ONLY",
+    "LIVE_PC22_UNVERIFIED"
+  ],
+  "reference_finance": {
+    "season": "2021-2022",
+    "currency": "USD",
+    "provenance": "NBA_OFFICIAL_2021_SOURCE_0114_SECONDARY_APRON_0115_NOT_PC22_SAVE",
+    "values": {
+      "salary_cap": 112414000,
+      "tax_line": 136606000,
+      "apron": 143002000,
+      "minimum_team_salary": 101173000,
+      "midlevel_non_taxpayer": 9536000,
+      "midlevel_taxpayer": 5890000,
+      "midlevel_room": 4910000
+    },
+    "warnings": {
+      "apron": "SECONDARY_ARCHIVE_NOT_PRIMARY_NBA_RELEASE",
+      "minimum_team_salary": "NBA_OFFICIAL_ROUNDED_TO_0.001_MILLION",
+      "all": "REAL_NBA_REFERENCE_NE_PC22_CURRENT_SAVE_VALUES"
+    }
+  },
+  "native_player_contract_field_count": 17,
+  "native_contract_fields": [
+    {
+      "key": "PLAYER.contract.bird_years",
+      "data_object": "PLAYER",
+      "offset_decimal": 854,
+      "offset_hex": "0x356",
+      "start_bit": 6,
+      "width_bits": 4,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Bird tenure is not independently certified Bird eligibility"
+    },
+    {
+      "key": "PLAYER.contract.original_contract_years",
+      "data_object": "PLAYER",
+      "offset_decimal": 833,
+      "offset_hex": "0x341",
+      "start_bit": 4,
+      "width_bits": 3,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.years_left_on_contract",
+      "data_object": "PLAYER",
+      "offset_decimal": 814,
+      "offset_hex": "0x32E",
+      "start_bit": 2,
+      "width_bits": 4,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.contract_option",
+      "data_object": "PLAYER",
+      "offset_decimal": 791,
+      "offset_hex": "0x317",
+      "start_bit": 4,
+      "width_bits": 2,
+      "enumeration": {
+        "0": "NULL",
+        "1": "TEAM_OPTION",
+        "2": "PLAYER_OPTION",
+        "3": "2_YEAR_TEAM_OPTION"
+      },
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Options 0,1,2,3 as registry labels; offseason exercise and persistence unknown"
+    },
+    {
+      "key": "PLAYER.contract.no_trade",
+      "data_object": "PLAYER",
+      "offset_decimal": 838,
+      "offset_hex": "0x346",
+      "start_bit": 4,
+      "width_bits": 1,
+      "enumeration": {
+        "0": "NO",
+        "1": "YES"
+      },
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.extension_length",
+      "data_object": "PLAYER",
+      "offset_decimal": 833,
+      "offset_hex": "0x341",
+      "start_bit": 7,
+      "width_bits": 3,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.extension_option",
+      "data_object": "PLAYER",
+      "offset_decimal": 834,
+      "offset_hex": "0x342",
+      "start_bit": 2,
+      "width_bits": 2,
+      "enumeration": {
+        "0": "NULL",
+        "1": "TEAM_OPTION",
+        "2": "PLAYER_OPTION",
+        "3": "2_YEAR_TEAM_OPTION"
+      },
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.extension_no_trade",
+      "data_object": "PLAYER",
+      "offset_decimal": 796,
+      "offset_hex": "0x31C",
+      "start_bit": 5,
+      "width_bits": 1,
+      "enumeration": {
+        "0": "NO",
+        "1": "YES"
+      },
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.contract_year_1",
+      "data_object": "PLAYER",
+      "offset_decimal": 420,
+      "offset_hex": "0x1A4",
+      "start_bit": 0,
+      "width_bits": 31,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "31bit salary packed shared flag; year slot mapping not certified across season"
+    },
+    {
+      "key": "PLAYER.contract.contract_year_2",
+      "data_object": "PLAYER",
+      "offset_decimal": 424,
+      "offset_hex": "0x1A8",
+      "start_bit": 0,
+      "width_bits": 31,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "31bit salary packed shared flag; year slot mapping not certified across season"
+    },
+    {
+      "key": "PLAYER.contract.contract_year_3",
+      "data_object": "PLAYER",
+      "offset_decimal": 428,
+      "offset_hex": "0x1AC",
+      "start_bit": 0,
+      "width_bits": 31,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "31bit salary packed shared flag; year slot mapping not certified across season"
+    },
+    {
+      "key": "PLAYER.contract.contract_year_4",
+      "data_object": "PLAYER",
+      "offset_decimal": 432,
+      "offset_hex": "0x1B0",
+      "start_bit": 0,
+      "width_bits": 31,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "31bit salary packed shared flag; year slot mapping not certified across season"
+    },
+    {
+      "key": "PLAYER.contract.contract_year_5",
+      "data_object": "PLAYER",
+      "offset_decimal": 436,
+      "offset_hex": "0x1B4",
+      "start_bit": 0,
+      "width_bits": 31,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "31bit salary packed shared flag; year slot mapping not certified across season"
+    },
+    {
+      "key": "PLAYER.contract.contract_year_6",
+      "data_object": "PLAYER",
+      "offset_decimal": 440,
+      "offset_hex": "0x1B8",
+      "start_bit": 0,
+      "width_bits": 31,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "31bit salary packed shared flag; year slot mapping not certified across season"
+    },
+    {
+      "key": "PLAYER.contract.contract_type",
+      "data_object": "PLAYER",
+      "offset_decimal": 836,
+      "offset_hex": "0x344",
+      "start_bit": 3,
+      "width_bits": 3,
+      "enumeration": {
+        "0": "CORE",
+        "1": "HARDSHIP",
+        "2": "TWO_WAY",
+        "3": "EURO_STASH",
+        "4": "LINEUP"
+      },
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.euro_stash_years_left",
+      "data_object": "PLAYER",
+      "offset_decimal": 659,
+      "offset_hex": "0x293",
+      "start_bit": 5,
+      "width_bits": 2,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    },
+    {
+      "key": "PLAYER.contract.two_way_days_left",
+      "data_object": "PLAYER",
+      "offset_decimal": 351,
+      "offset_hex": "0x15F",
+      "start_bit": 2,
+      "width_bits": 6,
+      "enumeration": null,
+      "source": "config/memory_field_profile.json",
+      "evidence": "REGISTERED_PROJECT_NATIVE_PROFILE_NOT_LIVE_CAPTURE",
+      "current_value": null,
+      "game_rule_effect": "CONTRACT_GAME_ENGINE_SAVING_AND_ELIGIBILITY_NOT_FULLY_VERIFIED",
+      "candidate_observations": [
+        "CURRENT_GAME_CONTRACT",
+        "OFFSEASON_BEFORE_AND_AFTER",
+        "OPTION_DECISION"
+      ],
+      "operation_status": "NO_WRITE_AUTHORIZED_FROM_RESEARCH",
+      "warning": "Exact current value and lifecycle effect requires a game source batch"
+    }
+  ],
+  "team_finance_known_or_candidate_fields": [
+    {
+      "key": "TEAM_FINANCE.total_salary",
+      "data_object": "TEAM",
+      "offset_hex": "0xCBC",
+      "profile_source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "evidence": "TEAM_NATIVE_CANDIDATE_NATIVE_READ_REPORTED",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.payroll",
+      "data_object": "TEAM",
+      "offset_hex": "0xFF4",
+      "profile_source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "evidence": "TEAM_NATIVE_CANDIDATE_NATIVE_READ_REPORTED",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.cash",
+      "data_object": "TEAM",
+      "offset_hex": "0x1010",
+      "profile_source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "evidence": "TEAM_NATIVE_CANDIDATE_ENCODING_UNVERIFIED",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Signed value hypothesis and units unknown"
+    },
+    {
+      "key": "TEAM_FINANCE.budget",
+      "data_object": "TEAM",
+      "offset_hex": "0x1014",
+      "profile_source": "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+      "evidence": "TEAM_NATIVE_CANDIDATE_UNIT_UNVERIFIED",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.staff_budget",
+      "data_object": "TEAM",
+      "offset_hex": null,
+      "profile_source": "src/gm_core/finance.py",
+      "evidence": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.fan_interest",
+      "data_object": "TEAM",
+      "offset_hex": null,
+      "profile_source": "src/gm_core/finance.py",
+      "evidence": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.ticket_courtside",
+      "data_object": "TEAM",
+      "offset_hex": null,
+      "profile_source": "src/gm_core/finance.py",
+      "evidence": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.ticket_lower",
+      "data_object": "TEAM",
+      "offset_hex": null,
+      "profile_source": "src/gm_core/finance.py",
+      "evidence": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.ticket_upper",
+      "data_object": "TEAM",
+      "offset_hex": null,
+      "profile_source": "src/gm_core/finance.py",
+      "evidence": "PROJECT_FINANCE_MODULE_FIELD_CAPTURE_PER_BATCH_UNKNOWN",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Not interchangeable with Salary Cap room"
+    },
+    {
+      "key": "TEAM_FINANCE.monthly_gate_revenue",
+      "data_object": "TEAM",
+      "offset_hex": null,
+      "profile_source": "src/gm_core/finance.py",
+      "evidence": "PROJECT_FINANCE_MODULE_FIELD_WINDOW_UNVERIFIED",
+      "current_value": null,
+      "game_rule_effect": "NOT_CERTIFIED_AS_SIGNING_SPENDABILITY",
+      "operation_status": "RESEARCH_ONLY",
+      "notes": "Measurement aggregation window unknown"
+    }
+  ],
+  "market_concept_count": 21,
+  "market_rule_concepts": [
+    {
+      "id": "UFA",
+      "concept": "free agent unconstrained matching?",
+      "evidence": "REAL_CBA_RESEARCH; PC22_RUNTIME_STATUS_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "RFA",
+      "concept": "qualifying offer and actual matching rights",
+      "evidence": "REAL_CBA_RESEARCH; 2K22_GAMING_BUG_REPORTED",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "BIRD",
+      "concept": "own free-agent cap exception",
+      "evidence": "17FIELD_BIRD_YEARS_NE_ELIGIBILITY",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "EARLY_BIRD",
+      "concept": "limited own free-agent cap exception",
+      "evidence": "PC22_NATIVE_ELIGIBILITY_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "NON_BIRD",
+      "concept": "limited own free-agent cap exception",
+      "evidence": "PC22_NATIVE_ELIGIBILITY_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "CAP_HOLD",
+      "concept": "unsigned FA team salary reservation",
+      "evidence": "2K22_MENU_GAME_CONTEXT_OBSERVED; PROJECT_NATIVE_FIELD_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "RENOUNCE_RIGHTS",
+      "concept": "remove selected cap hold and possibly renounce associated own-player rights",
+      "evidence": "2K22_OLDGEN_VS_NEXTGEN_MENU_DIFFERENCE; PROJECT_NATIVE_WRITE_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "QUALIFYING_OFFER",
+      "concept": "RFA precondition and potential one year contract",
+      "evidence": "NATIVE_PHASE_AND_PERSISTENCE_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "PLAYER_OPTION",
+      "concept": "player decides option year",
+      "evidence": "NATIVE_ENUM_REGISTERED_ACTUAL_OFFSEASON_STATE_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "TEAM_OPTION",
+      "concept": "team decides option year",
+      "evidence": "NATIVE_ENUM_REGISTERED_ACTUAL_OFFSEASON_STATE_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "FLAT_CONTRACT",
+      "concept": "same salary each year",
+      "evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "FRONT_CONTRACT",
+      "concept": "declining salary contract",
+      "evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "BACK_CONTRACT",
+      "concept": "increasing salary contract",
+      "evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "BIRD_CONTRACT_CURVE",
+      "concept": "higher available raises to own Bird free agents",
+      "evidence": "2K22_NEXTGEN_COMMUNITY_UI",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "HARDSHIP",
+      "concept": "emergency roster contract category",
+      "evidence": "PROJECT_NATIVE_CONTRACT_TYPE_ENUM",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "TWO_WAY",
+      "concept": "two-way player rights",
+      "evidence": "PROJECT_NATIVE_CONTRACT_TYPE_ENUM_WITH_REAL_2021_CONTEXT",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "SALARY_CAP_EXCEPTION",
+      "concept": "eligible cap override and method",
+      "evidence": "NBA_REAL_CBA_REFERENCE_PC22_EXACT_SUPPORTED_LIST_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "TPE",
+      "concept": "trade player exception",
+      "evidence": "NBA_REAL_CBA_REFERENCE; 2K22_NEXTGEN_UI_RENOUNCE_REPORT",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "NO_TRADE",
+      "concept": "contract clause in source profile",
+      "evidence": "NATIVE_FLAG_EXISTS_EFFECT_AND_WAIVER_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "BIRD_YEARS",
+      "concept": "tenure years",
+      "evidence": "NATIVE_FIELD_EXISTS_NOT_FORCE_MATCH_RFA",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0114",
+        "SRC-0120"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    },
+    {
+      "id": "APRON",
+      "concept": "triggered hard-cap / exception constraints not all transactions",
+      "evidence": "SECONDARY_2021_VALUE; 2K22_APPLICABILITY_UNKNOWN",
+      "current_save_operability": "UNKNOWN_UNTIL_PC22_UI_OR_CAPTURE",
+      "cannot_imply_game_executor": true,
+      "source_ids": [
+        "SRC-0117",
+        "SRC-0119"
+      ],
+      "required_qualification": "CURRENT_SAVE_PHASE_PERSONNEL_ELIGIBILITY_SOURCE"
+    }
+  ],
+  "technical_status": {
+    "finance_workbench": "THREE_TO_SIX_YEAR_READONLY_SCENARIO_SIGNING_CAPACITY_UNKNOWN",
+    "finance_minus_cap": "PROXY_NOT_LEGAL_CAP_SPACE",
+    "free_agent_pool": "SOME_ARCHIVE_0_ROWS_NOT_GLOBAL_EMPTY",
+    "offseason_phase": "NOT_OBSERVED",
+    "native_ai_signings": "NOT_CONTAINED",
+    "player_contract_writes": "SIGNING_LAYOUT_VALIDATED_FALSE_SIGNING_EXECUTION_ENABLED_FALSE",
+    "trade": "APPROVED_TRADE_PLAN_EXECUTE_VERIFY_EXISTS_BUT_NOT_SIGNING",
+    "present": "NO_REAL_GAME_ACTION"
+  },
+  "project_sources": [
+    "config/memory_field_profile.json",
+    "config/source_catalog.json",
+    "docs/GM_FINANCE_WORKBENCH.md",
+    "docs/development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md",
+    "docs/38_APPROVED_SIGNING_EXECUTION.md",
+    "docs/development_tasks/DEV_20261017_04_OFFSEASON_FREE_AGENCY_V1.md"
+  ],
+  "next_research": "R05-B_PLAYER_AND_DRAFT_PICK_TRADE_RULES",
+  "source_range": "SRC-0114..0128"
+}

@@ -1,0 +1,41 @@
+{
+  "event_id": "GITHUB_ISSUE_6_REFERENCE_IMPORT_V1",
+  "occurred_at": "2026-10-20T10:20:13+00:00",
+  "category": "OTHER_VERIFIED_ENGINEERING_ISSUE",
+  "title": "DEV14完整Registry字段目录被误识别为PLAYER Potential镜像",
+  "root_cause_key": "DEV14_REGISTRY_WORLD_POTENTIAL_ALIAS",
+  "scope": {
+    "kind": "SYSTEM"
+  },
+  "source": {
+    "source_stage": "MANUAL_RESEARCH",
+    "producer": "M3_T_REPORTED_EVIDENCE",
+    "code_version": "7e8ba1a71ee350ea722ea262f1da70bce51bfc49",
+    "error_code": "UNKNOWN_PLAYER_POTENTIAL_JSON_MIRROR"
+  },
+  "affected_capability": "DEV14_FULL_REGISTRY_POTENTIAL_SANITIZATION",
+  "evidence_refs": [
+    "https://github.com/chris2gao/nba2k22-gm-engine/issues/6",
+    "docs/development_reviews/M3_T_IMPLEMENTATION_AND_ACCEPTANCE.md"
+  ],
+  "repro_steps": [
+    "阅读M3-T报告与Issue #6的已有合成复现记录；本M4不重新运行净化器",
+    "原条件：state_io_captures.metadata_json含完整Registry及world.contracts_and_finances.player_potential_factor目录键"
+  ],
+  "actual": "已有合成报告记录UNKNOWN_PLAYER_POTENTIAL_JSON_MIRROR；下一次完整目录生产路径有阻断风险，未证明全部生产采集必然失败",
+  "expected": "后续独立修复区分字段目录与真正PLAYER Potential值/镜像，保留原脱敏保护",
+  "confidence": "STATIC_REPORT",
+  "severity": "P1",
+  "status": "DEFERRED",
+  "proposed_owner": "DEV14窗口①或另行批准的独立开发模型",
+  "next_review_trigger": "玩家单独批准Issue #6最小修复范围及验证后，且在需要完整目录生产采集之前",
+  "related_issue_ids": [
+    "GITHUB-6"
+  ],
+  "player_decision_ref": "玩家2026-10-20：不扩展本轮，记录给DEV14窗口①后续修复；Issue #6为BACKLOG_ONLY",
+  "known_limits": [
+    "首次时间为GitHub Issue登记时间，不是已知游戏故障起点",
+    "occurrences是独立导入证据事件数，不是生产故障次数",
+    "本次只导入已存在报告，未重现、修复或运行DEV14测试；没有生产采集证据"
+  ]
+}

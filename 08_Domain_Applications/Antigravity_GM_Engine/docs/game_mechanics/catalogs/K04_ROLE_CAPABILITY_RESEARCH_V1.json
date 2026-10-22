@@ -1,0 +1,321 @@
+{
+  "schema_id": "DEV29_K04_ROLE_CAPABILITY_RESEARCH_V1",
+  "schema_kind": "RESEARCH_KNOWLEDGE_ONLY_NOT_EXECUTOR_OR_AGENT_SCHEMA",
+  "version": "1.0.0",
+  "research_batch": "R02-C",
+  "status": "R02_RESEARCH_CLOSED_WITH_PC22_UI_GAPS",
+  "game": "NBA2K22",
+  "target_platform": "PC_CURRENT_GEN",
+  "target_mode": "OFFLINE_MYLEAGUE",
+  "world_update_authority": "HUMAN_APPROVAL_ONLY",
+  "research_only": true,
+  "evidence_lenses": [
+    "OBSERVABLE",
+    "ACTIONABLE",
+    "MECHANISM",
+    "OWNER"
+  ],
+  "role_labels": [
+    "GM",
+    "COACH",
+    "PLAYER",
+    "MEDIA"
+  ],
+  "role_independence": "NO_FORCED_OPTIMUM; preferences and beliefs not native game facts",
+  "data_boundary": "PROJECT_NATIVE_FIELD_EXISTENCE_NOT_EQUAL_TO_CURRENT_SNAPSHOT; explicit source/identity/timestamp required",
+  "access_control": "ROLE_VISIBILITY_CONCEPT_NOT_IMPLEMENTED; no disclosure of hidden Potential or private beliefs",
+  "human_authorization": "REQUIRED_FOR_ALL_GAME_WRITES",
+  "normal_player_attribute_write": "PROHIBITED_EXCEPT_SEPARATE_EXPLICIT_HISTORYLINE_AUTHORIZATION",
+  "future_role_state_storage": "EXTERNAL_SQLITE_CANONICAL_RECOMMENDED_NOT_BUILT",
+  "evidence_refs": [
+    "docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+    "web_gm/manuals/GM_COACHING_OPERATIONS.md",
+    "web_gm/manuals/GM_DEFENSE_AND_TEAM_PLAYBOOK_POLICY_V1.md",
+    "docs/GM_SHARED_PLAY_POOL_V1.md",
+    "docs/game_mechanics/SOURCES.md",
+    "docs/game_mechanics/visuals/EXTERNAL_VISUALS.md"
+  ],
+  "capabilities": [
+    {
+      "id": "K04.COACH_SYSTEM",
+      "source_fields": [
+        "coach.PreferredSystem",
+        "coach.ActiveSystem"
+      ],
+      "known_values": "enum 0..7; see GM_COACHING_OPERATIONS.md",
+      "evidence": "PROJECT_NATIVE_ENUM_KNOWN",
+      "observable_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_IF_DISCLOSED",
+        "MEDIA_IF_PUBLIC"
+      ],
+      "candidate_choices": [
+        "KEEP_SYSTEM",
+        "PROPOSE_CHANGE_SYSTEM",
+        "NEGOTIATE_ROSTER_FIT",
+        "REJECT_PROPOSED_SYSTEM"
+      ],
+      "native_effect": "COACHING_SYSTEM_PREFERENCE_AND_ACTIVE_SELECTION; on_court_causality_unknown",
+      "engine_write": "EXISTING_COACH_ACTION_APPROVAL_REQUIRED",
+      "feedback": [
+        "team_game_results_if_captured",
+        "lineup_performance_if_observed"
+      ]
+    },
+    {
+      "id": "K04.POE",
+      "source_fields": [
+        "coach.POEOffense",
+        "coach.POEOffense2",
+        "coach.POEOffense3",
+        "coach.POEDefense",
+        "coach.POEDefense2",
+        "coach.POEDefense3"
+      ],
+      "known_values": "field_specific_native_enums_in_project_dictionary",
+      "evidence": "PROJECT_NATIVE_ENUM_KNOWN",
+      "observable_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_IF_DISCLOSED"
+      ],
+      "candidate_choices": [
+        "HOLD",
+        "PROPOSE_TACTICAL_FOCUS",
+        "COUNTER_TRADEOFF",
+        "REJECT"
+      ],
+      "native_effect": "COACH_STATED_FOCUS; precise_CPU_execution_unknown",
+      "engine_write": "EXISTING_COACH_ACTION_APPROVAL_REQUIRED",
+      "feedback": [
+        "actual_shot_profile_if_captured",
+        "turnover_and_rebound_box_if_captured"
+      ]
+    },
+    {
+      "id": "K04.RUNPLAYS",
+      "source_fields": [
+        "coach.RunPlayTendency"
+      ],
+      "known_values": "integer 0..100 project-native; not literal playcall percentage",
+      "evidence": "PROJECT_NATIVE_FIELD_KNOWN",
+      "observable_roles": [
+        "GM",
+        "COACH"
+      ],
+      "candidate_choices": [
+        "MAINTAIN_AUTONOMY",
+        "MORE_SET_PLAYS",
+        "FEWER_SET_PLAYS",
+        "REQUEST_GAME_LOGS"
+      ],
+      "native_effect": "SET_PLAY_CALL_PREFERENCE; actual call distribution_unknown",
+      "engine_write": "EXISTING_COACH_ACTION_APPROVAL_REQUIRED",
+      "feedback": [
+        "observed_play_calls_only_if_recorded"
+      ]
+    },
+    {
+      "id": "K04.TEAM_PLAYBOOK",
+      "source_fields": [
+        "team_book.regular",
+        "team_book.bench",
+        "team_book.endgame",
+        "team_book.favorite",
+        "play.native_crc"
+      ],
+      "known_values": "30/20/10/8 slots; 1392 distinct historical CRC references not current world state",
+      "evidence": "PROJECT_ARCHIVED_NATIVE_CRC_AND_BOOK_LAYOUT",
+      "observable_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_ROLE_EXPLAINED"
+      ],
+      "candidate_choices": [
+        "KEEP_TEAM_BOOK",
+        "PROPOSE_ADD_KNOWN_CRC",
+        "PROPOSE_REPLACE_SLOT",
+        "REJECT_PLAY_FIT"
+      ],
+      "native_effect": "TEAM_PLAY_CANDIDATES; automatic_CPU_use_not_verified",
+      "engine_write": "OWN_TEAM_BOOK_ONLY; SAME_BATCH_NATIVE_ID_AND_HUMAN_APPROVAL_REQUIRED",
+      "feedback": [
+        "observed_book_after_readback",
+        "actual_3d_call_if_verified"
+      ]
+    },
+    {
+      "id": "K04.PLAYER_PLAYTYPES",
+      "source_fields": [
+        "player.play_type_1",
+        "player.play_type_2",
+        "player.play_type_3",
+        "player.play_type_4"
+      ],
+      "known_values": "four ordered slots; enum 0..15 as documented; membership relation to specific CRC unknown",
+      "evidence": "PLAYER_REPORTED_PRIORITY_AND_PROJECT_ENUM_KNOWN",
+      "observable_roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "candidate_choices": [
+        "PREFER_CURRENT_ROLE",
+        "REQUEST_NEW_ROLE",
+        "ACCEPT_ROLE",
+        "REJECT_ROLE"
+      ],
+      "native_effect": "PLAYER_ROLE_MATCHING_TYPE; CPU_call_frequency_unknown",
+      "engine_write": "PLAYER_CONSENT_POLICY_AND_HUMAN_APPROVAL_REQUIRED_IF_NATIVE_EDIT_LEGAL",
+      "feedback": [
+        "actual_touches_or_plays_only_if_captured",
+        "player_private_preference_external"
+      ]
+    },
+    {
+      "id": "K04.FREELANCE",
+      "source_fields": [
+        "coach.FreelanceType",
+        "coach.FreelanceType2",
+        "coach.FreelanceType3",
+        "coach.FreelanceType4"
+      ],
+      "known_values": "ordered 4 slots; 34 raw enums 0..33 from project mapping",
+      "evidence": "PROJECT_NATIVE_ENUM_KNOWN_PLUS_PLAYER_REPORTED_PRIORITY",
+      "observable_roles": [
+        "COACH",
+        "GM",
+        "PLAYER_WHEN_ROLE_EXPLAINED"
+      ],
+      "candidate_choices": [
+        "KEEP_SPACING_SCHEME",
+        "PROPOSE_OTHER_SET",
+        "CHOOSE_FREELANCE_PRIORITY",
+        "REFUSE_UNFITTING_SCHEME"
+      ],
+      "native_effect": "FREELANCE_SPACE_PREFERENCE; actual_3d_usage_and_persistence_unknown",
+      "engine_write": "EXISTING_COACH_ACTION_APPROVAL_REQUIRED",
+      "feedback": [
+        "gameplan_display_if_captured",
+        "spacing_and_play_calls_if_observed"
+      ]
+    },
+    {
+      "id": "K04.ACE_RUNTIME",
+      "source_fields": [
+        "runtime.ACE_MODE_UNVERIFIED",
+        "runtime.OFFENSE_PLAYCALLING_UNVERIFIED",
+        "runtime.DEFENSE_PLAYCALLING_UNVERIFIED"
+      ],
+      "known_values": null,
+      "evidence": "NBA2K22_COMMUNITY_CONFLICTING_AND_PC22_NATIVE_UNKNOWN",
+      "observable_roles": [
+        "COACH_IF_EXPOSED",
+        "GM_IF_EXPOSED"
+      ],
+      "candidate_choices": [
+        "DEBATE_ADAPTATION",
+        "REQUEST_TIMEOUT_STATE",
+        "HOLD_UNKNOWN"
+      ],
+      "native_effect": "GAME_ADAPTIVE_CONTROL_SEMANTICS_UNVERIFIED_IN_PC22",
+      "engine_write": "NOT_AUTHORIZED_OR_VERIFIED",
+      "feedback": [
+        "pregame_vs_timeout_screen_if_available",
+        "actual_cpu_action_if_observed"
+      ]
+    },
+    {
+      "id": "K04.PERSONAL_DEFENSE",
+      "source_fields": [
+        "defense.personal.PressureOnball",
+        "defense.personal.ScreenDefenseOnBall",
+        "defense.personal.ScreenDefenseHedge",
+        "defense.personal.TagOnRoll",
+        "defense.personal.PreRotate"
+      ],
+      "known_values": "18 project-native defense fields; enum per field; PreRotate bool 0/1",
+      "evidence": "PROJECT_NATIVE_FIELDS_KNOWN_EXACT_UI_INCOMPLETE",
+      "observable_roles": [
+        "COACH",
+        "GM",
+        "PLAYER_IF_TACTICS_DISCLOSED"
+      ],
+      "candidate_choices": [
+        "KEEP_MATCHUP",
+        "PROPOSE_PERSONAL_SCHEME",
+        "REJECT_RISKY_SWITCH",
+        "COUNTER_DOUBLE_TEAM"
+      ],
+      "native_effect": "OPPONENT_SPECIFIC_PERSONAL_DEFENSE; player-by-player trigger unknown",
+      "engine_write": "PERSONAL_DEFENSE_ONLY; SAME_BATCH_IDS; HUMAN_APPROVAL; OVERALL_GM_WRITE_DISABLED",
+      "feedback": [
+        "matchup_source_after_readback",
+        "box_results_if_captured"
+      ]
+    },
+    {
+      "id": "K04.GAME_FEEDBACK",
+      "source_fields": [
+        "game.game_id",
+        "game.team_box",
+        "game.player_box",
+        "history.game_log"
+      ],
+      "known_values": null,
+      "evidence": "R01_RESEARCH_COMPLETE_PC22_NATIVE_COLLECTION_PENDING",
+      "observable_roles": [
+        "GM_IF_COVERED",
+        "COACH_IF_COVERED",
+        "PLAYER_OWN_AND_PUBLIC",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "candidate_choices": [
+        "REINTERPRET_STRATEGY",
+        "KEEP_OWN_THEORY",
+        "CRITICIZE",
+        "REQUEST_MORE_EVIDENCE"
+      ],
+      "native_effect": "REAL_2K_GAME_OUTCOME_IF_CAPTURED; cannot_invent",
+      "engine_write": "NO_GAME_RECORD_FABRICATION",
+      "feedback": [
+        "real_completed_game_identity",
+        "versioned_history_if_present"
+      ]
+    },
+    {
+      "id": "K04.ROLE_AGENCY",
+      "source_fields": [],
+      "known_values": null,
+      "evidence": "EXTERNAL_ROLE_RESEARCH_CONCEPT_NOT_GAME_NATIVE",
+      "observable_roles": [
+        "ROLE_OWNER_PRIVATE",
+        "OTHERS_ONLY_IF_DISCLOSED"
+      ],
+      "candidate_choices": [
+        "HOLD",
+        "PROPOSE",
+        "COUNTER",
+        "ACCEPT",
+        "REJECT",
+        "WITHDRAW",
+        "REQUEST_MORE_DATA",
+        "ACCEPT_RISK"
+      ],
+      "native_effect": "NONE_UNTIL_SEPARATE_APPROVED_GAME_ACTION",
+      "engine_write": "NO_AGENT_IMPLEMENTATION; EXTERNAL_STATE_CONCEPT_ONLY",
+      "feedback": [
+        "negotiation_event_if_future_implemented",
+        "approved_game_result_if_future_implemented"
+      ]
+    }
+  ],
+  "unverified_ui_targets": [
+    "VIS-TODO-R02-01",
+    "VIS-TODO-R02-02",
+    "VIS-TODO-R02-03",
+    "VIS-TODO-R02-04",
+    "VIS-TODO-R02-05"
+  ]
+}

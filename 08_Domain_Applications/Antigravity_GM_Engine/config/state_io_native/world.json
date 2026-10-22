@@ -1,0 +1,369 @@
+{
+  "version": "1.0.0",
+  "name": "NBA2K22_EXTERNAL_GM_MYLEAGUE_WORLD_SETTINGS_V1",
+  "description": "NBA 2K22 外挂GM专用终极联盟世界规则 V1 内存字段注册表与方案配置字典",
+  "document_source": "https://github.com/chris2gao/nba2k22-gm-engine/blob/main/docs/research/NBA2K22_EXTERNAL_GM_MYLEAGUE_WORLD_SETTINGS_V1_20261019.md",
+  "slots": {
+    "SLOT_SETTINGS": {
+      "rva": "0x0632B4B0",
+      "description": "实机比赛规则控制器 (Quarter Length, Game Speed, Injuries Enabled)"
+    },
+    "SLOT_TRADE": {
+      "rva": "0x0632B498",
+      "description": "联盟规则、CBA财务、交易、伤病、士气、成长与模拟控制器"
+    },
+    "SLOT_SLIDERS": {
+      "rva": "0x0632B4A0",
+      "description": "赛场平衡对抗滑块矩阵 (TUNEDATA_SAVED)"
+    },
+    "SLOT_FRANCHISE": {
+      "rva": "0x0632B478",
+      "description": "终极联盟根对象指针 (30队组织架构与自动化控制)"
+    }
+  },
+  "fields": {
+    "trade_and_draft_rules": {
+      "cpu_cpu_trades": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x170",
+        "type": "uint32",
+        "v1_target": 0,
+        "default": 1,
+        "name_zh": "电脑球队间自主交易开关 (CPU-CPU Trades)",
+        "desc": "切断游戏自行交易，交易由外挂GM虚拟市场统一仲裁"
+      },
+      "cpu_trade_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x178",
+        "type": "uint32",
+        "v1_target": 0,
+        "default": 50,
+        "name_zh": "电脑交易发生频率 (CPU Trade Frequency)",
+        "desc": "辅助双保险，将交易发生概率压低至 0"
+      },
+      "ted_stepien_rule": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x180",
+        "type": "uint32",
+        "v1_target": 0,
+        "default": 1,
+        "name_zh": "斯特平连续首轮保护规则 (Ted Stepien Rule)",
+        "desc": "外挂GM资产链仅跟踪未来3届选秀权，关闭原生连续首轮强制限制"
+      },
+      "trade_override": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x168",
+        "type": "uint32",
+        "v1_target": 0,
+        "default": 0,
+        "name_zh": "强制交易覆盖开关 (Trade Override)",
+        "desc": "不默认启用原生强制交易，获批交易直接由Codex/适配器受控执行"
+      },
+      "trade_deadline": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x16C",
+        "type": "uint32",
+        "v1_target": 1,
+        "default": 1,
+        "name_zh": "交易截止日开关 (Trade Deadline)",
+        "desc": "保留现实 2 月交易截止日硬时限"
+      },
+      "financial_trade_rules": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x160",
+        "type": "uint32",
+        "v1_target": 1,
+        "default": 1,
+        "name_zh": "财务交易薪资匹配限制 (Financial Trade Rules)",
+        "desc": "保留原生薪资匹配辅助校验"
+      },
+      "recently_signed_rule": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x154",
+        "type": "uint32",
+        "v1_target": 1,
+        "default": 1,
+        "name_zh": "刚签约球员限制交易 (90天规则)",
+        "desc": "保留休赛期新签约球员 90 天冷冻期"
+      },
+      "recently_traded_rule": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x158",
+        "type": "uint32",
+        "v1_target": 1,
+        "default": 1,
+        "name_zh": "刚交易球员限制再打包 (60天规则)",
+        "desc": "保留刚交易球员 60 天不可再次打包交易限制"
+      },
+      "trade_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x174",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "玩家交易谈判难度 (Trade Negotiation Difficulty)",
+        "desc": "保持原版默认 50，实际谈判由外部 GM 双方利益权衡"
+      }
+    },
+    "contracts_and_finances": {
+      "cpu_interest_in_resigning": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x234",
+        "type": "uint32",
+        "v1_target": 0,
+        "default": 50,
+        "name_zh": "电脑母队提前续约激进度 (CPU Re-Signing Aggressiveness)",
+        "desc": "设为 0，防止原生自动续约与外挂虚拟市场冲突"
+      },
+      "contract_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x210",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "自由球员合同谈判难度 (Contract Difficulty)",
+        "desc": "保持原版默认 50"
+      },
+      "player_non_financial_ambitions": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x214",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "球员非经济偏好因素 (Ambitions)",
+        "desc": "保持原版默认 50"
+      },
+      "min_contract_rating": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x218",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "底薪球员起评分数门槛",
+        "desc": "保持原版默认 50"
+      },
+      "max_contract_rating": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x21C",
+        "type": "uint32",
+        "v1_target": 40,
+        "default": 40,
+        "name_zh": "顶薪起评分数门槛",
+        "desc": "保持原版默认 40"
+      },
+      "player_potential_factor": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x220",
+        "type": "uint32",
+        "v1_target": 60,
+        "default": 60,
+        "name_zh": "潜力在薪资要价中的权重",
+        "desc": "保持原版默认 60"
+      },
+      "player_durability_factor": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x224",
+        "type": "uint32",
+        "v1_target": 20,
+        "default": 20,
+        "name_zh": "耐用度在薪资要价中的权重",
+        "desc": "保持原版默认 20"
+      },
+      "player_fame_factor": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x22C",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "声望知名度在薪资要价中的加成",
+        "desc": "保持原版默认 50"
+      }
+    },
+    "progression_and_regression": {
+      "offseason_progression_rate": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x26C",
+        "type": "uint32",
+        "v1_target": 48,
+        "default": 50,
+        "name_zh": "球员休赛期成长速率 (Player Progression Rate)",
+        "desc": "采用 48，避免历史新秀成长过慢"
+      },
+      "regression_rate": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x274",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "球员年长衰退速率 (Player Regression Rate)",
+        "desc": "保持原版默认 50，暂不额外惩罚老将"
+      },
+      "training_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x268",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "赛季日常训练效果 (In-Season Training Effects)",
+        "desc": "保持原版默认 50"
+      }
+    },
+    "injuries_and_morale": {
+      "user_injury_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x24C",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "玩家球队伤病发生频率 (In-Game Injury Freq)",
+        "desc": "保持 50，实机 3D 比赛伤病基本正常"
+      },
+      "cpu_injury_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x250",
+        "type": "uint32",
+        "v1_target": 55,
+        "default": 50,
+        "name_zh": "模拟比赛伤病频率 (Sim Injury Frequency)",
+        "desc": "轻微上调至 55，轻微提高日历模拟真实伤病"
+      },
+      "user_injury_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x254",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "玩家球队伤病负面影响 (In-Game Injury Severity)",
+        "desc": "保持原版 50"
+      },
+      "cpu_injury_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x258",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "电脑球队伤病负面影响",
+        "desc": "保持原版 50"
+      },
+      "injury_severity": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x25C",
+        "type": "uint32",
+        "v1_target": 40,
+        "default": 50,
+        "name_zh": "模拟比赛伤病严重度 (Sim Injury Severity)",
+        "desc": "降至 40，降低部分重大伤病成本，增加小伤小病比例"
+      },
+      "injury_duration": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x260",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "伤病恢复持续周期 (Injury Duration)",
+        "desc": "保持原版默认 50"
+      },
+      "career_ending_injury_frequency": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x264",
+        "type": "uint32",
+        "v1_target": 5,
+        "default": 50,
+        "name_zh": "生涯报销退役大伤频率 (Career-Ending Injury)",
+        "desc": "大幅降至 5，确保罕见生涯毁灭伤"
+      },
+      "morale_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x238",
+        "type": "uint32",
+        "v1_target": 35,
+        "default": 50,
+        "name_zh": "更衣室士气波动难度 (Morale Difficulty)",
+        "desc": "降至 35，弱化出场时间覆盖导致的无端抱怨"
+      },
+      "morale_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x23C",
+        "type": "uint32",
+        "v1_target": 40,
+        "default": 50,
+        "name_zh": "低士气对能力负面惩罚 (Morale Effects)",
+        "desc": "降至 40，减轻低士气即时能力连锁惩罚"
+      },
+      "chemistry_difficulty": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x240",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "球队化学反应建立难度 (Chemistry Difficulty)",
+        "desc": "保持原版中性 50"
+      },
+      "chemistry_effects": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x244",
+        "type": "uint32",
+        "v1_target": 50,
+        "default": 50,
+        "name_zh": "化学反应配合加成幅度 (Chemistry Effects)",
+        "desc": "保持原版中性 50"
+      },
+      "injuries_enabled": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0xF0",
+        "type": "uint32",
+        "v1_target": 1,
+        "default": 1,
+        "name_zh": "伤病系统全局总开关 (Injuries)",
+        "desc": "保持开启 1"
+      }
+    },
+    "gameplay_and_calendar": {
+      "quarter_length": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0x14",
+        "type": "uint32",
+        "v1_target": 12,
+        "default": 12,
+        "name_zh": "实机比赛单节时间 (Quarter Length)",
+        "desc": "完整 12 分钟拟真节奏"
+      },
+      "sim_quarter_length": {
+        "slot": "SLOT_TRADE",
+        "offset": "0xB4",
+        "type": "uint32",
+        "v1_target": 12,
+        "default": 12,
+        "name_zh": "模拟比赛单节时间 (Simulated Quarter Length)",
+        "desc": "正常联盟日历 12 分钟"
+      },
+      "normalize_stats": {
+        "slot": "SLOT_TRADE",
+        "offset": "0x600",
+        "type": "uint32",
+        "v1_target": 0,
+        "default": 0,
+        "name_zh": "出场时间与统计数据归一化 (Normalize Stats)",
+        "desc": "保持关闭 0 (实打12分钟真实统计)"
+      },
+      "game_difficulty_preset": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x00",
+        "type": "uint32",
+        "v1_target": 4,
+        "default": 4,
+        "name_zh": "游戏难度预设 (Gameplay Difficulty)",
+        "desc": "保持名人堂基准 4"
+      },
+      "game_speed": {
+        "slot": "SLOT_SETTINGS",
+        "offset": "0x00",
+        "type": "float",
+        "v1_target": 0.5,
+        "default": 0.5,
+        "name_zh": "实机比赛速度 (Game Speed)",
+        "desc": "原版标准速度 50 (0.50)"
+      }
+    }
+  }
+}

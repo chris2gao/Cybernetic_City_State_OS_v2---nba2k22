@@ -1,0 +1,90 @@
+{
+  "issue": {
+    "actual": "已有合成报告记录UNKNOWN_PLAYER_POTENTIAL_JSON_MIRROR；下一次完整目录生产路径有阻断风险，未证明全部生产采集必然失败",
+    "affected_capability": "DEV14_FULL_REGISTRY_POTENTIAL_SANITIZATION",
+    "category": "OTHER_VERIFIED_ENGINEERING_ISSUE",
+    "confidence": "STATIC_REPORT",
+    "evidence_interpretation": "OPERATOR_SUPPLIED_REFERENCES_NOT_M4_LIVE_VERIFICATION",
+    "evidence_refs": [
+      "https://github.com/chris2gao/nba2k22-gm-engine/issues/6",
+      "docs/development_reviews/M3_T_IMPLEMENTATION_AND_ACCEPTANCE.md"
+    ],
+    "expected": "后续独立修复区分字段目录与真正PLAYER Potential值/镜像，保留原脱敏保护",
+    "finding_kind": "ENGINEERING_EVIDENCE",
+    "fingerprint": "5600dd26e1086b0b0f4570f856134a39d58516119c8d89fe6bb2f2b96dbe90b6",
+    "first_seen": "2026-10-20T10:20:13+00:00",
+    "first_source": {
+      "code_version": "7e8ba1a71ee350ea722ea262f1da70bce51bfc49",
+      "error_code": "UNKNOWN_PLAYER_POTENTIAL_JSON_MIRROR",
+      "producer": "M3_T_REPORTED_EVIDENCE",
+      "source_stage": "MANUAL_RESEARCH"
+    },
+    "issue_id": "DEV-5600dd26e1086b0b0f45",
+    "known_limits": [
+      "首次时间为GitHub Issue登记时间，不是已知游戏故障起点",
+      "occurrences是独立导入证据事件数，不是生产故障次数",
+      "本次只导入已存在报告，未重现、修复或运行DEV14测试；没有生产采集证据"
+    ],
+    "last_seen": "2026-10-20T10:20:13+00:00",
+    "latest_confidence": "STATIC_REPORT",
+    "latest_evidence_refs": [
+      "https://github.com/chris2gao/nba2k22-gm-engine/issues/6",
+      "docs/development_reviews/M3_T_IMPLEMENTATION_AND_ACCEPTANCE.md"
+    ],
+    "latest_source": {
+      "code_version": "7e8ba1a71ee350ea722ea262f1da70bce51bfc49",
+      "error_code": "UNKNOWN_PLAYER_POTENTIAL_JSON_MIRROR",
+      "producer": "M3_T_REPORTED_EVIDENCE",
+      "source_stage": "MANUAL_RESEARCH"
+    },
+    "next_review_trigger": "玩家单独批准Issue #6最小修复范围及验证后，且在需要完整目录生产采集之前",
+    "occurrences": 1,
+    "player_decision_ref": "玩家2026-10-20：不扩展本轮，记录给DEV14窗口①后续修复；Issue #6为BACKLOG_ONLY",
+    "proposed_owner": "DEV14窗口①或另行批准的独立开发模型",
+    "related_issue_ids": [
+      "GITHUB-6"
+    ],
+    "repro_steps": [
+      "阅读M3-T报告与Issue #6的已有合成复现记录；本M4不重新运行净化器",
+      "原条件：state_io_captures.metadata_json含完整Registry及world.contracts_and_finances.player_potential_factor目录键"
+    ],
+    "revision": 1,
+    "roadmap_note": "",
+    "root_cause_key": "DEV14_REGISTRY_WORLD_POTENTIAL_ALIAS",
+    "scope": {
+      "kind": "SYSTEM"
+    },
+    "severity": "P1",
+    "status": "DEFERRED",
+    "title": "DEV14完整Registry字段目录被误识别为PLAYER Potential镜像"
+  },
+  "history": {
+    "rows": [
+      {
+        "event_key": "ingest:1e69403bd5ff6e0d7de55c30f5223accb39ada4d9e611c948acacd133e836c22",
+        "kind": "OBSERVATION",
+        "revision": 1,
+        "occurred_at": "2026-10-20T10:20:13+00:00",
+        "recorded_at": "2026-10-20T13:46:59.133603+00:00",
+        "source": {
+          "code_version": "7e8ba1a71ee350ea722ea262f1da70bce51bfc49",
+          "error_code": "UNKNOWN_PLAYER_POTENTIAL_JSON_MIRROR",
+          "producer": "M3_T_REPORTED_EVIDENCE",
+          "source_stage": "MANUAL_RESEARCH"
+        },
+        "confidence": "STATIC_REPORT",
+        "evidence_refs": [
+          "https://github.com/chris2gao/nba2k22-gm-engine/issues/6",
+          "docs/development_reviews/M3_T_IMPLEMENTATION_AND_ACCEPTANCE.md"
+        ],
+        "status_change": null,
+        "player_decision_ref": "玩家2026-10-20：不扩展本轮，记录给DEV14窗口①后续修复；Issue #6为BACKLOG_ONLY"
+      }
+    ],
+    "row_count": 1,
+    "next_cursor": null,
+    "truncated": false,
+    "evidence_watermark": 4,
+    "execution_authorized": false
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "policy_id": "GM_OPERATING_DRAFT_V1",
+  "configuration_status": "PROPOSED_PENDING_PLAYER_CONFIRMATION",
+  "analysis_only": true,
+  "automatic_decisions": false,
+  "automatic_execution": false,
+  "valuation_model": "DEFERRED_V2_NO_DEFAULT_PLAYER_VALUES",
+  "lifecycles": ["CHAMPIONSHIP", "CONTENDING", "RISING", "COMPETITIVE", "RETOOLING", "REBUILDING", "UNDETERMINED"],
+  "lifecycle_candidate_thresholds": {
+    "minimum_games": 10,
+    "contending_win_percentage": 0.6,
+    "competitive_win_percentage": 0.45,
+    "rebuilding_win_percentage": 0.35
+  },
+  "protected_player_names": ["Tyrese Haliburton"],
+  "tactical_enums": {
+    "profile": "config/coach_tactics_profile.json",
+    "legacy_team_poe_status": "REVOKED_LEGACY_UNVERIFIED",
+    "contract": "gm_core.coaching.validate_plan_WITH_CURRENT_COACHING_SNAPSHOT",
+    "approval": "EXTERNAL_SPECIFIC_PLAYER_APPROVAL_REQUIRED"
+  },
+  "extensions": {
+    "v2": ["asset_ownership", "bilateral_negotiation", "cba_and_game_rules", "multi_model_handoff"],
+    "v3": ["confirmed_history", "draft_progress", "dual_worldlines", "season_effect_review"],
+    "status": "INTERFACES_ONLY_PLAYER_INSTRUCTION_REQUIRED"
+  }
+}

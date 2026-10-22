@@ -1,0 +1,521 @@
+{
+  "schema_version": 1,
+  "status": "SYNTHETIC_DESIGN_EXAMPLES_NOT_EXECUTED_M3_TESTS",
+  "current_game_facts": false,
+  "current_game_decisions": false,
+  "numeric_example_method": "Python arithmetic from explicit synthetic counters",
+  "cases": [
+    {
+      "case_id": "A_INTERVAL_METRICS",
+      "purpose": "Recompute interval ratios from counter deltas",
+      "input": {
+        "previous": {
+          "w": 10,
+          "l": 10,
+          "made": 600,
+          "attempted": 1400,
+          "three_made": 180,
+          "three_attempted": 500
+        },
+        "current": {
+          "w": 13,
+          "l": 12,
+          "made": 760,
+          "attempted": 1750,
+          "three_made": 240,
+          "three_attempted": 650
+        }
+      },
+      "expected": {
+        "delta": {
+          "w": 3,
+          "l": 2,
+          "made": 160,
+          "attempted": 350,
+          "three_made": 60,
+          "three_attempted": 150
+        },
+        "metrics": {
+          "games": 5,
+          "efg": 0.5428571428571428,
+          "three_attempt_rate": 0.42857142857142855
+        },
+        "scope": "INTERVAL_NOT_CALENDAR_MONTH"
+      }
+    },
+    {
+      "case_id": "A_ZERO_AND_REGRESSED_COUNTER",
+      "input": {
+        "games_delta": 0,
+        "attempted_delta": -3,
+        "salary_changed": true
+      },
+      "expected": {
+        "per_game_status": "NO_NEW_GAMES",
+        "shooting_delta_status": "NON_COMPARABLE",
+        "contract_change_research": "AVAILABLE_WITH_IDENTITY_EVIDENCE"
+      }
+    },
+    {
+      "case_id": "A_IDENTITY_NOT_COUNTS",
+      "input": {
+        "source": [
+          "pA",
+          "pB"
+        ],
+        "assessed": [
+          "pA",
+          "pC"
+        ]
+      },
+      "expected": {
+        "coverage": "INCOMPLETE",
+        "missing": [
+          "pB"
+        ],
+        "unexpected": [
+          "pC"
+        ],
+        "can_mark_team_complete": false
+      }
+    },
+    {
+      "case_id": "A_PAGED_ACCESS",
+      "input": {
+        "first_page": {
+          "rows": 7,
+          "next_cursor": "NEXT"
+        },
+        "second_page": {
+          "rows": 3,
+          "next_cursor": null
+        },
+        "staff_status": "QUERY_FAILED",
+        "pool_count": 3000,
+        "pool_read": 5
+      },
+      "expected": {
+        "roster_rows_read": 10,
+        "staff_dimension": "HOLD_FOR_ACCESS",
+        "pool_records_read": 5,
+        "pool_all_assessed": false,
+        "other_dimensions": "CONTINUE_IF_SUPPORTED"
+      }
+    },
+    {
+      "case_id": "A_TEMPORAL_IDENTITY",
+      "input": {
+        "same_name_and_face": true,
+        "previous_matches": 2,
+        "current_matches": 1,
+        "persistent_key": null
+      },
+      "expected": {
+        "match": "AMBIGUOUS",
+        "verified_growth_delta": null,
+        "team_level_deltas": "INDEPENDENTLY_AVAILABLE"
+      }
+    },
+    {
+      "case_id": "B_COLD_START_30",
+      "input": {
+        "source_binding": {
+          "career_id": "SYNTHETIC_M3",
+          "batch_id": "SYNTHETIC_B2",
+          "snapshot_id": "SYNTHETIC_S2"
+        },
+        "teams": [
+          {
+            "team_id": 1000,
+            "abbreviation": "S00",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1000:0"
+            ]
+          },
+          {
+            "team_id": 1001,
+            "abbreviation": "S01",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1001:0"
+            ]
+          },
+          {
+            "team_id": 1002,
+            "abbreviation": "S02",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1002:0"
+            ]
+          },
+          {
+            "team_id": 1003,
+            "abbreviation": "S03",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1003:0"
+            ]
+          },
+          {
+            "team_id": 1004,
+            "abbreviation": "S04",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1004:0"
+            ]
+          },
+          {
+            "team_id": 1005,
+            "abbreviation": "S05",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1005:0"
+            ]
+          },
+          {
+            "team_id": 1006,
+            "abbreviation": "S06",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1006:0"
+            ]
+          },
+          {
+            "team_id": 1007,
+            "abbreviation": "S07",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1007:0"
+            ]
+          },
+          {
+            "team_id": 1008,
+            "abbreviation": "S08",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1008:0"
+            ]
+          },
+          {
+            "team_id": 1009,
+            "abbreviation": "S09",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1009:0"
+            ]
+          },
+          {
+            "team_id": 1010,
+            "abbreviation": "S10",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1010:0"
+            ]
+          },
+          {
+            "team_id": 1011,
+            "abbreviation": "S11",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1011:0"
+            ]
+          },
+          {
+            "team_id": 1012,
+            "abbreviation": "S12",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1012:0"
+            ]
+          },
+          {
+            "team_id": 1013,
+            "abbreviation": "S13",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1013:0"
+            ]
+          },
+          {
+            "team_id": 1014,
+            "abbreviation": "S14",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1014:0"
+            ]
+          },
+          {
+            "team_id": 1015,
+            "abbreviation": "S15",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1015:0"
+            ]
+          },
+          {
+            "team_id": 1016,
+            "abbreviation": "S16",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1016:0"
+            ]
+          },
+          {
+            "team_id": 1017,
+            "abbreviation": "S17",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1017:0"
+            ]
+          },
+          {
+            "team_id": 1018,
+            "abbreviation": "S18",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1018:0"
+            ]
+          },
+          {
+            "team_id": 1019,
+            "abbreviation": "S19",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1019:0"
+            ]
+          },
+          {
+            "team_id": 1020,
+            "abbreviation": "S20",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1020:0"
+            ]
+          },
+          {
+            "team_id": 1021,
+            "abbreviation": "S21",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1021:0"
+            ]
+          },
+          {
+            "team_id": 1022,
+            "abbreviation": "S22",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1022:0"
+            ]
+          },
+          {
+            "team_id": 1023,
+            "abbreviation": "S23",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1023:0"
+            ]
+          },
+          {
+            "team_id": 1024,
+            "abbreviation": "S24",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1024:0"
+            ]
+          },
+          {
+            "team_id": 1025,
+            "abbreviation": "S25",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1025:0"
+            ]
+          },
+          {
+            "team_id": 1026,
+            "abbreviation": "S26",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1026:0"
+            ]
+          },
+          {
+            "team_id": 1027,
+            "abbreviation": "S27",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1027:0"
+            ]
+          },
+          {
+            "team_id": 1028,
+            "abbreviation": "S28",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1028:0"
+            ]
+          },
+          {
+            "team_id": 1029,
+            "abbreviation": "S29",
+            "roster_identities": [
+              "SYNTHETIC_S2:roster:1029:0"
+            ]
+          }
+        ],
+        "strategy_status": "UNASSESSED",
+        "finance_run_id": null
+      },
+      "expected": {
+        "prepared_team_count": 30,
+        "formally_reviewed_team_count": 0,
+        "can_mark_final": false,
+        "finance_status": "NOT_LINKED",
+        "next_step": "EXPLICIT_TEAM_RESEARCH"
+      }
+    },
+    {
+      "case_id": "B_INDEPENDENT_INTERESTS",
+      "input": {
+        "common_problem": "Acquire a ready wing for a future first and multiple salary years; internal coaching can also improve fit",
+        "policies": [
+          {
+            "team": "S00",
+            "objective": "Current competitive window if core evidence supports it",
+            "priority": "Prove wing gain exceeds internal alternative and asset cost"
+          },
+          {
+            "team": "S01",
+            "objective": "Improve current role utilization before external spending",
+            "priority": "Compare coaching-only alternative and retain future flexibility"
+          },
+          {
+            "team": "S02",
+            "objective": "Convert assets when roster and contract windows align",
+            "priority": "Retain pick unless current readiness supports conversion"
+          }
+        ]
+      },
+      "expected": {
+        "automatic_buyers_or_sellers": false,
+        "all_compare": [
+          "HOLD",
+          "INTERNAL",
+          "MARKET"
+        ],
+        "override_team_interest_for_league_total": false
+      }
+    },
+    {
+      "case_id": "B_COUNTER_RESETS_ACCEPTANCE",
+      "input": {
+        "offer_id": "O1",
+        "accepted_by_A_terms_revision": 1,
+        "counter_by_B_terms_revision": 2
+      },
+      "expected": {
+        "status": "NEGOTIATING",
+        "agreement": false,
+        "requires": "Both parties separately accept identical revision 2 terms"
+      }
+    },
+    {
+      "case_id": "B_CANDIDATE_VS_SELECTED_CONFLICT",
+      "input": {
+        "offers": [
+          {
+            "id": "O1",
+            "asset": "SYNTHETIC_P1",
+            "owner": "S00",
+            "to": "S01"
+          },
+          {
+            "id": "O2",
+            "asset": "SYNTHETIC_P1",
+            "owner": "S00",
+            "to": "S02"
+          }
+        ]
+      },
+      "expected": {
+        "candidate_storage": "ALLOWED_WITH_COMPETITION_LINK",
+        "selected_together": "ASSET_CONFLICT",
+        "alternatives_may_choose_one": true
+      }
+    },
+    {
+      "case_id": "B_EXECUTOR_TEAM_OVERLAP",
+      "input": {
+        "selected": [
+          {
+            "id": "O1",
+            "teams": [
+              "S00",
+              "S01"
+            ],
+            "assets": [
+              "pA"
+            ]
+          },
+          {
+            "id": "O2",
+            "teams": [
+              "S00",
+              "S02"
+            ],
+            "assets": [
+              "pB"
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "asset_conflict": false,
+        "executor_readiness": "DEPENDENCY_UNSUPPORTED",
+        "auto_sequence": false
+      }
+    },
+    {
+      "case_id": "B_TRADE_COACH_DEPENDENCY",
+      "input": {
+        "trade_changes_roster_of": "S00",
+        "coaching_snapshot": "PRE_TRADE_S00"
+      },
+      "expected": {
+        "coaching_ready_after_trade": false,
+        "action": "Re-evaluate after separately triggered updated source",
+        "auto_capture": false
+      }
+    },
+    {
+      "case_id": "B_FINANCE_UNKNOWN_SCOPE",
+      "input": {
+        "cash_semantics": "UNKNOWN",
+        "contract_move": "UNCHANGED",
+        "signing_execution_enabled": false
+      },
+      "expected": {
+        "trade_analysis": "AVAILABLE",
+        "trade_execution": "REQUIRES_LIVE_TRADE_PLAN",
+        "signing_cost_research": "AVAILABLE",
+        "signing_execution": "BLOCKED_EXECUTOR",
+        "claims_signing_capacity": false
+      }
+    },
+    {
+      "case_id": "B_STALE_REVISION_AND_FINAL",
+      "input": {
+        "current_revision": 4,
+        "submitted_expected_revision": 3,
+        "current_final_version": 1
+      },
+      "expected": {
+        "write": "REVISION_CONFLICT",
+        "previous_records_preserved": true,
+        "current_final_version": 1
+      }
+    },
+    {
+      "case_id": "B_NO_DEAL_VALID_HOLD",
+      "input": {
+        "all_30_reviews_complete": true,
+        "all_source_identity_sets_match": true,
+        "accepted_offers": [],
+        "team_hold_reasons_present": true
+      },
+      "expected": {
+        "finalization": "FINAL_PROPOSED",
+        "approval_items": [],
+        "no_deal_is_failure": false,
+        "execution_authorized": false
+      }
+    },
+    {
+      "case_id": "B_PREPARATION_IS_NOT_APPROVAL",
+      "input": {
+        "model_claim": {
+          "approved": true
+        },
+        "invented_coaching_digest": "MODEL_TEXT_WITHOUT_GENERATOR_RESULT"
+      },
+      "expected": {
+        "authority_claim": "REJECT",
+        "coaching_preparation": "PENDING",
+        "execution_authorized": false
+      }
+    }
+  ]
+}

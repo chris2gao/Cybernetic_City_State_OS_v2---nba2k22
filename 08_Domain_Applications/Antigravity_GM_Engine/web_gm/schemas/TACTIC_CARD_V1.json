@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "TACTIC_CARD_V1.json",
+  "title": "TacticCardV1",
+  "type": "object",
+  "required": [
+    "card_id",
+    "version",
+    "title",
+    "tags",
+    "basketball_principle",
+    "required_roles",
+    "required_abilities",
+    "counters_and_weaknesses",
+    "opportunity_cost",
+    "observable_signals",
+    "unavailable_signals",
+    "native_links",
+    "reference_sources",
+    "confidence",
+    "game_version_scope",
+    "status",
+    "superseded_by"
+  ],
+  "properties": {
+    "card_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "basketball_principle": {
+      "type": "string",
+      "minLength": 1
+    },
+    "game_version_scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "required_abilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "counters_and_weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "opportunity_cost": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "observable_signals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unavailable_signals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "version": {
+      "const": 1
+    },
+    "status": {
+      "const": "REFERENCE_OR_HYPOTHESIS"
+    },
+    "superseded_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "native_links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "scope",
+          "field",
+          "semantic_label",
+          "mapping_status",
+          "evidence_ref",
+          "caveat"
+        ],
+        "properties": {
+          "scope": {
+            "enum": [
+              "COACH_DEFAULT",
+              "VS_OPPONENT_DEFENSE"
+            ]
+          },
+          "field": {
+            "type": "string",
+            "minLength": 1
+          },
+          "semantic_label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "mapping_status": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_ref": {
+            "type": "string",
+            "minLength": 1
+          },
+          "caveat": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "reference_sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_id",
+          "url",
+          "section",
+          "fact_scope"
+        ],
+        "properties": {
+          "source_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1
+          },
+          "section": {
+            "type": "string",
+            "minLength": 1
+          },
+          "fact_scope": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "required": [
+        "basketball",
+        "native_mapping",
+        "in_game_effect"
+      ],
+      "properties": {
+        "basketball": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_mapping": {
+          "type": "string",
+          "minLength": 1
+        },
+        "in_game_effect": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

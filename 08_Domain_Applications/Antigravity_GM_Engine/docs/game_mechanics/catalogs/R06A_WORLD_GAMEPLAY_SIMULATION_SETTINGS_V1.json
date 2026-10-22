@@ -1,0 +1,3792 @@
+{
+  "schema_id": "DEV29_R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_RESEARCH_V1",
+  "date": "2026-10-21",
+  "status": "R06_A_RESEARCH_PUBLISHED_WITH_PC22_RUNTIME_VERIFICATION_GAPS",
+  "target": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "research_only": true,
+  "develop_agents": false,
+  "modify_game": false,
+  "installed_registry_sources": [
+    "config/state_io_native/settings.json",
+    "config/state_io_native/world.json",
+    "config/state_io_native/court.json"
+  ],
+  "registry_candidate_count": 86,
+  "registry_candidates": [
+    {
+      "id": "settings.game_settings.quarter_length",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "game_settings",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0x14",
+      "storage_type": "uint32",
+      "profile_range": [
+        1,
+        12
+      ],
+      "profile_default": 12,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.game_settings.game_speed",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "game_settings",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0x00",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.5,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.game_settings.free_throw_difficulty",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "game_settings",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0x60",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.5,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.game_settings.shot_clock",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "game_settings",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0x74",
+      "storage_type": "uint32",
+      "profile_range": [
+        12,
+        60
+      ],
+      "profile_default": 24,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.game_settings.foul_out",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "game_settings",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0xA0",
+      "storage_type": "uint32",
+      "profile_range": [
+        2,
+        8
+      ],
+      "profile_default": 6,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.game_settings.injuries_enabled",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "game_settings",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0xF0",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.simulation.sim_quarter_length",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "simulation",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0xB4",
+      "storage_type": "uint32",
+      "profile_range": [
+        1,
+        12
+      ],
+      "profile_default": 12,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CALENDAR_SIM",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.simulation.normalize_stats",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "simulation",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x600",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CALENDAR_SIM",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.cpu_cpu_trades",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x170",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.trade_override",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x168",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.trade_deadline",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x16C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.financial_trade_rules",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x160",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.recently_signed_rule",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x154",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.recently_traded_rule",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x158",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.trade_difficulty",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x174",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.cpu_trade_frequency",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x178",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.blockbuster_trade_frequency",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x17C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.trade_rules.untouchable_threshold",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "trade_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x184",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.contract_difficulty",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x210",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.player_non_financial_ambitions",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x214",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.min_contract_rating",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x218",
+      "storage_type": "uint32",
+      "profile_range": [
+        50,
+        99
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.max_contract_rating",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x21C",
+      "storage_type": "uint32",
+      "profile_range": [
+        70,
+        99
+      ],
+      "profile_default": 40,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.player_potential_factor",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x220",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 60,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.player_durability_factor",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x224",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 20,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.player_fame_factor",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x22C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.contracts.cpu_interest_in_resigning",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "contracts",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x234",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.user_injury_frequency",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x24C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 65,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.cpu_injury_frequency",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x250",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.user_injury_effects",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x254",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.cpu_injury_effects",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x258",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.injury_severity",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x25C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 30,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.injury_duration",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x260",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.career_ending_injury_frequency",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x264",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 5,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.morale_difficulty",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x238",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.morale_effects",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x23C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.chemistry_difficulty",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x240",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.injuries_and_morale.chemistry_effects",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x244",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.progression.training_effects",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "progression",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x268",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.progression.offseason_progression_rate",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "progression",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x26C",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.progression.regression_rate",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "progression",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x274",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        100
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.game_difficulty_preset",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x00",
+      "storage_type": "uint32",
+      "profile_range": [
+        0,
+        4
+      ],
+      "profile_default": 4,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.speed_with_ball_min_user",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x37C",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.4,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.speed_with_ball_min_cpu",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x380",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.4,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.speed_with_ball_max_user",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x374",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.7,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.speed_with_ball_max_cpu",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x378",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.7,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.acceleration_with_ball_min_user",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x39C",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.4,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.acceleration_with_ball_min_cpu",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x3A0",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.4,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.speed_without_ball_min_user",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x36C",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.35,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "settings.gameplay_sliders.speed_without_ball_min_cpu",
+      "source_path": "config/state_io_native/settings.json",
+      "group": "gameplay_sliders",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x370",
+      "storage_type": "float",
+      "profile_range": [
+        0,
+        1
+      ],
+      "profile_default": 0.35,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "LIVE_3D",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.cpu_cpu_trades",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x170",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.cpu_trade_frequency",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x178",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.ted_stepien_rule",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x180",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.trade_override",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x168",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 0,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.trade_deadline",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x16C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.financial_trade_rules",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x160",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.recently_signed_rule",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x154",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.recently_traded_rule",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x158",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.trade_and_draft_rules.trade_difficulty",
+      "source_path": "config/state_io_native/world.json",
+      "group": "trade_and_draft_rules",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x174",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.cpu_interest_in_resigning",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x234",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.contract_difficulty",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x210",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.player_non_financial_ambitions",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x214",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.min_contract_rating",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x218",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.max_contract_rating",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x21C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 40,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.player_potential_factor",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x220",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 60,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.player_durability_factor",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x224",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 20,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.contracts_and_finances.player_fame_factor",
+      "source_path": "config/state_io_native/world.json",
+      "group": "contracts_and_finances",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x22C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.progression_and_regression.offseason_progression_rate",
+      "source_path": "config/state_io_native/world.json",
+      "group": "progression_and_regression",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x26C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.progression_and_regression.regression_rate",
+      "source_path": "config/state_io_native/world.json",
+      "group": "progression_and_regression",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x274",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.progression_and_regression.training_effects",
+      "source_path": "config/state_io_native/world.json",
+      "group": "progression_and_regression",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x268",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.user_injury_frequency",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x24C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.cpu_injury_frequency",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x250",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.user_injury_effects",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x254",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.cpu_injury_effects",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x258",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.injury_severity",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x25C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.injury_duration",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x260",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.career_ending_injury_frequency",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x264",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.morale_difficulty",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x238",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.morale_effects",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x23C",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.chemistry_difficulty",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x240",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.chemistry_effects",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x244",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.injuries_and_morale.injuries_enabled",
+      "source_path": "config/state_io_native/world.json",
+      "group": "injuries_and_morale",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0xF0",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 1,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CONTEXT_DEPENDENT",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.gameplay_and_calendar.quarter_length",
+      "source_path": "config/state_io_native/world.json",
+      "group": "gameplay_and_calendar",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0x14",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 12,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.gameplay_and_calendar.sim_quarter_length",
+      "source_path": "config/state_io_native/world.json",
+      "group": "gameplay_and_calendar",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0xB4",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 12,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "CALENDAR_SIM",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.gameplay_and_calendar.normalize_stats",
+      "source_path": "config/state_io_native/world.json",
+      "group": "gameplay_and_calendar",
+      "slot": "SLOT_TRADE",
+      "slot_rva": "0x0632B498",
+      "offset": "0x600",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 0,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.gameplay_and_calendar.game_difficulty_preset",
+      "source_path": "config/state_io_native/world.json",
+      "group": "gameplay_and_calendar",
+      "slot": "SLOT_SLIDERS",
+      "slot_rva": "0x0632B4A0",
+      "offset": "0x00",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 4,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    },
+    {
+      "id": "world.gameplay_and_calendar.game_speed",
+      "source_path": "config/state_io_native/world.json",
+      "group": "gameplay_and_calendar",
+      "slot": "SLOT_SETTINGS",
+      "slot_rva": "0x0632B4B0",
+      "offset": "0x00",
+      "storage_type": "float",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 0.5,
+      "profile_defined": true,
+      "target_pc22_current_value": null,
+      "runtime_readback_verified_in_R06_A": false,
+      "effect_from_profile_not_verified": true,
+      "original_platform_provenance": "PROJECT_NATIVE_CANDIDATE_MAY_HAVE_UNVERIFIED_FIXED_RVA",
+      "risk": "REGISTERED_CODE_OR_PROFILE_DOES_NOT_PROVE_NATIVE_MENU_VALUE_OR_RUNTIME_EFFECT",
+      "related_engine": "FRANCHISE_WORLD",
+      "approval_for_game_write": "REQUIRES_NEW_HUMAN_APPROVAL; DEV29_NOT_EXECUTOR"
+    }
+  ],
+  "player_facing_menu_concept_count": 118,
+  "player_facing_menu_concepts": [
+    {
+      "id": "R06A.SETUP.AUTOSAVE",
+      "menu_name": "Autosave",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.SEASON_LENGTH",
+      "menu_name": "Season Length",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.PLAYOFF_LENGTH",
+      "menu_name": "Playoff Length",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.QUARTER_LENGTH",
+      "menu_name": "Quarter Length",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.SIMULATED_QUARTER_LENGTH",
+      "menu_name": "Simulated Quarter Length",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_MINUTES",
+      "menu_name": "Normalize Played to Sim Minutes",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_STATS",
+      "menu_name": "Normalize Played to Sim Stats",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.GAME_DIFFICULTY",
+      "menu_name": "Game Difficulty",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.SIMULATION_DIFFICULTY",
+      "menu_name": "Simulation Difficulty",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.GAME_SPEED",
+      "menu_name": "Game Speed",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.FOUL_OUT",
+      "menu_name": "Foul Out",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.FATIGUE",
+      "menu_name": "Fatigue",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SETUP.INJURIES",
+      "menu_name": "Injuries",
+      "family": "GAME_SETUP",
+      "platform_evidence": "NBA2K22_SAME_GAME_SERIES_GUIDE",
+      "source_ids": [
+        "SRC-0167",
+        "SRC-0168"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.PLAYER_FATIGUE_RATE",
+      "menu_name": "Player Fatigue Rate",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.PLAYER_RECOVERY_RATE",
+      "menu_name": "Player Recovery Rate",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.TEAM_PACE",
+      "menu_name": "Team Pace",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.TEAM_FASTBREAK",
+      "menu_name": "Team Fastbreak",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.POSSESSIONS_PER_GAME",
+      "menu_name": "Possessions Per Game",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.SHOTS",
+      "menu_name": "Shots",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.ASSISTS",
+      "menu_name": "Assists",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STEALS",
+      "menu_name": "Steals",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.BLOCKS",
+      "menu_name": "Blocks",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.TURNOVERS",
+      "menu_name": "Turnovers",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.FOULS",
+      "menu_name": "Fouls",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.INJURIES",
+      "menu_name": "Injuries",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.DUNKS",
+      "menu_name": "Dunks",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.LAYUPS",
+      "menu_name": "Layups",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.SHOT_CLOSE",
+      "menu_name": "Shot Close",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.SHOT_MEDIUM",
+      "menu_name": "Shot Medium",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.SHOT_THREE",
+      "menu_name": "Shot Three",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.DUNK_SHOT_PERCENTAGE",
+      "menu_name": "Dunk Shot Percentage",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.LAYUP_SHOT_PERCENTAGE",
+      "menu_name": "Layup Shot Percentage",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.CLOSE_RANGE_SHOT_PERCENTAGE",
+      "menu_name": "Close Range Shot Percentage",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.MEDIUM_RANGE_SHOT_PERCENTAGE",
+      "menu_name": "Medium Range Shot Percentage",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.THREE_POINT_SHOT_PERCENTAGE",
+      "menu_name": "Three Point Shot Percentage",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.FREE_THROW_PERCENTAGE",
+      "menu_name": "Free Throw Percentage",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_SHOT",
+      "menu_name": "Stat Distribution Shot",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_OREB",
+      "menu_name": "Stat Distribution OReb",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_DREB",
+      "menu_name": "Stat Distribution DReb",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_TREB",
+      "menu_name": "Stat Distribution TReb",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_ASSIST",
+      "menu_name": "Stat Distribution Assist",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_STEAL",
+      "menu_name": "Stat Distribution Steal",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_BLOCK",
+      "menu_name": "Stat Distribution Block",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_FOUL",
+      "menu_name": "Stat Distribution Foul",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.SIMULATION.STAT_DISTRIBUTION_TURNOVERS",
+      "menu_name": "Stat Distribution Turnovers",
+      "family": "CALENDAR_SIM",
+      "platform_evidence": "PC_NBA2K22_OS_RES2_JAN2022_AND_PS4_DARTHRAMBO_SEP2021",
+      "source_ids": [
+        "SRC-0164",
+        "SRC-0165"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.INSIDE_SHOT_SUCCESS",
+      "menu_name": "Inside Shot Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.CLOSE_SHOT_SUCCESS",
+      "menu_name": "Close Shot Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.MID_RANGE_SHOT_SUCCESS",
+      "menu_name": "Mid-Range Shot Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.3PT_SHOT_SUCCESS",
+      "menu_name": "3PT Shot Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.LAYUP_SUCCESS",
+      "menu_name": "Layup Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SHOT_COVERAGE_IMPACT",
+      "menu_name": "Shot Coverage Impact",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SHOT_TIMING_IMPACT",
+      "menu_name": "Shot Timing Impact",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DUNK_IN_TRAFFIC_FREQUENCY",
+      "menu_name": "Dunk in Traffic Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DUNK_IN_TRAFFIC_SUCCESS",
+      "menu_name": "Dunk in Traffic Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.PASS_ACCURACY",
+      "menu_name": "Pass Accuracy",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ALLEY_OOP_SUCCESS",
+      "menu_name": "Alley-Oop Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.CONTACT_SHOT_SUCCESS",
+      "menu_name": "Contact Shot Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.BALL_SECURITY",
+      "menu_name": "Ball Security",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.BODY_UP_SENSITIVITY",
+      "menu_name": "Body-Up Sensitivity",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.PASS_SPEED",
+      "menu_name": "Pass Speed",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DRIVING_CONTACT_SHOT_FREQUENCY",
+      "menu_name": "Driving Contact Shot Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.INSIDE_CONTACT_SHOT_FREQUENCY",
+      "menu_name": "Inside Contact Shot Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.LAYUP_DEFENSE_STRENGTH_TAKEOFF",
+      "menu_name": "Layup Defense Strength Takeoff",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.LAYUP_DEFENSE_STRENGTH_RELEASE",
+      "menu_name": "Layup Defense Strength Release",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.JUMP_SHOT_DEFENSE_STRENGTH_GATHER",
+      "menu_name": "Jump Shot Defense Strength Gather",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.JUMP_SHOT_DEFENSE_STRENGTH_RELEASE",
+      "menu_name": "Jump Shot Defense Strength Release",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.HELP_DEFENSE_STRENGTH",
+      "menu_name": "Help Defense Strength",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.STEAL_SUCCESS",
+      "menu_name": "Steal Success",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ACCELERATION",
+      "menu_name": "Acceleration",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.VERTICAL",
+      "menu_name": "Vertical",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.STRENGTH",
+      "menu_name": "Strength",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.STAMINA",
+      "menu_name": "Stamina",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SPEED",
+      "menu_name": "Speed",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DURABILITY",
+      "menu_name": "Durability",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.HUSTLE",
+      "menu_name": "Hustle",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.BALL_HANDLING",
+      "menu_name": "Ball Handling",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.HANDS",
+      "menu_name": "Hands",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DUNKING_ABILITY",
+      "menu_name": "Dunking Ability",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ON_BALL_DEFENSE",
+      "menu_name": "On-Ball Defense",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.STEALING",
+      "menu_name": "Stealing",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.BLOCKING",
+      "menu_name": "Blocking",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.OFFENSIVE_AWARENESS",
+      "menu_name": "Offensive Awareness",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DEFENSIVE_AWARENESS",
+      "menu_name": "Defensive Awareness",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.OFFENSIVE_REBOUNDING",
+      "menu_name": "Offensive Rebounding",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DEFENSIVE_REBOUNDING",
+      "menu_name": "Defensive Rebounding",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.OFFENSIVE_CONSISTENCY",
+      "menu_name": "Offensive Consistency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.DEFENSIVE_CONSISTENCY",
+      "menu_name": "Defensive Consistency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.FATIGUE_RATE",
+      "menu_name": "Fatigue Rate",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.LATERAL_QUICKNESS",
+      "menu_name": "Lateral Quickness",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.TAKE_INSIDE_SHOTS",
+      "menu_name": "Take Inside Shots",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.TAKE_CLOSE_SHOTS",
+      "menu_name": "Take Close Shots",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.TAKE_MID_RANGE_SHOTS",
+      "menu_name": "Take Mid-Range Shots",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.TAKE_3PT_SHOTS",
+      "menu_name": "Take 3PT Shots",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.POST_SHOTS",
+      "menu_name": "Post Shots",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ATTACK_THE_BASKET",
+      "menu_name": "Attack the Basket",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.LOOK_FOR_POST_PLAYERS",
+      "menu_name": "Look for Post Players",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.THROW_ALLEY_OOPS",
+      "menu_name": "Throw Alley-Oops",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ATTEMPT_DUNKS",
+      "menu_name": "Attempt Dunks",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ATTEMPT_PUTBACKS",
+      "menu_name": "Attempt Putbacks",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.PLAY_PASSING_LANES",
+      "menu_name": "Play Passing Lanes",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.GO_FOR_ON_BALL_STEALS",
+      "menu_name": "Go for On-Ball Steals",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.CONTEST_SHOTS",
+      "menu_name": "Contest Shots",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.BACKDOOR_CUTS",
+      "menu_name": "Backdoor Cuts",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.OVER_THE_BACK_FOUL_FREQUENCY",
+      "menu_name": "Over the Back Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.CHARGING_FOUL_FREQUENCY",
+      "menu_name": "Charging Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.BLOCKING_FOUL_FREQUENCY",
+      "menu_name": "Blocking Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.REACHING_FOUL_FREQUENCY",
+      "menu_name": "Reaching Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SHOOTING_FOUL_FREQUENCY",
+      "menu_name": "Shooting Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.LOOSE_BALL_FOUL_FREQUENCY",
+      "menu_name": "Loose Ball Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ILLEGAL_SCREEN_FOUL_FREQUENCY",
+      "menu_name": "Illegal Screen Foul Frequency",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SPEED_WITH_BALL_MAX",
+      "menu_name": "Speed with Ball Max",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SPEED_WITH_BALL_MIN",
+      "menu_name": "Speed with Ball Min",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ACCELERATION_WITH_BALL_MAX",
+      "menu_name": "Acceleration with Ball Max",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ACCELERATION_WITH_BALL_MIN",
+      "menu_name": "Acceleration with Ball Min",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SPEED_WITHOUT_BALL_MAX",
+      "menu_name": "Speed without Ball Max",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.SPEED_WITHOUT_BALL_MIN",
+      "menu_name": "Speed without Ball Min",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ACCELERATION_WITHOUT_BALL_MAX",
+      "menu_name": "Acceleration without Ball Max",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    },
+    {
+      "id": "R06A.GAMEPLAY.ACCELERATION_WITHOUT_BALL_MIN",
+      "menu_name": "Acceleration without Ball Min",
+      "family": "LIVE_3D",
+      "platform_evidence": "PC_NBA2K22_OS_CDCOOL_NOV2021_AND_PC_CURRENTGEN_RES2_JAN2022",
+      "source_ids": [
+        "SRC-0163",
+        "SRC-0166"
+      ],
+      "observed_menu_values_in_R06_A": null,
+      "pc_original_menu_pixel_verified": false,
+      "exact_allowed_values_verified": false,
+      "mechanism_effect_range": "QUALITATIVE_OR_STILL_UNKNOWN",
+      "not_behavior_prescription": true
+    }
+  ],
+  "native_live_court_profile_reference": {
+    "path": "config/state_io_native/court.json",
+    "modified_sliders": [
+      "inside_shot_success",
+      "layup_defense_takeoff",
+      "layup_defense_release",
+      "help_defense_strength"
+    ],
+    "field_count": 4,
+    "validation": "ONLY_PROJECT_TECH_EVIDENCE; MAY_HAVE_ISOLATED_TEST; NOT_COMPLETE_PC22_BUILD_GAME_EFFECT_VALIDATION"
+  },
+  "sim_vs_live_world_model": {
+    "LIVE_3D": "USER/CPU gameplay sliders, physical collisions, ACE, presentation and actual in-game game time",
+    "CALENDAR_SIM": "possession, shots, success and season simulation engine, not identical gameplay engine",
+    "SIMCAST_JUMPIN": "hybrid transitions may affect normalization and discrepancy",
+    "NORMALIZATION": "PLAYED_TO_SIM_MINUTES and PLAYED_TO_SIM_STATS must be distinct until independently checked",
+    "FRANCHISE_CONTROL": "30_USER_CONTROLLED_TEAMS do not imply every on-court player consumes USER sliders"
+  },
+  "observability": [
+    {
+      "key": "points_and_quarter_score",
+      "sources": [
+        "POSTGAME_BOX",
+        "CALENDAR_RESULT"
+      ],
+      "risk": "SCORE_DIFFERENCE_NORMALIZATION"
+    },
+    {
+      "key": "pace_and_possessions",
+      "sources": [
+        "TEAM_BOX",
+        "SIM_OUTPUT"
+      ],
+      "risk": "DO_NOT_TREAT_SIM_SLIDER_100_AS_100_REAL_POSSESSIONS"
+    },
+    {
+      "key": "fga_3pa_fta_assists_turnovers",
+      "sources": [
+        "TEAM_BOX"
+      ],
+      "risk": "ROSTER_EDIT_AND_SIM_SLIDER_CONFOUNDED"
+    },
+    {
+      "key": "player_minutes_and_stats",
+      "sources": [
+        "PLAYER_BOX",
+        "SEASON_AVERAGE"
+      ],
+      "risk": "NORMALIZE_MINUTES_SEPARATE_FROM_STATS"
+    },
+    {
+      "key": "injury_and_fatigue",
+      "sources": [
+        "GAME_INJURY_STATE",
+        "RECOVERY_STATE"
+      ],
+      "risk": "NOT_JUST_PLAYER_DURABILITY"
+    },
+    {
+      "key": "rotation_tactics_ace",
+      "sources": [
+        "COACH_NATIVE",
+        "LIVE_3D_GAME"
+      ],
+      "risk": "AI_OVERRIDES_NOT_EXACT_MINUTE_LOCK"
+    },
+    {
+      "key": "playback_vs_calendar_result",
+      "sources": [
+        "3D_FINAL",
+        "CALENDAR_SAVED_SCORE"
+      ],
+      "risk": "JUMP_IN_DOUBLE_NORMALIZATION_CASES"
+    }
+  ],
+  "anomalies": [
+    {
+      "id": "NORMALIZED_SCORE_MULTIPLIER_2K22",
+      "source": "SRC-0170",
+      "evidence": "JUNE_2022_PLAYER_ANOMALY",
+      "not_universal": true
+    },
+    {
+      "id": "NORMALIZE_MINUTES_VS_STATS_2K21",
+      "source": "SRC-0171",
+      "evidence": "OLDER_2021_MYLEAGUE",
+      "not_universal": true
+    },
+    {
+      "id": "PC22_SIM_SLIDERS_DEPEND_ON_ROSTER_TENDENCY_EDITS",
+      "source": "SRC-0164",
+      "evidence": "PC22_SOURCE_AUTHOR_SPECIFIC_COMBINED_TWEAKS",
+      "not_universal": true
+    }
+  ],
+  "world_note": "Baseline original HoF player preference already in project doc; reference examples are not authorized changes or true current values.",
+  "source_ids": [
+    "SRC-0163",
+    "SRC-0164",
+    "SRC-0165",
+    "SRC-0166",
+    "SRC-0167",
+    "SRC-0168",
+    "SRC-0169",
+    "SRC-0170",
+    "SRC-0171",
+    "SRC-0172",
+    "SRC-0173"
+  ],
+  "next": "R06-B HISTORY ERA RULE CHANGES AWARDS MEDIA"
+}

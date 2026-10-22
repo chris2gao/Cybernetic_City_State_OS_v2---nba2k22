@@ -1,0 +1,207 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "TEAM_STRATEGY_STATE_V1.json",
+  "title": "TeamStrategyStateV1",
+  "type": "object",
+  "required": [
+    "state_id",
+    "schema_version",
+    "career_id",
+    "team_id",
+    "team_abbr",
+    "revision",
+    "supersedes_state_id",
+    "strategist_version",
+    "created_at",
+    "source_binding",
+    "finance_run_id",
+    "ownership_cost_preference_if_verified",
+    "competitive_window",
+    "contract_window",
+    "last_review_batch",
+    "status",
+    "change_reason",
+    "identity_reference",
+    "identity_evidence",
+    "core_assets_and_hold_thresholds",
+    "tactical_direction",
+    "current_hypotheses",
+    "observed_challenges",
+    "current_actions",
+    "change_conditions",
+    "rejected_hypotheses"
+  ],
+  "$comment": "Runtime additionally validates known card IDs, source/career alignment, evidence, approval separation and optimistic revision continuity.",
+  "properties": {
+    "state_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "career_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "team_abbr": {
+      "type": "string",
+      "minLength": 1
+    },
+    "strategist_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "change_reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identity_reference": {
+      "type": "array"
+    },
+    "identity_evidence": {
+      "type": "array"
+    },
+    "core_assets_and_hold_thresholds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "batch_local_identity",
+          "role",
+          "retain_reason",
+          "reconsider_conditions"
+        ]
+      }
+    },
+    "tactical_direction": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "card_id",
+          "fit",
+          "missing_roles",
+          "evidence"
+        ]
+      }
+    },
+    "current_hypotheses": {
+      "type": "array"
+    },
+    "observed_challenges": {
+      "type": "array"
+    },
+    "current_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "enum": [
+              "HOLD",
+              "PROPOSED",
+              "RESEARCH"
+            ]
+          }
+        }
+      }
+    },
+    "change_conditions": {
+      "type": "array"
+    },
+    "rejected_hypotheses": {
+      "type": "array"
+    },
+    "schema_version": {
+      "const": "TEAM_STRATEGY_STATE_V1"
+    },
+    "team_id": {
+      "type": "integer"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "supersedes_state_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "finance_run_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "last_review_batch": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "UNASSESSED",
+        "DRAFT",
+        "REVIEWED_ANALYSIS"
+      ]
+    },
+    "source_binding": {
+      "type": "object",
+      "required": [
+        "career_id",
+        "batch_id",
+        "snapshot_id"
+      ],
+      "properties": {
+        "career_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "batch_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "competitive_window": {
+      "type": "object",
+      "required": [
+        "assessment",
+        "evidence",
+        "alternatives"
+      ],
+      "properties": {
+        "assessment": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array"
+        },
+        "alternatives": {
+          "type": "array"
+        }
+      }
+    },
+    "contract_window": {
+      "type": "object"
+    },
+    "ownership_cost_preference_if_verified": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  }
+}

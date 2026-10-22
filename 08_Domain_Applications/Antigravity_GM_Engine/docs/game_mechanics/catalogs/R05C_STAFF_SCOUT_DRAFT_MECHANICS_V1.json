@@ -1,0 +1,1275 @@
+{
+  "schema_id": "DEV29_R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1",
+  "date": "2026-10-21",
+  "status": "R05_C_RESEARCH_PUBLISHED_WITH_STAFF_SCOUT_DRAFT_UI_GAPS",
+  "artifact_kind": "RESEARCH_ONLY_NOT_AGENT_NOT_EXECUTOR",
+  "target": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "staff": {
+    "native_registered_field_count": 13,
+    "native_fields": [
+      {
+        "field_key": "STAFF.position",
+        "offset_decimal": 270,
+        "offset_hex": "0x10E",
+        "bit_start": 2,
+        "width_bits": 3,
+        "code_range": [
+          0,
+          7
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "HEAD_COACH"
+          },
+          {
+            "raw": 1,
+            "label": "ASSISTANT_COACH"
+          },
+          {
+            "raw": 2,
+            "label": "HEAD_SCOUT"
+          },
+          {
+            "raw": 3,
+            "label": "TRAINER"
+          },
+          {
+            "raw": 4,
+            "label": "GM"
+          },
+          {
+            "raw": 5,
+            "label": "GOVERNOR"
+          },
+          {
+            "raw": 6,
+            "label": "CFO"
+          },
+          {
+            "raw": 7,
+            "label": "ASSISTANT_GM"
+          }
+        ],
+        "group": "vitals",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.years_left",
+        "offset_decimal": 274,
+        "offset_hex": "0x112",
+        "bit_start": 0,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": null,
+        "group": "vitals",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.salary",
+        "offset_decimal": 248,
+        "offset_hex": "0xF8",
+        "bit_start": 0,
+        "width_bits": 24,
+        "code_range": [
+          0,
+          16777215
+        ],
+        "enum_values": null,
+        "group": "vitals",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.offense",
+        "offset_decimal": 256,
+        "offset_hex": "0x100",
+        "bit_start": 0,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.defense",
+        "offset_decimal": 256,
+        "offset_hex": "0x100",
+        "bit_start": 4,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.potential",
+        "offset_decimal": 264,
+        "offset_hex": "0x108",
+        "bit_start": 4,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.contracts",
+        "offset_decimal": 258,
+        "offset_hex": "0x102",
+        "bit_start": 0,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.trading",
+        "offset_decimal": 258,
+        "offset_hex": "0x102",
+        "bit_start": 4,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.scouting",
+        "offset_decimal": 257,
+        "offset_hex": "0x101",
+        "bit_start": 4,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.training",
+        "offset_decimal": 257,
+        "offset_hex": "0x101",
+        "bit_start": 0,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.business",
+        "offset_decimal": 259,
+        "offset_hex": "0x103",
+        "bit_start": 0,
+        "width_bits": 4,
+        "code_range": [
+          0,
+          15
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "F"
+          },
+          {
+            "raw": 1,
+            "label": "D-"
+          },
+          {
+            "raw": 2,
+            "label": "D"
+          },
+          {
+            "raw": 3,
+            "label": "D+"
+          },
+          {
+            "raw": 4,
+            "label": "C-"
+          },
+          {
+            "raw": 5,
+            "label": "C"
+          },
+          {
+            "raw": 6,
+            "label": "C+"
+          },
+          {
+            "raw": 7,
+            "label": "B-"
+          },
+          {
+            "raw": 8,
+            "label": "B"
+          },
+          {
+            "raw": 9,
+            "label": "B+"
+          },
+          {
+            "raw": 10,
+            "label": "A-"
+          },
+          {
+            "raw": 11,
+            "label": "A"
+          },
+          {
+            "raw": 12,
+            "label": "A+"
+          }
+        ],
+        "group": "attributes",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.preferred_system",
+        "offset_decimal": 266,
+        "offset_hex": "0x10A",
+        "bit_start": 0,
+        "width_bits": 3,
+        "code_range": [
+          0,
+          7
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "BALANCED"
+          },
+          {
+            "raw": 1,
+            "label": "GRIT_&_GRIND"
+          },
+          {
+            "raw": 2,
+            "label": "PACE_&_SPACE"
+          },
+          {
+            "raw": 3,
+            "label": "PERIMENTER_CENTRIC"
+          },
+          {
+            "raw": 4,
+            "label": "POST_CENTRIC"
+          },
+          {
+            "raw": 5,
+            "label": "TRIANGLE"
+          },
+          {
+            "raw": 6,
+            "label": "SEVEN_SECONDS"
+          },
+          {
+            "raw": 7,
+            "label": "DEFENSE"
+          }
+        ],
+        "group": "style",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      },
+      {
+        "field_key": "STAFF.active_system",
+        "offset_decimal": 267,
+        "offset_hex": "0x10B",
+        "bit_start": 4,
+        "width_bits": 3,
+        "code_range": [
+          0,
+          7
+        ],
+        "enum_values": [
+          {
+            "raw": 0,
+            "label": "BALANCED"
+          },
+          {
+            "raw": 1,
+            "label": "GRIT_&_GRIND"
+          },
+          {
+            "raw": 2,
+            "label": "PACE_&_SPACE"
+          },
+          {
+            "raw": 3,
+            "label": "PERIMENTER_CENTRIC"
+          },
+          {
+            "raw": 4,
+            "label": "POST_CENTRIC"
+          },
+          {
+            "raw": 5,
+            "label": "TRIANGLE"
+          },
+          {
+            "raw": 6,
+            "label": "SEVEN_SECONDS"
+          },
+          {
+            "raw": 7,
+            "label": "DEFENSE"
+          }
+        ],
+        "group": "style",
+        "static_registered": true,
+        "current_save_value_observed_in_this_round": false,
+        "gameplay_effect": "EXACT_IN_GAME_EFFECT_UNKNOWN",
+        "actual_read": "PROJECT_STAFF_SOURCE_READER_EXISTS; CROSSED_TEAM_POINTER_ONLY_IF_VERIFIED_RECIPROCAL_TEAM_ROLE",
+        "normal_write": "NO_APPROVAL_NO_GAME_WRITE",
+        "sources": [
+          "config/memory_field_profile.json",
+          "src/source_extensions.py"
+        ]
+      }
+    ],
+    "position_values": [
+      {
+        "code": 0,
+        "name": "HEAD_COACH",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 1,
+        "name": "ASSISTANT_COACH",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 2,
+        "name": "HEAD_SCOUT",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 3,
+        "name": "TRAINER",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 4,
+        "name": "GM",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 5,
+        "name": "GOVERNOR",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 6,
+        "name": "CFO",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      },
+      {
+        "code": 7,
+        "name": "ASSISTANT_GM",
+        "project_native_registered": true,
+        "target_platform": "PC22_PROJECT_NATIVE_PROFILE",
+        "native_write_validation": "NOT_PERFORMED_BY_R05_C"
+      }
+    ],
+    "source_reader": "src/source_extensions.py staff_details(), 0x160 staff record, team ptr at +0x18",
+    "reciprocal_status_success": "VERIFIED_RECIPROCAL_TEAM_ROLE",
+    "reciprocal_status_unmapped": "UNMAPPED_NOT_ASSUMED_FREE_AGENT",
+    "published_staff_json_present": true,
+    "current_batch_complete_read_verification": false,
+    "real_hire_fire_executor_verified": false,
+    "oldgen_2k20_candidate_roles": [
+      "CFO",
+      "ASSISTANT_GM",
+      "HEAD_COACH",
+      "ASSISTANT_COACH",
+      "HEAD_SCOUT",
+      "TRAINER"
+    ],
+    "nextgen_official_mystaff": {
+      "platform": "NBA2K22_PS5_XBOX_SERIES_XS_MYNBA_NOT_PC22",
+      "source_id": "SRC-0145",
+      "maximum_filled_roles": 17,
+      "staff_budget_governs": true,
+      "departments": [
+        {
+          "department": "Front Office",
+          "roles": [
+            "Governor",
+            "GM",
+            "Assistant GM",
+            "CFO"
+          ],
+          "stated_mandatory": "FRONT_OFFICE_POSITIONS_FILLED"
+        },
+        {
+          "department": "Coaching",
+          "roles": [
+            "Head Coach",
+            "Shot Doctor",
+            "Bigman Coach",
+            "Post Defense Coach",
+            "Perimeter Defense Coach",
+            "Guard Guru",
+            "Wing Whisperer"
+          ],
+          "stated_mandatory": "DEPARTMENT_HEAD"
+        },
+        {
+          "department": "Scouting",
+          "roles": [
+            "Head Scout",
+            "Domestic Scout x4",
+            "Foreign Scout x2"
+          ],
+          "stated_mandatory": "DEPARTMENT_HEAD"
+        },
+        {
+          "department": "Sports Medicine",
+          "roles": [
+            "Team Doctor",
+            "Strength Trainer",
+            "Stamina Trainer",
+            "Sports Psych",
+            "Sports Science",
+            "Physio",
+            "Sleep Doctor"
+          ],
+          "stated_mandatory": "DEPARTMENT_HEAD"
+        }
+      ],
+      "not_assumed_available_in_PC22": true
+    }
+  },
+  "scouting": {
+    "research_only": true,
+    "categories": [
+      {
+        "concept": "Prospect Scouting",
+        "data": [
+          "prospect_biography",
+          "draft_class",
+          "visible_projection"
+        ],
+        "game_menu_source": [
+          "SRC-0149"
+        ],
+        "platform": "NBA2K22_MYLEAGUE_ARTICLE",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "NBA2K22_MYLEAGUE_ARTICLE"
+      },
+      {
+        "concept": "Scouting completion",
+        "data": [
+          "scouted_percent"
+        ],
+        "game_menu_source": [
+          "SRC-0152",
+          "SRC-0153"
+        ],
+        "platform": "SERIES_COMMUNITY",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "SERIES_COMMUNITY"
+      },
+      {
+        "concept": "Projected OVR and letter Potential Grade",
+        "data": [
+          "scout_estimate",
+          "relative_grade"
+        ],
+        "game_menu_source": [
+          "SRC-0149",
+          "SRC-0154",
+          "SRC-0155"
+        ],
+        "platform": "SAME_ERA_COMMUNITY",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "SAME_ERA_COMMUNITY"
+      },
+      {
+        "concept": "DraftExpress Rank",
+        "data": [
+          "DE_RANK"
+        ],
+        "game_menu_source": [
+          "SRC-0149"
+        ],
+        "platform": "2K22_GUIDE",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "2K22_GUIDE"
+      },
+      {
+        "concept": "2K ranking",
+        "data": [
+          "2K_RANK"
+        ],
+        "game_menu_source": [
+          "SRC-0149"
+        ],
+        "platform": "2K22_GUIDE",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "2K22_GUIDE"
+      },
+      {
+        "concept": "NBA.com ranking",
+        "data": [
+          "NBA_COM_RANK"
+        ],
+        "game_menu_source": [
+          "SRC-0149"
+        ],
+        "platform": "2K22_GUIDE",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "2K22_GUIDE"
+      },
+      {
+        "concept": "Auto vs Manual Scouting",
+        "data": [
+          "setting",
+          "priority"
+        ],
+        "game_menu_source": [
+          "SRC-0151",
+          "SRC-0152"
+        ],
+        "platform": "OLDSERIES_AND_2022_COMMUNITY",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "OLDSERIES_AND_2022_COMMUNITY"
+      },
+      {
+        "concept": "Domestic and Foreign scouts",
+        "data": [
+          "foreign_vs_domestic_staff_focus"
+        ],
+        "game_menu_source": [
+          "SRC-0145"
+        ],
+        "platform": "NBA2K22_NEXTGEN_ONLY",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "NBA2K22_NEXTGEN_ONLY"
+      },
+      {
+        "concept": "Big Board vs Mock Draft",
+        "data": [
+          "talent_priority_vs_predicted_pick"
+        ],
+        "game_menu_source": [
+          "SRC-0158"
+        ],
+        "platform": "REAL_NBA_MEDIA_NOT_NATIVE",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "REAL_NBA_MEDIA_NOT_NATIVE"
+      },
+      {
+        "concept": "Scouting trip / periodic refresh",
+        "data": [
+          "timeslot",
+          "progress"
+        ],
+        "game_menu_source": [
+          "SRC-0153"
+        ],
+        "platform": "2015_MYLEAGUE_OLDER",
+        "native_field": null,
+        "native_pc22_complete_ui_verified": false,
+        "exact_effect": "UNKNOWN",
+        "visibility": "DO_NOT_EXPOSE_NATIVE_TRUE_POTENTIAL_TO_GM",
+        "source_grade": "2015_MYLEAGUE_OLDER"
+      }
+    ],
+    "real_player_potential_rule": "GM_PUBLIC_POTENTIAL_IS_MASKED_PLACEHOLDER_1_NOT_REAL_VALUE",
+    "scout_grade_not_true_potential": true,
+    "percent_complete_not_accuracy_probability": true,
+    "pc22_exact_scouter_effect_formula": "UNKNOWN"
+  },
+  "draft": {
+    "choice_catalog": [
+      {
+        "concept": "AUTO_GENERATED_DRAFT_CLASS",
+        "platform": "2K22_OFFLINE_GUIDE",
+        "sources": [
+          "SRC-0149"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "HISTORIC_DRAFT_CLASS",
+        "platform": "2K22_OFFLINE_GUIDE",
+        "sources": [
+          "SRC-0149"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "USER_CREATED_DRAFT_CLASS",
+        "platform": "2K22_OFFLINE_GUIDE",
+        "sources": [
+          "SRC-0149",
+          "SRC-0150"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "CREATE_EDIT_DRAFT_CLASS",
+        "platform": "2K22_OFFLINE_GUIDE",
+        "sources": [
+          "SRC-0149"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "SCOUTING_PROSPECT_CLASS_REPLACEMENT",
+        "platform": "2K22_ONLINE_COMMUNITY_2022",
+        "sources": [
+          "SRC-0150"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "EXPORT_IMPORT_PLAYER_DNA",
+        "platform": "CROSS_VERSION_AND_2K22_2022_COMMUNITY",
+        "sources": [
+          "SRC-0156"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "DRAFT_LOTTERY_ORDER",
+        "platform": "REAL_NBA_2022_AND_GAME_SERIES",
+        "sources": [
+          "SRC-0157"
+        ],
+        "is_game_choice": true,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "PREDRAFT_WORKOUTS_COMBINE",
+        "platform": "REAL_NBA_2022_NOT_VERIFIED_GAME_PC",
+        "sources": [
+          "SRC-0159"
+        ],
+        "is_game_choice": null,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "DRAFT_RESULTS_AND_RIGHTS",
+        "platform": "PROJECT_FUTURE_PICK_NATIVE_VERIFIED_DRAFT_OUTCOME_UNKNOWN",
+        "sources": [
+          "PROJECT_DRAFT_PROFILE"
+        ],
+        "is_game_choice": null,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      },
+      {
+        "concept": "ROOKIE_CONTRACT_STASH",
+        "platform": "PROJECT_PLAYER_CONTRACT_STATIC_VERIFIED_PROCESS_UNKNOWN",
+        "sources": [
+          "PROJECT_CONTRACT_PROFILE"
+        ],
+        "is_game_choice": null,
+        "pc22_game_ui_pixel_proof": false,
+        "runtime_action_authorized": false,
+        "engine_effect": "SOURCE_LIMITED_AND_OR_UNKNOWN"
+      }
+    ],
+    "historical_cycles": {
+      "first_class": 1984,
+      "last_class": 2020,
+      "class_count": 37,
+      "progression": "ONE_CONFIRMED_COMPLETED_DRAFT_PER_CLASS",
+      "after2020": "WRAP_1984",
+      "actual_next_historical_class_current_save": "NOT_AUTOMATICALLY_OBSERVED",
+      "game_year_is_different_from_historical_class_year": true
+    },
+    "project_source": {
+      "pool_stride_hex": "0x4F0",
+      "pool_slots_historical_project_example": 3320,
+      "type_byte_hex": "0x70",
+      "mask_hex": "0xE0",
+      "expected_masked_value_hex": "0xE0",
+      "examples_older_snapshot": {
+        "1984": 7,
+        "1996": 14
+      },
+      "max_future_draft_target_slots_claimed": 60,
+      "target_slot_native_layout": "NOT_VERIFIED",
+      "injection_execution": "NOT_IMPLEMENTED_OR_CERTIFIED",
+      "missing_candidates": "LEAVE_GAME_GENERATED_ROOKIES",
+      "gm_sanitized_potential_not_safe_as_native_injection_source": true
+    },
+    "pick_asset_ownership": "INDEPENDENT_FROM_DRAFT_CLASS_EDITING; SEE_R05B_NATIVE_DRAFT_ASSETS",
+    "scouting_nextgame_outcome": "REQUIRES_REAL_CURRENT_SAVE_AFTER_DRAFT"
+  },
+  "staff_finance": {
+    "STAFF_SALARY_NATIVE_OFFSET_HEX": "0xF8",
+    "salary_width_bits": 24,
+    "staff_budget_project_finance_candidate": true,
+    "not_player_salary_cap": true,
+    "current_staff_budget_units_and_dismissal_penalty_unknown": true
+  },
+  "evidence_boundaries": [
+    "PC22_STAFF_POSITION_ENUM_VERIFIED_IN_PROJECT_PROFILE_NOT_FULL_UI",
+    "NEXTGEN_MY_STAFF_17_SLOTS_NOT_PC22_CONFIRMED",
+    "2K22_OFFLINE_DRAFT_CLASS_MENU_GUIDE_NOT_PC22_PIXEL_VERIFIED",
+    "SCOUT_COMPLETION_NOT_POTENTIAL_TRUTH",
+    "DRAFT_YEAR_2022_DIFFERENT_FROM_HISTORIC_CLASS_1984",
+    "PAST_PRODUCTION_DOCS_CONTAIN_REVOKED_AUTO_ABILITY_CHANGES",
+    "NO_LIVE_GAME_OR_MEM_WRITES"
+  ],
+  "next_research": "R05-D_FRANCHISE_OPERATIONS_SOURCE_CAPABILITY_INTEGRATION",
+  "source_range": "SRC-0145..0160"
+}

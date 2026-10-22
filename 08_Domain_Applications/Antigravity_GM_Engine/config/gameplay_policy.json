@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "policy_id": "PLAYER_RULES_20261021_V4",
+  "source": "PLAYER_EXPLICIT_INSTRUCTIONS",
+  "game": "NBA2K22",
+  "initial_season": "2021-2022",
+  "phase_triggers": {
+    "data_capture": "PLAYER_EXPLICIT_TRIGGER",
+    "gm_decision": "PLAYER_EXPLICIT_SEPARATE_TRIGGER",
+    "game_execution": "PLAYER_EXPLICIT_SEPARATE_TRIGGER_WITH_SPECIFIC_APPROVAL",
+    "automatic_phase_transition": false,
+    "data_job_runs_gm": false,
+    "execution_job_recaptures_or_publishes": "ONLY_IF_PLAYER_REQUESTS_IN_SAME_TASK"
+  },
+  "roles": {
+    "codex": [
+      "initialize_sources",
+      "player_triggered_capture",
+      "verify",
+      "calculate",
+      "publish",
+      "execute_specific_player_approved_changes"
+    ],
+    "web_gpt": [
+      "read_verified_data",
+      "gm_decisions",
+      "team_building",
+      "winning_plans",
+      "worldline_proposals"
+    ],
+    "player": [
+      "advance_game",
+      "trigger_updates",
+      "approve_specific_proposal_version",
+      "relay_approved_changes_to_codex",
+      "test_web_access"
+    ]
+  },
+  "historical_draft": {
+    "first_class": 1984,
+    "last_class": 2020,
+    "order": "ASCENDING_ONE_CLASS_PER_DRAFT",
+    "after_last_class": "WRAP_TO_1984",
+    "advance_only_after": "PLAYER_CONFIRMED_COMPLETED_DRAFT",
+    "model_source": "VERIFIED_HISTORICAL_ROOKIE_DATABASE_RECORDS",
+    "missing_models": "KEEP_GENERATED_ROOKIES",
+    "runtime_progress": "NOT_AUTOMATICALLY_OBSERVED"
+  },
+  "natural_development": "GAME_CONTROLLED",
+  "default_player_edits": "FORBIDDEN",
+  "controlled_rotation_bias": {
+    "field_key": "rotation.intangibles",
+    "target_kind": "PLAYER_ROTATION_OVR_BIAS",
+    "native_byte": "0x440",
+    "display_range": [
+      25,
+      99
+    ],
+    "scope": "ALL_30_TEAMS_PROPOSALS_ONLY_UNTIL_SPECIFIC_PLAYER_APPROVAL",
+    "other_ability_potential_badge_writes": "NOT_AUTHORIZED",
+    "exact_minute_locking": "NOT_A_DEVELOPMENT_TARGET"
+  },
+  "gm_player_potential_visibility": {
+    "version": "potential_v1",
+    "persisted_placeholder": 1,
+    "evidence": "NOT_GAME_OBSERVED",
+    "original_game_memory": "UNCHANGED",
+    "old_unsanitized_batches": "EXCLUDED_FROM_GM_NOT_REWRITTEN"
+  },
+  "trade_execution": "SPECIFIC_PLAYER_APPROVAL_REQUIRED_NO_ABILITY_BOOSTS",
+  "draft_pick_trades": {
+    "status": "PLAYER_CONFIRMED_UPDATED_20261021",
+    "asset_type": "SIMPLE_YEAR_ROUND_ORIGINAL_TEAM_CURRENT_OWNER",
+    "protection_conditions": "NOT_USED",
+    "swap_rights": "NOT_USED",
+    "maximum_future_drafts": null,
+    "window": "NO_ADDITIONAL_WORLD_RULE_YEAR_LIMIT__REQUIRE_VERIFIED_NATIVE_ASSET_AND_EXECUTOR_SUPPORT",
+    "year_source": "VERIFIED_NEXT_DRAFT_YEAR_FROM_CURRENT_BATCH",
+    "ownership_source": "VERIFIED_CURRENT_BATCH_MEMORY_RECORDS",
+    "game_writes": "SEPARATE_SPECIFIC_PLAYER_APPROVAL_REQUIRED",
+    "known_native_read_horizon_drafts": 5,
+    "known_native_read_horizon_is_world_rule_cap": false,
+    "game_trade_legality": "DEPENDENT_ON_VERIFIED_ACTUAL_GAME_RULES_AND_EXECUTOR_CAPABILITY",
+    "legacy_three_year_code_status": "PENDING_CODEX_ALIGNMENT_NOT_EXECUTABLE_FOR_4TH_5TH_DRAFT_UNTIL_VALIDATED",
+    "policy_change_note": "Removed former NEXT_THREE artificial trade cap at explicit player request 2026-10-21; not replaced by a fixed five-year world-rule cap; SIMPLE picks/no swaps/no protections/human approval unchanged."
+  },
+  "historical_gravity": {
+    "status": "PROPOSALS_ONLY_UNTIL_SPECIFIC_PLAYER_APPROVAL",
+    "modern_reference_before_game_year": 2026,
+    "historical_reference_from_game_year": 2026,
+    "historical_anchor_year": 1984,
+    "elapsed_historical_years_at_transition": 4,
+    "automatic_attribute_changes": false,
+    "fixed_boost_values": null,
+    "guarantee_results": false
+  },
+  "mc_growth_story": {
+    "status": "DISABLED_DEFERRED",
+    "implemented": false,
+    "applicable_mode_if_later_enabled": "MYCAREER_ONLY"
+  },
+  "legacy_automatic_growth": "DISABLED",
+  "legacy_generic_player_editors": "DISABLED_PENDING_CONTROLLED_EXECUTOR",
+  "historical_draft_injection": "SEPARATE_APPROVED_ROSTER_IMPORT_NOT_GENERAL_PLAYER_EDIT_PERMISSION",
+  "numeric_calculation": "PYTHON_SQL_OR_EQUIVALENT_DETERMINISTIC_TOOL",
+  "web_access_acceptance": "PLAYER_HANDLED",
+  "policy_updated_at": "2026-10-21"
+}

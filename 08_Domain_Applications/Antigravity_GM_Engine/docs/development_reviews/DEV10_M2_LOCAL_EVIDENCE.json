@@ -1,0 +1,79 @@
+{
+  "status": "PASS_LOCAL_STATIC_M02",
+  "checked_at": "2026-10-19T10:22:25.776964+00:00",
+  "source_binding": {
+    "career_id": "mc_haliburton_2021",
+    "snapshot_id": "2021-2022_M02_DEC12_FULL_20261018",
+    "batch_id": "2021-2022_M02_DEC12_FULL_20261018_bee1cb016256_e94b241a_TS2",
+    "game_date": "2021-12-12",
+    "data_updated_at": "2026-10-18T12:12:13.170996+00:00",
+    "publication_status": "PUBLISHED_CURRENT",
+    "audit": "PASS_VERIFIED",
+    "query_version": "gm_sqlite_m0_v1",
+    "purpose": "production",
+    "production_gm_eligible": true
+  },
+  "search_matches": 1,
+  "native_direct": [
+    {
+      "scope": "COACH_DEFAULT",
+      "field": "POEOffense",
+      "semantic_label": "PICK_AND_ROLL_OFFENSE",
+      "mapping_status": "NATIVE_ENUM",
+      "evidence_ref": "config/coach_tactics_profile.json",
+      "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required",
+      "resolution": "SAME_BATCH_NATIVE_ENUM",
+      "raw_candidate": 4,
+      "reason": "Label agrees in current profile and selected batch",
+      "freelance_slot_order": [
+        "FreelanceType",
+        "FreelanceType2",
+        "FreelanceType3",
+        "FreelanceType4"
+      ]
+    }
+  ],
+  "drop_hypotheses": [
+    {
+      "scope": "VS_OPPONENT_DEFENSE",
+      "field": "ScreenDefenseHedge",
+      "semantic_label": "NO_HEDGE",
+      "mapping_status": "HYPOTHESIS",
+      "evidence_ref": "config/coach_tactics_profile.json",
+      "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required",
+      "resolution": "HYPOTHESIS_CANDIDATE",
+      "raw_candidate": 1,
+      "reason": "Not certified as Drop",
+      "freelance_slot_order": [
+        "FreelanceType",
+        "FreelanceType2",
+        "FreelanceType3",
+        "FreelanceType4"
+      ]
+    },
+    {
+      "scope": "VS_OPPONENT_DEFENSE",
+      "field": "ScreenDefenseOnBall",
+      "semantic_label": "GO_OVER",
+      "mapping_status": "HYPOTHESIS",
+      "evidence_ref": "config/coach_tactics_profile.json",
+      "caveat": "Reference or hypothesis; exact same-batch dictionary and separate approval required",
+      "resolution": "HYPOTHESIS_CANDIDATE",
+      "raw_candidate": 1,
+      "reason": "Not certified as Drop",
+      "freelance_slot_order": [
+        "FreelanceType",
+        "FreelanceType2",
+        "FreelanceType3",
+        "FreelanceType4"
+      ]
+    }
+  ],
+  "no_batch_resolution": "UNAVAILABLE",
+  "candidates": 30,
+  "assessed_teams": 0,
+  "local_unassessed_state_saved_and_read": true,
+  "strategy_export": "ANALYSIS_ONLY_NOT_PUBLISHED",
+  "web_connections": "DEFERRED_BY_PLAYER",
+  "game_access": "NOT_RUN"
+}

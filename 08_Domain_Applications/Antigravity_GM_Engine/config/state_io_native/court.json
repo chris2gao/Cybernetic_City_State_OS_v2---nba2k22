@@ -1,0 +1,54 @@
+{
+  "profile_name": "NBA2K22_HOF_COURT_PROFILE_V1",
+  "version": "1.0.0",
+  "date": "2026-10-19",
+  "baseline": "Hall of Fame (Default)",
+  "game_difficulty_id": 4,
+  "slot_sliders_rva": "0x0632B4A0",
+  "memory_struct": "TUNEDATA_SAVED",
+  "struct_size": 2020,
+  "current_table_offset": "0x04",
+  "custom_table_offset": "0x3F4",
+  "modified_sliders": {
+    "inside_shot_success": {
+      "table_index": 24,
+      "native_token": "TUNEDATA_ShotInside",
+      "name_zh": "篮下投篮成功率 (Inside Shot Success)",
+      "hof_default_user": 48.0,
+      "hof_default_cpu": 56.0,
+      "proposed_user": 52.0,
+      "proposed_cpu": 60.0,
+      "rationale": "改善内线和对抗下的轻度接触终结，减轻轻度干扰必丢球的现象"
+    },
+    "layup_defense_takeoff": {
+      "table_index": 70,
+      "native_token": "TUNEDATA_LayupDefenseTakeoff",
+      "name_zh": "上篮防守强度-起跳阶段 (Layup Defense Strength - Takeoff)",
+      "hof_default_user": 50.0,
+      "hof_default_cpu": 50.0,
+      "proposed_user": 35.0,
+      "proposed_cpu": 35.0,
+      "rationale": "H2UKNOW次世代HOF实证经验，降低起跳瞬间过度防守覆盖判定"
+    },
+    "layup_defense_release": {
+      "table_index": 71,
+      "native_token": "TUNEDATA_LayupDefenseRelease",
+      "name_zh": "上篮防守强度-出手阶段 (Layup Defense Strength - Release)",
+      "hof_default_user": 50.0,
+      "hof_default_cpu": 50.0,
+      "proposed_user": 35.0,
+      "proposed_cpu": 35.0,
+      "rationale": "改善强力攻框球员（如詹姆斯、字母哥）轻接触过度投失问题"
+    },
+    "help_defense_strength": {
+      "table_index": 100,
+      "native_token": "TUNEDATA_HelpDefense",
+      "name_zh": "协防强度 (Help Defense Strength)",
+      "hof_default_user": 50.0,
+      "hof_default_cpu": 50.0,
+      "proposed_user": 70.0,
+      "proposed_cpu": 70.0,
+      "rationale": "参考IrishSalsa PS4本世代方案，增强弱侧和内线协防就位速度"
+    }
+  }
+}

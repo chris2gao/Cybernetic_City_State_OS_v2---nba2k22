@@ -1,0 +1,645 @@
+{
+  "schema_id": "DEV29_R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1",
+  "date": "2026-10-21",
+  "target": "NBA2K22_PC_CURRENTGEN_OFFLINE_MYLEAGUE",
+  "status": "R06_C_RESEARCH_PUBLISHED_WITH_PC22_PHASE_SAVE_RETENTION_GAPS",
+  "research_only": true,
+  "perform_game_advance": false,
+  "perform_game_save": false,
+  "develop_agents": false,
+  "entries_not_native_fields": true,
+  "item_semantics": "38 research feature/information/time-phase candidates, not 38 observed native memory fields or database columns; even PC22 user reports do not certify target save runtime",
+  "field_count": 38,
+  "fields": [
+    {
+      "id": "K11.START_REGULAR_SEASON",
+      "label": "正规赛开局入口",
+      "classification": "SETUP_MENU",
+      "source_platform_or_mode": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0189"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SEASON_LENGTH",
+      "label": "常规赛长度设置候选",
+      "classification": "SETTING",
+      "source_platform_or_mode": "NBA2K22_PS4_MYLEAGUE",
+      "sources": [
+        "SRC-0199"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.PLAYOFF_SERIES_LENGTH",
+      "label": "季后赛系列赛长度设置候选",
+      "classification": "SETTING",
+      "source_platform_or_mode": "NBA2K22_PS4_MYLEAGUE",
+      "sources": [
+        "SRC-0199"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SCHEDULE_CURRENT_GAME",
+      "label": "赛程/待比赛",
+      "classification": "OBSERVABLE",
+      "source_platform_or_mode": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0189"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.CALENDAR_SIM_ACTION",
+      "label": "赛程模拟进度操作",
+      "classification": "ACTION_RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "SERIES_MYLEAGUE",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SIMCAST_JUMPIN",
+      "label": "SimCast进入/跳入",
+      "classification": "ACTION_RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "NBA2K22_PS4_MYLEAGUE",
+      "sources": [
+        "SRC-0199"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.TRADE_DEADLINE_PHASE",
+      "label": "交易截止阶段",
+      "classification": "GAME_PHASE_CANDIDATE",
+      "source_platform_or_mode": "SERIES_MYLEAGUE",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.PLAYOFFS_PHASE",
+      "label": "季后赛阶段",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_PS4_MYLEAGUE",
+      "sources": [
+        "SRC-0199"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.FINALS_TO_OFFSEASON",
+      "label": "总决赛后休赛期起点",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.RETIREMENTS",
+      "label": "退休人员页",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22",
+      "sources": [
+        "SRC-0198"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.DRAFT_LOTTERY",
+      "label": "乐透抽签前检查点",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION_MIXED_PREVIOUS",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.STAFF_HIRING",
+      "label": "Staff聘请期",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION_MIXED_PREVIOUS",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.HISTORIC_DRAFT_CLASS_LOCK",
+      "label": "历史选秀名单最后可编辑节点",
+      "classification": "UNVERIFIED_CANDIDATE",
+      "source_platform_or_mode": "OLD_MYLEAGUE_EXPERIENCE",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.NBA_DRAFT",
+      "label": "选秀前检查点",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION_MIXED_PREVIOUS",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.ROOKIE_SIGNING",
+      "label": "签约新秀阶段",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION_MIXED_PREVIOUS",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.FA_MORATORIUM",
+      "label": "FA禁令/谈判期",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION_MIXED_PREVIOUS",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.FA_CONTRACT_OFFERS",
+      "label": "自由市场报价",
+      "classification": "ACTION",
+      "source_platform_or_mode": "NBA2K22_MYLEAGUE",
+      "sources": [
+        "SRC-0190"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.TRAINING_CAMPS",
+      "label": "训练营前检查点",
+      "classification": "GAME_PHASE",
+      "source_platform_or_mode": "NBA2K22_DISCUSSION_MIXED_PREVIOUS",
+      "sources": [
+        "SRC-0188"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.NEXT_SEASON_ROLLOVER",
+      "label": "新赛季开始/年份递进",
+      "classification": "GAME_PHASE_CANDIDATE",
+      "source_platform_or_mode": "SERIES_MYLEAGUE",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SAVE_COMMAND",
+      "label": "Save手动保存",
+      "classification": "UI_ACTION",
+      "source_platform_or_mode": "NBA2K22_PC_STEAM",
+      "sources": [
+        "SRC-0191"
+      ],
+      "evidence_strength": "PLAYER_REPORTED_PC22_PC",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SAVE_AS_COMMAND",
+      "label": "Save as另存为",
+      "classification": "UI_ACTION",
+      "source_platform_or_mode": "NBA2K22_PC_STEAM",
+      "sources": [
+        "SRC-0191"
+      ],
+      "evidence_strength": "PLAYER_REPORTED_PC22_PC",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.AUTOSAVE_MENU",
+      "label": "Autosave自动存盘",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "source_platform_or_mode": "SERIES_MYLEAGUE",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SAVE_AFTER_EXIT_RELOAD",
+      "label": "退出/重入后存档持续性",
+      "classification": "RUNTIME_CHECK_CANDIDATE",
+      "source_platform_or_mode": "NBA2K22_PC_STEAM",
+      "sources": [
+        "SRC-0191"
+      ],
+      "evidence_strength": "PLAYER_REPORTED_PC22_PC",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SAVE_LIST_MISSING_CASE",
+      "label": "PC存档列表消失个例",
+      "classification": "PLAYER_BUG_REPORT",
+      "source_platform_or_mode": "NBA2K22_PC_STEAM",
+      "sources": [
+        "SRC-0192"
+      ],
+      "evidence_strength": "PLAYER_REPORTED_PC22_PC",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.SAVE_FILE_LIMIT_SPECULATION",
+      "label": "存档/下载队伍上限猜测",
+      "classification": "COMMUNITY_UNVERIFIED_THEORY",
+      "source_platform_or_mode": "NBA2K22_PC_STEAM",
+      "sources": [
+        "SRC-0193"
+      ],
+      "evidence_strength": "PLAYER_REPORTED_PC22_PC",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.STEAM_CLOUD_SYNC",
+      "label": "云端二级备份",
+      "classification": "PLATFORM_GUIDANCE",
+      "source_platform_or_mode": "STEAM_GENERIC_2026",
+      "sources": [
+        "SRC-0197"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.OFFLINE_MYLEAGUE",
+      "label": "2K22可离线MyLeague",
+      "classification": "OFFICIAL_PLATFORM_SUPPORT",
+      "source_platform_or_mode": "NBA2K22_OFFLINE",
+      "sources": [
+        "SRC-0187"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.CAREER_PRIOR_SEASONS_STATS",
+      "label": "球员跨季历史统计",
+      "classification": "RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "OLDER_2K_SERIES",
+      "sources": [
+        "SRC-0195"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.RETIRED_PLAYER_HISTORY",
+      "label": "退役球员过去赛季历史",
+      "classification": "RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "OLDER_2K_SERIES",
+      "sources": [
+        "SRC-0196"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.PAST_DRAFT_BOARD",
+      "label": "过往选秀完整顺位",
+      "classification": "RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "OLDER_2K_SERIES",
+      "sources": [
+        "SRC-0196"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.PAST_TRADE_HISTORY",
+      "label": "过往交易记录",
+      "classification": "RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "OLDER_2K_SERIES",
+      "sources": [
+        "SRC-0196"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.PAST_GAME_BOXSCORE",
+      "label": "历季每场Box持久",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "source_platform_or_mode": "NBA2K22_PC_CURRENTGEN",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.PAST_GAME_LOG",
+      "label": "历季逐场GameLog持久",
+      "classification": "RESEARCH_CANDIDATE_UNSOURCED",
+      "source_platform_or_mode": "NBA2K22_PC_CURRENTGEN",
+      "sources": [],
+      "evidence_strength": "UNSOURCED_RESEARCH_CANDIDATE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.AWARD_HISTORY_PERSISTENCE",
+      "label": "历季奖项持久",
+      "classification": "RESEARCH_CANDIDATE",
+      "source_platform_or_mode": "OLDER_2K_SERIES",
+      "sources": [
+        "SRC-0195"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.NATIVE_GAME_DATE",
+      "label": "当前游戏年月日原生来源",
+      "classification": "PROJECT_SOURCE_CANDIDATE",
+      "source_platform_or_mode": "NBA2K22_PC_CURRENTGEN",
+      "sources": [
+        "PROJECT_DOC_24"
+      ],
+      "evidence_strength": "REFERENCE_VERSION_OR_COMMUNITY_SCOPE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.DEV14_SAVE_IDENTITY",
+      "label": "多存档instance/generation关联",
+      "classification": "PROJECT_ARCHITECTURE",
+      "source_platform_or_mode": "EXTERNAL_GM_ENGINE",
+      "sources": [
+        "PROJECT_DEV14_RUNBOOK"
+      ],
+      "evidence_strength": "PROJECT_POLICY_OR_ARCHITECTURE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.FULL_VERIFIED_CAPTURE",
+      "label": "全量已验证采集来源",
+      "classification": "PROJECT_ARCHITECTURE",
+      "source_platform_or_mode": "EXTERNAL_GM_ENGINE",
+      "sources": [
+        "PROJECT_DOC_27"
+      ],
+      "evidence_strength": "PROJECT_POLICY_OR_ARCHITECTURE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    },
+    {
+      "id": "K11.HISTORIC_DRAFT_CYCLE_STEP",
+      "label": "只在实际已完成选秀后推进外挂年份",
+      "classification": "PROJECT_POLICY",
+      "source_platform_or_mode": "EXTERNAL_GM_ENGINE",
+      "sources": [
+        "PROJECT_RULES_V4"
+      ],
+      "evidence_strength": "PROJECT_POLICY_OR_ARCHITECTURE",
+      "target_save_value": null,
+      "pc22_native_menu_pixel_verified_in_R06C": false,
+      "pc22_runtime_readback_in_R06C": false,
+      "pc22_persistence_test_in_R06C": false,
+      "gm_queryable_in_R06C": false,
+      "source_is_not_certified_semantics": true
+    }
+  ],
+  "source_ids": [
+    "SRC-0187",
+    "SRC-0188",
+    "SRC-0189",
+    "SRC-0190",
+    "SRC-0191",
+    "SRC-0192",
+    "SRC-0193",
+    "SRC-0194",
+    "SRC-0195",
+    "SRC-0196",
+    "SRC-0197",
+    "SRC-0198",
+    "SRC-0199"
+  ],
+  "known_existing_project_docs": [
+    "docs/24_DATA_SOURCE_REGISTRY_AND_PLAYER_TRIGGERS.md",
+    "docs/27_DATA_WINDOW_RUNBOOK.md",
+    "docs/DEV14_STATE_IO_RUNBOOK.md",
+    "docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md",
+    "docs/game_mechanics/guides/K10_HISTORY_AWARDS_MEDIA_R06B.md"
+  ],
+  "current_game_date": null,
+  "current_save_slot": null,
+  "unknowns": [
+    "PC22_PRECISE_PHASE_BUTTONS_AND_GAME_DATE_NOT_TARGET_UI_VERIFIED",
+    "PC22_DEADLINE_VALUES_AND_STAGE_ORDER_NOT_DIRECT_RUNTIME_VERIFIED",
+    "PC22_AUTOSAVE_TRIGGER_AND_SAVE_AS_RELOAD_NOT_TESTED",
+    "PC22_CLOUD_SYNC_NOT_TARGET_GAME_VERIFIED",
+    "PC22_HISTORICAL_GAME_LOG_BOXSCORE_PERSISTENCE_NOT_VERIFIED",
+    "PC22_HISTORY_AWARD_RECORD_DRAFT_TRADE_RETENTION_NOT_VERIFIED",
+    "PC22_PLAYER_RETIREMENT_AND_COACH_CONVERSION_OUTCOME_NOT_CAPTURED",
+    "PHASE_TRANSITION_MAY_TRIGGER_NATIVE_AUTONOMOUS_CONTRACT_ROSTER_CHANGES",
+    "PROJECT_DEV14_AND_GAME_SAVE_ARE_DIFFERENT_AUTHORITIES"
+  ],
+  "next": "R06_D_CROSS_DOMAIN_SYNTHESIS_AND_GAPS"
+}

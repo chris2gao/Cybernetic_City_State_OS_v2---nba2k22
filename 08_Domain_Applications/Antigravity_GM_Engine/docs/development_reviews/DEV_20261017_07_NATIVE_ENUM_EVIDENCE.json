@@ -1,0 +1,430 @@
+{
+  "task_id": "DEV_20261017_07",
+  "native_evidence": {
+    "status": "VERIFIED_CURRENT_PROCESS_NATIVE_METADATA",
+    "evidence_version": "DEV_20261017_06_NATIVE_V1",
+    "coach_field_count": 142,
+    "defense_field_count": 18,
+    "module_timestamp": 1652287197,
+    "module_image_size": 115056640
+  },
+  "evidence": "Live enum CRC tables matched unique installed executable strings; PE timestamp and image size match live process",
+  "freelance_raw_labels": {
+    "0": "DEFAULT",
+    "1": "TWO_MAN",
+    "2": "THREE_MAN",
+    "3": "THREE_OUT",
+    "4": "WNBA_THREE_OUT",
+    "5": "FOUR_OUT",
+    "6": "BUCKS_2018",
+    "7": "CLIPPERS_2018",
+    "8": "DENVER_2018",
+    "9": "HAWKS_2018",
+    "10": "JAZZ",
+    "11": "MAVERICKS_2018",
+    "12": "PELICANS_2018",
+    "13": "PHILLY_ELBOW",
+    "14": "PISTON_SNAP",
+    "15": "SPURS_2018",
+    "16": "WARRIORS",
+    "17": "FLIP_PUSH",
+    "18": "FLOW",
+    "19": "FORTY_THREE",
+    "20": "FOURTEEN",
+    "21": "PACE",
+    "22": "POINT_FREELANCE",
+    "23": "PRINCESTON_CHIN",
+    "24": "SEVEN_SECONDS",
+    "25": "SLICE",
+    "26": "SWING",
+    "27": "TRIANGLE",
+    "28": "TWENTY_ONE_DELAY",
+    "29": "BULLS_88",
+    "30": "CELTICS_86",
+    "31": "EIGHTY",
+    "32": "FREELANCE_ONE",
+    "33": "FREELANCE_TWO"
+  },
+  "defensive_fields": {
+    "PressureOnball": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 3,
+      "mask": "0x7",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "089d6de7",
+        "2": "a91e9f17",
+        "3": "ccde4204",
+        "4": "d4b9356b"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GAP",
+        "2": "MODERATE",
+        "3": "TIGHT",
+        "4": "SMOTHER"
+      }
+    },
+    "PressureOffball": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 3,
+      "width": 3,
+      "mask": "0x38",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "089d6de7",
+        "2": "6ce44260",
+        "3": "a91e9f17",
+        "4": "ccde4204",
+        "5": "e21fffde"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GAP",
+        "2": "LEAVE",
+        "3": "MODERATE",
+        "4": "TIGHT",
+        "5": "DENY_BALL"
+      }
+    },
+    "ForceDirection": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0xc0",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "6e78dd49",
+        "2": "302a4f0a"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "MIDDLE",
+        "2": "BASELINE"
+      }
+    },
+    "ScreenDefenseOnBall": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 3,
+      "mask": "0x700",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e",
+        "4": "5de8c684"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GO_OVER",
+        "2": "GO_UNDER",
+        "3": "SWITCH",
+        "4": "ICE"
+      }
+    },
+    "ScreenDefenseHedge": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 11,
+      "width": 3,
+      "mask": "0x3800",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "1cfa4242",
+        "2": "7f66d741",
+        "3": "f7c5d5d3",
+        "4": "2a1f3569",
+        "5": "5d910492"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "NO_HEDGE",
+        "2": "SOFT_HEDGE",
+        "3": "HARD_HEDGE",
+        "4": "DOUBLE",
+        "5": "CATCH_HEDGE"
+      }
+    },
+    "OffballScreenDefense": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 14,
+      "width": 2,
+      "mask": "0xc000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GO_OVER",
+        "2": "GO_UNDER",
+        "3": "SWITCH"
+      }
+    },
+    "PostDefense": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 16,
+      "width": 3,
+      "mask": "0x70000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "09afa046",
+        "2": "5de1fc62",
+        "3": "80be0fb8",
+        "4": "d1996a24"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "FRONT",
+        "2": "BEHIND",
+        "3": "THREE_QUARTERS_TOP",
+        "4": "THREE_QUARTERS_BOTTOM"
+      }
+    },
+    "DoubleTeamPerimeter": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 19,
+      "width": 2,
+      "mask": "0x180000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e0237942",
+        "2": "886ef5e7",
+        "3": "25187b0c"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "MANUAL",
+        "2": "ON_CATCH",
+        "3": "ON_DRIVE"
+      }
+    },
+    "DoubleTeamPost": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 21,
+      "width": 3,
+      "mask": "0xe00000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e0237942",
+        "2": "41d1dc71",
+        "3": "886ef5e7",
+        "4": "aaf5b304"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "MANUAL",
+        "2": "DIG",
+        "3": "ON_CATCH",
+        "4": "ON_DRIBBLE"
+      }
+    },
+    "ScreenDefenseOnBall5": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 24,
+      "width": 3,
+      "mask": "0x7000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "fba0e5db",
+        "2": "fd216a1e",
+        "3": "9f118c9e",
+        "4": "5de8c684"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "GO_OVER",
+        "2": "GO_UNDER",
+        "3": "SWITCH",
+        "4": "ICE"
+      }
+    },
+    "ScreenDefenseHedge5": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 27,
+      "width": 3,
+      "mask": "0x38000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "1cfa4242",
+        "2": "7f66d741",
+        "3": "f7c5d5d3",
+        "4": "2a1f3569",
+        "5": "5d910492"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "NO_HEDGE",
+        "2": "SOFT_HEDGE",
+        "3": "HARD_HEDGE",
+        "4": "DOUBLE",
+        "5": "CATCH_HEDGE"
+      }
+    },
+    "SwitchRule": {
+      "offset": 0,
+      "storage_bytes": 4,
+      "start_bit": 30,
+      "width": 2,
+      "mask": "0xc0000000",
+      "native_enum_name_crc32": {
+        "0": "2f8e7735",
+        "1": "660df31b",
+        "2": "5de99f12",
+        "3": "ee9ee584"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "SWITCH_AUTO",
+        "1": "SWITCH_ALL",
+        "2": "SWITCH_BIGS",
+        "3": "SWITCH_GUARDS"
+      }
+    },
+    "OnballHelp": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 0,
+      "width": 2,
+      "mask": "0x300000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "3e12b118",
+        "2": "d2435ffd"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "HELP",
+        "2": "NO_HELP"
+      }
+    },
+    "ScreenHelp": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 2,
+      "width": 2,
+      "mask": "0xc00000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "3e12b118",
+        "2": "d2435ffd"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "HELP",
+        "2": "NO_HELP"
+      }
+    },
+    "ExtendPressure": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 4,
+      "width": 2,
+      "mask": "0x3000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "YES",
+        "2": "NO"
+      }
+    },
+    "TagOnRoll": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0xc000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "YES",
+        "2": "NO"
+      }
+    },
+    "StayAttached": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 8,
+      "width": 2,
+      "mask": "0x30000000000",
+      "native_enum_name_crc32": {
+        "0": "502fc84e",
+        "1": "e3407723",
+        "2": "c9402c75"
+      },
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {
+        "0": "AUTO",
+        "1": "YES",
+        "2": "NO"
+      }
+    },
+    "PreRotate": {
+      "offset": 4,
+      "storage_bytes": 4,
+      "start_bit": 10,
+      "width": 1,
+      "mask": "0x40000000000",
+      "native_enum_name_crc32": {},
+      "readiness": "LOCATED_READ_ONLY",
+      "production_enabled": false,
+      "native_enum_labels": {}
+    }
+  },
+  "ui_mapping_status": "PENDING_PLAYER_UI_DIFFERENCE",
+  "overall_selector_status": "NOT_IDENTIFIED_NO_WRITES_ALLOWED"
+}

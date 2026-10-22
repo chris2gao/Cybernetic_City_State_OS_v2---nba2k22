@@ -1,0 +1,208 @@
+{
+  "version": "1.0",
+  "generated_date": "2026-10-19",
+  "knowledge_domain": "NBA2K22_TACTICAL_ECOSYSTEM_AND_GM_REASONING",
+  "evidence_standards": {
+    "PROJECT_VERIFIED": "Directly verified via calibrated memory offsets and execution tests in this project.",
+    "2K22_COMMUNITY": "Verified by NBA 2K22 sim community testing (Operation Sports ATD, SimWorld).",
+    "NBA_REAL": "Observed in real-world NBA game films and tracking data.",
+    "UNKNOWN": "Mechanical coefficient or exact engine formula remains unexposed; GM must not assume guaranteed victory."
+  },
+  "knowledge_cards": [
+    {
+      "id": "PNR_BLITZ_SHORT_ROLL_COUNTER",
+      "title": "高位挡拆夹击破解：短顺下4打3与弱侧终结",
+      "basketball_principle": "当对手对持球大核（如库里、特雷杨）采取高位夹击（Blitz / Hard Hedge）时，持球人第一时间将球击地输送给处于罚球线中枢的短顺下内线（如追梦格林），由其在局部4打3中自主决定抛投攻筐或空切分球弱侧底角射手。",
+      "nba2k22_mechanisms": [
+        "Playbook 必须包含允许顺下分球或低位策应的战术 (P&R Roll Man / High Post)",
+        "持球人 PlayType1 必须包含 P&R Ball Handler (4) 且 Dish to Open Man 倾向 >= 75",
+        "顺下内线 PlayType 必须包含 P&R Roll Man (7) 且具备 Passing IQ 与 Flashy Pass 倾向",
+        "防守方 Hedge=HARD_HEDGE 或 DOUBLE_TEAM_PERIMETER 触发夹击动画"
+      ],
+      "requirements": {
+        "roster_roles": ["ball_handler", "short_roll_passer", "weakside_finisher"],
+        "min_passing_iq_connector": 75,
+        "verified_native_fields": ["PlayType1..4", "DISH_TO_OPEN_MAN_TENDENCY", "ROLL_VS_POP_TENDENCY"]
+      },
+      "contraindications": [
+        "内线为传统吃饼中锋，无短顺下传球与策应视野",
+        "弱侧底角底薪球员无三分投射威胁，防守方弱侧底角协防人可肆无忌惮回缩禁区"
+      ],
+      "counterplay_and_cost": "防守方可预先设置 TagOnRoll 与 PreRotate 提前封堵传球路线，代价是底角彻底暴露空位三分。",
+      "evidence": [
+        {"kind": "NBA_REAL", "source": "2022 NBA Finals G5/G6: Warriors short-roll breakdown vs Celtics Blitz"},
+        {"kind": "2K22_COMMUNITY", "source": "Operation Sports Useful Findings: Roll vs Pop and Dish tendency interactions"},
+        {"kind": "PROJECT_VERIFIED", "source": "Memory verified: PlayType slots at 0x168-0x169 and Tendencies at 0x458-0x4BA"}
+      ],
+      "sim_effect": "UNKNOWN",
+      "live_3d_effect": "Consistent: blitz animation triggers rapid pass to roller at free-throw line",
+      "gm_alternatives": [
+        "HOLD: 接受主控高失误率",
+        "PLAYBOOK_CHANGE: 引入更多高位短顺下战术",
+        "PLAYER_PLAY_TYPE_CHANGE: 将中锋战术槽位调整为 P&R Roll Man",
+        "TENDENCY_CHANGE: 提升持球人 Dish to Open Man (0x498) 与中锋 Roll 倾向 (0x49B)",
+        "TRADE: 交易引进具备处理球能力的球商型内线"
+      ]
+    },
+    {
+      "id": "DROP_COVERAGE_PULLUP_COUNTER",
+      "title": "沉退防守破解：挡拆急停干拔三分与蛇形运球中投",
+      "basketball_principle": "当对手大中锋采取深沉退（Drop Coverage）保护禁区时，持球人利用掩护墙彻底甩开追防人，直接在掩护后急停干拔三分，或通过中距离蛇形运球进入罚球线惩罚大个子不敢扑出的盲区。",
+      "nba2k22_mechanisms": [
+        "持球人具备极高的 3PT / Mid-range 投篮能力与 Pull-up 徽章",
+        "持球人 Transition Pull-up 3 (0x47F) 或 Drive Pull-up Mid (0x481) 倾向足够高",
+        "对手防守设置 ScreenDefenseHedge=DROP 或 STAY_ATTACHED"
+      ],
+      "requirements": {
+        "roster_roles": ["elite_pullup_shooter", "solid_screener"],
+        "min_three_rating": 82,
+        "verified_native_fields": ["SHOT_THREE_TENDENCY", "TRANSITION_PULL_UP_THREE", "DRIVE_PULL_UP_MID_RANGE"]
+      },
+      "contraindications": [
+        "持球人无持球干拔威胁（如纯突破型后卫），沉退防守将完全锁死攻筐空间",
+        "掩护人掩护质量低，无法有效延误防守持球人"
+      ],
+      "counterplay_and_cost": "对手若被连续命中两记三分后改用高位贴防或换防，会放大内线顺下空接和造犯规风险。",
+      "evidence": [
+        {"kind": "NBA_REAL", "source": "Curry and Chris Paul drop-coverage exploitation films"},
+        {"kind": "2K22_COMMUNITY", "source": "OS ATD Project: Drop Coverage requires specific pull-up frequency"},
+        {"kind": "PROJECT_VERIFIED", "source": "Defensive field ScreenDefenseHedge verified in locator"}
+      ],
+      "sim_effect": "UNKNOWN",
+      "live_3d_effect": "CPU will concede pull-up 3s when ScreenDefenseHedge is set to Drop",
+      "gm_alternatives": [
+        "HOLD: 维持突破攻筐但需承受极低禁区命中率",
+        "TENDENCY_CHANGE: 适度上调持球核心 Pull-up 3PT 倾向",
+        "TRADE: 引进具备空间威胁的持球投射大核"
+      ]
+    },
+    {
+      "id": "SWITCH_ALL_MISMATCH_ATTACK",
+      "title": "无限换防破解：错位单打点名与低位惩治",
+      "basketball_principle": "当对手采用无差别换防（Switch All）封锁外线转移球时，进攻端必须放弃无效复杂传切，通过战术发起制造小打大（后卫单挑慢速内线）或大打小（锋线低位碾压后卫）的绝对身体/速度错位点名。",
+      "nba2k22_mechanisms": [
+        "Playbook 包含针对性 Isolation 与 Post Up 战术",
+        "具备错位终结能力的球员 PlayType 包含 Isolation (1) 或 Post Up Low (8)",
+        "球员 Shot Tendency 与 Isolation 倾向足够匹配单打角色",
+        "对手整体防守设置 SwitchRule=SWITCH_ALL"
+      ],
+      "requirements": {
+        "roster_roles": ["mismatch_creator", "floor_spacers"],
+        "verified_native_fields": ["PlayType1..4", "SHOT_TENDENCY", "POST_UP_TENDENCY", "SwitchRule"]
+      },
+      "contraindications": [
+        "全队缺乏顶级单打攻坚手，导致在进攻时间见底时勉强顶投长两分",
+        "空间过于拥挤，防守方换防后可轻松刷卡协防"
+      ],
+      "counterplay_and_cost": "防守方可设置 DoubleTeamPost 或 DoubleTeamPerimeter 迫使其出球，需全队快速转移空位球。",
+      "evidence": [
+        {"kind": "NBA_REAL", "source": "Houston Rockets 2018 isolation hunting vs Warriors switch"},
+        {"kind": "2K22_COMMUNITY", "source": "OS Useful Findings p4: Iso Point unserved when playbook lacks ISO"},
+        {"kind": "PROJECT_VERIFIED", "source": "SwitchRule enum verified in coach locator"}
+      ],
+      "sim_effect": "UNKNOWN",
+      "live_3d_effect": "Observed: defender sticks to matched player after screen contact",
+      "gm_alternatives": [
+        "PLAYBOOK_CHANGE: 补充单打错位战术",
+        "PLAYER_PLAY_TYPE_CHANGE: 赋予错位点名手 Isolation 战术槽",
+        "TRADE: 补充具有一对一自主开发进攻能力的攻坚巨星"
+      ]
+    },
+    {
+      "id": "TOP_LOCK_BACKDOOR_CUT",
+      "title": "上线堵截破解：无球射手反跑后门空切",
+      "basketball_principle": "当防守方为掐死克莱、邓肯·罗宾逊等历史级无球射手而采取上线死贴封锁跑位路线（Top-Lock）时，射手突然蹬地变向反跑底线空切（Backdoor Cut），完成轻松空接或禁区挑篮。",
+      "nba2k22_mechanisms": [
+        "Playbook 包含 Cutter 与 Backdoor 跑位战术",
+        "球员 PlayType 包含 Cutter (11) 且具备高 Off-ball Cut IQ",
+        "对手防守针对射手设置 PressureOffball=DENY_BALL 或 OffballScreenDefense=GO_OVER"
+      ],
+      "requirements": {
+        "roster_roles": ["offball_shooter", "high_iq_cutter", "passing_hub"],
+        "verified_native_fields": ["PlayType", "OFF_SCREEN_SHOT_THREE", "PressureOffball"]
+      },
+      "contraindications": [
+        "内线护框手蹲坑禁区，后门空切无起跳终结空间",
+        "弧顶持球人缺乏击地穿透传球能力与传球视野"
+      ],
+      "counterplay_and_cost": "对手防守若收缩底线防空切，外线大范围无球掩护即可重新创造三分出手机会。",
+      "evidence": [
+        {"kind": "NBA_REAL", "source": "Golden State Warriors motion offense backdoor counter study"},
+        {"kind": "2K22_COMMUNITY", "source": "2K22 Tactical Guide: Cutter play types trigger rapid rim cuts"},
+        {"kind": "PROJECT_VERIFIED", "source": "PlayType 11 (Cutter) verified in memory"}
+      ],
+      "sim_effect": "UNKNOWN",
+      "live_3d_effect": "Player with Cutter PlayType cuts decisively when denied on perimeter",
+      "gm_alternatives": [
+        "PLAYER_PLAY_TYPE_CHANGE: 为射手配置第3/第4槽为 Cutter (11)",
+        "TRAINING: 安排射手进行进攻创造与切入终结特训",
+        "HOLD: 维持现有战术但需防守方露出破绽"
+      ]
+    },
+    {
+      "id": "FIVE_OUT_DRIVE_AND_KICK",
+      "title": "五外极致空间：突分驱动与底角三分惩戒",
+      "basketball_principle": "全队5人全部拉出三分线外（5-Out Spacing），清空整座禁区。持球人凭借速度一步过掉第一道防线后，防守侧翼被迫内缩护框，持球人顺势突分给两翼或底角的接球定点射手。",
+      "nba2k22_mechanisms": [
+        "场上5名球员（包括5号位）均具备合格三分投射能力 (3PT >= 75)",
+        "Coach Freelance 设置为 5-Out (Comp 5-Out / 21 Delay)",
+        "持球人 Drive Tendency >= 75 且 Dish to Open Man >= 80",
+        "侧翼射手 Spot Up Shot 3 (0x473) 倾向 >= 85"
+      ],
+      "requirements": {
+        "roster_roles": ["slasher_ballhandler", "four_spacers", "stretch_big"],
+        "min_team_three_pt_avg": 78,
+        "verified_native_fields": ["DRIVE_TENDENCY", "DISH_TO_OPEN_MAN_TENDENCY", "SPOT_UP_SHOT_THREE", "FreelanceType"]
+      },
+      "contraindications": [
+        "场上有传统无射程中锋滞留篮下，堵塞突破进攻路线",
+        "全队前场篮板争抢能力极度低下，失准时易遭对手打反击"
+      ],
+      "counterplay_and_cost": "防守方可采用单防锁死突分路径，不轻易收缩底角协防；代价是必须承受后卫单防被打爆的风险。",
+      "evidence": [
+        {"kind": "NBA_REAL", "source": "Boston Celtics 2024 / Dallas Mavericks 5-out spacing offense"},
+        {"kind": "2K22_COMMUNITY", "source": "OS Forums: 5-Out freelance spacing requires high Dish & Spotup 3 tendencies"},
+        {"kind": "PROJECT_VERIFIED", "source": "Freelance slot order and Freelance codecs verified in profile"}
+      ],
+      "sim_effect": "UNKNOWN",
+      "live_3d_effect": "Players maintain perimeter perimeter boundary when 5-out freelance is active",
+      "gm_alternatives": [
+        "INTERNAL_SCHEME: 切换 Freelance 为 5-Out",
+        "TENDENCY_CHANGE: 上调空间球员 Spot-up 3 倾向",
+        "TRADE: 必须交易引进具有稳定三分投射能力的空间型5号位"
+      ]
+    },
+    {
+      "id": "POST_HUB_SPLIT_CUT",
+      "title": "高低位轴心策应：强侧空切与内翻外弹传导",
+      "basketball_principle": "利用约基奇、萨博尼斯或追梦格林在罚球线或低位背身拿球作为战术中枢（Post Hub），外线两名后卫完成交叉空切（Split Action），策应轴心依据防守错位直接给空切人击地上篮或回传外线大空位跳投。",
+      "nba2k22_mechanisms": [
+        "Playbook 包含 Post Up High (9) 或 Guard Post Up (10) 战术",
+        "轴心内线具备高 Passing IQ, Passing Accuracy 和 Flashy Pass 倾向",
+        "切入外线具有高 Cutter 战术类型",
+        "Coach 体系设置为 Post Centric 或 Balanced"
+      ],
+      "requirements": {
+        "roster_roles": ["playmaking_big", "curling_shooters", "backdoor_cutters"],
+        "verified_native_fields": ["POST_UP_TENDENCY", "FLASHY_PASS_TENDENCY", "PlayType"]
+      },
+      "contraindications": [
+        "内线控球与出球能力极低，容易在被包夹时被抄截失误",
+        "外线球员缺乏跑位意识，空切跑动迟滞"
+      ],
+      "counterplay_and_cost": "防守方可预先在强侧夹击轴心逼迫其向弱侧出球，代价是弱侧防守轮转压力剧增。",
+      "evidence": [
+        {"kind": "NBA_REAL", "source": "Denver Nuggets Jokic high-post split action films"},
+        {"kind": "2K22_COMMUNITY", "source": "OS Community: High Post hub requires specific passing IQ thresholds"},
+        {"kind": "PROJECT_VERIFIED", "source": "Coach SystemPost and SystemProficiency verified at 0xF0"}
+      ],
+      "sim_effect": "UNKNOWN",
+      "live_3d_effect": "Post playmaker freezes defense and finds cutting guards consistently",
+      "gm_alternatives": [
+        "PLAYBOOK_CHANGE: 引入丹佛掘金或国王队高位策应战术本",
+        "TRAINING: 将内线训练类型配置为组织核心 (Playmaking Hub)",
+        "TRADE: 评估是否需要引进具有轴心视野的内线"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,610 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GM per-team data-to-decision dossier contract v1",
+  "description": "Template/validation schema only. Do not treat it as game data, a coaching batch or game execution authorization. Each current roster player is to be assessed from observed source. A separate deterministic source-bound validator must confirm source_roster_player_count == assessed_roster_player_count == unique(player_assessments) and exact source identity sets; JSON Schema itself cannot prove cross-file roster completeness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "career_id",
+    "game_season",
+    "game_date",
+    "source_batch_id",
+    "gm_node",
+    "round_id",
+    "team_abbr",
+    "team_id",
+    "review_status",
+    "goal_phase",
+    "team_diagnosis",
+    "player_assessments",
+    "staff_assessment",
+    "coaching_assessment",
+    "roster_use",
+    "contract_and_draft_assets",
+    "decision_alternatives",
+    "decision_dimensions",
+    "evidence_refs",
+    "uncertainties",
+    "candidate_actions",
+    "monitoring_plan",
+    "approval_state",
+    "source_roster_player_count",
+    "assessed_roster_player_count",
+    "roster_coverage_status",
+    "decision_objective"
+  ],
+  "properties": {
+    "career_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "game_season": {
+      "type": "string",
+      "minLength": 1
+    },
+    "game_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_batch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "analysis_batch_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "gm_node": {
+      "type": "string"
+    },
+    "round_id": {
+      "type": "string"
+    },
+    "team_abbr": {
+      "type": "string"
+    },
+    "team_id": {
+      "type": "integer"
+    },
+    "review_status": {
+      "enum": [
+        "PENDING",
+        "IN_PROGRESS",
+        "COMPLETE",
+        "REWORK_REQUIRED"
+      ]
+    },
+    "goal_phase": {
+      "type": "string"
+    },
+    "winning_philosophy": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional; do not invent team culture from its snapshot roster"
+    },
+    "team_diagnosis": {
+      "type": "object",
+      "required": [
+        "season_context",
+        "observed_team_performance",
+        "lineup_strengths",
+        "offensive_issues",
+        "defensive_issues",
+        "critical_unknowns"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "season_context": {
+          "type": "string"
+        },
+        "observed_team_performance": {
+          "type": "object"
+        },
+        "lineup_strengths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "offensive_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "defensive_issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "critical_unknowns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "player_assessments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_player_identity",
+          "name",
+          "current_team_verified",
+          "role",
+          "observed_data_refs",
+          "core_skill_profile",
+          "season_stats_scope",
+          "contract_asset_view",
+          "fit_diagnosis",
+          "natural_growth_opportunity",
+          "decision_view",
+          "uncertainty_flags"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "source_player_identity": {
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          },
+          "current_team_verified": {
+            "type": "boolean"
+          },
+          "role": {
+            "type": "string"
+          },
+          "observed_data_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "core_skill_profile": {
+            "type": "object"
+          },
+          "season_stats_scope": {
+            "enum": [
+              "TEAM_SINCE_TRADE_CONFIRMED",
+              "FULL_SEASON_CUMULATIVE",
+              "NOT_OBSERVED",
+              "UNKNOWN"
+            ]
+          },
+          "contract_asset_view": {
+            "type": "object"
+          },
+          "fit_diagnosis": {
+            "type": "string"
+          },
+          "natural_growth_opportunity": {
+            "type": "string"
+          },
+          "decision_view": {
+            "enum": [
+              "CORE_HOLD",
+              "ROLE_OPTIMIZE",
+              "TRADE_CANDIDATE",
+              "DEPTH_ASSET",
+              "OBSERVE"
+            ]
+          },
+          "uncertainty_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "staff_assessment": {
+      "type": "object",
+      "required": [
+        "observed_staff_roles",
+        "head_coach_review",
+        "non_headcoach_review",
+        "effect_evidence_level",
+        "staff_change_executor_status",
+        "decision"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "observed_staff_roles": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "head_coach_review": {
+          "type": "string"
+        },
+        "non_headcoach_review": {
+          "type": "string"
+        },
+        "effect_evidence_level": {
+          "enum": [
+            "OBSERVED_EFFECT_VALIDATED",
+            "PLAYER_EXPERIENCE",
+            "INFERRED_ONLY",
+            "UNKNOWN",
+            "NOT_EVALUATED"
+          ]
+        },
+        "staff_change_executor_status": {
+          "enum": [
+            "VERIFIED_ENABLED",
+            "NOT_VERIFIED",
+            "UNKNOWN"
+          ]
+        },
+        "decision": {
+          "enum": [
+            "STAFF_HOLD",
+            "STAFF_REVIEW",
+            "STAFF_CHANGE_RESEARCH_CANDIDATE",
+            "STAFF_DEFERRED_BY_PLAYER"
+          ]
+        }
+      }
+    },
+    "coaching_assessment": {
+      "type": "object",
+      "required": [
+        "observed_coaching_source",
+        "system_fit",
+        "setting_assessments",
+        "proposed_changes",
+        "decision"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "observed_coaching_source": {
+          "type": "string"
+        },
+        "system_fit": {
+          "type": "string"
+        },
+        "setting_assessments": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "proposed_changes": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "decision": {
+          "enum": [
+            "COACHING_HOLD",
+            "COACHING_PROPOSED",
+            "COACHING_SOURCE_UNAVAILABLE"
+          ]
+        }
+      }
+    },
+    "roster_use": {
+      "type": "object",
+      "required": [
+        "internal_options",
+        "rotation_ai_boundary",
+        "decision"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "internal_options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rotation_ai_boundary": {
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "LINEUP_HOLD",
+            "INTERNAL_ADJUSTMENT_INTENT"
+          ]
+        }
+      }
+    },
+    "contract_and_draft_assets": {
+      "type": "object"
+    },
+    "decision_alternatives": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "option",
+          "win_logic",
+          "asset_cost",
+          "risk",
+          "status"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "option": {
+            "type": "string"
+          },
+          "win_logic": {
+            "type": "string"
+          },
+          "asset_cost": {
+            "type": "string"
+          },
+          "risk": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "CANDIDATE",
+              "HOLD",
+              "BLOCKED",
+              "REJECTED"
+            ]
+          }
+        }
+      }
+    },
+    "decision_dimensions": {
+      "type": "object",
+      "required": [
+        "D1_STAFF",
+        "D2_TACTICS",
+        "D3_ROSTER_USE",
+        "D4_MARKET",
+        "D5_ASSETS_AND_DEVELOPMENT",
+        "D6_TEAM_IDENTITY_AND_MONITORING"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "D1_STAFF": {
+          "type": "object",
+          "required": [
+            "status",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "D2_TACTICS": {
+          "type": "object",
+          "required": [
+            "status",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "D3_ROSTER_USE": {
+          "type": "object",
+          "required": [
+            "status",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "D4_MARKET": {
+          "type": "object",
+          "required": [
+            "status",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "D5_ASSETS_AND_DEVELOPMENT": {
+          "type": "object",
+          "required": [
+            "status",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "D6_TEAM_IDENTITY_AND_MONITORING": {
+          "type": "object",
+          "required": [
+            "status",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "rationale": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_path",
+          "source_batch_id",
+          "evidence_type"
+        ],
+        "properties": {
+          "source_path": {
+            "type": "string"
+          },
+          "source_batch_id": {
+            "type": "string"
+          },
+          "evidence_type": {
+            "enum": [
+              "OBSERVED",
+              "CALCULATED",
+              "INFERRED",
+              "REFERENCE",
+              "UNKNOWN"
+            ]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "candidate_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "action_id",
+          "domain",
+          "status",
+          "rationale",
+          "requires_player_approval"
+        ],
+        "properties": {
+          "action_id": {
+            "type": "string"
+          },
+          "domain": {
+            "enum": [
+              "STAFF",
+              "COACHING",
+              "LINEUP",
+              "TRADE",
+              "SIGNING",
+              "ASSET",
+              "OTHER"
+            ]
+          },
+          "status": {
+            "enum": [
+              "HOLD",
+              "RESEARCH_CANDIDATE",
+              "PROPOSED_ONLY",
+              "BLOCKED_NO_EXECUTOR"
+            ]
+          },
+          "rationale": {
+            "type": "string"
+          },
+          "requires_player_approval": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "monitoring_plan": {
+      "type": "object",
+      "required": [
+        "next_player_trigger",
+        "observable_metrics",
+        "interpretation_limits"
+      ],
+      "properties": {
+        "next_player_trigger": {
+          "type": "string"
+        },
+        "observable_metrics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "interpretation_limits": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "approval_state": {
+      "enum": [
+        "NOT_APPROVED",
+        "PLAYER_APPROVED",
+        "EXECUTED_VERIFIED"
+      ]
+    },
+    "source_roster_player_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of all current team roster records from same-batch teams/abbr.json"
+    },
+    "assessed_roster_player_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The number of distinct player source identities assessed"
+    },
+    "roster_coverage_status": {
+      "enum": [
+        "COMPLETE_SAME_BATCH",
+        "INCOMPLETE_REWORK_REQUIRED",
+        "SOURCE_UNAVAILABLE"
+      ]
+    },
+    "decision_objective": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Evidence-linked, measurable performance objective"
+    }
+  }
+}

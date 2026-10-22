@@ -1,0 +1,2017 @@
+{
+  "schema_id": "DEV29_R07_GAME_KNOWLEDGE_TO_NATIVE_CAPABILITY_MATRIX_V1",
+  "date": "2026-10-21",
+  "status": "R07_RESEARCH_PUBLISHED_PENDING_INDEPENDENT_REVIEW",
+  "target": "NBA2K22_PC_CURRENTGEN_OFFLINE_MYLEAGUE",
+  "authority": "DEV29_ONLY_RESEARCH_NOT_GAME_EXECUTION_NOT_AGENT_IMPLEMENTATION",
+  "evidence_levels": [
+    "RESEARCH_MECHANISM_DOCUMENTED_WITH_SOURCE_SCOPE",
+    "TARGET_PC22_UI_AND_VALUE_VISIBLE",
+    "PROJECT_NATIVE_STRUCTURE_LOCATED",
+    "TARGET_SAVE_RUNTIME_READBACK_VERIFIED",
+    "FORMAL_FULL_VERIFIED_V1_BATCH_PUBLISHED",
+    "GM_OR_ROLE_ACTUALLY_QUERYABLE_WITH_ID_AND_SOURCE",
+    "HUMAN_APPROVED_NATIVE_EXECUTION_WITH_READBACK_AND_SEPARATE_POSTSAVE"
+  ],
+  "axes_are_independent_not_cumulative": true,
+  "population_note": "40 functional groups summarize 694 heterogeneous traceable item records; NOT 40 authenticated APIs or 694 native game fields",
+  "linked_item_index_path": "docs/game_mechanics/catalogs/R07_ITEM_TRACEABILITY_INDEX_V1.json",
+  "linked_r06d_path": "docs/game_mechanics/catalogs/R06D_CROSS_DOMAIN_MECHANISMS_AND_GAPS_V1.json",
+  "functional_group_count": 40,
+  "capability_groups": [
+    {
+      "id": "F01",
+      "theme_zh": "赛程、对阵及GameID",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K01.GAME_SCHEDULE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SCHEDULE_CURRENT_GAME"
+        }
+      ],
+      "subject_group": "TEAM_PLAYER_GAME",
+      "potential_observers_not_authorized_permissions": [
+        "REQUIRES_PUBLIC_OR_AUTHORIZED_SOURCE"
+      ],
+      "observation_or_setting_refresh_context": "GAME_CALENDAR",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "UNKNOWN_CURRENT_SAVE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G01",
+        "D06-G04"
+      ]
+    },
+    {
+      "id": "F02",
+      "theme_zh": "逐场球员及球队Game Logs",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K01.GAME_LOGS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_GAME_LOG"
+        }
+      ],
+      "subject_group": "PLAYER_TEAM_GAME",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_TEAM",
+        "PLAYER_SELF",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "POST_GAME",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G01",
+        "D06-G14"
+      ]
+    },
+    {
+      "id": "F03",
+      "theme_zh": "逐场双方Box与比赛细节",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.GAME_BOX_PLAYER"
+        },
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.GAME_BOX_TEAM"
+        }
+      ],
+      "subject_group": "PLAYER_TEAM_GAME",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_TEAM",
+        "PLAYER_SELF",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "POST_GAME",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G01",
+        "D06-G03"
+      ]
+    },
+    {
+      "id": "F04",
+      "theme_zh": "投篮图、热区及出手类型",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.SHOT_CHART"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.SHOT_THREE"
+        }
+      ],
+      "subject_group": "PLAYER_TEAM_GAME",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_TEAM",
+        "PLAYER_SELF",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "POST_GAME_AND_MODE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G01",
+        "D06-G02"
+      ]
+    },
+    {
+      "id": "F05",
+      "theme_zh": "球队赛季统计与战绩",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.PER_GAME"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SEASON_LENGTH"
+        }
+      ],
+      "subject_group": "TEAM",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_TEAM",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "GAME_END_AND_MONTH_CLOSE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_FULL_VERIFIED_SNAPSHOT_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "SQLITE_JSON_REPORTED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G01"
+      ]
+    },
+    {
+      "id": "F06",
+      "theme_zh": "球员赛季累计与每场指标",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.ADVANCED_STATS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+          "array": "entries",
+          "item_id": "PLAYER.attributes.driving_layup"
+        }
+      ],
+      "subject_group": "PLAYER_TEAM",
+      "potential_observers_not_authorized_permissions": [
+        "REQUIRES_PUBLIC_OR_AUTHORIZED_SOURCE"
+      ],
+      "observation_or_setting_refresh_context": "GAME_END_AND_MONTH_CLOSE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_SEASON_STATS_REPORTED_NOT_ADVANCED_ALL",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "SQLITE_JSON_REPORTED_SCOPE_ONLY",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G01"
+      ]
+    },
+    {
+      "id": "F07",
+      "theme_zh": "全球球员模型池及新秀身份",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+          "array": "entries",
+          "item_id": "PLAYER.attributes.driving_layup"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.HISTORIC_DRAFT_PICKER"
+        }
+      ],
+      "subject_group": "PLAYER_POOL",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_TEAM_IF_DISCLOSED"
+      ],
+      "observation_or_setting_refresh_context": "FULL_CAPTURE_OR_DRAFT_IMPORT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_FULL_VERIFIED_SNAPSHOT_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "SQLITE_JSON_REPORTED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G06",
+        "D06-G11"
+      ]
+    },
+    {
+      "id": "F08",
+      "theme_zh": "30队名单归属与人数核验",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+          "array": "roster_native_layout",
+          "item_id": "TEAM.roster.regular_ptr_array"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+          "array": "roster_native_layout",
+          "item_id": "TEAM.roster.regular_count"
+        }
+      ],
+      "subject_group": "ROSTER",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_TEAM",
+        "PLAYER_SELF",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "TRADE_AND_FULL_CAPTURE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_FULL_VERIFIED_SNAPSHOT_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "SQLITE_JSON_REPORTED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G07",
+        "D06-G08"
+      ]
+    },
+    {
+      "id": "F09",
+      "theme_zh": "教练19项默认设置、POE与体系",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.COACH_SYSTEM"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.POE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.RUNPLAYS"
+        }
+      ],
+      "subject_group": "COACH",
+      "potential_observers_not_authorized_permissions": [
+        "COACH",
+        "GM_AUTHORIZED"
+      ],
+      "observation_or_setting_refresh_context": "COACH_CHANGE_AND_PRE_GAME",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_CAPTURE_AND_PARTIAL_REAL_WRITEBACK_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PROJECT_COACH_QUERY_REPORTED",
+      "existing_execution_scope": "COACH_FIELDS_SELECTIVE_APPROVAL_GATE",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G09"
+      ]
+    },
+    {
+      "id": "F10",
+      "theme_zh": "整体防守与对手Gameplan",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.PERSONAL_DEFENSE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.GAME_FEEDBACK"
+        }
+      ],
+      "subject_group": "COACH",
+      "potential_observers_not_authorized_permissions": [
+        "COACH",
+        "GM_AUTHORIZED"
+      ],
+      "observation_or_setting_refresh_context": "BEFORE_SPECIFIC_MATCHUP",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PROJECT_OVERALL_DEFENSE_SCOPE_REPORTED_PER_PLAYER_UNKNOWN",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PROJECT_COACH_QUERY_REPORTED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G09"
+      ]
+    },
+    {
+      "id": "F11",
+      "theme_zh": "Playbook、战术与Freelance",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.TEAM_PLAYBOOK"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.FREELANCE"
+        }
+      ],
+      "subject_group": "COACH",
+      "potential_observers_not_authorized_permissions": [
+        "COACH",
+        "GM_AUTHORIZED"
+      ],
+      "observation_or_setting_refresh_context": "COACH_OR_PLAYBOOK_CHANGE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "PROJECT_PARTIAL_TECHNICAL_PROFILE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "PROJECT_QUERY_FIELDLEVEL_UNKNOWN",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G09"
+      ]
+    },
+    {
+      "id": "F12",
+      "theme_zh": "ACE及真实战术执行反馈",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.ACE_RUNTIME"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.GAME_FEEDBACK"
+        }
+      ],
+      "subject_group": "COACH",
+      "potential_observers_not_authorized_permissions": [
+        "COACH",
+        "GM_AUTHORIZED"
+      ],
+      "observation_or_setting_refresh_context": "LIVE_GAME_AND_POST_GAME",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "ENGINE_CAUSALITY_UNKNOWN",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G09"
+      ]
+    },
+    {
+      "id": "F13",
+      "theme_zh": "个人属性、耐久、潜力数据",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+          "array": "entries",
+          "item_id": "PLAYER.attributes.driving_layup"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.DURABILITY_RISK"
+        }
+      ],
+      "subject_group": "PLAYER",
+      "potential_observers_not_authorized_permissions": [
+        "PLAYER_SELF",
+        "COACH_TEAM",
+        "GM_AUTHORIZED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "FULL_CAPTURE_AND_SEASON_PROGRESS",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "PARTIAL_PRIOR_PROFILE_CAPTURE_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PER_FIELD_COVERAGE_NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G10"
+      ]
+    },
+    {
+      "id": "F14",
+      "theme_zh": "球员倾向及个人PlayTypes",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+          "array": "native_slots",
+          "item_id": "tendency.SHOT_THREE_TENDENCY"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.PLAYER_PLAYTYPES"
+        }
+      ],
+      "subject_group": "PLAYER_COACH",
+      "potential_observers_not_authorized_permissions": [
+        "PLAYER_SELF",
+        "COACH_TEAM",
+        "GM_AUTHORIZED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "PRE_GAME_AND_PLAYER_CHANGE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "STATIC_PROFILE_NOT_CURRENT_CAPTURE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G09"
+      ]
+    },
+    {
+      "id": "F15",
+      "theme_zh": "球队/个人训练设置",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.TEAM_TRAINING_INTENSITY"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.PLAYER_FOCUS"
+        }
+      ],
+      "subject_group": "PLAYER_COACH",
+      "potential_observers_not_authorized_permissions": [
+        "PLAYER_SELF",
+        "COACH_TEAM",
+        "GM_AUTHORIZED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "TRAINING_SESSION",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "PROJECT_STATIC_REGISTERED_NO_R07_LIVE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G10"
+      ]
+    },
+    {
+      "id": "F16",
+      "theme_zh": "实时体力、疲劳及伤病",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.INJURY_EVENT"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.FATIGUE_TIMESCALES"
+        }
+      ],
+      "subject_group": "HEALTH",
+      "potential_observers_not_authorized_permissions": [
+        "PLAYER_SELF",
+        "COACH_TEAM",
+        "GM_AUTHORIZED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "INJURY_AND_GAME_EVENT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G10"
+      ]
+    },
+    {
+      "id": "F17",
+      "theme_zh": "自然成长与退化历史",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.GAME_NATURAL_GROWTH"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.CAREER_PRIOR_SEASONS_STATS"
+        }
+      ],
+      "subject_group": "PLAYER",
+      "potential_observers_not_authorized_permissions": [
+        "PLAYER_SELF",
+        "COACH_TEAM",
+        "GM_AUTHORIZED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "SEASON_PROGRESS_OR_OFFSEASON",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "GAME_CONTROLS_GROWTH_NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G10",
+        "D06-G14"
+      ]
+    },
+    {
+      "id": "F18",
+      "theme_zh": "Loyalty/财务偏好/人格徽章参考",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json",
+          "array": "native_motivations",
+          "item_id": "Loyalty"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json",
+          "array": "personality_candidates",
+          "item_id": "PERSONALITY_REFERENCE_01"
+        }
+      ],
+      "subject_group": "PLAYER",
+      "potential_observers_not_authorized_permissions": [
+        "PLAYER_SELF",
+        "COACH_TEAM",
+        "GM_AUTHORIZED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "PLAYER_STATUS_CHANGE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "CROSS_VERSION_ARCHIVE_NOT_CURRENT_SAVE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G10"
+      ]
+    },
+    {
+      "id": "F19",
+      "theme_zh": "合同条款、选项与Bird状态",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "PLAYER.contract.bird_years"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "PLAYER.contract.contract_year_1"
+        }
+      ],
+      "subject_group": "CONTRACT",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "PLAYER_SELF",
+        "COACH_IF_DISCLOSED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "TRADE_CONTRACT_EVENT_OFFSEASON",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_CONTRACT_SOURCE_REPORTED_PER_FIELD_UNCERTAIN",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "SQLITE_QUERY_REPORTED_SCOPE_ONLY",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G07",
+        "D06-G17"
+      ]
+    },
+    {
+      "id": "F20",
+      "theme_zh": "球队薪资与市场可支出能力",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "TEAM_FINANCE.total_salary"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "TEAM_FINANCE.budget"
+        }
+      ],
+      "subject_group": "FINANCE",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_DISCLOSED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "ROSTER_TRADE_AND_OFFSEASON",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "PROFILE_CANDIDATES_CAP_ROOM_NOT_CERTIFIED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_FULLY_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G17"
+      ]
+    },
+    {
+      "id": "F21",
+      "theme_zh": "自由市场与真实签约",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "FA.UFA"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.FA_MORATORIUM"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.FA_CONTRACT_OFFERS"
+        }
+      ],
+      "subject_group": "CONTRACT",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "PLAYER_SELF",
+        "COACH_IF_DISCLOSED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "OFFSEASON_FREE_AGENCY",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "FA_PLANNER_SYNTHETIC_ONLY",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G07",
+        "D06-G17"
+      ],
+      "model_query_api_evidence_note": "No validated current-save end-to-end data query path was established for this capability in R07.",
+      "execution_warning": "SIGNING_WRITE_UNVALIDATED: offline synthetic FA planner does not validate real PC22 free-agent-pool retrieval, signed contract writes, or post-save success.",
+      "reviewed_old_query_value": "SIGNING_WRITE_UNVALIDATED",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F22",
+      "theme_zh": "普通球员交易与审批执行",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "TRADE.SELECT_PLAYERS_OR_PICKS_AND_MAKE_OFFER"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+          "array": "roster_native_layout",
+          "item_id": "TEAM.roster.regular_ptr_array"
+        }
+      ],
+      "subject_group": "TRANSACTION",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_DISCLOSED",
+        "PLAYER_SELF",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "TRADE_WINDOW",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "APPROVED_TRADE_V2_BOUNDED_NATIVE_EVIDENCE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PRIOR_SQLITE_JSON_REPORTED_SCOPE_ONLY",
+      "existing_execution_scope": "BOUNDED_APPROVED_TRADE_V2",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G08"
+      ],
+      "model_query_api_evidence_note": "Previously published roster/asset snapshots have reported SQLite/JSON evidence; availability of a dedicated trade proposal/query API and current-save freshness are not certified.",
+      "execution_warning": "APPROVED_BOUNDED_EXECUTOR: prior human-confirmed trade v2 is a limited write/verify path requiring specific approval; it does not certify a model trade-preflight query API or current-save roster snapshot.",
+      "reviewed_old_query_value": "APPROVED_BOUNDED_EXECUTOR",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F23",
+      "theme_zh": "简单选秀权权属及V4规则",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "DRAFT_ASSET.current_owner_ptr"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "TRADE.AVAILABLE_ASSETS_AND_MARKET_LIST"
+        }
+      ],
+      "subject_group": "DRAFT",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_DISCLOSED",
+        "PLAYER_DRAFTEE",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "DRAFT_AND_TRADE_EVENT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_PICKS_300_READ_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PRIOR_SQLITE_JSON_REPORTED_SCOPE_ONLY",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G08"
+      ],
+      "model_query_api_evidence_note": "Prior 300 native pick assets covering five future years were reported in a historic batch; current batch-specific ownership read and query must be checked separately; trade executor restriction does not change read coverage.",
+      "execution_warning": "EXECUTOR_OLD_PLUS3_REJECTION: project V4 policy removed artificial three-draft-year limit, but old executor still rejects later picks. Prior native/source report of five future years/300 picks is READ provenance, not present-tradeability or current-save readback.",
+      "reviewed_old_query_value": "EXECUTOR_OLD_PLUS3_REJECTION",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F24",
+      "theme_zh": "Draft Class导入、轮回与真实选秀",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.PROJECT_DRAFT_ROTATION"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.HISTORIC_DRAFT_CYCLE_STEP"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "DRAFT.HISTORIC_DRAFT_CLASS"
+        }
+      ],
+      "subject_group": "DRAFT",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_DISCLOSED",
+        "PLAYER_DRAFTEE",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "DRAFT_STAGE_AND_COMPLETE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "DRAFT_POOL_PARTIAL_NO_CURRENT_DRAFT_COMPLETION",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G06",
+        "D06-G11"
+      ]
+    },
+    {
+      "id": "F25",
+      "theme_zh": "Scouting、Mock Draft及不完全信息",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "SCOUT.DRAFTEXPRESS_RANK"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.DRAFT_PROSPECT_SCOUTING"
+        }
+      ],
+      "subject_group": "SCOUT",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_DISCLOSED",
+        "MEDIA_PUBLIC_ONLY_FOR_PUBLISHED_REPORT"
+      ],
+      "observation_or_setting_refresh_context": "SCOUTING_AND_DRAFT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "REPORT_VS_TRUE_POTENTIAL_UNVERIFIED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G11"
+      ]
+    },
+    {
+      "id": "F26",
+      "theme_zh": "员工、职位、薪资及雇聘",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+          "array": "staff.native_fields",
+          "item_id": "STAFF.position"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "STAFF.HIRE"
+        }
+      ],
+      "subject_group": "STAFF",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_DISCLOSED",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "STAFF_CHANGE_OFFSEASON",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_STAFF_SOURCE_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PRIOR_SQLITE_JSON_REPORTED_SCOPE_ONLY",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G17"
+      ],
+      "model_query_api_evidence_note": "Existing staff JSON source was reported as published; access to each individual staff field or latest batch is not revalidated in R07.",
+      "execution_warning": "STAFF_HIRE_FIRE_NOT_VALIDATED: previously published staff source/JSON does not constitute any validated hire/fire executor, and does not guarantee every staff field has current query coverage.",
+      "reviewed_old_query_value": "STAFF_HIRE_FIRE_NOT_VALIDATED",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F27",
+      "theme_zh": "Setup、Game Speed与世界设置",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "registry_candidates",
+          "item_id": "settings.game_settings.game_speed"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SETUP.GAME_SPEED"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "SAVE_CREATION_OR_SETUP_CHANGE",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "STATIC_REGISTRY_86_CANDIDATES",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G02"
+      ],
+      "model_query_api_evidence_note": "No validated current-save end-to-end data query path was established for this capability in R07.",
+      "execution_warning": "R07_NO_NEW_WRITE: no game mutation in R07; R06A static settings register is not an end-to-end query or approved configuration writer.",
+      "reviewed_old_query_value": "R07_NO_NEW_WRITE",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F28",
+      "theme_zh": "日历Simulation引擎设置",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.TEAM_PACE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.SHOT_THREE"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "CALENDAR_SIM",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "MENU_CONCEPTS_NOT_RUNTIME",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G02"
+      ]
+    },
+    {
+      "id": "F29",
+      "theme_zh": "3D Gameplay与USER/CPU滑块",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.GAMEPLAY.3PT_SHOT_SUCCESS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.GAMEPLAY.SPEED_WITH_BALL_MAX"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "LIVE_3D_PRE_GAME",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "MENU_CONCEPTS_NOT_RUNTIME",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G02"
+      ]
+    },
+    {
+      "id": "F30",
+      "theme_zh": "Normalize Stats/Minutes与统计冲突",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_MINUTES"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_STATS"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "POST_GAME_AND_SIMCAST",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "TWO_MENU_CONCEPTS_ONE_PARTIAL_PROFILE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G03"
+      ]
+    },
+    {
+      "id": "F31",
+      "theme_zh": "3D、SimCast、QuickSim模式事实",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SIMCAST_JUMPIN"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.TEAM_PACE"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "EACH_GAME",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "MODE_MARKER_NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G02"
+      ]
+    },
+    {
+      "id": "F32",
+      "theme_zh": "游戏时间、阶段、数据批次身份",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.NATIVE_GAME_DATE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.DEV14_SAVE_IDENTITY"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "EACH_CAPTURE_AND_PHASE_TRANSITION",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PROJECT_DATE_INPUT_READBACK_UNCERTAIN",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "FIELD_LEVEL_UNKNOWN",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G04"
+      ],
+      "model_query_api_evidence_note": "Prior capture-batch metadata exists as a project artifact, but field-level native game date/season phase correlation to current save is UNKNOWN and has not been certified.",
+      "data_integrity_warning": "CAPTURE_BATCH_REPORTED_SAVE_DATE_REQUIRES_VERIFICATION: batch metadata and user-entered/unknown game date may be available, but no PC22-native authoritative GameDate+phase and save_instance identity readback was verified by R07; do not infer that batch query proves game date.",
+      "reviewed_old_query_value": "CAPTURE_BATCH_REPORTED_SAVE_DATE_REQUIRES_VERIFICATION",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F33",
+      "theme_zh": "奖项、名人堂与历届获奖者",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.PAST_MVPS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.ROOKIE_OF_YEAR"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.AWARD_HISTORY_PERSISTENCE"
+        }
+      ],
+      "subject_group": "HISTORY",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH",
+        "PLAYER",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "END_SEASON_AND_HISTORY_QUERY",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PARTIAL_MENU_PLAYER_REPORT_TEN_AWARDS_UNSOURCED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G12",
+        "D06-G14"
+      ]
+    },
+    {
+      "id": "F34",
+      "theme_zh": "NBA纪录、生涯纪录及队史",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.NBA_RECORDS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.CAREER_RECORD"
+        }
+      ],
+      "subject_group": "HISTORY",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH",
+        "PLAYER",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "RECORD_EVENT_AND_HISTORY_QUERY",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "CROSS_VERSION_REFERENCE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G13",
+        "D06-G14"
+      ]
+    },
+    {
+      "id": "F35",
+      "theme_zh": "社交媒体、实力榜和新闻",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.SOCIAL_FEED"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.POWER_RANKINGS"
+        }
+      ],
+      "subject_group": "MEDIA",
+      "potential_observers_not_authorized_permissions": [
+        "MEDIA_PUBLIC_ONLY",
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "observation_or_setting_refresh_context": "MEDIA_EVENT_AND_RANKING",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PC22_MOD_TEXT_INDIRECT_ONLY",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G15"
+      ]
+    },
+    {
+      "id": "F36",
+      "theme_zh": "League Rule Changes与生效规则",
+      "review_priority_for_evidence": "P1",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.RULE_PROPOSALS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.ACTIVE_RULES"
+        }
+      ],
+      "subject_group": "WORLD",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_IF_RELEVANT",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "OFFSEASON_RULE_EVENT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "OLD_SERIES_MENU_REFERENCE",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G16"
+      ]
+    },
+    {
+      "id": "F37",
+      "theme_zh": "Save、Autosave、重载和SteamCloud",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SAVE_COMMAND"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.AUTOSAVE_MENU"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.STEAM_CLOUD_SYNC"
+        }
+      ],
+      "subject_group": "SAVE",
+      "potential_observers_not_authorized_permissions": [
+        "DATA_CAPTURE",
+        "ANALYTICS",
+        "GM_SOURCE_CHECK"
+      ],
+      "observation_or_setting_refresh_context": "SAVE_AND_RELOAD_EVENT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "SAVE_AS_PLAYER_REPORT_NO_RELOAD_TEST",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G05",
+        "D06-G19"
+      ]
+    },
+    {
+      "id": "F38",
+      "theme_zh": "历史比赛、交易、选秀跨年留存",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_GAME_BOXSCORE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_TRADE_HISTORY"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_DRAFT_BOARD"
+        }
+      ],
+      "subject_group": "HISTORY",
+      "potential_observers_not_authorized_permissions": [
+        "ANALYTICS",
+        "GM",
+        "COACH",
+        "PLAYER",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "AFTER_SEASON_TRANSITION",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "NOT_CAPTURED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G14"
+      ]
+    },
+    {
+      "id": "F39",
+      "theme_zh": "外挂全量采集/SQLite/发布与重发",
+      "review_priority_for_evidence": "P0",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.FULL_VERIFIED_CAPTURE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.DEV14_SAVE_IDENTITY"
+        }
+      ],
+      "subject_group": "PROJECT",
+      "potential_observers_not_authorized_permissions": [
+        "DATA_CAPTURE",
+        "ANALYTICS",
+        "GM_SOURCE_CHECK"
+      ],
+      "observation_or_setting_refresh_context": "USER_TRIGGERED_FULL_VERIFIED_V1",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "NOT_SUFFICIENTLY_LOCATED_FOR_TARGET_USE",
+      "prior_project_observation_evidence": "PRIOR_FULL_CAPTURE_AND_PUBLICATION_REPORTED",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "PRIOR_SCOPE_REPORTED_CHECK_LATEST_BATCH",
+      "model_query_api_status": "PRIOR_SQLITE_JSON_REPORTED_SCOPE_ONLY",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G04",
+        "D06-G05"
+      ],
+      "model_query_api_evidence_note": "Prior full_verified_v1 batch and SQLite/JSON publication are reported; querying requires correct save identity, published valid batch, supported fields, and permitted consumer scope.",
+      "query_prerequisites": "CURRENT_BATCH_PERMISSION_BOUND: only valid user-triggered full_verified_v1 published batch / same-save identity / allowed scope may be queried; historical SQLite/JSON access does not prove a new live capture or role-wide access.",
+      "reviewed_old_query_value": "CURRENT_BATCH_PERMISSION_BOUND",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    },
+    {
+      "id": "F40",
+      "theme_zh": "三套时间轴、历史参考和历史重力",
+      "review_priority_for_evidence": "P2",
+      "reference_anchors": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.ERA_MODE_2K23"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.PROJECT_DRAFT_ROTATION"
+        }
+      ],
+      "subject_group": "WORLDLINE",
+      "potential_observers_not_authorized_permissions": [
+        "GM",
+        "COACH_IF_RELEVANT",
+        "PLAYER_SELF",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "observation_or_setting_refresh_context": "HISTORICAL_DRAFT_OR_APPROVED_WORLDLINE_EVENT",
+      "exact_native_refresh_trigger_certified": false,
+      "mechanism_effect_scope": "PRIOR_GAMEPLAY_RESEARCH_ONLY_NO_PROVEN_CAUSAL_FORMULA",
+      "pc22_menu_or_visibility": "TARGET_CURRENT_SAVE_UI_NOT_CERTIFIED_BY_R07",
+      "native_locator_or_static_registration": "SOME_TECHNICAL_EVIDENCE_REPORTED_SCOPE_SPECIFIC",
+      "prior_project_observation_evidence": "EXTERNAL_POLICY_NOT_NATIVE_2K23_ERAS",
+      "current_save_realtime_readback": "NOT_NEWLY_CHECKED_IN_R07",
+      "formal_capture_and_publication": "NOT_PROVEN_FOR_THIS_CAPABILITY",
+      "model_query_api_status": "NOT_CERTIFIED",
+      "existing_execution_scope": "NO_SAFE_GENERAL_NATIVE_WRITE_VERIFIED",
+      "post_save_persistence": "NOT_VERIFIED_FOR_THIS_CAPABILITY_IN_R07",
+      "permission_to_act": "NO_NEW_APPROVAL_FROM_R07",
+      "unknown_and_handoff_gaps": [
+        "D06-G18"
+      ],
+      "model_query_api_evidence_note": "No validated current-save end-to-end data query path was established for this capability in R07.",
+      "world_rule_warning": "ABILITY_CHANGES_FORBIDDEN_EXCEPT_SPECIFIC_APPROVAL: ordinary direct changes to ratings/potential/badges forbidden; historical-gravity exceptions require distinct concrete player approval; 1984–2020 external draft worldline is not a PC22/2K23 Eras native query.",
+      "reviewed_old_query_value": "ABILITY_CHANGES_FORBIDDEN_EXCEPT_SPECIFIC_APPROVAL",
+      "classification_repair": "QUERY_STATUS_SEPARATED_FROM_NON_QUERY_LIMITATION_NO_EVIDENCE_UPGRADE"
+    }
+  ],
+  "existing_production_scope_count": 10,
+  "existing_production_evidence": [
+    {
+      "id": "REAL-01",
+      "scope": "全局模型池与历史新秀",
+      "source_path": "docs/34_BASELINE_CURRENT_STATE.md",
+      "prior_evidence": "historic validated sample 3383 models, 789 historical rookies; not the current save count",
+      "observable": "PROJECT_NATIVE_SOURCE",
+      "capture": "FULL_VERIFIED_V1_SNAPSHOT_REPORTED",
+      "query": "SQLITE_JSON_EXPORT_REPORTED",
+      "write": "NONE_FROM_RESEARCH",
+      "limitations": "OVR/显示年龄及真实新秀完成态不可从数量推断"
+    },
+    {
+      "id": "REAL-02",
+      "scope": "30队阵容与球员合同信息",
+      "source_path": "docs/34_BASELINE_CURRENT_STATE.md",
+      "prior_evidence": "historic sample 466 roster players; identity/position/salary/55 attributes in source summary",
+      "observable": "PROJECT_NATIVE_SOURCE",
+      "capture": "FULL_VERIFIED_V1_SNAPSHOT_REPORTED",
+      "query": "SQLITE_JSON_EXPORT_REPORTED",
+      "write": "NORMAL_PLAYER_RATINGS_WRITE_FORBIDDEN",
+      "limitations": "不能据此自动确定所有114+球员字段均已发布可查；名单实时归属需新批次验证"
+    },
+    {
+      "id": "REAL-03",
+      "scope": "球队与球员赛季累计统计",
+      "source_path": "docs/34_BASELINE_CURRENT_STATE.md",
+      "prior_evidence": "historic sample 30 team records, 389 player stats records; NOT per-game data",
+      "observable": "PROJECT_NATIVE_SOURCE",
+      "capture": "FULL_VERIFIED_V1_SNAPSHOT_REPORTED",
+      "query": "SEASON_AGGREGATES_REPORTED",
+      "write": "NONE",
+      "limitations": "没有可靠完整Game Logs、Box、Shot/历史逐场数据"
+    },
+    {
+      "id": "REAL-04",
+      "scope": "Staff岗位与球队关联",
+      "source_path": "docs/34_BASELINE_CURRENT_STATE.md",
+      "prior_evidence": "historic 1470 slots/1458 named/240 links, source audit, counts are historic",
+      "observable": "PROJECT_NATIVE_SOURCE_WITH_RECIPROCAL_CHECK",
+      "capture": "FULL_VERIFIED_V1_SOURCE_REPORTED",
+      "query": "PUBLISHED_STAFF_JSON_REPORTED",
+      "write": "STAFF_HIRE_FIRE_NOT_VALIDATED",
+      "limitations": "13个研究字段不等于每项已安全可查或可执行"
+    },
+    {
+      "id": "REAL-05",
+      "scope": "简化选秀权资产",
+      "source_path": "docs/34_BASELINE_CURRENT_STATE.md",
+      "prior_evidence": "historic 300 assets over five read years; project V4 removes artificial only-three restriction",
+      "observable": "NATIVE_ASSET_READER_REPORTED",
+      "capture": "FULL_VERIFIED_V1_SOURCE_REPORTED",
+      "query": "PROJECT_PICK_OWNERSHIP_REPORTED",
+      "write": "APPROVED_SIMPLE_PICKS_BOUNDED_V2_WITH_OLD_PLUS3_CODE_GAP",
+      "limitations": "五届可读≠五届可交易，旧+3拒绝未同步；简单资产无保护或swap"
+    },
+    {
+      "id": "REAL-06",
+      "scope": "原生教练战术默认值与对手防守",
+      "source_path": "docs/34_BASELINE_CURRENT_STATE.md",
+      "prior_evidence": "19 coach defaults; subset 14 real writeback evidence; opponent overall defense, production full source refresh reported",
+      "observable": "PROJECT_NATIVE_PROFILE_AND_PARTIAL_REAL_UI_EVIDENCE",
+      "capture": "FULL_VERIFIED_V1_COACH_SOURCE_REPORTED",
+      "query": "COACH_BATCH_QUERY_REPORTED",
+      "write": "SELECTIVE_APPROVED_COACH_SETTINGS_WITH_READBACK",
+      "limitations": "Tempo原生raw含义未知，个人防守不能冒充球队级；五项Sim*只读"
+    },
+    {
+      "id": "REAL-07",
+      "scope": "已批准普通交易执行器",
+      "source_path": "docs/37_APPROVED_TRADE_EXECUTOR.md",
+      "prior_evidence": "CHI/DET human-confirmed success after roster count reconciliation; limited normal-player and simple pick scope",
+      "observable": "PREPARE_RESOLVE_ID_AND_PRECONDITIONS",
+      "capture": "VERIFY_PHASE_SEPARATE_READ_ONLY",
+      "query": "EXECUTION_RECEIPT_NOT_WORLDWIDE_SOURCE",
+      "write": "HUMAN_SPECIFIC_APPROVAL_REQUIRED",
+      "limitations": "不认证签约裁员/复杂依赖/全部后续赛季保存；已执行回执不能重放"
+    },
+    {
+      "id": "REAL-08",
+      "scope": "自由市场竞价模拟与签约写入",
+      "source_path": "docs/38_APPROVED_SIGNING_EXECUTION.md",
+      "prior_evidence": "synthetic planner available; signing executor candidate present with live gate disabled",
+      "observable": "SYNTHETIC_PLANNING_ONLY",
+      "capture": "REAL_OFFSEASON_DATA_NOT_VERIFIED",
+      "query": "NOT_A_VALIDATED_CURRENT_FREE_AGENT_POOL",
+      "write": "REAL_SIGNING_WRITE_DISABLED",
+      "limitations": "不能把模拟同意、报价格式或源码存在当成功签约"
+    },
+    {
+      "id": "REAL-09",
+      "scope": "游戏Save、GameDate、逐场日志、健康历史",
+      "source_path": "docs/development_reviews/DEV29_R06_INDEPENDENT_ACCEPTANCE_20261021.md",
+      "prior_evidence": "R06 evidence gaps accepted as research-only",
+      "observable": "SOME_MENU_REPORTS_AND_STATIC_CANDIDATES",
+      "capture": "NO_R07_CURRENT_SAVE_CAPTURE",
+      "query": "NO_CERTIFIED_COMPLETE_QUERY",
+      "write": "NONE",
+      "limitations": "游戏Save与外部DEV14托管代次、GitHub数据包、SteamCloud各不同"
+    },
+    {
+      "id": "REAL-10",
+      "scope": "完整同批数据更新与网页来源",
+      "source_path": "docs/27_DATA_WINDOW_RUNBOOK.md",
+      "prior_evidence": "run_data_update.ps1 full_verified_v1 only; separate republish of already valid batch",
+      "observable": "PROJECT_READ_PIPELINE",
+      "capture": "PRODUCTION_FULL_VERIFIED_REPORTED",
+      "query": "BATCH_METADATA_SQLITE_JSON_REPORTED",
+      "write": "NO_GAME_MEMORY_WRITE_FROM_CAPTURE",
+      "limitations": "用户单次触发、明确存档身份与日期；不能将旧批次当新游戏状态"
+    }
+  ],
+  "r06d_gap_count": 20,
+  "gaps": [
+    {
+      "id": "D06-G01",
+      "priority": "P0",
+      "topic_zh": "单场Game Logs/Box/Shot与赛季聚合",
+      "domains": "K01_K02",
+      "status": "UNVERIFIED_CURRENT_SAVE_CAPTURE",
+      "evidence_needed": "同GameID、完整逐场双方球员Box/比分/日期/模式；原生页、跨月可读性",
+      "dimension": "GAME_ANALYSIS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G02",
+      "priority": "P0",
+      "topic_zh": "比赛生成路径3D/SimCast/QuickSim",
+      "domains": "K05_K11",
+      "status": "MODE_EFFECT_UNKNOWN",
+      "evidence_needed": "同场模式、controller side、USER/CPU使用侧与GameDate",
+      "dimension": "GAME_ANALYSIS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G03",
+      "priority": "P0",
+      "topic_zh": "Normalize Minutes与Stats两个开关及分数冲突",
+      "domains": "K05_K01",
+      "status": "NATIVE_ENUM_AND_FIELD_MAPPING_UNKNOWN",
+      "evidence_needed": "两开关UI截图、原生身份、保存/重进、同GameID原始Box对照",
+      "dimension": "GAME_ANALYSIS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G04",
+      "priority": "P0",
+      "topic_zh": "原生game_date、赛季phase和外部采集批次关联",
+      "domains": "K11",
+      "status": "GAME_DATE_NATIVE_SOURCE_NOT_VERIFIED",
+      "evidence_needed": "当前存档身份、游戏日历页与只读来源交叉核对",
+      "dimension": "WORLD_TIME",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G05",
+      "priority": "P0",
+      "topic_zh": "Save/Save as/Autosave退出重载持久化",
+      "domains": "K11",
+      "status": "NO_TARGET_SAVE_RELOAD_TEST",
+      "evidence_needed": "获批测试档、保存前后revision及真实reload和GameDate",
+      "dimension": "SAVE_AUTHORITY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G06",
+      "priority": "P0",
+      "topic_zh": "选秀年、实际导入新秀与完成选秀触发",
+      "domains": "K08_K10_K11",
+      "status": "DRAFT_CLASS_CYCLE_AND_NATIVE_IDS_UNVERIFIED",
+      "evidence_needed": "真实选秀结束、年份轮回计数、原生新秀身份与资产读回",
+      "dimension": "WORLD_TIME",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G07",
+      "priority": "P0",
+      "topic_zh": "休赛期各阶段及原生AI签约/合同变动",
+      "domains": "K07_K11",
+      "status": "PC22_PHASE_RUNTIME_UNKNOWN",
+      "evidence_needed": "各页标题/时点、合同前后与原生AI副作用的只读证据",
+      "dimension": "OPERATIONS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G08",
+      "priority": "P0",
+      "topic_zh": "交易资产V4规则和旧+3程序拒绝",
+      "domains": "K07_K08",
+      "status": "KNOWN_POLICY_EXECUTOR_DIVERGENCE",
+      "evidence_needed": "Codex另行获批做代码/测试同步，不改为固定五届；不启动本任务",
+      "dimension": "EXTERNAL_EXECUTION",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G09",
+      "priority": "P1",
+      "topic_zh": "教练默认、对手防守、ACE与Sim效果",
+      "domains": "K04_K05",
+      "status": "ON_COURT_CAUSALITY_UNVERIFIED",
+      "evidence_needed": "真实Coach设置revision、不同比赛路径对照与GameID",
+      "dimension": "COACHING",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G10",
+      "priority": "P1",
+      "topic_zh": "训练疲劳伤病的实际分域数据",
+      "domains": "K06_K05",
+      "status": "NATIVE_HEALTH_AND_EFFECT_UNKNOWN",
+      "evidence_needed": "当日健康状态/伤病事件/生效训练、比赛模式、时间跨度",
+      "dimension": "HEALTH",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G11",
+      "priority": "P1",
+      "topic_zh": "Draft/scouting历史名单与球员身份",
+      "domains": "K08_K10",
+      "status": "PLAYER_DRAFT_ID_MAPPING_UNKNOWN",
+      "evidence_needed": "历史clone验证、Scouting展示名单和已选中人身份、重复同名处理",
+      "dimension": "DRAFT",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G12",
+      "priority": "P1",
+      "topic_zh": "Past MVP/其它奖项历年获奖者",
+      "domains": "K10",
+      "status": "10_CANDIDATE_AWARDS_UNSOURCED",
+      "evidence_needed": "分具体奖项的原生页面或对应官方/同版资料，不能复用SRC-0178",
+      "dimension": "HISTORY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G13",
+      "priority": "P1",
+      "topic_zh": "职业、赛季、季后赛纪录的维度和刷新",
+      "domains": "K10_K11",
+      "status": "PC22_RECORD_UI_AND_RETENTION_UNKNOWN",
+      "evidence_needed": "精确PC22页面、stat category、历史赛季、刷新点",
+      "dimension": "HISTORY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G14",
+      "priority": "P1",
+      "topic_zh": "跨赛季逐场GameLog/Box/交易/选秀/奖项留存",
+      "domains": "K01_K10_K11",
+      "status": "CROSS_SEASON_RETENTION_UNKNOWN",
+      "evidence_needed": "独立测试档前后对比GameID/球员和团队身份/历届记录",
+      "dimension": "SAVE_AUTHORITY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G15",
+      "priority": "P1",
+      "topic_zh": "媒体文本、实力榜与Mock Draft事实性",
+      "domains": "K10",
+      "status": "UNMODDED_PC22_UI_AND_PROVENANCE_UNKNOWN",
+      "evidence_needed": "无Mod UI字段、消息类型、时间、公私域和虚实事实",
+      "dimension": "MEDIA",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G16",
+      "priority": "P1",
+      "topic_zh": "Rule Changes合法选项及何时生效",
+      "domains": "K10_K11",
+      "status": "TARGET_PC22_MENU_AND_VOTE_HISTORY_UNKNOWN",
+      "evidence_needed": "规则提案、投票、生效后UI以及跨季保存，勿套2K20",
+      "dimension": "WORLD_RULES",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G17",
+      "priority": "P1",
+      "topic_zh": "薪资帽空间、Staff预算、合同状态、市场可写性",
+      "domains": "K07_K11",
+      "status": "BUDGET_AND_EXECUTOR_VALIDATION_GAPS",
+      "evidence_needed": "合同/球队工资/员工预算区别，用户允许的真实休赛期验证",
+      "dimension": "FINANCE",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G18",
+      "priority": "P2",
+      "topic_zh": "2K23 Eras与本世界1984轮回对照说明",
+      "domains": "K10",
+      "status": "CROSS_VERSION_REFERENCE_ONLY",
+      "evidence_needed": "仅作时间轴/叙事背景，绝不登记为PC22原生Era菜单",
+      "dimension": "WORLDLINE",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G19",
+      "priority": "P2",
+      "topic_zh": "Save云端与本地文件权限/可靠性",
+      "domains": "K11",
+      "status": "STEAM_CLOUD_NOT_GAME_SAVE_PROOF",
+      "evidence_needed": "只在获批测试档检查Steam云状态，不推断游戏内保存",
+      "dimension": "SAVE_AUTHORITY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G20",
+      "priority": "P1",
+      "topic_zh": "R06-B独立质量复核",
+      "domains": "K10",
+      "status": "REPAIR_SUBMITTED_REVIEW_PENDING",
+      "evidence_needed": "确认10项sources=[]并对其余原料实施按条逐证审核",
+      "dimension": "EVIDENCE_GOVERNANCE",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    }
+  ],
+  "unresolved_r06B_awards": 10,
+  "unresolved_r06C_direct_sources": 7,
+  "game_memory_writes_during_r07": 0,
+  "agent_personality_design": false,
+  "dev28_start_authorized": false,
+  "next": "R07_INDEPENDENT_REVIEW_THEN_HUMAN_TRIGGERED_FINAL_CODEX_READ_ONLY_COVERAGE_AUDIT",
+  "targeted_query_semantics_repair": {
+    "review": "docs/development_reviews/DEV29_R07_INDEPENDENT_REVIEW_20261021.md",
+    "date": "2026-10-21",
+    "affected_ids": [
+      "F21",
+      "F22",
+      "F23",
+      "F26",
+      "F27",
+      "F32",
+      "F39",
+      "F40"
+    ],
+    "old_values_preserved_as": "reviewed_old_query_value",
+    "non_query_limits_preserved_in": [
+      "execution_warning",
+      "data_integrity_warning",
+      "query_prerequisites",
+      "world_rule_warning"
+    ],
+    "assertion": "No additional runtime readback, formal capture, role query entitlement, native write approval, or post-save verification was inferred."
+  }
+}

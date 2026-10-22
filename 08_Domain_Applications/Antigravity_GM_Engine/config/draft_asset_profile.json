@@ -1,0 +1,49 @@
+{
+  "profile_version": 1,
+  "game": "NBA2K22",
+  "record_stride": 32,
+  "directory_pointer_offset": 688,
+  "current_owner_offset": 0,
+  "original_owner_offset": 8,
+  "assigned_player_offset": 16,
+  "metadata_offset": 28,
+  "native_year_offset_bits": [
+    0,
+    3
+  ],
+  "round_bits": [
+    3,
+    5
+  ],
+  "pick_index_bits": [
+    8,
+    8
+  ],
+  "absolute_year_bits": [
+    22,
+    10
+  ],
+  "absolute_year_epoch": 2000,
+  "native_future_year_offset_range": [
+    0,
+    4
+  ],
+  "semantics_evidence": "Local NBA2K22 native named getters and live executable bytes, plus complete year/round/original-team coverage. Not inferred from NBA2K27 metadata.",
+  "code_evidence": [
+    {
+      "name": "DraftData_GetByOriginalTeam_cmp_record_plus_8",
+      "module_rva": 9609964,
+      "expected_hex": "48396808"
+    },
+    {
+      "name": "DraftData_GetByPickTeamAndIndex_cmp_record_plus_0",
+      "module_rva": 9610455,
+      "expected_hex": "4c3923"
+    },
+    {
+      "name": "ROSTERDATA_GetDraftDataByIndex_count_stride_pointer",
+      "module_rva": 15976797,
+      "expected_hex": "3b98a0020000731448c1e305480398a8020000"
+    }
+  ]
+}

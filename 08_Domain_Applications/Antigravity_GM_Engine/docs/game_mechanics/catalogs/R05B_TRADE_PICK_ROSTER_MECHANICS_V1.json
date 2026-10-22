@@ -1,0 +1,638 @@
+{
+  "schema_id": "DEV29_R05B_TRADE_PICK_ROSTER_MECHANICS_V1",
+  "date": "2026-10-21",
+  "status": "R05B_PUBLISHED_HISTORICAL_RESEARCH_WITH_20261021_POLICY_AMENDMENT",
+  "scope": "GAME_FACTS_ACTIONS_MECHANICS_PROVENANCE_ONLY",
+  "target": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "no_agent_design": true,
+  "no_game_execution": true,
+  "source_evidence_levels": [
+    "REAL_2017_CBA_2021_22_REFERENCE",
+    "2K22_COMMUNITY_CURRENTGEN_PC",
+    "2K22_FRANCHISE_GUIDE_CROSSGEN",
+    "OLDER_MODE_OR_2K23_NEARBY",
+    "PROJECT_NATIVE_CODE_AND_LIVE_ACCEPTED",
+    "PROJECT_GAME_POLICY",
+    "PC22_MENU_UNKNOWN"
+  ],
+  "native_trade_menu_research_options": [
+    {
+      "display_label": "Trade Logic",
+      "mechanic_kind": "TRADE_AI_VALIDITY",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_EFFECT_UNVERIFIED",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Trade Negotiation Difficulty",
+      "mechanic_kind": "CPU_TRADE_RESPONSE_DIFFICULTY",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "NUMERIC_SLIDER_VALUE_UNVERIFIED",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_VALUE_RANGE_UNVERIFIED",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Financial Trade Rules",
+      "mechanic_kind": "NATIVE_TRADE_SALARY_RULE_FILTER",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_SALARY_MATCH_IMPLEMENTATION_UNKNOWN",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Recently Signed Restrictions",
+      "mechanic_kind": "NEW_CONTRACT_WAIT_FOR_TRADE",
+      "public_evidence": "2K22_FRANCHISE_GUIDE_2022_CURRENTGEN_REPORT",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_DATE_BUG_REPORTED_NOT_REPRODUCED",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Recently Traded Restrictions",
+      "mechanic_kind": "RETRADE_OR_SALARY_AGGREGATION_RESTRICTION",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_TIMER_UNKNOWN",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Rookie Signing Restrictions",
+      "mechanic_kind": "ROOKIE_TRANSACTION_RESTRICTION",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_TRIGGER_UNKNOWN",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Trade Deadline",
+      "mechanic_kind": "TRADE_WINDOW_CLOSURE",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_NATIVE_DATE_SOURCE_UNKNOWN",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Stepien Rule",
+      "mechanic_kind": "FUTURE_FIRST_ROUND_CONSECUTIVE_RESTRICTION",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_NATIVE_RULE_CURRENT_VALUE_UNKNOWN",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Trade Override",
+      "mechanic_kind": "FORCE_TRADE_IN_NATIVE_UI",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "NOT_EXTERNAL_HUMAN_APPROVAL",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "CPU Trade Offers",
+      "mechanic_kind": "CPU_INITIATES_OFFERS_TO_USER",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "CURRENT_NATIVE_VALUE_UNOBSERVED",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "CPU-CPU Trades",
+      "mechanic_kind": "CPU_TEAMS_AUTONOMOUS_TRADES",
+      "public_evidence": "2K22_FRANCHISE_GUIDE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PROJECT_POLICY_VS_ACTUAL_GAME_SLIDER_SEPARATE",
+      "source_ids": [
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Trade Finder",
+      "mechanic_kind": "PLAYER_PICK_SEARCH_FOR_OFFERS",
+      "public_evidence": "OLD_SERIES_WIKI_2K22_COMMUNITY",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_MENU_EXACT_INPUTS_UNKNOWN",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Trade Block",
+      "mechanic_kind": "AVAILABLE_ASSETS_AND_MARKET_LIST",
+      "public_evidence": "2K22_SERIES_REFERENCE",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_ITEM_SET_UNKNOWN",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Propose Trade",
+      "mechanic_kind": "SELECT_PLAYERS_OR_PICKS_AND_MAKE_OFFER",
+      "public_evidence": "OLD_SERIES_WIKI_CURRENTGEN_COMMUNITY",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_MENU_AND_THREE_TEAM_LIMIT_UNKNOWN",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Player Finder",
+      "mechanic_kind": "SEARCH_FOR_PLAYER_TO_TRADE",
+      "public_evidence": "OLD_SERIES_WIKI",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "PC22_MENU_EXACT_FILTERS_UNKNOWN",
+      "source_ids": [
+        "SRC-0140",
+        "SRC-0131"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    },
+    {
+      "display_label": "Three-Team Trade",
+      "mechanic_kind": "MULTI_PARTY_AGGREGATION",
+      "public_evidence": "PC_2K22_COMMUNITY_COMMENT",
+      "pc22_game_menu_directly_verified": false,
+      "game_current_setting": null,
+      "possible_value_type": "BOOLEAN_OR_MENU_ACTION",
+      "exact_pc22_legal_range": null,
+      "engine_effect_status": "TRADE_EXECUTOR_DOES_NOT_IMPLEMENT_ARBITRARY_THREE_TEAM",
+      "source_ids": [
+        "SRC-0132"
+      ],
+      "allowed_in_native_exec_now": false,
+      "reference_is_not_permission": true
+    }
+  ],
+  "trade_menu_count": 16,
+  "historic_cba_salary_matching_reference": [
+    {
+      "id": "NON_TAX_0_TO_6533333",
+      "tax_status": "NON_TAX_POST_TRADE",
+      "min_outgoing": 0,
+      "max_outgoing": 6533333,
+      "formula": "1.75 * outgoing + 100000",
+      "source_id": "SRC-0129",
+      "status": "REAL_2017_CBA_REFERENCE_NOT_PC22_RULE_VALIDATION",
+      "details": "Boundary and applicability require exact CBA and game status; no trade authorization"
+    },
+    {
+      "id": "NON_TAX_6533334_TO_19600000",
+      "tax_status": "NON_TAX_POST_TRADE",
+      "min_outgoing": 6533334,
+      "max_outgoing": 19600000,
+      "formula": "outgoing + 5000000",
+      "source_id": "SRC-0129",
+      "status": "REAL_2017_CBA_REFERENCE_NOT_PC22_RULE_VALIDATION",
+      "details": "Boundary and applicability require exact CBA and game status; no trade authorization"
+    },
+    {
+      "id": "NON_TAX_ABOVE_19600000",
+      "tax_status": "NON_TAX_POST_TRADE",
+      "min_outgoing": 19600000,
+      "max_outgoing": null,
+      "formula": "1.25 * outgoing + 100000",
+      "source_id": "SRC-0129",
+      "status": "REAL_2017_CBA_REFERENCE_NOT_PC22_RULE_VALIDATION",
+      "details": "Boundary and applicability require exact CBA and game status; no trade authorization"
+    },
+    {
+      "id": "TAX_ANY",
+      "tax_status": "TAX_POST_TRADE",
+      "min_outgoing": 0,
+      "max_outgoing": null,
+      "formula": "1.25 * outgoing + 100000",
+      "source_id": "SRC-0129",
+      "status": "REAL_2017_CBA_REFERENCE_NOT_PC22_RULE_VALIDATION",
+      "details": "Boundary and applicability require exact CBA and game status; no trade authorization"
+    }
+  ],
+  "roster_native_layout": [
+    {
+      "key": "TEAM.roster.regular_ptr_array",
+      "offset_hex": "0x00",
+      "storage": "15 * uint64",
+      "capacity": 15,
+      "source": "config/roster_association_profile.json",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.regular_count",
+      "offset_hex": "0xCB1",
+      "storage": "uint8",
+      "capacity": 15,
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.two_way_ptrs",
+      "offset_hex": "0xA8 and 0xB0",
+      "storage": "2 * uint64",
+      "capacity": 2,
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.two_way_count",
+      "offset_hex": "0x1047 low 2 bits",
+      "storage": "2bit",
+      "capacity": 2,
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.active_ptr_array",
+      "offset_hex": "0xD0",
+      "storage": "13 * uint64",
+      "capacity": 13,
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.active_count",
+      "offset_hex": "0x1047 high 4 bits",
+      "storage": "4bit",
+      "capacity": 13,
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.reserved",
+      "offset_hex": "0x78..0xA7",
+      "storage": "6 * uint64",
+      "capacity": 0,
+      "warning": "NOT_EXTRA_REGULAR_SLOTS",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "TEAM.roster.other_lineup_refs",
+      "offset_hex": "0xD28..0xE67",
+      "storage": "40 * uint64",
+      "warning": "ONLY_SAFE_BOUNDED_MAPPING_IMPLEMENTED",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "PLAYER.current_team_ptr",
+      "offset_hex": "0x60",
+      "storage": "uint64",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "PLAYER.contract_team_ptr",
+      "offset_hex": "0xA8",
+      "storage": "uint64",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "DRAFT_ASSET.current_owner_ptr",
+      "offset_hex": "0x00",
+      "storage": "uint64",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "DRAFT_ASSET.original_owner_ptr",
+      "offset_hex": "0x08",
+      "storage": "uint64",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "DRAFT_ASSET.assigned_player_ptr",
+      "offset_hex": "0x10",
+      "storage": "uint64",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    },
+    {
+      "key": "DRAFT_ASSET.metadata",
+      "offset_hex": "0x1C",
+      "storage": "uint32",
+      "source_ids": [
+        "PROJECT_DOC_37",
+        "PROJECT_PROFILE_ASSOCIATION",
+        "PROJECT_DRAFT_ASSET_PROFILE"
+      ],
+      "provenance_level": "PROJECT_LIVE_NATIVE_EVIDENCE_OR_PROFILE",
+      "current_value": null,
+      "real_write_now": "ONLY_IN_EXISTING_BOUNDED_TRADE_EXECUTOR_AFTER_SPECIFIC_HUMAN_APPROVAL",
+      "no_blind_writes": true
+    }
+  ],
+  "draft_native_profile": {
+    "profile_path": "config/draft_asset_profile.json",
+    "stride": 32,
+    "metadata_offset": 28,
+    "record_current_owner": 0,
+    "record_original_owner": 8,
+    "record_assigned_player": 16,
+    "native_year_offset_bits": [
+      0,
+      3
+    ],
+    "native_year_offset_range": [
+      0,
+      4
+    ],
+    "round_bits": [
+      3,
+      5
+    ],
+    "pick_index_bits": [
+      8,
+      8
+    ],
+    "absolute_year_bits": [
+      22,
+      10
+    ],
+    "base": 2000,
+    "verified_horizon": 5,
+    "original_teams": 30,
+    "round_count": 2,
+    "expected_total_future_picks": 300,
+    "game_date_source": "VERIFIED_BATCH_OR_USER_CONFIRMED_NOT_RESEARCH_INFERRED",
+    "current_actual_next_draft_year": null,
+    "identity": [
+      "year",
+      "round",
+      "original_team",
+      "current_owner"
+    ],
+    "source": [
+      "config/draft_asset_profile.json",
+      "src/draft_assets.py"
+    ]
+  },
+  "world_pick_trade_policy": {
+    "status": "PLAYER_CONFIRMED_UPDATED_20261021",
+    "asset_type": "SIMPLE_YEAR_ROUND_ORIGINAL_TEAM_CURRENT_OWNER",
+    "protection_conditions": "NOT_USED",
+    "swap_rights": "NOT_USED",
+    "maximum_future_drafts": null,
+    "window": "NO_ADDITIONAL_WORLD_RULE_YEAR_LIMIT__REQUIRE_VERIFIED_NATIVE_ASSET_AND_EXECUTOR_SUPPORT",
+    "year_source": "VERIFIED_NEXT_DRAFT_YEAR_FROM_CURRENT_BATCH",
+    "ownership_source": "VERIFIED_CURRENT_BATCH_MEMORY_RECORDS",
+    "game_writes": "SEPARATE_SPECIFIC_PLAYER_APPROVAL_REQUIRED",
+    "known_native_read_horizon_drafts": 5,
+    "known_native_read_horizon_is_world_rule_cap": false,
+    "game_trade_legality": "DEPENDENT_ON_VERIFIED_ACTUAL_GAME_RULES_AND_EXECUTOR_CAPABILITY",
+    "legacy_three_year_code_status": "PENDING_CODEX_ALIGNMENT_NOT_EXECUTABLE_FOR_4TH_5TH_DRAFT_UNTIL_VALIDATED",
+    "policy_change_note": "Removed former NEXT_THREE artificial trade cap at explicit player request 2026-10-21; not replaced by a fixed five-year world-rule cap; SIMPLE picks/no swaps/no protections/human approval unchanged.",
+    "rules_source": "config/gameplay_policy.json",
+    "policy_id": "PLAYER_RULES_20261021_V4",
+    "old_three_year_policy": "SUPERSEDED_20261021",
+    "example_if_next_game_draft_is_2022": null,
+    "explicit_not_equivalent": "NATIVE_5_YEAR_DATA_READ_COVERAGE_IS_NOT_NEW_WORLD_RULE_TRADE_CAP",
+    "historic_class_label_is_not_game_year": true,
+    "technical_runtime_remains_3": "PENDING_CODEX_ALIGNMENT"
+  },
+  "supported_executor": {
+    "version": "ownership_transfer_v2",
+    "entrypoint": "scripts/execute_approved_trades.py",
+    "phases": [
+      "plan",
+      "execute",
+      "verify"
+    ],
+    "success_evidence": "CHI/DET UI player acceptance, live 30team consistency; DAL/HOU memory restart observations",
+    "approved_action_scopes": [
+      "REGULAR_ROSTER_PLAYER_TRANSFER_BOUNDED",
+      "SIMPLE_FUTURE_PICK_CURRENT_OWNER_TRANSFER_BOUNDED"
+    ],
+    "unsupported_actions": [
+      "COMPLEX_THREE_TEAM_ARBITRARY",
+      "CONTIGUOUS_SAME_TEAM_CHAIN",
+      "TWO_WAY_PLAYER_TRANSFER",
+      "SIGN_AND_TRADE",
+      "WAIVE_AND_SIGN",
+      "AD_HOC_EXTRA_ROSTER_CLEANUP",
+      "UNVERIFIED_TPE_OR_CAP_EXCEPTION_WRITE"
+    ],
+    "financial_legality": "NOT_A_COMPLETE_CBA_ENGINE",
+    "save_persistence": "SPECIFIC_REPAIR_SAVE_RELOAD_PENDING",
+    "requires_specific_human_approval": true,
+    "does_not_write": [
+      "player_ability",
+      "badge",
+      "potential",
+      "salary",
+      "finance",
+      "training",
+      "tendencies"
+    ]
+  },
+  "game_menu_persistence_status": "NOT_CERTIFIED_PC22",
+  "next_research": "R05-C STAFF_SCOUT_DRAFT_FRANCHISE_RESOURCES",
+  "sources": [
+    "SRC-0129..SRC-0144",
+    "docs/37_APPROVED_TRADE_EXECUTOR.md",
+    "config/gameplay_policy.json"
+  ],
+  "policy_supersession_note": "Previously recorded three future drafts as a valid 2026-10-17 old policy, superseded 2026-10-21. The user removed that cap; exact current executable horizon STILL three until separately approved code work upgrades trade_window.",
+  "technical_implementation_gap": {
+    "files": [
+      "src/draft_assets.py: trade_window()",
+      "src/gm_core/calculations.py: draft_pick_window()",
+      "src/gm_core/trades.py: DRAFT_PICK_OUTSIDE_THREE_YEAR_WINDOW",
+      "src/approved_trade_executor.py: trade_window(state['next_draft_year'])"
+    ],
+    "work_owner": "CODEX_SEPARATELY_AUTHORIZED_NOT_DEV29",
+    "current_effect": "FOURTH_AND_FIFTH_ASSET_STILL_REJECTED_BY_RUNTIME",
+    "new_cap_policy": "NO_FIXED_WORLD_CAP",
+    "future_year_coverage": "ONLY_IF_VERIFIED_GAME_SOURCE_AND_IMPLEMENTED_EXECUTOR_SUPPORT"
+  }
+}

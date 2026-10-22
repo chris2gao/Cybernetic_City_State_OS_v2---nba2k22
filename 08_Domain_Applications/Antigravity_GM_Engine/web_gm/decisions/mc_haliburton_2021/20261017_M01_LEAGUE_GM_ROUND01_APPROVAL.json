@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "record_type": "GM_DECISION_PLAYER_APPROVAL",
+  "approval_record_id": "GM-20261017-M01-R01-APPROVAL-01",
+  "decision_id": "GM-20261017-M01-R01",
+  "decision_version": 1,
+  "career_id": "mc_haliburton_2021",
+  "source_batch_id": "2021-2022_M01_SIMPLE_PICKS_V1_88101a36a3e3_fbde28d7_TS2",
+  "policy_id": "PLAYER_RULES_20261017_V3",
+  "record_date": "2026-10-17",
+  "approval_time_exact": "UNKNOWN",
+  "authorization_evidence": {
+    "type": "PLAYER_EXPLICIT_CHAT_MESSAGE",
+    "message_reference": "CURRENT_CONVERSATION_USER_APPROVAL",
+    "text": "我批准 GM-20261017-M01-R01 v1 中以下动作：GM-A01、GM-A02、GM-A03、GM-A04、GM-A05、GM-A06、GM-A07。批准仅限各动作描述的战略、分析或非约束询价范围，不授权游戏写入。",
+    "user_authorized": true
+  },
+  "approval_category": "STRATEGY_RESEARCH_NONBINDING_INQUIRY_ONLY",
+  "approval_scope_strict": true,
+  "approved_actions": [
+    {
+      "action_id": "GM-A01",
+      "description": "30 支球队 v1 经营方向作为后续规划基准",
+      "status": "APPROVED_STRATEGY_ONLY",
+      "restrictions": "保留短样本和数据缺口警告；非不可逆球队战略或执行修改"
+    },
+    {
+      "action_id": "GM-A02",
+      "description": "保护国王 Tyrese Haliburton 以及当前强势争冠核心",
+      "status": "APPROVED_ASSET_PROTECTION",
+      "restrictions": "SAC 两条类似名称记录必须区分；保护策略不能等同于游戏设置已锁定"
+    },
+    {
+      "action_id": "GM-A03",
+      "description": "核对 UTA 出场样本、SAC 同名对象及异常 cash",
+      "status": "APPROVED_RESEARCH_NOT_COMPLETED",
+      "restrictions": "分析基线或数据采集基线按需由玩家触发；不得擅改已发布事实"
+    },
+    {
+      "action_id": "GM-A04",
+      "description": "研究 GSW / UTA / DAL / CHI / IND 战术、角色、轮换",
+      "status": "APPROVED_STUDY_NOT_EXECUTION",
+      "restrictions": "没有批准具体 POE 枚举写入、轮换数据写入或换帅"
+    },
+    {
+      "action_id": "GM-A05",
+      "description": "对 MKT-01 CHI↔DET 与 MKT-02 CHA↔IND 进行非约束询价/研究",
+      "status": "APPROVED_INQUIRY_ONLY",
+      "restrictions": "没有交易成交批准，交易球员及签位、合同不转移；双方报价/匹配仍需认证"
+    },
+    {
+      "action_id": "GM-A06",
+      "description": "制定制服组、伤病、轮换、票务和交易合法性的数据/开发需求",
+      "status": "APPROVED_RESEARCH_REQUEST",
+      "restrictions": "缺失字段仍 UNKNOWN；不得扩大到自动工程开发或现实游戏写入"
+    },
+    {
+      "action_id": "GM-A07",
+      "description": "持续禁止普通球员属性编辑，本轮不启动历史重力或历史新秀注入",
+      "status": "APPROVED_HOLD",
+      "restrictions": "不授予任何属性/潜力/徽章/人物修改权限，MC 故事继续关闭"
+    }
+  ],
+  "not_authorized": [
+    "game_process_memory_writes",
+    "trades",
+    "player_team_id_changes",
+    "contract_salary_changes",
+    "draft_pick_transfers",
+    "staff_changes",
+    "ticket_price_changes",
+    "tactical_field_writes",
+    "rotation_writes",
+    "player_attribute_edits",
+    "historical_gravity_edits",
+    "rookie_slot_injection",
+    "automatic_data_capture",
+    "automatic_codex_execution"
+  ],
+  "market_inquiries": [
+    {
+      "market_id": "MKT-01",
+      "teams": [
+        "CHI",
+        "DET"
+      ],
+      "status": "PLAYER_APPROVED_INQUIRY_ONLY",
+      "transaction_approved": false,
+      "legality": "UNKNOWN",
+      "technical_execution": "NOT_VALIDATED"
+    },
+    {
+      "market_id": "MKT-02",
+      "teams": [
+        "CHA",
+        "IND"
+      ],
+      "status": "PLAYER_APPROVED_INQUIRY_ONLY",
+      "transaction_approved": false,
+      "legality": "UNKNOWN",
+      "technical_execution": "NOT_VALIDATED"
+    }
+  ],
+  "approvals_complete": 7,
+  "game_writes_approved": false,
+  "game_execution_performed": false,
+  "game_database_facts_modified": false,
+  "original_proposal_path": "web_gm/decisions/mc_haliburton_2021/20261017_M01_LEAGUE_GM_ROUND01_PROPOSED.md",
+  "next_tasks": [
+    {
+      "priority": "P0",
+      "owner": "WEB_GPT_ANALYTICS_OR_CODEX_DATA_ON_SEPARATE_PLAYER_TRIGGER",
+      "work": "Verify UTA games played cause unknown; SAC player identity duplicate; cash anomalies, separate observations and conjectures."
+    },
+    {
+      "priority": "P1",
+      "owner": "WEB_GPT_GM",
+      "work": "Evaluate GSW/UTA/DAL/CHI/IND tactical and roster structure, propose effective changes but not write fields."
+    },
+    {
+      "priority": "P1",
+      "owner": "WEB_GPT_GM_WITH_ANALYTICS",
+      "work": "Assess two bilateral inquiry proposals with real asset IDs, credible alternatives, valuation, salaries and explicit legality uncertainty."
+    },
+    {
+      "priority": "P2",
+      "owner": "WEB_GPT_DEVELOPMENT_OR_ANALYTICS_ON_SEPARATE_PLAYER_TRIGGER",
+      "work": "Plan missing certified staff, health, rotation, ticket-income periods and CBA validation."
+    },
+    {
+      "priority": "NEXT_GM_GATE",
+      "owner": "PLAYER",
+      "work": "Approve new specific plan/version before Codex execution; revalidate save and batch."
+    }
+  ]
+}

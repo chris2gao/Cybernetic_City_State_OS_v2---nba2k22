@@ -1,0 +1,310 @@
+{
+  "schema_id": "DEV29_K06_TRAINING_ROLE_INPUTS_RESEARCH_V1",
+  "format": "READ_ONLY_RESEARCH_INDEX",
+  "research_batch": "R03-A",
+  "research_status": "PUBLISHED_WITH_OPEN_ITEMS",
+  "target_game": "NBA2K22",
+  "target_platform": "PC_CURRENT_GEN",
+  "target_mode": "OFFLINE_MYLEAGUE",
+  "role_autonomy": "ALLOW_HOLD_NEGOTIATE_REFUSE_TAKE_RISK_NO_MANDATED_OPTIMUM",
+  "role_state_privacy": "beliefs_goals_promises_are_external_not_native",
+  "native_write_requirements": "HUMAN_APPROVAL_AND_SAME_BATCH_IDENTITY_AND_LEGAL_EXECUTOR",
+  "player_ability_potential_badge_policy": "NO_ORDINARY_DIRECT_EDITS",
+  "data_status": "REGISTRY_FIELD_EXISTENCE_NE_NATIVE_VALUE_CAPTURED",
+  "external_repurposing": "NEVER_WITHOUT_SEPARATE_EVIDENCE_AND_APPROVAL",
+  "training_enums_provenance": "config/state_io_native/training.json",
+  "live_health_status": "CURRENT_FATIGUE_INJURY_NOT_CERTIFIED",
+  "official_image_ids": [
+    "VIS-0009",
+    "VIS-0010"
+  ],
+  "source_range": "SRC-0049..0059",
+  "capabilities": [
+    {
+      "id": "K06.TEAM_TRAINING_INTENSITY",
+      "native_fields": [
+        "training.team.home_intensity",
+        "training.team.away_intensity"
+      ],
+      "raw_domain": {
+        "min": 0,
+        "max": 5,
+        "enum_ref": "config/state_io_native/training.json#/enums/intensities"
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_NOT_CURRENT_CAPTURE",
+      "observable_roles": [
+        "COACH",
+        "GM"
+      ],
+      "candidate_role_actions": [
+        "MAINTAIN",
+        "PROPOSE_HOME_AWAY_INTENSITY",
+        "COUNTER_TRAINING_LOAD",
+        "REJECT"
+      ],
+      "engine_effect_status": "DIRECTIONAL_NOT_QUANTIFIED",
+      "feedback": [
+        "effective_training_value_if_reconciled",
+        "real_game_fatigue_if_future_captured"
+      ]
+    },
+    {
+      "id": "K06.TEAM_TRAINING_AUTOMATION",
+      "native_fields": [
+        "training.team.automate_intensity"
+      ],
+      "raw_domain": {
+        "min": 0,
+        "max": 1
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_NOT_CURRENT_CAPTURE",
+      "observable_roles": [
+        "COACH",
+        "GM"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_AUTO_MANAGEMENT",
+        "KEEP_MANUAL",
+        "QUESTION_OVERRIDE"
+      ],
+      "engine_effect_status": "AUTO_CONFIGURATION_KNOWN_RUNTIME_PRIORITY_UNKNOWN",
+      "feedback": [
+        "effective_team_setting_if_reconciled"
+      ]
+    },
+    {
+      "id": "K06.B2B_REST",
+      "native_fields": [
+        "training.team.rest_before_b2b",
+        "training.team.rest_after_b2b"
+      ],
+      "raw_domain": {
+        "min": 0,
+        "max": 1
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_NOT_CURRENT_CAPTURE",
+      "observable_roles": [
+        "COACH",
+        "GM",
+        "PLAYER_IF_POLICY_DISCLOSED"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_REST_BEFORE_B2B",
+        "REQUEST_REST_AFTER_B2B",
+        "ACCEPT_SCHEDULED_PRACTICE",
+        "PROPOSE_ALTERNATIVE"
+      ],
+      "engine_effect_status": "TRIGGER_SCHEDULE_UNKNOWN",
+      "feedback": [
+        "real_schedule_and_minutes_if_captured",
+        "availability_if_captured"
+      ]
+    },
+    {
+      "id": "K06.TEAM_INJURY_RECOVERY",
+      "native_fields": [
+        "training.team.injury_recovery"
+      ],
+      "raw_domain": {
+        "min": 0,
+        "max": 1
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_NOT_CURRENT_CAPTURE",
+      "observable_roles": [
+        "COACH",
+        "GM",
+        "PLAYER_IF_DISCLOSED"
+      ],
+      "candidate_role_actions": [
+        "PROPOSE_REHAB_FOCUS",
+        "REQUEST_INJURY_REVIEW",
+        "HOLD_UNKNOWN"
+      ],
+      "engine_effect_status": "RECOVERY_DURATION_NOT_QUANTIFIED",
+      "feedback": [
+        "actual_game_injury_status_if_captured"
+      ]
+    },
+    {
+      "id": "K06.PLAYER_FOCUS",
+      "native_fields": [
+        "training.player.position",
+        "training.player.player_type"
+      ],
+      "raw_domain": {
+        "position": {
+          "min": 0,
+          "max": 5
+        },
+        "type": {
+          "min": 0,
+          "max": 8
+        },
+        "native_type_ref": "config/state_io_native/training.json#/enums/player_types"
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_PLUS_PLAYER_REPORTED_UI_POSITION_SPECIFIC_MAPPING_UNKNOWN",
+      "observable_roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_OUTSIDE_TRAINING",
+        "REQUEST_DEFENSIVE_TRAINING",
+        "KEEP_CURRENT_FOCUS",
+        "REJECT_COACH_FOCUS",
+        "NEGOTIATE_OTHER_FOCUS"
+      ],
+      "engine_effect_status": "EXACT_SKILL_GAIN_AND_TEMPLATE_COMPATIBILITY_UNKNOWN",
+      "feedback": [
+        "ability_diff_only_if_game_measured",
+        "injury_and_fatigue_if_measured"
+      ]
+    },
+    {
+      "id": "K06.PLAYER_INTENSITY_OVERRIDE",
+      "native_fields": [
+        "training.player.intensity",
+        "training.player.is_intensity_overriden"
+      ],
+      "raw_domain": {
+        "intensity": {
+          "min": 0,
+          "max": 5
+        },
+        "override": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_NOT_CURRENT_CAPTURE",
+      "observable_roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_MORE_TRAINING",
+        "REQUEST_REST",
+        "COUNTER_TEAM_INTENSITY",
+        "REFUSE_OVERLOAD"
+      ],
+      "engine_effect_status": "OVERRIDE_PRECEDENCE_UNKNOWN",
+      "feedback": [
+        "actual_player_intensity_if_reconciled",
+        "fatigue_if_verified"
+      ]
+    },
+    {
+      "id": "K06.PLAYER_INJURY_RECOVERY",
+      "native_fields": [
+        "training.player.injury_recovery"
+      ],
+      "raw_domain": {
+        "min": 0,
+        "max": 1
+      },
+      "source_evidence": "PROJECT_REGISTRY_DEFINED_NOT_CURRENT_CAPTURE",
+      "observable_roles": [
+        "PLAYER",
+        "COACH",
+        "GM"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_REHABILITATION",
+        "REQUEST_PLAY_THROUGH_RISK_REVIEW",
+        "REFUSE_HARD_TRAINING"
+      ],
+      "engine_effect_status": "RECOVERY_AND_ELIGIBILITY_UNKNOWN",
+      "feedback": [
+        "injury_days_remaining_if_real_source"
+      ]
+    },
+    {
+      "id": "K06.PROGRESSIVE_FATIGUE_HISTORY",
+      "native_fields": [
+        "player_training.progressive_fatigue_history"
+      ],
+      "raw_domain": null,
+      "source_evidence": "PROJECT_STATIC_LAYOUT_ONLY_NOT_REGISTRY_LIVE_CURRENT_VALUE",
+      "observable_roles": [
+        "PLAYER_IF_AVAILABLE",
+        "COACH_IF_AVAILABLE",
+        "GM_IF_AVAILABLE"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_CURRENT_HEALTH_DATA",
+        "HOLD_FATIGUE_DECISION"
+      ],
+      "engine_effect_status": "HISTORY_ENCODING_UNIT_AND_CURRENT_READING_UNKNOWN",
+      "feedback": [
+        "no_valid_current_health_feedback_yet"
+      ]
+    },
+    {
+      "id": "K06.MENTORSHIP",
+      "native_fields": [
+        "mentorship_manager.relations_array",
+        "mentorship_manager.badges_array"
+      ],
+      "raw_domain": null,
+      "source_evidence": "PROJECT_DISCOVERED_LAYOUT_REGISTRY_READONLY_ADAPTER_PENDING",
+      "observable_roles": [
+        "PLAYER_IF_DISCLOSED",
+        "COACH",
+        "GM"
+      ],
+      "candidate_role_actions": [
+        "REQUEST_MENTOR",
+        "DECLINE_MENTOR",
+        "PROPOSE_ROLE_MODEL"
+      ],
+      "engine_effect_status": "RELATIONSHIP_VALIDITY_AND_BADGE_PROGRESS_NOT_CAPTURED",
+      "feedback": [
+        "badge_change_only_from_real_game_snapshots"
+      ]
+    },
+    {
+      "id": "K06.GAME_NATURAL_GROWTH",
+      "native_fields": [],
+      "raw_domain": null,
+      "source_evidence": "GAME_ENGINE_AUTHORITY_R01_GAMELOGS_PC22_UI_GAPS",
+      "observable_roles": [
+        "PLAYER_OWN_AND_PUBLIC",
+        "COACH_IF_VISIBLE",
+        "GM_IF_COVERED",
+        "MEDIA_PUBLIC_ONLY"
+      ],
+      "candidate_role_actions": [
+        "REINTERPRET_PROGRESS",
+        "MAINTAIN_PLAN",
+        "REQUEST_DIFFERENT_PLAN",
+        "PUBLIC_CRITIQUE"
+      ],
+      "engine_effect_status": "GAME_NATIVE_NATURAL_GROWTH_ONLY_NO_DIRECT_ABILITY_EDITS",
+      "feedback": [
+        "real_attribute_diff_only_if_comparable_snapshots",
+        "real_injury_and_games_if_available"
+      ]
+    },
+    {
+      "id": "K06.PREP_HUB_NEXTGEN_ANALOGUE",
+      "native_fields": [],
+      "raw_domain": null,
+      "source_evidence": "OFFICIAL_NBA2K22_PS5_XBOX_SERIES_MYNBA_ONLY",
+      "observable_roles": [
+        "COACH_CONCEPT",
+        "PLAYER_CONCEPT",
+        "GM_CONCEPT"
+      ],
+      "candidate_role_actions": [
+        "DISCUSS_LOAD_MANAGEMENT",
+        "PROPOSE_SMART_LOW_STRESS_PRACTICE"
+      ],
+      "engine_effect_status": "NOT_CONFIRMED_AS_PC22_CURRENT_GEN_FEATURE",
+      "feedback": [
+        "NO_PC22_NATIVE_FEEDBACK"
+      ]
+    }
+  ]
+}

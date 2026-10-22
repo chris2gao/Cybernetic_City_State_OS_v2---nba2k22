@@ -1,0 +1,142 @@
+{
+  "schema_version": 2,
+  "capture_profile": "full_verified_v1",
+  "trigger_mode": "PLAYER_INITIATED_ONLY",
+  "game_calendar_detection": "NOT_OBSERVED_USER_DATE_OR_EXPLICIT_CURRENT_DATE_UNKNOWN",
+  "career_identity_detection": "NOT_IMPLEMENTED_EXPLICIT_SAVE_ID_REQUIRED",
+  "player_confirmed_scope": {
+    "contract_requirement": "CURRENT_ROSTER_PLAYER_SALARIES_ONLY",
+    "contract_scope_confirmed_at": "2026-10-17",
+    "excluded_contract_work": [
+      "guaranteed_amounts",
+      "dead_cap",
+      "exceptions",
+      "cap_holds",
+      "complete_real_world_CBA_ledger"
+    ],
+    "previously_observed_contract_clauses": "May remain as observations; not required for completion of the salary capture task.",
+    "age_requirement": "Prefer the in-game age field; date-derived age is not a substitute for observed in-game age. Unresolved fields may remain explicit gaps."
+  },
+  "field_notes": {
+    "team_monthly_stats.monthly_gate_revenue": "Direct offset value; the revenue aggregation window has not been independently established. The legacy column name does not prove it is monthly revenue.",
+    "season_rules": "Configured and versioned rules, not observations of an in-game CBA ledger.",
+    "monthly_snapshot": "A capture label is not evidence that game results for a month were acquired. Game date comes from the player's explicit trigger.",
+    "player_age": "Observed birth date; exact age is calculated only with a player-confirmed game date. Unknown date leaves age NULL.",
+    "season_statistics": "Current indexed season totals from roster descriptors; per-game and shooting percentages are deterministic Python calculations, not monthly observations.",
+    "overall_rating": "NOT_OBSERVED. Player reported MC Haliburton displays locked 60 and Curry 96; these samples are discovery clues, not a complete memory data source.",
+    "contract_ledger": "Player requirement is current-roster salaries only, already captured. Six 31-bit salary fields and previously decoded clauses remain available; guarantees, dead cap, exceptions, cap holds and a complete real-world CBA ledger are outside the current requested scope.",
+    "staff_identity": "Capture-local staff slot and reciprocal team-role links; not a cross-save permanent ID.",
+    "player_pool_identity": "Legacy model slot uses calibrated roster root as origin; slot zero is the roster directory. Read descriptor count plus root slot; never stop at a blank name."
+  },
+  "sources": [
+    {
+      "id": "global_players",
+      "status": "VERIFIED_PARTIAL_FIELDS",
+      "scope": "Complete live descriptor array; valid names, draft metadata, position, DOB, 55 attributes including potential, six salary fields and contract clauses. Raw structs retained; no OVR.",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "new_career",
+        "season_start",
+        "roster_import",
+        "draft_post"
+      ],
+      "identity": "slot identifies a model version within this pool, not a stable person across roster versions"
+    },
+    {
+      "id": "staff_pool",
+      "status": "VERIFIED_RECIPROCAL_TEAM_ROLES",
+      "scope": "Complete roster staff descriptor slots; named occupied entries and all 8 staff roles per NBA team. Unknown team pointers are unmapped, not assumed free agents.",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "season_start",
+        "staff_change",
+        "monthly_close"
+      ],
+      "identity": "slot and name only; persistent staff identity pending"
+    },
+    {
+      "id": "team_state",
+      "status": "VERIFIED_OBSERVED_FIELDS",
+      "scope": "30 core teams; finances, ticket values, chemistry, interest, eight POE fields",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "monthly_close",
+        "checkpoint",
+        "post_transaction",
+        "season_start"
+      ]
+    },
+    {
+      "id": "active_rosters_contracts",
+      "status": "VERIFIED_PARTIAL_FIELDS",
+      "scope": "30 rosters; identity, position, DOB, date-dependent age, 55 attributes, six annual salary amounts, options, type and no-trade. Full CBA ledger incomplete.",
+      "current_capture": "every verified capture",
+      "recommended_events": [
+        "monthly_close",
+        "post_transaction",
+        "draft_post",
+        "season_start"
+      ]
+    },
+    {
+      "id": "games_box_scores_standings",
+      "status": "VERIFIED_PARTIAL_SEASON_TOTALS",
+      "scope": "30-team current-season wins/losses and counting totals; current indexed player season totals where available. No game logs, schedule, exact tie-break rankings or monthly splits.",
+      "recommended_events": [
+        "game_complete",
+        "monthly_close"
+      ]
+    },
+    {
+      "id": "injuries_availability_rotations",
+      "status": "NOT_OBSERVED",
+      "scope": "injuries, fatigue, availability, rotation minutes and depth charts",
+      "recommended_events": [
+        "game_complete",
+        "monthly_close",
+        "post_transaction"
+      ]
+    },
+    {
+      "id": "full_player_models",
+      "status": "VERIFIED_PARTIAL_ATTRIBUTES",
+      "scope": "55 decoded attributes including potential and raw full model records. Overall, full badges/tendencies/animations and development history are not certified.",
+      "recommended_events": [
+        "season_start",
+        "monthly_close",
+        "roster_import"
+      ]
+    },
+    {
+      "id": "draft_picks_assets_free_agency",
+      "status": "VERIFIED_SIMPLE_FUTURE_PICKS",
+      "scope": "Native NBA2K22 getter signatures verify current/original owner semantics; packed year/round and complete future draft coverage checked each capture. Only next three uncompleted annual drafts are tradeable under player rules. No protection or swap conditions; no automatic execution or full CBA certification. Legacy batches remain candidates.",
+      "recommended_events": [
+        "post_transaction",
+        "draft_pre",
+        "draft_post",
+        "season_start"
+      ]
+    },
+    {
+      "id": "historical_draft_catalog",
+      "status": "VERIFIED_CLASSIFIER",
+      "scope": "historical rookie classification from raw[0x70] & 0xE0 == 0xE0; target slot injection remains separate and unverified",
+      "recommended_events": [
+        "roster_import",
+        "draft_pre"
+      ]
+    },
+    {
+      "id": "rules_worldlines_decisions",
+      "status": "CONFIGURED_NOT_MEMORY_TRUTH",
+      "scope": "versioned season rules, historical/real-world references, approved fictional branches, proposals, approval and execution receipts",
+      "recommended_events": [
+        "new_career",
+        "season_start",
+        "approved_decision",
+        "external_reference_update"
+      ]
+    }
+  ]
+}

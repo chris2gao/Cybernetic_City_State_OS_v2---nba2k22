@@ -1,0 +1,1095 @@
+{
+  "schema_id": "DEV29_R06D_CROSS_DOMAIN_RESEARCH_INTEGRATION_V1",
+  "date": "2026-10-21",
+  "status": "R06_D_RESEARCH_PUBLISHED_PENDING_INDEPENDENT_REVIEW",
+  "target": "NBA2K22_PC_CURRENT_GEN_OFFLINE_MYLEAGUE",
+  "research_only": true,
+  "game_write_authorized": false,
+  "role_agent_design_authorized": false,
+  "dev28_execution_authorized": false,
+  "input_guide_paths": [
+    "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+    "docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+    "docs/game_mechanics/guides/K06_TRAINING_HEALTH_GROWTH.md",
+    "docs/game_mechanics/guides/K07_K08_K09_FRANCHISE_OPERATIONS.md",
+    "docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md",
+    "docs/game_mechanics/guides/K10_HISTORY_AWARDS_MEDIA_R06B.md",
+    "docs/game_mechanics/guides/K11_SEASON_SAVE_PERSISTENCE_R06C.md"
+  ],
+  "source_catalogs": [
+    "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+    "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+    "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+    "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+    "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+    "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+    "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+    "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json"
+  ],
+  "source_snapshot_counts": {
+    "R06A_static_registry_candidates": 86,
+    "R06A_menu_or_parameter_candidates": 118,
+    "R06B_feature_or_information_candidates": 31,
+    "R06B_direct_source_missing_award_items": 10,
+    "R06C_feature_or_information_candidates": 38,
+    "R05D_data_research_rows": 54,
+    "R05D_action_research_rows": 63
+  },
+  "counts_are_heterogeneous_no_additive_native_fields": true,
+  "evidence_policy": {
+    "relations": "Cross-catalog semantic relationships and possible prerequisites, not experimentally demonstrated game engine formulas",
+    "direct_sources": "Inherited at linked items and guide/SOURCES; do not infer that all cited sources validate the synthesized causal link",
+    "unknowns": "NULL_OR_UNSOURCED_IS_NOT_FALSE_OR_IMPLEMENTED",
+    "pc22_current_save_readback_in_R06D": false,
+    "save_persistence_check_in_R06D": false
+  },
+  "relationship_count": 26,
+  "relationships": [
+    {
+      "id": "X01",
+      "name_zh": "真实3D与日历模拟是不同计算路径",
+      "relationship_class": "SEPARATION",
+      "domain_a": "R06A",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SIMULATION.SHOT_THREE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.GAMEPLAY.3PT_SHOT_SUCCESS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.SIMCAST_JUMPIN"
+        }
+      ],
+      "qualification": "已证玩家区分比赛方式；没有PC22当前GameID模式标记/引擎公式",
+      "future_observations": [
+        "GAME_MODE",
+        "GAME_ID",
+        "SIM_AND_3D_SETTINGS"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X02",
+      "name_zh": "三分的Sim出手、3D命中环境与个人投篮倾向不得等同",
+      "relationship_class": "SEMANTIC_DIFFERENCE",
+      "domain_a": "R06A",
+      "domain_b": "R04B",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SIMULATION.SHOT_THREE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.GAMEPLAY.3PT_SHOT_SUCCESS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+          "item_id": "tendency.SHOT_THREE_TENDENCY"
+        }
+      ],
+      "qualification": "三类原生对象不同；不能由Sim命中推断个人倾向已改变",
+      "future_observations": [
+        "SIM_SHOT_TYPE",
+        "LIVE_SHOT_SUCCESS",
+        "PLAYER_TENDENCY"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X03",
+      "name_zh": "3D全局出手倾向与个人Tendency是独立对象",
+      "relationship_class": "SEMANTIC_DIFFERENCE",
+      "domain_a": "R06A",
+      "domain_b": "R04B",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.GAMEPLAY.TAKE_3PT_SHOTS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+          "item_id": "tendency.SHOT_THREE_TENDENCY"
+        }
+      ],
+      "qualification": "引擎作用顺序、叠加量、具体消费者未认证",
+      "future_observations": [
+        "GLOBAL_GAMEPLAY_TENDENCY",
+        "PLAYER_TENDENCY"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X04",
+      "name_zh": "Coach战术/POE、球员PlayTypes与场上结果可能联动",
+      "relationship_class": "CONDITIONAL_INTERACTION",
+      "domain_a": "K04",
+      "domain_b": "R04B",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.POE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.PLAYER_PLAYTYPES"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+          "item_id": "tendency.TOUCHES_TENDENCY"
+        }
+      ],
+      "qualification": "是研究中的联动假设；不从单场因果倒推唯一设置",
+      "future_observations": [
+        "COACH_SYSTEM",
+        "PLAYER_PLAYTYPES",
+        "TOUCHES",
+        "PLAY_CALL_LOG"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X05",
+      "name_zh": "Coach设置与日历模拟行为的映射未证",
+      "relationship_class": "UNKNOWN_INTERACTION",
+      "domain_a": "K04",
+      "domain_b": "R06A",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.ACE_RUNTIME"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.RUNPLAYS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SIMULATION.TEAM_PACE"
+        }
+      ],
+      "qualification": "不能把3D ACE实际战术效果当Sim策略权重",
+      "future_observations": [
+        "3D_ACE",
+        "SIM_ENGINE_SETTINGS",
+        "MODE_SPECIFIC_RESULTS"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X06",
+      "name_zh": "教练和球员防守设置与3D Help Defense不应同值解释",
+      "relationship_class": "SEMANTIC_DIFFERENCE",
+      "domain_a": "K04",
+      "domain_b": "R06A",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.PERSONAL_DEFENSE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.GAMEPLAY.HELP_DEFENSE_STRENGTH"
+        }
+      ],
+      "qualification": "个人/球队防守指令≠全局防守滑块；内存作用细节需认证",
+      "future_observations": [
+        "DEFENSE_INSTRUCTIONS",
+        "GLOBAL_HELP_SLIDER"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X07",
+      "name_zh": "伤病事件/疲劳恢复需要按游戏模式与时间窗口建档",
+      "relationship_class": "DATA_DEPENDENCY",
+      "domain_a": "K06H",
+      "domain_b": "R06A",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "item_id": "K06.SIM_VS_PLAYED_INJURY"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "item_id": "K06.FATIGUE_TIMESCALES"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SIMULATION.PLAYER_FATIGUE_RATE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.GAMEPLAY.FATIGUE_RATE"
+        }
+      ],
+      "qualification": "不存在本批可用同位疲劳数值；事件发生机制未精确量化",
+      "future_observations": [
+        "GAME_MODE",
+        "INJURY_EVENT_ID",
+        "FATIGUE_TIMESCALE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X08",
+      "name_zh": "训练、耐久、Staff对自然成长与恢复的作用需要分离",
+      "relationship_class": "CONDITIONAL_INTERACTION",
+      "domain_a": "K06T",
+      "domain_b": "K06H",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "item_id": "K06.TEAM_TRAINING_INTENSITY"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "item_id": "K06.GAME_NATURAL_GROWTH"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "item_id": "K06.MEDICAL_STAFF"
+        }
+      ],
+      "qualification": "旧版/跨世代机制参考不证明PC22稳定效果公式，普通经营禁直接编辑能力",
+      "future_observations": [
+        "TRAINING_SETTING",
+        "MEDICAL_STAFF",
+        "NATURAL_PROGRESS_DELTA"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X09",
+      "name_zh": "自由市场报价、合同状态和真实阶段需三者同时核对",
+      "relationship_class": "TEMPORAL_DEPENDENCY",
+      "domain_a": "R05D",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "FA.UFA"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "FA.RFA"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.FA_MORATORIUM"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.FA_CONTRACT_OFFERS"
+        }
+      ],
+      "qualification": "合同类型/资格、当前FA阶段、获批执行与游戏重进持久互不等价",
+      "future_observations": [
+        "PHASE",
+        "CONTRACT_ID",
+        "PLAYER_ID",
+        "CURRENT_GAME_CONTRACT"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X10",
+      "name_zh": "交易允许动作与交易截止阶段分开",
+      "relationship_class": "TEMPORAL_DEPENDENCY",
+      "domain_a": "R05D",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "TRADE.TRADE_WINDOW_CLOSURE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.TRADE_DEADLINE_PHASE"
+        }
+      ],
+      "qualification": "现实NBA截止日不能作为游戏内法律日期；外部交易器亦非原生UI规则的替代",
+      "future_observations": [
+        "GAME_DATE",
+        "TRADE_WINDOW_STATUS",
+        "ASSET_OWNER"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X11",
+      "name_zh": "1984–2020历史选秀轮回依赖真实完成选秀而非时间推断",
+      "relationship_class": "WORLDLINE_SEPARATION",
+      "domain_a": "R06B",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.PROJECT_DRAFT_ROTATION"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.HISTORIC_DRAFT_CYCLE_STEP"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.NEXT_SEASON_ROLLOVER"
+        }
+      ],
+      "qualification": "选秀轮回属玩家外部规则；原生GameYear与对应历史届不等同",
+      "future_observations": [
+        "GAME_SEASON",
+        "DRAFT_CYCLE_INDEX",
+        "COMPLETED_DRAFT_EVIDENCE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X12",
+      "name_zh": "历史Draft Class加载与抽签/Scout流程需独立身份认证",
+      "relationship_class": "RESEARCH_DEPENDENCY",
+      "domain_a": "R05D",
+      "domain_b": "R06B",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "DRAFT.HISTORIC_DRAFT_CLASS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "DRAFT.SCOUTING_PROSPECT_CLASS_REPLACEMENT"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.DRAFT_PROSPECT_SCOUTING"
+        }
+      ],
+      "qualification": "外部克隆Type与实际Draft Class中球员ID未自动一一对应",
+      "future_observations": [
+        "DRAFT_CLASS_SOURCE",
+        "ROOKIE_ID",
+        "DRAFT_YEAR"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X13",
+      "name_zh": "选秀资产未来年限是游戏资产来源/业务规则/执行代码三层",
+      "relationship_class": "POLICY_TECHNICAL_SEPARATION",
+      "domain_a": "R05D",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "TRADE.AVAILABLE_ASSETS_AND_MARKET_LIST"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.NBA_DRAFT"
+        }
+      ],
+      "qualification": "世界政策已撤旧+3；执行代码仍有拒绝，读到五届不是强制新上限",
+      "future_observations": [
+        "PICK_YEAR",
+        "CURRENT_OWNER",
+        "WORLD_POLICY",
+        "EXECUTOR_VALIDATION"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X14",
+      "name_zh": "获奖记录与跨年持久保留不是同一能力",
+      "relationship_class": "TEMPORAL_DEPENDENCY",
+      "domain_a": "R06B",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.PAST_MVPS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.HALL_OF_FAME"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.AWARD_HISTORY_PERSISTENCE"
+        }
+      ],
+      "qualification": "2K22玩家仅报告部分历史菜单；完整历季获奖者记录和PC22读取未知",
+      "future_observations": [
+        "AWARD_TYPE",
+        "SEASON_ID",
+        "WINNER_PLAYER_ID",
+        "HISTORY_PROVENANCE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X15",
+      "name_zh": "其他10类荣誉是待证研究候选不可当PC22菜单证据",
+      "relationship_class": "EVIDENCE_AUDIT",
+      "domain_a": "R06B",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.ROOKIE_OF_YEAR"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.ALL_DEFENSIVE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.CHAMPIONS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.AWARD_HISTORY_PERSISTENCE"
+        }
+      ],
+      "qualification": "R06B 10项sources=[]；不可再用Past MVPs Reddit帖为它们背书",
+      "future_observations": [
+        "FEATURE_CANDIDATE_STATUS",
+        "DIRECT_SOURCE_MISSING"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X16",
+      "name_zh": "NBA纪录和单场Box留存不等同",
+      "relationship_class": "RESEARCH_DEPENDENCY",
+      "domain_a": "R06B",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.NBA_RECORDS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.SEASON_RECORD"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.PAST_GAME_BOXSCORE"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.PAST_GAME_LOG"
+        }
+      ],
+      "qualification": "纪录页有时汇总但无法倒推每场投篮事件，跨季GameLog留存未证",
+      "future_observations": [
+        "GAME_ID",
+        "GAME_LOG",
+        "RECORD_TYPE",
+        "HISTORICAL_RETENTION"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X17",
+      "name_zh": "社交消息/实力榜/Mock Draft的观点不等于正式事实",
+      "relationship_class": "AUTHORITY_SEPARATION",
+      "domain_a": "R06B",
+      "domain_b": "R05D",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.SOCIAL_FEED"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.POWER_RANKINGS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.MOCK_DRAFT_MEDIA"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "SCOUT.BIG_BOARD_VS_MOCK_DRAFT"
+        }
+      ],
+      "qualification": "Mod内容文字资源≠当前无Mod完整动态数据/独立人格；mock≠真实选秀结果",
+      "future_observations": [
+        "CONTENT_TYPE",
+        "FACT_VS_OPINION",
+        "PUBLIC_SOURCE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X18",
+      "name_zh": "游戏Save/Save As与DEV14托管存档及发布数据库独立",
+      "relationship_class": "STATE_AUTHORITY_SEPARATION",
+      "domain_a": "R06C",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.SAVE_COMMAND"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.SAVE_AS_COMMAND"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.DEV14_SAVE_IDENTITY"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.FULL_VERIFIED_CAPTURE"
+        }
+      ],
+      "qualification": "保存是否成功须退出重入验证；GitHub库新批次不是游戏Save revision",
+      "future_observations": [
+        "GAME_SAVE_SLOT",
+        "SAVE_INSTANCE",
+        "GENERATION_ID",
+        "CAPTURE_BATCH"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X19",
+      "name_zh": "Autosave/云同步/离线支持不能互相证明",
+      "relationship_class": "STATE_AUTHORITY_SEPARATION",
+      "domain_a": "R06C",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.AUTOSAVE_MENU"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.STEAM_CLOUD_SYNC"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.OFFLINE_MYLEAGUE"
+        }
+      ],
+      "qualification": "官方离线支持不保证SteamCloud同步；Autosave机制未知",
+      "future_observations": [
+        "OFFLINE_MODE",
+        "GAME_SAVE",
+        "STEAM_CLOUD_STATUS"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X20",
+      "name_zh": "3D末比分/日历结果/标准化统计必须同GameID区别保留",
+      "relationship_class": "DATA_INTEGRITY",
+      "domain_a": "R06A",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_MINUTES"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_STATS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.PAST_GAME_BOXSCORE"
+        }
+      ],
+      "qualification": "玩家单一故障案例不得当确定缩放公式；缺逐场来源不可重建比赛",
+      "future_observations": [
+        "GAME_ID",
+        "RAW_SCORE",
+        "DISPLAYED_SCORE",
+        "NORMALIZE_FLAGS"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X21",
+      "name_zh": "原生球员潜力与球探报告需要保护认知层差异",
+      "relationship_class": "OBSERVATION_AUTHORITY",
+      "domain_a": "R05D",
+      "domain_b": "R06B",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "SCOUT.DRAFTEXPRESS_RANK"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.MOCK_DRAFT_MEDIA"
+        }
+      ],
+      "qualification": "真实隐藏能力不应通过媒体预测/Scout编号泄漏，未证明球探概率",
+      "future_observations": [
+        "SCOUT_REPORT",
+        "TRUE_POTENTIAL",
+        "DISCLOSURE_LEVEL"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X22",
+      "name_zh": "规则投票、当前活跃规则与外挂政策不可混为一体",
+      "relationship_class": "RULE_AUTHORITY",
+      "domain_a": "R06B",
+      "domain_b": "R05D",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.RULE_PROPOSALS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.ACTIVE_RULES"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "TRADE.FUTURE_FIRST_ROUND_CONSECUTIVE_RESTRICTION"
+        }
+      ],
+      "qualification": "老代菜单不能当本机合法枚举；外挂选秀V4不是游戏规则投票",
+      "future_observations": [
+        "NATIVE_ACTIVE_RULE",
+        "REAL_CBA_REFERENCE",
+        "PROJECT_RULE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X23",
+      "name_zh": "退役/转教练、员工招聘需要跨年身份与阶段留存",
+      "relationship_class": "TEMPORAL_DEPENDENCY",
+      "domain_a": "R06C",
+      "domain_b": "R05D",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.RETIREMENTS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.STAFF_HIRING"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "item_id": "STAFF.HIRE"
+        }
+      ],
+      "qualification": "同版社区教程可能要求非法改球员能力；本研究仅保留界面线索",
+      "future_observations": [
+        "PERSON_ID",
+        "ROLE_STATUS",
+        "STAFF_OPENING",
+        "SEASON_PHASE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X24",
+      "name_zh": "连贯媒体记忆依赖可信历史数据，不是游戏原生记者代理",
+      "relationship_class": "RESEARCH_DEPENDENCY",
+      "domain_a": "R06B",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.SOCIAL_FEED"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "item_id": "K10.PAST_MVPS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.PAST_GAME_LOG"
+        }
+      ],
+      "qualification": "历史GameLog/奖项存储未知；本项目外部媒体模型未开发",
+      "future_observations": [
+        "PUBLIC_EVENT_LEDGER",
+        "HISTORY_SOURCE",
+        "VISIBILITY"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X25",
+      "name_zh": "教练技战术、逐场反馈与日历Sim不可通过同一统计推断",
+      "relationship_class": "EVIDENCE_CAUSALITY",
+      "domain_a": "K04",
+      "domain_b": "R06A",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.TEAM_PLAYBOOK"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "item_id": "K04.GAME_FEEDBACK"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "item_id": "R06A.SIMULATION.TEAM_PACE"
+        }
+      ],
+      "qualification": "缺3D/Sim分域Game Log及对照条件，不能将团队风格变化归因为唯一Coach字段",
+      "future_observations": [
+        "PLAYBOOK_VERSION",
+        "GAME_MODE",
+        "GAME_BOX",
+        "COACH_SETTING_REV"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    },
+    {
+      "id": "X26",
+      "name_zh": "训练/休息阶段与球员自然成长需要观察而不是直接增强",
+      "relationship_class": "EVIDENCE_CAUSALITY",
+      "domain_a": "K06T",
+      "domain_b": "R06C",
+      "evidence_anchors": [
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "item_id": "K06.PLAYER_FOCUS"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "item_id": "K06.GAME_NATURAL_GROWTH"
+        },
+        {
+          "catalog_path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "item_id": "K11.TRAINING_CAMPS"
+        }
+      ],
+      "qualification": "本局训练与成长数值未在该研究轮读取，不能直改能力",
+      "future_observations": [
+        "PLAYER_ID",
+        "TRAINING_SOURCE",
+        "GAME_GROWTH_DELTA",
+        "SEASON_PHASE"
+      ],
+      "relation_is_game_formula_proven": false,
+      "pc22_target_runtime_verification": "NOT_PERFORMED",
+      "evidence_semantics": "CATALOG_CROSS_REFERENCE_ONLY_NOT_CAUSAL_GAMEPLAY_PROOF",
+      "approval_for_native_changes": "NOT_AUTHORIZED"
+    }
+  ],
+  "open_gap_count": 20,
+  "open_gaps": [
+    {
+      "id": "D06-G01",
+      "priority": "P0",
+      "topic_zh": "单场Game Logs/Box/Shot与赛季聚合",
+      "domains": "K01_K02",
+      "status": "UNVERIFIED_CURRENT_SAVE_CAPTURE",
+      "evidence_needed": "同GameID、完整逐场双方球员Box/比分/日期/模式；原生页、跨月可读性",
+      "dimension": "GAME_ANALYSIS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G02",
+      "priority": "P0",
+      "topic_zh": "比赛生成路径3D/SimCast/QuickSim",
+      "domains": "K05_K11",
+      "status": "MODE_EFFECT_UNKNOWN",
+      "evidence_needed": "同场模式、controller side、USER/CPU使用侧与GameDate",
+      "dimension": "GAME_ANALYSIS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G03",
+      "priority": "P0",
+      "topic_zh": "Normalize Minutes与Stats两个开关及分数冲突",
+      "domains": "K05_K01",
+      "status": "NATIVE_ENUM_AND_FIELD_MAPPING_UNKNOWN",
+      "evidence_needed": "两开关UI截图、原生身份、保存/重进、同GameID原始Box对照",
+      "dimension": "GAME_ANALYSIS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G04",
+      "priority": "P0",
+      "topic_zh": "原生game_date、赛季phase和外部采集批次关联",
+      "domains": "K11",
+      "status": "GAME_DATE_NATIVE_SOURCE_NOT_VERIFIED",
+      "evidence_needed": "当前存档身份、游戏日历页与只读来源交叉核对",
+      "dimension": "WORLD_TIME",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G05",
+      "priority": "P0",
+      "topic_zh": "Save/Save as/Autosave退出重载持久化",
+      "domains": "K11",
+      "status": "NO_TARGET_SAVE_RELOAD_TEST",
+      "evidence_needed": "获批测试档、保存前后revision及真实reload和GameDate",
+      "dimension": "SAVE_AUTHORITY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G06",
+      "priority": "P0",
+      "topic_zh": "选秀年、实际导入新秀与完成选秀触发",
+      "domains": "K08_K10_K11",
+      "status": "DRAFT_CLASS_CYCLE_AND_NATIVE_IDS_UNVERIFIED",
+      "evidence_needed": "真实选秀结束、年份轮回计数、原生新秀身份与资产读回",
+      "dimension": "WORLD_TIME",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G07",
+      "priority": "P0",
+      "topic_zh": "休赛期各阶段及原生AI签约/合同变动",
+      "domains": "K07_K11",
+      "status": "PC22_PHASE_RUNTIME_UNKNOWN",
+      "evidence_needed": "各页标题/时点、合同前后与原生AI副作用的只读证据",
+      "dimension": "OPERATIONS",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G08",
+      "priority": "P0",
+      "topic_zh": "交易资产V4规则和旧+3程序拒绝",
+      "domains": "K07_K08",
+      "status": "KNOWN_POLICY_EXECUTOR_DIVERGENCE",
+      "evidence_needed": "Codex另行获批做代码/测试同步，不改为固定五届；不启动本任务",
+      "dimension": "EXTERNAL_EXECUTION",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G09",
+      "priority": "P1",
+      "topic_zh": "教练默认、对手防守、ACE与Sim效果",
+      "domains": "K04_K05",
+      "status": "ON_COURT_CAUSALITY_UNVERIFIED",
+      "evidence_needed": "真实Coach设置revision、不同比赛路径对照与GameID",
+      "dimension": "COACHING",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G10",
+      "priority": "P1",
+      "topic_zh": "训练疲劳伤病的实际分域数据",
+      "domains": "K06_K05",
+      "status": "NATIVE_HEALTH_AND_EFFECT_UNKNOWN",
+      "evidence_needed": "当日健康状态/伤病事件/生效训练、比赛模式、时间跨度",
+      "dimension": "HEALTH",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G11",
+      "priority": "P1",
+      "topic_zh": "Draft/scouting历史名单与球员身份",
+      "domains": "K08_K10",
+      "status": "PLAYER_DRAFT_ID_MAPPING_UNKNOWN",
+      "evidence_needed": "历史clone验证、Scouting展示名单和已选中人身份、重复同名处理",
+      "dimension": "DRAFT",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G12",
+      "priority": "P1",
+      "topic_zh": "Past MVP/其它奖项历年获奖者",
+      "domains": "K10",
+      "status": "10_CANDIDATE_AWARDS_UNSOURCED",
+      "evidence_needed": "分具体奖项的原生页面或对应官方/同版资料，不能复用SRC-0178",
+      "dimension": "HISTORY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G13",
+      "priority": "P1",
+      "topic_zh": "职业、赛季、季后赛纪录的维度和刷新",
+      "domains": "K10_K11",
+      "status": "PC22_RECORD_UI_AND_RETENTION_UNKNOWN",
+      "evidence_needed": "精确PC22页面、stat category、历史赛季、刷新点",
+      "dimension": "HISTORY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G14",
+      "priority": "P1",
+      "topic_zh": "跨赛季逐场GameLog/Box/交易/选秀/奖项留存",
+      "domains": "K01_K10_K11",
+      "status": "CROSS_SEASON_RETENTION_UNKNOWN",
+      "evidence_needed": "独立测试档前后对比GameID/球员和团队身份/历届记录",
+      "dimension": "SAVE_AUTHORITY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G15",
+      "priority": "P1",
+      "topic_zh": "媒体文本、实力榜与Mock Draft事实性",
+      "domains": "K10",
+      "status": "UNMODDED_PC22_UI_AND_PROVENANCE_UNKNOWN",
+      "evidence_needed": "无Mod UI字段、消息类型、时间、公私域和虚实事实",
+      "dimension": "MEDIA",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G16",
+      "priority": "P1",
+      "topic_zh": "Rule Changes合法选项及何时生效",
+      "domains": "K10_K11",
+      "status": "TARGET_PC22_MENU_AND_VOTE_HISTORY_UNKNOWN",
+      "evidence_needed": "规则提案、投票、生效后UI以及跨季保存，勿套2K20",
+      "dimension": "WORLD_RULES",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G17",
+      "priority": "P1",
+      "topic_zh": "薪资帽空间、Staff预算、合同状态、市场可写性",
+      "domains": "K07_K11",
+      "status": "BUDGET_AND_EXECUTOR_VALIDATION_GAPS",
+      "evidence_needed": "合同/球队工资/员工预算区别，用户允许的真实休赛期验证",
+      "dimension": "FINANCE",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G18",
+      "priority": "P2",
+      "topic_zh": "2K23 Eras与本世界1984轮回对照说明",
+      "domains": "K10",
+      "status": "CROSS_VERSION_REFERENCE_ONLY",
+      "evidence_needed": "仅作时间轴/叙事背景，绝不登记为PC22原生Era菜单",
+      "dimension": "WORLDLINE",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G19",
+      "priority": "P2",
+      "topic_zh": "Save云端与本地文件权限/可靠性",
+      "domains": "K11",
+      "status": "STEAM_CLOUD_NOT_GAME_SAVE_PROOF",
+      "evidence_needed": "只在获批测试档检查Steam云状态，不推断游戏内保存",
+      "dimension": "SAVE_AUTHORITY",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    },
+    {
+      "id": "D06-G20",
+      "priority": "P1",
+      "topic_zh": "R06-B独立质量复核",
+      "domains": "K10",
+      "status": "REPAIR_SUBMITTED_REVIEW_PENDING",
+      "evidence_needed": "确认10项sources=[]并对其余原料实施按条逐证审核",
+      "dimension": "EVIDENCE_GOVERNANCE",
+      "dev29_does_not_execute": true,
+      "dev28_candidate_not_approved_task": true
+    }
+  ],
+  "handoff": {
+    "R06D_review": "INDEPENDENT_REVIEW_REQUIRED",
+    "next_research": "R07_CROSS_RESEARCH_ROLE_OBSERVABLE_ACTION_EVIDENCE_MATRIX",
+    "final_codex": "ONLY_AFTER_R07_AND_HUMAN_APPROVAL",
+    "current_player_approval": "NONE_FOR_GAME_WRITES"
+  }
+}
