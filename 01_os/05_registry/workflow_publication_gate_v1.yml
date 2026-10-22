@@ -76,9 +76,10 @@ what_the_gate_does_not_decide:
 - >-
     the effective non-retroactive cutoff. --base is the remote old head the transport supplies and
     is not --boundary; no caller passes --boundary today, so every governed run at the candidate is
-    judged. applies_to_runs_created_after is still unbound and must be bound by a successor record
-    naming the exact landing commit. Deriving it from --base would be substituting one concept for
-    another.
+    judged. The task-branch cutoff is recorded in
+    01_os/_runs/run-20260911-stage-human-alignment-wiring-001/08_结论/生效边界后继记录_v1.yml,
+    naming the exact semantic implementation commit; callers do not automatically load that record.
+    This is not master integration. Deriving the cutoff from --base would substitute one concept for another.
 
 exit_codes:
   0: pass

@@ -1,0 +1,21 @@
+task_id: os-v2-stage-human-alignment-wiring-001
+run_id: run-20260911-stage-human-alignment-wiring-001
+recorded_date: '2026-10-22'
+record_kind: executor_transcription_of_current_Human_instruction
+Human_utterance: "我批准不需要独立复核了，我们持续把这个任务收尾，做完即可。"
+provenance: current_Human_chat
+disposition: authorized
+scope:
+  independent_coaudit: waived_for_this_task_only
+  secondary_coauditor_signature_prerequisite: waived_for_this_task_only
+  remaining_work: existing_landing_boundary_successor_and_task_closure
+  closure_basis: existing_executor_evidence_and_recorded_HG2_acceptance
+supersession:
+  replaces: prior_requirement_to_wait_for_independent_coaudit_before_boundary_record
+  retains: all_other_task_scope_and_prohibitions
+limitations:
+  - Waived review is not a passed review; no independent signature is fabricated.
+  - No additional functional tests, development or review layers.
+  - Master publication remains outside this task authorization.
+  - No runtime activation, scheduler activation or automatic cross-endpoint delivery.
+  - This transcription is not cryptographic authentication of the Human.

@@ -1,0 +1,21 @@
+task_id: os-v2-stage-human-alignment-wiring-001
+record_kind: semantic_landing_boundary_successor
+recorded_date: '2026-10-22'
+contract_ref: ../03_方案设计/阶段产物到instance映射契约_v1.yml#part_4_bootstrap_boundary
+Human_disposition_ref: ../01_任务输入/Human授权_v6_免独立复核收尾.yml
+exact_semantic_landing_commit: 73398e468cf56d62094c2f19e27d9ee048b47298
+applies_to_runs_created_after: 73398e468cf56d62094c2f19e27d9ee048b47298
+semantic_landing_meaning: committed_implementation_on_task_branch_not_master_integration
+construction_base: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+source_branch: claude/stage-human-alignment-wiring-001
+evidence_ref: ../07_测试执行/W6候选验证结果_v1.yml
+ordering:
+  successor_must_be_committed_after_named_semantic_commit: true
+  self_referential_sha: false
+review_disposition: waived_by_current_Human_not_passed
+READY_FOR_BOUNDARY_CLOSURE: not_signed_review_prerequisite_waived
+proof_limits:
+  - This record binds the existing contract cutoff; it is not a master merge or runtime activation.
+  - Existing callers do not automatically load this record or supply --boundary.
+  - No caller wiring is added; --base remains the publication old head, not this cutoff.
+  - No exemption by path, actor or guessed commit is introduced.
