@@ -5,10 +5,9 @@ task_packet:
   exact_base_sha: 26cd0bfabc5e4857e37bf491756d885ad592f41f
   branch: task/nba2k22-os-onboarding-roadmap-20261022
   objective: >-
-    Initialize repository-working-window OS understanding via remote-only read;
-    audit the imported NBA2K22 domain against established source baselines;
-    preserve critical architecture design documents and deliver the OS-governed
-    next-stage development roadmap without touching runtime or production data.
+    Define the executable OS-governed NBA2K22 multi-stage development program,
+    scoped task backlog, window handoff and durable memory strategy.
+    No business code, runtime, database or master mutation.
   source_evidence:
     - 01_os/开发入口与单窗口任务规范_v1.md
     - AGENT_WORKING_DISCIPLINE.md
@@ -24,10 +23,12 @@ task_packet:
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V1.md
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_MIGRATION_AND_BASELINE_RECONCILIATION_20261022.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_WINDOW_HANDOFF_TEMPLATE_V1.md
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md
     - 01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/**
   verification_plan: 01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/verification_plan.json
-  required_tests: [REMOTE_SCOPE, REMOTE_SOURCE_PROVENANCE, REMOTE_CONTENT_CONSISTENCY, OS_MANAGED_VERIFY]
+  required_tests: [REMOTE_SCOPE, BACKLOG_DAG, DOC_CROSSREF, OS_MANAGED_VERIFY]
   prohibitions:
     - modify_core_owned_paths
     - access_desktop_commander_without_fresh_explicit_Human_permission
@@ -69,8 +70,8 @@ task_packet:
 minimum_work_unit_output:
   role: decision_architecture
   work_performed_or_requested: >-
-    Inspect the imported domain and OS entry, reconcile missing architecture planning artifacts,
-    and propose the next independently dispatched NBA2K22 development tasks.
+    Establish a prioritized, dependencies-checked multi-window NBA2K22 OS development program,
+    including role division, output contracts, cross-window memory, tests and acceptance gates.
   implementation_or_review_method: >-
     Use fresh GitHub master SHA and immutable file blob comparisons; create a bounded task branch
     with provenance, roadmap, OS run evidence, and remote source-branch readback.
@@ -79,9 +80,9 @@ minimum_work_unit_output:
     architecture V1/V2 documents and Codex branch acceptance were not wholly imported.
     The OS root rules explicitly restrict domain writes to 08 and its run evidence location.
   feasibility_rationale: >-
-    The connected GitHub API permits exact branch-based text documentation and provenance checks
-    without consuming Desktop Commander quota. Local managed verification and independent review
-    are explicitly deferred rather than claimed to have run.
+    GitHub is sufficient to persist candidate backlog and planned process documents,
+    including remote validation of scope and dependency references. OS local managed verification
+    is not executed without separately authorized local access.
   task_constraints_and_boundaries:
     - Planning and documentation only; no master or core-owned OS modifications.
     - Future task packets are proposed, not automatically dispatched or executed.
