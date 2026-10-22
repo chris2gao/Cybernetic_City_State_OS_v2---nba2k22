@@ -1,0 +1,69 @@
+{
+  "task_id": "nba2k22-source-baseline-refresh-20261022",
+  "run_id": "run-20261022-nba2k22-source-refresh-001",
+  "verified_at": "2026-10-22T06:37:00Z",
+  "base_sha": "26cd0bfabc5e4857e37bf491756d885ad592f41f",
+  "work_branch": "task/nba2k22-source-refresh-20261022",
+  "sources": {
+    "source_a": {
+      "branch": "main",
+      "commit": "eb275a46765c758fa5ce6aaf6ca8dae217baaf97",
+      "role": "authoritative_business_tree",
+      "files_extracted": 1305,
+      "parallel_world_v1_present": true,
+      "parallel_world_v2_present": true
+    },
+    "source_b": {
+      "branch": "dev/native-io-exploration",
+      "commit": "21d62ec9e04b86a1f737c1500ea2f41c34583215",
+      "role": "native_access_research_ag_native_01_to_01d",
+      "suites_extracted": ["AG_NATIVE_01", "AG_NATIVE_01B", "AG_NATIVE_01C", "AG_NATIVE_01D"]
+    },
+    "source_c": {
+      "branch": "codex/final-code-audit-20261021",
+      "commit": "d1038811ecee3a6b35a5d9c4787c67bf65456438",
+      "role": "final_codex_audit_assets_and_verification_tool",
+      "assets_extracted": [
+        "docs/development_reviews/FINAL_CODEX_NATIVE_IO_COVERAGE_AUDIT_20261021_V1.md",
+        "docs/development_reviews/FINAL_CODEX_DEV28_GAP_REGISTER_20261021_V1.md",
+        "docs/development_reviews/FINAL_CODEX_MATCH_HISTORY_BRANCH_AUDIT_20261021_V1.md",
+        "docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+        "tools/audits/verify_final_codex_20261021.py"
+      ]
+    }
+  },
+  "tests": {
+    "python_syntax_check": {
+      "total": 211,
+      "passed": 211,
+      "failed": 0
+    },
+    "json_parse_check": {
+      "total": 813,
+      "passed": 813,
+      "failed": 0
+    },
+    "ag_native_pytest": {
+      "exit_code": 0,
+      "passed": 41,
+      "total": 41,
+      "duration_seconds": 1.15
+    },
+    "final_codex_script_check": {
+      "status": "NOT_RUN_LEGACY_REPO_DEPENDENCY",
+      "details": "tools/audits/verify_final_codex_20261021.py expects historical commit blob show from old nba2k22-gm-engine repo"
+    },
+    "git_diff_check": {
+      "status": "PASSED",
+      "whitespace_errors": 0
+    },
+    "nested_git_check": {
+      "status": "PASSED",
+      "nested_git_found": false
+    },
+    "preflight_task_context": {
+      "status": "PASSED",
+      "verdict": "ok"
+    }
+  }
+}

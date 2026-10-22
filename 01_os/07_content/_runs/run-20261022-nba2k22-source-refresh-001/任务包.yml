@@ -1,0 +1,28 @@
+task_id: nba2k22-source-baseline-refresh-20261022
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+exact_base_sha: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+branch: task/nba2k22-source-refresh-20261022
+risk_tier: T1_standard
+objective: 一次性完成新OS仓库中NBA2K22业务目录的完整替换，恢复最新代码、研究成果、开发文档和工程审计资产。
+allowed_changed_paths:
+  - 08_Domain_Applications/Antigravity_GM_Engine/**
+  - 08_Domain_Applications/README.md
+  - 01_os/07_content/_runs/run-20261022-nba2k22-source-refresh-001/**
+Human_confirmation: current_Human_nba2k22_os_migration_01_instruction
+legacy_build_freeze: superseded_for_this_domain_by_current_Human_creation_and_on_demand_upgrade_instruction
+verification_plan: sources_sha_integrity_ag_native_tests_final_codex_audit_json_validity_git_diff_check
+required_tests:
+  - test_sources_sha_integrity
+  - test_ag_native_suite_41_passed
+  - test_final_codex_audit_assets_present
+  - test_python_syntax_211_files
+  - test_json_parse_813_files
+  - test_git_diff_check_clean
+prohibitions:
+  - modify_core_owned_files
+  - push_direct_to_master
+  - modify_shared_os_files
+  - include_secrets_or_live_databases
+  - force_push_or_history_rewrite
+publisher:
+  expected_remote_master_head: "26cd0bfabc5e4857e37bf491756d885ad592f41f"

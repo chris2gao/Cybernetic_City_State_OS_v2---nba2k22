@@ -1,5 +1,17 @@
 # Codex 数据采集/开发/执行基线共用的当前状态与交接索引
 
+## 2026-10-22 最新架构纠错：允许从根本上重构数据平台
+
+玩家明确：旧双库、月度统计表、采集容器及相关API可以且应该根据长期平行篮球世界目标**整体重构**，不是不可更改的默认架构。旧工程是迁移的真实事实和安全机制来源，不能变成新模型的物理约束。新权威文档：[平行篮球世界数据架构V2](development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)。该设计区分world/save/generation/season/game/player incarnation/draft template身份，原生字节/解码事实/事件/状态快照/赛季累计/派生统计/AI决策与受控执行；允许改变SQLite库数量与Schema。候选逻辑与物理设计可以马上进行，正式DDL与数据迁移需Codex验收并单独批准；不直接变更当前生产库和游戏。下一段旧“复用双库”字样应理解为保留**已认证能力与事实**，并非禁止架构重构。
+
+## 2026-10-22 最新项目级共识：NBA2K22权威引擎与SQLite平行世界
+
+**优先阅读**：[项目宗旨](PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md)、[平行篮球世界数据架构V1](development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V1.md)与[原生Native I/O蓝图V2](development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md)。游戏是比赛与自然成长的权威；外挂基于已认证Native对象建立双SQLite可追溯事实镜像、真实跨赛季历史账本、多角色AI与经玩家批准的有限执行反馈。保留六阶段采集→分析→教练→球员→GM→执行的目标顺序，不把基础设施当角色人格。
+
+**工程状态**：DEV29 R01–R07正式研究结案。FINAL-CODEX审计`codex/final-code-audit-20261021@d1038811ecee3a6b35a5d9c4787c67bf65456438`已完成且经网页GPT独立审核接收（1项文档排版备注）；40族状态16历史部分/7已实现未发布/3未合并候选/1签约阻断/13参考或未知，20项缺口继续保留。比赛历史旧分支不应直接合并。AG-NATIVE-01至01D研究位于`dev/native-io-exploration@21d62ec9e04b86a1f737c1500ea2f41c34583215`，新增SEASON逐场/StatBank、Slot24生涯统计与对决矩阵样本；Curry16场与赛季记录18项一致的fixture值得Codex复核，**不意味着238场/全部游戏页/生产SQLite已独立验收**。
+
+**下一阶段方法**：Gemini Flash只读快速逆向与实验性Decoder/候选Schema，Codex做复杂问题和独立实机验证；候选数据建模与验证并行。验收、审批后Codex沿现有DEV14多存档代际、full_verified_v1双库暂存发布、Potential脱敏、M0查询和执行审批集成，不另造生产事实库。旧Oct18生产批无GM_SANITIZED，继续禁止作为GM正式生产入口。完整GM/Coach/Player的“食材”仍有动态比赛、角色状态、UI列/历史留存/原生权限缺口；人格系统按原项目边界另立任务。以上是最新状态；以下旧日期段落仅作历史。
+
 ## 2026-10-21 R01–R07研究反推：以PC22游戏页面/完整对象为界的Native I/O V2蓝图
 
 [正式规划V2](development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md)已综合R系列40族/694异质项、R04全球员信息、R05经营、R06世界、DEV24/28及已证`roster_directory`原生数组，确立：真实游戏UI完整页/Tab/表格及合法控件→原生对象/数据产生与查询机制→全量可证镜像/页面等价Query→经批准执行/回读。不能把游戏表格当SQL数据库已证；必须独立验证原生Getter、内存数组、文件存储与是否存在游戏内部数据库。局部PLAYER 55能力+17合同与倾向99byte/Badge研究≠完整PLAYER对象API，早期文档0xDF0与现采0x4F0冲突需保留证据版本。**这份V2只作后续工程的研发蓝图/任务边界，不扩大当前未结案FINAL-CODEX；AG/DEV28实机及任何写入仍需按包授权。**此前按角色筛选字段V1已撤回。

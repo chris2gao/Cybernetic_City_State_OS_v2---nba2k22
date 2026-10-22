@@ -1,39 +1,58 @@
-# NBA 2K22
+# 08 Domain Applications — NBA 2K22 业务应用领域
 
-这是特色领域仓库 `nba2k22`。通用 OS 来自 City-State core，特色资料和代码由你稍后手动放入本目录。
+本目录为 NBA 2K22 领域专属业务应用目录，由城市邦联操作系统（Cybernetic City-State OS v2）纳管。
 
-## 目录与工作边界
+项目已于 2026-10-22 完成从旧独立仓库到 OS 新仓库的完整业务源码与资产刷新（任务代号：`NBA2K22-OS-MIGRATION-01`）。
 
-- `01_os/`：共享 OS 的工作流、机制和执行入口，不在领域仓库修改 core-owned 文件。
-- `08_Domain_Applications/`：本仓库的特色内容目录，即 Human 指定的“08 文件夹”。
-- `01_os/07_content/_runs/`：OS 指定的领域任务运行证据位置，不是特色业务实现的存放位置。
-- 进入任务仍先读根级 `AGENTS.md` 和 `01_os` 两份入口；处理本目录时同时遵循本目录的 `AGENTS.md`。
+---
 
-当前没有导入任何特色业务资料、既有游戏工程或旧仓库内容；这里只提供 OS 基础和初始化说明。
-不创建 `08_os`，它不是新的 OS 副本；不把业务代码塞进共享机制目录。
+## 一、仓库与业务目录边界
 
-## 上游与更新
+- **新仓库**：`https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22`
+- **业务应用主目录**：`08_Domain_Applications/Antigravity_GM_Engine/`
+- **OS 系统与机制目录**：`01_os/`（core-owned，跨领域共享机制，禁止业务直接修改）
+- **业务工作流运行证据**：`01_os/07_content/_runs/`（domain-owned，每个独立任务的运行记录与证据）
 
-- 自身仓库：`https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22`，`origin` 的默认推送只指向本仓库。
-- OS 上游：`https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core`，通过 `core` 远端读取。
-- 初始 OS 提交：`3ae48d2183a6e77d63a43783c7e1999edc01711e`。这是创建基线，不冒充以后每次升级后的当前版本。
-- 新仓库保留与 core 的共同 Git 历史，不使用复制粘贴覆盖 OS。
+---
 
-需要更新 OS 时，由 Human 发起对应升级任务，按 OS 的范围、验证和发布纪律执行：
+## 二、OS 统一启动与开发入口
 
-```powershell
-git fetch core --no-tags
-git merge core/master
-```
+所有参与本领域开发的模型与工程师，必须遵循 OS 统一启动序列：
 
-共享 core 不修改本目录，因此正常的三方合并保留本领域资料。
-若发生冲突，不强行覆盖、不重写历史；先说明冲突，再按当前任务权限解决。
-没有启动自动拉取、自动合并、后台进程或定时器。
+1. **实时读取 `origin/master` 最新 40 位 SHA**；
+2. **遵守行为准则**：[`AGENT_WORKING_DISCIPLINE.md`](../AGENT_WORKING_DISCIPLINE.md)；
+3. **读取根级协作指南**：[`AGENTS.md`](../AGENTS.md)；
+4. **读取 OS 入口规范**：[`01_os/README.md`](../01_os/README.md) 与 `01_os/开发入口与单窗口任务规范_v1.md`；
+5. **领域级约束**：[`08_Domain_Applications/AGENTS.md`](AGENTS.md) 与 [`domain.yml`](domain.yml)。
 
-## 本次启用依据
+---
 
-Human 于 2026-10-22 明确要求创建并启用这六个领域仓库、以后按需接收 OS 更新。
-这项较新的明确指令是本仓库的启用依据，替代 `CORE_MANIFEST.yml` 中 2026-08-02
-“core 仍在建设期”的旧冻结要求对本次新建与后续明确请求升级的限制。
-未在领域仓库改写那份 core-owned manifest；也未解除其他任务的安全、范围和发布门禁。
-具体配置见 `domain.yml`。本次只配置仓库，不自动执行任何特色业务任务。
+## 三、最新数据架构方向：平行世界数据架构 V2
+
+本领域业务开发以最新的平行世界数据架构为核心蓝图：
+
+- **核心规范**：[`Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md`](Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)
+- **架构原则**：
+  - 允许全面重构原有的双 SQLite（`league_state.sqlite` / `player_pool.sqlite`）与采集容器；
+  - 建立统一的“平行篮球世界”数据总线，解耦底层 2K 原生内存抓取与上层业务模型；
+  - 历史审计产物保留在 `Antigravity_GM_Engine/docs/development_reviews/`；
+  - 原生只读逆向成果（AG-NATIVE-01 至 01D）作为底层数据访问能力储备。
+
+---
+
+## 四、后续工程任务规划与路线图
+
+业务迁移完成后，按以下严格优先级开展后续工程任务（一窗口一任务，只登记不提前执行）：
+
+1. **`WORLD-DATA-ARCH-01`**：完整平行篮球世界概念、逻辑及物理数据库模型（基于 V2 架构）；
+2. **`NATIVE-ACCEPT-01`**：AG-NATIVE-01C / 01D 单场比赛、赛季统计与球员数据链独立工程验收；
+3. **`WORLD-DATA-IMPL-01`**：新数据平台、统一采集、历史保存、查询及旧数据迁移；
+4. **角色数据契约开发**：为 GM、Coach、Player 等独立角色构建数据契约与模拟反馈系统。
+
+---
+
+## 五、独立任务分支与审查流程
+
+- **开发分支规范**：所有业务开发必须在独立任务分支（如 `task/<task-id>` 或 `dev/<feature>`）进行，**严禁直接 Push master**；
+- **运行证据（Run Evidence）**：每次任务必须在 `01_os/07_content/_runs/<run-id>/` 下建立持久化任务包（`任务包.yml`）、运行清单（`run.yml`）与完成指针（`completion_pointer_v1.yml`）；
+- **门禁与合流**：必须通过本地离线测试及 `workflow_publication_gate`，提交后由独立模型（网页 GPT 或评审代理）进行审核，最后由 Human 授权合流至 `master`。

@@ -1,0 +1,43 @@
+completion_pointer:
+  task_id: "nba2k22-source-baseline-refresh-20261022"
+  run_id: "run-20261022-nba2k22-source-refresh-001"
+  status: "candidate_ready_for_independent_review"
+  base_sha: "26cd0bfabc5e4857e37bf491756d885ad592f41f"
+  work_branch: "task/nba2k22-source-refresh-20261022"
+  repository: "chris2gao/Cybernetic_City_State_OS_v2---nba2k22"
+  business_content_root: "08_Domain_Applications/Antigravity_GM_Engine/"
+  authoritative_sources:
+    source_a_main:
+      branch: "main"
+      commit: "eb275a46765c758fa5ce6aaf6ca8dae217baaf97"
+      role: "authoritative_business_tree"
+    source_b_native:
+      branch: "dev/native-io-exploration"
+      commit: "21d62ec9e04b86a1f737c1500ea2f41c34583215"
+      role: "native_access_research_ag_native_01_to_01d"
+    source_c_audit:
+      branch: "codex/final-code-audit-20261021"
+      commit: "d1038811ecee3a6b35a5d9c4787c67bf65456438"
+      role: "final_codex_audit_assets_and_verification_tool"
+  proof_limits:
+    - "This record certifies code and asset assembly into OS baseline; it does not constitute independent acceptance of individual reverse-engineered native modules."
+    - "Future database reconstruction belongs to WORLD-DATA-ARCH-01."
+minimum_work_unit_output:
+  role: "execution"
+  work_performed_or_requested: "Replace NBA2K22 business directory in City-State OS repository with three authoritative sources, restore parallel world V2 architecture and AG-NATIVE-01..01D research, and deliver OS-compliant task packet and verification evidence."
+  implementation_or_review_method: "Deterministic extraction from bare git repository using immutable commit SHAs, safe external backup of uncommitted local databases, non-destructive replacement, offline syntax/JSON/test verification, and pre-push publication gate check."
+  supportability_rationale: "All files strictly belong to domain-owned paths; core-owned OS files remain untouched; 41 offline unit tests pass in 1.15s; 211 python files and 813 json files pass parsing."
+  feasibility_rationale: "The assembled directory cleanly integrates with OS v2 conventions and provides an immutable reference baseline for upcoming WORLD-DATA-ARCH-01."
+  exact_result_or_candidate_ref: "task/nba2k22-source-refresh-20261022"
+  verification_evidence:
+    - "sources_sha_verified:eb275a46765c758fa5ce6aaf6ca8dae217baaf97,21d62ec9e04b86a1f737c1500ea2f41c34583215,d1038811ecee3a6b35a5d9c4787c67bf65456438"
+    - "ag_native_pytest:41_passed_in_1.15s"
+    - "python_syntax_check:211_passed_0_failed"
+    - "json_parse_check:813_passed_0_failed"
+    - "nested_git_absent:true"
+    - "v1_v2_architecture_docs_present:true"
+    - "final_codex_assets_present:true"
+    - "git_diff_check:clean"
+  residual_risk_or_unproved_limits:
+    - "tools/audits/verify_final_codex_20261021.py carries historical dependency on old repo git show and is logged as NOT_RUN_LEGACY_REPO_DEPENDENCY."
+    - "Full system database restructuring will be planned and executed under WORLD-DATA-ARCH-01."

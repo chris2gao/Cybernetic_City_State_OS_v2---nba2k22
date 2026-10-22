@@ -2,6 +2,18 @@
 
 **2026-10-21；状态：RESEARCH_DERIVED_ENGINEERING_BLUEPRINT / 待玩家分别授权实施。** 本文件是对[已撤回V1](NATIVE_IO_CAPABILITY_EXPANSION_AND_FUTURE_ROLE_FOUNDATION_V1.md)的技术方法纠错。**不是当前游戏完整页面已经认证的清单，不批准游戏写入、推进赛季、正式数据库迁移、自动合并或启动DEV28实施。**
 
+> **架构修订说明（2026-10-22，优先于下文旧“复用双库物理Schema”限定）：** 可整体重构旧`league_state.sqlite`/`player_pool.sqlite`及其采集、Schema、查询与发布容器，不要求未来GAME/PLAYER/SEASON对象强行装进旧的月度表。优先定义世界线/存档/赛季/比赛/人物实例身份、事件与状态/累计的时间模型、原生证据、派生视图和安全契约，再通过容量/事务验证选定SQLite物理拆分。已有DEV14批准/故障恢复/脱敏/来源校验的**能力与不变量**必须保留，但具体实现允许迁移或重构。新权威文档：[平行世界完整数据架构V2](PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)。下文V2旧补充作为研发历史阅读，不作为不得重构原库的禁令。
+
+## 2026-10-22 架构共识与数据建模/验收顺序（V2补充）
+
+**固定架构**：原生NBA2K22引擎（比赛与自然成长权威）→ Native Object Reader（带原生Getter/字节/字段证据）→ 现有双SQLite事实镜像+长期历史账本（同档同批时间身份）→ 独立GM/Coach/Player等角色扩展 → 玩家批准的合法执行器及游戏回读。详细合同见[平行篮球世界数据架构V1](PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V1.md)。该架构不修改既定六阶段独立模型执行顺序。
+
+**现在可以进行数据模型设计，不必等待所有Codex验收**：Gemini提交原生样本、关系/Getter与实验性Schema；Codex同时验证GameID、PLAYER/TEAM身份、真实StatBank边界、Box-累计守恒、原生与派生字段、完整UI列及跨档/跨季语义。**正式DDL迁移/流水线接入/发布/M0查询只在逐对象验收并另获工程批准后进行**，且复用`database/schema.sql`、`src/auto_pipeline_ingest.py`、`gm_state_io.capture_files.install`、`src/gm_data_access/query.py`。不得直接合并实验性导出器的DROP TABLE或未修复的旧match-history Reader。
+
+**最新研究增量不是生产能力**：`dev/native-io-exploration@21d62ec9e04b86a1f737c1500ea2f41c34583215`包含SEASON 60B/StatBank 24B、Slot24 48B累计、生涯索引与Slot44交锋矩阵等候选；已提交Curry 16场与48B赛季数据18项一致的fixture，可作为高优先级Codex验收入口；但全部238场、跨存档、原生UI全字段、Save/Reload和生产发布尚未因此自动认证。G联赛双向合同字段≠完整G联赛数据，新秀身份/选秀资产≠完整新秀报告。
+
+**基础成熟度**：R01–R07解决“有什么内容/规则/候选来源”，FINAL-CODEX40族对账解决“现有源码/生产批具备什么”；当前GM已有部分可用事实与有限执行，教练设置/战术知识不等于独立教练人格，PLAYER完整字段与士气/健康/野心和独立球员人格尚不齐全。优先顺序为比赛/赛季/生涯真实闭环及长期保留，再按角色需求补充完整球员/教练/市场等事实；不能因部分原生结构被识别就宣布“食材已足够”。
+
 ## 0. 唯一目标：以游戏数据体系为边界，而不是以当前GM需求为边界
 
 从DEV29 R01–R07的游戏机制研究、DEV06/10/12/14/15/16/23/24/28及现有原生采集与SQLite证明，真正需要恢复的是：

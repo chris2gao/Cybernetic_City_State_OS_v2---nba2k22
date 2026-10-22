@@ -5,6 +5,10 @@
 
 > [**当前项目级开发意图优先于本文件旧交接**](PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md)：DEV29 R系列只研究NBA2K20–23游戏玩法/全部信息、可设置项和交互作用，DEV28只补可靠可读可查询且经批准可执行的游戏底层；未来独立Coach/Player人格、谈判/行为决策模型必须另立任务，**不得以固定阈值/权重决策程序冒充人格并顺带纳入R/DEV28**。六阶段采集→分析→教练→球员→GM→执行。下方PR #12“当前冲突”段落属于2026-10-20历史记录，PR #12已合并；最新状态见GitHub和文档34。
 
+> **2026-10-22 后续纠正（最新优先）**：用户允许全面重设计旧双库、月度统计表、采集容器、身份/API和物理文件拆分，以完整平行篮球世界为目标，而不是要求所有新数据都适配旧Schema。Codex未来架构任务先提交世界线/赛季/玩家实例/逐场事件/状态时间序列/跨季历史/原生证据和安全边界的概念ER、逻辑模型、候选DDL、数据迁移及分阶段发布方案；验收和候选建模并行，正式生产迁移另批。详见[完整数据架构V2](development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)。已有DEV14审批、安全、来源/代际、原生事实与故障恢复为必须保留的不变量，不强制保留旧表/库文件/API。
+
+> **2026-10-22 新的共同技术架构**：[平行篮球世界数据架构V1](development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V1.md)已固定“NBA2K22原生引擎为真实权威→Native Reader→现有SQLite双事实库和跨季账本→独立多角色AI→获玩家批准的游戏执行与读回”。数据模型候选和原生验收并行；Codex验收通过且独立获得工程批准后，才接现有DEV14/full_verified_v1/M0路径。Gemini探索研究结果不能直接合main或修改生产数据；不得把个别赛事fixture的正确性推广为全联盟完整已验收。该共识优先于下文旧阶段性开发记录。
+
 ## 当前权威状态：PR #12 主线冲突整理
 
 已将最新origin/main 5c032a0整合到原codex/bpti-package-c，保留主线官方/社区机制研究先行规范、DEV28和十二类战术/命名/DEV24来源资料，以及包C与F1–F4已完成记录。实际冲突只有AGENTS与本文件开头的新增说明；没有代码冲突或功能重写。F1–F4以2f659138已审查实现为准，旧阶段“待修/尚未开始”只作历史。证据见[验收及冲突交接](development_reviews/BPTI_PACKAGE_C_IMPLEMENTATION_AND_ACCEPTANCE.md)和[状态34](34_BASELINE_CURRENT_STATE.md)。PR #12保持Draft、未合并，DEV28仍须另行授权；本轮不重跑已通过的测试、不做无关游戏资料研究。
