@@ -1,0 +1,14 @@
+task_id: domain-bootstrap-nba2k22-20261022
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+exact_base_sha: 3ae48d2183a6e77d63a43783c7e1999edc01711e
+branch: master
+risk_tier: T0_mechanical
+objective: Initialize this Human-requested domain with unchanged shared OS and an empty 08 business area.
+allowed_changed_paths:
+  - 08_Domain_Applications/**
+  - 01_os/07_content/_runs/run-20261022-domain-bootstrap-001/**
+Human_confirmation: current_Human_six_repository_creation_and_initial_master_publication
+legacy_build_freeze: superseded_for_this_domain_by_current_Human_creation_and_on_demand_upgrade_instruction
+verification_plan: core_ancestry_and_scope_remotes_hooks_visibility_remote_head_and_clean_state
+required_tests: []
+prohibitions: [modify_core_owned_files, publish_archive_tags, automatic_update_activation, overwrite_existing_content]
