@@ -1,0 +1,90 @@
+task_packet:
+  task_id: nba2k22-os-onboarding-roadmap-20261022
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+  branch: task/nba2k22-os-onboarding-roadmap-20261022
+  objective: >-
+    Initialize repository-working-window OS understanding via remote-only read;
+    audit the imported NBA2K22 domain against established source baselines;
+    preserve critical architecture design documents and deliver the OS-governed
+    next-stage development roadmap without touching runtime or production data.
+  source_evidence:
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - AGENTS.md
+    - 08_Domain_Applications/domain.yml
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/CODEX_HANDOFF.md
+    - legacy_repo:chris2gao/nba2k22-gm-engine@eb275a46765c758fa5ce6aaf6ca8dae217baaf97
+    - legacy_ag_branch:chris2gao/nba2k22-gm-engine@21d62ec9e04b86a1f737c1500ea2f41c34583215
+    - legacy_codex_branch:chris2gao/nba2k22-gm-engine@d1038811ecee3a6b35a5d9c4787c67bf65456438
+  allowed_changed_paths:
+    - 08_Domain_Applications/README.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/README.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_MIGRATION_AND_BASELINE_RECONCILIATION_20261022.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md
+    - 01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/verification_plan.json
+  required_tests: [REMOTE_SCOPE, REMOTE_SOURCE_PROVENANCE, REMOTE_CONTENT_CONSISTENCY, OS_MANAGED_VERIFY]
+  prohibitions:
+    - modify_core_owned_paths
+    - access_desktop_commander_without_fresh_explicit_Human_permission
+    - change_master
+    - merge_old_repo_branches
+    - rewrite_history
+    - access_credentials
+    - game_memory_write_or_advance_game
+    - production_database_migration_or_capture
+    - automatically_activate_runtime_or_scheduler
+  required_completion_pointer: 01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/completion_pointer.json
+  big_task: false
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+    expected_remote_head: 26cd0bfabc5e4857e37bf491756d885ad592f41f
+  big_task_confirmation_closure:
+    enabled: false
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: OpenAI
+    surface: ChatGPT web with GitHub connector
+    model: GPT-6
+    reasoning_effort: not_exposed_on_this_surface
+    mode: conversation_foreground
+    routing_basis: Human requested remote-only low-cost repository inspection and architecture planning.
+    authority: routing_only
+    model_routing_validator: not_run_no_local_runner_and_DCR_not_authorized
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session_after_publication
+    different_model_family: preferred
+    different_measurement_tool: preferred
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Inspect the imported domain and OS entry, reconcile missing architecture planning artifacts,
+    and propose the next independently dispatched NBA2K22 development tasks.
+  implementation_or_review_method: >-
+    Use fresh GitHub master SHA and immutable file blob comparisons; create a bounded task branch
+    with provenance, roadmap, OS run evidence, and remote source-branch readback.
+  supportability_rationale: >-
+    Native 01D sources are present in the imported domain, but the older repository main
+    architecture V1/V2 documents and Codex branch acceptance were not wholly imported.
+    The OS root rules explicitly restrict domain writes to 08 and its run evidence location.
+  feasibility_rationale: >-
+    The connected GitHub API permits exact branch-based text documentation and provenance checks
+    without consuming Desktop Commander quota. Local managed verification and independent review
+    are explicitly deferred rather than claimed to have run.
+  task_constraints_and_boundaries:
+    - Planning and documentation only; no master or core-owned OS modifications.
+    - Future task packets are proposed, not automatically dispatched or executed.
+  stop_or_return_conditions:
+    - A new protected action, contradictory source, or inability to publish within allowed paths.
+    - OS-managed validator execution cannot be claimed without permitted local runtime.
