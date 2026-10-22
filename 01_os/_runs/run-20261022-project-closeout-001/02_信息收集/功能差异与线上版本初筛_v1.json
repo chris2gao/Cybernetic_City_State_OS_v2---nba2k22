@@ -1,0 +1,2875 @@
+{
+  "master": "310233073e39e9aab89d2a2ff8f6ada1a015590d",
+  "mapping": "08_os prefix to 01_os only; filename matches are possibilities, not equivalence",
+  "limits": "Counts are source/contract comparison clues, never proof of functionality missing or completed. Fixtures and traffic excluded; other historical root namespaces are not automatically mapped.",
+  "live_remote_heads": {
+    "refs/heads/ai/review/latest": "cd70147d55f8161163a37c24f181c6f01f3c7490",
+    "refs/heads/antigravity-opus/cargo-ovft-review-001": "6508e0d8a8e7deb229731176d8a64738bd19d5fa",
+    "refs/heads/antigravity/cargo-ovft-installation-candidate-001": "dee5591e5ec2e1e74a90d8217dd616e14f09303c",
+    "refs/heads/antigravity/cosmic-ray-existing-installation-reconciliation-001": "dc31074d700284d4a01c893f977896665ecdf39b",
+    "refs/heads/antigravity/openfasttrace-installation-candidate-001": "f7c636fe64935bf2e653ed413be4964ae7514249",
+    "refs/heads/antigravity/promptfoo-cli-offline-validation-001": "e3f9c642a81bdd57caccafca9b58202e5abb5ed0",
+    "refs/heads/antigravity/python-set-coverage-candidate-001": "9b6d34ddd8e41c08328701df90860609004e4187",
+    "refs/heads/antigravity/reference-graph-contract-inventory-001": "c10407e13956c2166b9e9551423c515169dbaefa",
+    "refs/heads/chatgpt/antigravity-08-os-onboarding-dispatch-001": "c38436b1b93168361bda63f46fe841156ddcb520",
+    "refs/heads/chatgpt/antigravity-promptfoo-cli-dispatch-001": "4ed619132acfab9025e60d45133a3458f963ef10",
+    "refs/heads/chatgpt/check-jsonschema-installation-validation-dispatch-001": "5b0784aed1bcefcace38f21d81b140b77fa52374",
+    "refs/heads/chatgpt/check-jsonschema-network-version-boundary-fix-dispatch-001": "f01695990c2268bbe7cb9972dd3b59be8c54154d",
+    "refs/heads/chatgpt/context-management-development-summary-baseline-fix-dispatch-001": "0d28cecb78dbaac6cf217ffd3fdabcd8ca981113",
+    "refs/heads/chatgpt/context-management-development-summary-review-dispatch-001": "7a3030aa6c4a9b0a9e48f2abe827294215b7dc1e",
+    "refs/heads/chatgpt/context-management-development-summary-revise-dispatch-001": "637322e87e4e34ce225244b7898e6f092e1ee97e",
+    "refs/heads/chatgpt/context-management-structure-migration-dispatch-001": "0c8430b731faae0f6153cbe320e3a3dfd6e1087d",
+    "refs/heads/chatgpt/context-management-structure-review-fixes-001": "0ca3cbae7df628b89835be5aeeb5e62fac821ac4",
+    "refs/heads/chatgpt/context-stage2-closure-review-dispatch-001": "6d3390e174f2b16d9beab0734eb729708e90f209",
+    "refs/heads/chatgpt/cosmic-ray-wsl-installation-validation-dispatch-001": "452f19a8d86fad32da002d24368cc204124e9084",
+    "refs/heads/chatgpt/deterministic-tools-benefit-risk-assessment-dispatch-001": "f9b3a6cbef5b92dd58e0dde2af9417a68069f98c",
+    "refs/heads/chatgpt/deterministic-tools-benefit-risk-assessment-registry-fix-dispatch-001": "3a35930c32b20403c683acfe110271474e2b5e9a",
+    "refs/heads/chatgpt/mutmut-evidence-consistency-fix-dispatch-001": "eb9b14aad99ce224dca3b7f7de7e0ec6827b3fe7",
+    "refs/heads/chatgpt/mutmut-wsl-installation-validation-dispatch-001": "df37a47c793b949ef727653c5c2871c9e717f271",
+    "refs/heads/claude/conformance-checker-phase1-001": "d817c804a9a9af17234a481a10690c45e07da85c",
+    "refs/heads/claude/stage-human-alignment-wiring-001": "c947c3978e1b6379a90c92a04044daf332aeb751",
+    "refs/heads/claude/task-discipline-receipts-001": "b79922dce8975add161de69d4614543644ef52f5",
+    "refs/heads/codex/check-jsonschema-installation-validation-001": "aafd4c05417c1c85a56456ac30269c8d655473af",
+    "refs/heads/codex/os-execution-foundation-20260907": "b6782775d7734fb10f5119ce04a057b5af0ef5f3",
+    "refs/heads/codex/project-closeout-20261022": "310233073e39e9aab89d2a2ff8f6ada1a015590d",
+    "refs/heads/codex/register-gpt6-astra-20260905": "3dc058a1a3cf393b936025f43fd737b0848937b4",
+    "refs/heads/codex/set-coverage-machine-acceptance-001": "a03971ab594eaa5ea3ec62205607f44d05281d59",
+    "refs/heads/dev/open-branch-deletion-guard-001": "5739a297ab71ecd37197524fa121a0b9b28da942",
+    "refs/heads/dev/os-v2-01-os-namespace-and-autoload-cutover-001": "cd90a9d9adedbfa2d0f1b90f245b4dde7a061716",
+    "refs/heads/dev/os-v2-agent-engineering-principles-001": "52e00fe13d6a2e385abfaf1e2618c70f3278926c",
+    "refs/heads/dev/os-v2-chatgpt-local-files-terminal-capability-001": "8692e3d26304a368d425923f459a8495ecd5c148",
+    "refs/heads/dev/os-v2-chatgpt-plugin-capability-catalog-001": "aa9b6cfda19c4fb1eb8e506c6f73900308fdb4fe",
+    "refs/heads/dev/os-v2-citystate-local-host-control-baseline-001": "4e182ac148dc7701eed6be7e03e8e39b139acc6b",
+    "refs/heads/dev/os-v2-citystate-local-host-control-program-design-001": "857c667547c93e9b9c3c26ed1316db38919a25a3",
+    "refs/heads/dev/os-v2-communication-git-blob-utf8-decoding-fix-001": "2697029d2b4035737cdd237fee18a4974774fe1d",
+    "refs/heads/dev/os-v2-communication-git-blob-utf8-decoding-fix-001-impl-001": "31296e1c1dd573310e26327b50ec2f70e176bc2a",
+    "refs/heads/dev/os-v2-execution-simplicity-and-bounded-closure-001": "1fbab0f3e0a84aebbc04035d720dbfea110bf0f4",
+    "refs/heads/dev/os-v2-gate-binding-repair-001": "536995889b0b33cd050a520e31fdafd32151153c",
+    "refs/heads/dev/os-v2-global-agent-local-capability-boundary-001": "c149ae626d63d3818c110d5a29972c32d083f350",
+    "refs/heads/dev/os-v2-global-communication-system-001": "7e389590d6b7d319416b5034c3a98900ee173961",
+    "refs/heads/dev/os-v2-global-human-authorization-simplification-001": "1559346ca2eab776cad110c7d96475f34a33f9b2",
+    "refs/heads/dev/os-v2-global-minimum-work-unit-output-contract-001": "6757bee2f8dfa3cf55abb464189b953e2b072773",
+    "refs/heads/dev/os-v2-global-model-capability-and-availability-routing-001": "dfe553d35ea61aa31ebac32f7f107a9b402723eb",
+    "refs/heads/dev/os-v2-global-model-capability-and-availability-routing-002": "c54f77984cc251cca554ab5011f5edaa5a86f7b2",
+    "refs/heads/dev/os-v2-human-auth-code-minlength-001": "dbd64a6ca3a8411cf2f1859293c54135b49065ef",
+    "refs/heads/dev/os-v2-human-auth-code-minlength-repair-001": "30f205eb7e0b975b97386fee103d180f3d03018e",
+    "refs/heads/dev/os-v2-human-task-authority-delegated-start-simplification-001": "570d400824a5937873d40cc58ee70905e811185f",
+    "refs/heads/dev/os-v2-human-task-authority-v2-migration-001": "759bff35284525c5b9c486f2f097e5e1cdf5f2d6",
+    "refs/heads/dev/os-v2-implementation-solution-modeling-stage-001": "0a480e1e115f9789258a4d196ab56cc2d0e3adca",
+    "refs/heads/dev/os-v2-implementation-solution-modeling-stage-evidence-001": "236706869ac280d084908b027263615c4fb47b35",
+    "refs/heads/dev/os-v2-legacy-physical-deletion-001": "9ead335ca4672f35a8ebe63625856ee39835c846",
+    "refs/heads/dev/os-v2-mechanism-activation-and-adherence-design-001": "bf538e5068381becd31e8e1daceade81e657262d",
+    "refs/heads/dev/os-v2-mechanism-activation-and-adherence-implementation-001": "c57e50cc05356e41f9dd77a80ceea42c9cacf41b",
+    "refs/heads/dev/os-v2-mechanism-activation-and-adherence-publication-closure-001": "ab8caca73ec8aaf8c1de609235eed98654a9567f",
+    "refs/heads/dev/os-v2-mechanism-activation-and-adherence-run-closure-001": "c57bbcc1621b334873503a10a2f3ed367fd0a5fd",
+    "refs/heads/dev/os-v2-model-routing-claude-code-opus5-registration-001": "58a584b6a27b6d86d01b6347266712fc0c13e6d1",
+    "refs/heads/dev/os-v2-model-routing-cowork-opus5-registration-001": "423f7715ba5584aca59605de71ca344f78508cb7",
+    "refs/heads/dev/os-v2-model-routing-cowork-opus5-review-001": "e75aa4140789cd50dbec9f30864f24a3b0754c6d",
+    "refs/heads/dev/os-v2-pre-deletion-migration-final-whitelist-001": "3a185a25f85e71d07098eddf0c74e0a96748ea48",
+    "refs/heads/dev/os-v2-role-window-context-model-routing-integration-001": "fa2c9b658df5ecfe9235261cb1f207af84efdfb3",
+    "refs/heads/dev/os-v2-root-global-retention-rewrite-001": "c932eafb53881ae32d5dd926391bb1d23e7fdade",
+    "refs/heads/dev/os-v2-seven-stage-minimum-operational-loop-001": "c7a508abbcda58361fc9b649236d44b706e0bdd4",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-activation-001": "c81a116226a57f0047b55b924fad1771c1b81029",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-activation-preparation-001": "0c6f08554636ade9b3120db03cadfe6dfa87861b",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-granularity-amendment-001": "e96669da9c9302a1ced9dc857176782c9670235a",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-impl-p1-canonical-001": "0e636ddddbc350a044b287a0378103885c353768",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-impl-p2-contracts-001": "bf233aafd4b7c6db00a1065ffa686abf51cd98bb",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-impl-p3-p7-integrated-001": "b9b6639d7835265ab5f85a7e544549f6ca2ac934",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-information-collection-001": "aa4d26073a37855d0a8983261ce680a41be27e17",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-master-integration-001": "12501472e5dfc8feb0f61da2c72c25e6febd39e0",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-requirement-001": "1435315040b6343820e10cfe274b0ec540b28087",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-result-modeling-001": "fe2ee5c47b3c18a063a8b67d62d27a9561971e2d",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-result-reason-docfix-001": "161163a4a762a33ad7c5b4382bccaa4023c7d0e5",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-solution-modeling-001": "f7bb80694ecb3cd87193a94e0041f32004942e8c",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-step-decomposition-001": "5e92dac4ef2dc90864320c92b7640ccf6eeef8d5",
+    "refs/heads/dev/os-v2-stage-collaborative-deliberation-test-review-modeling-001": "a9ea59a351c2d0932551069bf75b250ef68f350f",
+    "refs/heads/dev/os-v2-stage-human-alignment-deliberation-001": "eaf6748bd4a2fa789f28f985541ea724a31e4ade",
+    "refs/heads/dev/os-v2-stage-human-alignment-enforcement-root-cause-001": "ada4210427f83ed5e34a906691d5c91b4add62a2",
+    "refs/heads/dev/os-v2-stage-human-alignment-enforcement-root-cause-001-impl-001": "8d953a823275b3b98b8530ceef6682eeb84f0020",
+    "refs/heads/dev/os-v2-stage-human-alignment-enforcement-root-cause-001-nonce-001": "05c1a24fb0f517ecfd0021af91feff547efa5137",
+    "refs/heads/dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003": "8ae7e7f7cec427bbe9d76735bbac9181481078cb",
+    "refs/heads/dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-review-fix-001": "243e8bd7153f9060192ac376ca7f867c05128c54",
+    "refs/heads/dev/os-v2-stage04-semantic-acceptance-reentry-review-001": "73123ea11f3175c88496c313ec8a3f82f38630ec",
+    "refs/heads/dev/os-v2-stage04-semantic-acceptance-root-cause-replacement-001": "c6dd431deba81ad62c84a0f06df7ff81deb283b2",
+    "refs/heads/dev/os-v2-stage04-semantic-acceptance-root-cause-replacement-002": "19c39ed37f14c97cfa132ffafabcb9afa33dd7f0",
+    "refs/heads/dev/os-v2-stage04-structural-provenance-upstream-001": "7cf9195715dcc7aa34bd09a8bc0f8320415f3930",
+    "refs/heads/dev/os-v2-stage04-successor-acceptance-refreeze-001": "3002d6177779abf81e6d476bfc434ee5d6dbe3c8",
+    "refs/heads/dev/os-v2-stale-blob-binding-repair-001": "4015a2a40bd0e9fa6f338b3551b86b7c42537fdd",
+    "refs/heads/dev/os-v2-system-initialization-001": "01d24b511be0adcae1dbf94d1100716239f397ec",
+    "refs/heads/dev/os-v2-t2-completion-001": "b30241a0f9006fb72b9ab1a27f44e2311d4a7221",
+    "refs/heads/dev/os-v2-t2-master-integration-001": "d9a18b57749a0608a06ab546fd179b63e696e7f1",
+    "refs/heads/dev/os-v2-t2-resume-control-001": "04daacddfdba61bc3f6e1ba0e308721c202b7319",
+    "refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-001": "c919c1760929ff23d58083de9498e38850500afe",
+    "refs/heads/dev/os-v2-t3-archive-and-big-task-workflow-control-001": "6a229b92a3317b765cfd2570254db4099dc412ed",
+    "refs/heads/dev/os-v2-t3-closure-preflight-schema-drift-001": "820c61a322b5a7c5ea71c02bd7722dfbd448ab28",
+    "refs/heads/dev/os-v2-t3-stage-contract-001": "d9a18b57749a0608a06ab546fd179b63e696e7f1",
+    "refs/heads/dev/os-v2-t3-stage-contract-control-001": "d9a18b57749a0608a06ab546fd179b63e696e7f1",
+    "refs/heads/dev/os-v2-task-discipline-tooling-001": "596db847374ecb1546d343228fb6d0756a9fc9b4",
+    "refs/heads/dev/os-v2-task0-closure-evidence-repair-001": "a745a4e8bb426256d7eaf5146b0e0dfb6bc4a5df",
+    "refs/heads/dev/workflow-serial-operation-default-001": "79258866c0ee4502e65591799d601dcb35c25540",
+    "refs/heads/integration/os-v2-global-communication-system-001": "eb4be95a25cb4b0929def284a7fb4b6a412aed55",
+    "refs/heads/master": "310233073e39e9aab89d2a2ff8f6ada1a015590d",
+    "refs/heads/review/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-independent-review-001": "67fae8325bb4abe99a2e2429b88bdcfddba43abf",
+    "refs/heads/review/os-v2-stage04-semantic-acceptance-root-cause-001": "eeac20b519fad6d28c8be102e7e0b43ac3f9657b",
+    "refs/heads/review/os-v2-stage04-semantic-acceptance-root-cause-replacement-002": "760fdfbabe9078b96106fc435d2372b96e098180",
+    "refs/heads/tmp/os-v2-citystate-program-completion-1721": "a0a2148fdcbef519d2615f5c1bf37c531468817b",
+    "refs/heads/x": "330417171b141a9447594f4799383caa1876d72b"
+  },
+  "branches": [
+    {
+      "id": 1,
+      "head": "6d3390e174f2b16d9beab0734eb729708e90f209",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/context-stage2-closure-review-dispatch-001",
+          "head": "6d3390e174f2b16d9beab0734eb729708e90f209"
+        }
+      ],
+      "work_summary": "上下文管理 Stage2 收尾审核派单与按 A v2 修订任务包",
+      "online_branches_at_exact_head": [
+        "chatgpt/context-stage2-closure-review-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 2,
+      "head": "0c8430b731faae0f6153cbe320e3a3dfd6e1087d",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/context-management-structure-migration-dispatch-001",
+          "head": "0c8430b731faae0f6153cbe320e3a3dfd6e1087d"
+        }
+      ],
+      "work_summary": "上下文管理迁入全局机制结构的派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/context-management-structure-migration-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 3,
+      "head": "0ca3cbae7df628b89835be5aeeb5e62fac821ac4",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/context-management-structure-review-fixes-001",
+          "head": "0ca3cbae7df628b89835be5aeeb5e62fac821ac4"
+        }
+      ],
+      "work_summary": "上下文管理结构迁移审查修正派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/context-management-structure-review-fixes-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 4,
+      "head": "7a3030aa6c4a9b0a9e48f2abe827294215b7dc1e",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/context-management-development-summary-review-dispatch-001",
+          "head": "7a3030aa6c4a9b0a9e48f2abe827294215b7dc1e"
+        }
+      ],
+      "work_summary": "上下文机制开发总结的审核派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/context-management-development-summary-review-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 5,
+      "head": "637322e87e4e34ce225244b7898e6f092e1ee97e",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/context-management-development-summary-revise-dispatch-001",
+          "head": "637322e87e4e34ce225244b7898e6f092e1ee97e"
+        }
+      ],
+      "work_summary": "上下文机制开发总结修订派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/context-management-development-summary-revise-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 6,
+      "head": "0d28cecb78dbaac6cf217ffd3fdabcd8ca981113",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/context-management-development-summary-baseline-fix-dispatch-001",
+          "head": "0d28cecb78dbaac6cf217ffd3fdabcd8ca981113"
+        }
+      ],
+      "work_summary": "开发总结中稳定实现基线标签修正派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/context-management-development-summary-baseline-fix-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 7,
+      "head": "f9b3a6cbef5b92dd58e0dde2af9417a68069f98c",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/deterministic-tools-benefit-risk-assessment-dispatch-001",
+          "head": "f9b3a6cbef5b92dd58e0dde2af9417a68069f98c"
+        }
+      ],
+      "work_summary": "确定性工具收益与风险评估派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/deterministic-tools-benefit-risk-assessment-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 8,
+      "head": "3a35930c32b20403c683acfe110271474e2b5e9a",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/deterministic-tools-benefit-risk-assessment-registry-fix-dispatch-001",
+          "head": "3a35930c32b20403c683acfe110271474e2b5e9a"
+        }
+      ],
+      "work_summary": "确定性工具 registry 证据指针修正派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/deterministic-tools-benefit-risk-assessment-registry-fix-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 9,
+      "head": "5b0784aed1bcefcace38f21d81b140b77fa52374",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/check-jsonschema-installation-validation-dispatch-001",
+          "head": "5b0784aed1bcefcace38f21d81b140b77fa52374"
+        }
+      ],
+      "work_summary": "check-jsonschema 安装验证任务定义",
+      "online_branches_at_exact_head": [
+        "chatgpt/check-jsonschema-installation-validation-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 10,
+      "head": "aafd4c05417c1c85a56456ac30269c8d655473af",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "codex/check-jsonschema-installation-validation-001",
+          "head": "aafd4c05417c1c85a56456ac30269c8d655473af"
+        }
+      ],
+      "work_summary": "check-jsonschema 按需集成验证；唯一补丁与 master 等价",
+      "online_branches_at_exact_head": [
+        "codex/check-jsonschema-installation-validation-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "e299ff968a0961806dfdf7296db2565cea6241c7",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/check_jsonschema/invoke.ps1",
+          "canonical_path": "01_os/06_execution/tools/check_jsonschema/invoke.ps1",
+          "state": "different_blob",
+          "branch_blob": "29847285af49994cf0f7479e1f34f09882fc86d9",
+          "master_blob": "f0490acf2e8e22d3284bdc7ec1b0a9e7c418dcd4",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "head": "f01695990c2268bbe7cb9972dd3b59be8c54154d",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/check-jsonschema-network-version-boundary-fix-dispatch-001",
+          "head": "f01695990c2268bbe7cb9972dd3b59be8c54154d"
+        }
+      ],
+      "work_summary": "check-jsonschema 网络与版本边界修正及连续执行授权",
+      "online_branches_at_exact_head": [
+        "chatgpt/check-jsonschema-network-version-boundary-fix-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 12,
+      "head": "df37a47c793b949ef727653c5c2871c9e717f271",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/mutmut-wsl-installation-validation-dispatch-001",
+          "head": "df37a47c793b949ef727653c5c2871c9e717f271"
+        }
+      ],
+      "work_summary": "mutmut WSL 安装验证派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/mutmut-wsl-installation-validation-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 13,
+      "head": "eb9b14aad99ce224dca3b7f7de7e0ec6827b3fe7",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/mutmut-evidence-consistency-fix-dispatch-001",
+          "head": "eb9b14aad99ce224dca3b7f7de7e0ec6827b3fe7"
+        }
+      ],
+      "work_summary": "mutmut 远端 master 证据语义修正派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/mutmut-evidence-consistency-fix-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 14,
+      "head": "452f19a8d86fad32da002d24368cc204124e9084",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/cosmic-ray-wsl-installation-validation-dispatch-001",
+          "head": "452f19a8d86fad32da002d24368cc204124e9084"
+        }
+      ],
+      "work_summary": "Cosmic Ray WSL 对比验证派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/cosmic-ray-wsl-installation-validation-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 15,
+      "head": "4ed619132acfab9025e60d45133a3458f963ef10",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/antigravity-promptfoo-cli-dispatch-001",
+          "head": "4ed619132acfab9025e60d45133a3458f963ef10"
+        }
+      ],
+      "work_summary": "Antigravity 接入说明及 promptfoo 离线验证派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/antigravity-promptfoo-cli-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 16,
+      "head": "c38436b1b93168361bda63f46fe841156ddcb520",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "chatgpt/antigravity-08-os-onboarding-dispatch-001",
+          "head": "c38436b1b93168361bda63f46fe841156ddcb520"
+        }
+      ],
+      "work_summary": "Antigravity 后端接入指南和 Cosmic Ray 续作派单",
+      "online_branches_at_exact_head": [
+        "chatgpt/antigravity-08-os-onboarding-dispatch-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 17,
+      "head": "cd70147d55f8161163a37c24f181c6f01f3c7490",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "ai/review/latest",
+          "head": "cd70147d55f8161163a37c24f181c6f01f3c7490"
+        }
+      ],
+      "work_summary": "promptfoo CLI 离线验证、canonical 接入和交接简报",
+      "online_branches_at_exact_head": [
+        "ai/review/latest"
+      ],
+      "scoped_source_or_contract_counts": {
+        "no_direct_counterpart": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/06_execution/tools/promptfoo/inspect_config.py",
+          "canonical_path": "01_os/06_execution/tools/promptfoo/inspect_config.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "0b0657af50c066e49d5bfa996214f3a77366b9d6",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/promptfoo/invoke.ps1",
+          "canonical_path": "01_os/06_execution/tools/promptfoo/invoke.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "e5ae68f8f274267f1735732c93e203f164baa95a",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/06_execution/tools/check_jsonschema/invoke.ps1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "head": "e3f9c642a81bdd57caccafca9b58202e5abb5ed0",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity/promptfoo-cli-offline-validation-001",
+          "head": "e3f9c642a81bdd57caccafca9b58202e5abb5ed0"
+        }
+      ],
+      "work_summary": "promptfoo CLI 离线验证候选及 Windows 超时、工作目录、版本探测修正",
+      "online_branches_at_exact_head": [
+        "antigravity/promptfoo-cli-offline-validation-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "7c63cc7c68cb25f8e38d5254459368ad3fab2fa0",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/promptfoo/inspect_config.py",
+          "canonical_path": "01_os/06_execution/tools/promptfoo/inspect_config.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "5d3082ec99a2d246a71754dd754691684625327e",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/promptfoo/invoke.ps1",
+          "canonical_path": "01_os/06_execution/tools/promptfoo/invoke.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "9d30b6e59a11aa412a0a49393778409e781a7ab4",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/06_execution/tools/check_jsonschema/invoke.ps1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "head": "f7c636fe64935bf2e653ed413be4964ae7514249",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity/openfasttrace-installation-candidate-001",
+          "head": "f7c636fe64935bf2e653ed413be4964ae7514249"
+        }
+      ],
+      "work_summary": "OpenFastTrace 候选、回执及完整性/Java 运行时门",
+      "online_branches_at_exact_head": [
+        "antigravity/openfasttrace-installation-candidate-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1b72edbc00495b550b9a7163ebf3e4f3e5e297fc",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/openfasttrace/environment_receipt.json",
+          "canonical_path": "01_os/06_execution/tools/openfasttrace/environment_receipt.json",
+          "state": "no_direct_counterpart",
+          "branch_blob": "94565945e56d6734dc6f2859dea657860a2a070e",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json",
+            "01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/evidence/environment_receipt.json"
+          ]
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/openfasttrace/invoke_candidate.ps1",
+          "canonical_path": "01_os/06_execution/tools/openfasttrace/invoke_candidate.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "6dd21099d0c38ebcd1a72abaa748005f1157663e",
+          "master_blob": null,
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "head": "dee5591e5ec2e1e74a90d8217dd616e14f09303c",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity/cargo-ovft-installation-candidate-001",
+          "head": "dee5591e5ec2e1e74a90d8217dd616e14f09303c"
+        }
+      ],
+      "work_summary": "cargo-ovft 安装候选、registry wrapper、版本探测与 smoke 修正",
+      "online_branches_at_exact_head": [
+        "antigravity/cargo-ovft-installation-candidate-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "3acf4e166d13a1e76ef26f5789f8e981fa3b1a04",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/cargo_ovft/environment_receipt.json",
+          "canonical_path": "01_os/06_execution/tools/cargo_ovft/environment_receipt.json",
+          "state": "no_direct_counterpart",
+          "branch_blob": "29cbc51308ec9734f535e9b05255a6560e276960",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json",
+            "01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/evidence/environment_receipt.json"
+          ]
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/cargo_ovft/invoke_candidate.ps1",
+          "canonical_path": "01_os/06_execution/tools/cargo_ovft/invoke_candidate.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "6a57b1ed71b1fd054809332e20af6b174f9956de",
+          "master_blob": null,
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "head": "dc31074d700284d4a01c893f977896665ecdf39b",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity/cosmic-ray-existing-installation-reconciliation-001",
+          "head": "dc31074d700284d4a01c893f977896665ecdf39b"
+        }
+      ],
+      "work_summary": "既有 Cosmic Ray 安装对账、wrapper、回执脱敏修正",
+      "online_branches_at_exact_head": [
+        "antigravity/cosmic-ray-existing-installation-reconciliation-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "bcae0345cf16b3ec161a170e34779c2a83363ec0",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/cosmic_ray/environment_receipt.json",
+          "canonical_path": "01_os/06_execution/tools/cosmic_ray/environment_receipt.json",
+          "state": "no_direct_counterpart",
+          "branch_blob": "f0672c9d435cf151b1864deb3d8fa7ccce8f5c1d",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json",
+            "01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/evidence/environment_receipt.json"
+          ]
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/cosmic_ray/invoke_candidate.ps1",
+          "canonical_path": "01_os/06_execution/tools/cosmic_ray/invoke_candidate.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "a5e91a95cbd4c951cdf3e366d58e03f7b03d3234",
+          "master_blob": null,
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "head": "6508e0d8a8e7deb229731176d8a64738bd19d5fa",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity-opus/cargo-ovft-review-001",
+          "head": "6508e0d8a8e7deb229731176d8a64738bd19d5fa"
+        }
+      ],
+      "work_summary": "cargo-ovft 候选的独立审核记录，不是新的安装实现",
+      "online_branches_at_exact_head": [
+        "antigravity-opus/cargo-ovft-review-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 23,
+      "head": "9b6d34ddd8e41c08328701df90860609004e4187",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity/python-set-coverage-candidate-001",
+          "head": "9b6d34ddd8e41c08328701df90860609004e4187"
+        }
+      ],
+      "work_summary": "Python 集合覆盖检查器、CLI 错误和 wrapper 校验",
+      "online_branches_at_exact_head": [
+        "antigravity/python-set-coverage-candidate-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 4
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "d1d445decc7e4f98a4f7388ed074aeeffd07b955",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/environment_receipt.json",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/environment_receipt.json",
+          "state": "no_direct_counterpart",
+          "branch_blob": "1350060b594d6b1612789814a9288526bd55eaca",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json",
+            "01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/evidence/environment_receipt.json"
+          ]
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/invoke_candidate.ps1",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/invoke_candidate.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "52f03173aa1f724e4f0aefc4e2e9cd0f353a0f05",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/set_coverage.py",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/set_coverage.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "49d4b9132fe839ce64e7580be5fc2104219cf392",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/tests/test_set_coverage.py",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/tests/test_set_coverage.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "a342f72c36a6752e58cb1b1f58afa45c282c0eb8",
+          "master_blob": null,
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "head": "a03971ab594eaa5ea3ec62205607f44d05281d59",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "codex/set-coverage-machine-acceptance-001",
+          "head": "a03971ab594eaa5ea3ec62205607f44d05281d59"
+        }
+      ],
+      "work_summary": "集合覆盖机器验收、CLI 错误测试、路径泄露修正及接入记录",
+      "online_branches_at_exact_head": [
+        "codex/set-coverage-machine-acceptance-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 4
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/05_registry/skills_and_tools_v1.yml",
+          "canonical_path": "01_os/05_registry/skills_and_tools_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "40f5707c1a289b78c0334402e897bb26c5a97db7",
+          "master_blob": "6b7508e357932bdaf394c99f53f2dfcf389ce49a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/environment_receipt.json",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/environment_receipt.json",
+          "state": "no_direct_counterpart",
+          "branch_blob": "863ba7b66260150c3d273feba30664a2cdef821b",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-013-mutmut安装接入验证/01_任务输入/environment_receipt.json",
+            "01_os/_runs/run-014-cosmic-ray安装对照验证/07_测试执行/evidence/environment_receipt.json"
+          ]
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/invoke.ps1",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/invoke.ps1",
+          "state": "no_direct_counterpart",
+          "branch_blob": "921163320d419d012954a0532f3f39c19ba57974",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/06_execution/tools/check_jsonschema/invoke.ps1"
+          ]
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/set_coverage.py",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/set_coverage.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "686457166ef7c78adca495a487c86f1563ec7e41",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/tools/set_coverage/tests/test_set_coverage.py",
+          "canonical_path": "01_os/06_execution/tools/set_coverage/tests/test_set_coverage.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "00d2ea3e71e8c6a9f50db5fe7c2b2c8d84a7cd9a",
+          "master_blob": null,
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "head": "c10407e13956c2166b9e9551423c515169dbaefa",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "antigravity/reference-graph-contract-inventory-001",
+          "head": "c10407e13956c2166b9e9551423c515169dbaefa"
+        }
+      ],
+      "work_summary": "provenance 与 reference graph 契约盘点",
+      "online_branches_at_exact_head": [
+        "antigravity/reference-graph-contract-inventory-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 26,
+      "head": "0a480e1e115f9789258a4d196ab56cc2d0e3adca",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-implementation-solution-modeling-stage-001",
+          "head": "0a480e1e115f9789258a4d196ab56cc2d0e3adca"
+        }
+      ],
+      "work_summary": "实现方案建模阶段的需求模型、决策与完成记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-implementation-solution-modeling-stage-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 27,
+      "head": "0c6f08554636ade9b3120db03cadfe6dfa87861b",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-activation-preparation-001",
+          "head": "0c6f08554636ade9b3120db03cadfe6dfa87861b"
+        }
+      ],
+      "work_summary": "阶段协同推演激活准备、审核与完成指针",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-activation-preparation-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 21
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "11b4c81e98f9e8b6534de1ca58a7b6ed9dcd8837",
+          "master_blob": "ab51d1d3403c0551c0b8162d901081d0e270f4e2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "183aab1cd4cc218a99bd00e0ed0a675ea8641c85",
+          "master_blob": "e21bbb4b34ad65ec0cb04f09a01386cee1acf00e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "8f54c4c068572d84b1703cd3ed338cf868a7bf24",
+          "master_blob": "aa5cb74a58fb76c48deb390a97d9bf4d9eef4f88",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "b5540a806c5b67d553a151c152d915fc0e539335",
+          "master_blob": "9d65b8009d2a73d893814a5f62d6849d9987c5c1",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "564b09d62ab326abc2fb2103da77f72aa1fb033b",
+          "master_blob": "68ced25b4ccd682a3ea34bbfbb0f46648d52ffb7",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "2cb6d0478299f3a7fb650656f7f132d728c765fc",
+          "master_blob": "f55c44253c1e22161c9141db43b4fd2a04e8936f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a7a2033b2f312d1fc153fdf7fabfb8cec17df0b8",
+          "master_blob": "5157b6ce576d3e801ba5a3316b359d963a9909fc",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml",
+          "canonical_path": "01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "90920f0782eab5c2b1ace5dbf12df778ef84b6de",
+          "master_blob": "042dae0dd15c7e6af50d9653b1b314597cb0ee03",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "896fb3463a6bb5a8758de4016c2316e17721be09",
+          "master_blob": "d95f00821880dcedce0d7d52f9db17cbbb9fe7a0",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30562642d124041fe72033419055ddfe7a95199a",
+          "master_blob": "f5c78f8fb51cd65a02b81b9a454ea130bc95fe78",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "2da5e4ccd328999a65d6e9c613e49a93037d466b",
+          "master_blob": "cc10f96515abafa34748ef72fea77182d177e18b",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30c1d00115a8f1c8c3f39afce9db05b6d5a864db",
+          "master_blob": "82a92a8c4423cccd5c1b5a7ed11d891cc349bdab",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "643c14d77af04a48251cc97c47ba4f11874b6e55",
+          "master_blob": "2b5c0cf932f4b3713c58cd6a9995b89a4238ef11",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py",
+          "state": "different_blob",
+          "branch_blob": "3de5d56bb6cca8d0be708ddfd1e38f170b79f011",
+          "master_blob": "2c736df0eda8757f65966e5972178a40292794a2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "5014cc63d2e83d9e7b951748d65c23ce877e90b2",
+          "master_blob": "4435019ffd5a08b95cd77c83e1169d1147745391",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "e54ca08ffe48fcaf49d58330b0629aff6993e520",
+          "master_blob": "211f056f00125e9a0078ada861f72811b49b23fe",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "672f0970edb4ddacb0068e71c76407d87e92ba11",
+          "master_blob": "8464f14372b903052997447f83e89e4257a62c89",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "ab81f480d70ccd146b8af4fefaed79cb12ec7a81",
+          "master_blob": "f1c409d3012f8de98b3521c9d97db109598eaf68",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a5a6a9cd888a4760aea36c332743700b32f9aef2",
+          "master_blob": "36c30439946aaab4e3ae55e8bbc59cb90683973e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "b765bcce6c7c6bcf3613000f93ddc1086124c817",
+          "master_blob": "6e294c0a9501d0b843e4080702bf32cea685ba1f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/05_registry/stage_collaborative_deliberation_v1.yml",
+          "canonical_path": "01_os/05_registry/stage_collaborative_deliberation_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a51d26c5df633a09113a9e3d55e73bf338706047",
+          "master_blob": "1f05967e0429c4e706b9a8d81175a2b0061287b5",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "head": "0e636ddddbc350a044b287a0378103885c353768",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-impl-p1-canonical-001",
+          "head": "0e636ddddbc350a044b287a0378103885c353768"
+        }
+      ],
+      "work_summary": "阶段协同推演 P1 canonical 实现及审核修正、完成指针",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-impl-p1-canonical-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 7
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "896fb3463a6bb5a8758de4016c2316e17721be09",
+          "master_blob": "d95f00821880dcedce0d7d52f9db17cbbb9fe7a0",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30562642d124041fe72033419055ddfe7a95199a",
+          "master_blob": "f5c78f8fb51cd65a02b81b9a454ea130bc95fe78",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "2da5e4ccd328999a65d6e9c613e49a93037d466b",
+          "master_blob": "cc10f96515abafa34748ef72fea77182d177e18b",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30c1d00115a8f1c8c3f39afce9db05b6d5a864db",
+          "master_blob": "82a92a8c4423cccd5c1b5a7ed11d891cc349bdab",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "643c14d77af04a48251cc97c47ba4f11874b6e55",
+          "master_blob": "2b5c0cf932f4b3713c58cd6a9995b89a4238ef11",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a5a6a9cd888a4760aea36c332743700b32f9aef2",
+          "master_blob": "36c30439946aaab4e3ae55e8bbc59cb90683973e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "b765bcce6c7c6bcf3613000f93ddc1086124c817",
+          "master_blob": "6e294c0a9501d0b843e4080702bf32cea685ba1f",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "head": "1435315040b6343820e10cfe274b0ec540b28087",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-requirement-001",
+          "head": "1435315040b6343820e10cfe274b0ec540b28087"
+        }
+      ],
+      "work_summary": "阶段协同推演需求建模及复核、provenance 修正",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-requirement-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 30,
+      "head": "236706869ac280d084908b027263615c4fb47b35",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-implementation-solution-modeling-stage-evidence-001",
+          "head": "236706869ac280d084908b027263615c4fb47b35"
+        }
+      ],
+      "work_summary": "实现方案建模 Stage02 证据、远端验证和完成指针",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-implementation-solution-modeling-stage-evidence-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 31,
+      "head": "5e92dac4ef2dc90864320c92b7640ccf6eeef8d5",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-step-decomposition-001",
+          "head": "5e92dac4ef2dc90864320c92b7640ccf6eeef8d5"
+        }
+      ],
+      "work_summary": "阶段协同推演 Stage05 步骤拆分、复核及完成记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-step-decomposition-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 32,
+      "head": "a9ea59a351c2d0932551069bf75b250ef68f350f",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-test-review-modeling-001",
+          "head": "a9ea59a351c2d0932551069bf75b250ef68f350f"
+        }
+      ],
+      "work_summary": "阶段协同推演测试审核建模及 Stage06/P1 执行授权派单",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-test-review-modeling-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 33,
+      "head": "aa4d26073a37855d0a8983261ce680a41be27e17",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-information-collection-001",
+          "head": "aa4d26073a37855d0a8983261ce680a41be27e17"
+        }
+      ],
+      "work_summary": "阶段协同推演 Stage02 信息收集与审核完成记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-information-collection-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 34,
+      "head": "b9b6639d7835265ab5f85a7e544549f6ca2ac934",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-impl-p3-p7-integrated-001",
+          "head": "b9b6639d7835265ab5f85a7e544549f6ca2ac934"
+        }
+      ],
+      "work_summary": "阶段协同推演 P3–P7 集成实现及最终审核、完成指针",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-impl-p3-p7-integrated-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 21
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "94bf37e1908a6c6a9ca6e7f84bc6ff77657bdbb6",
+          "master_blob": "ab51d1d3403c0551c0b8162d901081d0e270f4e2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "12e02e5ac1dc9b2877f24675d6f3d8473fb988d3",
+          "master_blob": "e21bbb4b34ad65ec0cb04f09a01386cee1acf00e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "f637a896e1fb5a0701bddeccf13ecc20e029bc2f",
+          "master_blob": "aa5cb74a58fb76c48deb390a97d9bf4d9eef4f88",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "82003a2c2bc91aed1e9eb3ce47f5d0a2999fd273",
+          "master_blob": "9d65b8009d2a73d893814a5f62d6849d9987c5c1",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a357fa57dce4ab714ed9114d72f27719fe77166f",
+          "master_blob": "68ced25b4ccd682a3ea34bbfbb0f46648d52ffb7",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "99351a461d495895e839c2a5771564a5a75fc2b5",
+          "master_blob": "f55c44253c1e22161c9141db43b4fd2a04e8936f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "6314e63a865a8f61e588b8fbc745a1f226fe0366",
+          "master_blob": "5157b6ce576d3e801ba5a3316b359d963a9909fc",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml",
+          "canonical_path": "01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "037e4164a4d0f2cdee1133b989403b71355cddc2",
+          "master_blob": "042dae0dd15c7e6af50d9653b1b314597cb0ee03",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "896fb3463a6bb5a8758de4016c2316e17721be09",
+          "master_blob": "d95f00821880dcedce0d7d52f9db17cbbb9fe7a0",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30562642d124041fe72033419055ddfe7a95199a",
+          "master_blob": "f5c78f8fb51cd65a02b81b9a454ea130bc95fe78",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "2da5e4ccd328999a65d6e9c613e49a93037d466b",
+          "master_blob": "cc10f96515abafa34748ef72fea77182d177e18b",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30c1d00115a8f1c8c3f39afce9db05b6d5a864db",
+          "master_blob": "82a92a8c4423cccd5c1b5a7ed11d891cc349bdab",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "643c14d77af04a48251cc97c47ba4f11874b6e55",
+          "master_blob": "2b5c0cf932f4b3713c58cd6a9995b89a4238ef11",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py",
+          "state": "different_blob",
+          "branch_blob": "218c1f17c3958e372be362850d6bf6d75bdb86e8",
+          "master_blob": "2c736df0eda8757f65966e5972178a40292794a2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "5014cc63d2e83d9e7b951748d65c23ce877e90b2",
+          "master_blob": "4435019ffd5a08b95cd77c83e1169d1147745391",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "e54ca08ffe48fcaf49d58330b0629aff6993e520",
+          "master_blob": "211f056f00125e9a0078ada861f72811b49b23fe",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "672f0970edb4ddacb0068e71c76407d87e92ba11",
+          "master_blob": "8464f14372b903052997447f83e89e4257a62c89",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "ab81f480d70ccd146b8af4fefaed79cb12ec7a81",
+          "master_blob": "f1c409d3012f8de98b3521c9d97db109598eaf68",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a5a6a9cd888a4760aea36c332743700b32f9aef2",
+          "master_blob": "36c30439946aaab4e3ae55e8bbc59cb90683973e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "b765bcce6c7c6bcf3613000f93ddc1086124c817",
+          "master_blob": "6e294c0a9501d0b843e4080702bf32cea685ba1f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/05_registry/stage_collaborative_deliberation_v1.yml",
+          "canonical_path": "01_os/05_registry/stage_collaborative_deliberation_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a51d26c5df633a09113a9e3d55e73bf338706047",
+          "master_blob": "1f05967e0429c4e706b9a8d81175a2b0061287b5",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "head": "bf233aafd4b7c6db00a1065ffa686abf51cd98bb",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-impl-p2-contracts-001",
+          "head": "bf233aafd4b7c6db00a1065ffa686abf51cd98bb"
+        }
+      ],
+      "work_summary": "阶段协同推演 P2 机器契约、完成指针及单模型串行治理记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-impl-p2-contracts-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 10
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/evidence/evidence_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "896fb3463a6bb5a8758de4016c2316e17721be09",
+          "master_blob": "d95f00821880dcedce0d7d52f9db17cbbb9fe7a0",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/requirement/requirement_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30562642d124041fe72033419055ddfe7a95199a",
+          "master_blob": "f5c78f8fb51cd65a02b81b9a454ea130bc95fe78",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/result_contract/result_contract_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "2da5e4ccd328999a65d6e9c613e49a93037d466b",
+          "master_blob": "cc10f96515abafa34748ef72fea77182d177e18b",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/solution/solution_and_authority_basis_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "30c1d00115a8f1c8c3f39afce9db05b6d5a864db",
+          "master_blob": "82a92a8c4423cccd5c1b5a7ed11d891cc349bdab",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/依据材料/source_manifest_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "643c14d77af04a48251cc97c47ba4f11874b6e55",
+          "master_blob": "2b5c0cf932f4b3713c58cd6a9995b89a4238ef11",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "5014cc63d2e83d9e7b951748d65c23ce877e90b2",
+          "master_blob": "4435019ffd5a08b95cd77c83e1169d1147745391",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "e54ca08ffe48fcaf49d58330b0629aff6993e520",
+          "master_blob": "211f056f00125e9a0078ada861f72811b49b23fe",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "672f0970edb4ddacb0068e71c76407d87e92ba11",
+          "master_blob": "8464f14372b903052997447f83e89e4257a62c89",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "a5a6a9cd888a4760aea36c332743700b32f9aef2",
+          "master_blob": "36c30439946aaab4e3ae55e8bbc59cb90683973e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "b765bcce6c7c6bcf3613000f93ddc1086124c817",
+          "master_blob": "6e294c0a9501d0b843e4080702bf32cea685ba1f",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "head": "e96669da9c9302a1ced9dc857176782c9670235a",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-granularity-amendment-001",
+          "head": "e96669da9c9302a1ced9dc857176782c9670235a"
+        }
+      ],
+      "work_summary": "协同推演粒度修订及 Stage02 恢复执行记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-granularity-amendment-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 37,
+      "head": "f7bb80694ecb3cd87193a94e0041f32004942e8c",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-solution-modeling-001",
+          "head": "f7bb80694ecb3cd87193a94e0041f32004942e8c"
+        }
+      ],
+      "work_summary": "阶段协同推演 Stage04 方案建模及完成指针",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-solution-modeling-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 38,
+      "head": "fe2ee5c47b3c18a063a8b67d62d27a9561971e2d",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-collaborative-deliberation-result-modeling-001",
+          "head": "fe2ee5c47b3c18a063a8b67d62d27a9561971e2d"
+        }
+      ],
+      "work_summary": "阶段协同推演 Stage03 结果建模及完成指针",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-collaborative-deliberation-result-modeling-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 39,
+      "head": "79258866c0ee4502e65591799d601dcb35c25540",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/workflow-serial-operation-default-001",
+          "head": "79258866c0ee4502e65591799d601dcb35c25540"
+        }
+      ],
+      "work_summary": "单模型串行工作流默认规则文档",
+      "online_branches_at_exact_head": [
+        "dev/workflow-serial-operation-default-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 40,
+      "head": "7e389590d6b7d319416b5034c3a98900ee173961",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-global-communication-system-001",
+          "head": "7e389590d6b7d319416b5034c3a98900ee173961"
+        }
+      ],
+      "work_summary": "全局通讯系统、Stage07 修正证据、复核及 master 集成候选派单",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-global-communication-system-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 26,
+        "same_blob": 14
+      },
+      "comparisons": [
+        {
+          "branch_path": "08_os/02_boot/communication_system/启动清单_v1.yml",
+          "canonical_path": "01_os/02_boot/communication_system/启动清单_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "79aa7e745d32ce2a66abea509afc26a8d1af5fdf",
+          "master_blob": "969e04622cb31b4bcd479986a14cc6445c1d332c",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/Git收敛契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/Git收敛契约_v1.yml",
+          "state": "same_blob",
+          "branch_blob": "8c7195df641c39abc4334037a8c94dc533469a90",
+          "master_blob": "8c7195df641c39abc4334037a8c94dc533469a90",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "5c35b4028bd698fad3464d775f1a525de833fc88",
+          "master_blob": "9aea45dea1f87a541a61f762a9cb76812e12c949",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/导航与归档契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml",
+          "state": "same_blob",
+          "branch_blob": "83e7b17971529f511c483141a9571675f57da55e",
+          "master_blob": "83e7b17971529f511c483141a9571675f57da55e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/文档与引用契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "343b18245634cca8b9ee5593d156c5c32e720405",
+          "master_blob": "96baca621ea2304e26ec067549e1d8e6404d9392",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/消息契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/消息契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "c718f7f13a84e17b22330f56c4cd678cb3df029d",
+          "master_blob": "4431e2092d30d1550bb6221d95806752c1eb50a3",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/端点卡契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/端点卡契约_v1.yml",
+          "state": "same_blob",
+          "branch_blob": "f6632a3f95378949b970d327b1bcb4b4aeebdac3",
+          "master_blob": "f6632a3f95378949b970d327b1bcb4b4aeebdac3",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "ed76551e3e13f970d85a00789252125d5e1dda13",
+          "master_blob": "8338a126d88c23e9aaea4fb16ce28ccf2084b6b6",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/角色与权限边界_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "e7fe84f8790a1bd50814e9358c2ff2229a2995d7",
+          "master_blob": "5baea95d1ab9073cd43d40f48636720d1029baa2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/载体与发布契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "d5c1d8a5f77f5dbbccd135cd9cab4463473272d7",
+          "master_blob": "06d2d102db0427d43a3a46770035ef40c4496867",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/03_mechanisms/communication_system/通讯契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/communication_system/通讯契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "65ce0094ff3827a7fd2bb5faed4dce6c6e4bd51f",
+          "master_blob": "7678f95f8a74b19639463a6a45748c2f3fbb41b4",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/05_registry/communication_system_v1.yml",
+          "canonical_path": "01_os/05_registry/communication_system_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "3745973f81f7f374cc50acf820570303365999fc",
+          "master_blob": "1bdcd832af4abe92e3447a4bfb101d4a740b89c6",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/archive/__init__.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/archive/__init__.py",
+          "state": "same_blob",
+          "branch_blob": "3099d70309f5a3f2545c62fa76935986526a962d",
+          "master_blob": "3099d70309f5a3f2545c62fa76935986526a962d",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/archive/archive_task.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/archive/archive_task.py",
+          "state": "same_blob",
+          "branch_blob": "0c25e972f8860659e7a01ce501173c7a91a55c93",
+          "master_blob": "0c25e972f8860659e7a01ce501173c7a91a55c93",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/archive/navigation.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/archive/navigation.py",
+          "state": "same_blob",
+          "branch_blob": "0b7f030d7f84846d0e2d7204732519fdc5b7ea66",
+          "master_blob": "0b7f030d7f84846d0e2d7204732519fdc5b7ea66",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/archive/test_archive.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/archive/test_archive.py",
+          "state": "same_blob",
+          "branch_blob": "622f727fbb58bff5f49f22410f47605212732767",
+          "master_blob": "622f727fbb58bff5f49f22410f47605212732767",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/convergence/__init__.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/convergence/__init__.py",
+          "state": "same_blob",
+          "branch_blob": "20b96cd84fcbd50d9340571351ec5d1f39c15812",
+          "master_blob": "20b96cd84fcbd50d9340571351ec5d1f39c15812",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/convergence/converge_task.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/convergence/converge_task.py",
+          "state": "different_blob",
+          "branch_blob": "4359bc03c0a62469df4ca1cb8766d41a816fad60",
+          "master_blob": "cf228a4047b84cc0dd7b84d03c2dddc1eda52d8f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/convergence/test_convergence.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/convergence/test_convergence.py",
+          "state": "different_blob",
+          "branch_blob": "8d1d00a97299befed926c9273bc962a729075ebb",
+          "master_blob": "f56eb23abb6b4881e3c50b18060373f349041ca2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/publisher/__init__.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/publisher/__init__.py",
+          "state": "same_blob",
+          "branch_blob": "dca15c507f5bb8fd5f5a54c011bda06048cbcc5e",
+          "master_blob": "dca15c507f5bb8fd5f5a54c011bda06048cbcc5e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/publisher/publish_message.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/publisher/publish_message.py",
+          "state": "different_blob",
+          "branch_blob": "46f6bf27dc432ea2655b9daa73775a7ca3f216f9",
+          "master_blob": "37e040a0f09b2cd20a6b4ed87ac654277d1dc03c",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/publisher/republish_github.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/publisher/republish_github.py",
+          "state": "different_blob",
+          "branch_blob": "a0a068acf267f0306014a3e2a39323cf8e3a4c73",
+          "master_blob": "8e4adcdcc67c1c4dfc7c0302d97b584756dc7171",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/publisher/test_github_republication.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/publisher/test_github_republication.py",
+          "state": "different_blob",
+          "branch_blob": "ba1ba7f49a46147617c3472c2a75a70fc99aa9c9",
+          "master_blob": "453adc899097d75c0083225d9b630ab452671a64",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/publisher/test_publisher.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/publisher/test_publisher.py",
+          "state": "different_blob",
+          "branch_blob": "d2f77626dc6c1d3deb836dd51d13538b1e6c4335",
+          "master_blob": "3e69abd4b6b152897f345eaeece9872fdf41c464",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/task_space_initializer/__init__.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/task_space_initializer/__init__.py",
+          "state": "same_blob",
+          "branch_blob": "d0c0d5f6ae4ad4a028cc277d6ef04a5a9620eec1",
+          "master_blob": "d0c0d5f6ae4ad4a028cc277d6ef04a5a9620eec1",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/task_space_initializer/initialize_task_space.py",
+          "state": "different_blob",
+          "branch_blob": "54c1269702384ea4b6bccdaef98f8e423edce9ce",
+          "master_blob": "e0726ef5d7d81de4fad0c4c8c6f715f0d669504e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/task_space_initializer/test_initializer.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/task_space_initializer/test_initializer.py",
+          "state": "different_blob",
+          "branch_blob": "b1b7f4ffc4a3e86bfcad8f783c05c97d8bb7b50c",
+          "master_blob": "f09af4f7d188e325f8edb88ed948484478232740",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/__init__.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/__init__.py",
+          "state": "same_blob",
+          "branch_blob": "521f90da31c3275705b9b65bdad8dc0e65d8d45b",
+          "master_blob": "521f90da31c3275705b9b65bdad8dc0e65d8d45b",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/parity.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/parity.py",
+          "state": "different_blob",
+          "branch_blob": "9028354cc3f153dfcb1784592f81890619efb562",
+          "master_blob": "5d86c31e9abc616c16d5190a2999c2519f6ba179",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/receiver_bootstrap.py",
+          "state": "different_blob",
+          "branch_blob": "f11c3b2b5addd79a96b713e9975d6001952de290",
+          "master_blob": "d7e7e581a98e0b33fe1083439e247a459c6b1326",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/run_frozen_stage04_tests.py",
+          "state": "different_blob",
+          "branch_blob": "38ea7bbb090b77a79b5933d296a584d81c8e9310",
+          "master_blob": "e0447415d9772cbaf59a67dd0e618830d8eefcfa",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/sender_zone.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/sender_zone.py",
+          "state": "different_blob",
+          "branch_blob": "45b15ae597faf9dc5356a85c5a6979703954b946",
+          "master_blob": "65489e1c6cbe000c1a46c4de78765913baf66550",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/stage04_production_adapter.py",
+          "state": "different_blob",
+          "branch_blob": "a9747ca9968578d7eca8a7a96a95dcbd5ea18e02",
+          "master_blob": "7101da90ee5d4640bf43b6de89d72687d4827b6b",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/test_parity.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/test_parity.py",
+          "state": "same_blob",
+          "branch_blob": "84f2da36df942e86235278b6eae380d65469f112",
+          "master_blob": "84f2da36df942e86235278b6eae380d65469f112",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/test_production_oracle_coupling.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/test_production_oracle_coupling.py",
+          "state": "same_blob",
+          "branch_blob": "087f4a9481bb2b2b88b6d49bb5b2bf1200833bb2",
+          "master_blob": "087f4a9481bb2b2b88b6d49bb5b2bf1200833bb2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/test_receiver_bootstrap.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/test_receiver_bootstrap.py",
+          "state": "different_blob",
+          "branch_blob": "bcb49a6ac6ee4b71b4a18b71317d2f00b26a4d7e",
+          "master_blob": "3fa218b85a3b3e59e3e0a069af6f7f21663cc2d8",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/test_sender_zone.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/test_sender_zone.py",
+          "state": "same_blob",
+          "branch_blob": "010bbdf22b8d8eef16e5460a10fe35ef5561e215",
+          "master_blob": "010bbdf22b8d8eef16e5460a10fe35ef5561e215",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/test_validator.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/test_validator.py",
+          "state": "different_blob",
+          "branch_blob": "46064fb741c29e4139ca369be50e4586f9652c34",
+          "master_blob": "f41e067d39bb32c5a38bddbde212d855676eb131",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/validate_communication_system.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/validate_communication_system.py",
+          "state": "different_blob",
+          "branch_blob": "6f3b6d2db5a64bbb22d73186eb9e2cfb670753fa",
+          "master_blob": "3a2997b43d0fa1970900bca1839bd24b94d36624",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "08_os/06_execution/boot/communication_system/validator/validate_execution_package.py",
+          "canonical_path": "01_os/06_execution/boot/communication_system/validator/validate_execution_package.py",
+          "state": "different_blob",
+          "branch_blob": "f66b18400b88d3102b837f8a0af674cf5d257ae9",
+          "master_blob": "0eb5b65e814b38c0135984b82b57d6d4ed0d4c02",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "head": "dfe553d35ea61aa31ebac32f7f107a9b402723eb",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-global-model-capability-and-availability-routing-001",
+          "head": "dfe553d35ea61aa31ebac32f7f107a9b402723eb"
+        }
+      ],
+      "work_summary": "模型能力/可用性路由的资格测试、v2 测试套件及 Gemini 重测",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-global-model-capability-and-availability-routing-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 42,
+      "head": "c54f77984cc251cca554ab5011f5edaa5a86f7b2",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-global-model-capability-and-availability-routing-002",
+          "head": "c54f77984cc251cca554ab5011f5edaa5a86f7b2"
+        }
+      ],
+      "work_summary": "模型路由 master 集成回执和 run 关闭记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-global-model-capability-and-availability-routing-002"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 43,
+      "head": "19c39ed37f14c97cfa132ffafabcb9afa33dd7f0",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-semantic-acceptance-root-cause-replacement-002",
+          "head": "19c39ed37f14c97cfa132ffafabcb9afa33dd7f0"
+        }
+      ],
+      "work_summary": "Stage04 根因替换 v2、receipt Git blob 绑定与字节规范化",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-semantic-acceptance-root-cause-replacement-002"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "head": "243e8bd7153f9060192ac376ca7f867c05128c54",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-review-fix-001",
+          "head": "243e8bd7153f9060192ac376ca7f867c05128c54"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-review-fix-001",
+          "head": "243e8bd7153f9060192ac376ca7f867c05128c54"
+        }
+      ],
+      "work_summary": "correction-003 修正及 ownership-provenance 架构阻塞证据",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-review-fix-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "head": "3002d6177779abf81e6d476bfc434ee5d6dbe3c8",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-successor-acceptance-refreeze-001",
+          "head": "3002d6177779abf81e6d476bfc434ee5d6dbe3c8"
+        }
+      ],
+      "work_summary": "Stage04 后继候选重冻结及三项阻塞问题修正记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-successor-acceptance-refreeze-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "head": "67fae8325bb4abe99a2e2429b88bdcfddba43abf",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "review/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-independent-review-001",
+          "head": "67fae8325bb4abe99a2e2429b88bdcfddba43abf"
+        }
+      ],
+      "work_summary": "correction-003 独立审核 FIX_REQUIRED 结果",
+      "online_branches_at_exact_head": [
+        "review/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003-independent-review-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "head": "760fdfbabe9078b96106fc435d2372b96e098180",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "review/os-v2-stage04-semantic-acceptance-root-cause-replacement-002",
+          "head": "760fdfbabe9078b96106fc435d2372b96e098180"
+        }
+      ],
+      "work_summary": "Stage04 根因替换 v2 的独立审核 PASS 记录",
+      "online_branches_at_exact_head": [
+        "review/os-v2-stage04-semantic-acceptance-root-cause-replacement-002"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "head": "7cf9195715dcc7aa34bd09a8bc0f8320415f3930",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-stage04-structural-provenance-upstream-001",
+          "head": "7cf9195715dcc7aa34bd09a8bc0f8320415f3930"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-structural-provenance-upstream-001",
+          "head": "7cf9195715dcc7aa34bd09a8bc0f8320415f3930"
+        }
+      ],
+      "work_summary": "structural-provenance 上游修正；声明/事实通道及 B1/B2 问题关闭",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-structural-provenance-upstream-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "head": "8ae7e7f7cec427bbe9d76735bbac9181481078cb",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003",
+          "head": "8ae7e7f7cec427bbe9d76735bbac9181481078cb"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003",
+          "head": "8ae7e7f7cec427bbe9d76735bbac9181481078cb"
+        }
+      ],
+      "work_summary": "跨区域 applicability correction-003 修正与冻结记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-semantic-acceptance-cross-region-applicability-correction-003"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "head": "b30241a0f9006fb72b9ab1a27f44e2311d4a7221",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-t2-completion-001",
+          "head": "b30241a0f9006fb72b9ab1a27f44e2311d4a7221"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-t2-completion-001",
+          "head": "b30241a0f9006fb72b9ab1a27f44e2311d4a7221"
+        }
+      ],
+      "work_summary": "T2 后继重冻结、SR-001/SR-002 修正；提交仍声明一个 residual",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-t2-completion-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "head": "c6dd431deba81ad62c84a0f06df7ff81deb283b2",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-semantic-acceptance-root-cause-replacement-001",
+          "head": "c6dd431deba81ad62c84a0f06df7ff81deb283b2"
+        }
+      ],
+      "work_summary": "Stage04 根因替换 v1 候选及完成指针自指修正",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-semantic-acceptance-root-cause-replacement-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "head": "eeac20b519fad6d28c8be102e7e0b43ac3f9657b",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "review/os-v2-stage04-semantic-acceptance-root-cause-001",
+          "head": "eeac20b519fad6d28c8be102e7e0b43ac3f9657b"
+        }
+      ],
+      "work_summary": "Stage04 根因替换 v1 的 require-fixes 审核记录",
+      "online_branches_at_exact_head": [
+        "review/os-v2-stage04-semantic-acceptance-root-cause-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "head": "fa2c9b658df5ecfe9235261cb1f207af84efdfb3",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-role-window-context-model-routing-integration-001",
+          "head": "fa2c9b658df5ecfe9235261cb1f207af84efdfb3"
+        }
+      ],
+      "work_summary": "角色/窗口/上下文路由集成、可选重试语义及 Human 决策记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-role-window-context-model-routing-integration-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "1d124b05c09b9329947ce17975b70bf51051acaf",
+          "master_blob": "a4c6528095890eb7aea542854190510985ffd561",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "canonical_path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "state": "different_blob",
+          "branch_blob": "f5b0cef6353eb6e8625894e4447ca17cbf4c595a",
+          "master_blob": "ba621811d86cae268e216c80789653eb09dedfbf",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "head": "73123ea11f3175c88496c313ec8a3f82f38630ec",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage04-semantic-acceptance-reentry-review-001",
+          "head": "73123ea11f3175c88496c313ec8a3f82f38630ec"
+        }
+      ],
+      "work_summary": "Stage04 reentry 审核、前台交接、manifest 与 Human 顺序授权",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage04-semantic-acceptance-reentry-review-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 55,
+      "head": "01d24b511be0adcae1dbf94d1100716239f397ec",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-system-initialization-001",
+          "head": "01d24b511be0adcae1dbf94d1100716239f397ec"
+        }
+      ],
+      "work_summary": "OS 初始化任务包与 run 证据；未据此宣称初始化全部完成",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-system-initialization-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 56,
+      "head": "e75aa4140789cd50dbec9f30864f24a3b0754c6d",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-model-routing-cowork-opus5-review-001",
+          "head": "e75aa4140789cd50dbec9f30864f24a3b0754c6d"
+        }
+      ],
+      "work_summary": "Cowork Opus5 注册审核、发布授权与 master 发布记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-model-routing-cowork-opus5-review-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 57,
+      "head": "8692e3d26304a368d425923f459a8495ecd5c148",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-chatgpt-local-files-terminal-capability-001",
+          "head": "8692e3d26304a368d425923f459a8495ecd5c148"
+        }
+      ],
+      "work_summary": "ChatGPT 本地文件/终端能力任务初始化及派单导航",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-chatgpt-local-files-terminal-capability-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 58,
+      "head": "eaf6748bd4a2fa789f28f985541ea724a31e4ade",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-stage-human-alignment-deliberation-001",
+          "head": "eaf6748bd4a2fa789f28f985541ea724a31e4ade"
+        }
+      ],
+      "work_summary": "Human 阶段对齐推演；末轮 CHANGES_REQUIRED，原 W6 已明确冻结此前驱",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-stage-human-alignment-deliberation-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 13
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/01_需求建模/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "6a372bbe7647666d583ed3999ed09711ac8e5bda",
+          "master_blob": "ab51d1d3403c0551c0b8162d901081d0e270f4e2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/02_信息收集与提炼/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "89c2fde837d7172eb770bc9cb97ebece625ac2a7",
+          "master_blob": "e21bbb4b34ad65ec0cb04f09a01386cee1acf00e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/03_结果建模/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "be9042096fbe85e3f3269e6e00d5e7bf60dbb04b",
+          "master_blob": "aa5cb74a58fb76c48deb390a97d9bf4d9eef4f88",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/04_测试生成/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "0acd9132e0e40d056b526a9dd70854be114bc9a3",
+          "master_blob": "9d65b8009d2a73d893814a5f62d6849d9987c5c1",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/05_步骤拆分/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "bb47c8a7c02b6b9035f42949e8b3255e65f59a73",
+          "master_blob": "68ced25b4ccd682a3ea34bbfbb0f46648d52ffb7",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/06_执行/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "e45f20c61d6db8a3344a8959097d96c3f4f17809",
+          "master_blob": "f55c44253c1e22161c9141db43b4fd2a04e8936f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml",
+          "canonical_path": "01_os/01_workflow/07_测试执行/实现/阶段协同推演profile引用_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "7d1e020567847fad7719f6c9d78552e81c4c2997",
+          "master_blob": "5157b6ce576d3e801ba5a3316b359d963a9909fc",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml",
+          "canonical_path": "01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "c1c5129b90e37a9c5afa4af218d175236b5e1865",
+          "master_blob": "042dae0dd15c7e6af50d9653b1b314597cb0ee03",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py",
+          "state": "different_blob",
+          "branch_blob": "8e76514fd902aa1dfdc07755518f99fbb19faf51",
+          "master_blob": "b60ddb048864749b47d338ebbc8a0f62d7b49742",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "8ca4ca16ced60e724f8391e6afb8e536f4696ace",
+          "master_blob": "4435019ffd5a08b95cd77c83e1169d1147745391",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "06b210d4fad5e72aa2d44de9b5928f6a0014c351",
+          "master_blob": "36c30439946aaab4e3ae55e8bbc59cb90683973e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "7509c939085c9eff3357bf62cc5664116500fa0e",
+          "master_blob": "6e294c0a9501d0b843e4080702bf32cea685ba1f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/05_registry/stage_collaborative_deliberation_v1.yml",
+          "canonical_path": "01_os/05_registry/stage_collaborative_deliberation_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "9feec02c91d82a65a94079fc447e74a76b9564f7",
+          "master_blob": "1f05967e0429c4e706b9a8d81175a2b0061287b5",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "head": "dbd64a6ca3a8411cf2f1859293c54135b49065ef",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-human-auth-code-minlength-001",
+          "head": "dbd64a6ca3a8411cf2f1859293c54135b49065ef"
+        }
+      ],
+      "work_summary": "Human 授权码最小长度规则简化候选",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-human-auth-code-minlength-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "53bebb598609c02bfdc525a4a172dbf3162a7486",
+          "master_blob": "6e294c0a9501d0b843e4080702bf32cea685ba1f",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/boot/stage_collaborative_deliberation/human_challenge_verify.py",
+          "canonical_path": "01_os/06_execution/boot/stage_collaborative_deliberation/human_challenge_verify.py",
+          "state": "different_blob",
+          "branch_blob": "13465fb36ff0f4ed1c0d8768e7aef05a90015e06",
+          "master_blob": "d522ef61fda123f37bd70df9dad8af7bc61086b8",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "head": "aa9b6cfda19c4fb1eb8e506c6f73900308fdb4fe",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-chatgpt-plugin-capability-catalog-001",
+          "head": "aa9b6cfda19c4fb1eb8e506c6f73900308fdb4fe"
+        }
+      ],
+      "work_summary": "ChatGPT 插件能力目录任务初始化；未据此宣称目录实现完成",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-chatgpt-plugin-capability-catalog-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 61,
+      "head": "4e182ac148dc7701eed6be7e03e8e39b139acc6b",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-citystate-local-host-control-baseline-001",
+          "head": "4e182ac148dc7701eed6be7e03e8e39b139acc6b"
+        }
+      ],
+      "work_summary": "本地主机控制基线的集成后远端审核派单",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-citystate-local-host-control-baseline-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 62,
+      "head": "58a584b6a27b6d86d01b6347266712fc0c13e6d1",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "dev/os-v2-model-routing-claude-code-opus5-registration-001",
+          "head": "58a584b6a27b6d86d01b6347266712fc0c13e6d1"
+        }
+      ],
+      "work_summary": "Claude Code Opus5 路由注册及 authority blob 绑定修正",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-model-routing-claude-code-opus5-registration-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "same_blob": 1,
+        "different_blob": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/02_boot/model_routing/启动清单_v1.yml",
+          "canonical_path": "01_os/02_boot/model_routing/启动清单_v1.yml",
+          "state": "same_blob",
+          "branch_blob": "9b07ffc25e5990d4b8748d5b5d411fc698944e4e",
+          "master_blob": "9b07ffc25e5990d4b8748d5b5d411fc698944e4e",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/03_mechanisms/model_routing/来源索引_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/model_routing/来源索引_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "9964ef31c554ec671b2282139de67224ecc1343f",
+          "master_blob": "d61f6d71c3471b8ffce11e6f70cc1e97dd614961",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml",
+          "canonical_path": "01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "f9327e22bb2bc4e7ee114ba6876fb0e5ee304e98",
+          "master_blob": "b5f037051b10eea5b13515d5794fbc3607387689",
+          "basename_candidates": []
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "head": "04daacddfdba61bc3f6e1ba0e308721c202b7319",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-t2-resume-control-001",
+          "head": "04daacddfdba61bc3f6e1ba0e308721c202b7319"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-t2-resume-control-001",
+          "head": "04daacddfdba61bc3f6e1ba0e308721c202b7319"
+        }
+      ],
+      "work_summary": "T2 续作控制、审核接收、最终修正派单与状态记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-t2-resume-control-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 64,
+      "head": "330417171b141a9447594f4799383caa1876d72b",
+      "refs": [
+        {
+          "source": "remote",
+          "name": "x",
+          "head": "330417171b141a9447594f4799383caa1876d72b"
+        }
+      ],
+      "work_summary": "T2 结构绑定 refinement 提议；等待 CM-v2 Human 确认的控制记录",
+      "online_branches_at_exact_head": [
+        "x"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 65,
+      "head": "6a229b92a3317b765cfd2570254db4099dc412ed",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-t3-archive-and-big-task-workflow-control-local",
+          "head": "6a229b92a3317b765cfd2570254db4099dc412ed"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-t3-archive-and-big-task-workflow-control-001",
+          "head": "6a229b92a3317b765cfd2570254db4099dc412ed"
+        }
+      ],
+      "work_summary": "T3 归档/大任务工作流控制、sender index 规范化及派单",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-t3-archive-and-big-task-workflow-control-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 66,
+      "head": "a745a4e8bb426256d7eaf5146b0e0dfb6bc4a5df",
+      "refs": [
+        {
+          "source": "local",
+          "name": "dev/os-v2-task0-closure-evidence-repair-001",
+          "head": "a745a4e8bb426256d7eaf5146b0e0dfb6bc4a5df"
+        },
+        {
+          "source": "remote",
+          "name": "dev/os-v2-task0-closure-evidence-repair-001",
+          "head": "a745a4e8bb426256d7eaf5146b0e0dfb6bc4a5df"
+        }
+      ],
+      "work_summary": "Task0 关闭证据修复、最终审核与 Human 接受记录",
+      "online_branches_at_exact_head": [
+        "dev/os-v2-task0-closure-evidence-repair-001"
+      ],
+      "scoped_source_or_contract_counts": {},
+      "comparisons": []
+    },
+    {
+      "id": 67,
+      "head": "b79922dce8975add161de69d4614543644ef52f5",
+      "refs": [
+        {
+          "source": "local",
+          "name": "claude/task-discipline-receipts-001",
+          "head": "b79922dce8975add161de69d4614543644ef52f5"
+        },
+        {
+          "source": "remote",
+          "name": "claude/task-discipline-receipts-001",
+          "head": "b79922dce8975add161de69d4614543644ef52f5"
+        }
+      ],
+      "work_summary": "任务纪律回执及测量工具修正：显式 ref、路径台账、读取失败与遍历停止点",
+      "online_branches_at_exact_head": [
+        "claude/task-discipline-receipts-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 5,
+        "no_direct_counterpart": 6
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/05_registry/task_discipline_v1.yml",
+          "canonical_path": "01_os/05_registry/task_discipline_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "2e5c4aa79ae43a900c527169060f0d75021f56cb",
+          "master_blob": "2a5d5451ec5be7456c50b0e002774aba4ae6b85c",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/conformance/conformance.py",
+          "canonical_path": "01_os/06_execution/task_discipline/conformance/conformance.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "85e0b2b6b672a90ee566918f03701d7291dbbf1c",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/conformance/ledger.py",
+          "canonical_path": "01_os/06_execution/task_discipline/conformance/ledger.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "f751996e4b49564f8cf9dc85fc636a39d3d0f684",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/conformance/source.py",
+          "canonical_path": "01_os/06_execution/task_discipline/conformance/source.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "0472a008b6adacd5b315a54b526af658fcd7ebc6",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/conformance/test_conformance.py",
+          "canonical_path": "01_os/06_execution/task_discipline/conformance/test_conformance.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "55ef2822d3522f8a4deff0554c16dd00179b424b",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py",
+          "canonical_path": "01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py",
+          "state": "different_blob",
+          "branch_blob": "41f3a0752f5693b6d12e798fbfa7c9a403391ccb",
+          "master_blob": "9c8fa7709ce40fbce530015c39b28310882149e2",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/preflight/preflight_task_context.py",
+          "canonical_path": "01_os/06_execution/task_discipline/preflight/preflight_task_context.py",
+          "state": "different_blob",
+          "branch_blob": "78b2d17af4acedb44dfaff4e6dafdfe8c3d5b91b",
+          "master_blob": "ec6656ec3f1f8936e2534b34ed30020d52512b1a",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/preflight/test_preflight_task_context.py",
+          "canonical_path": "01_os/06_execution/task_discipline/preflight/test_preflight_task_context.py",
+          "state": "different_blob",
+          "branch_blob": "ad80ea7c4741984b726c8f3150164b4d16afc71b",
+          "master_blob": "ec69b1995c52126a0f68cdc3baef6ecaaa918ada",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py",
+          "canonical_path": "01_os/06_execution/task_discipline/quiet_verify/quiet_verify.py",
+          "state": "different_blob",
+          "branch_blob": "c82d4d82ec2090229449527d0d3455c4075951ba",
+          "master_blob": "9166ad089cf1e94f688e5e1a2a786b5ea05f59e0",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/receipt.py",
+          "canonical_path": "01_os/06_execution/task_discipline/receipt.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "b008a717d85edc9f2e88544ba2cb532e440fbd3f",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/02_acceptance/实现/semantic_acceptance/receipt.py"
+          ]
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/test_receipt.py",
+          "canonical_path": "01_os/06_execution/task_discipline/test_receipt.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "cce5dd9753b1869671d0634517bd07721df7b42b",
+          "master_blob": null,
+          "basename_candidates": [
+            "01_os/_runs/run-20260812-角色窗口上下文模型路由集成-001/04_测试生成/successor_v4/03_validation/vendored_baseline_tests/test_receipt.py"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "head": "d817c804a9a9af17234a481a10690c45e07da85c",
+      "refs": [
+        {
+          "source": "local",
+          "name": "claude/conformance-checker-phase1-001",
+          "head": "d817c804a9a9af17234a481a10690c45e07da85c"
+        },
+        {
+          "source": "remote",
+          "name": "claude/conformance-checker-phase1-001",
+          "head": "d817c804a9a9af17234a481a10690c45e07da85c"
+        }
+      ],
+      "work_summary": "文档/实际世界一致性测量 Phase1、完成指针及远端读回 SHA 补录",
+      "online_branches_at_exact_head": [
+        "claude/conformance-checker-phase1-001"
+      ],
+      "scoped_source_or_contract_counts": {
+        "different_blob": 1,
+        "no_direct_counterpart": 2
+      },
+      "comparisons": [
+        {
+          "branch_path": "01_os/05_registry/task_discipline_v1.yml",
+          "canonical_path": "01_os/05_registry/task_discipline_v1.yml",
+          "state": "different_blob",
+          "branch_blob": "b212d48322e739b9a649947deebfc880d33fb504",
+          "master_blob": "2a5d5451ec5be7456c50b0e002774aba4ae6b85c",
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/conformance/conformance.py",
+          "canonical_path": "01_os/06_execution/task_discipline/conformance/conformance.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "ca17bd07a48036409aaa07e9fd8c961721366f1a",
+          "master_blob": null,
+          "basename_candidates": []
+        },
+        {
+          "branch_path": "01_os/06_execution/task_discipline/conformance/test_conformance.py",
+          "canonical_path": "01_os/06_execution/task_discipline/conformance/test_conformance.py",
+          "state": "no_direct_counterpart",
+          "branch_blob": "aa8af435780a6b165becb753f2f74b370f56365a",
+          "master_blob": null,
+          "basename_candidates": []
+        }
+      ]
+    }
+  ]
+}

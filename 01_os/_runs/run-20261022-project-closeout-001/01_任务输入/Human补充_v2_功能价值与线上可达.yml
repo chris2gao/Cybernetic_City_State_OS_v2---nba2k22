@@ -1,0 +1,17 @@
+task_id: os-v2-project-closeout-integration-inventory-001
+recorded_date: '2026-10-22'
+source: current_Human_chat
+instructions:
+  - 只要有实际价值的，因为怕已有开发完成的分支没有合并，造成功能遗漏
+  - 核对待检查分支有无线上版本，没有则上传，让其他有上下文模型通过线上仓库判断
+scope:
+  functional_value_screening: compare_recorded_branch_implementations_with_current_master_without_new_tests_or_development
+  online_presence: require_exact_candidate_SHA_on_a_live_remote_branch
+  missing_candidate_publication: ordinary_non_force_branch_publication_authorized
+  master_report_publication: covered_by_current_project_closeout_request
+  other_branch_integration: still_requires_Human_selection
+limits:
+  - Do not treat missing ancestry as missing functionality.
+  - Do not treat possible path correspondence as semantic equivalence.
+  - Do not overwrite an existing remote branch to make names match.
+  - Online availability does not imply delivery, reading or acceptance by another model.
