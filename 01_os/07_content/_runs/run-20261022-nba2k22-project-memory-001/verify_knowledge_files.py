@@ -40,7 +40,7 @@ def ledger_evidence_links():
         assert a["audit_category"] == b["audit_category"], (i, "audit category mismatch")
         assert a["current_blocker"] == b["risk_or_blocker"], (i, "blocker mismatch")
     assert sum(l["counts"]["audit_status_distribution"].values()) == 40
-    assert l["counts"]["inherited_gaps"] == 20
+    assert source["counts"]["inherited_gaps"] == 20
     for w in l["workstreams"]:
         assert w["source_paths"], w["id"]
         for path in w["source_paths"]:

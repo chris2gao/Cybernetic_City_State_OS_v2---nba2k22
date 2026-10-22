@@ -3,8 +3,8 @@ run_id: run-20261022-nba2k22-project-memory-001
 base_sha: 8bdae1700ecd3ed47d2ad197cca86ace388083bb
 branch: task/nba2k22-project-memory-baseline-01
 ownership: domain
-lifecycle: candidate_pending_validation
-status: knowledge_documents_delivered_remote_checked_pending_OS_managed_verify_and_independent_review
+lifecycle: candidate_ready_for_independent_review
+status: knowledge_documents_delivered_managed_verify_passed_pending_independent_review
 task_packet_ref: 任务包.yml
 verification_plan_ref: verification_plan.json
 verification_evidence_ref: remote_verification.json
@@ -15,6 +15,6 @@ parent_source_refresh_candidate: 8bdae1700ecd3ed47d2ad197cca86ace388083bb
 master_at_dispatch: 26cd0bfabc5e4857e37bf491756d885ad592f41f
 evidence_limitations:
   - Source-refresh base is not yet merged to master; this branch is stacked on that candidate.
-  - No local OS managed validation because DCR has not been authorized.
-  - No live game, production database, local worktree or save accessed.
+  - OS managed verification executed and passed locally (PLAN_AND_TASK_DAG, LEDGER_EVIDENCE_LINKS, DOC_AUTHORITY_LINKS).
+  - No live game, production database, or save accessed.
   - Independent review remains a separate OS task and Human integration decision.
