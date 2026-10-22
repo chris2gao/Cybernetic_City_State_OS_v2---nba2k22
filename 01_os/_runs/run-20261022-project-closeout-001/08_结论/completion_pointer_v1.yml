@@ -1,0 +1,54 @@
+completion_pointer:
+  task_id: os-v2-project-closeout-integration-inventory-001
+  status: integration_and_inventory_delivered_Human_selection_pending
+  append_only: true
+  original_remote_master: b6782775d7734fb10f5119ce04a057b5af0ef5f3
+  integrated_candidate_and_remote_readback: ebd7341363ba8524125c8e4ff72f46980157ce7b
+  integration_method: atomic_non_force_fast_forward_local_git_with_registered_hook
+  Human_confirmation_ref: ../01_任务输入/任务包_v1.yml
+  local_document_disposition:
+    task_archives: moved_into_existing_W6_run_as_current_Human_requested
+    root_archive_ownership_addition: removed_in_favor_of_existing_01_os_runs_ownership
+    gpt_pre_images: preserved_local_untracked_not_published
+  inventory:
+    baseline_master: ebd7341363ba8524125c8e4ff72f46980157ce7b
+    live_remote_branches: 111
+    local_branches: 23
+    unmerged_refs: 77
+    distinct_unmerged_heads: 68
+    unique_unmerged_commit_ledger_entries: 1197
+    Human_table_ref: ../02_信息收集/未合并分支总表_v1.md
+    detailed_evidence_ref: ../02_信息收集/未合并分支清单_v1.md
+    snapshot_ref: ../02_信息收集/未合并分支快照_v1.json
+    definition: all_local_heads_plus_live_remote_heads_not_ancestors_of_baseline_master
+    patch_equivalence: measured_separately_with_git_cherry_not_used_as_merge_authority
+    ordering: earliest_unmerged_committer_timestamp_not_task_completion_date
+  validation:
+    prior_W6_implementation_and_tests: unchanged
+    functional_test_expansion: none
+    independent_review_expansion: none
+    diff_whitespace_check: passed
+    initial_master_push_hook: passed
+    initial_remote_readback: matched
+    historical_records: preserved_append_only
+  remaining_authorization_boundary: Human_must_choose_inventory_branches_before_their_merge
+  further_inventory_branch_merges_performed: false
+  branch_deletions_performed: false
+  proof_limits:
+    - Commit and historical run descriptions are evidence of recorded work, not new functional acceptance.
+    - First unmerged dates can reflect a shared ancestor and do not establish actual task completion order.
+    - Git cherry equivalent patches do not prove an entire branch is semantically redundant.
+    - Final publication of this record has a later carrier commit; it must be read back separately.
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: Commit approved local documents, integrate the completed W6 lineage into master, and list remaining unmerged branches for Human choice.
+  implementation_or_review_method: Preserve history with a normal fast-forward and registered hook; enumerate every local and live remote head, group identical tips, measure ancestry and patch equivalence, and summarize recorded work in Chinese.
+  supportability_rationale: The current Human explicitly approved master integration and canonical archive routing; remote readback confirms the delivered candidate, and the inventory retains exact tip identities and all 1197 unique unmerged commit records.
+  feasibility_rationale: Existing Git operations suffice without rewriting history, merging other branches, expanded tests, new review or publishing the five local images; grouped evidence makes Human decisions addressable by stable numbers.
+  exact_result_or_candidate_ref: ebd7341363ba8524125c8e4ff72f46980157ce7b
+  verification_evidence:
+    - ../02_信息收集/未合并分支快照_v1.json
+    - ../02_信息收集/未合并分支总表_v1.md
+    - remote_master_readback:ebd7341363ba8524125c8e4ff72f46980157ce7b
+  residual_risk_or_unproved_limits:
+    - Further merges require Human branch selection; inventory does not approve or accept any candidate.
