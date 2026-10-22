@@ -1,0 +1,39 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/任务包.yml",
+  "checks": [
+    {
+      "id": "DOCS_AND_SCOPE",
+      "argv": [
+        "@python",
+        "01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/verify_plan_artifacts.py",
+        "--check",
+        "DOCS_AND_SCOPE"
+      ],
+      "timeout_seconds": 30,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "BACKLOG_DAG",
+      "argv": [
+        "@python",
+        "01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/verify_plan_artifacts.py",
+        "--check",
+        "BACKLOG_DAG"
+      ],
+      "timeout_seconds": 30,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "DOC_CROSSREF",
+      "argv": [
+        "@python",
+        "01_os/07_content/_runs/run-20261022-nba2k22-os-onboarding-001/verify_plan_artifacts.py",
+        "--check",
+        "DOC_CROSSREF"
+      ],
+      "timeout_seconds": 30,
+      "expected_exit_code": 0
+    }
+  ]
+}
