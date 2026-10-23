@@ -1,0 +1,56 @@
+task_packet:
+  task_id: OS-EVIDENCE-FEEDBACK-LOOP-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 407e2134bd2f595477099b2c6e3484c818059fd9
+  branch: task/os-evidence-feedback-loop-01
+  objective: >-
+    Record an evidence-backed, selective cross-task OS feedback loop, distinguish
+    safe exploration autonomy from authorization boundaries, and prevent
+    self-referential review and low-value correction cycles. No new runtime gate.
+  human_input: >-
+    Human invited models to discover systemic problems and improve global OS
+    files, while keeping NBA2K22 Gemini/Codex deep native research moving.
+  source_evidence:
+    - task/native-atlas-r00-01-live01@7d84614710d9855d3ffd683da1cdb6fc896ebcf1
+    - task/native-atlas-r00-01@1d980be8f32642e8c177a6ad8e9b429beaa48647
+    - AGENT_WORKING_DISCIPLINE.md@407e2134bd2f595477099b2c6e3484c818059fd9
+    - 01_os/开发入口与单窗口任务规范_v1.md@407e2134bd2f595477099b2c6e3484c818059fd9
+  allowed_changed_paths:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/**
+  verification_plan: 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/verification_plan.json
+  required_tests:
+    - FEEDBACK_TRIAGE_POSITIVE_NEGATIVE
+    - SCOPE_AND_AUTHORITY_INVARIANTS
+    - SOURCE_AND_CLAIM_BOUNDARIES
+  prohibitions:
+    - modify_master_or_protected_shared_state
+    - force_push_or_history_rewrite
+    - activate_scheduler_runtime_or_boot
+    - access_game_process_or_save
+    - modify_domain_research
+    - automatic_task_creation_or_feedback_spam
+    - alter_canonical_permission_or_reviewer_requirements
+  publisher:
+    principal_binding: github_connector
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: OpenAI
+    surface: ChatGPT GitHub connector
+    model: GPT-6
+    mode: standard
+    authority: routing_only
+  verification_profile:
+    independent_reviewer: separate_session
+    different_model_family: preferred
+  terminal_lifecycle_state: candidate_ready_for_independent_review
