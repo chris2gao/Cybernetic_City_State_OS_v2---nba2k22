@@ -3112,5 +3112,77 @@
     "2bit badge level claim requires separate proof"
   ],
   "next_task": "NATIVE-ATLAS-R00",
-  "read_only": true
+  "read_only": true,
+  "field_adjacency_groups": [
+    {
+      "id": "NH_ATTRIBUTES",
+      "anchor": "PLAYER_ATTRIBUTES",
+      "region": "PLAYER+0x41F..0x456",
+      "evidence_ref": "config/memory_field_profile.json#/fields/PLAYER",
+      "negative_control": "two different UI ratings; exclude Potential",
+      "priority": "P0",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    },
+    {
+      "id": "NH_TENDENCIES",
+      "anchor": "PLAYER_TENDENCY_BYTES",
+      "region": "PLAYER+0x458..0x4BA",
+      "evidence_ref": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#/native_slots",
+      "negative_control": "named vs UNKNOWN bytes; no archived-label ordinal matches",
+      "priority": "P0",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    },
+    {
+      "id": "NH_BADGES",
+      "anchor": "PLAYER_BADGE_REGION",
+      "region": "PLAYER+0x36C..0x3C0 candidate",
+      "evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_badges",
+      "negative_control": "2-bit vs five-level contradiction",
+      "priority": "P0",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    },
+    {
+      "id": "NH_CAREER",
+      "anchor": "PLAYER_CAREER_INDEX_ARRAY",
+      "region": "PLAYER+0xFC..0x126 -> Slot24",
+      "evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/career_history_stats_array",
+      "negative_control": "retired and no-stat players; different save IDs",
+      "priority": "P0",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    },
+    {
+      "id": "NH_STATS",
+      "anchor": "PLAYER_STATS",
+      "region": "ROSTERDATA Slot24, historical 48 bytes",
+      "evidence_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS",
+      "negative_control": "packed fields and sentinel values",
+      "priority": "P0",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    },
+    {
+      "id": "NH_GAMES",
+      "anchor": "SEASON",
+      "region": "SEASON+0x28 / +0x1B6AC, Slot10/44 hypotheses",
+      "evidence_ref": "research/native_access/AG_NATIVE_01D/DISCOVERY.md",
+      "negative_control": "played vs unplayed; active count vs capacity",
+      "priority": "P0",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    },
+    {
+      "id": "NH_WORLD_SETTINGS",
+      "anchor": "ROSTERDATA",
+      "region": "registered settings groups; no invented contiguous region",
+      "evidence_ref": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json#/registry_candidates",
+      "negative_control": "profile defaults vs current UI",
+      "priority": "P1",
+      "confidence": "RESEARCH_ONLY",
+      "exact_field_adjacency_proven": false
+    }
+  ]
 }

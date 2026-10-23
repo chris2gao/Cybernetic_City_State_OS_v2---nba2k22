@@ -41,3 +41,12 @@
 ## Codex 升级
 
 高价值字段经两次不同实证路径仍未解决，或遇到复杂生命周期、分配/释放、批量写入关联问题时，给 Codex：固定 SHA、具体目标/原生根、试过的 offset 和 getter、UI 对照、负样本、失败假说、未解机制、可复核的成功判据。Codex 独立验证后回传修订 Delta。任何真实写游戏、批准执行、存档更改和自然成长修改不得在 Flash 研究中自行启动。
+
+
+## REV1 · Flash 探索目录字段级使用规则
+
+- `pages.page_kind` 将 AG01D 历史研究屏幕候选、虚拟研究分组、第三方导出组和 TEAM_MATCHUP_MATRIX 对象视图区分开；`target_pc22_ui_confirmed=false`，不可声称本任务已观察真实游戏页面。四个无 UI 的 Player Concept 只映射到虚拟 `PLAYER_CONCEPT_RESEARCH`。
+- `type_evidence_ref` / `meaning_evidence_ref` 是已登记项目来源，不是当前存档实机证明。项目已知存储字节宽度并不自动证明篮球语义；UNKNOWN 坚持 UNKNOWN。
+- `discovery_group_ref` 仅关联到 `GAME_NATIVE_OBJECT_HINTS_V0.json#/field_adjacency_groups` 的历史锚点；字段标注 `RESEARCH_GROUP_NOT_EXACT_NEIGHBOR` 明确不构成物理连续性证明。必须有反例和相邻字段验证才可升级。
+- `canonical_field_ref` 目前只在项目同名+同偏移或已登记命名原生倾向下建立自身的规范种子；其他来源为未归并研究条目。禁止按顺序将第三方 99 个标签对齐原生字节。
+- `FLASH_R00_PRIORITY_QUEUE_V0.json` 是尚未派发的只读探索清单，有明确停止条件；它不是 DCR/游戏进程权限。年龄仍以 Human 候选公式为主，寻找独立 age 内存槽非阻断项。207 条 Action 仍全部禁用本轮游戏执行。

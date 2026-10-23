@@ -1,0 +1,269 @@
+{
+  "schema_version": "nba2k22.flash_r00_priority_queue.v0",
+  "source_parent_sha": "43be6483ca309fad6f17b8e2e0d3d79918fa1931",
+  "task_id": "WORLD-SOURCE-MODEL-SEED-01",
+  "status": "NOT_DISPATCHED",
+  "notes": [
+    "Read-only queue only",
+    "No DCR/game access from this document",
+    "No game write authority"
+  ],
+  "items": [
+    {
+      "id": "R00-01",
+      "priority": "P0",
+      "target": "ROSTERDATA",
+      "question": "Check descriptor origin, count, stride and +8 error",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0"
+      ],
+      "field_refs": [],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Two descriptor layouts and in-range object evidence",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop at uncertain manager pointer",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-02",
+      "priority": "P0",
+      "target": "PLAYER",
+      "question": "Verify current player identities and age inputs",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/2"
+      ],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/345",
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/474"
+      ],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Two UI/player comparisons; same-save proof",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop if save or build identity unbound",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-03",
+      "priority": "P0",
+      "target": "PLAYER_ATTRIBUTES",
+      "question": "Check registered 55 rating/durability fields",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/10"
+      ],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/199"
+      ],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Bounded reads; contrasting player and hidden Potential excluded",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop if any hidden sensitive bytes exported",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-04",
+      "priority": "P0",
+      "target": "PLAYER_TENDENCY_BYTES",
+      "question": "48 named and 51 unknown tendency bytes",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/11"
+      ],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/374"
+      ],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Two players, no ordinal third-party assignment",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop before inferring semantic names",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-05",
+      "priority": "P0",
+      "target": "PLAYER_BADGE_REGION",
+      "question": "Resolve 2-bit vs 5 labels mismatch",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/12"
+      ],
+      "field_refs": [],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Multiple displayed badge states; negative controls",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Escalate if contradictory",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-06",
+      "priority": "P0",
+      "target": "SEASON",
+      "question": "Validate schedule, count and played flags",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/1",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/6"
+      ],
+      "field_refs": [],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Played/unplayed match, actual vs capacity",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop at unvalidated game state",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-07",
+      "priority": "P0",
+      "target": "PLAYER_STATS",
+      "question": "Link stats to current/career player",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/3",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/9"
+      ],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/500"
+      ],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Index mapping and no-stats negative case",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop at unknown PlayerID scope",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-08",
+      "priority": "P0",
+      "target": "BOXSCORE_STATBANK",
+      "question": "Identify valid StatBank and GameID scope",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/7"
+      ],
+      "field_refs": [],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Known game and stat rows, unplayed negative case",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop before claiming global GameID",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-09",
+      "priority": "P0",
+      "target": "PLAYER_UI",
+      "question": "True PC22 tabs vs virtual groups",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/2"
+      ],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/369"
+      ],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Screens observed and not-observed list",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop before inventing UI tabs",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-10",
+      "priority": "P0",
+      "target": "WORLD_IDENTITY",
+      "question": "Save isolation and long-term identity",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/2",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0"
+      ],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/473"
+      ],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Distinct save scoped examples",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop at unverified continuity",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-11",
+      "priority": "P1",
+      "target": "WORLD_SETTINGS",
+      "question": "Profile defaults vs real UI settings",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0"
+      ],
+      "field_refs": [],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Read-only values, version and negative control",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop before any setter",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "R00-12",
+      "priority": "P1",
+      "target": "ACTION_DIRECTORY",
+      "question": "Read-only action/source relationships",
+      "root_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/2"
+      ],
+      "field_refs": [],
+      "source_refs": [
+        "GAME_NATIVE_OBJECT_HINTS_V0.json",
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+      ],
+      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
+      "expected_evidence": "Catalog status, side effects and approval evidence",
+      "negative_control": "Different object, no-stat or unplayed example",
+      "stop_condition": "Stop before game action",
+      "game_write_authorized": false,
+      "status": "NOT_RUN"
+    }
+  ]
+}
