@@ -2,7 +2,7 @@
   "schema_version": "nba2k22.world_data_arch_completion.v1",
   "task_id": "WORLD-DATA-ARCH-01",
   "completion_pointer": "01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json",
-  "lifecycle": "candidate_pending_validation",
+  "lifecycle": "candidate_ready_for_independent_review",
   "base_sha": "407e2134bd2f595477099b2c6e3484c818059fd9",
   "branch": "task/world-data-arch-01",
   "candidate_binding": "Containing Git commit pins these artifacts. A later evidence-only commit may name its verified implementation parent; no self-referential SHA is claimed.",
@@ -16,7 +16,12 @@
   "task_packet": "01_os/07_content/_runs/run-20261022-world-data-arch-001/task_packet.yml",
   "verification_plan": "01_os/07_content/_runs/run-20261022-world-data-arch-001/verification_plan.json",
   "verification": {
-    "state": "NOT_YET_RUN",
+    "state": "PASS",
+    "receipt": "01_os/07_content/_runs/run-20261022-world-data-arch-001/verification_receipt.json",
+    "candidate_sha": "4cb30c369cf3b02dabbf33f04e02f928d260bbf5",
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "checks": 6,
     "evidence_scope": "SYNTHETIC_CONCEPTUAL_AND_OS_STATIC_ONLY"
   },
   "human_acceptance": {
@@ -37,9 +42,19 @@
     "feasibility_rationale": "模型只规定逻辑身份、关系和有效性约束；SQLite 的复合键与外键可承载其约束方向，物理库数、DDL、事务及迁移留待 Schema 任务，原生未知映射保持 HOLD。",
     "exact_result_or_candidate_ref": "01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json in its containing task/world-data-arch-01 commit",
     "verification_evidence": {
+      "receipt": "01_os/07_content/_runs/run-20261022-world-data-arch-001/verification_receipt.json",
       "plan": "01_os/07_content/_runs/run-20261022-world-data-arch-001/verification_plan.json",
-      "scope": "Results pending managed execution; do not infer PASS from this structural MWU artifact."
+      "candidate_sha": "4cb30c369cf3b02dabbf33f04e02f928d260bbf5",
+      "managed_run": "PASS",
+      "managed_inspect": "PASS",
+      "limits": "Proves only declared OS static and conceptual checks; no independent model or native acceptance."
     },
     "residual_risk_or_unproved_limits": "概念示例不证明生产 API 安全、真实游戏回读、长期赛季 Decoder、数据库迁移或独立模型审核。GameID、PlayerID 与 StatBank 边界待 NATIVE-ACCEPT-01。"
+  },
+  "implementation_candidate_sha": "4cb30c369cf3b02dabbf33f04e02f928d260bbf5",
+  "publication_binding": {
+    "task_branch": "task/world-data-arch-01",
+    "exact_published_sha": "Use containing published Git commit; final Human handoff and external publication_receipt.json record its full SHA after push/readback.",
+    "final_managed_attempt": "Sibling workspace directory world-data-arch-01-evidence/final-attempt; final committed tree is revalidated before publication."
   }
 }

@@ -1,0 +1,45 @@
+{
+  "packet": "01_os\\07_content\\_runs\\run-20261022-world-data-arch-001\\task_packet.yml",
+  "closable_as_big_task": true,
+  "findings": [],
+  "derived_closure": {
+    "objective": "Establish the complete conceptual basketball data model, independent-save identity and time contracts, source quality rules and schema handoff; deliver a verified candidate for separate review.",
+    "allowed_changed_paths": [
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/WORLD_DATA_DOMAIN_MODEL_V1.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/WORLD_DATA_IDENTITY_AND_TIME_ADR_V1.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/WORLD_DATA_ENTITY_CATALOG_V1.json",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/WORLD_DATA_SOURCE_AND_QUALITY_CONTRACT_V1.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/WORLD_DATA_LEGACY_IMPACT_AND_SCHEMA_HANDOFF_V1.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md",
+      "01_os/07_content/_runs/run-20261022-world-data-arch-001/**"
+    ],
+    "known_protected_actions": [],
+    "evidence_gates": [
+      "OS_ROUTING",
+      "OS_CLOSURE",
+      "CATALOG_RELATIONS",
+      "SIX_SCENARIOS",
+      "LINKS_AND_SCOPE",
+      "MWU"
+    ],
+    "stop_conditions": [
+      "game_process_or_save_access",
+      "production_database_or_DDL_mutation",
+      "season_advance_or_player_attribute_write",
+      "collector_or_personality_implementation",
+      "cross_save_branch_merge_or_history_inheritance",
+      "shared_OS_modification",
+      "DCR_without_separate_Human_approval",
+      "master_publication",
+      "force_push_or_history_rewrite"
+    ],
+    "final_reviewer_boundary": "separate_session_after_candidate_delivery",
+    "terminal_lifecycle_state": "candidate_ready_for_independent_review",
+    "completion_pointer_shape": "01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json"
+  },
+  "authority_effect": "none"
+}

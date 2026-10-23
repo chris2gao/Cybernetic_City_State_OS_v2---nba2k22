@@ -1,0 +1,191 @@
+{
+  "task_id": "WORLD-DATA-ARCH-01",
+  "implementation_candidate": "4cb30c369cf3b02dabbf33f04e02f928d260bbf5",
+  "source_base": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "plan_sha256": "7dcacdf905c915f88e2d627d236a54edc352661e8b99a23624107a61bfde6e35",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "task_packet_sha256": "2cb45d4460a3f26f548956cafdfe570b55cdd55145a2864575cb57eba083dc5b",
+  "source_before": {
+    "head": "4cb30c369cf3b02dabbf33f04e02f928d260bbf5",
+    "tree": "52f7d650245fa731f17a2e76850561e9214ce9c3",
+    "clean": true
+  },
+  "source_after": {
+    "state": {
+      "head": "4cb30c369cf3b02dabbf33f04e02f928d260bbf5",
+      "tree": "52f7d650245fa731f17a2e76850561e9214ce9c3",
+      "clean": true
+    },
+    "error": null
+  },
+  "managed_run_exit_code": 0,
+  "managed_inspect_exit_code": 0,
+  "checks": [
+    {
+      "id": "OS_ROUTING",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/03_mechanisms/model_routing/瀹炵幇/verify_model_routing.py",
+        "static",
+        "."
+      ],
+      "exit_code": 0,
+      "status": "success",
+      "elapsed_seconds": 0.36153379999996105,
+      "logs": {
+        "stdout": {
+          "path": "verification/001.stdout.txt",
+          "sha256": "5a9f5aeaadb5243c8c86e4893ca885a1bf4448995190d29fe18d0753e81360e5",
+          "bytes": 19
+        },
+        "stderr": {
+          "path": "verification/001.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "OS_CLOSURE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/06_execution/task_orchestration/big_task/closure_preflight.py",
+        "--packet",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/task_packet.yml"
+      ],
+      "exit_code": 0,
+      "status": "success",
+      "elapsed_seconds": 0.14581299999997555,
+      "logs": {
+        "stdout": {
+          "path": "verification/002.stdout.txt",
+          "sha256": "dc138d5e1cf5b00f88a9f7da74e8089ceb68b8f4712ba265aa130b667078ef82",
+          "bytes": 2550
+        },
+        "stderr": {
+          "path": "verification/002.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "CATALOG_RELATIONS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/verify_architecture.py",
+        "catalog"
+      ],
+      "exit_code": 0,
+      "status": "success",
+      "elapsed_seconds": 0.13178740000000744,
+      "logs": {
+        "stdout": {
+          "path": "verification/003.stdout.txt",
+          "sha256": "b8fd43f1fd4a0e2b8a0166935f844de01c751b007f4a34132923db31978b20c8",
+          "bytes": 83
+        },
+        "stderr": {
+          "path": "verification/003.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "SIX_SCENARIOS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/verify_architecture.py",
+        "scenarios"
+      ],
+      "exit_code": 0,
+      "status": "success",
+      "elapsed_seconds": 0.12143790000004628,
+      "logs": {
+        "stdout": {
+          "path": "verification/004.stdout.txt",
+          "sha256": "b5e1a80cd4b770d6c043052cd3a1dcc16eba68612442b3facc3a1b1c8e276f2f",
+          "bytes": 794
+        },
+        "stderr": {
+          "path": "verification/004.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "LINKS_AND_SCOPE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/verify_architecture.py",
+        "links"
+      ],
+      "exit_code": 0,
+      "status": "success",
+      "elapsed_seconds": 0.26521999999999935,
+      "logs": {
+        "stdout": {
+          "path": "verification/005.stdout.txt",
+          "sha256": "94e91330f84281bc42980d29f8d84b7e89b100d1f1efa16da93fb35b25aa121d",
+          "bytes": 106
+        },
+        "stderr": {
+          "path": "verification/005.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "MWU",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py",
+        "artifact",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json",
+        "--root",
+        ".",
+        "--require-mwu"
+      ],
+      "exit_code": 0,
+      "status": "success",
+      "elapsed_seconds": 0.1602563999999802,
+      "logs": {
+        "stdout": {
+          "path": "verification/006.stdout.txt",
+          "sha256": "cafe1f108fefdd5ae0252d38564e0f5cdd5b0c30ad1075fce7655a43bc2401eb",
+          "bytes": 33
+        },
+        "stderr": {
+          "path": "verification/006.stderr.txt",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    }
+  ],
+  "status": "PASS",
+  "raw_attempt_location": "Sibling workspace directory world-data-arch-01-evidence/attempt-02; retained locally with original input/start/stream records.",
+  "published_evidence_note": "Complete stdout/stderr bytes retained as .txt; finish/source/result records unchanged. Runtime interpreter and local paths from input/start records are omitted. This portable subset is not the full inspect input.",
+  "first_invocation": {
+    "candidate": "9f6e67cd677a2c296cf2d5b9ff58a0b9b8ab08da",
+    "exit_code": 1,
+    "error": "candidate_outside_packet_allowlist",
+    "stage": "before attempt directory creation",
+    "resolution": "Replaced unsupported filename wildcard with exact five document paths; aligned local scope check. No checks ran on rejected candidate."
+  },
+  "limits": [
+    "Synthetic conceptual examples only",
+    "Not production API or SQLite enforcement",
+    "Not AG native test rerun or game acceptance",
+    "Not separate independent model review"
+  ]
+}
