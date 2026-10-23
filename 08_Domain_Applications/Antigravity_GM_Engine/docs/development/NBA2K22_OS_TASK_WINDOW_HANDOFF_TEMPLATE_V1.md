@@ -85,7 +85,7 @@ stop_conditions:
 
 `run.yml.lifecycle`只能是OS七值枚举（`research_only`、`candidate_pending_validation`、`candidate_ready_for_independent_review`、`verified_on_demand`、`integrated_and_verified_on_demand`、`deferred`、`excluded`）。`status:`可作说明但不能替代`lifecycle:`。
 
-OS的独立审核必须在不同会话完成：派单/执行同人不能宣称T2/T3任务已最终独立通过。评审看原始证据、未证结论和执行者论证，出正式verdict（契约内PASS/FIX_REQUIRED/REJECT；对Human沟通可另解释建议`ready_for_human_integration`等）。
+OS的独立审核必须在不同会话完成：派单/执行同人不能宣称T2/T3任务已最终独立通过。按2026-10-22 Human 更新，独立性以不同会话、独立上下文和未参与生成被审候选判断；另一个同模型族（包括GPT-6）会话可以审核，`different_model_family`如实披露而非默认硬门。具体边界及本轮历史任务包覆盖见[协作规范第4.1节](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md)。评审看原始证据、未证结论和执行者论证，出正式verdict（契约内PASS/FIX_REQUIRED/REJECT；对Human沟通可另解释建议`ready_for_human_integration`等）。
 
 ## E. 最小可追溯completion handoff字段
 

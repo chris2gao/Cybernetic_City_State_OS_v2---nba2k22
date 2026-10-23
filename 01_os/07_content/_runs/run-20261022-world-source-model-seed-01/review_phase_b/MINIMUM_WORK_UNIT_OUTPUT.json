@@ -1,0 +1,32 @@
+{
+  "minimum_work_unit_output": {
+    "role": "independent_review",
+    "work_performed_or_requested": "完成固定候选的原始机器证据、架构语义和 Flash R00 就绪性独立审核，并记录 Human 授权的领域独立性规则修订。",
+    "implementation_or_review_method": "从固定 Git 对象离线解析目录和引用，检查原始 attempt 与日志摘要，用具体实体反例和逐任务队列对照检验生产者主张。",
+    "supportability_rationale": "十项机器记录支持结构约束与成功记录；错误实体归属和缺乏目标锚点的任务构成可复查反例，因此不能支持整体放行。",
+    "feasibility_rationale": "最小整改只需修改特定队列行、语义映射与来源记录，保留合法 UNKNOWN，无需实机调查或新建 Reader，适合生产者下一轮定向修订。",
+    "verdict": "FIX_REQUIRED",
+    "primary_evidence_examined": [
+      "stage_a_evidence_audit.json",
+      "catalog_analysis.json",
+      "architecture_mapping_audit.json",
+      "semantic_counterexamples.json"
+    ],
+    "findings_and_residual_risk": "B-01/B-02 为 MAJOR；B-03 至 B-05 为 MINOR。原 Inspect 当前失败、同族经 Human 许可、实机与集成仍未认证。",
+    "executor_rationale_assessment": {
+      "supportability_assessment": "计数与默认禁止的理由由原始记录支持；覆盖完整不能推出实体正确，字段反例直接推翻全量语义就绪主张。",
+      "feasibility_assessment": "前九项可作有条件种子，但后三项尚需重新查找真正对象锚点，统一负样本不能支撑低成本独立执行全部队列。",
+      "primary_evidence_refs": [
+        "stage_a_evidence_audit.json",
+        "catalog_analysis.json",
+        "architecture_mapping_audit.json",
+        "semantic_counterexamples.json"
+      ],
+      "unsupported_or_inferred_claims": [
+        "888 行等于已认证原生字段不成立",
+        "通用方法和字段非空等于 R00 全量可执行不成立",
+        "派生副本 Inspect 通过不能证明原目录当前通过"
+      ]
+    }
+  }
+}

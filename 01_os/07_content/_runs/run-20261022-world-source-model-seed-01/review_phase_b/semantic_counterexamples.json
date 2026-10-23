@@ -1,0 +1,779 @@
+{
+  "selected_fields": [
+    {
+      "json_pointer": "/fields/10",
+      "line": 756,
+      "field": {
+        "field_id": "AG01D.UI.PLAYER_CARD.player_tendencies",
+        "domain": "Player",
+        "entity": "PlayerIncarnation",
+        "field_family": "PLAYER_CARD",
+        "display_label": "player_tendencies",
+        "meaning": "原生打球倾向",
+        "value_type": "raw uint8",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "NATIVE_OBSERVATION_CANDIDATE",
+        "source_kind": "AG01D_RESEARCH_MATRIX",
+        "ui_pages": [
+          "PLAYER_CARD"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "Slot 1 PLAYER",
+        "native_offset_or_getter_hint": "0x170..0x260",
+        "adjacent_fields_or_regions": [
+          {
+            "scope": "RESEARCH_GROUP_NOT_EXACT_NEIGHBOR",
+            "region": "PLAYER+0xFC..0x126 -> Slot24",
+            "evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/career_history_stats_array",
+            "negative_control": "retired and no-stat players; different save IDs"
+          }
+        ],
+        "source_refs": [
+          "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_tendencies"
+        ],
+        "original_source_status": "NATIVE_VERIFIED",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INDEPENDENT_NATIVE_ACCEPTANCE_PENDING",
+          "CURRENT_SAVE_NOT_RETESTED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_GROUP:NH_CAREER; retired and no-stat players; different save IDs",
+        "discovery_group_ref": "NH_CAREER",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "type_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_tendencies",
+        "meaning_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_tendencies"
+      }
+    },
+    {
+      "json_pointer": "/fields/11",
+      "line": 804,
+      "field": {
+        "field_id": "AG01D.UI.ROOKIE_REPORT.draft_pick_original_team",
+        "domain": "Operations",
+        "entity": "TransactionEvent",
+        "field_family": "ROOKIE_REPORT",
+        "display_label": "draft_pick_original_team",
+        "meaning": "选秀权原始产生球队 ID",
+        "value_type": "uint16",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "NATIVE_OBSERVATION_CANDIDATE",
+        "source_kind": "AG01D_RESEARCH_MATRIX",
+        "ui_pages": [
+          "ROOKIE_REPORT"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "Slot 36 DRAFT_ASSETS",
+        "native_offset_or_getter_hint": "0x00",
+        "adjacent_fields_or_regions": [],
+        "source_refs": [
+          "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/draft_pick_original_team"
+        ],
+        "original_source_status": "NATIVE_VERIFIED",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INDEPENDENT_NATIVE_ACCEPTANCE_PENDING",
+          "CURRENT_SAVE_NOT_RETESTED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_SOURCE:AG01D_RESEARCH_MATRIX; inspect versioned source, UI and negative sample",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "type_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/draft_pick_original_team",
+        "meaning_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/draft_pick_original_team"
+      }
+    },
+    {
+      "json_pointer": "/fields/12",
+      "line": 844,
+      "field": {
+        "field_id": "AG01D.UI.ROOKIE_REPORT.draft_pick_owner_team",
+        "domain": "Operations",
+        "entity": "TransactionEvent",
+        "field_family": "ROOKIE_REPORT",
+        "display_label": "draft_pick_owner_team",
+        "meaning": "当前选秀权持有球队 ID",
+        "value_type": "uint16",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "NATIVE_OBSERVATION_CANDIDATE",
+        "source_kind": "AG01D_RESEARCH_MATRIX",
+        "ui_pages": [
+          "ROOKIE_REPORT"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "Slot 36 DRAFT_ASSETS",
+        "native_offset_or_getter_hint": "0x02",
+        "adjacent_fields_or_regions": [],
+        "source_refs": [
+          "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/draft_pick_owner_team"
+        ],
+        "original_source_status": "NATIVE_VERIFIED",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INDEPENDENT_NATIVE_ACCEPTANCE_PENDING",
+          "CURRENT_SAVE_NOT_RETESTED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_SOURCE:AG01D_RESEARCH_MATRIX; inspect versioned source, UI and negative sample",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "type_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/draft_pick_owner_team",
+        "meaning_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/draft_pick_owner_team"
+      }
+    },
+    {
+      "json_pointer": "/fields/16",
+      "line": 1003,
+      "field": {
+        "field_id": "AG01D.UI.ROOKIE_REPORT.is_rookie",
+        "domain": "Operations",
+        "entity": "TransactionEvent",
+        "field_family": "ROOKIE_REPORT",
+        "display_label": "is_rookie",
+        "meaning": "is_rookie = (years_pro == 0)",
+        "value_type": "uint8 (years_pro)",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "NATIVE_OBSERVATION_CANDIDATE",
+        "source_kind": "AG01D_RESEARCH_MATRIX",
+        "ui_pages": [
+          "ROOKIE_REPORT"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "Slot 1 PLAYER",
+        "native_offset_or_getter_hint": "0x320",
+        "adjacent_fields_or_regions": [
+          {
+            "scope": "RESEARCH_GROUP_NOT_EXACT_NEIGHBOR",
+            "region": "PLAYER+0xFC..0x126 -> Slot24",
+            "evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/career_history_stats_array",
+            "negative_control": "retired and no-stat players; different save IDs"
+          }
+        ],
+        "source_refs": [
+          "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/is_rookie"
+        ],
+        "original_source_status": "NATIVE_VERIFIED",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INDEPENDENT_NATIVE_ACCEPTANCE_PENDING",
+          "CURRENT_SAVE_NOT_RETESTED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_GROUP:NH_CAREER; retired and no-stat players; different save IDs",
+        "discovery_group_ref": "NH_CAREER",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "type_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/is_rookie",
+        "meaning_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT/fields/is_rookie"
+      }
+    },
+    {
+      "json_pointer": "/fields/19",
+      "line": 1147,
+      "field": {
+        "field_id": "AG01D.UI.SEASON_STATS_AND_LEADERBOARDS.season_points",
+        "domain": "Game",
+        "entity": "Game",
+        "field_family": "SEASON_STATS_AND_LEADERBOARDS",
+        "display_label": "season_points",
+        "meaning": "当前赛季总得分",
+        "value_type": "uint16",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "NATIVE_OBSERVATION_CANDIDATE",
+        "source_kind": "AG01D_RESEARCH_MATRIX",
+        "ui_pages": [
+          "SEASON_STATS_AND_LEADERBOARDS"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "Slot 24 PLAYER_STATS",
+        "native_offset_or_getter_hint": "0x20",
+        "adjacent_fields_or_regions": [
+          {
+            "scope": "RESEARCH_GROUP_NOT_EXACT_NEIGHBOR",
+            "region": "PLAYER+0xFC..0x126 -> Slot24",
+            "evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/career_history_stats_array",
+            "negative_control": "retired and no-stat players; different save IDs"
+          }
+        ],
+        "source_refs": [
+          "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SEASON_STATS_AND_LEADERBOARDS/fields/season_points"
+        ],
+        "original_source_status": "NATIVE_VERIFIED",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INDEPENDENT_NATIVE_ACCEPTANCE_PENDING",
+          "CURRENT_SAVE_NOT_RETESTED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_GROUP:NH_CAREER; retired and no-stat players; different save IDs",
+        "discovery_group_ref": "NH_CAREER",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "type_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SEASON_STATS_AND_LEADERBOARDS/fields/season_points",
+        "meaning_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SEASON_STATS_AND_LEADERBOARDS/fields/season_points"
+      }
+    },
+    {
+      "json_pointer": "/fields/33",
+      "line": 1818,
+      "field": {
+        "field_id": "AG01D.UI.SINGLE_GAME_BOXSCORE.player_statline",
+        "domain": "Game",
+        "entity": "Game",
+        "field_family": "SINGLE_GAME_BOXSCORE",
+        "display_label": "player_statline",
+        "meaning": null,
+        "value_type": "24 bytes binary struct (6 x uint32)",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "NATIVE_OBSERVATION_CANDIDATE",
+        "source_kind": "AG01D_RESEARCH_MATRIX",
+        "ui_pages": [
+          "SINGLE_GAME_BOXSCORE"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "BOXSCORE_STATBANK",
+        "native_offset_or_getter_hint": "statbank_addr + stat_idx * 24",
+        "adjacent_fields_or_regions": [
+          {
+            "scope": "RESEARCH_GROUP_NOT_EXACT_NEIGHBOR",
+            "region": "SEASON+0x28 / +0x1B6AC, Slot10/44 hypotheses",
+            "evidence_ref": "research/native_access/AG_NATIVE_01D/DISCOVERY.md",
+            "negative_control": "played vs unplayed; active count vs capacity"
+          }
+        ],
+        "source_refs": [
+          "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SINGLE_GAME_BOXSCORE/fields/player_statline"
+        ],
+        "original_source_status": "NATIVE_VERIFIED",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INDEPENDENT_NATIVE_ACCEPTANCE_PENDING",
+          "CURRENT_SAVE_NOT_RETESTED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_GROUP:NH_GAMES; played vs unplayed; active count vs capacity",
+        "discovery_group_ref": "NH_GAMES",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "type_evidence_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SINGLE_GAME_BOXSCORE/fields/player_statline"
+      }
+    },
+    {
+      "json_pointer": "/fields/374",
+      "line": 16342,
+      "field": {
+        "field_id": "PLAYER.TENDENCY.BYTE_0x458",
+        "domain": "Player",
+        "entity": "PlayerIncarnation",
+        "field_family": "tendency_native",
+        "display_label": "SHOT_TENDENCY",
+        "meaning": "99 physical tendency bytes, 48 named / 51 unknown; external 99 labels are NOT positionally matched",
+        "value_type": "raw_bytes_1_unsignedness_unverified",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "DYNAMIC_STATE_OBSERVATION",
+        "source_kind": "PROJECT_NATIVE_TENDENCY_SLOT",
+        "ui_pages": [
+          "PLAYER_TENDENCIES_RESEARCH"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": "PLAYER",
+        "native_offset_or_getter_hint": "0x458",
+        "adjacent_fields_or_regions": [
+          {
+            "scope": "RESEARCH_GROUP_NOT_EXACT_NEIGHBOR",
+            "region": "PLAYER+0x458..0x4BA",
+            "evidence_ref": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#/native_slots",
+            "negative_control": "named vs UNKNOWN bytes; no archived-label ordinal matches"
+          }
+        ],
+        "source_refs": [
+          "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#/native_slots/0"
+        ],
+        "original_source_status": "NAMED_NATIVE",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "NATIVE_TENDENCY_UI_CORRELATION_UNVERIFIED",
+          "ENGINE_EFFECT_NOT_VERIFIED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "READ_ONLY_GROUP:NH_TENDENCIES; named vs UNKNOWN bytes; no archived-label ordinal matches",
+        "canonical_field_ref": "PLAYER.TENDENCY.BYTE_0x458",
+        "canonicalization_state": "CANONICAL_REGISTERED_TENDENCY_SLOT",
+        "type_evidence_ref": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#/native_slots/0",
+        "type_maturity": "PROJECT_REGISTRY_ONLY",
+        "discovery_group_ref": "NH_TENDENCIES",
+        "projection_of": null,
+        "meaning_evidence_ref": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#/native_slots/0"
+      }
+    },
+    {
+      "json_pointer": "/fields/474",
+      "line": 21232,
+      "field": {
+        "field_id": "PLAYER.years_pro",
+        "domain": "Player",
+        "entity": "PlayerIncarnation",
+        "field_family": "age_draft_and_career",
+        "display_label": "years_pro",
+        "meaning": "游戏记录的职业球龄",
+        "value_type": "UNKNOWN",
+        "unit": "UNKNOWN",
+        "data_lifecycle": "DYNAMIC_GAME_STATE",
+        "source_kind": "BASE_INPUT",
+        "ui_pages": [
+          "PLAYER_CARD_RESEARCH",
+          "TEAM_ROSTER_RESEARCH"
+        ],
+        "ui_mapping_status": "RESEARCH_PAGE_TARGET_NOT_CURRENT_UI_VERIFIED",
+        "native_object_hint": null,
+        "native_offset_or_getter_hint": null,
+        "adjacent_fields_or_regions": [],
+        "source_refs": [
+          "HUMAN_DECISION_20261022"
+        ],
+        "original_source_status": "HUMAN_PROJECT_RULE_NOT_NATIVE_ENGINE_PROOF",
+        "evidence_maturity": [
+          "RESEARCH_INDEXED"
+        ],
+        "current_save_live_verified": false,
+        "full_enumeration_certified": false,
+        "auto_capture_status": "NOT_CERTIFIED",
+        "unknowns": [
+          "INPUT_SOURCE_OR_UI_BOUNDARY_NOT_VERIFIED"
+        ],
+        "sensitivity": "NOT_CLASSIFIED_FAIL_CLOSED",
+        "next_probe": "AGE_FORMULA: verify birth_year, original_draft_year, years_pro; independent age slot not required",
+        "canonical_field_ref": null,
+        "canonicalization_state": "UNRESOLVED_NO_PROVEN_EQUIVALENCE",
+        "projection_of": null,
+        "meaning_evidence_ref": "HUMAN_DECISION_20261022"
+      }
+    }
+  ],
+  "source_ref_checks": [
+    {
+      "kind": "action",
+      "count": 207,
+      "failures": []
+    },
+    {
+      "kind": "page",
+      "count": 19,
+      "failures": []
+    },
+    {
+      "kind": "neighborhood",
+      "count": 7,
+      "failures": []
+    },
+    {
+      "kind": "queue",
+      "count": 17,
+      "failures": []
+    }
+  ],
+  "arch_all_44_names_match": true,
+  "missing_entities": [],
+  "extra_entities": [],
+  "research_sources_read": [
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+      "schema": "DEV29_R04_PLAYER_FIELD_AND_RIGHTS_MATRIX_V1",
+      "status": null,
+      "keys": [
+        "schema_id",
+        "scope",
+        "created_at",
+        "target_platform",
+        "other_generations",
+        "purposes",
+        "data_authority",
+        "native_profile_field_count",
+        "native_attribute_field_count",
+        "native_durability_field_count",
+        "native_contract_field_count",
+        "candidate_fields_pending_pc22_mapping",
+        "potential_rule",
+        "intangibles_rule",
+        "ordinary_ratings_policy",
+        "person_memory_storage",
+        "audit_independent_model_future",
+        "entries",
+        "r04c_companion_path",
+        "r04c_notice"
+      ],
+      "collections": {
+        "purposes": 4,
+        "entries": 109
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+      "schema": "DEV29_R04B_TENDENCY_AND_PLAYSTYLE_RESEARCH_V1",
+      "status": null,
+      "keys": [
+        "schema_id",
+        "research_batch",
+        "version",
+        "date",
+        "role",
+        "target_game",
+        "game_play_vs_sim_effect_status",
+        "player_native_range",
+        "archived_ui_export",
+        "policy",
+        "provenance",
+        "native_slots",
+        "archived_export_tendency_labels",
+        "pending_evidence",
+        "playtype_native_registered",
+        "mode_conflicting_observations",
+        "gameplay_layers",
+        "cross_references"
+      ],
+      "collections": {
+        "provenance": 8,
+        "native_slots": 99,
+        "archived_export_tendency_labels": 99,
+        "pending_evidence": 7,
+        "mode_conflicting_observations": 4,
+        "gameplay_layers": 4,
+        "cross_references": 3
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json",
+      "schema": "DEV29_R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1",
+      "status": "R04_C_RESEARCH_PUBLISHED_WITH_NATIVE_MOTIVATION_GAPS",
+      "keys": [
+        "schema_id",
+        "research_batch",
+        "created_at",
+        "status",
+        "artifact_kind",
+        "target_game",
+        "source_evidence_policy",
+        "canon_authority",
+        "game_write_policy",
+        "read_pipeline",
+        "native_profile_check",
+        "source_range",
+        "personality_reference_counts",
+        "native_motivations",
+        "personality_candidates",
+        "other_native_dynamic_concepts",
+        "external_role_choice_lexicon",
+        "observability_rules",
+        "pitfalls",
+        "next_batch"
+      ],
+      "collections": {
+        "native_motivations": 3,
+        "personality_candidates": 21,
+        "other_native_dynamic_concepts": 4,
+        "external_role_choice_lexicon": 6,
+        "pitfalls": 7
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1.json",
+      "schema": "DEV29_R05A_FINANCE_CONTRACT_MARKET_RESEARCH_V1",
+      "status": "R05_A_RESEARCH_PUBLISHED_WITH_FINANCE_EXECUTION_GAPS",
+      "keys": [
+        "schema_id",
+        "version",
+        "date",
+        "status",
+        "scope",
+        "mode",
+        "career_rule",
+        "behavior_policy",
+        "data_provenance_levels",
+        "reference_finance",
+        "native_player_contract_field_count",
+        "native_contract_fields",
+        "team_finance_known_or_candidate_fields",
+        "market_concept_count",
+        "market_rule_concepts",
+        "technical_status",
+        "project_sources",
+        "next_research",
+        "source_range"
+      ],
+      "collections": {
+        "data_provenance_levels": 6,
+        "native_contract_fields": 17,
+        "team_finance_known_or_candidate_fields": 10,
+        "market_rule_concepts": 21,
+        "project_sources": 6
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+      "schema": "DEV29_R05B_TRADE_PICK_ROSTER_MECHANICS_V1",
+      "status": "R05B_PUBLISHED_HISTORICAL_RESEARCH_WITH_20261021_POLICY_AMENDMENT",
+      "keys": [
+        "schema_id",
+        "date",
+        "status",
+        "scope",
+        "target",
+        "no_agent_design",
+        "no_game_execution",
+        "source_evidence_levels",
+        "native_trade_menu_research_options",
+        "trade_menu_count",
+        "historic_cba_salary_matching_reference",
+        "roster_native_layout",
+        "draft_native_profile",
+        "world_pick_trade_policy",
+        "supported_executor",
+        "game_menu_persistence_status",
+        "next_research",
+        "sources",
+        "policy_supersession_note",
+        "technical_implementation_gap"
+      ],
+      "collections": {
+        "source_evidence_levels": 7,
+        "native_trade_menu_research_options": 16,
+        "historic_cba_salary_matching_reference": 4,
+        "roster_native_layout": 14,
+        "sources": 3
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+      "schema": "DEV29_R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1",
+      "status": "R05_C_RESEARCH_PUBLISHED_WITH_STAFF_SCOUT_DRAFT_UI_GAPS",
+      "keys": [
+        "schema_id",
+        "date",
+        "status",
+        "artifact_kind",
+        "target",
+        "staff",
+        "scouting",
+        "draft",
+        "staff_finance",
+        "evidence_boundaries",
+        "next_research",
+        "source_range"
+      ],
+      "collections": {
+        "evidence_boundaries": 7
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+      "schema": "DEV29_R05D_FRANCHISE_MECHANICS_INTEGRATED_CAPABILITY_ATLAS_V1",
+      "status": "R05_D_RESEARCH_PUBLISHED_WITH_PC22_NATIVE_CAPABILITY_GAPS",
+      "keys": [
+        "schema_id",
+        "published_on",
+        "status",
+        "mode",
+        "is_agent_algorithm",
+        "is_game_executor",
+        "no_live_game_write",
+        "provenance",
+        "primary_research_catalogs",
+        "source_registry",
+        "visual_registry",
+        "policy_id",
+        "pick_trade_rule",
+        "studied_action_rows",
+        "action_research_rows",
+        "crossdomain_effects",
+        "open_pc22_gaps",
+        "implementation_handoff",
+        "next_topic",
+        "observed_or_candidate_data_rows",
+        "data_research_rows",
+        "data_evidence_note"
+      ],
+      "collections": {
+        "provenance": 7,
+        "primary_research_catalogs": 3,
+        "action_research_rows": 63,
+        "crossdomain_effects": 12,
+        "open_pc22_gaps": 12,
+        "data_research_rows": 54
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+      "schema": "DEV29_R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_RESEARCH_V1",
+      "status": "R06_A_RESEARCH_PUBLISHED_WITH_PC22_RUNTIME_VERIFICATION_GAPS",
+      "keys": [
+        "schema_id",
+        "date",
+        "status",
+        "target",
+        "research_only",
+        "develop_agents",
+        "modify_game",
+        "installed_registry_sources",
+        "registry_candidate_count",
+        "registry_candidates",
+        "player_facing_menu_concept_count",
+        "player_facing_menu_concepts",
+        "native_live_court_profile_reference",
+        "sim_vs_live_world_model",
+        "observability",
+        "anomalies",
+        "world_note",
+        "source_ids",
+        "next"
+      ],
+      "collections": {
+        "installed_registry_sources": 3,
+        "registry_candidates": 86,
+        "player_facing_menu_concepts": 118,
+        "observability": 7,
+        "anomalies": 3,
+        "source_ids": 11
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+      "schema": "DEV29_R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1",
+      "status": "R06_B_RESEARCH_PUBLISHED_WITH_PC22_UI_AND_HISTORY_GAPS",
+      "keys": [
+        "schema_id",
+        "date",
+        "status",
+        "target",
+        "research_only",
+        "modify_game",
+        "develop_agents",
+        "authority_separation",
+        "worldline",
+        "fields",
+        "field_count",
+        "sources",
+        "gaps",
+        "next",
+        "catalog_item_semantics",
+        "default_capture_status",
+        "sources_semantics",
+        "source_audit"
+      ],
+      "collections": {
+        "authority_separation": 5,
+        "fields": 31,
+        "sources": 13,
+        "gaps": 9
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+      "schema": "DEV29_R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1",
+      "status": "R06_C_RESEARCH_PUBLISHED_WITH_PC22_PHASE_SAVE_RETENTION_GAPS",
+      "keys": [
+        "schema_id",
+        "date",
+        "target",
+        "status",
+        "research_only",
+        "perform_game_advance",
+        "perform_game_save",
+        "develop_agents",
+        "entries_not_native_fields",
+        "item_semantics",
+        "field_count",
+        "fields",
+        "source_ids",
+        "known_existing_project_docs",
+        "current_game_date",
+        "current_save_slot",
+        "unknowns",
+        "next"
+      ],
+      "collections": {
+        "fields": 38,
+        "source_ids": 13,
+        "known_existing_project_docs": 5,
+        "unknowns": 9
+      }
+    },
+    {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R07_GAME_CAPABILITY_MATURITY_MATRIX_V1.json",
+      "schema": "DEV29_R07_GAME_KNOWLEDGE_TO_NATIVE_CAPABILITY_MATRIX_V1",
+      "status": "R07_RESEARCH_PUBLISHED_PENDING_INDEPENDENT_REVIEW",
+      "keys": [
+        "schema_id",
+        "date",
+        "status",
+        "target",
+        "authority",
+        "evidence_levels",
+        "axes_are_independent_not_cumulative",
+        "population_note",
+        "linked_item_index_path",
+        "linked_r06d_path",
+        "functional_group_count",
+        "capability_groups",
+        "existing_production_scope_count",
+        "existing_production_evidence",
+        "r06d_gap_count",
+        "gaps",
+        "unresolved_r06B_awards",
+        "unresolved_r06C_direct_sources",
+        "game_memory_writes_during_r07",
+        "agent_personality_design",
+        "dev28_start_authorized",
+        "next",
+        "targeted_query_semantics_repair"
+      ],
+      "collections": {
+        "evidence_levels": 7,
+        "capability_groups": 40,
+        "existing_production_evidence": 10,
+        "gaps": 20
+      }
+    }
+  ]
+}

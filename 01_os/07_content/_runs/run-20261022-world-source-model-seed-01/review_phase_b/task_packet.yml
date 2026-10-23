@@ -1,0 +1,37 @@
+task_packet:
+  task_id: NBA2K22-OS-INDEPENDENT-REVIEW-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 142531f2d60813bce5b90254c5e347050c40b406
+  branch: review/world-source-model-seed-01-phase-b
+  objective: Independently review the pinned source-model seed, Stage A original evidence and Flash R00 readiness; report findings without repairing the candidate.
+  source_evidence:
+    - Human goal-objective.md supplied on 2026-10-22
+    - task/world-source-model-seed-01@142531f2d60813bce5b90254c5e347050c40b406
+    - task/world-data-arch-01@734188ab378974cf1d4426e67c675de561aac692
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_WINDOW_HANDOFF_TEMPLATE_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PLANNING_MODEL_ENTRY_V1.md
+    - 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/review_phase_b/**
+    - 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/INDEPENDENT_REVIEW.md
+    - 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/REVIEW_FINDINGS.json
+    - 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/FLASH_R00_READINESS.md
+  prohibitions: [candidate_file_changes, main_worktree_changes, original_attempt_changes, game_process_access, memory_or_save_access, master_merge, history_rewrite, launch_Flash_R00]
+  required_tests: [review_evidence_consistency, review_source_and_reference_analysis, review_deliverable_integrity]
+  verification_plan: review_phase_b/review_checks.py and captured OS inspect invocations; this review does not replace candidate validation
+  required_completion_pointer: review_phase_b/REVIEW_EVIDENCE_POINTER.json
+  executor_profile:
+    provider: OpenAI
+    surface: Codex desktop
+    model: GPT-6 family; exact runtime variant not independently observable
+    routing_basis: Human explicitly assigned Codex independent technical review
+    authority: routing_only
+  verification_profile:
+    independent_reviewer: this separate review session
+    different_model_family: false
+    different_measurement_tool: true
+    independent_session_required: true
+    human_override_ref: HUMAN_REVIEW_INDEPENDENCE_UPDATE.md
+    limitation: Same GPT-6 family disclosed; Human explicitly supersedes the old different-family hard gate. Separate session and non-participation remain required.
+  publication: local review artifacts only; no master integration

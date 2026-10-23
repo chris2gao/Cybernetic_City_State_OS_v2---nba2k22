@@ -1,0 +1,154 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "142531f2d60813bce5b90254c5e347050c40b406",
+  "plan_path": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verification_plan.json",
+  "plan_sha256": "3ccb95c3ba90adbc609d951c27d040b0dd242b049b709ba575f14a405e24e4c0",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "plan": {
+    "schema_version": "citystate.verification_plan.v1",
+    "task_packet": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/task_packet.yml",
+    "checks": [
+      {
+        "id": "CATALOG_PARSE_AND_KEYS",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "CATALOG_PARSE_AND_KEYS"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "SOURCE_PROVENANCE",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "SOURCE_PROVENANCE"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "DOMAIN_AND_LIFECYCLE",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "DOMAIN_AND_LIFECYCLE"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "AGE_AND_WORLD",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "AGE_AND_WORLD"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "ACTION_FAIL_CLOSED",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "ACTION_FAIL_CLOSED"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "ALLOWLIST_AND_HANDOFF",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "ALLOWLIST_AND_HANDOFF"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "PAGE_LINK_INTEGRITY",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "PAGE_LINK_INTEGRITY"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "TYPE_PROVENANCE",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "TYPE_PROVENANCE"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "CANONICAL_RELATIONS",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "CANONICAL_RELATIONS"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "NEIGHBORHOOD_AND_QUEUE",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+          "NEIGHBORHOOD_AND_QUEUE"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      }
+    ]
+  },
+  "task_id": "WORLD-SOURCE-MODEL-SEED-01",
+  "task_packet_sha256": "dc9b26ed16680838460c5edf6ff782a6ebd5d4b6a8ccf0e15251f3a2cdf7fd4f",
+  "source_base": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "changed_paths": [
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/completion_pointer.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/connector_static_revision_receipt.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/human_task.md",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/run.yml",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/task_packet.yml",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verification_plan.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verification_receipt.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_ACTION_DISCOVERY_SEED_V0.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_DOMAIN_SOURCE_MODEL_V0.md",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_FIELD_LIFECYCLE_RULES_V0.md",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json"
+  ],
+  "source_before": {
+    "head": "142531f2d60813bce5b90254c5e347050c40b406",
+    "tree": "34c2a48c80e588f54a4e1e6b6ffb3353d27637eb",
+    "clean": true
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "executable": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "runner_file_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997"
+  }
+}

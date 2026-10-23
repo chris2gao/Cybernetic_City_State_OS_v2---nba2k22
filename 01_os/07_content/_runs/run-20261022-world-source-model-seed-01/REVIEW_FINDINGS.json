@@ -1,0 +1,179 @@
+{
+  "schema_version": "nba2k22.independent_review_findings.v1",
+  "task_id": "NBA2K22-OS-INDEPENDENT-REVIEW-01",
+  "candidate_sha": "142531f2d60813bce5b90254c5e347050c40b406",
+  "base_sha": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "arch_reference_sha": "734188ab378974cf1d4426e67c675de561aac692",
+  "review_session_id": "01a1676e-e700-7691-ac54-9e74af1ae21b",
+  "verdict": "fix_required",
+  "severity_counts": {
+    "MAJOR": 2,
+    "MINOR": 3
+  },
+  "independence": {
+    "different_model_family": false,
+    "independent_session_required": true,
+    "candidate_generation_participation": false,
+    "human_override_ref": "review_phase_b/HUMAN_REVIEW_INDEPENDENCE_UPDATE.md",
+    "same_family_is_blocker": false,
+    "exact_runtime_variant": "not independently observable"
+  },
+  "findings": [
+    {
+      "finding_id": "B-01",
+      "severity": "MAJOR",
+      "title": "R00 队列未提供足够的按目标调查边界和后段对象锚点",
+      "locations": [
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+          "line": 206,
+          "json_pointer": null
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+          "line": 229,
+          "json_pointer": null
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+          "line": 249,
+          "json_pointer": null
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+          "line": 25,
+          "json_pointer": null
+        }
+      ],
+      "evidence": [
+        "12 项 read_only_method 完全相同，12 项 negative_control 完全相同；no-stat/unplayed 不能直接定义世界身份、设置或操作目录的反例。",
+        "R00-10 仅引用 PLAYER、ROSTERDATA 和 world_draft_season；没有绑定 save_context/DEV14 的身份与重置证据。world_draft_season 不是存档连续性证明。",
+        "R00-11 仅引用 ROSTERDATA，field_refs 为空；既有 config/state_io_native/world.json 的 SLOT_SETTINGS、SLOT_TRADE、SLOT_SLIDERS、SLOT_FRANCHISE 未链接。",
+        "R00-12 仅引用 PLAYER，field_refs 为空；未链接 GAME_ACTION_DISCOVERY_SEED_V0.json 的具体 action 或各领域只读来源。"
+      ],
+      "impact": "Flash 仍需自行猜测跨对象身份、调查起点与边界；机械满足字段非空不能证明可以低成本独立执行全部 12 项。",
+      "minimum_fix": "仅修订 12 行任务及必要引用：按目标列明来源、待答问题、起点、依赖、限定对象/记录/区域或时间预算、匹配正反例与可检验交付。10 链接已有存档绑定证据；11 链接实际设置资料；12 链接具体 action 与被动调查对象。不能获得样本时保留 UNKNOWN 并交接；不要求新增 Reader 或现场调查。",
+      "verification_criteria": [
+        "每项可从固定引用定位起点，调查边界在执行前可确定；负样本说明应出现或不应出现什么。",
+        "10 明确相同存档连续性、不同存档隔离与无法证明时 HOLD；不要求本轮切换或加载存档。",
+        "11 区分默认配置与游戏观察，12 可枚举被审 action，且全部保留禁止执行。",
+        "保留“两条失败路径后升级”等总契约，并在行内引用；不得以 UNKNOWN 数量下降作为唯一验收。"
+      ]
+    },
+    {
+      "finding_id": "B-02",
+      "severity": "MAJOR",
+      "title": "字段目录将部分资产及统计事实归属到错误的概念实体",
+      "locations": [
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 804,
+          "json_pointer": "/fields/11"
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 844,
+          "json_pointer": "/fields/12"
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 1147,
+          "json_pointer": "/fields/19"
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 1818,
+          "json_pointer": "/fields/33"
+        }
+      ],
+      "evidence": [
+        "fields/11、12 的 source 指向 DRAFT_ASSETS 的原始球队和当前持有球队，但 entity 均为 TransactionEvent。13–16 同一页面的选秀轮次/年份/球员资料也不能因页面名而一律作为交易事件。",
+        "fields/17–19 的赛季出场、首发和得分累计被标为 Game；fields/33 的 player_statline 也被标为 Game。",
+        "ARCH 候选已有 DraftPick、PickOwnership、SeasonTotals、PlayerGameStatline 等概念；模型表列齐 44 名称不保证逐字段语义归属正确。"
+      ],
+      "impact": "归属决定身份、时间与重复粒度。将持有状态当交易事件、赛季累计当单场比赛，会误导 Flash 的对象关系调查和后续事实键设计。",
+      "minimum_fix": "仅更正已证实反例及同一生成规则涉及的行；区分原始来源对象与目标语义实体/投影。选秀权与持有状态分别链接 DraftPick/PickOwnership，赛季累计链接球员/赛季及可用的 stint，单场球员数据链接 PlayerGameStatline 和比赛/球员/球队。未知关系继续 UNKNOWN。原始来源值和历史状态不得覆盖。",
+      "verification_criteria": [
+        "逐条展示上述反例的来源对象、语义实体和关联键，字段不再由页面名默认分配错误实体。",
+        "赛季累计与单场事实明确不同粒度；选秀资产、持有快照与交易事件明确区分。",
+        "新增少量语义断言验证这些反例；无需重写 888 行或新建物理 Schema。"
+      ]
+    },
+    {
+      "finding_id": "B-03",
+      "severity": "MINOR",
+      "title": "阶段 A 报告计数与原 attempt 严格目录契约不一致",
+      "locations": [
+        {
+          "path": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/OS_MACHINE_VERIFICATION_REPORT.md",
+          "section": "阶段 A 证据清单/第 6 节"
+        },
+        {
+          "path": "C:\\Users\\gk\\AppData\\Local\\Temp\\citystate_managed_verification_evidence\\attempt_seed_01_e5a2d145e33d457d98878bf3fac81c61",
+          "field": "directory file set"
+        }
+      ],
+      "evidence": [
+        "磁盘为 54 文件；OS 规范要求 53，必需文件缺失为 0；额外项为 WORLD_SOURCE_MODEL_SEED_01_OS_MACHINE_VERIFICATION_REPORT.md。",
+        "本轮 original Inspect=3（unexpected_or_missing_attempt_files）；53 文件逐字节副本 Inspect=0。历史报告所述 43 与磁盘不符。",
+        "10 项 finished 记录均为 exit_code=0；日志 hash、候选 SHA、干净 source 快照一致。没有独立见证原先 managed run/inspect 进程退出瞬间。"
+      ],
+      "impact": "核心机器结果有原始证据支持，但不能声称当前原目录严格 Inspect 通过；额外报告与计数问题不构成架构否决。",
+      "minimum_fix": "由证据所有者追加更正说明，区分历史报告、原目录现状、53 文件派生副本及其 hash。保留原目录。如后续消费方硬性要求 pristine attempt，通过另行授权的验证生成新 attempt；本审核不删除原件、不伪造原始通过。",
+      "verification_criteria": [
+        "更正说明可重算 53+1=54，明确无缺失、原 Inspect=3、副本 Inspect=0。",
+        "原 attempt 清单和 hash 保持不变，副本不得冒充新一轮运行或修复后的原始证据。"
+      ]
+    },
+    {
+      "finding_id": "B-04",
+      "severity": "MINOR",
+      "title": "倾向字段继承了相互不兼容的定位线索及错误研究邻域",
+      "locations": [
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 756,
+          "json_pointer": "/fields/10"
+        },
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 16342,
+          "json_pointer": "/fields/374"
+        }
+      ],
+      "evidence": [
+        "AG01D player_tendencies 历史提示为 PLAYER+0x170..0x260，且 discovery_group_ref=NH_CAREER，next_probe 指向职业历史组。",
+        "R04/profile 的倾向原生槽提示为 PLAYER+0x458..0x4BA；目录已有 NH_TENDENCIES，却没有将上述矛盾并列为冲突关系。",
+        "所有候选仍非当前存档认证，因此本 finding 不判定哪个地址正确。"
+      ],
+      "impact": "Flash 可能沿职业历史区域调查倾向，并将未解决历史偏移当作互不相关的候选，增加错误读取与重复调查成本。",
+      "minimum_fix": "给相关历史提示增加明确冲突/替代来源与 build 状态，修正 next_probe 的语义组；版本或对象基址不足时保持 UNKNOWN，不选定地址、不执行读取。",
+      "verification_criteria": [
+        "读取该倾向项即可发现两套历史定位及未解决原因；不再把 NH_CAREER 当倾向的实际邻域。",
+        "保留来源原文，当前认证仍为 false，未解决冲突不会自动成为 canonical 等价。"
+      ]
+    },
+    {
+      "finding_id": "B-05",
+      "severity": "MINOR",
+      "title": "六个 Human 决策符号引用缺少可机器定位的注册映射",
+      "locations": [
+        {
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+          "line": 3978,
+          "json_pointer": null
+        }
+      ],
+      "evidence": [
+        "source_refs 中六个 HUMAN_DECISION_20261022 不是路径/JSON Pointer，现有目录没有对应解析映射。",
+        "同任务 human_task.md 第 3 行确有年龄候选公式等 Human 要求；不是 Human 决策内容缺失。"
+      ],
+      "impact": "消费者可以读到公式，却不能仅凭 source_refs 自动追到持久化裁决；不要把缺映射误报成没有授权或没有来源。",
+      "minimum_fix": "为该符号注册同任务 human_task.md 的准确路径/节或行及固定候选，或改成直接持久化引用；无需改变公式。",
+      "verification_criteria": [
+        "六个引用均可机械解析到相同原始 Human 记录。",
+        "公式仍为 Human 优先派生规则，不冒充引擎公式；缺输入仍 UNKNOWN。"
+      ]
+    }
+  ]
+}
