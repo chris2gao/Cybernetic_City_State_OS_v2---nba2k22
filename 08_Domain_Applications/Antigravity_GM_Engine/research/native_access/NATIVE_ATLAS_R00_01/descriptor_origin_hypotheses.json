@@ -2,7 +2,7 @@
   "schema_version": "nba2k22.descriptor_origin_hypotheses.v1",
   "task_id": "NATIVE-ATLAS-R00-01",
   "target_object": "ROSTERDATA",
-  "created_at": "2026-10-22T23:37:00Z",
+  "created_at": "2026-10-23T00:15:00Z",
   "hypotheses": [
     {
       "hypothesis_id": "HYP-A-NATIVE-DISASSEMBLY",
@@ -30,7 +30,7 @@
           }
         ]
       },
-      "stride_storage_mechanism": "Stride is NOT stored in the descriptor table. It is baked as an immediate constant in native getter machine code (e.g. `imul rbx, rbx, 4F0h` for 1264 bytes, `imul rbx, rbx, 30h` for 48 bytes).",
+      "stride_storage_mechanism": "Stride is NOT stored in the descriptor table. In native 2K22 getter disassembly (such as GetWaivedSalaryByIndex RVA 0xF3C790), strides are baked as immediate multiplication operands (e.g. imul rbx, rbx, 88h). However, specific Getter RVAs for Slot 1 (PLAYER) and Slot 24 (PLAYER_STATS) are NOT isolated in .text (marked '-' in directory audit). Their strides (1264 and 48) are empirically inferred from record memory layouts, field spans, and BoxScore statistical parity, rather than verified machine code immediate operands.",
       "slot_computations": {
         "slot_1_player": {
           "slot_index": 1,
@@ -40,7 +40,9 @@
           "historical_count": 3390,
           "element_stride_bytes": 1264,
           "element_stride_hex": "0x4F0",
-          "historical_buffer_bytes": 4284960
+          "historical_buffer_bytes": 4284960,
+          "stride_maturity": "EMPIRICALLY_INFERRED_PENDING_GETTER_ISOLATION",
+          "stride_evidence": "Empirically verified in AG_NATIVE_01/01C/01D by player struct field offsets spanning 0 to 1263 bytes; specific GetPlayerByIndex getter RVA not isolated in directory audit table."
         },
         "slot_24_player_stats": {
           "slot_index": 24,
@@ -50,7 +52,9 @@
           "historical_count": 9773,
           "element_stride_bytes": 48,
           "element_stride_hex": "0x30",
-          "historical_buffer_bytes": 469104
+          "historical_buffer_bytes": 469104,
+          "stride_maturity": "EMPIRICALLY_VALIDATED_STATISTICAL_PARITY",
+          "stride_evidence": "Empirically validated in AG_NATIVE_01D by Curry 16-game BoxScore cumulative stats parity across 18 metrics; specific GetPlayerStatsByIndex getter RVA not isolated in directory audit table."
         }
       },
       "evidence_references": [
@@ -63,13 +67,12 @@
     },
     {
       "hypothesis_id": "HYP-B-LEGACY-CALIBRATION-ARTIFACT",
-      "name": "Legacy Python 24-Byte EndPointer / +8 Offset Layout",
+      "name": "Legacy Python Offset Calibration Artifact (+8 Shift and External Address Equation)",
       "status": "REFUTED_HISTORICAL_ARTIFACT",
-      "summary": "Legacy address_calibrator.py anchored its root 8 bytes lower than g_pRosterData (0x7FF4E6DFB2E8 vs 0x7FF4E6DFB2F0). This shifted all descriptor offsets by +0x08 and caused consecutive array pointers to be misinterpreted as an internal EndPointer field.",
-      "disproved_struct": {
-        "claimed_declaration": "struct LegacyCalibratedDescriptor { uint64_t pad; uint64_t count; void* pData; void* pEnd; };",
-        "claimed_size_bytes": 24,
-        "disproof_reason": "Native assembly disproves any 24-byte struct or internal EndPointer field. The offset +0x10 beyond pData[i] is simply pData[i+1] of the next contiguous descriptor."
+      "summary": "Legacy Python code (src/source_extensions.py) used an external offset calculation logic (root + offset - 8 for count, root + offset for address, root + offset + 0x10 for end). This arose because address_calibrator.py anchored its root 8 bytes lower than g_pRosterData (0x7FF4E6DFB2E8 vs 0x7FF4E6DFB2F0). This shifted descriptor access by +0x08 and treated three consecutive 8-byte values as an extraction template. It was not a 24-byte C++ struct declared by the game engine.",
+      "clarified_legacy_extraction_pattern": {
+        "legacy_script_formula": "address = mem[root + offset], count = mem[root + offset - 8], end = mem[root + offset + 0x10]",
+        "clarification": "The legacy code did not declare a 24-byte struct in engine memory. The 24-byte span was an artifact of the Python script reading three 8-byte words across the +8 shifted root, mistaking the adjacent descriptor's pData for an internal EndPointer."
       },
       "shift_derivation": {
         "manager_pointer_heap": "0x7FF4E6DFB2F0",
@@ -91,9 +94,9 @@
           "legacy_pdata_offset_hex": "+0x190"
         }
       },
-      "contiguous_heap_illusion": {
+      "partially_contiguous_heap_illusion": {
         "phenomenon": "pData[i] + count[i] * stride[i] == pData[i+1]",
-        "explanation": "Game engine allocates array heap buffers consecutively in memory during roster initialization. The next descriptor's pData happened to coincide with the end of the previous buffer, leading legacy scripts to assume a 3-member struct containing EndPointer."
+        "explanation": "The validation equation end == address + count * stride succeeded for certain adjacent slots (e.g. Slot 0 end matches Slot 1 start exactly at 0x7FF4E6DFB7D8). However, this is NOT a universal zero-gap invariant across all 75 slots: for instance, Slot 1 buffer ends at 0x7FF4E72118F8 while Slot 2 buffer begins at 0x7FF4E72119F8, leaving a 256-byte heap gap/alignment header. The equation's historical pass was an artifact of local heap allocator packing, not an engine contract for all descriptors."
       }
     }
   ],

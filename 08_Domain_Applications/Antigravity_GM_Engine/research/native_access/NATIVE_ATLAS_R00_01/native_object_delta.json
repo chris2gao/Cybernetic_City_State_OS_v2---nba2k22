@@ -1,7 +1,7 @@
 {
   "schema_version": "nba2k22.native_object_delta.v1",
   "task_id": "NATIVE-ATLAS-R00-01",
-  "created_at": "2026-10-22T23:37:30Z",
+  "created_at": "2026-10-23T00:15:00Z",
   "base_commit": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
   "target_manager": {
     "object_name": "ROSTERDATA",
@@ -39,7 +39,9 @@
         "historical_count": 3390,
         "stride_bytes": 1264,
         "stride_hex": "0x4F0",
-        "stride_source": "IMMEDIATE_OPERAND_IN_GETTER_CODE",
+        "stride_source": "EMPIRICALLY_INFERRED_RECORD_LAYOUT_UNVERIFIED_GETTER_RVA",
+        "stride_maturity": "EMPIRICALLY_INFERRED_PENDING_GETTER_ISOLATION",
+        "stride_evidence_summary": "Inferred from struct field spans 0..1263 bytes in AG_NATIVE_01/01C/01D; specific GetPlayerByIndex getter RVA not isolated in directory audit (marked '-').",
         "buffer_size_bytes": 4284960,
         "buffer_size_mb_approx": 4.086
       },
@@ -70,7 +72,9 @@
         "historical_count": 9773,
         "stride_bytes": 48,
         "stride_hex": "0x30",
-        "stride_source": "IMMEDIATE_OPERAND_IN_GETTER_CODE",
+        "stride_source": "EMPIRICALLY_VALIDATED_STATISTICAL_PARITY_UNVERIFIED_GETTER_RVA",
+        "stride_maturity": "EMPIRICALLY_VALIDATED_STATISTICAL_PARITY",
+        "stride_evidence_summary": "Empirically validated by Stephen Curry 16-game BoxScore cumulative stats parity across 18 metrics in AG_NATIVE_01D; specific GetPlayerStatsByIndex getter RVA not isolated in directory audit (marked '-').",
         "buffer_size_bytes": 469104,
         "buffer_size_kb_approx": 458.11
       },
@@ -91,7 +95,7 @@
     "total_slots_in_manager": 75,
     "calibrated_in_this_delta": 2,
     "remaining_uncalibrated_slots": 73,
-    "legacy_offset_correction": "Offset shifted from +0x08 legacy back to +0x00 canonical base; EndPointer eliminated.",
+    "legacy_offset_correction": "Offset shifted from +0x08 legacy Python calibrator anchor back to +0x00 canonical base; legacy 3-word extraction formula and partial heap contiguity illusion clarified; phantom EndPointer eliminated.",
     "future_execution_boundary": "No live memory reads, no live memory writes, no save mutations, no expansion to R00-02..R00-12 permitted without explicit separate human authorization."
   }
 }

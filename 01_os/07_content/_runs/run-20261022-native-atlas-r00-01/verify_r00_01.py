@@ -108,7 +108,8 @@ def check_native_object_delta():
     assert d1.get("offsets", {}).get("canonical_manager_offset_hex") == "+0x010", "Slot 1 canonical offset mismatch"
     assert d1.get("dimensions", {}).get("historical_count") == 3390, "Slot 1 count mismatch"
     assert d1.get("dimensions", {}).get("stride_bytes") == 1264, "Slot 1 stride mismatch"
-    assert d1.get("dimensions", {}).get("stride_source") == "IMMEDIATE_OPERAND_IN_GETTER_CODE", "Slot 1 stride source mismatch"
+    assert "EMPIRICAL" in d1.get("dimensions", {}).get("stride_source", ""), "Slot 1 stride source must reflect empirical inference"
+    assert d1.get("dimensions", {}).get("stride_maturity") == "EMPIRICALLY_INFERRED_PENDING_GETTER_ISOLATION", "Slot 1 maturity mismatch"
     assert d1.get("verification_axes", {}).get("RESEARCH_INDEXED") is True, "RESEARCH_INDEXED must be True"
     assert d1.get("verification_axes", {}).get("NATIVE_LAYOUT") is True, "NATIVE_LAYOUT must be True"
     assert d1.get("verification_axes", {}).get("FIXTURE_PASS") is False, "FIXTURE_PASS must be False"
@@ -119,7 +120,8 @@ def check_native_object_delta():
     assert d24.get("offsets", {}).get("canonical_manager_offset_hex") == "+0x180", "Slot 24 canonical offset mismatch"
     assert d24.get("dimensions", {}).get("historical_count") == 9773, "Slot 24 count mismatch"
     assert d24.get("dimensions", {}).get("stride_bytes") == 48, "Slot 24 stride mismatch"
-    assert d24.get("dimensions", {}).get("stride_source") == "IMMEDIATE_OPERAND_IN_GETTER_CODE", "Slot 24 stride source mismatch"
+    assert "EMPIRICAL" in d24.get("dimensions", {}).get("stride_source", ""), "Slot 24 stride source must reflect empirical validation"
+    assert d24.get("dimensions", {}).get("stride_maturity") == "EMPIRICALLY_VALIDATED_STATISTICAL_PARITY", "Slot 24 maturity mismatch"
     assert d24.get("verification_axes", {}).get("RESEARCH_INDEXED") is True, "RESEARCH_INDEXED must be True"
     assert d24.get("verification_axes", {}).get("NATIVE_LAYOUT") is True, "NATIVE_LAYOUT must be True"
     assert d24.get("verification_axes", {}).get("FIXTURE_PASS") is False, "FIXTURE_PASS must be False"
@@ -147,6 +149,7 @@ def check_unresolved_findings():
     assert "UNRES-02-SAVE-IDENTITY-AND-DYNAMIC-COUNTS" in findings, "Missing UNRES-02"
     assert "UNRES-03-DYNAMIC-HEAP-LIFECYCLE-AND-EXPANSION" in findings, "Missing UNRES-03"
     assert "UNRES-04-REMAINING-SLOTS-UNCALIBRATED" in findings, "Missing UNRES-04"
+    assert "UNRES-05-EXACT-GETTER-RVA-FOR-SLOTS-1-AND-24" in findings, "Missing UNRES-05"
     
     boundary = data.get("phase_b_live_probe_authorization_boundary", {}).get("strict_limits", {})
     assert boundary.get("target_manager_limit") == 1, "target_manager_limit must be 1"

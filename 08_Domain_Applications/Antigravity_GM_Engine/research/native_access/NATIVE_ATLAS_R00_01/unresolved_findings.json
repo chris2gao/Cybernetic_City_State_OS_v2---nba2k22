@@ -2,7 +2,7 @@
   "schema_version": "nba2k22.unresolved_findings.v1",
   "task_id": "NATIVE-ATLAS-R00-01",
   "target_object": "ROSTERDATA",
-  "created_at": "2026-10-22T23:38:00Z",
+  "created_at": "2026-10-23T00:15:00Z",
   "base_commit": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
   "unresolved_items": [
     {
@@ -44,12 +44,22 @@
       "missing_evidence": "Individual getter disassembly, strides, and count interpretations for slots outside {1, 24} have not been verified under R00-01.",
       "fail_closed_action": "Strictly withhold judgment on slots 0, 2-23, 25-74. Do not include them in the current calibrated delta.",
       "next_bounded_question": "Process subsequent priority queue tasks (R00-02 through R00-12) sequentially only when scheduled."
+    },
+    {
+      "finding_id": "UNRES-05-EXACT-GETTER-RVA-FOR-SLOTS-1-AND-24",
+      "topic": "Native Getter Function RVAs and Direct Opcode Strides for Slot 1 and Slot 24",
+      "status": "HOLD_UNKNOWN",
+      "severity": "MEDIUM",
+      "current_known": "General 2K22 getter pattern uses immediate multiplication (imul rbx, rbx, <stride>), and empirical record decoding confirms 1264 for Slot 1 and 48 for Slot 24.",
+      "missing_evidence": "Specific .text RVAs for GetPlayerByIndex and GetPlayerStatsByIndex are not isolated from the 215 native accessors in the directory audit (marked '-').",
+      "fail_closed_action": "Downgrade stride maturity to empirical inference; do not claim static machine code opcode proof until exact RVAs are isolated.",
+      "next_bounded_question": "Search .text functions calling GetRosterDataManager (0x11D5DE0) for accesses to offset +0x010 (Slot 1) and +0x180 (Slot 24)."
     }
   ],
   "rejected_hypotheses": [
     {
       "hypothesis_id": "HYP-B-LEGACY-CALIBRATION-ARTIFACT",
-      "rejection_reason": "Direct disassembly of 215 native getter functions proves that ROSTERDATA descriptors are 16 bytes {uint64_t count, void* pData}. The legacy 24-byte layout was an illusion created by an 8-byte root offset error and contiguous heap layout.",
+      "rejection_reason": "Native assembly disproves any internal EndPointer field or 24-byte struct layout. The legacy code in src/source_extensions.py was a Python extraction script anchoring 8 bytes below g_pRosterData (0x7FF4E6DFB2E8 vs 0x7FF4E6DFB2F0). The pass of end == address + count * stride was an artifact of partial heap packing across specific adjacent slots (such as Slot 0 to Slot 1), not a universal engine struct layout.",
       "impact": "Legacy offsets (+0x018/+0x020 for Slot 1, +0x188/+0x190 for Slot 24) and the concept of an internal EndPointer field are deprecated and removed."
     }
   ],

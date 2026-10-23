@@ -7,8 +7,9 @@
   "lifecycle": "candidate_ready_for_independent_review",
   "source_branch": "task/native-atlas-r00-01",
   "source_base": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
-  "implementation_candidate_sha": "e4e7736aeb02239a79e6b72ba164c6c4100bccec",
-  "source_head_note": "Containing commit SHA will be updated upon commit and verification.",
+  "verified_candidate_sha": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
+  "remote_readback_head": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
+  "source_head_note": "Verification candidate commit is 522952b6d5fc61053cc8752a77fbe4a829ba4228, which passed OS managed verification (run & inspect exit code 0) and was published to origin/task/native-atlas-r00-01. Subsequent minor delivery correction commits (HEAD) form an explicit linear progression from this verified candidate.",
   "artifacts": [
     "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/source_manifest.json",
     "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/descriptor_origin_hypotheses.json",
@@ -18,11 +19,14 @@
   "task_packet": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/task_packet.yml",
   "verification_plan": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verification_plan.json",
   "verification": {
-    "state": "LOCAL_VERIFY_PASS",
+    "state": "LOCAL_MANAGED_VERIFY_PASS",
     "receipt": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verification_receipt.json",
+    "candidate_verified": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
     "managed_run_exit_code": 0,
     "managed_inspect_exit_code": 0,
-    "tests_generated": "All 5 check items PASS exit code 0",
+    "persistent_evidence_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_01",
+    "plan_sha256": "1c34f136e88daca593fd85ad6620fd55aaf6ea2fcd4b9d8bc14388ec3e1345f7",
+    "tests_generated": "All 5 check items PASS exit code 0 in managed verification",
     "candidate_caused_failures": "NONE",
     "diff_scope": "STRICTLY_INSIDE_ALLOWED_PATHS",
     "hook_guard": "PASS"
@@ -36,8 +40,8 @@
     "transport": "local_git_cli",
     "replacement_gate": "LOCAL_BRANCH_COMMIT",
     "expected_remote_head": "407e2134bd2f595477099b2c6e3484c818059fd9",
-    "resulting_remote_head": null,
-    "push_performed": false,
+    "verified_head_published": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
+    "push_performed": true,
     "master_modified": false,
     "force_push": false
   },
@@ -48,8 +52,8 @@
   "next_owner": "independent_reviewer_then_human_task_authority",
   "minimum_work_unit_output": {
     "role": "execution",
-    "work_performed_or_requested": "Offline calibration of ROSTERDATA native manager entry, Slot 1 and Slot 24 descriptors; disproved +8 shift and EndPointer; established 4 machine-readable artifacts, OS run, and bounded Phase B probe limits.",
-    "implementation_or_review_method": "Static disassembly cross-referencing, multi-evidence provenance manifest, 5-point Python verification plan.",
-    "supportability_rationale": "Direct x64 disassembly of 215 native accessors proves 16-byte {count, pData} struct; live runtime fields remain fail-closed HOLD_UNKNOWN until authorized."
+    "work_performed_or_requested": "Offline calibration of ROSTERDATA native manager entry, Slot 1 and Slot 24 descriptors; disproved +8 shift and EndPointer; downgraded stride maturity to empirical inference; established 4 machine-readable artifacts, OS run, persistent verification logs, and bounded Phase B probe limits.",
+    "implementation_or_review_method": "Static disassembly cross-referencing, multi-evidence provenance manifest, 5-point Python verification plan, managed verification run & inspect with external attempt evidence persistence.",
+    "supportability_rationale": "Direct x64 disassembly of 215 native accessors proves 16-byte {count, pData} struct; live runtime fields remain fail-closed HOLD_UNKNOWN until authorized; Slot 1 & 24 strides classified as empirical pending isolated getter RVAs."
   }
 }
