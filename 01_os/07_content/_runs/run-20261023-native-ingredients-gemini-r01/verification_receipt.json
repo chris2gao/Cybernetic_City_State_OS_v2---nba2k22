@@ -1,0 +1,49 @@
+{
+  "schema_version": "nba2k22.native_ingredients_verification_receipt.v1",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R01",
+  "run_id": "run-20261023-native-ingredients-gemini-r01",
+  "base_sha": "7d778aa3bd2f64145f997af0e44d9062c94fc55c",
+  "timestamp": "2026-10-23T03:14:00Z",
+  "verification_profile": {
+    "executor_model": "Gemini Flash (Antigravity)",
+    "execution_environment": "Windows pwsh local repository checkout with live process PID 1828",
+    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+    "evidence_durability_note": "Attempt evidence directories reside in local Windows %TEMP% storage; they are verifiable local test records, not git-tracked repository blobs."
+  },
+  "checks": [
+    {
+      "id": "CHECK_BIND_AND_PROVENANCE",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verify_r01_ingredients.py CHECK_BIND_AND_PROVENANCE",
+      "evidence": "PE SHA256 verified; R01-BIND 75 descriptors parsed with 67 active slots and 8 empty reserved slots; save status GAME_CONTEXT_MATCHED_NOT_SAVE_BOUND."
+    },
+    {
+      "id": "CHECK_PLAYER_HISTORY_CHAIN",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verify_r01_ingredients.py CHECK_PLAYER_HISTORY_CHAIN",
+      "evidence": "Slot 1 +0xFC career indices linking to Slot 24 with sequential decrementing season codes (0x7A -> 0x76); Slot 26 shot chart 114-byte stride confirmed; Potential guarded."
+    },
+    {
+      "id": "CHECK_DRAFT_AND_COACH_BOOK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verify_r01_ingredients.py CHECK_DRAFT_AND_COACH_BOOK",
+      "evidence": "DraftData simple vs traded pick discrimination and bit17 mode confirmed; Playbook 360-byte boundary (byte 359 terminal), low7 keys (0, 1, 2), and 68 play words confirmed; rotation timeline refuted."
+    },
+    {
+      "id": "CHECK_GM_CAP_AND_RECORD_BOOK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verify_r01_ingredients.py CHECK_GM_CAP_AND_RECORD_BOOK",
+      "evidence": "DeadCap multi-year stretch payouts ($92,857/yr, $8,856,969/yr) confirmed; TradeException UTF-16LE player names ('Theis', 'Porter Jr', 'McGee') confirmed; RecordBook Wilt Chamberlain 100.0 / Kobe Bryant 81.0 confirmed."
+    },
+    {
+      "id": "CHECK_AUDIT_LOG_AND_BUDGET",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verify_r01_ingredients.py CHECK_AUDIT_LOG_AND_BUDGET",
+      "evidence": "52 Win32 ReadProcessMemory calls audited, 5,172 total bytes read (under 5,300 byte budget), 100% success rate, 0 writes/save edits."
+    }
+  ],
+  "managed_verification_evidence": {
+    "planned_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/r01_attempt_01",
+    "verification_mode": "clean_worktree_managed_verify"
+  }
+}

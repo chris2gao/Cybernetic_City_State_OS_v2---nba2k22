@@ -1,0 +1,188 @@
+{
+  "schema_version": "nba2k22.ingredient_gap_matrix.v2",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R01",
+  "maturity_axes": [
+    "OBJECT_FAMILY",
+    "FIELD_DECODE",
+    "IDENTITY_BINDING",
+    "COLLECTOR_EXECUTED",
+    "PUBLISHED",
+    "ROLE_SAFE_QUERY",
+    "UI_EFFECT",
+    "SAVE_RELOAD"
+  ],
+  "domains": {
+    "Player": {
+      "ingredients": [
+        {
+          "name": "Player Identity & Basic Attributes",
+          "native_source": "Slot 1 (PLAYER, stride 1264, 3390 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "PARTIALLY_DECODED",
+            "IDENTITY_BINDING": "PARTIALLY_BOUND",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "PARTIALLY_CAPABLE",
+            "UI_EFFECT": "MATCHED_NAME_STRINGS",
+            "SAVE_RELOAD": "UNBOUND_TO_CAREER_SAVE"
+          },
+          "verified_fields": ["First Name (+0x00, 32B)", "Last Name (+0x20, 32B)", "Career Index Chain (+0xFC, 44B)"],
+          "gap": "Contract terms, secondary attributes, and physical measurements require field offset calibration; Potential strictly held sensitive."
+        },
+        {
+          "name": "Player Career Year-by-Year Stats",
+          "native_source": "Slot 24 (PlayerStat, stride 48, 9773 records) indexed via Slot 1 (+0xFC..+0x127)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "HIGHLY_CORROBORATED",
+            "IDENTITY_BINDING": "BOUND_VIA_SLOT1_CHAIN",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "CAPABLE",
+            "UI_EFFECT": "MATCHED_CAREER_SEASONS",
+            "SAVE_RELOAD": "UNBOUND_TO_CAREER_SAVE"
+          },
+          "verified_fields": ["Career Index Chain (22 slots, uint16)", "Sentinel Filtering (0xFFFF)", "Season Code (+0x04)", "Games Played (+0x08)"],
+          "gap": "Per-game averages vs totals scaling; playoff stat segregation."
+        },
+        {
+          "name": "Player Shot Chart & Zone Efficiency",
+          "native_source": "Slot 26 (PlayerShotChart, stride 114, 1023 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "STRUCTURE_CONFIRMED",
+            "IDENTITY_BINDING": "UNBOUND_TO_SPECIFIC_PLAYER",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "NOT_YET_CAPABLE",
+            "UI_EFFECT": "PENDING_ZONE_MAPPING",
+            "SAVE_RELOAD": "UNBOUND_TO_CAREER_SAVE"
+          },
+          "verified_fields": ["114-byte stride", "Shot count / attempt words"],
+          "gap": "Mapping shot chart record indices to player IDs; hex zone coordinate layout."
+        },
+        {
+          "name": "NBA All-Time Record Book",
+          "native_source": "Slot 39 (RecordData, stride 52, 69040 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "HIGHLY_CORROBORATED",
+            "IDENTITY_BINDING": "HISTORICAL_PLAYER_ID_BOUND",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "CAPABLE",
+            "UI_EFFECT": "MATCHED_NBA_LEAGUE_LEADERS",
+            "SAVE_RELOAD": "GLOBAL_ROSTER_BOUND"
+          },
+          "verified_fields": ["Record Headline Text (20B)", "Holder Name (20B)", "Record Value Float (4B)", "Packed Category Dword (4B)", "Historical Player ID (+0x30, 2B)"],
+          "gap": "Category bitmask full enumeration; team ID mapping for franchise-specific records."
+        }
+      ]
+    },
+    "GM": {
+      "ingredients": [
+        {
+          "name": "Future Draft Pick Assets & Trades",
+          "native_source": "Slot 42 (DraftData, stride 32, 504 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "HIGHLY_CORROBORATED",
+            "IDENTITY_BINDING": "TEAM_POINTER_BOUND",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "CAPABLE",
+            "UI_EFFECT": "MATCHED_TRADE_OWNERSHIP",
+            "SAVE_RELOAD": "UNBOUND_TO_CAREER_SAVE"
+          },
+          "verified_fields": ["Current Owner Team Ptr (+0x00)", "Original Team Ptr (+0x08)", "Traded Flag (owner != orig)", "GetLinkedPick Token (+0x18)", "Bit17 Mode (+0x1C)", "Round & Sequence (+0x1C)"],
+          "gap": "Conditional protections / pick swap bitmask decoding in live trade context (currently NOT_OBSERVED)."
+        },
+        {
+          "name": "Dead Salary & Stretched Contracts",
+          "native_source": "Slot 61 (DeadCap, stride 136, 222 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "HIGHLY_CORROBORATED",
+            "IDENTITY_BINDING": "TEAM_AND_PLAYER_POINTER_BOUND",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "CAPABLE",
+            "UI_EFFECT": "MATCHED_SALARY_AMOUNTS",
+            "SAVE_RELOAD": "UNBOUND_TO_CAREER_SAVE"
+          },
+          "verified_fields": ["Team Pointer (+0x00)", "Player Pointer (+0x08)", "Year 1/2/3 Payout Amounts (+0x10, +0x14, +0x18)", "Multi-Year Stretch Detection"],
+          "gap": "Contract year expiry bitmask and waiver type discrimination."
+        },
+        {
+          "name": "Traded Player Exceptions (TPE)",
+          "native_source": "Slot 71 (TradeException, stride 112, 144 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "HIGHLY_CORROBORATED",
+            "IDENTITY_BINDING": "TEAM_POINTER_AND_PLAYER_NAME_BOUND",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "CAPABLE",
+            "UI_EFFECT": "MATCHED_PLAYER_NAMES",
+            "SAVE_RELOAD": "UNBOUND_TO_CAREER_SAVE"
+          },
+          "verified_fields": ["Team Pointer (+0x00)", "UTF-16LE Player Name String (+0x10)"],
+          "gap": "Exact TPE dollar amount offset vs expiration calendar date conversion."
+        },
+        {
+          "name": "Team Payroll & Luxury Tax Aggregation",
+          "native_source": "Static Front-Office Consumer Tracking (Slot 35 CustomUniform refuted)",
+          "maturity": {
+            "OBJECT_FAMILY": "REFUTED_ATLAS_SLOT35",
+            "FIELD_DECODE": "STATIC_CONSUMER_TRACKED",
+            "IDENTITY_BINDING": "NOT_YET_LIVE_BOUND",
+            "COLLECTOR_EXECUTED": "NOT_EXECUTED",
+            "PUBLISHED": "NOT_PUBLISHED",
+            "ROLE_SAFE_QUERY": "NOT_CAPABLE",
+            "UI_EFFECT": "UI_ACTIVE",
+            "SAVE_RELOAD": "UNBOUND"
+          },
+          "verified_fields": ["Slot 35 proven CustomUniformData (not finance)"],
+          "gap": "Team payroll totals are calculated dynamically by summing active player contracts, DeadCap, and Cap Holds; requires dedicated static front-office consumer audit."
+        }
+      ]
+    },
+    "Coach": {
+      "ingredients": [
+        {
+          "name": "Tactical Playbooks & Play Sets",
+          "native_source": "Slot 22 (Playbook, stride 360, 84 records)",
+          "maturity": {
+            "OBJECT_FAMILY": "VERIFIED_ACTIVE",
+            "FIELD_DECODE": "FULLY_DECODED_STRUCTURE",
+            "IDENTITY_BINDING": "LOW7_LOOKUP_KEY_BOUND",
+            "COLLECTOR_EXECUTED": "BOUNDED_AUDITED_SAMPLE",
+            "PUBLISHED": "PROPOSED_CANDIDATE",
+            "ROLE_SAFE_QUERY": "CAPABLE",
+            "UI_EFFECT": "MATCHED_PLAYBOOK_NAMES",
+            "SAVE_RELOAD": "GLOBAL_ROSTER_BOUND"
+          },
+          "verified_fields": ["Playbook Name (+0x00, 80B)", "Lookup Key Low7 (+0x54)", "68 Play Words (+0x58..+0x167, uint32)", "360-byte Clean Boundary (byte 359 terminal)"],
+          "gap": "Mapping 32-bit play hashes to tactical play diagrams / diagram names in game UI."
+        },
+        {
+          "name": "Team Rotations & Substitution Grids",
+          "native_source": "Slot 22 rotation timeline hypothesis REFUTED; candidate relocated to Slot 21 (CoachStat) or engine tactical state",
+          "maturity": {
+            "OBJECT_FAMILY": "HYPOTHESIS_REFUTED_ON_SLOT22",
+            "FIELD_DECODE": "NOT_DECODED",
+            "IDENTITY_BINDING": "UNBOUND",
+            "COLLECTOR_EXECUTED": "NOT_EXECUTED",
+            "PUBLISHED": "NOT_PUBLISHED",
+            "ROLE_SAFE_QUERY": "NOT_CAPABLE",
+            "UI_EFFECT": "UI_ACTIVE",
+            "SAVE_RELOAD": "UNBOUND"
+          },
+          "verified_fields": ["Slot 22 proven PlaybookData"],
+          "gap": "Locating native rotation schedule storage (separate from playbooks)."
+        }
+      ]
+    }
+  }
+}

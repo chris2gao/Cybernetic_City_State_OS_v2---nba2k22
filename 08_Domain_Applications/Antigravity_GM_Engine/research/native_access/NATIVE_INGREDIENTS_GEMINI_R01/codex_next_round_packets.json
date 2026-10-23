@@ -1,0 +1,73 @@
+{
+  "schema_version": "nba2k22.codex_breakthrough_packets.v2",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R01",
+  "provenance_base": "task/native-ingredients-gemini-r01",
+  "packets": [
+    {
+      "packet_id": "CODEX-PKT-01-RECORDDATA-NAMESPACE",
+      "target_slot": 39,
+      "native_name": "ROSTERDATA::GetRecordDataByIndex",
+      "getter_rva": "0xF40090",
+      "record_size_bytes": 52,
+      "verified_facts": {
+        "record_count": 69040,
+        "pdata_live": "0x7ff4e76c5ce0",
+        "sample_records": [
+          {"index": 0, "name": "Wilt Chamberlain", "val": 100.0, "cat_code": 4, "packed_dword": "0x8f5462", "tail_id": 15584},
+          {"index": 1, "name": "Kobe Bryant", "val": 81.0, "cat_code": 4, "packed_dword": "0x8fac36", "tail_id": 15761},
+          {"index": 5, "name": "Wilt Chamberlain", "val": 36.0, "cat_code": 4, "packed_dword": "0x18f5462", "tail_id": 15584}
+        ]
+      },
+      "core_question": "How do RecordData consumer functions (0xF32B10, 0xF33FC0, 0xF34C60, 0xEFFF60) decode the packed dword at +0x2C, and how is the 16-bit historical player ID at +0x30 resolved to player metadata?",
+      "suggested_static_targets": [
+        "0xF32B10 (RecordData_GetGameRecord)",
+        "0xF33FC0 (RecordData_GetSeasonOrCareerRecord)",
+        "0xF34C60 (RecordData_GetTeamRecordsByIndex)",
+        "0xEFFF60 (RecordData consumer)"
+      ]
+    },
+    {
+      "packet_id": "CODEX-PKT-02-DEADCAP-STRETCH-CALC",
+      "target_slot": 61,
+      "native_name": "ROSTERDATA::GetDeadCapDataByIndex",
+      "getter_rva": "0xF3C780",
+      "record_size_bytes": 136,
+      "verified_facts": {
+        "record_count": 222,
+        "pdata_live": "0x7ff4e7c3e180",
+        "observed_layout": [
+          {"offset": "+0x00", "size": 8, "desc": "Team pointer (or 0x0 if unbound)"},
+          {"offset": "+0x08", "size": 8, "desc": "Player pointer in Slot 1"},
+          {"offset": "+0x10", "size": 4, "desc": "Year 1 dead salary payout (e.g. 92857)"},
+          {"offset": "+0x14", "size": 4, "desc": "Year 2 dead salary payout (e.g. 92857)"},
+          {"offset": "+0x18", "size": 4, "desc": "Year 3 dead salary payout (e.g. 92857)"}
+        ]
+      },
+      "core_question": "What is the complete field map of the 136-byte DeadCap struct? How many maximum yearly payout slots exist (from +0x10 onwards), and how does the front-office salary cap engine aggregate these dead cap records into team payroll?",
+      "suggested_static_targets": [
+        "0xF3C780 (ROSTERDATA::GetDeadCapDataByIndex)",
+        "Front-office team payroll aggregation routines referencing manager +0x3D0 / +0x3D8"
+      ]
+    },
+    {
+      "packet_id": "CODEX-PKT-03-TRADE-EXCEPTION-EXPIRY",
+      "target_slot": 71,
+      "native_name": "ROSTERDATA::GetTradeExceptionDataByIndex",
+      "getter_rva": "0xF3C840",
+      "record_size_bytes": 112,
+      "verified_facts": {
+        "record_count": 144,
+        "pdata_live": "0x7ff4e7c82830",
+        "verified_fields": [
+          {"offset": "+0x00", "size": 8, "desc": "Team pointer in Slot 8"},
+          {"offset": "+0x10", "size": 32, "desc": "UTF-16LE Player name string (e.g. 'Theis', 'Porter J', 'McGee')"}
+        ]
+      },
+      "core_question": "Where are the remaining TPE monetary amount (int32 / uint32) and the trade exception calendar expiration timestamp located within the 112-byte record?",
+      "suggested_static_targets": [
+        "0xF3C840 (ROSTERDATA::GetTradeExceptionDataByIndex)",
+        "Trade evaluation logic verifying incoming salary against TPE allowances"
+      ]
+    }
+  ]
+}
