@@ -1,0 +1,3116 @@
+{
+  "schema_version": "nba2k22.game_native_object_hints.seed.v0",
+  "task_id": "WORLD-SOURCE-MODEL-SEED-01",
+  "base_sha": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "arch_candidate_sha": "734188ab378974cf1d4426e67c675de561aac692",
+  "scope": "Historical roots/layouts from research; no live process access in this task; do not treat memory addresses as stable process pointers.",
+  "historical_slot_summary": {
+    "total_slots": 75,
+    "verified_objects_count": 16,
+    "unknown_slots_count": 51,
+    "empty_slots_count": 8
+  },
+  "roots": [
+    {
+      "object": "ROSTERDATA",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "NBA2K22.exe+0x06347720",
+      "notes": "AG01C single manager, historical target build; verify module RVA and descriptor origin +8 discrepancy",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "SEASON",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "NBA2K22.exe+0x0632B4B8",
+      "notes": "AG01D season root; historical build relative address only",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "ROSTERDATA Slot 1, 0x4F0 bytes",
+      "notes": "native player records and research references",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER_STATS",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "ROSTERDATA Slot 24, 48 bytes",
+      "notes": "season native accumulator; career index links",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "TEAM_STATS",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "ROSTERDATA Slot 26, 62 bytes",
+      "notes": "native season team accumulator",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "DRAFT_ASSETS",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "ROSTERDATA Slot 36, 32 bytes",
+      "notes": "pick records, current owner and draft-year ranges",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "SEASON_SCHEDULE",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "SEASON+0x28, 60-byte records, 1232 capacity historic",
+      "notes": "actual valid game count not equal capacity",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "BOXSCORE_STATBANK",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "SEASON+0x1B6AC, 24-byte records, 45292 capacity historic",
+      "notes": "current use count and player ID scope unknown",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER_CURRENT_STATS_INDEX",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "PLAYER+0xFC",
+      "notes": "current season pointer/index; verify sentinel",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER_CAREER_INDEX_ARRAY",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "PLAYER+0xFE..0x126",
+      "notes": "historic decoder visits 20 slots, not game-world hard lifetime cap",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER_ATTRIBUTES",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "PLAYER+0x41F..0x456 (prior profile)",
+      "notes": "55 named attrs include 16 durability; potential hidden 0x441",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER_TENDENCY_BYTES",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "PLAYER+0x458..0x4BA",
+      "notes": "99 native bytes: 48 named, 51 unknown; no automatic ordinal link to 99 third party labels",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    },
+    {
+      "object": "PLAYER_BADGE_REGION",
+      "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+      "locator": "PLAYER+0x36C..0x3C0 (AG01D claim)",
+      "notes": "2bit versus five claimed badge levels: unverified encoding contradiction",
+      "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+      "current_save_verified": false
+    }
+  ],
+  "slot_inventory_historical": [
+    {
+      "slot": 0,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/0",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 56,
+      "descriptor_offset_from_manager": "+0x000",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 1,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/1",
+      "record_name_historical": "PLAYER",
+      "family_historical": "ROSTER_PLAYERS",
+      "historical_count": 3390,
+      "historical_stride": 1264,
+      "descriptor_offset_from_manager": "+0x010",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 2,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/2",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 270,
+      "historical_stride": 160,
+      "descriptor_offset_from_manager": "+0x020",
+      "getter_rva": "0xF3FC10",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 3,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/3",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 10,
+      "historical_stride": 160,
+      "descriptor_offset_from_manager": "+0x030",
+      "getter_rva": "0xF3CFF0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 4,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/4",
+      "record_name_historical": "DRAFT_PROSPECTS_OR_CUSTOM_PLAYERS",
+      "family_historical": "ROSTER_PLAYERS",
+      "historical_count": 90,
+      "historical_stride": 1264,
+      "descriptor_offset_from_manager": "+0x040",
+      "getter_rva": "0xF3F220",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 5,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/5",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 8008,
+      "descriptor_offset_from_manager": "+0x050",
+      "getter_rva": "0xF3CF20",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 6,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/6",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 172,
+      "historical_stride": 4860,
+      "descriptor_offset_from_manager": "+0x060",
+      "getter_rva": "0xF40AF0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 7,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/7",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x070",
+      "getter_rva": "0xF3C5D0",
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 8,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/8",
+      "record_name_historical": "TEAM",
+      "family_historical": "TEAM_FRANCHISE",
+      "historical_count": 219,
+      "historical_stride": 4696,
+      "descriptor_offset_from_manager": "+0x080",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 9,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/9",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 583,
+      "historical_stride": 60,
+      "descriptor_offset_from_manager": "+0x090",
+      "getter_rva": "0xF3C51D",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 10,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/10",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1232,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x0A0",
+      "getter_rva": "0xF3DED0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 11,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/11",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 872,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x0B0",
+      "getter_rva": "0xF3DD30",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 12,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/12",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 437,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x0C0",
+      "getter_rva": "0xF3DC60",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 13,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/13",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 212,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x0D0",
+      "getter_rva": "0xF3DE00",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 14,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/14",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x0E0",
+      "getter_rva": "0xF42040",
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 15,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/15",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x0F0",
+      "getter_rva": null,
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 16,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/16",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x100",
+      "getter_rva": "0xF41DD0",
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 17,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/17",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x110",
+      "getter_rva": "0xF41F70",
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 18,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/18",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 203,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x120",
+      "getter_rva": "0xF3FEF0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 19,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/19",
+      "record_name_historical": "STAFF",
+      "family_historical": "COACHING_STAFF",
+      "historical_count": 1470,
+      "historical_stride": 352,
+      "descriptor_offset_from_manager": "+0x130",
+      "getter_rva": "0xF3C120",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 20,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/20",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 2,
+      "descriptor_offset_from_manager": "+0x140",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 21,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/21",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 287,
+      "historical_stride": 12,
+      "descriptor_offset_from_manager": "+0x150",
+      "getter_rva": "0xF3C3CD",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 22,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/22",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 84,
+      "historical_stride": 360,
+      "descriptor_offset_from_manager": "+0x160",
+      "getter_rva": "0xF3ED70",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 23,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/23",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 4,
+      "descriptor_offset_from_manager": "+0x170",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 24,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/24",
+      "record_name_historical": "PLAYER_STATS",
+      "family_historical": "STATISTICS",
+      "historical_count": 9773,
+      "historical_stride": 48,
+      "descriptor_offset_from_manager": "+0x180",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 25,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/25",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 2,
+      "descriptor_offset_from_manager": "+0x190",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 26,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/26",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1023,
+      "historical_stride": 114,
+      "descriptor_offset_from_manager": "+0x1A0",
+      "getter_rva": "0xF3F6F0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 27,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/27",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 2,
+      "descriptor_offset_from_manager": "+0x1B0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 28,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/28",
+      "record_name_historical": "TEAM_STATS",
+      "family_historical": "STATISTICS",
+      "historical_count": 2964,
+      "historical_stride": 62,
+      "descriptor_offset_from_manager": "+0x1C0",
+      "getter_rva": "0xF413B0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 29,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/29",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 2,
+      "descriptor_offset_from_manager": "+0x1D0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 30,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/30",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 36,
+      "historical_stride": 114,
+      "descriptor_offset_from_manager": "+0x1E0",
+      "getter_rva": "0xF41210",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 31,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/31",
+      "record_name_historical": "FIRST_NAME_CATALOG",
+      "family_historical": "LOCALIZATION_STRINGS",
+      "historical_count": 2744,
+      "historical_stride": 48,
+      "descriptor_offset_from_manager": "+0x1F0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 32,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/32",
+      "record_name_historical": "LAST_NAME_CATALOG",
+      "family_historical": "LOCALIZATION_STRINGS",
+      "historical_count": 4119,
+      "historical_stride": 48,
+      "descriptor_offset_from_manager": "+0x200",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 33,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/33",
+      "record_name_historical": "CITY_NAME_CATALOG",
+      "family_historical": "LOCALIZATION_STRINGS",
+      "historical_count": 88,
+      "historical_stride": 48,
+      "descriptor_offset_from_manager": "+0x210",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 34,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/34",
+      "record_name_historical": "TEAM_NICKNAME_CATALOG",
+      "family_historical": "LOCALIZATION_STRINGS",
+      "historical_count": 56,
+      "historical_stride": 48,
+      "descriptor_offset_from_manager": "+0x220",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 35,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/35",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 112,
+      "historical_stride": 4020,
+      "descriptor_offset_from_manager": "+0x230",
+      "getter_rva": "0xF3C6B0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 36,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/36",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1072,
+      "historical_stride": 336,
+      "descriptor_offset_from_manager": "+0x240",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 37,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/37",
+      "record_name_historical": "STATS_SUBTABLE_250",
+      "family_historical": "STATISTICS",
+      "historical_count": 6242,
+      "historical_stride": 48,
+      "descriptor_offset_from_manager": "+0x250",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 38,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/38",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 6,
+      "historical_stride": 120,
+      "descriptor_offset_from_manager": "+0x260",
+      "getter_rva": "0xF409B0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 39,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/39",
+      "record_name_historical": "NBA_RECORD_BOOK",
+      "family_historical": "STATISTICS_ALL_TIME_RECORDS",
+      "historical_count": 69040,
+      "historical_stride": 52,
+      "descriptor_offset_from_manager": "+0x270",
+      "getter_rva": "0xF400A0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 40,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/40",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 4,
+      "descriptor_offset_from_manager": "+0x280",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 41,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/41",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 6769,
+      "historical_stride": 152,
+      "descriptor_offset_from_manager": "+0x290",
+      "getter_rva": "0xF3DABD",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 42,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/42",
+      "record_name_historical": "DRAFT_ASSETS",
+      "family_historical": "DRAFT_FINANCE",
+      "historical_count": 504,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x2A0",
+      "getter_rva": "0xF3C940",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 43,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/43",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 400,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x2B0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 44,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/44",
+      "record_name_historical": "SCHEDULE_CALENDAR",
+      "family_historical": "LEAGUE_CALENDAR_GAMES",
+      "historical_count": 1260,
+      "historical_stride": 24,
+      "descriptor_offset_from_manager": "+0x2C0",
+      "getter_rva": "0xF3DB80",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 45,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/45",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 4,
+      "descriptor_offset_from_manager": "+0x2D0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 46,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/46",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 543,
+      "historical_stride": 216,
+      "descriptor_offset_from_manager": "+0x2E0",
+      "getter_rva": "0xF3D0ED",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 47,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/47",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 30,
+      "historical_stride": 16,
+      "descriptor_offset_from_manager": "+0x2F0",
+      "getter_rva": "0xF3EC40",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 48,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/48",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x300",
+      "getter_rva": null,
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 49,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/49",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x310",
+      "getter_rva": "0xF3CB60",
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 50,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/50",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 32,
+      "historical_stride": 280,
+      "descriptor_offset_from_manager": "+0x320",
+      "getter_rva": "0xF3EE50",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 51,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/51",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x330",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 52,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/52",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1601,
+      "historical_stride": 128,
+      "descriptor_offset_from_manager": "+0x340",
+      "getter_rva": "0xF3F000",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 53,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/53",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 4,
+      "descriptor_offset_from_manager": "+0x350",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 54,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/54",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 5227,
+      "historical_stride": 64,
+      "descriptor_offset_from_manager": "+0x360",
+      "getter_rva": "0xF44FEF",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 55,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/55",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 201,
+      "historical_stride": 1960,
+      "descriptor_offset_from_manager": "+0x370",
+      "getter_rva": "0xF40800",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 56,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/56",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x380",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 57,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/57",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 201,
+      "historical_stride": 32,
+      "descriptor_offset_from_manager": "+0x390",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 58,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/58",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 4,
+      "descriptor_offset_from_manager": "+0x3A0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 59,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/59",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 2,
+      "historical_stride": 212,
+      "descriptor_offset_from_manager": "+0x3B0",
+      "getter_rva": "0xF3BBE0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 60,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/60",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 4,
+      "descriptor_offset_from_manager": "+0x3C0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 61,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/61",
+      "record_name_historical": "WAIVED_SALARY",
+      "family_historical": "FINANCE_DEAD_CAP",
+      "historical_count": 222,
+      "historical_stride": 136,
+      "descriptor_offset_from_manager": "+0x3D0",
+      "getter_rva": "0xF3C790",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 62,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/62",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x3E0",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 63,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/63",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1060,
+      "historical_stride": 120,
+      "descriptor_offset_from_manager": "+0x3F0",
+      "getter_rva": "0xF40250",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 64,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/64",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x400",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 65,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/65",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 20,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x410",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 66,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/66",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 120,
+      "historical_stride": 112,
+      "descriptor_offset_from_manager": "+0x420",
+      "getter_rva": "0xF3BE10",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 67,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/67",
+      "record_name_historical": "SHOES_CATALOG",
+      "family_historical": "EQUIPMENT_GEAR",
+      "historical_count": 443,
+      "historical_stride": 116,
+      "descriptor_offset_from_manager": "+0x430",
+      "getter_rva": "0xF40730",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 68,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/68",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 16132,
+      "descriptor_offset_from_manager": "+0x440",
+      "getter_rva": "0xF3B9C0",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 69,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/69",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 41704,
+      "descriptor_offset_from_manager": "+0x450",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 70,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/70",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 8,
+      "descriptor_offset_from_manager": "+0x460",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 71,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/71",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 144,
+      "historical_stride": 112,
+      "descriptor_offset_from_manager": "+0x470",
+      "getter_rva": "0xF41550",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 72,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/72",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 1,
+      "historical_stride": 2,
+      "descriptor_offset_from_manager": "+0x480",
+      "getter_rva": null,
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 73,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/73",
+      "record_name_historical": "EMPTY_SLOT",
+      "family_historical": "NONE",
+      "historical_count": 0,
+      "historical_stride": 0,
+      "descriptor_offset_from_manager": "+0x490",
+      "getter_rva": null,
+      "historical_source_grade": "EMPTY",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    },
+    {
+      "slot": 74,
+      "source_ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/74",
+      "record_name_historical": "UNKNOWN",
+      "family_historical": "UNKNOWN",
+      "historical_count": 8136,
+      "historical_stride": 2,
+      "descriptor_offset_from_manager": "+0x4A0",
+      "getter_rva": "0xF3D90D",
+      "historical_source_grade": "STRUCTURE_VERIFIED",
+      "current_game_read": "NOT_RUN",
+      "pointer_persisted": false,
+      "verification_required": [
+        "CURRENT_EXECUTABLE_HASH",
+        "ROOT_ALIGNMENT",
+        "OBJECT_IDENTITY",
+        "COUNT_VS_CAPACITY"
+      ]
+    }
+  ],
+  "registered_native_field_groups": {
+    "PLAYER": {
+      "registered_fields": [
+        {
+          "name": "driving_layup",
+          "offset_hex": "0x41f",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/0"
+        },
+        {
+          "name": "post_fadeaway",
+          "offset_hex": "0x420",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/1"
+        },
+        {
+          "name": "post_hook",
+          "offset_hex": "0x421",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/2"
+        },
+        {
+          "name": "post_moves",
+          "offset_hex": "0x422",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/3"
+        },
+        {
+          "name": "draw_foul",
+          "offset_hex": "0x423",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/4"
+        },
+        {
+          "name": "shot_close",
+          "offset_hex": "0x424",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/5"
+        },
+        {
+          "name": "mid_range_shot",
+          "offset_hex": "0x425",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/6"
+        },
+        {
+          "name": "3pt_shot",
+          "offset_hex": "0x426",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/7"
+        },
+        {
+          "name": "free_throw",
+          "offset_hex": "0x427",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/8"
+        },
+        {
+          "name": "ball_control",
+          "offset_hex": "0x428",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/9"
+        },
+        {
+          "name": "passing_iq",
+          "offset_hex": "0x429",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/10"
+        },
+        {
+          "name": "passing_accuracy",
+          "offset_hex": "0x42a",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/11"
+        },
+        {
+          "name": "offensive_rebound",
+          "offset_hex": "0x42b",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/12"
+        },
+        {
+          "name": "standing_dunk",
+          "offset_hex": "0x435",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/13"
+        },
+        {
+          "name": "driving_dunk",
+          "offset_hex": "0x436",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/14"
+        },
+        {
+          "name": "shot_iq",
+          "offset_hex": "0x43e",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/15"
+        },
+        {
+          "name": "passing_vision",
+          "offset_hex": "0x453",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/16"
+        },
+        {
+          "name": "hands",
+          "offset_hex": "0x455",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/17"
+        },
+        {
+          "name": "defensive_rebound",
+          "offset_hex": "0x42c",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/18"
+        },
+        {
+          "name": "interior_defense",
+          "offset_hex": "0x42d",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/19"
+        },
+        {
+          "name": "perimeter_defense",
+          "offset_hex": "0x42e",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/20"
+        },
+        {
+          "name": "block",
+          "offset_hex": "0x431",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/21"
+        },
+        {
+          "name": "steal",
+          "offset_hex": "0x432",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/22"
+        },
+        {
+          "name": "shot_contest",
+          "offset_hex": "0x456",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/23"
+        },
+        {
+          "name": "lateral_quickness",
+          "offset_hex": "0x42f",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/24"
+        },
+        {
+          "name": "speed",
+          "offset_hex": "0x437",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/25"
+        },
+        {
+          "name": "speed_with_ball",
+          "offset_hex": "0x438",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/26"
+        },
+        {
+          "name": "acceleration",
+          "offset_hex": "0x439",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/27"
+        },
+        {
+          "name": "vertical",
+          "offset_hex": "0x43a",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/28"
+        },
+        {
+          "name": "strength",
+          "offset_hex": "0x43b",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/29"
+        },
+        {
+          "name": "stamina",
+          "offset_hex": "0x43c",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/30"
+        },
+        {
+          "name": "hustle",
+          "offset_hex": "0x43d",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/31"
+        },
+        {
+          "name": "head_durability",
+          "offset_hex": "0x442",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/32"
+        },
+        {
+          "name": "neck_durability",
+          "offset_hex": "0x443",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/33"
+        },
+        {
+          "name": "back_durability",
+          "offset_hex": "0x444",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/34"
+        },
+        {
+          "name": "left_shoulder_durability",
+          "offset_hex": "0x445",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/35"
+        },
+        {
+          "name": "right_shoulder_durability",
+          "offset_hex": "0x446",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/36"
+        },
+        {
+          "name": "left_elbow_durability",
+          "offset_hex": "0x447",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/37"
+        },
+        {
+          "name": "right_elbow_durability",
+          "offset_hex": "0x448",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/38"
+        },
+        {
+          "name": "left_hip_durability",
+          "offset_hex": "0x449",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/39"
+        },
+        {
+          "name": "right_hip_durability",
+          "offset_hex": "0x44a",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/40"
+        },
+        {
+          "name": "left_knee_durability",
+          "offset_hex": "0x44b",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/41"
+        },
+        {
+          "name": "right_knee_durability",
+          "offset_hex": "0x44c",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/42"
+        },
+        {
+          "name": "left_ankle_durability",
+          "offset_hex": "0x44d",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/43"
+        },
+        {
+          "name": "right_ankle_durability",
+          "offset_hex": "0x44e",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/44"
+        },
+        {
+          "name": "left_foot_durability",
+          "offset_hex": "0x44f",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/45"
+        },
+        {
+          "name": "right_foot_durability",
+          "offset_hex": "0x450",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/46"
+        },
+        {
+          "name": "misc_durability",
+          "offset_hex": "0x451",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/47"
+        },
+        {
+          "name": "pass_perception",
+          "offset_hex": "0x430",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/48"
+        },
+        {
+          "name": "defensive_consistency",
+          "offset_hex": "0x433",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/49"
+        },
+        {
+          "name": "help_defensive_iq",
+          "offset_hex": "0x434",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/50"
+        },
+        {
+          "name": "offensive_consistency",
+          "offset_hex": "0x43f",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/51"
+        },
+        {
+          "name": "pick_and_roll_defensive_iq",
+          "offset_hex": "0x454",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/52"
+        },
+        {
+          "name": "intangibles",
+          "offset_hex": "0x440",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/53"
+        },
+        {
+          "name": "potential",
+          "offset_hex": "0x441",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/54"
+        },
+        {
+          "name": "bird_years",
+          "offset_hex": "0x356",
+          "bit_start": 6,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/55"
+        },
+        {
+          "name": "original_contract_years",
+          "offset_hex": "0x341",
+          "bit_start": 4,
+          "bit_width": 3,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/56"
+        },
+        {
+          "name": "years_left_on_contract",
+          "offset_hex": "0x32e",
+          "bit_start": 2,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/57"
+        },
+        {
+          "name": "contract_option",
+          "offset_hex": "0x317",
+          "bit_start": 4,
+          "bit_width": 2,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/58"
+        },
+        {
+          "name": "no_trade",
+          "offset_hex": "0x346",
+          "bit_start": 4,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/59"
+        },
+        {
+          "name": "extension_length",
+          "offset_hex": "0x341",
+          "bit_start": 7,
+          "bit_width": 3,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/60"
+        },
+        {
+          "name": "extension_option",
+          "offset_hex": "0x342",
+          "bit_start": 2,
+          "bit_width": 2,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/61"
+        },
+        {
+          "name": "extension_no_trade",
+          "offset_hex": "0x31c",
+          "bit_start": 5,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/62"
+        },
+        {
+          "name": "contract_year_1",
+          "offset_hex": "0x1a4",
+          "bit_start": 0,
+          "bit_width": 31,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/63"
+        },
+        {
+          "name": "contract_year_2",
+          "offset_hex": "0x1a8",
+          "bit_start": 0,
+          "bit_width": 31,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/64"
+        },
+        {
+          "name": "contract_year_3",
+          "offset_hex": "0x1ac",
+          "bit_start": 0,
+          "bit_width": 31,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/65"
+        },
+        {
+          "name": "contract_year_4",
+          "offset_hex": "0x1b0",
+          "bit_start": 0,
+          "bit_width": 31,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/66"
+        },
+        {
+          "name": "contract_year_5",
+          "offset_hex": "0x1b4",
+          "bit_start": 0,
+          "bit_width": 31,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/67"
+        },
+        {
+          "name": "contract_year_6",
+          "offset_hex": "0x1b8",
+          "bit_start": 0,
+          "bit_width": 31,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/68"
+        },
+        {
+          "name": "contract_type",
+          "offset_hex": "0x344",
+          "bit_start": 3,
+          "bit_width": 3,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/69"
+        },
+        {
+          "name": "euro_stash_years_left",
+          "offset_hex": "0x293",
+          "bit_start": 5,
+          "bit_width": 2,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/70"
+        },
+        {
+          "name": "two_way_days_left",
+          "offset_hex": "0x15f",
+          "bit_start": 2,
+          "bit_width": 6,
+          "bytes": null,
+          "group": "contract",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER/71"
+        }
+      ],
+      "status": "PROJECT_PROFILE_STATIC_REGISTRATION"
+    },
+    "STAFF": {
+      "registered_fields": [
+        {
+          "name": "position",
+          "offset_hex": "0x10e",
+          "bit_start": 2,
+          "bit_width": 3,
+          "bytes": null,
+          "group": "vitals",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/0"
+        },
+        {
+          "name": "years_left",
+          "offset_hex": "0x112",
+          "bit_start": 0,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "vitals",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/1"
+        },
+        {
+          "name": "salary",
+          "offset_hex": "0xf8",
+          "bit_start": 0,
+          "bit_width": 24,
+          "bytes": null,
+          "group": "vitals",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/2"
+        },
+        {
+          "name": "offense",
+          "offset_hex": "0x100",
+          "bit_start": 0,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/3"
+        },
+        {
+          "name": "defense",
+          "offset_hex": "0x100",
+          "bit_start": 4,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/4"
+        },
+        {
+          "name": "potential",
+          "offset_hex": "0x108",
+          "bit_start": 4,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/5"
+        },
+        {
+          "name": "contracts",
+          "offset_hex": "0x102",
+          "bit_start": 0,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/6"
+        },
+        {
+          "name": "trading",
+          "offset_hex": "0x102",
+          "bit_start": 4,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/7"
+        },
+        {
+          "name": "scouting",
+          "offset_hex": "0x101",
+          "bit_start": 4,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/8"
+        },
+        {
+          "name": "training",
+          "offset_hex": "0x101",
+          "bit_start": 0,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/9"
+        },
+        {
+          "name": "business",
+          "offset_hex": "0x103",
+          "bit_start": 0,
+          "bit_width": 4,
+          "bytes": null,
+          "group": "attributes",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/10"
+        },
+        {
+          "name": "preferred_system",
+          "offset_hex": "0x10a",
+          "bit_start": 0,
+          "bit_width": 3,
+          "bytes": null,
+          "group": "style",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/11"
+        },
+        {
+          "name": "active_system",
+          "offset_hex": "0x10b",
+          "bit_start": 4,
+          "bit_width": 3,
+          "bytes": null,
+          "group": "style",
+          "source_ref": "config/memory_field_profile.json#/fields/STAFF/12"
+        }
+      ],
+      "status": "PROJECT_PROFILE_STATIC_REGISTRATION"
+    },
+    "TEAM_STATS": {
+      "registered_fields": [
+        {
+          "name": "w",
+          "offset_hex": "0x5",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/0"
+        },
+        {
+          "name": "l",
+          "offset_hex": "0x3c",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 1,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/1"
+        },
+        {
+          "name": "points",
+          "offset_hex": "0x8",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/2"
+        },
+        {
+          "name": "pa",
+          "offset_hex": "0xa",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/3"
+        },
+        {
+          "name": "made",
+          "offset_hex": "0xc",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/4"
+        },
+        {
+          "name": "attempted",
+          "offset_hex": "0xe",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/5"
+        },
+        {
+          "name": "3pt_made",
+          "offset_hex": "0x10",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/6"
+        },
+        {
+          "name": "3pt_attempted",
+          "offset_hex": "0x12",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/7"
+        },
+        {
+          "name": "free_throws_made",
+          "offset_hex": "0x14",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/8"
+        },
+        {
+          "name": "free_throws_attempted",
+          "offset_hex": "0x16",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/9"
+        },
+        {
+          "name": "offensive_rebounds",
+          "offset_hex": "0x18",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/10"
+        },
+        {
+          "name": "defensive_rebounds",
+          "offset_hex": "0x1a",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/11"
+        },
+        {
+          "name": "assists",
+          "offset_hex": "0x22",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/12"
+        },
+        {
+          "name": "steals",
+          "offset_hex": "0x1c",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/13"
+        },
+        {
+          "name": "blocks",
+          "offset_hex": "0x20",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/14"
+        },
+        {
+          "name": "foul",
+          "offset_hex": "0x24",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/15"
+        },
+        {
+          "name": "turnover",
+          "offset_hex": "0x1e",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/16"
+        },
+        {
+          "name": "pts_to",
+          "offset_hex": "0x26",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/17"
+        },
+        {
+          "name": "2ndpts",
+          "offset_hex": "0x28",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/18"
+        },
+        {
+          "name": "pip",
+          "offset_hex": "0x2a",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/19"
+        },
+        {
+          "name": "bench",
+          "offset_hex": "0x36",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/20"
+        },
+        {
+          "name": "poss",
+          "offset_hex": "0x3a",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/21"
+        },
+        {
+          "name": "pace",
+          "offset_hex": "0x6",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/22"
+        },
+        {
+          "name": "ofgm",
+          "offset_hex": "0x2c",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/23"
+        },
+        {
+          "name": "ofga",
+          "offset_hex": "0x2e",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/24"
+        },
+        {
+          "name": "o3pm",
+          "offset_hex": "0x30",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/25"
+        },
+        {
+          "name": "o3pa",
+          "offset_hex": "0x32",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/TEAM_STATS/26"
+        }
+      ],
+      "status": "PROJECT_PROFILE_STATIC_REGISTRATION"
+    },
+    "PLAYER_STATS": {
+      "registered_fields": [
+        {
+          "name": "last_team",
+          "offset_hex": "0x0",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/0"
+        },
+        {
+          "name": "previous_team",
+          "offset_hex": "0x2",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/1"
+        },
+        {
+          "name": "season",
+          "offset_hex": "0x5",
+          "bit_start": 0,
+          "bit_width": 7,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/2"
+        },
+        {
+          "name": "times",
+          "offset_hex": "0x8",
+          "bit_start": 0,
+          "bit_width": 7,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/3"
+        },
+        {
+          "name": "lineup",
+          "offset_hex": "0xc",
+          "bit_start": 0,
+          "bit_width": 7,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/4"
+        },
+        {
+          "name": "points",
+          "offset_hex": "0x20",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/5"
+        },
+        {
+          "name": "offensive_rebounds",
+          "offset_hex": "0x16",
+          "bit_start": 6,
+          "bit_width": 10,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/6"
+        },
+        {
+          "name": "defensive_rebounds",
+          "offset_hex": "0x1c",
+          "bit_start": 0,
+          "bit_width": 15,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/7"
+        },
+        {
+          "name": "assists",
+          "offset_hex": "0x19",
+          "bit_start": 3,
+          "bit_width": 11,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/8"
+        },
+        {
+          "name": "steals",
+          "offset_hex": "0x10",
+          "bit_start": 0,
+          "bit_width": 11,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/9"
+        },
+        {
+          "name": "blocks",
+          "offset_hex": "0x11",
+          "bit_start": 3,
+          "bit_width": 11,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/10"
+        },
+        {
+          "name": "turnover",
+          "offset_hex": "0x1d",
+          "bit_start": 7,
+          "bit_width": 15,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/11"
+        },
+        {
+          "name": "made",
+          "offset_hex": "0xe",
+          "bit_start": 4,
+          "bit_width": 12,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/12"
+        },
+        {
+          "name": "attempted",
+          "offset_hex": "0x9",
+          "bit_start": 7,
+          "bit_width": 13,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/13"
+        },
+        {
+          "name": "3pt_made",
+          "offset_hex": "0x1a",
+          "bit_start": 6,
+          "bit_width": 10,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/14"
+        },
+        {
+          "name": "3pt_attempted",
+          "offset_hex": "0x18",
+          "bit_start": 0,
+          "bit_width": 11,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/15"
+        },
+        {
+          "name": "free_throws_made",
+          "offset_hex": "0x14",
+          "bit_start": 0,
+          "bit_width": 11,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/16"
+        },
+        {
+          "name": "free_throws_attempted",
+          "offset_hex": "0x15",
+          "bit_start": 3,
+          "bit_width": 11,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/17"
+        },
+        {
+          "name": "minutes",
+          "offset_hex": "0xc",
+          "bit_start": 7,
+          "bit_width": 13,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/18"
+        },
+        {
+          "name": "foul",
+          "offset_hex": "0x12",
+          "bit_start": 6,
+          "bit_width": 10,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/19"
+        },
+        {
+          "name": "double",
+          "offset_hex": "0x2b",
+          "bit_start": 1,
+          "bit_width": 7,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/20"
+        },
+        {
+          "name": "treble",
+          "offset_hex": "0x9",
+          "bit_start": 0,
+          "bit_width": 7,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/21"
+        },
+        {
+          "name": "+_",
+          "offset_hex": "0x22",
+          "bit_start": null,
+          "bit_width": null,
+          "bytes": 2,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/22"
+        },
+        {
+          "name": "championship",
+          "offset_hex": "0x1f",
+          "bit_start": 6,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/23"
+        },
+        {
+          "name": "mpv",
+          "offset_hex": "0x8",
+          "bit_start": 7,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/24"
+        },
+        {
+          "name": "all_nba_team",
+          "offset_hex": "0xb",
+          "bit_start": 4,
+          "bit_width": 2,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/25"
+        },
+        {
+          "name": "all_defensive_team",
+          "offset_hex": "0xb",
+          "bit_start": 6,
+          "bit_width": 2,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/26"
+        },
+        {
+          "name": "allstrt_w",
+          "offset_hex": "0x2e",
+          "bit_start": 0,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/27"
+        },
+        {
+          "name": "allstrt_e",
+          "offset_hex": "0x2e",
+          "bit_start": 1,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/28"
+        },
+        {
+          "name": "all_rookie_team",
+          "offset_hex": "0x2d",
+          "bit_start": 6,
+          "bit_width": 2,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/29"
+        },
+        {
+          "name": "rookie_of_the_year",
+          "offset_hex": "0x2e",
+          "bit_start": 2,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/30"
+        },
+        {
+          "name": "sixth_man",
+          "offset_hex": "0x2e",
+          "bit_start": 3,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/31"
+        },
+        {
+          "name": "dpoy",
+          "offset_hex": "0x2e",
+          "bit_start": 4,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/32"
+        },
+        {
+          "name": "most_improved_player",
+          "offset_hex": "0x2e",
+          "bit_start": 5,
+          "bit_width": 1,
+          "bytes": null,
+          "group": "totals",
+          "source_ref": "config/memory_field_profile.json#/fields/PLAYER_STATS/33"
+        }
+      ],
+      "status": "PROJECT_PROFILE_STATIC_REGISTRATION"
+    }
+  },
+  "ui_source_research_matrix": {
+    "SINGLE_GAME_BOXSCORE": {
+      "screen_name": "Game Box Score (单场比赛技术统计与对比)",
+      "source_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SINGLE_GAME_BOXSCORE",
+      "native_parents": [
+        {
+          "name": "SEASON",
+          "offset": null,
+          "record_bytes": null,
+          "capacity_historical": null
+        },
+        {
+          "name": "SEASON_SCHEDULE",
+          "offset": "+0x28 (40)",
+          "record_bytes": 60,
+          "capacity_historical": 1232
+        },
+        {
+          "name": "BOXSCORE_STATBANK",
+          "offset": "+0x1B6AC (112308)",
+          "record_bytes": 24,
+          "capacity_historical": 45292
+        }
+      ],
+      "candidate_fields": [
+        "game_id",
+        "game_date",
+        "home_team_id",
+        "away_team_id",
+        "linescore_quarters",
+        "linescore_overtime",
+        "final_score",
+        "attendance",
+        "game_status",
+        "team_advanced_stats",
+        "player_statline",
+        "player_points_conservation",
+        "player_advanced_analytics"
+      ],
+      "evidence": "AG01D_SOURCE_REPORT_NOT_INDEPENDENT_NATIVE_ACCEPTANCE",
+      "current_live_game_read": "NOT_RUN"
+    },
+    "SEASON_STATS_AND_LEADERBOARDS": {
+      "screen_name": "League Leaders & Player Stats (赛季统计与联盟排行榜)",
+      "source_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SEASON_STATS_AND_LEADERBOARDS",
+      "native_parents": [
+        {
+          "name": "ROSTERDATA Slot 24 (PLAYER_STATS)",
+          "offset": null,
+          "record_bytes": 48,
+          "capacity_historical": null
+        },
+        {
+          "name": "ROSTERDATA Slot 26 (TEAM_STATS)",
+          "offset": null,
+          "record_bytes": 62,
+          "capacity_historical": null
+        }
+      ],
+      "candidate_fields": [
+        "games_played",
+        "games_started",
+        "season_points",
+        "season_scoring_identity",
+        "splits_additive_equations"
+      ],
+      "evidence": "AG01D_SOURCE_REPORT_NOT_INDEPENDENT_NATIVE_ACCEPTANCE",
+      "current_live_game_read": "NOT_RUN"
+    },
+    "PLAYER_CARD": {
+      "screen_name": "Player Card (完整球员卡片与生涯履历)",
+      "source_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD",
+      "native_parents": [
+        {
+          "name": "ROSTERDATA Slot 1 (PLAYER)",
+          "offset": null,
+          "record_bytes": 1264,
+          "capacity_historical": null
+        },
+        {
+          "name": "ROSTERDATA Slot 24 (PLAYER_STATS)",
+          "offset": null,
+          "record_bytes": 48,
+          "capacity_historical": null
+        }
+      ],
+      "candidate_fields": [
+        "identity_names",
+        "player_id",
+        "current_team_ptr",
+        "current_season_stats_index",
+        "career_history_stats_array",
+        "player_attributes",
+        "player_tendencies",
+        "player_badges"
+      ],
+      "evidence": "AG01D_SOURCE_REPORT_NOT_INDEPENDENT_NATIVE_ACCEPTANCE",
+      "current_live_game_read": "NOT_RUN"
+    },
+    "G_LEAGUE": {
+      "screen_name": "G-League & Two-Way Assignments (发展联盟与双向合同)",
+      "source_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/G_LEAGUE",
+      "native_parents": [
+        {
+          "name": "ROSTERDATA Slot 1 (PLAYER)",
+          "offset": null,
+          "record_bytes": 1264,
+          "capacity_historical": null
+        }
+      ],
+      "candidate_fields": [
+        "contract_type",
+        "two_way_days_left",
+        "gleague_team_assignment"
+      ],
+      "evidence": "AG01D_SOURCE_REPORT_NOT_INDEPENDENT_NATIVE_ACCEPTANCE",
+      "current_live_game_read": "NOT_RUN"
+    },
+    "ROOKIE_REPORT": {
+      "screen_name": "Rookie Report & Draft Assets (新秀报告与选秀资产)",
+      "source_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/ROOKIE_REPORT",
+      "native_parents": [
+        {
+          "name": "ROSTERDATA Slot 1 (PLAYER)",
+          "offset": null,
+          "record_bytes": 1264,
+          "capacity_historical": null
+        },
+        {
+          "name": "ROSTERDATA Slot 36 (DRAFT_ASSETS)",
+          "offset": null,
+          "record_bytes": 32,
+          "capacity_historical": null
+        }
+      ],
+      "candidate_fields": [
+        "is_rookie",
+        "draft_pick_original_team",
+        "draft_pick_owner_team",
+        "draft_pick_year",
+        "draft_pick_round",
+        "draft_prospect_pool"
+      ],
+      "evidence": "AG01D_SOURCE_REPORT_NOT_INDEPENDENT_NATIVE_ACCEPTANCE",
+      "current_live_game_read": "NOT_RUN"
+    },
+    "TEAM_MATCHUP_MATRIX": {
+      "screen_name": "Team Matchup Matrix & Head-to-Head Records (球队对决矩阵)",
+      "source_ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/TEAM_MATCHUP_MATRIX",
+      "native_parents": [
+        {
+          "name": "ROSTERDATA Slot 44",
+          "offset": null,
+          "record_bytes": 24,
+          "capacity_historical": null
+        }
+      ],
+      "candidate_fields": [
+        "home_team_ptr",
+        "away_team_ptr",
+        "head_to_head_wins",
+        "series_status_code"
+      ],
+      "evidence": "AG01D_SOURCE_REPORT_NOT_INDEPENDENT_NATIVE_ACCEPTANCE",
+      "current_live_game_read": "NOT_RUN"
+    }
+  },
+  "adjacency_hypotheses": [
+    {
+      "anchor": "PLAYER attributes 0x41F..0x456",
+      "neighbor_targets": [
+        "55 registered attribute/durability names",
+        "hidden Potential 0x441"
+      ],
+      "test": "Valid in-bounds read of two identified players and same-save UI comparison; do not export raw Potential.",
+      "negative_control": "another player differing in known attribute",
+      "confidence": "RESEARCH_ONLY"
+    },
+    {
+      "anchor": "PLAYER tendency bytes 0x458..0x4BA",
+      "neighbor_targets": [
+        "48 named native offsets",
+        "51 unexplained bytes",
+        "99 independent archived labels"
+      ],
+      "test": "Use real PC22 editor labels and mixed-player samples; no order-based matching.",
+      "negative_control": "duplicate values / mismatched export layout",
+      "confidence": "RESEARCH_ONLY"
+    },
+    {
+      "anchor": "PLAYER stat index +0xFC/+0xFE..+0x126",
+      "neighbor_targets": [
+        "current season stats",
+        "career years",
+        "null/sentinel slots"
+      ],
+      "test": "Cross-join Slot24 on save/season and player; test retired and no-stat players",
+      "negative_control": "same native PlayerID different save",
+      "confidence": "AG01D_CANDIDATE"
+    },
+    {
+      "anchor": "player badges +0x36C..0x3C0",
+      "neighbor_targets": [
+        "badge encoding",
+        "extra flags or separate none marker",
+        "personality badges"
+      ],
+      "test": "2-bit can only express 4 states; five-label HOF claim requires additional mechanism or invalid inference.",
+      "negative_control": "badges NONE/BRONZE/SILVER/GOLD/HOF read-only samples",
+      "confidence": "CONTRADICTORY_CLAIM"
+    },
+    {
+      "anchor": "Slot10 / Slot44 / SEASON",
+      "neighbor_targets": [
+        "actual calendar",
+        "matchup matrix",
+        "single game rows"
+      ],
+      "test": "Read-only cross-validation with original PC22 schedule and game status",
+      "negative_control": "unscheduled/unfinished games",
+      "confidence": "AG01D_RESEARCH"
+    }
+  ],
+  "known_invalid_inferences": [
+    "Slot44 as game schedule: superseded AG01D matchup-matrix interpretation",
+    "99 archived tendency labels do not imply 99 native positional labels",
+    "raw StatBank capacity is not completed-game count",
+    "old decoder 20-season traversal is not a world-history limit",
+    "native PlayerID/slot/pointer global stability not proved",
+    "age derived formula is not a mandatory game memory slot",
+    "2bit badge level claim requires separate proof"
+  ],
+  "next_task": "NATIVE-ATLAS-R00",
+  "read_only": true
+}
