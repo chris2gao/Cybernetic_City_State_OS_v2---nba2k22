@@ -1,0 +1,591 @@
+{
+  "schema": "r02.fixture.v1",
+  "source_commit": "5cef84fb21892266686bd5fd75a06901ea911d12",
+  "provenance": "Historical Gemini acquisition only, PID1828 reported not independently file-bound; SAVE_UNBOUND",
+  "pools": {
+    "Team": {
+      "base": "0x7ff4e73065f0",
+      "stride": 4696,
+      "count": 219
+    },
+    "DeadCap": {
+      "base": "0x7ff4e7c3e180",
+      "stride": 136,
+      "count": 222
+    },
+    "TradeException": {
+      "base": "0x7ff4e7c82830",
+      "stride": 112,
+      "count": 144
+    }
+  },
+  "historical_explicit_audit": {
+    "calls": 52,
+    "bytes": 5172,
+    "by_phase": {
+      "R01-BIND": 1208,
+      "R02-PLAYER-HISTORY": 1134,
+      "R03-DRAFT-RELATIONS": 486,
+      "R04-COACH-BOOK": 1080,
+      "R05-GM-CAP": 744,
+      "R06-RECORD-BOOK": 520
+    },
+    "limitation": "Self-registered ranges; no proof of implicit reads or effective external authorization"
+  },
+  "player_stats": [
+    {
+      "address": "0x7ff4e74f303c",
+      "index": 6432,
+      "player_index": 0,
+      "raw_hex": "0000ffff197affff1001500090ef40061a5880090fc8000900a003004b001200d7006c00c500d80352500b0400004000",
+      "audit_call": 7,
+      "sha256": "413af4a14d59a50f3e226e0f8bda3e3433cf6368ebabc8543baa36aae5569689",
+      "prior_wrong_u16": 272,
+      "native_stat83_low7": 16,
+      "native_stat84": 16,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 1,
+      "season_code_raw": "0x7a19",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74ae5dc",
+      "index": 574,
+      "player_index": 0,
+      "raw_hex": "0000ffff1979ffff3a842341baaa53145d18c12ab0f848170a88cc00448156003d0349016610850f1016d51a00004200",
+      "audit_call": 8,
+      "sha256": "b42f291ed1468b0f489950620849678f2e0d32fa4a7f4b5770c97bfc886bbf3a",
+      "prior_wrong_u16": 33850,
+      "native_stat83_low7": 58,
+      "native_stat84": 58,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 4,
+      "season_code_raw": "0x7919",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74ae5ac",
+      "index": 573,
+      "player_index": 0,
+      "raw_hex": "0000ffff1978ffff39864371b9f073177708812eb950491c07388e004b016400a9033e0000002e160000003e00004200",
+      "audit_call": 9,
+      "sha256": "7f9eae5f8648d4403438e737efcfce58f9d2ea8e288d90a60047e80a40b941f4",
+      "prior_wrong_u16": 34361,
+      "native_stat83_low7": 57,
+      "native_stat84": 57,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 6,
+      "season_code_raw": "0x7819",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74ae57c",
+      "index": 572,
+      "player_index": 0,
+      "raw_hex": "0000ffff1977ffff4f0ae0014f46c52170e8413401610d2b061013000d028900390574000000bb1f0000005400004200",
+      "audit_call": 10,
+      "sha256": "64c92c0ac089cb96ab483bb935092d63ca29a0ec9513d69ed5a8c293d5158046",
+      "prior_wrong_u16": 2639,
+      "native_stat83_low7": 79,
+      "native_stat84": 79,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 10,
+      "season_code_raw": "0x7719",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74ae54c",
+      "index": 571,
+      "player_index": 0,
+      "raw_hex": "0000ffff1976ffff510cf301515605228c30c234bfa84a240ba8140002028b00ff0484016700d21f2560054c00404400",
+      "audit_call": 11,
+      "sha256": "07b1f6e682ca840c5a097d515d9f26891e79ed0deb59314b8358ec45ab356e5e",
+      "prior_wrong_u16": 3153,
+      "native_stat83_low7": 81,
+      "native_stat84": 81,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 12,
+      "season_code_raw": "0x7619",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74f306c",
+      "index": 6433,
+      "player_index": 1,
+      "raw_hex": "0000ffff1f7affff10003e0090c4b0030c00000515b800004c10c1080f000b00ae004500b00023034ac0090000004000",
+      "audit_call": 12,
+      "sha256": "4443521fa8e192da52905d35e227cb4130f2333e9bab428f44fc5d1fa0be159d",
+      "prior_wrong_u16": 16,
+      "native_stat83_low7": 16,
+      "native_stat84": 16,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x7a1f",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74fa53c",
+      "index": 7056,
+      "player_index": 1,
+      "raw_hex": "0000ffff1f79ffff39001401393323102c4000184568820218d9841f7e802000c7023f012e0e740d48e5b90000004000",
+      "audit_call": 13,
+      "sha256": "cb0fc2f76900c3db9adc99bb8b40a7502ae54bfd8ceb5bcd833fe7fcec715506",
+      "prior_wrong_u16": 57,
+      "native_stat83_low7": 57,
+      "native_stat84": 57,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x791f",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74fa50c",
+      "index": 7055,
+      "player_index": 1,
+      "raw_hex": "1100ffff1e78ffff40001f011914c3112648401c5008c30641e1432476001f001903a100000023190000000000004000",
+      "audit_call": 14,
+      "sha256": "690bc2c4288b885fa2f09bd9abf10f71312e4fb3f278da1fc7ecb57fc657bd5d",
+      "prior_wrong_u16": 64,
+      "native_stat83_low7": 64,
+      "native_stat84": 25,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x781e",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74fa4dc",
+      "index": 7054,
+      "player_index": 1,
+      "raw_hex": "1c00ffff1f77ffff4a80e80082bb420d246040182ca0c106fb10421c5d801e004502840000000e1d0000000000004000",
+      "audit_call": 15,
+      "sha256": "980cc7290b3552625cf5801004f51a9e34f028d7cc0bb9d414fbde8b508862e5",
+      "prior_wrong_u16": 32842,
+      "native_stat83_low7": 74,
+      "native_stat84": 2,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x771f",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74fa4ac",
+      "index": 7053,
+      "player_index": 1,
+      "raw_hex": "1100ffff1e75ffff46805f012a0324154f38801f5520430642e945229a002e008203daff00005f190000000200004000",
+      "audit_call": 16,
+      "sha256": "2f62e0e6c0e0b210faf56f932a95b9a0832000ffb1f904b15b690aee149b9984",
+      "prior_wrong_u16": 32838,
+      "native_stat83_low7": 70,
+      "native_stat84": 42,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x751e",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74fa47c",
+      "index": 7052,
+      "player_index": 1,
+      "raw_hex": "0d00ffff1e74ffff2c007000095a61061618400a2db041026f18820c330012002b01dcff00005f110000000200004000",
+      "audit_call": 17,
+      "sha256": "5e78a25f98b8cdd5cf882741aecea4fb8ea5016675553632501333cef9988139",
+      "prior_wrong_u16": 44,
+      "native_stat83_low7": 44,
+      "native_stat84": 9,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x741e",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    },
+    {
+      "address": "0x7ff4e74fa44c",
+      "index": 7051,
+      "player_index": 1,
+      "raw_hex": "1a00ffff0a73ffff0280010000040000000080000000000001080000020000000000fcff000010000000000000004000",
+      "audit_call": 18,
+      "sha256": "5c35ff6e0732b48e4bb5d3c61ac40a313a3527f4679813ce3abafa53100ebc12",
+      "prior_wrong_u16": 32770,
+      "native_stat83_low7": 2,
+      "native_stat84": 0,
+      "adjacent_bit7": 0,
+      "adjacent_bits8_14": 0,
+      "season_code_raw": "0x730a",
+      "season_identity": "UNKNOWN_UI_SAVE_UNBOUND"
+    }
+  ],
+  "draft_records": [
+    {
+      "index": 0,
+      "raw_hex": "104231e7f47f0000104231e7f47f00000000000000000000ffffffff00008205",
+      "source_form": "RECONSTRUCTED_FIELDS_HASH_MATCH_FULL_AUDIT",
+      "audit_call": 22,
+      "sha256": "0efe271329f667dc0d0640d199d718d917552bb0792f38145b8e1963840d0183",
+      "prior_wrong_signed_round": 11550720,
+      "decoded": {
+        "pick_team_index": 12,
+        "original_team_index": 12,
+        "references_differ": false,
+        "signed_round": 0,
+        "group": 0,
+        "pick_sequence": 0,
+        "bit17_raw": 1,
+        "token_raw": "0xffffffff",
+        "player_reference_raw": "0x0",
+        "metadata_raw": "0x5820000",
+        "legal_traded_asset": "UNKNOWN",
+        "protection_or_swap": "UNKNOWN"
+      }
+    },
+    {
+      "index": 1,
+      "raw_hex": "104231e7f47f0000080b31e7f47f000000000000000000001f00e0020001a205",
+      "source_form": "RECONSTRUCTED_FIELDS_HASH_MATCH_FULL_AUDIT",
+      "audit_call": 23,
+      "sha256": "3a186b88529c90403f94c10eb091c446c301c9801a201291410e53dfbffd94f0",
+      "prior_wrong_signed_round": 11812896,
+      "decoded": {
+        "pick_team_index": 12,
+        "original_team_index": 9,
+        "references_differ": true,
+        "signed_round": 0,
+        "group": 0,
+        "pick_sequence": 1,
+        "bit17_raw": 1,
+        "token_raw": "0x2e0001f",
+        "player_reference_raw": "0x0",
+        "metadata_raw": "0x5a20100",
+        "legal_traded_asset": "UNKNOWN",
+        "protection_or_swap": "UNKNOWN"
+      }
+    },
+    {
+      "index": 2,
+      "raw_hex": "e87932e7f47f0000e87932e7f47f00000000000000000000ffffffff00028205",
+      "source_form": "RECONSTRUCTED_FIELDS_HASH_MATCH_FULL_AUDIT",
+      "audit_call": 24,
+      "sha256": "17cce664a93983ea256dbd25e0ead8182836a92ce719676a668cb5da367e58ac",
+      "prior_wrong_signed_round": 11550784,
+      "decoded": {
+        "pick_team_index": 29,
+        "original_team_index": 29,
+        "references_differ": false,
+        "signed_round": 0,
+        "group": 0,
+        "pick_sequence": 2,
+        "bit17_raw": 1,
+        "token_raw": "0xffffffff",
+        "player_reference_raw": "0x0",
+        "metadata_raw": "0x5820200",
+        "legal_traded_asset": "UNKNOWN",
+        "protection_or_swap": "UNKNOWN"
+      }
+    },
+    {
+      "index": 3,
+      "raw_hex": "f89c30e7f47f0000f89c30e7f47f00000000000000000000ffffffff00038205",
+      "source_form": "RECONSTRUCTED_FIELDS_HASH_MATCH_FULL_AUDIT",
+      "audit_call": 25,
+      "sha256": "787877b4f4d9e42cdcab427ac16fe798d03c4b4c289208f63c0ef7ccd0bc108b",
+      "prior_wrong_signed_round": 11550816,
+      "decoded": {
+        "pick_team_index": 3,
+        "original_team_index": 3,
+        "references_differ": false,
+        "signed_round": 0,
+        "group": 0,
+        "pick_sequence": 3,
+        "bit17_raw": 1,
+        "token_raw": "0xffffffff",
+        "player_reference_raw": "0x0",
+        "metadata_raw": "0x5820300",
+        "legal_traded_asset": "UNKNOWN",
+        "protection_or_swap": "UNKNOWN"
+      }
+    },
+    {
+      "index": 4,
+      "raw_hex": "00d430e7f47f000000d430e7f47f00000000000000000000ffffffff00048205",
+      "source_form": "RECONSTRUCTED_FIELDS_HASH_MATCH_FULL_AUDIT",
+      "audit_call": 26,
+      "sha256": "05ee0cc91057559a7fd3edbdbb1d4d7561c6c89854e96de04fae4f8194ee985b",
+      "prior_wrong_signed_round": 11550848,
+      "decoded": {
+        "pick_team_index": 6,
+        "original_team_index": 6,
+        "references_differ": false,
+        "signed_round": 0,
+        "group": 0,
+        "pick_sequence": 4,
+        "bit17_raw": 1,
+        "token_raw": "0xffffffff",
+        "player_reference_raw": "0x0",
+        "metadata_raw": "0x5820400",
+        "legal_traded_asset": "UNKNOWN",
+        "protection_or_swap": "UNKNOWN"
+      }
+    },
+    {
+      "index": 5,
+      "raw_hex": "883032e7f47f0000d0d431e7f47f000000000000000000001500e0020005a205",
+      "source_form": "RECONSTRUCTED_FIELDS_HASH_MATCH_FULL_AUDIT",
+      "audit_call": 27,
+      "sha256": "152b05fdfb5f82c8831d238d37de173928541dac7eb94186224a8a6729740cde",
+      "prior_wrong_signed_round": 11813024,
+      "decoded": {
+        "pick_team_index": 25,
+        "original_team_index": 20,
+        "references_differ": true,
+        "signed_round": 0,
+        "group": 0,
+        "pick_sequence": 5,
+        "bit17_raw": 1,
+        "token_raw": "0x2e00015",
+        "player_reference_raw": "0x0",
+        "metadata_raw": "0x5a20500",
+        "legal_traded_asset": "UNKNOWN",
+        "protection_or_swap": "UNKNOWN"
+      }
+    }
+  ],
+  "gm_records": [
+    {
+      "kind": "DeadCap",
+      "index": 0,
+      "address": "0x7ff4e7c3e180",
+      "prefix16_hex": "000000000000000050af30e7f47f0000",
+      "audit_call": 37,
+      "source_form": "EXACT_AUDIT_PREVIEW16_NOT_FULL_RECORD",
+      "decoded": {
+        "next_pointer": "0x0",
+        "next_record_index": null,
+        "owner_team_pointer": "0x7ff4e730af50",
+        "owner_team_index": 4,
+        "active_state": "UNKNOWN_NOT_CAPTURED",
+        "entity_player_id": "UNKNOWN"
+      }
+    },
+    {
+      "kind": "DeadCap",
+      "index": 1,
+      "address": "0x7ff4e7c3e208",
+      "prefix16_hex": "80e1c3e7f47f000050af30e7f47f0000",
+      "audit_call": 38,
+      "source_form": "EXACT_AUDIT_PREVIEW16_NOT_FULL_RECORD",
+      "decoded": {
+        "next_pointer": "0x7ff4e7c3e180",
+        "next_record_index": 0,
+        "owner_team_pointer": "0x7ff4e730af50",
+        "owner_team_index": 4,
+        "active_state": "UNKNOWN_NOT_CAPTURED",
+        "entity_player_id": "UNKNOWN"
+      }
+    },
+    {
+      "kind": "DeadCap",
+      "index": 2,
+      "address": "0x7ff4e7c3e290",
+      "prefix16_hex": "0000000000000000080b31e7f47f0000",
+      "audit_call": 39,
+      "source_form": "EXACT_AUDIT_PREVIEW16_NOT_FULL_RECORD",
+      "decoded": {
+        "next_pointer": "0x0",
+        "next_record_index": null,
+        "owner_team_pointer": "0x7ff4e7310b08",
+        "owner_team_index": 9,
+        "active_state": "UNKNOWN_NOT_CAPTURED",
+        "entity_player_id": "UNKNOWN"
+      }
+    },
+    {
+      "kind": "TradeException",
+      "index": 0,
+      "address": "0x7ff4e7c82830",
+      "prefix16_hex": "0000000000000000a08a30e7f47f0000",
+      "audit_call": 40,
+      "source_form": "EXACT_AUDIT_PREVIEW16_NOT_FULL_RECORD",
+      "decoded": {
+        "next_pointer": "0x0",
+        "next_record_index": null,
+        "owner_team_pointer": "0x7ff4e7308aa0",
+        "owner_team_index": 2,
+        "active_state": "UNKNOWN_NOT_CAPTURED",
+        "entity_player_id": "UNKNOWN"
+      }
+    },
+    {
+      "kind": "TradeException",
+      "index": 1,
+      "address": "0x7ff4e7c828a0",
+      "prefix16_hex": "1029c8e7f47f0000f89c30e7f47f0000",
+      "audit_call": 41,
+      "source_form": "EXACT_AUDIT_PREVIEW16_NOT_FULL_RECORD",
+      "decoded": {
+        "next_pointer": "0x7ff4e7c82910",
+        "next_record_index": 2,
+        "owner_team_pointer": "0x7ff4e7309cf8",
+        "owner_team_index": 3,
+        "active_state": "UNKNOWN_NOT_CAPTURED",
+        "entity_player_id": "UNKNOWN"
+      }
+    },
+    {
+      "kind": "TradeException",
+      "index": 2,
+      "address": "0x7ff4e7c82910",
+      "prefix16_hex": "0000000000000000f89c30e7f47f0000",
+      "audit_call": 42,
+      "source_form": "EXACT_AUDIT_PREVIEW16_NOT_FULL_RECORD",
+      "decoded": {
+        "next_pointer": "0x0",
+        "next_record_index": null,
+        "owner_team_pointer": "0x7ff4e7309cf8",
+        "owner_team_index": 3,
+        "active_state": "UNKNOWN_NOT_CAPTURED",
+        "entity_player_id": "UNKNOWN"
+      }
+    }
+  ],
+  "player_names": [
+    {
+      "player_index": 0,
+      "prefix16_hex": "530069006d006d006f006e0073000000",
+      "retained_surname_prefix": "Simmons",
+      "prior_truncated_name": "S",
+      "given_name": "SOURCE_MISSING",
+      "full_name_pair": "SOURCE_MISSING",
+      "audit_call": 3,
+      "acquired_bytes": 64,
+      "retained_preview_bytes": 16,
+      "native_pair_required_bytes": 80,
+      "missing_indices": "R01 retained 22 filtered indices; native ordinary capacity24, special25",
+      "full_identity": "UNKNOWN"
+    },
+    {
+      "player_index": 1,
+      "prefix16_hex": "43007500720072007900000000000000",
+      "retained_surname_prefix": "Curry",
+      "prior_truncated_name": "C",
+      "given_name": "SOURCE_MISSING",
+      "full_name_pair": "SOURCE_MISSING",
+      "audit_call": 5,
+      "acquired_bytes": 64,
+      "retained_preview_bytes": 16,
+      "native_pair_required_bytes": 80,
+      "missing_indices": "R01 retained 22 filtered indices; native ordinary capacity24, special25",
+      "full_identity": "UNKNOWN"
+    }
+  ],
+  "record_book": [
+    {
+      "index": 0,
+      "holder": "Wilt Chamberlain",
+      "value": 100.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 1,
+      "holder": "Kobe Bryant",
+      "value": 81.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15761,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 2,
+      "holder": "Wilt Chamberlain",
+      "value": 78.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 3,
+      "holder": "David Thompson",
+      "value": 73.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15817,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 4,
+      "holder": "Wilt Chamberlain",
+      "value": 73.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 5,
+      "holder": "Wilt Chamberlain",
+      "value": 36.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 6,
+      "holder": "Wilt Chamberlain",
+      "value": 31.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 7,
+      "holder": "Rick Barry",
+      "value": 30.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15307,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 8,
+      "holder": "Wilt Chamberlain",
+      "value": 30.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    },
+    {
+      "index": 9,
+      "holder": "Wilt Chamberlain",
+      "value": 29.0,
+      "native_type_filter": 4,
+      "full_stat_category": "UNKNOWN",
+      "raw_tail_token": 15584,
+      "token_namespace": "UNKNOWN",
+      "raw_team_word": 0,
+      "current_save_player_id": "UNKNOWN"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "task_id": "NATIVE-INGREDIENTS-CODEX-R02",
+  "status": "candidate_pending_validation",
+  "source_base": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "source_branch": "task/native-ingredients-codex-r02",
+  "outputs_root": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02",
+  "verification_plan": "01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/verification_plan.json",
+  "independent_review_of_this_delivery": "SEPARATE_FUTURE_SESSION",
+  "master_modified": false,
+  "new_live_reads": 0,
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "Resolve linked GM ownership, native stat bitfields, name boundaries and Draft signed fields from pinned historical samples and disk PE; propose high-value next probes.",
+    "implementation_or_review_method": "Capture hashed native blocks and full stat dispatch tables, validate fixture hashes and chain identities, challenge decoders with counterexamples and external fixed-policy offline mock tests.",
+    "supportability_rationale": "Native insertion/removal shows record+0 next and+8 owningTeam; exact historical pointers align to pools; stat83 native masks defeat the incorrectu16 read; Draft reconstruction matches auditSHA.",
+    "feasibility_rationale": "Disk PE and fixed repo evidence support bounded reverse engineering without process handles; installed Python/Capstone can replay the result. New UI/save/process verification needs a separate envelope.",
+    "exact_result_or_candidate_ref": "candidate_pending_validation",
+    "verification_evidence": [
+      "verification_plan.json",
+      "bootstrap_receipt.json"
+    ],
+    "residual_risk_or_unproved_limits": [
+      "No current game process, UI or nativeSavebinding",
+      "No production DTO or write readiness",
+      "Recordtailnamespace, Draftprotection and special25thstat semanticsUNKNOWN",
+      "No independent final acceptance of this delivery"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema": "r02.fixed-policy.mock.v1",
+  "mode": "OFFLINE_MOCK_ONLY_NOT_HUMAN_LIVE_AUTHORIZATION",
+  "binding": {
+    "pid": 101,
+    "creation_token": "FIXTURE-PROCESS-CREATION-01",
+    "image_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "module_base": "0x140000000",
+    "context": "OFFLINE_SYNTHETIC_NOT_SAVE_BOUND"
+  },
+  "phase_budgets": {"BIND": 8, "STATS": 48, "SENSITIVE_TEST": 16},
+  "permits": [
+    {"key": "root", "phase": "BIND", "address": "0x1000", "size": 8, "max_calls": 1},
+    {"key": "stat", "phase": "STATS", "address": "0x2000", "size": 48, "max_calls": 2},
+    {"key": "forbidden_overlap", "phase": "SENSITIVE_TEST", "address": "0x3000", "size": 16, "max_calls": 1}
+  ],
+  "denied_ranges": [{"address": "0x3008", "size": 1}]
+}

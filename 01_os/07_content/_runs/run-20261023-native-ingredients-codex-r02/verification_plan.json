@@ -1,0 +1,50 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/task_packet.yml",
+  "checks": [
+    {
+      "id": "FIXTURE_AND_IDENTITY_REGRESSIONS",
+      "argv": [
+        "@python",
+        "-B",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/verify_delivery.py",
+        "FIXTURE_AND_IDENTITY_REGRESSIONS"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "OFFLINE_POLICY_NEGATIVE_CONTROLS",
+      "argv": [
+        "@python",
+        "-B",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/verify_delivery.py",
+        "OFFLINE_POLICY_NEGATIVE_CONTROLS"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "STATIC_IMAGE_REPLAY",
+      "argv": [
+        "@python",
+        "-B",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/verify_delivery.py",
+        "STATIC_IMAGE_REPLAY"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "DELIVERY_SCOPE_AND_MWU",
+      "argv": [
+        "@python",
+        "-B",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/verify_delivery.py",
+        "DELIVERY_SCOPE_AND_MWU"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    }
+  ]
+}

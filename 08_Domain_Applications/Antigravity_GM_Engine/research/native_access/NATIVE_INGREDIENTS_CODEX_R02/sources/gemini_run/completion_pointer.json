@@ -1,0 +1,59 @@
+{
+  "schema_version": "nba2k22.native_ingredients_completion.v1",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R01",
+  "completion_pointer": "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/completion_pointer.json",
+  "packet_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R01",
+  "status": "completed",
+  "lifecycle": "candidate_ready_for_independent_review",
+  "source_branch": "task/native-ingredients-gemini-r01",
+  "source_base": "7d778aa3bd2f64145f997af0e44d9062c94fc55c",
+  "verified_candidate_sha": "748d904717017d32ba9356fe06b85a52c53b49c6",
+  "remote_readback_head": null,
+  "source_head_note": "Initial candidate 748d9047 was verified via OS managed_verify in r01_attempt_01 (both run and inspect exit 0). The current commit binds exact verification pass record.",
+  "artifacts": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_GEMINI_R01/ingredient_discovery_results.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_GEMINI_R01/ingredient_gap_matrix.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_GEMINI_R01/codex_next_round_packets.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_GEMINI_R01/read_audit_log.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_GEMINI_R01/NATIVE_INGREDIENT_DISCOVERY_REPORT.md"
+  ],
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/task_packet.yml",
+  "verification_plan": "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verification_plan.json",
+  "verification": {
+    "state": "LOCAL_MANAGED_VERIFY_PASS",
+    "receipt": "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r01/verification_receipt.json",
+    "initial_verified_candidate": "748d904717017d32ba9356fe06b85a52c53b49c6",
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "persistent_evidence_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/r01_attempt_01",
+    "evidence_durability_note": "Attempt evidence directory resides in local Windows %TEMP% storage; 001-005 logs and result.json recorded.",
+    "tests_generated": "All 5 check items PASS exit code 0",
+    "candidate_caused_failures": "NONE",
+    "diff_scope": "STRICTLY_INSIDE_ALLOWED_PATHS",
+    "hook_guard": "PASS"
+  },
+  "repository": {
+    "out_of_scope_paths": 0,
+    "binary_artifact_count": 0,
+    "worktree_clean": true
+  },
+  "publication": {
+    "transport": "local_git_cli",
+    "replacement_gate": "LOCAL_BRANCH_COMMIT",
+    "expected_remote_head": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "push_performed": true,
+    "master_modified": false,
+    "force_push": false
+  },
+  "independent_model_review": "NOT_STARTED",
+  "human_acceptance": "TASK_AUTHORIZED_NOT_ACCEPTANCE_OF_DELIVERY",
+  "master_integration": "NOT_PERFORMED",
+  "next_task": "INDEPENDENT_REVIEW_OR_CODEX_DEEP_REVERSE_ROUND",
+  "next_owner": "independent_reviewer_then_codex_specialist",
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "Executed Human-authorized Issue #2 bounded read-only investigation across R01-R06 on live NBA2K22.exe PID 1828; verified Slot 1 +0xFC career index chain to Slot 24 with sequential decrementing season codes (0x7A -> 0x76); verified Slot 26 shot chart (114B); discriminated Slot 42 simple own vs traded pick with bit17 linked pick token; confirmed Slot 22 Playbook 360-byte boundary (byte 359 terminal) and 68 play words while refuting rotation timeline; decoded Slot 61 DeadCap multi-year stretch payouts and Slot 71 TradeException UTF-16LE player names; decoded Slot 39 RecordData historical player ID namespace while refuting career logs; audited 52 RPM operations totaling 5,172 bytes (under 5,300 byte budget) with 0 memory writes or save edits.",
+    "implementation_or_review_method": "Pre-read allowlist enforcement on AuditedGameMemory, strict phase byte budgeting, sensitive Potential field exclusion, offline negative controls, 5-point Python verification plan, OS managed verification run and inspect.",
+    "supportability_rationale": "All 6 phases verified against live process memory with exact struct bounds and offsets corroborated; non-contiguous buffer gaps maintained; 52 memory reads audited with zero errors."
+  }
+}

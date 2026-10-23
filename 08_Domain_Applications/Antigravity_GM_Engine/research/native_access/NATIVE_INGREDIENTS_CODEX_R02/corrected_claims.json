@@ -1,0 +1,258 @@
+{
+  "schema": "r02.corrected-claims.v1",
+  "historical_sources_unchanged": true,
+  "claims": [
+    {
+      "id": "GM_DEADCAP_OWNER",
+      "previous_claim": "+0 Team / +8 Player; TEAM_AND_PLAYER_POINTER_BOUND",
+      "corrected_claim": "+0 next DeadCap / +8 owning Team, native head Team+0xC88; sampled Team indices4,4,9",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "HISTORICAL_PREFIX16_ONLY",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "GM_TPE_OWNER",
+      "previous_claim": "+0 Team; associated name implies Player binding",
+      "corrected_claim": "+0 next TPE / +8 owning Team, native head Team+0xC90; copied name is not a PlayerID",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "HISTORICAL_PREFIX16_ONLY",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "GM_FREE_CHAIN",
+      "previous_claim": "All records end in fixed sentinel; doubly linked",
+      "corrected_claim": "Manager free-head index and record next-free +0x36/+0x62; active markerFFFF written on allocation; separate from null-terminated Team chain",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "TAIL_SOURCE_MISSING",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "GM_STRETCH",
+      "previous_claim": "Three equal salaries certify native stretch",
+      "corrected_claim": "Equal amounts are observations only; native stretch flag UNKNOWN",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": false,
+        "LIVE_SAMPLED": "HISTORICAL_DECODED_AMOUNTS",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "PLAYER_NAMES",
+      "previous_claim": "S/C and 32B/32B segments bound identities",
+      "corrected_claim": "Native two20-UTF16-unit spans at0,+0x28; only surname preview retained; full80B pair SOURCE_MISSING",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "PREFIX16_NOT_FULL80",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "PLAYERSTAT_GP",
+      "previous_claim": "u16(+8) games played; ROLE_SAFE_QUERY capable",
+      "corrected_claim": "Stat83 getter is u32(+8)&127; adjacent bits separate native cases. UI GP label and season/split join still require controls",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "12_FULL48B_HASH_MATCHED",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "PLAYER_HISTORY",
+      "previous_claim": "22-entry table, filtered count equals seasons; zero/end sentinel",
+      "corrected_claim": "24 ordinary selectors plus special24; signed negative indices invalid, index0 valid, holes preserved; current remaining6B missing",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "22_FILTERED_INPUT_ONLY",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "PLAYERSTAT_SEASON",
+      "previous_claim": "Highbyte progression certifies year",
+      "corrected_claim": "Season raw code retained; date/competition/save semantics UNKNOWN",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": false,
+        "LIVE_SAMPLED": "HISTORICAL_RAW48",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "DRAFT_ROUND",
+      "previous_claim": "Python (meta<<24)>>27 gives signed_round",
+      "corrected_claim": "Native signed5 bits3..7; six historical samples decode0; full32B reconstruction matches audit hash",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "6_RECONSTRUCTED32B_HASH_MATCHED",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "DRAFT_TEAMS",
+      "previous_claim": "Owner!=original certifies traded asset/protection",
+      "corrected_claim": "Named native consumers corroborate pickTeam+0/originalTeam+8; differing refs only, legal trade/protection/swap UNKNOWN",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "6_RECONSTRUCTED32B_HASH_MATCHED",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "RECORD_CATEGORY",
+      "previous_claim": "(packed>>21)&7 is full stat category",
+      "corrected_claim": "Native type filter confirmed; all10 sample4 spansPTS/FGM so complete stat category UNKNOWN",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": true,
+        "LIVE_SAMPLED": "10_HISTORICAL_DECODED_ROWS",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "RECORD_ID",
+      "previous_claim": "tail15584 is global historical PlayerID",
+      "corrected_claim": "Repeated raw token; namespace/current-save resolver UNKNOWN",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": false,
+        "LIVE_SAMPLED": "10_HISTORICAL_DECODED_ROWS",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "LIVE_AUTH",
+      "previous_claim": "Audit and constant expected SHA prove protected live operation",
+      "corrected_claim": "52 explicit calls5172B only; self-registration permits arbitrary ranges; process-file hash binding unproved; SAVE_UNBOUND",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": false,
+        "LIVE_SAMPLED": "HISTORICAL_AUDIT_ONLY",
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    },
+    {
+      "id": "POLICY",
+      "previous_claim": "New offline policy fixes historical live safety",
+      "corrected_claim": "Fixed immutable policy mock and negative controls only; no live adapter or retrospective authorization",
+      "evidence_axes": {
+        "RAW": "RETAINED_OR_EXPLICIT_MISSING_PER_FIXTURE",
+        "STATIC_CONFIRMED": false,
+        "LIVE_SAMPLED": false,
+        "UI_BOUND": false,
+        "SAVE_BOUND": false,
+        "PRODUCTION_READY": false
+      },
+      "evidence": [
+        "static_capture.json",
+        "decoded_fixtures.json"
+      ],
+      "independent_acceptance": "PENDING_SEPARATE_REVIEW"
+    }
+  ]
+}

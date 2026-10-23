@@ -1,0 +1,54 @@
+task_packet:
+  task_id: NATIVE-INGREDIENTS-CODEX-R02
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 407e2134bd2f595477099b2c6e3484c818059fd9
+  branch: task/native-ingredients-codex-r02
+  objective: Resolve linked GM object and Player bitfield/encoding identity errors using bounded static PE, pinned live fixtures and negative controls; deliver a fail-closed offline policy model and executable next Gemini plan.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/3
+    - 5cef84fb21892266686bd5fd75a06901ea911d12
+    - 748d904717017d32ba9356fe06b85a52c53b49c6
+    - 7d778aa3bd2f64145f997af0e44d9062c94fc55c
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/2#issuecomment-6363396630
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/**
+    - 01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/**
+  verification_plan: 01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/verification_plan.json
+  required_tests: [FIXTURE_AND_IDENTITY_REGRESSIONS, OFFLINE_POLICY_NEGATIVE_CONTROLS, STATIC_IMAGE_REPLAY, DELIVERY_SCOPE_AND_MWU]
+  prohibitions:
+    - live_process_access
+    - game_memory_or_save_operations
+    - game_UI_or_simulation
+    - hooks_or_injection
+    - production_database_or_DTO_changes
+    - core_owned_file_changes
+    - master_merge_or_history_rewrite
+    - credentials_access
+    - automatic_next_task_or_cross_model_delivery
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    surface: Codex desktop current session
+    model: host_selected_current_session
+    reasoning_effort: host_selected
+    mode: standard
+    routing_basis: Human directly assigns Codex static reverse engineering, fixture decoders and offline safety counterexamples; no agent delegation.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: separate_future_session
+    different_model_family: preferred
+    different_measurement_tool: true
+  required_completion_pointer: 01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/completion_pointer.json
+  big_task: true

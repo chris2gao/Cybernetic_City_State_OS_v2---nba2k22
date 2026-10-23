@@ -1,0 +1,210 @@
+{
+  "schema": "r02.next-round.v1",
+  "common": {
+    "status": "PROPOSED_NOT_AUTHORIZED_NOT_SENT_NOT_STARTED",
+    "authority": "New Human approval required for any live bytes/UI access; old Issue2 approval does not carry forward",
+    "static_first": [
+      "Replay relevant captured disk blocks against exact SHA; no hooks or code execution in game",
+      "Implement negative mock tests before asking for live approval"
+    ],
+    "binding": [
+      "Administrative read-only process access if separately approved; no game writes",
+      "Record fresh PID+creation token, actual process-image path and disk SHA, module base/size, acquisition timestamp and context",
+      "Detect file/process mismatch and recycled PID; expected constant is not observation",
+      "Record true native save ID only if already available without additional unauthorized read; else SAVE_UNBOUND and no save-specific claims"
+    ],
+    "bootstrap": {
+      "formula": [
+        "module_base+0x6347720 : 8B root pointer",
+        "resolved root : 75*16B descriptor table"
+      ],
+      "bytes": 1208,
+      "max_records": 75,
+      "limits": "Once per approved session; shared bootstrap is not free and cannot be repeated implicitly. No other helper RPM."
+    },
+    "safety": [
+      "Freeze external policy digest, formula-derived exact intervals and phase budgets before target reads; no executor self-registration",
+      "Include implicit count/helper reads in manifest or deny them before backend",
+      "Sensitive Player Potential and all unspecified fields denied; no full Player records",
+      "Any mismatch/partial read/unknown pointer/cycle/unsampled chain successor => stop the item, preserve evidence; do not expand range",
+      "No budget transfers or repeated sampling; no UI mutations, save/load, season advance or native writes"
+    ]
+  },
+  "items": [
+    {
+      "id": "GEMINI-R02-A-GM-OWNER-HEAD",
+      "priority": 1,
+      "benefit": "让 GM 的 waived salary / TPE 从错误Player归属变为可验证的球队资产材料。",
+      "objective": "Verify current Team heads, null-terminated next links and manager-active markers for the six previously selected record positions; compare visible Team ownership.",
+      "methods": [
+        "Replay insert/remove/free-list static blocks; correct TPE Getter toRVA0xF41540",
+        "Under new envelope sample exact record indices0,1,2 in Slot61 and71, no pointer chasing beyond sample",
+        "Read Team indices2,3,4,9 head pair and raw ID; compare sample inclusion only where current pointers fall in sampled set"
+      ],
+      "target_ranges": [
+        {
+          "formula": "P61+i*136",
+          "indices": [
+            0,
+            1,
+            2
+          ],
+          "size": 136,
+          "bytes": 408,
+          "fields": "next+0,owner+8,amountsraw,name/raw,free-next+0x36; full GM record only"
+        },
+        {
+          "formula": "P71+i*112",
+          "indices": [
+            0,
+            1,
+            2
+          ],
+          "size": 112,
+          "bytes": 336,
+          "fields": "next+0,owner+8,copiedUTF16names,ID+0x60,free-next+0x62,expiration/raw"
+        },
+        {
+          "formula": "P8+t*4696+0xC88",
+          "indices": [
+            2,
+            3,
+            4,
+            9
+          ],
+          "size": 16,
+          "bytes": 64,
+          "fields": "DeadCap head and TPE head"
+        },
+        {
+          "formula": "P8+t*4696+0xCA8",
+          "indices": [
+            2,
+            3,
+            4,
+            9
+          ],
+          "size": 2,
+          "bytes": 8,
+          "fields": "raw Team ID only, no roster dereference"
+        }
+      ],
+      "max_records": {
+        "DeadCap": 3,
+        "TradeException": 3,
+        "Team": 4
+      },
+      "target_byte_ceiling": 816,
+      "standalone_ceiling_with_bootstrap": 2024,
+      "ui_controls": [
+        "Read-only current Team cap/waived-contract/TPE screen matching sampled Team IDs; record screenshot/text evidence only under explicit UI-view approval",
+        "Positive: a sampled owner and visible team entry/name/amount agree; negative: swapped Team or copied name alone must fail identity join",
+        "Head outside six sampled records => INCOMPLETE_CHAIN, no new pointer-follow read; equal salary alone cannot certify stretch"
+      ],
+      "acceptance": "Independent agreement of head membership, owner Team and selected visible entry; report each axis separately. Active-marker reading alone is not saved persistence."
+    },
+    {
+      "id": "GEMINI-R02-B-PLAYER-HISTORY",
+      "priority": 2,
+      "benefit": "恢复完整Player姓名和统计入口，建立可读GP数据与UI赛季之间的最小关联。",
+      "objective": "Verify80B names, all25 index slots and up to12 exact48B stats; validate stat83 GP with UI and preserve missing/negative slots.",
+      "methods": [
+        "Use disk-proven40B+40B UTF16 boundaries, signed16 index guard and native stat83 mask",
+        "Player indices0,1 only; read complete25-index slice once each",
+        "Per Player choose first5 valid ordinary selectors in ascending selector order, plus special selector24 if valid. At most6 rows per Player; invalid/duplicates do not create replacement read authority"
+      ],
+      "target_ranges": [
+        {
+          "formula": "P1+p*1264+0",
+          "indices": [
+            0,
+            1
+          ],
+          "size": 80,
+          "bytes": 160,
+          "fields": "surname+0:40,given+40:80"
+        },
+        {
+          "formula": "P1+p*1264+0xFC",
+          "indices": [
+            0,
+            1
+          ],
+          "size": 50,
+          "bytes": 100,
+          "fields": "24 ordinary signed16 references and special25th"
+        },
+        {
+          "formula": "P24+valid_index*48",
+          "selection": "first5 valid ordinary plus special24 for each approvedPlayer; negative or>=C24 rejected; duplicates readonce",
+          "size": 48,
+          "max_records": 12,
+          "bytes": 576,
+          "fields": "full Slot24 raw48; no additional Playerfields"
+        }
+      ],
+      "max_records": {
+        "Player": 2,
+        "PlayerStat": 12
+      },
+      "target_byte_ceiling": 836,
+      "standalone_ceiling_with_bootstrap": 2044,
+      "ui_controls": [
+        "Positive: full current Player name agrees; select current and historical visible season GP/stat row for at least2 distinct rows if present",
+        "Negative: same surname/wronggiven name, swapped Player, wrongseason/competition split, neighboringflag flips must not pass",
+        "Do not truncate at index0 or first negative hole; do not call rawyear a calendar year; special25th meaning remainsunknown until consumer/UI matches"
+      ],
+      "acceptance": "Keep name, stat mask, index association, UI season/split and save binding as separate axes; unsupported special row remainsRAW."
+    },
+    {
+      "id": "GEMINI-R02-C-DRAFT-UI-AND-RECORD-RESOLVER",
+      "priority": 3,
+      "benefit": "阻止 Draft 保护/交换和 RecordBook 历史身份在进入GM/Player查询时被错误命名。",
+      "objective": "Static-first challenge of Draft token/protection and RecordData fullstat/tail resolver; optional strictly bounded Draft/UI comparison only after new approval.",
+      "methods": [
+        "Trace existing Draft token branch and original/pick Team consumers, RecordData native type filter call chain and +0x30/+0x32 loads. Budget static work to two consumer paths each; stop without resolver evidence rather than broaden live reads",
+        "Prepare explicit business hypothesis and a contradictory control before live request; if no resolver found, outputUNKNOWN and precise unproved branch",
+        "Optional live: exact Draft indices0..5, at most3 Team raw IDs from alignedpick/original references in first-encounter order; no records database/live recordbook scan"
+      ],
+      "target_ranges": [
+        {
+          "formula": "P42+d*32",
+          "indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "size": 32,
+          "bytes": 192,
+          "fields": "full Draft raw32; signed5,rawtoken/meta,Teamrelations"
+        },
+        {
+          "formula": "P8+aligned_team_index*4696+0xCA8",
+          "selection": "first3 unique Team references encountered in approved six Draft rows, pick thenoriginal, validatepoolalignment",
+          "size": 2,
+          "max_records": 3,
+          "bytes": 6,
+          "fields": "rawTeamID only"
+        }
+      ],
+      "max_records": {
+        "DraftData": 6,
+        "Team": 3,
+        "RecordData_live": 0
+      },
+      "target_byte_ceiling": 198,
+      "standalone_ceiling_with_bootstrap": 1406,
+      "ui_controls": [
+        "Positive: a visible pick lists same pickTeam/originalTeam and specific condition text, if available under read-onlyUIapproval",
+        "Negative: refs differ but no condition text, rawbit17 present alone, RecordData type4 spanningPTS/FGM, duplicated tailtoken withoutresolver",
+        "Do not trade, edit, advance season or save/load to create a test case. If current UI has no qualifying example, markSOURCE_MISSING"
+      ],
+      "acceptance": "Signed5/Team roles already static-confirmed; protection/swap and globalPlayerID require a named native resolver plus matching UI/context, otherwiseUNKNOWN."
+    }
+  ],
+  "combined_session_ceiling_if_all_newly_approved": 3058,
+  "combined_formula": "1208 bootstrap once +816+836+198 =3058B; no recordbook live bytes; actual unused bytes not transferable"
+}
