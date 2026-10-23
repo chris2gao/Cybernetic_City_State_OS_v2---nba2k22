@@ -1,0 +1,61 @@
+task_packet:
+  task_id: NATIVE-ATLAS-R00-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 97fe60de5b30d0e3ccf9af8f45f051e20dc2140a
+  branch: task/native-atlas-r00-01
+  objective: Calibrate ROSTERDATA native manager entry and Slot 1 (PLAYER) and Slot 24 (PLAYER_STATS) descriptors offline; resolve +0 vs +8 origin hypotheses and EndPointer disproof; establish bounded Phase B probe envelope without live memory access.
+  source_evidence:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json#/items/0
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_DISCOVERY_FILL_CONTRACT_V0.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01B/ROSTERDATA_DIRECTORY_AUDIT.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01C/object_catalog.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/DISCOVERY.md
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/**
+    - 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/**
+  verification_plan: 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verification_plan.json
+  required_tests:
+    - SOURCE_MANIFEST_CHECK
+    - DESCRIPTORS_HYPOTHESES_CHECK
+    - NATIVE_OBJECT_DELTA_CHECK
+    - UNRESOLVED_FINDINGS_CHECK
+    - SCOPE_AND_PROHIBITIONS_CHECK
+  prohibitions:
+    - live_game_process_read_or_write
+    - game_save_write_or_edit
+    - advance_to_r00_02_through_r00_12
+    - enumerate_all_75_slots
+    - dereference_historical_heap_pointers
+    - database_ddl_or_migration
+    - master_branch_publication
+    - force_push_or_history_rewrite
+  required_completion_pointer: 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/completion_pointer.json
+  big_task: true
+  publisher:
+    principal_binding: local_git_shell
+    publication_transport: local_git_cli
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Google
+    surface: chat
+    model: Gemini Flash (Antigravity)
+    reasoning_effort: high
+    mode: standard
+    routing_basis: Task designated for Gemini Flash native reverse engineering calibration under OS model routing.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session
+    different_model_family: true
+    different_measurement_tool: true
+  execution_basis: Human approved NATIVE-ATLAS-R00-01 offline calibration task; no live game probe or confirmation-bound actions in Phase A.
+  terminal_lifecycle_state: candidate_ready_for_independent_review

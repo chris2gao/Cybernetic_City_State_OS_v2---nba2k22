@@ -1,0 +1,55 @@
+{
+  "schema_version": "nba2k22.native_atlas_completion.v1",
+  "task_id": "NATIVE-ATLAS-R00-01",
+  "completion_pointer": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/completion_pointer.json",
+  "packet_id": "NATIVE-ATLAS-R00-01",
+  "status": "completed",
+  "lifecycle": "candidate_ready_for_independent_review",
+  "source_branch": "task/native-atlas-r00-01",
+  "source_base": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
+  "implementation_candidate_sha": "e4e7736aeb02239a79e6b72ba164c6c4100bccec",
+  "source_head_note": "Containing commit SHA will be updated upon commit and verification.",
+  "artifacts": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/source_manifest.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/descriptor_origin_hypotheses.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/native_object_delta.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/unresolved_findings.json"
+  ],
+  "task_packet": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/task_packet.yml",
+  "verification_plan": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verification_plan.json",
+  "verification": {
+    "state": "LOCAL_VERIFY_PASS",
+    "receipt": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verification_receipt.json",
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "tests_generated": "All 5 check items PASS exit code 0",
+    "candidate_caused_failures": "NONE",
+    "diff_scope": "STRICTLY_INSIDE_ALLOWED_PATHS",
+    "hook_guard": "PASS"
+  },
+  "repository": {
+    "out_of_scope_paths": 0,
+    "binary_artifact_count": 0,
+    "worktree_clean": true
+  },
+  "publication": {
+    "transport": "local_git_cli",
+    "replacement_gate": "LOCAL_BRANCH_COMMIT",
+    "expected_remote_head": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "resulting_remote_head": null,
+    "push_performed": false,
+    "master_modified": false,
+    "force_push": false
+  },
+  "independent_model_review": "NOT_STARTED",
+  "human_acceptance": "TASK_AUTHORIZED_NOT_ACCEPTANCE_OF_DELIVERY",
+  "master_integration": "NOT_PERFORMED",
+  "next_task": "INDEPENDENT_REVIEW_OR_PHASE_B_PROBE_UPON_HUMAN_APPROVAL",
+  "next_owner": "independent_reviewer_then_human_task_authority",
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "Offline calibration of ROSTERDATA native manager entry, Slot 1 and Slot 24 descriptors; disproved +8 shift and EndPointer; established 4 machine-readable artifacts, OS run, and bounded Phase B probe limits.",
+    "implementation_or_review_method": "Static disassembly cross-referencing, multi-evidence provenance manifest, 5-point Python verification plan.",
+    "supportability_rationale": "Direct x64 disassembly of 215 native accessors proves 16-byte {count, pData} struct; live runtime fields remain fail-closed HOLD_UNKNOWN until authorized."
+  }
+}

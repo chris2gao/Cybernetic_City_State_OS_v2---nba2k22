@@ -1,0 +1,73 @@
+{
+  "schema_version": "nba2k22.unresolved_findings.v1",
+  "task_id": "NATIVE-ATLAS-R00-01",
+  "target_object": "ROSTERDATA",
+  "created_at": "2026-10-22T23:38:00Z",
+  "base_commit": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
+  "unresolved_items": [
+    {
+      "finding_id": "UNRES-01-LIVE-EXECUTABLE-AND-ASLR",
+      "topic": "Live Executable Identity and Dynamic ASLR Relocation",
+      "status": "HOLD_UNKNOWN",
+      "severity": "BLOCKING_FOR_LIVE_ACCESS",
+      "current_known": "Static module RVA NBA2K22.exe+0x06347720 is confirmed in offline disassembly of historical binary.",
+      "missing_evidence": "Current running process PID, executable SHA-256 hash, and actual module base address (ASLR slide) are unmeasured.",
+      "fail_closed_action": "Do not attempt memory dereferencing. Keep live pointer fields as null.",
+      "next_bounded_question": "When authorized, inspect process memory map of NBA2K22.exe to verify image base and module header."
+    },
+    {
+      "finding_id": "UNRES-02-SAVE-IDENTITY-AND-DYNAMIC-COUNTS",
+      "topic": "Save File Binding and Dynamic Element Counts",
+      "status": "HOLD_UNKNOWN",
+      "severity": "HIGH",
+      "current_known": "Historical roster snapshot recorded 3390 players in Slot 1 and 9773 stat records in Slot 24.",
+      "missing_evidence": "Whether dynamic element counts vary across default rosters, MyCareer saves, or customized rosters, and whether save file headers explicitly store these counts.",
+      "fail_closed_action": "Treat historical counts (3390, 9773) as historical reference points only, not invariants of all saves.",
+      "next_bounded_question": "When a live save is loaded under Phase B, read Slot 1 and Slot 24 count fields to determine exact runtime count."
+    },
+    {
+      "finding_id": "UNRES-03-DYNAMIC-HEAP-LIFECYCLE-AND-EXPANSION",
+      "topic": "Dynamic Heap Allocation and Reallocation Behavior",
+      "status": "HOLD_UNKNOWN",
+      "severity": "MEDIUM",
+      "current_known": "During roster loading, heap buffers for descriptors were observed to be allocated sequentially.",
+      "missing_evidence": "Does the engine ever reallocate or resize these buffers during active gameplay (e.g., signing free agents, generating draft prospects), or are they fixed-capacity pools allocated once during roster initialization?",
+      "fail_closed_action": "Assume pointers may be invalidated across scene transitions or roster reloads.",
+      "next_bounded_question": "Analyze memory allocation functions (malloc/HeapAlloc calls in GetRosterDataManager) in static disassembly."
+    },
+    {
+      "finding_id": "UNRES-04-REMAINING-SLOTS-UNCALIBRATED",
+      "topic": "Calibration of Remaining 73 Descriptor Slots (Slots 0, 2-23, 25-74)",
+      "status": "HOLD_UNKNOWN",
+      "severity": "LOW_OUT_OF_SCOPE",
+      "current_known": "Slot inventory in GAME_NATIVE_OBJECT_HINTS_V0.json lists historical names for all 75 slots.",
+      "missing_evidence": "Individual getter disassembly, strides, and count interpretations for slots outside {1, 24} have not been verified under R00-01.",
+      "fail_closed_action": "Strictly withhold judgment on slots 0, 2-23, 25-74. Do not include them in the current calibrated delta.",
+      "next_bounded_question": "Process subsequent priority queue tasks (R00-02 through R00-12) sequentially only when scheduled."
+    }
+  ],
+  "rejected_hypotheses": [
+    {
+      "hypothesis_id": "HYP-B-LEGACY-CALIBRATION-ARTIFACT",
+      "rejection_reason": "Direct disassembly of 215 native getter functions proves that ROSTERDATA descriptors are 16 bytes {uint64_t count, void* pData}. The legacy 24-byte layout was an illusion created by an 8-byte root offset error and contiguous heap layout.",
+      "impact": "Legacy offsets (+0x018/+0x020 for Slot 1, +0x188/+0x190 for Slot 24) and the concept of an internal EndPointer field are deprecated and removed."
+    }
+  ],
+  "phase_b_live_probe_authorization_boundary": {
+    "prerequisites": "Requires separate, explicit Human authorization before execution.",
+    "strict_limits": {
+      "target_manager_limit": 1,
+      "allowed_slots": [1, 24],
+      "max_sample_records_per_slot": 2,
+      "max_investigation_time_minutes": 20,
+      "max_distinct_failed_paths": 2,
+      "disallowed_operations": [
+        "No memory writing (Read-Only probe)",
+        "No save file writing or deletion",
+        "No scanning of uncalibrated slots (0, 2-23, 25-74)",
+        "No scanning of adjacent memory ranges",
+        "No execution of game actions (e.g. trading, advancing dates, simulating games)"
+      ]
+    }
+  }
+}

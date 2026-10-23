@@ -1,0 +1,130 @@
+{
+  "schema_version": "nba2k22.native_atlas_source_manifest.v1",
+  "task_id": "NATIVE-ATLAS-R00-01",
+  "target_object": "ROSTERDATA",
+  "created_at": "2026-10-22T23:35:00Z",
+  "base_commit": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
+  "sources": [
+    {
+      "source_id": "HINTS_V0_ROOTS_0",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json",
+      "json_pointer": "/roots/0",
+      "role": "manager_static_rva_hint",
+      "content_summary": {
+        "object": "ROSTERDATA",
+        "locator_type": "HISTORICAL_MODULE_RELATIVE_OR_OBJECT_OFFSET",
+        "locator": "NBA2K22.exe+0x06347720",
+        "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
+        "current_save_verified": false
+      }
+    },
+    {
+      "source_id": "HINTS_V0_SLOT_1_PLAYER",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json",
+      "json_pointer": "/slot_inventory_historical/1",
+      "role": "slot_1_descriptor_hint",
+      "content_summary": {
+        "slot": 1,
+        "record_name_historical": "PLAYER",
+        "family_historical": "ROSTER_PLAYERS",
+        "historical_count": 3390,
+        "historical_stride": 1264,
+        "descriptor_offset_from_manager": "+0x010"
+      }
+    },
+    {
+      "source_id": "HINTS_V0_SLOT_24_PLAYER_STATS",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json",
+      "json_pointer": "/slot_inventory_historical/24",
+      "role": "slot_24_descriptor_hint",
+      "content_summary": {
+        "slot": 24,
+        "record_name_historical": "PLAYER_STATS",
+        "family_historical": "STATISTICS",
+        "historical_count": 9773,
+        "historical_stride": 48,
+        "descriptor_offset_from_manager": "+0x180"
+      }
+    },
+    {
+      "source_id": "QUEUE_V0_R00_01",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+      "json_pointer": "/items/0",
+      "role": "r00_01_task_contract",
+      "content_summary": {
+        "id": "R00-01",
+        "priority": "P0",
+        "target": "ROSTERDATA",
+        "question": "Check descriptor origin, count, stride and +8 error",
+        "max_investigation": {
+          "max_minutes": 20,
+          "max_distinct_failed_paths": 2,
+          "max_sample_records": 2,
+          "allowed_regions_or_records": [
+            "ROSTERDATA descriptor[1]",
+            "ROSTERDATA descriptor[24]"
+          ],
+          "expansion_allowed": false
+        }
+      }
+    },
+    {
+      "source_id": "AG_01C_OBJECT_CATALOG_DESC_1_AND_24",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01C/object_catalog.json",
+      "json_pointer": "/descriptors",
+      "role": "historical_catalog_descriptors_sample",
+      "content_summary": {
+        "singleton_static_address": "NBA2K22.exe + 0x6347720",
+        "singleton_retrieval_function_rva": "0x11D5DE0",
+        "total_slots": 75,
+        "desc_1": {
+          "slot_index": 1,
+          "offset_from_manager_hex": "+0x010",
+          "offset_from_calibrated_root_hex": "+0x018",
+          "count": 3390,
+          "inferred_stride": 1264,
+          "size_in_heap": 4284960
+        },
+        "desc_24": {
+          "slot_index": 24,
+          "offset_from_manager_hex": "+0x180",
+          "offset_from_calibrated_root_hex": "+0x188",
+          "count": 9773,
+          "inferred_stride": 48,
+          "size_in_heap": 469104
+        }
+      }
+    },
+    {
+      "source_id": "AG_01B_DIRECTORY_AUDIT",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01B/ROSTERDATA_DIRECTORY_AUDIT.md",
+      "role": "disassembly_evidence_and_structure_definition",
+      "content_summary": {
+        "total_slots": 75,
+        "active_slots": 67,
+        "reserved_empty_slots": 8,
+        "descriptor_size_bytes": 16,
+        "descriptor_struct": "struct RosterArrayDescriptor { uint64_t count; void* pData; };",
+        "getter_disassembly_example": "RVA 0xF3C790 GetWaivedSalaryByIndex checks [rax+3D0h] (count) and adds [rax+3D8h] (pointer)",
+        "end_pointer_misconception_refuted": "root+offset+0x10 is the pData pointer of adjacent array descriptor [i+1], not an internal end-pointer",
+        "calibrated_offset_diff": "address_calibrator root was 0x7FF4E6DFB2E8, exactly 8 bytes lower than g_pRosterData (0x7FF4E6DFB2F0)"
+      }
+    },
+    {
+      "source_id": "AG_01D_BOXSCORE_STATBANK_ALIGNMENT",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/DISCOVERY.md",
+      "role": "slot_24_cross_validation_evidence",
+      "content_summary": {
+        "slot_24_role": "Career and multi-season cumulative stats pool",
+        "cross_check": "Curry 16-game single boxscore sums match Slot 24 48-byte record in 18 technical metrics with 100.00% parity",
+        "slot_10_vs_slot_44": "Slot 10 is schedule (1232 records, 32B stride); Slot 44 is matchup matrix (36*35 records, 24B stride)"
+      }
+    }
+  ],
+  "provenance_boundary": {
+    "live_game_attached": false,
+    "live_memory_read": false,
+    "historical_heap_addresses_treated_as_live": false,
+    "all_live_fields_status": "HOLD_UNKNOWN_PENDING_SEPARATE_HUMAN_SCOPE"
+  }
+}

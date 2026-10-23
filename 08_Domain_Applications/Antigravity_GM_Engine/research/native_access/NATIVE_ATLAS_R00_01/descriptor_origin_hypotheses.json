@@ -1,0 +1,104 @@
+{
+  "schema_version": "nba2k22.descriptor_origin_hypotheses.v1",
+  "task_id": "NATIVE-ATLAS-R00-01",
+  "target_object": "ROSTERDATA",
+  "created_at": "2026-10-22T23:37:00Z",
+  "hypotheses": [
+    {
+      "hypothesis_id": "HYP-A-NATIVE-DISASSEMBLY",
+      "name": "Native Engine 16-Byte Descriptor Layout (Canonical)",
+      "status": "CONFIRMED_BY_STATIC_DISASSEMBLY",
+      "summary": "Native x64 assembly in NBA2K22.exe implements ROSTERDATA as a contiguous array of 75 16-byte descriptors starting at g_pRosterData (offset +0x000).",
+      "descriptor_struct": {
+        "c_type_declaration": "struct RosterArrayDescriptor { uint64_t count; void* pData; };",
+        "stride_bytes": 16,
+        "stride_hex": "0x10",
+        "fields": [
+          {
+            "field_name": "count",
+            "relative_offset_hex": "+0x00",
+            "relative_offset_bytes": 0,
+            "data_type": "uint64_t",
+            "native_access_pattern": "cmp ebx, dword ptr [rax + slot_offset + 0x00]"
+          },
+          {
+            "field_name": "pData",
+            "relative_offset_hex": "+0x08",
+            "relative_offset_bytes": 8,
+            "data_type": "void*",
+            "native_access_pattern": "add rbx, qword ptr [rax + slot_offset + 0x08]"
+          }
+        ]
+      },
+      "stride_storage_mechanism": "Stride is NOT stored in the descriptor table. It is baked as an immediate constant in native getter machine code (e.g. `imul rbx, rbx, 4F0h` for 1264 bytes, `imul rbx, rbx, 30h` for 48 bytes).",
+      "slot_computations": {
+        "slot_1_player": {
+          "slot_index": 1,
+          "descriptor_offset_hex": "+0x010",
+          "count_offset_hex": "+0x010",
+          "pdata_offset_hex": "+0x018",
+          "historical_count": 3390,
+          "element_stride_bytes": 1264,
+          "element_stride_hex": "0x4F0",
+          "historical_buffer_bytes": 4284960
+        },
+        "slot_24_player_stats": {
+          "slot_index": 24,
+          "descriptor_offset_hex": "+0x180",
+          "count_offset_hex": "+0x180",
+          "pdata_offset_hex": "+0x188",
+          "historical_count": 9773,
+          "element_stride_bytes": 48,
+          "element_stride_hex": "0x30",
+          "historical_buffer_bytes": 469104
+        }
+      },
+      "evidence_references": [
+        {
+          "file": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01B/ROSTERDATA_DIRECTORY_AUDIT.md",
+          "section": "Disassembly of 215 native access functions",
+          "concrete_example": "RVA 0xF3C790 GetWaivedSalaryByIndex: movsxd rbx, edx; cmp ebx, dword ptr [rax+3D0h]; jnb exit; imul rbx, rbx, 58h; add rbx, qword ptr [rax+3D8h]; mov rax, rbx; ret"
+        }
+      ]
+    },
+    {
+      "hypothesis_id": "HYP-B-LEGACY-CALIBRATION-ARTIFACT",
+      "name": "Legacy Python 24-Byte EndPointer / +8 Offset Layout",
+      "status": "REFUTED_HISTORICAL_ARTIFACT",
+      "summary": "Legacy address_calibrator.py anchored its root 8 bytes lower than g_pRosterData (0x7FF4E6DFB2E8 vs 0x7FF4E6DFB2F0). This shifted all descriptor offsets by +0x08 and caused consecutive array pointers to be misinterpreted as an internal EndPointer field.",
+      "disproved_struct": {
+        "claimed_declaration": "struct LegacyCalibratedDescriptor { uint64_t pad; uint64_t count; void* pData; void* pEnd; };",
+        "claimed_size_bytes": 24,
+        "disproof_reason": "Native assembly disproves any 24-byte struct or internal EndPointer field. The offset +0x10 beyond pData[i] is simply pData[i+1] of the next contiguous descriptor."
+      },
+      "shift_derivation": {
+        "manager_pointer_heap": "0x7FF4E6DFB2F0",
+        "calibrated_root_heap": "0x7FF4E6DFB2E8",
+        "root_difference_bytes": -8,
+        "mapping_formula": "offset_from_calibrated_root = offset_from_manager + 8"
+      },
+      "slot_computations_under_hypothesis": {
+        "slot_1_player": {
+          "slot_index": 1,
+          "legacy_offset_hex": "+0x018",
+          "legacy_count_offset_hex": "+0x018",
+          "legacy_pdata_offset_hex": "+0x020"
+        },
+        "slot_24_player_stats": {
+          "slot_index": 24,
+          "legacy_offset_hex": "+0x188",
+          "legacy_count_offset_hex": "+0x188",
+          "legacy_pdata_offset_hex": "+0x190"
+        }
+      },
+      "contiguous_heap_illusion": {
+        "phenomenon": "pData[i] + count[i] * stride[i] == pData[i+1]",
+        "explanation": "Game engine allocates array heap buffers consecutively in memory during roster initialization. The next descriptor's pData happened to coincide with the end of the previous buffer, leading legacy scripts to assume a 3-member struct containing EndPointer."
+      }
+    }
+  ],
+  "conclusion": {
+    "canonical_hypothesis": "HYP-A-NATIVE-DISASSEMBLY",
+    "required_action": "Future live probes must anchor at g_pRosterData directly (RVA 0x06347720) using 16-byte descriptors (+0x00 count, +0x08 pData) and eliminate the legacy 8-byte shift and phantom EndPointer fields."
+  }
+}

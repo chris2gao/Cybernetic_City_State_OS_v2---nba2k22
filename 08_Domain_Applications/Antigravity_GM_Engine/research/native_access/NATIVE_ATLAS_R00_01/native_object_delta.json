@@ -1,0 +1,97 @@
+{
+  "schema_version": "nba2k22.native_object_delta.v1",
+  "task_id": "NATIVE-ATLAS-R00-01",
+  "created_at": "2026-10-22T23:37:30Z",
+  "base_commit": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
+  "target_manager": {
+    "object_name": "ROSTERDATA",
+    "static_module_rva": "NBA2K22.exe+0x06347720",
+    "retrieval_function_rva": "0x11D5DE0",
+    "total_slots": 75,
+    "descriptor_stride_bytes": 16,
+    "descriptor_stride_hex": "0x10",
+    "descriptor_schema": {
+      "count_offset_hex": "+0x00",
+      "pdata_offset_hex": "+0x08"
+    },
+    "calibration_status": "CALIBRATED_STATIC_HINT",
+    "live_runtime_state": {
+      "game_build_hash": null,
+      "save_binding": null,
+      "observed_at": null,
+      "live_base_address": null,
+      "status": "HOLD_UNKNOWN_NOT_ATTACHED"
+    }
+  },
+  "calibrated_descriptors": [
+    {
+      "slot_index": 1,
+      "record_name": "PLAYER",
+      "family": "ROSTER_PLAYERS",
+      "offsets": {
+        "canonical_manager_offset_hex": "+0x010",
+        "canonical_count_offset_hex": "+0x010",
+        "canonical_pdata_offset_hex": "+0x018",
+        "superseded_legacy_calibrated_offset_hex": "+0x018",
+        "superseded_legacy_pdata_offset_hex": "+0x020"
+      },
+      "dimensions": {
+        "historical_count": 3390,
+        "stride_bytes": 1264,
+        "stride_hex": "0x4F0",
+        "stride_source": "IMMEDIATE_OPERAND_IN_GETTER_CODE",
+        "buffer_size_bytes": 4284960,
+        "buffer_size_mb_approx": 4.086
+      },
+      "verification_axes": {
+        "RESEARCH_INDEXED": true,
+        "NATIVE_LAYOUT": true,
+        "FIXTURE_PASS": false,
+        "LIVE_UI_MATCH": false,
+        "ALL_OBJECTS_ENUMERATED": false,
+        "PIPELINE_INTEGRATED": false,
+        "PUBLISHED_QUERY": false,
+        "SAVE_RELOAD": false
+      },
+      "fail_closed_status": "CALIBRATED_OFFLINE_AWAITING_LIVE_CONFIRMATION"
+    },
+    {
+      "slot_index": 24,
+      "record_name": "PLAYER_STATS",
+      "family": "STATISTICS",
+      "offsets": {
+        "canonical_manager_offset_hex": "+0x180",
+        "canonical_count_offset_hex": "+0x180",
+        "canonical_pdata_offset_hex": "+0x188",
+        "superseded_legacy_calibrated_offset_hex": "+0x188",
+        "superseded_legacy_pdata_offset_hex": "+0x190"
+      },
+      "dimensions": {
+        "historical_count": 9773,
+        "stride_bytes": 48,
+        "stride_hex": "0x30",
+        "stride_source": "IMMEDIATE_OPERAND_IN_GETTER_CODE",
+        "buffer_size_bytes": 469104,
+        "buffer_size_kb_approx": 458.11
+      },
+      "verification_axes": {
+        "RESEARCH_INDEXED": true,
+        "NATIVE_LAYOUT": true,
+        "FIXTURE_PASS": false,
+        "LIVE_UI_MATCH": false,
+        "ALL_OBJECTS_ENUMERATED": false,
+        "PIPELINE_INTEGRATED": false,
+        "PUBLISHED_QUERY": false,
+        "SAVE_RELOAD": false
+      },
+      "fail_closed_status": "CALIBRATED_OFFLINE_AWAITING_LIVE_CONFIRMATION"
+    }
+  ],
+  "delta_summary": {
+    "total_slots_in_manager": 75,
+    "calibrated_in_this_delta": 2,
+    "remaining_uncalibrated_slots": 73,
+    "legacy_offset_correction": "Offset shifted from +0x08 legacy back to +0x00 canonical base; EndPointer eliminated.",
+    "future_execution_boundary": "No live memory reads, no live memory writes, no save mutations, no expansion to R00-02..R00-12 permitted without explicit separate human authorization."
+  }
+}

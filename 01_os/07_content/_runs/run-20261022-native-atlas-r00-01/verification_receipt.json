@@ -1,0 +1,48 @@
+{
+  "schema_version": "nba2k22.native_atlas_verification_receipt.v1",
+  "task_id": "NATIVE-ATLAS-R00-01",
+  "run_id": "run-20261022-native-atlas-r00-01",
+  "base_sha": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
+  "timestamp": "2026-10-22T23:38:30Z",
+  "verification_profile": {
+    "executor_model": "Gemini Flash (Antigravity)",
+    "execution_environment": "Windows pwsh local repository checkout",
+    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py"
+  },
+  "checks": [
+    {
+      "id": "SOURCE_MANIFEST_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py SOURCE_MANIFEST_CHECK",
+      "evidence": "source_manifest.json verified with 7 sources, ROSTERDATA target, and strict fail-closed boundary."
+    },
+    {
+      "id": "DESCRIPTORS_HYPOTHESES_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py DESCRIPTORS_HYPOTHESES_CHECK",
+      "evidence": "HYP-A canonical 16-byte confirmed; HYP-B 24-byte +8 shift and EndPointer refuted."
+    },
+    {
+      "id": "NATIVE_OBJECT_DELTA_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py NATIVE_OBJECT_DELTA_CHECK",
+      "evidence": "Slot 1 (PLAYER, count 3390, stride 1264) and Slot 24 (PLAYER_STATS, count 9773, stride 48) calibrated offline."
+    },
+    {
+      "id": "UNRESOLVED_FINDINGS_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py UNRESOLVED_FINDINGS_CHECK",
+      "evidence": "All 4 unresolved findings confirmed as HOLD_UNKNOWN; Phase B bounded envelope established."
+    },
+    {
+      "id": "SCOPE_AND_PROHIBITIONS_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py SCOPE_AND_PROHIBITIONS_CHECK",
+      "evidence": "Allowed changed paths and strict prohibitions validated."
+    }
+  ],
+  "managed_verification_preflight": {
+    "plan_path": "01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verification_plan.json",
+    "preflight_status": "READY_FOR_MANAGED_VERIFY"
+  }
+}
