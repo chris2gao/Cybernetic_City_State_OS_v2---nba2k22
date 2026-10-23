@@ -2,6 +2,16 @@
 
 **2026-10-22；领域知识导航，不创造新的OS上下文机制或审批机构。** 本索引用来决定新开发/规划窗口应读哪一份文件，哪些结论已有证据、哪些只是历史或候选。项目状态会随GitHub分支和Player决定改变，以下固定SHA为**历史来源锚点**，绝不代替实时HEAD。
 
+> 2026-10-22 ARCH-01 范围修订：Human 当前明确每存档独立连续、无分叉/合并/历史记忆继承。此产品规则覆盖旧文档相反表述。基准 master 407e2134bd2f595477099b2c6e3484c818059fd9 已包含知识基线，旧候选说明为历史状态；G0 独立审核不由本任务补认证。
+
+ARCH-01 新增**待独立审核候选**：
+- [世界领域模型](WORLD_DATA_DOMAIN_MODEL_V1.md)：实体、基数、生命周期与 ER。
+- [身份与时间 ADR](WORLD_DATA_IDENTITY_AND_TIME_ADR_V1.md)：独立存档、稳定业务身份、DEV14 技术绑定、事实修订。
+- [机器实体字典](WORLD_DATA_ENTITY_CATALOG_V1.json)：模型的属性/关系/来源/未知表达。
+- [数据真实性与质量](WORLD_DATA_SOURCE_AND_QUALITY_CONTRACT_V1.md)：证据、缺失、对账与隐藏属性边界。
+- [旧系统与 Schema 交接](WORLD_DATA_LEGACY_IMPACT_AND_SCHEMA_HANDOFF_V1.md)：迁移方向与未证问题。
+- 运行与完成证据：`01_os/07_content/_runs/run-20261022-world-data-arch-001/`；实际候选状态按其 run 与 completion pointer，不能仅凭文档存在称已验收。
+
 ## 1. 权威来源分层
 
 | 优先级/范围 | Canonical来源（相对领域根，OS路径从仓库根） | 解释规则 |

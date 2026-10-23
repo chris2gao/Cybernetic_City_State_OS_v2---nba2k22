@@ -1,0 +1,138 @@
+{
+  "scope": "Synthetic conceptual relationships only; no production modules imported, no SQLite and no game access.",
+  "scenarios": [
+    {
+      "id": "S1_INDEPENDENT_SAVES",
+      "worlds": [
+        "A",
+        "B"
+      ],
+      "same_native_player_id": 30,
+      "same_native_game_id": 7,
+      "player_name": "Stephen Curry",
+      "season": "2021-22",
+      "expected_world_A_players": 1
+    },
+    {
+      "id": "S2_CONTINUOUS_CAREER",
+      "world": "A",
+      "player": "p1",
+      "seasons": [
+        "2021-22",
+        "2024-25",
+        "2027-28",
+        "2030-31"
+      ],
+      "memberships": [
+        {
+          "team": "GSW",
+          "start": 2021,
+          "end": 2024
+        },
+        {
+          "team": "BOS",
+          "start": 2024,
+          "end": 2027
+        },
+        {
+          "team": "NYK",
+          "start": 2027,
+          "end": 2031
+        }
+      ],
+      "games": [
+        {
+          "year": 2022,
+          "expected_team": "GSW"
+        },
+        {
+          "year": 2025,
+          "expected_team": "BOS"
+        },
+        {
+          "year": 2030,
+          "expected_team": "NYK"
+        }
+      ],
+      "old_binding": [
+        "saveA",
+        "i1",
+        "g1"
+      ],
+      "new_binding": [
+        "saveA",
+        "i2",
+        "g2"
+      ]
+    },
+    {
+      "id": "S3_REPEAT_CAPTURE",
+      "world": "A",
+      "native_game_id": 7,
+      "game_uid": "G7",
+      "observations": [
+        {
+          "batch": "b1",
+          "score": 100
+        },
+        {
+          "batch": "b2",
+          "score": 100
+        },
+        {
+          "batch": "b3",
+          "score": 102
+        }
+      ],
+      "expected_games": 1,
+      "expected_observations": 3,
+      "expected_revisions": 2
+    },
+    {
+      "id": "S4_TOTAL_MISMATCH",
+      "world": "A",
+      "observed_game_points": [
+        20,
+        25
+      ],
+      "native_season_points": 70,
+      "expected_observed_total": 45,
+      "expected_difference": 25,
+      "expected_games": 2
+    },
+    {
+      "id": "S5_HIDDEN_POTENTIAL",
+      "world": "A",
+      "allowed_field": "points",
+      "allowed_value": 25,
+      "sensitive_value": 99,
+      "attacks": [
+        "potential",
+        "raw_struct",
+        "raw_bytes",
+        "native_address",
+        "debug_payload",
+        "潜力",
+        "potential_alias"
+      ],
+      "nested_attack": {
+        "points": {
+          "debug": {
+            "potential": 99
+          }
+        }
+      }
+    },
+    {
+      "id": "S6_SHARED_TEMPLATE",
+      "template_id": "T1984",
+      "worlds": [
+        "A",
+        "B"
+      ],
+      "same_native_player_id": 23,
+      "world_A_points": 1000,
+      "world_B_points": 200
+    }
+  ]
+}

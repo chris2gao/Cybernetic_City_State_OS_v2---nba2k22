@@ -4,6 +4,8 @@
 
 > **仓库与源版本**：正式开发仓库`chris2gao/Cybernetic_City_State_OS_v2---nba2k22`；领域根`08_Domain_Applications/Antigravity_GM_Engine/`；本索引构建在迁移候选`task/nba2k22-source-refresh-20261022@8bdae1700ecd3ed47d2ad197cca86ace388083bb`之上。**截至此基线生成时该候选与规划分支未并入master**；日后新任务必须实时重新读取`master`及各证据分支，不准把当前时间的候选状态写成未来永久事实。此文档所在分支也未自动获得master权威性。
 
+> 2026-10-22 ARCH-01 接续：本轮 fresh-read master 为 407e2134bd2f595477099b2c6e3484c818059fd9，知识已收录；上述未合入说明保留为生成时来源。当前 Human 明确：每存档独立连续，不存在存档分叉、合并或跨档历史/记忆继承。当前详细设计候选为[领域模型](WORLD_DATA_DOMAIN_MODEL_V1.md)、[身份时间ADR](WORLD_DATA_IDENTITY_AND_TIME_ADR_V1.md)、[实体字典](WORLD_DATA_ENTITY_CATALOG_V1.json)、[质量契约](WORLD_DATA_SOURCE_AND_QUALITY_CONTRACT_V1.md)、[Schema交接](WORLD_DATA_LEGACY_IMPACT_AND_SCHEMA_HANDOFF_V1.md)。候选仍待独立审核，不升级原生/生产成熟度。
+
 ## 1. 我们真正建设的产品
 
 目标不是仅给玩家推荐交易的GM助手，而是**以PC NBA2K22离线MyLEAGUE为比赛、游戏状态和自然成长权威的“平行篮球世界”**。实际赛果由游戏产生，外挂用带证据的原生读取收集真正发生的事实，在独立世界线身份下保存跨季历史，提供GM/Coach/Player等自主模型的角色可见信息，最后仅将玩家批准的合法动作写回游戏并确认实际读回。AI的推论不能伪造游戏事实。

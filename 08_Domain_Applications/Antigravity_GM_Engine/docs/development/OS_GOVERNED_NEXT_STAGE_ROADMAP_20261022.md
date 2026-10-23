@@ -6,6 +6,8 @@
 >
 > **注意分支状态**：最新完整业务候选目前是`task/nba2k22-source-refresh-20261022@8bdae1700ecd3ed47d2ad197cca86ace388083bb`，不是`master`；必须经过OS独立审阅和玩家合并决定后，后续工程才从实际新master建立新分支。此状态必须在未来每次派单时重新核验。
 
+> 2026-10-22 ARCH-01 实际更新：本任务启动时远端 master 已为 407e2134bd2f595477099b2c6e3484c818059fd9，包含上述知识资产；旧“未入主线”段落是生成时状态，不能代替当前 Git 事实。Human 已派发 WORLD-DATA-ARCH-01，候选状态与完成指针见 Backlog；此任务不替 G0 补做独立验收。产品规则固定为每存档独立连续世界，无存档分叉、合并或跨档历史/记忆继承。设计入口：[领域模型](WORLD_DATA_DOMAIN_MODEL_V1.md)、[身份 ADR](WORLD_DATA_IDENTITY_AND_TIME_ADR_V1.md)，均待独立审核。
+
 ## 1. 不可妥协的最终产品定义
 
 目标不是“较好用的旧GM数据库”，而是**以NBA2K22本体作为比赛与自然成长权威的平行篮球世界**：
@@ -35,7 +37,7 @@
 | 优先级 | 任务ID | 目标与最低可验收交付 | 前置条件 | 建议执行/独立评审 |
 |---|---|---|---|---|
 | G0 | `OS-BASELINE-01` | 接收当前业务刷新任务候选及OS门禁/玩家合并决定；确保V2、AG01D、FINAL-CODEX证据在新master且有来源 | 独立迁移候选已存在；不预设审核结论 | Gemini小修（若需要）/新审核窗口/Human集成 |
-| P0 | `WORLD-DATA-ARCH-01` | 领域概念ER、稳定身份(world/save/generation/season/game/player incarnation/team/draft template)、事件/状态/累计双时间契约、来源和敏感性边界 | G0 | Codex T2设计/不同会话独立审阅/Human裁决争议 |
+| P0 | `WORLD-DATA-ARCH-01` | 独立存档连续世界的领域ER、业务身份与DEV14技术绑定、事件/状态/累计双时间、来源/敏感性及六反例；禁止存档分叉合并继承 | G0；本轮Human已明确派发，候选见Backlog | Codex T2设计/不同会话独立审阅/Human裁决争议 |
 | P0 | `NATIVE-ACCEPT-01` | AG01B–01D（尤其SEASON/StatBank/Slot24、Box和生涯索引）独立验证、候选字段字典、未知与失败矩阵；绝不直接合并旧match-history | G0；可与ARCH-01并行 | Codex工程验证；Gemini提供fixtures不自验收 |
 | P0 | `WORLD-DATA-SCHEMA-01` | 在已验身份合同上给出逻辑关系模型、约束、索引、物理SQLite分库方案A/B权衡、候选DDL、真实fixtures的查询样例与旧库迁移映射 | ARCH-01；NATIVE-ACCEPT的已确认部分可分批消化 | Codex主设计/独立ER与SQL审阅/Human决定重大存储拓扑 |
 | P0 | `WORLD-DATA-PROTOTYPE-01` | **离线独立实验平台**：最小世界线+player/team+GAME+Box+SeasonTotals+来源/批次结构，真实样本加载/身份冲突与幂等测试；不触及生产库 | SCHEMA-01已评审 | Codex实现/独立验收 |

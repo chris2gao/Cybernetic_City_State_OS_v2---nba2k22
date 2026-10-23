@@ -39,10 +39,14 @@
       "depends_on": [
         "OS-BASELINE-01"
       ],
-      "state": "planned_not_dispatched",
+      "state": "candidate_ready_for_independent_review",
+      "human_review": "PASS_BY_EXPLICIT_HUMAN_STATEMENT_20261022; independent model review not performed; no master integration authorization",
+      "completion_pointer": "01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json",
+      "candidate_branch": "task/world-data-arch-01",
+      "dispatch_basis": "Current Human WORLD-DATA-ARCH-01 task; master source verified at 407e2134bd2f595477099b2c6e3484c818059fd9. G0 historical review status is not re-certified by this task.",
       "execution_route_hint": "Codex architecture; GPT independent review",
       "risk_hint": "T2_semantic",
-      "acceptance_gate": "ER, identity collisions/season forks, event vs observation semantics, source and potential boundary documented",
+      "acceptance_gate": "ER and entity catalog; independent saves with no world branching, merging or history inheritance; continuous careers; technical generation isolation; six counterexamples; source and potential boundaries; OS managed verification and separate review",
       "deliverable_summary": "concept ER; identity/time ADR; invariants; open unknowns",
       "window_strategy": "one coherent bounded task; internal deterministic validation stays in executor window; final independent review in separate session",
       "protected_actions": "No production cutover, game write, master integration or DCR without distinct current Human confirmation"

@@ -2,6 +2,8 @@
 
 **2026-10-22；项目级目标架构/数据建模设计基线（尚未批准实施迁移）。** 本文件取代[V1](PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V1.md)中“必须复用原双事实库物理Schema/不能重新设计数据库”的限制。保留V1作为历史决策记录；本文优先。相容原则、研究证据与待验证项必须分开，不代表任何AG模块已经通过Codex生产验收，不批准实机修改、生产迁移、删除原库或游戏推进。
 
+> 2026-10-22 WORLD-DATA-ARCH-01 Human 范围修订：每个存档独立且跨赛季连续；不存在存档分叉、合并、历史或角色记忆继承。DEV14 instance/generation 为技术绑定，reset 会同时更换二者。细化设计见[身份与时间 ADR 候选](WORLD_DATA_IDENTITY_AND_TIME_ADR_V1.md)与[领域模型候选](WORLD_DATA_DOMAIN_MODEL_V1.md)；仍待独立审核。本轮物理 DDL、库数量、迁移实现留给 WORLD-DATA-SCHEMA-01 及后继任务。
+
 ## 0. 正式纠错：旧库是迁移来源，不是设计约束
 
 **以完整NBA2K22平行篮球世界为第一原则，允许重新设计整个采集容器、数据库文件边界、主键、表、关系、历史模型、API和发布布局。** 原有`league_state.sqlite`/`player_pool.sqlite`、`database/schema.sql`、月度事实表和自动采集脚本属于第一代实现；不能因已运行而强制新数据适应旧Schema。
@@ -26,7 +28,7 @@
 
 | 领域边界 | 概念实体（逻辑层，不等于马上创建同名物理表） | 数据生命周期 |
 |---|---|---|
-| WORLD/TIME | World、SaveInstance、Generation、Season、Phase、CaptureBatch、GameCalendar | 多存档/分叉/赛季/批次 |
+| WORLD/TIME | GameSave、TechnicalBinding、Season、Phase、CaptureBatch、GameCalendar | 独立存档、连续赛季、技术代际与采集批次 |
 | ENTITY/IDENTITY | Person、PlayerIncarnation、StaffRole、Franchise、TeamSeason、DraftTemplate、NativeIdentityMapping | 身份历史/防重号/防名字歧义 |
 | ROSTER/CONTRACT | TeamMembership、RosterAssignment、Contract、ContractSeason、WaivedSalary、PickAsset、PickOwnership | 随游戏时间变化的权益与合同 |
 | GAME | Game、TeamGameStats、PlayerGameStatline、LineScore、BoxExtra、GameStatus | 比赛发生及后来更正/阶段变化 |
@@ -43,7 +45,7 @@
 
 必须区分：
 - `world_id`：同一平行篮球世界线；
-- `save_instance_id`、`generation_id`：存档身份、恢复或分叉代际；
+- `save_instance_id`、`generation_id`：DEV14 技术实例与数据代际；reset 同时更换，不能代表业务分叉，也不能自动证明同档连续性；
 - `season_id`：属于一个world的具体赛季，不仅是2022这个年份；
 - `game_uid`：世界线+赛季+有效比赛原生身份（复赛/赛事类型/代际冲突需查清）；原生GameID、Slot仅为映射值；
 - `player_incarnation_id`：在本游戏世界线实际存在的一个球员实例，不能简单等同姓名、Cyberface、模板球员或短期内存Slot；
@@ -103,7 +105,7 @@
 此时**可以确定概念/逻辑架构方向**；但尚不能确定每个原生字段的物理列/主键和所有跨季身份规则，也不能宣布完整生产Schema已经定稿。
 
 **建议单独架构任务`WORLD-DATA-ARCH-01`，由Codex主导设计、网页GPT独立审核，Gemini提供只读原生证据**，交付：
-1. 领域概念图（World/Season/Game/Player/Team/Contract/Career/Action等）、对象生命周期、稳定身份与多存档分叉模型。
+1. 领域概念图（GameSave/Season/Game/Player/Team/Contract/Career/Action等）、对象生命周期、稳定身份与独立存档隔离模型；无存档分叉、合并或跨档记忆继承。
 2. 每域的关系字典/ER图/字段规范：`raw_native`、`verified`、`derived`、`unknown`、`sensitive`，含来源、时间、基数、主键、索引、约束。
 3. 物理数据库选型与文件切分对比、参考DDL、大小/性能测算、跨库一致性契约，带一套真正可查询的实验性可迁移实例。
 4. 原有两事实库、player_pool、DEV14控制数据、旧月度/赛季/history Schema的迁移映射与测试；历史缺证不能填0或猜测值，原数据只读保留，迁移脚本可回滚。

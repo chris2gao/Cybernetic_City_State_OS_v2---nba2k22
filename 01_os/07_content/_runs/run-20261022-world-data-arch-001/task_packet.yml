@@ -1,0 +1,63 @@
+task_packet:
+  task_id: WORLD-DATA-ARCH-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 407e2134bd2f595477099b2c6e3484c818059fd9
+  branch: task/world-data-arch-01
+  objective: Establish the complete conceptual basketball data model, independent-save identity and time contracts, source quality rules and schema handoff; deliver a verified candidate for separate review.
+  source_evidence:
+    - 01_os/07_content/_runs/run-20261022-world-data-arch-001/human_task.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/src/gm_state_io/workspace.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/CODEX_HANDOFF.md
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/WORLD_DATA_*
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md
+    - 01_os/07_content/_runs/run-20261022-world-data-arch-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261022-world-data-arch-001/verification_plan.json
+  required_tests: [OS_ROUTING, OS_CLOSURE, CATALOG_RELATIONS, SIX_SCENARIOS, LINKS_AND_SCOPE, MWU]
+  prohibitions:
+    - game_process_or_save_access
+    - production_database_or_DDL_mutation
+    - season_advance_or_player_attribute_write
+    - collector_or_personality_implementation
+    - cross_save_branch_merge_or_history_inheritance
+    - shared_OS_modification
+    - DCR_without_separate_Human_approval
+    - master_publication
+    - force_push_or_history_rewrite
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task: true
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    surface: codex_desktop
+    model: GPT-6 Astra
+    model_selection_evidence: Human task recommends Astra; current host supplies Codex GPT-6; exact backend variant is not independently observable.
+    reasoning_effort: surface_current
+    current_reasoning_setting: not_observable
+    mode: standard
+    routing_basis: Registered Codex desktop route fits repository architecture, Python validation and local Git; Human requested architecture in this window.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session_after_candidate_delivery
+    different_model_family: true
+    different_measurement_tool: true
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  required_completion_pointer: 01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json
+  execution_basis: Current Human instruction explicitly delegates conceptual design decisions, six conceptual tests and task-branch publication; no new formal cross-endpoint dispatch.
+  prerequisite_limit: master contains baseline source; historical G0 review receipts remain stale. Current Human explicitly dispatches ARCH-01; this does not certify G0 or AG native acceptance.

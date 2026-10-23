@@ -1,0 +1,78 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261022-world-data-arch-001/task_packet.yml",
+  "checks": [
+    {
+      "id": "OS_ROUTING",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/03_mechanisms/model_routing/实现/verify_model_routing.py",
+        "static",
+        "."
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "OS_CLOSURE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/06_execution/task_orchestration/big_task/closure_preflight.py",
+        "--packet",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/task_packet.yml"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "CATALOG_RELATIONS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/verify_architecture.py",
+        "catalog"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SIX_SCENARIOS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/verify_architecture.py",
+        "scenarios"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "LINKS_AND_SCOPE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/verify_architecture.py",
+        "links"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "MWU",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py",
+        "artifact",
+        "01_os/07_content/_runs/run-20261022-world-data-arch-001/completion_pointer.json",
+        "--root",
+        ".",
+        "--require-mwu"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    }
+  ]
+}

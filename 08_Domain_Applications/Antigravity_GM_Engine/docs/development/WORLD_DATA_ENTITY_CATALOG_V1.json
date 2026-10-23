@@ -1,0 +1,2824 @@
+{
+  "schema_version": "nba2k22.world_data_entity_catalog.v1",
+  "task_id": "WORLD-DATA-ARCH-01",
+  "status": "CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "source_base_sha": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "scope": "Conceptual model only; no physical tables, production implementation or native acceptance asserted.",
+  "domains": {
+    "A": "Save and time",
+    "B": "Identity",
+    "C": "Operations and assets",
+    "D": "Games and statistics",
+    "E": "Dynamic state",
+    "F": "Native evidence",
+    "G": "Actors and approved action"
+  },
+  "identity_policy": {
+    "world_key": "world_id",
+    "world_definition": "One independent game save, continuous across seasons",
+    "independent_worlds": true,
+    "world_branching": false,
+    "world_merging": false,
+    "cross_world_history_inheritance": false,
+    "technical_binding_keys": [
+      "save_id",
+      "save_instance_id",
+      "generation_id"
+    ],
+    "native_key_scope": [
+      "world_id",
+      "binding_id",
+      "batch_id",
+      "object_kind",
+      "native_id_or_slot"
+    ],
+    "cross_batch_native_resolution": "REQUIRES_VERIFIED_IDENTITY_MAPPING",
+    "world_vs_instance_reason": "DEV14 reset replaces save_instance_id as well as generation_id; stable basketball world identity must not alias that changing token.",
+    "reset_continuity": "explicit same-game-save evidence required; otherwise HOLD; distinct save requires a fresh unrelated world_id"
+  },
+  "common_fact_fields": {
+    "world_id": "required except STATIC_RESOURCE definitions",
+    "business_id": "application ID, never pointer/name or batch ID",
+    "revision": "immutable assertion revision; does not create a new basketball event",
+    "valid_time": "known/unknown game effective instant or interval",
+    "observed_at": "UTC capture time",
+    "recorded_at": "UTC ingestion time",
+    "source_refs": "nonempty observation/manifest/receipt refs for factual assertion",
+    "field_status": "KNOWN|UNKNOWN|NOT_OBSERVED|NOT_APPLICABLE|WITHHELD|CONFLICT",
+    "provenance_kind": "NATIVE_OBSERVATION|EVENT_ASSERTION|DERIVED|AI|STATIC_RESOURCE",
+    "evidence_labels": "independent per-field labels; no single ordered DONE"
+  },
+  "constraints": {
+    "forbidden_world_fields": [
+      "parent_world_id",
+      "fork_world_id",
+      "merge_world_id",
+      "inherits_world_id"
+    ],
+    "business_fact_cross_world_links": "REJECT",
+    "unresolved_identity": "QUARANTINE",
+    "batch_is_entity_identity": false,
+    "normal_season_changes_world": false,
+    "technical_reset_invalidates_old_approval": true,
+    "event_revision_policy": "APPEND_ONLY",
+    "native_totals_imply_complete_games": false,
+    "unknown_is_zero": false
+  },
+  "query_policy": {
+    "default": "DENY",
+    "ordinary_GM_allowed_fields": [
+      "player_uid",
+      "display_name",
+      "points",
+      "rebounds",
+      "assists",
+      "season_uid",
+      "game_uid",
+      "team_uid",
+      "source_refs",
+      "coverage",
+      "as_of"
+    ],
+    "forbidden_payloads": [
+      "potential",
+      "raw_struct",
+      "raw_bytes",
+      "native_address",
+      "debug_payload"
+    ],
+    "derived_sensitivity": "UNION_OF_INPUT_RESTRICTIONS",
+    "role_scope": "same world plus actor subject and as_of; generic SQL/raw joins prohibited"
+  },
+  "source_registry": {
+    "HUMAN": {
+      "path": "01_os/07_content/_runs/run-20261022-world-data-arch-001/human_task.md",
+      "kind": "HUMAN_REQUIREMENT",
+      "supports": "Independent saves, no branches or inheritance, full domain model and six scenarios."
+    },
+    "DEV14": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/gm_state_io/workspace.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "create/adopt generate instance and generation; reset replaces BOTH; archives and lifecycle guards."
+    },
+    "SAVEPATH": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/save_context.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "save_id is a validated directory locator; paths follow manifest data_directory."
+    },
+    "CAPTURE": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/gm_state_io/capture_files.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "Complete cohort and source metadata binding; publication recovery."
+    },
+    "APPROVAL": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/gm_state_io/executor.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "Exact instance/generation/source/decision/version/digest bound execution, separate readback."
+    },
+    "M0": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/gm_data_access/query.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "Snapshot-bound views; potential_v1 GM_SANITIZED check; roster-slot identities are snapshot local."
+    },
+    "LEGACY": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/database/schema.sql",
+      "kind": "STATIC_SCHEMA_REVIEWED",
+      "supports": "Existing teams/players/contracts/monthly/season/history/assets schema, not observed live facts."
+    },
+    "SOURCE": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/source_extensions.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "Snapshot and roster-slot keyed source observations; field decoding."
+    },
+    "AGC": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01C/CODEX_HANDOFF.md",
+      "kind": "REPORTED_NATIVE_RESEARCH",
+      "supports": "Record book and dictionaries; Slot44 schedule claim superseded by AGD."
+    },
+    "AGD": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/CODEX_HANDOFF.md",
+      "kind": "REPORTED_NATIVE_RESEARCH",
+      "supports": "SEASON/24B Box/48B season totals/career links and Slot44 matchup interpretation; pending independent acceptance."
+    },
+    "BOX": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/decoders/boxscore_decoder.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "Candidate fields/flags/indexes; formulas in decoder are derived, not automatic native truth."
+    },
+    "TOTALS": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/decoders/season_stats_decoder.py",
+      "kind": "STATIC_CODE_REVIEWED",
+      "supports": "48-byte totals and uint16 career slots; 7-bit season code and bounded historical loop need future-year validation."
+    },
+    "AUDIT": {
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/development_reviews/FINAL_CODEX_CAPABILITY_MATRIX_20261021_V1.json",
+      "kind": "HISTORICAL_AUDIT",
+      "supports": "40 capability families, independent maturity axes; not AGD acceptance."
+    }
+  },
+  "entities": [
+    {
+      "id": "GameSave",
+      "domain": "A",
+      "aliases": [
+        "GameSave",
+        "SaveInstance",
+        "World"
+      ],
+      "definition": "一个独立 NBA2K22 游戏存档所代表的连续篮球世界；不是存档文件路径或备份文件。",
+      "identity": {
+        "business_key": "world_id",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "save_label",
+          "type": "string"
+        },
+        {
+          "name": "registration_evidence",
+          "type": "ref"
+        },
+        {
+          "name": "status",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "registered -> active -> retired; retirement retains history",
+      "source_refs": [
+        "HUMAN",
+        "DEV14"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "physical save identity is not auto-readable; enrollment needs explicit binding"
+      ],
+      "relations": [
+        "R01",
+        "R02",
+        "R06",
+        "R09",
+        "R11",
+        "R25",
+        "R40",
+        "R42",
+        "R43",
+        "R44",
+        "R52",
+        "R53"
+      ]
+    },
+    {
+      "id": "TechnicalBinding",
+      "domain": "A",
+      "aliases": [
+        "TechnicalGeneration"
+      ],
+      "definition": "世界与一次 DEV14 物理工作区实例/技术代际的绑定；是安全边界而非世界分支。",
+      "identity": {
+        "business_key": "binding_id",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "save_id",
+          "type": "string"
+        },
+        {
+          "name": "save_instance_id",
+          "type": "string"
+        },
+        {
+          "name": "generation_id",
+          "type": "string"
+        },
+        {
+          "name": "manifest_digest",
+          "type": "string"
+        },
+        {
+          "name": "continuity_evidence",
+          "type": "ref"
+        }
+      ],
+      "lifecycle": "prepared -> active -> sealed/blocked; append new binding on reset",
+      "source_refs": [
+        "DEV14",
+        "SAVEPATH"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "same-save continuity after reset must be proved; never infer from save_id"
+      ],
+      "relations": [
+        "R01",
+        "R05",
+        "R57"
+      ]
+    },
+    {
+      "id": "Season",
+      "domain": "A",
+      "aliases": [
+        "Season"
+      ],
+      "definition": "一个世界内的赛季周期；年份标签仅为属性。",
+      "identity": {
+        "business_key": "season_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "season_label",
+          "type": "string"
+        },
+        {
+          "name": "ordinal",
+          "type": "integer"
+        },
+        {
+          "name": "competition",
+          "type": "enum"
+        },
+        {
+          "name": "start_end",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "scheduled -> active -> completed -> archived",
+      "source_refs": [
+        "HUMAN",
+        "LEGACY",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "native season encoding after 2027 and historical coverage"
+      ],
+      "relations": [
+        "R02",
+        "R03",
+        "R04",
+        "R08",
+        "R16",
+        "R18",
+        "R21",
+        "R28",
+        "R37",
+        "R41"
+      ]
+    },
+    {
+      "id": "SeasonPhase",
+      "domain": "A",
+      "aliases": [
+        "SeasonPhase"
+      ],
+      "definition": "赛季中有来源的阶段及有效区间。",
+      "identity": {
+        "business_key": "phase_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "phase_kind",
+          "type": "enum"
+        },
+        {
+          "name": "valid_interval",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "observed intervals; corrections versioned",
+      "source_refs": [
+        "LEGACY",
+        "AUDIT"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "exact native phase transition/source"
+      ],
+      "relations": [
+        "R03"
+      ]
+    },
+    {
+      "id": "GameCalendar",
+      "domain": "A",
+      "aliases": [
+        "GameCalendar"
+      ],
+      "definition": "某赛季已观察到的赛程视图及版本，不将缺少日期的比赛补造为日历事件。",
+      "identity": {
+        "business_key": "calendar_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "schedule_revision",
+          "type": "integer"
+        },
+        {
+          "name": "known_coverage",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "versioned season calendar projection; not event creator",
+      "source_refs": [
+        "AGD",
+        "BOX"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "Slot10 versus SEASON schedule relation; cancelled/postponed identities"
+      ],
+      "relations": [
+        "R04"
+      ]
+    },
+    {
+      "id": "CaptureBatch",
+      "domain": "A",
+      "aliases": [
+        "CaptureBatch",
+        "ObservationTime"
+      ],
+      "definition": "一次被明确绑定到存档和技术代际的采集执行及其完整性边界。",
+      "identity": {
+        "business_key": "batch_id",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "binding_id",
+          "type": "ref"
+        },
+        {
+          "name": "observed_at",
+          "type": "utc"
+        },
+        {
+          "name": "game_time",
+          "type": "game_time"
+        },
+        {
+          "name": "coverage",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "staged -> validated -> published or rejected; immutable publication manifest",
+      "source_refs": [
+        "DEV14",
+        "CAPTURE"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "physical format and scheduling remain SCHEMA/INGEST tasks"
+      ],
+      "relations": [
+        "R05",
+        "R47",
+        "R51"
+      ]
+    },
+    {
+      "id": "Franchise",
+      "domain": "B",
+      "aliases": [
+        "Franchise",
+        "Team"
+      ],
+      "definition": "世界内长期球队组织身份，可跨赛季更名或迁址；原生槽位不等于此身份。",
+      "identity": {
+        "business_key": "team_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "display_name",
+          "type": "string"
+        },
+        {
+          "name": "native_mappings",
+          "type": "refs"
+        }
+      ],
+      "lifecycle": "registered through rename/relocation; retired identity retained",
+      "source_refs": [
+        "LEGACY",
+        "SOURCE"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "expansion/rebranding native identity continuity"
+      ],
+      "relations": [
+        "R06",
+        "R07",
+        "R17",
+        "R20",
+        "R23"
+      ]
+    },
+    {
+      "id": "TeamSeason",
+      "domain": "B",
+      "aliases": [
+        "TeamSeason"
+      ],
+      "definition": "长期球队在一个赛季/竞赛中的参与身份与状态容器。",
+      "identity": {
+        "business_key": "team_season_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_uid",
+          "type": "ref"
+        },
+        {
+          "name": "league_membership",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "one franchise participation per season and competition; observed state versions",
+      "source_refs": [
+        "LEGACY"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "competition and G-League affiliations"
+      ],
+      "relations": [
+        "R07",
+        "R08",
+        "R13",
+        "R24",
+        "R27",
+        "R30",
+        "R33",
+        "R45"
+      ]
+    },
+    {
+      "id": "PlayerIncarnation",
+      "domain": "B",
+      "aliases": [
+        "Player",
+        "PlayerIncarnation"
+      ],
+      "definition": "某个存档内实际存在的一名球员及其连续生涯；球员姓名和历史模板都不是身份。",
+      "identity": {
+        "business_key": "player_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "display_name",
+          "type": "string"
+        },
+        {
+          "name": "birth_observation",
+          "type": "ref"
+        },
+        {
+          "name": "template_id",
+          "type": "optional_ref"
+        },
+        {
+          "name": "identity_status",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "registered -> active -> retired; stable across season and trade",
+      "source_refs": [
+        "HUMAN",
+        "SOURCE",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "PlayerID reuse and cross-season continuity; ambiguous observations quarantined"
+      ],
+      "relations": [
+        "R09",
+        "R10",
+        "R12",
+        "R14",
+        "R19",
+        "R32",
+        "R38"
+      ]
+    },
+    {
+      "id": "DraftTemplate",
+      "domain": "B",
+      "aliases": [
+        "DraftTemplate"
+      ],
+      "definition": "可跨存档复用的版本化静态选秀素材；不含游戏实例的历史、记忆或成长。",
+      "identity": {
+        "business_key": "template_id",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "STATIC_RESOURCE",
+        "world_id_required": false
+      },
+      "attributes": [
+        {
+          "name": "source_year",
+          "type": "integer"
+        },
+        {
+          "name": "source_person_key",
+          "type": "string"
+        },
+        {
+          "name": "resource_version",
+          "type": "string"
+        }
+      ],
+      "lifecycle": "versioned reusable static resource; no world facts/memories",
+      "source_refs": [
+        "HUMAN"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "template import matching; no career/ability future leakage to role views"
+      ],
+      "relations": [
+        "R10"
+      ]
+    },
+    {
+      "id": "Staff",
+      "domain": "B",
+      "aliases": [
+        "Staff",
+        "Coach"
+      ],
+      "definition": "世界内工作人员身份；Coach 是岗位，换队不自动产生新人。",
+      "identity": {
+        "business_key": "staff_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "display_name",
+          "type": "string"
+        },
+        {
+          "name": "native_mappings",
+          "type": "refs"
+        }
+      ],
+      "lifecycle": "registered -> employed/unemployed -> retired",
+      "source_refs": [
+        "SOURCE",
+        "LEGACY"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "staff identity reuse and player-to-staff conversion"
+      ],
+      "relations": [
+        "R11",
+        "R26"
+      ]
+    },
+    {
+      "id": "RosterMembership",
+      "domain": "C",
+      "aliases": [
+        "RosterMembership"
+      ],
+      "definition": "球员在球队赛季中某种名单角色的有时效归属；合同球队可能与出场球队不同。",
+      "identity": {
+        "business_key": "membership_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "player_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "assignment_kind",
+          "type": "enum"
+        },
+        {
+          "name": "valid_interval",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "effective intervals; end on trade/waive, never rewrite prior membership",
+      "source_refs": [
+        "SOURCE",
+        "LEGACY"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "trade instant when only snapshot observations exist"
+      ],
+      "relations": [
+        "R12",
+        "R13"
+      ]
+    },
+    {
+      "id": "Contract",
+      "domain": "C",
+      "aliases": [
+        "Contract"
+      ],
+      "definition": "球员与组织之间的一份有来源的合同及修订历史。",
+      "identity": {
+        "business_key": "contract_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "player_uid",
+          "type": "ref"
+        },
+        {
+          "name": "signing_team",
+          "type": "ref"
+        },
+        {
+          "name": "terms",
+          "type": "typed_values"
+        },
+        {
+          "name": "valid_interval",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "observed -> active -> amended/terminated/expired; amendments retain versions",
+      "source_refs": [
+        "SOURCE",
+        "LEGACY"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "multi-team obligations, options, contract identity source"
+      ],
+      "relations": [
+        "R14",
+        "R15"
+      ]
+    },
+    {
+      "id": "ContractSeason",
+      "domain": "C",
+      "aliases": [
+        "Salary"
+      ],
+      "definition": "合同在具体游戏赛季的薪资义务、保障及选项观察。",
+      "identity": {
+        "business_key": "contract_season_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "salary",
+          "type": "money"
+        },
+        {
+          "name": "guarantee",
+          "type": "known_value"
+        },
+        {
+          "name": "option",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "per-contract season obligations and versioned observations",
+      "source_refs": [
+        "LEGACY",
+        "SOURCE"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "salary units and option semantics must retain source certification"
+      ],
+      "relations": [
+        "R15",
+        "R16"
+      ]
+    },
+    {
+      "id": "WaivedSalary",
+      "domain": "C",
+      "aliases": [
+        "WaivedSalary"
+      ],
+      "definition": "球队在某赛季的裁员残留薪资义务，不等同球员现行合同。",
+      "identity": {
+        "business_key": "obligation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "team_uid",
+          "type": "ref"
+        },
+        {
+          "name": "player_uid",
+          "type": "optional_ref"
+        },
+        {
+          "name": "season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "amount",
+          "type": "money"
+        }
+      ],
+      "lifecycle": "observed liability -> settled/expired; prior balances retained",
+      "source_refs": [
+        "AGC",
+        "LEGACY"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "is_stretched_heuristic is derived, not native flag"
+      ],
+      "relations": [
+        "R17",
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "id": "DraftPick",
+      "domain": "C",
+      "aliases": [
+        "DraftPick"
+      ],
+      "definition": "以本世界未来选秀赛季、轮次和原始球队定义语义的资产；归属变化不改变资产身份。",
+      "identity": {
+        "business_key": "pick_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "origin_team_uid",
+          "type": "ref"
+        },
+        {
+          "name": "draft_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "round",
+          "type": "integer"
+        },
+        {
+          "name": "conditions",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "created -> transferred -> exercised/expired; stable asset",
+      "source_refs": [
+        "LEGACY",
+        "SOURCE"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "protections/swaps cannot be inferred from simple owner"
+      ],
+      "relations": [
+        "R20",
+        "R21",
+        "R22"
+      ]
+    },
+    {
+      "id": "PickOwnership",
+      "domain": "C",
+      "aliases": [
+        "PickOwnership"
+      ],
+      "definition": "选秀权的有时效归属与附带条件；不臆造保护或互换权。",
+      "identity": {
+        "business_key": "ownership_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "pick_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_uid",
+          "type": "ref"
+        },
+        {
+          "name": "valid_interval",
+          "type": "game_time"
+        },
+        {
+          "name": "conditions",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "effective owner intervals; condition versions retained",
+      "source_refs": [
+        "LEGACY"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "complex contingent rights and exact transfer time"
+      ],
+      "relations": [
+        "R22",
+        "R23"
+      ]
+    },
+    {
+      "id": "TeamFinance",
+      "domain": "C",
+      "aliases": [
+        "TeamFinance"
+      ],
+      "definition": "球队赛季财务在指定时点的观察；原生金额和公式估算分字段标记。",
+      "identity": {
+        "business_key": "finance_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "team_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "amounts",
+          "type": "typed_values"
+        },
+        {
+          "name": "currency",
+          "type": "string"
+        }
+      ],
+      "lifecycle": "append observations, retain source version and effective time",
+      "source_refs": [
+        "LEGACY",
+        "SOURCE"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "some legacy finance fields are formulas rather than observed balances"
+      ],
+      "relations": [
+        "R24"
+      ]
+    },
+    {
+      "id": "TransactionEvent",
+      "domain": "C",
+      "aliases": [
+        "Trade",
+        "Signing",
+        "DraftSelection"
+      ],
+      "definition": "已发生的交易、签约或选秀事件的有证据断言；提案不能成为此事件。",
+      "identity": {
+        "business_key": "transaction_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "event_kind",
+          "type": "enum"
+        },
+        {
+          "name": "participants",
+          "type": "typed_refs"
+        },
+        {
+          "name": "occurred_at",
+          "type": "game_time"
+        },
+        {
+          "name": "receipt_id",
+          "type": "optional_ref"
+        }
+      ],
+      "lifecycle": "candidate observation -> identity/source resolved -> recorded; corrections versioned",
+      "source_refs": [
+        "LEGACY",
+        "APPROVAL"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "snapshot roster delta alone cannot prove trade/signing details"
+      ],
+      "relations": [
+        "R25"
+      ]
+    },
+    {
+      "id": "StaffEmployment",
+      "domain": "C",
+      "aliases": [
+        "StaffEmployment"
+      ],
+      "definition": "工作人员在球队赛季中担任岗位的有效区间及条款。",
+      "identity": {
+        "business_key": "employment_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "staff_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "role",
+          "type": "enum"
+        },
+        {
+          "name": "valid_interval",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "effective team-role interval with observed terms",
+      "source_refs": [
+        "LEGACY",
+        "SOURCE"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "precise hiring/firing event and concurrent roles"
+      ],
+      "relations": [
+        "R26",
+        "R27"
+      ]
+    },
+    {
+      "id": "Game",
+      "domain": "D",
+      "aliases": [
+        "Game"
+      ],
+      "definition": "世界内赛季与竞赛中的一次比赛身份；赛程、进行中和终局是状态而非三个事件。",
+      "identity": {
+        "business_key": "game_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "competition",
+          "type": "enum"
+        },
+        {
+          "name": "native_key",
+          "type": "optional_value"
+        },
+        {
+          "name": "status",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "scheduled -> in_progress -> final; cancel/postpone/unknown retained as versioned observations",
+      "source_refs": [
+        "AGD",
+        "BOX"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "GameID scope/reuse, repeated fixtures and current flags"
+      ],
+      "relations": [
+        "R28",
+        "R29",
+        "R31",
+        "R34"
+      ]
+    },
+    {
+      "id": "TeamGameResult",
+      "domain": "D",
+      "aliases": [
+        "TeamGameResult"
+      ],
+      "definition": "某队在某场比赛的一份结果版本，包括主客方、比分和结果状态。",
+      "identity": {
+        "business_key": "result_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "game_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "side",
+          "type": "enum"
+        },
+        {
+          "name": "score",
+          "type": "known_value"
+        },
+        {
+          "name": "result_revision",
+          "type": "integer"
+        }
+      ],
+      "lifecycle": "one per game/team/result revision; only resolved final games yield wins",
+      "source_refs": [
+        "AGD",
+        "BOX"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "overtime limits, scores/status, tied/unplayed winner must remain unknown"
+      ],
+      "relations": [
+        "R29",
+        "R30",
+        "R35"
+      ]
+    },
+    {
+      "id": "PlayerGameStatline",
+      "domain": "D",
+      "aliases": [
+        "PlayerGameStatline"
+      ],
+      "definition": "球员为比赛当时球队出场的统计断言，保留未出场和未观察的差别。",
+      "identity": {
+        "business_key": "statline_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "game_uid",
+          "type": "ref"
+        },
+        {
+          "name": "player_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "metrics",
+          "type": "typed_values"
+        },
+        {
+          "name": "in_use",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "game/player/team observation versions; never follow player's current team",
+      "source_refs": [
+        "AGD",
+        "BOX"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "StatBank bounds/InUse, player lookup, DNP versus unobserved"
+      ],
+      "relations": [
+        "R31",
+        "R32",
+        "R33",
+        "R36"
+      ]
+    },
+    {
+      "id": "BoxScore",
+      "domain": "D",
+      "aliases": [
+        "BoxScore"
+      ],
+      "definition": "同一比赛修订版本下的双方结果和球员统计聚合，完整性必须显式声明。",
+      "identity": {
+        "business_key": "box_revision_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "game_uid",
+          "type": "ref"
+        },
+        {
+          "name": "result_refs",
+          "type": "refs"
+        },
+        {
+          "name": "statline_refs",
+          "type": "refs"
+        },
+        {
+          "name": "coverage",
+          "type": "enum"
+        },
+        {
+          "name": "revision",
+          "type": "integer"
+        }
+      ],
+      "lifecycle": "immutable game revision aggregate; may be partial",
+      "source_refs": [
+        "AGD",
+        "BOX"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "complete game/team/player cohort coverage"
+      ],
+      "relations": [
+        "R34",
+        "R35",
+        "R36"
+      ]
+    },
+    {
+      "id": "SeasonTotals",
+      "domain": "D",
+      "aliases": [
+        "SeasonTotals"
+      ],
+      "definition": "原生赛季累计观察；包括主体、赛季、竞赛、球队口径和截至时间。",
+      "identity": {
+        "business_key": "totals_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "subject",
+          "type": "typed_ref"
+        },
+        {
+          "name": "season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "team_scope",
+          "type": "known_value"
+        },
+        {
+          "name": "metrics",
+          "type": "typed_values"
+        },
+        {
+          "name": "as_of",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "append native cumulative observations per subject/season/competition/stint",
+      "source_refs": [
+        "AGD",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "team stint vs whole-season meaning and additive eligibility"
+      ],
+      "relations": [
+        "R37",
+        "R39"
+      ]
+    },
+    {
+      "id": "CareerHistory",
+      "domain": "D",
+      "aliases": [
+        "CareerHistory"
+      ],
+      "definition": "球员与已有原生历史赛季记录的有证据关联；不是全部职业生涯完整性的承诺。",
+      "identity": {
+        "business_key": "career_link_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "player_uid",
+          "type": "ref"
+        },
+        {
+          "name": "season_uid",
+          "type": "optional_ref"
+        },
+        {
+          "name": "totals_ref",
+          "type": "optional_ref"
+        },
+        {
+          "name": "native_index",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "links native history observations to resolved player/season; retains missing history",
+      "source_refs": [
+        "AGD",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "20-loop/sentinel boundaries, chronology and retired-player persistence"
+      ],
+      "relations": [
+        "R38",
+        "R39"
+      ]
+    },
+    {
+      "id": "RecordBook",
+      "domain": "D",
+      "aliases": [
+        "RecordBook"
+      ],
+      "definition": "原生纪录簿的一条观察，区分内置真实 NBA 历史与该存档产生的纪录。",
+      "identity": {
+        "business_key": "record_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "record_type",
+          "type": "known_value"
+        },
+        {
+          "name": "subject",
+          "type": "optional_typed_ref"
+        },
+        {
+          "name": "value",
+          "type": "known_value"
+        },
+        {
+          "name": "origin_kind",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "versioned native record observations; world history distinguished from built-in real history",
+      "source_refs": [
+        "AGC"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "preseeded NBA record not proof event occurred in this save; flags unresolved"
+      ],
+      "relations": [
+        "R40"
+      ]
+    },
+    {
+      "id": "Award",
+      "domain": "D",
+      "aliases": [
+        "Awards"
+      ],
+      "definition": "指定世界赛季中的有证据奖项事件及获奖主体。",
+      "identity": {
+        "business_key": "award_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "award_type",
+          "type": "known_value"
+        },
+        {
+          "name": "recipient",
+          "type": "typed_ref"
+        }
+      ],
+      "lifecycle": "observed season award event; correction retains prior winner assertion",
+      "source_refs": [
+        "LEGACY",
+        "AUDIT"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "native award source and individual/team recipient resolution"
+      ],
+      "relations": [
+        "R41"
+      ]
+    },
+    {
+      "id": "DerivedStatistic",
+      "domain": "D",
+      "aliases": [
+        "DerivedStatistics"
+      ],
+      "definition": "在明确输入集合和公式版本上计算的结果，保留覆盖率及敏感性继承。",
+      "identity": {
+        "business_key": "derivation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "formula_id",
+          "type": "string"
+        },
+        {
+          "name": "formula_version",
+          "type": "string"
+        },
+        {
+          "name": "input_refs",
+          "type": "refs"
+        },
+        {
+          "name": "coverage",
+          "type": "enum"
+        },
+        {
+          "name": "result",
+          "type": "known_value"
+        }
+      ],
+      "lifecycle": "immutable formula execution on explicit source set; recompute new version",
+      "source_refs": [
+        "BOX",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "per-game minutes rounding and non-additive metrics"
+      ],
+      "relations": [
+        "R42"
+      ]
+    },
+    {
+      "id": "StateObservation",
+      "domain": "E",
+      "aliases": [
+        "PlayerAttributes",
+        "Tendencies",
+        "Badges",
+        "Injury",
+        "Fatigue",
+        "Morale",
+        "Training",
+        "CoachSettings"
+      ],
+      "definition": "某主体在某时点的能力、倾向、徽章、健康、训练或教练配置等类型化观察。",
+      "identity": {
+        "business_key": "state_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "subject",
+          "type": "typed_ref"
+        },
+        {
+          "name": "state_kind",
+          "type": "enum"
+        },
+        {
+          "name": "fields",
+          "type": "typed_values"
+        },
+        {
+          "name": "effective_at",
+          "type": "game_time"
+        },
+        {
+          "name": "observed_at",
+          "type": "utc"
+        }
+      ],
+      "lifecycle": "append typed observations; valid interval only where evidenced",
+      "source_refs": [
+        "SOURCE",
+        "M0",
+        "AUDIT"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "fatigue, morale, injury dynamics and settings effects vary by field evidence"
+      ],
+      "relations": [
+        "R43"
+      ]
+    },
+    {
+      "id": "Playbook",
+      "domain": "E",
+      "aliases": [
+        "Playbook"
+      ],
+      "definition": "世界内已观察到的原生战术本内容版本；不以篮球研究知识替代原生指令。",
+      "identity": {
+        "business_key": "playbook_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "native_book_key",
+          "type": "known_value"
+        },
+        {
+          "name": "plays",
+          "type": "known_values"
+        },
+        {
+          "name": "content_hash",
+          "type": "string"
+        }
+      ],
+      "lifecycle": "versioned observed native book content; assignment distinct from static tactics research",
+      "source_refs": [
+        "SOURCE",
+        "AUDIT"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "CRC semantics, coach binding, reload persistence"
+      ],
+      "relations": [
+        "R44",
+        "R46"
+      ]
+    },
+    {
+      "id": "TacticalConfiguration",
+      "domain": "E",
+      "aliases": [
+        "TacticalConfiguration"
+      ],
+      "definition": "球队赛季及可选对手范围内的战术配置观察；配置不证明比赛效果。",
+      "identity": {
+        "business_key": "tactics_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "team_season_uid",
+          "type": "ref"
+        },
+        {
+          "name": "opponent",
+          "type": "optional_ref"
+        },
+        {
+          "name": "playbook_ref",
+          "type": "optional_ref"
+        },
+        {
+          "name": "settings",
+          "type": "typed_values"
+        }
+      ],
+      "lifecycle": "team/opponent scoped observation versions; effect unknown without evidence",
+      "source_refs": [
+        "SOURCE",
+        "AUDIT"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "observed configuration does not prove gameplay effect"
+      ],
+      "relations": [
+        "R45",
+        "R46"
+      ]
+    },
+    {
+      "id": "NativeObject",
+      "domain": "F",
+      "aliases": [
+        "NativeObject"
+      ],
+      "definition": "一次采集内的有界原生对象字节或安全摘要，具有布局版本和批次局部定位。",
+      "identity": {
+        "business_key": "native_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "batch_id",
+          "type": "ref"
+        },
+        {
+          "name": "object_kind",
+          "type": "string"
+        },
+        {
+          "name": "locator",
+          "type": "restricted_value"
+        },
+        {
+          "name": "layout_id",
+          "type": "string"
+        },
+        {
+          "name": "payload_hash",
+          "type": "string"
+        }
+      ],
+      "lifecycle": "immutable bounded capture-local bytes/summary; restricted raw access",
+      "source_refs": [
+        "SOURCE",
+        "AGD"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "layout/build and bounds may be unknown; no live reading in this task"
+      ],
+      "relations": [
+        "R47",
+        "R48",
+        "R49"
+      ]
+    },
+    {
+      "id": "NativeIdentityMapping",
+      "domain": "F",
+      "aliases": [
+        "NativeIdentityMapping"
+      ],
+      "definition": "在明确原生命名空间和有效范围内，将原生标识映射到业务对象的证据断言。",
+      "identity": {
+        "business_key": "mapping_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "native_observation_uid",
+          "type": "ref"
+        },
+        {
+          "name": "target",
+          "type": "optional_typed_ref"
+        },
+        {
+          "name": "native_id",
+          "type": "known_value"
+        },
+        {
+          "name": "namespace",
+          "type": "tuple"
+        },
+        {
+          "name": "verification",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "candidate -> verified/ambiguous/rejected/expired; scope and evidence retained",
+      "source_refs": [
+        "SOURCE",
+        "AGD"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "native ID lifetime is never presumed global"
+      ],
+      "relations": [
+        "R48"
+      ]
+    },
+    {
+      "id": "CaptureObservation",
+      "domain": "F",
+      "aliases": [
+        "CaptureObservation"
+      ],
+      "definition": "使用指定 Decoder 对某原生对象生成的一次字段断言；身份未解时不进入事实层。",
+      "identity": {
+        "business_key": "observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "native_ref",
+          "type": "ref"
+        },
+        {
+          "name": "decoder_ref",
+          "type": "ref"
+        },
+        {
+          "name": "subject",
+          "type": "optional_typed_ref"
+        },
+        {
+          "name": "fields",
+          "type": "typed_values"
+        },
+        {
+          "name": "evidence_labels",
+          "type": "list"
+        }
+      ],
+      "lifecycle": "immutable decoded assertion; corrected by another assertion",
+      "source_refs": [
+        "SOURCE",
+        "BOX",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "unresolved identity remains observation only, not canonical entity"
+      ],
+      "relations": [
+        "R49",
+        "R50"
+      ]
+    },
+    {
+      "id": "DecoderVersion",
+      "domain": "F",
+      "aliases": [
+        "DecoderVersion"
+      ],
+      "definition": "版本化解码代码、布局与字段语义说明；可共享的静态程序资源。",
+      "identity": {
+        "business_key": "decoder_id",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "STATIC_RESOURCE",
+        "world_id_required": false
+      },
+      "attributes": [
+        {
+          "name": "code_sha",
+          "type": "string"
+        },
+        {
+          "name": "layout_version",
+          "type": "string"
+        },
+        {
+          "name": "field_dictionary",
+          "type": "ref"
+        },
+        {
+          "name": "acceptance_refs",
+          "type": "refs"
+        }
+      ],
+      "lifecycle": "immutable code/layout hash release; version not auto-acceptance",
+      "source_refs": [
+        "BOX",
+        "TOTALS"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "research decoder is not production-certified"
+      ],
+      "relations": [
+        "R50"
+      ]
+    },
+    {
+      "id": "SourceManifest",
+      "domain": "F",
+      "aliases": [
+        "SourceManifest"
+      ],
+      "definition": "封存批次的来源、产物哈希、覆盖度、脱敏与发布一致性证明清单。",
+      "identity": {
+        "business_key": "manifest_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "batch_id",
+          "type": "ref"
+        },
+        {
+          "name": "artifact_hashes",
+          "type": "map"
+        },
+        {
+          "name": "coverage",
+          "type": "enum"
+        },
+        {
+          "name": "mask_policy_version",
+          "type": "string"
+        }
+      ],
+      "lifecycle": "sealed per publication cohort; cross-file hashes and masking evidence",
+      "source_refs": [
+        "CAPTURE",
+        "M0"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "new physical cohort design reserved for SCHEMA/PUBLISH"
+      ],
+      "relations": [
+        "R51"
+      ]
+    },
+    {
+      "id": "DataQualityReport",
+      "domain": "F",
+      "aliases": [
+        "DataQualityReport"
+      ],
+      "definition": "对来源、身份、关系、统计或权限问题的可追溯质量记录。",
+      "identity": {
+        "business_key": "quality_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "subject_refs",
+          "type": "refs"
+        },
+        {
+          "name": "rule_id",
+          "type": "string"
+        },
+        {
+          "name": "severity",
+          "type": "enum"
+        },
+        {
+          "name": "expected_actual",
+          "type": "typed_values"
+        },
+        {
+          "name": "status",
+          "type": "enum"
+        }
+      ],
+      "lifecycle": "append issues/findings and scoped disposition; original mismatch retained",
+      "source_refs": [
+        "AUDIT",
+        "AGD"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "passed formula cannot certify all native source semantics"
+      ],
+      "relations": [
+        "R52"
+      ]
+    },
+    {
+      "id": "Actor",
+      "domain": "G",
+      "aliases": [
+        "GM角色",
+        "Coach角色",
+        "Player角色"
+      ],
+      "definition": "世界内 GM、Coach 或 Player 的角色及主体绑定，不规定人格算法。",
+      "identity": {
+        "business_key": "actor_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "role",
+          "type": "enum"
+        },
+        {
+          "name": "subject",
+          "type": "typed_ref"
+        },
+        {
+          "name": "visibility_policy",
+          "type": "string"
+        },
+        {
+          "name": "active_interval",
+          "type": "game_time"
+        }
+      ],
+      "lifecycle": "role binding within one save; memory retained in that save only",
+      "source_refs": [
+        "HUMAN",
+        "M0"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "future personality/runtime not implemented here"
+      ],
+      "relations": [
+        "R53",
+        "R54",
+        "R55"
+      ]
+    },
+    {
+      "id": "AgentObservation",
+      "domain": "G",
+      "aliases": [
+        "AgentObservation"
+      ],
+      "definition": "按角色、世界、时间和策略裁剪后的事实视图快照。",
+      "identity": {
+        "business_key": "agent_observation_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "actor_uid",
+          "type": "ref"
+        },
+        {
+          "name": "batch_id",
+          "type": "ref"
+        },
+        {
+          "name": "allowed_fact_refs",
+          "type": "refs"
+        },
+        {
+          "name": "policy_version",
+          "type": "string"
+        }
+      ],
+      "lifecycle": "immutable role-safe view snapshot; explicit as-of and source set",
+      "source_refs": [
+        "HUMAN",
+        "M0"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "visibility of future role fields needs separate product acceptance"
+      ],
+      "relations": [
+        "R54"
+      ]
+    },
+    {
+      "id": "AgentDecision",
+      "domain": "G",
+      "aliases": [
+        "AgentDecision",
+        "AgentMemory"
+      ],
+      "definition": "角色基于其观察作出的分析、意愿、提案或记忆；始终为 AI 来源。",
+      "identity": {
+        "business_key": "decision_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "actor_uid",
+          "type": "ref"
+        },
+        {
+          "name": "input_refs",
+          "type": "refs"
+        },
+        {
+          "name": "reasoning_summary",
+          "type": "string"
+        },
+        {
+          "name": "intent",
+          "type": "typed_values"
+        },
+        {
+          "name": "memory_refs",
+          "type": "refs"
+        }
+      ],
+      "lifecycle": "draft -> proposed -> accepted/rejected/withdrawn; all AI provenance",
+      "source_refs": [
+        "HUMAN",
+        "APPROVAL"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "AI memory never inherits from another save or template"
+      ],
+      "relations": [
+        "R55",
+        "R56"
+      ]
+    },
+    {
+      "id": "Approval",
+      "domain": "G",
+      "aliases": [
+        "Approval"
+      ],
+      "definition": "真人对明确意向、批次、技术绑定和摘要的具体批准。",
+      "identity": {
+        "business_key": "approval_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "decision_uid",
+          "type": "ref"
+        },
+        {
+          "name": "binding_id",
+          "type": "ref"
+        },
+        {
+          "name": "source_batch_id",
+          "type": "ref"
+        },
+        {
+          "name": "digest",
+          "type": "string"
+        },
+        {
+          "name": "scope",
+          "type": "typed_values"
+        }
+      ],
+      "lifecycle": "explicit Human grant -> used/revoked/expired; stale binding rejected",
+      "source_refs": [
+        "APPROVAL",
+        "DEV14"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "approval cannot authorize unsupported operation"
+      ],
+      "relations": [
+        "R56",
+        "R57",
+        "R58"
+      ]
+    },
+    {
+      "id": "ExecutionReceipt",
+      "domain": "G",
+      "aliases": [
+        "ExecutionReceipt"
+      ],
+      "definition": "一次获批执行尝试及其前像、状态、故障与恢复凭据。",
+      "identity": {
+        "business_key": "execution_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "approval_uid",
+          "type": "ref"
+        },
+        {
+          "name": "binding_id",
+          "type": "ref"
+        },
+        {
+          "name": "attempt_id",
+          "type": "string"
+        },
+        {
+          "name": "status",
+          "type": "enum"
+        },
+        {
+          "name": "journal_ref",
+          "type": "restricted_ref"
+        }
+      ],
+      "lifecycle": "prepared -> applying -> complete/partial/unrecovered; durable preimages",
+      "source_refs": [
+        "APPROVAL",
+        "DEV14"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "no write implemented/run here; incomplete outcome requires recovery"
+      ],
+      "relations": [
+        "R58",
+        "R59"
+      ]
+    },
+    {
+      "id": "GameReadback",
+      "domain": "G",
+      "aliases": [
+        "GameReadback"
+      ],
+      "definition": "对执行后实际游戏状态的观察；内存回读和 Save/Reload 证明独立记录。",
+      "identity": {
+        "business_key": "readback_uid",
+        "origin": "APPLICATION_GENERATED",
+        "scope": "ONE_GAME_SAVE",
+        "world_id_required": true
+      },
+      "attributes": [
+        {
+          "name": "execution_uid",
+          "type": "ref"
+        },
+        {
+          "name": "observed_at",
+          "type": "utc"
+        },
+        {
+          "name": "expected_actual",
+          "type": "typed_values"
+        },
+        {
+          "name": "save_reload_evidence",
+          "type": "optional_ref"
+        }
+      ],
+      "lifecycle": "one or more post-attempt observations; persistence separate",
+      "source_refs": [
+        "APPROVAL"
+      ],
+      "source_acceptance": "DESIGN_CANDIDATE_NOT_NATIVE_ACCEPTANCE",
+      "unknown_fields": [
+        "memory match alone does not prove gameplay or Save/Reload"
+      ],
+      "relations": [
+        "R59"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "R01",
+      "from": "GameSave",
+      "to": "TechnicalBinding",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "technical_bindings",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R02",
+      "from": "GameSave",
+      "to": "Season",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "seasons",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R03",
+      "from": "Season",
+      "to": "SeasonPhase",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "phases",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R04",
+      "from": "Season",
+      "to": "GameCalendar",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "calendar_versions",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R05",
+      "from": "TechnicalBinding",
+      "to": "CaptureBatch",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "captures",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R06",
+      "from": "GameSave",
+      "to": "Franchise",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "franchises",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R07",
+      "from": "Franchise",
+      "to": "TeamSeason",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "season_participations",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R08",
+      "from": "Season",
+      "to": "TeamSeason",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "teams",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R09",
+      "from": "GameSave",
+      "to": "PlayerIncarnation",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "players",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R10",
+      "from": "DraftTemplate",
+      "to": "PlayerIncarnation",
+      "from_cardinality": "0..1",
+      "to_cardinality": "0..*",
+      "name": "instantiates_static_template",
+      "world_rule": "STATIC_REFERENCE_ONLY"
+    },
+    {
+      "id": "R11",
+      "from": "GameSave",
+      "to": "Staff",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "staff",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R12",
+      "from": "PlayerIncarnation",
+      "to": "RosterMembership",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "membership_history",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R13",
+      "from": "TeamSeason",
+      "to": "RosterMembership",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "roster_intervals",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R14",
+      "from": "PlayerIncarnation",
+      "to": "Contract",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "contracts",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R15",
+      "from": "Contract",
+      "to": "ContractSeason",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "salary_terms",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R16",
+      "from": "Season",
+      "to": "ContractSeason",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "contract_seasons",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R17",
+      "from": "Franchise",
+      "to": "WaivedSalary",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "liabilities",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R18",
+      "from": "Season",
+      "to": "WaivedSalary",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "liability_season",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R19",
+      "from": "PlayerIncarnation",
+      "to": "WaivedSalary",
+      "from_cardinality": "0..1",
+      "to_cardinality": "0..*",
+      "name": "waived_player",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R20",
+      "from": "Franchise",
+      "to": "DraftPick",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "original_pick_team",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R21",
+      "from": "Season",
+      "to": "DraftPick",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "draft_season",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R22",
+      "from": "DraftPick",
+      "to": "PickOwnership",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "owner_intervals",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R23",
+      "from": "Franchise",
+      "to": "PickOwnership",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "owned_pick_intervals",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R24",
+      "from": "TeamSeason",
+      "to": "TeamFinance",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "finance_observations",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R25",
+      "from": "GameSave",
+      "to": "TransactionEvent",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "transactions",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R26",
+      "from": "Staff",
+      "to": "StaffEmployment",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "employments",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R27",
+      "from": "TeamSeason",
+      "to": "StaffEmployment",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "staff_roles",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R28",
+      "from": "Season",
+      "to": "Game",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "games",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R29",
+      "from": "Game",
+      "to": "TeamGameResult",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "team_result_versions",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R30",
+      "from": "TeamSeason",
+      "to": "TeamGameResult",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "team_results",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R31",
+      "from": "Game",
+      "to": "PlayerGameStatline",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "player_statline_versions",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R32",
+      "from": "PlayerIncarnation",
+      "to": "PlayerGameStatline",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "player_games",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R33",
+      "from": "TeamSeason",
+      "to": "PlayerGameStatline",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "actual_game_team",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R34",
+      "from": "Game",
+      "to": "BoxScore",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "box_revisions",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R35",
+      "from": "BoxScore",
+      "to": "TeamGameResult",
+      "from_cardinality": "0..1",
+      "to_cardinality": "0..2",
+      "name": "revision_team_results",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R36",
+      "from": "BoxScore",
+      "to": "PlayerGameStatline",
+      "from_cardinality": "0..1",
+      "to_cardinality": "0..*",
+      "name": "revision_statlines",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R37",
+      "from": "Season",
+      "to": "SeasonTotals",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "native_totals",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R38",
+      "from": "PlayerIncarnation",
+      "to": "CareerHistory",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "career_links",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R39",
+      "from": "SeasonTotals",
+      "to": "CareerHistory",
+      "from_cardinality": "0..1",
+      "to_cardinality": "0..*",
+      "name": "career_totals_links",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R40",
+      "from": "GameSave",
+      "to": "RecordBook",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "record_observations",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R41",
+      "from": "Season",
+      "to": "Award",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "awards",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R42",
+      "from": "GameSave",
+      "to": "DerivedStatistic",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "derived_metrics",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R43",
+      "from": "GameSave",
+      "to": "StateObservation",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "state_observations",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R44",
+      "from": "GameSave",
+      "to": "Playbook",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "playbooks",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R45",
+      "from": "TeamSeason",
+      "to": "TacticalConfiguration",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "tactical_observations",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R46",
+      "from": "Playbook",
+      "to": "TacticalConfiguration",
+      "from_cardinality": "0..1",
+      "to_cardinality": "0..*",
+      "name": "book_assignments",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R47",
+      "from": "CaptureBatch",
+      "to": "NativeObject",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "raw_objects",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R48",
+      "from": "NativeObject",
+      "to": "NativeIdentityMapping",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "identity_assertions",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R49",
+      "from": "NativeObject",
+      "to": "CaptureObservation",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "decoded_observations",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R50",
+      "from": "DecoderVersion",
+      "to": "CaptureObservation",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "decoded_by",
+      "world_rule": "STATIC_REFERENCE_ONLY"
+    },
+    {
+      "id": "R51",
+      "from": "CaptureBatch",
+      "to": "SourceManifest",
+      "from_cardinality": "1",
+      "to_cardinality": "0..1",
+      "name": "publication_manifest",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R52",
+      "from": "GameSave",
+      "to": "DataQualityReport",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "quality_issues",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R53",
+      "from": "GameSave",
+      "to": "Actor",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "actors",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R54",
+      "from": "Actor",
+      "to": "AgentObservation",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "role_views",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R55",
+      "from": "Actor",
+      "to": "AgentDecision",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "decisions_and_memories",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R56",
+      "from": "AgentDecision",
+      "to": "Approval",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "human_approvals",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R57",
+      "from": "TechnicalBinding",
+      "to": "Approval",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "approval_binding",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R58",
+      "from": "Approval",
+      "to": "ExecutionReceipt",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "execution_attempts",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "id": "R59",
+      "from": "ExecutionReceipt",
+      "to": "GameReadback",
+      "from_cardinality": "1",
+      "to_cardinality": "0..*",
+      "name": "readbacks",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    }
+  ],
+  "polymorphic_relations": [
+    {
+      "owner": "CaptureObservation",
+      "field": "subject",
+      "targets": [
+        "PlayerIncarnation",
+        "Staff",
+        "Franchise",
+        "Game",
+        "Season",
+        "Contract",
+        "DraftPick"
+      ],
+      "cardinality": "0..1",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "owner": "NativeIdentityMapping",
+      "field": "target",
+      "targets": [
+        "PlayerIncarnation",
+        "Staff",
+        "Franchise",
+        "Game",
+        "Season"
+      ],
+      "cardinality": "0..1",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "owner": "StateObservation",
+      "field": "subject",
+      "targets": [
+        "PlayerIncarnation",
+        "Staff",
+        "TeamSeason"
+      ],
+      "cardinality": "1",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "owner": "SeasonTotals",
+      "field": "subject",
+      "targets": [
+        "PlayerIncarnation",
+        "TeamSeason"
+      ],
+      "cardinality": "1",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "owner": "Award",
+      "field": "recipient",
+      "targets": [
+        "PlayerIncarnation",
+        "Staff",
+        "TeamSeason"
+      ],
+      "cardinality": "1",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "owner": "Actor",
+      "field": "subject",
+      "targets": [
+        "PlayerIncarnation",
+        "Staff",
+        "Franchise"
+      ],
+      "cardinality": "1",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    },
+    {
+      "owner": "TransactionEvent",
+      "field": "participants",
+      "targets": [
+        "PlayerIncarnation",
+        "Franchise",
+        "Contract",
+        "DraftPick"
+      ],
+      "cardinality": "1..*",
+      "world_rule": "SAME_WORLD_REQUIRED"
+    }
+  ],
+  "non_table_concepts": {
+    "ObservationTime": "value in CaptureBatch and assertion envelope",
+    "Salary": "ContractSeason amounts with currency/unit",
+    "BoxScore": "aggregate revision, may be a view",
+    "Player": "alias of PlayerIncarnation; no extra global person for playing careers",
+    "Coach": "Staff with role binding; not an independent personality implementation",
+    "AgentMemory": "AI records under same-world AgentDecision, no personality algorithm",
+    "NativeObject": "capture instance; layout definition held by DecoderVersion",
+    "DraftTemplate": "global immutable static only, role access not automatic"
+  },
+  "required_scenarios": [
+    "S1_INDEPENDENT_SAVES",
+    "S2_CONTINUOUS_CAREER",
+    "S3_REPEAT_CAPTURE",
+    "S4_TOTAL_MISMATCH",
+    "S5_HIDDEN_POTENTIAL",
+    "S6_SHARED_TEMPLATE"
+  ]
+}
