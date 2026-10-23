@@ -1,0 +1,115 @@
+{
+  "schema_version": "nba2k22.source_seed_verification_receipt.v0",
+  "task_id": "WORLD-SOURCE-MODEL-SEED-01",
+  "run_id": "run-20261022-world-source-model-seed-01",
+  "base_sha": "407e2134bd2f595477099b2c6e3484c818059fd9",
+  "implementation_candidate_sha": "489e6aef324d6cbf9797b6a764bdf917f78e2f5c",
+  "verification_scope": "CONNECTOR_GENERATION_ASSERTIONS_AND_GIT_DIFF_SCOPE_ONLY_NOT_OS_MANAGED",
+  "timestamp_note": "Generated on 2026-10-22 local task date; server Git timestamps may be 2026-10-23 UTC.",
+  "checks": [
+    {
+      "id": "GEN_PRIMARY",
+      "status": "PASS",
+      "method": "Connector-side generation assertions before first JSON create",
+      "evidence": "533 initial entries, unique IDs and nonempty source_refs verified in generating code"
+    },
+    {
+      "id": "GEN_EXTEND",
+      "status": "PASS",
+      "method": "Connector-side second-phase transformation assertions",
+      "evidence": "888 entries, seven domains, unique keys, nonempty source_refs and unknowns"
+    },
+    {
+      "id": "GEN_HINTS",
+      "status": "PASS",
+      "method": "Connector-side native-hint assertions",
+      "evidence": "75 historical descriptor entries; 13 research roots; 4 registered memory groups; six UI research screens"
+    },
+    {
+      "id": "GEN_ACTION",
+      "status": "PASS",
+      "method": "Connector-side action-seed assertions",
+      "evidence": "207 candidate actions; all current_task_real_write=false and production_enabled_by_this_catalog=false"
+    },
+    {
+      "id": "REMOTE_SCOPE",
+      "status": "PASS",
+      "method": "GitHub compare base to candidate",
+      "evidence": "Six planned domain assets and five OS run support files inside allowed_changed_paths; zero out-of-scope; behind 0"
+    },
+    {
+      "id": "MANAGED_VERIFICATION",
+      "status": "NOT_RUN",
+      "method": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+      "reason": "Connector-only environment has no local repository checkout; user did not grant DCR to access Windows workspace."
+    },
+    {
+      "id": "INDEPENDENT_MODEL_REVIEW",
+      "status": "NOT_RUN",
+      "reason": "Must be performed in separate session/model."
+    },
+    {
+      "id": "GAME_PROCESS_READ_OR_WRITE",
+      "status": "NOT_RUN",
+      "reason": "Out of scope; no game process, DCR, save or SQLite access."
+    }
+  ],
+  "registered_os_tests": [
+    {
+      "id": "CATALOG_PARSE_AND_KEYS",
+      "status": "NOT_RUN",
+      "reproduction_command": "python -B 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py CATALOG_PARSE_AND_KEYS"
+    },
+    {
+      "id": "SOURCE_PROVENANCE",
+      "status": "NOT_RUN",
+      "reproduction_command": "python -B 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py SOURCE_PROVENANCE"
+    },
+    {
+      "id": "DOMAIN_AND_LIFECYCLE",
+      "status": "NOT_RUN",
+      "reproduction_command": "python -B 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py DOMAIN_AND_LIFECYCLE"
+    },
+    {
+      "id": "AGE_AND_WORLD",
+      "status": "NOT_RUN",
+      "reproduction_command": "python -B 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py AGE_AND_WORLD"
+    },
+    {
+      "id": "ACTION_FAIL_CLOSED",
+      "status": "NOT_RUN",
+      "reproduction_command": "python -B 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py ACTION_FAIL_CLOSED"
+    },
+    {
+      "id": "ALLOWLIST_AND_HANDOFF",
+      "status": "NOT_RUN",
+      "reproduction_command": "python -B 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py ALLOWLIST_AND_HANDOFF"
+    }
+  ],
+  "managed_run_exit_code": null,
+  "managed_inspect_exit_code": null,
+  "revision_lifecycle": "candidate_pending_validation",
+  "source_artifact_counts": {
+    "field_catalog_entries": 888,
+    "domain_breakdown": {
+      "Player": 422,
+      "Operations": 45,
+      "Game": 52,
+      "Team": 49,
+      "History": 31,
+      "CoachStaff": 47,
+      "World": 242
+    },
+    "historical_native_slots": 75,
+    "native_roots": 13,
+    "action_seed_entries": 207,
+    "production_executions_newly_approved": 0,
+    "game_current_save_readings_newly_proved": 0
+  },
+  "limits": [
+    "Generated JSON is from JSON.stringify; full local Python reparse/managed_verify not executed.",
+    "Archived third-party labels and R04/R07 research are not current-save native fields.",
+    "Current ARCH-01 identity ADR is only a branch candidate.",
+    "Task branch publication is not master integration or independent review."
+  ]
+}
