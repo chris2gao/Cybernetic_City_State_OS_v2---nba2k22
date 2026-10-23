@@ -1,0 +1,15 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/task_packet.yml",
+  "checks": [
+    {"id":"PRESERVED_SEED_INVARIANTS","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","invariants"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"FIELD_SEMANTICS","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","semantics"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"SOURCE_RELATIONS","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","sources"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"TENDENCY_CONFLICT","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","conflict"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"HUMAN_DECISION_RESOLUTION","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","human"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"R00_TARGETED_QUEUE","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","queue"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"ADVERSARIAL_REGRESSIONS","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","adversarial"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"FIX_SCOPE_AND_PRESERVATION","argv":["@python","-B","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py","scope"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"EXECUTION_OUTPUT_CONTRACT","argv":["@python","-B","01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py","artifact","01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/execution_output.json","--require-mwu"],"timeout_seconds":90,"expected_exit_code":0}
+  ]
+}
