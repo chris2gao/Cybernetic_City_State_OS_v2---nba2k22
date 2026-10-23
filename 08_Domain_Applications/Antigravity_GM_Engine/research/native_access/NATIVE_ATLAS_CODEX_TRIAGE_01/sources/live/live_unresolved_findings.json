@@ -1,0 +1,45 @@
+{
+  "schema_version": "nba2k22.live_unresolved_findings.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "target_object": "ROSTERDATA",
+  "created_at": "2026-10-23T00:46:00Z",
+  "base_commit": "1d980be8f32642e8c177a6ad8e9b429beaa48647",
+  "unresolved_items": [
+    {
+      "finding_id": "LIVE-UNRES-01-CAREER-SAVE-BINDING",
+      "topic": "Specific Career Save File Binding and Persisted Save Metadata",
+      "status": "HOLD_UNKNOWN",
+      "severity": "HIGH",
+      "current_known": "Game process PID 1828 has loaded default opening roster in active memory (Ben Simmons / Seth Curry signatures verified).",
+      "missing_evidence": "No specific MyCareer or MyLeague save file header or save_id has been selected or confirmed by the player.",
+      "fail_closed_action": "Mark save_binding as UNBOUND_TO_CAREER_SAVE. Do not associate observations with a persistent career ID."
+    },
+    {
+      "finding_id": "LIVE-UNRES-02-EXACT-GETTER-RVA-FOR-SLOTS-1-AND-24",
+      "topic": "Native Getter Function RVAs in .text for Slot 1 and Slot 24",
+      "status": "HOLD_UNKNOWN",
+      "severity": "MEDIUM",
+      "current_known": "Live memory buffer strides are 1264 bytes (Slot 1) and 48 bytes (Slot 24), fully readable without fault.",
+      "missing_evidence": "Dedicated C++ Getter functions in .text (e.g. GetPlayerByIndex) remain unisolated from the 215 native accessors.",
+      "fail_closed_action": "Keep stride maturity as empirical inference; do not claim static opcode verification."
+    },
+    {
+      "finding_id": "LIVE-UNRES-03-DYNAMIC-HEAP-REALLOCATION",
+      "topic": "Buffer Relocation Behavior Across Mode Switches or Roster Edits",
+      "status": "HOLD_UNKNOWN",
+      "severity": "MEDIUM",
+      "current_known": "Pointers g_pRosterData (0x7FF4E6DFB2F0), Slot 1 (0x7FF4E6DFB7D8), and Slot 24 (0x7FF4E74A7A3C) are valid in current process session.",
+      "missing_evidence": "Whether in-game roster edits (e.g. creating a player or trading) trigger reallocation of these buffers.",
+      "fail_closed_action": "Re-read g_pRosterData and descriptor pointers dynamically per session rather than caching heap pointers across sessions."
+    },
+    {
+      "finding_id": "LIVE-UNRES-04-REMAINING-SLOTS-UNCALIBRATED",
+      "topic": "Remaining 73 Descriptor Slots in Manager",
+      "status": "HOLD_UNKNOWN",
+      "severity": "LOW_OUT_OF_SCOPE",
+      "current_known": "Slot 0, 9, 10 were referenced for header and gap verification; remaining slots were not read.",
+      "missing_evidence": "Verification of slots outside {1, 24} is deferred to future scheduled queue items.",
+      "fail_closed_action": "Maintain strict scope boundaries; do not advance to R00-02 without explicit scheduling."
+    }
+  ]
+}

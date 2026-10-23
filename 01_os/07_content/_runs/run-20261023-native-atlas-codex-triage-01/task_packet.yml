@@ -1,0 +1,52 @@
+task_packet:
+  task_id: NATIVE-ATLAS-CODEX-TRIAGE-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 407e2134bd2f595477099b2c6e3484c818059fd9
+  branch: task/native-atlas-codex-triage-01
+  objective: Independently adjudicate 75-slot atlas evidence, reverse high-value static structures, and supply an executable bounded Gemini follow-up research plan.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/1
+    - b779ad8d677b0f7bb53fdb99e9f8acf12d3d7482
+    - 7139d7662b50d85be27d1b60ef822abaf45d979f
+    - 7d84614710d9855d3ffd683da1cdb6fc896ebcf1
+    - 446ca66ad48831f5fcdb1af18f37d07619e048c4
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_CODEX_TRIAGE_01/**
+    - 01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/**
+  verification_plan: 01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/verification_plan.json
+  required_tests: [ADJUDICATION_AND_REGRESSIONS, STATIC_EVIDENCE_REPLAY, DELIVERY_AND_SCOPE]
+  prohibitions:
+    - new_live_process_reads
+    - game_or_save_operations
+    - production_database_or_decoder_changes
+    - core_owned_file_changes
+    - master_merge
+    - credentials_access
+    - automatic_cross_model_delivery
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    surface: Codex desktop current session
+    model: host_selected_current_session
+    reasoning_effort: host_selected
+    mode: standard
+    routing_basis: Human explicitly assigns Codex static native adjudication and complex reverse engineering; no auxiliary agents.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: separate_future_session
+    different_model_family: preferred
+    different_measurement_tool: true
+  required_completion_pointer: 01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/completion_pointer.json
+  big_task: true

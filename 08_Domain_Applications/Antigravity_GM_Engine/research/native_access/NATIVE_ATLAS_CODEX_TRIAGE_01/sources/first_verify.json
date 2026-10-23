@@ -1,0 +1,49 @@
+{
+  "schema_version": "nba2k22.wide_verification_receipt.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-WIDE-01",
+  "run_id": "run-20261023-native-atlas-r00-wide-01",
+  "base_sha": "7d84614710d9855d3ffd683da1cdb6fc896ebcf1",
+  "timestamp": "2026-10-23T01:52:00Z",
+  "verification_profile": {
+    "executor_model": "Gemini Flash (Antigravity)",
+    "execution_environment": "Windows pwsh local repository checkout with live process PID 1828",
+    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+    "evidence_durability_note": "Attempt evidence directories reside in local Windows %TEMP% storage; they are verifiable local test records, not git-tracked repository blobs."
+  },
+  "checks": [
+    {
+      "id": "ATLAS_75_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py ATLAS_75_CHECK",
+      "evidence": "All 75 slots verified: 67 active readable, 8 empty reserved, 0 anomalous."
+    },
+    {
+      "id": "INGREDIENT_MATRIX_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py INGREDIENT_MATRIX_CHECK",
+      "evidence": "Player, GM, Coach ingredient coverage across 6 maturity tiers confirmed."
+    },
+    {
+      "id": "CODEX_PACKETS_AND_QUEUE_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py CODEX_PACKETS_AND_QUEUE_CHECK",
+      "evidence": "4 high-leverage Codex breakthrough packets and 6 ranked research queue items verified."
+    },
+    {
+      "id": "READ_AUDIT_LOG_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py READ_AUDIT_LOG_CHECK",
+      "evidence": "135 ReadProcessMemory calls audited, all successful, read_only=True enforced."
+    },
+    {
+      "id": "SCOPE_AND_PROHIBITIONS_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py SCOPE_AND_PROHIBITIONS_CHECK",
+      "evidence": "Prohibitions validated; object_discovery_map.md and decoder_and_collector_roadmap.md confirmed."
+    }
+  ],
+  "managed_verification_evidence": {
+    "planned_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/wide01_attempt_01",
+    "verification_mode": "clean_worktree_managed_verify"
+  }
+}

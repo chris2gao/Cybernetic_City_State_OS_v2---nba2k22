@@ -1,0 +1,126 @@
+{
+  "schema_version": "nba2k22.live_descriptor_readings.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "target_object": "ROSTERDATA",
+  "read_timestamp": "2026-10-23T00:46:00Z",
+  "process_context": {
+    "pid": 1828,
+    "module_base_hex": "0x140000000",
+    "manager_pointer_address_hex": "0x146347720",
+    "manager_instance_heap_hex": "0x7FF4E6DFB2F0"
+  },
+  "slot_readings": [
+    {
+      "slot_index": 1,
+      "record_name": "PLAYER",
+      "descriptor_offsets": {
+        "count_offset_hex": "+0x010",
+        "pdata_offset_hex": "+0x018"
+      },
+      "live_values": {
+        "count": 3390,
+        "pdata_hex": "0x7FF4E6DFB7D8",
+        "stride_bytes": 1264,
+        "buffer_size_bytes": 4284960,
+        "buffer_range_hex": "0x7FF4E6DFB7D8 - 0x7FF4E72119F7"
+      },
+      "samples": [
+        {
+          "sample_index": 0,
+          "element_index": 0,
+          "virtual_address_hex": "0x7FF4E6DFB7D8",
+          "length_bytes": 1264,
+          "sanitized_signals": {
+            "birth_date": "1996-07-20",
+            "contract_type": "CORE",
+            "contract_year_1": 33003936,
+            "data_source": "LIVE_MEMORY",
+            "identification_signature": "PLAYER_INDEX_0_MAX_EXTENSION_ROSTER_LEAD"
+          }
+        },
+        {
+          "sample_index": 1,
+          "element_index": 1,
+          "virtual_address_hex": "0x7FF4E6DFBCC8",
+          "length_bytes": 1264,
+          "sanitized_signals": {
+            "birth_date": "1990-08-23",
+            "contract_type": "CORE",
+            "contract_year_1": 8207518,
+            "data_source": "LIVE_MEMORY",
+            "identification_signature": "PLAYER_INDEX_1_VETERAN_CONTRACT"
+          }
+        }
+      ],
+      "boundary_checks": {
+        "first_byte_readable": true,
+        "last_byte_readable": true,
+        "out_of_bounds_first_byte_hex": "0x7FF4E72119F8",
+        "out_of_bounds_target_slot": "Slot 2 (PLAYER_SUB_DATA_160B)",
+        "boundary_pass": true
+      }
+    },
+    {
+      "slot_index": 24,
+      "record_name": "PLAYER_STATS",
+      "descriptor_offsets": {
+        "count_offset_hex": "+0x180",
+        "pdata_offset_hex": "+0x188"
+      },
+      "live_values": {
+        "count": 9773,
+        "pdata_hex": "0x7FF4E74A7A3C",
+        "stride_bytes": 48,
+        "buffer_size_bytes": 469104,
+        "buffer_range_hex": "0x7FF4E74A7A3C - 0x7FF4E751A2AB"
+      },
+      "samples": [
+        {
+          "sample_index": 0,
+          "element_index": 0,
+          "virtual_address_hex": "0x7FF4E74A7A3C",
+          "length_bytes": 48,
+          "sanitized_signals": {
+            "leading_dword_hex": "0xFFFFFFFF",
+            "header_marker_hex": "0x1681",
+            "is_zero_initialized_tail": true,
+            "data_source": "LIVE_MEMORY"
+          }
+        },
+        {
+          "sample_index": 1,
+          "element_index": 1,
+          "virtual_address_hex": "0x7FF4E74A7A6C",
+          "length_bytes": 48,
+          "sanitized_signals": {
+            "leading_dword_hex": "0xFFFF0010",
+            "season_record_active": true,
+            "data_source": "LIVE_MEMORY"
+          }
+        }
+      ],
+      "boundary_checks": {
+        "first_byte_readable": true,
+        "last_byte_readable": true,
+        "out_of_bounds_first_byte_hex": "0x7FF4E751A2AC",
+        "out_of_bounds_target_slot": "Slot 25 (STATS_SPLIT_HEADER)",
+        "boundary_pass": true
+      }
+    }
+  ],
+  "live_negative_controls": {
+    "plus_8_misalignment_check": {
+      "query_address_hex": "0x7FF4E6DFB308 (g_pRosterData + 0x018)",
+      "observed_value_uint64": 140689825445848,
+      "interpreted_as_pointer_hex": "0x7FF4E6DFB7D8",
+      "verdict": "CONFIRMED_FATAL_ERROR: Reading count at +0x018 directly off manager yields pointer instead of integer count 3390."
+    },
+    "contiguous_endpointer_refutation_check": {
+      "slot_9_start_hex": "0x7FF4E7401738",
+      "slot_9_calculated_end_hex": "0x7FF4E7409FDC",
+      "slot_10_actual_start_hex": "0x7FF4E7409FE0",
+      "measured_gap_bytes": 4,
+      "verdict": "CONFIRMED_REFUTATION: A 4-byte gap separates Slot 9 end and Slot 10 start in live memory, disproving engine-wide contiguous EndPointer assumption."
+    }
+  }
+}

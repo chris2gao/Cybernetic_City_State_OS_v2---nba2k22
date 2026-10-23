@@ -1,0 +1,3039 @@
+{
+  "schema": "triage.adjudication.v1",
+  "source_commit": "b779ad8d677b0f7bb53fdb99e9f8acf12d3d7482",
+  "static_image_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "slots": [
+    {
+      "slot_index": 0,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E6DFB7A0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/0",
+      "wide_hypothesis": "Root header defining global season year and roster engine state.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetRosterInfoDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/33",
+        "static_evidence.json#/getters/67"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 56,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/0",
+        "sources/ag01c/object_catalog.json#/descriptors/0"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 1,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 3390,
+        "pointer": "0x7FF4E6DFB7D8",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "PLAYER",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/1",
+      "wide_hypothesis": "Primary Player entity pool; PlayerID index anchors stats, contracts, and rotations.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA Slot 1 indexed PLAYER layout (type name not inferred from size alone)"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/extras/player_getter"
+      ],
+      "static_name_confidence": "PLAYER_LAYOUT_CORROBORATED_HISTORICAL_NAME_ONLY",
+      "stride_bytes": 1264,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/1",
+        "sources/ag01c/object_catalog.json#/descriptors/1"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 2,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 270,
+        "pointer": "0x7FF4E72119F8",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/2",
+      "wide_hypothesis": "1-to-1 or filtered sub-data for active roster players (160 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerTemplateDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/47"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 160,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/2",
+        "sources/ag01c/object_catalog.json#/descriptors/2"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 3,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 10,
+        "pointer": "0x7FF4E721C2B8",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/3",
+      "wide_hypothesis": "Special attributes or all-time legendary player modifiers (10 records).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetGenerationalPlayerTemplateDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/21"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 160,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/3",
+        "sources/ag01c/object_catalog.json#/descriptors/3"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 4,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 90,
+        "pointer": "0x7FF4E721C8F8",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "DRAFT_PROSPECTS_OR_CUSTOM_PLAYERS",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/4",
+      "wide_hypothesis": "Draft prospects pool sharing 1264-byte PLAYER struct with Slot 1.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerCareerPresetDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/40"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 1264,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/4",
+        "sources/ag01c/object_catalog.json#/descriptors/4"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 5,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7238558",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/5",
+      "wide_hypothesis": "Global CBA and league operational rules (8008 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetFreeAgentDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/0",
+        "static_evidence.json#/getters/20"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8008,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Global CBA rules claim contradicted by native GetFreeAgentDataByIndex family.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/5",
+        "sources/ag01c/object_catalog.json#/descriptors/5"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 6,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 172,
+        "pointer": "0x7FF4E723A4A0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/6",
+      "wide_hypothesis": "Secondary team configuration, market size, and fan interest (4860 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetStadiumDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/58"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 4860,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Team market configuration claim contradicted by native GetStadiumDataByIndex family.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/6",
+        "sources/ag01c/object_catalog.json#/descriptors/6"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 7,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/7",
+      "wide_hypothesis": "Reserved empty slot (count=0, pData=NULL).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCourtFloorDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/12"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/7",
+        "sources/ag01c/object_catalog.json#/descriptors/7"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 8,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 219,
+        "pointer": "0x7FF4E73065F0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "TEAM",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/8",
+      "wide_hypothesis": "Primary Team entity pool (219 teams, 4696 bytes); anchors team_id.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 4696,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/8",
+        "sources/ag01c/object_catalog.json#/descriptors/8"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 9,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 583,
+        "pointer": "0x7FF4E7401738",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/9",
+      "wide_hypothesis": "Team arena, court floor, and jersey uniform catalog (60 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCollegeDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/11"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 60,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": "Arena/court/uniform claim contradicted by native GetCollegeDataByIndex; fractional stride rejected.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/9",
+        "sources/ag01c/object_catalog.json#/descriptors/9"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 10,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1232,
+        "pointer": "0x7FF4E7409FE0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/10",
+      "wide_hypothesis": "League historical championship and records index 1 (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetNBAScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/32"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 32,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Championship/record history claim contradicted by native GetNBAScheduleDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/10",
+        "sources/ag01c/object_catalog.json#/descriptors/10"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 11,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 872,
+        "pointer": "0x7FF4E74139E0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/11",
+      "wide_hypothesis": "League historical awards index 2 (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetNBAAllTwiceScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/30"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 32,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Historical awards claim contradicted by native GetNBAAllTwiceScheduleDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/11",
+        "sources/ag01c/object_catalog.json#/descriptors/11"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 12,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 437,
+        "pointer": "0x7FF4E741A6E0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/12",
+      "wide_hypothesis": "League retired jerseys and hall-of-fame index 3 (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetNBAAllOnceScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/29"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 32,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Retired-jersey/Hall-of-Fame claim contradicted by native GetNBAAllOnceScheduleDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/12",
+        "sources/ag01c/object_catalog.json#/descriptors/12"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 13,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 212,
+        "pointer": "0x7FF4E741DD80",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/13",
+      "wide_hypothesis": "League record book index 4 (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetNBAConfScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/31"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 32,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Record-book index claim contradicted by native GetNBAConfScheduleDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/13",
+        "sources/ag01c/object_catalog.json#/descriptors/13"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 14,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/14",
+      "wide_hypothesis": "Reserved empty slot (Slot 14-17 group).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetWNBAScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/71"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/14",
+        "sources/ag01c/object_catalog.json#/descriptors/14"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 15,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/15",
+      "wide_hypothesis": "Reserved empty slot (Slot 14-17 group).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetWNBAAllTwiceScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/69"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/15",
+        "sources/ag01c/object_catalog.json#/descriptors/15"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 16,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/16",
+      "wide_hypothesis": "Reserved empty slot (Slot 14-17 group).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetWNBAAllOnceScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/68"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/16",
+        "sources/ag01c/object_catalog.json#/descriptors/16"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 17,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/17",
+      "wide_hypothesis": "Reserved empty slot (Slot 14-17 group).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetWNBAConfScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/70"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/17",
+        "sources/ag01c/object_catalog.json#/descriptors/17"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 18,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 203,
+        "pointer": "0x7FF4E741F800",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/18",
+      "wide_hypothesis": "Coaching tactics, philosophy, offensive/defensive tempo, and playstyle (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPreseasonScheduleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/48"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 32,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Coach philosophy claim contradicted by native GetPreseasonScheduleDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/18",
+        "sources/ag01c/object_catalog.json#/descriptors/18"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 19,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1470,
+        "pointer": "0x7FF4E7421160",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "STAFF",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/19",
+      "wide_hypothesis": "Staff members pool (head coach, assistants, scouts, trainers - 352 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCoachDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/8"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 352,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/19",
+        "sources/ag01c/object_catalog.json#/descriptors/19"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 20,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E749F6A0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/20",
+      "wide_hypothesis": "Schedule metadata header (current day index, total games).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 2,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/20",
+        "sources/ag01c/object_catalog.json#/descriptors/20"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 21,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 287,
+        "pointer": "0x7FF4E749F6A2",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/21",
+      "wide_hypothesis": "Calendar events, trade deadline, draft day, all-star schedule (12 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCoachStatDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/10"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": "Calendar events claim contradicted by native GetCoachStatDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/21",
+        "sources/ag01c/object_catalog.json#/descriptors/21"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 22,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 84,
+        "pointer": "0x7FF4E74A0418",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/22",
+      "wide_hypothesis": "Team rotation timeline and minutes distribution grid (360 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlaybookDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/35"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 360,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": "Rotation timeline claim contradicted by native GetPlaybookDataByIndex and 68-case play accessor.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/22",
+        "sources/ag01c/object_catalog.json#/descriptors/22"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 23,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E74A7A38",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/23",
+      "wide_hypothesis": "Statistics header metadata (4 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerStatManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/46"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 4,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/23",
+        "sources/ag01c/object_catalog.json#/descriptors/23"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 24,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 9773,
+        "pointer": "0x7FF4E74A7A3C",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "PLAYER_STATS",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/24",
+      "wide_hypothesis": "Player regular season cumulative traditional and shooting statistics (48 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerStatDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/45"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 48,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/24",
+        "sources/ag01c/object_catalog.json#/descriptors/24"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 25,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E751A2AC",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/25",
+      "wide_hypothesis": "Playoff stats split header (2 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerShotChartManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/44"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 2,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Playoff-stat manager claim contradicted by native GetPlayerShotChartManagerDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/25",
+        "sources/ag01c/object_catalog.json#/descriptors/25"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 26,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1023,
+        "pointer": "0x7FF4E751A2AE",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/26",
+      "wide_hypothesis": "Player playoff cumulative statistics (114 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerShotChartDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/43"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 114,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Player playoff totals claim contradicted by native GetPlayerShotChartDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/26",
+        "sources/ag01c/object_catalog.json#/descriptors/26"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 27,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7536A3C",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/27",
+      "wide_hypothesis": "Team stats split header (2 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTeamStatManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/64"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 2,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/27",
+        "sources/ag01c/object_catalog.json#/descriptors/27"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 28,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 2964,
+        "pointer": "0x7FF4E7536A3E",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "TEAM_STATS",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/28",
+      "wide_hypothesis": "Team regular season cumulative traditional statistics (62 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTeamStatDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/63"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 62,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/28",
+        "sources/ag01c/object_catalog.json#/descriptors/28"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 29,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7563816",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/29",
+      "wide_hypothesis": "Team split header metadata (2 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTeamShotChartManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/62"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 2,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/29",
+        "sources/ag01c/object_catalog.json#/descriptors/29"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 30,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 36,
+        "pointer": "0x7FF4E7563818",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/30",
+      "wide_hypothesis": "Team playoff cumulative statistics (114 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTeamShotChartDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/61"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 114,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Team playoff totals claim contradicted by native GetTeamShotChartDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/30",
+        "sources/ag01c/object_catalog.json#/descriptors/30"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 31,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 2744,
+        "pointer": "0x7FF4E7564820",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "FIRST_NAME_CATALOG",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/31",
+      "wide_hypothesis": "Player career-high single game statistics (48 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetFirstNameDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/19"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 48,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Career-high stat claim contradicted by native GetFirstNameDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/31",
+        "sources/ag01c/object_catalog.json#/descriptors/31"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 32,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 4119,
+        "pointer": "0x7FF4E7584AA0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "LAST_NAME_CATALOG",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/32",
+      "wide_hypothesis": "Player advanced and tracking metrics (hustle, speed, touches - 48 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetLastNameDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/26"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 48,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Advanced/tracking stat claim contradicted by native GetLastNameDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/32",
+        "sources/ag01c/object_catalog.json#/descriptors/32"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 33,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 88,
+        "pointer": "0x7FF4E75B4EF0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "CITY_NAME_CATALOG",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/33",
+      "wide_hypothesis": "Player All-Star game cumulative statistics (48 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCityNameDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/6"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 48,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "All-Star stat claim contradicted by native GetCityNameDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/33",
+        "sources/ag01c/object_catalog.json#/descriptors/33"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 34,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 56,
+        "pointer": "0x7FF4E75B5F70",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "TEAM_NICKNAME_CATALOG",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/34",
+      "wide_hypothesis": "Player NBA Finals cumulative statistics (48 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTeamMascotNameDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/60"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 48,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Finals stat claim contradicted by native GetTeamMascotNameDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/34",
+        "sources/ag01c/object_catalog.json#/descriptors/34"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 35,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 112,
+        "pointer": "0x7FF4E75B69F0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/35",
+      "wide_hypothesis": "Team financial ledger, total payroll, luxury tax bill, cash balance (4020 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCustomUniformDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/13"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 4020,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": "Financial ledger claim contradicted by native GetCustomUniformDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/35",
+        "sources/ag01c/object_catalog.json#/descriptors/35"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 36,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 1072,
+        "pointer": "0x7FF4E76248B0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/36",
+      "wide_hypothesis": "Mid-season player contract extension proposals and negotiation states (336 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 336,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/36",
+        "sources/ag01c/object_catalog.json#/descriptors/36"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 37,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 6242,
+        "pointer": "0x7FF4E767C7B0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "STATS_SUBTABLE_250",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/37",
+      "wide_hypothesis": "Player last 5 games rolling statistical window (48 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 48,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/37",
+        "sources/ag01c/object_catalog.json#/descriptors/37"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 38,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 6,
+        "pointer": "0x7FF4E76C5A10",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/38",
+      "wide_hypothesis": "Standings tiebreak rules and conference seedings (120 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetSpecialTeamDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/57"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 120,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Standings/tiebreak rule claim is not supported by native GetSpecialTeamDataByIndex; retain unknown fields.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/38",
+        "sources/ag01c/object_catalog.json#/descriptors/38"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 39,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 69040,
+        "pointer": "0x7FF4E76C5CE0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "NBA_RECORD_BOOK",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/39",
+      "wide_hypothesis": "Player year-by-year historical career logs (69,040 records, 52 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetRecordDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/49"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 52,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": "Year-by-year career layout contradicted by names/float fixture and native record consumers.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/39",
+        "sources/ag01c/object_catalog.json#/descriptors/39"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 40,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7A324A0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/40",
+      "wide_hypothesis": "Draft metadata header (4 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 4,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/40",
+        "sources/ag01c/object_catalog.json#/descriptors/40"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 41,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 6769,
+        "pointer": "0x7FF4E7A324A4",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/41",
+      "wide_hypothesis": "Draft combine scouting measurements and athletic drill scores (152 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetLeagueHistoryDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/27"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": "Draft-combine measurement claim contradicted by native GetLeagueHistoryDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/41",
+        "sources/ag01c/object_catalog.json#/descriptors/41"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 42,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 504,
+        "pointer": "0x7FF4E7B2D7C0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "DRAFT_ASSETS",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/42",
+      "wide_hypothesis": "Future draft pick assets, protections, swap rights (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetDraftDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/16"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 32,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/42",
+        "sources/ag01c/object_catalog.json#/descriptors/42"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 43,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 400,
+        "pointer": "0x7FF4E7B316C0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/43",
+      "wide_hypothesis": "Draft order pick ownership pointers (8 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetHistoricDraftDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/24"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/43",
+        "sources/ag01c/object_catalog.json#/descriptors/43"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 44,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1260,
+        "pointer": "0x7FF4E7B32340",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "SCHEDULE_CALENDAR",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/44",
+      "wide_hypothesis": "Team trade restrictions or head-to-head matchup matrix (24 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetMatchupDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/28"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 24,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/44",
+        "sources/ag01c/object_catalog.json#/descriptors/44"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 45,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7B39960",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/45",
+      "wide_hypothesis": "Unassigned or empty descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 4,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/45",
+        "sources/ag01c/object_catalog.json#/descriptors/45"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 46,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 543,
+        "pointer": "0x7FF4E7B39964",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/46",
+      "wide_hypothesis": "Free agent interest index and destination preference matrix (216 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetHallOfFameDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/22"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": "Free-agent preference claim contradicted by native GetHallOfFameDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/46",
+        "sources/ag01c/object_catalog.json#/descriptors/46"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 47,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 30,
+        "pointer": "0x7FF4E7B56390",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/47",
+      "wide_hypothesis": "Team GM and Owner relationship, trust, goals, budget constraints (16 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetOnlineTeamupDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/34"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 16,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "GM/Owner relationship claim contradicted by native GetOnlineTeamupDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/47",
+        "sources/ag01c/object_catalog.json#/descriptors/47"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 48,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/48",
+      "wide_hypothesis": "Reserved empty slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetBadgeItemDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/2"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/48",
+        "sources/ag01c/object_catalog.json#/descriptors/48"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 49,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/49",
+      "wide_hypothesis": "Reserved empty slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetEvolutionDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/18"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/49",
+        "sources/ag01c/object_catalog.json#/descriptors/49"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 50,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 32,
+        "pointer": "0x7FF4E7B56570",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/50",
+      "wide_hypothesis": "Team offensive playbook catalog and set play assignments (280 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerAccessoryDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/36"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 280,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Playbook catalogue claim contradicted by native GetPlayerAccessoryDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/50",
+        "sources/ag01c/object_catalog.json#/descriptors/50"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 51,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7B58870",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/51",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerAccessoryManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/37"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/51",
+        "sources/ag01c/object_catalog.json#/descriptors/51"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 52,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1601,
+        "pointer": "0x7FF4E7B58878",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/52",
+      "wide_hypothesis": "Tactical play diagram waypoints and execution routes (128 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerBoostDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/38"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 128,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Play diagram/route claim contradicted by native GetPlayerBoostDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/52",
+        "sources/ag01c/object_catalog.json#/descriptors/52"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 53,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7B8A8F8",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/53",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetPlayerBoostManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/39"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 4,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/53",
+        "sources/ag01c/object_catalog.json#/descriptors/53"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 54,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 5227,
+        "pointer": "0x7FF4E7B8A8FC",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/54",
+      "wide_hypothesis": "Player detailed gameplay tendency and action weights (64 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/54",
+        "sources/ag01c/object_catalog.json#/descriptors/54"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 55,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 201,
+        "pointer": "0x7FF4E7BDC3C0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/55",
+      "wide_hypothesis": "Arena operations, maintenance, security expenditure (1960 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetSkinDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/55"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 1960,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Arena operating expense claim contradicted by native GetSkinDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/55",
+        "sources/ag01c/object_catalog.json#/descriptors/55"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 56,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C3C6A8",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/56",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetSkinManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/56"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/56",
+        "sources/ag01c/object_catalog.json#/descriptors/56"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 57,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 201,
+        "pointer": "0x7FF4E7C3C6B0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/57",
+      "wide_hypothesis": "Ticket pricing table, attendance demand, pricing tiers (32 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 32,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/57",
+        "sources/ag01c/object_catalog.json#/descriptors/57"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 58,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C3DFD0",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/58",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": 4,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/58",
+        "sources/ag01c/object_catalog.json#/descriptors/58"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 59,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 2,
+        "pointer": "0x7FF4E7C3DFD4",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/59",
+      "wide_hypothesis": "Luxury tax bracket configuration and repeater penalties (212 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetBlacktopDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/3"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 212,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Luxury-tax configuration claim contradicted by native GetBlacktopDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/59",
+        "sources/ag01c/object_catalog.json#/descriptors/59"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 60,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C3E17C",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/60",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetBlacktopManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/4"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 4,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/60",
+        "sources/ag01c/object_catalog.json#/descriptors/60"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 61,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 222,
+        "pointer": "0x7FF4E7C3E180",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "WAIVED_SALARY",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/61",
+      "wide_hypothesis": "Waived player salary and stretch provision dead money ledger (136 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetDeadCapDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/14"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 136,
+      "stride_status": "STATIC_CODE_VERIFIED_FOR_HASHED_IMAGE",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/61",
+        "sources/ag01c/object_catalog.json#/descriptors/61"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 62,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C45770",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/62",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetDeadCapManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/15"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/62",
+        "sources/ag01c/object_catalog.json#/descriptors/62"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 63,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1060,
+        "pointer": "0x7FF4E7C45778",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/63",
+      "wide_hypothesis": "Contract option clauses (player option, team option, non-guaranteed bonuses - 120 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetRetiredJerseyDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/50"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 120,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Contract options claim contradicted by native GetRetiredJerseyDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/63",
+        "sources/ag01c/object_catalog.json#/descriptors/63"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 64,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C64858",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/64",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetRetiredJerseyManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/51"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/64",
+        "sources/ag01c/object_catalog.json#/descriptors/64"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 65,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 20,
+        "pointer": "0x7FF4E7C64860",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/65",
+      "wide_hypothesis": "All-Defensive and All-NBA team voting results (8 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetHistoricAllStarDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/23"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "All-Defensive/All-NBA voting claim not established by native GetHistoricAllStarDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/65",
+        "sources/ag01c/object_catalog.json#/descriptors/65"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 66,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 120,
+        "pointer": "0x7FF4E7C64900",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/66",
+      "wide_hypothesis": "Team salary cap exceptions (MLE, BAE, Hard Cap Apron state - 112 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetCityDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/5"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 112,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Salary cap exceptions claim contradicted by native GetCityDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/66",
+        "sources/ag01c/object_catalog.json#/descriptors/66"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 67,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 443,
+        "pointer": "0x7FF4E7C67D80",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "SHOES_CATALOG",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/67",
+      "wide_hypothesis": "Traded Player Exceptions (TPE) balances and expiration dates (116 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetShoeStyleDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/54"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 116,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Traded-player-exception claim contradicted by native GetShoeStyleDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/67",
+        "sources/ag01c/object_catalog.json#/descriptors/67"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 68,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C7463C",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/68",
+      "wide_hypothesis": "Global team chemistry and player morale matrix (16,132 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetAttributeRangeDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/1"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 16132,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Chemistry/morale matrix claim contradicted by native GetAttributeRangeDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/68",
+        "sources/ag01c/object_catalog.json#/descriptors/68"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 69,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C78540",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/69",
+      "wide_hypothesis": "Global player injury system state and body part trauma (41,704 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetRosterIndexDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/7",
+        "static_evidence.json#/getters/9",
+        "static_evidence.json#/getters/17",
+        "static_evidence.json#/getters/41",
+        "static_evidence.json#/getters/42",
+        "static_evidence.json#/getters/52",
+        "static_evidence.json#/getters/59"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 41704,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Global injury matrix claim contradicted by native GetRosterIndexDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/69",
+        "sources/ag01c/object_catalog.json#/descriptors/69"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 70,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C82828",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/70",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetShoeOverrideDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/53"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 8,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/70",
+        "sources/ag01c/object_catalog.json#/descriptors/70"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 71,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 144,
+        "pointer": "0x7FF4E7C82830",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/71",
+      "wide_hypothesis": "Staff budget allocation across coaching, medical, and scouting (112 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTradeExceptionDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/65"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 112,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": "Staff budget claim contradicted by native GetTradeExceptionDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/71",
+        "sources/ag01c/object_catalog.json#/descriptors/71"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 72,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED"
+      ],
+      "descriptor": {
+        "count": 1,
+        "pointer": "0x7FF4E7C86730",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/72",
+      "wide_hypothesis": "Unassigned descriptor slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetTradeExceptionManagerDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/66"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": 2,
+      "stride_status": "HISTORICAL_INFERENCE_NOT_REVALIDATED",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/72",
+        "sources/ag01c/object_catalog.json#/descriptors/72"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 73,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HISTORICAL",
+        "NAME_HYPOTHESIS"
+      ],
+      "descriptor": {
+        "count": 0,
+        "pointer": "NULL",
+        "reported_readable": false,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "EMPTY_SLOT",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/73",
+      "wide_hypothesis": "Reserved empty slot.",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [],
+      "static_evidence_refs": [],
+      "static_name_confidence": "NOT_CORROBORATED_THIS_PASS",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": null,
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/73",
+        "sources/ag01c/object_catalog.json#/descriptors/73"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    },
+    {
+      "slot_index": 74,
+      "evidence_labels": [
+        "DESCRIPTOR_OBSERVED",
+        "NAME_HYPOTHESIS",
+        "SEMANTICALLY_CORROBORATED",
+        "REJECTED_OR_CONFLICT"
+      ],
+      "descriptor": {
+        "count": 8136,
+        "pointer": "0x7FF4E7C86732",
+        "reported_readable": true,
+        "matches_historical_count": true,
+        "matches_historical_pointer": true,
+        "confidence": "SOURCE_REPORT_AND_HISTORICAL_FIXTURE_ONLY",
+        "new_process_or_save_verified": false
+      },
+      "historical_name": "UNKNOWN",
+      "historical_name_source": "sources/ag01c/object_catalog.json#/descriptors/74",
+      "wide_hypothesis": "Global engine feature flags and unlockable bitmasks (8,136 records, 2 bytes).",
+      "hypothesis_source": "sources/wide/enrich_atlas_and_artifacts.py:SLOT_METADATA",
+      "native_names": [
+        "ROSTERDATA::GetIndexStorageDataByIndex"
+      ],
+      "static_evidence_refs": [
+        "static_evidence.json#/getters/25"
+      ],
+      "static_name_confidence": "HIGH_BUILD_SPECIFIC",
+      "stride_bytes": null,
+      "stride_status": "REJECTED_NONINTEGER_OR_MISSING",
+      "conflict": "Global feature-bitmask claim not established by native GetIndexStorageDataByIndex.",
+      "source_refs": [
+        "sources/wide/native_object_atlas_75.json#/slots/74",
+        "sources/ag01c/object_catalog.json#/descriptors/74"
+      ],
+      "current_save_identity": "NOT_VERIFIED",
+      "production_query": "NOT_ASSESSED",
+      "game_write": "NOT_AUTHORIZED",
+      "save_reload": "NOT_TESTED"
+    }
+  ],
+  "summary": {
+    "slot_count": 75,
+    "matching_historical_pairs": 75,
+    "active_reported": 67,
+    "empty_reported": 8,
+    "named_static_slots": 64,
+    "static_plus_player_layout_slots": 65,
+    "explicit_source_claim_conflicts": 35,
+    "new_live_reads_performed": 0
+  },
+  "contradictions": {
+    "slot39": {
+      "first_record": {
+        "first_text": "Wilt",
+        "last_text": "Chamberlain",
+        "numeric_value": 100.0,
+        "tail_words_raw": [
+          21602,
+          143,
+          15584,
+          0
+        ]
+      },
+      "second_record": {
+        "first_text": "Kobe",
+        "last_text": "Bryant",
+        "numeric_value": 81.0,
+        "tail_words_raw": [
+          44086,
+          143,
+          15761,
+          0
+        ]
+      },
+      "fixture_records": 500,
+      "proposed_leading_u16s": [
+        26967,
+        29804
+      ],
+      "tail_id_namespace": "UNKNOWN_NOT_A_CONFIRMED_SLOT1_INDEX",
+      "fixture_confidence": "Two text regions and float fit sample; tail raw until independent semantic proof."
+    },
+    "slot22": {
+      "rejected_grid_min_bytes": 480,
+      "stride_bytes": 360,
+      "play_field_base": 88,
+      "play_count": 68,
+      "play_width": 4,
+      "play_end_exclusive": 360,
+      "masked_lookup_field": {
+        "offset": 84,
+        "mask": 127,
+        "meaning": "native lookup key; team identity mapping not yet verified"
+      }
+    },
+    "slot9": {
+      "imported_stride": 60.01,
+      "imported_total": 34985.83,
+      "verified_stride": 60,
+      "verified_payload": 34980,
+      "adjacent_allocation_gap": 34984,
+      "arithmetic_slack": 4,
+      "note": "Adjacent allocation gap is not allocator padding proof; do not round imported float or treat it as exact stride."
+    },
+    "slot42": {
+      "native_family": "DraftData",
+      "record_stride": 32,
+      "record_shape": "three qwords + token u32 + metadata u32",
+      "named_consumer": "DraftData_GetByPickTeamAndIndex",
+      "native_link_consumer": "DRAFTDATA::GetLinkedPick",
+      "protection_semantics": "UNKNOWN",
+      "scope_note": "Structural bit access is corroborated; year epoch/protection/swap/UI/save semantics are not newly verified."
+    }
+  },
+  "audit": {
+    "explicit_logged_calls": 135,
+    "head_calls": 67,
+    "tail_calls": 66,
+    "explicit_object_sample_bytes": 334,
+    "total_explicit_logged_bytes": 1542,
+    "lower_layer_completeness": "NOT_PROVEN",
+    "permission_disposition": "NO_RETROACTIVE_AUTHORIZATION",
+    "original_managed_verify_scope": "JSON/schema/files/log-assertions; not independent live calls or semantic acceptance"
+  },
+  "limitations": [
+    "75 identical count/pointer pairs are compatible with same active session or reused observations; neither freshness nor fabrication is proved.",
+    "64 static family names do not mean 64 decoded objects, 64 current-save bindings or 64 role-query APIs.",
+    "Not observed and unknown fields must not be marked NON_EXISTENT.",
+    "This static evidence cannot establish legality of prior buffer probes or establish every lower-layer call."
+  ]
+}

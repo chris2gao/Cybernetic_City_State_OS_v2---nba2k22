@@ -1,0 +1,96 @@
+{
+  "schema_version": "nba2k22.live_object_delta.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "created_at": "2026-10-23T00:46:00Z",
+  "base_commit": "1d980be8f32642e8c177a6ad8e9b429beaa48647",
+  "target_manager": {
+    "object_name": "ROSTERDATA",
+    "static_module_rva": "NBA2K22.exe+0x06347720",
+    "retrieval_function_rva": "0x11D5DE0",
+    "total_slots": 75,
+    "descriptor_stride_bytes": 16,
+    "descriptor_stride_hex": "0x10",
+    "calibration_status": "CALIBRATED_LIVE_READ_CONFIRMED",
+    "live_runtime_state": {
+      "game_build_hash": "1727AD72085FBA39E789EE574FC15AAB623AD1651CF6879E95E8CD53B6FFBBF5",
+      "pid": 1828,
+      "live_base_address": "0x140000000",
+      "live_manager_instance": "0x7FF4E6DFB2F0",
+      "save_binding": "LIVE_ROSTER_ACTIVE_MEMORY_UNBOUND_TO_CAREER_SAVE",
+      "observed_at": "2026-10-23T00:46:00Z",
+      "status": "LIVE_ATTACHED_AND_VERIFIED"
+    }
+  },
+  "calibrated_descriptors": [
+    {
+      "slot_index": 1,
+      "record_name": "PLAYER",
+      "family": "ROSTER_PLAYERS",
+      "offsets": {
+        "canonical_manager_offset_hex": "+0x010",
+        "canonical_count_offset_hex": "+0x010",
+        "canonical_pdata_offset_hex": "+0x018",
+        "legacy_source_extensions_pdata_offset_hex": "+0x020",
+        "legacy_count_offset_hex": "+0x018"
+      },
+      "live_dimensions": {
+        "verified_count": 3390,
+        "verified_stride_bytes": 1264,
+        "verified_stride_hex": "0x4F0",
+        "verified_pdata_hex": "0x7FF4E6DFB7D8",
+        "verified_buffer_size_bytes": 4284960,
+        "stride_source": "EMPIRICALLY_INFERRED_RECORD_LAYOUT_UNVERIFIED_GETTER_RVA",
+        "stride_maturity": "EMPIRICALLY_INFERRED_PENDING_GETTER_ISOLATION"
+      },
+      "verification_axes": {
+        "RESEARCH_INDEXED": true,
+        "NATIVE_LAYOUT": true,
+        "FIXTURE_PASS": true,
+        "LIVE_UI_MATCH": false,
+        "ALL_OBJECTS_ENUMERATED": false,
+        "PIPELINE_INTEGRATED": false,
+        "PUBLISHED_QUERY": false,
+        "SAVE_RELOAD": false
+      },
+      "calibration_status": "CALIBRATED_LIVE_READ_CONFIRMED"
+    },
+    {
+      "slot_index": 24,
+      "record_name": "PLAYER_STATS",
+      "family": "STATISTICS",
+      "offsets": {
+        "canonical_manager_offset_hex": "+0x180",
+        "canonical_count_offset_hex": "+0x180",
+        "canonical_pdata_offset_hex": "+0x188",
+        "legacy_source_extensions_pdata_offset_hex": "+0x190",
+        "legacy_count_offset_hex": "+0x188"
+      },
+      "live_dimensions": {
+        "verified_count": 9773,
+        "verified_stride_bytes": 48,
+        "verified_stride_hex": "0x30",
+        "verified_pdata_hex": "0x7FF4E74A7A3C",
+        "verified_buffer_size_bytes": 469104,
+        "stride_source": "EMPIRICALLY_VALIDATED_STATISTICAL_PARITY_UNVERIFIED_GETTER_RVA",
+        "stride_maturity": "EMPIRICALLY_VALIDATED_STATISTICAL_PARITY"
+      },
+      "verification_axes": {
+        "RESEARCH_INDEXED": true,
+        "NATIVE_LAYOUT": true,
+        "FIXTURE_PASS": true,
+        "LIVE_UI_MATCH": false,
+        "ALL_OBJECTS_ENUMERATED": false,
+        "PIPELINE_INTEGRATED": false,
+        "PUBLISHED_QUERY": false,
+        "SAVE_RELOAD": false
+      },
+      "calibration_status": "CALIBRATED_LIVE_READ_CONFIRMED"
+    }
+  ],
+  "delta_summary": {
+    "total_slots_in_manager": 75,
+    "calibrated_in_this_live_delta": 2,
+    "remaining_uncalibrated_slots": 73,
+    "live_confirmation_summary": "Confirmed g_pRosterData at 0x7FF4E6DFB2F0, Slot 1 at count=3390, pData=0x7FF4E6DFB7D8, and Slot 24 at count=9773, pData=0x7FF4E74A7A3C on live PID 1828."
+  }
+}

@@ -1,0 +1,460 @@
+{
+  "$schema": "ui_native_source_matrix_v1",
+  "task": "AG-NATIVE-01D",
+  "generated_at": "2026-10-22T04:00:00Z",
+  "source_environment": {
+    "game": "NBA 2K22 PC",
+    "executable": "NBA2K22.exe",
+    "base_address": "0x140000000",
+    "season_root_rva": "0x0632B4B8",
+    "rosterdata_root_rva": "0x06347720"
+  },
+  "screens": {
+    "SINGLE_GAME_BOXSCORE": {
+      "ui_screen_name": "Game Box Score (单场比赛技术统计与对比)",
+      "native_parent_objects": [
+        {
+          "name": "SEASON",
+          "address_locator": "NBA2K22.exe + 0x0632B4B8",
+          "role": "单场比赛主控账本 (Transaction Ledger)"
+        },
+        {
+          "name": "SEASON_SCHEDULE",
+          "offset_in_parent": "+0x28 (40)",
+          "element_size": 60,
+          "capacity": 1232,
+          "role": "单场赛程与比赛元数据"
+        },
+        {
+          "name": "BOXSCORE_STATBANK",
+          "offset_in_parent": "+0x1B6AC (112308)",
+          "element_size": 24,
+          "capacity": 45292,
+          "role": "单场出场球员统计行资金池"
+        }
+      ],
+      "fields": {
+        "game_id": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x08",
+          "type": "uint32",
+          "status": "NATIVE_VERIFIED",
+          "notes": "比赛唯一编号 (1..1232)"
+        },
+        "game_date": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x00",
+          "type": "uint32 (SCHEDULEDATE bitfield)",
+          "status": "NATIVE_VERIFIED",
+          "formula": "year=2000+(raw>>25)&0x7F, month=(raw>>21)&0x0F, day=(raw>>16)&0x1F",
+          "notes": "计划开赛日期"
+        },
+        "home_team_id": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x0C",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "主队 ID (0..35)"
+        },
+        "away_team_id": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x0E",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "客队 ID (0..35)"
+        },
+        "linescore_quarters": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x2C..0x33 (44..51)",
+          "type": "8 x uint8",
+          "status": "NATIVE_VERIFIED",
+          "notes": "主队 Q1~Q4 (bytes 44..47), 客队 Q1~Q4 (bytes 48..51)"
+        },
+        "linescore_overtime": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x34 (52)",
+          "type": "uint32",
+          "status": "NATIVE_VERIFIED",
+          "formula": "ot_home = raw & 0xFF, ot_away = (raw >> 8) & 0xFF",
+          "notes": "加时单节总分"
+        },
+        "final_score": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x2C..0x37",
+          "type": "derived",
+          "status": "DERIVED_WITH_FORMULA",
+          "formula": "score = q1 + q2 + q3 + q4 + ot",
+          "notes": "比赛双方最终得分，严格守恒 sum(player.pts)"
+        },
+        "attendance": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x34 (52)",
+          "type": "uint32",
+          "status": "NATIVE_VERIFIED",
+          "formula": "(raw >> 16) & 0x7FFF",
+          "notes": "实机现场观众上座人数"
+        },
+        "game_status": {
+          "native_source": "SEASON_SCHEDULE",
+          "offset": "0x38 (56)",
+          "type": "uint32",
+          "status": "NATIVE_VERIFIED",
+          "formula": "status = (raw >> 11) & 0x03 (0=Sched, 1=In-Prog, 2=Final), was_sim = (raw >> 18) & 0x01",
+          "notes": "比赛终局状态与模拟标记"
+        },
+        "team_advanced_stats": {
+          "native_source": "SEASON_SCHEDULE::BOXSCORE (offset 0x14..0x2B)",
+          "offset": "0x14..0x2B (20..43)",
+          "type": "24 bytes binary struct",
+          "status": "NATIVE_VERIFIED",
+          "fields_contained": [
+            "stat_idx (0x00, uint16)",
+            "num_home_players (0x02, uint8)",
+            "num_away_players (0x03, uint8)",
+            "home_lead (0x04, uint8)",
+            "home_fastbreak (0x05, uint8)",
+            "home_points_in_paint (0x06, uint8)",
+            "home_2nd_chance (0x07, uint8)",
+            "home_possession_seconds (0x08..0x0B, bits 0..11)",
+            "home_team_oreb (0x09, bits 4..7)",
+            "home_pts_off_to (0x0B, uint8)",
+            "away_lead (0x0C, uint8)",
+            "away_fastbreak (0x0D, uint8)",
+            "away_points_in_paint (0x0E, uint8)",
+            "away_2nd_chance (0x0F, uint8)",
+            "away_possession_seconds (0x10..0x13, bits 0..11)",
+            "away_pts_off_to (0x13, uint8)",
+            "home_possessions (0x14, bits 0..7)",
+            "away_possessions (0x14, bits 14..21)"
+          ]
+        },
+        "player_statline": {
+          "native_source": "BOXSCORE_STATBANK",
+          "offset": "statbank_addr + stat_idx * 24",
+          "type": "24 bytes binary struct (6 x uint32)",
+          "status": "NATIVE_VERIFIED",
+          "fields_contained": [
+            "player_id (Word 0, bits 0..15, uint16, 匹配 ROSTERDATA PLAYER 0x2F8)",
+            "in_use (Word 0, bit 16)",
+            "minutes (Word 0, bits 17..23)",
+            "plus_minus (Word 0, bits 24..31, signed int8)",
+            "fgm (Word 1, bits 0..7)",
+            "fga (Word 1, bits 8..16)",
+            "tpm (Word 1, bits 17..23)",
+            "tpa (Word 1, bits 24..31)",
+            "fta (Word 2, bits 0..7)",
+            "stl (Word 2, bits 8..15)",
+            "blk (Word 2, bits 16..23)",
+            "dreb (Word 2, bits 24..31)",
+            "def_fgm (Word 3, bits 0..7)",
+            "def_fga (Word 3, bits 8..16)",
+            "def_pts (Word 3, bits 17..31)",
+            "ast (Word 4, bits 0..6)",
+            "ftm (Word 4, bits 7..13)",
+            "oreb (Word 4, bits 14..21)",
+            "tov (Word 4, bits 22..28)",
+            "possessions (Word 5, bits 0..7)",
+            "fouls (Word 5, bits 8..11)",
+            "is_starter (Word 5, bit 12)"
+          ]
+        },
+        "player_points_conservation": {
+          "native_source": "BOXSCORE_STATBANK",
+          "type": "derived",
+          "status": "DERIVED_WITH_FORMULA",
+          "formula": "pts = fgm * 2 + tpm + ftm",
+          "notes": "单场个人得分计算公式，已通过实机湖人与勇士比赛 100.00% 验证"
+        },
+        "player_advanced_analytics": {
+          "native_source": "BOXSCORE_STATBANK",
+          "type": "derived",
+          "status": "DERIVED_WITH_FORMULA",
+          "formulas": {
+            "TS%": "PTS / (2 * (FGA + 0.44 * FTA))",
+            "eFG%": "(FGM + 0.5 * 3PM) / FGA",
+            "GameScore": "PTS + 0.4*FGM - 0.7*FGA - 0.4*(FTA-FTM) + 0.7*OREB + 0.3*DREB + STL + 0.7*AST + 0.7*BLK - 0.4*PF - TOV"
+          }
+        }
+      }
+    },
+    "SEASON_STATS_AND_LEADERBOARDS": {
+      "ui_screen_name": "League Leaders & Player Stats (赛季统计与联盟排行榜)",
+      "native_parent_objects": [
+        {
+          "name": "ROSTERDATA Slot 24 (PLAYER_STATS)",
+          "address_locator": "g_pRosterData + 24 * 16",
+          "element_size": 48,
+          "count": 9773,
+          "role": "球员赛季汇总流水总账 (Season Accumulator)"
+        },
+        {
+          "name": "ROSTERDATA Slot 26 (TEAM_STATS)",
+          "address_locator": "g_pRosterData + 26 * 16",
+          "element_size": 62,
+          "count": 1023,
+          "role": "球队赛季汇总数据"
+        }
+      ],
+      "fields": {
+        "games_played": {
+          "native_source": "Slot 24 PLAYER_STATS",
+          "offset": "0x08",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "当前赛季出场次数 times"
+        },
+        "games_started": {
+          "native_source": "Slot 24 PLAYER_STATS",
+          "offset": "0x0A",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "当前赛季首发出场次数 lineup"
+        },
+        "season_points": {
+          "native_source": "Slot 24 PLAYER_STATS",
+          "offset": "0x20",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "当前赛季总得分"
+        },
+        "season_scoring_identity": {
+          "native_source": "Slot 24 PLAYER_STATS",
+          "type": "derived",
+          "status": "DERIVED_WITH_FORMULA",
+          "formula": "points == 2 * made + 3pt_made + free_throws_made",
+          "notes": "原生总账守恒方程，实机测试完全成立"
+        },
+        "splits_additive_equations": {
+          "native_source": "BOXSCORE_STATBANK aggregation",
+          "type": "derived",
+          "status": "DERIVED_WITH_FORMULA",
+          "equations": {
+            "win_loss_additivity": "Total_Stat = Win_Stat + Loss_Stat",
+            "starter_bench_additivity": "Total_Stat = Starter_Stat + Bench_Stat",
+            "home_away_additivity": "Total_Stat = Home_Stat + Away_Stat"
+          },
+          "notes": "由于每一场比赛的胜负、先发与主客场完全由原生单场记录标注，5 类统计切片可由单场流水实现零幻觉确定性精确加和"
+        }
+      }
+    },
+    "PLAYER_CARD": {
+      "ui_screen_name": "Player Card (完整球员卡片与生涯履历)",
+      "native_parent_objects": [
+        {
+          "name": "ROSTERDATA Slot 1 (PLAYER)",
+          "address_locator": "g_pRosterData + 1 * 16",
+          "element_size": 1264,
+          "count": 3390,
+          "role": "球员全量档案定义与属性"
+        },
+        {
+          "name": "ROSTERDATA Slot 24 (PLAYER_STATS)",
+          "address_locator": "g_pRosterData + 24 * 16",
+          "element_size": 48,
+          "count": 9773,
+          "role": "多赛季历史生涯记录池"
+        }
+      ],
+      "fields": {
+        "identity_names": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x00..0x4F",
+          "type": "UTF-16LE strings",
+          "status": "NATIVE_VERIFIED",
+          "notes": "0x00: last_name (40B), 0x28: first_name (40B)"
+        },
+        "player_id": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x2F8",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "球员原生全局唯一 ID (如 Curry=1612, LeBron=1013)"
+        },
+        "current_team_ptr": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x60",
+          "type": "uint64",
+          "status": "NATIVE_VERIFIED",
+          "notes": "指向所属 TEAM 对象的堆指针"
+        },
+        "current_season_stats_index": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0xFC",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "指向 Slot 24 当前赛季的统计记录槽位 (如 LeBron=3296)"
+        },
+        "career_history_stats_array": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0xFE..0x126",
+          "type": "array of uint16 (up to 20 seasons)",
+          "status": "NATIVE_VERIFIED",
+          "notes": "连续存储倒序各历史赛季指向 Slot 24 的索引。例如 LeBron 从 2021(5148) 倒序至 2004(5132)"
+        },
+        "player_attributes": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x3C0..0x450",
+          "type": "raw bytes / bitfields",
+          "status": "NATIVE_VERIFIED",
+          "notes": "包含投篮、防守、体能等属性，potential (0x441) 按工程规范遮蔽为 1"
+        },
+        "player_tendencies": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x170..0x260",
+          "type": "raw uint8",
+          "status": "NATIVE_VERIFIED",
+          "notes": "原生打球倾向"
+        },
+        "player_badges": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x36C..0x3C0",
+          "type": "2-bit pairs (None, Bronze, Silver, Gold, HOF)",
+          "status": "NATIVE_VERIFIED",
+          "notes": "原生徽章"
+        }
+      }
+    },
+    "G_LEAGUE": {
+      "ui_screen_name": "G-League & Two-Way Assignments (发展联盟与双向合同)",
+      "native_parent_objects": [
+        {
+          "name": "ROSTERDATA Slot 1 (PLAYER)",
+          "address_locator": "g_pRosterData + 1 * 16",
+          "element_size": 1264,
+          "role": "双向合同与下放状态标注"
+        }
+      ],
+      "fields": {
+        "contract_type": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "836 (0x344)",
+          "type": "bitfield (bits 3..5)",
+          "status": "NATIVE_VERIFIED",
+          "labels": {
+            "0": "CORE",
+            "1": "HARDSHIP",
+            "2": "TWO_WAY",
+            "3": "EURO_STASH",
+            "4": "LINEUP"
+          },
+          "notes": "contract_type == 2 表示双向合同"
+        },
+        "two_way_days_left": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "351 (0x15F)",
+          "type": "bitfield (bits 2..7)",
+          "status": "NATIVE_VERIFIED",
+          "notes": "双向球员在 NBA 球队注册并允许随队出赛的剩余天数 (最大 45/50 天)"
+        },
+        "gleague_team_assignment": {
+          "native_source": "Slot 1 PLAYER / TEAM",
+          "status": "UNKNOWN",
+          "notes": "2K22 PC 终极联盟未设立独立的 30 支 G 联赛 3D 参赛球队，而是通过附属于母队的双向球员名单与下放开关机制进行管理"
+        }
+      }
+    },
+    "ROOKIE_REPORT": {
+      "ui_screen_name": "Rookie Report & Draft Assets (新秀报告与选秀资产)",
+      "native_parent_objects": [
+        {
+          "name": "ROSTERDATA Slot 1 (PLAYER)",
+          "address_locator": "g_pRosterData + 1 * 16",
+          "element_size": 1264,
+          "role": "新秀球员识别"
+        },
+        {
+          "name": "ROSTERDATA Slot 36 (DRAFT_ASSETS)",
+          "address_locator": "g_pRosterData + 36 * 16",
+          "element_size": 32,
+          "count": 1060,
+          "role": "选秀权与资产流转表"
+        }
+      ],
+      "fields": {
+        "is_rookie": {
+          "native_source": "Slot 1 PLAYER",
+          "offset": "0x320",
+          "type": "uint8 (years_pro)",
+          "status": "NATIVE_VERIFIED",
+          "formula": "is_rookie = (years_pro == 0)",
+          "notes": "球龄为 0 判定为一年级新秀"
+        },
+        "draft_pick_original_team": {
+          "native_source": "Slot 36 DRAFT_ASSETS",
+          "offset": "0x00",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "选秀权原始产生球队 ID"
+        },
+        "draft_pick_owner_team": {
+          "native_source": "Slot 36 DRAFT_ASSETS",
+          "offset": "0x02",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "当前选秀权持有球队 ID"
+        },
+        "draft_pick_year": {
+          "native_source": "Slot 36 DRAFT_ASSETS",
+          "offset": "0x04",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "选秀权年份 (2022..2028)"
+        },
+        "draft_pick_round": {
+          "native_source": "Slot 36 DRAFT_ASSETS",
+          "offset": "0x06",
+          "type": "uint8",
+          "status": "NATIVE_VERIFIED",
+          "notes": "选秀权轮次 (1=首轮, 2=次轮)"
+        },
+        "draft_prospect_pool": {
+          "native_source": "Slot 55 / Slot 57 (count 201)",
+          "status": "UNKNOWN",
+          "notes": "待选新秀池结构体正在逆向分析中，当前记录了 201 个候选槽位"
+        }
+      }
+    },
+    "TEAM_MATCHUP_MATRIX": {
+      "ui_screen_name": "Team Matchup Matrix & Head-to-Head Records (球队对决矩阵)",
+      "native_parent_objects": [
+        {
+          "name": "ROSTERDATA Slot 44",
+          "address_locator": "g_pRosterData + 44 * 16",
+          "element_size": 24,
+          "count": 1260,
+          "role": "36 支球队对 35 支对手的交锋历史与交战规划表"
+        }
+      ],
+      "fields": {
+        "home_team_ptr": {
+          "native_source": "Slot 44",
+          "offset": "0x00",
+          "type": "uint64",
+          "status": "NATIVE_VERIFIED",
+          "notes": "基准球队指针 (36 支球队各拥有连续 35 条记录，36*35=1260)"
+        },
+        "away_team_ptr": {
+          "native_source": "Slot 44",
+          "offset": "0x08",
+          "type": "uint64",
+          "status": "NATIVE_VERIFIED",
+          "notes": "对手球队指针 (按英文首字母排序的 29 支联盟对手 + 6 支预留扩张队)"
+        },
+        "head_to_head_wins": {
+          "native_source": "Slot 44",
+          "offset": "0x14 (20)",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "本队对该对手的交锋胜场数 (0..4, 65535 表示尚未交手)"
+        },
+        "series_status_code": {
+          "native_source": "Slot 44",
+          "offset": "0x16 (22)",
+          "type": "uint16",
+          "status": "NATIVE_VERIFIED",
+          "notes": "系列赛交锋状态码"
+        }
+      }
+    }
+  }
+}

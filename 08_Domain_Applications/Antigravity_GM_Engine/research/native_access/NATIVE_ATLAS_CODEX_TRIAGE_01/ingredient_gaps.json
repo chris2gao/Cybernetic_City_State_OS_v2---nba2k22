@@ -1,0 +1,25 @@
+{
+  "schema": "triage.consumer_gaps.v1",
+  "scope": "Priority blockers, not an exhaustive inventory of all game data; static corroboration does not establish current save, UI semantics, capture, query or production readiness.",
+  "shared_blockers": ["Executable hash and current process/save/world identity are not bound in R00-WIDE-01.", "75 identical historical descriptor pairs do not establish a fresh independent capture.", "Native field namespace, game time, sensitivity and role-safe DTO provenance must precede publication.", "Historical research fixtures and source code are not a running collector or role query acceptance."],
+  "roles": {
+    "Player": [
+      {"ingredient": "Identity and complete profile", "location": "Slot 1, stride 1264; partial historical field profiles", "evidence": "static_evidence.json#/extras/player_getter", "blockers": ["Native index vs stable player incarnation and save identity", "Complete field dictionary and visibility, including Potential isolation", "Current-save capture and role-safe query"]},
+      {"ingredient": "Season and career history", "location": "Slot 24 / AG01D candidate Slot1+0xFC..0x127 links; Slot39 is record book", "evidence": "sources/ag01d/DISCOVERY.md and sources/ag01d/fixtures/sample_player_career_slice.json", "blockers": ["Link sentinel/bounds, year ordering and season identity", "AG01D candidate layout independent validation", "No reconstruction of unobserved games from cumulative totals"]},
+      {"ingredient": "Shooting distribution", "location": "Slot26 PlayerShotChart, manager Slot25; Slot30 TeamShotChart, manager Slot29", "evidence": "static_evidence.json native names", "blockers": ["Cell/zone/time semantics and player association", "UI negative controls", "Do not mislabel these as playoff cumulative tables"]},
+      {"ingredient": "Health, fatigue, morale and development history", "location": "Partial registered/historical sources; Slot69 is RosterIndex, Slot68 AttributeRange", "evidence": "static_evidence.json native names; source hints are candidates", "blockers": ["Locate actual sources through native consumers and UI", "No evidence of NON_EXISTENT from atlas omission", "Natural growth remains game controlled"]}
+    ],
+    "GM": [
+      {"ingredient": "Draft assets and conditional relations", "location": "Slot42 DraftData 32B; historical current-owner/original-owner profile", "evidence": "static_evidence.json draft consumers; sources/hints.json historically points to Slot36", "blockers": ["Resolve historical Slot36 vs native Slot42 naming conflict", "Current team/player namespaces and absolute-year interpretation", "Linked token/bit17 is not certified protection or swap semantics", "UI/save-bound read evidence"]},
+      {"ingredient": "Dead cap and exceptions", "location": "Slot61 DeadCap, Slot62 manager; Slot71 TradeException, Slot72 manager", "evidence": "static_evidence.json native names; sources/ag01b/WAIVED_SALARY_SPEC.md", "blockers": ["Revalidate player/team references, currency scale and effective seasons", "Stretch remains a heuristic until a native flag is proved", "Slot66 City and Slot67 ShoeStyle cannot supply claimed MLE/TPE balances"]},
+      {"ingredient": "Payroll, tax, revenue and cap rules", "location": "Existing contract/finance sources; not Slot35 CustomUniform", "evidence": "static_evidence.json Slot35 and uniform consumer", "blockers": ["Trace actual front-office UI consumers and distinguish derived formulas from native facts", "Current rules/date/team binding", "No 4020-byte speculative financial decoder"]}
+    ],
+    "Coach": [
+      {"ingredient": "Playbook identity and play pool", "location": "Slot22 360B, lookup byte+0x54 low7 and 68 dwords+0x58", "evidence": "static_evidence.json playbook_dispatch and playbook_lookup", "blockers": ["Current team/coach/book binding", "Play value to loaded play identity and UI mapping", "Settings and playbook availability do not prove tactical gameplay effect"]},
+      {"ingredient": "Rotation, minutes, defensive and tactical state", "location": "Existing limited coaching sources; Slot22 is not a timeline; Slot18 PreseasonSchedule", "evidence": "static_evidence.json native names; existing tactical_reader.py is a historical implementation source", "blockers": ["Locate actual rotation timeline consumers", "Current UI and source/enum mapping", "No inference of independent Coach personality from configuration bytes"]},
+      {"ingredient": "Staff and coaching statistics", "location": "Slot19 CoachData and Slot21 CoachStat", "evidence": "static_evidence.json native names", "blockers": ["Stat grouping/season identity and coach-role link", "Full field semantics and visibility", "Role-safe capture/query and independent acceptance"]}
+    ]
+  },
+  "maturity_axes": ["OBJECT_FAMILY", "FIELD_DECODE", "IDENTITY_BINDING", "COLLECTOR_EXECUTED", "PUBLISHED", "ROLE_SAFE_QUERY", "UI_EFFECT", "SAVE_RELOAD"],
+  "prohibition": "Never promote all axes because one native name, fixture or JSON test passed."
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/task_packet.yml",
+  "checks": [
+    {
+      "id": "LIVE_SOURCE_MANIFEST_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py",
+        "LIVE_SOURCE_MANIFEST_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "LIVE_DESCRIPTOR_READINGS_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py",
+        "LIVE_DESCRIPTOR_READINGS_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "LIVE_OBJECT_DELTA_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py",
+        "LIVE_OBJECT_DELTA_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "LIVE_UNRESOLVED_FINDINGS_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py",
+        "LIVE_UNRESOLVED_FINDINGS_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SCOPE_AND_PROHIBITIONS_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py",
+        "SCOPE_AND_PROHIBITIONS_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    }
+  ]
+}

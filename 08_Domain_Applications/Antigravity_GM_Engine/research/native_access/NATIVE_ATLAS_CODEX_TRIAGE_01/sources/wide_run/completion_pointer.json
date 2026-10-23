@@ -1,0 +1,61 @@
+{
+  "schema_version": "nba2k22.wide_atlas_completion.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-WIDE-01",
+  "completion_pointer": "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/completion_pointer.json",
+  "packet_id": "NBA2K22-NATIVE-ATLAS-R00-WIDE-01",
+  "status": "completed",
+  "lifecycle": "candidate_ready_for_independent_review",
+  "source_branch": "task/native-atlas-r00-wide-01",
+  "source_base": "7d84614710d9855d3ffd683da1cdb6fc896ebcf1",
+  "verified_candidate_sha": "7139d7662b50d85be27d1b60ef822abaf45d979f",
+  "remote_readback_head": null,
+  "source_head_note": "Initial candidate 7139d766 was verified via OS managed_verify in wide01_attempt_01 (both run and inspect exit 0). The current commit updates completion pointer and verification receipt with exact attempt records.",
+  "artifacts": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/native_object_atlas_75.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/native_ingredient_matrix.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/priority_research_queue.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/codex_breakthrough_packets.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/read_audit_log.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/object_discovery_map.md",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_WIDE_01/decoder_and_collector_roadmap.md"
+  ],
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/task_packet.yml",
+  "verification_plan": "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verification_plan.json",
+  "verification": {
+    "state": "LOCAL_MANAGED_VERIFY_PASS",
+    "receipt": "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verification_receipt.json",
+    "initial_verified_candidate": "7139d7662b50d85be27d1b60ef822abaf45d979f",
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "persistent_evidence_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/wide01_attempt_01",
+    "evidence_durability_note": "Attempt evidence directory resides in local Windows %TEMP% storage; 001-005 logs and result.json recorded.",
+    "tests_generated": "All 5 check items PASS exit code 0",
+    "candidate_caused_failures": "NONE",
+    "diff_scope": "STRICTLY_INSIDE_ALLOWED_PATHS",
+    "hook_guard": "PASS"
+  },
+  "repository": {
+    "out_of_scope_paths": 0,
+    "binary_artifact_count": 0,
+    "worktree_clean": true
+  },
+  "publication": {
+    "transport": "local_git_cli",
+    "replacement_gate": "LOCAL_BRANCH_COMMIT",
+    "expected_remote_head": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "push_performed": true,
+    "master_modified": false,
+    "force_push": false
+  },
+  "independent_model_review": "NOT_STARTED",
+  "human_acceptance": "TASK_AUTHORIZED_NOT_ACCEPTANCE_OF_DELIVERY",
+  "master_integration": "NOT_PERFORMED",
+  "next_task": "INDEPENDENT_REVIEW_OR_NEXT_SCHEDULED_QUEUE_ITEM",
+  "next_owner": "independent_reviewer_then_human_task_authority",
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "Full ROSTERDATA 75-slot metadata scan on live NBA2K22.exe PID 1828 (1200 bytes header + head/tail probes); 67 active readable slots and 8 empty reserved slots cataloged; Player/GM/Coach ingredient coverage matrix across 6 maturity tiers; 4 targeted Codex breakthrough packets (Slot 39, 35, 42, 22); audited log of 135 ReadProcessMemory operations; object discovery map and 3-phase decoder/collector roadmap delivered; strictly read-only with no game memory writes or save file tampering.",
+    "implementation_or_review_method": "Audited live memory scanning via GameMemory, cross-referencing static RVA/Getter data, multi-tier maturity classification, 5-point Python verification suite, OS managed verification run and inspect.",
+    "supportability_rationale": "All 75 slots verified in live running memory at g_pRosterData (0x7FF4E6DFB2F0); memory addresses, counts, and strides corroborated against known engine fixtures; non-contiguous buffer gaps explicitly verified; 135 memory reads completely audited with zero failures."
+  }
+}

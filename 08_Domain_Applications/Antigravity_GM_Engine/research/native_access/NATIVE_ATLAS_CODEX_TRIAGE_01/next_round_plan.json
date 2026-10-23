@@ -1,0 +1,72 @@
+{
+  "schema": "triage.next_round.v1",
+  "authorization_status": "PROPOSAL_NOT_LIVE_AUTHORIZATION",
+  "recipient_function": "Gemini Flash native evidence exploration, current OS routing must choose exact supported model/surface",
+  "delivery_status": "ARTIFACT_PREPARED_NOT_SENT_NOT_STARTED",
+  "method_freedom": "After Human authorizes an explicit phase envelope, change hypothesis order, static xrefs and bounded comparisons inside it. A failed subprobe does not terminate the whole programme; new objects/regions/bytes need scope change before access.",
+  "common_evidence": ["Pin image SHA256/build, process creation identity, module base and the actual game context; never reuse PID1828 or old pData.", "Preserve requested address/size, actual returned length, exception/exit code, raw safe bytes and hashes; account for constructor/helper reads before they run.", "Use a lowest-reader-boundary allowlist before any read, without in-process Hook/injection; the script log alone is not independent completeness proof.", "If no native save identity can be established, report GAME_CONTEXT_MATCHED_NOT_SAVE_BOUND and do not certify save-bound publication.", "No Potential bytes or raw attributes in ordinary role exports; no game function invocation, write, save load/switch, date advancement or production DB change."],
+  "phases": [
+    {
+      "rank": 1, "id": "GEMINI-ATLAS-R01-BIND", "roles": ["Player", "GM", "Coach"],
+      "objective": "Establish a fresh provenance/authorization envelope before interpreting any object buffer.",
+      "steps": ["Load this adjudication, current OS and the selected source image hash; precompute every allowed range.", "Ask Human to identify current MyLEAGUE context without loading or modifying a save; preserve time/team/season context evidence.", "If specifically authorized, read module+0x06347720 (8B) and resolved manager+0..1199 (1200B) once; preserve full 1200B descriptor bytes.", "Compare metadata with historical samples but report fresh identity separately; classify empty/currently inactive without declaring nonexistent.", "Set collector save identity to UNBOUND if it cannot be independently established; continue static research only for affected publication claims."],
+      "evidence_required": ["Image hash and static signature matches", "Raw manager pointer and complete descriptor table hashes", "Read manifest with actual lengths", "Native save identifier evidence or explicit UNBOUND", "Human context evidence does not substitute native binding"],
+      "envelope": {"access_mode": "READ_ONLY_PROPOSED", "objects": ["module root pointer", "ROSTERDATA descriptor metadata only"], "address_formula": "M=read_u64(module_base+0x06347720); slot n metadata=M+16*n", "max_cases": 1, "max_total_bytes": 1208, "object_buffer_reads": "NONE", "build_guard": "Match pinned static signatures or stop for new-build static analysis"},
+      "positive_controls": ["75 descriptors parse with raw byte identity", "Observed game context and manifest agree"],
+      "negative_controls": ["Wrong image signature blocks every read", "Unbound save blocks save-certified output", "Buffer-read request is rejected before RPM"],
+      "stop_conditions": ["Unknown constructor/helper read", "Partial read", "Unexpected build", "Scope escape", "Missing save identity blocks certification, not static research"]
+    },
+    {
+      "rank": 2, "id": "GEMINI-ATLAS-R02-PLAYER-HISTORY", "roles": ["Player", "GM", "Coach"],
+      "objective": "Validate the actual Slot1-to-Slot24 career chain and investigate Slot26 shooting data, instead of a nonexistent Slot39 career decoder.",
+      "steps": ["Statically confirm AG01D candidate career indices at PLAYER+0xFC..0x127 and 0xFFFF/other sentinels before requesting related stats rows.", "Choose two current UI-identifiable players with different career lengths; read names and candidate career indices under the proposed envelope.", "Read at most twelve complete 48B Slot24 rows selected by validated indices; bind game season, not only a calendar year.", "For Slot26, first statically trace GetPlayerShotChartDataByIndex plus manager Slot25; nominate at most three candidate record indices and cross-check a known player shooting UI.", "Return a field evidence table and negative results; if shot-chart identity fails, keep raw candidate evidence separate from certified career rows."],
+      "evidence_required": ["Player identity/season link table", "Sentinel and out-of-bounds rejection results", "Raw safe slices and actual table bounds", "UI totals/zone evidence or explicit UNKNOWN", "No unobserved game reconstruction"],
+      "envelope": {"access_mode": "READ_ONLY_PROPOSED", "objects": ["Slot1 two identity slices", "Slot24 twelve records", "Slot26 three candidate shot-chart records"], "address_formula": "Slot n Pn=read_u64(M+16*n+8); record=Pn+validated_index*code_verified_stride", "ranges": ["Slot1 each +0x00..0x7F (128B names only after sensitivity check), +0xFC..0x127 (44B candidate links)", "Slot24 12*48B", "Slot26 3*114B only after static stride confirmation"], "max_cases": 2, "max_total_bytes": 1262, "pointer_following": "Only nominated Slot24/26 records; no generic graph traversal", "metadata": "Reuse phase1 bounded descriptor snapshot; rebind separately if stale"},
+      "positive_controls": ["Two players yield distinct valid chains", "Applicable UI season totals match decoded fields"],
+      "negative_controls": ["0xFFFF and count index rejected without invalid RPM", "Wrong player and wrong season cannot silently join", "Potential range request blocked"],
+      "stop_conditions": ["Layout signature mismatch", "Unclear sensitivity in identity slice", "Unbound player/season", "Byte budget exhausted; preserve findings and revise scope before additional live access"]
+    },
+    {
+      "rank": 3, "id": "GEMINI-ATLAS-R03-DRAFT-RELATIONS", "roles": ["GM"],
+      "objective": "Bind Slot42 draft fields to current teams and discriminate simple assets, linked-pick relations, protection and swap hypotheses.",
+      "steps": ["Replay native DraftData getter, DraftData_GetByPickTeamAndIndex and GetLinkedPick evidence from this packet.", "Use current in-game draft-assets/trade UI to nominate six records covering ordinary ownership and an existing conditional case; never create a trade or condition.", "Read 32B records and at most three whitelisted team identity slices; resolve +0/+8 pointers to the nominated teams, +16 as raw candidate player reference.", "Decode +28 structural bits separately from semantics; test bit17 token branch and +24 relation token against native consumer paths.", "If no protected/swap case exists in current context, return NOT_OBSERVED for protection/swap; do not use real-NBA trades or the lack of a case as proof."],
+      "evidence_required": ["UI-to-record pairing", "Team namespace and source origin formula", "Raw +24/+28 relation evidence", "Positive and negative ordinary/conditional cases", "Explicit remaining protection/swap unknowns"],
+      "envelope": {"access_mode": "READ_ONLY_PROPOSED", "objects": ["Slot42 six 32B records", "Slot8 up to three team identities"], "address_formula": "P42=M descriptor42 pData; record=P42+index*32; P8 team identities must be index/stride validated", "ranges": ["6*32B DraftData", "3*(TEAM+0..95 plus TEAM+0xCA8..0xCA9), only after static sensitivity/identity validation"], "max_cases": 6, "max_total_bytes": 486, "pointer_following": "No automatic linked-record traversal; nominate target indices within this same budget before reading"},
+      "positive_controls": ["Owner and original owner independently match UI", "At least two different year/round groups if present"],
+      "negative_controls": ["Do not confuse manager-8 legacy directory origin with manager origin", "Linked token alone never certifies protection", "Out-of-range token rejected offline"],
+      "stop_conditions": ["UI/native contradiction", "Pointer cannot map to nominated team", "Missing conditional case", "Need extra record or target object beyond envelope"]
+    },
+    {
+      "rank": 4, "id": "GEMINI-ATLAS-R04-COACH-BOOK", "roles": ["Coach", "GM"],
+      "objective": "Bind Slot22 playbook lookup key and 68 play values to current team/coach and loaded play identities.",
+      "steps": ["Replay all 68 cases at RVA0xF1D740 and the lookup at RVA0xF3ED00.", "Nominate three existing books including two different teams and one generic/sentinel book; read each 360B record once.", "Compare lookup byte+0x54 low7 and name with the current playbook UI and preexisting coach/book binding evidence.", "Map selected play values to an already authorized loaded play catalogue; if that catalogue is unavailable, keep raw values and request its precise scope later.", "Return current binding and callable data contract candidate; do not claim rotation timeline, tactical effectiveness, writes or persistence."],
+      "evidence_required": ["Three book identity pairs", "68-value bounds and sentinel examples", "Current team/coach binding evidence or UNKNOWN", "Play identity source citations"],
+      "envelope": {"access_mode": "READ_ONLY_PROPOSED", "objects": ["Slot22 three complete playbooks"], "address_formula": "P22+index*360; key=record+0x54; values=record+0x58+4*k, 0<=k<68", "max_cases": 3, "max_total_bytes": 1080, "pointer_following": "NONE; new Coach/TEAM/play-catalog reads need separate nominated scope"},
+      "positive_controls": ["Distinct books have distinct key/name mappings", "Last play word ends exactly at byte359"],
+      "negative_controls": ["48*5 uint16 layout rejected", "Index68 rejected before RPM", "Enum equality without team/coach binding cannot certify current assignment"],
+      "stop_conditions": ["Missing current assignment evidence", "UI mapping conflict", "Need external catalogue or coach record beyond envelope"]
+    },
+    {
+      "rank": 5, "id": "GEMINI-ATLAS-R05-GM-CAP", "roles": ["GM", "Player"],
+      "objective": "Validate DeadCap and TradeException consumers and locate actual payroll/tax sources without treating Slot35 uniforms as finance.",
+      "steps": ["Statically trace Slot61/62 DeadCap and Slot71/72 TradeException, retaining historical stretch heuristic status.", "Nominate three existing dead-cap and three existing exception records from the current front-office UI, if available.", "Read only those bounded records; establish currency scale, player/team reference and season/expiry semantics with current UI evidence.", "Trace front-office payroll/tax UI static consumers to existing contract/finance sources; request new live objects only after a precise new envelope is approved.", "If an object is inactive, return NOT_OBSERVED; never redirect to arbitrary nearby buffers."],
+      "evidence_required": ["Native consumer/field map", "Currency and date controls", "UI record pairing", "Explicit actual payroll-source unknowns"],
+      "envelope": {"access_mode": "READ_ONLY_PROPOSED", "objects": ["Slot61 up to three 136B records", "Slot71 up to three 112B records"], "address_formula": "Pn+index*verified_stride; validate current count, current sensitivity and build first", "max_cases": 6, "max_total_bytes": 744, "pointer_following": "NONE; do not dereference player/manager pointers automatically"},
+      "positive_controls": ["Nonzero amount and separate season/expiry example where present"],
+      "negative_controls": ["Uniform record rejected as finance", "Heuristic stretch flag remains derived", "Inactive slots do not prove missing game capability"],
+      "stop_conditions": ["No current UI case", "Unverified stride", "Unbound currency or expiry semantics", "Additional buffer required"]
+    },
+    {
+      "rank": 6, "id": "GEMINI-ATLAS-R06-RECORD-BOOK", "roles": ["Player", "GM"],
+      "objective": "Resolve record-book packed-tail categories and identity namespace, not year-by-year career logs.",
+      "steps": ["Use GetRecordDataByIndex and RecordData_GetGameRecord/SeasonOrCareerRecord static paths to nominate ten record indices across distinct categories.", "Read at most ten full 52B records, including an authorized last valid index boundary if relevant.", "Compare two text fields and float with current record-book UI; trace packed category/type fields and the +48 word namespace without assuming Slot1 index.", "Keep record-book history distinct from actual world career and game events; do not import future knowledge into GM views."],
+      "evidence_required": ["Category and UI pairing", "Packed-tail negative controls", "Current record identity/source/time visibility"],
+      "envelope": {"access_mode": "READ_ONLY_PROPOSED", "objects": ["Slot39 ten record-book entries"], "address_formula": "P39+index*52, 0<=index<count", "max_cases": 10, "max_total_bytes": 520, "pointer_following": "NONE"},
+      "positive_controls": ["At least two different record categories"],
+      "negative_controls": ["Leading u16 season rejected", "Tail word above player count not treated as Slot1 player identity", "No category guessed from real-world historical stats"],
+      "stop_conditions": ["UI/source category mismatch", "Identity namespace unresolved; preserve raw tail", "Budget exhausted"]
+    }
+  ],
+  "deprioritized": [{"slot":35,"reason":"Static name and consumer identify custom uniforms; no finance gain. No new live buffer authorization proposed."}],
+  "finish": "One bounded research delivery, source hashes/raw safe samples/field evidence/tests and exact task SHA; independent Codex review consumes evidence. Do not auto-start production decoders, game actions, new tasks or master integration."
+}

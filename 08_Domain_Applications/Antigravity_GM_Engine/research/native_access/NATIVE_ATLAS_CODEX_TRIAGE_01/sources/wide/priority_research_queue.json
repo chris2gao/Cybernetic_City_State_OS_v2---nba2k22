@@ -1,0 +1,73 @@
+{
+  "schema_version": "nba2k22.priority_research_queue.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-WIDE-01",
+  "generated_at": "2026-10-23T09:50:34.888200+00:00",
+  "queue_items": [
+    {
+      "priority_rank": 1,
+      "target_slot": 39,
+      "target_name": "PLAYER_CAREER_LOGS",
+      "stride_bytes": 52,
+      "count": 69040,
+      "getter_rva": "0xF400A0",
+      "consumer_role": "PLAYER",
+      "impact": "Unlocks historical year-by-year player boxscore performance and career milestones.",
+      "research_objective": "Determine composite key (PlayerID + SeasonYear) and unpack 52-byte record schema."
+    },
+    {
+      "priority_rank": 2,
+      "target_slot": 35,
+      "target_name": "TEAM_FINANCIAL_LEDGER_BLOCK",
+      "stride_bytes": 4020,
+      "count": 112,
+      "getter_rva": "0xF3C6B0",
+      "consumer_role": "GM",
+      "impact": "Unlocks multi-year team payroll, cash reserves, revenue, and luxury tax bills.",
+      "research_objective": "Map 4KB structure into sub-blocks (payroll, tax, exceptions, revenue streams)."
+    },
+    {
+      "priority_rank": 3,
+      "target_slot": 42,
+      "target_name": "DRAFT_ASSETS",
+      "stride_bytes": 32,
+      "count": 504,
+      "getter_rva": "0xF3C940",
+      "consumer_role": "GM",
+      "impact": "Unlocks all traded draft picks, pick swaps, and conditional protections.",
+      "research_objective": "Unpack 32-byte struct: draft year, round, original team, owning team, protection bitmask."
+    },
+    {
+      "priority_rank": 4,
+      "target_slot": 22,
+      "target_name": "TEAM_ROTATION_TIMELINE",
+      "stride_bytes": 360,
+      "count": 84,
+      "getter_rva": "0xF3ED70",
+      "consumer_role": "COACH",
+      "impact": "Unlocks coach substitution timeline, minutes per game targets, and depth chart hierarchy.",
+      "research_objective": "Map 360 bytes to 15 player roster slots across 48 minutes."
+    },
+    {
+      "priority_rank": 5,
+      "target_slot": 61,
+      "target_name": "WAIVED_SALARY",
+      "stride_bytes": 136,
+      "count": 222,
+      "getter_rva": "0xF3C790",
+      "consumer_role": "GM",
+      "impact": "Unlocks dead salary cap hits and multi-season stretch provision accounting.",
+      "research_objective": "Unpack 136-byte dead money schedule and player reference index."
+    },
+    {
+      "priority_rank": 6,
+      "target_slot": 50,
+      "target_name": "PLAYBOOK_SET_PLAY_CATALOG",
+      "stride_bytes": 280,
+      "count": 32,
+      "getter_rva": "0xF3EE50",
+      "consumer_role": "COACH",
+      "impact": "Unlocks playbooks for all 30 teams and set play selections.",
+      "research_objective": "Unpack 280-byte playbook table and cross-reference with Slot 52 diagram waypoints."
+    }
+  ]
+}
