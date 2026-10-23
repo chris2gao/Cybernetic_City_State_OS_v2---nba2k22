@@ -1,9 +1,9 @@
 {
   "task_id": "OS-EVIDENCE-FEEDBACK-LOOP-01",
-  "status": "candidate_pending_validation",
+  "status": "human_accepted_for_direct_core_master_integration",
   "source_base": "3ae48d2183a6e77d63a43783c7e1999edc01711e",
   "source_branch": "task/os-evidence-feedback-loop-01",
-  "source_head": null,
+  "source_head": "a8c99c20d650cca186448a3e1e82b1fa10542d7b",
   "changed_scope": [
     "AGENT_WORKING_DISCIPLINE.md",
     "01_os/开发入口与单窗口任务规范_v1.md",
@@ -13,11 +13,13 @@
     "plan": "01_os/_runs/run-20261023-os-evidence-feedback-loop-01/verification_plan.json",
     "managed_run": "NOT_RUN",
     "managed_inspect": "NOT_RUN",
-    "independent_review": "NOT_RUN",
-    "static_connector_checks": "PENDING"
+    "independent_review": "WAIVED_BY_HUMAN",
+    "static_connector_checks": "PASS_SOURCE_AND_SCENARIO_ASSERTIONS"
   },
   "authority_effect": "none",
   "master_modified": false,
   "domain_repo_modified_by_this_core_candidate": false,
-  "disposition": "propose_on_draft_PR_only; Human/master integration not requested"
+  "disposition": "Human explicitly approved direct core/master merge on 2026-10-23; merge SHA to be resolved from PR #8 after publication; no new boot/activation; managed verification not run in connector-only environment",
+  "human_acceptance": "APPROVED_DIRECT_MERGE_AND_RECORD_ONLY",
+  "master_integration": "PENDING_PR_8"
 }

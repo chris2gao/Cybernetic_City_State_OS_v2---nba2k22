@@ -1,7 +1,7 @@
 task_packet:
   task_id: OS-EVIDENCE-FEEDBACK-LOOP-01
   repository: chris2gao/Cybernetic_City_State_OS_v2---core
-  risk_tier: T2_semantic
+  risk_tier: T3_high_risk
   exact_base_sha: 3ae48d2183a6e77d63a43783c7e1999edc01711e
   branch: task/os-evidence-feedback-loop-01
   objective: >-
@@ -38,12 +38,12 @@ task_packet:
     principal_binding: connector_authenticated
     publication_transport: github_api_connector
     source_branch_publication: task_scope_default
-    master_integration_confirmation: not_requested
+    master_integration_confirmation: current_Human_confirmed
     expected_remote_master_head: 3ae48d2183a6e77d63a43783c7e1999edc01711e
   big_task_confirmation_closure:
     enabled: true
-    known_confirmation_required_actions: []
-    preconfirmed_actions: []
+    known_confirmation_required_actions: [publish_or_merge_to_master]
+    preconfirmed_actions: [publish_or_merge_to_master]
     uncovered_actions: []
   executor_profile:
     provider: OpenAI
@@ -51,7 +51,7 @@ task_packet:
     model: GPT-6
     reasoning_effort: high
     mode: standard
-    routing_basis: Human requested model-driven core feedback with independent verification later.
+    routing_basis: Human explicitly approved direct core/master integration, with review waived and preserved task record.
     authority: routing_only
   verification_profile:
     reproduce_before_change: not_required
@@ -59,5 +59,5 @@ task_packet:
     different_model_family: true
     different_measurement_tool: true
   required_completion_pointer: 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/completion_pointer.json
-  big_task: false
+  big_task: true
   terminal_lifecycle_state: candidate_ready_for_independent_review

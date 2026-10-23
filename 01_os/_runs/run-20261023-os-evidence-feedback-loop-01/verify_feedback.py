@@ -60,7 +60,7 @@ def source_links_and_scope():
 
 def guardrail_non_regression():
     for token in (
-        "not authorization",
+        "discovery does not retroactively authorize it",
         "outside the envelope",
         "does not retroactively",
         "No background monitor",
@@ -71,11 +71,10 @@ def guardrail_non_regression():
         assert token.lower() in ROOT.lower(), token
     for token in (
         "不能直接修改领域内的 core 副本",
-        "不等于批准发布到 core/master",
+        "Human 的集成裁决与现有独立审核均保持不变",
         "不引入新的 always-on",
-        "人类",
     ):
-        assert token in ENTRY or token == "人类", token
+        assert token in ENTRY, token
     assert "publish_or_merge_to_master" not in CASE
     print("PASS GUARDRAIL_NON_REGRESSION")
 

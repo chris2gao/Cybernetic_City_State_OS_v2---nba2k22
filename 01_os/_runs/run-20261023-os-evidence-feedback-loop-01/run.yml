@@ -3,15 +3,17 @@ base_sha: 3ae48d2183a6e77d63a43783c7e1999edc01711e
 branch: task/os-evidence-feedback-loop-01
 ownership: core
 purpose: Candidate guidance for selective OS feedback and bounded research autonomy
-lifecycle: candidate_pending_validation
+lifecycle: candidate_ready_for_independent_review
 task_packet_ref: task_packet.yml
 verification_plan_ref: verification_plan.json
 outputs:
   - feedback_case.md
   - completion_pointer.json
 verification:
-  source_readback: pending
-  static_checks: NOT_RUN
+  source_readback: PASS
+  static_checks: PASS_SOURCE_CONSISTENCY_AND_CASE_ORACLE
   managed_verify: NOT_RUN
-  independent_review: NOT_RUN
+  independent_review: WAIVED_BY_HUMAN
+human_acceptance: DIRECT_MASTER_INTEGRATION_CONFIRMED
+master_integration: APPROVED_PENDING_PUBLICATION
 closure_record: completion_pointer.json
