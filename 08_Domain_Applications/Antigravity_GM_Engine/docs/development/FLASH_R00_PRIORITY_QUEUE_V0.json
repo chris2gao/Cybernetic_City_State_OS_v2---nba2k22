@@ -20,14 +20,77 @@
       "field_refs": [],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/1",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Two descriptor layouts and in-range object evidence",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop at uncertain manager pointer",
+      "read_only_method": "Inspect historical descriptor bounds and pointer/count/stride evidence; on separately authorized existing samples, check two descriptors against object lengths. Never dereference an unbound manager.",
+      "expected_evidence": "descriptor_origin_comparison: two hypotheses, source bounds, sample lengths and accepted/rejected/UNKNOWN result; no all-slot certification.",
+      "negative_control": {
+        "case": "Null pointer, zero count with nonempty claim, invalid buffer end, or shifted +8 interpretation must be rejected rather than decoded.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN if manager/build/save or descriptor origin cannot be supported; do not search adjacent memory.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "research/native_access/AG_NATIVE_01C/object_catalog.json#/descriptors/1",
+          "role": "historic PLAYER descriptor; compare descriptor origin hypotheses"
+        },
+        {
+          "ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0",
+          "role": "historic manager RVA, not a current pointer"
+        }
+      ],
+      "object_scope": "One ROSTERDATA manager; Slot1 and Slot24 only. Compare descriptor origin +0 versus +8; do not enumerate all 75 slots.",
+      "positive_control": {
+        "case": "Slot1 and Slot24 descriptors have coherent pointer/count/stride within their source buffer and the same bound manager.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "ROSTERDATA descriptor[1]",
+          "ROSTERDATA descriptor[24]"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-02",
@@ -39,18 +102,83 @@
       ],
       "field_refs": [
         "GAME_UI_FIELD_CATALOG_V0.json#/fields/345",
-        "GAME_UI_FIELD_CATALOG_V0.json#/fields/474"
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/373",
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/474",
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/90",
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/369"
       ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields",
+        "GAME_UI_FIELD_CATALOG_V0.json#/source_reference_registry/HUMAN_DECISION_20261022"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Two UI/player comparisons; same-save proof",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop if save or build identity unbound",
+      "read_only_method": "Associate each historical PLAYER sample with player identity and three separately sourced age inputs. Calculate the Human candidate only if all inputs exist; retain the observed UI value separately.",
+      "expected_evidence": "player_age_input_matrix: identity scope, input provenance, candidate calculation, UI observation and unresolved cases; no engine formula claim.",
+      "negative_control": {
+        "case": "Missing birth/draft year or an input from another save leaves age UNKNOWN; world_draft_season must not substitute original_draft_year.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN on missing input, cross-save identity or build uncertainty; an independent age slot is not required.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields",
+          "role": "PLAYER identity and historical bytes"
+        },
+        {
+          "ref": "GAME_UI_FIELD_CATALOG_V0.json#/source_reference_registry/HUMAN_DECISION_20261022",
+          "role": "exact Human age-input and independent-save rule"
+        }
+      ],
+      "object_scope": "Two player instances in one independently bound save; birth_year, original_draft_year, years_pro and separate UI display age only.",
+      "positive_control": {
+        "case": "A source-complete player yields a candidate age with three provenance refs and a distinct display_age_observed value, even if they differ.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "PLAYER identity + age input candidates"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-03",
@@ -61,18 +189,80 @@
         "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/10"
       ],
       "field_refs": [
-        "GAME_UI_FIELD_CATALOG_V0.json#/fields/199"
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/205"
       ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "config/memory_field_profile.json#/fields/PLAYER",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/field_adjacency_groups/0"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Bounded reads; contrasting player and hidden Potential excluded",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop if any hidden sensitive bytes exported",
+      "read_only_method": "Select two non-sensitive registered fields; compare widths and source/UI values independently. Record masked omissions without copying Potential or neighboring raw bytes.",
+      "expected_evidence": "rating_pair_atlas: field refs, bounded source slices without sensitive bytes, UI comparison, omissions and unknown encoding.",
+      "negative_control": {
+        "case": "Potential at 0x441, an unclassified field, missing UI evidence or unbound player is withheld and cannot pass the visible-rating comparison.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "Stop before any sensitive export, implicit contiguous read or unknown codec; record WITHHELD or UNKNOWN.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "config/memory_field_profile.json#/fields/PLAYER",
+          "role": "registered rating offsets and widths"
+        },
+        {
+          "ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/field_adjacency_groups/0",
+          "role": "historical attribute range"
+        }
+      ],
+      "object_scope": "Two already-bound players and two approved visible ratings only; do not dump all 55 ratings or the contiguous range containing Potential.",
+      "positive_control": {
+        "case": "The same approved rating in two players has separately identified bytes and UI values within the source layout bounds.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "two explicit non-sensitive profile fields; exclude 0x441"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-04",
@@ -83,18 +273,82 @@
         "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/11"
       ],
       "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/10",
         "GAME_UI_FIELD_CATALOG_V0.json#/fields/374"
       ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/historical_layout_conflicts/0",
+        "config/state_io_native/player.json#/TENDENCY_OFFSETS"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Two players, no ordinal third-party assignment",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop before inferring semantic names",
+      "read_only_method": "Compare AG01D 0x170..0x260 with R04/Profile 0x458..0x4BA using versioned source identity. Only a future authorized, calibrated sample may test named bytes; never ordinal-match external 99 labels.",
+      "expected_evidence": "tendency_conflict_matrix: both ranges, source commits, build/base evidence, rejected hypotheses and unresolved byte labels; selected address remains null without proof.",
+      "negative_control": {
+        "case": "Unknown or different build/base, an unnamed byte, or an ordinal external-label match must remain UNKNOWN; neither historical claim wins by status text.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN before either live range if build/base evidence is missing; two failed distinct paths trigger Codex escalation.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/historical_layout_conflicts/0",
+          "role": "both contradictory PLAYER tendency locations"
+        },
+        {
+          "ref": "config/state_io_native/player.json#/TENDENCY_OFFSETS",
+          "role": "48 named static offsets; no live certification"
+        }
+      ],
+      "object_scope": "Two historical layout candidates and at most two existing player samples; resolve build and object-base compatibility before considering bytes. No range is selected by this task.",
+      "positive_control": {
+        "case": "A candidate with proven build/object-base and two matching player/UI controls may be proposed as a version-specific hypothesis, never globally canonical.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "candidate 0x170..0x260",
+          "candidate 0x458..0x4BA"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-05",
@@ -107,14 +361,76 @@
       "field_refs": [],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_badges",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/12"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Multiple displayed badge states; negative controls",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Escalate if contradictory",
+      "read_only_method": "Compare the source encoding claim to displayed states and separate enable/unlock-bit evidence. Test whether two bits can support five mutually exclusive levels; do not invent a fifth code.",
+      "expected_evidence": "badge_encoding_hypotheses: raw limited sample provenance, UI labels, rejected 2-bit-only model and UNKNOWN components.",
+      "negative_control": {
+        "case": "Five labels mapped directly to two bits, missing unlock evidence, or absent UI sample falsifies the simple encoding hypothesis.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN on encoding contradiction or missing UI; do not grant badges, infer IDs or widen the candidate region.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_badges",
+          "role": "historical badge encoding claim"
+        },
+        {
+          "ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/12",
+          "role": "candidate region, not an approved read"
+        }
+      ],
+      "object_scope": "One badge across two existing player samples with contrasting displayed states; only the declared candidate region, no badge writes or region expansion.",
+      "positive_control": {
+        "case": "A reproducible state/bit explanation binds both sample identities and UI states; a composite encoding needs separate evidence for each component.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "PLAYER+0x36C..0x3C0 historical candidate"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-06",
@@ -125,17 +441,81 @@
         "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/1",
         "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/6"
       ],
-      "field_refs": [],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/19"
+      ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/6",
+        "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SEASON_STATS_AND_LEADERBOARDS/fields"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Played/unplayed match, actual vs capacity",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop at unvalidated game state",
+      "read_only_method": "Validate source-record length, schedule status/date and game/team association within SEASON+0x28 candidate. Keep Slot24 SeasonTotals as a separate observation, not a synthetic schedule.",
+      "expected_evidence": "season_record_grain_matrix: played and unplayed status, valid-bound vs capacity, game scope and separately sourced SeasonTotals.",
+      "negative_control": {
+        "case": "An unplayed record must not produce final score/player Box facts; out-of-count capacity slots and Slot44 matchup rows are not schedule games.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN if valid count, status, season or game identity is unresolved; no full-season enumeration.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/6",
+          "role": "SEASON schedule candidate"
+        },
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SEASON_STATS_AND_LEADERBOARDS/fields",
+          "role": "separate accumulator grain, not per-game records"
+        }
+      ],
+      "object_scope": "One bound season; at most one known played and one scheduled/unplayed existing record. Actual valid count is distinct from historical capacity 1232.",
+      "positive_control": {
+        "case": "An existing played record has traceable season/game/teams and explicit status; the accumulator remains keyed to player/season, not game.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "SEASON+0x28: two 60-byte records maximum"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-07",
@@ -147,18 +527,82 @@
         "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/9"
       ],
       "field_refs": [
-        "GAME_UI_FIELD_CATALOG_V0.json#/fields/500"
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/500",
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/503"
       ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/3",
+        "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/career_history_stats_array"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Index mapping and no-stats negative case",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop at unknown PlayerID scope",
+      "read_only_method": "Follow documented PLAYER current and career index candidates in existing samples, preserving season, native index and optional team metadata. Do not join on name or index alone.",
+      "expected_evidence": "player_stats_link_matrix: player/season/index/binding provenance, optional stint UNKNOWN, sentinel result and historical-loop limit disclosure.",
+      "negative_control": {
+        "case": "Sentinel/out-of-bounds index, no-stat player or same index in another save must not create a row or cross-save career continuity.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN on index scope, record boundary or player ambiguity; never turn 20 visited indices into a game lifetime cap.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/3",
+          "role": "48-byte PLAYER_STATS candidate"
+        },
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/career_history_stats_array",
+          "role": "current/career link; fixed decoder loop is not lifetime limit"
+        }
+      ],
+      "object_scope": "One player with existing current/career record and one no-stat/sentinel case; at most two Slot24 records and the declared index chain.",
+      "positive_control": {
+        "case": "An index within source bounds links a player and season to a 48-byte accumulator with provenance; team/stint linkage is separately UNKNOWN until proven.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "PLAYER+0xFC and +0xFE..0x126",
+          "Slot24: two 48-byte records maximum"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-08",
@@ -168,17 +612,82 @@
       "root_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/7"
       ],
-      "field_refs": [],
+      "field_refs": [
+        "GAME_UI_FIELD_CATALOG_V0.json#/fields/33"
+      ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SINGLE_GAME_BOXSCORE/fields/player_statline",
+        "research/native_access/AG_NATIVE_01D/DISCOVERY.md"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Known game and stat rows, unplayed negative case",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop before claiming global GameID",
+      "read_only_method": "Bind schedule game and teams before using stat_idx into the bounded StatBank source. Reconcile only the sampled game/player facts; capacity 45292 is not valid use count.",
+      "expected_evidence": "statbank_game_link: sample bounds, game/player/team keys, conservation checks only where applicable, invalid-index and unplayed outcomes.",
+      "negative_control": {
+        "case": "Unplayed header, wrong bank, out-of-range stat_idx, cross-save GameID collision or Slot44 matchup row must not yield a valid player-game statline.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN at unknown bank extent, GameID scope or identity; do not claim all 238 games accepted.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/SINGLE_GAME_BOXSCORE/fields/player_statline",
+          "role": "24-byte StatBank player-game candidate"
+        },
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/DISCOVERY.md",
+          "role": "Slot44 correction and valid StatBank caveats"
+        }
+      ],
+      "object_scope": "One existing played game, at most two associated player rows and one unplayed header control; no league-wide bank scan.",
+      "positive_control": {
+        "case": "Two source-bounded rows share the proven game/season/team context and independently identified players; player statline is distinct from SeasonTotals.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 3,
+        "allowed_regions_or_records": [
+          "SEASON+0x1B6AC: two 24-byte rows maximum",
+          "one unplayed schedule header"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-09",
@@ -193,14 +702,76 @@
       ],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "GAME_UI_FIELD_CATALOG_V0.json#/pages",
+        "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Screens observed and not-observed list",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop before inventing UI tabs",
+      "read_only_method": "Record actually visible labels/units and distinguish historical AG screen names, virtual research groups and third-party exports from target PC22 pages.",
+      "expected_evidence": "ui_page_manifest: observed and NOT_OBSERVED targets, screenshot/source refs, page-kind distinctions and field links.",
+      "negative_control": {
+        "case": "A virtual research group, third-party HTML tab or an unseen page stays NOT_OBSERVED; no-stats is not proof a page does not exist.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "Stop if UI evidence is unavailable or navigation would be needed; do not manufacture PC22 tabs from source headings.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "GAME_UI_FIELD_CATALOG_V0.json#/pages",
+          "role": "research page kinds and all current UI flags false"
+        },
+        {
+          "ref": "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD",
+          "role": "historical page candidate, not observation"
+        }
+      ],
+      "object_scope": "One player card and at most two already-visible PC22 tabs or previously authorized screenshots; do not navigate, switch saves or open new game pages under this queue.",
+      "positive_control": {
+        "case": "A page already visible in authorized evidence gets a source timestamp, game/player scope and observed label list.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "two existing UI tabs/screenshots maximum"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-10",
@@ -208,22 +779,92 @@
       "target": "WORLD_IDENTITY",
       "question": "Save isolation and long-term identity",
       "root_refs": [
-        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/2",
-        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0"
+        "src/save_context.py",
+        "src/gm_state_io/workspace.py"
       ],
-      "field_refs": [
-        "GAME_UI_FIELD_CATALOG_V0.json#/fields/473"
-      ],
+      "field_refs": [],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "src/save_context.py",
+        "src/gm_state_io/workspace.py",
+        "docs/DEV14_STATE_IO_RUNBOOK.md",
+        "GAME_DOMAIN_SOURCE_MODEL_V0.md"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Distinct save scoped examples",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop at unverified continuity",
+      "read_only_method": "Inspect source contracts and supplied receipt copies for save_id/save_instance_id/generation_id, active/workspace agreement, batch/source time and explicit loaded-save confirmation. Record that software binding alone cannot independently identify the actual loaded game save.",
+      "expected_evidence": "save_continuity_matrix: receipt refs, technical tuples, actual-save attestation limits, same/different/reset cases, HOLD_UNKNOWN when samples or continuity proof are absent.",
+      "negative_control": {
+        "case": "Different actual save, reset into a new world, same names/season/player IDs or absent loaded-save attestation cannot inherit continuity. world_draft_season is never a save/world identity.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN if actual save identity/continuity cannot be evidenced; no switching/loading, reset, new world branches or dynamic cross-save history inheritance.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "src/save_context.py",
+          "role": "save_paths: technical save directories, not physical game-save proof"
+        },
+        {
+          "ref": "src/gm_state_io/workspace.py",
+          "role": "binding checks, activation and reset manifest semantics"
+        },
+        {
+          "ref": "docs/DEV14_STATE_IO_RUNBOOK.md",
+          "role": "actual loaded-save confirmation limitation and reset behavior"
+        },
+        {
+          "ref": "GAME_DOMAIN_SOURCE_MODEL_V0.md",
+          "role": "one independent continuous world per actual save; no dynamic inheritance"
+        }
+      ],
+      "object_scope": "Offline comparison of at most three already-existing authorized evidence records: same-save consecutive captures and one different-save or reset binding; do not read/load real saves or create manifests.",
+      "positive_control": {
+        "case": "Two preexisting observations explicitly confirmed for the same actual save with coherent binding/time can support bounded continuity; technical generation change needs explicit same-save proof.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 3,
+        "allowed_regions_or_records": [
+          "offline receipt/workspace copies only; no actual save files"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file."
     },
     {
       "id": "R00-11",
@@ -231,39 +872,226 @@
       "target": "WORLD_SETTINGS",
       "question": "Profile defaults vs real UI settings",
       "root_refs": [
-        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/0"
+        "config/state_io_native/world.json#/slots"
       ],
       "field_refs": [],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "config/state_io_native/world.json#/slots",
+        "config/state_io_native/world.json#/fields/gameplay_and_calendar/quarter_length",
+        "config/state_io_native/world.json#/fields/trade_and_draft_rules/cpu_cpu_trades",
+        "config/state_io_native/settings.json#/slots",
+        "config/source_catalog.json#/deterministic_state_io"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Read-only values, version and negative control",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop before any setter",
+      "read_only_method": "Trace quarter_length and cpu_cpu_trades from slot/type/offset through source_registry to same-bound observed evidence if supplied; keep default, v1_target and observed value in distinct columns.",
+      "expected_evidence": "world_settings_source_matrix: four slot refs, two field refs, configured defaults/targets, observed_value UNKNOWN unless evidenced, build/binding/time/side and effect limits.",
+      "negative_control": {
+        "case": "cpu_cpu_trades default=1 and v1_target=0 cannot be relabeled as the current game value. Missing root or observation must yield UNKNOWN, never default-fill.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "HOLD_UNKNOWN if root, type, build or observed source is missing; stop before any setter, slider change or simulated date advancement.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "config/state_io_native/world.json#/slots",
+          "role": "SLOT_SETTINGS / SLOT_TRADE / SLOT_SLIDERS / SLOT_FRANCHISE historical RVAs"
+        },
+        {
+          "ref": "config/state_io_native/world.json#/fields/gameplay_and_calendar/quarter_length",
+          "role": "default and v1_target are configured values, not observations"
+        },
+        {
+          "ref": "config/state_io_native/world.json#/fields/trade_and_draft_rules/cpu_cpu_trades",
+          "role": "explicit non-equal default/target contrast"
+        },
+        {
+          "ref": "config/state_io_native/settings.json#/slots",
+          "role": "related global-settings source"
+        },
+        {
+          "ref": "config/source_catalog.json#/deterministic_state_io",
+          "role": "same-batch observed source and pipeline limits"
+        }
+      ],
+      "object_scope": "Four static slot descriptors; two selected setting definitions and at most two supplied actual observations. No settings/slider dump or parameter change.",
+      "positive_control": {
+        "case": "Only a separately timestamped, bound game/UI observation can fill observed_value; the four slot RVAs remain historical candidates until calibrated.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 2,
+        "allowed_regions_or_records": [
+          "four static slot definitions",
+          "two explicit setting fields only"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file.",
+      "setting_field_refs": [
+        "config/state_io_native/world.json#/fields/gameplay_and_calendar/quarter_length",
+        "config/state_io_native/world.json#/fields/trade_and_draft_rules/cpu_cpu_trades"
+      ]
     },
     {
       "id": "R00-12",
       "priority": "P1",
       "target": "ACTION_DIRECTORY",
       "question": "Read-only action/source relationships",
-      "root_refs": [
-        "GAME_NATIVE_OBJECT_HINTS_V0.json#/roots/2"
-      ],
+      "root_refs": [],
       "field_refs": [],
       "source_refs": [
         "GAME_NATIVE_OBJECT_HINTS_V0.json",
-        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md"
+        "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/0",
+        "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/154",
+        "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/206"
       ],
-      "read_only_method": "Revalidate game build/save, bounded passive reads and already-visible UI; compare 2 samples with a negative control, never invoke setters.",
-      "expected_evidence": "Catalog status, side effects and approval evidence",
-      "negative_control": "Different object, no-stat or unplayed example",
-      "stop_condition": "Stop before game action",
+      "read_only_method": "Passively resolve each action_id, original source pointer and known-read-source relation from repository text. Describe identity dependencies and possible side effects without evaluating or enabling the action.",
+      "expected_evidence": "action_source_matrix: three action IDs, exact source/known-read refs, identity/time dependencies, side effects, unresolved UI associations and prohibition evidence for all 207 entries.",
+      "negative_control": {
+        "case": "A default/target, discovered offset, menu name, old executor evidence or approval of this repair cannot authorize execution; unresolved read source remains UNKNOWN.",
+        "expected_result": "REJECT_ASSOCIATION_OR_HOLD_UNKNOWN; no fabricated fact"
+      },
+      "stop_condition": "Stop before importing executor or invoking any action; HOLD_UNKNOWN for ambiguous source/UI links; discovery never yields execution approval.",
       "game_write_authorized": false,
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "start_points": [
+        {
+          "ref": "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/0",
+          "role": "COACH.FIELD.POEDefense"
+        },
+        {
+          "ref": "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/154",
+          "role": "WORLD.SETTING.world.trade_and_draft_rules.cpu_cpu_trades"
+        },
+        {
+          "ref": "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/206",
+          "role": "TRADE.MENU.016"
+        }
+      ],
+      "object_scope": "Exactly three named action entries and their raw read-source definitions. No action invocation, Getter call, setter, executor import, transaction, signing or game access.",
+      "positive_control": {
+        "case": "Each named entry resolves to original coach/world/trade-menu source, with all write/readback/persistence/production flags false and known side effects retained.",
+        "expected_result": "EVIDENCED_WITH_BOUND_SCOPE_OR_UNKNOWN"
+      },
+      "max_investigation": {
+        "max_minutes": 20,
+        "max_distinct_failed_paths": 2,
+        "max_sample_records": 3,
+        "allowed_regions_or_records": [
+          "entries/0",
+          "entries/154",
+          "entries/206"
+        ],
+        "expansion_allowed": false
+      },
+      "failure_escalation": {
+        "contract_ref": "FLASH_DISCOVERY_FILL_CONTRACT_V0.md",
+        "after_distinct_failed_paths": 2,
+        "recipient_role": "Codex",
+        "result": "Freeze failed hypotheses, return UNKNOWN and evidence; no third unbounded investigation."
+      },
+      "unknown_result": {
+        "status": "HOLD_UNKNOWN",
+        "required": [
+          "reason",
+          "missing_evidence",
+          "failed_hypotheses",
+          "source_refs",
+          "next_bounded_question"
+        ],
+        "blocks_claim_not_documentation": true
+      },
+      "evidence_contract": {
+        "required": [
+          "build_or_UNKNOWN",
+          "save_binding_or_UNKNOWN",
+          "capture_batch_or_UNKNOWN",
+          "observed_at_or_UNKNOWN",
+          "source_commit_and_pointer",
+          "hypothesis_vs_observation",
+          "positive_case_result",
+          "negative_case_result",
+          "failed_paths",
+          "unresolved_relations"
+        ],
+        "acceptance_basis": "Traceable answer or bounded UNKNOWN with tested counterexample; never UNKNOWN-count reduction."
+      },
+      "access_gate": "NOT_DISPATCHED. Any later live/UI sample collection needs a separate Human scope plus freshly calibrated build/save. No runtime authorized by this file.",
+      "action_refs": [
+        {
+          "action_id": "COACH.FIELD.POEDefense",
+          "entry_ref": "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/0",
+          "original_source_ref": "config/coach_tactics_profile.json#/fields/POEDefense",
+          "known_read_source_raw": "config/coach_tactics_profile.json#/fields/POEDefense",
+          "resolved_read_source_ref": "config/coach_tactics_profile.json#/fields/POEDefense",
+          "relation_status": "STATIC_SOURCE_RELATION_NOT_RUNTIME_CERTIFICATION",
+          "execution_allowed": false
+        },
+        {
+          "action_id": "WORLD.SETTING.world.trade_and_draft_rules.cpu_cpu_trades",
+          "entry_ref": "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/154",
+          "original_source_ref": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json#/registry_candidates/49",
+          "known_read_source_raw": "config/state_io_native/world.json",
+          "resolved_read_source_ref": "config/state_io_native/world.json#/fields/trade_and_draft_rules/cpu_cpu_trades",
+          "relation_status": "STATIC_SOURCE_RELATION_NOT_RUNTIME_CERTIFICATION",
+          "execution_allowed": false
+        },
+        {
+          "action_id": "TRADE.MENU.016",
+          "entry_ref": "GAME_ACTION_DISCOVERY_SEED_V0.json#/entries/206",
+          "original_source_ref": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json#/native_trade_menu_research_options/15",
+          "known_read_source_raw": "R05B trade menu",
+          "resolved_read_source_ref": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json#/native_trade_menu_research_options/15",
+          "relation_status": "STATIC_SOURCE_RELATION_NOT_RUNTIME_CERTIFICATION",
+          "execution_allowed": false
+        }
+      ]
     }
-  ]
+  ],
+  "bounded_fix2": {
+    "review_sha": "8cdbfaefbcb001c6ca0612017957c6414876eea4",
+    "finding": "B-01",
+    "row_count": 12,
+    "status": "TARGETED_PLANNING_CANDIDATE_PENDING_INDEPENDENT_RECHECK",
+    "live_access_authorized": false,
+    "Flash_started": false,
+    "all_207_actions_execution_prohibited": true
+  }
 }

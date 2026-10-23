@@ -105,7 +105,9 @@
       "locator": "PLAYER+0x458..0x4BA",
       "notes": "99 native bytes: 48 named, 51 unknown; no automatic ordinal link to 99 third party labels",
       "status": "STATIC_RESEARCH_HINT_REVALIDATE_PER_BUILD",
-      "current_save_verified": false
+      "current_save_verified": false,
+      "conflict_ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/historical_layout_conflicts/0",
+      "locator_authority": "HISTORICAL_CANDIDATE_ONLY_NOT_SELECTED"
     },
     {
       "object": "PLAYER_BADGE_REGION",
@@ -3132,7 +3134,8 @@
       "negative_control": "named vs UNKNOWN bytes; no archived-label ordinal matches",
       "priority": "P0",
       "confidence": "RESEARCH_ONLY",
-      "exact_field_adjacency_proven": false
+      "exact_field_adjacency_proven": false,
+      "conflict_ref": "GAME_NATIVE_OBJECT_HINTS_V0.json#/historical_layout_conflicts/0"
     },
     {
       "id": "NH_BADGES",
@@ -3183,6 +3186,38 @@
       "priority": "P1",
       "confidence": "RESEARCH_ONLY",
       "exact_field_adjacency_proven": false
+    }
+  ],
+  "historical_layout_conflicts": [
+    {
+      "id": "PLAYER_TENDENCIES_OFFSET_BUILD_CONFLICT",
+      "object": "PLAYER",
+      "status": "UNRESOLVED_HISTORICAL_LAYOUT_CONFLICT",
+      "candidates": [
+        {
+          "offset_range": "0x170..0x260",
+          "source_refs": [
+            "research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json#/screens/PLAYER_CARD/fields/player_tendencies"
+          ],
+          "build_status": "UNKNOWN",
+          "object_base_equivalence": "UNKNOWN",
+          "current_save_verified": false
+        },
+        {
+          "offset_range": "0x458..0x4BA",
+          "source_refs": [
+            "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json#/native_slots",
+            "config/state_io_native/player.json#/TENDENCY_OFFSETS"
+          ],
+          "build_status": "UNKNOWN",
+          "object_base_equivalence": "UNKNOWN",
+          "current_save_verified": false
+        }
+      ],
+      "selected_candidate": null,
+      "canonical_equivalence_proven": false,
+      "investigation_entry": "FLASH_R00_PRIORITY_QUEUE_V0.json#/items/3",
+      "stop_condition": "HOLD_UNKNOWN until build/layout version and PLAYER object base are evidenced; never select a range by name or read either live range in this repair."
     }
   ]
 }
