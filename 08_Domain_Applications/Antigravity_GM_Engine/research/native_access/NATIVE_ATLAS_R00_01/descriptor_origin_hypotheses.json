@@ -83,20 +83,22 @@
       "slot_computations_under_hypothesis": {
         "slot_1_player": {
           "slot_index": 1,
-          "legacy_offset_hex": "+0x018",
+          "legacy_source_extensions_pdata_offset_hex": "+0x020",
           "legacy_count_offset_hex": "+0x018",
-          "legacy_pdata_offset_hex": "+0x020"
+          "legacy_end_pointer_offset_hex": "+0x030",
+          "notes": "Matches definitions['players'] = (0x20, 0x4f0) in src/source_extensions.py; count was read at offset - 8 (+0x018), and end was assumed at offset + 0x10 (+0x030)."
         },
         "slot_24_player_stats": {
           "slot_index": 24,
-          "legacy_offset_hex": "+0x188",
+          "legacy_source_extensions_pdata_offset_hex": "+0x190",
           "legacy_count_offset_hex": "+0x188",
-          "legacy_pdata_offset_hex": "+0x190"
+          "legacy_end_pointer_offset_hex": "+0x1A0",
+          "notes": "Matches definitions['player_stats'] = (0x190, 48) in src/source_extensions.py; count was read at offset - 8 (+0x188), and end was assumed at offset + 0x10 (+0x1A0)."
         }
       },
       "partially_contiguous_heap_illusion": {
         "phenomenon": "pData[i] + count[i] * stride[i] == pData[i+1]",
-        "explanation": "The validation equation end == address + count * stride succeeded for certain adjacent slots (e.g. Slot 0 end matches Slot 1 start exactly at 0x7FF4E6DFB7D8). However, this is NOT a universal zero-gap invariant across all 75 slots: for instance, Slot 1 buffer ends at 0x7FF4E72118F8 while Slot 2 buffer begins at 0x7FF4E72119F8, leaving a 256-byte heap gap/alignment header. The equation's historical pass was an artifact of local heap allocator packing, not an engine contract for all descriptors."
+        "explanation": "The validation equation end == address + count * stride succeeded for certain adjacent slots (e.g. Slot 0 end matches Slot 1 start exactly at 0x7FF4E6DFB7D8, and Slot 1 end at 0x7FF4E6DFB7D8 + 4,284,960 = 0x7FF4E72119F8 matches Slot 2 start exactly at 0x7FF4E72119F8 with 0 bytes gap). However, this is NOT a universal zero-gap invariant across all 75 slots: a concrete verified counterexample exists at Slot 9 (TEAM_ARENA_UNIFORM_DATA, buffer 0x7FF4E7401738 + 583*60 = 0x7FF4E7409FDC) to Slot 10 (LEAGUE_HISTORY_INDEX_1, start 0x7FF4E7409FE0), where an explicit 4-byte alignment/padding gap is present. The equation's historical pass was an artifact of local heap allocator packing for specific sequential slots, not a universal engine layout contract."
       }
     }
   ],

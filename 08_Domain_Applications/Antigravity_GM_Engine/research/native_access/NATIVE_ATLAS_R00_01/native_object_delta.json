@@ -32,8 +32,8 @@
         "canonical_manager_offset_hex": "+0x010",
         "canonical_count_offset_hex": "+0x010",
         "canonical_pdata_offset_hex": "+0x018",
-        "superseded_legacy_calibrated_offset_hex": "+0x018",
-        "superseded_legacy_pdata_offset_hex": "+0x020"
+        "legacy_source_extensions_pdata_offset_hex": "+0x020",
+        "legacy_count_offset_hex": "+0x018"
       },
       "dimensions": {
         "historical_count": 3390,
@@ -65,8 +65,8 @@
         "canonical_manager_offset_hex": "+0x180",
         "canonical_count_offset_hex": "+0x180",
         "canonical_pdata_offset_hex": "+0x188",
-        "superseded_legacy_calibrated_offset_hex": "+0x188",
-        "superseded_legacy_pdata_offset_hex": "+0x190"
+        "legacy_source_extensions_pdata_offset_hex": "+0x190",
+        "legacy_count_offset_hex": "+0x188"
       },
       "dimensions": {
         "historical_count": 9773,
@@ -95,7 +95,7 @@
     "total_slots_in_manager": 75,
     "calibrated_in_this_delta": 2,
     "remaining_uncalibrated_slots": 73,
-    "legacy_offset_correction": "Offset shifted from +0x08 legacy Python calibrator anchor back to +0x00 canonical base; legacy 3-word extraction formula and partial heap contiguity illusion clarified; phantom EndPointer eliminated.",
+    "legacy_offset_correction": "Offset shifted from +0x08 legacy Python calibrator anchor back to +0x00 canonical base; legacy 3-word extraction formula (source_extensions.py definitions pData +0x020/+0x190, count +0x018/+0x188) and partial heap contiguity illusion (refuted by Slot 9 to 10 4-byte gap) clarified; phantom EndPointer eliminated.",
     "future_execution_boundary": "No live memory reads, no live memory writes, no save mutations, no expansion to R00-02..R00-12 permitted without explicit separate human authorization."
   }
 }

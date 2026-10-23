@@ -77,6 +77,14 @@ def check_descriptor_hypotheses():
     hyp_b = hypotheses["HYP-B-LEGACY-CALIBRATION-ARTIFACT"]
     assert hyp_b.get("status") == "REFUTED_HISTORICAL_ARTIFACT", "HYP-B status mismatch"
     assert hyp_b.get("shift_derivation", {}).get("root_difference_bytes") == -8, "Shift must be -8 bytes"
+    slot1_b = hyp_b.get("slot_computations_under_hypothesis", {}).get("slot_1_player", {})
+    assert slot1_b.get("legacy_source_extensions_pdata_offset_hex") == "+0x020", "Slot 1 legacy pdata offset mismatch"
+    assert slot1_b.get("legacy_count_offset_hex") == "+0x018", "Slot 1 legacy count offset mismatch"
+    assert slot1_b.get("legacy_end_pointer_offset_hex") == "+0x030", "Slot 1 legacy end pointer offset mismatch"
+    slot24_b = hyp_b.get("slot_computations_under_hypothesis", {}).get("slot_24_player_stats", {})
+    assert slot24_b.get("legacy_source_extensions_pdata_offset_hex") == "+0x190", "Slot 24 legacy pdata offset mismatch"
+    assert slot24_b.get("legacy_count_offset_hex") == "+0x188", "Slot 24 legacy count offset mismatch"
+    assert slot24_b.get("legacy_end_pointer_offset_hex") == "+0x1A0", "Slot 24 legacy end pointer offset mismatch"
     
     assert data.get("conclusion", {}).get("canonical_hypothesis") == "HYP-A-NATIVE-DISASSEMBLY", "Canonical must be HYP-A"
     
@@ -106,6 +114,8 @@ def check_native_object_delta():
     d1 = descriptors[1]
     assert d1.get("record_name") == "PLAYER", "Slot 1 name mismatch"
     assert d1.get("offsets", {}).get("canonical_manager_offset_hex") == "+0x010", "Slot 1 canonical offset mismatch"
+    assert d1.get("offsets", {}).get("legacy_source_extensions_pdata_offset_hex") == "+0x020", "Slot 1 legacy pData mismatch"
+    assert d1.get("offsets", {}).get("legacy_count_offset_hex") == "+0x018", "Slot 1 legacy count mismatch"
     assert d1.get("dimensions", {}).get("historical_count") == 3390, "Slot 1 count mismatch"
     assert d1.get("dimensions", {}).get("stride_bytes") == 1264, "Slot 1 stride mismatch"
     assert "EMPIRICAL" in d1.get("dimensions", {}).get("stride_source", ""), "Slot 1 stride source must reflect empirical inference"
@@ -118,6 +128,8 @@ def check_native_object_delta():
     d24 = descriptors[24]
     assert d24.get("record_name") == "PLAYER_STATS", "Slot 24 name mismatch"
     assert d24.get("offsets", {}).get("canonical_manager_offset_hex") == "+0x180", "Slot 24 canonical offset mismatch"
+    assert d24.get("offsets", {}).get("legacy_source_extensions_pdata_offset_hex") == "+0x190", "Slot 24 legacy pData mismatch"
+    assert d24.get("offsets", {}).get("legacy_count_offset_hex") == "+0x188", "Slot 24 legacy count mismatch"
     assert d24.get("dimensions", {}).get("historical_count") == 9773, "Slot 24 count mismatch"
     assert d24.get("dimensions", {}).get("stride_bytes") == 48, "Slot 24 stride mismatch"
     assert "EMPIRICAL" in d24.get("dimensions", {}).get("stride_source", ""), "Slot 24 stride source must reflect empirical validation"

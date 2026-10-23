@@ -3,12 +3,19 @@
   "task_id": "NATIVE-ATLAS-R00-01",
   "run_id": "run-20261022-native-atlas-r00-01",
   "base_sha": "97fe60de5b30d0e3ccf9af8f45f051e20dc2140a",
-  "implementation_candidate_sha": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
-  "timestamp": "2026-10-23T00:15:00Z",
+  "verification_lineage": {
+    "initial_verified_candidate": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
+    "initial_attempt_directory": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_01",
+    "intermediate_correction_commit": "538be296bd11156eff771e570a8595f61a35dae6",
+    "final_delivery_candidate_target": "task/native-atlas-r00-01 HEAD (pass 2 managed verify)",
+    "final_attempt_directory": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_02"
+  },
+  "timestamp": "2026-10-23T00:30:00Z",
   "verification_profile": {
     "executor_model": "Gemini Flash (Antigravity)",
     "execution_environment": "Windows pwsh local repository checkout",
-    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py"
+    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+    "evidence_durability_note": "Attempt evidence directories reside in local Windows %TEMP% storage. They constitute verifiable local execution logs, not git-tracked repository blobs."
   },
   "checks": [
     {
@@ -21,13 +28,13 @@
       "id": "DESCRIPTORS_HYPOTHESES_CHECK",
       "status": "PASS",
       "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py DESCRIPTORS_HYPOTHESES_CHECK",
-      "evidence": "HYP-A canonical 16-byte confirmed; HYP-B legacy Python extraction formula and partial heap packing clarified; phantom EndPointer refuted."
+      "evidence": "HYP-A canonical 16-byte confirmed; HYP-B legacy Python extraction formula (pData +0x020/+0x190, count +0x018/+0x188) and partial heap packing (refuted by Slot 9->10 4-byte gap) clarified; phantom EndPointer refuted."
     },
     {
       "id": "NATIVE_OBJECT_DELTA_CHECK",
       "status": "PASS",
       "command": "python -B 01_os/07_content/_runs/run-20261022-native-atlas-r00-01/verify_r00_01.py NATIVE_OBJECT_DELTA_CHECK",
-      "evidence": "Slot 1 (PLAYER, count 3390, stride 1264, empirical inference) and Slot 24 (PLAYER_STATS, count 9773, stride 48, BoxScore parity) calibrated with downgraded stride maturity."
+      "evidence": "Slot 1 (PLAYER, count 3390, stride 1264, empirical inference) and Slot 24 (PLAYER_STATS, count 9773, stride 48, BoxScore parity) calibrated with downgraded stride maturity and precise legacy offsets."
     },
     {
       "id": "UNRESOLVED_FINDINGS_CHECK",
@@ -43,19 +50,10 @@
     }
   ],
   "managed_verification_evidence": {
-    "attempt_directory": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_01",
-    "attempt_status": "success",
-    "managed_run_exit_code": 0,
-    "managed_inspect_exit_code": 0,
-    "plan_sha256": "1c34f136e88daca593fd85ad6620fd55aaf6ea2fcd4b9d8bc14388ec3e1345f7",
-    "result_json_path": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_01/result.json",
-    "input_json_path": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_01/input.json",
-    "check_records": [
-      "001.started.json", "001.finished.json", "001.stdout.bin",
-      "002.started.json", "002.finished.json", "002.stdout.bin",
-      "003.started.json", "003.finished.json", "003.stdout.bin",
-      "004.started.json", "004.finished.json", "004.stdout.bin",
-      "005.started.json", "005.finished.json", "005.stdout.bin"
-    ]
+    "attempt_01_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_01",
+    "attempt_01_candidate": "522952b6d5fc61053cc8752a77fbe4a829ba4228",
+    "attempt_01_status": "success",
+    "attempt_02_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/attempt_02",
+    "attempt_02_status": "planned_execution_on_final_head"
   }
 }

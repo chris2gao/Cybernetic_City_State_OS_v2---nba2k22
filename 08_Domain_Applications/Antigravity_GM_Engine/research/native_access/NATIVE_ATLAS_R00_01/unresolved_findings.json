@@ -59,7 +59,7 @@
   "rejected_hypotheses": [
     {
       "hypothesis_id": "HYP-B-LEGACY-CALIBRATION-ARTIFACT",
-      "rejection_reason": "Native assembly disproves any internal EndPointer field or 24-byte struct layout. The legacy code in src/source_extensions.py was a Python extraction script anchoring 8 bytes below g_pRosterData (0x7FF4E6DFB2E8 vs 0x7FF4E6DFB2F0). The pass of end == address + count * stride was an artifact of partial heap packing across specific adjacent slots (such as Slot 0 to Slot 1), not a universal engine struct layout.",
+      "rejection_reason": "Native assembly disproves any internal EndPointer field or 24-byte struct layout. The legacy code in src/source_extensions.py was a Python extraction script anchoring 8 bytes below g_pRosterData (0x7FF4E6DFB2E8 vs 0x7FF4E6DFB2F0). The pass of end == address + count * stride was an artifact of partial heap packing across specific adjacent slots (such as Slot 0 to Slot 1, and Slot 1 to Slot 2), not a universal engine struct layout; a concrete counterexample exists at Slot 9 to Slot 10 where a 4-byte gap is present.",
       "impact": "Legacy offsets (+0x018/+0x020 for Slot 1, +0x188/+0x190 for Slot 24) and the concept of an internal EndPointer field are deprecated and removed."
     }
   ],
