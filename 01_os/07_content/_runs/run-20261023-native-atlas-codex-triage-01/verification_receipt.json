@@ -1,0 +1,153 @@
+{
+  "task_id": "NATIVE-ATLAS-CODEX-TRIAGE-01",
+  "candidate": "b66267083c7c7594913c56946f1aa3bdcca72f24",
+  "plan": "verification_plan.json",
+  "plan_sha256": "d221ec7d37584ee1c6337da57e02f4fcb6c6ccc995730f9e3da7e27109152962",
+  "managed_run_exit_code": 0,
+  "managed_inspect_exit_code": 0,
+  "preflight_exit_code": 0,
+  "checks": [
+    {
+      "id": "ADJUDICATION_AND_REGRESSIONS",
+      "status": "success"
+    },
+    {
+      "id": "STATIC_EVIDENCE_REPLAY",
+      "status": "success"
+    },
+    {
+      "id": "DELIVERY_AND_SCOPE",
+      "status": "success"
+    }
+  ],
+  "regression_tests": 6,
+  "static_image_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "commands": [
+    "python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py run --repo-root . --candidate b66267083c7c7594913c56946f1aa3bdcca72f24 --plan 01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/verification_plan.json --attempt <external-attempt>",
+    "python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py inspect --repo-root . --candidate b66267083c7c7594913c56946f1aa3bdcca72f24 --plan 01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/verification_plan.json --attempt <same-external-attempt>"
+  ],
+  "external_input": {
+    "environment_variable": "NBA2K22_TRIAGE_STATIC_IMAGE",
+    "meaning": "authorized disk executable path, never a process handle"
+  },
+  "raw_attempt_manifest": [
+    {
+      "name": "001.finished.json",
+      "bytes": 386,
+      "sha256": "41ae12794d09d73660b28ff6b15ee1142f7b4bc3bbda5be3273dc68d0ef29867",
+      "public_raw_copy": true
+    },
+    {
+      "name": "001.source.json",
+      "bytes": 168,
+      "sha256": "ad2029577f9061f7af3be50c5974adadc904b2d1462f277328defc841b88c991",
+      "public_raw_copy": true
+    },
+    {
+      "name": "001.started.json",
+      "bytes": 342,
+      "sha256": "bea624028488fc7e0fa4ba533e9b5d6ca4807e43399f0a117c8c9ec141448773",
+      "public_raw_copy": false
+    },
+    {
+      "name": "001.stderr.bin",
+      "bytes": 1001,
+      "sha256": "f0f94375b0806e92feaae0d9e2103e6780aec4ec089bf4ebd978eb84d201eb0f",
+      "public_raw_copy": true
+    },
+    {
+      "name": "001.stdout.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.finished.json",
+      "bytes": 379,
+      "sha256": "622dcd28eed2291774428dadd3b511b659911386bbdecfa6b0385fbc58505afb",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.source.json",
+      "bytes": 168,
+      "sha256": "ad2029577f9061f7af3be50c5974adadc904b2d1462f277328defc841b88c991",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.started.json",
+      "bytes": 330,
+      "sha256": "9c25d8e882e65ee26de899d7a6c24442d05751cdfe771143693839a30590d0a5",
+      "public_raw_copy": false
+    },
+    {
+      "name": "002.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.stdout.bin",
+      "bytes": 110,
+      "sha256": "96924cf461704d82a3e420be889b2826b56e26cb684d599fdce5e617b367036f",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.finished.json",
+      "bytes": 376,
+      "sha256": "163e3125f485e287261f115eb692f772e8af99259fb9cf6157ccceeeda3e5179",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.source.json",
+      "bytes": 168,
+      "sha256": "ad2029577f9061f7af3be50c5974adadc904b2d1462f277328defc841b88c991",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.started.json",
+      "bytes": 322,
+      "sha256": "a4a490c3cf68dd9f9a14d268ab5e71dcf37bbe97514ebfcd134e2024f0a4f4ac",
+      "public_raw_copy": false
+    },
+    {
+      "name": "003.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.stdout.bin",
+      "bytes": 113,
+      "sha256": "05b381f634252d38ece44ede9d9f9eea738c52de6be9d56ba0254104b67013aa",
+      "public_raw_copy": true
+    },
+    {
+      "name": "input.json",
+      "bytes": 11020,
+      "sha256": "7fd50051efcc291bc501c801cfe46175bb20b2f1d65846bcb383b498d62673bc",
+      "public_raw_copy": false
+    },
+    {
+      "name": "result.json",
+      "bytes": 508,
+      "sha256": "a3207b68274e25617aad8875a365cd7da8a8122ebea3587e6c95c97d0a868732",
+      "public_raw_copy": true
+    },
+    {
+      "name": "source_after.json",
+      "bytes": 168,
+      "sha256": "ad2029577f9061f7af3be50c5974adadc904b2d1462f277328defc841b88c991",
+      "public_raw_copy": true
+    }
+  ],
+  "raw_attempt_retention": "Unmodified full input/started/runtime and other records remain in task workspace sibling native-atlas-triage-evidence/candidate-b66267083c7c-01; personal interpreter/workspace paths are not published.",
+  "public_evidence": "Exact finished/source/result/stdout/stderr byte copies plus raw-record hashes. This is not a claim that a fresh clone can inspect the withheld machine-specific input without recreating an attempt.",
+  "limits": [
+    "No live game verification",
+    "No save binding",
+    "No draft protection/swap semantic certification",
+    "No final independent acceptance of this delivery",
+    "No game writes or master merge"
+  ],
+  "closure_protocol": "Later evidence-only closure commit does not change tested business files or plan; compare these trees, verify raw log hashes and MWU/scope before push."
+}

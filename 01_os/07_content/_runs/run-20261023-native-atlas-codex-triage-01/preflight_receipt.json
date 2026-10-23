@@ -1,0 +1,50 @@
+{
+  "report": {
+    "task_id": "NATIVE-ATLAS-CODEX-TRIAGE-01",
+    "packet_format": "wrapped_v1",
+    "normalized_fields": [],
+    "branch_declared": "task/native-atlas-codex-triage-01",
+    "base_declared": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "branch_actual": "task/native-atlas-codex-triage-01",
+    "local_head": "b66267083c7c7594913c56946f1aa3bdcca72f24",
+    "hooks_path": ".githooks",
+    "quotepath": "false",
+    "allowlist": [
+      "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_CODEX_TRIAGE_01/**",
+      "01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/**"
+    ],
+    "prohibitions": [
+      "new_live_process_reads",
+      "game_or_save_operations",
+      "production_database_or_decoder_changes",
+      "core_owned_file_changes",
+      "master_merge",
+      "credentials_access",
+      "automatic_cross_model_delivery"
+    ],
+    "required_tests": [
+      "ADJUDICATION_AND_REGRESSIONS",
+      "STATIC_EVIDENCE_REPLAY",
+      "DELIVERY_AND_SCOPE"
+    ],
+    "big_task": true,
+    "big_task_confirmation_closure": {
+      "enabled": true,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "dirty_path_count": 0,
+    "head_descends_from_base": true,
+    "commits_since_base": [
+      "b6626708 research(native): adjudicate atlas with static object and layout evidence"
+    ],
+    "remote_master": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "remote_branch": null,
+    "expected_remote_master": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "master_unchanged": true,
+    "master_verification": "verified_unchanged"
+  },
+  "gate": null,
+  "hard_failures": []
+}

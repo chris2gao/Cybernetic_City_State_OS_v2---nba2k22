@@ -1,12 +1,17 @@
 {
   "task_id": "NATIVE-ATLAS-CODEX-TRIAGE-01",
-  "status": "candidate_pending_validation",
+  "status": "candidate_ready_for_independent_review",
   "source_base": "407e2134bd2f595477099b2c6e3484c818059fd9",
   "source_branch": "task/native-atlas-codex-triage-01",
   "source_input": "b779ad8d677b0f7bb53fdb99e9f8acf12d3d7482",
   "outputs_root": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_CODEX_TRIAGE_01",
   "verification_plan": "01_os/07_content/_runs/run-20261023-native-atlas-codex-triage-01/verification_plan.json",
-  "verification": "PENDING_CANDIDATE_MANAGED_RUN_AND_INSPECT",
+  "verification": {
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "preflight_exit_code": 0,
+    "receipt": "verification_receipt.json"
+  },
   "independent_review_of_this_delivery": "SEPARATE_FUTURE_SESSION",
   "master_modified": false,
   "new_live_reads": 0,
@@ -16,8 +21,31 @@
     "implementation_or_review_method": "Preserve pinned raw fixtures and source hashes; reconstruct native Getter count/stride/pData and assert-string references; follow record/draft/playbook consumers and replay all68 switch targets; challenge proposed layouts with binary fixtures and capacity counterexamples.",
     "supportability_rationale": "Original image bytes plus native consumer resource names directly disprove financial and rotation labels; the raw record-book fixture disproves the leading player/season schema, while decoder helpers retain undecoded tail and protection semantics as unknown.",
     "feasibility_rationale": "The existing Python and Capstone environment can analyze the authorized local disk PE and preserved offline fixtures without a process handle. Live save binding, UI field semantics and production role queries remain explicitly outside this delivery's demonstrated capabilities.",
-    "exact_result_or_candidate_ref": "task/native-atlas-codex-triage-01",
-    "verification_evidence": ["verification_plan.json"],
-    "residual_risk_or_unproved_limits": ["No fresh live process or native save binding", "No certified draft protection/swap decoder", "No full current UI or Save/Reload acceptance", "This delivery still needs separate final independent review"]
-  }
+    "exact_result_or_candidate_ref": "b66267083c7c7594913c56946f1aa3bdcca72f24",
+    "verification_evidence": [
+      "verification_plan.json",
+      "verification_receipt.json",
+      "verification_evidence/result.json",
+      "preflight_receipt.json"
+    ],
+    "residual_risk_or_unproved_limits": [
+      "No fresh live process or native save binding",
+      "No certified draft protection/swap decoder",
+      "No full current UI or Save/Reload acceptance",
+      "This delivery still needs separate final independent review"
+    ]
+  },
+  "tested_candidate": "b66267083c7c7594913c56946f1aa3bdcca72f24",
+  "publication": {
+    "transport": "local_git",
+    "force_push": false,
+    "master_modified": false,
+    "status": "READY_FOR_ORDINARY_TASK_BRANCH_PUSH",
+    "remote_head_readback": "resolve after publishing the closure commit; not a self-referential hash"
+  },
+  "next_round_artifacts": [
+    "GEMINI_NEXT_ROUND.md",
+    "next_round_plan.json"
+  ],
+  "next_round_delivery": "PREPARED_NOT_SENT_NOT_STARTED"
 }
