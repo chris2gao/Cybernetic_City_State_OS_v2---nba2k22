@@ -35,7 +35,7 @@ task_packet:
     - automatically_create_followup_tasks
     - weaken_Human_confirmation_or_independent_review
   publisher:
-    principal_binding: github_connector
+    principal_binding: connector_authenticated
     publication_transport: github_api_connector
     source_branch_publication: task_scope_default
     master_integration_confirmation: not_requested
@@ -49,8 +49,15 @@ task_packet:
     provider: OpenAI
     surface: ChatGPT GitHub connector
     model: GPT-6
+    reasoning_effort: high
+    mode: standard
+    routing_basis: Human requested model-driven core feedback with independent verification later.
     authority: routing_only
   verification_profile:
+    reproduce_before_change: not_required
     independent_reviewer: separate_session
-    different_model_family: preferred
+    different_model_family: true
+    different_measurement_tool: true
+  required_completion_pointer: 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/completion_pointer.json
+  big_task: false
   terminal_lifecycle_state: candidate_ready_for_independent_review
