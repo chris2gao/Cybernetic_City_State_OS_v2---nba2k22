@@ -403,78 +403,39 @@ fraction of the same effort.
 
 ## 9. Promote evidence-backed execution feedback, not every local defect
 
-A model may notice a defect in the OS while carrying out domain work. It should
-report the defect, protect the current task, and *selectively* propose a core
-improvement. Observation is not authorization, and a useful discovery does not
-retroactively make an out-of-scope action legitimate.
+*Paid for 2026-10-23, NBA2K22 R00-01:* narrow probe dispatches, a
+claimed out-of-scope live observation and JSON-only verification led to
+repeated corrections without proportional new native-data capability.
+These represent different failures: task design, authorization and proof.
 
-*Paid for 2026-10-23 (NBA2K22 NATIVE-ATLAS-R00-01):* dispatch of a deep
-native-data programme was reduced to repeated two-slot checks; a subsequent
-live report also claimed observation of other slots outside that dispatch.
-Static tests checked reported JSON but did not independently establish every
-process-memory call. The resulting conversation spent multiple corrections
-on evidence wording rather than expanding useful native-data coverage. These
-are distinct issues: scope design, actual authorization, proof strength and
-research throughput. They must not be collapsed into a single "PASS"/"FAIL".
+- **LOCAL_FIX:** one-off arithmetic, naming or receipt defect that can be
+  corrected inside the task; do not create global rules for it.
+- **CORE_CANDIDATE:** a generalizable repeated failure, measurable systematic
+  waste or one high-impact safety/identity/authority incident, supported by
+  fixed primary evidence and a falsifiable counterexample.
+- **HOLD_FINDING:** evidence or causality is insufficient. Name the gap;
+  a model report is not proof of every memory call.
+- **REJECT_DUPLICATE:** existing discipline already handles the issue or
+  the proposed gate costs more than it prevents.
 
-### Select before proposing
+For exploration, separate the **authorized exploration envelope** (build/save,
+objects, regions, access mode, sensitivity and export rules) from the **research
+method** (hypothesis order, depth, bounded comparisons). Inside that envelope,
+adapt methods without per-field permission. Outside the envelope, stop before
+access and propose a new scope; discovery does not retroactively authorize it.
+A read-only handle is not permission to read every readable byte.
+A failed subprobe budget is not the lifetime limit of a research programme.
 
-- **Repair locally** when a one-off calculation, mistaken label or stale receipt
-  can be fixed inside the current task and adds no reusable rule. Do not turn a
-  local defect into a new global gate.
-- **Propose core feedback** when evidence supports a recurring failure across
-  tasks/models, a high-impact trust/authority error, a systemic mismatch
-  between task objective and method, or measurable repeated low-value work.
-  A single severe incident may qualify; two repetitions are not mandatory.
-- **Hold as a finding** when the primary evidence, causal mechanism or expected
-  benefit is unknown. Label it uncertain, name the missing evidence and leave
-  the domain work free to proceed where safe.
-- **Reject the proposal** when the same protection already exists, the change
-  merely restates a rule, or its expected coordination/test cost is greater than
-  its benefit. A new document or validator is not a success metric.
+Judge progress by traceable **consumer capability** (identified native facts,
+decoder evidence, versioned acquisition and usable Player/GM/Coach data), not
+count of passing JSON tests or reduction of UNKNOWN. Live read, fixture,
+save binding and UI semantics require separate evidence.
 
-A useful feedback record is *one per distinct failure mechanism*, not one per
-tool call or correction. It names: immutable source ref(s); observed versus
-claimed fact; impact on the consumer; reproducibility and counterexample; a
-local containment step; root-cause confidence; alternative "no OS change";
-proposed reusable rule; explicit positive/negative acceptance cases; expected
-cost; decision owner; and re-open trigger. Bundle related observations and
-separate historical claims from independently repeated measurements.
-
-### Bound freedom by authority, not by curiosity
-
-For exploratory work, the task should describe the **authorized exploration
-envelope** (process/save/build, data family and allowable memory regions,
-read/write mode, sensitive bytes and export rules) separately from the
-**research method** (hypotheses, objects to compare, depth and order).
-Within the envelope, an executor may follow valuable adjacent evidence,
-adjust hypotheses and batch hard cases to a specialist without requesting
-Human approval for every microstep. Outside the envelope, stop and record a
-scope-expansion proposal before touching new data. A read-only handle is not
-permission to read every readable byte. Exploration quotas and failed-hypothesis
-limits apply to bounded probes; they are not automatically the stopping rule
-for the entire programme.
-
-Judge discovery by reusable, traceable **consumer capability**: independently
-bound identities, decoded facts, negative controls, source provenance,
-versioned collection and quality of the data delivered to downstream roles.
-Field counts, named slots, passing JSON assertions and reduced UNKNOWN counts
-are at most supporting measures. A live read does not imply save binding;
-a readable buffer is not a verified field meaning; a static JSON check does
-not prove the runtime call trace; a fixture axis requires its own fixture.
-
-### Close the feedback loop without creating a shadow workflow
-
-A domain window records its finding in domain-owned evidence but does not edit
-core-owned files. A bounded, separately scoped **core task** may implement a
-candidate improvement on a task branch with tests and a reversible rationale.
-Keep the original incident link; do not rewrite or erase it. A different
-review session checks whether the proposed rule prevents the failure without
-blocking a legitimate counterexample. Human decides semantic adoption and
-protected master integration; a research or verification result cannot grant
-that authority. No background monitor, automatic activation, automatic merge
-or new blanket approval ritual is implied.
-
-After disposition (adopt, defer, reject), link the decision back to the source
-incident and return to the domain objective. Reopen only for a new falsifying
-case, measured regression, or changed risk—not another stylistic refinement.
+Record one bounded feedback case per distinct mechanism: fixed source SHA,
+observed-versus-claimed, counterexample, impact, local containment, cost of
+new rule versus no-change, positive/negative acceptance tests and decision.
+Domain windows never edit core-owned files. A separate core task branch may
+propose a change; independent review and Human-controlled master integration
+remain distinct. No background monitor, automatic merge, mandatory new
+approval ritual or automatic feedback task creation follows from this rule.
+Return to the domain objective after disposition; reopen only on new evidence.
