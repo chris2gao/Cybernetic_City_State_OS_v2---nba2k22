@@ -41,5 +41,15 @@ def preflight():
     print(json.dumps({'exit_code':p.returncode,'evidence_directory':str(out),'hard_failures':body['hard_failures'],
         'head':body['report']['local_head'],'branch':body['report']['branch_actual'],'dirty':body['report']['dirty_path_count']},ensure_ascii=False))
     raise SystemExit(p.returncode)
+def details():
+    c=load(DEV+'GAME_UI_FIELD_CATALOG_V0.json')
+    for i,f in enumerate(c['fields']):
+        if f['entity'] in ['Game','TransactionEvent']:
+            print(i,f['field_id'],f['meaning'],f['source_refs'][0])
+    m=load(DOM+'research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json')
+    print('ROOKIE',json.dumps(m['screens']['ROOKIE_REPORT'],ensure_ascii=False))
+    print('SEASON',json.dumps(m['screens']['SEASON_STATS_AND_LEADERBOARDS'],ensure_ascii=False))
+    a=load(DEV+'GAME_ACTION_DISCOVERY_SEED_V0.json')['entries']
+    print('WORLD ACTIONS',[(i,x['action_id'],x['known_read_source']) for i,x in enumerate(a) if 'world' in x['known_read_source']][:6])
 if __name__=='__main__':
-    {'baseline':baseline,'inspect':inspect,'preflight':preflight}[sys.argv[1]]()
+    {'baseline':baseline,'inspect':inspect,'preflight':preflight,'details':details}[sys.argv[1]]()
