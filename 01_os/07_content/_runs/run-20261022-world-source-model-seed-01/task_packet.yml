@@ -1,0 +1,52 @@
+task_packet:
+  task_id: WORLD-SOURCE-MODEL-SEED-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 407e2134bd2f595477099b2c6e3484c818059fd9
+  branch: task/world-source-model-seed-01
+  objective: Design NBA2K22 V0 multi-domain raw-source field atlas, native-object hints, lifecycle rules and Flash/Codex handoff; no production schema or game operations.
+  source_evidence:
+    - current_Human_task_input_20261022
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R07_GAME_CAPABILITY_MATURITY_MATRIX_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/config/source_catalog.json
+    - task/world-data-arch-01@734188ab378974cf1d4426e67c675de561aac692
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_DOMAIN_SOURCE_MODEL_V0.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_FIELD_LIFECYCLE_RULES_V0.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_DISCOVERY_FILL_CONTRACT_V0.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_ACTION_DISCOVERY_SEED_V0.json
+    - 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/**
+  verification_plan: 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verification_plan.json
+  required_tests: [CATALOG_PARSE_AND_KEYS, SOURCE_PROVENANCE, DOMAIN_AND_LIFECYCLE, AGE_AND_WORLD, ACTION_FAIL_CLOSED, ALLOWLIST_AND_HANDOFF]
+  prohibitions: [DCR_without_explicit_authorization, game_process_access, game_save_write, season_advance, native_game_write, physical_DDL_or_database_migration, shared_OS_core_modification, master_publication, force_push_or_history_rewrite, promote_candidate_to_production]
+  required_completion_pointer: 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/completion_pointer.json
+  big_task: true
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: OpenAI
+    surface: chat
+    model: GPT-6
+    reasoning_effort: host_controlled
+    mode: standard
+    routing_basis: Human assigned this fork to conceptual V0 modeling; model routing cannot be locally executed in connector-only environment.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session
+    different_model_family: true
+    different_measurement_tool: true
+  execution_basis: Human approved repository task-scoped documentation development and ordinary branch publication; no confirmation-bound actions.
+  terminal_lifecycle_state: candidate_pending_validation
