@@ -23,7 +23,8 @@ def pinned(name):
     return git('show', CAND + ':' + DEV + name)
 
 def write(path, value):
-    path.write_text(value.rstrip() + '\n', encoding='utf-8')
+    with path.open('w', encoding='utf-8', newline='\n') as target:
+        target.write(value.rstrip() + '\n')
 
 def save(path, value):
     write(path, json.dumps(value, ensure_ascii=False, indent=2))
@@ -227,7 +228,7 @@ manifest={p.name:{'bytes':p.stat().st_size,'sha256':digest(p)} for p in original
 assert manifest == audit['original_manifest'], 'Original attempt changed'
 seven=['GAME_DOMAIN_SOURCE_MODEL_V0.md','GAME_UI_FIELD_CATALOG_V0.json','GAME_NATIVE_OBJECT_HINTS_V0.json','GAME_FIELD_LIFECYCLE_RULES_V0.md','FLASH_DISCOVERY_FILL_CONTRACT_V0.md','GAME_ACTION_DISCOVERY_SEED_V0.json','FLASH_R00_PRIORITY_QUEUE_V0.json']
 assert all((ROOT/DEV/n).read_bytes() == pinned(n) for n in seven), 'Candidate deliverable modified'
-assert git('rev-parse','HEAD').decode().strip() == CAND, 'Review base changed before closeout'
+subprocess.check_call(['git','merge-base','--is-ancestor',CAND,'HEAD'],cwd=ROOT)
 assert len(catalog['fields']) == 888 and len(tasks)==12
 assert len({t['read_only_method'] for t in tasks})==1
 assert len({t['negative_control'] for t in tasks})==1

@@ -3,6 +3,7 @@ import hashlib
 import json
 import pathlib
 import subprocess
+import sys
 
 HERE=pathlib.Path(__file__).resolve().parent
 ROOT=HERE.parents[4]
@@ -16,6 +17,13 @@ pointer=json.loads((HERE/'REVIEW_EVIDENCE_POINTER.json').read_bytes())
 bad=[name for name,expected in pointer['evidence_sha256'].items()
      if hashlib.sha256((RUN/name).read_bytes()).hexdigest()!=expected]
 assert not bad,bad
+index_check='not_requested'
+if '--index' in sys.argv:
+    for name,expected in pointer['evidence_sha256'].items():
+        path=(RUN/name).relative_to(ROOT).as_posix()
+        stored=subprocess.check_output(['git','show',':'+path],cwd=ROOT)
+        assert hashlib.sha256(stored).hexdigest()==expected, 'Git index bytes differ: '+path
+    index_check='PASS'
 findings=json.loads((RUN/'REVIEW_FINDINGS.json').read_bytes())
 assert len(findings['findings'])==5
 for f in findings['findings']:
@@ -42,6 +50,7 @@ assert main_head['stdout']==pointer['source_master_sha']
 main_status=command(['git','status','--porcelain','--untracked-files=normal'],main)
 assert not any(x[:2] != '??' for x in main_status['stdout'].splitlines())
 report={'status':'PASS','review_scope_only':True,'hashed_evidence_count':len(pointer['evidence_sha256']),
+        'git_index_byte_preservation':index_check,
         'evidence_hash_mismatches':bad,'finding_schema_and_locations':'PASS','mwu':mwu,'diff_check':diff,
         'fresh_remote_refs':remote,'main_head':main_head['stdout'],'main_status':main_status['stdout'],
         'limits':'No game checks, no candidate repair, no new managed verification run, no master integration.'}
