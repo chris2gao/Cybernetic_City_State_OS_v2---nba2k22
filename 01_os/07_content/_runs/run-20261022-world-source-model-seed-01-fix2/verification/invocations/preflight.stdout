@@ -1,0 +1,66 @@
+{
+  "report": {
+    "task_id": "WORLD-SOURCE-MODEL-SEED-01-FIX2",
+    "packet_format": "wrapped_v1",
+    "normalized_fields": [],
+    "branch_declared": "task/world-source-model-seed-01-fix2",
+    "base_declared": "8cdbfaefbcb001c6ca0612017957c6414876eea4",
+    "branch_actual": "task/world-source-model-seed-01-fix2",
+    "local_head": "0f5bb86b3640a1607a03e7765795d12a5f2110fb",
+    "hooks_path": ".githooks",
+    "quotepath": "false",
+    "allowlist": [
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json",
+      "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+      "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/**"
+    ],
+    "prohibitions": [
+      "master_integration",
+      "force_push",
+      "history_rewrite",
+      "third_unbounded_revision",
+      "original_attempt_modification",
+      "original_review_or_run_modification",
+      "game_process_access",
+      "game_memory_access",
+      "save_access_or_load",
+      "Flash_activation",
+      "production_database_change",
+      "shared_OS_change",
+      "self_independent_acceptance"
+    ],
+    "required_tests": [
+      "PRESERVED_SEED_INVARIANTS",
+      "FIELD_SEMANTICS",
+      "SOURCE_RELATIONS",
+      "TENDENCY_CONFLICT",
+      "HUMAN_DECISION_RESOLUTION",
+      "R00_TARGETED_QUEUE",
+      "ADVERSARIAL_REGRESSIONS",
+      "FIX_SCOPE_AND_PRESERVATION",
+      "EXECUTION_OUTPUT_CONTRACT"
+    ],
+    "big_task": true,
+    "big_task_confirmation_closure": {
+      "enabled": true,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "dirty_path_count": 0,
+    "head_descends_from_base": true,
+    "commits_since_base": [
+      "0f5bb86b Repair seed field semantics, R00 bounds, tendency conflicts and Human refs",
+      "8210d29a Preserve bounded fix2 source inspection helper",
+      "b2452742 Establish bounded seed fix2 task and preservation baseline"
+    ],
+    "remote_master": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "remote_branch": null,
+    "expected_remote_master": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "master_unchanged": true,
+    "master_verification": "verified_unchanged"
+  },
+  "gate": null,
+  "hard_failures": []
+}

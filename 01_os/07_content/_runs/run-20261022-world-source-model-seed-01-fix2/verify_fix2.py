@@ -182,6 +182,18 @@ def scope(c,h,q):
     # Business assets outside the three-file repair remain byte-for-byte Git-identical.
     for name in ['GAME_ACTION_DISCOVERY_SEED_V0.json','GAME_DOMAIN_SOURCE_MODEL_V0.md','GAME_FIELD_LIFECYCLE_RULES_V0.md','FLASH_DISCOVERY_FILL_CONTRACT_V0.md']:
         require(git('show','HEAD:'+DEV+name)==git('show',BASE+':'+DEV+name),'unrelated V0 asset changed')
+    receipt_path=ROOT/RUN/'verification_receipt.json'
+    if receipt_path.exists():
+        receipt=load(RUN+'verification_receipt.json')
+        folder=ROOT/RUN/'verification/candidate_attempt'
+        expected={'input.json','result.json','source_after.json'}|{f'{i:03d}.{kind}' for i in range(1,10) for kind in ['started.json','finished.json','source.json','stdout.bin','stderr.bin']}
+        require({p.name for p in folder.iterdir()}==expected,'archived strict attempt has missing/extra files')
+        hashes={p.relative_to(ROOT/RUN).as_posix():digest(p) for p in folder.iterdir()}
+        require(hashes==receipt['sha256'],'archived byte hashes changed')
+        result=load(RUN+'verification/candidate_attempt/result.json')
+        require(result['candidate']==receipt['candidate_sha'] and result['status']=='success' and len(result['checks'])==9 and all(x['status']=='success' for x in result['checks']),'archived candidate/result mismatch')
+        manifest=load(RUN+'changed_paths.json')
+        require(changed==set(manifest['final_delivery_paths']),'exact delivered changed-path manifest drift')
     require(git('diff','--check',BASE,'HEAD')==b'','whitespace failure')
 def adversarial(c,h,q):
     cases=[]

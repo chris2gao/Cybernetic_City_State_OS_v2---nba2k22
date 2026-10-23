@@ -1,0 +1,148 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "0f5bb86b3640a1607a03e7765795d12a5f2110fb",
+  "plan_path": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verification_plan.json",
+  "plan_sha256": "81bdebe9450cf4a0210a480634affcb457ec1caf04bde342ea878230e103f252",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "plan": {
+    "schema_version": "citystate.verification_plan.v1",
+    "task_packet": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/task_packet.yml",
+    "checks": [
+      {
+        "id": "PRESERVED_SEED_INVARIANTS",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "invariants"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "FIELD_SEMANTICS",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "semantics"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "SOURCE_RELATIONS",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "sources"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "TENDENCY_CONFLICT",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "conflict"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "HUMAN_DECISION_RESOLUTION",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "human"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "R00_TARGETED_QUEUE",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "queue"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "ADVERSARIAL_REGRESSIONS",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "adversarial"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "FIX_SCOPE_AND_PRESERVATION",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+          "scope"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "EXECUTION_OUTPUT_CONTRACT",
+        "argv": [
+          "@python",
+          "-B",
+          "01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py",
+          "artifact",
+          "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/execution_output.json",
+          "--require-mwu"
+        ],
+        "timeout_seconds": 90,
+        "expected_exit_code": 0
+      }
+    ]
+  },
+  "task_id": "WORLD-SOURCE-MODEL-SEED-01-FIX2",
+  "task_packet_sha256": "85b2096bd1d0dca20e4457de7dca8b63ead73dc26c3f31fcb39c7e75194bf2ce",
+  "source_base": "8cdbfaefbcb001c6ca0612017957c6414876eea4",
+  "changed_paths": [
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/.gitattributes",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/completion_pointer.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/execution_output.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/inspect_sources.py",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/ops_fix2.py",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/preservation_baseline.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/repair_catalog.py",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/repair_queue.py",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/repair_report.md",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/run.yml",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/semantic_change_manifest.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/task_packet.yml",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verification_plan.json",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_candidate.py",
+    "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verify_fix2.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_NATIVE_OBJECT_HINTS_V0.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_UI_FIELD_CATALOG_V0.json"
+  ],
+  "source_before": {
+    "head": "0f5bb86b3640a1607a03e7765795d12a5f2110fb",
+    "tree": "9e33c51c7d7148331733a64221f459a8d88ac75f",
+    "clean": true
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "executable": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "runner_file_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997"
+  }
+}

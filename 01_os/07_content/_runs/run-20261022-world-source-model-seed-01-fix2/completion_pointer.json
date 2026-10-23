@@ -1,16 +1,40 @@
 {
   "task_id": "WORLD-SOURCE-MODEL-SEED-01-FIX2",
-  "status": "candidate_pending_validation",
-  "branch": "task/world-source-model-seed-01-fix2",
+  "status": "candidate_ready_for_independent_review",
+  "source_branch": "task/world-source-model-seed-01-fix2",
+  "review_base_sha": "8cdbfaefbcb001c6ca0612017957c6414876eea4",
   "original_candidate_sha": "142531f2d60813bce5b90254c5e347050c40b406",
-  "review_source_sha": "8cdbfaefbcb001c6ca0612017957c6414876eea4",
-  "findings_in_scope": ["B-01", "B-02", "B-04", "B-05"],
-  "B-03": "UNCHANGED_OWNER_FOLLOWUP; original attempt preserved, no original Inspect pass claimed",
-  "verification_plan": "verification_plan.json",
-  "execution_output": "execution_output.json",
-  "repair_report": "repair_report.md",
+  "verified_repair_sha": "0f5bb86b3640a1607a03e7765795d12a5f2110fb",
+  "delivery_head_resolution": "Resolve the task branch current commit; final remote head is read back after ordinary non-force publication. Closure evidence is not a new business repair.",
+  "findings": {
+    "B-01": "IMPLEMENTED_OFFLINE_CHECKED_PENDING_INDEPENDENT_RECHECK",
+    "B-02": "IMPLEMENTED_OFFLINE_CHECKED_PENDING_INDEPENDENT_RECHECK",
+    "B-04": "IMPLEMENTED_OFFLINE_CHECKED_PENDING_INDEPENDENT_RECHECK",
+    "B-05": "IMPLEMENTED_OFFLINE_CHECKED_PENDING_INDEPENDENT_RECHECK"
+  },
+  "B-03": "UNCHANGED_OWNER_FOLLOWUP; original files/hashes preserved, no original Inspect pass claimed",
+  "verification": {
+    "receipt": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verification_receipt.json",
+    "plan": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verification_plan.json",
+    "strict_attempt": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/verification/candidate_attempt",
+    "new_run_exit_code": 0,
+    "new_inspect_exit_code": 0,
+    "scope": "nine declared offline checks plus sixteen rejecting mutations; no 888-field native certification"
+  },
+  "changed_paths": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/changed_paths.json",
+  "semantic_changes": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/semantic_change_manifest.json",
+  "repair_report": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/repair_report.md",
+  "execution_output": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01-fix2/execution_output.json",
   "independent_recheck": "PENDING_SEPARATE_SESSION",
-  "Flash_dispatch": "NOT_RUN",
-  "game_and_production_operations": "NOT_RUN",
-  "master_integration": "NOT_RUN"
+  "R00_planning_status": "TARGETED_QUEUE_OFFLINE_CHECKED; INDEPENDENT_RECHECK_PENDING; NOT_DISPATCHED",
+  "not_run": [
+    "Flash activation",
+    "live game reads/writes",
+    "save load/switch/reset",
+    "production database operations",
+    "Save/Reload proof",
+    "master integration",
+    "new independent review"
+  ],
+  "next_step": "Different-session targeted recheck of B-01/B-02/B-04/B-05; Human decides later Flash scope. Do not launch a third unbounded repair."
 }
