@@ -1,0 +1,49 @@
+{
+  "schema_version": "nba2k22.gemini_r02_verification_receipt.v1",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R02",
+  "run_id": "run-20261023-native-ingredients-gemini-r02",
+  "base_sha": "5dd127d77e8d3896c6251bfe358b4cdc313a4933",
+  "timestamp": "2026-10-23T04:48:00Z",
+  "verification_profile": {
+    "executor_model": "Gemini Flash (Antigravity)",
+    "execution_environment": "Windows pwsh local repository checkout with live process PID 1828",
+    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+    "evidence_durability_note": "Attempt evidence directories reside in local Windows %TEMP% storage; they are verifiable local test records, not git-tracked repository blobs."
+  },
+  "checks": [
+    {
+      "id": "CHECK_POLICY_AND_PROVENANCE",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py CHECK_POLICY_AND_PROVENANCE",
+      "evidence": "Policy manifest SHA256 c95b696c... and image SHA256 1727ad72... verified; bootstrap 1,208 bytes parsed with 67 active slots and 8 empty slots; SAVE_UNBOUND confirmed."
+    },
+    {
+      "id": "CHECK_GM_CHAIN_CLOSURE",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py CHECK_GM_CHAIN_CLOSURE",
+      "evidence": "Closed linked list traversal confirmed: Team 4 -> DC1 -> DC0 -> NULL; Team 9 -> DC2 -> NULL; Team 2 -> TE0 -> NULL; Team 3 -> TE1 -> TE2 -> NULL. Refuted claim that +8 is Player pointer."
+    },
+    {
+      "id": "CHECK_PLAYER_FULL_NAMES_AND_SELECTORS",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py CHECK_PLAYER_FULL_NAMES_AND_SELECTORS",
+      "evidence": "80B UTF-16 names verified ('Ben Simmons', 'Seth Curry'); all 25 selectors verified including missed-season hole -1 at selector 4 for Seth Curry; stat83 games played verified (Simmons: 16, 58, 57, 79, 81; Curry: 16, 57, 64, 74, 70, 44, 2)."
+    },
+    {
+      "id": "CHECK_DRAFT_RELATIONS_AND_TEAMS",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py CHECK_DRAFT_RELATIONS_AND_TEAMS",
+      "evidence": "DraftData simple own pick (token 0xffffffff) vs traded pick (token 0x2e0001f) confirmed; Team IDs 14, 31, 2 resolved at +0xCA8; protection held NOT_OBSERVED."
+    },
+    {
+      "id": "CHECK_AUDIT_LOG_AND_BUDGET",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py CHECK_AUDIT_LOG_AND_BUDGET",
+      "evidence": "41 Win32 ReadProcessMemory calls audited, exactly 3,058 total bytes read (100.0% of 3,058 ceiling), 100% success rate, zero memory writes, zero save edits."
+    }
+  ],
+  "managed_verification_evidence": {
+    "planned_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/gemini_r02_attempt_01",
+    "verification_mode": "clean_worktree_managed_verify"
+  }
+}

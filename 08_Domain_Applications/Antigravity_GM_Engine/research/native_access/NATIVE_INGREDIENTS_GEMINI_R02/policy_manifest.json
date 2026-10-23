@@ -1,0 +1,359 @@
+{
+  "schema": "r02.fixed-policy.live.v1",
+  "mode": "WINDOWS_LIVE_READ_PROCESS_MEMORY",
+  "binding": {
+    "pid": 1828,
+    "creation_token": "2026-10-22 22:03:32",
+    "image_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "module_base": "0x140000000",
+    "context": "GLOBAL_ROSTERDATA_ACTIVE"
+  },
+  "phase_budgets": {
+    "BOOTSTRAP": 1208,
+    "PHASE_A_GM": 816,
+    "PHASE_B_PLAYER": 836,
+    "PHASE_C_DRAFT": 198
+  },
+  "permits": [
+    {
+      "key": "BOOTSTRAP_ROOT",
+      "phase": "BOOTSTRAP",
+      "address": "0x146347720",
+      "size": 8,
+      "max_calls": 1,
+      "purpose": "Module root pointer to g_pRosterData"
+    },
+    {
+      "key": "BOOTSTRAP_DESCRIPTORS",
+      "phase": "BOOTSTRAP",
+      "address": "0x7ff4e6dfb2f0",
+      "size": 1200,
+      "max_calls": 1,
+      "purpose": "75 ROSTERDATA descriptor entries (16B each)"
+    },
+    {
+      "key": "GM_DEADCAP_0",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7c3e180",
+      "size": 136,
+      "max_calls": 1,
+      "purpose": "Slot 61 DeadCap index 0"
+    },
+    {
+      "key": "GM_DEADCAP_1",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7c3e208",
+      "size": 136,
+      "max_calls": 1,
+      "purpose": "Slot 61 DeadCap index 1"
+    },
+    {
+      "key": "GM_DEADCAP_2",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7c3e290",
+      "size": 136,
+      "max_calls": 1,
+      "purpose": "Slot 61 DeadCap index 2"
+    },
+    {
+      "key": "GM_TPE_0",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7c82830",
+      "size": 112,
+      "max_calls": 1,
+      "purpose": "Slot 71 TradeException index 0"
+    },
+    {
+      "key": "GM_TPE_1",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7c828a0",
+      "size": 112,
+      "max_calls": 1,
+      "purpose": "Slot 71 TradeException index 1"
+    },
+    {
+      "key": "GM_TPE_2",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7c82910",
+      "size": 112,
+      "max_calls": 1,
+      "purpose": "Slot 71 TradeException index 2"
+    },
+    {
+      "key": "GM_TEAM2_HEADS",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7309728",
+      "size": 16,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 2 DeadCap and TPE heads"
+    },
+    {
+      "key": "GM_TEAM2_ID",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7309748",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 2 raw Team ID"
+    },
+    {
+      "key": "GM_TEAM3_HEADS",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e730a980",
+      "size": 16,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 3 DeadCap and TPE heads"
+    },
+    {
+      "key": "GM_TEAM3_ID",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e730a9a0",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 3 raw Team ID"
+    },
+    {
+      "key": "GM_TEAM4_HEADS",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e730bbd8",
+      "size": 16,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 4 DeadCap and TPE heads"
+    },
+    {
+      "key": "GM_TEAM4_ID",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e730bbf8",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 4 raw Team ID"
+    },
+    {
+      "key": "GM_TEAM9_HEADS",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e7311790",
+      "size": 16,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 9 DeadCap and TPE heads"
+    },
+    {
+      "key": "GM_TEAM9_ID",
+      "phase": "PHASE_A_GM",
+      "address": "0x7ff4e73117b0",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 9 raw Team ID"
+    },
+    {
+      "key": "PLAYER_P0_NAMES",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e6dfb7d8",
+      "size": 80,
+      "max_calls": 1,
+      "purpose": "Slot 1 Player 0 surname (40B) and given name (40B) UTF-16"
+    },
+    {
+      "key": "PLAYER_P0_INDICES",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e6dfb8d4",
+      "size": 50,
+      "max_calls": 1,
+      "purpose": "Slot 1 Player 0 25 index entries (50B) at +0xFC"
+    },
+    {
+      "key": "PLAYER_P1_NAMES",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e6dfbcc8",
+      "size": 80,
+      "max_calls": 1,
+      "purpose": "Slot 1 Player 1 surname (40B) and given name (40B) UTF-16"
+    },
+    {
+      "key": "PLAYER_P1_INDICES",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e6dfbdc4",
+      "size": 50,
+      "max_calls": 1,
+      "purpose": "Slot 1 Player 1 25 index entries (50B) at +0xFC"
+    },
+    {
+      "key": "STAT_ROW_6432",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74f303c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 6432 (P0 season 0)"
+    },
+    {
+      "key": "STAT_ROW_574",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74ae5dc",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 574 (P0 season 1)"
+    },
+    {
+      "key": "STAT_ROW_573",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74ae5ac",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 573 (P0 season 2)"
+    },
+    {
+      "key": "STAT_ROW_572",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74ae57c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 572 (P0 season 3)"
+    },
+    {
+      "key": "STAT_ROW_571",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74ae54c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 571 (P0 season 4)"
+    },
+    {
+      "key": "STAT_ROW_6433",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74f306c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 6433 (P1 season 0)"
+    },
+    {
+      "key": "STAT_ROW_7056",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74fa53c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 7056 (P1 season 1)"
+    },
+    {
+      "key": "STAT_ROW_7055",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74fa50c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 7055 (P1 season 2)"
+    },
+    {
+      "key": "STAT_ROW_7054",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74fa4dc",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 7054 (P1 season 3)"
+    },
+    {
+      "key": "STAT_ROW_7053",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74fa4ac",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 7053 (P1 season 4)"
+    },
+    {
+      "key": "STAT_ROW_7052",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74fa47c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 7052 (P1 season 5)"
+    },
+    {
+      "key": "STAT_ROW_7051",
+      "phase": "PHASE_B_PLAYER",
+      "address": "0x7ff4e74fa44c",
+      "size": 48,
+      "max_calls": 1,
+      "purpose": "Slot 24 PlayerStat row 7051 (P1 season 6)"
+    },
+    {
+      "key": "DRAFT_ROW_0",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7b2d7c0",
+      "size": 32,
+      "max_calls": 1,
+      "purpose": "Slot 42 DraftData index 0"
+    },
+    {
+      "key": "DRAFT_ROW_1",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7b2d7e0",
+      "size": 32,
+      "max_calls": 1,
+      "purpose": "Slot 42 DraftData index 1"
+    },
+    {
+      "key": "DRAFT_ROW_2",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7b2d800",
+      "size": 32,
+      "max_calls": 1,
+      "purpose": "Slot 42 DraftData index 2"
+    },
+    {
+      "key": "DRAFT_ROW_3",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7b2d820",
+      "size": 32,
+      "max_calls": 1,
+      "purpose": "Slot 42 DraftData index 3"
+    },
+    {
+      "key": "DRAFT_ROW_4",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7b2d840",
+      "size": 32,
+      "max_calls": 1,
+      "purpose": "Slot 42 DraftData index 4"
+    },
+    {
+      "key": "DRAFT_ROW_5",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7b2d860",
+      "size": 32,
+      "max_calls": 1,
+      "purpose": "Slot 42 DraftData index 5"
+    },
+    {
+      "key": "DRAFT_TEAM_12_ID",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7314eb8",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 12 raw ID (pick 0 owner/orig, pick 1 owner)"
+    },
+    {
+      "key": "DRAFT_TEAM_9_ID",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e73117b0",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 9 raw ID (pick 1 orig)"
+    },
+    {
+      "key": "DRAFT_TEAM_29_ID",
+      "phase": "PHASE_C_DRAFT",
+      "address": "0x7ff4e7328690",
+      "size": 2,
+      "max_calls": 1,
+      "purpose": "Slot 8 Team index 29 raw ID (pick 2 owner/orig)"
+    }
+  ],
+  "denied_ranges": [
+    {
+      "address": "0x7ff4e6dfb850",
+      "size": 16,
+      "reason": "Player 0 Potential and sensitive secondary attributes (+0x78..+0x88)"
+    },
+    {
+      "address": "0x7ff4e6dfbd40",
+      "size": 16,
+      "reason": "Player 1 Potential and sensitive secondary attributes (+0x78..+0x88)"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/task_packet.yml",
+  "checks": [
+    {
+      "id": "CHECK_POLICY_AND_PROVENANCE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py",
+        "CHECK_POLICY_AND_PROVENANCE"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "CHECK_GM_CHAIN_CLOSURE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py",
+        "CHECK_GM_CHAIN_CLOSURE"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "CHECK_PLAYER_FULL_NAMES_AND_SELECTORS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py",
+        "CHECK_PLAYER_FULL_NAMES_AND_SELECTORS"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "CHECK_DRAFT_RELATIONS_AND_TEAMS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py",
+        "CHECK_DRAFT_RELATIONS_AND_TEAMS"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "CHECK_AUDIT_LOG_AND_BUDGET",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verify_gemini_r02.py",
+        "CHECK_AUDIT_LOG_AND_BUDGET"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    }
+  ]
+}

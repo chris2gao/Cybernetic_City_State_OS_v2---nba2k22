@@ -1,0 +1,70 @@
+{
+  "schema_version": "nba2k22.codex_next_round_materials.v1",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R02",
+  "source_sha": "5cef84fb21892266686bd5fd75a06901ea911d12",
+  "target_codex_packets": [
+    {
+      "packet_id": "CODEX-R03-PKT-01-DRAFT-CONDITIONS",
+      "target_slot": 42,
+      "native_name": "ROSTERDATA::GetDraftDataByIndex",
+      "verified_facts": {
+        "record_stride": 32,
+        "token_simple": "0xFFFFFFFF",
+        "token_traded": "0x02E0001F (and 0x02E00015)",
+        "bit17_mode": true,
+        "owner_team_offset": "+0x00",
+        "original_team_offset": "+0x08"
+      },
+      "core_question": "How does the native trade condition parser evaluate tokens like 0x02E0001F to derive pick protection terms (e.g. lottery protected, top-10 protected, or pick swap)? What function translates the token into the human-readable UI condition text?",
+      "static_targets": [
+        "0x947330 (DRAFTDATA::GetLinkedPick)",
+        "0x92A3A0 (DraftData_GetByPickTeamAndIndex)",
+        "UI condition formatter callers referencing metadata bit 17"
+      ]
+    },
+    {
+      "packet_id": "CODEX-R03-PKT-02-SPECIAL-SELECTOR-24",
+      "target_slot": 1,
+      "native_name": "PLAYER::GetCareerStatSelector",
+      "verified_facts": {
+        "index_slice_offset": "+0xFC",
+        "total_selectors": 25,
+        "ordinary_selectors": "Indices 0..23 (each signed int16)",
+        "special_selector": "Index 24 at +0x12C (signed int16, -1 in Ben Simmons and Seth Curry)"
+      },
+      "core_question": "What is the semantic purpose of the 25th selector at PLAYER +0x12C? Does it point to playoff stats in Slot 24, all-star stats, or a distinct stat structure?",
+      "static_targets": [
+        "Static consumers accessing PLAYER + 0x12C / 0x12D",
+        "Playoff career stats getter in native binary"
+      ]
+    },
+    {
+      "packet_id": "CODEX-R03-PKT-03-V2-DATABASE-INTEGRATION",
+      "focus": "WORLD-DATA-ARCH-01 Schema Harmonization",
+      "verified_mappings": {
+        "players": {
+          "surname_offset": "+0x00 (40B UTF-16LE)",
+          "given_name_offset": "+0x28 (40B UTF-16LE)",
+          "career_chain_offset": "+0xFC (25 x int16)",
+          "slot24_stat83_gp": "u32(+8) & 0x7F"
+        },
+        "teams": {
+          "dead_cap_head_offset": "+0xC88 (uint64 pointer to Slot 61)",
+          "tpe_head_offset": "+0xC90 (uint64 pointer to Slot 71)",
+          "team_id_offset": "+0xCA8 (uint16)"
+        },
+        "dead_cap": {
+          "next_ptr": "+0x00",
+          "owning_team_ptr": "+0x08",
+          "yearly_payouts": "+0x10, +0x14, +0x18 (3 x uint32)"
+        },
+        "trade_exceptions": {
+          "next_ptr": "+0x00",
+          "owning_team_ptr": "+0x08",
+          "player_name_utf16": "+0x10 (32B UTF-16LE)"
+        }
+      },
+      "core_question": "How should Codex structure the V2 SQLite ingestion tables to store these exact verified native pointer chains and bitfields without lossy transformation?"
+    }
+  ]
+}

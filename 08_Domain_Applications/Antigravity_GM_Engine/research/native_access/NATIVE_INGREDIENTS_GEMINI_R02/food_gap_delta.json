@@ -1,0 +1,55 @@
+{
+  "schema_version": "nba2k22.food_gap_delta.v1",
+  "task_id": "NBA2K22-NATIVE-INGREDIENTS-GEMINI-R02",
+  "provenance_base": "task/native-ingredients-codex-r02@5dd127d77e8d3896c6251bfe358b4cdc313a4933",
+  "closed_gaps": [
+    {
+      "domain": "GM",
+      "ingredient": "DeadCap & TradeException Ownership Chain",
+      "previous_state": "Claimed +8 was Player pointer; copied player name in TPE was PlayerID; Team association unverified.",
+      "resolved_state": "VERIFIED_LINKED_LIST_CLOSURE: +0 next record pointer, +8 owning Team pointer. Team +0xC88 holds DeadCap head pointer, Team +0xC90 holds TPE head pointer. Verified closed linked lists: Team 4 -> DeadCap 1 -> DeadCap 0 -> NULL; Team 9 -> DeadCap 2 -> NULL; Team 2 -> TPE 0 -> NULL; Team 3 -> TPE 1 -> TPE 2 -> NULL.",
+      "v2_database_mapping_requirement": "Table `gm_dead_cap` and `gm_trade_exceptions` must foreign-key to `team_id` via Slot 8 Team pointer (`+0xCA8`), NOT to `player_id`. Copied UTF-16 player name stored as descriptive text."
+    },
+    {
+      "domain": "Player",
+      "ingredient": "Player Full Names (80B UTF-16LE)",
+      "previous_state": "Only ASCII preview (e.g. 'S ', 'C '); potential and attributes unseparated.",
+      "resolved_state": "VERIFIED_FULL_UTF16_NAMES: First 40 bytes surname (e.g. 'Simmons', 'Curry'), second 40 bytes given name (e.g. 'Ben', 'Seth'). Strict sensitive Potential exclusion enforced.",
+      "v2_database_mapping_requirement": "Table `players` columns `first_name` and `last_name` mapped directly from UTF-16LE fields at +0x28 and +0x00 without truncating characters."
+    },
+    {
+      "domain": "Player",
+      "ingredient": "Career Index Entries & Games Played",
+      "previous_state": "22 selectors assumed with sequential season mapping; GP offset uncertain.",
+      "resolved_state": "VERIFIED_25_INDEX_ENTRIES_AND_STAT83: Exact 50-byte array (24 ordinary int16 selectors + 1 special selector 24). Missing seasons represented as -1 holes (e.g. Seth Curry's missed 2017-18 season at selector 4). Stat83 games played verified as `u32(+8) & 0x7F` matching real NBA game logs (Simmons: 81, 79, 57, 58, 16; Curry: 2, 44, 70, 74, 64, 57, 16).",
+      "v2_database_mapping_requirement": "Table `player_season_stats` indexed by Slot 24 pointer; holes in the career chain must not abort season traversal; games played column populated via `stat83` formula."
+    },
+    {
+      "domain": "GM",
+      "ingredient": "Draft Pick Ownership & Traded Status",
+      "previous_state": "Asset IDs and compact byte schemas hypothesized; protection bitmask assumed.",
+      "resolved_state": "VERIFIED_32B_DRAFT_RECORDS: +0 owning Team, +8 original Team, +18 GetLinkedPick token, +1C signed round & metadata. Discriminated simple own pick (token 0xFFFFFFFF) from traded pick (token 0x02E0001F). Pick protection held NOT_OBSERVED.",
+      "v2_database_mapping_requirement": "Table `draft_assets` columns `owner_team_id` and `original_team_id` resolved via Slot 8 Team pointers; `is_traded` flag derived from `owner_ptr != orig_ptr`."
+    }
+  ],
+  "remaining_gaps": [
+    {
+      "domain": "GM",
+      "ingredient": "Draft Pick Protection & Conditional Swaps",
+      "blocker": "Static token branches verified, but condition text / protection bitmask resolution requires live trade context or decompiler recovery of condition parser.",
+      "next_action": "Codex static disassembly of GetLinkedPick caller and trade condition text evaluator."
+    },
+    {
+      "domain": "Player",
+      "ingredient": "Special Selector 24 Meaning",
+      "blocker": "Selector 24 was -1 (inactive) in both sample players. May represent playoff stats or international career.",
+      "next_action": "Static xref audit of accessor reading `PLAYER + 0x12C`."
+    },
+    {
+      "domain": "Cross-Domain",
+      "ingredient": "Native Career Save Binding",
+      "blocker": "Live process remains in global roster context (SAVE_UNBOUND). Specific MyLEAGUE career save ID is not yet bound.",
+      "next_action": "Once career save is loaded by Human in UI, audit save identifier memory location."
+    }
+  ]
+}

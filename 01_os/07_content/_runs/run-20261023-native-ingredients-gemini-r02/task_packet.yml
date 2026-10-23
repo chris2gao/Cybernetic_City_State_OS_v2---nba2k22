@@ -1,0 +1,59 @@
+task_packet:
+  task_id: NBA2K22-NATIVE-INGREDIENTS-GEMINI-R02
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 5dd127d77e8d3896c6251bfe358b4cdc313a4933
+  branch: task/native-ingredients-gemini-r02
+  objective: Execute Human-authorized GitHub Issue #4 bounded read-only investigation across Phase A (GM closed chains), Phase B (Player full 80B UTF-16 names, 25 selectors and stat83 games played), and Phase C (DraftData 32B records and Team IDs); enforce external fixed policy manifest (SHA256 c95b696c0210b944520eec96d2a288ba8dc26fd2a6deeb1326ea6d55d4798abc), Windows Live policy reader, exact 3,058-byte ceiling, and sensitive Potential exclusion; deliver food-gap delta and Codex next-round materials.
+  source_evidence:
+    - task/native-ingredients-codex-r02@5dd127d77e8d3896c6251bfe358b4cdc313a4933
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/GEMINI_NEXT_ROUND.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/next_round_plan.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/corrected_claims.json
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/4
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_GEMINI_R02/**
+    - 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/**
+  verification_plan: 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/verification_plan.json
+  required_tests:
+    - CHECK_POLICY_AND_PROVENANCE
+    - CHECK_GM_CHAIN_CLOSURE
+    - CHECK_PLAYER_FULL_NAMES_AND_SELECTORS
+    - CHECK_DRAFT_RELATIONS_AND_TEAMS
+    - CHECK_AUDIT_LOG_AND_BUDGET
+  prohibitions:
+    - game_memory_write
+    - game_save_write_or_edit
+    - advance_game_or_simulate_season
+    - call_native_functions_with_unknown_side_effects
+    - full_dump_of_unclassified_memory
+    - master_branch_publication
+    - force_push_or_history_rewrite
+  required_completion_pointer: 01_os/07_content/_runs/run-20261023-native-ingredients-gemini-r02/completion_pointer.json
+  big_task: true
+  publisher:
+    principal_binding: local_git_shell
+    publication_transport: local_git_cli
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Google
+    surface: chat
+    model: Gemini Flash (Antigravity)
+    reasoning_effort: high
+    mode: standard
+    routing_basis: Task designated for Gemini Flash bounded read-only investigation and ingredient discovery under OS model routing.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session
+    different_model_family: true
+    different_measurement_tool: true
+  execution_basis: Human authorized GitHub Issue #4 bounded read-only investigation with 3,058B budget.
+  terminal_lifecycle_state: candidate_ready_for_independent_review
