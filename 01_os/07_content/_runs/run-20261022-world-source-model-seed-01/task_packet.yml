@@ -18,9 +18,10 @@ task_packet:
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_FIELD_LIFECYCLE_RULES_V0.md
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_DISCOVERY_FILL_CONTRACT_V0.md
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/GAME_ACTION_DISCOVERY_SEED_V0.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/FLASH_R00_PRIORITY_QUEUE_V0.json
     - 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/**
   verification_plan: 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verification_plan.json
-  required_tests: [CATALOG_PARSE_AND_KEYS, SOURCE_PROVENANCE, DOMAIN_AND_LIFECYCLE, AGE_AND_WORLD, ACTION_FAIL_CLOSED, ALLOWLIST_AND_HANDOFF]
+  required_tests: [CATALOG_PARSE_AND_KEYS, SOURCE_PROVENANCE, DOMAIN_AND_LIFECYCLE, AGE_AND_WORLD, ACTION_FAIL_CLOSED, ALLOWLIST_AND_HANDOFF, PAGE_LINK_INTEGRITY, TYPE_PROVENANCE, CANONICAL_RELATIONS, NEIGHBORHOOD_AND_QUEUE]
   prohibitions: [DCR_without_explicit_authorization, game_process_access, game_save_write, season_advance, native_game_write, physical_DDL_or_database_migration, shared_OS_core_modification, master_publication, force_push_or_history_rewrite, promote_candidate_to_production]
   required_completion_pointer: 01_os/07_content/_runs/run-20261022-world-source-model-seed-01/completion_pointer.json
   big_task: true
