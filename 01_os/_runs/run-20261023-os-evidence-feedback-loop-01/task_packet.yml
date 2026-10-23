@@ -1,0 +1,56 @@
+task_packet:
+  task_id: OS-EVIDENCE-FEEDBACK-LOOP-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 3ae48d2183a6e77d63a43783c7e1999edc01711e
+  branch: task/os-evidence-feedback-loop-01
+  objective: >-
+    Add a bounded evidence-to-OS feedback loop and distinguish the authorized
+    exploration envelope from the research method, without new permission
+    gates, background automation, or default runtime activation.
+  human_input: >-
+    Human expressly invited model-driven OS file improvements based on actual
+    execution problems, while keeping Gemini/Codex NBA2K22 native-data work moving.
+  source_evidence:
+    - chris2gao/Cybernetic_City_State_OS_v2---nba2k22@7d84614710d9855d3ffd683da1cdb6fc896ebcf1
+    - chris2gao/Cybernetic_City_State_OS_v2---nba2k22@1d980be8f32642e8c177a6ad8e9b429beaa48647
+    - AGENT_WORKING_DISCIPLINE.md@3ae48d2183a6e77d63a43783c7e1999edc01711e
+    - 01_os/开发入口与单窗口任务规范_v1.md@3ae48d2183a6e77d63a43783c7e1999edc01711e
+  allowed_changed_paths:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/**
+  verification_plan: 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/verification_plan.json
+  required_tests:
+    - FEEDBACK_CASES
+    - SOURCE_LINKS_AND_SCOPE
+    - GUARDRAIL_NON_REGRESSION
+  prohibitions:
+    - edit_any_domain_repo_core_owned_paths
+    - modify_master_without_separate_explicit_integration_confirmation
+    - force_push_or_history_rewrite
+    - activate_boot_runtime_scheduler_or_coordinator
+    - access_game_process_or_save
+    - modify_domain_research
+    - automatically_create_followup_tasks
+    - weaken_Human_confirmation_or_independent_review
+  publisher:
+    principal_binding: github_connector
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 3ae48d2183a6e77d63a43783c7e1999edc01711e
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: OpenAI
+    surface: ChatGPT GitHub connector
+    model: GPT-6
+    authority: routing_only
+  verification_profile:
+    independent_reviewer: separate_session
+    different_model_family: preferred
+  terminal_lifecycle_state: candidate_ready_for_independent_review
