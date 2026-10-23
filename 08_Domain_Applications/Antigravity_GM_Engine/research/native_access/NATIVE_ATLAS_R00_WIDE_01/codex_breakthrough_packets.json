@@ -1,0 +1,63 @@
+{
+  "schema_version": "nba2k22.codex_breakthrough_packets.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-WIDE-01",
+  "generated_at": "2026-10-23T09:50:34.888641+00:00",
+  "packets": [
+    {
+      "packet_id": "CODEX-PKT-01-CAREER-LOG-INDEXING",
+      "title": "Slot 39 PLAYER_CAREER_LOGS (69K Records) Composite Indexing & Schema",
+      "target_slot": 39,
+      "getter_rva": "0xF400A0",
+      "record_stride_bytes": 52,
+      "live_count": 69040,
+      "consumer_domain": "PLAYER",
+      "core_problem": "Slot 39 contains 69,040 52-byte records, representing year-by-year career historical stats. How does the game index into this massive pool from Slot 1 (PLAYER)? Is there a start_log_index and log_count in Slot 1, or is Slot 39 sorted by PlayerID and SeasonYear?",
+      "disassembly_anchor": "Getter RVA 0xF400A0 accesses [rax + 0x270] (count) and [rax + 0x278] (pData); stride imul is 52 (0x34).",
+      "reproducible_conditions": "Game process running (PID 1828); pData is live at 0x7FF4E76C5CE0.",
+      "expected_decoded_shape": "{ player_id: uint16, season_year: uint16, team_id: uint8, games_played: uint8, games_started: uint8, minutes: uint16, pts: uint16, reb: uint16, ast: uint16, stl: uint16, blk: uint16, fgm: uint16, fga: uint16, ftm: uint16, fta: uint16, tpm: uint16, tpa: uint16 }",
+      "verification_method": "Verify whether decoding matches known historical records for Michael Jordan, LeBron James, Stephen Curry with 100% statistical fidelity."
+    },
+    {
+      "packet_id": "CODEX-PKT-02-FINANCIAL-LEDGER-STRUCTURE",
+      "title": "Slot 35 TEAM_FINANCIAL_LEDGER_BLOCK (4KB Block) Multi-Year Decomposition",
+      "target_slot": 35,
+      "getter_rva": "0xF3C6B0",
+      "record_stride_bytes": 4020,
+      "live_count": 112,
+      "consumer_domain": "GM",
+      "core_problem": "Slot 35 allocates 4,020 bytes per team (112 records across 30 active + historical franchises). This massive block governs salary payroll, cash flow, revenue, luxury tax, and arena operations. What is the internal sub-struct layout of this 4KB block?",
+      "disassembly_anchor": "Getter RVA 0xF3C6B0 accesses [rax + 0x230] (count) and [rax + 0x238] (pData); stride is 4020 (0xFB4).",
+      "reproducible_conditions": "pData is live at 0x7FF4E75B69F0.",
+      "expected_decoded_shape": "{ team_id: uint8, current_payroll: int64, projected_tax: int64, cash_balance: int64, ticket_revenue_projected: int64, multi_year_commitments: list[int64] }",
+      "verification_method": "Cross-reference decoded payroll and luxury tax against in-game GM front-office screen for Golden State Warriors (highest tax bill in 2021-22)."
+    },
+    {
+      "packet_id": "CODEX-PKT-03-DRAFT-ASSET-PROTECTIONS",
+      "title": "Slot 42 DRAFT_ASSETS (32 Bytes) Traded Pick Protection Bitmask",
+      "target_slot": 42,
+      "getter_rva": "0xF3C940",
+      "record_stride_bytes": 32,
+      "live_count": 504,
+      "consumer_domain": "GM",
+      "core_problem": "Future draft pick trading in NBA2K22 allows protections (e.g. top-3 protected, lottery protected, pick swaps). How does the 32-byte record encode original owning team, current owning team, draft year, round, and condition/protection logic?",
+      "disassembly_anchor": "Getter RVA 0xF3C940 accesses [rax + 0x2A0] (count) and [rax + 0x2A8] (pData); stride is 32 (0x20).",
+      "reproducible_conditions": "pData is live at 0x7FF4E7B2D7C0.",
+      "expected_decoded_shape": "{ asset_id: uint16, year: uint16, round: uint8, original_team_id: uint8, current_owner_team_id: uint8, is_swap: bool, protection_kind: enum, protection_range: uint8 }",
+      "verification_method": "Check traded pick assets against known 2021-22 real-world traded picks (e.g. Lakers 2022 first round pick owned by Pelicans)."
+    },
+    {
+      "packet_id": "CODEX-PKT-04-ROTATION-TIMELINE-GRID",
+      "title": "Slot 22 TEAM_ROTATION_TIMELINE (360 Bytes) 48-Minute Substitution Grid",
+      "target_slot": 22,
+      "getter_rva": "0xF3ED70",
+      "record_stride_bytes": 360,
+      "live_count": 84,
+      "consumer_domain": "COACH",
+      "core_problem": "Slot 22 represents coach rotation timelines (360 bytes per team). 360 = 15 players * 24 bytes, or 30 players * 12 bytes, or 48 minutes * 7.5 bytes? How does the timeline represent which 5 players are on the floor for each minute of the game?",
+      "disassembly_anchor": "Getter RVA 0xF3ED70 accesses [rax + 0x160] (count) and [rax + 0x168] (pData); stride is 360 (0x168).",
+      "reproducible_conditions": "pData is live at 0x7FF4E74A0418.",
+      "expected_decoded_shape": "{ team_id: uint8, player_minutes_targets: list[uint8, 15], minute_by_minute_lineup: list[list[uint16, 5], 48] }",
+      "verification_method": "Compare decoded minute allocations with in-game Coach Rotation UI timeline."
+    }
+  ]
+}

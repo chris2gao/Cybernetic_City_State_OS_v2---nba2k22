@@ -1,0 +1,61 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/task_packet.yml",
+  "checks": [
+    {
+      "id": "ATLAS_75_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py",
+        "ATLAS_75_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "INGREDIENT_MATRIX_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py",
+        "INGREDIENT_MATRIX_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "CODEX_PACKETS_AND_QUEUE_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py",
+        "CODEX_PACKETS_AND_QUEUE_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "READ_AUDIT_LOG_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py",
+        "READ_AUDIT_LOG_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SCOPE_AND_PROHIBITIONS_CHECK",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261023-native-atlas-r00-wide-01/verify_r00_wide.py",
+        "SCOPE_AND_PROHIBITIONS_CHECK"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    }
+  ]
+}
