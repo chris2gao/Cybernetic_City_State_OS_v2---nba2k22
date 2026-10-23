@@ -1,6 +1,6 @@
 {
   "task_id": "NATIVE-INGREDIENTS-CODEX-R02",
-  "status": "candidate_pending_validation",
+  "status": "candidate_ready_for_independent_review",
   "source_base": "407e2134bd2f595477099b2c6e3484c818059fd9",
   "source_branch": "task/native-ingredients-codex-r02",
   "outputs_root": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02",
@@ -14,10 +14,12 @@
     "implementation_or_review_method": "Capture hashed native blocks and full stat dispatch tables, validate fixture hashes and chain identities, challenge decoders with counterexamples and external fixed-policy offline mock tests.",
     "supportability_rationale": "Native insertion/removal shows record+0 next and+8 owningTeam; exact historical pointers align to pools; stat83 native masks defeat the incorrectu16 read; Draft reconstruction matches auditSHA.",
     "feasibility_rationale": "Disk PE and fixed repo evidence support bounded reverse engineering without process handles; installed Python/Capstone can replay the result. New UI/save/process verification needs a separate envelope.",
-    "exact_result_or_candidate_ref": "candidate_pending_validation",
+    "exact_result_or_candidate_ref": "de322442ad48f2288c828dcf0f1bfc80aa6b34ec",
     "verification_evidence": [
       "verification_plan.json",
-      "bootstrap_receipt.json"
+      "verification_receipt.json",
+      "verification_evidence/result.json",
+      "preflight_receipt.json"
     ],
     "residual_risk_or_unproved_limits": [
       "No current game process, UI or nativeSavebinding",
@@ -25,5 +27,24 @@
       "Recordtailnamespace, Draftprotection and special25thstat semanticsUNKNOWN",
       "No independent final acceptance of this delivery"
     ]
-  }
+  },
+  "tested_candidate": "de322442ad48f2288c828dcf0f1bfc80aa6b34ec",
+  "verification": {
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "preflight_exit_code": 0,
+    "receipt": "verification_receipt.json"
+  },
+  "publication": {
+    "transport": "local_git",
+    "force_push": false,
+    "master_modified": false,
+    "status": "READY_FOR_ORDINARY_TASK_BRANCH_PUSH",
+    "remote_head_readback": "Resolve published task-branch SHA; a commit cannot contain its own final hash"
+  },
+  "next_round_artifacts": [
+    "GEMINI_NEXT_ROUND.md",
+    "next_round_plan.json"
+  ],
+  "next_round_delivery": "PREPARED_NOT_SENT_NOT_STARTED"
 }

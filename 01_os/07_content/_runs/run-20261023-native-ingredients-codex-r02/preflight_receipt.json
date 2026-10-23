@@ -1,0 +1,53 @@
+{
+  "report": {
+    "task_id": "NATIVE-INGREDIENTS-CODEX-R02",
+    "packet_format": "wrapped_v1",
+    "normalized_fields": [],
+    "branch_declared": "task/native-ingredients-codex-r02",
+    "base_declared": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "branch_actual": "task/native-ingredients-codex-r02",
+    "local_head": "de322442ad48f2288c828dcf0f1bfc80aa6b34ec",
+    "hooks_path": ".githooks",
+    "quotepath": "false",
+    "allowlist": [
+      "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_INGREDIENTS_CODEX_R02/**",
+      "01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/**"
+    ],
+    "prohibitions": [
+      "live_process_access",
+      "game_memory_or_save_operations",
+      "game_UI_or_simulation",
+      "hooks_or_injection",
+      "production_database_or_DTO_changes",
+      "core_owned_file_changes",
+      "master_merge_or_history_rewrite",
+      "credentials_access",
+      "automatic_next_task_or_cross_model_delivery"
+    ],
+    "required_tests": [
+      "FIXTURE_AND_IDENTITY_REGRESSIONS",
+      "OFFLINE_POLICY_NEGATIVE_CONTROLS",
+      "STATIC_IMAGE_REPLAY",
+      "DELIVERY_SCOPE_AND_MWU"
+    ],
+    "big_task": true,
+    "big_task_confirmation_closure": {
+      "enabled": true,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "dirty_path_count": 0,
+    "head_descends_from_base": true,
+    "commits_since_base": [
+      "de322442 research(native): resolve GM ownership and native stat bitfields with offline controls"
+    ],
+    "remote_master": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "remote_branch": null,
+    "expected_remote_master": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "master_unchanged": true,
+    "master_verification": "verified_unchanged"
+  },
+  "gate": null,
+  "hard_failures": []
+}

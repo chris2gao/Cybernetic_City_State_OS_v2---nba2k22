@@ -1,0 +1,190 @@
+{
+  "task_id": "NATIVE-INGREDIENTS-CODEX-R02",
+  "candidate": "de322442ad48f2288c828dcf0f1bfc80aa6b34ec",
+  "plan": "verification_plan.json",
+  "plan_sha256": "dddd2b8bb978b8485de19ee6adcf3b7c57fb1b20990e6cf237e8404c23797f79",
+  "managed_run_exit_code": 0,
+  "managed_inspect_exit_code": 0,
+  "preflight_exit_code": 0,
+  "checks": [
+    {
+      "id": "FIXTURE_AND_IDENTITY_REGRESSIONS",
+      "status": "success"
+    },
+    {
+      "id": "OFFLINE_POLICY_NEGATIVE_CONTROLS",
+      "status": "success"
+    },
+    {
+      "id": "STATIC_IMAGE_REPLAY",
+      "status": "success"
+    },
+    {
+      "id": "DELIVERY_SCOPE_AND_MWU",
+      "status": "success"
+    }
+  ],
+  "regression_tests": 20,
+  "fixture_identity_tests": 11,
+  "offline_policy_tests": 9,
+  "static_spans_replayed": 22,
+  "static_image_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "commands": [
+    "python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py run --repo-root . --candidate de322442ad48f2288c828dcf0f1bfc80aa6b34ec --plan 01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/verification_plan.json --attempt <same-external-attempt>",
+    "python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py inspect --repo-root . --candidate de322442ad48f2288c828dcf0f1bfc80aa6b34ec --plan 01_os/07_content/_runs/run-20261023-native-ingredients-codex-r02/verification_plan.json --attempt <same-external-attempt>"
+  ],
+  "external_input": {
+    "environment_variable": "NBA2K22_R02_STATIC_IMAGE",
+    "meaning": "authorized disk executable path, never process memory"
+  },
+  "raw_attempt_manifest": [
+    {
+      "name": "001.finished.json",
+      "bytes": 390,
+      "sha256": "54dad50f6d17d97d8d483ab2aad8da5e8c4088004046d17e3a05e677394d2bef",
+      "public_raw_copy": true
+    },
+    {
+      "name": "001.source.json",
+      "bytes": 168,
+      "sha256": "64a3f54beb740ed2f1a822ef7b33f0ca7a7fb2a81718040583ea9909895451ac",
+      "public_raw_copy": true
+    },
+    {
+      "name": "001.started.json",
+      "bytes": 350,
+      "sha256": "5e1e591b4974aa574ae1058198965c9f58ea895508098e08b964373760d2dee2",
+      "public_raw_copy": false
+    },
+    {
+      "name": "001.stderr.bin",
+      "bytes": 1491,
+      "sha256": "c270b9ee239598713f44c3b0affc1418b5cf4220c70643642d562a9c8744a204",
+      "public_raw_copy": true
+    },
+    {
+      "name": "001.stdout.bin",
+      "bytes": 49,
+      "sha256": "4e97e14311768f71aa155ffdd6761a2f61e66cd5143f0470dd6cfc16acb54b0d",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.finished.json",
+      "bytes": 390,
+      "sha256": "cc4f4e19beaa775b9bb0ddd57d1968b604c9e3ad82528d83176b758efb7ab3d8",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.source.json",
+      "bytes": 168,
+      "sha256": "64a3f54beb740ed2f1a822ef7b33f0ca7a7fb2a81718040583ea9909895451ac",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.started.json",
+      "bytes": 350,
+      "sha256": "1ffcc623f4619b0f6d624bc14323691d56c4a86429cfb62b0f78977bacf67b9d",
+      "public_raw_copy": false
+    },
+    {
+      "name": "002.stderr.bin",
+      "bytes": 1223,
+      "sha256": "6958b64a622aa5979d3d434e90b8ba280f6be202bb931008e50a8ed6b9705651",
+      "public_raw_copy": true
+    },
+    {
+      "name": "002.stdout.bin",
+      "bytes": 48,
+      "sha256": "77f5560f5f5848f170e630d9a0dba015cf43093b68c58d775e5d0d9531138022",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.finished.json",
+      "bytes": 376,
+      "sha256": "944effd01ea552e088391628c7878ad9c5e4f2418b7ed64f173d3e62a8fddaf4",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.source.json",
+      "bytes": 168,
+      "sha256": "64a3f54beb740ed2f1a822ef7b33f0ca7a7fb2a81718040583ea9909895451ac",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.started.json",
+      "bytes": 324,
+      "sha256": "50592b178c6cc9d8359123f6528f9521a047b0d4de7c329be35b416a9c3e46be",
+      "public_raw_copy": false
+    },
+    {
+      "name": "003.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_raw_copy": true
+    },
+    {
+      "name": "003.stdout.bin",
+      "bytes": 45,
+      "sha256": "209c0c0fa073ced5acc34bea64cd8ebd39df3a2aeac54599faa4412c0da11c13",
+      "public_raw_copy": true
+    },
+    {
+      "name": "004.finished.json",
+      "bytes": 379,
+      "sha256": "1853cdc0ccf1e79c28a8428541cbcdcfcaa2ae4e9781dcd7509e630c72db510a",
+      "public_raw_copy": true
+    },
+    {
+      "name": "004.source.json",
+      "bytes": 168,
+      "sha256": "64a3f54beb740ed2f1a822ef7b33f0ca7a7fb2a81718040583ea9909895451ac",
+      "public_raw_copy": true
+    },
+    {
+      "name": "004.started.json",
+      "bytes": 330,
+      "sha256": "2c9c566cfba6f7e1cfac78266813304d2fef7ef385a304e13d718a038723c1e3",
+      "public_raw_copy": false
+    },
+    {
+      "name": "004.stderr.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_raw_copy": true
+    },
+    {
+      "name": "004.stdout.bin",
+      "bytes": 103,
+      "sha256": "06f784b505d55101b1fa1085ad96434ec623d79a8a75c035aaaf5cb6649c2efe",
+      "public_raw_copy": true
+    },
+    {
+      "name": "input.json",
+      "bytes": 8193,
+      "sha256": "d496c8bb216cccf3c812755a69276c78c6268fee713faf8ede34d22f18458e57",
+      "public_raw_copy": false
+    },
+    {
+      "name": "result.json",
+      "bytes": 600,
+      "sha256": "ef3527b093a2e005bb8c3164e1e30fe9cbab4bad8fe8d84d1778ca95d7145956",
+      "public_raw_copy": true
+    },
+    {
+      "name": "source_after.json",
+      "bytes": 168,
+      "sha256": "64a3f54beb740ed2f1a822ef7b33f0ca7a7fb2a81718040583ea9909895451ac",
+      "public_raw_copy": true
+    }
+  ],
+  "raw_attempt_retention": "Unmodified full input/started/runtime records retained in task workspace sibling native-ingredients-r02-evidence/candidate-de322442ad48-01; personal interpreter/workspace paths not published.",
+  "public_evidence": "Exact finished/source/result/stdout/stderr byte copies and all original record hashes. A fresh reviewer recreates their own managed attempt; withheld machine-specific input is not claimed clone-replayable.",
+  "limits": [
+    "No new live game process or UI access",
+    "No Save binding or game writes",
+    "No production readiness",
+    "No final independent acceptance of this delivery",
+    "No master merge"
+  ],
+  "closure_protocol": "Evidence-only closure changes run records; business tree and task packet/plan remain identical to managed candidate. Recheck scope, raw log hashes and MWU before ordinary branch push."
+}
