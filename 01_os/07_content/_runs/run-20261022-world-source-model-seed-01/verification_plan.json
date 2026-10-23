@@ -1,0 +1,72 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/task_packet.yml",
+  "checks": [
+    {
+      "id": "CATALOG_PARSE_AND_KEYS",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+        "CATALOG_PARSE_AND_KEYS"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SOURCE_PROVENANCE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+        "SOURCE_PROVENANCE"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "DOMAIN_AND_LIFECYCLE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+        "DOMAIN_AND_LIFECYCLE"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "AGE_AND_WORLD",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+        "AGE_AND_WORLD"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "ACTION_FAIL_CLOSED",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+        "ACTION_FAIL_CLOSED"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "ALLOWLIST_AND_HANDOFF",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/07_content/_runs/run-20261022-world-source-model-seed-01/verify_seed.py",
+        "ALLOWLIST_AND_HANDOFF"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    }
+  ]
+}
