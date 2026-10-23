@@ -2,7 +2,6 @@
 from pathlib import Path
 import argparse
 import copy
-import fnmatch
 import json
 import re
 import subprocess
@@ -234,7 +233,7 @@ def links():
     changed=subprocess.check_output(["git","diff","--name-only","-z",BASE,"HEAD"],cwd=ROOT).decode().split("\0")
     changed=[p for p in changed if p]
     assert changed
-    assert all(any(fnmatch.fnmatchcase(p,a) for a in packet["allowed_changed_paths"]) for p in changed), changed
+    assert all(any(p == a or (a.endswith("/**") and p.startswith(a[:-3]+"/")) for a in packet["allowed_changed_paths"]) for p in changed), changed
     assert not any(p.endswith((".sqlite",".db",".bin")) for p in changed)
     assert not any(p.startswith("01_os/") and not p.startswith("01_os/07_content/_runs/run-20261022-world-data-arch-001/") for p in changed)
     subprocess.run(["git","diff","--check",BASE,"HEAD"],cwd=ROOT,check=True,capture_output=True)
