@@ -1,0 +1,58 @@
+task_packet:
+  task_id: NBA2K22-NATIVE-ATLAS-R00-01-LIVE01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 1d980be8f32642e8c177a6ad8e9b429beaa48647
+  branch: task/native-atlas-r00-01-live01
+  objective: Execute Phase B read-only live process memory verification on NBA2K22.exe PID 1828; verify static RVA NBA2K22.exe+0x06347720 to ROSTERDATA manager; read and validate Slot 1 (PLAYER) and Slot 24 (PLAYER_STATS) Count/pData descriptors; perform boundary checks and negative controls without memory writes or career save changes.
+  source_evidence:
+    - task/native-atlas-r00-01@1d980be8f32642e8c177a6ad8e9b429beaa48647
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/descriptor_origin_hypotheses.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/src/memory.py
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01_LIVE01/**
+    - 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/**
+  verification_plan: 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verification_plan.json
+  required_tests:
+    - LIVE_SOURCE_MANIFEST_CHECK
+    - LIVE_DESCRIPTOR_READINGS_CHECK
+    - LIVE_OBJECT_DELTA_CHECK
+    - LIVE_UNRESOLVED_FINDINGS_CHECK
+    - SCOPE_AND_PROHIBITIONS_CHECK
+  prohibitions:
+    - game_memory_write
+    - game_save_write_or_edit
+    - advance_game_or_simulate_season
+    - expand_scope_to_r00_02_through_r00_12
+    - full_enumeration_of_all_75_slots
+    - call_native_functions_with_unknown_side_effects
+    - master_branch_publication
+    - force_push_or_history_rewrite
+  required_completion_pointer: 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/completion_pointer.json
+  big_task: true
+  publisher:
+    principal_binding: local_git_shell
+    publication_transport: local_git_cli
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Google
+    surface: chat
+    model: Gemini Flash (Antigravity)
+    reasoning_effort: high
+    mode: standard
+    routing_basis: Human authorized Phase B live read-only verification under OS model routing.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session
+    different_model_family: true
+    different_measurement_tool: true
+  execution_basis: Human approved R00-01 Phase B read-only investigation; strictly bounded to ROSTERDATA Slot 1 and Slot 24.
+  terminal_lifecycle_state: candidate_ready_for_independent_review

@@ -1,0 +1,49 @@
+{
+  "schema_version": "nba2k22.live_verification_receipt.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "run_id": "run-20261023-native-atlas-r00-01-live01",
+  "base_sha": "1d980be8f32642e8c177a6ad8e9b429beaa48647",
+  "timestamp": "2026-10-23T00:50:00Z",
+  "verification_profile": {
+    "executor_model": "Gemini Flash (Antigravity)",
+    "execution_environment": "Windows pwsh local repository checkout with live process PID 1828",
+    "verification_runner": "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+    "evidence_durability_note": "Attempt evidence directories reside in local Windows %TEMP% storage; they are verifiable local test records, not git-tracked repository blobs."
+  },
+  "checks": [
+    {
+      "id": "LIVE_SOURCE_MANIFEST_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py LIVE_SOURCE_MANIFEST_CHECK",
+      "evidence": "PID 1828, base 0x140000000, hash, and static RVA 0x06347720 verified."
+    },
+    {
+      "id": "LIVE_DESCRIPTOR_READINGS_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py LIVE_DESCRIPTOR_READINGS_CHECK",
+      "evidence": "Slot 1 (3390, 0x7FF4E6DFB7D8) and Slot 24 (9773, 0x7FF4E74A7A3C) read, 2 samples each, boundaries verified, negative controls passed."
+    },
+    {
+      "id": "LIVE_OBJECT_DELTA_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py LIVE_OBJECT_DELTA_CHECK",
+      "evidence": "CALIBRATED_LIVE_READ_CONFIRMED status and FIXTURE_PASS=True set."
+    },
+    {
+      "id": "LIVE_UNRESOLVED_FINDINGS_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py LIVE_UNRESOLVED_FINDINGS_CHECK",
+      "evidence": "All 4 unresolved findings held as HOLD_UNKNOWN."
+    },
+    {
+      "id": "SCOPE_AND_PROHIBITIONS_CHECK",
+      "status": "PASS",
+      "command": "python -B 01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verify_r00_01_live.py SCOPE_AND_PROHIBITIONS_CHECK",
+      "evidence": "All prohibitions and allowed changed paths validated."
+    }
+  ],
+  "managed_verification_evidence": {
+    "planned_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/live01_attempt_01",
+    "verification_mode": "clean_worktree_managed_verify"
+  }
+}

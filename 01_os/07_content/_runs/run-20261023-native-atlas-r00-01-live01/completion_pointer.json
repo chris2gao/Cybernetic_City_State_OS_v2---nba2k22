@@ -1,0 +1,57 @@
+{
+  "schema_version": "nba2k22.live_atlas_completion.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "completion_pointer": "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/completion_pointer.json",
+  "packet_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "status": "completed",
+  "lifecycle": "candidate_ready_for_independent_review",
+  "source_branch": "task/native-atlas-r00-01-live01",
+  "source_base": "1d980be8f32642e8c177a6ad8e9b429beaa48647",
+  "verified_candidate_sha": null,
+  "remote_readback_head": null,
+  "source_head_note": "Candidate commit SHA will be bound upon commit and OS managed verification readback.",
+  "artifacts": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01_LIVE01/live_source_manifest.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01_LIVE01/live_descriptor_readings.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01_LIVE01/live_object_delta.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01_LIVE01/live_unresolved_findings.json"
+  ],
+  "task_packet": "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/task_packet.yml",
+  "verification_plan": "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verification_plan.json",
+  "verification": {
+    "state": "LOCAL_MANAGED_VERIFY_PENDING",
+    "receipt": "01_os/07_content/_runs/run-20261023-native-atlas-r00-01-live01/verification_receipt.json",
+    "managed_run_exit_code": 0,
+    "managed_inspect_exit_code": 0,
+    "persistent_evidence_attempt_pointer": "C:/Users/gk/AppData/Local/Temp/mv_evidence/live01_attempt_01",
+    "evidence_durability_note": "Attempt evidence directory resides in local Windows %TEMP% storage.",
+    "tests_generated": "All 5 check items PASS exit code 0",
+    "candidate_caused_failures": "NONE",
+    "diff_scope": "STRICTLY_INSIDE_ALLOWED_PATHS",
+    "hook_guard": "PASS"
+  },
+  "repository": {
+    "out_of_scope_paths": 0,
+    "binary_artifact_count": 0,
+    "worktree_clean": true
+  },
+  "publication": {
+    "transport": "local_git_cli",
+    "replacement_gate": "LOCAL_BRANCH_COMMIT",
+    "expected_remote_head": "407e2134bd2f595477099b2c6e3484c818059fd9",
+    "push_performed": false,
+    "master_modified": false,
+    "force_push": false
+  },
+  "independent_model_review": "NOT_STARTED",
+  "human_acceptance": "TASK_AUTHORIZED_NOT_ACCEPTANCE_OF_DELIVERY",
+  "master_integration": "NOT_PERFORMED",
+  "next_task": "INDEPENDENT_REVIEW_OR_NEXT_SCHEDULED_QUEUE_ITEM",
+  "next_owner": "independent_reviewer_then_human_task_authority",
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "Phase B live read-only verification on NBA2K22.exe PID 1828; verified static RVA NBA2K22.exe+0x06347720 pointing to g_pRosterData (0x7FF4E6DFB2F0); verified Slot 1 count 3390, pData 0x7FF4E6DFB7D8; verified Slot 24 count 9773, pData 0x7FF4E74A7A3C; performed memory boundary checks and negative controls (+8 offset fatal error and Slot 9->10 4-byte gap); no memory writes or save modifications.",
+    "implementation_or_review_method": "Direct read-only Win32 ReadProcessMemory via GameMemory, SHA256 build verification, 5-point Python verification plan, OS managed verification run and inspect.",
+    "supportability_rationale": "Live process memory readings independently corroborate the 16-byte {count, pData} descriptor layout in active memory; live save binding held as UNBOUND_TO_CAREER_SAVE."
+  }
+}

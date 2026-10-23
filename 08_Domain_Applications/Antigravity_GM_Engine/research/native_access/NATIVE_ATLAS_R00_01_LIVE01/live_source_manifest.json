@@ -1,0 +1,54 @@
+{
+  "schema_version": "nba2k22.live_source_manifest.v1",
+  "task_id": "NBA2K22-NATIVE-ATLAS-R00-01-LIVE01",
+  "target_object": "ROSTERDATA",
+  "captured_at": "2026-10-23T00:46:00Z",
+  "base_commit": "1d980be8f32642e8c177a6ad8e9b429beaa48647",
+  "live_process_identity": {
+    "process_name": "NBA2K22.exe",
+    "pid": 1828,
+    "executable_path": "E:\\Games\\NBA 2K22\\NBA2K22.exe",
+    "executable_sha256": "1727AD72085FBA39E789EE574FC15AAB623AD1651CF6879E95E8CD53B6FFBBF5",
+    "module_base_address_hex": "0x140000000",
+    "module_memory_size_hex": "0x6DBA000",
+    "process_architecture": "x86_64",
+    "start_time": "2026-10-22T22:03:32"
+  },
+  "static_rva_binding": {
+    "static_manager_rva": "0x06347720",
+    "effective_virtual_address_hex": "0x146347720",
+    "resolved_manager_instance_pointer_hex": "0x7FF4E6DFB2F0"
+  },
+  "save_binding_status": {
+    "status": "LIVE_ROSTER_ACTIVE_MEMORY_UNBOUND_TO_CAREER_SAVE",
+    "career_save_id": null,
+    "save_instance_id": null,
+    "generation_id": null,
+    "operational_link": "NOT_BOUND_TO_ANY_SAVE",
+    "notes": "Game process is active with standard opening roster loaded in memory; no specific MyCareer save file was bound or selected."
+  },
+  "sources_consulted": [
+    {
+      "source_id": "BASE_R00_01_OFFLINE",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/native_access/NATIVE_ATLAS_R00_01/descriptor_origin_hypotheses.json",
+      "role": "offline_hypotheses_and_gap_evidence"
+    },
+    {
+      "source_id": "GAME_MEMORY_READER",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/src/memory.py",
+      "role": "read_only_process_memory_reader"
+    },
+    {
+      "source_id": "LIVE_PROCESS_QUERY",
+      "role": "live_windows_kernel32_toolhelp_and_rpm",
+      "evidence": "ReadProcessMemory executed in read_only=True mode against PID 1828"
+    }
+  ],
+  "safety_guarantees": {
+    "read_only_enforced": true,
+    "memory_writes_performed": false,
+    "game_save_mutations": false,
+    "slots_outside_1_and_24_enumerated": false,
+    "process_handle_closed_after_read": true
+  }
+}
