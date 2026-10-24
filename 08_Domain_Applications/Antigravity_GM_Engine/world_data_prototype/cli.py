@@ -6,9 +6,10 @@ import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1
-from readers import replay_ag01d
-from query import player_card,game_box,history,export_jsonl
+from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
+from readers import replay_ag01d,replay_player_families
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture
+from owner_capture import recorded_game_capture
 
 
 def synthetic_payload(save_id='demo-alpha',run_id='run-1',unit_id='unit-1',observed_at='2026-10-24T00:00:00Z'):
@@ -46,26 +47,38 @@ def main():
     sub.add_parser('smoke')
     demo=sub.add_parser('demo');demo.add_argument('database');demo.add_argument('save_id')
     replay=sub.add_parser('replay-ag01d');replay.add_argument('database');replay.add_argument('save_id');replay.add_argument('--observed-at')
+    families=sub.add_parser('replay-player-families');families.add_argument('database');families.add_argument('save_id');families.add_argument('--observed-at')
     stats=sub.add_parser('summary');stats.add_argument('database')
     card=sub.add_parser('player');card.add_argument('database');card.add_argument('player_id')
     game=sub.add_parser('game');game.add_argument('database');game.add_argument('game_id')
     hist=sub.add_parser('history');hist.add_argument('database');hist.add_argument('table');hist.add_argument('--entity-key');hist.add_argument('--entity-id');hist.add_argument('--limit',type=int,default=200)
     exp=sub.add_parser('export');exp.add_argument('database');exp.add_argument('table');exp.add_argument('destination');exp.add_argument('--limit',type=int,default=10000)
     mig=sub.add_parser('migrate-v1');mig.add_argument('source');mig.add_argument('new_database')
+    upgrade=sub.add_parser('upgrade');upgrade.add_argument('source');upgrade.add_argument('new_database')
+    owner=sub.add_parser('replay-owner-capture');owner.add_argument('capture_directory');owner.add_argument('database');owner.add_argument('research_save_id')
+    inspect=sub.add_parser('inspect-source');inspect.add_argument('database');inspect.add_argument('unit_id')
     args=parser.parse_args()
     if args.action=='smoke': print(json.dumps(smoke(),sort_keys=True));return
     if args.action=='summary':print(json.dumps(summarize(args.database),sort_keys=True));return
     if args.action=='player':print(json.dumps(player_card(args.database,args.player_id),ensure_ascii=False));return
     if args.action=='game':print(json.dumps(game_box(args.database,args.game_id),ensure_ascii=False));return
+    if args.action=='inspect-source':print(json.dumps(inspect_source_capture(args.database,args.unit_id),ensure_ascii=False));return
     if args.action=='history':print(json.dumps(history(args.database,args.table,entity_key=args.entity_key,entity_id=args.entity_id,limit=args.limit),ensure_ascii=False));return
     if args.action=='export':print(json.dumps(export_jsonl(args.database,args.destination,args.table,limit=args.limit)));return
     if args.action=='migrate-v1':print(json.dumps({'database':str(migrate_v1(args.source,args.new_database))}));return
-    if args.action=='replay-ag01d':
+    if args.action=='upgrade':print(json.dumps({'database':str(migrate_database(args.source,args.new_database))}));return
+    if args.action=='replay-owner-capture':
+        payload=recorded_game_capture(args.capture_directory,args.research_save_id)
+        create_database(args.database,args.research_save_id)
+        with connect(args.database) as conn:ingest_capture(conn,payload)
+        print(json.dumps(summarize(args.database),sort_keys=True));return
+    if args.action in ('replay-ag01d','replay-player-families'):
         create_database(args.database,args.save_id)
         # Each source unit is independently atomic; a later failure preserves
         # earlier successful units for diagnosis rather than feigning a full batch.
         results=[]
-        for payload in replay_ag01d(args.save_id,observed_at=args.observed_at):
+        reader=replay_ag01d if args.action=='replay-ag01d' else replay_player_families
+        for payload in reader(args.save_id,observed_at=args.observed_at):
             with connect(args.database) as conn:results.append(ingest_capture(conn,payload))
         print(json.dumps({'units':len(results),**summarize(args.database)},sort_keys=True));return
     if args.action=='init':create_database(args.database,args.save_id);print(json.dumps(summarize(args.database)));return

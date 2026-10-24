@@ -20,8 +20,13 @@ SEASON_RVA=0x0632B4B8
 GAME_OFFSET=0x28
 GAME_STRIDE=60
 RESEARCH_GAME_CAPACITY=1232
-STATBANK_OFFSET=0x1B6AC
+# The historical report spells both 0x1B6AC and decimal 112308 (8 bytes
+# different). The first actual owner read at the hex offset failed Box/score
+# conservation. Probe the documented decimal candidate separately; do not
+# silently treat the old report as a verified address.
+STATBANK_OFFSET=112308
 RESEARCH_STAT_CAPACITY=45292
+ROSTER_RVA=0x06347720
 
 
 class ReadOnlyGameProcess:
@@ -104,11 +109,64 @@ def collect_known_game(reader,game_index):
     raw=reader.read(season+STATBANK_OFFSET+idx*24,count*24,'ONE_GAME_PARTICIPANT_STATBANK')
     full=decoder.decode_full_boxscore(game,raw)
     return {'header':header,'game':game,'box':raw,'decoded':full,'season_pointer':hex(season),
+        'statbank_offset_candidate':STATBANK_OFFSET,
+        'score_conservation_passed':full['conservation']['home_score_exact'] and full['conservation']['away_score_exact'],
         'layout_grade':'KNOWN_RESEARCH_LAYOUT_PLAUSIBILITY_ONLY','save_binding':'UNKNOWN_NOT_INFERRED_FROM_PID',
         'active_schedule_window':'NOT_PROVEN','capacity_source':'AG_NATIVE_01D research, not a newly proven active count'}
 
 
-def probe(pid,new_output_directory,game_index=0):
+def collect_player_links(reader,game_result):
+    """Two actual game participants, no full PLAYER or hidden Potential reads.
+
+    The descriptor-bounded 2-byte ID lookup is mechanical, not a memory scan.
+    Native IDs must be unique in the observed pool before a link is emitted.
+    """
+    if not game_result['score_conservation_passed']:raise ValueError('cannot link a rejected Box layout')
+    decoded=game_result['decoded'];targets=[]
+    for side in ('home_players','away_players'):
+        present=[p for p in decoded[side] if p['in_use']]
+        if not present:raise ValueError('no observed active participant on one side')
+        targets.append(present[0]['player_id'])
+    ptr=reader.read(reader.module_base+ROSTER_RVA,8,'ROSTERDATA_POINTER')
+    root=struct.unpack('<Q',ptr)[0]
+    pdesc=reader.read(root+16,16,'ROSTER_SLOT1_DESCRIPTOR')
+    sdesc=reader.read(root+24*16,16,'ROSTER_SLOT24_DESCRIPTOR')
+    count,players=struct.unpack('<QQ',pdesc);stats_count,stats=struct.unpack('<QQ',sdesc)
+    if not 1<=count<=8192 or not 1<=stats_count<=65535:raise ValueError('descriptor outside bounded PLAYER/PLAYER_STATS envelope')
+    hits={p:[] for p in targets}
+    for index in range(count):
+        raw_id=reader.read(players+index*1264+0x2F8,2,'PLAYER_NATIVE_ID_ONLY')
+        native_id=struct.unpack('<H',raw_id)[0]
+        if native_id in hits:hits[native_id].append(index)
+    links=[];stats_decoder=_module('season_stats_decoder').SeasonStatsDecoder
+    for native_id,indices in hits.items():
+        item={'native_player_id':native_id,'identity_status':'UNIQUE_IN_CURRENT_OBSERVED_PLAYER_POOL' if len(indices)==1 else 'AMBIGUOUS_OR_NOT_OBSERVED',
+              'matched_indices':indices,'candidate_records':[]}
+        for index in indices[:8]:
+            address=players+index*1264
+            name=reader.read(address,80,'PLAYER_PUBLIC_NAME')
+            idx_raw=reader.read(address+0xFC,2,'PLAYER_CURRENT_SLOT24_INDEX')
+            idx=struct.unpack('<H',idx_raw)[0]
+            candidate={'player_pool_index':index,'first_name':name[40:80].decode('utf-16le').split('\0')[0],
+                'last_name':name[:40].decode('utf-16le').split('\0')[0],'current_slot24_index':idx}
+            if idx<stats_count and idx not in (65535,32756):
+                raw=reader.read(stats+idx*48,48,'MATCHING_SLOT24_CURRENT_RECORD')
+                candidate['season_total']=stats_decoder.decode_player_stats_record(raw)
+                candidate['season_raw_hex']=raw.hex()
+            else:candidate['season_status']='NOT_OBSERVED_INDEX_OUTSIDE_CURRENT_DESCRIPTOR'
+            item['candidate_records'].append(candidate)
+        item['candidate_details_complete']=len(indices)<=8
+        links.append(item)
+    if reader.read(reader.module_base+ROSTER_RVA,8,'ROSTER_POINTER_RECHECK')!=ptr:
+        raise ValueError('roster root changed during capture')
+    if reader.read(root+16,16,'ROSTER_SLOT1_RECHECK')!=pdesc or reader.read(root+24*16,16,'ROSTER_SLOT24_RECHECK')!=sdesc:
+        raise ValueError('roster descriptors changed during capture')
+    return {'player_descriptor_count':count,'slot24_descriptor_count':stats_count,'links':links,
+            'save_binding':'CURRENT_CAPTURE_SESSION_ONLY_PERSISTENT_SAVE_ID_UNKNOWN',
+            'hidden_potential_read':False,'lookup_scope':'Only 2-byte PLAYER native IDs, two names, two season index/record pairs'}
+
+
+def probe(pid,new_output_directory,game_index=0,include_player_links=False):
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False)
     result={'observed_at':datetime.now(timezone.utc).isoformat(),'pid':pid,'game_index':game_index,
         'source_mode':'LIVE_READ_ATTEMPT','game_writes':False,'save_binding':'UNKNOWN','source_facts_ingested':False}
@@ -118,8 +176,13 @@ def probe(pid,new_output_directory,game_index=0):
         found=collect_known_game(reader,game_index)
         for name in ('header','game','box'):(out/(name+'.bin')).write_bytes(found[name])
         (out/'decoded-game.json').write_text(json.dumps(found['decoded'],ensure_ascii=False,indent=2),encoding='utf-8')
-        result.update({'status':'BOUNDED_LIVE_BYTES_CAPTURED_NOT_FULL_ACCEPTANCE','module_base':hex(reader.module_base),
+        result.update({'status':'BOUNDED_LIVE_BYTES_CAPTURED_NOT_FULL_ACCEPTANCE' if found['score_conservation_passed'] else 'CAPTURE_REJECTED_LAYOUT_CHECK',
+                       'module_base':hex(reader.module_base),
                        'module_size':reader.module_size,**{k:v for k,v in found.items() if k not in ('header','game','box','decoded')}})
+        if include_player_links:
+            links=collect_player_links(reader,found)
+            (out/'player-links.json').write_text(json.dumps(links,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+            result['player_links_status']='RECORDED_WITHIN_CURRENT_CAPTURE_SESSION'
     except (OSError,ValueError,RuntimeError) as error:
         result.update({'status':'SOURCE_UNAVAILABLE','error_type':type(error).__name__,'winerror':getattr(error,'winerror',None),
                        'reason':str(error),'read_trace':getattr(error,'read_trace',[])})
@@ -131,7 +194,7 @@ def probe(pid,new_output_directory,game_index=0):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('pid',type=int);p.add_argument('new_output_directory');p.add_argument('--game-index',type=int,default=0);a=p.parse_args()
-    r=probe(a.pid,a.new_output_directory,a.game_index)
+    p=argparse.ArgumentParser();p.add_argument('pid',type=int);p.add_argument('new_output_directory');p.add_argument('--game-index',type=int,default=0);p.add_argument('--player-links',action='store_true');a=p.parse_args()
+    r=probe(a.pid,a.new_output_directory,a.game_index,a.player_links)
     print(json.dumps({k:r.get(k) for k in ('status','pid','winerror','save_binding','source_facts_ingested')}))
     raise SystemExit(0 if r['status']=='BOUNDED_LIVE_BYTES_CAPTURED_NOT_FULL_ACCEPTANCE' else 2)

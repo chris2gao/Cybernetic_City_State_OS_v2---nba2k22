@@ -8,6 +8,10 @@ import json
 from pathlib import Path
 from engine import connect
 from schema_model import TABLES, ident
+from family_codec import registered_rating_candidate,PROFILE
+
+RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_raw'
+                for d in PROFILE['fields']['PLAYER'] if d.get('conversion')=='rating' and d['name']!='potential'}
 
 PUBLIC_TABLES=frozenset(name for name,t in TABLES.items() if t.public)
 ENTITY_KEYS=frozenset('player_id team_id staff_id game_id season_id'.split())
@@ -48,6 +52,8 @@ def player_card(path,player_id):
                   ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1'''
                 row=c.execute(sql,(player_id,)).fetchone()
                 fields[col.name]=dict(row) if row else {'value':None,'status':'NOT_OBSERVED'}
+                if row and name=='player_attribute_snapshots' and col.name in RATING_COLUMNS:
+                    fields[col.name]['decoded_candidate']=registered_rating_candidate(row['value'])
             result['families'][name]=fields
         for name in ('player_badge_values','player_play_type_slots'):
             result['families'][name]=history(path,name,entity_key='player_id',entity_id=player_id)
@@ -62,6 +68,19 @@ def game_box(path,game_id):
             'period_scores':history(path,'game_period_scores',entity_key='game_id',entity_id=game_id),
             'player_boxes':history(path,'player_game_boxes',entity_key='game_id',entity_id=game_id),
             'team_boxes':history(path,'team_game_boxes',entity_key='game_id',entity_id=game_id)}
+
+
+def inspect_source_capture(path,unit_id):
+    """Developer evidence/quality inspection; not an ordinary-role Player query."""
+    with closing(connect(path,True)) as c:
+        unit=c.execute('SELECT u.*,r.source_grade,r.decoder_version,r.save_binding_ref FROM capture_units u JOIN capture_runs r USING(run_id) WHERE unit_id=?',(unit_id,)).fetchone()
+        if unit is None:return {'unit_id':unit_id,'status':'NOT_OBSERVED'}
+        staged=[dict(r) for r in c.execute('SELECT game_id,side,native_team_id,count(*) AS rows,sum(points) AS derived_box_points FROM native_box_observations WHERE unit_id=? GROUP BY game_id,side,native_team_id ORDER BY side',(unit_id,))]
+        periods=[dict(r) for r in c.execute('SELECT game_id,team_id,sum(period_points) AS regulation_period_sum FROM game_period_scores WHERE unit_id=? GROUP BY game_id,team_id',(unit_id,))]
+        gaps=[dict(r) for r in c.execute('SELECT target_field,reason,impact,human_exception_ref FROM field_gaps')]
+        canonical=c.execute('SELECT count(*) FROM player_game_boxes WHERE unit_id=?',(unit_id,)).fetchone()[0]
+        return {'unit':dict(unit),'typed_native_box_staging':staged,'period_sums':periods,
+                'canonical_player_box_rows':canonical,'gaps':gaps,'status':'RESEARCH_SOURCE_NOT_CANONICAL_PLAYER_ACCEPTANCE'}
 
 
 def export_jsonl(path,destination,table,*,limit=10000):

@@ -1,0 +1,70 @@
+{
+  "observed_at": "2026-10-24T13:22:15.789787+00:00",
+  "pid": 2564,
+  "game_index": 0,
+  "source_mode": "LIVE_READ_ATTEMPT",
+  "game_writes": false,
+  "save_binding": "UNKNOWN_NOT_INFERRED_FROM_PID",
+  "source_facts_ingested": false,
+  "status": "BOUNDED_LIVE_BYTES_CAPTURED_NOT_FULL_ACCEPTANCE",
+  "module_base": "0x140000000",
+  "module_size": 115056640,
+  "season_pointer": "0x7ff4e68fe1c8",
+  "statbank_offset_candidate": 112308,
+  "score_conservation_passed": true,
+  "layout_grade": "KNOWN_RESEARCH_LAYOUT_PLAUSIBILITY_ONLY",
+  "active_schedule_window": "NOT_PROVEN",
+  "capacity_source": "AG_NATIVE_01D research, not a newly proven active count",
+  "player_links_status": "RECORDED_WITHIN_CURRENT_CAPTURE_SESSION",
+  "read_trace": [
+    {
+      "operation": "OpenProcess",
+      "pid": 2564,
+      "requested_access": "0x1010 VM_READ|QUERY_LIMITED_INFORMATION",
+      "success": true,
+      "winerror": 0
+    },
+    {
+      "operation": "ReadProcessMemory",
+      "pid": 2564,
+      "label": "SEASON_HEADER",
+      "address": "0x7ff4e68fe1c8",
+      "requested_bytes": 64,
+      "returned_bytes": 64,
+      "success": true,
+      "winerror": 0,
+      "sha256": "885b1a577dc7f3668fb1a325ad6b94860e8414726fc00691ea15e0ba2fbe4eaa"
+    },
+    {
+      "operation": "ReadProcessMemory",
+      "pid": 2564,
+      "label": "ONE_SEASON_GAME",
+      "address": "0x7ff4e68fe1f0",
+      "requested_bytes": 60,
+      "returned_bytes": 60,
+      "success": true,
+      "winerror": 0,
+      "sha256": "23ff27b85075b1490684da6897dc76028113103129be7e4fb6381f148c4e04a3"
+    },
+    {
+      "operation": "ReadProcessMemory",
+      "pid": 2564,
+      "label": "ONE_GAME_PARTICIPANT_STATBANK",
+      "address": "0x7ff4e691987c",
+      "requested_bytes": 624,
+      "returned_bytes": 624,
+      "success": true,
+      "winerror": 0,
+      "sha256": "1a2a2b9bd2a06a888ea7000b43cca8822194ecab4544af1671634c292c8abda2"
+    }
+  ],
+  "artifact_sha256": {
+    "box.bin": "1a2a2b9bd2a06a888ea7000b43cca8822194ecab4544af1671634c292c8abda2",
+    "decoded-game.json": "c1d78104a6f37b190e31a68619d01bfc55bd7996ed9dade21a0b697e2f09fc49",
+    "game.bin": "23ff27b85075b1490684da6897dc76028113103129be7e4fb6381f148c4e04a3",
+    "header.bin": "885b1a577dc7f3668fb1a325ad6b94860e8414726fc00691ea15e0ba2fbe4eaa",
+    "player-links.json": "a3128fadbc6003958860e1b9aa4c6f6507526d16065f8bfd9b960afbbe1d7fb5"
+  },
+  "trace_excerpt_only": true,
+  "full_report_sha256": "a3c73a1e08d7c1cdeae84dba9b4a1b9adf2b150713fc9ca322e9f32eff8962d5"
+}
