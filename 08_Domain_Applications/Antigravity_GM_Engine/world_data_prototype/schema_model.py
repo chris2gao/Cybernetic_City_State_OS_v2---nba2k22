@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 3
+VERSION = 4
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -94,7 +94,7 @@ STATS_SOURCE = 'AG_NATIVE_01D/decoders: research layout; fixture replay only, no
 
 table('saves', 'singleton', 'RES-D', 'one independent game save per SQLite file', [
     col('save_id', required=True, source='HUMAN_OR_EVIDENCED_SAVE_BINDING', unit='opaque save identity'),
-    col('schema_version', 'INTEGER', required=True, check='schema_version=3', source='ENGINEERING_SCHEMA_VERSION'),
+    col('schema_version', 'INTEGER', required=True, check=f'schema_version={VERSION}', source='ENGINEERING_SCHEMA_VERSION'),
     col('created_at', required=True, source='SYSTEM_UTC_CLOCK', unit='ISO8601 UTC'),
     col('source_grade', required=True, default="'SYNTHETIC_ONLY'", source='EVIDENCE_CLASSIFICATION'),
     col('game_build'), col('native_save_fingerprint', visibility='OWNER_ONLY')],
@@ -224,7 +224,10 @@ def schema_sql():
         compare=[c.name for c in spec.columns if c.name not in {spec.key,'unit_id',*keys}]
         match=' AND '.join(f'old.{ident(k)}=NEW.{ident(k)}' for k in keys)
         diff=' OR '.join(f'(old.{ident(k)} IS NOT NULL AND NEW.{ident(k)} IS NOT NULL AND old.{ident(k)}<>NEW.{ident(k)})' for k in compare)
-        out.append(f'CREATE TRIGGER "{name}_frozen_conflict" BEFORE INSERT ON {name} WHEN EXISTS(SELECT 1 FROM game_state_observations WHERE game_id=NEW.game_id AND is_final=1) AND EXISTS(SELECT 1 FROM {name} old WHERE {match} AND ({diff})) BEGIN SELECT RAISE(ABORT,\'frozen game conflict; quarantine required\'); END;')
+        # Scheduled/in-progress observations remain historical observations;
+        # only a final observation is an immutable final-value baseline.
+        final_old='old.is_final=1' if name=='game_state_observations' else 'EXISTS(SELECT 1 FROM game_state_observations fs WHERE fs.game_id=old.game_id AND fs.unit_id=old.unit_id AND fs.is_final=1)'
+        out.append(f'CREATE TRIGGER "{name}_frozen_conflict" BEFORE INSERT ON {name} WHEN EXISTS(SELECT 1 FROM game_state_observations WHERE game_id=NEW.game_id AND is_final=1) AND EXISTS(SELECT 1 FROM {name} old WHERE {match} AND ({final_old}) AND ({diff})) BEGIN SELECT RAISE(ABORT,\'frozen game conflict; quarantine required\'); END;')
     for kind, target, key in [('player','players','player_id'),('team','teams','team_id'),('game','games','game_id'),('staff','staff_members','staff_id')]:
         out.append(f'CREATE TRIGGER "identity_{kind}_fk" BEFORE INSERT ON native_identity_links WHEN NEW.entity_type=\'{kind}\' AND NOT EXISTS(SELECT 1 FROM {target} WHERE {key}=NEW.entity_id) BEGIN SELECT RAISE(ABORT,\'unresolved native identity\'); END;')
     for name, entities in [('player_season_totals',['player_id','season_id']),('team_season_totals',['team_id','season_id'])]:

@@ -4,7 +4,7 @@ Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engi
 
 ## Implemented structure
 
-**Schema v3: 62 STRICT SQLite tables, 659 columns**. The 59-table approved provisional catalog is implemented, retaining `game_state_observations`, adding explicit `season_finalizations` and typed `native_box_observations` staging. The latter preserves real captured stats when a canonical player binding is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
+**Schema v4: 62 STRICT SQLite tables, 659 columns**. The 59-table approved provisional catalog is implemented, retaining `game_state_observations`, adding explicit `season_finalizations` and typed `native_box_observations` staging. The latter preserves real captured stats when a canonical player binding is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
 
 The database covers player/team/staff identities, typed attributes and named tendencies, vitals/contract/health/morale/training, badges/play types, schedule/period scores/Box/season totals, coaching/tactics/mentors, finances/market/draft, actual settings/rules, awards/records/news, native source governance, external transaction/readback contracts and season closure. **Having a typed table does not establish the Native source for its columns.** UNKNOWN ranges and source gaps remain explicit. Contract offset 833 aliases and badge tier encoding are not silently decoded.
 
@@ -28,6 +28,9 @@ python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py 
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py replay-owner-capture CAPTURE_DIRECTORY DB OWNER_CAPTURE_RESEARCH_ONLY
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py init-save SAVE_DIRECTORY nba2k22_test_01 NATIVE_SAVE_FILE
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-live PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY --game-index 0
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py upgrade-save SAVE_DIRECTORY MyLEAGUE0003
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-season PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py schedule DB --status-code 2
 python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q
 ```
 
@@ -65,4 +68,12 @@ The adapter requests public PLAYER segments on either side of Potential byte 108
 
 Actual second acquisition into this bound world contains 26 players, 26 canonical game Boxes, 25 native season totals, 54 registered public attributes / 48 named tendencies / 17 contract fields / four PlayTypes per player, two teams and eight period scores. All 26 original native Box rows remain in source staging. Rodney Hood has no current Slot24 record; no cumulative zeros were substituted. Game date stays NULL pending UI calendar evidence. The earlier research replay remains unchanged with its original unbound identity and zero canonical Boxes.
 
-No source unreadability is a Q10 exception by itself. Full schedule coverage, cross-session native player lifecycle, badge/contract UI semantics, staff assignments, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.
+## Complete observed schedule window (increment 05)
+
+`capture-season` reads the actual Slot10 count within the known SEASON bound, retains its 32-byte index and all 60-byte records, reads both-team Boxes for every final, then resolves the union of completed-game player IDs. Every index entry is checked against its SEASON date bits and both current TEAM pointers. Complete windows and captured Boxes are reread around player-context acquisition. Invalid/duplicate/nonconserving game sources reject the batch. Unknown player mappings remain typed source rows and explicit gaps; no identity is invented.
+
+Actual descriptor count is 1,232: 238 final games with both-team score conservation and 994 unplayed games. The final capture has 411 resolved players, 6,133 canonical game Boxes, all 6,170 native Box rows and 369 current player totals. Four IDs remain unresolved. Unplayed games get no artificial zero scores/Boxes; all canonical dates stay NULL pending UI calendar semantics. `schedule` uses latest observed state and exposes derived scores only when both canonical player Boxes cover every native in-use participant. Its row cap rejects truncation.
+
+Schema v4 fixes final-history comparison to use only prior final observations, allowing scheduled/in-progress/final progression and consistent final re-observation. Conflicting finals still reject. `upgrade-save` copies v1/v2/v3 facts into a new current-schema file and switches the small binding pointer while retaining the old DB and declaration. Name decoding stops at the aligned UTF-16 NUL before interpreting padding; invalid text before the terminator still rejects a candidate.
+
+No source unreadability is a Q10 exception by itself. Missing player IDs, current player lifecycle, calendar/badge/contract UI semantics, staff assignments, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.

@@ -70,6 +70,40 @@ def game_box(path,game_id):
             'team_boxes':history(path,'team_game_boxes',entity_key='game_id',entity_id=game_id)}
 
 
+def schedule(path,*,season_id=None,status_code=None,limit=2000):
+    """Latest observed schedule state; scores only from complete canonical Boxes."""
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    if status_code is not None and status_code not in ('0','1','2'):raise ValueError('native status must be 0, 1 or 2')
+    clauses=[];args=[]
+    if season_id is not None:clauses.append('g.season_id=?');args.append(season_id)
+    if status_code is not None:clauses.append('s.status_code=?');args.append(status_code)
+    where=' WHERE '+' AND '.join(clauses) if clauses else ''
+    sql='''WITH state AS (
+        SELECT s.*,u.observed_at,r.source_grade,
+        row_number() OVER (PARTITION BY s.game_id ORDER BY u.observed_at DESC,s.unit_id DESC) AS recency
+        FROM game_state_observations s JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)),
+      box AS (SELECT game_id,unit_id,team_id,count(*) AS rows,sum(points) AS points
+        FROM player_game_boxes GROUP BY game_id,unit_id,team_id),
+      expected AS (SELECT game_id,unit_id,side,sum(in_use) AS rows FROM native_box_observations GROUP BY game_id,unit_id,side)
+      SELECT g.*,h.display_name AS home_team_name,a.display_name AS away_team_name,
+        s.status_code,s.is_final,s.observed_at,s.source_grade,s.unit_id,
+        CASE WHEN hb.rows=he.rows AND hb.rows>0 THEN hb.points END AS home_points_derived,
+        CASE WHEN ab.rows=ae.rows AND ab.rows>0 THEN ab.points END AS away_points_derived,
+        CASE WHEN hb.rows=he.rows AND ab.rows=ae.rows AND hb.rows>0 AND ab.rows>0 THEN 1 ELSE 0 END AS canonical_box_complete,
+        'DERIVED_CANONICAL_BOX_SUM_WHEN_ALL_NATIVE_PARTICIPANTS_RESOLVED' AS score_provenance
+      FROM games g JOIN teams h ON h.team_id=g.home_team_id JOIN teams a ON a.team_id=g.away_team_id
+        LEFT JOIN state s ON s.game_id=g.game_id AND s.recency=1
+        LEFT JOIN box hb ON hb.game_id=g.game_id AND hb.unit_id=s.unit_id AND hb.team_id=g.home_team_id
+        LEFT JOIN box ab ON ab.game_id=g.game_id AND ab.unit_id=s.unit_id AND ab.team_id=g.away_team_id
+        LEFT JOIN expected he ON he.game_id=g.game_id AND he.unit_id=s.unit_id AND he.side='HOME'
+        LEFT JOIN expected ae ON ae.game_id=g.game_id AND ae.unit_id=s.unit_id AND ae.side='AWAY' '''
+    sql+=where+' ORDER BY g.season_id,CAST(g.native_game_id AS INTEGER),g.game_id LIMIT ?'
+    with closing(connect(path,True)) as c:
+        count=c.execute('SELECT count(*) FROM ('+sql+')',args+[10001]).fetchone()[0]
+        if count>limit:raise ValueError(f'schedule needs limit >= {count}; no silent truncation')
+        return [dict(row) for row in c.execute(sql,args+[limit])]
+
+
 def inspect_source_capture(path,unit_id):
     """Developer evidence/quality inspection; not an ordinary-role Player query."""
     with closing(connect(path,True)) as c:

@@ -84,7 +84,7 @@ def create_database(path,save_id,*,_migration_header=None,_seed_catalog=True):
                 header.update({k:v for k,v in _migration_header.items() if k in ('created_at','source_grade','game_build','native_save_fingerprint')})
             _insert(conn,'saves',header)
             if _seed_catalog:_seed_registry(conn)
-            conn.execute('PRAGMA user_version=3');conn.commit()
+            conn.execute(f'PRAGMA user_version={VERSION}');conn.commit()
             if conn.execute('PRAGMA foreign_key_check').fetchall():raise RuntimeError('schema FK failure')
     except BaseException:
         target.unlink(missing_ok=True);raise
@@ -221,10 +221,10 @@ def summarize(path):
 
 
 def migrate_database(source,new_path):
-    """Copy-upgrade v1/v2 to a NEW fact file, preserving all existing tables/rows."""
+    """Copy-upgrade an older schema to a NEW file, preserving tables/rows."""
     src=Path(source).resolve();dst=Path(new_path).resolve()
     with closing(connect(src,True)) as old:
-        if old.execute('PRAGMA user_version').fetchone()[0] not in (1,2):raise ValueError('source must be v1 or v2')
+        if old.execute('PRAGMA user_version').fetchone()[0] not in range(1,VERSION):raise ValueError('source must be an older supported schema')
         if old.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('source integrity failure')
         names={r[0] for r in old.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
         if names-TABLES.keys():raise ValueError('migration cannot silently discard unknown source tables')

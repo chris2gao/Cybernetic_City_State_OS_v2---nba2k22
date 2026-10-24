@@ -51,27 +51,27 @@ def main():
     if any(x in public_text.lower() for x in ('potential','raw_player_hex','protected_value_ref','payload_ref')):
         raise RuntimeError('restricted output in public projection')
     checksums={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir() if p.is_file()}
-    report={'task_id':'nba2k22-world-data-full-implementation-01','increment':'04_OPERATOR_SAVE_BINDING_AND_LIVE_WORLD_ADAPTER',
+    report={'task_id':'nba2k22-world-data-full-implementation-01','increment':'05_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYER_CONTEXT',
         'candidate_code_head':subprocess.run(['git','rev-parse','HEAD'],cwd=repo,capture_output=True,text=True,check=True).stdout.strip(),
         'status':'DEVELOPMENT_INCREMENT_VERIFIED_FULL_GOAL_NOT_COMPLETE',
         'environment':{'python':platform.python_version(),'platform':platform.system()},
         'test_exit_code':tests.returncode,'test_command':'python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q',
         'test_evidence':'tests.stderr.log','database':summarize(db),'native_source_status':'HISTORICAL_AG01D_AND_RECORDED_OWNER_LIVE_SOURCE_REPLAY',
         'check_scope':'This command replays fixtures; actual owner read calls are separately recorded in the Native source evidence',
-        'actual_owner_acquisition_evidence_ref':'01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment04/native_sources/source_manifest.json',
+        'actual_owner_acquisition_evidence_ref':'01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment05/native_sources/source_manifest.json',
         'season_observations':seasons,'observed_team_identities':team_count,
         'public_player_attributes_observed':sum(1 for f in card['families']['player_attribute_snapshots'].values() if f.get('value') is not None),
         'registered_player_families':summarize(family_db),'owner_source_replay':summarize(owner_db),
         'contract_bit_layout':profile_layout_receipt(),
         'queried_player_id':pid,'queried_game_id':gid,'exported_box_rows':export['rows'],
-        'implemented_domains':sorted({t.domain for t in TABLES.values()}),
+        'schema_domains':sorted({t.domain for t in TABLES.values()}),
         'schema_mapping':{'v1_tables_preserved':16,'approved_provisional_tables':59,'actual_tables':len(TABLES),
             'additional_tables':['game_state_observations','season_finalizations','native_box_observations']},
         'code_hash_scope':'Actual executed working-tree bytes at candidate_code_head; generated artifacts preserve their bytes via local .gitattributes',
-        'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [BASE/'schema.sql',BASE/'field_dictionary.json',BASE/'schema_model.py',BASE/'engine.py',BASE/'readers.py',BASE/'query.py',BASE/'live_reader.py',BASE/'family_codec.py',BASE/'owner_capture.py',BASE/'live_world.py',BASE/'cli.py']},
+        'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [BASE/'schema.sql',BASE/'field_dictionary.json',BASE/'schema_model.py',BASE/'engine.py',BASE/'readers.py',BASE/'query.py',BASE/'live_reader.py',BASE/'family_codec.py',BASE/'owner_capture.py',BASE/'live_world.py',BASE/'cli.py',BASE/'schedule_reader.py']},
         'artifact_sha256':checksums,'not_run':['fresh live acquisition inside this verification command','full-domain native source acceptance','100-season capacity benchmark','final managed verification','independent review','Human full-candidate acceptance'],
         'next_owner':'Codex continues engineering and can research Native directly; Human relays Gemini only for selected batch exploration',
-        'open_source_gaps':['full active schedule window','cross-session native player lifecycle identity','contract UI semantics after registered bit separation','badge tier encoding','staff-to-team and full coaching source','draft/G League native identities','all setting/rule UI fields','actual awards/records/news sources'],
+        'open_source_gaps':['four unresolved completed-game Native player IDs','calendar UI encoding','cross-session native player lifecycle identity','contract UI semantics after registered bit separation','badge tier encoding','staff-to-team and full coaching source','draft/G League native identities','all setting/rule UI fields','actual awards/records/news sources'],
         'q10_exceptions_approved':[],'game_writes':False,'game_process_access':False,'master_modified':False}
     (out/'development_report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'status':report['status'],'tests_exit':tests.returncode,'tables':len(TABLES),

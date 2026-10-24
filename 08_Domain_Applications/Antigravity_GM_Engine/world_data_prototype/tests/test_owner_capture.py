@@ -6,6 +6,7 @@ import unittest
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE))
 from owner_capture import recorded_game_capture
 from engine import connect,create_database,ingest_capture,migrate_database
+from schema_model import VERSION
 from query import inspect_source_capture,history
 FIXTURE=BASE/'tests/fixtures/owner_capture_20261024'
 
@@ -63,7 +64,7 @@ class OwnerCaptureTests(unittest.TestCase):
             before=hashlib.sha256(old.read_bytes()).hexdigest();migrate_database(old,new)
             self.assertEqual(hashlib.sha256(old.read_bytes()).hexdigest(),before)
             with connect(new) as c:
-                self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],3)
+                self.assertEqual(c.execute('PRAGMA user_version').fetchone()[0],VERSION)
                 self.assertEqual(c.execute('SELECT payroll_raw FROM team_finance_observations').fetchone()[0],1000)
                 self.assertEqual(c.execute("SELECT source_ref FROM native_fields WHERE field_id='players.player_id'").fetchone()[0],'OLDER_EVIDENCE')
                 self.assertTrue(c.execute("SELECT 1 FROM native_fields WHERE field_id='native_box_observations.native_player_id'").fetchone())
