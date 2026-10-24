@@ -2,6 +2,8 @@ task_packet:
   task_id: nba2k22-world-data-full-implementation-01
   repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
   exact_base_sha: 5cff5f7a6d826ed851954e83021e65372dcd2663
+  master_at_plan_creation: 977890d93210107a87acdce70b528065f82d49d0
+  note: executor_must_refresh_master_and_branch_HEAD_before_local_execution
   parent_branch: task/nba2k22-world-data-prototype-mainline-20261024
   branch: task/nba2k22-world-data-full-implementation-20261024
   risk_tier: T2_semantic
@@ -37,7 +39,6 @@ task_packet:
   required_tests:
     - PYTHON_UNIT
     - SQLITE_SMOKE
-    - FINAL_DOMAIN_COVERAGE
   prohibitions:
     - concurrent_Codex_Antigravity_local_worktree_mutations
     - merge_or_write_to_master_without_Human_confirmation
@@ -45,6 +46,11 @@ task_packet:
     - invent_native_values_or_silent_Human_Q10_exceptions
     - rewrite_confirmed_observation_history
     - introduce_cross_save_fork_or_inheritance_relations
+  final_acceptance_evidence:
+    - all_accepted_domains_res_p_t_c_g_l_m_h_s_d_with_exact_tables_and_columns
+    - native_source_or_explicit_unknown_for_every_target_field
+    - real_sqlite_ddl_ingest_query_and_data_integrity
+    - independent_review_after_completed_candidate
   big_task: true
   completion_pointer_ref: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/completion_pointer.json
   publisher:
