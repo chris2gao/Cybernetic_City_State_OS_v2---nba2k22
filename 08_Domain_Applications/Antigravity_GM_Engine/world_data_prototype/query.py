@@ -60,6 +60,51 @@ def player_card(path,player_id):
     return result
 
 
+def _scalar_families(conn,entity_key,entity_id,tables):
+    result={}
+    for table in tables:
+        values={}
+        for col in TABLES[table].columns:
+            if col.name in (entity_key,'unit_id',TABLES[table].key):continue
+            row=conn.execute(f'''SELECT a.{ident(col.name)} AS value,u.unit_id,u.observed_at,u.effective_at,u.completeness,r.source_grade
+                FROM {ident(table)} a JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+                WHERE a.{ident(entity_key)}=? AND a.{ident(col.name)} IS NOT NULL
+                ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(entity_id,)).fetchone()
+            values[col.name]=dict(row) if row else {'value':None,'status':'NOT_OBSERVED'}
+        result[table]=values
+    return result
+
+
+def staff_card(path,staff_id):
+    with closing(connect(path,True)) as c:
+        row=c.execute('SELECT * FROM staff_members WHERE staff_id=?',(staff_id,)).fetchone()
+        if row is None:return {'staff_id':staff_id,'status':'NOT_OBSERVED'}
+        result={'staff':dict(row),'families':_scalar_families(c,'staff_id',staff_id,
+            ('staff_contract_observations','staff_skill_observations','coach_preferences'))}
+    result['assignments']=history(path,'staff_team_assignments',entity_key='staff_id',entity_id=staff_id)
+    return result
+
+
+def team_card(path,team_id):
+    with closing(connect(path,True)) as c:
+        row=c.execute('SELECT * FROM teams WHERE team_id=?',(team_id,)).fetchone()
+        if row is None:return {'team_id':team_id,'status':'NOT_OBSERVED'}
+        result={'team':dict(row),'families':_scalar_families(c,'team_id',team_id,
+            ('team_finance_observations','team_state_observations','team_tactic_settings'))}
+        unit=c.execute('''SELECT u.unit_id FROM capture_units u JOIN staff_team_assignments a USING(unit_id)
+            WHERE a.team_id=? ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(team_id,)).fetchone()
+        result['assigned_staff']=[] if unit is None else [dict(r) for r in c.execute('''SELECT a.*,p.display_name,u.observed_at,r.source_grade
+            FROM staff_team_assignments a JOIN staff_members p USING(staff_id) JOIN capture_units u USING(unit_id)
+            JOIN capture_runs r USING(run_id) WHERE a.unit_id=? AND a.team_id=? ORDER BY CAST(a.role_code AS INTEGER)''',(unit[0],team_id))]
+        book=c.execute('''SELECT a.unit_id FROM team_playbook_slots a JOIN capture_units u USING(unit_id)
+            WHERE team_id=? ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(team_id,)).fetchone()
+        result['playbook_slots']=[] if book is None else [dict(r) for r in c.execute('''SELECT a.*,u.observed_at,r.source_grade
+            FROM team_playbook_slots a JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+            WHERE a.team_id=? AND a.unit_id=? ORDER BY a.slot_index''',(team_id,book[0]))]
+    result['season_totals']=history(path,'team_season_totals',entity_key='team_id',entity_id=team_id)
+    return result
+
+
 def game_box(path,game_id):
     with closing(connect(path,True)) as c:
         game=c.execute('SELECT * FROM games WHERE game_id=?',(game_id,)).fetchone()

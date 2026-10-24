@@ -4,7 +4,7 @@ Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engi
 
 ## Implemented structure
 
-**Schema v4: 62 STRICT SQLite tables, 659 columns**. The 59-table approved provisional catalog is implemented, retaining `game_state_observations`, adding explicit `season_finalizations` and typed `native_box_observations` staging. The latter preserves real captured stats when a canonical player binding is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
+**Schema v5: 63 STRICT SQLite tables, 693 columns**. The 59-table approved provisional catalog is implemented, retaining `game_state_observations`, adding explicit `season_finalizations`, typed `native_box_observations` staging and `team_state_observations`. Staging preserves real captured stats when a canonical player binding is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
 
 The database covers player/team/staff identities, typed attributes and named tendencies, vitals/contract/health/morale/training, badges/play types, schedule/period scores/Box/season totals, coaching/tactics/mentors, finances/market/draft, actual settings/rules, awards/records/news, native source governance, external transaction/readback contracts and season closure. **Having a typed table does not establish the Native source for its columns.** UNKNOWN ranges and source gaps remain explicit. Contract offset 833 aliases and badge tier encoding are not silently decoded.
 
@@ -31,6 +31,9 @@ python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py 
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py upgrade-save SAVE_DIRECTORY MyLEAGUE0003
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-season PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py schedule DB --status-code 2
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-organization PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py team DB team:native:0
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py staff DB staff:native:70
 python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q
 ```
 
@@ -76,4 +79,12 @@ Actual descriptor count is 1,232: 238 final games with both-team score conservat
 
 Schema v4 fixes final-history comparison to use only prior final observations, allowing scheduled/in-progress/final progression and consistent final re-observation. Conflicting finals still reject. `upgrade-save` copies v1/v2/v3 facts into a new current-schema file and switches the small binding pointer while retaining the old DB and declaration. Name decoding stops at the aligned UTF-16 NUL before interpreting padding; invalid text before the terminator still rejects a candidate.
 
-No source unreadability is a Q10 exception by itself. Missing player IDs, current player lifecycle, calendar/badge/contract UI semantics, staff assignments, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.
+## Current organization source (increment 06)
+
+`capture-organization` follows current TEAM/STAFF/TEAM_STATS descriptors without reading PLAYER structures. All 30 core teams' eight role pointers must align to the staff array and match both each STAFF record's reverse TEAM pointer and its role bits. The adapter checks current COACHDATA/GAMEPLAN/PLAYBOOKDATA metadata using the existing read-only verifier, resolves assigned native staff IDs, decodes staff contracts/seven public skill fields and captures 24 head-coach defaults. The native metadata gives PreferredSystem/ActiveSystem four-bit widths; the older STAFF three-bit profile is not used for these observations.
+
+Actual source provides 30 team totals, 240 assigned staff, 30 coach/default observations, 30 native finance snapshots and chemistry/fan state. Every team's wins/losses/points/opponent points reconciles exactly with the current complete schedule. The 84 loaded playbooks resolve all head-coach book codes and contribute 68 ordered native CRC slots per team (2,040 observations). Native book unique ID and loaded enum code are kept distinct. Play text labels, training and unassigned-staff market availability remain explicit gaps.
+
+`team` and `staff` return typed allowed fields, source grade and observation freshness; raw structures, source pointers and Potential are withheld. Financial amounts retain unsigned raw integers, with no signed-cash conversion, cap-space calculation or salary-unit assertion. Schema v5 adds distinct typed coach fields, extra native team stats/finance columns and the state observation table. Copy-upgrade preserves old files and history.
+
+No source unreadability is a Q10 exception by itself. Missing player IDs, lifecycle, calendar/badge/contract/finance UI semantics, gameplan/training/mentor sources, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.

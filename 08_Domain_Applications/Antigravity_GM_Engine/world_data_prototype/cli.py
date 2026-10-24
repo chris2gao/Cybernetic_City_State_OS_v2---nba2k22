@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
 from readers import replay_ag01d,replay_player_families
-from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card
 from owner_capture import recorded_game_capture
 
 
@@ -62,7 +62,15 @@ def main():
     saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
     season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory')
     sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--limit',type=int,default=2000)
+    org=sub.add_parser('capture-organization');org.add_argument('pid',type=int);org.add_argument('save_directory');org.add_argument('loaded_filename');org.add_argument('new_output_directory')
+    team=sub.add_parser('team');team.add_argument('database');team.add_argument('team_id')
+    staff=sub.add_parser('staff');staff.add_argument('database');staff.add_argument('staff_id')
     args=parser.parse_args()
+    if args.action=='capture-organization':
+        from organization_reader import capture_organization
+        print(json.dumps(capture_organization(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='team':print(json.dumps(team_card(args.database,args.team_id),ensure_ascii=False));return
+    if args.action=='staff':print(json.dumps(staff_card(args.database,args.staff_id),ensure_ascii=False));return
     if args.action=='schedule':print(json.dumps(schedule(args.database,season_id=args.season_id,status_code=args.status_code,limit=args.limit),ensure_ascii=False));return
     if args.action=='upgrade-save':
         from live_world import upgrade_bound_save
