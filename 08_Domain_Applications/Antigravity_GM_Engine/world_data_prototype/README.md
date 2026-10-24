@@ -4,7 +4,7 @@ Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engi
 
 ## Implemented structure
 
-**Schema v6: 68 STRICT SQLite tables, 833 columns**. The 59-table approved provisional catalog is implemented with explicit game/finalization/source observations, team state, draft-pool state, separate public prospect families and waived-salary observations. Staging preserves real captured stats when canonical identity is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
+**Schema v7: 74 STRICT SQLite tables, 936 columns**. The 59-table approved provisional catalog is implemented with explicit game/finalization/source observations, team state, draft/prospect/waived state and stored opponent-plan/training/mentor source observations. Staging preserves real captured stats when canonical identity is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
 
 The database covers player/team/staff identities, typed attributes and named tendencies, vitals/contract/health/morale/training, badges/play types, schedule/period scores/Box/season totals, coaching/tactics/mentors, finances/market/draft, actual settings/rules, awards/records/news, native source governance, external transaction/readback contracts and season closure. **Having a typed table does not establish the Native source for its columns.** UNKNOWN ranges and source gaps remain explicit. Contract offset 833 aliases and badge tier encoding are not silently decoded.
 
@@ -37,6 +37,9 @@ python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py 
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-market PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py market DB --team-id team:native:5
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py prospect DB PROSPECT_OBSERVATION_ID
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-planning PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py planning DB --team-id team:native:20
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py gameplan DB team:native:20 team:native:0
 python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q
 ```
 
@@ -98,4 +101,12 @@ All 222 actual 136-byte waived-salary records are retained as typed observations
 
 The actual prospect pool has 90 allocated templates with no name and native ID zero. These produce slot-state observations, **zero prospect people** and zero prospect attribute/tendency/play-type facts. The acquisition skips Potential byte1089 on every prospect read and reread. Separate typed prospect families support named source observations, never PLAYER instances. Class year is nullable and cannot be filled from the future-pick base year. `market` and `prospect` provide bounded role-safe queries; free-agent availability is explicitly not observed by this source.
 
-No source unreadability is a Q10 exception by itself. Missing player IDs, lifecycle, calendar/badge/contract/finance UI semantics, gameplan/training/mentor sources, initialized class/year, protection/swaps and results, G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.
+## Stored opponent plans and training (increment 08)
+
+`capture-planning` verifies native roster/franchise getters and current plan/defense metadata, reads all registered 35 plan slots per core team, then accepts the complete 29-core-opponent set per team. It joins canonical rotation/defensive subjects only to exact reciprocal current-roster UIDs for the corresponding own/opponent team. Stale or sentinel IDs retain raw values and NULL player FKs. SQLite checks parent/child unit consistency and same-unit roster ownership.
+
+Actual source has 870 core opponent plans (869 native commit flags0, one flag1), 20,010 ordered rotation rows and 20,010 defensive rows. The commit bit is observed state, not game-effect proof. The 461-player current roster binds 456 unique training IDs. All 786 registered training slots are classified; this capacity is not treated as an active count. Only ID+0 and flag bytes+0x318 are read from PLAYER_TRAINING; overall/attribute history arrays are not acquired. Thirty team training records supply six registered flag fields each.
+
+Thirty mentor headers have plausible owner/count fields and 61 relation headers whose two subjects match current own-roster UIDs. These produce observed associations with activity/effect explicitly unverified; badge slots, tiers, consent and improvement are not inferred. `planning` returns bounded source snapshots and `gameplan` returns one owner's stored opponent plan with identity/commit state. Default COACHDATA, byte-based GAMEPLAN and global rotation remain separate concepts.
+
+No source unreadability is a Q10 exception by itself. Missing player IDs, lifecycle, calendar/badge/contract/finance UI semantics, training focus/safe history, global rotation/effect, mentor badge activity, initialized class/year, protection/swaps and results, G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.

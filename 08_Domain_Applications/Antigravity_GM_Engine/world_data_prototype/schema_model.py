@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 6
+VERSION = 7
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -287,6 +287,50 @@ table('native_box_observations','box_observation_id','RES-D','one captured Box r
       [col('points_provenance',required=True),col('identity_status',required=True,default="'UNRESOLVED'")],
       unique=[('game_id','unit_id','side','row_index')],public=False)
 
+GAMEPLAN_HEADER_MAP={'POEOffense':'poe_offense_1_raw','POEOffense2':'poe_offense_2_raw','POEOffense3':'poe_offense_3_raw',
+    'POEDefense':'poe_defense_1_raw','POEDefense2':'poe_defense_2_raw','POEDefense3':'poe_defense_3_raw',
+    'HelpDefense':'help_defense_raw','RunPlayTendency':'run_plays_raw','ZoneUsage':'zone_usage_raw','BenchDepth':'bench_depth_raw',
+    'BenchUtilization':'bench_utilization_raw','LineupFormFactor':'lineup_form_factor_raw','PlaybookID':'playbook_code_raw','FreelanceType':'freelance_code_raw'}
+DEFENSE_COLUMN_MAP={'PressureOnball':'pressure_onball_raw','PressureOffball':'pressure_offball_raw','ForceDirection':'force_direction_raw',
+    'ScreenDefenseOnBall':'screen_defense_onball_raw','ScreenDefenseHedge':'screen_defense_hedge_raw','OffballScreenDefense':'offball_screen_defense_raw',
+    'PostDefense':'post_defense_raw','DoubleTeamPerimeter':'double_team_perimeter_raw','DoubleTeamPost':'double_team_post_raw',
+    'ScreenDefenseOnBall5':'screen_defense_onball5_raw','ScreenDefenseHedge5':'screen_defense_hedge5_raw','SwitchRule':'switch_rule_raw',
+    'OnballHelp':'onball_help_raw','ScreenHelp':'screen_help_raw','ExtendPressure':'extend_pressure_raw','TagOnRoll':'tag_on_roll_raw',
+    'StayAttached':'stay_attached_raw','PreRotate':'pre_rotate_raw'}
+table('gameplan_observations','plan_id','RES-C','one stored owner/opponent GAMEPLAN observation; commit flag is not game-effect proof',[
+    T(),ref('opponent_team_id','teams','team_id'),U(),col('source_slot_index','INTEGER',required=True),
+    col('is_in_use_raw','INTEGER',required=True),col('is_tainted_raw','INTEGER',required=True)]+
+    fields(' '.join(GAMEPLAN_HEADER_MAP.values()),source='src/gameplan_codec.py unpacked GAMEPLAN +0x17E..0x18B; native type metadata anchors checked; distinct from packed COACHDATA'),
+    unique=[('team_id','opponent_team_id','unit_id')],checks=['team_id<>opponent_team_id'])
+table('gameplan_rotation_observations','rotation_id','RES-C','one stored plan ordered rotation entry, including sentinel slots',[
+    ref('plan_id','gameplan_observations'),U(),col('slot_index','INTEGER',required=True),col('native_rotation_id_raw','INTEGER',required=True),
+    ref('player_id','players',required=False),col('rotation_spot_raw','INTEGER'),col('playing_time_raw','INTEGER'),col('identity_status',required=True)],
+    unique=[('plan_id','slot_index','unit_id')],source='GAMEPLAN +6, 23 four-byte entries; canonical link only to exact current own roster UID')
+table('gameplan_defense_observations','defense_id','RES-C','one stored plan defensive row, including empty sentinel rows',[
+    ref('plan_id','gameplan_observations'),U(),col('slot_index','INTEGER',required=True),col('native_matchup_id_raw','INTEGER',required=True),
+    col('native_defender_id_raw','INTEGER',required=True),ref('opponent_player_id','players','player_id',False),ref('defender_player_id','players','player_id',False),
+    col('slot_status',required=True),col('identity_status',required=True)]+
+    fields(' '.join(DEFENSE_COLUMN_MAP.values()),source='Current GAMEPLAN_MATCHUP_DEFENSIVE_SETTINGS native metadata; packed eight-byte row +0x64+12*i+4'),
+    unique=[('plan_id','slot_index','unit_id')])
+training_flags='position_raw player_type_raw intensity_raw injury_recovery_raw is_intensity_overriden_raw'
+table('player_training_slot_observations','training_slot_id','RES-P','one profile-bounded training slot; window capacity is not active player count',[
+    U(),col('source_slot_index','INTEGER',required=True),col('native_player_id_raw','INTEGER',required=True),col('identity_status',required=True)]+
+    fields(training_flags,source='training.json PLAYER_TRAINING ID+0 / flags+0x318; stride796 bound786; history arrays not read'),unique=[('unit_id','source_slot_index')])
+TABLES['team_training_settings'].columns+=fields('home_intensity_raw away_intensity_raw automate_intensity_raw rest_before_b2b_raw rest_after_b2b_raw injury_recovery_raw',
+    source='training.json TEAM_TRAINING flags+0x53/+0x54; current franchise slot maps to training root +88*slot')
+TABLES['player_training_observations'].columns+=fields('position_raw player_type_raw injury_recovery_raw is_intensity_overriden_raw source_slot_index',
+    source='training.json PLAYER_TRAINING +0x318 packed flags; exact unique current roster UID match')+[col('identity_status')]
+table('mentor_manager_observations','manager_id','RES-C','one observed mentorship header per current franchise team',[
+    T(),U(),col('franchise_slot','INTEGER'),col('header_team_id_raw','INTEGER'),col('first_badge_raw','INTEGER'),
+    col('relation_count_raw','INTEGER'),col('layout_status',required=True)],unique=[('team_id','unit_id')],source='training.json franchise manager +0x132A8 first12 bytes; owner/count plausibility separate from effect')
+table('native_mentor_relation_observations','native_relation_id','RES-C','one native mentorship relation header before canonical/effect claims',[
+    T(),U(),col('source_slot_index','INTEGER'),col('mentee_id_raw','INTEGER'),col('mentor_id_raw','INTEGER'),
+    col('duration_days_raw','INTEGER'),col('compatibility_word_raw','INTEGER'),col('badge_count_raw','INTEGER'),col('identity_status',required=True)],
+    unique=[('team_id','unit_id','source_slot_index')],source='training.json relation entry204 first24 bytes; badge slots not read')
+TABLES['mentorship_relations'].columns+=fields('source_slot_index duration_days_raw compatibility_word_raw badge_count_raw',
+    source='Current native mentorship relation header plus both exact own-roster UID links; compatibility word not converted')+[
+    col('association_status',default="'OBSERVED_PAIR_ACTIVITY_NOT_VERIFIED'",source='EVIDENCE_CLASSIFICATION: association source/identity only, not actor consent or badge effect')]
+
 # Field-level evidence annotations for the implemented sample adapter. Never
 # promote a native legal game/UI range from its packed integer storage width.
 for name in ('player_game_boxes','team_game_boxes','player_season_totals','team_season_totals'):
@@ -314,6 +358,10 @@ def schema_sql():
             out.append(f'CREATE TRIGGER "{t.name}_no_{op.lower()}" BEFORE {op} ON {ident(t.name)} BEGIN SELECT RAISE(ABORT,\'immutable history\'); END;')
         if t.observation and any(c.name=='unit_id' for c in t.columns):
             out.append(f'CREATE TRIGGER "{t.name}_successful_unit" BEFORE INSERT ON {ident(t.name)} WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status=\'success\') BEGIN SELECT RAISE(ABORT,\'capture unit is not successful\'); END;')
+    for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
+        out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
+    for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:
+        out.append(f'CREATE TRIGGER "{name}_{column}_roster" BEFORE INSERT ON {name} WHEN NEW.{column} IS NOT NULL AND NOT EXISTS(SELECT 1 FROM gameplan_observations p JOIN roster_memberships r ON r.unit_id=NEW.unit_id AND r.team_id=p.{owner} AND r.player_id=NEW.{column} WHERE p.plan_id=NEW.plan_id) BEGIN SELECT RAISE(ABORT,\'gameplan player lacks same-unit roster owner\'); END;')
     for name in ['player_game_boxes','team_game_boxes','game_period_scores']:
         out.append(f'CREATE TRIGGER "{name}_participant" BEFORE INSERT ON {name} WHEN NOT EXISTS (SELECT 1 FROM games WHERE game_id=NEW.game_id AND NEW.team_id IN (home_team_id,away_team_id)) BEGIN SELECT RAISE(ABORT,\'team is not a game participant\'); END;')
     # Once a game is final, fill formerly unobserved fields but never silently

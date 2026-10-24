@@ -137,6 +137,40 @@ def market_snapshot(path,*,team_id=None,limit=10000):
             'free_agent_availability':'NOT_OBSERVED_BY_THIS_SOURCE','draft_results':'NOT_INFERRED_FROM_ASSET_OR_SLOT_STATE'}
 
 
+def planning_snapshot(path,*,team_id=None,limit=5000):
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    with closing(connect(path,True)) as c:
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,r.source_grade FROM capture_units u JOIN capture_runs r USING(run_id)
+            WHERE u.source_key='BOUND_PLANNING_AND_TRAINING' AND u.unit_status='success'
+            ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''').fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED'}
+        groups={};total=0
+        for table in ('gameplan_observations','team_training_settings','player_training_observations','mentorship_relations','mentor_manager_observations'):
+            args=[unit['unit_id']];where=''
+            if team_id is not None:where=' AND team_id=?';args.append(team_id)
+            rows=[dict(r) for r in c.execute('SELECT * FROM '+ident(table)+' WHERE unit_id=?'+where+' ORDER BY '+ident(TABLES[table].key),args)]
+            total+=len(rows);groups[table]=rows
+        if total>limit:raise ValueError('planning snapshot exceeds explicit cap; no truncation')
+        counts={r['identity_status']:r['n'] for r in c.execute('SELECT identity_status,count(*) AS n FROM player_training_slot_observations WHERE unit_id=? GROUP BY identity_status',(unit['unit_id'],))}
+        return {'status':'OBSERVED_STORED_PLANS_AND_TRAINING','unit':dict(unit),'families':groups,
+            'native_commit_flag_counts':{str(r['is_in_use_raw']):r['n'] for r in c.execute('SELECT is_in_use_raw,count(*) AS n FROM gameplan_observations WHERE unit_id=? GROUP BY is_in_use_raw',(unit['unit_id'],))},
+            'training_slot_identity_counts':counts,'game_effect':'NOT_INFERRED_FROM_COMMIT_FLAG','training_history':'NOT_ACQUIRED'}
+
+
+def gameplan_card(path,team_id,opponent_team_id):
+    with closing(connect(path,True)) as c:
+        plan=c.execute('''SELECT p.*,u.observed_at,r.source_grade FROM gameplan_observations p JOIN capture_units u USING(unit_id)
+            JOIN capture_runs r USING(run_id) WHERE p.team_id=? AND p.opponent_team_id=?
+            ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(team_id,opponent_team_id)).fetchone()
+        if plan is None:return {'team_id':team_id,'opponent_team_id':opponent_team_id,'status':'NOT_OBSERVED'}
+        rotations=[dict(r) for r in c.execute('''SELECT a.*,p.display_name FROM gameplan_rotation_observations a
+            LEFT JOIN players p USING(player_id) WHERE a.plan_id=? ORDER BY a.slot_index''',(plan['plan_id'],))]
+        defenses=[dict(r) for r in c.execute('''SELECT a.*,o.display_name AS opponent_display_name,d.display_name AS defender_display_name
+            FROM gameplan_defense_observations a LEFT JOIN players o ON o.player_id=a.opponent_player_id
+            LEFT JOIN players d ON d.player_id=a.defender_player_id WHERE a.plan_id=? ORDER BY a.slot_index''',(plan['plan_id'],))]
+        return {'plan':dict(plan),'rotations':rotations,'defenses':defenses,'game_effect':'NOT_INFERRED_FROM_COMMIT_FLAG'}
+
+
 def game_box(path,game_id):
     with closing(connect(path,True)) as c:
         game=c.execute('SELECT * FROM games WHERE game_id=?',(game_id,)).fetchone()
