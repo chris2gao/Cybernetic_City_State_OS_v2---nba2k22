@@ -50,6 +50,24 @@ entries:
   cache_dirs: []
   failure_surfacing: next static or pilot validation
   deletion_rule: protected
+- path: 01_os/01_workflow/01_需求建模/方法论_v0.4.md
+  purpose: Human特批本仓活动的需求共识/需求结果双层建模规范
+  loader: workflow Stage01 planning model / Human
+  loader_class: host_application
+  discovery: boot.stage01_active_semantic_spec and 01_需求建模/README.md
+  evidence: 01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml
+  cache_dirs: []
+  failure_surfacing: next Stage01 review
+  deletion_rule: protected
+- path: 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
+  purpose: 跨领域目标成品逐项建模参考模板
+  loader: workflow Stage01 planning model / Human
+  loader_class: host_application
+  discovery: boot.stage01_result_model_template and 方法论_v0.4.md
+  evidence: 01_os/01_workflow/01_需求建模/方法论_v0.4.md
+  cache_dirs: []
+  failure_surfacing: next Stage01 result-model review
+  deletion_rule: protected
 committed_run_validation:
   candidate_required: exact_40_character_commit
   structure_source: candidate_regular_Git_blobs_not_mutable_checkout

@@ -1,0 +1,36 @@
+# Stage01b 跨领域参考模板；不是当前七阶段 runner v1 的新增必填 Schema
+schema_version: citystate.workflow.requirement_result.template.v1
+status: template_only
+task_id: "<task>"
+stage01:
+  consensus_A0:
+    version: "<A0 version>"
+    human_confirmation_ref: "<A0 confirmed ref>"
+  requirement_result_A:
+    version: "<A version>"
+    objective: "<任务最终成品的可观察形态>"
+    result_items:
+    - result_item_id: "RES-001"
+      title: "<一个具体的最终交付对象>"
+      kind: "<entity|function|interface|document|other>"
+      expected_end_state: "<最终交付成品实际具有的内容/形态>"
+      components: ["<已知子对象/字段/行为，逐项展开>"]
+      relations: ["<对象间关系/键/生命周期>"]
+      inputs_outputs: ["<查询/导出/操作结果举例>"]
+      completeness_rule: "<如何判定全部内容到位>"
+      known_facts:
+      - item: "<明确已知项目>"
+        evidence_status: "human_requirement"
+      unknowns:
+      - question_id: "EVQ-001"
+        scope: "<具体需核实的剩余字段/来源/关系>"
+        closure_evidence: "<何种证明可关闭>"
+        status: unknown
+      acceptance_criterion_ids: ["SC-001"]
+    coverage:
+    - success_criterion_id: "SC-001"
+      result_item_ids: ["RES-001"]
+      evidence_questions: ["EVQ-001"]
+    human_complete_A_confirmation:
+      confirmed: false
+      version: "<A version>"

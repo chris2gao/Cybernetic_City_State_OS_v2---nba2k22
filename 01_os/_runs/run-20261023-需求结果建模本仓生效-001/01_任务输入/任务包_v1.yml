@@ -1,0 +1,36 @@
+task_packet:
+  task_id: OS-STAGE01-REQUIREMENT-RESULT-NBA2K22-20261023
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 407e2134bd2f595477099b2c6e3484c818059fd9
+  branch: task/os-stage01-requirement-result-20261023
+  objective: "特批在本仓激活需求共识→需求结果建模的工作流语义，保留七阶段兼容并开始NBA2K22第一任务01b"
+  allowed_changed_paths:
+    - "01_os/01_workflow/"
+    - "01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml"
+    - "01_os/05_registry/workflow_minimum_operational_loop_v1.yml"
+    - "01_os/_runs/run-20261023-需求结果建模本仓生效-001/"
+    - "08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_TASK1_REQUIREMENT_RESULT_MODEL_V0_1.md"
+  source_evidence:
+    - "Human 2026-10-23 特批本仓核心工作流修改和提交，Core后续审核"
+    - "01_os/01_workflow/01_需求建模/方法论_v0.2.md@407e2134bd2f595477099b2c6e3484c818059fd9"
+  required_tests:
+    - "readback_activity"
+    - "unchanged_seven_stage_contract"
+    - "boot_registry_links"
+    - "yaml_template_parse"
+    - "allowed_paths"
+  verification_plan: "01_os/_runs/run-20261023-需求结果建模本仓生效-001/01_任务输入/verification_plan.json"
+  prohibitions:
+    - "访问本地DCR或游戏进程"
+    - "更改七阶段runner v1必填字段而无兼容验证"
+    - "宣称未经独立审核的机器验收已完成"
+    - "修改Core仓库master"
+    - "force_push/rewrite_history"
+  required_completion_pointer: "Git SHA and active workflow method path"
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: current_Human_confirmed_for_NBA2K22
+    expected_remote_master_head: 407e2134bd2f595477099b2c6e3484c818059fd9
