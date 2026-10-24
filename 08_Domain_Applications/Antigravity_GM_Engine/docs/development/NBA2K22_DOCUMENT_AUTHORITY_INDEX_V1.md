@@ -8,6 +8,7 @@
 |---|---|---|
 | OS全局机制与权限 | `AGENT_WORKING_DISCIPLINE.md`, 根`AGENTS.md`, `01_os/README.md`, `01_os/开发入口与单窗口任务规范_v1.md`, `08_Domain_Applications/AGENTS.md` | 当下`master`或Human指派的确切OS版本；不由领域docs重写 |
 | 玩家产品目标和角色授权 | [项目宗旨](../PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md)、后续Human明确更新 | 六阶段参与顺序、自然成长、受控写入。业务文档不可将规划视作Human新的写游戏许可 |
+| NBA2K22 项目级开发协作 | [跨模型开发规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)，[旧V1](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md) | **V2进入master后为当前项目默认**：GPT负责规划/Human关键决策，Codex唯一工程Owner，Antigravity顺序有界探索；共用本地仓库不得并行。V1保留历史和不冲突的证据/子代理限制。此行不是OS全局机制更新 |
 | 世界数据目标架构 | [平行世界V2](PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)及**未来通过审核的新ADR** | V2修订V1中“必须保留旧双库物理Schema”说法；**V2仍为目标设计而非通过的DDL** |
 | 当前开发基线与成熟度 | [正式开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md)、[能力总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json) | 只是来源和状态索引，关于某族成熟度优先回到FINAL-CODEX矩阵与新实际验证 |
 | 历史代码/成果证据 | [历史任务索引](NBA2K22_HISTORICAL_TASK_REGISTER_V1.json)、`docs/development_reviews/`、`research/native_access/` | 历史审计判断仅针对固定commit和范围，之后AG research与生产状态不能借旧证据冒领 |
@@ -42,6 +43,7 @@
 
 ## 4. 按问题恢复上下文（最小读取集）
 
+- **我是NBA2K22开发规划/执行模型**：在OS启动文件后读取领域`AGENTS.md`所指向的[当前项目级跨模型规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)；旧规划中的Codex/Antigravity并行或先全研究再开发要求，以最新Human决定的顺序结对与原型驱动为准。
 - **我是新开发执行模型**：读OS入口 + [开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) + 当前task packet + 前置完成指针；需要具体能力时定位[40族总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json)中的1项。
 - **我是新规划模型**：读OS入口 + [规划入口](NBA2K22_PLANNING_MODEL_ENTRY_V1.md) + [路线图](OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md)/backlog对应节点 + 直属上游设计裁决。
 - **我想知道开发完成了什么**：能力总账→FINAL-CODEX机器矩阵→具体源码/验收报告和当前新run；不信“任务名称”或全局DONE。
