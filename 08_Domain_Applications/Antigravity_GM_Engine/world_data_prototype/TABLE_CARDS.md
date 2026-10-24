@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **63**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **68**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -53,7 +53,12 @@ Actual tables: **63**. Every table is STRICT and append-only. A SQLite owner can
 | `draft_pick_assets` | RES-M | one actual draft pick identity | `pick_id` | save_id -> saves(save_id); original_team_id -> teams(team_id) | ADD |
 | `transaction_components` | RES-M | one evidenced external transaction component | `component_id` | transaction_id -> external_transaction_events(transaction_id); unit_id -> capture_units(unit_id); from_team_id -> teams(team_id); to_team_id -> teams(team_id); player_id -> players(player_id); staff_id -> staff_members(staff_id); pick_id -> draft_pick_assets(pick_id) | ADD |
 | `draft_pick_ownerships` | RES-M | observed or explicit event-backed pick ownership | `ownership_id` | pick_id -> draft_pick_assets(pick_id); owner_team_id -> teams(team_id); unit_id -> capture_units(unit_id); event_ref -> external_transaction_events(transaction_id) | ADD |
-| `draft_prospects` | RES-M | one evidenced prospect, separate from player instance | `prospect_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |
+| `draft_prospects` | RES-M | one named prospect source observation, separate from PLAYER instance | `prospect_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |
+| `draft_pool_slot_observations` | RES-M | one actual draft-pool slot observation, including uninitialized slots | `pool_slot_id` | unit_id -> capture_units(unit_id) | ADD |
+| `draft_prospect_attribute_snapshots` | RES-P | one named prospect public attribute observation | `snapshot_id` | prospect_id -> draft_prospects(prospect_id); unit_id -> capture_units(unit_id) | ADD |
+| `draft_prospect_tendency_snapshots` | RES-P | one named prospect registered tendency observation | `snapshot_id` | prospect_id -> draft_prospects(prospect_id); unit_id -> capture_units(unit_id) | ADD |
+| `draft_prospect_play_type_slots` | RES-P | one named prospect ordered native play-type observation | `slot_id` | prospect_id -> draft_prospects(prospect_id); unit_id -> capture_units(unit_id) | ADD |
+| `waived_salary_observations` | RES-M | one observed 136-byte native waived-salary source record; not an inferred release event | `waived_id` | team_id -> teams(team_id); player_id -> players(player_id); unit_id -> capture_units(unit_id) | ADD |
 | `draft_results` | RES-M | actual source-backed draft result | `result_id` | prospect_id -> draft_prospects(prospect_id); pick_id -> draft_pick_assets(pick_id); team_id -> teams(team_id); player_id -> players(player_id); unit_id -> capture_units(unit_id) | ADD |
 | `worldline_config_versions` | RES-S | versioned desired configuration, never actual game state | `config_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |
 | `game_setting_observations` | RES-S | one actual native setting, using typed value alternatives | `setting_obs_id` | unit_id -> capture_units(unit_id); field_id -> native_fields(field_id) | ADD |

@@ -4,14 +4,14 @@ The SQL and complete field cards are generated from this module; persisted facts
 are relational columns, never an EAV/JSON substitute for the domain model.
 """
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 import json
 import re
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 5
+VERSION = 6
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -214,7 +214,55 @@ table('external_transaction_events','transaction_id','RES-M','explicit completed
 table('draft_pick_assets','pick_id','RES-M','one actual draft pick identity',[SAVE(),col('draft_year','INTEGER',required=True),col('draft_round','INTEGER',required=True),ref('original_team_id','teams','team_id'),col('native_pick_id')],unique=[('draft_year','draft_round','original_team_id')],observation=False)
 table('transaction_components','component_id','RES-M','one evidenced external transaction component',[ref('transaction_id','external_transaction_events'),U(),ref('from_team_id','teams','team_id',False),ref('to_team_id','teams','team_id',False),ref('player_id','players',required=False),ref('staff_id','staff_members',required=False),ref('pick_id','draft_pick_assets',required=False),col('component_kind',required=True),col('salary_raw','INTEGER')],public=False)
 table('draft_pick_ownerships','ownership_id','RES-M','observed or explicit event-backed pick ownership',[ref('pick_id','draft_pick_assets'),ref('owner_team_id','teams','team_id'),U(),ref('event_ref','external_transaction_events','transaction_id',False),col('origin_type',required=True,check="origin_type IN ('NATIVE','EXTERNAL')")],unique=[('pick_id','unit_id')])
-table('draft_prospects','prospect_id','RES-M','one evidenced prospect, separate from player instance',[SAVE(),col('draft_year','INTEGER',required=True),col('native_prospect_id'),col('display_name'),U()])
+TABLES['draft_pick_ownerships'].columns+=fields('source_row_index native_pick_index_raw',source='DRAFT_ASSETS 32-byte actual descriptor index and +28 metadata bits8..15; not a selection result')+[
+    col('protection_status',default="'UNKNOWN'",source='Protection semantics not decoded; absence is not unprotected'),
+    col('swap_status',default="'UNKNOWN'",source='Swap semantics not decoded; absence is not no swap')]
+table('draft_prospects','prospect_id','RES-M','one named prospect source observation, separate from PLAYER instance',[SAVE(),
+    col('draft_year','INTEGER',source='UNKNOWN unless actual class year source is acquired; never infer from next future-pick year'),
+    col('native_prospect_id',source='Public prospect record +0x2F8 uint16; not assumed unique in pool'),col('display_name'),
+    col('class_year_status',default="'UNKNOWN'"),U()])
+table('draft_pool_slot_observations','pool_slot_id','RES-M','one actual draft-pool slot observation, including uninitialized slots',[
+    U(),col('source_row_index','INTEGER',required=True),col('slot_state',required=True),col('native_prospect_id'),
+    col('display_name'),col('draft_year','INTEGER'),col('class_year_status',required=True)],unique=[('unit_id','source_row_index')],
+    source='ROSTERDATA Slot4 count/pointer, 1264-byte public template excluding Potential; allocated slots are not necessarily people')
+table('draft_prospect_attribute_snapshots','snapshot_id','RES-P','one named prospect public attribute observation',[
+    ref('prospect_id','draft_prospects'),U()]+[replace(c) for c in attribute_cols],unique=[('prospect_id','unit_id')])
+table('draft_prospect_tendency_snapshots','snapshot_id','RES-P','one named prospect registered tendency observation',[
+    ref('prospect_id','draft_prospects'),U()]+[replace(c) for c in tendency_cols if c.name in {name.lower()+'_raw' for name in TENDENCY_FIELDS}],unique=[('prospect_id','unit_id')])
+table('draft_prospect_play_type_slots','slot_id','RES-P','one named prospect ordered native play-type observation',[
+    ref('prospect_id','draft_prospects'),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('native_play_code')],unique=[('prospect_id','unit_id','slot_index')])
+table('waived_salary_observations','waived_id','RES-M','one observed 136-byte native waived-salary source record; not an inferred release event',[
+    T(False),ref('player_id','players',required=False),U(),col('source_row_index','INTEGER',required=True),
+    col('owner_mapping_status',required=True),col('native_player_id','INTEGER'),col('observed_player_name'),
+    col('player_mapping_status',required=True),col('name_source_status',required=True)]+
+    fields('salary_year_1_raw salary_year_2_raw salary_year_3_raw',source='WAIVED_SALARY +16/+20/+24 uint32 research candidate, relative buckets; absolute season mapping and UI units unknown'),
+    unique=[('unit_id','source_row_index')],source='ROSTERDATA Slot61 stride136; TEAM pointer+8; candidate inline UTF16 surname+56/given+96')
+market_column_sources={
+    'draft_pick_assets':{'draft_year':'DRAFT_ASSETS +28 bits22..31 +2000; checked native getter profile and complete groups',
+        'draft_round':'DRAFT_ASSETS +28 bits3..7 +1; only verified future round codes0/1 accepted',
+        'original_team_id':'DRAFT_ASSETS +8 TEAM pointer; current named getter bytes checked',
+        'native_pick_id':'UNKNOWN: no stable unique Native pick ID is asserted from array index'},
+    'draft_pick_ownerships':{'owner_team_id':'DRAFT_ASSETS +0 TEAM pointer; current named getter bytes checked',
+        'origin_type':'EVIDENCE_CLASSIFICATION: observed native owner state, not a completed transaction'},
+    'draft_pool_slot_observations':{'source_row_index':'ENGINEERING_ARRAY_INDEX: actual Slot4 descriptor-bounded index',
+        'slot_state':'EVIDENCE_CLASSIFICATION: aligned UTF16 prefix presence; blank slot is not a person',
+        'native_prospect_id':'Slot4 public template +0x2F8 uint16; zero/duplicate IDs not promoted to identity',
+        'display_name':'Slot4 +0..39 surname and +40..79 given-name UTF16 candidate prefixes',
+        'draft_year':'UNKNOWN: actual class year not inferred from future pick base',
+        'class_year_status':'EVIDENCE_CLASSIFICATION: actual class year source missing'},
+    'waived_salary_observations':{'team_id':'WAIVED_SALARY +8 exact current TEAM pointer mapping; not economic active-status proof',
+        'source_row_index':'ENGINEERING_ARRAY_INDEX: actual Slot61 descriptor-bounded index',
+        'owner_mapping_status':'EVIDENCE_CLASSIFICATION: CORE_TEAM_POINTER or UNMAPPED_OR_EMPTY',
+        'native_player_id':'UNKNOWN: no Native person ID inferred from the first Q word or inline name',
+        'observed_player_name':'WAIVED_SALARY candidate inline UTF16 surname+56..95/given+96..135; no canonical association',
+        'player_mapping_status':'EVIDENCE_CLASSIFICATION: canonical PLAYER link not established',
+        'name_source_status':'EVIDENCE_CLASSIFICATION: candidate inline text decoding only'}}
+for table_name,mapping in market_column_sources.items():
+    for c in TABLES[table_name].columns:
+        if c.name in mapping:c.source=mapping[c.name]
+for table_name in ('draft_prospect_attribute_snapshots','draft_prospect_tendency_snapshots'):
+    for c in TABLES[table_name].columns:
+        if c.name.endswith('_raw'):c.source='Slot4 TEMPLATE_CANDIDATE; named initialized-class Native acceptance outstanding; '+c.source
 table('draft_results','result_id','RES-M','actual source-backed draft result',[ref('prospect_id','draft_prospects',required=False),ref('pick_id','draft_pick_assets',required=False),T(),ref('player_id','players',required=False),U(),col('source_ref',required=True),col('selection_number','INTEGER')])
 table('worldline_config_versions','config_id','RES-S','versioned desired configuration, never actual game state',[SAVE(),U(),col('config_version',required=True),col('config_hash',required=True),col('approval_ref')],unique=[('config_version',)],public=False)
 table('game_setting_observations','setting_obs_id','RES-S','one actual native setting, using typed value alternatives',[U(),ref('field_id','native_fields'),col('scope_code',required=True),col('integer_value','INTEGER'),col('real_value','REAL'),col('text_value'),col('display_value')],unique=[('unit_id','field_id','scope_code')],checks=['(integer_value IS NOT NULL)+(real_value IS NOT NULL)+(text_value IS NOT NULL)=1'])

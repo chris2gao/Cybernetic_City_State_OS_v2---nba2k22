@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=5),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=6),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -1201,6 +1201,10 @@ CREATE TABLE "draft_pick_ownerships" (
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "event_ref" TEXT REFERENCES external_transaction_events(transaction_id) ON DELETE RESTRICT,
   "origin_type" TEXT NOT NULL CHECK (origin_type IN ('NATIVE','EXTERNAL')),
+  "source_row_index" INTEGER,
+  "native_pick_index_raw" INTEGER,
+  "protection_status" TEXT DEFAULT 'UNKNOWN',
+  "swap_status" TEXT DEFAULT 'UNKNOWN',
   UNIQUE ("pick_id","unit_id")
 ) STRICT;
 
@@ -1221,9 +1225,10 @@ CREATE TRIGGER "draft_pick_ownerships_successful_unit" BEFORE INSERT ON "draft_p
 CREATE TABLE "draft_prospects" (
   "prospect_id" TEXT NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL REFERENCES saves(save_id) ON DELETE RESTRICT,
-  "draft_year" INTEGER NOT NULL,
+  "draft_year" INTEGER,
   "native_prospect_id" TEXT,
   "display_name" TEXT,
+  "class_year_status" TEXT DEFAULT 'UNKNOWN',
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT
 ) STRICT;
 
@@ -1236,6 +1241,211 @@ CREATE TRIGGER "draft_prospects_no_update" BEFORE UPDATE ON "draft_prospects" BE
 CREATE TRIGGER "draft_prospects_no_delete" BEFORE DELETE ON "draft_prospects" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "draft_prospects_successful_unit" BEFORE INSERT ON "draft_prospects" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "draft_pool_slot_observations" (
+  "pool_slot_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_row_index" INTEGER NOT NULL,
+  "slot_state" TEXT NOT NULL,
+  "native_prospect_id" TEXT,
+  "display_name" TEXT,
+  "draft_year" INTEGER,
+  "class_year_status" TEXT NOT NULL,
+  UNIQUE ("unit_id","source_row_index")
+) STRICT;
+
+CREATE INDEX "idx_draft_pool_slot_observations_unit_id" ON "draft_pool_slot_observations" ("unit_id");
+
+CREATE TRIGGER "draft_pool_slot_observations_no_update" BEFORE UPDATE ON "draft_pool_slot_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_pool_slot_observations_no_delete" BEFORE DELETE ON "draft_pool_slot_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_pool_slot_observations_successful_unit" BEFORE INSERT ON "draft_pool_slot_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "draft_prospect_attribute_snapshots" (
+  "snapshot_id" TEXT NOT NULL PRIMARY KEY,
+  "prospect_id" TEXT NOT NULL REFERENCES draft_prospects(prospect_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "overall_raw" INTEGER,
+  "driving_layup_raw" INTEGER,
+  "post_fadeaway_raw" INTEGER,
+  "post_hook_raw" INTEGER,
+  "post_moves_raw" INTEGER,
+  "draw_foul_raw" INTEGER,
+  "shot_close_raw" INTEGER,
+  "mid_range_shot_raw" INTEGER,
+  "three_point_shot_raw" INTEGER,
+  "free_throw_raw" INTEGER,
+  "ball_control_raw" INTEGER,
+  "passing_iq_raw" INTEGER,
+  "passing_accuracy_raw" INTEGER,
+  "offensive_rebound_raw" INTEGER,
+  "standing_dunk_raw" INTEGER,
+  "driving_dunk_raw" INTEGER,
+  "shot_iq_raw" INTEGER,
+  "passing_vision_raw" INTEGER,
+  "hands_raw" INTEGER,
+  "defensive_rebound_raw" INTEGER,
+  "interior_defense_raw" INTEGER,
+  "perimeter_defense_raw" INTEGER,
+  "block_raw" INTEGER,
+  "steal_raw" INTEGER,
+  "shot_contest_raw" INTEGER,
+  "lateral_quickness_raw" INTEGER,
+  "speed_raw" INTEGER,
+  "speed_with_ball_raw" INTEGER,
+  "acceleration_raw" INTEGER,
+  "vertical_raw" INTEGER,
+  "strength_raw" INTEGER,
+  "stamina_raw" INTEGER,
+  "hustle_raw" INTEGER,
+  "head_durability_raw" INTEGER,
+  "neck_durability_raw" INTEGER,
+  "back_durability_raw" INTEGER,
+  "left_shoulder_durability_raw" INTEGER,
+  "right_shoulder_durability_raw" INTEGER,
+  "left_elbow_durability_raw" INTEGER,
+  "right_elbow_durability_raw" INTEGER,
+  "left_hip_durability_raw" INTEGER,
+  "right_hip_durability_raw" INTEGER,
+  "left_knee_durability_raw" INTEGER,
+  "right_knee_durability_raw" INTEGER,
+  "left_ankle_durability_raw" INTEGER,
+  "right_ankle_durability_raw" INTEGER,
+  "left_foot_durability_raw" INTEGER,
+  "right_foot_durability_raw" INTEGER,
+  "misc_durability_raw" INTEGER,
+  "pass_perception_raw" INTEGER,
+  "defensive_consistency_raw" INTEGER,
+  "help_defensive_iq_raw" INTEGER,
+  "offensive_consistency_raw" INTEGER,
+  "pick_and_roll_defensive_iq_raw" INTEGER,
+  "intangibles_raw" INTEGER,
+  UNIQUE ("prospect_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_draft_prospect_attribute_snapshots_prospect_id" ON "draft_prospect_attribute_snapshots" ("prospect_id");
+
+CREATE INDEX "idx_draft_prospect_attribute_snapshots_unit_id" ON "draft_prospect_attribute_snapshots" ("unit_id");
+
+CREATE TRIGGER "draft_prospect_attribute_snapshots_no_update" BEFORE UPDATE ON "draft_prospect_attribute_snapshots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_prospect_attribute_snapshots_no_delete" BEFORE DELETE ON "draft_prospect_attribute_snapshots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_prospect_attribute_snapshots_successful_unit" BEFORE INSERT ON "draft_prospect_attribute_snapshots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "draft_prospect_tendency_snapshots" (
+  "snapshot_id" TEXT NOT NULL PRIMARY KEY,
+  "prospect_id" TEXT NOT NULL REFERENCES draft_prospects(prospect_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "shot_tendency_raw" INTEGER,
+  "drive_tendency_raw" INTEGER,
+  "driving_layup_tendency_raw" INTEGER,
+  "standing_dunk_tendency_raw" INTEGER,
+  "driving_dunk_tendency_raw" INTEGER,
+  "flashy_dunk_tendency_raw" INTEGER,
+  "alley_oop_tendency_raw" INTEGER,
+  "putback_tendency_raw" INTEGER,
+  "crash_tendency_raw" INTEGER,
+  "spin_layup_tendency_raw" INTEGER,
+  "hop_step_layup_tendency_raw" INTEGER,
+  "euro_step_layup_tendency_raw" INTEGER,
+  "floater_tendency_raw" INTEGER,
+  "step_through_shot_tendency_raw" INTEGER,
+  "shot_under_basket_tendency_raw" INTEGER,
+  "shot_close_tendency_raw" INTEGER,
+  "shot_mid_range_tendency_raw" INTEGER,
+  "spot_up_shot_mid_range_raw" INTEGER,
+  "off_screen_shot_mid_range_raw" INTEGER,
+  "shot_three_tendency_raw" INTEGER,
+  "spot_up_shot_three_raw" INTEGER,
+  "off_screen_shot_three_raw" INTEGER,
+  "contested_jumper_three_raw" INTEGER,
+  "contested_jumper_mid_range_raw" INTEGER,
+  "stepback_jumper_three_raw" INTEGER,
+  "stepback_jumper_mid_range_raw" INTEGER,
+  "spin_jumper_tendency_raw" INTEGER,
+  "transition_pull_up_three_raw" INTEGER,
+  "drive_pull_up_three_raw" INTEGER,
+  "drive_pull_up_mid_range_raw" INTEGER,
+  "spot_up_drive_tendency_raw" INTEGER,
+  "off_screen_drive_tendency_raw" INTEGER,
+  "attack_strong_on_drive_raw" INTEGER,
+  "dish_to_open_man_tendency_raw" INTEGER,
+  "touches_tendency_raw" INTEGER,
+  "post_up_tendency_raw" INTEGER,
+  "roll_vs_pop_tendency_raw" INTEGER,
+  "transition_spot_up_raw" INTEGER,
+  "play_discipline_tendency_raw" INTEGER,
+  "flashy_pass_tendency_raw" INTEGER,
+  "alley_oop_pass_tendency_raw" INTEGER,
+  "pass_interception_tendency_raw" INTEGER,
+  "take_charge_tendency_raw" INTEGER,
+  "on_ball_steal_tendency_raw" INTEGER,
+  "contest_shot_tendency_raw" INTEGER,
+  "block_shot_tendency_raw" INTEGER,
+  "foul_tendency_raw" INTEGER,
+  "hard_foul_tendency_raw" INTEGER,
+  UNIQUE ("prospect_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_draft_prospect_tendency_snapshots_prospect_id" ON "draft_prospect_tendency_snapshots" ("prospect_id");
+
+CREATE INDEX "idx_draft_prospect_tendency_snapshots_unit_id" ON "draft_prospect_tendency_snapshots" ("unit_id");
+
+CREATE TRIGGER "draft_prospect_tendency_snapshots_no_update" BEFORE UPDATE ON "draft_prospect_tendency_snapshots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_prospect_tendency_snapshots_no_delete" BEFORE DELETE ON "draft_prospect_tendency_snapshots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_prospect_tendency_snapshots_successful_unit" BEFORE INSERT ON "draft_prospect_tendency_snapshots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "draft_prospect_play_type_slots" (
+  "slot_id" TEXT NOT NULL PRIMARY KEY,
+  "prospect_id" TEXT NOT NULL REFERENCES draft_prospects(prospect_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "slot_index" INTEGER NOT NULL CHECK (slot_index>=0),
+  "native_play_code" TEXT,
+  UNIQUE ("prospect_id","unit_id","slot_index")
+) STRICT;
+
+CREATE INDEX "idx_draft_prospect_play_type_slots_prospect_id" ON "draft_prospect_play_type_slots" ("prospect_id");
+
+CREATE INDEX "idx_draft_prospect_play_type_slots_unit_id" ON "draft_prospect_play_type_slots" ("unit_id");
+
+CREATE TRIGGER "draft_prospect_play_type_slots_no_update" BEFORE UPDATE ON "draft_prospect_play_type_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_prospect_play_type_slots_no_delete" BEFORE DELETE ON "draft_prospect_play_type_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "draft_prospect_play_type_slots_successful_unit" BEFORE INSERT ON "draft_prospect_play_type_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "waived_salary_observations" (
+  "waived_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_row_index" INTEGER NOT NULL,
+  "owner_mapping_status" TEXT NOT NULL,
+  "native_player_id" INTEGER,
+  "observed_player_name" TEXT,
+  "player_mapping_status" TEXT NOT NULL,
+  "name_source_status" TEXT NOT NULL,
+  "salary_year_1_raw" INTEGER,
+  "salary_year_2_raw" INTEGER,
+  "salary_year_3_raw" INTEGER,
+  UNIQUE ("unit_id","source_row_index")
+) STRICT;
+
+CREATE INDEX "idx_waived_salary_observations_team_id" ON "waived_salary_observations" ("team_id");
+
+CREATE INDEX "idx_waived_salary_observations_player_id" ON "waived_salary_observations" ("player_id");
+
+CREATE INDEX "idx_waived_salary_observations_unit_id" ON "waived_salary_observations" ("unit_id");
+
+CREATE TRIGGER "waived_salary_observations_no_update" BEFORE UPDATE ON "waived_salary_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "waived_salary_observations_no_delete" BEFORE DELETE ON "waived_salary_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "waived_salary_observations_successful_unit" BEFORE INSERT ON "waived_salary_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "draft_results" (
   "result_id" TEXT NOT NULL PRIMARY KEY,

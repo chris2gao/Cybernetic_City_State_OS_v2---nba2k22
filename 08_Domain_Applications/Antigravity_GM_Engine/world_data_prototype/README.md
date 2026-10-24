@@ -4,7 +4,7 @@ Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engi
 
 ## Implemented structure
 
-**Schema v5: 63 STRICT SQLite tables, 693 columns**. The 59-table approved provisional catalog is implemented, retaining `game_state_observations`, adding explicit `season_finalizations`, typed `native_box_observations` staging and `team_state_observations`. Staging preserves real captured stats when a canonical player binding is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
+**Schema v6: 68 STRICT SQLite tables, 833 columns**. The 59-table approved provisional catalog is implemented with explicit game/finalization/source observations, team state, draft-pool state, separate public prospect families and waived-salary observations. Staging preserves real captured stats when canonical identity is not proven. The original 16 table names and observations are preserved. See [table cards](TABLE_CARDS.md), [complete field dictionary](field_dictionary.json), executable [DDL](schema.sql) and its [catalog generator](schema_model.py).
 
 The database covers player/team/staff identities, typed attributes and named tendencies, vitals/contract/health/morale/training, badges/play types, schedule/period scores/Box/season totals, coaching/tactics/mentors, finances/market/draft, actual settings/rules, awards/records/news, native source governance, external transaction/readback contracts and season closure. **Having a typed table does not establish the Native source for its columns.** UNKNOWN ranges and source gaps remain explicit. Contract offset 833 aliases and badge tier encoding are not silently decoded.
 
@@ -34,6 +34,9 @@ python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py 
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-organization PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py team DB team:native:0
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py staff DB staff:native:70
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-market PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py market DB --team-id team:native:5
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py prospect DB PROSPECT_OBSERVATION_ID
 python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q
 ```
 
@@ -87,4 +90,12 @@ Actual source provides 30 team totals, 240 assigned staff, 30 coach/default obse
 
 `team` and `staff` return typed allowed fields, source grade and observation freshness; raw structures, source pointers and Potential are withheld. Financial amounts retain unsigned raw integers, with no signed-cash conversion, cap-space calculation or salary-unit assertion. Schema v5 adds distinct typed coach fields, extra native team stats/finance columns and the state observation table. Copy-upgrade preserves old files and history.
 
-No source unreadability is a Q10 exception by itself. Missing player IDs, lifecycle, calendar/badge/contract/finance UI semantics, gameplan/training/mentor sources, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.
+## Native future picks and source market state (increment 07)
+
+`capture-market` verifies current draft getter executable bytes and actual descriptors, accepts only complete simple future-pick year/round/original-team groups, and rereads records/controls. Actual source has 300 picks across 2022–2026 (30 original teams per year/round). Identity uses save-local year/round/original team; ownership is a separate append-only observation. Protection and swap statuses stay UNKNOWN. No tradeability window, trade event or draft result is inferred.
+
+All 222 actual 136-byte waived-salary records are retained as typed observations; 32 map to current core teams. Three unsigned salary buckets and candidate inline UTF16 names are read, with canonical player FK and absolute salary years left unproven. The first Q word is not treated as a PLAYER pointer. Unmapped/empty owners remain explicit; no cap-space total or release event is invented.
+
+The actual prospect pool has 90 allocated templates with no name and native ID zero. These produce slot-state observations, **zero prospect people** and zero prospect attribute/tendency/play-type facts. The acquisition skips Potential byte1089 on every prospect read and reread. Separate typed prospect families support named source observations, never PLAYER instances. Class year is nullable and cannot be filled from the future-pick base year. `market` and `prospect` provide bounded role-safe queries; free-agent availability is explicitly not observed by this source.
+
+No source unreadability is a Q10 exception by itself. Missing player IDs, lifecycle, calendar/badge/contract/finance UI semantics, gameplan/training/mentor sources, initialized class/year, protection/swaps and results, G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.

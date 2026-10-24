@@ -14,7 +14,7 @@ RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_r
                 for d in PROFILE['fields']['PLAYER'] if d.get('conversion')=='rating' and d['name']!='potential'}
 
 PUBLIC_TABLES=frozenset(name for name,t in TABLES.items() if t.public)
-ENTITY_KEYS=frozenset('player_id team_id staff_id game_id season_id'.split())
+ENTITY_KEYS=frozenset('player_id team_id staff_id game_id season_id prospect_id'.split())
 
 
 def history(path,table,*,entity_key=None,entity_id=None,limit=200,role='GM'):
@@ -103,6 +103,38 @@ def team_card(path,team_id):
             WHERE a.team_id=? AND a.unit_id=? ORDER BY a.slot_index''',(team_id,book[0]))]
     result['season_totals']=history(path,'team_season_totals',entity_key='team_id',entity_id=team_id)
     return result
+
+
+def prospect_card(path,prospect_id):
+    with closing(connect(path,True)) as c:
+        row=c.execute('SELECT * FROM draft_prospects WHERE prospect_id=?',(prospect_id,)).fetchone()
+        if row is None:return {'prospect_id':prospect_id,'status':'NOT_OBSERVED'}
+        result={'prospect':dict(row),'families':_scalar_families(c,'prospect_id',prospect_id,
+            ('draft_prospect_attribute_snapshots','draft_prospect_tendency_snapshots')),'restricted_fields':'WITHHELD'}
+    result['play_type_slots']=history(path,'draft_prospect_play_type_slots',entity_key='prospect_id',entity_id=prospect_id)
+    return result
+
+
+def market_snapshot(path,*,team_id=None,limit=10000):
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    with closing(connect(path,True)) as c:
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,r.source_grade FROM capture_units u JOIN capture_runs r USING(run_id)
+            WHERE u.source_key='BOUND_NATIVE_MARKET_SOURCES' AND u.unit_status='success'
+            ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''').fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED'}
+        args=[unit['unit_id']];where=''
+        if team_id is not None:where=' AND o.owner_team_id=?';args.append(team_id)
+        picks=[dict(r) for r in c.execute('''SELECT a.*,o.owner_team_id,o.source_row_index,o.native_pick_index_raw,
+            o.protection_status,o.swap_status,o.origin_type FROM draft_pick_assets a JOIN draft_pick_ownerships o USING(pick_id)
+            WHERE o.unit_id=?'''+where+' ORDER BY a.draft_year,a.draft_round,a.original_team_id',args)]
+        args=[unit['unit_id']];where=''
+        if team_id is not None:where=' AND team_id=?';args.append(team_id)
+        waived=[dict(r) for r in c.execute('SELECT * FROM waived_salary_observations WHERE unit_id=?'+where+' ORDER BY source_row_index',args)]
+        slots=[dict(r) for r in c.execute('SELECT * FROM draft_pool_slot_observations WHERE unit_id=? ORDER BY source_row_index',(unit['unit_id'],))]
+        if len(picks)+len(waived)+len(slots)>limit:raise ValueError('market snapshot exceeds explicit row cap; no truncation')
+        return {'status':'OBSERVED_PARTIAL_MARKET_SOURCES','unit':dict(unit),'future_picks':picks,
+            'waived_salary_source_observations':waived,'draft_pool_slots':slots,
+            'free_agent_availability':'NOT_OBSERVED_BY_THIS_SOURCE','draft_results':'NOT_INFERRED_FROM_ASSET_OR_SLOT_STATE'}
 
 
 def game_box(path,game_id):
