@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
 from readers import replay_ag01d,replay_player_families
-from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card,settings_snapshot,rules_snapshot
 from owner_capture import recorded_game_capture
 
 
@@ -71,7 +71,15 @@ def main():
     capture_plan=sub.add_parser('capture-planning');capture_plan.add_argument('pid',type=int);capture_plan.add_argument('save_directory');capture_plan.add_argument('loaded_filename');capture_plan.add_argument('new_output_directory')
     planning=sub.add_parser('planning');planning.add_argument('database');planning.add_argument('--team-id');planning.add_argument('--limit',type=int,default=5000)
     gp=sub.add_parser('gameplan');gp.add_argument('database');gp.add_argument('team_id');gp.add_argument('opponent_team_id')
+    capture_settings_cmd=sub.add_parser('capture-settings');capture_settings_cmd.add_argument('pid',type=int);capture_settings_cmd.add_argument('save_directory');capture_settings_cmd.add_argument('loaded_filename');capture_settings_cmd.add_argument('new_output_directory')
+    settings_cmd=sub.add_parser('settings');settings_cmd.add_argument('database');settings_cmd.add_argument('--scope-code');settings_cmd.add_argument('--limit',type=int,default=2000)
+    rules_cmd=sub.add_parser('rules');rules_cmd.add_argument('database');rules_cmd.add_argument('--season-id');rules_cmd.add_argument('--limit',type=int,default=2000)
     args=parser.parse_args()
+    if args.action=='capture-settings':
+        from settings_reader import capture_settings
+        print(json.dumps(capture_settings(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='settings':print(json.dumps(settings_snapshot(args.database,scope_code=args.scope_code,limit=args.limit),ensure_ascii=False));return
+    if args.action=='rules':print(json.dumps(rules_snapshot(args.database,season_id=args.season_id,limit=args.limit),ensure_ascii=False));return
     if args.action=='capture-planning':
         from planning_reader import capture_planning
         print(json.dumps(capture_planning(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return

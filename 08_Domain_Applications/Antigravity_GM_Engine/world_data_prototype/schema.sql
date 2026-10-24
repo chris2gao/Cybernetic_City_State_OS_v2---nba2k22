@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=7),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=8),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -1520,6 +1520,12 @@ CREATE TABLE "game_setting_observations" (
   "real_value" REAL,
   "text_value" TEXT,
   "display_value" TEXT,
+  "logical_key" TEXT,
+  "raw_word_u32" INTEGER CHECK (raw_word_u32 BETWEEN 0 AND 4294967295),
+  "value_status" TEXT,
+  "semantic_status" TEXT,
+  "registered_range_status" TEXT,
+  "aliases_json" TEXT,
   UNIQUE ("unit_id","field_id","scope_code"),
   CHECK ((integer_value IS NOT NULL)+(real_value IS NOT NULL)+(text_value IS NOT NULL)=1)
 ) STRICT;
@@ -1563,12 +1569,16 @@ CREATE TABLE "league_rule_observations" (
   "integer_value" INTEGER,
   "text_value" TEXT,
   "display_value" TEXT,
+  "real_value" REAL,
+  "setting_obs_id" TEXT REFERENCES game_setting_observations(setting_obs_id) ON DELETE RESTRICT,
   UNIQUE ("season_id","unit_id","rule_key")
 ) STRICT;
 
 CREATE INDEX "idx_league_rule_observations_season_id" ON "league_rule_observations" ("season_id");
 
 CREATE INDEX "idx_league_rule_observations_unit_id" ON "league_rule_observations" ("unit_id");
+
+CREATE INDEX "idx_league_rule_observations_setting_obs_id" ON "league_rule_observations" ("setting_obs_id");
 
 CREATE TRIGGER "league_rule_observations_no_update" BEFORE UPDATE ON "league_rule_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -1983,6 +1993,8 @@ CREATE TRIGGER "native_mentor_relation_observations_no_update" BEFORE UPDATE ON 
 CREATE TRIGGER "native_mentor_relation_observations_no_delete" BEFORE DELETE ON "native_mentor_relation_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "native_mentor_relation_observations_successful_unit" BEFORE INSERT ON "native_mentor_relation_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 

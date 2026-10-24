@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 7
+VERSION = 8
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -265,9 +265,20 @@ for table_name in ('draft_prospect_attribute_snapshots','draft_prospect_tendency
         if c.name.endswith('_raw'):c.source='Slot4 TEMPLATE_CANDIDATE; named initialized-class Native acceptance outstanding; '+c.source
 table('draft_results','result_id','RES-M','actual source-backed draft result',[ref('prospect_id','draft_prospects',required=False),ref('pick_id','draft_pick_assets',required=False),T(),ref('player_id','players',required=False),U(),col('source_ref',required=True),col('selection_number','INTEGER')])
 table('worldline_config_versions','config_id','RES-S','versioned desired configuration, never actual game state',[SAVE(),U(),col('config_version',required=True),col('config_hash',required=True),col('approval_ref')],unique=[('config_version',)],public=False)
-table('game_setting_observations','setting_obs_id','RES-S','one actual native setting, using typed value alternatives',[U(),ref('field_id','native_fields'),col('scope_code',required=True),col('integer_value','INTEGER'),col('real_value','REAL'),col('text_value'),col('display_value')],unique=[('unit_id','field_id','scope_code')],checks=['(integer_value IS NOT NULL)+(real_value IS NOT NULL)+(text_value IS NOT NULL)=1'])
+table('game_setting_observations','setting_obs_id','RES-S','one actual native setting word with typed value and qualified semantics',[
+    U(),ref('field_id','native_fields'),col('scope_code',required=True),col('integer_value','INTEGER'),col('real_value','REAL'),col('text_value'),col('display_value'),
+    col('logical_key',source='ENGINEERING_LAYOUT_IDENTITY; not an accepted UI label'),
+    col('raw_word_u32','INTEGER',check='raw_word_u32 BETWEEN 0 AND 4294967295',source='ACTUAL_NATIVE_FOUR_BYTE_WORD',unit='unsigned 32-bit bit pattern'),
+    col('value_status',source='EVIDENCE_FLOAT_OR_UINT32_DECODE_STATUS'),
+    col('semantic_status',source='EVIDENCE_REGISTERED_LAYOUT_VS_CURRENT_UI_SEMANTICS'),
+    col('registered_range_status',source='EVIDENCE_COMPARISON_WITH_CANDIDATE_RANGES; game range not certified'),
+    col('aliases_json',source='config/state_io_native/{world,settings,court}.json; names and candidate bounds only, no defaults/targets',unit='JSON list of registered aliases; not game facts')],
+    unique=[('unit_id','field_id','scope_code')],checks=['(integer_value IS NOT NULL)+(real_value IS NOT NULL)+(text_value IS NOT NULL)=1'])
 table('startup_config_checks','check_id','RES-S','desired-vs-observed configuration check',[ref('config_id','worldline_config_versions',required=False),ref('setting_obs_id','game_setting_observations',required=False),U(),col('result',required=True),col('dependency_ref')],public=False)
-table('league_rule_observations','rule_id','RES-L','one actual season rule observation',[S(),U(),col('rule_key',required=True),col('integer_value','INTEGER'),col('text_value'),col('display_value')],unique=[('season_id','unit_id','rule_key')])
+table('league_rule_observations','rule_id','RES-L','one actual season rule observation, not external business policy',[
+    S(),U(),col('rule_key',required=True),col('integer_value','INTEGER'),col('text_value'),col('display_value'),
+    col('real_value','REAL',source='ACTUAL_NATIVE_FLOAT32_WHEN_REGISTERED'),
+    ref('setting_obs_id','game_setting_observations',required=False)],unique=[('season_id','unit_id','rule_key')])
 table('season_award_instances','award_id','RES-H','actual awarded honor; leaders are not winners',[S(),U(),col('award_code',required=True),col('award_type',required=True),col('is_final','INTEGER',required=True,check='is_final=1')],unique=[('season_id','award_code','award_type')])
 table('award_recipients','recipient_id','RES-H','one actual award recipient',[ref('award_id','season_award_instances'),ref('player_id','players',required=False),T(False),col('rank_index','INTEGER'),U()],checks=['player_id IS NOT NULL OR team_id IS NOT NULL'])
 table('season_record_entries','record_id','RES-H','one actual record holder/value, no fabricated honors',[S(),U(),col('record_key',required=True),ref('holder_player_id','players','player_id',False),ref('holder_team_id','teams','team_id',False),col('value_raw',required=True),col('source_ref',required=True),col('occurred_at')])
@@ -358,6 +369,7 @@ def schema_sql():
             out.append(f'CREATE TRIGGER "{t.name}_no_{op.lower()}" BEFORE {op} ON {ident(t.name)} BEGIN SELECT RAISE(ABORT,\'immutable history\'); END;')
         if t.observation and any(c.name=='unit_id' for c in t.columns):
             out.append(f'CREATE TRIGGER "{t.name}_successful_unit" BEFORE INSERT ON {ident(t.name)} WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status=\'success\') BEGIN SELECT RAISE(ABORT,\'capture unit is not successful\'); END;')
+    out.append('''CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
         out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
     for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:
