@@ -1,0 +1,29 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Implement complete bounded live native record-book acquisition and qualified
+    typed historical observations, preserving old facts and adding pinned queries/export.
+  implementation_or_review_method: >-
+    Verify the current native Getter/stride and source descriptors, acquire/reread
+    the full native count, decode exact words without rounding or subject inference,
+    copy-migrate schema8 to schema9 and compare every old/source row and query page.
+  supportability_rationale: >-
+    Actual PID8784 read hashes cover the complete 69040-row record book. Audit
+    compares 69045 new typed records and 96060 old rows, verifies all seven pages
+    and the full export. Invalid candidate dates and unmapped category codes are
+    retained; no canonical holder, record season, award or occurred-at is invented.
+  feasibility_rationale: >-
+    The existing read-only worker, STRICT schema generator, receipt-bound ingest,
+    copy migration and streamed export support the registered 52-byte source in
+    allowed paths. All 143 category codes have curated raw fixture coverage, while
+    UI mappings, awards/news and full-candidate acceptance remain unproved.
+  exact_result_or_candidate_ref: 25de00f644640b2efa77a2d348d5ce410289743d
+  verification_evidence:
+    - 06_执行/increment10/records_world_report.json
+    - 06_执行/increment10/native_sources/source_manifest.json
+    - 06_执行/increment10/verification/development_report.json
+    - 06_执行/increment10/verification/tests.stderr.log
+  residual_risk_or_unproved_limits:
+    - Native record category/subject/scope/date interpretations lack current UI certification.
+    - Actual season awards and news sources are not supplied by this record book.
+    - Full-domain capacity/recovery, managed verification and independent/Human acceptance remain incomplete.
