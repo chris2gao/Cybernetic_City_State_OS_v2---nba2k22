@@ -57,7 +57,15 @@ def main():
     upgrade=sub.add_parser('upgrade');upgrade.add_argument('source');upgrade.add_argument('new_database')
     owner=sub.add_parser('replay-owner-capture');owner.add_argument('capture_directory');owner.add_argument('database');owner.add_argument('research_save_id')
     inspect=sub.add_parser('inspect-source');inspect.add_argument('database');inspect.add_argument('unit_id')
+    bound=sub.add_parser('init-save');bound.add_argument('save_directory');bound.add_argument('save_id');bound.add_argument('native_save_file')
+    live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
     args=parser.parse_args()
+    if args.action=='init-save':
+        from live_world import initialize_save
+        print(json.dumps(initialize_save(args.save_directory,args.save_id,args.native_save_file),ensure_ascii=False));return
+    if args.action=='capture-live':
+        from live_world import capture_live
+        print(json.dumps(capture_live(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,args.game_index),ensure_ascii=False));return
     if args.action=='smoke': print(json.dumps(smoke(),sort_keys=True));return
     if args.action=='summary':print(json.dumps(summarize(args.database),sort_keys=True));return
     if args.action=='player':print(json.dumps(player_card(args.database,args.player_id),ensure_ascii=False));return

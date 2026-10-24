@@ -91,7 +91,7 @@ def create_database(path,save_id,*,_migration_header=None,_seed_catalog=True):
     return target
 
 
-def _check_envelope(conn,payload):
+def _check_envelope(conn,payload,live_receipt=None):
     if conn.in_transaction:raise ValueError('ingest requires a clean connection transaction boundary')
     save=conn.execute('SELECT save_id,schema_version FROM saves WHERE singleton=1').fetchone()
     if not save or payload.get('save_id')!=save['save_id']:raise ValueError('cross-save capture/database mismatch')
@@ -101,7 +101,11 @@ def _check_envelope(conn,payload):
     stamp=datetime.fromisoformat(payload['observed_at'].replace('Z','+00:00'))
     if stamp.utcoffset() is None:raise ValueError('observation requires timezone')
     grade=payload.get('evidence_grade')
-    if grade not in ('SYNTHETIC_FIXTURE','RESEARCH_FIXTURE'):raise ValueError('live provenance requires acquisition adapter, no assertion-only promotion')
+    if grade=='LIVE_READ':
+        from live_world import _AcquisitionReceipt
+        if type(live_receipt) is not _AcquisitionReceipt or not live_receipt.matches(payload):
+            raise ValueError('live provenance requires acquisition adapter, no assertion-only promotion')
+    elif grade not in ('SYNTHETIC_FIXTURE','RESEARCH_FIXTURE'):raise ValueError('unrecognized evidence grade')
     artifacts=payload.get('artifacts',[])
     if grade=='RESEARCH_FIXTURE' and (not artifacts or not payload.get('decoder_version')):raise ValueError('research capture needs hashed artifacts and decoder version')
     for a in artifacts:
@@ -123,9 +127,9 @@ def _check_envelope(conn,payload):
             if any(row.get(k) is None for k in required):raise ValueError('incomplete source family '+t)
 
 
-def ingest_capture(conn,payload):
+def ingest_capture(conn,payload,*,_live_receipt=None):
     """One typed consistency unit, all-or-nothing. Fixture is not live evidence."""
-    _check_envelope(conn,payload);digest=_digest(payload)
+    _check_envelope(conn,payload,_live_receipt);digest=_digest(payload)
     prior=conn.execute('SELECT payload_sha256 FROM capture_units WHERE unit_id=?',(payload['unit_id'],)).fetchone()
     if prior:
         if prior['payload_sha256']!=digest:raise ValueError('same unit_id with conflicting content')
