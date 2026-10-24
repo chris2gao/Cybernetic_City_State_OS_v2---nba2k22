@@ -30,7 +30,7 @@ class WorldDataIntegrationTests(unittest.TestCase):
                 'season':{'season_id':'s1','season_code':'2021-22'},'facts':{}}
 
     def test_ddl_dictionary_and_every_relation_are_executable(self):
-        self.assertEqual(len(TABLES),61)
+        self.assertEqual(len(TABLES),62)
         self.assertEqual(schema_sql(),(BASE/'schema.sql').read_text())
         self.assertEqual(dictionary(),json.loads((BASE/'field_dictionary.json').read_text()))
         with connect(self.path) as c:

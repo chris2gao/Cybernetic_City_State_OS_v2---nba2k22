@@ -61,7 +61,18 @@ def _ensure_record(conn,table,key,record,match_fields=None):
     elif any(current[k]!=record[k] for k in (match_fields or record.keys())):raise ValueError('identity collision in '+table+': '+str(record[key]))
 
 
-def create_database(path,save_id,*,_migration_header=None):
+def _seed_registry(conn,only_missing=False):
+    for t in dictionary()['tables']:
+        for c in t['columns']:
+            key=t['name']+'.'+c['name']
+            if only_missing and conn.execute('SELECT 1 FROM native_fields WHERE field_id=?',(key,)).fetchone():continue
+            _insert(conn,'native_fields',{'field_id':key,'source_group':t['domain'],'native_key':c['name'],
+                'table_name':t['name'],'column_name':c['name'],'source_ref':c['source'],
+                'evidence_grade':'RESEARCH_LEAD' if any(x in c['source'].lower() for x in ('registr','research')) else 'UNKNOWN',
+                'visibility':c['visibility'],'unit':c['unit'],'legal_range_state':c['legal_game_range']})
+
+
+def create_database(path,save_id,*,_migration_header=None,_seed_catalog=True):
     if not isinstance(save_id,str) or not save_id.strip() or len(save_id)>128:raise ValueError('valid unique save_id required')
     target=Path(path).resolve();target.parent.mkdir(parents=True,exist_ok=True)
     with target.open('xb'):pass
@@ -70,15 +81,10 @@ def create_database(path,save_id,*,_migration_header=None):
             conn.executescript('BEGIN IMMEDIATE;\n'+SCHEMA.read_text(encoding='utf-8'))
             header={'singleton':1,'save_id':save_id,'schema_version':VERSION,'created_at':datetime.now(timezone.utc).isoformat(),'source_grade':'UNBOUND'}
             if _migration_header:
-                header.update({k:v for k,v in _migration_header.items() if k in ('created_at','source_grade')})
+                header.update({k:v for k,v in _migration_header.items() if k in ('created_at','source_grade','game_build','native_save_fingerprint')})
             _insert(conn,'saves',header)
-            for t in dictionary()['tables']:
-                for c in t['columns']:
-                    _insert(conn,'native_fields',{'field_id':t['name']+'.'+c['name'],'source_group':t['domain'],'native_key':c['name'],
-                        'table_name':t['name'],'column_name':c['name'],'source_ref':c['source'],
-                        'evidence_grade':'RESEARCH_LEAD' if 'REGISTRY' in c['source'] or 'research' in c['source'].lower() else 'UNKNOWN',
-                        'visibility':c['visibility'],'unit':c['unit'],'legal_range_state':c['legal_game_range']})
-            conn.execute('PRAGMA user_version=2');conn.commit()
+            if _seed_catalog:_seed_registry(conn)
+            conn.execute('PRAGMA user_version=3');conn.commit()
             if conn.execute('PRAGMA foreign_key_check').fetchall():raise RuntimeError('schema FK failure')
     except BaseException:
         target.unlink(missing_ok=True);raise
@@ -89,7 +95,7 @@ def _check_envelope(conn,payload):
     if conn.in_transaction:raise ValueError('ingest requires a clean connection transaction boundary')
     save=conn.execute('SELECT save_id,schema_version FROM saves WHERE singleton=1').fetchone()
     if not save or payload.get('save_id')!=save['save_id']:raise ValueError('cross-save capture/database mismatch')
-    if save['schema_version']!=VERSION:raise ValueError('explicit v1 copy migration required')
+    if save['schema_version']!=VERSION:raise ValueError('explicit copy migration to current schema required')
     for k in ('run_id','unit_id','source_key','observed_at','season'):
         if not payload.get(k):raise ValueError('missing '+k)
     stamp=datetime.fromisoformat(payload['observed_at'].replace('Z','+00:00'))
@@ -197,33 +203,45 @@ def read_gm_observations(path,player_id):
 
 def summarize(path):
     with closing(connect(path,True)) as c:
-        counts={t:c.execute(f'SELECT count(*) FROM {ident(t)}').fetchone()[0] for t in TABLES}
+        names={r[0] for r in c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
+        if names-TABLES.keys():raise ValueError('unknown database tables; not a recognized world fact schema')
+        counts={t:c.execute(f'SELECT count(*) FROM {ident(t)}').fetchone()[0] for t in names}
         grades={r[0]:r[1] for r in c.execute('SELECT source_grade,count(*) FROM capture_runs GROUP BY source_grade')}
-        return {'save_id':c.execute('SELECT save_id FROM saves').fetchone()[0],'schema_version':VERSION,
-            'table_count':c.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone()[0],
-            'column_count':sum(len(t.columns) for t in TABLES.values()),'game_count':counts['games'],'box_observations':counts['player_game_boxes'],
+        header=c.execute('SELECT save_id,schema_version FROM saves').fetchone()
+        return {'save_id':header['save_id'],'schema_version':header['schema_version'],
+            'table_count':len(names),'column_count':sum(len(c.execute(f'PRAGMA table_info({ident(t)})').fetchall()) for t in names),
+            'game_count':counts['games'],'box_observations':counts['player_game_boxes'],
             'attribute_observations':counts['player_attribute_snapshots'],'capture_units':counts['capture_units'],
             'foreign_key_errors':len(c.execute('PRAGMA foreign_key_check').fetchall()),'source_grades':grades,
             'nonempty_fact_tables':[t for t,n in counts.items() if n and t not in RESERVED|{'native_fields'}]}
 
 
-def migrate_v1(source,new_path):
-    """Copy-upgrade to a NEW fact file; original DB and observations untouched."""
+def migrate_database(source,new_path):
+    """Copy-upgrade v1/v2 to a NEW fact file, preserving all existing tables/rows."""
     src=Path(source).resolve();dst=Path(new_path).resolve()
     with closing(connect(src,True)) as old:
-        if old.execute('PRAGMA user_version').fetchone()[0]!=1:raise ValueError('source must be v1')
+        if old.execute('PRAGMA user_version').fetchone()[0] not in (1,2):raise ValueError('source must be v1 or v2')
         if old.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('source integrity failure')
-        save=dict(old.execute('SELECT * FROM saves').fetchone());create_database(dst,save['save_id'],_migration_header=save)
+        names={r[0] for r in old.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")}
+        if names-TABLES.keys():raise ValueError('migration cannot silently discard unknown source tables')
+        save=dict(old.execute('SELECT * FROM saves').fetchone());create_database(dst,save['save_id'],_migration_header=save,_seed_catalog=False)
         try:
             with closing(connect(dst)) as new:
                 with new:
                     new.execute('PRAGMA defer_foreign_keys=ON')
                     for name in TABLES:
-                        if name not in LEGACY_TABLES or name=='saves':continue
+                        if name not in names or name=='saves':continue
                         for row in old.execute(f'SELECT * FROM {ident(name)}'):_insert(new,name,dict(row))
-                    for name in LEGACY_TABLES-{'saves','native_fields'}:
+                    for name in names-{'saves'}:
                         if old.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]!=new.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]:raise RuntimeError('migration count mismatch '+name)
+                    _seed_registry(new,only_missing=True)
                     if new.execute('PRAGMA foreign_key_check').fetchall():raise ValueError('migration foreign key failure')
         except BaseException:
             dst.unlink(missing_ok=True);raise
     return dst
+
+
+def migrate_v1(source,new_path):
+    with closing(connect(source,True)) as old:
+        if old.execute('PRAGMA user_version').fetchone()[0]!=1:raise ValueError('source must be v1')
+    return migrate_database(source,new_path)

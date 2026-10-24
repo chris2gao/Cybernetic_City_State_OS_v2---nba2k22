@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **61**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **62**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -67,3 +67,4 @@ Actual tables: **61**. Every table is STRICT and append-only. A SQLite owner can
 | `player_restricted_observations` | RES-P | restricted external-storage metadata; raw Potential never in world facts | `observation_id` | player_id -> players(player_id); unit_id -> capture_units(unit_id) | ADD |
 | `game_news_entries` | RES-H | one source-observed native news item | `news_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
 | `season_finalizations` | RES-D | explicit evidenced season closure boundary | `finalization_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
+| `native_box_observations` | RES-D | one captured Box row before canonical player identity is proven | `box_observation_id` | game_id -> games(game_id); unit_id -> capture_units(unit_id) | ADD |

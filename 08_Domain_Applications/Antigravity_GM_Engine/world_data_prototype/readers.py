@@ -10,6 +10,7 @@ import importlib.util
 import json
 from pathlib import Path
 from schema_model import DOMAIN, PROFILE, TENDENCY_FIELDS
+from family_codec import public_player_families
 
 NATIVE=DOMAIN/'research/native_access/AG_NATIVE_01D'
 SOURCE_REF='21d62ec9e04b86a1f737c1500ea2f41c34583215:research/native_access/AG_NATIVE_01D'
@@ -25,20 +26,60 @@ def _module(name):
 def artifact(path,kind):
     path=Path(path).resolve()
     data=path.read_bytes()
+    version=SOURCE_REF if path.is_relative_to(NATIVE) else 'REGISTERED_LAYOUT:'+str(path.relative_to(DOMAIN))
     return {'sha256':hashlib.sha256(data).hexdigest(),'payload_kind':kind,
-            'payload_ref':str(path.relative_to(DOMAIN)),'byte_count':len(data),'source_version':SOURCE_REF,'restricted':1}
+            'payload_ref':str(path.relative_to(DOMAIN)),'byte_count':len(data),'source_version':version,'restricted':1}
 
 
 def decode_player_public(raw):
     """Decode only registered public unsigned scalars; never return raw PLAYER bytes.
 
-    Contract offset 833 and packed STAFF fields are intentionally not decoded by
-    this scalar adapter. Native byte ranges are storage bounds, not UI legality.
+    Packed fields are delegated to the registered bit decoder, but this function
+    returns only attributes. Native byte ranges are storage bounds, not UI legality.
     """
-    if len(raw)!=1264:raise ValueError('PLAYER record must be exactly 1264 bytes')
-    return {('three_point_shot' if r['name']=='3pt_shot' else r['name'])+'_raw':
-            int.from_bytes(raw[r['offset']:r['offset']+r['bytes']],'little')
-            for r in PROFILE['fields']['PLAYER'] if r['group']=='attributes' and r['name']!='potential'}
+    return public_player_families(raw)['attributes']
+
+
+def replay_player_families(save_id,*,observed_at=None):
+    """Decode all three existing research PLAYER samples into real typed tables.
+
+    Sources are the same masked-at-output research records, with no claim to a
+    current-save binding. Unknown badge interpretation is an explicit field gap.
+    """
+    stamp=observed_at or datetime.now(timezone.utc).isoformat()
+    path=NATIVE/'fixtures/sample_player_career_slice.json'
+    data=json.loads(path.read_text(encoding='utf-8'))
+    decoder=_module('season_stats_decoder').SeasonStatsDecoder
+    for subject,source in data.items():
+        raw=bytes.fromhex(source['raw_player_hex'])
+        identity=decoder.extract_player_career_indices(raw)
+        families=public_player_families(raw)
+        pid='player:AG01D:'+str(identity['player_id'])
+        stats=source['stats_records_hex'].get(str(identity['current_season_stats_index']))
+        if stats is None:raise ValueError('source current season link missing')
+        year=decoder.decode_player_stats_record(bytes.fromhex(stats))['season_year']
+        unit='ag01d-families:'+subject+':'+stamp
+        yield {'save_id':save_id,'run_id':'ag01d-families:'+stamp,'unit_id':unit,
+            'source_key':'PLAYER_FAMILIES:'+subject,'observed_at':stamp,'evidence_grade':'RESEARCH_FIXTURE',
+            'decoder_version':'REGISTERED_PUBLIC_PLAYER_FAMILIES_V1',
+            'save_binding_ref':'UNVERIFIED_ORIGINAL_SAVE: '+SOURCE_REF,
+            'season':{'season_id':f'season:{year}','season_code':f'{year-1}-{str(year)[2:]}'},
+            'completeness':'PARTIAL',
+            'required_fields':{'player_attribute_snapshots':list(families['attributes']),
+                               'player_contract_observations':list(families['contracts'])},
+            'artifacts':[artifact(path,'RESTRICTED_RESEARCH_PLAYER_AND_CAREER'),
+                         artifact(DOMAIN/'config/memory_field_profile.json','REGISTERED_LAYOUT'),
+                         artifact(DOMAIN/'config/state_io_native/player.json','REGISTERED_LAYOUT')],
+            'facts':{'players':[{'player_id':pid,'display_name':identity['name'],
+                               'native_player_id':str(identity['player_id']),'native_identity_status':'UNVERIFIED'}],
+                'player_attribute_snapshots':[{'player_id':pid,**families['attributes']}],
+                'player_vitals_observations':[{'player_id':pid,**families['vitals']}],
+                'player_contract_observations':[{'player_id':pid,**families['contracts']}],
+                'player_tendency_snapshots':[{'player_id':pid,**families['tendencies']}],
+                'player_play_type_slots':[{'player_id':pid,**row} for row in families['play_types']],
+                'field_gaps':[{'affected_domain':'RES-P','target_field':pid+':BADGE_TIERS',
+                              'reason':'2-bit/five-tier semantics not proven by this source adapter',
+                              'impact':'No badge ownership or tier invented; no Q10 exception approved'}]}}
 
 
 def replay_ag01d(save_id,*,observed_at=None):

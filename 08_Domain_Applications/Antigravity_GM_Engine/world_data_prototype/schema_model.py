@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 2
+VERSION = 3
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -94,7 +94,7 @@ STATS_SOURCE = 'AG_NATIVE_01D/decoders: research layout; fixture replay only, no
 
 table('saves', 'singleton', 'RES-D', 'one independent game save per SQLite file', [
     col('save_id', required=True, source='HUMAN_OR_EVIDENCED_SAVE_BINDING', unit='opaque save identity'),
-    col('schema_version', 'INTEGER', required=True, check='schema_version=2', source='ENGINEERING_SCHEMA_VERSION'),
+    col('schema_version', 'INTEGER', required=True, check='schema_version=3', source='ENGINEERING_SCHEMA_VERSION'),
     col('created_at', required=True, source='SYSTEM_UTC_CLOCK', unit='ISO8601 UTC'),
     col('source_grade', required=True, default="'SYNTHETIC_ONLY'", source='EVIDENCE_CLASSIFICATION'),
     col('game_build'), col('native_save_fingerprint', visibility='OWNER_ONLY')],
@@ -125,7 +125,10 @@ TENDENCY_FIELDS = PLAYER_CONFIG['TENDENCY_OFFSETS']
 tendency_cols = fields('shot_tendency_raw drive_tendency_raw',source='UNKNOWN: legacy synthetic aliases; not native-certified')
 for name, offset in TENDENCY_FIELDS.items():
     clean = re.sub('[^a-z0-9_]', '_',name.lower())+'_raw'
-    if clean not in {c.name for c in tendency_cols}:
+    existing=next((c for c in tendency_cols if c.name==clean),None)
+    if existing:
+        existing.source=f'config/state_io_native/player.json TENDENCY_OFFSETS.{name}={offset}; RESEARCH_LEAD'
+    else:
         tendency_cols += fields(clean,source=f'config/state_io_native/player.json TENDENCY_OFFSETS.{name}={offset}; RESEARCH_LEAD')
 table('player_tendency_snapshots','snapshot_id','RES-P','one player named tendency family observation',[P(),U()]+tendency_cols,unique=[('player_id','unit_id')])
 table('player_badge_values','badge_observation_id','RES-P','one enumerated badge observation; absence is not unowned',[P(),U(),col('badge_key',required=True),col('native_code','INTEGER'),col('tier_label'),col('owned_state',required=True,check="owned_state IN ('owned','not_owned','unknown')")],unique=[('player_id','unit_id','badge_key')],source='Badge bit encoding UNKNOWN; source research conflicts retained')
@@ -133,7 +136,7 @@ table('player_play_type_slots','play_type_observation_id','RES-P','one ordered p
 contract_cols=[]
 for r in PROFILE['fields']['PLAYER']:
     if r['group']=='contract':
-        contract_cols += fields(r['name']+'_raw',source=f'{PROFILE_REF} PLAYER +{r["offset"]}; '+('AMBIGUOUS_SHARED_OFFSET_833' if r['offset']==833 else 'REGISTRY_ONLY'),unit='raw integer; salary units UNKNOWN' if r['name'].startswith('contract_year') else 'native raw code')
+        contract_cols += fields(r['name']+'_raw',source=f'{PROFILE_REF} PLAYER +{r["offset"]} bit={r.get("start_bit",0)} width={r.get("bits",r.get("bytes",0)*8)}; REGISTERED_LAYOUT_NOT_CURRENT_UI_ACCEPTANCE',unit='raw integer; salary units UNKNOWN' if r['name'].startswith('contract_year') else 'native raw code')
 table('player_contract_observations','contract_obs_id','RES-M','one actual contract observation, not inferred signing event',[P(),T(False),U()]+contract_cols,unique=[('player_id','unit_id')])
 table('player_health_observations','health_id','RES-P','observed health separate from attribute durability',[P(),U()]+fields('injury_code body_part severity availability recovery_text','TEXT')+fields('fatigue_raw energy_raw recovery_days'),unique=[('player_id','unit_id')])
 table('player_morale_observations','morale_id','RES-P','observed native morale/role, not AI personality',[P(),U(),col('role_code'),col('morale_raw','INTEGER'),col('role_satisfaction_raw','INTEGER')],unique=[('player_id','unit_id')])
@@ -177,6 +180,13 @@ table('game_news_entries','news_id','RES-H','one source-observed native news ite
 # Added to the 59-table proposal: explicit season freeze boundary instead of
 # treating the last observed cumulative snapshot as an accepted final season.
 table('season_finalizations','finalization_id','RES-D','explicit evidenced season closure boundary',[S(),U(),col('source_ref',required=True),col('finalized_at',required=True)],unique=[('season_id',)],public=False)
+table('native_box_observations','box_observation_id','RES-D','one captured Box row before canonical player identity is proven',
+      [G(),U(),col('side',required=True,check="side IN ('HOME','AWAY')"),
+       col('row_index','INTEGER',required=True,check='row_index>=0'),col('native_player_id','INTEGER',required=True),
+       col('native_team_id','INTEGER',required=True),col('in_use','INTEGER',required=True,check='in_use IN (0,1)')]+
+      fields(STATS,source='OWNER_CAPTURED_24_BYTE_BOX_RECORD; candidate decode, not canonical identity')+
+      [col('points_provenance',required=True),col('identity_status',required=True,default="'UNRESOLVED'")],
+      unique=[('game_id','unit_id','side','row_index')],public=False)
 
 # Field-level evidence annotations for the implemented sample adapter. Never
 # promote a native legal game/UI range from its packed integer storage width.
@@ -193,7 +203,7 @@ for c in TABLES['game_period_scores'].columns:
 
 
 def schema_sql():
-    out=['-- Generated by schema_model.py; 59 proposed tables + observed game states + explicit season finalizations.\nPRAGMA foreign_keys=ON;']
+    out=['-- Generated: 59 proposed tables + game states + season finalizations + typed unresolved Native Box staging.\nPRAGMA foreign_keys=ON;']
     for t in TABLES.values():
         definitions=[c.sql()+(' PRIMARY KEY' if c.name==t.key else '') for c in t.columns]
         definitions += ['UNIQUE ('+','.join(map(ident, cols))+')' for cols in t.unique]
@@ -238,7 +248,7 @@ def dictionary():
         for c in t.columns:
             row['columns'].append({'name':c.name,'sqlite_type':c.kind,'meaning':c.meaning or c.name.replace('_',' '),
                 'required':c.required,'default':c.default,'null_meaning':None if c.required else 'NOT_OBSERVED in this unit; not zero or previous value',
-                'unit':c.unit,'foreign_key':c.ref,'sql_constraint':c.check,'legal_game_range':'UNKNOWN' if c.source.startswith('UNKNOWN') or 'REGISTRY' in c.source or 'research' in c.source.lower() else 'NOT_APPLICABLE_OR_SEPARATELY_EVIDENCED',
+                'unit':c.unit,'foreign_key':c.ref,'sql_constraint':c.check,'legal_game_range':'NOT_APPLICABLE' if c.source.startswith(('ENGINEERING_','SYSTEM_','ACQUISITION_','EVIDENCE_','HUMAN_')) else 'UNKNOWN',
                 'source':c.source,'visibility':c.visibility if t.public else 'OWNER_ONLY',
                 'time_semantics':'observation time from unit_id; effective game time separately recorded' if t.observation else 'immutable identity or metadata'})
         result['tables'].append(row)
@@ -249,8 +259,8 @@ LEGACY_TABLES = set('saves seasons teams players games capture_runs capture_unit
 
 
 if __name__=='__main__':
-    (BASE/'schema.sql').write_text(schema_sql(),encoding='utf-8')
-    (BASE/'field_dictionary.json').write_text(json.dumps(dictionary(),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (BASE/'schema.sql').write_text(schema_sql(),encoding='utf-8',newline='\n')
+    (BASE/'field_dictionary.json').write_text(json.dumps(dictionary(),ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
     cards=['# Executable world table cards (development candidate)', '',
         'Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.',
         '',f'Actual tables: **{len(TABLES)}**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.','',
@@ -258,5 +268,5 @@ if __name__=='__main__':
     for t in TABLES.values():
         fks='; '.join(c.name+' -> '+c.ref for c in t.columns if c.ref)
         cards.append(f'| `{t.name}` | {t.domain} | {t.grain} | `{t.key}` | {fks} | '+('EXTEND/PRESERVE' if t.name in LEGACY_TABLES else 'ADD')+' |')
-    (BASE/'TABLE_CARDS.md').write_text('\n'.join(cards)+'\n',encoding='utf-8')
+    (BASE/'TABLE_CARDS.md').write_text('\n'.join(cards)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps({'tables':len(TABLES),'columns':sum(len(t.columns) for t in TABLES.values())}))
