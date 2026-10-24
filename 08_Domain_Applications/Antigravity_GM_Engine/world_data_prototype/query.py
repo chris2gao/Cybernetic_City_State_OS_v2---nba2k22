@@ -137,6 +137,41 @@ def market_snapshot(path,*,team_id=None,limit=10000):
             'free_agent_availability':'NOT_OBSERVED_BY_THIS_SOURCE','draft_results':'NOT_INFERRED_FROM_ASSET_OR_SLOT_STATE'}
 
 
+def settings_snapshot(path,*,scope_code=None,limit=2000):
+    """Latest observed settings unit. Native words never become UI defaults."""
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    with closing(connect(path,True)) as c:
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade FROM capture_units u
+            JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_SETTINGS_AND_RULES' AND u.unit_status='success'
+            ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''').fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED'}
+        where=' AND s.scope_code=?' if scope_code is not None else '';args=[unit['unit_id']]+([scope_code] if scope_code is not None else [])
+        rows=[dict(r) for r in c.execute('''SELECT s.*,n.codec,n.legal_range_state FROM game_setting_observations s
+            JOIN native_fields n USING(field_id) WHERE s.unit_id=?'''+where+' ORDER BY s.scope_code,s.logical_key LIMIT ?',args+[limit+1])]
+        if len(rows)>limit:raise ValueError('settings snapshot exceeds explicit cap; no truncation')
+        for row in rows:row['registered_aliases']=json.loads(row.pop('aliases_json') or '[]')
+        return {'status':'OBSERVED_NATIVE_WORDS_QUALIFIED_LAYOUT','unit':dict(unit),'settings':rows,
+            'ui_value_and_range':'NOT_CERTIFIED_BY_REGISTERED_CANDIDATES','targets_defaults_applied':False}
+
+
+def rules_snapshot(path,*,season_id=None,limit=2000):
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    with closing(connect(path,True)) as c:
+        args=[];season=''
+        if season_id is not None:season=' AND r.season_id=?';args.append(season_id)
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,r.source_grade,r.season_id FROM capture_units u
+            JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_SETTINGS_AND_RULES' AND u.unit_status='success' '''+season+
+            ' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED'}
+        rows=[dict(r) for r in c.execute('''SELECT r.*,s.logical_key,s.scope_code,s.raw_word_u32,s.value_status,
+            s.semantic_status,s.registered_range_status,s.aliases_json FROM league_rule_observations r
+            JOIN game_setting_observations s USING(setting_obs_id) WHERE r.unit_id=? ORDER BY r.rule_key LIMIT ?''',(unit['unit_id'],limit+1))]
+        if len(rows)>limit:raise ValueError('rules snapshot exceeds explicit cap; no truncation')
+        for row in rows:row['registered_aliases']=json.loads(row.pop('aliases_json') or '[]')
+        return {'status':'OBSERVED_REGISTERED_LEAGUE_WORDS','unit':dict(unit),'rules':rows,
+            'business_policy_or_cba_effect':'NOT_INFERRED_FROM_WORDS'}
+
+
 def planning_snapshot(path,*,team_id=None,limit=5000):
     if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
     with closing(connect(path,True)) as c:

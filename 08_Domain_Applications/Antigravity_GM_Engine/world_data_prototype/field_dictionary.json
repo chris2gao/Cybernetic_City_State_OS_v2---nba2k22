@@ -1,5 +1,5 @@
 {
-  "schema_version": 7,
+  "schema_version": 8,
   "table_count": 74,
   "evidence_policy": "Native legal ranges UNKNOWN unless separately certified; registration and fixture replay are not live acceptance",
   "tables": [
@@ -61,7 +61,7 @@
           "null_meaning": null,
           "unit": "UNKNOWN/native representation",
           "foreign_key": null,
-          "sql_constraint": "schema_version=7",
+          "sql_constraint": "schema_version=8",
           "legal_game_range": "NOT_APPLICABLE",
           "source": "ENGINEERING_SCHEMA_VERSION",
           "visibility": "OWNER_ONLY",
@@ -12190,8 +12190,8 @@
     {
       "name": "game_setting_observations",
       "domain": "RES-S",
-      "grain": "one actual native setting, using typed value alternatives",
-      "reason_for_table": "one actual native setting, using typed value alternatives; independent identity/lifecycle or consistency unit",
+      "grain": "one actual native setting word with typed value and qualified semantics",
+      "reason_for_table": "one actual native setting word with typed value and qualified semantics; independent identity/lifecycle or consistency unit",
       "primary_key": "setting_obs_id",
       "unique_keys": [
         [
@@ -12211,7 +12211,7 @@
         {
           "name": "setting_obs_id",
           "sqlite_type": "TEXT",
-          "meaning": "one actual native setting, using typed value alternatives identity",
+          "meaning": "one actual native setting word with typed value and qualified semantics identity",
           "required": true,
           "default": null,
           "null_meaning": null,
@@ -12327,6 +12327,96 @@
           "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
           "visibility": "GM_PUBLIC",
           "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "logical_key",
+          "sqlite_type": "TEXT",
+          "meaning": "logical key",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "ENGINEERING_LAYOUT_IDENTITY; not an accepted UI label",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "raw_word_u32",
+          "sqlite_type": "INTEGER",
+          "meaning": "raw word u32",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "unsigned 32-bit bit pattern",
+          "foreign_key": null,
+          "sql_constraint": "raw_word_u32 BETWEEN 0 AND 4294967295",
+          "legal_game_range": "UNKNOWN",
+          "source": "ACTUAL_NATIVE_FOUR_BYTE_WORD",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "value_status",
+          "sqlite_type": "TEXT",
+          "meaning": "value status",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "EVIDENCE_FLOAT_OR_UINT32_DECODE_STATUS",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "semantic_status",
+          "sqlite_type": "TEXT",
+          "meaning": "semantic status",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "EVIDENCE_REGISTERED_LAYOUT_VS_CURRENT_UI_SEMANTICS",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "registered_range_status",
+          "sqlite_type": "TEXT",
+          "meaning": "registered range status",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "EVIDENCE_COMPARISON_WITH_CANDIDATE_RANGES; game range not certified",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "aliases_json",
+          "sqlite_type": "TEXT",
+          "meaning": "aliases json",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "JSON list of registered aliases; not game facts",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "UNKNOWN",
+          "source": "config/state_io_native/{world,settings,court}.json; names and candidate bounds only, no defaults/targets",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
         }
       ]
     },
@@ -12438,8 +12528,8 @@
     {
       "name": "league_rule_observations",
       "domain": "RES-L",
-      "grain": "one actual season rule observation",
-      "reason_for_table": "one actual season rule observation; independent identity/lifecycle or consistency unit",
+      "grain": "one actual season rule observation, not external business policy",
+      "reason_for_table": "one actual season rule observation, not external business policy; independent identity/lifecycle or consistency unit",
       "primary_key": "rule_id",
       "unique_keys": [
         [
@@ -12457,7 +12547,7 @@
         {
           "name": "rule_id",
           "sqlite_type": "TEXT",
-          "meaning": "one actual season rule observation identity",
+          "meaning": "one actual season rule observation, not external business policy identity",
           "required": true,
           "default": null,
           "null_meaning": null,
@@ -12556,6 +12646,36 @@
           "sql_constraint": null,
           "legal_game_range": "UNKNOWN",
           "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "real_value",
+          "sqlite_type": "REAL",
+          "meaning": "real value",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "UNKNOWN",
+          "source": "ACTUAL_NATIVE_FLOAT32_WHEN_REGISTERED",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "setting_obs_id",
+          "sqlite_type": "TEXT",
+          "meaning": "Reference to the evidenced game_setting_observations record",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "save-local identifier",
+          "foreign_key": "game_setting_observations(setting_obs_id)",
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "ENGINEERING_IDENTITY_CONTRACT",
           "visibility": "GM_PUBLIC",
           "time_semantics": "observation time from unit_id; effective game time separately recorded"
         }
