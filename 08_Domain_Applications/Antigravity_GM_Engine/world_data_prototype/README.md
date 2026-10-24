@@ -1,6 +1,6 @@
 # NBA2K22 per-save world database — full-system development
 
-Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engineering candidate**: executable all-domain structure with a bounded historical research adapter; full live-source coverage, whole-system acceptance and independent review are outstanding.
+Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engineering candidate**: executable all-domain structure, historical adapters and an operator-bound live game/player adapter; full live-source coverage, whole-system acceptance and independent review are outstanding.
 
 ## Implemented structure
 
@@ -26,6 +26,8 @@ python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py 
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py upgrade OLD_V1_OR_V2_DB NEW_V3_DB
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py replay-player-families DB AG01D-REGISTERED-PLAYERS
 python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py replay-owner-capture CAPTURE_DIRECTORY DB OWNER_CAPTURE_RESEARCH_ONLY
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py init-save SAVE_DIRECTORY nba2k22_test_01 NATIVE_SAVE_FILE
+python 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py capture-live PID SAVE_DIRECTORY MyLEAGUE0003 NEW_CAPTURE_DIRECTORY --game-index 0
 python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q
 ```
 
@@ -53,4 +55,14 @@ Current PLAYER pool controls found duplicate Native IDs: Jrue Holiday at indices
 
 `replay-owner-capture` verifies recorded-byte hashes and matching API trace entries, decodes raw bytes again, checks both-team score conservation and writes a **research-only replay**. Its `RESEARCH_FIXTURE` grade describes replay/candidate maturity; its origin is this task's recorded live acquisition. It is not an accepted, persistently bound world database, and cannot be used to claim a complete source or independent acceptance. JSON PASS assertions alone cannot bypass raw-byte conservation checks.
 
-No source unreadability is a Q10 exception by itself. Live save binding, full schedule and both-team Box, badge/contract ambiguities, staff assignments, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.
+## Operator-bound current world (increment 04)
+
+Human assigned `nba2k22_test_01` to the loaded native file `MyLEAGUE0003` in the declared remote save directory. `init-save` creates a small `save.json` declaration and one `world.sqlite`, refusing overwrite. `capture-live` takes the loaded filename explicitly and checks it against this declaration. Human announces switches and provides the new filename; reopening the same file keeps its save ID. File hashes, PID, pool positions and pointers are acquisition controls, not a replacement save identity. This prototype does not invoke the older production capture system or modify the game file.
+
+`live_world.py` traverses the bounded PLAYER, TEAM and Slot24 descriptors, links both game teams to unique TEAM IDs, and discriminates duplicate player IDs using valid current-team pointers and current Slot24 records. A unique pool ID and valid TEAM pointer can also identify a player without a current cumulative record. That player still gets public fields and a game Box; the missing total stays absent. Ambiguity remains explicit, never a name-based merge. Selected source bytes, directory descriptors and game/Box bytes are reread to reject mixed observations.
+
+The adapter requests public PLAYER segments on either side of Potential byte 1089; that byte is **never read**. Public binary artifacts contain a documented zero placeholder at the excluded position. They remain owner-only. The fresh Windows acquisition can emit `LIVE_READ` through an in-process acquisition receipt bound to the exact payload. A JSON payload passed directly to generic ingestion cannot assert that grade. `LIVE_READ` establishes acquisition provenance; UI semantics, unknown ranges and missing fields retain their own evidence limits.
+
+Actual second acquisition into this bound world contains 26 players, 26 canonical game Boxes, 25 native season totals, 54 registered public attributes / 48 named tendencies / 17 contract fields / four PlayTypes per player, two teams and eight period scores. All 26 original native Box rows remain in source staging. Rodney Hood has no current Slot24 record; no cumulative zeros were substituted. Game date stays NULL pending UI calendar evidence. The earlier research replay remains unchanged with its original unbound identity and zero canonical Boxes.
+
+No source unreadability is a Q10 exception by itself. Full schedule coverage, cross-session native player lifecycle, badge/contract UI semantics, staff assignments, draft/G League, settings and honors/news still require source evidence. No full-system acceptance, capacity benchmark, game writes, production migration or master integration is claimed.
