@@ -26,3 +26,9 @@ The existing managed verification plan remains reserved for a completed all-doma
 Human explicitly steered that Antigravity requests are relayed by Human between tasks. Codex stopped Computer Use, did not submit a request, and will not automate Antigravity. The bounded request is `world_data_prototype/ANTIGRAVITY_NATIVE_REQUEST_01.md`.
 
 Before Antigravity starts, Human passes the exact clean committed/published HEAD and the same local worktree. While Antigravity uses that workspace/game process, Codex does not operate either. Antigravity returns only its allowed research contribution, precise HEAD, evidence and stopped/clean status; Codex then resumes schema/Reader integration. No old Backlog state is added as an automatic predecessor and no master merge is performed.
+
+## Subsequent Human clarification and Owner probe
+
+Human clarified that Codex can perform Native reverse engineering directly. Gemini is optional for batch exploration and quota savings, not a mandatory handoff for every source question. This supersedes any earlier next-owner wording that implied an immediate required Antigravity step. The request card is now an optional SEASON/Box/Slot24 + PLAYER contract/badge batch, relayed only by Human when selected.
+
+Codex implemented `live_reader.py` and attempted to open the designated running `NBA2K22.exe` PID 2564 using **0x1010 = VM_READ | QUERY_LIMITED_INFORMATION**. Windows returned **error 5**. No ReadProcessMemory call occurred, no raw bytes were returned, no facts were ingested and no game write or privilege elevation was attempted. The exact trace is retained with this run. A read-only worker with the required Windows privilege is the next prerequisite for current-process acquisition; this is not a general programme stop or an assertion that the local game is offline. Remaining schema/adapter work can proceed independently.

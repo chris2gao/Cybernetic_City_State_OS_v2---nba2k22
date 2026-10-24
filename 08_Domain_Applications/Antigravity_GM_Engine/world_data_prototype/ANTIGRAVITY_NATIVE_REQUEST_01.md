@@ -1,6 +1,6 @@
-# Serial Native request 01 — current SEASON / full Box / Slot24 identity chain
+# Optional batch Native request 01 — only when Owner/Human chooses to offload
 
-Human relays this request manually. **Do not start against a stale checkout or while Codex still operates the shared worktree.** Parent task: `nba2k22-world-data-full-implementation-01`; branch: `task/nba2k22-world-data-full-implementation-20261024`. This is one bounded source-evidence contribution, not a new system Owner or an independent review.
+Human relays this request manually only if Codex judges batch exploration useful. **Do not start against a stale checkout or while Codex still operates the shared worktree.** Parent task: `nba2k22-world-data-full-implementation-01`; branch: `task/nba2k22-world-data-full-implementation-20261024`. Gemini is an optional quota-saving research assistant, not a required predecessor for every Native question. Codex can perform its own bounded reads and reverse engineering. This is one source-evidence contribution, not a new system Owner or an independent review.
 
 ## Five-field handoff
 
@@ -12,7 +12,7 @@ Human relays this request manually. **Do not start against a stale checkout or w
 
 ## Exploration envelope
 
-This authorizes only existing known source families on the currently designated test process: SEASON header, schedule/game records, Box StatBank and the related Slot1 PLAYER identity / Slot24 cumulative records. Recalibrate addresses and runtime identity; historical absolute pointers are hints only. Use query/read rights only. No process memory writes, injection, suspend/resume, UI advancement, game simulation/date progression, save/load/overwrite, other processes' memory, credentials, production stores or DCR without its applicable separate authorization.
+This authorizes only existing known source families on the currently designated test process: SEASON header, schedule/game records, Box StatBank and the related Slot1 PLAYER identity/contract/badge fields / Slot24 cumulative records. Recalibrate addresses and runtime identity; historical absolute pointers are hints only. Use query/read rights only. No process memory writes, injection, suspend/resume, UI advancement, game simulation/date progression, save/load/overwrite, other processes' memory, credentials, production stores or DCR without its applicable separate authorization.
 
 Start from a current bounded header and one demonstrated final game. Read only the game's validated participant window (up to 52 records × 24 bytes), at most two related player records and their mapped season records; field investigation can adapt **inside these source families**. Validate pointer ranges/counts and byte completeness before reading arrays. If the layout/count differs or the current process cannot be bound, retain the failure evidence instead of guessing. A failed hypothesis does not end the parent engineering programme; stop only this contribution when it cannot yield further supported evidence within its envelope.
 
@@ -26,4 +26,8 @@ Full PLAYER records contain hidden Potential. Do not commit or return their unma
 4. Capture one matching Slot24 total and identify its season/scope. If additivity needs a complete season window that is not obtained here, label it NOT_PROVEN rather than extending to an unbounded programme.
 5. Return limitations affecting `games`, `game_state_observations`, `game_period_scores`, `player_game_boxes`, `team_game_boxes`, `player_season_totals`, `native_identity_links` and `capture_units`.
 
-Finish by committing only the allowed research contribution and stopping all tools on the shared workspace/game process. No automatic master merge, no table redesign, no second owner, no per-field Human approvals inside the declared envelope. Badge/contract offset 833, staff, draft and settings are later source questions, not extra work in this handoff.
+## Optional batch alongside the same PLAYER samples
+
+If dispatched as a batch, also investigate the `original_contract_years` / `extension_length` shared offset 833 (bitfields/alias/incorrect registration) and the badge 2-bit/five-label inconsistency using the same bounded PLAYER sample family. Return exact bit/byte interpretations, observed controls and UNKNOWN alternatives; do not fabricate a complete legal range from two examples. No new game state changes are permitted to manufacture a differential. Staff, draft and global settings are outside this batch.
+
+Finish by committing only the allowed research contribution and stopping all tools on the shared workspace/game process. No automatic master merge, no table redesign, no second owner, no per-field Human approvals inside the declared envelope.
