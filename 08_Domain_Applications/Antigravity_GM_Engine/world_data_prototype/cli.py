@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
 from readers import replay_ag01d,replay_player_families
-from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card,settings_snapshot,rules_snapshot
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card,settings_snapshot,rules_snapshot,record_book
 from owner_capture import recorded_game_capture
 
 
@@ -74,7 +74,13 @@ def main():
     capture_settings_cmd=sub.add_parser('capture-settings');capture_settings_cmd.add_argument('pid',type=int);capture_settings_cmd.add_argument('save_directory');capture_settings_cmd.add_argument('loaded_filename');capture_settings_cmd.add_argument('new_output_directory')
     settings_cmd=sub.add_parser('settings');settings_cmd.add_argument('database');settings_cmd.add_argument('--scope-code');settings_cmd.add_argument('--limit',type=int,default=2000)
     rules_cmd=sub.add_parser('rules');rules_cmd.add_argument('database');rules_cmd.add_argument('--season-id');rules_cmd.add_argument('--limit',type=int,default=2000)
+    capture_records_cmd=sub.add_parser('capture-records');capture_records_cmd.add_argument('pid',type=int);capture_records_cmd.add_argument('save_directory');capture_records_cmd.add_argument('loaded_filename');capture_records_cmd.add_argument('new_output_directory')
+    records_cmd=sub.add_parser('records');records_cmd.add_argument('database');records_cmd.add_argument('--category-code',type=lambda s:int(s,0));records_cmd.add_argument('--subject-name');records_cmd.add_argument('--unit-id');records_cmd.add_argument('--after-index',type=int,default=-1);records_cmd.add_argument('--limit',type=int,default=200)
     args=parser.parse_args()
+    if args.action=='capture-records':
+        from records_reader import capture_records
+        print(json.dumps(capture_records(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='records':print(json.dumps(record_book(args.database,category_code=args.category_code,subject_name=args.subject_name,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
     if args.action=='capture-settings':
         from settings_reader import capture_settings
         print(json.dumps(capture_settings(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return

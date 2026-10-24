@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 8
+VERSION = 9
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -281,7 +281,26 @@ table('league_rule_observations','rule_id','RES-L','one actual season rule obser
     ref('setting_obs_id','game_setting_observations',required=False)],unique=[('season_id','unit_id','rule_key')])
 table('season_award_instances','award_id','RES-H','actual awarded honor; leaders are not winners',[S(),U(),col('award_code',required=True),col('award_type',required=True),col('is_final','INTEGER',required=True,check='is_final=1')],unique=[('season_id','award_code','award_type')])
 table('award_recipients','recipient_id','RES-H','one actual award recipient',[ref('award_id','season_award_instances'),ref('player_id','players',required=False),T(False),col('rank_index','INTEGER'),U()],checks=['player_id IS NOT NULL OR team_id IS NOT NULL'])
-table('season_record_entries','record_id','RES-H','one actual record holder/value, no fabricated honors',[S(),U(),col('record_key',required=True),ref('holder_player_id','players','player_id',False),ref('holder_team_id','teams','team_id',False),col('value_raw',required=True),col('source_ref',required=True),col('occurred_at')])
+table('season_record_entries','record_id','RES-H','one observed native record-book slot; source subjects and historical scopes need separate identity proof',[
+    ref('season_id','seasons',required=False),U(),col('record_key',required=True),ref('holder_player_id','players','player_id',False),ref('holder_team_id','teams','team_id',False),
+    col('value_raw',required=True,source='ACTUAL_NATIVE_FLOAT32_HEX_OR_NONFINITE_DIAGNOSTIC; never rounded'),col('source_ref',required=True),col('occurred_at'),
+    ref('observed_in_season_id','seasons','season_id',False),
+    col('source_row_index','INTEGER',check='source_row_index>=0',source='ROSTERDATA_SLOT39_CURRENT_NATIVE_INDEX; not a lifetime record identity'),
+    col('source_first_name',source='ROSTERDATA_SLOT39_RECORD52 +0..19 inline name prefix'),
+    col('source_last_name',source='ROSTERDATA_SLOT39_RECORD52 +20..39 inline name prefix'),
+    col('native_value_word_u32','INTEGER',check='native_value_word_u32 BETWEEN 0 AND 4294967295',source='ROSTERDATA_SLOT39_RECORD52 +40..43 raw bytes',unit='uint32 bit pattern'),
+    col('native_value_real','REAL',source='ROSTERDATA_SLOT39_RECORD52 +40 IEEE754 float32; no rounding or UI scaling'),
+    col('packed_date_raw','INTEGER',check='packed_date_raw BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +44 uint16'),
+    col('native_category_code','INTEGER',check='native_category_code BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +46 uint16'),
+    col('category_label_candidate',source='AG_NATIVE_01C/decoders/record_book_decoder.py CATEGORY_NAMES; research candidate not current UI certification'),
+    col('native_player_id_raw','INTEGER',check='native_player_id_raw BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +48 uint16; no current PLAYER binding'),
+    col('flags_raw','INTEGER',check='flags_raw BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +50 uint16; team/scope meaning UNKNOWN'),
+    col('decode_status',source='EVIDENCE_RECORD_SLOT_NAME_AND_FINITE_VALUE_CLASSIFICATION'),
+    col('name_encoding_status',source='EVIDENCE_INLINE_NAME_PREFIX_ENCODING; no name-based identity binding'),
+    col('record_date_candidate',source='AG_NATIVE_01C 1920 epoch candidate; Gregorian validation only, not occurred_at',unit='ISO date candidate'),
+    col('date_interpretation_status',source='EVIDENCE_1920_EPOCH_CANDIDATE_APPLICABILITY; packed word retained'),
+    col('source_scope_status',source='EVIDENCE_SCOPE_NOT_DERIVED_FROM_OBSERVATION_SEASON_OR_FLAGS')],
+    unique=[('unit_id','source_row_index')],source='ROSTERDATA Slot39; actual native getter count/pointer/52-byte stride, research field semantics')
 table('external_execution_receipts','receipt_id','RES-D','external executor report, not proof of readback',[SAVE(),ref('transaction_id','external_transaction_events',required=False),U(),col('attempted_at',required=True),col('write_status',required=True),col('source_ref',required=True),col('approval_ref')],public=False)
 table('external_readback_checks','check_id','RES-D','separate observed readback reconciliation',[ref('receipt_id','external_execution_receipts'),U(),col('expected_state',required=True),col('observed_state'),col('reconcile_status',required=True)],public=False)
 table('native_identity_links','link_id','RES-D','one versioned native ID to actual save-local entity link',[SAVE(),U(),col('entity_type',required=True,check="entity_type IN ('player','team','game','staff')"),col('entity_id',required=True),col('native_id'),col('valid_from'),col('identity_state',required=True)],public=False)
