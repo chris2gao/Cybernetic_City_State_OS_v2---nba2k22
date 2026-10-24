@@ -15,3 +15,5 @@ Increment05 copy-upgraded the active fact file to `world-v4.sqlite`; `save.json.
 Increment06 subsequently copy-upgraded to `world-v5.sqlite`, selected by the same binding pointer. Both older fact files and declarations remain retained. The actual organization unit was acquired from fresh PID8784 with read/query rights only.
 
 Increment07 subsequently selected the copied `world-v6.sqlite`. The v5 file/declaration remain retained and byte-unchanged. The native market source came from PID8784; no native save file or game state was changed.
+
+Increment08 selected copied `world-v7.sqlite`, retaining the v6 file/declaration and all old values. Planning/training/mentor source came from PID8784 with fresh roots/metadata and reciprocal current-roster checks. No game/save write occurred.
