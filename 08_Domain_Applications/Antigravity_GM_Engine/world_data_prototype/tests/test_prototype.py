@@ -10,6 +10,7 @@ BASE=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(BASE))
 from engine import create_database,connect,ingest_synthetic_capture,read_gm_observations,summarize
 from cli import synthetic_payload,smoke
+from schema_model import TABLES
 
 class WorldDataPrototypeTests(unittest.TestCase):
     def setUp(self):
@@ -23,7 +24,7 @@ class WorldDataPrototypeTests(unittest.TestCase):
 
     def test_create_and_no_overwrite(self):
         with self.assertRaises(FileExistsError):create_database(self.db,'save-beta')
-        self.assertEqual(summarize(self.db)['table_count'],16)
+        self.assertEqual(summarize(self.db)['table_count'],len(TABLES))
         with connect(self.db) as c:
             self.assertEqual(c.execute('SELECT save_id FROM saves').fetchone()[0],'save-alpha')
             with self.assertRaises(sqlite3.IntegrityError):c.execute('UPDATE saves SET save_id="changed"')
@@ -57,14 +58,14 @@ class WorldDataPrototypeTests(unittest.TestCase):
         self.assertEqual(summarize(self.db)['attribute_observations'],0)
         with connect(self.db) as c:
             with self.assertRaises(sqlite3.IntegrityError):
-                c.execute('INSERT INTO player_attribute_snapshots VALUES(?,?,?,?,?,?)',('a','p','unit-1',1,1,1))
+                c.execute('INSERT INTO player_attribute_snapshots(snapshot_id,player_id,unit_id,overall_raw) VALUES(?,?,?,?)',('a','p','unit-1',1))
 
     def test_append_only_and_fk(self):
         self.ingest()
         with connect(self.db) as c:
             with self.assertRaises(sqlite3.IntegrityError):c.execute('UPDATE player_attribute_snapshots SET overall_raw=99')
             with self.assertRaises(sqlite3.IntegrityError):c.execute('DELETE FROM player_game_boxes')
-            with self.assertRaises(sqlite3.IntegrityError):c.execute('INSERT INTO player_game_boxes VALUES(?,?,?,?,?,?,?,?)',('x','unknown-game','player-a','team-a','unit-1',2,1,1))
+            with self.assertRaises(sqlite3.IntegrityError):c.execute('INSERT INTO player_game_boxes(box_id,game_id,player_id,team_id,unit_id,points) VALUES(?,?,?,?,?,?)',('x','unknown-game','player-a','team-a','unit-1',2))
             self.assertEqual(c.execute('PRAGMA foreign_key_check').fetchall(),[])
 
     def test_reject_hidden_potential_and_transaction_rolls_back(self):

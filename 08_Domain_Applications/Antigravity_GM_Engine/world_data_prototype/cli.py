@@ -6,7 +6,9 @@ import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from engine import create_database,connect,ingest_synthetic_capture,summarize
+from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1
+from readers import replay_ag01d
+from query import player_card,game_box,history,export_jsonl
 
 
 def synthetic_payload(save_id='demo-alpha',run_id='run-1',unit_id='unit-1',observed_at='2026-10-24T00:00:00Z'):
@@ -38,13 +40,34 @@ def smoke():
 
 
 def main():
-    parser=argparse.ArgumentParser(description='Isolated NBA2K22 synthetic SQLite prototype (NO game access)')
+    parser=argparse.ArgumentParser(description='Per-save NBA2K22 world facts; fixture replay is NOT live acceptance')
     sub=parser.add_subparsers(dest='action',required=True)
     init=sub.add_parser('init');init.add_argument('database');init.add_argument('save_id')
     sub.add_parser('smoke')
     demo=sub.add_parser('demo');demo.add_argument('database');demo.add_argument('save_id')
+    replay=sub.add_parser('replay-ag01d');replay.add_argument('database');replay.add_argument('save_id');replay.add_argument('--observed-at')
+    stats=sub.add_parser('summary');stats.add_argument('database')
+    card=sub.add_parser('player');card.add_argument('database');card.add_argument('player_id')
+    game=sub.add_parser('game');game.add_argument('database');game.add_argument('game_id')
+    hist=sub.add_parser('history');hist.add_argument('database');hist.add_argument('table');hist.add_argument('--entity-key');hist.add_argument('--entity-id');hist.add_argument('--limit',type=int,default=200)
+    exp=sub.add_parser('export');exp.add_argument('database');exp.add_argument('table');exp.add_argument('destination');exp.add_argument('--limit',type=int,default=10000)
+    mig=sub.add_parser('migrate-v1');mig.add_argument('source');mig.add_argument('new_database')
     args=parser.parse_args()
     if args.action=='smoke': print(json.dumps(smoke(),sort_keys=True));return
+    if args.action=='summary':print(json.dumps(summarize(args.database),sort_keys=True));return
+    if args.action=='player':print(json.dumps(player_card(args.database,args.player_id),ensure_ascii=False));return
+    if args.action=='game':print(json.dumps(game_box(args.database,args.game_id),ensure_ascii=False));return
+    if args.action=='history':print(json.dumps(history(args.database,args.table,entity_key=args.entity_key,entity_id=args.entity_id,limit=args.limit),ensure_ascii=False));return
+    if args.action=='export':print(json.dumps(export_jsonl(args.database,args.destination,args.table,limit=args.limit)));return
+    if args.action=='migrate-v1':print(json.dumps({'database':str(migrate_v1(args.source,args.new_database))}));return
+    if args.action=='replay-ag01d':
+        create_database(args.database,args.save_id)
+        # Each source unit is independently atomic; a later failure preserves
+        # earlier successful units for diagnosis rather than feigning a full batch.
+        results=[]
+        for payload in replay_ag01d(args.save_id,observed_at=args.observed_at):
+            with connect(args.database) as conn:results.append(ingest_capture(conn,payload))
+        print(json.dumps({'units':len(results),**summarize(args.database)},sort_keys=True));return
     if args.action=='init':create_database(args.database,args.save_id);print(json.dumps(summarize(args.database)));return
     create_database(args.database,args.save_id)
     with connect(args.database) as conn:

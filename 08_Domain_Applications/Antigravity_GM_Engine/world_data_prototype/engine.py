@@ -1,157 +1,229 @@
-"""Initial NBA2K22 per-save world-data SQLite prototype.
-
-No memory access, game writes, live data claiming, or old-schema migration.
-This first implementation accepts *only explicitly synthetic fixture inputs*.
-"""
+"""Per-save typed world facts: atomic append-only ingestion, no game writes."""
 from __future__ import annotations
-
+from contextlib import closing
+from datetime import datetime, timezone
 import hashlib
 import json
-import sqlite3
 from pathlib import Path
-from datetime import datetime, timezone
-from typing import Any
+import sqlite3
+from schema_model import TABLES, VERSION, LEGACY_TABLES, dictionary, ident
 
-SCHEMA = Path(__file__).with_name('schema.sql')
-ALLOWED_CAPTURE_FIELDS = frozenset({'overall_raw','shot_close_raw','driving_layup_raw'})
-ALLOWED_TENDENCIES = frozenset({'shot_tendency_raw','drive_tendency_raw'})
+SCHEMA=Path(__file__).with_name('schema.sql')
+ALLOWED_CAPTURE_FIELDS=frozenset(c.name for c in TABLES['player_attribute_snapshots'].columns if c.name not in ('snapshot_id','player_id','unit_id'))
+ALLOWED_TENDENCIES=frozenset(c.name for c in TABLES['player_tendency_snapshots'].columns if c.name not in ('snapshot_id','player_id','unit_id'))
+RESERVED={'saves','seasons','capture_runs','capture_units','source_artifacts'}
+BLOCKED_INPUT={'player_restricted_observations'}
 
 
-def connect(path: str | Path, readonly: bool = False) -> sqlite3.Connection:
-    target = Path(path).resolve()
-    if readonly:
-        conn = sqlite3.connect(target.as_uri() + '?mode=ro', uri=True)
-    else:
-        conn = sqlite3.connect(str(target))
-    conn.execute('PRAGMA foreign_keys=ON')
-    conn.row_factory = sqlite3.Row
+class ManagedConnection(sqlite3.Connection):
+    def __enter__(self):
+        self._context_depth=getattr(self,'_context_depth',0)+1
+        return super().__enter__()
+
+    def __exit__(self,kind,value,traceback):
+        try:return super().__exit__(kind,value,traceback)
+        finally:
+            self._context_depth-=1
+            if self._context_depth==0:self.close()
+
+
+def connect(path,readonly=False):
+    target=Path(path).resolve()
+    conn=sqlite3.connect(target.as_uri()+('?mode=ro' if readonly else '?mode=rw'),uri=True,factory=ManagedConnection)
+    conn.execute('PRAGMA foreign_keys=ON');conn.row_factory=sqlite3.Row
     return conn
 
 
-def create_database(path: str | Path, save_id: str) -> Path:
-    """Create a *new* independent save database. Refuse any existing file."""
-    if not isinstance(save_id,str) or not save_id or len(save_id)>128:
-        raise ValueError('valid unique save_id required')
-    target = Path(path).resolve()
-    target.parent.mkdir(parents=True, exist_ok=True)
-    # Exclusive creation prevents accidental overwrite of a real/old database.
-    with target.open('xb'):
-        pass
+def _digest(data):
+    return hashlib.sha256(json.dumps(data,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()).hexdigest()
+
+
+def _utc(value):
+    return datetime.fromisoformat(value.replace('Z','+00:00')).astimezone(timezone.utc).isoformat(timespec='microseconds')
+
+
+def _insert(conn,table,record):
+    allowed={c.name:c for c in TABLES[table].columns}
+    if set(record)-allowed.keys():raise PermissionError('unknown/unapproved columns for '+table+': '+','.join(sorted(set(record)-allowed.keys())))
+    for k,v in record.items():
+        if v is None:continue
+        kind=allowed[k].kind
+        if kind=='INTEGER' and (not isinstance(v,int) or isinstance(v,bool)):raise ValueError(table+'.'+k+' must be integer or null')
+        if kind=='TEXT' and not isinstance(v,str):raise ValueError(table+'.'+k+' must be text or null')
+        if kind=='REAL' and (not isinstance(v,(int,float)) or isinstance(v,bool)):raise ValueError(table+'.'+k+' must be numeric or null')
+    cols=list(record)
+    conn.execute(f'INSERT INTO {ident(table)} ({",".join(map(ident,cols))}) VALUES ({",".join("?" for _ in cols)})',tuple(record.values()))
+
+
+def _ensure_record(conn,table,key,record,match_fields=None):
+    current=conn.execute(f'SELECT * FROM {ident(table)} WHERE {ident(key)}=?',(record[key],)).fetchone()
+    if current is None:_insert(conn,table,record)
+    elif any(current[k]!=record[k] for k in (match_fields or record.keys())):raise ValueError('identity collision in '+table+': '+str(record[key]))
+
+
+def create_database(path,save_id,*,_migration_header=None):
+    if not isinstance(save_id,str) or not save_id.strip() or len(save_id)>128:raise ValueError('valid unique save_id required')
+    target=Path(path).resolve();target.parent.mkdir(parents=True,exist_ok=True)
+    with target.open('xb'):pass
     try:
-        with connect(target) as conn:
-            conn.executescript(SCHEMA.read_text(encoding='utf-8'))
-            conn.execute('INSERT INTO saves(singleton,save_id,schema_version,created_at) VALUES(1,?,?,?)',
-                         (save_id,1,datetime.now(timezone.utc).isoformat()))
-            conn.execute('PRAGMA user_version=1')
-            conn.commit()
-            assert conn.execute('PRAGMA foreign_key_check').fetchall()==[]
+        with closing(connect(target)) as conn:
+            conn.executescript('BEGIN IMMEDIATE;\n'+SCHEMA.read_text(encoding='utf-8'))
+            header={'singleton':1,'save_id':save_id,'schema_version':VERSION,'created_at':datetime.now(timezone.utc).isoformat(),'source_grade':'UNBOUND'}
+            if _migration_header:
+                header.update({k:v for k,v in _migration_header.items() if k in ('created_at','source_grade')})
+            _insert(conn,'saves',header)
+            for t in dictionary()['tables']:
+                for c in t['columns']:
+                    _insert(conn,'native_fields',{'field_id':t['name']+'.'+c['name'],'source_group':t['domain'],'native_key':c['name'],
+                        'table_name':t['name'],'column_name':c['name'],'source_ref':c['source'],
+                        'evidence_grade':'RESEARCH_LEAD' if 'REGISTRY' in c['source'] or 'research' in c['source'].lower() else 'UNKNOWN',
+                        'visibility':c['visibility'],'unit':c['unit'],'legal_range_state':c['legal_game_range']})
+            conn.execute('PRAGMA user_version=2');conn.commit()
+            if conn.execute('PRAGMA foreign_key_check').fetchall():raise RuntimeError('schema FK failure')
     except BaseException:
-        target.unlink(missing_ok=True)
-        raise
+        target.unlink(missing_ok=True);raise
     return target
 
 
-def _digest(data: dict[str,Any]) -> str:
-    return hashlib.sha256(json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+def _check_envelope(conn,payload):
+    if conn.in_transaction:raise ValueError('ingest requires a clean connection transaction boundary')
+    save=conn.execute('SELECT save_id,schema_version FROM saves WHERE singleton=1').fetchone()
+    if not save or payload.get('save_id')!=save['save_id']:raise ValueError('cross-save capture/database mismatch')
+    if save['schema_version']!=VERSION:raise ValueError('explicit v1 copy migration required')
+    for k in ('run_id','unit_id','source_key','observed_at','season'):
+        if not payload.get(k):raise ValueError('missing '+k)
+    stamp=datetime.fromisoformat(payload['observed_at'].replace('Z','+00:00'))
+    if stamp.utcoffset() is None:raise ValueError('observation requires timezone')
+    grade=payload.get('evidence_grade')
+    if grade not in ('SYNTHETIC_FIXTURE','RESEARCH_FIXTURE'):raise ValueError('live provenance requires acquisition adapter, no assertion-only promotion')
+    artifacts=payload.get('artifacts',[])
+    if grade=='RESEARCH_FIXTURE' and (not artifacts or not payload.get('decoder_version')):raise ValueError('research capture needs hashed artifacts and decoder version')
+    for a in artifacts:
+        if len(a.get('sha256',''))!=64 or any(x not in '0123456789abcdef' for x in a['sha256']):raise ValueError('invalid artifact hash')
+    facts=payload.get('facts',{})
+    if set(facts)-TABLES.keys() or set(facts)&(RESERVED|BLOCKED_INPUT):raise PermissionError('reserved/restricted capture table')
+    for t,rows in facts.items():
+        if not isinstance(rows,list):raise ValueError('facts must be lists of typed records')
+        for row in rows:
+            if any('potential' in k.lower() or 'raw_struct' in k.lower() for k in row):raise PermissionError('restricted raw field')
+            if 'unit_id' in row and row['unit_id']!=payload['unit_id']:raise ValueError('cross-unit fact reference')
+            if 'save_id' in row and row['save_id']!=payload['save_id']:raise ValueError('cross-save fact reference')
+    status=payload.get('unit_status','success')
+    if status not in ('success','failed'):raise ValueError('invalid unit_status')
+    if status=='failed' and any(facts.values()):raise ValueError('failed unit cannot carry accepted facts')
+    for t,required in payload.get('required_fields',{}).items():
+        if t not in facts or not facts[t]:raise ValueError('missing required source family '+t)
+        for row in facts[t]:
+            if any(row.get(k) is None for k in required):raise ValueError('incomplete source family '+t)
 
 
-def _ensure_record(conn:sqlite3.Connection, table:str, key:str, record:dict[str,Any], match_fields:tuple[str,...]) -> None:
-    current=conn.execute(f'SELECT * FROM {table} WHERE {key}=?',(record[key],)).fetchone()
-    if current is None:
-        cols=list(record)
-        conn.execute(f"INSERT INTO {table}({','.join(cols)}) VALUES({','.join('?' for _ in cols)})",tuple(record.values()))
-    elif any(current[field]!=record[field] for field in match_fields):
-        raise ValueError(f'identity collision in {table}: {record[key]}')
-
-
-def _check_clean_attributes(item:dict[str,Any], allow:frozenset[str]) -> None:
-    fields=set(item)-{'player_id'}
-    if fields-allow or any('potential' in k.lower() for k in item):
-        raise PermissionError('only explicitly allowlisted GM-visible synthetic fields may be persisted')
-    for key in fields:
-        if item[key] is not None and (not isinstance(item[key],int) or isinstance(item[key],bool)):
-            raise ValueError(f'{key} must be an integer or null; native range not yet verified')
-
-
-def ingest_synthetic_capture(conn:sqlite3.Connection, payload:dict[str,Any]) -> str:
-    """Atomic typed ingest; stable repeat => no-op; failed unit => no facts.
-
-    Validates the DB save ID *before* any writes. No external game data adapter
-    may call this under a Native-verified claim.
-    """
-    if payload.get('evidence_grade') != 'SYNTHETIC_FIXTURE':
-        raise ValueError('only synthetic fixtures are authorized in this prototype')
-    save_row=conn.execute('SELECT save_id FROM saves WHERE singleton=1').fetchone()
-    if save_row is None or payload.get('save_id')!=save_row['save_id']:
-        raise ValueError('cross-save fixture/database mismatch')
-    required=('run_id','unit_id','source_key','observed_at','season')
-    for key in required:
-        if not payload.get(key): raise ValueError('missing '+key)
-    season=payload['season']
-    digest=_digest(payload)
-    unit_status=payload.get('unit_status','success')
-    if unit_status not in ('success','failed'):raise ValueError('invalid unit_status')
-    # Avoid a failed-unit fake success by forbidden fact payloads.
-    if unit_status=='failed' and any(payload.get(k) for k in ('teams','players','game','boxes','attributes','tendencies','badges','play_types','game_state')):
-        raise ValueError('failed unit cannot carry accepted facts')
+def ingest_capture(conn,payload):
+    """One typed consistency unit, all-or-nothing. Fixture is not live evidence."""
+    _check_envelope(conn,payload);digest=_digest(payload)
+    prior=conn.execute('SELECT payload_sha256 FROM capture_units WHERE unit_id=?',(payload['unit_id'],)).fetchone()
+    if prior:
+        if prior['payload_sha256']!=digest:raise ValueError('same unit_id with conflicting content')
+        return 'already_applied'
+    unit=payload['unit_id'];season=payload['season']
     with conn:
-        prior=conn.execute('SELECT payload_sha256 FROM capture_units WHERE unit_id=?',(payload['unit_id'],)).fetchone()
-        if prior is not None:
-            if prior['payload_sha256'] != digest:raise ValueError('same unit_id with conflicting content')
-            return 'already_applied'
-        _ensure_record(conn,'seasons','season_id',{'season_id':season['season_id'],'season_code':season['season_code']},('season_code',))
-        _ensure_record(conn,'capture_runs','run_id',{'run_id':payload['run_id'],'season_id':season['season_id'],'observed_at':payload['observed_at'],'source_grade':'SYNTHETIC_FIXTURE'},('season_id','observed_at','source_grade'))
-        conn.execute('INSERT INTO capture_units(unit_id,run_id,source_key,payload_sha256,unit_status,observed_at) VALUES(?,?,?,?,?,?)',
-                     (payload['unit_id'],payload['run_id'],payload['source_key'],digest,unit_status,payload['observed_at']))
-        if unit_status=='failed':return 'failed_recorded'
-        for team in payload.get('teams',[]):
-            _ensure_record(conn,'teams','team_id',team,('display_name',))
-        for player in payload.get('players',[]):
-            _ensure_record(conn,'players','player_id',player,('display_name',))
-        game=payload.get('game')
-        if game is not None:
-            item={'game_id':game['game_id'],'season_id':season['season_id'],'home_team_id':game['home_team_id'],'away_team_id':game['away_team_id'],'game_date':game.get('game_date')}
-            _ensure_record(conn,'games','game_id',item,('season_id','home_team_id','away_team_id','game_date'))
-        unit=payload['unit_id']
-        if payload.get('game_state'):
-            g=payload['game_state']
-            conn.execute('INSERT INTO game_state_observations VALUES(?,?,?,?,?,?)',
-                         (unit+':game',game['game_id'],unit,g['status_code'],g.get('home_points'),g.get('away_points')))
-        for b in payload.get('boxes',[]):
-            if not game or b['team_id'] not in (game['home_team_id'],game['away_team_id']):
-                raise ValueError('box team is not a participant in the declared game')
-            conn.execute('INSERT INTO player_game_boxes VALUES(?,?,?,?,?,?,?,?)',
-                         (f"{unit}:box:{b['player_id']}",game['game_id'],b['player_id'],b['team_id'],unit,b.get('points'),b.get('fg_made'),b.get('fg_attempted')))
-        for a in payload.get('attributes',[]):
-            _check_clean_attributes(a,ALLOWED_CAPTURE_FIELDS)
-            conn.execute('INSERT INTO player_attribute_snapshots VALUES(?,?,?,?,?,?)',
-                         (f"{unit}:attrs:{a['player_id']}",a['player_id'],unit,a.get('overall_raw'),a.get('shot_close_raw'),a.get('driving_layup_raw')))
-        for t in payload.get('tendencies',[]):
-            _check_clean_attributes(t,ALLOWED_TENDENCIES)
-            conn.execute('INSERT INTO player_tendency_snapshots VALUES(?,?,?,?,?)',
-                         (f"{unit}:tendency:{t['player_id']}",t['player_id'],unit,t.get('shot_tendency_raw'),t.get('drive_tendency_raw')))
-        for b in payload.get('badges',[]):
-            conn.execute('INSERT INTO player_badge_values VALUES(?,?,?,?,?,?,?)',
-                         (f"{unit}:badge:{b['player_id']}:{b['badge_key']}",b['player_id'],unit,b['badge_key'],b.get('native_code'),b.get('tier_label'),b.get('owned_state','unknown')))
-        for p in payload.get('play_types',[]):
-            conn.execute('INSERT INTO player_play_type_slots VALUES(?,?,?,?,?)',
-                         (f"{unit}:playtype:{p['player_id']}:{p['slot_index']}",p['player_id'],unit,p['slot_index'],p.get('native_play_code')))
-    return 'ingested'
+        conn.execute('PRAGMA defer_foreign_keys=ON')
+        _ensure_record(conn,'seasons','season_id',{'season_id':season['season_id'],'season_code':season['season_code']})
+        _ensure_record(conn,'capture_runs','run_id',{'run_id':payload['run_id'],'season_id':season['season_id'],
+            'observed_at':_utc(payload['observed_at']),'source_grade':payload['evidence_grade'],
+            'decoder_version':payload.get('decoder_version'),'save_binding_ref':payload.get('save_binding_ref')})
+        status=payload.get('unit_status','success')
+        _insert(conn,'capture_units',{'unit_id':unit,'run_id':payload['run_id'],'source_key':payload['source_key'],
+            'payload_sha256':digest,'unit_status':status,'observed_at':_utc(payload['observed_at']),'effective_at':payload.get('effective_at'),
+            'layout_version':payload.get('decoder_version'),'completeness':'FAILED' if status=='failed' else payload.get('completeness','PARTIAL')})
+        for n,a in enumerate(payload.get('artifacts',[])):
+            record={'artifact_id':f'{unit}:artifact:{n}','unit_id':unit,'restricted':1,**a}
+            if record['unit_id']!=unit:raise ValueError('artifact scope mismatch')
+            _insert(conn,'source_artifacts',record)
+        for name in TABLES:
+            if name not in payload.get('facts',{}):continue
+            spec=TABLES[name]
+            for n,original in enumerate(payload['facts'][name]):
+                item=dict(original);cols={c.name for c in spec.columns}
+                if 'unit_id' in cols:item.setdefault('unit_id',unit)
+                if 'save_id' in cols:item.setdefault('save_id',payload['save_id'])
+                item.setdefault(spec.key,f'{unit}:{name}:{n}')
+                if not spec.observation or name=='native_fields':_ensure_record(conn,name,spec.key,item)
+                else:_insert(conn,name,item)
+    return 'failed_recorded' if status=='failed' else 'ingested'
 
 
-def read_gm_observations(path:str|Path, player_id:str) -> list[dict[str,Any]]:
-    with connect(path,readonly=True) as conn:
-        rows=conn.execute('SELECT * FROM gm_player_observations WHERE player_id=? ORDER BY observed_at,unit_id',(player_id,)).fetchall()
-        return [dict(x) for x in rows]
+def ingest_synthetic_capture(conn,payload):
+    """Translate original 16-table synthetic API without promoting its evidence."""
+    if payload.get('evidence_grade')!='SYNTHETIC_FIXTURE':raise ValueError('synthetic API cannot promote Native claims')
+    facts={}
+    aliases=[('teams','teams'),('players','players'),('attributes','player_attribute_snapshots'),('tendencies','player_tendency_snapshots'),('badges','player_badge_values'),('play_types','player_play_type_slots')]
+    for old,new in aliases:facts[new]=payload.get(old,[])
+    game=payload.get('game')
+    if game:
+        if any(b['team_id'] not in (game['home_team_id'],game['away_team_id']) for b in payload.get('boxes',[])):
+            raise ValueError('box team is not a game participant')
+        facts['games']=[dict(game,season_id=payload['season']['season_id'])]
+        facts['player_game_boxes']=[dict(b,game_id=game['game_id']) for b in payload.get('boxes',[])]
+        if payload.get('game_state'):facts['game_state_observations']=[dict(payload['game_state'],game_id=game['game_id'])]
+    translated={k:v for k,v in payload.items() if k not in {'teams','players','attributes','tendencies','badges','play_types','game','boxes','game_state'}}
+    translated['facts']=facts
+    return ingest_capture(conn,translated)
 
 
-def summarize(path:str|Path) -> dict[str,Any]:
-    with connect(path,readonly=True) as conn:
-        save=conn.execute('SELECT save_id FROM saves WHERE singleton=1').fetchone()
-        return {'save_id':save['save_id'],
-                'table_count':conn.execute("SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone()['n'],
-                'game_count':conn.execute('SELECT count(*) n FROM games').fetchone()['n'],
-                'box_observations':conn.execute('SELECT count(*) n FROM player_game_boxes').fetchone()['n'],
-                'attribute_observations':conn.execute('SELECT count(*) n FROM player_attribute_snapshots').fetchone()['n'],
-                'capture_units':conn.execute('SELECT count(*) n FROM capture_units').fetchone()['n'],
-                'foreign_key_errors':len(conn.execute('PRAGMA foreign_key_check').fetchall())}
+def ingest_or_quarantine(conn,payload):
+    """Keep proposed conflicting historical facts out of accepted fact tables.
+
+    The quarantine stores digests, not restricted proposed bytes. Human decisions
+    arrive as new immutable records, never an UPDATE of old game history.
+    """
+    try:return ingest_capture(conn,payload)
+    except sqlite3.IntegrityError as exc:
+        if not ('frozen game conflict' in str(exc) or 'already finalized' in str(exc)):raise
+        digest=_digest(payload)
+        quarantine=dict(payload)
+        quarantine['unit_id']='quarantine:'+payload['unit_id']
+        quarantine['source_key']='quarantine:'+payload['source_key']
+        quarantine['required_fields']={}
+        quarantine['facts']={'fact_conflicts':[{'object_ref':payload['unit_id'],
+            'evidence_a':'Existing immutable game/season history; '+str(exc),
+            'evidence_b':'PROPOSED_PAYLOAD_SHA256:'+digest,'review_status':'PENDING_HUMAN'}]}
+        ingest_capture(conn,quarantine)
+        return 'quarantined_pending_human'
+
+
+def read_gm_observations(path,player_id):
+    with closing(connect(path,True)) as c:return [dict(r) for r in c.execute('SELECT * FROM gm_player_observations WHERE player_id=? ORDER BY observed_at,unit_id',(player_id,))]
+
+
+def summarize(path):
+    with closing(connect(path,True)) as c:
+        counts={t:c.execute(f'SELECT count(*) FROM {ident(t)}').fetchone()[0] for t in TABLES}
+        grades={r[0]:r[1] for r in c.execute('SELECT source_grade,count(*) FROM capture_runs GROUP BY source_grade')}
+        return {'save_id':c.execute('SELECT save_id FROM saves').fetchone()[0],'schema_version':VERSION,
+            'table_count':c.execute("SELECT count(*) FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").fetchone()[0],
+            'column_count':sum(len(t.columns) for t in TABLES.values()),'game_count':counts['games'],'box_observations':counts['player_game_boxes'],
+            'attribute_observations':counts['player_attribute_snapshots'],'capture_units':counts['capture_units'],
+            'foreign_key_errors':len(c.execute('PRAGMA foreign_key_check').fetchall()),'source_grades':grades,
+            'nonempty_fact_tables':[t for t,n in counts.items() if n and t not in RESERVED|{'native_fields'}]}
+
+
+def migrate_v1(source,new_path):
+    """Copy-upgrade to a NEW fact file; original DB and observations untouched."""
+    src=Path(source).resolve();dst=Path(new_path).resolve()
+    with closing(connect(src,True)) as old:
+        if old.execute('PRAGMA user_version').fetchone()[0]!=1:raise ValueError('source must be v1')
+        if old.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('source integrity failure')
+        save=dict(old.execute('SELECT * FROM saves').fetchone());create_database(dst,save['save_id'],_migration_header=save)
+        try:
+            with closing(connect(dst)) as new:
+                with new:
+                    new.execute('PRAGMA defer_foreign_keys=ON')
+                    for name in TABLES:
+                        if name not in LEGACY_TABLES or name=='saves':continue
+                        for row in old.execute(f'SELECT * FROM {ident(name)}'):_insert(new,name,dict(row))
+                    for name in LEGACY_TABLES-{'saves','native_fields'}:
+                        if old.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]!=new.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]:raise RuntimeError('migration count mismatch '+name)
+                    if new.execute('PRAGMA foreign_key_check').fetchall():raise ValueError('migration foreign key failure')
+        except BaseException:
+            dst.unlink(missing_ok=True);raise
+    return dst
