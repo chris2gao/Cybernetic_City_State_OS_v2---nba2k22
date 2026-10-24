@@ -137,6 +137,32 @@ def market_snapshot(path,*,team_id=None,limit=10000):
             'free_agent_availability':'NOT_OBSERVED_BY_THIS_SOURCE','draft_results':'NOT_INFERRED_FROM_ASSET_OR_SLOT_STATE'}
 
 
+def record_book(path,*,category_code=None,subject_name=None,unit_id=None,after_index=-1,limit=200):
+    """One pinned native record source with explicit bounded index pagination."""
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    if type(after_index) is not int or after_index< -1:raise ValueError('after_index must be >= -1')
+    if category_code is not None and (type(category_code) is not int or not 0<=category_code<=65535):raise ValueError('native category must be uint16')
+    with closing(connect(path,True)) as c:
+        args=[];pin=''
+        if unit_id is not None:pin=' AND u.unit_id=?';args.append(unit_id)
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.season_id AS observation_season_id
+            FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_RECORD_BOOK'
+            AND u.unit_status='success' '''+pin+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED'}
+        where=' WHERE unit_id=?';args=[unit['unit_id']]
+        if category_code is not None:where+=' AND native_category_code=?';args.append(category_code)
+        if subject_name is not None:
+            where+=" AND trim(coalesce(source_first_name,'')||' '||coalesce(source_last_name,''))=? COLLATE NOCASE";args.append(subject_name)
+        total=c.execute('SELECT count(*) FROM season_record_entries'+where,args).fetchone()[0]
+        rows=[dict(r) for r in c.execute('SELECT * FROM season_record_entries'+where+
+            ' AND source_row_index>? ORDER BY source_row_index LIMIT ?',args+[after_index,limit+1])]
+        more=len(rows)>limit;rows=rows[:limit]
+        return {'status':'OBSERVED_NATIVE_RECORD_SLOTS','unit':dict(unit),'matching_source_slots':total,'records':rows,
+            'has_more':more,'next_after_index':rows[-1]['source_row_index'] if more else None,
+            'canonical_subject_binding':'NOT_INFERRED_FROM_NAMES_OR_NATIVE_IDS','awards':'NOT_INFERRED_FROM_RECORD_BOOK',
+            'record_scope_and_date':'NATIVE_WORDS_WITH_QUALIFIED_RESEARCH_INTERPRETATIONS'}
+
+
 def settings_snapshot(path,*,scope_code=None,limit=2000):
     """Latest observed settings unit. Native words never become UI defaults."""
     if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')

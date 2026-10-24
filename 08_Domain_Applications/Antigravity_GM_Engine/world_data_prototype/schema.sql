@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=8),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=9),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -1632,14 +1632,31 @@ CREATE TRIGGER "award_recipients_successful_unit" BEFORE INSERT ON "award_recipi
 
 CREATE TABLE "season_record_entries" (
   "record_id" TEXT NOT NULL PRIMARY KEY,
-  "season_id" TEXT NOT NULL REFERENCES seasons(season_id) ON DELETE RESTRICT,
+  "season_id" TEXT REFERENCES seasons(season_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "record_key" TEXT NOT NULL,
   "holder_player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "holder_team_id" TEXT REFERENCES teams(team_id) ON DELETE RESTRICT,
   "value_raw" TEXT NOT NULL,
   "source_ref" TEXT NOT NULL,
-  "occurred_at" TEXT
+  "occurred_at" TEXT,
+  "observed_in_season_id" TEXT REFERENCES seasons(season_id) ON DELETE RESTRICT,
+  "source_row_index" INTEGER CHECK (source_row_index>=0),
+  "source_first_name" TEXT,
+  "source_last_name" TEXT,
+  "native_value_word_u32" INTEGER CHECK (native_value_word_u32 BETWEEN 0 AND 4294967295),
+  "native_value_real" REAL,
+  "packed_date_raw" INTEGER CHECK (packed_date_raw BETWEEN 0 AND 65535),
+  "native_category_code" INTEGER CHECK (native_category_code BETWEEN 0 AND 65535),
+  "category_label_candidate" TEXT,
+  "native_player_id_raw" INTEGER CHECK (native_player_id_raw BETWEEN 0 AND 65535),
+  "flags_raw" INTEGER CHECK (flags_raw BETWEEN 0 AND 65535),
+  "decode_status" TEXT,
+  "name_encoding_status" TEXT,
+  "record_date_candidate" TEXT,
+  "date_interpretation_status" TEXT,
+  "source_scope_status" TEXT,
+  UNIQUE ("unit_id","source_row_index")
 ) STRICT;
 
 CREATE INDEX "idx_season_record_entries_season_id" ON "season_record_entries" ("season_id");
@@ -1649,6 +1666,8 @@ CREATE INDEX "idx_season_record_entries_unit_id" ON "season_record_entries" ("un
 CREATE INDEX "idx_season_record_entries_holder_player_id" ON "season_record_entries" ("holder_player_id");
 
 CREATE INDEX "idx_season_record_entries_holder_team_id" ON "season_record_entries" ("holder_team_id");
+
+CREATE INDEX "idx_season_record_entries_observed_in_season_id" ON "season_record_entries" ("observed_in_season_id");
 
 CREATE TRIGGER "season_record_entries_no_update" BEFORE UPDATE ON "season_record_entries" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
