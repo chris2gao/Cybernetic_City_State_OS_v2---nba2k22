@@ -1,0 +1,38 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/任务包.yml",
+  "note": "During development, execute lightweight relevant tests only. Formal checks after complete candidate. Commands are prospective, not reported as run.",
+  "checks": [
+    {
+      "id": "PYTHON_UNIT",
+      "argv": [
+        "@python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "timeout_seconds": 180,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SQLITE_SMOKE",
+      "argv": [
+        "@python",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py",
+        "smoke"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "FINAL_DOMAIN_COVERAGE",
+      "check_type": "manual_evidence",
+      "requirement": "A real test-engine audit map for every accepted RES domain (P/T/C/G/L/M/H/S/D), exact final tables and columns with source/UNKNOWN/Q10 exception; no dummy PASS or substitute script."
+    }
+  ]
+}

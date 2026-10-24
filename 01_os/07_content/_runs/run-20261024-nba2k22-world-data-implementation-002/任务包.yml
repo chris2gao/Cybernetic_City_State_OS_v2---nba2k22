@@ -1,0 +1,67 @@
+task_packet:
+  task_id: nba2k22-world-data-full-implementation-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  exact_base_sha: 5cff5f7a6d826ed851954e83021e65372dcd2663
+  parent_branch: task/nba2k22-world-data-prototype-mainline-20261024
+  branch: task/nba2k22-world-data-full-implementation-20261024
+  risk_tier: T2_semantic
+  objective: >-
+    Continue the Human-approved NBA2K22 world-data SQLite prototype as the new
+    full-system development mainline. Codex is the single engineering Owner,
+    Antigravity is a serial native-research/pair-programming contributor using
+    the same local worktree, never concurrently. Realize the complete table/field
+    dictionaries, reader/decoder ingest and queries through prototype-driven
+    iteration. Historical tasks are information sources, not automatic gates.
+  ownership:
+    engineering_owner: Codex
+    native_research_contributor: Antigravity
+    execution_mode: serial_shared_local_worktree
+    planning_owner: GPT
+    Human_decisions: major_ADR_Q10_exceptions_and_protected_actions
+  sources:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/README.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json
+    - task/nba2k22-task1-01b-requirement-result-20261023@6c148d801ddc2a17490a1b29c4f57e0d52e882a5
+    - task/nba2k22-world-data-prototype-mainline-20261024@5cff5f7a6d826ed851954e83021e65372dcd2663
+  source_evidence:
+    - Human_approved_ADR01_one_sqlite_per_independent_save
+    - Human_approved_ADR02_typed_snapshots_badge_and_playtype_children
+    - Human_approved_serial_Codex_Antigravity_development_in_shared_local_repo
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_WORLD_DATA_**
+    - 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/**
+  verification_plan: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/verification_plan.json
+  required_tests:
+    - PYTHON_UNIT
+    - SQLITE_SMOKE
+    - FINAL_DOMAIN_COVERAGE
+  prohibitions:
+    - concurrent_Codex_Antigravity_local_worktree_mutations
+    - merge_or_write_to_master_without_Human_confirmation
+    - change_live_game_or_override_real_saves_without_scope_specific_authorization
+    - invent_native_values_or_silent_Human_Q10_exceptions
+    - rewrite_confirmed_observation_history
+    - introduce_cross_save_fork_or_inheritance_relations
+  big_task: true
+  completion_pointer_ref: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/completion_pointer.json
+  publisher:
+    publication_transport: github_api_connector_or_OS_authorized_local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_parent_head: 5cff5f7a6d826ed851954e83021e65372dcd2663
+  executor_profile:
+    primary_model: Codex
+    contributor_model: Antigravity_Gemini
+    concurrent_execution: false
+  verification_profile:
+    development_validation: on_change_lightweight
+    final_coverage_tests: at_full_candidate
+    independent_reviewer: separate_session_required
+    post_delivery_remedy_budget: two_evidence_based_rounds
+  minimum_work_unit_output:
+    role: implementation
+    objective_done: executable_all_domain_SQLite_and_verified_source_coverage_or_explicit_gaps
+    current_status: task_prepared_not_executed
