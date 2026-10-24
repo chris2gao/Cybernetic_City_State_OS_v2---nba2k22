@@ -9,3 +9,5 @@ Human will announce multi-save switches in advance and supply the actual filenam
 The actual file exists (4,322,888 bytes when checked). This is an operator declaration, not a claim that the game embeds the engineering ID. File size/timestamps/hashes can change as a save progresses. PID and pointers are reacquired for each capture and do not define the save identity.
 
 Runtime binding: `_runtime/world-saves/nba2k22_test_01/save.json`; facts: adjacent `world.sqlite`. Durable binding copy: `06_执行/increment04/native_sources/save_binding.json`. This operation initialized only engineering files and read the game process; it did not modify the native save or advance the game date.
+
+Increment05 copy-upgraded the active fact file to `world-v4.sqlite`; `save.json.database_file` selects it. The original `world.sqlite` and `save.before-v4.json` remain unchanged. Human later reported process restart; fresh lookup/probe confirmed PID8784. Save identity is unchanged; prior PID2564/addresses are historical acquisition evidence only.

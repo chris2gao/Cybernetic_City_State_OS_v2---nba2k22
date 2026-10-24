@@ -1,0 +1,84 @@
+{
+  "status": "COMPLETE_OBSERVED_WINDOW_VERIFIED_FULL_GOAL_INCOMPLETE",
+  "schema": {
+    "save_id": "nba2k22_test_01",
+    "schema_version": 4,
+    "table_count": 62,
+    "column_count": 659,
+    "game_count": 1232,
+    "box_observations": 11455,
+    "attribute_observations": 811,
+    "capture_units": 4,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "LIVE_READ": 4
+    },
+    "nonempty_fact_tables": [
+      "player_season_totals",
+      "field_gaps",
+      "game_state_observations",
+      "game_period_scores",
+      "player_tendency_snapshots",
+      "player_attribute_snapshots",
+      "players",
+      "games",
+      "player_play_type_slots",
+      "roster_memberships",
+      "player_vitals_observations",
+      "teams",
+      "team_game_boxes",
+      "player_game_boxes",
+      "player_contract_observations",
+      "native_box_observations",
+      "team_seasons"
+    ]
+  },
+  "candidate_code_head": "babfcff38f8e8a1ebe26a64cd3cacef9f060d6b8",
+  "source_code_sha256": {
+    "schedule_reader.py": "78da1dc2db32cae9c12c7e5f1855a196ffd727b5f748ccd5267a273baf777ed5",
+    "live_world.py": "d561060d3b025714c6c842b19cb7296f3c17d74cf7ca7059713654fd573ab2a8",
+    "live_reader.py": "7f587e39985fcd563cc316b438e56f41c94bd11c4a8fad12745f35171446f4ac",
+    "family_codec.py": "eda7b786f40fe7169e3fa8a0446b5f7d846a62c138f95fe98b8833edb725edd4",
+    "engine.py": "92e54805ce2a01024f3630b8f708e38dfd6da84de3edefe0a0003a62c55ac54f",
+    "schema_model.py": "72180b4e37234c78236ee34b65836b5da8f54d5d2d8f0c01a3146dd6ef40b7e2",
+    "cli.py": "ca2bddef387f591ecfad2b469d66e03caeef6dd30533462ff182d755eab93e91",
+    "query.py": "82fa8ee9e454b0d80f2d988183f87baf66e95f0aa58e4cb9cf3192d2738a64fd"
+  },
+  "latest_unit": "live-world:abffaed591a079206825b8fe",
+  "latest_counts": {
+    "game_state_observations": 1232,
+    "player_game_boxes": 6133,
+    "native_box_observations": 6170,
+    "player_season_totals": 369
+  },
+  "resolved_players": 411,
+  "final_games": 238,
+  "unplayed_games": 994,
+  "complete_canonical_box_games": 202,
+  "unresolved_native_player_ids": [
+    1344,
+    2382,
+    9808,
+    18057
+  ],
+  "index_relationship": {
+    "record_count": 1232,
+    "all_record_matches": {
+      "date_except_low5": 1232,
+      "home_team_pointer": 1232,
+      "away_team_pointer": 1232
+    },
+    "scope": "ACTUAL_PAIRED_WINDOW_CURRENT_TEAM_POINTERS",
+    "date_ui_calendar_validation": "NOT_OBSERVED"
+  },
+  "old_schema3_rows_preserved": 1467,
+  "all_old_rows_compared": true,
+  "potential_bytes_read": 0,
+  "world_sqlite_sha256": "252e6f0246fc795ead44693383af5722d6133a3a749a4e2f6e16d2691e29be6f",
+  "exported_history_boxes": 11455,
+  "game_writes": false,
+  "full_goal_complete": false,
+  "independent_review": false,
+  "source_process_pid": 2564,
+  "process_restart_after_capture": "Human reported restart; old addresses are historical only"
+}
