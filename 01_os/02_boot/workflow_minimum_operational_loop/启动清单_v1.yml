@@ -10,6 +10,9 @@ stage_schemas:
 - 01_os/01_workflow/05_步骤拆分/实现/最小运行schema_v1.yml
 - 01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml
 - 01_os/01_workflow/07_测试执行/实现/最小运行schema_v1.yml
+stage01_active_semantic_spec: 01_os/01_workflow/01_需求建模/方法论_v0.4.md
+stage01_result_model_template: 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
+# 规划/执行模型读取上述活动语义；现行 v1 Python runner 不以其作为新增机器校验器。
 runner: 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
 registry: 01_os/05_registry/workflow_minimum_operational_loop_v1.yml
 mechanism_preconditions:
