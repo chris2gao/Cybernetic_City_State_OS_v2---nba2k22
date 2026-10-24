@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
 from readers import replay_ag01d,replay_player_families
-from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card
 from owner_capture import recorded_game_capture
 
 
@@ -65,7 +65,15 @@ def main():
     org=sub.add_parser('capture-organization');org.add_argument('pid',type=int);org.add_argument('save_directory');org.add_argument('loaded_filename');org.add_argument('new_output_directory')
     team=sub.add_parser('team');team.add_argument('database');team.add_argument('team_id')
     staff=sub.add_parser('staff');staff.add_argument('database');staff.add_argument('staff_id')
+    market=sub.add_parser('capture-market');market.add_argument('pid',type=int);market.add_argument('save_directory');market.add_argument('loaded_filename');market.add_argument('new_output_directory')
+    market_read=sub.add_parser('market');market_read.add_argument('database');market_read.add_argument('--team-id');market_read.add_argument('--limit',type=int,default=10000)
+    prospect=sub.add_parser('prospect');prospect.add_argument('database');prospect.add_argument('prospect_id')
     args=parser.parse_args()
+    if args.action=='capture-market':
+        from market_reader import capture_market
+        print(json.dumps(capture_market(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='market':print(json.dumps(market_snapshot(args.database,team_id=args.team_id,limit=args.limit),ensure_ascii=False));return
+    if args.action=='prospect':print(json.dumps(prospect_card(args.database,args.prospect_id),ensure_ascii=False));return
     if args.action=='capture-organization':
         from organization_reader import capture_organization
         print(json.dumps(capture_organization(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
