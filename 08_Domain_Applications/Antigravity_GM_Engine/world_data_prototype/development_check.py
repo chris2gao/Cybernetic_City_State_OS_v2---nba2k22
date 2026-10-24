@@ -55,6 +55,7 @@ def main():
         'implemented_domains':sorted({t.domain for t in TABLES.values()}),
         'schema_mapping':{'v1_tables_preserved':16,'approved_provisional_tables':59,'actual_tables':len(TABLES),
             'additional_tables':['game_state_observations','season_finalizations']},
+        'code_hash_scope':'Actual executed working-tree bytes at candidate_code_head; generated artifacts preserve their bytes via local .gitattributes',
         'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [BASE/'schema.sql',BASE/'field_dictionary.json',BASE/'schema_model.py',BASE/'engine.py',BASE/'readers.py',BASE/'query.py']},
         'artifact_sha256':checksums,'not_run':['live process acquisition','full-domain native source acceptance','100-season capacity benchmark','final managed verification','independent review','Human full-candidate acceptance'],
         'next_owner':'Human-relayed Antigravity bounded Native evidence, then Codex integration',
