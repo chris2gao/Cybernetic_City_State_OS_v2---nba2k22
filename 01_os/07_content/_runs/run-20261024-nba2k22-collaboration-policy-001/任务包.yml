@@ -1,0 +1,51 @@
+task_packet:
+  task_id: nba2k22-project-collaboration-policy-v2-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T3_high_risk
+  exact_base_sha: 977890d93210107a87acdce70b528065f82d49d0
+  branch: task/nba2k22-project-collaboration-policy-20261024
+  objective: >-
+    Establish the Human-confirmed GPT planning / Codex implementation /
+    Antigravity bounded serial exploration arrangement as the default
+    NBA2K22 project policy. Preserve original V1 as historical evidence.
+    Update the NBA2K22 directory agent entry and documentation authority index.
+    Publish to master only with protected merge controls and independent review.
+  source_evidence:
+    - Human 2026-10-24 instruction to make this NBA2K22-global and merge master
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/AGENTS.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/AGENTS.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+    - 01_os/07_content/_runs/run-20261024-nba2k22-collaboration-policy-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261024-nba2k22-collaboration-policy-001/verification_plan.json
+  required_tests: []
+  prohibitions:
+    - edit_core_owned_OS_or_root_agent_rules
+    - replace_historical_V1
+    - force_push_or_rewrite_history
+    - claim_independent_review_without_separate_reviewer
+  required_completion_pointer: 01_os/07_content/_runs/run-20261024-nba2k22-collaboration-policy-001/completion_pointer.json
+  big_task: false
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: current_Human_confirmed
+    confirmation_ref: Human current request 2026-10-24 explicitly says merge master
+    expected_remote_master_head: 977890d93210107a87acdce70b528065f82d49d0
+    expected_remote_head: 977890d93210107a87acdce70b528065f82d49d0
+  executor_profile:
+    provider: OpenAI
+    model: GPT-6
+    reasoning_effort: high
+    mode: standard
+    routing_basis: project policy editorial update following explicit Human direction
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session_required_for_master
+    different_model_family: false
+    different_measurement_tool: true
