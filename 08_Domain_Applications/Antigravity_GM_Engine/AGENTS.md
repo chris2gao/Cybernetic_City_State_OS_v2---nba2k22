@@ -2,7 +2,7 @@
 
 > **最新技术研发方法（2026-10-21）**：[根据R01–R07和现有原生工程反推的UI→完整对象→数据生产/查询源→数据库镜像→受控操作V2蓝图](docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md)。以NBA2K22 PC真实页面、各页面全部数据列/控件及原生对象/索引/Getter为研究边界；不能按GM/人格预期挑几个字段补采。内存表状结构不等于证明游戏内部SQL库；完整PLAYER必须包含能力、倾向、徽章、统计等全部原生子对象。旧Native I/O V1已撤回，V2是待验证规划，不自动授权DEV28开发/游戏写入。
 
-> **跨模型工程协作硬规则（2026-10-21）**：[单一Owner、可复查辅助工作、消费端低成本验收、Flash subagent同型号证明或禁用](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md)。Codex未完成的主任务由Codex断点续作，Flash不得接管主审计或以草稿代替正式交付；辅助模型的TASK_CLOSED≠消费端通过验收。未能核实Antigravity子代理使用明确指定的同等级具体模型时，默认不使用子代理。此规则适用于后续所有派单；不授予额外游戏写入或DEV28开发权限。
+> **NBA2K22 项目级默认协作规范（2026-10-24；最新Human裁决）**：[跨模型协作与原型驱动开发规范 V2](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)。**GPT规划与Human重大架构决策，Codex为工程实现唯一Owner，Antigravity只做有界Native逆向及重复性辅助**；两者共用本地仓库/测试环境时必须**顺序工作、交接HEAD与工作区状态，不能并行执行**。先明确全域原型，再由Codex连续实现并依据真实发现迭代；开发期做必要轻量验证，完整候选后集中独立审核。项目既有任务是新主线的技术背景，不自动成为其阶段依赖；实际OS权限、独立审核与master发布门禁继续适用。旧[V1跨模型规范](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md)保留历史及不冲突条款（含subagent证明/禁用规则）。
 
 > [**新网页GPT开发规划/审核窗口长程快照（2026-10-21）**](docs/development_snapshots/DEV_PLANNING_WINDOW_HANDOFF_20261021_V1.md)：所有接替模型先读项目宗旨和该快照，再读PROGRESS最新首节及共享状态。六阶段采集→数据分析→Coach（未开发）→Player（未开发）→GM→汇总执行。DEV29仅知识原料；DEV28仅I/O；真人写游戏须批准，未来人格另立项。R07两项源/成熟度修复已提交待独立复验，不自动授权FINAL-CODEX或DEV28。
 
