@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
 from readers import replay_ag01d,replay_player_families
-from query import player_card,game_box,history,export_jsonl,inspect_source_capture
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule
 from owner_capture import recorded_game_capture
 
 
@@ -59,7 +59,17 @@ def main():
     inspect=sub.add_parser('inspect-source');inspect.add_argument('database');inspect.add_argument('unit_id')
     bound=sub.add_parser('init-save');bound.add_argument('save_directory');bound.add_argument('save_id');bound.add_argument('native_save_file')
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
+    saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
+    season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory')
+    sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--limit',type=int,default=2000)
     args=parser.parse_args()
+    if args.action=='schedule':print(json.dumps(schedule(args.database,season_id=args.season_id,status_code=args.status_code,limit=args.limit),ensure_ascii=False));return
+    if args.action=='upgrade-save':
+        from live_world import upgrade_bound_save
+        print(json.dumps(upgrade_bound_save(args.save_directory,args.loaded_filename)));return
+    if args.action=='capture-season':
+        from schedule_reader import capture_season
+        print(json.dumps(capture_season(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
     if args.action=='init-save':
         from live_world import initialize_save
         print(json.dumps(initialize_save(args.save_directory,args.save_id,args.native_save_file),ensure_ascii=False));return

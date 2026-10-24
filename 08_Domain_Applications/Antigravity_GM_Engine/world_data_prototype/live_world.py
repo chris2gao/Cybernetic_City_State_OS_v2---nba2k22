@@ -12,12 +12,12 @@ import json
 from pathlib import Path
 import re
 import struct
-from engine import create_database,connect,ingest_capture,_digest
-from family_codec import public_player_families
+from engine import create_database,connect,ingest_capture,migrate_database,_digest
+from family_codec import public_player_families,decode_fixed_utf16
 from live_reader import ReadOnlyGameProcess,collect_known_game,ROSTER_RVA,SEASON_RVA,GAME_OFFSET,GAME_STRIDE,STATBANK_OFFSET
 from owner_capture import STAT_MAP
 from readers import _module
-from schema_model import PROFILE,DOMAIN
+from schema_model import PROFILE,DOMAIN,VERSION as SCHEMA_VERSION
 
 VERSION='OPERATOR_BOUND_WORLD_READ_V1'
 PLAYER_STRIDE=1264
@@ -52,12 +52,35 @@ def read_binding(save_directory,loaded_filename):
     if binding['native_save_filename']!=loaded_filename:raise ValueError('loaded save filename differs from bound database')
     native=Path(binding['native_save_file'])
     if not native.is_file() or native.name!=loaded_filename:raise ValueError('bound native save file unavailable')
-    with connect(directory/'world.sqlite',True) as c:
+    with connect(bound_database(directory,binding),True) as c:
         if c.execute('SELECT save_id FROM saves').fetchone()[0]!=binding['save_id']:raise ValueError('save binding/database mismatch')
     return binding,hashlib.sha256(raw).hexdigest()
 
 
-def _utf(raw):return raw.decode('utf-16le').split('\0')[0]
+def bound_database(save_directory,binding):
+    name=binding.get('database_file','world.sqlite')
+    if not isinstance(name,str) or Path(name).name!=name or not name.endswith('.sqlite'):
+        raise ValueError('save binding requires a local SQLite filename')
+    return Path(save_directory).resolve()/name
+
+
+def upgrade_bound_save(save_directory,loaded_filename):
+    """Copy facts, retain old DB/declaration, atomically point to new schema."""
+    directory=Path(save_directory).resolve();binding,_=read_binding(directory,loaded_filename)
+    old=bound_database(directory,binding)
+    with connect(old,True) as conn:old_version=conn.execute('PRAGMA user_version').fetchone()[0]
+    target=directory/f'world-v{SCHEMA_VERSION}.sqlite'
+    migrate_database(old,target)
+    original=(directory/'save.json').read_bytes()
+    backup=directory/f'save.before-v{SCHEMA_VERSION}.json'
+    with backup.open('xb') as f:f.write(original)
+    binding['database_file']=target.name
+    pending=directory/'save.pending.json';_json(pending,binding);pending.replace(directory/'save.json')
+    return {'save_id':binding['save_id'],'source_schema':old_version,'schema_version':SCHEMA_VERSION,
+            'database_file':target.name,'original_database_retained':old.name}
+
+
+def _utf(raw):return decode_fixed_utf16(raw)
 
 
 def _public_raw(reader,address,label):
@@ -66,10 +89,14 @@ def _public_raw(reader,address,label):
             reader.read(address+POTENTIAL+1,PLAYER_STRIDE-POTENTIAL-1,label+':after-excluded-byte'))
 
 
-def collect_world(reader,game_index):
+def collect_world(reader,game_index,*,target_native_ids=None):
     found=collect_known_game(reader,game_index)
     if not found['score_conservation_passed']:raise ValueError('rejected Box layout')
     full=found['decoded'];targets={p['player_id'] for side in ('home_players','away_players') for p in full[side] if p['in_use']}
+    if target_native_ids is not None:
+        if not isinstance(target_native_ids,set) or not 1<=len(target_native_ids)<=8192 or any(type(n) is not int or not 0<=n<=65535 for n in target_native_ids):
+            raise ValueError('explicit bounded native player target set required')
+        targets.update(target_native_ids)
     pointer=reader.read(reader.module_base+ROSTER_RVA,8,'WORLD_ROSTER_POINTER');root=struct.unpack('<Q',pointer)[0]
     specs={1:(8192,1264),8:(1024,4696),24:(65535,48)};descriptors={};decoded_desc={}
     for slot,(maximum,stride) in specs.items():
@@ -101,7 +128,11 @@ def collect_world(reader,game_index):
             address=pd['address']+i*PLAYER_STRIDE;label=f'PLAYER:{i}'
             raw=_public_raw(reader,address,label);idx=int.from_bytes(raw[0xFC:0xFE],'little')
             current_team=struct.unpack_from('<Q',raw,0x60)[0];contract_team=struct.unpack_from('<Q',raw,0xA8)[0]
-            c={'pool_index':i,'native_player_id':native_id,'name':(_utf(raw[40:80])+' '+_utf(raw[:40])).strip(),
+            try:
+                name=(_utf(raw[40:80])+' '+_utf(raw[:40])).strip();name_status='DECODED_UTF16LE'
+            except UnicodeDecodeError:
+                name=None;name_status='REJECTED_INVALID_UTF16LE'
+            c={'pool_index':i,'native_player_id':native_id,'name':name,'name_status':name_status,
                'current_slot24_index':idx,'current_team_pointer':hex(current_team),
                'current_team_id':team_by_pointer[current_team]['native_team_id'] if current_team in team_by_pointer else None,
                'contract_team_id':team_by_pointer[contract_team]['native_team_id'] if contract_team in team_by_pointer else None}
@@ -271,7 +302,7 @@ def capture_live(pid,save_directory,loaded_filename,new_output_directory,game_in
         token=hashlib.sha256((out/'acquisition-report.json').read_bytes()).hexdigest()[:24]
         payload=world_payload(binding,found,manifest,blobs,artifacts,stamp,token);payload['evidence_grade']='LIVE_READ'
         receipt=_AcquisitionReceipt(payload,reader)
-        with connect(Path(save_directory)/'world.sqlite') as conn:status=ingest_capture(conn,payload,_live_receipt=receipt)
+        with connect(bound_database(save_directory,binding)) as conn:status=ingest_capture(conn,payload,_live_receipt=receipt)
         result={'status':status,'save_id':binding['save_id'],'native_save_filename':loaded_filename,'unit_id':payload['unit_id'],
                 'source_grade':'LIVE_READ','field_semantics':'REGISTERED_CODECS_NOT_UI_CERTIFICATION',
                 'counts':{t:len(rows) for t,rows in payload['facts'].items()},'game_id':payload['facts']['games'][0]['game_id'],

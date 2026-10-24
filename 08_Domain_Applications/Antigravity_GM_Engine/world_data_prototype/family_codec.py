@@ -25,6 +25,17 @@ def registered_rating_candidate(raw):
             'status':'DERIVED_REGISTERED_CODEC','target_ui_validation':'NOT_OBSERVED'}
 
 
+def decode_fixed_utf16(raw):
+    """Decode only initialized code units before the aligned NUL terminator.
+
+    Padding in the fixed-width Native name field is not necessarily UTF-16.
+    Invalid text before the terminator still raises, rather than guessing a name.
+    """
+    if len(raw)%2:raise ValueError('UTF16 field must contain whole code units')
+    end=next((i for i in range(0,len(raw),2) if raw[i:i+2]==b'\0\0'),len(raw))
+    return raw[:end].decode('utf-16le')
+
+
 def extract_unsigned(raw,definition):
     offset=definition['offset']
     start=definition.get('start_bit',0)
@@ -54,8 +65,8 @@ def public_player_families(raw):
     # Only names actually present in the registry are decoded. The other raw
     # tendency bytes remain unknown rather than acquiring guessed field names.
     play_types=[{'slot_index':i,'native_play_code':str((raw[0x168+i//2]>>(4*(i%2)))&15)} for i in range(4)]
-    vitals={'last_name':raw[0:40].decode('utf-16le').split('\0')[0],
-            'first_name':raw[40:80].decode('utf-16le').split('\0')[0]}
+    vitals={'last_name':decode_fixed_utf16(raw[0:40]),
+            'first_name':decode_fixed_utf16(raw[40:80])}
     return {'attributes':attrs,'contracts':contracts,'tendencies':tendencies,'play_types':play_types,'vitals':vitals,
             'source_status':'REGISTERED_LAYOUT_RESEARCH_FIXTURE_NOT_LIVE_UI_ACCEPTANCE',
             'family_completeness':{'attributes':'ALL_PUBLIC_REGISTERED_FIELDS','contracts':'ALL_REGISTERED_FIELDS',
