@@ -13,3 +13,5 @@ Runtime binding: `_runtime/world-saves/nba2k22_test_01/save.json`; facts: adjace
 Increment05 copy-upgraded the active fact file to `world-v4.sqlite`; `save.json.database_file` selects it. The original `world.sqlite` and `save.before-v4.json` remain unchanged. Human later reported process restart; fresh lookup/probe confirmed PID8784. Save identity is unchanged; prior PID2564/addresses are historical acquisition evidence only.
 
 Increment06 subsequently copy-upgraded to `world-v5.sqlite`, selected by the same binding pointer. Both older fact files and declarations remain retained. The actual organization unit was acquired from fresh PID8784 with read/query rights only.
+
+Increment07 subsequently selected the copied `world-v6.sqlite`. The v5 file/declaration remain retained and byte-unchanged. The native market source came from PID8784; no native save file or game state was changed.
