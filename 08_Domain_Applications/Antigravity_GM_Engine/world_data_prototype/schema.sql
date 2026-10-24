@@ -1,10 +1,10 @@
--- Generated: 59 proposed tables + game states + season finalizations + typed unresolved Native Box staging.
+-- Generated: approved catalog + explicit game/finalization/source staging and team state observations.
 PRAGMA foreign_keys=ON;
 
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=4),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=5),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -834,6 +834,15 @@ CREATE TABLE "team_season_totals" (
   "plus_minus" INTEGER,
   "possessions_raw" INTEGER CHECK ("possessions_raw" IS NULL OR "possessions_raw">=0),
   "opponent_points" INTEGER,
+  "points_off_turnovers" INTEGER,
+  "second_chance_points" INTEGER,
+  "paint_points" INTEGER,
+  "bench_points" INTEGER,
+  "pace_raw" INTEGER,
+  "opponent_fg_made" INTEGER,
+  "opponent_fg_attempted" INTEGER,
+  "opponent_three_made" INTEGER,
+  "opponent_three_attempted" INTEGER,
   UNIQUE ("team_id","season_id","unit_id")
 ) STRICT;
 
@@ -951,6 +960,20 @@ CREATE TABLE "team_tactic_settings" (
   "freelance_slot_2" TEXT,
   "freelance_slot_3" TEXT,
   "freelance_slot_4" TEXT,
+  "poe_defense_1_raw" INTEGER,
+  "poe_defense_2_raw" INTEGER,
+  "poe_defense_3_raw" INTEGER,
+  "poe_offense_1_raw" INTEGER,
+  "poe_offense_2_raw" INTEGER,
+  "poe_offense_3_raw" INTEGER,
+  "sim_pace_raw" INTEGER,
+  "sim_pressure_raw" INTEGER,
+  "sim_help_defense_raw" INTEGER,
+  "sim_offensive_rebounds_raw" INTEGER,
+  "sim_defensive_rebounds_raw" INTEGER,
+  "active_system_raw" INTEGER,
+  "playbook_code_raw" INTEGER,
+  "bench_utilization_raw" INTEGER,
   UNIQUE ("team_id","unit_id")
 ) STRICT;
 
@@ -1039,6 +1062,12 @@ CREATE TABLE "team_finance_observations" (
   "budget_raw" INTEGER,
   "salary_cap_raw" INTEGER,
   "hard_cap_raw" INTEGER,
+  "total_salary_raw" INTEGER,
+  "staff_budget_raw" INTEGER,
+  "cash_raw" INTEGER,
+  "gate_revenue_raw" INTEGER,
+  "merch_revenue_raw" INTEGER,
+  "media_revenue_raw" INTEGER,
   UNIQUE ("team_id","unit_id")
 ) STRICT;
 
@@ -1051,6 +1080,25 @@ CREATE TRIGGER "team_finance_observations_no_update" BEFORE UPDATE ON "team_fina
 CREATE TRIGGER "team_finance_observations_no_delete" BEFORE DELETE ON "team_finance_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "team_finance_observations_successful_unit" BEFORE INSERT ON "team_finance_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "team_state_observations" (
+  "state_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "chemistry_raw" REAL,
+  "fan_interest_raw" REAL,
+  UNIQUE ("team_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_team_state_observations_team_id" ON "team_state_observations" ("team_id");
+
+CREATE INDEX "idx_team_state_observations_unit_id" ON "team_state_observations" ("unit_id");
+
+CREATE TRIGGER "team_state_observations_no_update" BEFORE UPDATE ON "team_state_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_state_observations_no_delete" BEFORE DELETE ON "team_state_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_state_observations_successful_unit" BEFORE INSERT ON "team_state_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "market_state_observations" (
   "market_id" TEXT NOT NULL PRIMARY KEY,

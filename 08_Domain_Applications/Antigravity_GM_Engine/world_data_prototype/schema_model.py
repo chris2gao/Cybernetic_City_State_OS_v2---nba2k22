@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 4
+VERSION = 5
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -154,10 +154,61 @@ table('staff_contract_observations','contract_obs_id','RES-C','one staff contrac
 table('staff_skill_observations','skill_obs_id','RES-C','one staff typed skill family observation',[F(),U()]+fields('offense_raw defense_raw contracts_raw trading_raw scouting_raw training_raw business_raw',source='memory_field_profile.json STAFF; packed-bit fields require decoder'),unique=[('staff_id','unit_id')])
 table('coach_preferences','pref_id','RES-C','one coach preferences observation',[F(),U()]+fields('preferred_system_raw active_system_raw')+[col('personal_style')],unique=[('staff_id','unit_id')])
 table('team_tactic_settings','tactic_id','RES-C','one team actual tactics settings observation',[T(),U()]+fields('poe_code ace_code preferred_system_raw run_plays_raw help_defense_raw zone_usage_raw tempo_raw crash_offensive_glass_raw crash_defensive_glass_raw bench_depth_raw')+fields('freelance_slot_1 freelance_slot_2 freelance_slot_3 freelance_slot_4','TEXT'),unique=[('team_id','unit_id')])
+COACH_FIELD_COLUMNS={'POEDefense':'poe_defense_1_raw','POEDefense2':'poe_defense_2_raw','POEDefense3':'poe_defense_3_raw',
+    'POEOffense':'poe_offense_1_raw','POEOffense2':'poe_offense_2_raw','POEOffense3':'poe_offense_3_raw',
+    'SimPace':'sim_pace_raw','SimPress':'sim_pressure_raw','SimHelpDef':'sim_help_defense_raw',
+    'SimOffReb':'sim_offensive_rebounds_raw','SimDefReb':'sim_defensive_rebounds_raw',
+    'PreferredSystem':'preferred_system_raw','ActiveSystem':'active_system_raw','PlaybookID':'playbook_code_raw',
+    'BenchDepth':'bench_depth_raw','RunPlayTendency':'run_plays_raw','ZoneUsage':'zone_usage_raw',
+    'BenchUtilization':'bench_utilization_raw','Tempo':'tempo_raw','HelpDefense':'help_defense_raw',
+    'FreelanceType':'freelance_slot_1','FreelanceType2':'freelance_slot_2','FreelanceType3':'freelance_slot_3','FreelanceType4':'freelance_slot_4'}
+coach_profile=json.loads((DOMAIN/'config/coach_tactics_profile.json').read_bytes())
+for native_name,column_name in COACH_FIELD_COLUMNS.items():
+    spec=TABLES['team_tactic_settings'];existing=next((c for c in spec.columns if c.name==column_name),None)
+    if existing is None:
+        existing=col(column_name,'TEXT' if native_name.startswith('FreelanceType') else 'INTEGER',meaning='Observed native '+native_name)
+        spec.columns.append(existing)
+    f=coach_profile['fields'][native_name]
+    existing.source=f'config/coach_tactics_profile.json {native_name} offset={f["offset"]} bit={f["start_bit"]} width={f["width"]}; current COACHDATA metadata checked by adapter'
+    existing.unit='native code; target UI observation and effect separate'
 table('team_playbook_slots','slot_id','RES-C','one ordered actual team playbook entry',[T(),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('play_code'),col('play_name'),col('playbook_native_id')],unique=[('team_id','unit_id','slot_index')])
 table('team_training_settings','training_id','RES-C','one team actual training settings',[T(),U(),col('focus_code'),col('intensity_raw','INTEGER'),col('schedule_code')],unique=[('team_id','unit_id')])
 table('mentorship_relations','mentor_id','RES-C','observed actual mentor association',[P(),ref('mentor_player_id','players','player_id',False),T(False),U()],checks=['player_id<>mentor_player_id'],unique=[('player_id','unit_id')])
 table('team_finance_observations','finance_id','RES-M','native financial snapshot, not external CBA inference',[T(),U()]+fields('payroll_raw cap_space_raw luxury_tax_raw budget_raw salary_cap_raw hard_cap_raw'),unique=[('team_id','unit_id')])
+for name,offset in {'total_salary_raw':0xCBC,'payroll_raw':0xFF4,'budget_raw':0x1014,'staff_budget_raw':0x1018,
+    'cash_raw':0x1010,'gate_revenue_raw':0xFD8,'merch_revenue_raw':0xFDC,'media_revenue_raw':0xFE4}.items():
+    spec=TABLES['team_finance_observations'];c=next((c for c in spec.columns if c.name==name),None)
+    if c is None:
+        c=col(name,'INTEGER',meaning='Observed native '+name);spec.columns.append(c)
+    c.source=f'src/config.py and src/dump_teams_info.py TEAM +{offset:#x} uint32; registered meaning not target UI acceptance'
+    c.unit='unsigned native integer; no signed reinterpretation or CBA inference'
+table('team_state_observations','state_id','RES-T','one team observed native chemistry/fan state',[T(),U()]+
+    [col('chemistry_raw','REAL',source='src/config.py TEAM +0xEC4 float32',unit='native float; UI scale not newly observed'),
+     col('fan_interest_raw','REAL',source='src/config.py TEAM +0xF7C float32',unit='native float; no percentage conversion')],unique=[('team_id','unit_id')])
+TABLES['team_season_totals'].columns+=fields('points_off_turnovers second_chance_points paint_points bench_points pace_raw opponent_fg_made opponent_fg_attempted opponent_three_made opponent_three_attempted',
+    source='config/memory_field_profile.json TEAM_STATS 62-byte raw registry; current wins/losses/points/PA reconciled with schedule')
+for table_name,field_map in {
+    'staff_contract_observations':{'salary_raw':'salary','years_left':'years_left'},
+    'staff_skill_observations':{name+'_raw':name for name in ('offense','defense','contracts','trading','scouting','training','business')}
+}.items():
+    definitions={f['name']:f for f in PROFILE['fields']['STAFF']}
+    for c in TABLES[table_name].columns:
+        if c.name not in field_map:continue
+        f=definitions[field_map[c.name]]
+        c.source=f'config/memory_field_profile.json STAFF {f["name"]} +{f["offset"]} bit={f.get("start_bit",0)} width={f["bits"]}; current reciprocal TEAM role source'
+        c.unit='native grade code' if table_name=='staff_skill_observations' else 'native raw contract integer; UI units separate'
+for c in TABLES['coach_preferences'].columns:
+    if c.name in ('preferred_system_raw','active_system_raw'):
+        name='PreferredSystem' if c.name=='preferred_system_raw' else 'ActiveSystem'
+        c.source=f'config/coach_tactics_profile.json {name}; actual COACHDATA metadata uses four bits; old STAFF three-bit registration not used'
+for c in TABLES['staff_team_assignments'].columns:
+    if c.name=='role_code':c.source='STAFF +0x10E bit2 width3 plus TEAM +0xCE8+8*role reciprocal pointers; profile role labels 0..7'
+for c in TABLES['staff_members'].columns:
+    if c.name=='native_staff_id':c.source='Current COACHDATA UniqueId metadata field (observed +0xD8 uint16); unique in assigned source set'
+for c in TABLES['team_playbook_slots'].columns:
+    if c.name=='slot_index':c.source='PLAYBOOKDATA +0x58, ordered array of 68 uint32 CRCs';c.unit='zero-based native slot index'
+    elif c.name=='play_code':c.source='Native uint32 CRC from loaded PLAYBOOKDATA ordered slot';c.unit='eight lowercase hexadecimal digits, no decoded play name inferred'
+    elif c.name=='playbook_native_id':c.source='PLAYBOOKDATA +0x3E uint16 unique ID; differs from loaded enum code at +0x54'
 table('market_state_observations','market_id','RES-M','native or external market state with explicit origin',[ref('player_id','players',required=False),ref('staff_id','staff_members',required=False),U(),col('market_status',required=True),col('origin_type',required=True,check="origin_type IN ('NATIVE','EXTERNAL')")])
 table('external_transaction_events','transaction_id','RES-M','explicit completed external transaction, never roster-diff inference',[SAVE(),U(),col('event_type',required=True),col('occurred_at'),col('source_ref',required=True),col('status',required=True),col('producer_event_id',required=True)],unique=[('source_ref','producer_event_id')],public=False)
 table('draft_pick_assets','pick_id','RES-M','one actual draft pick identity',[SAVE(),col('draft_year','INTEGER',required=True),col('draft_round','INTEGER',required=True),ref('original_team_id','teams','team_id'),col('native_pick_id')],unique=[('draft_year','draft_round','original_team_id')],observation=False)
@@ -203,7 +254,7 @@ for c in TABLES['game_period_scores'].columns:
 
 
 def schema_sql():
-    out=['-- Generated: 59 proposed tables + game states + season finalizations + typed unresolved Native Box staging.\nPRAGMA foreign_keys=ON;']
+    out=['-- Generated: approved catalog + explicit game/finalization/source staging and team state observations.\nPRAGMA foreign_keys=ON;']
     for t in TABLES.values():
         definitions=[c.sql()+(' PRIMARY KEY' if c.name==t.key else '') for c in t.columns]
         definitions += ['UNIQUE ('+','.join(map(ident, cols))+')' for cols in t.unique]
