@@ -1,6 +1,8 @@
 """Minimal synthetic-only world-data prototype command line."""
 from __future__ import annotations
 import argparse
+from contextlib import redirect_stdout
+from io import StringIO
 import json
 import sys
 from pathlib import Path
@@ -96,7 +98,24 @@ def main():
     backup=sub.add_parser('backup-facts');backup.add_argument('database');backup.add_argument('new_output_directory')
     restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
     storage=sub.add_parser('storage-profile');storage.add_argument('database')
+    paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
+    for read_parser in (card,game,hist,paged,exp,sched,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
+        read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
+    if getattr(args,'as_of',None) is not None:
+        from observation_scope import observed_as_of
+        with observed_as_of(args.database,args.as_of) as scope:
+            output=StringIO()
+            with redirect_stdout(output):dispatch(args)
+            print(json.dumps({'observation_scope':scope.metadata(),'result':json.loads(output.getvalue())},ensure_ascii=False))
+        return
+    return dispatch(args)
+
+
+def dispatch(args):
+    if args.action=='history-page':
+        from query import history_page
+        print(json.dumps(history_page(args.database,args.table,entity_key=args.entity_key,entity_id=args.entity_id,limit=args.limit,cursor=json.loads(args.cursor_json) if args.cursor_json else None),ensure_ascii=False));return
     if args.action=='backup-facts':
         from database_operations import backup_facts
         print(json.dumps(backup_facts(args.database,args.new_output_directory),ensure_ascii=False));return
