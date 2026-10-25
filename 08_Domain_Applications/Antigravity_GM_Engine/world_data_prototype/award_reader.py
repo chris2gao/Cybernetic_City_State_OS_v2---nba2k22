@@ -266,10 +266,17 @@ def honors_payload(binding,manifest,artifacts,observed_at,token,canonical_legacy
 
 
 def capture_native_honors(pid,save_directory,loaded_filename,new_output_directory):
+    from cadence import prepare_annual_capture,attach_annual_period
     binding,binding_hash=read_binding(save_directory,loaded_filename)
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);reader=None;stamp=datetime.now(timezone.utc).isoformat()
     try:
-        reader=ReadOnlyGameProcess(pid);manifest,blobs=collect_native_honors(reader);reader.close()
+        reader=ReadOnlyGameProcess(pid)
+        refresh_year,previous=prepare_annual_capture(reader,bound_database(save_directory,binding),'NATIVE_HONOR_STATS')
+        if previous is not None:
+            previous.update({'save_id':binding['save_id'],'read_trace':reader.trace})
+            _json(out/'ingest-result.json',previous);return previous
+        manifest,blobs=collect_native_honors(reader);reader.close()
+        if manifest['season_year']!=refresh_year:raise ValueError('game season changed during annual honor acquisition')
         if manifest['source_coverage']!='COMPLETE_NATIVE_PLAYER_POOL_AND_STAT_BANK':raise ValueError('live adapter requires complete bounded source pools')
         for name,raw in blobs.items():(out/name).write_bytes(raw)
         _json(out/'honors-manifest.json',manifest)
@@ -289,8 +296,10 @@ def capture_native_honors(pid,save_directory,loaded_filename,new_output_director
         with connect(bound_database(save_directory,binding)) as c:
             canonical={r['player_id']:r['display_name'] for r in c.execute('SELECT player_id,display_name FROM players')}
             payload=honors_payload(binding,manifest,artifacts,stamp,token,canonical);payload['evidence_grade']='LIVE_READ'
+            attach_annual_period(payload,'NATIVE_HONOR_STATS',refresh_year)
             receipt=_AcquisitionReceipt(payload,reader);status=ingest_capture(c,payload,_live_receipt=receipt)
         result={'status':status,'unit_id':payload['unit_id'],'save_id':binding['save_id'],'source_grade':'LIVE_READ',
+            'refresh_family':'NATIVE_HONOR_STATS','refresh_period_year':refresh_year,
             'counts':{name:len(values) for name,values in payload['facts'].items()},'game_writes':False,'restricted_player_bytes_read':0,
             'source_pid':pid,'full_goal_complete':False}
         _json(out/'ingest-result.json',result);return result

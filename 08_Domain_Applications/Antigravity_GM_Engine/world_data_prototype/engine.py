@@ -100,6 +100,8 @@ def _check_envelope(conn,payload,live_receipt=None):
         if not payload.get(k):raise ValueError('missing '+k)
     stamp=datetime.fromisoformat(payload['observed_at'].replace('Z','+00:00'))
     if stamp.utcoffset() is None:raise ValueError('observation requires timezone')
+    from cadence import validate_refresh_metadata
+    validate_refresh_metadata(payload)
     grade=payload.get('evidence_grade')
     if grade=='LIVE_READ':
         from live_world import _AcquisitionReceipt
@@ -140,7 +142,8 @@ def ingest_capture(conn,payload,*,_live_receipt=None):
         _ensure_record(conn,'seasons','season_id',{'season_id':season['season_id'],'season_code':season['season_code']})
         _ensure_record(conn,'capture_runs','run_id',{'run_id':payload['run_id'],'season_id':season['season_id'],
             'observed_at':_utc(payload['observed_at']),'source_grade':payload['evidence_grade'],
-            'decoder_version':payload.get('decoder_version'),'save_binding_ref':payload.get('save_binding_ref')})
+            'decoder_version':payload.get('decoder_version'),'save_binding_ref':payload.get('save_binding_ref'),
+            'refresh_family':payload.get('refresh_family'),'refresh_period_year':payload.get('refresh_period_year')})
         status=payload.get('unit_status','success')
         _insert(conn,'capture_units',{'unit_id':unit,'run_id':payload['run_id'],'source_key':payload['source_key'],
             'payload_sha256':digest,'unit_status':status,'observed_at':_utc(payload['observed_at']),'effective_at':payload.get('effective_at'),
