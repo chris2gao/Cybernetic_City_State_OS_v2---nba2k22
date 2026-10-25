@@ -1,5 +1,7 @@
 # NBA2K22 GM project instructions
 
+> **NBA2K22 最新 Human 产品/开发运行契约（2026-10-25；项目级）**：[世界数据原型八场景、正式年度 Human 手动采集/人格触发与底层增量读写契约 V1](docs/development/NBA2K22_WORLD_RUNTIME_AND_PROTOTYPE_SCENE_CONTRACT_V1.md)。**研发逆向场景不等于正式采集频率**；正式游戏由 Human 自行玩到节点、主动通过模型调用增量采集，再主动分别启动 GM/Coach/Player 决策，绝无自动推进游戏、定时采集或采后自动唤醒人格。**当前底层开发包括读取、数据库/历史/查询、字段语义、经批准的可写字段与批量 CRUD/读回，不包括为什么作出某项 GM/教练/球员决策。** Codex 默认独立开发，Gemini 仅在大批量重复 Native 研究明显节省综合成本时由 Human 有界转交，禁止为零碎任务经 Computer Use 驱动另一模型。本链接适用于后续任务，也供正在执行的世界数据任务按需读取；不追溯改写其任务包、不授权真实游戏写入，OS 规则不变。
+
 > **最新技术研发方法（2026-10-21）**：[根据R01–R07和现有原生工程反推的UI→完整对象→数据生产/查询源→数据库镜像→受控操作V2蓝图](docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md)。以NBA2K22 PC真实页面、各页面全部数据列/控件及原生对象/索引/Getter为研究边界；不能按GM/人格预期挑几个字段补采。内存表状结构不等于证明游戏内部SQL库；完整PLAYER必须包含能力、倾向、徽章、统计等全部原生子对象。旧Native I/O V1已撤回，V2是待验证规划，不自动授权DEV28开发/游戏写入。
 
 > **NBA2K22 项目级默认协作规范（2026-10-24；最新Human裁决）**：[跨模型协作与原型驱动开发规范 V2](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)。**GPT规划与Human重大架构决策，Codex为工程实现唯一Owner，Antigravity只做有界Native逆向及重复性辅助**；两者共用本地仓库/测试环境时必须**顺序工作、交接HEAD与工作区状态，不能并行执行**。先明确全域原型，再由Codex连续实现并依据真实发现迭代；开发期做必要轻量验证，完整候选后集中独立审核。项目既有任务是新主线的技术背景，不自动成为其阶段依赖；实际OS权限、独立审核与master发布门禁继续适用。旧[V1跨模型规范](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md)保留历史及不冲突条款（含subagent证明/禁用规则）。
