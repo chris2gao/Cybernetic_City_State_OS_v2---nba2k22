@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 13
+VERSION = 14
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -158,6 +158,34 @@ table('player_contract_observations','contract_obs_id','RES-M','one actual contr
     unique=[('player_id','unit_id'),('source_player_id','unit_id')],checks=['player_id IS NOT NULL OR source_player_id IS NOT NULL'])
 table('player_health_observations','health_id','RES-P','observed health separate from attribute durability',[P(),U()]+fields('injury_code body_part severity availability recovery_text','TEXT')+fields('fatigue_raw energy_raw recovery_days'),unique=[('player_id','unit_id')])
 table('player_morale_observations','morale_id','RES-P','observed native morale/role, not AI personality',[P(),U(),col('role_code'),col('morale_raw','INTEGER'),col('role_satisfaction_raw','INTEGER')],unique=[('player_id','unit_id')])
+_state_profile=json.loads((BASE/'player_state_native_profile.json').read_bytes())
+for _group,_table_name in [('vitals','player_vitals_observations'),('health','player_health_observations'),('morale','player_morale_observations')]:
+    _table=TABLES[_table_name]
+    for _c in _table.columns:
+        if _c.name=='player_id':_c.required=False
+    _table.columns.extend([ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version')])
+    _table.unique.append(('source_player_id','unit_id'));_table.checks.append('player_id IS NOT NULL OR source_player_id IS NOT NULL')
+    for _name,_field in _state_profile['groups'][_group].items():
+        if _field['native_type']=='float':continue
+        _source=f'CURRENT_NATIVE.PLAYERDATA.{_field["native_name"]} offset={_field["offset"]} bit={_field["start_bit"]} width={_field["width"]}; player_state_native_profile.json'
+        _existing=next((c for c in _table.columns if c.name==_name),None)
+        if _existing:_existing.source=_source;_existing.unit='native unsigned storage; UI semantics separate'
+        else:_table.columns.append(col(_name,'INTEGER',check=f'{_name} BETWEEN 0 AND {(1<<_field["width"])-1}',source=_source,unit='native unsigned storage'))
+TABLES['player_vitals_observations'].columns.extend([
+    col('weight_real','REAL',source='CURRENT_NATIVE.PLAYERDATA.Weight float32; no UI unit assertion'),col('weight_value_text'),col('weight_value_status'),
+    col('wingspan_raw','INTEGER',check='wingspan_raw BETWEEN 0 AND 32767',source='CURRENT_NATIVE.APPEARANCEDATA.WingspanInTenthsOfMM',unit='tenths of millimeter'),
+    col('height_cm_native_derived','REAL',source='DERIVED HeightInTenthsOfMM /100; native named unit, not UI acceptance',unit='centimeter'),
+    col('wingspan_cm_native_derived','REAL',source='DERIVED WingspanInTenthsOfMM /100; native named unit, not UI acceptance',unit='centimeter'),
+    col('appearance_status'),col('tertiary_position'),col('best_dunk_hand_label')])
+for _c in TABLES['player_vitals_observations'].columns:
+    if _c.name=='height_raw':_c.source='CURRENT_NATIVE.APPEARANCEDATA.HeightInTenthsOfMM uint15';_c.unit='tenths of millimeter'
+    if _c.name=='weight_raw':_c.source='CURRENT_NATIVE.PLAYERDATA.Weight exact IEEE754 word';_c.unit='uint32 float bit pattern; UI weight unit separate'
+TABLES['player_health_observations'].columns.extend([col(f'injury{slot}_{kind}_label',source='CURRENT_NATIVE injury/status enum exact code/CRC') for slot in (1,2) for kind in ('type','status')])
+TABLES['player_morale_observations'].columns.extend([
+    col('morale_word_raw','INTEGER',check='morale_word_raw BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.PLAYERDATA.Morale_Private float32 bits'),
+    col('morale_real','REAL',source='CURRENT_NATIVE.PLAYERDATA.Morale_Private finite float32; no UI scale assertion'),col('morale_value_text'),col('morale_value_status'),
+    col('morale_event_adjustment_signed','INTEGER',check='morale_event_adjustment_signed BETWEEN -128 AND 127',source='CURRENT_NATIVE MoraleEventAdjustment s8; two-complement conversion'),
+    col('morale_event_label'),col('org_role_label',source='CURRENT_NATIVE.PLAYERDATA_ORG_ROLE; not playing-time role or satisfaction')])
 table('player_training_observations','training_id','RES-P','observed personal training settings',[P(),U(),T(False),col('focus_code'),col('intensity_raw','INTEGER'),col('schedule_code')],unique=[('player_id','unit_id')])
 table('game_state_observations','observation_id','RES-G','observed status and native score if actually available',[G(),U(),col('status_code',required=True)]+fields('home_points away_points overtime_count attendance was_simulated')+[col('score_provenance',default="'UNKNOWN'"),col('is_final','INTEGER',default='0',check='is_final IN (0,1)')],unique=[('game_id','unit_id')],source=STATS_SOURCE)
 table('game_period_scores','period_score_id','RES-G','one team one actual period score observation',[G(),T(),U(),col('period_index','INTEGER',required=True,check='period_index>=1'),col('period_points','INTEGER',required=True,check='period_points>=0')],unique=[('game_id','team_id','period_index','unit_id')],source='SEASON_GAME +44..51; OT byte is aggregate, not individually split')
@@ -487,7 +515,7 @@ for c in TABLES['game_period_scores'].columns:
 # move that source parent ahead of badges/contracts for DDL, ingest and migration.
 _ordered={}
 for _name,_table in TABLES.items():
-    if _name=='player_badge_values':_ordered['native_player_sources']=TABLES['native_player_sources']
+    if _name=='player_vitals_observations':_ordered['native_player_sources']=TABLES['native_player_sources']
     if _name!='native_player_sources':_ordered[_name]=_table
 TABLES=_ordered
 
@@ -512,7 +540,7 @@ def schema_sql():
     out.append('''CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;''')
     out.append('''CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;''')
     out.append('''CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;''')
-    for name in ('player_badge_values','player_contract_observations'):
+    for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations'):
         out.append(f'''CREATE TRIGGER {name}_native_source_unit BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
         out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
