@@ -1,0 +1,35 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Add typed game-header acquisition/reuse checks, avoid reading qualified frozen
+    Native Boxes, preserve original Box age and remove the old Box context anchor.
+  implementation_or_review_method: >-
+    Copy-upgrade v16 facts to v17. Capture one full source baseline, then repeat
+    against the freshly discovered process. Check actual ReadProcessMemory traces,
+    all old rows, exact origin/header constraints and all1232 Game Box unit choices.
+  supportability_rationale: >-
+    Actual second capture reads36 final Boxes and skips202 qualified frozen ones.
+    Box API calls fall952 to144 and bytes592320 to89280, with zero historical Box
+    anchor reads. All1318485 prior rows are preserved aside from the required
+    schema-version header.2096 source artifacts and18382 private-interval read
+    checks pass. Original v16 file and save identity fields remain unchanged.
+  feasibility_rationale: >-
+    Schema v17 adds one typed source-check table for85 tables and1315 columns.
+    Existing readers/atomic ingest and frozen-conflict guards remain in use.
+    Current roster/Slot24 collection works without final games and does not relabel
+    old-year totals.171 tests plus smoke pass; exact snapshots/sources and code
+    hashes are retained. Reuse does not claim unread Native Box equality.
+  exact_result_or_candidate_ref: cf2479399afdbf762c6833b8f2c91ad4a12e9c99
+  verification_evidence:
+    - 06_执行/increment22/actual-incremental-report.json
+    - 06_执行/increment22/seed-source-summary.json
+    - 06_执行/increment22/incremental-source-summary.json
+    - 06_执行/increment22/all-game-query-checks.json
+    - 06_执行/increment22/world-v17.snapshot.json
+    - 06_执行/increment22/verification/operations_report.json
+  residual_risk_or_unproved_limits:
+    - Matching headers reuse prior frozen facts; unread Native Box equality is not observed.
+    - Explicit recheck-frozen is available and conflicting final facts still require adjudication.
+    - Incomplete canonical mappings require full acquisition and remain incomplete.
+    - Operator save declaration and Native/UI/lifecycle uncertainties remain in force.
+    - Capacity/retention evidence and final independent/Human acceptance remain outstanding.
