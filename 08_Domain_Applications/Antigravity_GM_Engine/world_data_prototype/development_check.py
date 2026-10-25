@@ -24,6 +24,8 @@ from player_detail_reader import detail_payload
 from query import native_player_details
 from player_state_reader import state_payload
 from query import native_player_state
+from player_affiliation_reader import affiliation_payload
+from query import native_affiliations
 from organization_reader import organization_payload
 from market_reader import market_payload
 from planning_reader import planning_payload
@@ -175,18 +177,29 @@ def main():
     with connect(state_db) as conn:ingest_capture(conn,bundle)
     state_summary=summarize(state_db)
     (out/'native-curry-state.json').write_text(json.dumps(native_player_state(state_db,subject_name='Stephen Curry'),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    public_text=''.join((out/name).read_text() for name in ('gm-player-card.json','public-player-game-boxes.jsonl','team-card.json','staff-card.json','market-snapshot.json','planning-snapshot.json','gameplan-card.json','record-book-page.json','wilt-records.json','native-mvp-source.json','native-honor-source.json','league-history-queries.json','league-news-queries.json','native-curry-details.json','native-curry-state.json'))
+    affiliation_source=BASE/'tests/fixtures/player_affiliations_20261025';affiliation_sources=json.loads((affiliation_source/'source_manifest.json').read_bytes());fixture=affiliation_source/'manifest.json.gz';digest=hashlib.sha256(fixture.read_bytes()).hexdigest()
+    if digest!=affiliation_sources['files'][fixture.name]:raise ValueError('player affiliation fixture hash mismatch')
+    affiliation_manifest=json.loads(gzip.decompress(fixture.read_bytes()));affiliation_db=out/'player-affiliations-research.sqlite';create_database(affiliation_db,'PLAYER_AFFILIATIONS_RESEARCH_ONLY')
+    canonical={'player:native:'+str(p['preserved_id_raw']):p['observed_name'] for p in affiliation_manifest['players'] if p['current_core_roster_status']=='CURRENT_CORE_ROSTER'}
+    bundle=affiliation_payload({'save_id':'PLAYER_AFFILIATIONS_RESEARCH_ONLY','native_save_filename':'MyLEAGUE0003'},affiliation_manifest,
+        [{'sha256':digest,'payload_kind':'COMPLETE_NATIVE_PLAYER_AFFILIATIONS_RESEARCH_REPLAY','payload_ref':fixture.name}],
+        '2026-10-25T00:00:00Z','development-fixture',canonical)
+    bundle['facts']['players']=[{'player_id':key,'display_name':name} for key,name in canonical.items()]
+    with connect(affiliation_db) as conn:ingest_capture(conn,bundle)
+    affiliation_summary=summarize(affiliation_db)
+    (out/'native-curry-affiliations.json').write_text(json.dumps(native_affiliations(affiliation_db,subject_name='Stephen Curry'),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    public_text=''.join((out/name).read_text() for name in ('gm-player-card.json','public-player-game-boxes.jsonl','team-card.json','staff-card.json','market-snapshot.json','planning-snapshot.json','gameplan-card.json','record-book-page.json','wilt-records.json','native-mvp-source.json','native-honor-source.json','league-history-queries.json','league-news-queries.json','native-curry-details.json','native-curry-state.json','native-curry-affiliations.json'))
     if any(x in public_text.lower() for x in ('potential','raw_player_hex','protected_value_ref','payload_ref')):
         raise RuntimeError('restricted output in public projection')
     checksums={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in out.iterdir() if p.is_file()}
-    report={'task_id':'nba2k22-world-data-full-implementation-01','increment':'15_NATIVE_PLAYER_VITALS_HEALTH_AND_MORALE',
+    report={'task_id':'nba2k22-world-data-full-implementation-01','increment':'16_NATIVE_PLAYER_AFFILIATIONS_AND_COLLEGE_REFERENTS',
         'candidate_code_head':subprocess.run(['git','rev-parse','HEAD'],cwd=repo,capture_output=True,text=True,check=True).stdout.strip(),
         'status':'DEVELOPMENT_INCREMENT_VERIFIED_FULL_GOAL_NOT_COMPLETE',
         'environment':{'python':platform.python_version(),'platform':platform.system()},
         'test_exit_code':tests.returncode,'test_command':'python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q',
         'test_evidence':'tests.stderr.log','database':summarize(db),'native_source_status':'HISTORICAL_AG01D_AND_RECORDED_OWNER_LIVE_SOURCE_REPLAY',
         'check_scope':'This command replays fixtures; actual owner read calls are separately recorded in the Native source evidence',
-        'actual_owner_acquisition_evidence_ref':'01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment15/native_sources/source_manifest.json',
+        'actual_owner_acquisition_evidence_ref':'01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment16/native_sources/source_manifest.json',
         'season_observations':seasons,'observed_team_identities':team_count,
         'public_player_attributes_observed':sum(1 for f in card['families']['player_attribute_snapshots'].values() if f.get('value') is not None),
         'registered_player_families':summarize(family_db),'owner_source_replay':summarize(owner_db),'organization_replay':summarize(org_db),'market_replay':summarize(market_db),'planning_replay':summarize(plan_db),'settings_replay':summarize(settings_db),'records_replay':summarize(record_db),'native_honors_replay':summarize(honor_db),
@@ -194,6 +207,7 @@ def main():
         'league_research_replay':league_summaries,
         'player_detail_research_replay':detail_summary,
         'player_state_research_replay':state_summary,
+        'player_affiliation_research_replay':affiliation_summary,
         'queried_player_id':pid,'queried_game_id':gid,'exported_box_rows':export['rows'],
         'schema_domains':sorted({t.domain for t in TABLES.values()}),
         'schema_mapping':{'v1_tables_preserved':16,'approved_provisional_tables':59,'actual_tables':len(TABLES),
@@ -202,9 +216,9 @@ def main():
                 'gameplan_observations','gameplan_rotation_observations','gameplan_defense_observations','player_training_slot_observations','mentor_manager_observations','native_mentor_relation_observations',
                 'native_player_stat_observations','native_player_sources','native_player_stat_links',
                 'native_league_history_observations','native_social_message_observations','native_transaction_observations',
-                'native_transaction_item_observations','native_award_matrix_observations','native_league_capture_controls']},
+                'native_transaction_item_observations','native_award_matrix_observations','native_league_capture_controls','native_college_observations']},
         'code_hash_scope':'Actual executed working-tree bytes at candidate_code_head; generated artifacts preserve their bytes via local .gitattributes',
-        'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [BASE/'schema.sql',BASE/'field_dictionary.json',BASE/'schema_model.py',BASE/'engine.py',BASE/'readers.py',BASE/'query.py',BASE/'live_reader.py',BASE/'family_codec.py',BASE/'owner_capture.py',BASE/'live_world.py',BASE/'cli.py',BASE/'schedule_reader.py',BASE/'organization_reader.py',BASE/'market_reader.py',BASE/'planning_reader.py',BASE/'settings_reader.py',BASE/'records_reader.py',BASE/'award_reader.py',BASE/'award_native_profile.json',BASE/'cadence.py',BASE/'league_reader.py',BASE/'league_ingest.py',BASE/'league_native_profile.json',BASE/'player_detail_reader.py',BASE/'player_detail_codec.py',BASE/'player_detail_native_profile.json',BASE/'player_state_reader.py',BASE/'player_state_codec.py',BASE/'player_state_native_profile.json']},
+        'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in [BASE/'schema.sql',BASE/'field_dictionary.json',BASE/'schema_model.py',BASE/'engine.py',BASE/'readers.py',BASE/'query.py',BASE/'live_reader.py',BASE/'family_codec.py',BASE/'owner_capture.py',BASE/'live_world.py',BASE/'cli.py',BASE/'schedule_reader.py',BASE/'organization_reader.py',BASE/'market_reader.py',BASE/'planning_reader.py',BASE/'settings_reader.py',BASE/'records_reader.py',BASE/'award_reader.py',BASE/'award_native_profile.json',BASE/'cadence.py',BASE/'league_reader.py',BASE/'league_ingest.py',BASE/'league_native_profile.json',BASE/'player_detail_reader.py',BASE/'player_detail_codec.py',BASE/'player_detail_native_profile.json',BASE/'player_state_reader.py',BASE/'player_state_codec.py',BASE/'player_state_native_profile.json',BASE/'player_affiliation_reader.py',BASE/'player_affiliation_codec.py',BASE/'player_affiliation_native_profile.json']},
         'artifact_sha256':checksums,'not_run':['fresh live acquisition inside this verification command','full-domain native source acceptance','100-season capacity benchmark','final managed verification','independent review','Human full-candidate acceptance'],
         'next_owner':'Codex continues engineering and can research Native directly; Human relays Gemini only for selected batch exploration',
         'open_source_gaps':['four unresolved completed-game Native player IDs','calendar UI encoding','cross-session player/staff lifecycle identity; preserved vs unique ID canonical transition not inferred','contract/finance UI semantics','badge tier encoding','training focus/schedules and safe history fields','global rotation and committed-plan effect','mentor badge activity/effect','decoded play names','player/staff market availability','initialized prospect class/year and G League identities','pick protection/swaps and historical results','global setting NativeType descriptors, full UI names/ranges/scale and remaining league rules','record category/subject/scope/date semantics; native honor flag subjects/allocation/final-instance acceptance and news source'],
