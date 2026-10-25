@@ -1,0 +1,33 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Integrate actual native player vitals, two-slot injury/fatigue and float morale
+    state with source-only subjects, appearance measurements and query coverage.
+  implementation_or_review_method: >-
+    Read current PLAYERDATA/APPEARANCEDATA/SCHEDULEDATE metadata and seven enums,
+    verify field signatures/primitive type CRCs, collect/recheck scoped public pool
+    projections and pointed four-byte measurements, decode typed families and
+    append receipt-bound units with exact unknown/derived-value distinctions.
+  supportability_rationale: >-
+    PID2132 capture covers all3390 public source subjects, 3390 snapshots in each
+    of the three families and 3390 pointed measurement sources. Audit redecodes
+    every projection and compares13604 typed records, checks all private-byte
+    exclusions and all34 query pages, preserving795710 old rows and the v13 hash.
+  feasibility_rationale: >-
+    Shared narrow source projection, existing typed family tables and same-unit
+    subject guards support source-only and461 current canonical matches without
+    invented identities. Named tenths-mm units allow explicit cm derivation;
+    float words, nonfinite diagnostics and signed adjustment preserve source facts.
+    Development suite passes105 tests with13 retained research database examples.
+  exact_result_or_candidate_ref: 7bf3225009ee30879dc86446402776ef054b1a9b
+  verification_evidence:
+    - 06_执行/increment15/player_state_world_report.json
+    - 06_执行/increment15/migration-report.json
+    - 06_执行/increment15/native_sources/source_manifest.json
+    - 06_执行/increment15/verification/development_report.json
+    - 06_执行/increment15/verification/tests.stderr.log
+  residual_risk_or_unproved_limits:
+    - Weight/morale UI scale, birth month/calendar conventions, age, college and country remain incomplete.
+    - Injury slots do not independently establish aggregate availability, energy or remaining recovery days.
+    - OrgRole is organizational positioning, not playing-time role or satisfaction; source lifecycle remains unaccepted.
+    - Remaining domains/role coverage, capacity/recovery and whole-candidate independent/Human acceptance remain incomplete.

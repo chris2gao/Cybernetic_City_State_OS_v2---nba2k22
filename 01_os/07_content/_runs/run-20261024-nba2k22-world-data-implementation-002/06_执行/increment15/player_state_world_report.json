@@ -1,0 +1,144 @@
+{
+  "status": "NATIVE_PLAYER_VITALS_HEALTH_MORALE_BYTES_TO_QUERY_VERIFIED_FULL_GOAL_INCOMPLETE",
+  "candidate_code_head": "7bf3225009ee30879dc86446402776ef054b1a9b",
+  "schema": {
+    "save_id": "nba2k22_test_01",
+    "schema_version": 14,
+    "table_count": 83,
+    "column_count": 1207,
+    "game_count": 1232,
+    "box_observations": 11455,
+    "attribute_observations": 811,
+    "capture_units": 16,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "LIVE_READ": 16
+    },
+    "nonempty_fact_tables": [
+      "mentor_manager_observations",
+      "native_award_matrix_observations",
+      "season_record_entries",
+      "player_badge_values",
+      "player_health_observations",
+      "native_league_capture_controls",
+      "team_game_boxes",
+      "native_player_stat_links",
+      "native_player_stat_observations",
+      "native_social_message_observations",
+      "team_training_settings",
+      "game_news_entries",
+      "staff_contract_observations",
+      "game_state_observations",
+      "player_contract_observations",
+      "team_state_observations",
+      "team_tactic_settings",
+      "native_player_sources",
+      "game_setting_observations",
+      "players",
+      "mentorship_relations",
+      "roster_memberships",
+      "player_game_boxes",
+      "player_attribute_snapshots",
+      "native_mentor_relation_observations",
+      "player_vitals_observations",
+      "player_tendency_snapshots",
+      "native_transaction_observations",
+      "coach_preferences",
+      "staff_members",
+      "native_box_observations",
+      "native_identity_links",
+      "team_playbook_slots",
+      "team_seasons",
+      "game_period_scores",
+      "gameplan_observations",
+      "gameplan_defense_observations",
+      "team_finance_observations",
+      "league_rule_observations",
+      "player_play_type_slots",
+      "award_recipients",
+      "native_league_history_observations",
+      "gameplan_rotation_observations",
+      "games",
+      "season_award_instances",
+      "draft_pick_ownerships",
+      "native_transaction_item_observations",
+      "player_morale_observations",
+      "player_season_totals",
+      "staff_skill_observations",
+      "player_training_slot_observations",
+      "draft_pool_slot_observations",
+      "player_training_observations",
+      "staff_team_assignments",
+      "waived_salary_observations",
+      "draft_pick_assets",
+      "team_season_totals",
+      "teams",
+      "field_gaps"
+    ]
+  },
+  "source_pid": 2132,
+  "unit_id": "player-state:0cdec9c404bf1ced7f0af1f8",
+  "latest_counts": {
+    "native_fields": 40,
+    "native_player_sources": 3390,
+    "player_vitals_observations": 3390,
+    "player_health_observations": 3390,
+    "player_morale_observations": 3390,
+    "field_gaps": 4
+  },
+  "source_to_typed_rows_compared": 13604,
+  "public_player_projections_redecoded": 3390,
+  "matched_current_roster_canonical_players": 461,
+  "appearance_status_counts": {
+    "NATIVE_APPEARANCE_PUBLIC_FIELDS_OBSERVED": 3390
+  },
+  "injury_status_source_counts": [
+    {
+      "injury1_status_label": "DOUBTFUL",
+      "injury2_status_label": "HEALTHY",
+      "rows": 5
+    },
+    {
+      "injury1_status_label": "HEALTHY",
+      "injury2_status_label": "HEALTHY",
+      "rows": 3366
+    },
+    {
+      "injury1_status_label": "OUT",
+      "injury2_status_label": "HEALTHY",
+      "rows": 13
+    },
+    {
+      "injury1_status_label": "PROBABLE",
+      "injury2_status_label": "HEALTHY",
+      "rows": 2
+    },
+    {
+      "injury1_status_label": "QUESTIONABLE",
+      "injury2_status_label": "HEALTHY",
+      "rows": 4
+    }
+  ],
+  "old_rows_preserved": 795710,
+  "old_v13_file_hash_unchanged": true,
+  "known_restricted_player_bytes_requested": 0,
+  "old_attributes_and_base_badges_unchanged": true,
+  "pinned_state_pages": 34,
+  "export_rows": {
+    "player_vitals_observations": 4201,
+    "player_health_observations": 3390,
+    "player_morale_observations": 3390
+  },
+  "world_sqlite_sha256": "750dfdcf30cc92e7cd818c7854e0d912b87ec02e18aed2c945907623be8dc81a",
+  "world_sqlite_bytes": 532484096,
+  "compressed_world_bytes": 55746936,
+  "game_writes": false,
+  "full_goal_complete": false,
+  "independent_review": false,
+  "limits": [
+    "Named native appearance units support explicit derived cm, not UI acceptance.",
+    "Weight/morale UI scale, calendar/birth month and additional vitals remain incomplete.",
+    "Two injury slots do not establish aggregate availability, energy or remaining recovery days.",
+    "OrgRole is not playing-time role/satisfaction; source lifecycle, remaining domains, capacity/recovery and final acceptance remain open."
+  ]
+}
