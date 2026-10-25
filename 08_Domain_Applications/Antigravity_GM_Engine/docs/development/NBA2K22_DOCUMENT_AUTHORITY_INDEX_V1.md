@@ -8,6 +8,7 @@
 |---|---|---|
 | OS全局机制与权限 | `AGENT_WORKING_DISCIPLINE.md`, 根`AGENTS.md`, `01_os/README.md`, `01_os/开发入口与单窗口任务规范_v1.md`, `08_Domain_Applications/AGENTS.md` | 当下`master`或Human指派的确切OS版本；不由领域docs重写 |
 | 玩家产品目标和角色授权 | [项目宗旨](../PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md)、后续Human明确更新 | 六阶段参与顺序、自然成长、受控写入。业务文档不可将规划视作Human新的写游戏许可 |
+| **Human 确定的游戏运行与世界数据原型场景** | [世界数据原型八场景、正式年度手动采集和底层读写契约 V1](NBA2K22_WORLD_RUNTIME_AND_PROTOTYPE_SCENE_CONTRACT_V1.md) | **2026-10-25 最新项目级产品裁决**：8 个仅供 Native 逆向取证的场景 ≠ 12 类正式游戏采集节点；Human 主动推进游戏、通过模型触发采集，并分别启动独立人格，不设无人值守 scheduler。增量采集与历史冻结。读取/写入/CRUD/值域语义属于当前底层工程，决策理由属于未来独立人格任务。当前长任务不追溯中断，不赋予游戏写入许可。 |
 | NBA2K22 项目级开发协作 | [跨模型开发规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)，[旧V1](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md) | **V2进入master后为当前项目默认**：GPT负责规划/Human关键决策，Codex唯一工程Owner，Antigravity顺序有界探索；共用本地仓库不得并行。V1保留历史和不冲突的证据/子代理限制。此行不是OS全局机制更新 |
 | 世界数据目标架构 | [平行世界V2](PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)及**未来通过审核的新ADR** | V2修订V1中“必须保留旧双库物理Schema”说法；**V2仍为目标设计而非通过的DDL** |
 | 当前开发基线与成熟度 | [正式开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md)、[能力总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json) | 只是来源和状态索引，关于某族成熟度优先回到FINAL-CODEX矩阵与新实际验证 |
@@ -43,6 +44,7 @@
 
 ## 4. 按问题恢复上下文（最小读取集）
 
+- **我要规划当前/下一阶段世界数据工程或正式游戏循环**：先读 [Human 世界数据原型场景与正式采集契约 V1](NBA2K22_WORLD_RUNTIME_AND_PROTOTYPE_SCENE_CONTRACT_V1.md)；将研发的八个取证节点与正式 Human 手动采集节点分开；不研发自动调度或在 CRUD 工程中混入人格决策。最新版源码、Reader、真实采集、提交仍以实际任务分支证据为准。
 - **我是NBA2K22开发规划/执行模型**：在OS启动文件后读取领域`AGENTS.md`所指向的[当前项目级跨模型规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)；旧规划中的Codex/Antigravity并行或先全研究再开发要求，以最新Human决定的顺序结对与原型驱动为准。
 - **我是新开发执行模型**：读OS入口 + [开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) + 当前task packet + 前置完成指针；需要具体能力时定位[40族总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json)中的1项。
 - **我是新规划模型**：读OS入口 + [规划入口](NBA2K22_PLANNING_MODEL_ENTRY_V1.md) + [路线图](OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md)/backlog对应节点 + 直属上游设计裁决。
