@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 14
+VERSION = 15
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -256,6 +256,25 @@ for c in TABLES['team_playbook_slots'].columns:
     elif c.name=='play_code':c.source='Native uint32 CRC from loaded PLAYBOOKDATA ordered slot';c.unit='eight lowercase hexadecimal digits, no decoded play name inferred'
     elif c.name=='playbook_native_id':c.source='PLAYBOOKDATA +0x3E uint16 unique ID; differs from loaded enum code at +0x54'
 table('market_state_observations','market_id','RES-M','native or external market state with explicit origin',[ref('player_id','players',required=False),ref('staff_id','staff_members',required=False),U(),col('market_status',required=True),col('origin_type',required=True,check="origin_type IN ('NATIVE','EXTERNAL')")])
+_affiliation_profile=json.loads((BASE/'player_affiliation_native_profile.json').read_bytes())
+TABLES['market_state_observations'].columns.extend([
+    ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version'),col('native_player_type_label'),col('g_league_team_label'),col('free_agency_type_label'),
+    col('availability_interpretation',source='Class/type/agency flags are not a proof of signability or current free-agent availability')])
+TABLES['market_state_observations'].checks.append('player_id IS NOT NULL OR staff_id IS NOT NULL OR source_player_id IS NOT NULL')
+TABLES['market_state_observations'].unique.append(('source_player_id','unit_id'))
+for _name,_field in _affiliation_profile['player_fields'].items():
+    TABLES['market_state_observations'].columns.append(col(_name,'INTEGER',check=f'{_name} BETWEEN 0 AND {(1<<_field["width"])-1}',
+        source=f'CURRENT_NATIVE.PLAYERDATA.{_field["native_name"]} offset={_field["offset"]} bit={_field["start_bit"]} width={_field["width"]}; player_affiliation_native_profile.json',unit='native unsigned storage; independent flags retained'))
+table('native_college_observations','college_observation_id','RES-P','one distinct pointed COLLEGEDATA referent in a capture unit',[
+    U(),col('source_object_index','INTEGER',required=True,check='source_object_index>=0'),col('native_label'),col('name_encoding_status'),
+    col('localized_name_crc_raw','INTEGER',check='localized_name_crc_raw BETWEEN 0 AND 4294967295'),
+    col('appearance_group_raw','INTEGER',check='appearance_group_raw BETWEEN 0 AND 65535'),col('appearance_group_label'),
+    col('region_id_raw','INTEGER',check='region_id_raw BETWEEN 0 AND 127'),col('college_id_raw','INTEGER',check='college_id_raw BETWEEN 0 AND 2047'),
+    col('is_high_school_raw','INTEGER',check='is_high_school_raw IN (0,1)'),col('source_scope_status')],unique=[('unit_id','source_object_index')],
+    source='Current COLLEGEDATA header/field signature; native name[34], CRC, group, packed raw IDs and high-school flag; no inferred nationality')
+TABLES['player_vitals_observations'].columns.extend([
+    ref('native_college_obs_id','native_college_observations','college_observation_id',False),col('college_source_status'),
+    col('college_country_semantics_status',source='Native referent label kept separate from canonical college/country until category mapping is proven')])
 table('external_transaction_events','transaction_id','RES-M','explicit completed external transaction, never roster-diff inference',[SAVE(),U(),col('event_type',required=True),col('occurred_at'),col('source_ref',required=True),col('status',required=True),col('producer_event_id',required=True)],unique=[('source_ref','producer_event_id')],public=False)
 table('draft_pick_assets','pick_id','RES-M','one actual draft pick identity',[SAVE(),col('draft_year','INTEGER',required=True),col('draft_round','INTEGER',required=True),ref('original_team_id','teams','team_id'),col('native_pick_id')],unique=[('draft_year','draft_round','original_team_id')],observation=False)
 table('transaction_components','component_id','RES-M','one evidenced external transaction component',[ref('transaction_id','external_transaction_events'),U(),ref('from_team_id','teams','team_id',False),ref('to_team_id','teams','team_id',False),ref('player_id','players',required=False),ref('staff_id','staff_members',required=False),ref('pick_id','draft_pick_assets',required=False),col('component_kind',required=True),col('salary_raw','INTEGER')],public=False)
@@ -515,8 +534,9 @@ for c in TABLES['game_period_scores'].columns:
 # move that source parent ahead of badges/contracts for DDL, ingest and migration.
 _ordered={}
 for _name,_table in TABLES.items():
-    if _name=='player_vitals_observations':_ordered['native_player_sources']=TABLES['native_player_sources']
-    if _name!='native_player_sources':_ordered[_name]=_table
+    if _name=='player_vitals_observations':
+        _ordered['native_player_sources']=TABLES['native_player_sources'];_ordered['native_college_observations']=TABLES['native_college_observations']
+    if _name not in ('native_player_sources','native_college_observations'):_ordered[_name]=_table
 TABLES=_ordered
 
 
@@ -540,8 +560,9 @@ def schema_sql():
     out.append('''CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;''')
     out.append('''CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;''')
     out.append('''CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;''')
-    for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations'):
+    for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations','market_state_observations'):
         out.append(f'''CREATE TRIGGER {name}_native_source_unit BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;''')
+    out.append('''CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
         out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
     for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:

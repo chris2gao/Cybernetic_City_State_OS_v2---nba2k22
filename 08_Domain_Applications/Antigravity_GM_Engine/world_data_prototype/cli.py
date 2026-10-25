@@ -89,7 +89,15 @@ def main():
     badge_query=sub.add_parser('player-badges');badge_query.add_argument('database');badge_query.add_argument('player_id')
     state_capture=sub.add_parser('capture-player-state');state_capture.add_argument('pid',type=int);state_capture.add_argument('save_directory');state_capture.add_argument('loaded_filename');state_capture.add_argument('new_output_directory')
     state_query=sub.add_parser('native-player-state');state_query.add_argument('database');state_query.add_argument('--subject-name');state_query.add_argument('--source-index',type=int);state_query.add_argument('--unit-id');state_query.add_argument('--after-index',type=int,default=-1);state_query.add_argument('--limit',type=int,default=20)
+    affiliation_capture=sub.add_parser('capture-affiliations');affiliation_capture.add_argument('pid',type=int);affiliation_capture.add_argument('save_directory');affiliation_capture.add_argument('loaded_filename');affiliation_capture.add_argument('new_output_directory')
+    affiliation_query=sub.add_parser('native-affiliations');affiliation_query.add_argument('database');affiliation_query.add_argument('--subject-name');affiliation_query.add_argument('--source-index',type=int);affiliation_query.add_argument('--flag');affiliation_query.add_argument('--flag-value',type=int,default=1);affiliation_query.add_argument('--unit-id');affiliation_query.add_argument('--after-index',type=int,default=-1);affiliation_query.add_argument('--limit',type=int,default=20)
     args=parser.parse_args()
+    if args.action=='capture-affiliations':
+        from player_affiliation_reader import capture_player_affiliations
+        print(json.dumps(capture_player_affiliations(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='native-affiliations':
+        from query import native_affiliations
+        print(json.dumps(native_affiliations(args.database,subject_name=args.subject_name,source_index=args.source_index,flag=args.flag,flag_value=args.flag_value,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
     if args.action=='capture-player-state':
         from player_state_reader import capture_player_state
         print(json.dumps(capture_player_state(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return

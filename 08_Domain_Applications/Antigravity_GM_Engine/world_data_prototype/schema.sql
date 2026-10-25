@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=14),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=15),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -295,6 +295,30 @@ CREATE TRIGGER "native_player_sources_no_delete" BEFORE DELETE ON "native_player
 
 CREATE TRIGGER "native_player_sources_successful_unit" BEFORE INSERT ON "native_player_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "native_college_observations" (
+  "college_observation_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_object_index" INTEGER NOT NULL CHECK (source_object_index>=0),
+  "native_label" TEXT,
+  "name_encoding_status" TEXT,
+  "localized_name_crc_raw" INTEGER CHECK (localized_name_crc_raw BETWEEN 0 AND 4294967295),
+  "appearance_group_raw" INTEGER CHECK (appearance_group_raw BETWEEN 0 AND 65535),
+  "appearance_group_label" TEXT,
+  "region_id_raw" INTEGER CHECK (region_id_raw BETWEEN 0 AND 127),
+  "college_id_raw" INTEGER CHECK (college_id_raw BETWEEN 0 AND 2047),
+  "is_high_school_raw" INTEGER CHECK (is_high_school_raw IN (0,1)),
+  "source_scope_status" TEXT,
+  UNIQUE ("unit_id","source_object_index")
+) STRICT;
+
+CREATE INDEX "idx_native_college_observations_unit_id" ON "native_college_observations" ("unit_id");
+
+CREATE TRIGGER "native_college_observations_no_update" BEFORE UPDATE ON "native_college_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_college_observations_no_delete" BEFORE DELETE ON "native_college_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_college_observations_successful_unit" BEFORE INSERT ON "native_college_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "player_vitals_observations" (
   "observation_id" TEXT NOT NULL PRIMARY KEY,
   "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
@@ -333,6 +357,9 @@ CREATE TABLE "player_vitals_observations" (
   "appearance_status" TEXT,
   "tertiary_position" TEXT,
   "best_dunk_hand_label" TEXT,
+  "native_college_obs_id" TEXT REFERENCES native_college_observations(college_observation_id) ON DELETE RESTRICT,
+  "college_source_status" TEXT,
+  "college_country_semantics_status" TEXT,
   UNIQUE ("player_id","unit_id"),
   UNIQUE ("source_player_id","unit_id"),
   CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
@@ -343,6 +370,8 @@ CREATE INDEX "idx_player_vitals_observations_player_id" ON "player_vitals_observ
 CREATE INDEX "idx_player_vitals_observations_unit_id" ON "player_vitals_observations" ("unit_id");
 
 CREATE INDEX "idx_player_vitals_observations_source_player_id" ON "player_vitals_observations" ("source_player_id");
+
+CREATE INDEX "idx_player_vitals_observations_native_college_obs_id" ON "player_vitals_observations" ("native_college_obs_id");
 
 CREATE TRIGGER "player_vitals_observations_no_update" BEFORE UPDATE ON "player_vitals_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -1243,7 +1272,32 @@ CREATE TABLE "market_state_observations" (
   "staff_id" TEXT REFERENCES staff_members(staff_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "market_status" TEXT NOT NULL,
-  "origin_type" TEXT NOT NULL CHECK (origin_type IN ('NATIVE','EXTERNAL'))
+  "origin_type" TEXT NOT NULL CHECK (origin_type IN ('NATIVE','EXTERNAL')),
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "native_player_type_label" TEXT,
+  "g_league_team_label" TEXT,
+  "free_agency_type_label" TEXT,
+  "availability_interpretation" TEXT,
+  "native_player_type_raw" INTEGER CHECK (native_player_type_raw BETWEEN 0 AND 7),
+  "is_active_raw" INTEGER CHECK (is_active_raw BETWEEN 0 AND 1),
+  "is_hidden_raw" INTEGER CHECK (is_hidden_raw BETWEEN 0 AND 1),
+  "is_generated_raw" INTEGER CHECK (is_generated_raw BETWEEN 0 AND 1),
+  "is_draft_prospect_raw" INTEGER CHECK (is_draft_prospect_raw BETWEEN 0 AND 1),
+  "was_drafted_raw" INTEGER CHECK (was_drafted_raw BETWEEN 0 AND 1),
+  "is_historic_raw" INTEGER CHECK (is_historic_raw BETWEEN 0 AND 1),
+  "is_d_league_raw" INTEGER CHECK (is_d_league_raw BETWEEN 0 AND 1),
+  "is_d_league_send_down_raw" INTEGER CHECK (is_d_league_send_down_raw BETWEEN 0 AND 1),
+  "g_league_team_raw" INTEGER CHECK (g_league_team_raw BETWEEN 0 AND 31),
+  "free_agency_type_raw" INTEGER CHECK (free_agency_type_raw BETWEEN 0 AND 3),
+  "offseason_free_agent_raw" INTEGER CHECK (offseason_free_agent_raw BETWEEN 0 AND 1),
+  "offseason_free_agent_extended_raw" INTEGER CHECK (offseason_free_agent_extended_raw BETWEEN 0 AND 1),
+  "is_waived_raw" INTEGER CHECK (is_waived_raw BETWEEN 0 AND 1),
+  "is_playable_raw" INTEGER CHECK (is_playable_raw BETWEEN 0 AND 1),
+  "drafted_round_raw" INTEGER CHECK (drafted_round_raw BETWEEN 0 AND 15),
+  "drafted_pick_raw" INTEGER CHECK (drafted_pick_raw BETWEEN 0 AND 63),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR staff_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_market_state_observations_player_id" ON "market_state_observations" ("player_id");
@@ -1251,6 +1305,8 @@ CREATE INDEX "idx_market_state_observations_player_id" ON "market_state_observat
 CREATE INDEX "idx_market_state_observations_staff_id" ON "market_state_observations" ("staff_id");
 
 CREATE INDEX "idx_market_state_observations_unit_id" ON "market_state_observations" ("unit_id");
+
+CREATE INDEX "idx_market_state_observations_source_player_id" ON "market_state_observations" ("source_player_id");
 
 CREATE TRIGGER "market_state_observations_no_update" BEFORE UPDATE ON "market_state_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -2430,6 +2486,10 @@ CREATE TRIGGER player_vitals_observations_native_source_unit BEFORE INSERT ON pl
 CREATE TRIGGER player_health_observations_native_source_unit BEFORE INSERT ON player_health_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER player_morale_observations_native_source_unit BEFORE INSERT ON player_morale_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER market_state_observations_native_source_unit BEFORE INSERT ON market_state_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 
