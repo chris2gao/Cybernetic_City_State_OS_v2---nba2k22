@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=9),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=10),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -1836,6 +1836,116 @@ CREATE TRIGGER "native_box_observations_no_delete" BEFORE DELETE ON "native_box_
 
 CREATE TRIGGER "native_box_observations_successful_unit" BEFORE INSERT ON "native_box_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "native_player_stat_observations" (
+  "stat_observation_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_stat_index" INTEGER NOT NULL CHECK (source_stat_index>=0),
+  "stat_year" INTEGER,
+  "scoring_identity_status" TEXT,
+  "primary_team_id_raw" INTEGER CHECK (primary_team_id_raw BETWEEN 0 AND 65535),
+  "secondary_team_id_raw" INTEGER CHECK (secondary_team_id_raw BETWEEN 0 AND 65535),
+  "jersey_number_raw" INTEGER CHECK (jersey_number_raw BETWEEN 0 AND 255),
+  "compact_year_raw" INTEGER CHECK (compact_year_raw BETWEEN 0 AND 255),
+  "next_free_raw" INTEGER CHECK (next_free_raw BETWEEN 0 AND 65535),
+  "games_played_raw" INTEGER CHECK (games_played_raw BETWEEN 0 AND 127),
+  "mvp_raw" INTEGER CHECK (mvp_raw BETWEEN 0 AND 1),
+  "triple_doubles_raw" INTEGER CHECK (triple_doubles_raw BETWEEN 0 AND 127),
+  "fg_attempted_raw" INTEGER CHECK (fg_attempted_raw BETWEEN 0 AND 8191),
+  "all_nba_rank_raw" INTEGER CHECK (all_nba_rank_raw BETWEEN 0 AND 3),
+  "all_defensive_rank_raw" INTEGER CHECK (all_defensive_rank_raw BETWEEN 0 AND 3),
+  "games_started_raw" INTEGER CHECK (games_started_raw BETWEEN 0 AND 127),
+  "minutes_raw" INTEGER CHECK (minutes_raw BETWEEN 0 AND 8191),
+  "fg_made_raw" INTEGER CHECK (fg_made_raw BETWEEN 0 AND 4095),
+  "steals_raw" INTEGER CHECK (steals_raw BETWEEN 0 AND 2047),
+  "blocks_raw" INTEGER CHECK (blocks_raw BETWEEN 0 AND 2047),
+  "fouls_raw" INTEGER CHECK (fouls_raw BETWEEN 0 AND 1023),
+  "ft_made_raw" INTEGER CHECK (ft_made_raw BETWEEN 0 AND 2047),
+  "ft_attempted_raw" INTEGER CHECK (ft_attempted_raw BETWEEN 0 AND 2047),
+  "offensive_rebounds_raw" INTEGER CHECK (offensive_rebounds_raw BETWEEN 0 AND 1023),
+  "three_attempted_raw" INTEGER CHECK (three_attempted_raw BETWEEN 0 AND 2047),
+  "assists_raw" INTEGER CHECK (assists_raw BETWEEN 0 AND 2047),
+  "three_made_raw" INTEGER CHECK (three_made_raw BETWEEN 0 AND 1023),
+  "defensive_rebounds_raw" INTEGER CHECK (defensive_rebounds_raw BETWEEN 0 AND 32767),
+  "turnovers_raw" INTEGER CHECK (turnovers_raw BETWEEN 0 AND 32767),
+  "champion_raw" INTEGER CHECK (champion_raw BETWEEN 0 AND 1),
+  "finals_mvp_raw" INTEGER CHECK (finals_mvp_raw BETWEEN 0 AND 1),
+  "points_raw" INTEGER CHECK (points_raw BETWEEN 0 AND 65535),
+  "plus_minus_word_raw" INTEGER CHECK (plus_minus_word_raw BETWEEN 0 AND 65535),
+  "points_allowed_raw" INTEGER CHECK (points_allowed_raw BETWEEN 0 AND 65535),
+  "possessions_raw" INTEGER CHECK (possessions_raw BETWEEN 0 AND 65535),
+  "defensive_fg_made_raw" INTEGER CHECK (defensive_fg_made_raw BETWEEN 0 AND 4095),
+  "defensive_fg_attempted_raw" INTEGER CHECK (defensive_fg_attempted_raw BETWEEN 0 AND 8191),
+  "double_doubles_raw" INTEGER CHECK (double_doubles_raw BETWEEN 0 AND 127),
+  "forty_point_games_raw" INTEGER CHECK (forty_point_games_raw BETWEEN 0 AND 127),
+  "fifty_point_games_raw" INTEGER CHECK (fifty_point_games_raw BETWEEN 0 AND 127),
+  "all_rookie_rank_raw" INTEGER CHECK (all_rookie_rank_raw BETWEEN 0 AND 3),
+  "all_star_starter_raw" INTEGER CHECK (all_star_starter_raw BETWEEN 0 AND 1),
+  "all_star_reserve_raw" INTEGER CHECK (all_star_reserve_raw BETWEEN 0 AND 1),
+  "rookie_of_year_raw" INTEGER CHECK (rookie_of_year_raw BETWEEN 0 AND 1),
+  "sixth_man_raw" INTEGER CHECK (sixth_man_raw BETWEEN 0 AND 1),
+  "defensive_player_raw" INTEGER CHECK (defensive_player_raw BETWEEN 0 AND 1),
+  "most_improved_raw" INTEGER CHECK (most_improved_raw BETWEEN 0 AND 1),
+  "reference_count_raw" INTEGER CHECK (reference_count_raw BETWEEN 0 AND 255),
+  UNIQUE ("unit_id","source_stat_index")
+) STRICT;
+
+CREATE INDEX "idx_native_player_stat_observations_unit_id" ON "native_player_stat_observations" ("unit_id");
+
+CREATE TRIGGER "native_player_stat_observations_no_update" BEFORE UPDATE ON "native_player_stat_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_stat_observations_no_delete" BEFORE DELETE ON "native_player_stat_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_stat_observations_successful_unit" BEFORE INSERT ON "native_player_stat_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_player_sources" (
+  "player_source_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_player_index" INTEGER NOT NULL CHECK (source_player_index>=0),
+  "native_unique_id_raw" INTEGER CHECK (native_unique_id_raw BETWEEN 0 AND 65535),
+  "preserved_id_raw" INTEGER CHECK (preserved_id_raw BETWEEN 0 AND 4294967295),
+  "observed_name" TEXT,
+  "name_status" TEXT,
+  "native_team_id" INTEGER,
+  "current_core_roster_status" TEXT,
+  "current_roster_slot" INTEGER,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "canonical_link_status" TEXT,
+  UNIQUE ("unit_id","source_player_index")
+) STRICT;
+
+CREATE INDEX "idx_native_player_sources_unit_id" ON "native_player_sources" ("unit_id");
+
+CREATE INDEX "idx_native_player_sources_player_id" ON "native_player_sources" ("player_id");
+
+CREATE TRIGGER "native_player_sources_no_update" BEFORE UPDATE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_sources_no_delete" BEFORE DELETE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_sources_successful_unit" BEFORE INSERT ON "native_player_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_player_stat_links" (
+  "stat_link_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "player_source_id" TEXT NOT NULL REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "history_slot_index" INTEGER NOT NULL CHECK (history_slot_index>=0),
+  "native_stat_index_raw" INTEGER NOT NULL CHECK (native_stat_index_raw BETWEEN 0 AND 65535),
+  "stat_observation_id" TEXT REFERENCES native_player_stat_observations(stat_observation_id) ON DELETE RESTRICT,
+  "link_status" TEXT NOT NULL,
+  UNIQUE ("unit_id","player_source_id","history_slot_index")
+) STRICT;
+
+CREATE INDEX "idx_native_player_stat_links_unit_id" ON "native_player_stat_links" ("unit_id");
+
+CREATE INDEX "idx_native_player_stat_links_player_source_id" ON "native_player_stat_links" ("player_source_id");
+
+CREATE INDEX "idx_native_player_stat_links_stat_observation_id" ON "native_player_stat_links" ("stat_observation_id");
+
+CREATE TRIGGER "native_player_stat_links_no_update" BEFORE UPDATE ON "native_player_stat_links" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_stat_links_no_delete" BEFORE DELETE ON "native_player_stat_links" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_stat_links_successful_unit" BEFORE INSERT ON "native_player_stat_links" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "gameplan_observations" (
   "plan_id" TEXT NOT NULL PRIMARY KEY,
   "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
@@ -2014,6 +2124,10 @@ CREATE TRIGGER "native_mentor_relation_observations_no_delete" BEFORE DELETE ON 
 CREATE TRIGGER "native_mentor_relation_observations_successful_unit" BEFORE INSERT ON "native_mentor_relation_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;
+
+CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;
+
+CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 

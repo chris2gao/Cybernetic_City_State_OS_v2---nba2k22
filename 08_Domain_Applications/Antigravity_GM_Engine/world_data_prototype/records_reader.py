@@ -82,7 +82,7 @@ def collect_records(reader):
     if reader.read(reader.module_base+ROSTER_RVA,8,'RECORDS_ROOT_RECHECK')!=pointer:raise ValueError('record root changed')
     for slot,data in descriptors.items():
         if reader.read(root+slot*16,16,f'RECORDS_SLOT{slot}_RECHECK')!=data:raise ValueError('record directory changed')
-    return {'season_year':1900+(season_control[4]&127),'descriptors':tables,'record_rows':rows,'capture_coverage':'COMPLETE_NATIVE_COUNT',
+    return {'season_year':1900+season_control[4],'descriptors':tables,'record_rows':rows,'capture_coverage':'COMPLETE_NATIVE_COUNT',
         'decode_status_counts':dict(Counter(r['decode_status'] for r in rows)),
         'getter_status':'CURRENT_NATIVE_COUNT_POINTER_AND_52_BYTE_STRIDE_VERIFIED',
         'category_labels_status':'RESEARCH_CANDIDATES_NOT_CURRENT_UI_CERTIFIED',

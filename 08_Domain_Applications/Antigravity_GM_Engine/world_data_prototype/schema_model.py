@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 9
+VERSION = 10
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -91,6 +91,8 @@ G = lambda: ref('game_id', 'games')
 SAVE = lambda: ref('save_id', 'saves')
 STATS = 'points fg_made fg_attempted three_made three_attempted ft_made ft_attempted offensive_rebounds defensive_rebounds assists steals blocks turnovers fouls minutes_raw plus_minus possessions_raw'
 STATS_SOURCE = 'AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance'
+NATIVE_PLAYER_STAT_MAP=dict(zip(('PrimaryTeamId SecondaryTeamId JerseyNumber CompactYear NextFree GamesPlayed MVP TripleDoubles FieldGoalsAttempted AllNBATeamRank AllDefensiveTeamRank GamesStarted MinutesPlayed FieldGoalsMade Steals Blocks Fouls FreeThrowsMade FreeThrowsAttempted OffensiveRebounds ThreePointShotsAttempted Assists ThreePointShotsMade DefensiveRebounds Turnovers Champion FinalsMVP TotalPoints PlusMinus TotalPointsAllowed Possessions DefensiveFieldGoalsMade DefensiveFieldGoalsAttempted DoubleDoubles FortyPointGames FiftyPointGames AllRookieTeamRank AllStarStarter AllStarReserve RookieOfTheYear SixthManOfTheYear DefensivePlayerOfTheYear MostImprovedPlayer ReferenceCount').split(),
+    ('primary_team_id_raw secondary_team_id_raw jersey_number_raw compact_year_raw next_free_raw games_played_raw mvp_raw triple_doubles_raw fg_attempted_raw all_nba_rank_raw all_defensive_rank_raw games_started_raw minutes_raw fg_made_raw steals_raw blocks_raw fouls_raw ft_made_raw ft_attempted_raw offensive_rebounds_raw three_attempted_raw assists_raw three_made_raw defensive_rebounds_raw turnovers_raw champion_raw finals_mvp_raw points_raw plus_minus_word_raw points_allowed_raw possessions_raw defensive_fg_made_raw defensive_fg_attempted_raw double_doubles_raw forty_point_games_raw fifty_point_games_raw all_rookie_rank_raw all_star_starter_raw all_star_reserve_raw rookie_of_year_raw sixth_man_raw defensive_player_raw most_improved_raw reference_count_raw').split()))
 
 table('saves', 'singleton', 'RES-D', 'one independent game save per SQLite file', [
     col('save_id', required=True, source='HUMAN_OR_EVIDENCED_SAVE_BINDING', unit='opaque save identity'),
@@ -317,6 +319,33 @@ table('native_box_observations','box_observation_id','RES-D','one captured Box r
       [col('points_provenance',required=True),col('identity_status',required=True,default="'UNRESOLVED'")],
       unique=[('game_id','unit_id','side','row_index')],public=False)
 
+_native_stat_profile=json.loads((BASE/'award_native_profile.json').read_bytes())
+_native_stat_cols=[]
+for _native_name,_column in NATIVE_PLAYER_STAT_MAP.items():
+    _f=_native_stat_profile['stat_fields'][_native_name]
+    _native_stat_cols.append(col(_column,'INTEGER',check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',
+        source=f'CURRENT_PLAYERSTATDATA.{_native_name} CRC={_f["name_crc"]:08x} offset={_f["offset"]} size={_f["size"]} start={_f["start_bit"]} width={_f["width"]}; award_native_profile.json',
+        unit='native unsigned field representation; UI/award-instance acceptance separate'))
+table('native_player_stat_observations','stat_observation_id','RES-H','one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates',[
+    U(),col('source_stat_index','INTEGER',required=True,check='source_stat_index>=0'),
+    col('stat_year','INTEGER',source='PLAYERSTATDATA.CompactYear unsigned byte +1900; not season finalization'),
+    col('scoring_identity_status',source='EVIDENCE_RAW_POINTS_COMPARISON; inconsistent source retained')]+_native_stat_cols,
+    unique=[('unit_id','source_stat_index')],source='CURRENT_NATIVE_PLAYERSTATDATA_48_BYTE_FIELDS; raw award fields are not fabricated final award instances')
+table('native_player_sources','player_source_id','RES-D','one PLAYER pool source projection with both native identity fields and optional current canonical match',[
+    U(),col('source_player_index','INTEGER',required=True,check='source_player_index>=0'),
+    col('native_unique_id_raw','INTEGER',check='native_unique_id_raw BETWEEN 0 AND 65535',source='CURRENT_PLAYERDATA.UniqueId +244 uint16'),
+    col('preserved_id_raw','INTEGER',check='preserved_id_raw BETWEEN 0 AND 4294967295',source='CURRENT_PLAYERDATA.PreservedId +760 uint32; old adapters used low16'),
+    col('observed_name',source='PLAYERDATA public UTF16 name prefixes'),col('name_status',source='EVIDENCE_UTF16_PREFIX_VALIDATION'),
+    col('native_team_id','INTEGER',source='CurrentTeam_Internal reciprocal current core TEAM pointer'),
+    col('current_core_roster_status',source='EVIDENCE_CURRENT_TEAM_POINTER_AND_ROSTER_SLOT'),col('current_roster_slot','INTEGER'),
+    ref('player_id','players',required=False),col('canonical_link_status',source='EVIDENCE_CURRENT_MATCH_ONLY; not historical lifecycle certification')],
+    unique=[('unit_id','source_player_index')])
+table('native_player_stat_links','stat_link_id','RES-H','one native fixed-array SeasonStats reference, preserving empty/outside/after-empty slots',[
+    U(),ref('player_source_id','native_player_sources'),col('history_slot_index','INTEGER',required=True,check='history_slot_index>=0'),
+    col('native_stat_index_raw','INTEGER',required=True,check='native_stat_index_raw BETWEEN 0 AND 65535'),
+    ref('stat_observation_id','native_player_stat_observations',required=False),col('link_status',required=True,source='EVIDENCE_FIXED_25_ELEMENT_ARRAY_REFERENCE; no contiguous-history assumption')],
+    unique=[('unit_id','player_source_id','history_slot_index')])
+
 GAMEPLAN_HEADER_MAP={'POEOffense':'poe_offense_1_raw','POEOffense2':'poe_offense_2_raw','POEOffense3':'poe_offense_3_raw',
     'POEDefense':'poe_defense_1_raw','POEDefense2':'poe_defense_2_raw','POEDefense3':'poe_defense_3_raw',
     'HelpDefense':'help_defense_raw','RunPlayTendency':'run_plays_raw','ZoneUsage':'zone_usage_raw','BenchDepth':'bench_depth_raw',
@@ -389,6 +418,8 @@ def schema_sql():
         if t.observation and any(c.name=='unit_id' for c in t.columns):
             out.append(f'CREATE TRIGGER "{t.name}_successful_unit" BEFORE INSERT ON {ident(t.name)} WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status=\'success\') BEGIN SELECT RAISE(ABORT,\'capture unit is not successful\'); END;')
     out.append('''CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;''')
+    out.append('''CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;''')
+    out.append('''CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
         out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
     for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:

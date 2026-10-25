@@ -79,7 +79,7 @@ def collect_market(reader):
     team_ids={t['address']:t['native_team_id'] for t in teams};first=teams[0];idx=first['stats_index']
     if idx>=tables[28]['count'] or idx==65535:raise ValueError('native season year source absent')
     current=reader.read(tables[28]['address']+idx*62,62,'MARKET_NATIVE_SEASON_CONTROL')
-    year=1900+(current[4]&127);blobs['season-control.bin']=current
+    year=1900+current[4];blobs['season-control.bin']=current
     controls.append((tables[28]['address']+idx*62,current,'MARKET_NATIVE_SEASON_RECHECK'))
     for i,item in enumerate(DRAFT_PROFILE['code_evidence']):
         raw=reader.read(reader.module_base+item['module_rva'],len(bytes.fromhex(item['expected_hex'])),f'MARKET_DRAFT_CODE:{i}')

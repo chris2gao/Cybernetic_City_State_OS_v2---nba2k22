@@ -113,7 +113,7 @@ def collect_settings(reader):
         season_control=reader.read(stats+idx*62,62,'SETTINGS_SEASON_CONTROL')
         controls.extend(((addr+0xCA8,ident,'SETTINGS_TEAM_CONTROL_ID_RECHECK'),(addr+0xE80,idxraw,'SETTINGS_TEAM_CONTROL_INDEX_RECHECK'),(stats+idx*62,season_control,'SETTINGS_SEASON_RECHECK')));break
     if season_control is None:raise ValueError('current season control unavailable')
-    blobs['season-control.bin']=season_control;year=1900+(season_control[4]&127)
+    blobs['season-control.bin']=season_control;year=1900+season_control[4]
     for row in rows:row['registered_range_status']=range_status(row,row['aliases'])
     physical_types={}
     for row in rows:physical_types.setdefault((row['pointer_rva'],row['source_offset']),set()).add(row['encoding'])

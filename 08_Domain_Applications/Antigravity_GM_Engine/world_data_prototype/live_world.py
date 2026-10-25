@@ -23,6 +23,10 @@ VERSION='OPERATOR_BOUND_WORLD_READ_V1'
 PLAYER_STRIDE=1264
 TEAM_STRIDE=4696
 POTENTIAL=next(d['offset'] for d in PROFILE['fields']['PLAYER'] if d['name']=='potential')
+# Current PLAYERDATA metadata also exposes original, minimum/maximum and
+# previous storage. Skip their actual physical byte intervals, not just the
+# main PotentialRaw byte. None is decoded into the public field families.
+RESTRICTED_PLAYER_RANGES=((785,786),(880,882),(930,931),(1089,1090))
 
 
 def _json(path,value):
@@ -84,9 +88,14 @@ def _utf(raw):return decode_fixed_utf16(raw)
 
 
 def _public_raw(reader,address,label):
-    # Not a masked native read: the excluded byte is never requested from Windows.
-    return (reader.read(address,POTENTIAL,label+':before-excluded-byte')+b'\0'+
-            reader.read(address+POTENTIAL+1,PLAYER_STRIDE-POTENTIAL-1,label+':after-excluded-byte'))
+    # Excluded bytes are never requested from Windows. Zero placeholders only
+    # preserve public fixed-offset decoding; no private value is reconstructed.
+    parts=[];start=0
+    for low,high in RESTRICTED_PLAYER_RANGES:
+        if start<low:parts.append(reader.read(address+start,low-start,label+':public-segment:'+str(start)))
+        parts.append(bytes(high-low));start=high
+    if start<PLAYER_STRIDE:parts.append(reader.read(address+start,PLAYER_STRIDE-start,label+':public-segment:'+str(start)))
+    return b''.join(parts)
 
 
 def collect_world(reader,game_index,*,target_native_ids=None):
