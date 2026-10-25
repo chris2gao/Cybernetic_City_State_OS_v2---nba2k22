@@ -12,7 +12,7 @@ from engine import connect,ingest_capture
 from family_codec import extract_unsigned,decode_fixed_utf16
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import read_binding,bound_database,_json,_AcquisitionReceipt
-from schedule_reader import collect_schedule,bounded_block
+from schedule_reader import collect_schedule,bounded_block,index_relationship
 from readers import _module
 from schema_model import DOMAIN,PROFILE,COACH_FIELD_COLUMNS
 
@@ -94,13 +94,16 @@ def collect_organization(reader):
         if not 1<=count<=maximum:raise ValueError('descriptor outside organization envelope')
         descriptors[slot]=raw;decoded[slot]={'count':count,'address':address,'stride':stride}
     evidence,uid_field,locator=native_metadata(reader)
-    season=collect_schedule(reader)
+    from calendar_reader import verify_calendar_metadata
+    calendar_metadata=verify_calendar_metadata(reader)
+    season=collect_schedule(reader,with_calendar=True,read_final_boxes=False)
     if season['manifest']['errors'] or season['manifest']['duplicate_game_ids']:raise ValueError('current schedule does not pass source checks')
-    blobs={};teams=[];staff=[];totals=[];controls=[];gaps=[]
+    blobs={};teams=[];staff=[];totals=[];controls=[];gaps=[];all_team_pointers=[]
     td=decoded[8];sd=decoded[19];ts=decoded[28]
     for i in range(td['count']):
         address=td['address']+i*TEAM_STRIDE;raw=bounded_block(reader,address,TEAM_STRIDE,f'ORG_TEAM:{i}')
         tid=int.from_bytes(raw[0xCA8:0xCAA],'little')
+        all_team_pointers.append({'address':address,'native_team_id':tid})
         if tid not in CORE_IDS:continue
         if any(t['native_team_id']==tid for t in teams):raise ValueError('duplicate core TEAM ID')
         name=decode_fixed_utf16(raw[0x2B4:0x2DC]);city=decode_fixed_utf16(raw[0x2E6:0x30A]);abb=decode_fixed_utf16(raw[0x30A:0x314])
@@ -135,6 +138,7 @@ def collect_organization(reader):
                 'identity_status':'RECIPROCAL_CURRENT_TEAM_ROLE; NATIVE_LIFECYCLE_NOT_CERTIFIED'})
             blobs[f'staff-{index}.bin']=staff_raw;controls.append((target,staff_raw,f'ORG_STAFF:{index}:RECHECK'))
     if {t['native_team_id'] for t in teams}!=CORE_IDS:raise ValueError('current core TEAM set incomplete')
+    relationship=index_relationship(season,{'teams':all_team_pointers})
     years={t['season_year'] for t in totals}
     if len(years)!=1:raise ValueError('one native current season year not established')
     # Actual native PLAYBOOKDATA metadata verifies the 360-byte layout. Coach
@@ -155,8 +159,8 @@ def collect_organization(reader):
             raise ValueError('head coach playbook code not present in loaded directory')
     for address,data,label in controls:
         if bounded_block(reader,address,len(data),label)!=data:raise ValueError('organization source changed during acquisition')
-    after=collect_schedule(reader)
-    if any(season[k]!=after[k] for k in ('header','games','native_index','boxes')):raise ValueError('schedule changed during organization acquisition')
+    after=collect_schedule(reader,with_calendar=True,read_final_boxes=False)
+    if any(season[k]!=after[k] for k in ('header','games','native_index','boxes','calendar')):raise ValueError('schedule changed during organization acquisition')
     for slot,data in descriptors.items():
         if reader.read(root+slot*16,16,f'ORG_SLOT{slot}_RECHECK')!=data:raise ValueError('organization descriptor changed')
     if reader.read(reader.module_base+ROSTER_RVA,8,'ORG_ROSTER_RECHECK')!=pointer:raise ValueError('roster context changed')
@@ -168,6 +172,10 @@ def collect_organization(reader):
         'native_metadata':evidence,'native_staff_uid_field':uid_field,'season_year':next(iter(years)),
         'schedule_status_counts':season['manifest']['status_counts'],'staff_uid_duplicates':{str(k):v for k,v in Counter(s['native_staff_id'] for s in staff).items() if v>1},
         'playbooks':books,'game_writes':False,'player_struct_reads':0,'player_potential_bytes_read':0}
+    manifest.update({'calendar':season['calendar'],'calendar_metadata':calendar_metadata,'schedule_read_policy':season['manifest']['box_read_policy'],
+        'schedule_index_relationship':relationship,
+        'final_headers_without_box_reads':season['manifest']['final_headers_without_box_reads'],'native_boxes_read':len(season['boxes']),
+        'team_total_reconciliation_basis':'CURRENT_REPEATED_GAME_HEADER_REGULATION_PLUS_AGGREGATE_OT_POINTS; NO_BOX_READ_OR_REVALIDATION'})
     return manifest,blobs
 
 
@@ -196,6 +204,7 @@ def organization_payload(binding,manifest,artifacts,observed_at,token):
     if None in uid_counts or any(count!=1 for count in uid_counts.values()):raise ValueError('assigned STAFF native identity not unique')
     facts={name:[] for name in ('teams','team_seasons','team_finance_observations','team_state_observations','team_season_totals',
         'staff_members','staff_team_assignments','staff_contract_observations','staff_skill_observations','coach_preferences','team_tactic_settings','team_playbook_slots')}
+    if manifest.get('calendar') is not None:facts['season_calendar_observations']=[{'season_id':season['season_id'],**manifest['calendar']}]
     for t in manifest['teams']:
         team=tid(t['native_team_id'])
         facts['teams'].append({'team_id':team,'native_team_id':str(t['native_team_id']),
@@ -260,6 +269,8 @@ def capture_organization(pid,save_directory,loaded_filename,new_output_directory
         result={'status':status,'unit_id':payload['unit_id'],'save_id':binding['save_id'],'native_save_filename':loaded_filename,
             'source_grade':'LIVE_READ','counts':{k:len(v) for k,v in payload['facts'].items()},
             'native_metadata':manifest['native_metadata'],'team_totals_reconciled':len(manifest['team_totals']),
+            'schedule_read_policy':manifest['schedule_read_policy'],'native_boxes_read':manifest['native_boxes_read'],
+            'final_headers_without_box_reads':manifest['final_headers_without_box_reads'],'team_total_reconciliation_basis':manifest['team_total_reconciliation_basis'],
             'loaded_playbooks':len(manifest['playbooks']),'game_writes':False,'player_struct_reads':0,'full_goal_complete':False}
         _json(out/'ingest-result.json',result);return result
     except Exception as error:

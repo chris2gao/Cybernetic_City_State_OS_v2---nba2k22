@@ -21,7 +21,8 @@ def bounded_block(reader,address,size,label,chunk=1200):
     return b''.join(reader.read(address+off,min(chunk,size-off),label+':'+str(off)) for off in range(0,size,chunk))
 
 
-def collect_schedule(reader,*,frozen_cache=None,with_calendar=False):
+def collect_schedule(reader,*,frozen_cache=None,with_calendar=False,read_final_boxes=True):
+    if type(read_final_boxes) is not bool:raise ValueError('explicit boolean Box acquisition policy required')
     frozen_cache=frozen_cache or {}
     season_pointer=reader.read(reader.module_base+SEASON_RVA,8,'SCHEDULE_SEASON_POINTER')
     roster_pointer=reader.read(reader.module_base+ROSTER_RVA,8,'SCHEDULE_ROSTER_POINTER')
@@ -48,6 +49,8 @@ def collect_schedule(reader,*,frozen_cache=None,with_calendar=False):
                                         g['status'] in (0,1,2,3))
         if not item['record_shape_valid']:errors.append({'pool_index':i,'reason':'NON_GAME_OR_UNRECOGNIZED_RECORD'})
         if item['record_shape_valid'] and g['status']==2:
+            if not read_final_boxes:
+                item.update({'box_status':'HEADER_ONLY_AUXILIARY; BOX_NOT_READ_OR_REVALIDATED','home_score':g['home_score'],'away_score':g['away_score']});entries.append(item);continue
             prior=frozen_cache.get(g['game_id'])
             if prior and prior['header_sha256']==hashlib.sha256(raw).hexdigest():
                 item['box_status']='REUSED_FROZEN_SOURCE; NATIVE_BOX_NOT_REREAD';item['prior_full_unit_id']=prior['unit_id'];reused[i]=prior;entries.append(item);continue
@@ -87,6 +90,8 @@ def collect_schedule(reader,*,frozen_cache=None,with_calendar=False):
                 'header_words':list(struct.unpack('<16I',header)),
                 'scope':'ACTUAL_DESCRIPTOR_BOUNDED_WINDOW; INDEX_RELATION_NOT_YET_CERTIFIED',
                 'game_writes':False,'native_boxes_read':len(boxes),'frozen_boxes_reused':len(reused),
+                'box_read_policy':'READ_NEEDED_FINAL_WINDOWS' if read_final_boxes else 'AUXILIARY_HEADER_ONLY_NO_BOX_REVALIDATION',
+                'final_headers_without_box_reads':sum(e['status']==2 for e in entries) if not read_final_boxes else 0,
                 'reuse_semantics':'Current header/directory read; prior immutable full Box retained at its original source time. Unread Native Box equality is not asserted.'}}
 
 
@@ -126,6 +131,7 @@ def index_relationship(found,context):
 
 
 def schedule_facts(found,season,selected_native_ids):
+    if found['manifest'].get('box_read_policy')=='AUXILIARY_HEADER_ONLY_NO_BOX_REVALIDATION':raise ValueError('auxiliary header window is not a Box acquisition payload')
     decoder=_module('boxscore_decoder').BoxScoreDecoder
     facts={name:[] for name in ('games','game_state_observations','game_period_scores','team_game_boxes','player_game_boxes','native_box_observations','game_source_checks')}
     tid=lambda n:'team:native:'+str(n)
