@@ -1,0 +1,458 @@
+{
+  "candidate_code_head": "44aa4615c2afeb639da7a5a9be5c1fb5264e6311",
+  "before_binding_sha256": "0375472305fb5732ae2882ddabecf9bdf867ca501f47be92b87517738a818fac",
+  "before_database_sha256": "ba0d03601940d6739aae90b885a6a13363e551298d6197bf30d990eb5219bade",
+  "game_writes": false,
+  "full_goal_complete": false,
+  "migration": {
+    "save_id": "nba2k22_test_01",
+    "source_schema": 17,
+    "schema_version": 18,
+    "database_file": "world-v18.sqlite",
+    "original_database_retained": "world-v17.sqlite"
+  },
+  "context_before": {
+    "epoch": {
+      "pid": 8648,
+      "creation_filetime": 134374235525280570,
+      "module_base": "0x140000000",
+      "module_size": 115056640,
+      "pe_timestamp": 1652287197,
+      "game_season_year": 2022
+    },
+    "read_trace": [
+      {
+        "operation": "OpenProcess",
+        "pid": 8648,
+        "requested_access": "0x1010 VM_READ|QUERY_LIMITED_INFORMATION",
+        "success": true,
+        "winerror": 0
+      },
+      {
+        "operation": "GetProcessTimes",
+        "pid": 8648,
+        "creation_filetime": 134374235525280570,
+        "success": true
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "REFRESH_DOS_HEADER",
+        "address": "0x140000000",
+        "requested_bytes": 64,
+        "returned_bytes": 64,
+        "success": true,
+        "winerror": 0,
+        "sha256": "6323ffc7845c16c38927677ef45fb48e2bd8c7a2e47ac97a5125e9043c72755c"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "REFRESH_PE_HEADER",
+        "address": "0x140000158",
+        "requested_bytes": 24,
+        "returned_bytes": 24,
+        "success": true,
+        "winerror": 0,
+        "sha256": "5288a778ee6b485490c7341dedb58aec9acd20b60ce074987675a65709e930c1"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_ROSTER_POINTER",
+        "address": "0x146347720",
+        "requested_bytes": 8,
+        "returned_bytes": 8,
+        "success": true,
+        "winerror": 0,
+        "sha256": "a833eb0281836071ba864641bceb73fbf73222a3107ef24fb3d56a442b2614a8"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_TEAM_DESCRIPTOR",
+        "address": "0x7ff4e6dfb370",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "c118909bb8fdfb8c883d9d551176e63158144d55d3a6e03d6b9a2fdc08695fa3"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_TEAM_STAT_DESCRIPTOR",
+        "address": "0x7ff4e6dfb4b0",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "7dcbf68c97ceacb5418900baf59ac703051f51cf8cb994fa2d253119bd6ca981"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_TEAM_ID",
+        "address": "0x7ff4e7307298",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CURRENT_STAT_INDEX",
+        "address": "0x7ff4e7307470",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "cf32590a6d95f5d5db3f5cf02625382e1d67ff691f58354a69fe93a38c60c584"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_COMPACT_YEAR",
+        "address": "0x7ff4e7558808",
+        "requested_bytes": 1,
+        "returned_bytes": 1,
+        "success": true,
+        "winerror": 0,
+        "sha256": "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e7307298",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e7307470",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "cf32590a6d95f5d5db3f5cf02625382e1d67ff691f58354a69fe93a38c60c584"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e7558808",
+        "requested_bytes": 1,
+        "returned_bytes": 1,
+        "success": true,
+        "winerror": 0,
+        "sha256": "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x146347720",
+        "requested_bytes": 8,
+        "returned_bytes": 8,
+        "success": true,
+        "winerror": 0,
+        "sha256": "a833eb0281836071ba864641bceb73fbf73222a3107ef24fb3d56a442b2614a8"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e6dfb370",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "c118909bb8fdfb8c883d9d551176e63158144d55d3a6e03d6b9a2fdc08695fa3"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e6dfb4b0",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "7dcbf68c97ceacb5418900baf59ac703051f51cf8cb994fa2d253119bd6ca981"
+      }
+    ]
+  },
+  "capture": {
+    "status": "ingested",
+    "unit_id": "live-world:6db2dbc44cf5e834d056ca2d",
+    "save_id": "nba2k22_test_01",
+    "source_grade": "LIVE_READ",
+    "native_save_filename": "MyLEAGUE0003",
+    "season": {
+      "season_id": "season:native-year:2022",
+      "season_code": "NATIVE_YEAR:2022"
+    },
+    "schedule_status_counts": {
+      "2": 238,
+      "0": 994
+    },
+    "counts": {
+      "teams": 34,
+      "team_seasons": 34,
+      "players": 455,
+      "player_attribute_snapshots": 455,
+      "player_tendency_snapshots": 455,
+      "player_vitals_observations": 455,
+      "player_contract_observations": 455,
+      "player_play_type_slots": 1820,
+      "roster_memberships": 455,
+      "player_season_totals": 370,
+      "field_gaps": 1,
+      "games": 1232,
+      "game_state_observations": 1030,
+      "game_period_scores": 288,
+      "team_game_boxes": 72,
+      "player_game_boxes": 893,
+      "native_box_observations": 930,
+      "game_source_checks": 1232,
+      "season_calendar_observations": 1
+    },
+    "targeted_native_player_ids": 292,
+    "unresolved_native_player_ids": [
+      1344,
+      2382,
+      9808,
+      18057
+    ],
+    "index_relationship": {
+      "record_count": 1232,
+      "all_record_matches": {
+        "date_except_low5": 1232,
+        "home_team_pointer": 1232,
+        "away_team_pointer": 1232
+      },
+      "scope": "ACTUAL_PAIRED_WINDOW_CURRENT_TEAM_POINTERS",
+      "date_ui_calendar_validation": "NOT_OBSERVED"
+    },
+    "native_boxes_read": 36,
+    "frozen_boxes_reused": 202,
+    "recheck_frozen": false,
+    "native_calendar": {
+      "current_word_raw": 726902018,
+      "current_id_raw": 2,
+      "current_minutes_since_midnight_raw": 1320,
+      "current_day_raw": 19,
+      "current_month_raw": 10,
+      "current_month_label": "NOVEMBER",
+      "current_base_year_offset_raw": 21,
+      "current_native_iso_date": "2021-11-19",
+      "current_native_time_hhmm": "22:00",
+      "current_decode_status": "DERIVED_NATIVE_COMPONENTS_EPOCH_2000; NO_UI_OR_TIMEZONE_ACCEPTANCE",
+      "period_raw": 2,
+      "period_label": "REGULARSEASON",
+      "current_index_raw": 237,
+      "next_index_raw": 238,
+      "declared_game_count_raw": 1232,
+      "source_slot10_count_raw": 1232,
+      "game_capacity_verified": 1742,
+      "next_game_id_raw": 1233,
+      "allstar_game_index_raw": 889,
+      "rookie_sophomore_game_index_raw": 888,
+      "box_current_stat_line_raw": 6170,
+      "box_stat_capacity_verified": 45292
+    },
+    "game_writes": false,
+    "potential_bytes_read": 0,
+    "full_goal_complete": false
+  },
+  "context_after": {
+    "epoch": {
+      "pid": 8648,
+      "creation_filetime": 134374235525280570,
+      "module_base": "0x140000000",
+      "module_size": 115056640,
+      "pe_timestamp": 1652287197,
+      "game_season_year": 2022
+    },
+    "read_trace": [
+      {
+        "operation": "OpenProcess",
+        "pid": 8648,
+        "requested_access": "0x1010 VM_READ|QUERY_LIMITED_INFORMATION",
+        "success": true,
+        "winerror": 0
+      },
+      {
+        "operation": "GetProcessTimes",
+        "pid": 8648,
+        "creation_filetime": 134374235525280570,
+        "success": true
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "REFRESH_DOS_HEADER",
+        "address": "0x140000000",
+        "requested_bytes": 64,
+        "returned_bytes": 64,
+        "success": true,
+        "winerror": 0,
+        "sha256": "6323ffc7845c16c38927677ef45fb48e2bd8c7a2e47ac97a5125e9043c72755c"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "REFRESH_PE_HEADER",
+        "address": "0x140000158",
+        "requested_bytes": 24,
+        "returned_bytes": 24,
+        "success": true,
+        "winerror": 0,
+        "sha256": "5288a778ee6b485490c7341dedb58aec9acd20b60ce074987675a65709e930c1"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_ROSTER_POINTER",
+        "address": "0x146347720",
+        "requested_bytes": 8,
+        "returned_bytes": 8,
+        "success": true,
+        "winerror": 0,
+        "sha256": "a833eb0281836071ba864641bceb73fbf73222a3107ef24fb3d56a442b2614a8"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_TEAM_DESCRIPTOR",
+        "address": "0x7ff4e6dfb370",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "c118909bb8fdfb8c883d9d551176e63158144d55d3a6e03d6b9a2fdc08695fa3"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_TEAM_STAT_DESCRIPTOR",
+        "address": "0x7ff4e6dfb4b0",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "7dcbf68c97ceacb5418900baf59ac703051f51cf8cb994fa2d253119bd6ca981"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_TEAM_ID",
+        "address": "0x7ff4e7307298",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CURRENT_STAT_INDEX",
+        "address": "0x7ff4e7307470",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "cf32590a6d95f5d5db3f5cf02625382e1d67ff691f58354a69fe93a38c60c584"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_COMPACT_YEAR",
+        "address": "0x7ff4e7558808",
+        "requested_bytes": 1,
+        "returned_bytes": 1,
+        "success": true,
+        "winerror": 0,
+        "sha256": "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e7307298",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e7307470",
+        "requested_bytes": 2,
+        "returned_bytes": 2,
+        "success": true,
+        "winerror": 0,
+        "sha256": "cf32590a6d95f5d5db3f5cf02625382e1d67ff691f58354a69fe93a38c60c584"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e7558808",
+        "requested_bytes": 1,
+        "returned_bytes": 1,
+        "success": true,
+        "winerror": 0,
+        "sha256": "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x146347720",
+        "requested_bytes": 8,
+        "returned_bytes": 8,
+        "success": true,
+        "winerror": 0,
+        "sha256": "a833eb0281836071ba864641bceb73fbf73222a3107ef24fb3d56a442b2614a8"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e6dfb370",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "c118909bb8fdfb8c883d9d551176e63158144d55d3a6e03d6b9a2fdc08695fa3"
+      },
+      {
+        "operation": "ReadProcessMemory",
+        "pid": 8648,
+        "label": "CADENCE_CONTEXT_RECHECK",
+        "address": "0x7ff4e6dfb4b0",
+        "requested_bytes": 16,
+        "returned_bytes": 16,
+        "success": true,
+        "winerror": 0,
+        "sha256": "7dcbf68c97ceacb5418900baf59ac703051f51cf8cb994fa2d253119bd6ca981"
+      }
+    ]
+  },
+  "status": "NATIVE_V18_CALENDAR_AND_GAME_CLASSIFICATION_CAPTURE_FINISHED",
+  "after_database_sha256": "0780e661605c98d280348b2436d1cf49190effa537c675ddbde0e5b64c053082",
+  "old_database_sha256_unchanged": true
+}
