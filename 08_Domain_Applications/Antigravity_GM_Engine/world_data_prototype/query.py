@@ -211,6 +211,53 @@ def native_honors(path,*,flag=None,year=None,subject_name=None,unit_id=None,afte
             'canonical_award_instances':'NOT_ESTABLISHED_BY_THIS_QUERY','reference_count_and_year':'OBSERVED_WORDS_NOT_ALLOCATION_OR_SEASON_CLOSURE_PROOF'}
 
 
+def native_player_seasons(path,*,player_id=None,subject_name=None,source_index=None,year=None,unit_id=None,after_index=-1,limit=20):
+    """All captured fixed-array slots, resolved independently against one source unit."""
+    from observation_scope import utc_stamp
+    from stat_reference import resolve_reference,RULE
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('invalid native season page')
+    if after_index>=0 and unit_id is None:raise ValueError('pin unit_id when continuing native season pages')
+    if source_index is not None and (type(source_index) is not int or source_index<0):raise ValueError('invalid source player index')
+    if year is not None and (type(year) is not int or not 1900<=year<=2155):raise ValueError('year outside native byte representation')
+    with closing(connect(path,True)) as c:
+        c.create_function('stat_reference_utc',1,utc_stamp,deterministic=True)
+        pin=' AND u.unit_id=?' if unit_id is not None else '';args=[unit_id] if unit_id is not None else []
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.season_id AS observation_season_id
+            FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_HONOR_STATS'
+            AND u.unit_status='success' '''+pin+' ORDER BY stat_reference_utc(u.observed_at) DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED','unit':None,'records':[],'has_more':False,'next_after_index':None}
+        clauses=['p.unit_id=?','p.source_player_index>?'];args=[unit['unit_id'],after_index]
+        for column,value in (('player_id',player_id),('source_player_index',source_index),('observed_name',subject_name)):
+            if value is not None:clauses.append('p.'+ident(column)+'=?'+(' COLLATE NOCASE' if column=='observed_name' else ''));args.append(value)
+        if year is not None:
+            clauses.append('''EXISTS(SELECT 1 FROM native_player_stat_links l JOIN native_player_stat_observations s
+                ON s.unit_id=l.unit_id AND s.source_stat_index=l.native_stat_index_raw
+                WHERE l.player_source_id=p.player_source_id AND l.unit_id=p.unit_id AND l.history_slot_index BETWEEN 0 AND 24
+                AND l.native_stat_index_raw<32768 AND s.stat_year=?)''');args.append(year)
+        projection='p.player_source_id,p.source_player_index,p.native_unique_id_raw,p.preserved_id_raw,p.observed_name,p.name_status,p.native_team_id,p.current_core_roster_status,p.current_roster_slot,p.player_id,p.canonical_link_status'
+        rows=[dict(row) for row in c.execute('SELECT '+projection+' FROM native_player_sources p WHERE '+' AND '.join(clauses)+' ORDER BY p.source_player_index LIMIT ?',args+[limit+1])]
+        more=len(rows)>limit;rows=rows[:limit];columns=('stat_observation_id','source_stat_index','stat_year','scoring_identity_status',*NATIVE_PLAYER_STAT_MAP.values());stat_projection=','.join(ident(name) for name in columns)
+        for row in rows:
+            links=[dict(link) for link in c.execute('''SELECT stat_link_id,history_slot_index,native_stat_index_raw,stat_observation_id,link_status
+                FROM native_player_stat_links WHERE unit_id=? AND player_source_id=? ORDER BY history_slot_index''',(unit['unit_id'],row['player_source_id']))]
+            row['reference_array_complete']=[link['history_slot_index'] for link in links]==list(range(25));row['captured_reference_count']=len(links);references=[]
+            for link in links:
+                raw=link['native_stat_index_raw'];position=link['history_slot_index'];record=None
+                if 0<=position<25 and raw<32768:
+                    found=c.execute('SELECT '+stat_projection+' FROM native_player_stat_observations WHERE unit_id=? AND source_stat_index=?',(unit['unit_id'],raw)).fetchone();record=dict(found) if found else None
+                resolution=resolve_reference(raw,position,record)
+                if year is not None and (record is None or record['stat_year']!=year):continue
+                references.append({'reference_id':link['stat_link_id'],'array_position':position,'native_stat_index_raw':raw,
+                    'capture_link_status':link['link_status'],'capture_stat_observation_id':link['stat_observation_id'],
+                    'resolution_status':resolution,'record':record,'phase_code':None})
+            row['stat_references']=references
+        return {'status':'OBSERVED_NATIVE_SEASON_STAT_REFERENCES','unit':dict(unit),'records':rows,'has_more':more,
+            'next_after_index':rows[-1]['source_player_index'] if more else None,'reference_rule':RULE,'year_filter':year,
+            'scope':'Same-unit Native SeasonStats array references; independent signed16 index checks, including zero and positions after gaps',
+            'ownership_and_allocation':'Source association only; shared references, allocation and historical subject lifecycle remain unaccepted',
+            'phase_and_order':'No phase labels, chronological slot order, finalization, career aggregation or UI units inferred'}
+
+
 def record_book(path,*,category_code=None,subject_name=None,unit_id=None,after_index=-1,limit=200):
     """One pinned native record source with explicit bounded index pagination."""
     if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')

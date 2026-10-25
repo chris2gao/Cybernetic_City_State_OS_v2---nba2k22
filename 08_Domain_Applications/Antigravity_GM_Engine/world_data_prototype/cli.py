@@ -85,6 +85,7 @@ def main():
     records_cmd=sub.add_parser('records');records_cmd.add_argument('database');records_cmd.add_argument('--category-code',type=lambda s:int(s,0));records_cmd.add_argument('--subject-name');records_cmd.add_argument('--unit-id');records_cmd.add_argument('--after-index',type=int,default=-1);records_cmd.add_argument('--limit',type=int,default=200)
     honor_capture=sub.add_parser('capture-honors');honor_capture.add_argument('pid',type=int);honor_capture.add_argument('save_directory');honor_capture.add_argument('loaded_filename');honor_capture.add_argument('new_output_directory')
     honor_query=sub.add_parser('native-honors');honor_query.add_argument('database');honor_query.add_argument('--flag');honor_query.add_argument('--year',type=int);honor_query.add_argument('--subject-name');honor_query.add_argument('--unit-id');honor_query.add_argument('--after-index',type=int,default=-1);honor_query.add_argument('--limit',type=int,default=200)
+    native_seasons=sub.add_parser('native-player-seasons');native_seasons.add_argument('database');native_seasons.add_argument('--player-id');native_seasons.add_argument('--subject-name');native_seasons.add_argument('--source-index',type=int);native_seasons.add_argument('--year',type=int);native_seasons.add_argument('--unit-id');native_seasons.add_argument('--after-index',type=int,default=-1);native_seasons.add_argument('--limit',type=int,default=20)
     for command in ('capture-league-history','capture-news'):
         capture=sub.add_parser(command);capture.add_argument('pid',type=int);capture.add_argument('save_directory');capture.add_argument('loaded_filename');capture.add_argument('new_output_directory')
     award_cmd=sub.add_parser('awards');award_cmd.add_argument('database');award_cmd.add_argument('--year',type=int);award_cmd.add_argument('--award-code');award_cmd.add_argument('--after-key',default='');award_cmd.add_argument('--limit',type=int,default=200)
@@ -104,7 +105,7 @@ def main():
     restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
     storage=sub.add_parser('storage-profile');storage.add_argument('database')
     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
-    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
+    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,native_seasons,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
     if getattr(args,'as_of',None) is not None:
@@ -118,6 +119,9 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='native-player-seasons':
+        from query import native_player_seasons
+        print(json.dumps(native_player_seasons(args.database,player_id=args.player_id,subject_name=args.subject_name,source_index=args.source_index,year=args.year,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
     if args.action=='calendar':
         from query import league_calendar
         print(json.dumps(league_calendar(args.database,season_id=args.season_id,limit=args.limit),ensure_ascii=False));return
