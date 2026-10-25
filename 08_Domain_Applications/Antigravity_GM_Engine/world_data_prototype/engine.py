@@ -98,6 +98,13 @@ def _check_envelope(conn,payload,live_receipt=None):
     if save['schema_version']!=VERSION:raise ValueError('explicit copy migration to current schema required')
     for k in ('run_id','unit_id','source_key','observed_at','season'):
         if not payload.get(k):raise ValueError('missing '+k)
+    referenced=payload.get('referenced_seasons',[])
+    if not isinstance(referenced,list):raise ValueError('referenced seasons must be a list')
+    ids=[]
+    for period in referenced:
+        if not isinstance(period,dict) or set(period)!={'season_id','season_code'} or not all(isinstance(v,str) and v for v in period.values()):raise ValueError('invalid referenced season registry row')
+        ids.append(period['season_id'])
+    if len(ids)!=len(set(ids)):raise ValueError('duplicate referenced seasons')
     stamp=datetime.fromisoformat(payload['observed_at'].replace('Z','+00:00'))
     if stamp.utcoffset() is None:raise ValueError('observation requires timezone')
     from cadence import validate_refresh_metadata
@@ -138,8 +145,10 @@ def ingest_capture(conn,payload,*,_live_receipt=None):
         return 'already_applied'
     unit=payload['unit_id'];season=payload['season']
     with conn:
+        conn.execute('BEGIN')
         conn.execute('PRAGMA defer_foreign_keys=ON')
         _ensure_record(conn,'seasons','season_id',{'season_id':season['season_id'],'season_code':season['season_code']})
+        for period in payload.get('referenced_seasons',[]):_ensure_record(conn,'seasons','season_id',period)
         _ensure_record(conn,'capture_runs','run_id',{'run_id':payload['run_id'],'season_id':season['season_id'],
             'observed_at':_utc(payload['observed_at']),'source_grade':payload['evidence_grade'],
             'decoder_version':payload.get('decoder_version'),'save_binding_ref':payload.get('save_binding_ref'),
@@ -235,6 +244,7 @@ def migrate_database(source,new_path):
         try:
             with closing(connect(dst)) as new:
                 with new:
+                    new.execute('BEGIN')
                     new.execute('PRAGMA defer_foreign_keys=ON')
                     for name in TABLES:
                         if name not in names or name=='saves':continue

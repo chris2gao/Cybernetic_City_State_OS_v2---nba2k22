@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **77**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **83**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -64,14 +64,20 @@ Actual tables: **77**. Every table is STRICT and append-only. A SQLite owner can
 | `game_setting_observations` | RES-S | one actual native setting word with typed value and qualified semantics | `setting_obs_id` | unit_id -> capture_units(unit_id); field_id -> native_fields(field_id) | ADD |
 | `startup_config_checks` | RES-S | desired-vs-observed configuration check | `check_id` | config_id -> worldline_config_versions(config_id); setting_obs_id -> game_setting_observations(setting_obs_id); unit_id -> capture_units(unit_id) | ADD |
 | `league_rule_observations` | RES-L | one actual season rule observation, not external business policy | `rule_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id); setting_obs_id -> game_setting_observations(setting_obs_id) | ADD |
-| `season_award_instances` | RES-H | actual awarded honor; leaders are not winners | `award_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
-| `award_recipients` | RES-H | one actual award recipient | `recipient_id` | award_id -> season_award_instances(award_id); player_id -> players(player_id); team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
+| `native_league_history_observations` | RES-H | one native 152-byte league history slot per acquisition | `history_observation_id` | unit_id -> capture_units(unit_id); award_id -> season_award_instances(award_id) | ADD |
+| `season_award_instances` | RES-H | actual source-recorded awarded honor; scope and finality basis explicit; leaders are not winners | `award_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
+| `award_recipients` | RES-H | one source-recorded award recipient, canonical or inline historical identity | `recipient_id` | award_id -> season_award_instances(award_id); player_id -> players(player_id); team_id -> teams(team_id); unit_id -> capture_units(unit_id); staff_id -> staff_members(staff_id); source_history_id -> native_league_history_observations(history_observation_id) | ADD |
+| `native_social_message_observations` | RES-H | one native social-message bank slot, including inactive storage | `message_observation_id` | unit_id -> capture_units(unit_id) | ADD |
+| `native_transaction_observations` | RES-M | one allocated native transaction slot, not an accepted external execution | `native_transaction_id` | unit_id -> capture_units(unit_id) | ADD |
+| `native_transaction_item_observations` | RES-M | one native transaction parameter storage slot | `item_observation_id` | unit_id -> capture_units(unit_id); native_transaction_id -> native_transaction_observations(native_transaction_id) | ADD |
+| `native_award_matrix_observations` | RES-H | one current franchise award matrix cell, not a final award | `matrix_observation_id` | unit_id -> capture_units(unit_id) | ADD |
+| `native_league_capture_controls` | RES-D | one source mode and allocator/count observations per acquisition | `control_id` | unit_id -> capture_units(unit_id) | ADD |
 | `season_record_entries` | RES-H | one observed native record-book slot; source subjects and historical scopes need separate identity proof | `record_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id); holder_player_id -> players(player_id); holder_team_id -> teams(team_id); observed_in_season_id -> seasons(season_id) | ADD |
 | `external_execution_receipts` | RES-D | external executor report, not proof of readback | `receipt_id` | save_id -> saves(save_id); transaction_id -> external_transaction_events(transaction_id); unit_id -> capture_units(unit_id) | ADD |
 | `external_readback_checks` | RES-D | separate observed readback reconciliation | `check_id` | receipt_id -> external_execution_receipts(receipt_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_identity_links` | RES-D | one versioned native ID to actual save-local entity link | `link_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |
 | `player_restricted_observations` | RES-P | restricted external-storage metadata; raw Potential never in world facts | `observation_id` | player_id -> players(player_id); unit_id -> capture_units(unit_id) | ADD |
-| `game_news_entries` | RES-H | one source-observed native news item | `news_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
+| `game_news_entries` | RES-H | one source-observed native news item observation | `news_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id); source_message_id -> native_social_message_observations(message_observation_id) | ADD |
 | `season_finalizations` | RES-D | explicit evidenced season closure boundary | `finalization_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_box_observations` | RES-D | one captured Box row before canonical player identity is proven | `box_observation_id` | game_id -> games(game_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_player_stat_observations` | RES-H | one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates | `stat_observation_id` | unit_id -> capture_units(unit_id) | ADD |

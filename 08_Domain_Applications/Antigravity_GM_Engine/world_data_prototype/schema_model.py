@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 11
+VERSION = 12
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -285,8 +285,70 @@ table('league_rule_observations','rule_id','RES-L','one actual season rule obser
     S(),U(),col('rule_key',required=True),col('integer_value','INTEGER'),col('text_value'),col('display_value'),
     col('real_value','REAL',source='ACTUAL_NATIVE_FLOAT32_WHEN_REGISTERED'),
     ref('setting_obs_id','game_setting_observations',required=False)],unique=[('season_id','unit_id','rule_key')])
-table('season_award_instances','award_id','RES-H','actual awarded honor; leaders are not winners',[S(),U(),col('award_code',required=True),col('award_type',required=True),col('is_final','INTEGER',required=True,check='is_final=1')],unique=[('season_id','award_code','award_type')])
-table('award_recipients','recipient_id','RES-H','one actual award recipient',[ref('award_id','season_award_instances'),ref('player_id','players',required=False),T(False),col('rank_index','INTEGER'),U()],checks=['player_id IS NOT NULL OR team_id IS NOT NULL'])
+_league_profile=json.loads((BASE/'league_native_profile.json').read_bytes())
+HISTORY_NATIVE_MAP=dict(zip('Type PrimaryTeamID SecondaryTeamID NextFree PlayerID Year'.split(),
+    'native_type_code primary_team_id_raw secondary_team_id_raw next_free_raw player_id_raw native_year_raw'.split()))
+MESSAGE_NATIVE_MAP=dict(zip('Data1 Data2 Data3 Data4 Data5 TeamInvolvedId1 TeamInvolvedId2 SenderIndex MessageIndex GameId PlayerInvolvedIndex1 PlayerInvolvedIndex2 DataU32 SenderIndexOverride Event SenderType MessageUnread SenderActiveStatus Score RandomNumOfShares SenderLocation'.split(),
+    'data1_raw data2_raw data3_raw data4_raw data5_raw team_id1_raw team_id2_raw sender_index_raw message_index_raw game_id_raw player_index1_raw player_index2_raw data_u32_raw sender_index_override_raw event_code sender_type_raw unread_raw sender_active_raw score_raw random_shares_raw sender_location_raw'.split()))
+
+def _league_numeric(native_type,mapping):
+    result=[]
+    for native_name,column in mapping.items():
+        f=_league_profile['bindings'][native_type][native_name]
+        result.append(col(column,'INTEGER',required=True,check=f'{column} BETWEEN 0 AND {(1<<f["width"])-1}',
+            source=f'CURRENT_NATIVE.{native_type}.{native_name}; CRC={f["name_crc"]:08x} offset={f["offset"]} size={f["size"]} bit={f["start_bit"]} width={f["width"]}; league_native_profile.json',
+            unit='native unsigned representation; UI/lifetime semantics separate'))
+    return result
+
+def _native_date_columns():
+    return [col(n,'INTEGER',required=True,check=f'{n} BETWEEN 0 AND {maximum}',source='CURRENT_NATIVE.SCHEDULEDATE verified bit fields; epoch not promoted')
+        for n,maximum in [('date_word_raw',4294967295),('date_id_raw',31),('date_minutes_raw',2047),('date_day_raw',31),('date_month_raw',15),('date_year_offset_raw',127)]]
+
+table('native_league_history_observations','history_observation_id','RES-H','one native 152-byte league history slot per acquisition',[
+    U(),col('source_row_index','INTEGER',required=True,check='source_row_index>=0')]+_league_numeric('LEAGUEHISTORYDATA',HISTORY_NATIVE_MAP)+
+    [col(n,source='CURRENT_NATIVE.LEAGUEHISTORYDATA inline Latin1 name prefix; not current identity') for n in
+        'primary_team_name primary_team_city secondary_team_name secondary_team_city player_first_name player_last_name'.split()]+
+    [col('native_type_label',source='CURRENT_NATIVE.LEAGUEHISTORY_TYPE enum + literal identifier CRC'),
+     col('primary_stat_word_raw','INTEGER',required=True,check='primary_stat_word_raw BETWEEN 0 AND 4294967295'),col('primary_stat_real','REAL'),col('primary_stat_text',required=True),
+     col('secondary_stat_word_raw','INTEGER',required=True,check='secondary_stat_word_raw BETWEEN 0 AND 4294967295'),col('secondary_stat_real','REAL'),col('secondary_stat_text',required=True),
+     col('source_state',required=True),col('text_status',required=True),ref('award_id','season_award_instances',required=False),
+     col('award_link_status',required=True,source='NATIVE_HISTORY award category, closed source year, inline subject, immutable-event comparison; no PLAYER binding')],
+    unique=[('unit_id','source_row_index')],source='ROSTER Slot41 + current LEAGUEHISTORYDATA metadata; archived roster history, world occurrence not inferred')
+
+table('season_award_instances','award_id','RES-H','actual source-recorded awarded honor; scope and finality basis explicit; leaders are not winners',[
+    S(),U(),col('award_code',required=True),col('award_type',required=True),col('is_final','INTEGER',required=True,check='is_final=1'),
+    col('source_year_raw','INTEGER',check='source_year_raw BETWEEN 1 AND 4095',source='CURRENT_NATIVE.LEAGUEHISTORYDATA.Year; no synthetic season dates'),
+    col('source_fingerprint',source='SHA256 sorted semantic source recipient records; excludes slot/allocation and acquisition clock'),
+    col('finality_basis',source='NATIVE_ROSTER_HISTORY_ENTRY_FOR_CLOSED_SOURCE_YEAR; not current-world finalization or independent acceptance')],unique=[('season_id','award_code','award_type')])
+table('award_recipients','recipient_id','RES-H','one source-recorded award recipient, canonical or inline historical identity',[
+    ref('award_id','season_award_instances'),ref('player_id','players',required=False),T(False),col('rank_index','INTEGER'),U(),
+    ref('staff_id','staff_members',required=False),ref('source_history_id','native_league_history_observations','history_observation_id',False),
+    col('source_subject_type',check="source_subject_type IN ('PLAYER','TEAM','STAFF')",source='Native history award category; canonical identity not inferred')],
+    checks=['player_id IS NOT NULL OR team_id IS NOT NULL OR staff_id IS NOT NULL OR source_history_id IS NOT NULL'])
+
+table('native_social_message_observations','message_observation_id','RES-H','one native social-message bank slot, including inactive storage',[
+    U(),col('bank_index','INTEGER',required=True,check='bank_index BETWEEN 0 AND 1'),col('source_slot_index','INTEGER',required=True,check='source_slot_index BETWEEN 0 AND 1999')]+
+    _league_numeric('FRANCHISE_SOCIALMEDIA::MESSAGE',MESSAGE_NATIVE_MAP)+_native_date_columns()+[
+    col('event_label'),col('sender_type_label'),col('string1_fragment'),col('string2_fragment'),col('text_status',required=True),
+    col('source_state',required=True),col('active_prefix_status',required=True)],unique=[('unit_id','bank_index','source_slot_index')],public=False,
+    source='CURRENT_NATIVE.FRANCHISE.SocialMedia; generic parameters/text remain owner-only until rendered UI semantics verified')
+
+table('native_transaction_observations','native_transaction_id','RES-M','one allocated native transaction slot, not an accepted external execution',[
+    U(),col('source_slot_index','INTEGER',required=True,check='source_slot_index BETWEEN 0 AND 249')]+
+    _league_numeric('FRANCHISE_TRANSACTION',{'Type':'native_type_code','NumData':'data_count_raw'})+_native_date_columns()+[
+    col('native_type_label'),col('active_prefix_status',required=True)],unique=[('unit_id','source_slot_index')],public=False)
+table('native_transaction_item_observations','item_observation_id','RES-M','one native transaction parameter storage slot',[
+    U(),ref('native_transaction_id','native_transaction_observations'),col('source_item_index','INTEGER',required=True,check='source_item_index BETWEEN 0 AND 38')]+
+    _league_numeric('FRANCHISE_TRANSACTION_RECORD',{'Int':'integer_word_raw','Type':'native_type_code'}),
+    unique=[('unit_id','native_transaction_id','source_item_index')],public=False)
+table('native_award_matrix_observations','matrix_observation_id','RES-H','one current franchise award matrix cell, not a final award',[
+    U(),col('award_slot_index','INTEGER',required=True,check='award_slot_index BETWEEN 0 AND 14'),col('recipient_slot_index','INTEGER',required=True,check='recipient_slot_index BETWEEN 0 AND 4'),
+    col('native_player_index_raw','INTEGER',required=True,check='native_player_index_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.FRANCHISE.SeasonAwardWinnerIndex uint16[15,5]; sentinel preserved')],
+    unique=[('unit_id','award_slot_index','recipient_slot_index')])
+table('native_league_capture_controls','control_id','RES-D','one source mode and allocator/count observations per acquisition',[
+    U(),col('source_mode',required=True,check="source_mode IN ('HISTORY_AWARDS','NEWS_TRANSACTIONS')"),
+    col('observation_year','INTEGER',required=True),col('history_slot_count','INTEGER'),col('manager_first_free_candidate','INTEGER'),col('free_chain_status'),col('free_chain_count','INTEGER'),
+    col('social_active_count0','INTEGER'),col('social_active_count1','INTEGER'),col('transaction_count','INTEGER'),col('matrix_cell_count','INTEGER')],unique=[('unit_id',)],public=False)
 table('season_record_entries','record_id','RES-H','one observed native record-book slot; source subjects and historical scopes need separate identity proof',[
     ref('season_id','seasons',required=False),U(),col('record_key',required=True),ref('holder_player_id','players','player_id',False),ref('holder_team_id','teams','team_id',False),
     col('value_raw',required=True,source='ACTUAL_NATIVE_FLOAT32_HEX_OR_NONFINITE_DIAGNOSTIC; never rounded'),col('source_ref',required=True),col('occurred_at'),
@@ -311,7 +373,8 @@ table('external_execution_receipts','receipt_id','RES-D','external executor repo
 table('external_readback_checks','check_id','RES-D','separate observed readback reconciliation',[ref('receipt_id','external_execution_receipts'),U(),col('expected_state',required=True),col('observed_state'),col('reconcile_status',required=True)],public=False)
 table('native_identity_links','link_id','RES-D','one versioned native ID to actual save-local entity link',[SAVE(),U(),col('entity_type',required=True,check="entity_type IN ('player','team','game','staff')"),col('entity_id',required=True),col('native_id'),col('valid_from'),col('identity_state',required=True)],public=False)
 table('player_restricted_observations','observation_id','RES-P','restricted external-storage metadata; raw Potential never in world facts',[P(),U(),col('restricted_field_key',required=True,visibility='OWNER_ONLY'),col('protected_value_ref',required=True,visibility='OWNER_ONLY'),col('authorization_scope',required=True,visibility='OWNER_ONLY')],public=False)
-table('game_news_entries','news_id','RES-H','one source-observed native news item',[ref('season_id','seasons',required=False),U(),col('native_news_id'),col('text_body'),col('occurrence_time')],public=False)
+table('game_news_entries','news_id','RES-H','one source-observed native news item observation',[ref('season_id','seasons',required=False),U(),col('native_news_id'),col('text_body'),col('occurrence_time'),
+    ref('source_message_id','native_social_message_observations','message_observation_id',False),col('content_status',source='NATIVE_EVENT_ONLY; rendered headline/localization and active UI semantics separate')],public=False)
 # Added to the 59-table proposal: explicit season freeze boundary instead of
 # treating the last observed cumulative snapshot as an accepted final season.
 table('season_finalizations','finalization_id','RES-D','explicit evidenced season closure boundary',[S(),U(),col('source_ref',required=True),col('finalized_at',required=True)],unique=[('season_id',)],public=False)
@@ -425,6 +488,9 @@ def schema_sql():
     out.append('''CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;''')
     out.append('''CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;''')
     out.append('''CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_family IS NOT NULL AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;''')
+    out.append('''CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;''')
+    out.append('''CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;''')
+    out.append('''CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
         out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
     for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:
