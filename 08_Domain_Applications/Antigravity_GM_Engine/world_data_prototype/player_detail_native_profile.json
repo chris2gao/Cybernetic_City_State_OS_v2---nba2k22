@@ -1,0 +1,3920 @@
+{
+  "status": "CURRENT_NATIVE_FIELDS_ENUMS_LITERAL_CRCS_AND_ALL_BASE_BADGE_DISPATCH_CASES_VERIFIED; EFFECTIVE_CONTEXT_AND_UI_SEPARATE",
+  "module_timestamp": 1652287197,
+  "types": [
+    {
+      "name": "PLAYERDATA",
+      "type_rva": 80186288,
+      "field_array_rva": 51826456,
+      "schema_rva": 51787936,
+      "name_rva": 35828032,
+      "static_auxiliary_word5_uninterpreted": 65537,
+      "initializer_rva": 632795,
+      "constructor_rva": 31801136,
+      "initializer_hex": "4c8d0d5e09190248894424204c8d05b2900c03488d1523270d03488d0db4e3bd04e82f97db01",
+      "initializer_sha256": "017b09c550a9b0d68c9a6fc0c5f8913cbfde04d5e995aa1a444cca4e648e868d",
+      "field_signature_sha256": "cf38d95d2e0d67c20922f001d96442b93d4d7be73db75c966091c41e2da81ab5",
+      "expected_field_count": 963
+    },
+    {
+      "name": "PLAYERDATA_BADGE_LEVEL",
+      "type_rva": 80183600,
+      "field_array_rva": 51773624,
+      "schema_rva": 51773560,
+      "name_rva": 35811120,
+      "static_auxiliary_word5_uninterpreted": 0,
+      "initializer_rva": 630864,
+      "constructor_rva": 31800976,
+      "initializer_hex": "4c8d0dd9ce18024c8d051a600c03488d1553600c03488d0dc4e0bd04e91f9edb01",
+      "initializer_sha256": "7d7d4cdd549b0942ce1405f06138d459804901c4293f1d7516017784a6885a66"
+    },
+    {
+      "name": "PLAYERDATA_CONTRACT_OPTION",
+      "type_rva": 80184496,
+      "field_array_rva": 51779160,
+      "schema_rva": 51779112,
+      "name_rva": 35817936,
+      "static_auxiliary_word5_uninterpreted": 0,
+      "initializer_rva": 631056,
+      "constructor_rva": 31800976,
+      "initializer_hex": "4c8d0db9e818024c8d050a750c03488d1533750c03488d0d84e3bd04e95f9ddb01",
+      "initializer_sha256": "74bfb788efee81a1036f7d531295fe72265be8d1610f77fc10257d4af4e9de29"
+    },
+    {
+      "name": "PLAYERDATA_BADGE",
+      "type_rva": 81092320,
+      "field_array_rva": 52359520,
+      "schema_rva": 52358328,
+      "name_rva": 36312256,
+      "static_auxiliary_word5_uninterpreted": 0,
+      "initializer_rva": 662944,
+      "constructor_rva": 31800976,
+      "initializer_hex": "4c8d0d19f71f024c8d050acf1403488d15abd31403488d0d2441cb04e9cf20db01",
+      "initializer_sha256": "c1861c3ef942b4c343219b294aa923b04dfdcdd44b16150ac6e700c8cd6fb3da"
+    },
+    {
+      "name": "TEAMDATA_PLAYER_ROSTER_TYPE",
+      "type_rva": 80185456,
+      "field_array_rva": 51784104,
+      "schema_rva": 51784040,
+      "name_rva": 35823600,
+      "static_auxiliary_word5_uninterpreted": 0,
+      "initializer_rva": 639312,
+      "constructor_rva": 31800976,
+      "initializer_hex": "4c8d0d99de18024c8d050a680c03488d1543680c03488d0d04c7bd04e91f7ddb01",
+      "initializer_sha256": "875db21040b7b9d36a54bdaffebb23abe05b04b44635e318815577758086f39c"
+    }
+  ],
+  "contract_fields": {
+    "bird_years": {
+      "name_crc": 2511354015,
+      "offset": 852,
+      "size": 4,
+      "format": 605422848,
+      "width": 5,
+      "start_bit": 22,
+      "enum_pointer": 0,
+      "words": [
+        2511354015,
+        2445756185,
+        852,
+        4,
+        605422848,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BirdYears"
+    },
+    "original_contract_years": {
+      "name_crc": 42767332,
+      "offset": 832,
+      "size": 4,
+      "format": 604766976,
+      "width": 3,
+      "start_bit": 12,
+      "enum_pointer": 0,
+      "words": [
+        42767332,
+        2445756185,
+        832,
+        4,
+        604766976,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ContractLength"
+    },
+    "years_left_on_contract": {
+      "name_crc": 2394663826,
+      "offset": 812,
+      "size": 4,
+      "format": 605160704,
+      "width": 5,
+      "start_bit": 18,
+      "enum_pointer": 0,
+      "words": [
+        2394663826,
+        2445756185,
+        812,
+        4,
+        605160704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "YearsLeft"
+    },
+    "contract_option": {
+      "name_crc": 1500974566,
+      "offset": 788,
+      "size": 4,
+      "format": 656146944,
+      "width": 2,
+      "start_bit": 28,
+      "enum_pointer": 5448893616,
+      "words": [
+        1500974566,
+        2954732842,
+        788,
+        4,
+        656146944,
+        1,
+        0,
+        0,
+        1153926320,
+        1
+      ],
+      "native_name": "ContractOption"
+    },
+    "no_trade": {
+      "name_crc": 3545361590,
+      "offset": 836,
+      "size": 4,
+      "format": 622067968,
+      "width": 1,
+      "start_bit": 20,
+      "enum_pointer": 0,
+      "words": [
+        3545361590,
+        4054322895,
+        836,
+        4,
+        622067968,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "NoTradeClause"
+    },
+    "extension_length": {
+      "name_crc": 3077074362,
+      "offset": 832,
+      "size": 4,
+      "format": 604963584,
+      "width": 3,
+      "start_bit": 15,
+      "enum_pointer": 0,
+      "words": [
+        3077074362,
+        2445756185,
+        832,
+        4,
+        604963584,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ExtensionLength"
+    },
+    "extension_option": {
+      "name_crc": 3969119160,
+      "offset": 832,
+      "size": 4,
+      "format": 655491584,
+      "width": 2,
+      "start_bit": 18,
+      "enum_pointer": 5448893616,
+      "words": [
+        3969119160,
+        2954732842,
+        832,
+        4,
+        655491584,
+        1,
+        0,
+        0,
+        1153926320,
+        1
+      ],
+      "native_name": "ExtensionOption"
+    },
+    "extension_no_trade": {
+      "name_crc": 1356827431,
+      "offset": 796,
+      "size": 4,
+      "format": 621084928,
+      "width": 1,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        1356827431,
+        4054322895,
+        796,
+        4,
+        621084928,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ExtensionNoTradeClause"
+    },
+    "contract_year_1": {
+      "name_crc": 703537575,
+      "offset": 420,
+      "size": 4,
+      "format": 603987712,
+      "width": 31,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        703537575,
+        2445756185,
+        420,
+        4,
+        603987712,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "Wage"
+    },
+    "contract_year_2": {
+      "name_crc": 1380869991,
+      "offset": 424,
+      "size": 4,
+      "format": 603987712,
+      "width": 31,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1380869991,
+        2445756185,
+        424,
+        4,
+        603987712,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "Wage2"
+    },
+    "contract_year_3": {
+      "name_crc": 625563633,
+      "offset": 428,
+      "size": 4,
+      "format": 603987712,
+      "width": 31,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        625563633,
+        2445756185,
+        428,
+        4,
+        603987712,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "Wage3"
+    },
+    "contract_year_4": {
+      "name_crc": 3140338258,
+      "offset": 432,
+      "size": 4,
+      "format": 603987712,
+      "width": 31,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3140338258,
+        2445756185,
+        432,
+        4,
+        603987712,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "Wage4"
+    },
+    "contract_year_5": {
+      "name_crc": 3425366724,
+      "offset": 436,
+      "size": 4,
+      "format": 603987712,
+      "width": 31,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3425366724,
+        2445756185,
+        436,
+        4,
+        603987712,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "Wage5"
+    },
+    "contract_year_6": {
+      "name_crc": 1428398974,
+      "offset": 440,
+      "size": 4,
+      "format": 603987712,
+      "width": 31,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1428398974,
+        2445756185,
+        440,
+        4,
+        603987712,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "Wage6"
+    },
+    "contract_type": {
+      "name_crc": 835328112,
+      "offset": 836,
+      "size": 4,
+      "format": 654508800,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 5448894576,
+      "words": [
+        835328112,
+        3521788712,
+        836,
+        4,
+        654508800,
+        1,
+        0,
+        0,
+        1153927280,
+        1
+      ],
+      "native_name": "RosterType"
+    },
+    "euro_stash_years_left": {
+      "name_crc": 3096771400,
+      "offset": 656,
+      "size": 4,
+      "format": 605881088,
+      "width": 3,
+      "start_bit": 29,
+      "enum_pointer": 0,
+      "words": [
+        3096771400,
+        2445756185,
+        656,
+        4,
+        605881088,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "EuroStashYearsLeft"
+    },
+    "two_way_days_left": {
+      "name_crc": 3529053728,
+      "offset": 348,
+      "size": 4,
+      "format": 605685248,
+      "width": 6,
+      "start_bit": 26,
+      "enum_pointer": 0,
+      "words": [
+        3529053728,
+        2445756185,
+        348,
+        4,
+        605685248,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "TwoWayNBADaysLeft"
+    }
+  },
+  "badge_fields": {
+    "NONE": {
+      "name_crc": 2991987077,
+      "offset": 1211,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2991987077,
+        999499730,
+        1211,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "NONEBadge",
+      "badge_id": 0,
+      "kind": "BOOLEAN",
+      "reserved": true
+    },
+    "AlphaDog": {
+      "name_crc": 167179080,
+      "offset": 1211,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        167179080,
+        999499730,
+        1211,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "AlphaDogBadge",
+      "badge_id": 1,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "CatchAndShoot": {
+      "name_crc": 3451642532,
+      "offset": 1211,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        3451642532,
+        999499730,
+        1211,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "CatchAndShootBadge",
+      "badge_id": 2,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "CornerSpecialist": {
+      "name_crc": 1569008462,
+      "offset": 1211,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        1569008462,
+        999499730,
+        1211,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "CornerSpecialistBadge",
+      "badge_id": 3,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Enforcer": {
+      "name_crc": 276745005,
+      "offset": 1212,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        276745005,
+        999499730,
+        1212,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "EnforcerBadge",
+      "badge_id": 4,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "LowFriendliness": {
+      "name_crc": 2050627592,
+      "offset": 1212,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        2050627592,
+        999499730,
+        1212,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "LowFriendlinessBadge",
+      "badge_id": 5,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "DifficultShots": {
+      "name_crc": 267943135,
+      "offset": 1212,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        267943135,
+        999499730,
+        1212,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "DifficultShotsBadge",
+      "badge_id": 6,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "FearlessFinisher": {
+      "name_crc": 953847917,
+      "offset": 1212,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        953847917,
+        999499730,
+        1212,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "FearlessFinisherBadge",
+      "badge_id": 7,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "HighFriendliness": {
+      "name_crc": 99837800,
+      "offset": 1213,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        99837800,
+        999499730,
+        1213,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HighFriendlinessBadge",
+      "badge_id": 8,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "SmallEgo": {
+      "name_crc": 3267509252,
+      "offset": 1213,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        3267509252,
+        999499730,
+        1213,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SmallEgoBadge",
+      "badge_id": 9,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "Acrobat": {
+      "name_crc": 3203197277,
+      "offset": 1213,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        3203197277,
+        999499730,
+        1213,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "AcrobatBadge",
+      "badge_id": 10,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "TearDropper": {
+      "name_crc": 3310593735,
+      "offset": 1213,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        3310593735,
+        999499730,
+        1213,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "TearDropperBadge",
+      "badge_id": 11,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BigEgo": {
+      "name_crc": 3750642044,
+      "offset": 1214,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3750642044,
+        999499730,
+        1214,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BigEgoBadge",
+      "badge_id": 12,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "HighWorkEthic": {
+      "name_crc": 4275396528,
+      "offset": 1214,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        4275396528,
+        999499730,
+        1214,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HighWorkEthicBadge",
+      "badge_id": 13,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "BrickWall": {
+      "name_crc": 1045376861,
+      "offset": 1214,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        1045376861,
+        999499730,
+        1214,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BrickWallBadge",
+      "badge_id": 14,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "PostSpinTechnician": {
+      "name_crc": 4152481406,
+      "offset": 1214,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        4152481406,
+        999499730,
+        1214,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PostSpinTechnicianBadge",
+      "badge_id": 15,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "VeryHighWorkEthic": {
+      "name_crc": 1831136328,
+      "offset": 1215,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1831136328,
+        999499730,
+        1215,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "VeryHighWorkEthicBadge",
+      "badge_id": 16,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "NegativelyMotivated": {
+      "name_crc": 3265005707,
+      "offset": 1215,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        3265005707,
+        999499730,
+        1215,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "NegativelyMotivatedBadge",
+      "badge_id": 17,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "PostDropStepper": {
+      "name_crc": 4208378289,
+      "offset": 1215,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        4208378289,
+        999499730,
+        1215,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PostDropStepperBadge",
+      "badge_id": 18,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "PutbackArtist": {
+      "name_crc": 1247442249,
+      "offset": 1215,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        1247442249,
+        999499730,
+        1215,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PutbackArtistBadge",
+      "badge_id": 19,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "PositivelyMotivated": {
+      "name_crc": 3796654496,
+      "offset": 1216,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3796654496,
+        999499730,
+        1216,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PositivelyMotivatedBadge",
+      "badge_id": 20,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "Expressive": {
+      "name_crc": 2449056528,
+      "offset": 1216,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        2449056528,
+        999499730,
+        1216,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ExpressiveBadge",
+      "badge_id": 21,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "AnkleBreaker": {
+      "name_crc": 3469003677,
+      "offset": 1216,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        3469003677,
+        999499730,
+        1216,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "AnkleBreakerBadge",
+      "badge_id": 22,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Hyperdrive": {
+      "name_crc": 3720113027,
+      "offset": 1216,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        3720113027,
+        999499730,
+        1216,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HyperdriveBadge",
+      "badge_id": 23,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Unpredictable": {
+      "name_crc": 620969469,
+      "offset": 1217,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        620969469,
+        999499730,
+        1217,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "UnpredictableBadge",
+      "badge_id": 24,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "LaidBack": {
+      "name_crc": 2776297539,
+      "offset": 1217,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        2776297539,
+        999499730,
+        1217,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "LaidBackBadge",
+      "badge_id": 25,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "BreakStarter": {
+      "name_crc": 973180744,
+      "offset": 1217,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        973180744,
+        999499730,
+        1217,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BreakStarterBadge",
+      "badge_id": 26,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "LobCityFinisher": {
+      "name_crc": 712799819,
+      "offset": 1217,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        712799819,
+        999499730,
+        1217,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "LobCityFinisherBadge",
+      "badge_id": 27,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "OnCourtCoach": {
+      "name_crc": 646585950,
+      "offset": 1218,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        646585950,
+        999499730,
+        1218,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "OnCourtCoachBadge",
+      "badge_id": 28,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "CareerGymEliminator": {
+      "name_crc": 687878954,
+      "offset": 1218,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        687878954,
+        999499730,
+        1218,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "CareerGymEliminatorBadge",
+      "badge_id": 29,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "GlueHands": {
+      "name_crc": 4104416362,
+      "offset": 1218,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        4104416362,
+        999499730,
+        1218,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "GlueHandsBadge",
+      "badge_id": 30,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Dimer": {
+      "name_crc": 2843873973,
+      "offset": 1218,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        2843873973,
+        999499730,
+        1218,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "DimerBadge",
+      "badge_id": 31,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BigMarketPlayer": {
+      "name_crc": 4020381447,
+      "offset": 1219,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        4020381447,
+        999499730,
+        1219,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BigMarketPlayerBadge",
+      "badge_id": 32,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "FairWeatherPlayer": {
+      "name_crc": 2547595594,
+      "offset": 1219,
+      "size": 1,
+      "format": 67174656,
+      "width": 1,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        2547595594,
+        999499730,
+        1219,
+        1,
+        67174656,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "FairWeatherPlayerBadge",
+      "badge_id": 33,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "PickPocket": {
+      "name_crc": 2435569390,
+      "offset": 1219,
+      "size": 1,
+      "format": 67240704,
+      "width": 3,
+      "start_bit": 2,
+      "enum_pointer": 0,
+      "words": [
+        2435569390,
+        999499730,
+        1219,
+        1,
+        67240704,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PickPocketBadge",
+      "badge_id": 34,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "RimProtector": {
+      "name_crc": 1550652642,
+      "offset": 1219,
+      "size": 1,
+      "format": 67437312,
+      "width": 3,
+      "start_bit": 5,
+      "enum_pointer": 0,
+      "words": [
+        1550652642,
+        999499730,
+        1219,
+        1,
+        67437312,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "RimProtectorBadge",
+      "badge_id": 35,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "TaxAvoiderPlayer": {
+      "name_crc": 2709905680,
+      "offset": 1220,
+      "size": 1,
+      "format": 67109120,
+      "width": 1,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2709905680,
+        999499730,
+        1220,
+        1,
+        67109120,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "TaxAvoiderPlayerBadge",
+      "badge_id": 36,
+      "kind": "BOOLEAN",
+      "reserved": false
+    },
+    "PickDodger": {
+      "name_crc": 1788082748,
+      "offset": 1220,
+      "size": 1,
+      "format": 67175168,
+      "width": 3,
+      "start_bit": 1,
+      "enum_pointer": 0,
+      "words": [
+        1788082748,
+        999499730,
+        1220,
+        1,
+        67175168,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PickDodgerBadge",
+      "badge_id": 37,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "ChasedownArtist": {
+      "name_crc": 2891463436,
+      "offset": 1220,
+      "size": 1,
+      "format": 67371776,
+      "width": 3,
+      "start_bit": 4,
+      "enum_pointer": 0,
+      "words": [
+        2891463436,
+        999499730,
+        1220,
+        1,
+        67371776,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ChasedownArtistBadge",
+      "badge_id": 38,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Box": {
+      "name_crc": 1829124445,
+      "offset": 1221,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1829124445,
+        999499730,
+        1221,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BoxBadge",
+      "badge_id": 39,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Clamps": {
+      "name_crc": 2009937201,
+      "offset": 1221,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2009937201,
+        999499730,
+        1221,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ClampsBadge",
+      "badge_id": 40,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "DefensiveLeader": {
+      "name_crc": 1541483508,
+      "offset": 1222,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1541483508,
+        999499730,
+        1222,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "DefensiveLeaderBadge",
+      "badge_id": 41,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BallAndChain": {
+      "name_crc": 1822306363,
+      "offset": 1222,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        1822306363,
+        999499730,
+        1222,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BallAndChainBadge",
+      "badge_id": 42,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Interceptor": {
+      "name_crc": 2094778351,
+      "offset": 1223,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2094778351,
+        999499730,
+        1223,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "InterceptorBadge",
+      "badge_id": 43,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Intimidator": {
+      "name_crc": 775645457,
+      "offset": 1223,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        775645457,
+        999499730,
+        1223,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "IntimidatorBadge",
+      "badge_id": 44,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "HookSpecialist": {
+      "name_crc": 3021760278,
+      "offset": 1224,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3021760278,
+        999499730,
+        1224,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HookSpecialistBadge",
+      "badge_id": 45,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Posterizer": {
+      "name_crc": 3681156159,
+      "offset": 1224,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        3681156159,
+        999499730,
+        1224,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PosterizerBadge",
+      "badge_id": 46,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "OffBallPest": {
+      "name_crc": 4190015825,
+      "offset": 1225,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        4190015825,
+        999499730,
+        1225,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "OffBallPestBadge",
+      "badge_id": 47,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "ReboundChaser": {
+      "name_crc": 3931776621,
+      "offset": 1225,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        3931776621,
+        999499730,
+        1225,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ReboundChaserBadge",
+      "badge_id": 48,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Pogostick": {
+      "name_crc": 507409535,
+      "offset": 1226,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        507409535,
+        999499730,
+        1226,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PogostickBadge",
+      "badge_id": 49,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "PostLockdown": {
+      "name_crc": 2803355041,
+      "offset": 1226,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2803355041,
+        999499730,
+        1226,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PostLockdownBadge",
+      "badge_id": 50,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "TirelessDefender": {
+      "name_crc": 4108065952,
+      "offset": 1227,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        4108065952,
+        999499730,
+        1227,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "TirelessDefenderBadge",
+      "badge_id": 51,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "MismatchExpert": {
+      "name_crc": 366555845,
+      "offset": 1227,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        366555845,
+        999499730,
+        1227,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "MismatchExpertBadge",
+      "badge_id": 52,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Worm": {
+      "name_crc": 3481257860,
+      "offset": 1228,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3481257860,
+        999499730,
+        1228,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "WormBadge",
+      "badge_id": 53,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BackdownPunisher": {
+      "name_crc": 2461874199,
+      "offset": 1228,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2461874199,
+        999499730,
+        1228,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BackdownPunisherBadge",
+      "badge_id": 54,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "RiseUp": {
+      "name_crc": 3026120873,
+      "offset": 1229,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3026120873,
+        999499730,
+        1229,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "RiseUpBadge",
+      "badge_id": 55,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "LuckyNumber7": {
+      "name_crc": 175246164,
+      "offset": 1229,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        175246164,
+        999499730,
+        1229,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "LuckyNumber7Badge",
+      "badge_id": 56,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Blinders": {
+      "name_crc": 2375847819,
+      "offset": 1230,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2375847819,
+        999499730,
+        1230,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BlindersBadge",
+      "badge_id": 57,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "CircusThrees": {
+      "name_crc": 1749168719,
+      "offset": 1230,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        1749168719,
+        999499730,
+        1230,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "CircusThreesBadge",
+      "badge_id": 58,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "FadeAce": {
+      "name_crc": 90859392,
+      "offset": 1231,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        90859392,
+        999499730,
+        1231,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "FadeAceBadge",
+      "badge_id": 59,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "LimitlessSpotUp": {
+      "name_crc": 904319005,
+      "offset": 1231,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        904319005,
+        999499730,
+        1231,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "LimitlessSpotUpBadge",
+      "badge_id": 60,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Chef": {
+      "name_crc": 4230516579,
+      "offset": 1232,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        4230516579,
+        999499730,
+        1232,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ChefBadge",
+      "badge_id": 61,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "GiantSlayer": {
+      "name_crc": 2097941095,
+      "offset": 1232,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2097941095,
+        999499730,
+        1232,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "GiantSlayerBadge",
+      "badge_id": 62,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "ProTouch": {
+      "name_crc": 2111615134,
+      "offset": 1233,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2111615134,
+        999499730,
+        1233,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ProTouchBadge",
+      "badge_id": 63,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "RhythmShooter": {
+      "name_crc": 1474009086,
+      "offset": 1233,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        1474009086,
+        999499730,
+        1233,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "RhythmShooterBadge",
+      "badge_id": 64,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "SlitheryFinisher": {
+      "name_crc": 431517676,
+      "offset": 1234,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        431517676,
+        999499730,
+        1234,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SlitheryFinisherBadge",
+      "badge_id": 65,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BailOut": {
+      "name_crc": 2252278764,
+      "offset": 1234,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2252278764,
+        999499730,
+        1234,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BailOutBadge",
+      "badge_id": 66,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Downhill": {
+      "name_crc": 3533561069,
+      "offset": 1235,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3533561069,
+        999499730,
+        1235,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "DownhillBadge",
+      "badge_id": 67,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "DreamShake": {
+      "name_crc": 645681188,
+      "offset": 1235,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        645681188,
+        999499730,
+        1235,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "DreamShakeBadge",
+      "badge_id": 68,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "HandlesForDays": {
+      "name_crc": 1034328084,
+      "offset": 1236,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1034328084,
+        999499730,
+        1236,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HandlesForDaysBadge",
+      "badge_id": 69,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "NeedleThreader": {
+      "name_crc": 1793190554,
+      "offset": 1236,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        1793190554,
+        999499730,
+        1236,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "NeedleThreaderBadge",
+      "badge_id": 70,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "SetShooter": {
+      "name_crc": 1991070741,
+      "offset": 1237,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1991070741,
+        999499730,
+        1237,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SetShooterBadge",
+      "badge_id": 71,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "QuickFirstStep": {
+      "name_crc": 3361086677,
+      "offset": 1237,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        3361086677,
+        999499730,
+        1237,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "QuickFirstStepBadge",
+      "badge_id": 72,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "SpaceCreator": {
+      "name_crc": 1624896340,
+      "offset": 1238,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1624896340,
+        999499730,
+        1238,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SpaceCreatorBadge",
+      "badge_id": 73,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "StopAndGo": {
+      "name_crc": 1679679116,
+      "offset": 1238,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        1679679116,
+        999499730,
+        1238,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "StopAndGoBadge",
+      "badge_id": 74,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "TightHandles": {
+      "name_crc": 1271345430,
+      "offset": 1239,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1271345430,
+        999499730,
+        1239,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "TightHandlesBadge",
+      "badge_id": 75,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Unpluckable": {
+      "name_crc": 3890360406,
+      "offset": 1239,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        3890360406,
+        999499730,
+        1239,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "UnpluckableBadge",
+      "badge_id": 76,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "ClutchShooter": {
+      "name_crc": 269943294,
+      "offset": 1240,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        269943294,
+        999499730,
+        1240,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "ClutchShooterBadge",
+      "badge_id": 77,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Deadeye": {
+      "name_crc": 373881526,
+      "offset": 1240,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        373881526,
+        999499730,
+        1240,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "DeadeyeBadge",
+      "badge_id": 78,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Sniper": {
+      "name_crc": 2131937257,
+      "offset": 1241,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2131937257,
+        999499730,
+        1241,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SniperBadge",
+      "badge_id": 79,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "StopAndPop": {
+      "name_crc": 3048427302,
+      "offset": 1241,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        3048427302,
+        999499730,
+        1241,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "StopAndPopBadge",
+      "badge_id": 80,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "GreenMachine": {
+      "name_crc": 919950166,
+      "offset": 1242,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        919950166,
+        999499730,
+        1242,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "GreenMachineBadge",
+      "badge_id": 81,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "HotSpotHunter": {
+      "name_crc": 2845060652,
+      "offset": 1242,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2845060652,
+        999499730,
+        1242,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HotSpotHunterBadge",
+      "badge_id": 82,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Unstrippable": {
+      "name_crc": 3651486847,
+      "offset": 1243,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3651486847,
+        999499730,
+        1243,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "UnstrippableBadge",
+      "badge_id": 83,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "MouseInTheHouse": {
+      "name_crc": 1447532627,
+      "offset": 1243,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        1447532627,
+        999499730,
+        1243,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "MouseInTheHouseBadge",
+      "badge_id": 84,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BulletPasser": {
+      "name_crc": 3150237633,
+      "offset": 1244,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3150237633,
+        999499730,
+        1244,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BulletPasserBadge",
+      "badge_id": 85,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "SpecialDelivery": {
+      "name_crc": 2560035014,
+      "offset": 1244,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2560035014,
+        999499730,
+        1244,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SpecialDeliveryBadge",
+      "badge_id": 86,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "AnkleBraces": {
+      "name_crc": 3765630668,
+      "offset": 1245,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        3765630668,
+        999499730,
+        1245,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "AnkleBracesBadge",
+      "badge_id": 87,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "LimitlessTakeoff": {
+      "name_crc": 682110147,
+      "offset": 1245,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        682110147,
+        999499730,
+        1245,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "LimitlessTakeoffBadge",
+      "badge_id": 88,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "GraceUnderPressure": {
+      "name_crc": 845544078,
+      "offset": 1246,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        845544078,
+        999499730,
+        1246,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "GraceUnderPressureBadge",
+      "badge_id": 89,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "VolumeShooter": {
+      "name_crc": 2277816787,
+      "offset": 1246,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2277816787,
+        999499730,
+        1246,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "VolumeShooterBadge",
+      "badge_id": 90,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "FloorGeneral": {
+      "name_crc": 1117393876,
+      "offset": 1247,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1117393876,
+        999499730,
+        1247,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "FloorGeneralBadge",
+      "badge_id": 91,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "SlipperyOffball": {
+      "name_crc": 2672586858,
+      "offset": 1247,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2672586858,
+        999499730,
+        1247,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "SlipperyOffballBadge",
+      "badge_id": 92,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "FastTwitch": {
+      "name_crc": 2914040687,
+      "offset": 1248,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2914040687,
+        999499730,
+        1248,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "FastTwitchBadge",
+      "badge_id": 93,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Menace": {
+      "name_crc": 3523315894,
+      "offset": 1248,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        3523315894,
+        999499730,
+        1248,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "MenaceBadge",
+      "badge_id": 94,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "PostPlaymaker": {
+      "name_crc": 1039213221,
+      "offset": 1249,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1039213221,
+        999499730,
+        1249,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "PostPlaymakerBadge",
+      "badge_id": 95,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "TripleThreatJuke": {
+      "name_crc": 149021154,
+      "offset": 1249,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        149021154,
+        999499730,
+        1249,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "TripleThreatJukeBadge",
+      "badge_id": 96,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "BallStripper": {
+      "name_crc": 1416348398,
+      "offset": 1250,
+      "size": 1,
+      "format": 67109632,
+      "width": 3,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1416348398,
+        999499730,
+        1250,
+        1,
+        67109632,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "BallStripperBadge",
+      "badge_id": 97,
+      "kind": "LEVEL",
+      "reserved": false
+    },
+    "Hustler": {
+      "name_crc": 2479734762,
+      "offset": 1250,
+      "size": 1,
+      "format": 67306240,
+      "width": 3,
+      "start_bit": 3,
+      "enum_pointer": 0,
+      "words": [
+        2479734762,
+        999499730,
+        1250,
+        1,
+        67306240,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_name": "HustlerBadge",
+      "badge_id": 98,
+      "kind": "LEVEL",
+      "reserved": false
+    }
+  },
+  "enum_labels": {
+    "PLAYERDATA_BADGE_LEVEL": {
+      "0": {
+        "name_crc": 479621058,
+        "labels": [
+          "UNEQUIPPED"
+        ]
+      },
+      "1": {
+        "name_crc": 1309703695,
+        "labels": [
+          "BRONZE"
+        ]
+      },
+      "2": {
+        "name_crc": 3752058845,
+        "labels": [
+          "SILVER"
+        ]
+      },
+      "3": {
+        "name_crc": 1899819237,
+        "labels": [
+          "GOLD"
+        ]
+      },
+      "4": {
+        "name_crc": 924706723,
+        "labels": [
+          "HALL_OF_FAME"
+        ]
+      }
+    },
+    "PLAYERDATA_CONTRACT_OPTION": {
+      "0": {
+        "name_crc": 3469075377,
+        "labels": [
+          "NO_OPTION"
+        ]
+      },
+      "1": {
+        "name_crc": 1847847965,
+        "labels": [
+          "TEAM_OPTION"
+        ]
+      },
+      "2": {
+        "name_crc": 746040599,
+        "labels": [
+          "PLAYER_OPTION"
+        ]
+      },
+      "3": {
+        "name_crc": 3808276104,
+        "labels": [
+          "TEAM_OPTION_2"
+        ]
+      }
+    },
+    "PLAYERDATA_BADGE": {
+      "0": {
+        "name_crc": 1225125243,
+        "labels": [
+          "NONE"
+        ]
+      },
+      "1": {
+        "name_crc": 2883140655,
+        "labels": [
+          "AlphaDog"
+        ]
+      },
+      "2": {
+        "name_crc": 4113087006,
+        "labels": [
+          "CatchAndShoot"
+        ]
+      },
+      "3": {
+        "name_crc": 2061565789,
+        "labels": [
+          "CornerSpecialist"
+        ]
+      },
+      "4": {
+        "name_crc": 926923295,
+        "labels": [
+          "Enforcer"
+        ]
+      },
+      "5": {
+        "name_crc": 242352420,
+        "labels": [
+          "LowFriendliness"
+        ]
+      },
+      "6": {
+        "name_crc": 1329224447,
+        "labels": [
+          "DifficultShots"
+        ]
+      },
+      "7": {
+        "name_crc": 1037300121,
+        "labels": [
+          "FearlessFinisher"
+        ]
+      },
+      "8": {
+        "name_crc": 1931202031,
+        "labels": [
+          "HighFriendliness"
+        ]
+      },
+      "9": {
+        "name_crc": 999343843,
+        "labels": [
+          "SmallEgo"
+        ]
+      },
+      "10": {
+        "name_crc": 1912240176,
+        "labels": [
+          "Acrobat"
+        ]
+      },
+      "11": {
+        "name_crc": 1170246006,
+        "labels": [
+          "TearDropper"
+        ]
+      },
+      "12": {
+        "name_crc": 1080106688,
+        "labels": [
+          "BigEgo"
+        ]
+      },
+      "13": {
+        "name_crc": 3001855927,
+        "labels": [
+          "HighWorkEthic"
+        ]
+      },
+      "14": {
+        "name_crc": 339149960,
+        "labels": [
+          "BrickWall"
+        ]
+      },
+      "15": {
+        "name_crc": 881378369,
+        "labels": [
+          "PostSpinTechnician"
+        ]
+      },
+      "16": {
+        "name_crc": 816784544,
+        "labels": [
+          "VeryHighWorkEthic"
+        ]
+      },
+      "17": {
+        "name_crc": 1973744564,
+        "labels": [
+          "NegativelyMotivated"
+        ]
+      },
+      "18": {
+        "name_crc": 1388680472,
+        "labels": [
+          "PostDropStepper"
+        ]
+      },
+      "19": {
+        "name_crc": 168061593,
+        "labels": [
+          "PutbackArtist"
+        ]
+      },
+      "20": {
+        "name_crc": 4149492314,
+        "labels": [
+          "PositivelyMotivated"
+        ]
+      },
+      "21": {
+        "name_crc": 2612995393,
+        "labels": [
+          "Expressive"
+        ]
+      },
+      "22": {
+        "name_crc": 2095032532,
+        "labels": [
+          "AnkleBreaker"
+        ]
+      },
+      "23": {
+        "name_crc": 2951480870,
+        "labels": [
+          "Hyperdrive"
+        ]
+      },
+      "24": {
+        "name_crc": 876354707,
+        "labels": [
+          "Unpredictable"
+        ]
+      },
+      "25": {
+        "name_crc": 2569040272,
+        "labels": [
+          "LaidBack"
+        ]
+      },
+      "26": {
+        "name_crc": 3792119653,
+        "labels": [
+          "BreakStarter"
+        ]
+      },
+      "27": {
+        "name_crc": 3979524919,
+        "labels": [
+          "LobCityFinisher"
+        ]
+      },
+      "28": {
+        "name_crc": 4204332530,
+        "labels": [
+          "OnCourtCoach"
+        ]
+      },
+      "29": {
+        "name_crc": 894312606,
+        "labels": [
+          "CareerGymEliminator"
+        ]
+      },
+      "30": {
+        "name_crc": 1545225488,
+        "labels": [
+          "GlueHands"
+        ]
+      },
+      "31": {
+        "name_crc": 3421595292,
+        "labels": [
+          "Dimer"
+        ]
+      },
+      "32": {
+        "name_crc": 1508004937,
+        "labels": [
+          "BigMarketPlayer"
+        ]
+      },
+      "33": {
+        "name_crc": 456773257,
+        "labels": [
+          "FairWeatherPlayer"
+        ]
+      },
+      "34": {
+        "name_crc": 1217714182,
+        "labels": [
+          "PickPocket"
+        ]
+      },
+      "35": {
+        "name_crc": 2728953573,
+        "labels": [
+          "RimProtector"
+        ]
+      },
+      "36": {
+        "name_crc": 1536605237,
+        "labels": [
+          "TaxAvoiderPlayer"
+        ]
+      },
+      "37": {
+        "name_crc": 2910714979,
+        "labels": [
+          "PickDodger"
+        ]
+      },
+      "38": {
+        "name_crc": 2199821829,
+        "labels": [
+          "ChasedownArtist"
+        ]
+      },
+      "39": {
+        "name_crc": 820252378,
+        "labels": [
+          "Box"
+        ]
+      },
+      "40": {
+        "name_crc": 1097519688,
+        "labels": [
+          "Clamps"
+        ]
+      },
+      "41": {
+        "name_crc": 2666390379,
+        "labels": [
+          "DefensiveLeader"
+        ]
+      },
+      "42": {
+        "name_crc": 1549879522,
+        "labels": [
+          "BallAndChain"
+        ]
+      },
+      "43": {
+        "name_crc": 4228177376,
+        "labels": [
+          "Interceptor"
+        ]
+      },
+      "44": {
+        "name_crc": 1315118756,
+        "labels": [
+          "Intimidator"
+        ]
+      },
+      "45": {
+        "name_crc": 3441122364,
+        "labels": [
+          "HookSpecialist"
+        ]
+      },
+      "46": {
+        "name_crc": 2170435003,
+        "labels": [
+          "Posterizer"
+        ]
+      },
+      "47": {
+        "name_crc": 1850842633,
+        "labels": [
+          "OffBallPest"
+        ]
+      },
+      "48": {
+        "name_crc": 2911469202,
+        "labels": [
+          "ReboundChaser"
+        ]
+      },
+      "49": {
+        "name_crc": 2746938852,
+        "labels": [
+          "Pogostick"
+        ]
+      },
+      "50": {
+        "name_crc": 1783025150,
+        "labels": [
+          "PostLockdown"
+        ]
+      },
+      "51": {
+        "name_crc": 3444150006,
+        "labels": [
+          "TirelessDefender"
+        ]
+      },
+      "52": {
+        "name_crc": 3928541562,
+        "labels": [
+          "MismatchExpert"
+        ]
+      },
+      "53": {
+        "name_crc": 438264459,
+        "labels": [
+          "Worm"
+        ]
+      },
+      "54": {
+        "name_crc": 453989842,
+        "labels": [
+          "BackdownPunisher"
+        ]
+      },
+      "55": {
+        "name_crc": 3304702967,
+        "labels": [
+          "RiseUp"
+        ]
+      },
+      "56": {
+        "name_crc": 3268297100,
+        "labels": [
+          "LuckyNumber7"
+        ]
+      },
+      "57": {
+        "name_crc": 1697184187,
+        "labels": [
+          "Blinders"
+        ]
+      },
+      "58": {
+        "name_crc": 3642891905,
+        "labels": [
+          "CircusThrees"
+        ]
+      },
+      "59": {
+        "name_crc": 453369658,
+        "labels": [
+          "FadeAce"
+        ]
+      },
+      "60": {
+        "name_crc": 1044739437,
+        "labels": [
+          "LimitlessSpotUp"
+        ]
+      },
+      "61": {
+        "name_crc": 1383786968,
+        "labels": [
+          "Chef"
+        ]
+      },
+      "62": {
+        "name_crc": 2277240114,
+        "labels": [
+          "GiantSlayer"
+        ]
+      },
+      "63": {
+        "name_crc": 1124378057,
+        "labels": [
+          "ProTouch"
+        ]
+      },
+      "64": {
+        "name_crc": 3852482470,
+        "labels": [
+          "RhythmShooter"
+        ]
+      },
+      "65": {
+        "name_crc": 1032396362,
+        "labels": [
+          "SlitheryFinisher"
+        ]
+      },
+      "66": {
+        "name_crc": 375703613,
+        "labels": [
+          "BailOut"
+        ]
+      },
+      "67": {
+        "name_crc": 2985754044,
+        "labels": [
+          "Downhill"
+        ]
+      },
+      "68": {
+        "name_crc": 3637198254,
+        "labels": [
+          "DreamShake"
+        ]
+      },
+      "69": {
+        "name_crc": 2572795190,
+        "labels": [
+          "HandlesForDays"
+        ]
+      },
+      "70": {
+        "name_crc": 3512646509,
+        "labels": [
+          "NeedleThreader"
+        ]
+      },
+      "71": {
+        "name_crc": 4102240278,
+        "labels": [
+          "SetShooter"
+        ]
+      },
+      "72": {
+        "name_crc": 3277746941,
+        "labels": [
+          "QuickFirstStep"
+        ]
+      },
+      "73": {
+        "name_crc": 3808783377,
+        "labels": [
+          "SpaceCreator"
+        ]
+      },
+      "74": {
+        "name_crc": 1620177028,
+        "labels": [
+          "StopAndGo"
+        ]
+      },
+      "75": {
+        "name_crc": 636121031,
+        "labels": [
+          "TightHandles"
+        ]
+      },
+      "76": {
+        "name_crc": 942438424,
+        "labels": [
+          "Unpluckable"
+        ]
+      },
+      "77": {
+        "name_crc": 1335390712,
+        "labels": [
+          "ClutchShooter"
+        ]
+      },
+      "78": {
+        "name_crc": 3896406263,
+        "labels": [
+          "Deadeye"
+        ]
+      },
+      "79": {
+        "name_crc": 2844020221,
+        "labels": [
+          "Sniper"
+        ]
+      },
+      "80": {
+        "name_crc": 1910242701,
+        "labels": [
+          "StopAndPop"
+        ]
+      },
+      "81": {
+        "name_crc": 988803858,
+        "labels": [
+          "GreenMachine"
+        ]
+      },
+      "82": {
+        "name_crc": 3004319245,
+        "labels": [
+          "HotSpotHunter"
+        ]
+      },
+      "83": {
+        "name_crc": 1399633550,
+        "labels": [
+          "Unstrippable"
+        ]
+      },
+      "84": {
+        "name_crc": 1238851887,
+        "labels": [
+          "MouseInTheHouse"
+        ]
+      },
+      "85": {
+        "name_crc": 4164476315,
+        "labels": [
+          "BulletPasser"
+        ]
+      },
+      "86": {
+        "name_crc": 3933605168,
+        "labels": [
+          "SpecialDelivery"
+        ]
+      },
+      "87": {
+        "name_crc": 3936143484,
+        "labels": [
+          "AnkleBraces"
+        ]
+      },
+      "88": {
+        "name_crc": 1619189611,
+        "labels": [
+          "LimitlessTakeoff"
+        ]
+      },
+      "89": {
+        "name_crc": 1603264196,
+        "labels": [
+          "GraceUnderPressure"
+        ]
+      },
+      "90": {
+        "name_crc": 4170246642,
+        "labels": [
+          "VolumeShooter"
+        ]
+      },
+      "91": {
+        "name_crc": 805209933,
+        "labels": [
+          "FloorGeneral"
+        ]
+      },
+      "92": {
+        "name_crc": 3363816120,
+        "labels": [
+          "SlipperyOffball"
+        ]
+      },
+      "93": {
+        "name_crc": 3310106376,
+        "labels": [
+          "FastTwitch"
+        ]
+      },
+      "94": {
+        "name_crc": 2989673656,
+        "labels": [
+          "Menace"
+        ]
+      },
+      "95": {
+        "name_crc": 815527145,
+        "labels": [
+          "PostPlaymaker"
+        ]
+      },
+      "96": {
+        "name_crc": 2024467485,
+        "labels": [
+          "TripleThreatJuke"
+        ]
+      },
+      "97": {
+        "name_crc": 3478310499,
+        "labels": [
+          "BallStripper"
+        ]
+      },
+      "98": {
+        "name_crc": 201615472,
+        "labels": [
+          "Hustler"
+        ]
+      }
+    },
+    "TEAMDATA_PLAYER_ROSTER_TYPE": {
+      "0": {
+        "name_crc": 1561880827,
+        "labels": [
+          "CORE"
+        ]
+      },
+      "1": {
+        "name_crc": 2096297477,
+        "labels": [
+          "HARDSHIP"
+        ]
+      },
+      "2": {
+        "name_crc": 2157336024,
+        "labels": [
+          "TWO_WAY"
+        ]
+      },
+      "3": {
+        "name_crc": 1481762446,
+        "labels": [
+          "EURO_STASH"
+        ]
+      },
+      "4": {
+        "name_crc": 1032243532,
+        "labels": [
+          "LINEUP"
+        ]
+      }
+    }
+  },
+  "metadata_artifact_sha256": "00f8f6011c0888d4cf98153112298f8b5f5cc294d2e96fa3db047a81d55130a7",
+  "contract_width_comparison": [
+    {
+      "registered": "bird_years",
+      "native_name": "BirdYears",
+      "old_width": 4,
+      "native_width": 5
+    },
+    {
+      "registered": "original_contract_years",
+      "native_name": "ContractLength",
+      "old_width": 3,
+      "native_width": 3
+    },
+    {
+      "registered": "years_left_on_contract",
+      "native_name": "YearsLeft",
+      "old_width": 4,
+      "native_width": 5
+    },
+    {
+      "registered": "contract_option",
+      "native_name": "ContractOption",
+      "old_width": 2,
+      "native_width": 2
+    },
+    {
+      "registered": "no_trade",
+      "native_name": "NoTradeClause",
+      "old_width": 1,
+      "native_width": 1
+    },
+    {
+      "registered": "extension_length",
+      "native_name": "ExtensionLength",
+      "old_width": 3,
+      "native_width": 3
+    },
+    {
+      "registered": "extension_option",
+      "native_name": "ExtensionOption",
+      "old_width": 2,
+      "native_width": 2
+    },
+    {
+      "registered": "extension_no_trade",
+      "native_name": "ExtensionNoTradeClause",
+      "old_width": 1,
+      "native_width": 1
+    },
+    {
+      "registered": "contract_year_1",
+      "native_name": "Wage",
+      "old_width": 31,
+      "native_width": 31
+    },
+    {
+      "registered": "contract_year_2",
+      "native_name": "Wage2",
+      "old_width": 31,
+      "native_width": 31
+    },
+    {
+      "registered": "contract_year_3",
+      "native_name": "Wage3",
+      "old_width": 31,
+      "native_width": 31
+    },
+    {
+      "registered": "contract_year_4",
+      "native_name": "Wage4",
+      "old_width": 31,
+      "native_width": 31
+    },
+    {
+      "registered": "contract_year_5",
+      "native_name": "Wage5",
+      "old_width": 31,
+      "native_width": 31
+    },
+    {
+      "registered": "contract_year_6",
+      "native_name": "Wage6",
+      "old_width": 31,
+      "native_width": 31
+    },
+    {
+      "registered": "contract_type",
+      "native_name": "RosterType",
+      "old_width": 3,
+      "native_width": 3
+    },
+    {
+      "registered": "euro_stash_years_left",
+      "native_name": "EuroStashYearsLeft",
+      "old_width": 2,
+      "native_width": 3
+    },
+    {
+      "registered": "two_way_days_left",
+      "native_name": "TwoWayNBADaysLeft",
+      "old_width": 6,
+      "native_width": 6
+    }
+  ],
+  "public_identity_fields": {
+    "UniqueId": {
+      "name_crc": 834505462,
+      "offset": 244,
+      "size": 2,
+      "format": 335548416,
+      "width": 16,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        834505462,
+        2761744770,
+        244,
+        2,
+        335548416,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "PreservedId": {
+      "name_crc": 337282258,
+      "offset": 760,
+      "size": 4,
+      "format": 603987968,
+      "width": 32,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        337282258,
+        2445756185,
+        760,
+        4,
+        603987968,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "CurrentTeam_Internal": {
+      "name_crc": 1185899687,
+      "offset": 96,
+      "size": 4696,
+      "format": 939524096,
+      "width": 0,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1185899687,
+        2084109425,
+        96,
+        4696,
+        939524096,
+        2048,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "UnlocalizedFirstName": {
+      "name_crc": 4099911928,
+      "offset": 40,
+      "size": 2,
+      "format": 369102848,
+      "width": 16,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        4099911928,
+        1273519784,
+        40,
+        2,
+        369102848,
+        65537,
+        1125484880,
+        1,
+        0,
+        0
+      ]
+    },
+    "UnlocalizedLastName": {
+      "name_crc": 1372936809,
+      "offset": 0,
+      "size": 2,
+      "format": 369102848,
+      "width": 16,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1372936809,
+        1273519784,
+        0,
+        2,
+        369102848,
+        65537,
+        1125484856,
+        1,
+        0,
+        0
+      ]
+    }
+  },
+  "name_layout": "CURRENT_NATIVE UnlocalizedLastName +0 / UnlocalizedFirstName +40 uint16[20]; aligned UTF16 prefixes",
+  "additional_vital_fields": {
+    "Weight": {
+      "name_crc": 6377591,
+      "offset": 88,
+      "size": 4,
+      "format": 587210752,
+      "width": 32,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        6377591,
+        3383058069,
+        88,
+        4,
+        587210752,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "BirthYear": {
+      "name_crc": 2705012211,
+      "offset": 108,
+      "size": 4,
+      "format": 605031424,
+      "width": 12,
+      "start_bit": 16,
+      "enum_pointer": 0,
+      "words": [
+        2705012211,
+        2445756185,
+        108,
+        4,
+        605031424,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "BirthMonth": {
+      "name_crc": 312848361,
+      "offset": 108,
+      "size": 4,
+      "format": 605815808,
+      "width": 4,
+      "start_bit": 28,
+      "enum_pointer": 0,
+      "words": [
+        312848361,
+        2445756185,
+        108,
+        4,
+        605815808,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "BirthDay": {
+      "name_crc": 2251460740,
+      "offset": 112,
+      "size": 4,
+      "format": 603981056,
+      "width": 5,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2251460740,
+        2445756185,
+        112,
+        4,
+        603981056,
+        1,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "badge_base_dispatch": {
+    "code_start_rva": 9943104,
+    "code_end_rva": 9944800,
+    "code_hex": "beb697007c9e970023b19700429b9700beb69700beb69700b8b4970057a69700ceaf9700cccccccccccccccccccccccc4053574883ec3848896c245032db488974245833f64c896424608bfe4c896c2430458be84c63e24c897424284183fc620f8778050000488d15534768ff498bc4468b8ca2e0be97004c03ca41ffe10fb699bb040000bf010000004022dfe94c0500000fb699bb040000bf01000000d0eb4022dfe9360500000fb699bb040000c0eb02e9240500000fb699bb040000c0eb05e9180500000fb699bc040000bf010000004022dfe9040500000fb699bc040000bf01000000d0eb4022dfe9ee0400000fb699bc040000c0eb02e9dc0400000fb699bc040000c0eb05e9d00400000fb699bd040000bf010000004022dfe9bc0400000fb699bd040000bf01000000d0eb4022dfe9a60400000fb699bd040000c0eb02e9940400000fb699bd040000c0eb05e9880400000fb699be040000bf010000004022dfe9740400000fb699be040000bf01000000d0eb4022dfe95e0400000fb699be040000c0eb02e94c0400000fb699be040000c0eb05e9400400000fb699bf040000bf010000004022dfe92c0400000fb699bf040000bf01000000d0eb4022dfe9160400000fb699bf040000c0eb02e9040400000fb699bf040000c0eb05e9f80300000fb699c0040000bf010000004022dfe9e40300000fb699c0040000bf01000000d0eb4022dfe9ce0300000fb699c0040000c0eb02e9bc0300000fb699c0040000c0eb05e9b00300000fb699c1040000bf010000004022dfe99c0300000fb699c1040000bf01000000d0eb4022dfe9860300000fb699c1040000c0eb02e9740300000fb699c1040000c0eb05e9680300000fb699c2040000bf010000004022dfe9540300000fb699c2040000bf01000000d0eb4022dfe93e0300000fb699c2040000c0eb02e92c0300000fb699c2040000c0eb05e9200300000fb699c3040000bf010000004022dfe90c0300000fb699c3040000bf01000000d0eb4022dfe9f60200000fb699c3040000c0eb02e9e40200000fb699c3040000c0eb05e9d80200000fb699c4040000bf010000004022dfe9c40200000fb699c4040000d0ebe9b30200000fb699c4040000c0eb04e9a40200000fb699c5040000e9980200000fb699c5040000e9890200000fb699c6040000e9800200000fb699c6040000e9710200000fb699c7040000e9680200000fb699c7040000e9590200000fb699c8040000e9500200000fb699c8040000e9410200000fb699c9040000e9380200000fb699c9040000e9290200000fb699ca040000e9200200000fb699ca040000e9110200000fb699cb040000e9080200000fb699cb040000e9f90100000fb699cc040000e9f00100000fb699cc040000e9e10100000fb699cd040000e9d80100000fb699cd040000e9c90100000fb699ce040000e9c00100000fb699ce040000e9b10100000fb699cf040000e9a80100000fb699cf040000e9990100000fb699d0040000e9900100000fb699d0040000e9810100000fb699d1040000e9780100000fb699d1040000e9690100000fb699d2040000e9600100000fb699d2040000e9510100000fb699d3040000e9480100000fb699d3040000e9390100000fb699d4040000e9300100000fb699d4040000e9210100000fb699d5040000e9180100000fb699d5040000e9090100000fb699d6040000e9000100000fb699d6040000e9f10000000fb699d7040000e9e80000000fb699d7040000e9d90000000fb699d8040000e9d00000000fb699d8040000e9c10000000fb699d9040000e9b80000000fb699d9040000e9a90000000fb699da040000e9a00000000fb699da040000e9910000000fb699db040000e9880000000fb699db040000eb7c0fb699dc040000eb760fb699dc040000eb6a0fb699dd040000eb640fb699dd040000eb580fb699de040000eb520fb699de040000eb460fb699df040000eb400fb699df040000eb340fb699e0040000eb2e0fb699e0040000eb220fb699e1040000eb1c0fb699e1040000eb100fb699e2040000eb0a0fb699e2040000c0eb0380e307488ba9d8000000448bf64885ed74714c897c2420448bb9540300004183e7070f1f008b4d188bc1c1e80d83e007413bc7771f81e1ff1f000081f9ff1f00007511418bd4488bcde8c7dcfeff0fbec84403f1488b6d084885ed75c84c8b7c24204585f6741c4402f3bb040000004584f6410fb6c60f4ff0403af3400fb6c60f4cd84c8b7424284585ed4c8b6c24304c8b642460488b742458488b6c2450741885ff741484db0fb6c3b9030000000f4fc14883c4385f5bc30fb6c34883c4385f5bc36690",
+    "code_sha256": "63d9331950015c95c76e53279909ae977b8d3bdd4d6b82fd952c75586595439b",
+    "table_rva": 9944800,
+    "table_hex": "beb89700d2b89700e8b89700f7b8970006b997001ab9970030b997003fb997004eb9970062b9970078b9970087b9970096b99700aab99700c0b99700cfb99700deb99700f2b9970008ba970017ba970026ba97003aba970050ba97005fba97006eba970082ba970098ba9700a7ba9700b6ba9700caba9700e0ba9700efba9700feba970012bb970028bb970037bb970046bb97005abb970068bb970077bb970083bb97008fbb97009bbb9700a7bb9700b3bb9700bfbb9700cbbb9700d7bb9700e3bb9700efbb9700fbbb970007bc970013bc97001fbc97002bbc970037bc970043bc97004fbc97005bbc970067bc970073bc97007fbc97008bbc970097bc9700a3bc9700afbc9700bbbc9700c7bc9700d3bc9700dfbc9700ebbc9700f7bc970003bd97000fbd97001bbd970027bd970033bd97003fbd97004bbd970057bd970063bd97006fbd97007bbd970087bd970093bd97009cbd9700a5bd9700aebd9700b7bd9700c0bd9700c9bd9700d2bd9700dbbd9700e4bd9700edbd9700f6bd9700ffbd970008be970011be9700",
+    "table_sha256": "868f1baef41b6b7d913c128f534643db23eba0ab11964552f4178e3f8eb1ca23",
+    "base_extraction_end_rva": 9944606,
+    "verified_input_patterns": 25344
+  },
+  "badge_dispatch_proof_sha256": "cd33093d90aa3a4c2b6b35dea2483a64c921e5e2557343c07315ae43162b85eb"
+}

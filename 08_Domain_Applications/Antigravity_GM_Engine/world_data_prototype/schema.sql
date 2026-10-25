@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=12),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=13),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -437,20 +437,57 @@ CREATE TRIGGER "player_tendency_snapshots_no_delete" BEFORE DELETE ON "player_te
 
 CREATE TRIGGER "player_tendency_snapshots_successful_unit" BEFORE INSERT ON "player_tendency_snapshots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "native_player_sources" (
+  "player_source_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_player_index" INTEGER NOT NULL CHECK (source_player_index>=0),
+  "native_unique_id_raw" INTEGER CHECK (native_unique_id_raw BETWEEN 0 AND 65535),
+  "preserved_id_raw" INTEGER CHECK (preserved_id_raw BETWEEN 0 AND 4294967295),
+  "observed_name" TEXT,
+  "name_status" TEXT,
+  "native_team_id" INTEGER,
+  "current_core_roster_status" TEXT,
+  "current_roster_slot" INTEGER,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "canonical_link_status" TEXT,
+  UNIQUE ("unit_id","source_player_index")
+) STRICT;
+
+CREATE INDEX "idx_native_player_sources_unit_id" ON "native_player_sources" ("unit_id");
+
+CREATE INDEX "idx_native_player_sources_player_id" ON "native_player_sources" ("player_id");
+
+CREATE TRIGGER "native_player_sources_no_update" BEFORE UPDATE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_sources_no_delete" BEFORE DELETE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_sources_successful_unit" BEFORE INSERT ON "native_player_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "player_badge_values" (
   "badge_observation_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "badge_key" TEXT NOT NULL,
   "native_code" INTEGER,
   "tier_label" TEXT,
   "owned_state" TEXT NOT NULL CHECK (owned_state IN ('owned','not_owned','unknown')),
-  UNIQUE ("player_id","unit_id","badge_key")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "native_field_id" TEXT REFERENCES native_fields(field_id) ON DELETE RESTRICT,
+  "native_badge_id" INTEGER CHECK (native_badge_id BETWEEN 1 AND 98),
+  "native_kind" TEXT CHECK (native_kind IN ('BOOLEAN','LEVEL')),
+  "native_level_status" TEXT,
+  UNIQUE ("player_id","unit_id","badge_key"),
+  UNIQUE ("source_player_id","unit_id","badge_key"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_badge_values_player_id" ON "player_badge_values" ("player_id");
 
 CREATE INDEX "idx_player_badge_values_unit_id" ON "player_badge_values" ("unit_id");
+
+CREATE INDEX "idx_player_badge_values_source_player_id" ON "player_badge_values" ("source_player_id");
+
+CREATE INDEX "idx_player_badge_values_native_field_id" ON "player_badge_values" ("native_field_id");
 
 CREATE TRIGGER "player_badge_values_no_update" BEFORE UPDATE ON "player_badge_values" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -479,27 +516,33 @@ CREATE TRIGGER "player_play_type_slots_successful_unit" BEFORE INSERT ON "player
 
 CREATE TABLE "player_contract_observations" (
   "contract_obs_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "team_id" TEXT REFERENCES teams(team_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
-  "bird_years_raw" INTEGER,
-  "original_contract_years_raw" INTEGER,
-  "years_left_on_contract_raw" INTEGER,
-  "contract_option_raw" INTEGER,
-  "no_trade_raw" INTEGER,
-  "extension_length_raw" INTEGER,
-  "extension_option_raw" INTEGER,
-  "extension_no_trade_raw" INTEGER,
-  "contract_year_1_raw" INTEGER,
-  "contract_year_2_raw" INTEGER,
-  "contract_year_3_raw" INTEGER,
-  "contract_year_4_raw" INTEGER,
-  "contract_year_5_raw" INTEGER,
-  "contract_year_6_raw" INTEGER,
-  "contract_type_raw" INTEGER,
-  "euro_stash_years_left_raw" INTEGER,
-  "two_way_days_left_raw" INTEGER,
-  UNIQUE ("player_id","unit_id")
+  "bird_years_raw" INTEGER CHECK (bird_years_raw BETWEEN 0 AND 31),
+  "original_contract_years_raw" INTEGER CHECK (original_contract_years_raw BETWEEN 0 AND 7),
+  "years_left_on_contract_raw" INTEGER CHECK (years_left_on_contract_raw BETWEEN 0 AND 31),
+  "contract_option_raw" INTEGER CHECK (contract_option_raw BETWEEN 0 AND 3),
+  "no_trade_raw" INTEGER CHECK (no_trade_raw BETWEEN 0 AND 1),
+  "extension_length_raw" INTEGER CHECK (extension_length_raw BETWEEN 0 AND 7),
+  "extension_option_raw" INTEGER CHECK (extension_option_raw BETWEEN 0 AND 3),
+  "extension_no_trade_raw" INTEGER CHECK (extension_no_trade_raw BETWEEN 0 AND 1),
+  "contract_year_1_raw" INTEGER CHECK (contract_year_1_raw BETWEEN 0 AND 2147483647),
+  "contract_year_2_raw" INTEGER CHECK (contract_year_2_raw BETWEEN 0 AND 2147483647),
+  "contract_year_3_raw" INTEGER CHECK (contract_year_3_raw BETWEEN 0 AND 2147483647),
+  "contract_year_4_raw" INTEGER CHECK (contract_year_4_raw BETWEEN 0 AND 2147483647),
+  "contract_year_5_raw" INTEGER CHECK (contract_year_5_raw BETWEEN 0 AND 2147483647),
+  "contract_year_6_raw" INTEGER CHECK (contract_year_6_raw BETWEEN 0 AND 2147483647),
+  "contract_type_raw" INTEGER CHECK (contract_type_raw BETWEEN 0 AND 7),
+  "euro_stash_years_left_raw" INTEGER CHECK (euro_stash_years_left_raw BETWEEN 0 AND 7),
+  "two_way_days_left_raw" INTEGER CHECK (two_way_days_left_raw BETWEEN 0 AND 63),
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "native_contract_team_id_raw" INTEGER,
+  "contract_team_status" TEXT,
+  UNIQUE ("player_id","unit_id"),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_contract_observations_player_id" ON "player_contract_observations" ("player_id");
@@ -507,6 +550,8 @@ CREATE INDEX "idx_player_contract_observations_player_id" ON "player_contract_ob
 CREATE INDEX "idx_player_contract_observations_team_id" ON "player_contract_observations" ("team_id");
 
 CREATE INDEX "idx_player_contract_observations_unit_id" ON "player_contract_observations" ("unit_id");
+
+CREATE INDEX "idx_player_contract_observations_source_player_id" ON "player_contract_observations" ("source_player_id");
 
 CREATE TRIGGER "player_contract_observations_no_update" BEFORE UPDATE ON "player_contract_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -2090,32 +2135,6 @@ CREATE TRIGGER "native_player_stat_observations_no_delete" BEFORE DELETE ON "nat
 
 CREATE TRIGGER "native_player_stat_observations_successful_unit" BEFORE INSERT ON "native_player_stat_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
-CREATE TABLE "native_player_sources" (
-  "player_source_id" TEXT NOT NULL PRIMARY KEY,
-  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
-  "source_player_index" INTEGER NOT NULL CHECK (source_player_index>=0),
-  "native_unique_id_raw" INTEGER CHECK (native_unique_id_raw BETWEEN 0 AND 65535),
-  "preserved_id_raw" INTEGER CHECK (preserved_id_raw BETWEEN 0 AND 4294967295),
-  "observed_name" TEXT,
-  "name_status" TEXT,
-  "native_team_id" INTEGER,
-  "current_core_roster_status" TEXT,
-  "current_roster_slot" INTEGER,
-  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
-  "canonical_link_status" TEXT,
-  UNIQUE ("unit_id","source_player_index")
-) STRICT;
-
-CREATE INDEX "idx_native_player_sources_unit_id" ON "native_player_sources" ("unit_id");
-
-CREATE INDEX "idx_native_player_sources_player_id" ON "native_player_sources" ("player_id");
-
-CREATE TRIGGER "native_player_sources_no_update" BEFORE UPDATE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
-
-CREATE TRIGGER "native_player_sources_no_delete" BEFORE DELETE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
-
-CREATE TRIGGER "native_player_sources_successful_unit" BEFORE INSERT ON "native_player_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
-
 CREATE TABLE "native_player_stat_links" (
   "stat_link_id" TEXT NOT NULL PRIMARY KEY,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
@@ -2329,6 +2348,10 @@ CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients W
 CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;
 
 CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;
+
+CREATE TRIGGER player_badge_values_native_source_unit BEFORE INSERT ON player_badge_values WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_contract_observations_native_source_unit BEFORE INSERT ON player_contract_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 

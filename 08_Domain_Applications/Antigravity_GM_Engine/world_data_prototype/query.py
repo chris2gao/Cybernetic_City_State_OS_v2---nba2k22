@@ -61,8 +61,8 @@ def player_card(path,player_id):
                 if row and name=='player_attribute_snapshots' and col.name in RATING_COLUMNS:
                     fields[col.name]['decoded_candidate']=registered_rating_candidate(row['value'])
             result['families'][name]=fields
-        for name in ('player_badge_values','player_play_type_slots'):
-            result['families'][name]=history(path,name,entity_key='player_id',entity_id=player_id)
+        result['families']['player_badge_values']=player_badges(path,player_id)
+        result['families']['player_play_type_slots']=history(path,'player_play_type_slots',entity_key='player_id',entity_id=player_id)
     return result
 
 
@@ -327,6 +327,39 @@ def inspect_source_capture(path,unit_id):
         canonical=c.execute('SELECT count(*) FROM player_game_boxes WHERE unit_id=?',(unit_id,)).fetchone()[0]
         return {'unit':dict(unit),'typed_native_box_staging':staged,'period_sums':periods,
                 'canonical_player_box_rows':canonical,'gaps':gaps,'status':'RESEARCH_SOURCE_NOT_CANONICAL_PLAYER_ACCEPTANCE'}
+
+
+def player_badges(path,player_id):
+    with closing(connect(path,True)) as c:
+        rows=[dict(r) for r in c.execute('''WITH b AS (SELECT v.*,u.observed_at,r.source_grade,
+            row_number() OVER(PARTITION BY v.badge_key ORDER BY u.observed_at DESC,v.unit_id DESC) AS recency
+            FROM player_badge_values v JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+            WHERE v.player_id=?) SELECT * FROM b WHERE recency=1 ORDER BY native_badge_id,badge_key''',(player_id,))]
+        for row in rows:row.pop('recency')
+        return rows
+
+
+def native_player_details(path,*,subject_name=None,source_index=None,unit_id=None,after_index=-1,limit=10):
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('invalid player detail page')
+    if source_index is not None and (type(source_index) is not int or source_index<0):raise ValueError('invalid source index')
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            latest=c.execute("SELECT unit_id FROM capture_units WHERE source_key='BOUND_PLAYER_CONTRACT_AND_BASE_BADGES' AND unit_status='success' ORDER BY observed_at DESC,unit_id DESC LIMIT 1").fetchone()
+            if latest is None:return {'status':'NOT_OBSERVED','records':[],'unit_id':None,'has_more':False}
+            unit_id=latest['unit_id']
+        clauses=['p.unit_id=?','p.source_player_index>?'];args=[unit_id,after_index]
+        if subject_name is not None:clauses.append('p.observed_name LIKE ?');args.append('%'+subject_name+'%')
+        if source_index is not None:clauses.append('p.source_player_index=?');args.append(source_index)
+        rows=[dict(r) for r in c.execute('''SELECT p.*,u.observed_at,r.source_grade FROM native_player_sources p
+            JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE '''+' AND '.join(clauses)+' ORDER BY p.source_player_index LIMIT ?',args+[limit+1])]
+        more=len(rows)>limit;rows=rows[:limit]
+        for row in rows:
+            contract=c.execute('SELECT * FROM player_contract_observations WHERE source_player_id=? AND unit_id=?',(row['player_source_id'],unit_id)).fetchone()
+            row['contract']=dict(contract) if contract else None
+            row['base_badges']=[dict(r) for r in c.execute('SELECT * FROM player_badge_values WHERE source_player_id=? AND unit_id=? ORDER BY native_badge_id',(row['player_source_id'],unit_id))]
+        return {'records':rows,'unit_id':unit_id,'has_more':more,'next_after_index':rows[-1]['source_player_index'] if more else None,
+            'semantics':'Stored base badges, raw contract values and qualified current identities; effective context/UI/salary scale/lifecycle separate',
+            'legacy_column_aliases':{'original_contract_years_raw':'Native ContractLength; original-duration semantics not asserted','contract_type_raw':'Native RosterType; not a financial contract-type classification'}}
 
 
 def awards(path,*,year=None,award_code=None,after_key='',limit=200):
