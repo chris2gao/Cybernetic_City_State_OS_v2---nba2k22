@@ -4,7 +4,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE))
-from live_world import collect_world,world_payload,initialize_save,read_binding,POTENTIAL
+from live_world import collect_world,world_payload,initialize_save,read_binding,POTENTIAL,RESTRICTED_PLAYER_RANGES
 from live_reader import ROSTER_RVA
 from test_live_reader import FixtureReader
 from engine import create_database,connect,ingest_capture
@@ -25,7 +25,8 @@ class WorldMemory(FixtureReader):
         records=[]
         for n in ids:
             for duplicate in range(1 if no_total and n==ids[-1] else 2):
-                p=bytearray(template);p[POTENTIAL]=0xAB
+                p=bytearray(template)
+                for low,high in RESTRICTED_PLAYER_RANGES:p[low:high]=bytes([0xAB])*(high-low)
                 struct.pack_into('<H',p,0x2F8,n);struct.pack_into('<H',p,0xFC,0 if duplicate==0 or ambiguous else 65535)
                 if no_total and n==ids[-1]:struct.pack_into('<H',p,0xFC,65535)
                 struct.pack_into('<Q',p,0x60,self.teams);struct.pack_into('<Q',p,0xA8,self.teams)
@@ -44,8 +45,9 @@ class WorldMemory(FixtureReader):
     def read(self,address,size,label):
         if label=='WORLD_GAME_RECHECK' and self.changed:return b'\xff'*size
         for i in range(self.player_count):
-            excluded=self.players+i*1264+POTENTIAL
-            if address<=excluded<address+size:self.excluded_reads+=1;raise AssertionError('restricted byte requested')
+            for low,high in RESTRICTED_PLAYER_RANGES:
+                start=self.players+i*1264+low;end=self.players+i*1264+high
+                if address<end and address+size>start:self.excluded_reads+=1;raise AssertionError('restricted byte requested')
         for start,data in self.segments.items():
             if start<=address and address+size<=start+len(data):
                 self.calls.append((address,size,label));return data[address-start:address-start+size]
@@ -56,7 +58,7 @@ class LiveWorldTests(unittest.TestCase):
     def test_active_template_discrimination_routes_public_fields_and_boxes(self):
         reader=WorldMemory();found,manifest,blobs=collect_world(reader,0)
         self.assertEqual(reader.excluded_reads,0)
-        self.assertTrue(all(v[POTENTIAL]==0 for k,v in blobs.items() if k.endswith('.public.bin')))
+        self.assertTrue(all(not any(v[low:high]) for k,v in blobs.items() if k.endswith('.public.bin') for low,high in RESTRICTED_PLAYER_RANGES))
         self.assertTrue(all(x['selected_pool_index'] is not None and len(x['matched_indices'])==2 for x in manifest['player_links']))
         payload=world_payload({'save_id':'fixture','native_save_filename':'MyLEAGUE0003'},found,manifest,blobs,
             [{'sha256':'0'*64,'payload_kind':'SIMULATED_MEMORY'}],'2026-10-24T00:00:00Z','fixture-1')

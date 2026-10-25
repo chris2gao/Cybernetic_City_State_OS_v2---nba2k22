@@ -7,7 +7,7 @@ from contextlib import closing
 import json
 from pathlib import Path
 from engine import connect
-from schema_model import TABLES, ident
+from schema_model import TABLES, ident,NATIVE_PLAYER_STAT_MAP
 from family_codec import registered_rating_candidate,PROFILE
 
 RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_raw'
@@ -15,6 +15,7 @@ RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_r
 
 PUBLIC_TABLES=frozenset(name for name,t in TABLES.items() if t.public)
 ENTITY_KEYS=frozenset('player_id team_id staff_id game_id season_id prospect_id'.split())
+HONOR_QUERY_COLUMNS=tuple(NATIVE_PLAYER_STAT_MAP[n] for n in ('MVP','Champion','FinalsMVP','AllNBATeamRank','AllDefensiveTeamRank','AllRookieTeamRank','AllStarStarter','AllStarReserve','RookieOfTheYear','SixthManOfTheYear','DefensivePlayerOfTheYear','MostImprovedPlayer'))
 
 
 def history(path,table,*,entity_key=None,entity_id=None,limit=200,role='GM'):
@@ -42,6 +43,11 @@ def player_card(path,player_id):
         player=c.execute('SELECT * FROM players WHERE player_id=?',(player_id,)).fetchone()
         if player is None:return {'player_id':player_id,'status':'NOT_OBSERVED'}
         result={'player':dict(player),'families':{},'restricted_fields':'WITHHELD'}
+        identity=c.execute('''SELECT p.native_unique_id_raw,p.preserved_id_raw,p.canonical_link_status,u.observed_at,r.source_grade
+            FROM native_player_sources p JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+            WHERE p.player_id=? ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(player_id,)).fetchone()
+        result['native_identity_observation']=dict(identity) if identity else {'status':'NOT_OBSERVED'}
+        if player['native_player_id'] is not None:result['legacy_native_id_semantics']='Registered low16 of PLAYERDATA.PreservedId (+760); distinct from UniqueId (+244). Historical opaque player key preserved.'
         for name in ('player_vitals_observations','player_attribute_snapshots','player_tendency_snapshots','player_contract_observations','player_health_observations','player_morale_observations','player_training_observations'):
             fields={}
             for col in TABLES[name].columns:
@@ -135,6 +141,40 @@ def market_snapshot(path,*,team_id=None,limit=10000):
         return {'status':'OBSERVED_PARTIAL_MARKET_SOURCES','unit':dict(unit),'future_picks':picks,
             'waived_salary_source_observations':waived,'draft_pool_slots':slots,
             'free_agent_availability':'NOT_OBSERVED_BY_THIS_SOURCE','draft_results':'NOT_INFERRED_FROM_ASSET_OR_SLOT_STATE'}
+
+
+def native_honors(path,*,flag=None,year=None,subject_name=None,unit_id=None,after_index=-1,limit=200):
+    """Raw native selection/winner fields and every source subject reference."""
+    if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
+    if type(after_index) is not int or after_index< -1:raise ValueError('after_index must be >= -1')
+    if flag is not None and flag not in HONOR_QUERY_COLUMNS:raise ValueError('unregistered native honor field')
+    if year is not None and (type(year) is not int or not 1900<=year<=2155):raise ValueError('year outside native byte representation')
+    with closing(connect(path,True)) as c:
+        args=[];pin=''
+        if unit_id is not None:pin=' AND u.unit_id=?';args.append(unit_id)
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.season_id AS observation_season_id
+            FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_HONOR_STATS'
+            AND u.unit_status='success' '''+pin+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED'}
+        columns=(flag,) if flag else HONOR_QUERY_COLUMNS
+        where=' WHERE s.unit_id=? AND ('+' OR '.join('s.'+ident(k)+'>0' for k in columns)+')';args=[unit['unit_id']]
+        if year is not None:where+=' AND s.stat_year=?';args.append(year)
+        if subject_name is not None:
+            where+=''' AND EXISTS(SELECT 1 FROM native_player_stat_links l JOIN native_player_sources p USING(player_source_id)
+                WHERE l.stat_observation_id=s.stat_observation_id AND p.observed_name=? COLLATE NOCASE)''';args.append(subject_name)
+        total=c.execute('SELECT count(*) FROM native_player_stat_observations s'+where,args).fetchone()[0]
+        rows=[dict(r) for r in c.execute('SELECT s.* FROM native_player_stat_observations s'+where+
+            ' AND s.source_stat_index>? ORDER BY s.source_stat_index LIMIT ?',args+[after_index,limit+1])]
+        more=len(rows)>limit;rows=rows[:limit]
+        for row in rows:
+            subjects=[dict(r) for r in c.execute('''SELECT p.source_player_index,p.native_unique_id_raw,p.preserved_id_raw,p.observed_name,
+                p.player_id,p.canonical_link_status,p.current_core_roster_status,l.history_slot_index,l.link_status FROM native_player_stat_links l
+                JOIN native_player_sources p USING(player_source_id) WHERE l.stat_observation_id=? ORDER BY p.source_player_index,l.history_slot_index LIMIT 10001''',(row['stat_observation_id'],))]
+            if len(subjects)>10000:raise ValueError('source reference cap exceeded; no truncation')
+            row['source_subjects']=subjects;row['subject_status']='ALL_OBSERVED_SOURCE_REFERENCES; NO_ARBITRARY_OWNER_CHOICE' if subjects else 'NO_BOUND_SOURCE_SUBJECT'
+        return {'status':'OBSERVED_NATIVE_HONOR_FIELDS_WITH_SOURCE_REFERENCES','unit':dict(unit),'matching_native_stat_slots':total,
+            'records':rows,'has_more':more,'next_after_index':rows[-1]['source_stat_index'] if more else None,
+            'canonical_award_instances':'NOT_ESTABLISHED_BY_THIS_QUERY','reference_count_and_year':'OBSERVED_WORDS_NOT_ALLOCATION_OR_SEASON_CLOSURE_PROOF'}
 
 
 def record_book(path,*,category_code=None,subject_name=None,unit_id=None,after_index=-1,limit=200):

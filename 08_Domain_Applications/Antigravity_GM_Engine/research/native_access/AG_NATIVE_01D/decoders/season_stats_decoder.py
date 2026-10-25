@@ -31,7 +31,9 @@ class SeasonStatsDecoder:
 
         last_team = int.from_bytes(raw_stat[0:2], "little")
         previous_team = int.from_bytes(raw_stat[2:4], "little")
-        season_code = _extract_bitfield(raw_stat, 5, 7, 0)
+        # Current PLAYERSTATDATA metadata: CompactYear is an unsigned byte,
+        # not seven bits. Preserve years beyond 2027 without wrapping to 1900.
+        season_code = _extract_bitfield(raw_stat, 5, 8, 0)
         season_year = 1900 + season_code
 
         times = _extract_bitfield(raw_stat, 8, 7, 0)       # 出场次数 Games Played

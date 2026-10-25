@@ -167,7 +167,7 @@ def collect_planning(reader):
     blobs['training-id-projection.bin']=bytes(ids);blobs['training-flags-projection.bin']=bytes(flagbytes)
     first=teams[0];idx=first['stats_index']
     if not 0<=idx<tables[28]['count']:raise ValueError('current native season control missing')
-    raw=reader.read(tables[28]['address']+idx*62,62,'PLAN_SEASON_CONTROL');season_year=1900+(raw[4]&127)
+    raw=reader.read(tables[28]['address']+idx*62,62,'PLAN_SEASON_CONTROL');season_year=1900+raw[4]
     blobs['season-control.bin']=raw;controls.append((tables[28]['address']+idx*62,raw,'PLAN_SEASON_RECHECK'))
     for address,data,label in controls:
         if bounded_block(reader,address,len(data),label)!=data:raise ValueError('planning source changed during acquisition')

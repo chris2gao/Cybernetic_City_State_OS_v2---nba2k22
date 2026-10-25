@@ -70,7 +70,7 @@ def native_metadata(reader):
 
 
 def reconcile_team(raw,season,team_id):
-    totals=registered_fields(raw,'TEAM_STATS');year=1900+(raw[4]&127)
+    totals=registered_fields(raw,'TEAM_STATS');year=1900+raw[4]
     if totals['points']!=2*totals['made']+totals['3pt_made']+totals['free_throws_made']:
         raise ValueError('TEAM_STATS scoring identity failed for '+str(team_id))
     decoder=_module('boxscore_decoder').BoxScoreDecoder;wins=losses=points=opponent=0;games=0
