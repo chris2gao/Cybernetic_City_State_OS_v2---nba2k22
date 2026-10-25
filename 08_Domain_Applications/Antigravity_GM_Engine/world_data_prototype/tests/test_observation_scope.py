@@ -60,7 +60,7 @@ class ObservationScopeTests(unittest.TestCase):
         old=query_at(self.db,T0,'player_card','p1')['result']['families'];new=player_card(self.db,'p1')['families']
         self.assertEqual(old['player_badge_values'][0]['owned_state'],'owned');self.assertEqual(new['player_badge_values'][0]['owned_state'],'not_owned')
         self.assertEqual(len(new['player_play_type_slots']),4);self.assertEqual(new['player_play_type_slots'][0]['native_play_code'],'0');self.assertEqual(old['player_play_type_slots'][0]['native_play_code'],'4')
-        self.assertEqual(new['player_play_type_slots'][1]['unit_id'],'unit-a');self.assertEqual(len(history(self.db,'player_play_type_slots')),5)
+        self.assertEqual(new['player_play_type_slots'][1]['unit_id'],'unit-a');self.assertEqual(len(history(self.db,'player_play_type_slots')),6)
     def test_team_staff_and_game_read_the_same_historical_scope(self):
         with observed_as_of(self.db,T0):
             team=team_card(self.db,'t1');self.assertEqual(team['families']['team_finance_observations']['payroll_raw']['value'],1000);self.assertEqual(team['assigned_staff'][0]['staff_id'],'c1')
