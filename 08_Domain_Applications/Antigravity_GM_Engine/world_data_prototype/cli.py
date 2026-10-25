@@ -63,6 +63,8 @@ def main():
     inspect=sub.add_parser('inspect-source');inspect.add_argument('database');inspect.add_argument('unit_id')
     bound=sub.add_parser('init-save');bound.add_argument('save_directory');bound.add_argument('save_id');bound.add_argument('native_save_file')
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
+    from refresh import SOURCES
+    refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=int);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES))
     saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
     season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory')
     sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--limit',type=int,default=2000)
@@ -115,6 +117,12 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='refresh-world':
+        from refresh import refresh_world,RefreshFailed
+        try:result=refresh_world(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,families=args.families)
+        except RefreshFailed as error:
+            print(json.dumps(error.report,ensure_ascii=False));raise SystemExit(2) from None
+        print(json.dumps(result,ensure_ascii=False));return
     if args.action=='history-page':
         from query import history_page
         print(json.dumps(history_page(args.database,args.table,entity_key=args.entity_key,entity_id=args.entity_id,limit=args.limit,cursor=json.loads(args.cursor_json) if args.cursor_json else None),ensure_ascii=False));return
