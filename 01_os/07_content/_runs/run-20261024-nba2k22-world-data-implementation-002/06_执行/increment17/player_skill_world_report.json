@@ -1,0 +1,1126 @@
+{
+  "status": "NATIVE_PUBLIC_SKILL_BYTES_TO_TYPED_QUERY_VERIFIED_FULL_GOAL_INCOMPLETE",
+  "candidate_code_head": "e77d4fd6f263c4791ff6bbf2f63b74a107b3f9a5",
+  "schema": {
+    "save_id": "nba2k22_test_01",
+    "schema_version": 16,
+    "table_count": 84,
+    "column_count": 1306,
+    "game_count": 1232,
+    "box_observations": 11455,
+    "attribute_observations": 4201,
+    "capture_units": 18,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "LIVE_READ": 18
+    },
+    "nonempty_fact_tables": [
+      "team_finance_observations",
+      "team_training_settings",
+      "teams",
+      "native_identity_links",
+      "native_social_message_observations",
+      "player_contract_observations",
+      "staff_contract_observations",
+      "game_news_entries",
+      "player_play_type_slots",
+      "staff_skill_observations",
+      "season_record_entries",
+      "league_rule_observations",
+      "player_vitals_observations",
+      "staff_members",
+      "team_state_observations",
+      "native_mentor_relation_observations",
+      "native_box_observations",
+      "native_award_matrix_observations",
+      "gameplan_observations",
+      "native_league_capture_controls",
+      "mentor_manager_observations",
+      "coach_preferences",
+      "player_training_slot_observations",
+      "native_league_history_observations",
+      "mentorship_relations",
+      "native_transaction_item_observations",
+      "team_tactic_settings",
+      "player_game_boxes",
+      "staff_team_assignments",
+      "draft_pool_slot_observations",
+      "draft_pick_ownerships",
+      "gameplan_defense_observations",
+      "games",
+      "game_state_observations",
+      "team_season_totals",
+      "native_college_observations",
+      "season_award_instances",
+      "players",
+      "player_morale_observations",
+      "game_period_scores",
+      "native_player_stat_links",
+      "roster_memberships",
+      "team_playbook_slots",
+      "gameplan_rotation_observations",
+      "player_training_observations",
+      "award_recipients",
+      "player_attribute_snapshots",
+      "team_seasons",
+      "game_setting_observations",
+      "native_transaction_observations",
+      "field_gaps",
+      "draft_pick_assets",
+      "native_player_sources",
+      "waived_salary_observations",
+      "team_game_boxes",
+      "market_state_observations",
+      "native_player_stat_observations",
+      "player_health_observations",
+      "player_badge_values",
+      "player_season_totals",
+      "player_tendency_snapshots"
+    ]
+  },
+  "source_pid": 6212,
+  "unit_id": "player-skill:842230daefd491c6e04660eb",
+  "latest_counts": {
+    "native_fields": 160,
+    "native_player_sources": 3390,
+    "player_attribute_snapshots": 3390,
+    "player_tendency_snapshots": 3390,
+    "player_play_type_slots": 13560,
+    "field_gaps": 3
+  },
+  "source_to_typed_rows_compared": 23893,
+  "public_player_projections_redecoded": 3390,
+  "public_raw_attribute_fields": 56,
+  "native_raw_tendency_fields": 99,
+  "independent_initiator_flag": true,
+  "matched_current_roster_canonical_players": 461,
+  "play_code_counts": [
+    {
+      "native_play_code": "0",
+      "native_play_label": "NONE",
+      "rows": 4393
+    },
+    {
+      "native_play_code": "1",
+      "native_play_label": "ISOLATION",
+      "rows": 937
+    },
+    {
+      "native_play_code": "2",
+      "native_play_label": "ISO_POINT",
+      "rows": 1
+    },
+    {
+      "native_play_code": "3",
+      "native_play_label": "ISO_WING",
+      "rows": 9
+    },
+    {
+      "native_play_code": "4",
+      "native_play_label": "PNR_BALLHANDLER",
+      "rows": 1317
+    },
+    {
+      "native_play_code": "5",
+      "native_play_label": "PNR_POINT",
+      "rows": 200
+    },
+    {
+      "native_play_code": "6",
+      "native_play_label": "PNR_WING",
+      "rows": 383
+    },
+    {
+      "native_play_code": "7",
+      "native_play_label": "PNR_SCREENER",
+      "rows": 1089
+    },
+    {
+      "native_play_code": "8",
+      "native_play_label": "LOW_POST",
+      "rows": 862
+    },
+    {
+      "native_play_code": "9",
+      "native_play_label": "HIGH_POST",
+      "rows": 420
+    },
+    {
+      "native_play_code": "10",
+      "native_play_label": "GUARD_POST",
+      "rows": 333
+    },
+    {
+      "native_play_code": "11",
+      "native_play_label": "CUTTER",
+      "rows": 786
+    },
+    {
+      "native_play_code": "12",
+      "native_play_label": "HANDOFF",
+      "rows": 808
+    },
+    {
+      "native_play_code": "13",
+      "native_play_label": "SCREEN_MID",
+      "rows": 929
+    },
+    {
+      "native_play_code": "14",
+      "native_play_label": "SCREEN_3PT",
+      "rows": 1093
+    }
+  ],
+  "observed_raw_ranges": {
+    "driving_layup_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_fadeaway_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_hook_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_moves_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "draw_foul_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_close_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "mid_range_shot_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "three_point_shot_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "free_throw_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "ball_control_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "passing_iq_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "passing_accuracy_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "offensive_rebound_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "standing_dunk_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "driving_dunk_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_iq_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "passing_vision_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "hands_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "defensive_rebound_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "interior_defense_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "perimeter_defense_raw": {
+      "observed_min": 0,
+      "observed_max": 219,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "block_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "steal_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_contest_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "lateral_quickness_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "speed_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "speed_with_ball_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "acceleration_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "vertical_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "strength_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "stamina_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "hustle_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "head_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "neck_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "back_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "left_shoulder_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "right_shoulder_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "left_elbow_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "right_elbow_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "left_hip_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "right_hip_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "left_knee_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "right_knee_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "left_ankle_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "right_ankle_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "left_foot_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "right_foot_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "misc_durability_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "pass_perception_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "defensive_consistency_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "help_defensive_iq_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "offensive_consistency_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "pick_and_roll_defensive_iq_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "intangibles_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "emotion_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "reaction_time_raw": {
+      "observed_min": 0,
+      "observed_max": 222,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "driving_layup_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "standing_dunk_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "driving_dunk_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "flashy_dunk_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "alley_oop_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "putback_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "crash_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "spin_layup_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "hop_step_layup_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "euro_step_layup_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "floater_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "step_through_shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_under_basket_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_close_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_close_left_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_close_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_close_right_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_mid_range_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "spot_up_shot_mid_range_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "off_screen_shot_mid_range_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_medium_left_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_medium_left_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_medium_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_medium_right_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_medium_right_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_three_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "spot_up_shot_three_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "off_screen_shot_three_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_three_left_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_three_left_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_three_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_three_right_center_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "shot_area_three_right_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "contested_jumper_three_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "contested_jumper_mid_range_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "stepback_jumper_three_raw": {
+      "observed_min": 0,
+      "observed_max": 90,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "stepback_jumper_mid_range_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "spin_jumper_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "transition_pull_up_three_raw": {
+      "observed_min": 0,
+      "observed_max": 85,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "drive_pull_up_three_raw": {
+      "observed_min": 0,
+      "observed_max": 85,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "drive_pull_up_mid_range_raw": {
+      "observed_min": 0,
+      "observed_max": 78,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "use_glass_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "drive_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "spot_up_drive_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "off_screen_drive_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "drive_right_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "triple_threat_pump_fake_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "triple_threat_jab_step_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "triple_threat_nothing_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "triple_threat_shoot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "setup_sizeup_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "setup_hesitation_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "setup_nothing_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_crossover_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_spin_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 85,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_step_back_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_half_spin_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 91,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_double_cross_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 98,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_behind_back_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 77,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_hesitation_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 98,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_in_and_out_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dribble_nothing_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "attack_strong_on_drive_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "dish_to_open_man_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "touches_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_up_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "roll_vs_pop_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "transition_spot_up_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "iso_vs_elite_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 95,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "iso_vs_good_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 95,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "iso_vs_average_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "iso_vs_poor_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "play_discipline_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_shimmy_shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 97,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_face_up_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_back_down_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_aggressive_back_down_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_shoot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_hook_left_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 88,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_hook_right_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_fade_left_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_fade_right_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_up_and_under_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 94,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_hop_shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 94,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_stepback_shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 94,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_drive_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_spin_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 96,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_drop_step_outside_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "post_drop_step_inside_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 91,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "flashy_pass_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "alley_oop_pass_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "pass_interception_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "take_charge_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "on_ball_steal_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "contest_shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "block_shot_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "foul_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 99,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    },
+    "hard_foul_tendency_raw": {
+      "observed_min": 0,
+      "observed_max": 100,
+      "count": 3390,
+      "range_meaning": "OBSERVED_SAMPLE_NOT_UI_LEGAL_LIMIT"
+    }
+  },
+  "old_rows_preserved": 819997,
+  "old_v15_file_hash_unchanged": true,
+  "known_restricted_player_bytes_requested": 0,
+  "old_badges_state_and_affiliation_unchanged": true,
+  "pinned_skill_pages": 34,
+  "export_rows": {
+    "player_attribute_snapshots": 4201,
+    "player_tendency_snapshots": 4201,
+    "player_play_type_slots": 16804
+  },
+  "world_sqlite_sha256": "466d3eeaf7bda194cdba7f26f6013227a9c2a569084ee450a665792746135932",
+  "world_sqlite_bytes": 555216896,
+  "compressed_world_bytes": 58275635,
+  "game_writes": false,
+  "full_goal_complete": false,
+  "independent_review": false,
+  "limits": [
+    "Raw storage does not certify UI rating transforms, legal UI ranges or effective behavior.",
+    "Current Overall getter/cache, lifecycle identities, remaining domains, role/capacity/recovery and final independent/Human acceptance remain open."
+  ]
+}
