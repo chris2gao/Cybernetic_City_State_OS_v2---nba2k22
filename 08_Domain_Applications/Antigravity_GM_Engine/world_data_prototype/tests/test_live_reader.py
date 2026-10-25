@@ -42,7 +42,7 @@ class LiveReaderBoundaryTests(unittest.TestCase):
 
     def test_outside_capacity_does_not_read(self):
         r=FixtureReader()
-        with self.assertRaises(ValueError):collect_known_game(r,1232)
+        with self.assertRaises(ValueError):collect_known_game(r,1742)
         self.assertEqual(r.calls,[])
 
     def test_invalid_participant_count_does_not_read_statbank(self):
