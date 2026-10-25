@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 17
+VERSION = 18
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -466,9 +466,22 @@ table('game_source_checks','check_id','RES-G','one current game-header check and
     G(),U(),col('header_sha256',required=True,check='length(header_sha256)=64',source='SHA256 of the actually read 60-byte SEASON game header'),
     col('box_sha256',check='box_sha256 IS NULL OR length(box_sha256)=64',source='SHA256 of actually read Native Box bytes; NULL when not read'),
     col('box_mode',required=True,check="box_mode IN ('FULL_NATIVE_BOX','REUSED_FROZEN_BOX','HEADER_ONLY_NOT_FINAL')"),
-    ref('prior_full_unit_id','capture_units','unit_id',False),col('game_status_raw','INTEGER',required=True,check='game_status_raw IN (0,1,2)'),
+    ref('prior_full_unit_id','capture_units','unit_id',False),col('game_status_raw','INTEGER',required=True,check='game_status_raw IN (0,1,2,3)'),
     col('reuse_basis',required=True,source='Explicit header check/frozen-source reuse; never asserts that unread Native Box bytes were unchanged')],
-    unique=[('game_id','unit_id')],checks=["(box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1))"])
+    unique=[('game_id','unit_id')],checks=["(box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1,3))"])
+
+from calendar_codec import PROFILE as CALENDAR_PROFILE,DATE_FIELDS as CALENDAR_DATE_FIELDS,DATE_TEXT as CALENDAR_DATE_TEXT,GAME_FIELDS as CALENDAR_GAME_FIELDS,GAME_LABELS as CALENDAR_GAME_LABELS
+def _calendar_date_columns(prefix):
+    return [col(prefix+name,'INTEGER',check=f'{prefix+name} BETWEEN 0 AND {(1<<width)-1}',source='CURRENT_NATIVE.SCHEDULEDATE; calendar_native_profile.json',unit='native packed date component') for name,width in CALENDAR_DATE_FIELDS.items()]+[
+        col(prefix+name,source='Native month enum / derived named date components; epoch2000 code verified; no UI/timezone assertion',meaning='NULL normalized strings mean invalid/unset source date or time; raw components remain available') for name in CALENDAR_DATE_TEXT]
+for _prefix in ('scheduled_','played_'):TABLES['game_source_checks'].columns+=_calendar_date_columns(_prefix)
+for _column,_name in CALENDAR_GAME_FIELDS.items():
+    _f=CALENDAR_PROFILE['bindings']['SEASON_GAME'][_name];TABLES['game_source_checks'].columns.append(col(_column,'INTEGER',check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',source=f'CURRENT_NATIVE.SEASON_GAME.{_name}',unit='native unsigned storage'))
+TABLES['game_source_checks'].columns += [col(name,source='Current exact native enum; unknown code retains NULL label') for name in (*CALENDAR_GAME_LABELS,'status_label')]
+table('season_calendar_observations','calendar_id','RES-L','one observed SEASON calendar/period and native schedule-control window',[
+    S(),U()]+_calendar_date_columns('current_')+[
+    col('period_raw','INTEGER',check='period_raw BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.SEASON.Period; SEASON_TIMEPERIOD enum'),col('period_label',source='Exact native SEASON_TIMEPERIOD label, not a franchise offseason substage'),
+    *[col(name,'INTEGER',check=f'{name} BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.SEASON / SEASON_SCHEDULE / BOXSCORE_STATBANK named scalar; no sentinel or index semantics inferred') for name in ('current_index_raw','next_index_raw','declared_game_count_raw','source_slot10_count_raw','game_capacity_verified','next_game_id_raw','allstar_game_index_raw','rookie_sophomore_game_index_raw','box_current_stat_line_raw','box_stat_capacity_verified')]],unique=[('season_id','unit_id')])
 
 _native_stat_profile=json.loads((BASE/'award_native_profile.json').read_bytes())
 _native_stat_cols=[]

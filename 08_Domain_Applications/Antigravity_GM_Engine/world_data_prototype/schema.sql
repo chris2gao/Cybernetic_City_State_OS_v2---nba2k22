@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=17),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=18),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -2283,10 +2283,46 @@ CREATE TABLE "game_source_checks" (
   "box_sha256" TEXT CHECK (box_sha256 IS NULL OR length(box_sha256)=64),
   "box_mode" TEXT NOT NULL CHECK (box_mode IN ('FULL_NATIVE_BOX','REUSED_FROZEN_BOX','HEADER_ONLY_NOT_FINAL')),
   "prior_full_unit_id" TEXT REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
-  "game_status_raw" INTEGER NOT NULL CHECK (game_status_raw IN (0,1,2)),
+  "game_status_raw" INTEGER NOT NULL CHECK (game_status_raw IN (0,1,2,3)),
   "reuse_basis" TEXT NOT NULL,
+  "scheduled_word_raw" INTEGER CHECK (scheduled_word_raw BETWEEN 0 AND 4294967295),
+  "scheduled_id_raw" INTEGER CHECK (scheduled_id_raw BETWEEN 0 AND 31),
+  "scheduled_minutes_since_midnight_raw" INTEGER CHECK (scheduled_minutes_since_midnight_raw BETWEEN 0 AND 2047),
+  "scheduled_day_raw" INTEGER CHECK (scheduled_day_raw BETWEEN 0 AND 31),
+  "scheduled_month_raw" INTEGER CHECK (scheduled_month_raw BETWEEN 0 AND 15),
+  "scheduled_base_year_offset_raw" INTEGER CHECK (scheduled_base_year_offset_raw BETWEEN 0 AND 127),
+  "scheduled_month_label" TEXT,
+  "scheduled_native_iso_date" TEXT,
+  "scheduled_native_time_hhmm" TEXT,
+  "scheduled_decode_status" TEXT,
+  "played_word_raw" INTEGER CHECK (played_word_raw BETWEEN 0 AND 4294967295),
+  "played_id_raw" INTEGER CHECK (played_id_raw BETWEEN 0 AND 31),
+  "played_minutes_since_midnight_raw" INTEGER CHECK (played_minutes_since_midnight_raw BETWEEN 0 AND 2047),
+  "played_day_raw" INTEGER CHECK (played_day_raw BETWEEN 0 AND 31),
+  "played_month_raw" INTEGER CHECK (played_month_raw BETWEEN 0 AND 15),
+  "played_base_year_offset_raw" INTEGER CHECK (played_base_year_offset_raw BETWEEN 0 AND 127),
+  "played_month_label" TEXT,
+  "played_native_iso_date" TEXT,
+  "played_native_time_hhmm" TEXT,
+  "played_decode_status" TEXT,
+  "time_period_raw" INTEGER CHECK (time_period_raw BETWEEN 0 AND 7),
+  "game_type_raw" INTEGER CHECK (game_type_raw BETWEEN 0 AND 3),
+  "force_winner_raw" INTEGER CHECK (force_winner_raw BETWEEN 0 AND 7),
+  "home_uniform_id_raw" INTEGER CHECK (home_uniform_id_raw BETWEEN 0 AND 65535),
+  "away_uniform_id_raw" INTEGER CHECK (away_uniform_id_raw BETWEEN 0 AND 65535),
+  "was_simulated_raw" INTEGER CHECK (was_simulated_raw BETWEEN 0 AND 1),
+  "was_sim_to_end_raw" INTEGER CHECK (was_sim_to_end_raw BETWEEN 0 AND 1),
+  "is_foreign_site_raw" INTEGER CHECK (is_foreign_site_raw BETWEEN 0 AND 1),
+  "is_selected_raw" INTEGER CHECK (is_selected_raw BETWEEN 0 AND 1),
+  "is_nationally_televised_raw" INTEGER CHECK (is_nationally_televised_raw BETWEEN 0 AND 1),
+  "overtime_count_raw" INTEGER CHECK (overtime_count_raw BETWEEN 0 AND 63),
+  "attendance_raw" INTEGER CHECK (attendance_raw BETWEEN 0 AND 32767),
+  "time_period_label" TEXT,
+  "game_type_label" TEXT,
+  "force_winner_label" TEXT,
+  "status_label" TEXT,
   UNIQUE ("game_id","unit_id"),
-  CHECK ((box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1)))
+  CHECK ((box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1,3)))
 ) STRICT;
 
 CREATE INDEX "idx_game_source_checks_game_id" ON "game_source_checks" ("game_id");
@@ -2300,6 +2336,45 @@ CREATE TRIGGER "game_source_checks_no_update" BEFORE UPDATE ON "game_source_chec
 CREATE TRIGGER "game_source_checks_no_delete" BEFORE DELETE ON "game_source_checks" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "game_source_checks_successful_unit" BEFORE INSERT ON "game_source_checks" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "season_calendar_observations" (
+  "calendar_id" TEXT NOT NULL PRIMARY KEY,
+  "season_id" TEXT NOT NULL REFERENCES seasons(season_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "current_word_raw" INTEGER CHECK (current_word_raw BETWEEN 0 AND 4294967295),
+  "current_id_raw" INTEGER CHECK (current_id_raw BETWEEN 0 AND 31),
+  "current_minutes_since_midnight_raw" INTEGER CHECK (current_minutes_since_midnight_raw BETWEEN 0 AND 2047),
+  "current_day_raw" INTEGER CHECK (current_day_raw BETWEEN 0 AND 31),
+  "current_month_raw" INTEGER CHECK (current_month_raw BETWEEN 0 AND 15),
+  "current_base_year_offset_raw" INTEGER CHECK (current_base_year_offset_raw BETWEEN 0 AND 127),
+  "current_month_label" TEXT,
+  "current_native_iso_date" TEXT,
+  "current_native_time_hhmm" TEXT,
+  "current_decode_status" TEXT,
+  "period_raw" INTEGER CHECK (period_raw BETWEEN 0 AND 4294967295),
+  "period_label" TEXT,
+  "current_index_raw" INTEGER CHECK (current_index_raw BETWEEN 0 AND 4294967295),
+  "next_index_raw" INTEGER CHECK (next_index_raw BETWEEN 0 AND 4294967295),
+  "declared_game_count_raw" INTEGER CHECK (declared_game_count_raw BETWEEN 0 AND 4294967295),
+  "source_slot10_count_raw" INTEGER CHECK (source_slot10_count_raw BETWEEN 0 AND 4294967295),
+  "game_capacity_verified" INTEGER CHECK (game_capacity_verified BETWEEN 0 AND 4294967295),
+  "next_game_id_raw" INTEGER CHECK (next_game_id_raw BETWEEN 0 AND 4294967295),
+  "allstar_game_index_raw" INTEGER CHECK (allstar_game_index_raw BETWEEN 0 AND 4294967295),
+  "rookie_sophomore_game_index_raw" INTEGER CHECK (rookie_sophomore_game_index_raw BETWEEN 0 AND 4294967295),
+  "box_current_stat_line_raw" INTEGER CHECK (box_current_stat_line_raw BETWEEN 0 AND 4294967295),
+  "box_stat_capacity_verified" INTEGER CHECK (box_stat_capacity_verified BETWEEN 0 AND 4294967295),
+  UNIQUE ("season_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_season_calendar_observations_season_id" ON "season_calendar_observations" ("season_id");
+
+CREATE INDEX "idx_season_calendar_observations_unit_id" ON "season_calendar_observations" ("unit_id");
+
+CREATE TRIGGER "season_calendar_observations_no_update" BEFORE UPDATE ON "season_calendar_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "season_calendar_observations_no_delete" BEFORE DELETE ON "season_calendar_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "season_calendar_observations_successful_unit" BEFORE INSERT ON "season_calendar_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "native_player_stat_observations" (
   "stat_observation_id" TEXT NOT NULL PRIMARY KEY,
