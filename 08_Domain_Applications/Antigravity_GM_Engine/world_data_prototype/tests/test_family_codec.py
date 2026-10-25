@@ -23,7 +23,10 @@ class RegisteredFamilyTests(unittest.TestCase):
         self.assertEqual(data['contracts']['original_contract_years_raw'],5)
         self.assertEqual(data['contracts']['extension_length_raw'],3)
         self.assertFalse(profile_layout_receipt()['registered_bits_overlap'])
-        self.assertEqual(profile_layout_receipt()['current_game_semantics'],'UNKNOWN_PENDING_TARGET_UI_OR_NATIVE_CONTROL')
+        receipt=profile_layout_receipt()
+        self.assertEqual(receipt['current_native_contract_bindings']['original_contract_years']['native_name'],'ContractLength')
+        self.assertEqual(receipt['current_native_contract_bindings']['extension_length']['start_bit'],15)
+        self.assertIn('salary scale, sentinels and target UI separate',receipt['current_game_semantics'])
 
     def test_truncated_cross_byte_field_is_not_silently_decoded(self):
         with self.assertRaisesRegex(ValueError,'incomplete'):

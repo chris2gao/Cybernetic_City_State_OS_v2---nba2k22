@@ -8,6 +8,7 @@ import json
 import importlib.util
 from functools import lru_cache
 from schema_model import PROFILE,PLAYER_CONFIG,DOMAIN
+from player_detail_codec import native_contracts,LAYOUT as CONTRACT_LAYOUT,PROFILE as DETAIL_PROFILE
 
 
 @lru_cache(maxsize=1)
@@ -51,13 +52,12 @@ def extract_unsigned(raw,definition):
 def public_player_families(raw):
     if len(raw)!=PROFILE['record_bytes']['PLAYER']:
         raise ValueError('PLAYER record must be exactly registered length')
-    attrs={};contracts={}
+    attrs={};contracts={**native_contracts(raw),'layout_version':CONTRACT_LAYOUT}
     for definition in PROFILE['fields']['PLAYER']:
         name=definition['name']
-        if name=='potential':continue
+        if name=='potential' or definition['group']=='contract':continue
         value=extract_unsigned(raw,definition)
         if definition['group']=='attributes':attrs[('three_point_shot' if name=='3pt_shot' else name)+'_raw']=value
-        elif definition['group']=='contract':contracts[name+'_raw']=value
     tendencies={}
     for name,offset in PLAYER_CONFIG['TENDENCY_OFFSETS'].items():
         if not 0<=offset<len(raw):raise ValueError('tendency outside PLAYER')
@@ -68,10 +68,10 @@ def public_player_families(raw):
     vitals={'last_name':decode_fixed_utf16(raw[0:40]),
             'first_name':decode_fixed_utf16(raw[40:80])}
     return {'attributes':attrs,'contracts':contracts,'tendencies':tendencies,'play_types':play_types,'vitals':vitals,
-            'source_status':'REGISTERED_LAYOUT_RESEARCH_FIXTURE_NOT_LIVE_UI_ACCEPTANCE',
+            'source_status':'REGISTERED_PUBLIC_FAMILIES; CONTRACT_LAYOUT_CURRENT_NATIVE_PROFILE; NOT_UI_ACCEPTANCE',
             'family_completeness':{'attributes':'ALL_PUBLIC_REGISTERED_FIELDS','contracts':'ALL_REGISTERED_FIELDS',
                                    'tendencies':'NAMED_FIELDS_ONLY_NOT_ENTIRE_NATIVE_TENDENCY_FAMILY',
-                                   'play_types':'FOUR_ORDERED_REGISTERED_SLOTS','badges':'UNKNOWN_ENCODING_NOT_DECODED'}}
+                                   'play_types':'FOUR_ORDERED_REGISTERED_SLOTS','badges':'SEPARATE_NATIVE_DETAIL_CAPTURE; NOT_INCLUDED_BY_THIS_REGISTERED_FAMILY_FUNCTION'}}
 
 
 def profile_layout_receipt():
@@ -84,5 +84,7 @@ def profile_layout_receipt():
             'original_contract_years':{'definition':a,'absolute_bit_span':sa},
             'extension_length':{'definition':b,'absolute_bit_span':sb},
             'registered_bits_overlap':max(sa[0],sb[0])<=min(sa[1],sb[1]),
-            'current_game_semantics':'UNKNOWN_PENDING_TARGET_UI_OR_NATIVE_CONTROL',
+            'current_native_contract_bindings':{name:{k:f[k] for k in ('native_name','offset','start_bit','width')} for name,f in DETAIL_PROFILE['contract_fields'].items()},
+            'native_width_corrections':[r for r in DETAIL_PROFILE['contract_width_comparison'] if r['old_width']!=r['native_width']],
+            'current_game_semantics':'Native field layout/option/roster enums verified; salary scale, sentinels and target UI separate',
             'profile_sha256':hashlib.sha256(json.dumps(PROFILE,sort_keys=True).encode()).hexdigest()}

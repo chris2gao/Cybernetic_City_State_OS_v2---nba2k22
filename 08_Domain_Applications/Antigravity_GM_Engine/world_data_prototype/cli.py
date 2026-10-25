@@ -84,7 +84,19 @@ def main():
     history_cmd=sub.add_parser('league-history');history_cmd.add_argument('database');history_cmd.add_argument('--year',type=int);history_cmd.add_argument('--type-label');history_cmd.add_argument('--unit-id');history_cmd.add_argument('--after-index',type=int,default=-1);history_cmd.add_argument('--limit',type=int,default=200)
     news_cmd=sub.add_parser('native-news');news_cmd.add_argument('database');news_cmd.add_argument('--event-label');news_cmd.add_argument('--unit-id');news_cmd.add_argument('--after-index',type=int,default=-1);news_cmd.add_argument('--limit',type=int,default=200)
     tx_cmd=sub.add_parser('native-transactions');tx_cmd.add_argument('database');tx_cmd.add_argument('--unit-id')
+    detail_capture=sub.add_parser('capture-player-details');detail_capture.add_argument('pid',type=int);detail_capture.add_argument('save_directory');detail_capture.add_argument('loaded_filename');detail_capture.add_argument('new_output_directory')
+    detail_query=sub.add_parser('native-player-details');detail_query.add_argument('database');detail_query.add_argument('--subject-name');detail_query.add_argument('--source-index',type=int);detail_query.add_argument('--unit-id');detail_query.add_argument('--after-index',type=int,default=-1);detail_query.add_argument('--limit',type=int,default=10)
+    badge_query=sub.add_parser('player-badges');badge_query.add_argument('database');badge_query.add_argument('player_id')
     args=parser.parse_args()
+    if args.action=='capture-player-details':
+        from player_detail_reader import capture_player_details
+        print(json.dumps(capture_player_details(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='native-player-details':
+        from query import native_player_details
+        print(json.dumps(native_player_details(args.database,subject_name=args.subject_name,source_index=args.source_index,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+    if args.action=='player-badges':
+        from query import player_badges
+        print(json.dumps(player_badges(args.database,args.player_id),ensure_ascii=False));return
     if args.action in ('capture-league-history','capture-news'):
         from league_ingest import capture_league
         print(json.dumps(capture_league(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,mode='HISTORY_AWARDS' if args.action=='capture-league-history' else 'NEWS_TRANSACTIONS'),ensure_ascii=False));return
