@@ -6,7 +6,7 @@ raw materials, restricted metadata, owner transaction/control and native news.
 from contextlib import closing
 import json
 from pathlib import Path
-from engine import connect
+from observation_scope import query_connection as connect
 from schema_model import TABLES, ident,NATIVE_PLAYER_STAT_MAP
 from family_codec import registered_rating_candidate,PROFILE
 
@@ -16,6 +16,38 @@ RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_r
 PUBLIC_TABLES=frozenset(name for name,t in TABLES.items() if t.public)
 ENTITY_KEYS=frozenset('player_id team_id staff_id game_id season_id prospect_id'.split())
 HONOR_QUERY_COLUMNS=tuple(NATIVE_PLAYER_STAT_MAP[n] for n in ('MVP','Champion','FinalsMVP','AllNBATeamRank','AllDefensiveTeamRank','AllRookieTeamRank','AllStarStarter','AllStarReserve','RookieOfTheYear','SixthManOfTheYear','DefensivePlayerOfTheYear','MostImprovedPlayer'))
+
+
+def history_page(path,table,*,entity_key=None,entity_id=None,limit=200,cursor=None):
+    """Complete keyset paging over one fixed successful observation ledger."""
+    from datetime import datetime,timezone
+    from observation_scope import current_scope,observed_as_of
+    if table not in PUBLIC_TABLES:raise PermissionError('owner-only or unknown dataset')
+    if type(limit) is not int or not 1<=limit<=1000:raise ValueError('history page limit must be 1..1000')
+    spec=TABLES[table];columns={c.name for c in spec.columns}
+    if 'unit_id' not in columns:raise ValueError('history pages require an observed source-unit table')
+    if entity_key is not None and (entity_key not in ENTITY_KEYS or entity_key not in columns or not isinstance(entity_id,str)):raise ValueError('invalid historical entity filter')
+    target={'table':table,'entity_key':entity_key,'entity_id':entity_id}
+    if cursor is not None:
+        if not isinstance(cursor,dict) or set(cursor)!={'format','observed_through','scope_sha256','target','observed_at','record_key'} or cursor['format']!='WORLD_HISTORY_CURSOR_V1' or cursor['target']!=target or not isinstance(cursor['record_key'],str):raise ValueError('invalid history cursor')
+    scope=current_scope()
+    if scope is None:
+        cutoff=cursor['observed_through'] if cursor else datetime.now(timezone.utc).isoformat()
+        with observed_as_of(path,cutoff):return history_page(path,table,entity_key=entity_key,entity_id=entity_id,limit=limit,cursor=cursor)
+    if cursor and (cursor['scope_sha256']!=scope.fingerprint or cursor['observed_through']!=scope.observed_through):raise ValueError('history observation ledger changed; restart paging with a new scope')
+    where=[];args=[]
+    if entity_key is not None:where.append('t.'+ident(entity_key)+'=?');args.append(entity_id)
+    if cursor:
+        from observation_scope import utc_stamp
+        stamp=utc_stamp(cursor['observed_at']);where.append('(u.observed_at<? OR (u.observed_at=? AND t.'+ident(spec.key)+'<?))');args.extend((stamp,stamp,cursor['record_key']))
+    sql='SELECT t.*,u.observed_at,u.effective_at,u.completeness,r.source_grade FROM '+ident(table)+' t JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)'
+    if where:sql+=' WHERE '+' AND '.join(where)
+    sql+=' ORDER BY u.observed_at DESC,t.'+ident(spec.key)+' DESC LIMIT ?'
+    with closing(connect(path,True)) as c:rows=[dict(r) for r in c.execute(sql,args+[limit+1])]
+    more=len(rows)>limit;rows=rows[:limit];next_cursor=None
+    if more:
+        last=rows[-1];next_cursor={'format':'WORLD_HISTORY_CURSOR_V1','observed_through':scope.observed_through,'scope_sha256':scope.fingerprint,'target':target,'observed_at':last['observed_at'],'record_key':last[spec.key]}
+    return {'records':rows,'has_more':more,'next_cursor':next_cursor,'observation_scope':scope.metadata()}
 
 
 def history(path,table,*,entity_key=None,entity_id=None,limit=200,role='GM'):
@@ -62,7 +94,7 @@ def player_card(path,player_id):
                     fields[col.name]['decoded_candidate']=registered_rating_candidate(row['value'])
             result['families'][name]=fields
         result['families']['player_badge_values']=player_badges(path,player_id)
-        result['families']['player_play_type_slots']=history(path,'player_play_type_slots',entity_key='player_id',entity_id=player_id)
+        result['families']['player_play_type_slots']=player_play_types(path,player_id)
     return result
 
 
@@ -335,6 +367,17 @@ def player_badges(path,player_id):
             row_number() OVER(PARTITION BY v.badge_key ORDER BY u.observed_at DESC,v.unit_id DESC) AS recency
             FROM player_badge_values v JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
             WHERE v.player_id=?) SELECT * FROM b WHERE recency=1 ORDER BY native_badge_id,badge_key''',(player_id,))]
+        for row in rows:row.pop('recency')
+        return rows
+
+
+def player_play_types(path,player_id):
+    """Latest observed value of each ordered slot; all raw observations stay in history."""
+    with closing(connect(path,True)) as c:
+        rows=[dict(r) for r in c.execute('''WITH slots AS (SELECT p.*,u.observed_at,r.source_grade,
+            row_number() OVER(PARTITION BY p.slot_index ORDER BY u.observed_at DESC,p.unit_id DESC) AS recency
+            FROM player_play_type_slots p JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+            WHERE p.player_id=? AND p.native_play_code IS NOT NULL) SELECT * FROM slots WHERE recency=1 ORDER BY slot_index''',(player_id,))]
         for row in rows:row.pop('recency')
         return rows
 
