@@ -67,7 +67,8 @@ def main():
     refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=int);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES))
     saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
     season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory');season_capture.add_argument('--recheck-frozen',action='store_true')
-    sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--limit',type=int,default=2000)
+    sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--period-code',type=int);sched.add_argument('--game-type-code',type=int);sched.add_argument('--native-date-from');sched.add_argument('--native-date-to');sched.add_argument('--limit',type=int,default=2000)
+    calendar=sub.add_parser('calendar');calendar.add_argument('database');calendar.add_argument('--season-id');calendar.add_argument('--limit',type=int,default=20)
     org=sub.add_parser('capture-organization');org.add_argument('pid',type=int);org.add_argument('save_directory');org.add_argument('loaded_filename');org.add_argument('new_output_directory')
     team=sub.add_parser('team');team.add_argument('database');team.add_argument('team_id')
     staff=sub.add_parser('staff');staff.add_argument('database');staff.add_argument('staff_id')
@@ -103,7 +104,7 @@ def main():
     restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
     storage=sub.add_parser('storage-profile');storage.add_argument('database')
     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
-    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
+    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
     if getattr(args,'as_of',None) is not None:
@@ -117,6 +118,9 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='calendar':
+        from query import league_calendar
+        print(json.dumps(league_calendar(args.database,season_id=args.season_id,limit=args.limit),ensure_ascii=False));return
     if args.action=='refresh-world':
         from refresh import refresh_world,RefreshFailed
         try:result=refresh_world(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,families=args.families)
@@ -205,7 +209,7 @@ def dispatch(args):
         print(json.dumps(capture_organization(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
     if args.action=='team':print(json.dumps(team_card(args.database,args.team_id),ensure_ascii=False));return
     if args.action=='staff':print(json.dumps(staff_card(args.database,args.staff_id),ensure_ascii=False));return
-    if args.action=='schedule':print(json.dumps(schedule(args.database,season_id=args.season_id,status_code=args.status_code,limit=args.limit),ensure_ascii=False));return
+    if args.action=='schedule':print(json.dumps(schedule(args.database,season_id=args.season_id,status_code=args.status_code,period_code=args.period_code,game_type_code=args.game_type_code,native_date_from=args.native_date_from,native_date_to=args.native_date_to,limit=args.limit),ensure_ascii=False));return
     if args.action=='upgrade-save':
         from live_world import upgrade_bound_save
         print(json.dumps(upgrade_bound_save(args.save_directory,args.loaded_filename)));return

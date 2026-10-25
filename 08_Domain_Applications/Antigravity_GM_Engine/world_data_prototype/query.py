@@ -310,29 +310,61 @@ def game_box(path,game_id,*,unit_id=None):
     return game_box_snapshot(path,game_id,unit_id=unit_id)
 
 
-def schedule(path,*,season_id=None,status_code=None,limit=2000):
+def league_calendar(path,*,season_id=None,limit=20):
+    from observation_scope import utc_stamp
+    if type(limit) is not int or not 1<=limit<=1000:raise ValueError('calendar limit must be1..1000')
+    with closing(connect(path,True)) as c:
+        c.create_function('calendar_utc',1,utc_stamp,deterministic=True)
+        where=' AND a.season_id=?' if season_id else '';args=[season_id] if season_id else []
+        rows=[dict(r) for r in c.execute('''WITH ranked AS (SELECT a.*,u.observed_at,u.effective_at,u.completeness,r.source_grade,
+            row_number() OVER(PARTITION BY a.season_id ORDER BY calendar_utc(u.observed_at) DESC,u.unit_id DESC) AS recency
+            FROM season_calendar_observations a JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE u.unit_status='success' '''+where+''')
+            SELECT * FROM ranked WHERE recency=1 ORDER BY season_id''',args)]
+    if len(rows)>limit:raise ValueError('calendar exceeds explicit cap; no truncation')
+    for row in rows:row.pop('recency')
+    return {'records':rows,'scope':'Current named Native SEASON calendar/period; not the phase of every cumulative stat or franchise offseason substage','timezone':'NOT_OBSERVED','ui_calendar_acceptance':'NOT_ASSERTED'}
+
+
+def schedule(path,*,season_id=None,status_code=None,period_code=None,game_type_code=None,native_date_from=None,native_date_to=None,limit=2000):
     """Latest observed schedule state; scores only from complete canonical Boxes."""
     if type(limit) is not int or not 1<=limit<=10000:raise ValueError('limit must be 1..10000')
-    if status_code is not None and status_code not in ('0','1','2'):raise ValueError('native status must be 0, 1 or 2')
+    if status_code is not None and status_code not in ('0','1','2','3'):raise ValueError('native status must be0..3 including POSTPONED')
     clauses=[];args=[]
     if season_id is not None:clauses.append('g.season_id=?');args.append(season_id)
     if status_code is not None:clauses.append('s.status_code=?');args.append(status_code)
+    for column,value,bound in [('time_period_raw',period_code,7),('game_type_raw',game_type_code,3)]:
+        if value is not None:
+            if type(value) is not int or not 0<=value<=bound:raise ValueError('invalid native classification code')
+            clauses.append('hc.'+column+'=?');args.append(value)
+    from datetime import date
+    for value,operator in ((native_date_from,'>='),(native_date_to,'<=')):
+        if value is not None:
+            try:valid=date.fromisoformat(value).isoformat()==value
+            except (TypeError,ValueError):valid=False
+            if not valid:raise ValueError('native schedule date filter must be YYYY-MM-DD')
+            clauses.append('hc.scheduled_native_iso_date'+operator+'?');args.append(value)
+    if native_date_from and native_date_to and native_date_from>native_date_to:raise ValueError('native date range is reversed')
     where=' WHERE '+' AND '.join(clauses) if clauses else ''
     sql='''WITH state AS (
         SELECT s.*,u.observed_at,r.source_grade,
         row_number() OVER (PARTITION BY s.game_id ORDER BY u.observed_at DESC,s.unit_id DESC) AS recency
         FROM game_state_observations s JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)),
+      header_checks AS (SELECT c.*,u.observed_at AS header_observed_at,row_number() OVER(PARTITION BY c.game_id ORDER BY u.observed_at DESC,c.unit_id DESC) AS recency
+        FROM game_source_checks c JOIN capture_units u USING(unit_id)),
       box AS (SELECT game_id,unit_id,team_id,count(*) AS rows,sum(points) AS points
         FROM player_game_boxes GROUP BY game_id,unit_id,team_id),
       expected AS (SELECT game_id,unit_id,side,sum(in_use) AS rows FROM native_box_observations GROUP BY game_id,unit_id,side)
       SELECT g.*,h.display_name AS home_team_name,a.display_name AS away_team_name,
         s.status_code,s.is_final,s.observed_at,s.source_grade,s.unit_id,
+        hc.unit_id AS calendar_unit_id,hc.header_observed_at AS calendar_observed_at,hc.scheduled_native_iso_date AS native_game_date,hc.scheduled_native_time_hhmm AS native_game_time,
+        hc.played_native_iso_date AS native_played_date,hc.time_period_raw,hc.time_period_label,hc.game_type_raw,hc.game_type_label,hc.status_label,
         CASE WHEN hb.rows=he.rows AND hb.rows>0 THEN hb.points END AS home_points_derived,
         CASE WHEN ab.rows=ae.rows AND ab.rows>0 THEN ab.points END AS away_points_derived,
         CASE WHEN hb.rows=he.rows AND ab.rows=ae.rows AND hb.rows>0 AND ab.rows>0 THEN 1 ELSE 0 END AS canonical_box_complete,
         'DERIVED_CANONICAL_BOX_SUM_WHEN_ALL_NATIVE_PARTICIPANTS_RESOLVED' AS score_provenance
       FROM games g JOIN teams h ON h.team_id=g.home_team_id JOIN teams a ON a.team_id=g.away_team_id
         LEFT JOIN state s ON s.game_id=g.game_id AND s.recency=1
+        LEFT JOIN header_checks hc ON hc.game_id=g.game_id AND hc.recency=1
         LEFT JOIN box hb ON hb.game_id=g.game_id AND hb.unit_id=s.unit_id AND hb.team_id=g.home_team_id
         LEFT JOIN box ab ON ab.game_id=g.game_id AND ab.unit_id=s.unit_id AND ab.team_id=g.away_team_id
         LEFT JOIN expected he ON he.game_id=g.game_id AND he.unit_id=s.unit_id AND he.side='HOME'

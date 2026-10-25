@@ -19,7 +19,7 @@ from readers import _module
 SEASON_RVA=0x0632B4B8
 GAME_OFFSET=0x28
 GAME_STRIDE=60
-RESEARCH_GAME_CAPACITY=1232
+RESEARCH_GAME_CAPACITY=1742  # Current SEASON_SCHEDULE.Games native metadata extent.
 # The historical report spells both 0x1B6AC and decimal 112308 (8 bytes
 # different). The first actual owner read at the hex offset failed Box/score
 # conservation. Probe the documented decimal candidate separately; do not

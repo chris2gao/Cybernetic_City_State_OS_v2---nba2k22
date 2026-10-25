@@ -13,6 +13,7 @@ from live_world import collect_world,world_payload,read_binding,bound_database,_
 from engine import connect,ingest_capture
 from owner_capture import STAT_MAP
 from schema_model import DOMAIN
+from calendar_codec import game_calendar_fields,GAME_CAPACITY
 
 
 def bounded_block(reader,address,size,label,chunk=1200):
@@ -20,27 +21,31 @@ def bounded_block(reader,address,size,label,chunk=1200):
     return b''.join(reader.read(address+off,min(chunk,size-off),label+':'+str(off)) for off in range(0,size,chunk))
 
 
-def collect_schedule(reader,*,frozen_cache=None):
+def collect_schedule(reader,*,frozen_cache=None,with_calendar=False):
     frozen_cache=frozen_cache or {}
     season_pointer=reader.read(reader.module_base+SEASON_RVA,8,'SCHEDULE_SEASON_POINTER')
     roster_pointer=reader.read(reader.module_base+ROSTER_RVA,8,'SCHEDULE_ROSTER_POINTER')
     season=struct.unpack('<Q',season_pointer)[0];root=struct.unpack('<Q',roster_pointer)[0]
     descriptor=reader.read(root+10*16,16,'SCHEDULE_SLOT10_DESCRIPTOR')
     count,index=struct.unpack('<QQ',descriptor)
-    if not 1<=count<=RESEARCH_GAME_CAPACITY:raise ValueError('actual Slot10 count outside known SEASON window')
+    if not 0<=count<=GAME_CAPACITY:raise ValueError('actual Slot10 count outside verified SEASON window')
     header=reader.read(season,64,'SCHEDULE_SEASON_HEADER')
-    games=bounded_block(reader,season+GAME_OFFSET,count*60,'SCHEDULE_GAMES_60')
-    native_index=bounded_block(reader,index,count*32,'SCHEDULE_SLOT10_32')
+    games=bounded_block(reader,season+GAME_OFFSET,count*60,'SCHEDULE_GAMES_60') if count else b''
+    native_index=bounded_block(reader,index,count*32,'SCHEDULE_SLOT10_32') if count else b''
+    calendar=None
+    if with_calendar:
+        from calendar_reader import collect_calendar_controls
+        calendar=collect_calendar_controls(reader,season,count)
     decoder=_module('boxscore_decoder').BoxScoreDecoder
     entries=[];boxes={};errors=[];reused={}
     for i in range(count):
         raw=games[i*60:(i+1)*60];g=decoder.decode_game_header(raw);meta=g['boxscore_meta']
         item={'pool_index':i,'native_game_id':g['game_id'],'home_team_id':g['home_team_id'],
-              'away_team_id':g['away_team_id'],'status':g['status'],'date_candidate':g['game_date'],
+              'away_team_id':g['away_team_id'],'status':g['status'],'legacy_research_date_candidate':g['game_date'],'calendar':game_calendar_fields(raw),
               'stat_lines_index':meta['stat_lines_index'],'home_players':meta['num_home_players'],
               'away_players':meta['num_away_players'],'overtime_count':g['overtime_count']}
         item['record_shape_valid']=bool(g['game_id'] not in (0,0xFFFFFFFF) and g['home_team_id']!=g['away_team_id'] and
-                                        g['status'] in (0,1,2))
+                                        g['status'] in (0,1,2,3))
         if not item['record_shape_valid']:errors.append({'pool_index':i,'reason':'NON_GAME_OR_UNRECOGNIZED_RECORD'})
         if item['record_shape_valid'] and g['status']==2:
             prior=frozen_cache.get(g['game_id'])
@@ -61,8 +66,8 @@ def collect_schedule(reader,*,frozen_cache=None):
     duplicates={str(k):v for k,v in ids.items() if v>1}
     # Repeat complete schedule/index and each captured Box to reject a mid-read
     # simulation/update; this does not advance or pause the game's state.
-    if bounded_block(reader,season+GAME_OFFSET,count*60,'SCHEDULE_GAMES_RECHECK')!=games:raise ValueError('schedule changed during acquisition')
-    if bounded_block(reader,index,count*32,'SCHEDULE_INDEX_RECHECK')!=native_index:raise ValueError('Slot10 index changed during acquisition')
+    if count and bounded_block(reader,season+GAME_OFFSET,count*60,'SCHEDULE_GAMES_RECHECK')!=games:raise ValueError('schedule changed during acquisition')
+    if count and bounded_block(reader,index,count*32,'SCHEDULE_INDEX_RECHECK')!=native_index:raise ValueError('Slot10 index changed during acquisition')
     for i,data in boxes.items():
         start=entries[i]['stat_lines_index']
         if reader.read(season+STATBANK_OFFSET+start*24,len(data),f'SCHEDULE_BOX_RECHECK:{i}')!=data:raise ValueError('Box changed during acquisition')
@@ -70,14 +75,15 @@ def collect_schedule(reader,*,frozen_cache=None):
         (reader.module_base+ROSTER_RVA,roster_pointer,'SCHEDULE_ROSTER_POINTER_RECHECK'),
         (root+10*16,descriptor,'SCHEDULE_DESCRIPTOR_RECHECK'),(season,header,'SCHEDULE_HEADER_RECHECK')):
         if reader.read(address,len(data),label)!=data:raise ValueError('schedule directory/header changed during acquisition')
-    return {'header':header,'games':games,'native_index':native_index,'boxes':boxes,'reused':reused,
+    if with_calendar and collect_calendar_controls(reader,season,count)!=calendar:raise ValueError('calendar changed during schedule capture')
+    return {'header':header,'games':games,'native_index':native_index,'boxes':boxes,'reused':reused,'calendar':calendar,
             'manifest':{'actual_slot10_count':count,'season_capacity_bound':RESEARCH_GAME_CAPACITY,
                 'season_pointer':hex(season),'roster_root':hex(root),'slot10_address':hex(index),
                 'record_count':len(entries),'status_counts':dict(Counter(str(e['status']) for e in entries)),
                 'duplicate_game_ids':duplicates,'errors':errors,'entries':entries,
                 'raw_identity_samples':[{'pool_index':i,'season_words':list(struct.unpack('<15I',games[i*60:(i+1)*60])),
                                         'slot10_words':list(struct.unpack('<8I',native_index[i*32:(i+1)*32]))}
-                                       for i in sorted({0,min(1,count-1),min(2,count-1),count-1})],
+                                       for i in (sorted({0,min(1,count-1),min(2,count-1),count-1}) if count else [])],
                 'header_words':list(struct.unpack('<16I',header)),
                 'scope':'ACTUAL_DESCRIPTOR_BOUNDED_WINDOW; INDEX_RELATION_NOT_YET_CERTIFIED',
                 'game_writes':False,'native_boxes_read':len(boxes),'frozen_boxes_reused':len(reused),
@@ -127,7 +133,7 @@ def schedule_facts(found,season,selected_native_ids):
         g=decoder.decode_game_header(found['games'][i*60:(i+1)*60]);gid=season['season_id']+':game:'+str(g['game_id'])
         facts['games'].append({'game_id':gid,'season_id':season['season_id'],'native_game_id':str(g['game_id']),
             'home_team_id':tid(g['home_team_id']),'away_team_id':tid(g['away_team_id']),'game_date':None})
-        check={'game_id':gid,'header_sha256':hashlib.sha256(found['games'][i*60:(i+1)*60]).hexdigest(),'game_status_raw':g['status']}
+        check={'game_id':gid,'header_sha256':hashlib.sha256(found['games'][i*60:(i+1)*60]).hexdigest(),'game_status_raw':g['status'],**game_calendar_fields(found['games'][i*60:(i+1)*60])}
         if g['status']!=2:
             facts['game_source_checks'].append({**check,'box_mode':'HEADER_ONLY_NOT_FINAL','reuse_basis':'CURRENT_HEADER_ONLY; NO_FINAL_BOX_EXPECTED'})
             facts['game_state_observations'].append({'game_id':gid,'status_code':str(g['status']),'is_final':0,
@@ -187,9 +193,10 @@ def capture_season(pid,save_directory,loaded_filename,new_output_directory,*,rec
     stamp=datetime.now(timezone.utc).isoformat()
     try:
         from cadence import observed_game_season_year
-        reader=ReadOnlyGameProcess(pid);year=observed_game_season_year(reader)
+        from calendar_reader import verify_calendar_metadata
+        reader=ReadOnlyGameProcess(pid);calendar_metadata=verify_calendar_metadata(reader);year=observed_game_season_year(reader)
         cache={} if recheck_frozen else frozen_game_sources(bound_database(save_directory,binding),'season:native-year:'+str(year))
-        found=collect_schedule(reader,frozen_cache=cache)
+        found=collect_schedule(reader,frozen_cache=cache,with_calendar=True)
         if found['manifest']['errors'] or found['manifest']['duplicate_game_ids']:raise ValueError('schedule source contains invalid, duplicate or nonconserving games')
         decoder=_module('boxscore_decoder').BoxScoreDecoder;targets=set()
         for i,data in found['boxes'].items():
@@ -198,13 +205,14 @@ def capture_season(pid,save_directory,loaded_filename,new_output_directory,*,rec
         one,context,blobs=collect_world(reader,None,target_native_ids=targets,current_context_only=True)
         if context['game_season_year']!=year:raise ValueError('native season changed during incremental schedule capture')
         relation=index_relationship(found,context)
-        after=collect_schedule(reader,frozen_cache=cache)
+        after=collect_schedule(reader,frozen_cache=cache,with_calendar=True)
         if any(found[k]!=after[k] for k in ('header','games','native_index','boxes')):raise ValueError('schedule changed while collecting player context')
         reader.close()
         for name in ('header','games','native_index'):blobs['schedule-'+name+'.bin']=found[name]
         for i,data in found['boxes'].items():blobs[f'schedule-box-{i}.bin']=data
         for name,data in blobs.items():(out/name).write_bytes(data)
         _json(out/'player-context.json',context);_json(out/'schedule-manifest.json',found['manifest']);_json(out/'index-relationship.json',relation)
+        _json(out/'calendar-metadata.json',calendar_metadata);_json(out/'calendar-context.json',found['calendar'])
         report={'observed_at':stamp,'pid':pid,'save_id':binding['save_id'],'native_save_filename':loaded_filename,
             'binding_sha256':binding_hash,'status':'COMPLETE_DESCRIPTOR_WINDOW_AND_PLAYER_CONTROLS_PASSED',
             'read_trace':reader.trace,'game_writes':False,'potential_bytes_read':0,
@@ -220,6 +228,7 @@ def capture_season(pid,save_directory,loaded_filename,new_output_directory,*,rec
         payload=world_payload(binding,one,context,blobs,artifacts,stamp,token)
         selected={int(p['native_player_id']) for p in payload['facts']['players']}
         payload['facts'].update(schedule_facts(found,payload['season'],selected))
+        payload['facts']['season_calendar_observations']=[{'season_id':payload['season']['season_id'],**found['calendar']}]
         team_ids={g[k] for g in payload['facts']['games'] for k in ('home_team_id','away_team_id')}
         for key in sorted(team_ids-{t['team_id'] for t in payload['facts']['teams']}):
             native=int(key.rsplit(':',1)[1]);teams=[t for t in context['teams'] if t['native_team_id']==native]
@@ -236,6 +245,7 @@ def capture_season(pid,save_directory,loaded_filename,new_output_directory,*,rec
             'counts':{name:len(rows) for name,rows in payload['facts'].items()},'targeted_native_player_ids':len(targets),
             'unresolved_native_player_ids':sorted(targets-selected),'index_relationship':relation,
                 'native_boxes_read':len(found['boxes']),'frozen_boxes_reused':len(found['reused']),'recheck_frozen':recheck_frozen,
+                'native_calendar':found['calendar'],
             'game_writes':False,'potential_bytes_read':0,'full_goal_complete':False}
         _json(out/'ingest-result.json',result);return result
     except Exception as error:
