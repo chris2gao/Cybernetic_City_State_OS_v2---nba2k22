@@ -1,5 +1,5 @@
 {
-  "schema_version": 10,
+  "schema_version": 11,
   "table_count": 77,
   "evidence_policy": "Native legal ranges UNKNOWN unless separately certified; registration and fixture replay are not live acceptance",
   "tables": [
@@ -61,7 +61,7 @@
           "null_meaning": null,
           "unit": "UNKNOWN/native representation",
           "foreign_key": null,
-          "sql_constraint": "schema_version=10",
+          "sql_constraint": "schema_version=11",
           "legal_game_range": "NOT_APPLICABLE",
           "source": "ENGINEERING_SCHEMA_VERSION",
           "visibility": "OWNER_ONLY",
@@ -547,7 +547,9 @@
       "reason_for_table": "one acquisition session; independent identity/lifecycle or consistency unit",
       "primary_key": "run_id",
       "unique_keys": [],
-      "checks": [],
+      "checks": [
+        "(refresh_family IS NULL)=(refresh_period_year IS NULL)"
+      ],
       "append_only": true,
       "gm_queryable": false,
       "source_status": "UNKNOWN",
@@ -655,6 +657,36 @@
           "sql_constraint": null,
           "legal_game_range": "UNKNOWN",
           "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
+          "visibility": "OWNER_ONLY",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "refresh_family",
+          "sqlite_type": "TEXT",
+          "meaning": "refresh family",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": "refresh_family IN ('RECORD_BOOK','NATIVE_HONOR_STATS','LEAGUE_HISTORY_AWARDS')",
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "HUMAN_GAME_SEASON_ANNUAL_REFRESH_POLICY; NULL for ordinary captures/earlier engineering evidence",
+          "visibility": "OWNER_ONLY",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "refresh_period_year",
+          "sqlite_type": "INTEGER",
+          "meaning": "refresh period year",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "game-season annual refresh bucket",
+          "foreign_key": null,
+          "sql_constraint": "refresh_period_year BETWEEN 1 AND 9999",
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "HUMAN_OR_NATIVE_GAME_SEASON_PERIOD; distinct from host calendar and source observation season",
           "visibility": "OWNER_ONLY",
           "time_semantics": "observation time from unit_id; effective game time separately recorded"
         }

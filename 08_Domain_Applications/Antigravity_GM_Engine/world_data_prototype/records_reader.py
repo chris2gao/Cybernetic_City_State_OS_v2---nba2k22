@@ -146,10 +146,17 @@ def records_payload(binding,manifest,artifacts,observed_at,token):
 
 
 def capture_records(pid,save_directory,loaded_filename,new_output_directory):
+    from cadence import prepare_annual_capture,attach_annual_period
     binding,binding_hash=read_binding(save_directory,loaded_filename)
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);reader=None;stamp=datetime.now(timezone.utc).isoformat()
     try:
-        reader=ReadOnlyGameProcess(pid);manifest,blobs=collect_records(reader);reader.close()
+        reader=ReadOnlyGameProcess(pid)
+        refresh_year,previous=prepare_annual_capture(reader,bound_database(save_directory,binding),'RECORD_BOOK')
+        if previous is not None:
+            previous.update({'save_id':binding['save_id'],'read_trace':reader.trace})
+            _json(out/'ingest-result.json',previous);return previous
+        manifest,blobs=collect_records(reader);reader.close()
+        if manifest['season_year']!=refresh_year:raise ValueError('game season changed during annual record acquisition')
         if manifest['capture_coverage']!='COMPLETE_NATIVE_COUNT':raise ValueError('live adapter requires complete bounded native count')
         for name,raw in blobs.items():(out/name).write_bytes(raw)
         _json(out/'records-manifest.json',manifest)
@@ -166,9 +173,11 @@ def capture_records(pid,save_directory,loaded_filename,new_output_directory):
                 'payload_kind':'EXECUTED_READER_OR_RESEARCH_CATEGORY_SOURCE','source_version':'NATIVE_RECORD52_V1','payload_ref':str(path.relative_to(DOMAIN))})
         token=hashlib.sha256((out/'records-report.json').read_bytes()).hexdigest()[:24]
         payload=records_payload(binding,manifest,artifacts,stamp,token);payload['evidence_grade']='LIVE_READ'
+        attach_annual_period(payload,'RECORD_BOOK',refresh_year)
         receipt=_AcquisitionReceipt(payload,reader)
         with connect(bound_database(save_directory,binding)) as c:status=ingest_capture(c,payload,_live_receipt=receipt)
         result={'status':status,'unit_id':payload['unit_id'],'save_id':binding['save_id'],'source_grade':'LIVE_READ',
+            'refresh_family':'RECORD_BOOK','refresh_period_year':refresh_year,
             'counts':{name:len(values) for name,values in payload['facts'].items()},'game_writes':False,'player_struct_reads':0,
             'decode_status_counts':manifest['decode_status_counts'],'full_goal_complete':False}
         _json(out/'ingest-result.json',result);return result

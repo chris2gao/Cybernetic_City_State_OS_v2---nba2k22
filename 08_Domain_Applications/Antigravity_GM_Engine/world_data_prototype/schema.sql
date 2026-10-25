@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=10),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=11),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -91,7 +91,10 @@ CREATE TABLE "capture_runs" (
   "source_grade" TEXT NOT NULL CHECK (source_grade IN ('SYNTHETIC_FIXTURE','RESEARCH_FIXTURE','LIVE_READ')),
   "game_date" TEXT,
   "decoder_version" TEXT,
-  "save_binding_ref" TEXT
+  "save_binding_ref" TEXT,
+  "refresh_family" TEXT CHECK (refresh_family IN ('RECORD_BOOK','NATIVE_HONOR_STATS','LEAGUE_HISTORY_AWARDS')),
+  "refresh_period_year" INTEGER CHECK (refresh_period_year BETWEEN 1 AND 9999),
+  CHECK ((refresh_family IS NULL)=(refresh_period_year IS NULL))
 ) STRICT;
 
 CREATE INDEX "idx_capture_runs_season_id" ON "capture_runs" ("season_id");
@@ -2128,6 +2131,8 @@ CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_obse
 CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;
 
 CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;
+
+CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_family IS NOT NULL AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 
