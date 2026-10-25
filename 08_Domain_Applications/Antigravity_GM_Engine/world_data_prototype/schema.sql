@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=13),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=14),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -269,9 +269,35 @@ CREATE TRIGGER "team_rotation_slots_no_delete" BEFORE DELETE ON "team_rotation_s
 
 CREATE TRIGGER "team_rotation_slots_successful_unit" BEFORE INSERT ON "team_rotation_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "native_player_sources" (
+  "player_source_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_player_index" INTEGER NOT NULL CHECK (source_player_index>=0),
+  "native_unique_id_raw" INTEGER CHECK (native_unique_id_raw BETWEEN 0 AND 65535),
+  "preserved_id_raw" INTEGER CHECK (preserved_id_raw BETWEEN 0 AND 4294967295),
+  "observed_name" TEXT,
+  "name_status" TEXT,
+  "native_team_id" INTEGER,
+  "current_core_roster_status" TEXT,
+  "current_roster_slot" INTEGER,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "canonical_link_status" TEXT,
+  UNIQUE ("unit_id","source_player_index")
+) STRICT;
+
+CREATE INDEX "idx_native_player_sources_unit_id" ON "native_player_sources" ("unit_id");
+
+CREATE INDEX "idx_native_player_sources_player_id" ON "native_player_sources" ("player_id");
+
+CREATE TRIGGER "native_player_sources_no_update" BEFORE UPDATE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_sources_no_delete" BEFORE DELETE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_sources_successful_unit" BEFORE INSERT ON "native_player_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "player_vitals_observations" (
   "observation_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "first_name" TEXT,
   "last_name" TEXT,
@@ -287,12 +313,36 @@ CREATE TABLE "player_vitals_observations" (
   "weight_raw" INTEGER,
   "age_raw" INTEGER,
   "years_pro" INTEGER,
-  UNIQUE ("player_id","unit_id")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "birth_year_raw" INTEGER CHECK (birth_year_raw BETWEEN 0 AND 4095),
+  "birth_month_raw" INTEGER CHECK (birth_month_raw BETWEEN 0 AND 15),
+  "birth_day_raw" INTEGER CHECK (birth_day_raw BETWEEN 0 AND 31),
+  "primary_position_raw" INTEGER CHECK (primary_position_raw BETWEEN 0 AND 7),
+  "secondary_position_raw" INTEGER CHECK (secondary_position_raw BETWEEN 0 AND 7),
+  "tertiary_position_raw" INTEGER CHECK (tertiary_position_raw BETWEEN 0 AND 7),
+  "best_hand_raw" INTEGER CHECK (best_hand_raw BETWEEN 0 AND 1),
+  "best_dunk_hand_raw" INTEGER CHECK (best_dunk_hand_raw BETWEEN 0 AND 3),
+  "jersey_number_raw" INTEGER CHECK (jersey_number_raw BETWEEN 0 AND 127),
+  "weight_real" REAL,
+  "weight_value_text" TEXT,
+  "weight_value_status" TEXT,
+  "wingspan_raw" INTEGER CHECK (wingspan_raw BETWEEN 0 AND 32767),
+  "height_cm_native_derived" REAL,
+  "wingspan_cm_native_derived" REAL,
+  "appearance_status" TEXT,
+  "tertiary_position" TEXT,
+  "best_dunk_hand_label" TEXT,
+  UNIQUE ("player_id","unit_id"),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_vitals_observations_player_id" ON "player_vitals_observations" ("player_id");
 
 CREATE INDEX "idx_player_vitals_observations_unit_id" ON "player_vitals_observations" ("unit_id");
+
+CREATE INDEX "idx_player_vitals_observations_source_player_id" ON "player_vitals_observations" ("source_player_id");
 
 CREATE TRIGGER "player_vitals_observations_no_update" BEFORE UPDATE ON "player_vitals_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -437,32 +487,6 @@ CREATE TRIGGER "player_tendency_snapshots_no_delete" BEFORE DELETE ON "player_te
 
 CREATE TRIGGER "player_tendency_snapshots_successful_unit" BEFORE INSERT ON "player_tendency_snapshots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
-CREATE TABLE "native_player_sources" (
-  "player_source_id" TEXT NOT NULL PRIMARY KEY,
-  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
-  "source_player_index" INTEGER NOT NULL CHECK (source_player_index>=0),
-  "native_unique_id_raw" INTEGER CHECK (native_unique_id_raw BETWEEN 0 AND 65535),
-  "preserved_id_raw" INTEGER CHECK (preserved_id_raw BETWEEN 0 AND 4294967295),
-  "observed_name" TEXT,
-  "name_status" TEXT,
-  "native_team_id" INTEGER,
-  "current_core_roster_status" TEXT,
-  "current_roster_slot" INTEGER,
-  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
-  "canonical_link_status" TEXT,
-  UNIQUE ("unit_id","source_player_index")
-) STRICT;
-
-CREATE INDEX "idx_native_player_sources_unit_id" ON "native_player_sources" ("unit_id");
-
-CREATE INDEX "idx_native_player_sources_player_id" ON "native_player_sources" ("player_id");
-
-CREATE TRIGGER "native_player_sources_no_update" BEFORE UPDATE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
-
-CREATE TRIGGER "native_player_sources_no_delete" BEFORE DELETE ON "native_player_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
-
-CREATE TRIGGER "native_player_sources_successful_unit" BEFORE INSERT ON "native_player_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
-
 CREATE TABLE "player_badge_values" (
   "badge_observation_id" TEXT NOT NULL PRIMARY KEY,
   "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
@@ -561,7 +585,7 @@ CREATE TRIGGER "player_contract_observations_successful_unit" BEFORE INSERT ON "
 
 CREATE TABLE "player_health_observations" (
   "health_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "injury_code" TEXT,
   "body_part" TEXT,
@@ -571,12 +595,44 @@ CREATE TABLE "player_health_observations" (
   "fatigue_raw" INTEGER,
   "energy_raw" INTEGER,
   "recovery_days" INTEGER,
-  UNIQUE ("player_id","unit_id")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "injury1_type_raw" INTEGER CHECK (injury1_type_raw BETWEEN 0 AND 255),
+  "injury2_type_raw" INTEGER CHECK (injury2_type_raw BETWEEN 0 AND 255),
+  "original_injury1_type_raw" INTEGER CHECK (original_injury1_type_raw BETWEEN 0 AND 255),
+  "original_injury2_type_raw" INTEGER CHECK (original_injury2_type_raw BETWEEN 0 AND 255),
+  "injury1_healed_percentage_raw" INTEGER CHECK (injury1_healed_percentage_raw BETWEEN 0 AND 127),
+  "injury2_healed_percentage_raw" INTEGER CHECK (injury2_healed_percentage_raw BETWEEN 0 AND 127),
+  "wear_and_tear_raw" INTEGER CHECK (wear_and_tear_raw BETWEEN 0 AND 255),
+  "injury1_start_date_word_raw" INTEGER CHECK (injury1_start_date_word_raw BETWEEN 0 AND 4294967295),
+  "injury2_start_date_word_raw" INTEGER CHECK (injury2_start_date_word_raw BETWEEN 0 AND 4294967295),
+  "latest_healed_start_date_word_raw" INTEGER CHECK (latest_healed_start_date_word_raw BETWEEN 0 AND 4294967295),
+  "latest_healed_date_word_raw" INTEGER CHECK (latest_healed_date_word_raw BETWEEN 0 AND 4294967295),
+  "injury1_duration_minutes_raw" INTEGER CHECK (injury1_duration_minutes_raw BETWEEN 0 AND 1048575),
+  "injury2_duration_minutes_raw" INTEGER CHECK (injury2_duration_minutes_raw BETWEEN 0 AND 1048575),
+  "injury1_status_raw" INTEGER CHECK (injury1_status_raw BETWEEN 0 AND 7),
+  "injury2_status_raw" INTEGER CHECK (injury2_status_raw BETWEEN 0 AND 7),
+  "injury1_left_side_raw" INTEGER CHECK (injury1_left_side_raw BETWEEN 0 AND 1),
+  "injury2_left_side_raw" INTEGER CHECK (injury2_left_side_raw BETWEEN 0 AND 1),
+  "latest_injury_slot_raw" INTEGER CHECK (latest_injury_slot_raw BETWEEN 0 AND 1),
+  "career_ended_by_injury_raw" INTEGER CHECK (career_ended_by_injury_raw BETWEEN 0 AND 1),
+  "important_injury_recovery_raw" INTEGER CHECK (important_injury_recovery_raw BETWEEN 0 AND 1),
+  "had_important_injury_raw" INTEGER CHECK (had_important_injury_raw BETWEEN 0 AND 1),
+  "games_missed_injury_raw" INTEGER CHECK (games_missed_injury_raw BETWEEN 0 AND 127),
+  "injury1_type_label" TEXT,
+  "injury1_status_label" TEXT,
+  "injury2_type_label" TEXT,
+  "injury2_status_label" TEXT,
+  UNIQUE ("player_id","unit_id"),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_health_observations_player_id" ON "player_health_observations" ("player_id");
 
 CREATE INDEX "idx_player_health_observations_unit_id" ON "player_health_observations" ("unit_id");
+
+CREATE INDEX "idx_player_health_observations_source_player_id" ON "player_health_observations" ("source_player_id");
 
 CREATE TRIGGER "player_health_observations_no_update" BEFORE UPDATE ON "player_health_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -586,17 +642,33 @@ CREATE TRIGGER "player_health_observations_successful_unit" BEFORE INSERT ON "pl
 
 CREATE TABLE "player_morale_observations" (
   "morale_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "role_code" TEXT,
   "morale_raw" INTEGER,
   "role_satisfaction_raw" INTEGER,
-  UNIQUE ("player_id","unit_id")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "morale_event_type_raw" INTEGER CHECK (morale_event_type_raw BETWEEN 0 AND 255),
+  "morale_event_adjustment_raw" INTEGER CHECK (morale_event_adjustment_raw BETWEEN 0 AND 255),
+  "org_role_raw" INTEGER CHECK (org_role_raw BETWEEN 0 AND 7),
+  "morale_word_raw" INTEGER CHECK (morale_word_raw BETWEEN 0 AND 4294967295),
+  "morale_real" REAL,
+  "morale_value_text" TEXT,
+  "morale_value_status" TEXT,
+  "morale_event_adjustment_signed" INTEGER CHECK (morale_event_adjustment_signed BETWEEN -128 AND 127),
+  "morale_event_label" TEXT,
+  "org_role_label" TEXT,
+  UNIQUE ("player_id","unit_id"),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_morale_observations_player_id" ON "player_morale_observations" ("player_id");
 
 CREATE INDEX "idx_player_morale_observations_unit_id" ON "player_morale_observations" ("unit_id");
+
+CREATE INDEX "idx_player_morale_observations_source_player_id" ON "player_morale_observations" ("source_player_id");
 
 CREATE TRIGGER "player_morale_observations_no_update" BEFORE UPDATE ON "player_morale_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -2352,6 +2424,12 @@ CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHE
 CREATE TRIGGER player_badge_values_native_source_unit BEFORE INSERT ON player_badge_values WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER player_contract_observations_native_source_unit BEFORE INSERT ON player_contract_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_vitals_observations_native_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_health_observations_native_source_unit BEFORE INSERT ON player_health_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_morale_observations_native_source_unit BEFORE INSERT ON player_morale_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 

@@ -362,6 +362,28 @@ def native_player_details(path,*,subject_name=None,source_index=None,unit_id=Non
             'legacy_column_aliases':{'original_contract_years_raw':'Native ContractLength; original-duration semantics not asserted','contract_type_raw':'Native RosterType; not a financial contract-type classification'}}
 
 
+def native_player_state(path,*,subject_name=None,source_index=None,unit_id=None,after_index=-1,limit=20):
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('invalid player state page')
+    if source_index is not None and (type(source_index) is not int or source_index<0):raise ValueError('invalid source player index')
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            latest=c.execute("SELECT unit_id FROM capture_units WHERE source_key='BOUND_PLAYER_VITALS_HEALTH_MORALE' AND unit_status='success' ORDER BY observed_at DESC,unit_id DESC LIMIT 1").fetchone()
+            if latest is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'unit_id':None}
+            unit_id=latest['unit_id']
+        clauses=['p.unit_id=?','p.source_player_index>?'];args=[unit_id,after_index]
+        if subject_name is not None:clauses.append('p.observed_name LIKE ?');args.append('%'+subject_name+'%')
+        if source_index is not None:clauses.append('p.source_player_index=?');args.append(source_index)
+        rows=[dict(r) for r in c.execute('''SELECT p.*,u.observed_at,r.source_grade FROM native_player_sources p
+            JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE '''+' AND '.join(clauses)+' ORDER BY p.source_player_index LIMIT ?',args+[limit+1])]
+        more=len(rows)>limit;rows=rows[:limit]
+        for row in rows:
+            for key,table in (('vitals','player_vitals_observations'),('health','player_health_observations'),('morale','player_morale_observations')):
+                value=c.execute('SELECT * FROM '+ident(table)+' WHERE source_player_id=? AND unit_id=?',(row['player_source_id'],unit_id)).fetchone()
+                row[key]=dict(value) if value else None
+        return {'records':rows,'unit_id':unit_id,'has_more':more,'next_after_index':rows[-1]['source_player_index'] if more else None,
+            'semantics':'Native stored body/position/injury slots/fatigue/morale; UI scale, aggregate availability, recovery days, energy and playing-role satisfaction remain separate'}
+
+
 def awards(path,*,year=None,award_code=None,after_key='',limit=200):
     if type(limit) is not int or not 1<=limit<=1000:raise ValueError('limit must be 1..1000')
     if year is not None and (type(year) is not int or not 1<=year<=4095):raise ValueError('invalid native year')

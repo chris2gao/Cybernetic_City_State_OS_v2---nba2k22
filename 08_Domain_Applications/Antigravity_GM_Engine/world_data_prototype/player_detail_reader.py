@@ -62,8 +62,12 @@ def verify_detail_metadata(reader):
     return metadata
 
 
-def collect_player_details(reader):
-    metadata=verify_detail_metadata(reader);year=observed_game_season_year(reader)
+def collect_public_player_pool(reader,*,ranges,metadata):
+    ranges=[tuple(r) for r in ranges]
+    if any(not 0<=low<high<=1264 or high-low>1248 or any(low<b and a<high for a,b in RESTRICTED_PLAYER_RANGES) for low,high in ranges):raise ValueError('invalid/private public PLAYER interval')
+    for low,high in ((0,80),(96,104),(244,246),(760,764)):
+        if not any(a<=low and high<=b for a,b in ranges):raise ValueError('public projection lacks required identity interval')
+    year=observed_game_season_year(reader)
     pointer=reader.read(reader.module_base+ROSTER_RVA,8,'PLAYER_DETAIL_ROSTER_POINTER');root=int.from_bytes(pointer,'little');descriptors={};tables={};controls=[];blobs={}
     for slot,maximum,stride in ((1,8192,1264),(8,1024,4696)):
         raw=reader.read(root+slot*16,16,f'PLAYER_DETAIL_SLOT{slot}_DESCRIPTOR');count,address=struct.unpack('<QQ',raw)
@@ -82,7 +86,7 @@ def collect_player_details(reader):
             if remainder or not 0<=index<tables[1]['count'] or index in assigned:raise ValueError('native current roster pointer collision/outside pool')
             assigned[index]=(tid,pos)
     if set(teams.values())!=core:raise ValueError('complete current core-team context absent')
-    ranges=projection_ranges();parts=[];players=[];contract_rows=[];badge_rows=[]
+    parts=[];players=[]
     for index in range(tables[1]['count']):
         address=tables[1]['address']+index*1264;pieces=[]
         for low,high in ranges:
@@ -95,20 +99,29 @@ def collect_player_details(reader):
         players.append({'source_player_index':index,'native_unique_id_raw':int.from_bytes(raw[244:246],'little'),
             'preserved_id_raw':int.from_bytes(raw[760:764],'little'),'observed_name':name,'name_status':status,
             'native_team_id':team,'current_core_roster_status':'CURRENT_CORE_ROSTER' if current else 'NOT_CURRENT_CORE_ROSTER','current_roster_slot':current[1] if current else None})
-        contract_team=teams.get(int.from_bytes(raw[168:176],'little'))
-        contract_rows.append({'source_player_index':index,**native_contracts(raw),'native_contract_team_id_raw':contract_team,
-            'contract_team_status':'NATIVE_CORE_TEAM_POINTER_OBSERVED' if contract_team is not None else 'NO_CORE_CONTRACT_TEAM_BINDING'})
-        badge_rows.extend({'source_player_index':index,**r} for r in native_badges(raw))
     blobs['player-detail-public-projections.bin']=b''.join(parts)
     for address,raw,label in controls:
         if reader.read(address,len(raw),label)!=raw:raise ValueError('native player detail or roster changed during capture')
     for slot,raw in descriptors.items():
         if reader.read(root+slot*16,16,f'PLAYER_DETAIL_SLOT{slot}_RECHECK')!=raw:raise ValueError('native player descriptor changed')
     if reader.read(reader.module_base+ROSTER_RVA,8,'PLAYER_DETAIL_ROOT_RECHECK')!=pointer or observed_game_season_year(reader)!=year:raise ValueError('native player context/year changed')
-    return {'season_year':year,'descriptors':tables,'metadata':metadata,'players':players,'contract_rows':contract_rows,'badge_rows':badge_rows,
+    return {'season_year':year,'descriptors':tables,'metadata':metadata,'players':players,'core_team_pointer_map':teams,
         'projection_ranges':ranges,'projection_stride':sum(b-a for a,b in ranges),'current_core_roster_count':len(assigned),
-        'source_coverage':'COMPLETE_NATIVE_PLAYER_POOL_PUBLIC_CONTRACT_AND_BASE_BADGES',
+        'source_coverage':'COMPLETE_NATIVE_PLAYER_POOL_PUBLIC_PROJECTION',
         'excluded_player_byte_ranges':list(RESTRICTED_PLAYER_RANGES),'game_writes':False,'full_player_struct_reads':0,'restricted_player_bytes_read':0},blobs
+
+
+def collect_player_details(reader):
+    manifest,blobs=collect_public_player_pool(reader,ranges=projection_ranges(),metadata=verify_detail_metadata(reader))
+    stride=manifest['projection_stride'];ranges=manifest['projection_ranges'];data=blobs['player-detail-public-projections.bin'];contracts=[];badges=[]
+    for index in range(len(manifest['players'])):
+        raw=reconstruct_projection(data[index*stride:(index+1)*stride],ranges)
+        team=manifest['core_team_pointer_map'].get(int.from_bytes(raw[168:176],'little'))
+        contracts.append({'source_player_index':index,**native_contracts(raw),'native_contract_team_id_raw':team,
+            'contract_team_status':'NATIVE_CORE_TEAM_POINTER_OBSERVED' if team is not None else 'NO_CORE_CONTRACT_TEAM_BINDING'})
+        badges.extend({'source_player_index':index,**r} for r in native_badges(raw))
+    manifest.update({'contract_rows':contracts,'badge_rows':badges,'source_coverage':'COMPLETE_NATIVE_PLAYER_POOL_PUBLIC_CONTRACT_AND_BASE_BADGES'})
+    return manifest,blobs
 
 
 def detail_payload(binding,manifest,artifacts,stamp,token,canonical=None,known_teams=None):
