@@ -1,6 +1,6 @@
 {
-  "schema_version": 16,
-  "table_count": 84,
+  "schema_version": 17,
+  "table_count": 85,
   "evidence_policy": "Native legal ranges UNKNOWN unless separately certified; registration and fixture replay are not live acceptance",
   "tables": [
     {
@@ -61,7 +61,7 @@
           "null_meaning": null,
           "unit": "UNKNOWN/native representation",
           "foreign_key": null,
-          "sql_constraint": "schema_version=16",
+          "sql_constraint": "schema_version=17",
           "legal_game_range": "NOT_APPLICABLE",
           "source": "ENGINEERING_SCHEMA_VERSION",
           "visibility": "OWNER_ONLY",
@@ -18967,6 +18967,163 @@
           "legal_game_range": "UNKNOWN",
           "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
           "visibility": "OWNER_ONLY",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        }
+      ]
+    },
+    {
+      "name": "game_source_checks",
+      "domain": "RES-G",
+      "grain": "one current game-header check and explicit Box acquisition/reuse decision",
+      "reason_for_table": "one current game-header check and explicit Box acquisition/reuse decision; independent identity/lifecycle or consistency unit",
+      "primary_key": "check_id",
+      "unique_keys": [
+        [
+          "game_id",
+          "unit_id"
+        ]
+      ],
+      "checks": [
+        "(box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1))"
+      ],
+      "append_only": true,
+      "gm_queryable": true,
+      "source_status": "UNKNOWN",
+      "v1_mapping": "ADD",
+      "columns": [
+        {
+          "name": "check_id",
+          "sqlite_type": "TEXT",
+          "meaning": "one current game-header check and explicit Box acquisition/reuse decision identity",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "save-local immutable row identifier",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "ENGINEERING_IDENTITY_CONTRACT",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "game_id",
+          "sqlite_type": "TEXT",
+          "meaning": "Reference to the evidenced games record",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "save-local identifier",
+          "foreign_key": "games(game_id)",
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "ENGINEERING_IDENTITY_CONTRACT",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "unit_id",
+          "sqlite_type": "TEXT",
+          "meaning": "Reference to the evidenced capture_units record",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "save-local identifier",
+          "foreign_key": "capture_units(unit_id)",
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "ENGINEERING_IDENTITY_CONTRACT",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "header_sha256",
+          "sqlite_type": "TEXT",
+          "meaning": "header sha256",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": "length(header_sha256)=64",
+          "legal_game_range": "UNKNOWN",
+          "source": "SHA256 of the actually read 60-byte SEASON game header",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "box_sha256",
+          "sqlite_type": "TEXT",
+          "meaning": "box sha256",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": "box_sha256 IS NULL OR length(box_sha256)=64",
+          "legal_game_range": "UNKNOWN",
+          "source": "SHA256 of actually read Native Box bytes; NULL when not read",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "box_mode",
+          "sqlite_type": "TEXT",
+          "meaning": "box mode",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": "box_mode IN ('FULL_NATIVE_BOX','REUSED_FROZEN_BOX','HEADER_ONLY_NOT_FINAL')",
+          "legal_game_range": "UNKNOWN",
+          "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "prior_full_unit_id",
+          "sqlite_type": "TEXT",
+          "meaning": "Reference to the evidenced capture_units record",
+          "required": false,
+          "default": null,
+          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
+          "unit": "save-local identifier",
+          "foreign_key": "capture_units(unit_id)",
+          "sql_constraint": null,
+          "legal_game_range": "NOT_APPLICABLE",
+          "source": "ENGINEERING_IDENTITY_CONTRACT",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "game_status_raw",
+          "sqlite_type": "INTEGER",
+          "meaning": "game status raw",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": "game_status_raw IN (0,1,2)",
+          "legal_game_range": "UNKNOWN",
+          "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
+          "visibility": "GM_PUBLIC",
+          "time_semantics": "observation time from unit_id; effective game time separately recorded"
+        },
+        {
+          "name": "reuse_basis",
+          "sqlite_type": "TEXT",
+          "meaning": "reuse basis",
+          "required": true,
+          "default": null,
+          "null_meaning": null,
+          "unit": "UNKNOWN/native representation",
+          "foreign_key": null,
+          "sql_constraint": null,
+          "legal_game_range": "UNKNOWN",
+          "source": "Explicit header check/frozen-source reuse; never asserts that unread Native Box bytes were unchanged",
+          "visibility": "GM_PUBLIC",
           "time_semantics": "observation time from unit_id; effective game time separately recorded"
         }
       ]

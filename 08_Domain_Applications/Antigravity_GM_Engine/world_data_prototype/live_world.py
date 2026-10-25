@@ -98,12 +98,12 @@ def _public_raw(reader,address,label):
     return b''.join(parts)
 
 
-def collect_world(reader,game_index,*,target_native_ids=None):
-    found=collect_known_game(reader,game_index)
-    if not found['score_conservation_passed']:raise ValueError('rejected Box layout')
-    full=found['decoded'];targets={p['player_id'] for side in ('home_players','away_players') for p in full[side] if p['in_use']}
+def collect_world(reader,game_index,*,target_native_ids=None,current_context_only=False):
+    found=None if current_context_only else collect_known_game(reader,game_index)
+    if found is not None and not found['score_conservation_passed']:raise ValueError('rejected Box layout')
+    full=found['decoded'] if found else None;targets={p['player_id'] for side in ('home_players','away_players') for p in full[side] if p['in_use']} if full else set()
     if target_native_ids is not None:
-        if not isinstance(target_native_ids,set) or not 1<=len(target_native_ids)<=8192 or any(type(n) is not int or not 0<=n<=65535 for n in target_native_ids):
+        if not isinstance(target_native_ids,set) or not 0<=len(target_native_ids)<=8192 or any(type(n) is not int or not 0<=n<=65535 for n in target_native_ids):
             raise ValueError('explicit bounded native player target set required')
         targets.update(target_native_ids)
     pointer=reader.read(reader.module_base+ROSTER_RVA,8,'WORLD_ROSTER_POINTER');root=struct.unpack('<Q',pointer)[0]
@@ -122,15 +122,31 @@ def collect_world(reader,game_index,*,target_native_ids=None):
         t={'pool_index':i,'address':address,'native_team_id':int.from_bytes(ident,'little'),
            'name':_utf(name),'city':_utf(city),'control_hex':{'id':ident.hex(),'name':name.hex(),'city':city.hex()}}
         teams.append(t);team_by_pointer[address]=t;team_by_id.setdefault(t['native_team_id'],[]).append(t)
-    for native_id in (full['home_team_id'],full['away_team_id']):
+    for native_id in ((full['home_team_id'],full['away_team_id']) if full else ()):
         if len(team_by_id.get(native_id,[]))!=1:raise ValueError('game native team ID is not unique in current TEAM pool')
-    pd=decoded_desc[1];sd=decoded_desc[24];hits={native_id:[] for native_id in targets}
+    pd=decoded_desc[1];sd=decoded_desc[24];roster_controls=[];roster_owners={}
+    if current_context_only:
+        from cadence import observed_game_season_year
+        context_year=observed_game_season_year(reader);core=set(range(30))-{7};core.add(31);seen=set()
+        for team in teams:
+            if team['native_team_id'] not in core:continue
+            if team['native_team_id'] in seen:raise ValueError('duplicate current core team')
+            seen.add(team['native_team_id']);raw=reader.read(team['address'],200,'WORLD_CURRENT_TEAM_ROSTER');roster_controls.append((team['address'],raw,'WORLD_CURRENT_TEAM_ROSTER_RECHECK'))
+            for pointer_value in struct.unpack('<25Q',raw):
+                if not pointer_value:continue
+                index,remainder=divmod(pointer_value-pd['address'],PLAYER_STRIDE)
+                if remainder or not 0<=index<pd['count']:raise ValueError('current roster player outside fresh pool')
+                if index in roster_owners:raise ValueError('current player appears twice in core rosters')
+                roster_owners[index]=team['native_team_id']
+                targets.add(int.from_bytes(reader.read(pointer_value+0x2F8,2,'WORLD_CURRENT_ROSTER_PLAYER_ID'),'little'))
+        if seen!=core:raise ValueError('incomplete current core-team roster directory')
+    hits={native_id:[] for native_id in targets}
     for i in range(pd['count']):
         ident=reader.read(pd['address']+i*PLAYER_STRIDE+0x2F8,2,'WORLD_PLAYER_NATIVE_ID_ONLY')
         native_id=int.from_bytes(ident,'little')
         if native_id in hits:hits[native_id].append(i)
     stats_decoder=_module('season_stats_decoder').SeasonStatsDecoder
-    links=[];blobs={};controls=[]
+    links=[];blobs={};controls=list(roster_controls)
     for native_id,indices in sorted(hits.items()):
         candidates=[]
         for i in indices[:8]:
@@ -145,6 +161,7 @@ def collect_world(reader,game_index,*,target_native_ids=None):
                'current_slot24_index':idx,'current_team_pointer':hex(current_team),
                'current_team_id':team_by_pointer[current_team]['native_team_id'] if current_team in team_by_pointer else None,
                'contract_team_id':team_by_pointer[contract_team]['native_team_id'] if contract_team in team_by_pointer else None}
+            if i in roster_owners and (c['current_team_id']!=roster_owners[i] or not name):raise ValueError('current roster player lacks reciprocal team/name')
             blobs[f'player-{i}.public.bin']=raw;controls.append((address,raw,label))
             if idx<sd['count'] and idx not in (65535,32756):
                 stat=reader.read(sd['address']+idx*48,48,f'PLAYER:{i}:current-slot24')
@@ -180,32 +197,36 @@ def collect_world(reader,game_index,*,target_native_ids=None):
     if reader.read(reader.module_base+ROSTER_RVA,8,'WORLD_ROSTER_RECHECK')!=pointer:raise ValueError('roster root changed during capture')
     for slot,raw in descriptors.items():
         if reader.read(root+slot*16,16,f'WORLD_SLOT{slot}_RECHECK')!=raw:raise ValueError('roster descriptor changed during capture')
-    season=int(found['season_pointer'],16);meta=full['boxscore_meta']
-    for address,raw,label in ((reader.module_base+SEASON_RVA,struct.pack('<Q',season),'WORLD_SEASON_POINTER_RECHECK'),
+    season=int(found['season_pointer'],16) if found else None;meta=full['boxscore_meta'] if full else None
+    game_controls=((reader.module_base+SEASON_RVA,struct.pack('<Q',season),'WORLD_SEASON_POINTER_RECHECK'),
         (season,found['header'],'WORLD_HEADER_RECHECK'),
         (season+GAME_OFFSET+game_index*GAME_STRIDE,found['game'],'WORLD_GAME_RECHECK'),
-        (season+STATBANK_OFFSET+meta['stat_lines_index']*24,found['box'],'WORLD_BOX_RECHECK')):
+        (season+STATBANK_OFFSET+meta['stat_lines_index']*24,found['box'],'WORLD_BOX_RECHECK')) if found else ()
+    for address,raw,label in game_controls:
         if reader.read(address,len(raw),label)!=raw:raise ValueError('game source changed during capture')
     manifest={'teams':teams,'player_links':links,'descriptors':decoded_desc,
               'excluded_player_bytes':[{'offset':POTENTIAL,'length':1,'status':'NOT_READ; ZERO_PLACEHOLDER_IN_PUBLIC_ARTIFACT'}],
               'identity_scope':'CURRENT_OPERATOR_BOUND_SAVE; NATIVE_ID_CANDIDATE_WITH_COLLISION_REJECTION',
               'ui_field_validation':'NOT_OBSERVED','consistency':'REPEATED_SELECTED_BYTES_AND_DIRECTORY_CONTROLS_EQUAL'}
+    if current_context_only:
+        if observed_game_season_year(reader)!=context_year:raise ValueError('native game season changed during player context acquisition')
+        manifest['game_season_year']=context_year;manifest['player_context_scope']='CURRENT_CORE_ROSTERS_AND_EXPLICIT_NEW_BOX_SUBJECTS; NO_GAME_BOX_ANCHOR_READ'
     return found,manifest,blobs
 
 
 def world_payload(binding,found,manifest,blobs,artifacts,observed_at,token):
     """Pure transform, initially research-grade. Direct driver supplies live receipt."""
-    full=found['decoded'];selected={}
+    full=found['decoded'] if found else None;selected={}
     for link in manifest['player_links']:
         if link['selected_pool_index'] is not None:
             selected[link['native_player_id']]=next(c for c in link['candidates'] if c['pool_index']==link['selected_pool_index'])
     years={c['totals']['season_year'] for c in selected.values() if 'totals' in c}
-    if len(years)!=1:raise ValueError('a single current native season year is not established')
-    year=next(iter(years));season={'season_id':f'season:native-year:{year}','season_code':f'NATIVE_YEAR:{year}'}
+    if full is not None and len(years)!=1:raise ValueError('a single current native season year is not established')
+    year=manifest['game_season_year'] if full is None else next(iter(years));season={'season_id':f'season:native-year:{year}','season_code':f'NATIVE_YEAR:{year}'}
     tid=lambda n:'team:native:'+str(n)
     pid=lambda n:'player:native:'+str(n)
-    gid=season['season_id']+':game:'+str(full['game_id']);facts={}
-    team_ids={full['home_team_id'],full['away_team_id']}
+    gid=season['season_id']+':game:'+str(full['game_id']) if full else None;facts={}
+    team_ids={full['home_team_id'],full['away_team_id']} if full else set()
     team_ids.update(c['current_team_id'] for c in selected.values())
     team_ids.update(c['contract_team_id'] for c in selected.values() if c['contract_team_id'] is not None)
     teams={}
@@ -231,10 +252,15 @@ def world_payload(binding,found,manifest,blobs,artifacts,observed_at,token):
                                           'roster_status':'CURRENT_NATIVE_TEAM_POINTER'})
         stats=c.get('totals');mapping={**STAT_MAP,'foul':'fouls','games_played':'games_played','games_started':'games_started',
                                    'double_doubles':'double_doubles','triple_doubles':'triple_doubles'}
-        if stats is not None:
+        if stats is not None and stats['season_year']==year:
             facts['player_season_totals'].append({'player_id':key,'season_id':season['season_id'],'team_id':None,
                 'team_scope':'NATIVE_CURRENT_RECORD; TEAM_SPLIT_NOT_ASSERTED','phase_code':None,'is_final':0,
                 **{new:stats[old] for old,new in mapping.items() if old in stats}})
+    if full is None:
+        unit='live-world:'+token
+        facts['field_gaps']=[{'affected_domain':'RES-L','target_field':'CURRENT_SEASON_SCOPE','reason':'Current core rosters and available native Slot24 totals; phase/team splits and missing totals remain unknown','impact':'No old-year total relabeled as the new game season; no missing zeros invented'}]
+        return {'save_id':binding['save_id'],'run_id':unit,'unit_id':unit,'source_key':'BOUND_GAME_PLAYER_WORLD','observed_at':observed_at,'evidence_grade':'RESEARCH_FIXTURE','decoder_version':VERSION,
+            'save_binding_ref':'HUMAN_DECLARED_SAVE:'+binding['save_id']+':'+binding['native_save_filename'],'season':season,'facts':facts,'artifacts':artifacts,'completeness':'PARTIAL'}
     facts['games']=[{'game_id':gid,'season_id':season['season_id'],'native_game_id':str(full['game_id']),
                     'home_team_id':tid(full['home_team_id']),'away_team_id':tid(full['away_team_id']),'game_date':None}]
     facts['game_state_observations']=[{'game_id':gid,'status_code':str(full['status']),'is_final':1,

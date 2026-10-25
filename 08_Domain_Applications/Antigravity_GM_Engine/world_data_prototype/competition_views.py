@@ -49,10 +49,13 @@ def game_box_snapshot(path,game_id,*,unit_id=None):
                 'scope':'Coverage of this captured Native window; not historical player lifecycle or UI acceptance'}
             derived[side]=points if full else None;native_points[side]=observed['captured_active_points'] if observed and observed['active_rows'] and observed['active_rows_without_points']==0 else None
         state=rows['states'][0] if rows['states'] else None;observed_points={side:state['home_points' if side=='HOME' else 'away_points'] if state else None for side in ('HOME','AWAY')}
+        check=conn.execute('''SELECT c.*,u.observed_at AS header_observed_at,r.source_grade FROM game_source_checks c JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+            WHERE c.game_id=? AND u.unit_status='success' ORDER BY competition_utc(u.observed_at) DESC,u.unit_id DESC LIMIT 1''',(game_id,)).fetchone()
         if any(value is not None for value in observed_points.values()):primary=observed_points;score_kind='LITERAL_GAME_STATE_SCORE_FIELDS' if all(v is not None for v in observed_points.values()) else 'PARTIAL_GAME_STATE_SCORE_FIELDS'
         elif all(value is not None for value in derived.values()):primary=derived;score_kind='DERIVED_CANONICAL_BOX_SUM_MATCHING_CAPTURED_NATIVE_WINDOW'
         else:primary={'HOME':None,'AWAY':None};score_kind='NO_COMPLETE_QUALIFIED_SCORE'
         return {'game':dict(game),'status':'SINGLE_OBSERVATION_UNIT','capture':selected,'selected_unit_id':unit,'observation_units':units,**rows,'coverage':coverage,
+            'latest_header_check':dict(check) if check else None,'box_observation_time_policy':'All Box/state/period rows belong to selected_unit_id; later header checks do not refresh their source time',
             'scores':{'home_points':primary['HOME'],'away_points':primary['AWAY'],'value_status':score_kind,'state_points':observed_points,
                 'derived_canonical_points':derived,'captured_native_points':native_points,'state_score_fields_present':bool(state and all(v is not None for v in observed_points.values())),
                 'state_score_provenance':state['score_provenance'] if state else None,'captured_native_scope':'Sum of in-use rows in this unit, not a substitute for qualified canonical participants'},

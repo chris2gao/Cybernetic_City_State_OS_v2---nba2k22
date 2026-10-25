@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 16
+VERSION = 17
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -462,6 +462,14 @@ table('native_box_observations','box_observation_id','RES-D','one captured Box r
       [col('points_provenance',required=True),col('identity_status',required=True,default="'UNRESOLVED'")],
       unique=[('game_id','unit_id','side','row_index')],public=False)
 
+table('game_source_checks','check_id','RES-G','one current game-header check and explicit Box acquisition/reuse decision',[
+    G(),U(),col('header_sha256',required=True,check='length(header_sha256)=64',source='SHA256 of the actually read 60-byte SEASON game header'),
+    col('box_sha256',check='box_sha256 IS NULL OR length(box_sha256)=64',source='SHA256 of actually read Native Box bytes; NULL when not read'),
+    col('box_mode',required=True,check="box_mode IN ('FULL_NATIVE_BOX','REUSED_FROZEN_BOX','HEADER_ONLY_NOT_FINAL')"),
+    ref('prior_full_unit_id','capture_units','unit_id',False),col('game_status_raw','INTEGER',required=True,check='game_status_raw IN (0,1,2)'),
+    col('reuse_basis',required=True,source='Explicit header check/frozen-source reuse; never asserts that unread Native Box bytes were unchanged')],
+    unique=[('game_id','unit_id')],checks=["(box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1))"])
+
 _native_stat_profile=json.loads((BASE/'award_native_profile.json').read_bytes())
 _native_stat_cols=[]
 for _native_name,_column in NATIVE_PLAYER_STAT_MAP.items():
@@ -574,6 +582,7 @@ def schema_sql():
     out.append('''CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;''')
     out.append('''CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;''')
     out.append('''CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_family IS NOT NULL AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;''')
+    out.append('''CREATE TRIGGER game_source_reuse_origin BEFORE INSERT ON game_source_checks WHEN NEW.box_mode='REUSED_FROZEN_BOX' AND NOT EXISTS(SELECT 1 FROM game_source_checks o JOIN game_state_observations s ON s.game_id=o.game_id AND s.unit_id=o.unit_id JOIN capture_units u ON u.unit_id=o.unit_id WHERE o.game_id=NEW.game_id AND o.unit_id=NEW.prior_full_unit_id AND o.box_mode='FULL_NATIVE_BOX' AND o.header_sha256=NEW.header_sha256 AND s.is_final=1 AND u.unit_status='success') BEGIN SELECT RAISE(ABORT,'game reuse lacks matching frozen full source'); END;''')
     out.append('''CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;''')
     out.append('''CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;''')
     out.append('''CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;''')
