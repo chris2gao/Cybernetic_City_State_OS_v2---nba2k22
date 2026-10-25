@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=16),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=17),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -2275,6 +2275,32 @@ CREATE TRIGGER "native_box_observations_no_delete" BEFORE DELETE ON "native_box_
 
 CREATE TRIGGER "native_box_observations_successful_unit" BEFORE INSERT ON "native_box_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "game_source_checks" (
+  "check_id" TEXT NOT NULL PRIMARY KEY,
+  "game_id" TEXT NOT NULL REFERENCES games(game_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "header_sha256" TEXT NOT NULL CHECK (length(header_sha256)=64),
+  "box_sha256" TEXT CHECK (box_sha256 IS NULL OR length(box_sha256)=64),
+  "box_mode" TEXT NOT NULL CHECK (box_mode IN ('FULL_NATIVE_BOX','REUSED_FROZEN_BOX','HEADER_ONLY_NOT_FINAL')),
+  "prior_full_unit_id" TEXT REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "game_status_raw" INTEGER NOT NULL CHECK (game_status_raw IN (0,1,2)),
+  "reuse_basis" TEXT NOT NULL,
+  UNIQUE ("game_id","unit_id"),
+  CHECK ((box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1)))
+) STRICT;
+
+CREATE INDEX "idx_game_source_checks_game_id" ON "game_source_checks" ("game_id");
+
+CREATE INDEX "idx_game_source_checks_unit_id" ON "game_source_checks" ("unit_id");
+
+CREATE INDEX "idx_game_source_checks_prior_full_unit_id" ON "game_source_checks" ("prior_full_unit_id");
+
+CREATE TRIGGER "game_source_checks_no_update" BEFORE UPDATE ON "game_source_checks" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "game_source_checks_no_delete" BEFORE DELETE ON "game_source_checks" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "game_source_checks_successful_unit" BEFORE INSERT ON "game_source_checks" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "native_player_stat_observations" (
   "stat_observation_id" TEXT NOT NULL PRIMARY KEY,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
@@ -2543,6 +2569,8 @@ CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_
 CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;
 
 CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_family IS NOT NULL AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;
+
+CREATE TRIGGER game_source_reuse_origin BEFORE INSERT ON game_source_checks WHEN NEW.box_mode='REUSED_FROZEN_BOX' AND NOT EXISTS(SELECT 1 FROM game_source_checks o JOIN game_state_observations s ON s.game_id=o.game_id AND s.unit_id=o.unit_id JOIN capture_units u ON u.unit_id=o.unit_id WHERE o.game_id=NEW.game_id AND o.unit_id=NEW.prior_full_unit_id AND o.box_mode='FULL_NATIVE_BOX' AND o.header_sha256=NEW.header_sha256 AND s.is_final=1 AND u.unit_status='success') BEGIN SELECT RAISE(ABORT,'game reuse lacks matching frozen full source'); END;
 
 CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;
 

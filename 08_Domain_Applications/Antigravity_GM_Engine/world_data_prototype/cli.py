@@ -66,7 +66,7 @@ def main():
     from refresh import SOURCES
     refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=int);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES))
     saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
-    season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory')
+    season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory');season_capture.add_argument('--recheck-frozen',action='store_true')
     sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--limit',type=int,default=2000)
     org=sub.add_parser('capture-organization');org.add_argument('pid',type=int);org.add_argument('save_directory');org.add_argument('loaded_filename');org.add_argument('new_output_directory')
     team=sub.add_parser('team');team.add_argument('database');team.add_argument('team_id')
@@ -211,7 +211,7 @@ def dispatch(args):
         print(json.dumps(upgrade_bound_save(args.save_directory,args.loaded_filename)));return
     if args.action=='capture-season':
         from schedule_reader import capture_season
-        print(json.dumps(capture_season(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+        print(json.dumps(capture_season(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,recheck_frozen=args.recheck_frozen),ensure_ascii=False));return
     if args.action=='init-save':
         from live_world import initialize_save
         print(json.dumps(initialize_save(args.save_directory,args.save_id,args.native_save_file),ensure_ascii=False));return

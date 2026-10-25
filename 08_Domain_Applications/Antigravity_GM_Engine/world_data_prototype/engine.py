@@ -248,7 +248,8 @@ def migrate_database(source,new_path):
                     new.execute('PRAGMA defer_foreign_keys=ON')
                     for name in TABLES:
                         if name not in names or name=='saves':continue
-                        for row in old.execute(f'SELECT * FROM {ident(name)}'):_insert(new,name,dict(row))
+                        ordering=' ORDER BY box_mode' if name=='game_source_checks' else ''
+                        for row in old.execute(f'SELECT * FROM {ident(name)}'+ordering):_insert(new,name,dict(row))
                     for name in names-{'saves'}:
                         if old.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]!=new.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]:raise RuntimeError('migration count mismatch '+name)
                     _seed_registry(new,only_missing=True)
