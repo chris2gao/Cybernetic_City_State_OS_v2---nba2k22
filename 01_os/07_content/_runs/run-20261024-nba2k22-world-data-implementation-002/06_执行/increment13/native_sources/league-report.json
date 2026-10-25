@@ -1,0 +1,196 @@
+{
+  "status": "LEAGUE_HISTORY_AWARDS_AND_ORDINARY_EVENTS_CAPTURED",
+  "pid": 2132,
+  "results": {
+    "history": {
+      "status": "ingested",
+      "mode": "HISTORY_AWARDS",
+      "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+      "save_id": "nba2k22_test_01",
+      "source_grade": "LIVE_READ",
+      "counts": {
+        "native_league_history_observations": 6769,
+        "season_award_instances": 764,
+        "award_recipients": 2315,
+        "fact_conflicts": 0,
+        "native_award_matrix_observations": 75,
+        "native_league_capture_controls": 1,
+        "field_gaps": 3
+      },
+      "game_writes": false,
+      "player_struct_reads": 0,
+      "full_goal_complete": false
+    },
+    "history_repeat": {
+      "status": "already_refreshed",
+      "refresh_family": "LEAGUE_HISTORY_AWARDS",
+      "refresh_period_year": 2022,
+      "previous_unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+      "previous_observed_at": "2026-10-25T06:28:28.651155+00:00",
+      "previous_source_grade": "LIVE_READ",
+      "full_source_acquisition": false,
+      "game_writes": false,
+      "save_id": "nba2k22_test_01",
+      "read_trace": [
+        {
+          "operation": "OpenProcess",
+          "pid": 2132,
+          "requested_access": "0x1010 VM_READ|QUERY_LIMITED_INFORMATION",
+          "success": true,
+          "winerror": 0
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_ROSTER_POINTER",
+          "address": "0x146347720",
+          "requested_bytes": 8,
+          "returned_bytes": 8,
+          "success": true,
+          "winerror": 0,
+          "sha256": "1a102433dec3685bee1eaf3dc1a402135a266165b418859408adf13454d9a90a"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_TEAM_DESCRIPTOR",
+          "address": "0x7ff4e65fb370",
+          "requested_bytes": 16,
+          "returned_bytes": 16,
+          "success": true,
+          "winerror": 0,
+          "sha256": "fb42fe41bf8087481bea16baeb95773c61d8a25b8940d694d57bdd7ac9de35e7"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_TEAM_STAT_DESCRIPTOR",
+          "address": "0x7ff4e65fb4b0",
+          "requested_bytes": 16,
+          "returned_bytes": 16,
+          "success": true,
+          "winerror": 0,
+          "sha256": "c9a4c96239e4021a76158e02dea9a84542741ab0965651516a8158bd528dec6e"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_TEAM_ID",
+          "address": "0x7ff4e6b07298",
+          "requested_bytes": 2,
+          "returned_bytes": 2,
+          "success": true,
+          "winerror": 0,
+          "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CURRENT_STAT_INDEX",
+          "address": "0x7ff4e6b07470",
+          "requested_bytes": 2,
+          "returned_bytes": 2,
+          "success": true,
+          "winerror": 0,
+          "sha256": "cf32590a6d95f5d5db3f5cf02625382e1d67ff691f58354a69fe93a38c60c584"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_COMPACT_YEAR",
+          "address": "0x7ff4e6d58808",
+          "requested_bytes": 1,
+          "returned_bytes": 1,
+          "success": true,
+          "winerror": 0,
+          "sha256": "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CONTEXT_RECHECK",
+          "address": "0x7ff4e6b07298",
+          "requested_bytes": 2,
+          "returned_bytes": 2,
+          "success": true,
+          "winerror": 0,
+          "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CONTEXT_RECHECK",
+          "address": "0x7ff4e6b07470",
+          "requested_bytes": 2,
+          "returned_bytes": 2,
+          "success": true,
+          "winerror": 0,
+          "sha256": "cf32590a6d95f5d5db3f5cf02625382e1d67ff691f58354a69fe93a38c60c584"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CONTEXT_RECHECK",
+          "address": "0x7ff4e6d58808",
+          "requested_bytes": 1,
+          "returned_bytes": 1,
+          "success": true,
+          "winerror": 0,
+          "sha256": "594e519ae499312b29433b7dd8a97ff068defcba9755b6d5d00e84c524d67b06"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CONTEXT_RECHECK",
+          "address": "0x146347720",
+          "requested_bytes": 8,
+          "returned_bytes": 8,
+          "success": true,
+          "winerror": 0,
+          "sha256": "1a102433dec3685bee1eaf3dc1a402135a266165b418859408adf13454d9a90a"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CONTEXT_RECHECK",
+          "address": "0x7ff4e65fb370",
+          "requested_bytes": 16,
+          "returned_bytes": 16,
+          "success": true,
+          "winerror": 0,
+          "sha256": "fb42fe41bf8087481bea16baeb95773c61d8a25b8940d694d57bdd7ac9de35e7"
+        },
+        {
+          "operation": "ReadProcessMemory",
+          "pid": 2132,
+          "label": "CADENCE_CONTEXT_RECHECK",
+          "address": "0x7ff4e65fb4b0",
+          "requested_bytes": 16,
+          "returned_bytes": 16,
+          "success": true,
+          "winerror": 0,
+          "sha256": "c9a4c96239e4021a76158e02dea9a84542741ab0965651516a8158bd528dec6e"
+        }
+      ]
+    },
+    "news": {
+      "status": "ingested",
+      "mode": "NEWS_TRANSACTIONS",
+      "unit_id": "native-league:58b1a2b1e2b8d4ee5db8e120",
+      "save_id": "nba2k22_test_01",
+      "source_grade": "LIVE_READ",
+      "counts": {
+        "native_social_message_observations": 4000,
+        "game_news_entries": 1281,
+        "native_transaction_observations": 250,
+        "native_transaction_item_observations": 9750,
+        "native_league_capture_controls": 1,
+        "field_gaps": 3
+      },
+      "game_writes": false,
+      "player_struct_reads": 0,
+      "full_goal_complete": false
+    }
+  },
+  "game_writes": false
+}
