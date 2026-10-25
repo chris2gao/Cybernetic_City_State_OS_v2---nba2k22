@@ -78,7 +78,28 @@ def main():
     records_cmd=sub.add_parser('records');records_cmd.add_argument('database');records_cmd.add_argument('--category-code',type=lambda s:int(s,0));records_cmd.add_argument('--subject-name');records_cmd.add_argument('--unit-id');records_cmd.add_argument('--after-index',type=int,default=-1);records_cmd.add_argument('--limit',type=int,default=200)
     honor_capture=sub.add_parser('capture-honors');honor_capture.add_argument('pid',type=int);honor_capture.add_argument('save_directory');honor_capture.add_argument('loaded_filename');honor_capture.add_argument('new_output_directory')
     honor_query=sub.add_parser('native-honors');honor_query.add_argument('database');honor_query.add_argument('--flag');honor_query.add_argument('--year',type=int);honor_query.add_argument('--subject-name');honor_query.add_argument('--unit-id');honor_query.add_argument('--after-index',type=int,default=-1);honor_query.add_argument('--limit',type=int,default=200)
+    for command in ('capture-league-history','capture-news'):
+        capture=sub.add_parser(command);capture.add_argument('pid',type=int);capture.add_argument('save_directory');capture.add_argument('loaded_filename');capture.add_argument('new_output_directory')
+    award_cmd=sub.add_parser('awards');award_cmd.add_argument('database');award_cmd.add_argument('--year',type=int);award_cmd.add_argument('--award-code');award_cmd.add_argument('--after-key',default='');award_cmd.add_argument('--limit',type=int,default=200)
+    history_cmd=sub.add_parser('league-history');history_cmd.add_argument('database');history_cmd.add_argument('--year',type=int);history_cmd.add_argument('--type-label');history_cmd.add_argument('--unit-id');history_cmd.add_argument('--after-index',type=int,default=-1);history_cmd.add_argument('--limit',type=int,default=200)
+    news_cmd=sub.add_parser('native-news');news_cmd.add_argument('database');news_cmd.add_argument('--event-label');news_cmd.add_argument('--unit-id');news_cmd.add_argument('--after-index',type=int,default=-1);news_cmd.add_argument('--limit',type=int,default=200)
+    tx_cmd=sub.add_parser('native-transactions');tx_cmd.add_argument('database');tx_cmd.add_argument('--unit-id')
     args=parser.parse_args()
+    if args.action in ('capture-league-history','capture-news'):
+        from league_ingest import capture_league
+        print(json.dumps(capture_league(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,mode='HISTORY_AWARDS' if args.action=='capture-league-history' else 'NEWS_TRANSACTIONS'),ensure_ascii=False));return
+    if args.action=='awards':
+        from query import awards
+        print(json.dumps(awards(args.database,year=args.year,award_code=args.award_code,after_key=args.after_key,limit=args.limit),ensure_ascii=False));return
+    if args.action=='league-history':
+        from query import league_history
+        print(json.dumps(league_history(args.database,year=args.year,type_label=args.type_label,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+    if args.action=='native-news':
+        from query import native_news
+        print(json.dumps(native_news(args.database,event_label=args.event_label,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+    if args.action=='native-transactions':
+        from query import native_transactions
+        print(json.dumps(native_transactions(args.database,unit_id=args.unit_id),ensure_ascii=False));return
     if args.action=='capture-honors':
         from award_reader import capture_native_honors
         print(json.dumps(capture_native_honors(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return

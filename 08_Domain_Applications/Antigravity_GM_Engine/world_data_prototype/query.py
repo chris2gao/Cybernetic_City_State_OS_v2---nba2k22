@@ -329,6 +329,81 @@ def inspect_source_capture(path,unit_id):
                 'canonical_player_box_rows':canonical,'gaps':gaps,'status':'RESEARCH_SOURCE_NOT_CANONICAL_PLAYER_ACCEPTANCE'}
 
 
+def awards(path,*,year=None,award_code=None,after_key='',limit=200):
+    if type(limit) is not int or not 1<=limit<=1000:raise ValueError('limit must be 1..1000')
+    if year is not None and (type(year) is not int or not 1<=year<=4095):raise ValueError('invalid native year')
+    clauses=['a.award_id>?'];args=[after_key]
+    if year is not None:clauses.append('a.source_year_raw=?');args.append(year)
+    if award_code is not None:clauses.append('a.award_code=?');args.append(award_code)
+    with closing(connect(path,True)) as c:
+        values=[dict(r) for r in c.execute('''SELECT a.*,u.observed_at,r.source_grade FROM season_award_instances a
+            JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE '''+' AND '.join(clauses)+' ORDER BY a.award_id LIMIT ?',args+[limit+1])]
+        more=len(values)>limit;values=values[:limit]
+        for award in values:
+            award['recipients']=[dict(r) for r in c.execute('''SELECT p.recipient_id,p.player_id,p.team_id,p.staff_id,p.rank_index,p.source_subject_type,
+                h.player_first_name,h.player_last_name,h.primary_team_name,h.primary_team_city,h.secondary_team_name,h.secondary_team_city,
+                h.player_id_raw,h.primary_team_id_raw,h.secondary_team_id_raw,p.source_history_id
+                FROM award_recipients p LEFT JOIN native_league_history_observations h ON h.history_observation_id=p.source_history_id
+                WHERE p.award_id=? ORDER BY p.recipient_id''',(award['award_id'],))]
+            observed=c.execute('''SELECT u.observed_at,u.unit_id,r.source_grade,h.award_link_status
+                FROM native_league_history_observations h JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+                WHERE h.award_id=? ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(award['award_id'],)).fetchone()
+            award['latest_source_observation']=dict(observed) if observed else None
+        return {'awards':values,'has_more':more,'next_after_key':values[-1]['award_id'] if more else None,
+            'scope':'NATIVE_ROSTER_HISTORY is archived source history; canonical subject lifecycle and world occurrence not inferred'}
+
+
+def league_history(path,*,year=None,type_label=None,unit_id=None,after_index=-1,limit=200):
+    if type(limit) is not int or not 1<=limit<=1000 or type(after_index) is not int or after_index< -1:raise ValueError('invalid history page')
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            latest=c.execute("SELECT u.unit_id FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_LEAGUE_HISTORY_AND_AWARDS' AND u.unit_status='success' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1").fetchone()
+            if latest is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'unit_id':None}
+            unit_id=latest['unit_id']
+        clauses=['h.unit_id=?','h.source_row_index>?','h.native_type_code<>0'];args=[unit_id,after_index]
+        if year is not None:
+            if type(year) is not int or not 1<=year<=4095:raise ValueError('invalid native year')
+            clauses.append('h.native_year_raw=?');args.append(year)
+        if type_label is not None:clauses.append('h.native_type_label=?');args.append(type_label)
+        rows=[dict(r) for r in c.execute('''SELECT h.*,u.observed_at,r.source_grade FROM native_league_history_observations h
+            JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE '''+' AND '.join(clauses)+' ORDER BY h.source_row_index LIMIT ?',args+[limit+1])]
+        more=len(rows)>limit;rows=rows[:limit]
+        return {'records':rows,'unit_id':unit_id,'has_more':more,'next_after_index':rows[-1]['source_row_index'] if more else None,
+            'scope':'NATIVE_ROSTER_HISTORY; no inferred lifetime subjects, UI award acceptance or world occurrence'}
+
+
+def native_news(path,*,event_label=None,unit_id=None,after_index=-1,limit=200):
+    """Explicit safe event projection: no generic parameters or text fragments."""
+    if type(limit) is not int or not 1<=limit<=1000 or type(after_index) is not int or after_index< -1:raise ValueError('invalid news page')
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            latest=c.execute("SELECT unit_id FROM capture_units WHERE source_key='BOUND_NATIVE_NEWS_AND_TRANSACTIONS' AND unit_status='success' ORDER BY observed_at DESC,unit_id DESC LIMIT 1").fetchone()
+            if latest is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'unit_id':None}
+            unit_id=latest['unit_id']
+        clauses=['m.unit_id=?','m.bank_index*2000+m.source_slot_index>?','m.event_code>0'];args=[unit_id,after_index]
+        if event_label is not None:clauses.append('m.event_label=?');args.append(event_label)
+        projection='m.bank_index,m.source_slot_index,m.event_code,m.event_label,m.sender_type_label,m.date_word_raw,m.date_id_raw,m.date_minutes_raw,m.date_day_raw,m.date_month_raw,m.date_year_offset_raw,m.source_state,m.active_prefix_status'
+        rows=[dict(r) for r in c.execute('SELECT '+projection+''',u.observed_at,r.source_grade FROM native_social_message_observations m
+            JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE '''+' AND '.join(clauses)+' ORDER BY m.bank_index,m.source_slot_index LIMIT ?',args+[limit+1])]
+        more=len(rows)>limit;rows=rows[:limit]
+        return {'records':rows,'unit_id':unit_id,'has_more':more,'next_after_index':rows[-1]['bank_index']*2000+rows[-1]['source_slot_index'] if more else None,
+            'content_status':'NATIVE_EVENT_AND_DATE_COMPONENTS; RENDERED_TEXT_AND_UI_ACTIVITY_UNVERIFIED',
+            'withheld':'Generic parameters and string fragments stay owner-only pending renderer/privacy semantics'}
+
+
+def native_transactions(path,*,unit_id=None):
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            latest=c.execute("SELECT unit_id FROM capture_units WHERE source_key='BOUND_NATIVE_NEWS_AND_TRANSACTIONS' AND unit_status='success' ORDER BY observed_at DESC,unit_id DESC LIMIT 1").fetchone()
+            if latest is None:return {'status':'NOT_OBSERVED'}
+            unit_id=latest['unit_id']
+        control=c.execute('''SELECT c.transaction_count,u.observed_at,r.source_grade FROM native_league_capture_controls c
+            JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE c.unit_id=? AND c.source_mode='NEWS_TRANSACTIONS' ''',(unit_id,)).fetchone()
+        rows=[dict(r) for r in c.execute("SELECT source_slot_index,native_type_code,native_type_label,data_count_raw,date_word_raw,active_prefix_status FROM native_transaction_observations WHERE unit_id=? AND active_prefix_status='WITHIN_DECLARED_COUNT_PREFIX_CANDIDATE' ORDER BY source_slot_index",(unit_id,))]
+        return {'unit_id':unit_id,'native_control':dict(control) if control else None,'candidate_entries':rows,
+            'status':'NATIVE_STORAGE_NOT_EXTERNAL_EXECUTION_OR_ACCEPTED_TRANSACTION'}
+
+
 def export_jsonl(path,destination,table,*,limit=10000):
     """Exclusive streamed export, all rows in stable primary-key order.
 
