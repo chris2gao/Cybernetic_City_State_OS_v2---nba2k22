@@ -93,7 +93,19 @@ def main():
     affiliation_query=sub.add_parser('native-affiliations');affiliation_query.add_argument('database');affiliation_query.add_argument('--subject-name');affiliation_query.add_argument('--source-index',type=int);affiliation_query.add_argument('--flag');affiliation_query.add_argument('--flag-value',type=int,default=1);affiliation_query.add_argument('--unit-id');affiliation_query.add_argument('--after-index',type=int,default=-1);affiliation_query.add_argument('--limit',type=int,default=20)
     skill_capture=sub.add_parser('capture-player-skills');skill_capture.add_argument('pid',type=int);skill_capture.add_argument('save_directory');skill_capture.add_argument('loaded_filename');skill_capture.add_argument('new_output_directory')
     skill_query=sub.add_parser('native-player-skills');skill_query.add_argument('database');skill_query.add_argument('--subject-name');skill_query.add_argument('--source-index',type=int);skill_query.add_argument('--unit-id');skill_query.add_argument('--after-index',type=int,default=-1);skill_query.add_argument('--limit',type=int,default=20)
+    backup=sub.add_parser('backup-facts');backup.add_argument('database');backup.add_argument('new_output_directory')
+    restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
+    storage=sub.add_parser('storage-profile');storage.add_argument('database')
     args=parser.parse_args()
+    if args.action=='backup-facts':
+        from database_operations import backup_facts
+        print(json.dumps(backup_facts(args.database,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='restore-facts':
+        from database_operations import restore_facts
+        print(json.dumps(restore_facts(args.backup_directory,args.new_database,expected_save_id=args.expected_save_id),ensure_ascii=False));return
+    if args.action=='storage-profile':
+        from database_operations import storage_profile
+        print(json.dumps(storage_profile(args.database),ensure_ascii=False));return
     if args.action=='capture-player-skills':
         from player_skill_reader import capture_player_skills
         print(json.dumps(capture_player_skills(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
