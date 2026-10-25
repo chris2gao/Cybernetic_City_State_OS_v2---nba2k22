@@ -68,7 +68,10 @@ class LiveWorldTests(unittest.TestCase):
             result=game_box(db,payload['facts']['games'][0]['game_id'])
             self.assertEqual(len(result['player_boxes']),26)
             self.assertEqual(sorted(sum(r['points'] for r in result['player_boxes'] if r['team_id']==t['team_id']) for t in payload['facts']['teams']),[106,122])
-            self.assertEqual(len(player_card(db,payload['facts']['players'][0]['player_id'])['families']['player_attribute_snapshots']),55)
+            attributes=player_card(db,payload['facts']['players'][0]['player_id'])['families']['player_attribute_snapshots']
+            self.assertEqual(sum(name.endswith('_raw') for name in attributes),57)
+            for name in ('emotion_raw','reaction_time_raw'):
+                self.assertIsNone(attributes[name]['value'])  # Earlier adapter never acquired these source fields.
             with connect(db,True) as c:self.assertEqual(c.execute('PRAGMA foreign_key_check').fetchall(),[])
             forged=copy.deepcopy(payload);forged['evidence_grade']='LIVE_READ'
             with connect(db) as c:

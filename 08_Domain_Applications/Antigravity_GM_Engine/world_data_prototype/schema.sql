@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=15),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=16),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -381,7 +381,7 @@ CREATE TRIGGER "player_vitals_observations_successful_unit" BEFORE INSERT ON "pl
 
 CREATE TABLE "player_attribute_snapshots" (
   "snapshot_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "overall_raw" INTEGER,
   "driving_layup_raw" INTEGER,
@@ -438,12 +438,20 @@ CREATE TABLE "player_attribute_snapshots" (
   "offensive_consistency_raw" INTEGER,
   "pick_and_roll_defensive_iq_raw" INTEGER,
   "intangibles_raw" INTEGER,
-  UNIQUE ("player_id","unit_id")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "emotion_raw" INTEGER CHECK (emotion_raw BETWEEN 0 AND 255),
+  "reaction_time_raw" INTEGER CHECK (reaction_time_raw BETWEEN 0 AND 255),
+  UNIQUE ("player_id","unit_id"),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_attribute_snapshots_player_id" ON "player_attribute_snapshots" ("player_id");
 
 CREATE INDEX "idx_player_attribute_snapshots_unit_id" ON "player_attribute_snapshots" ("unit_id");
+
+CREATE INDEX "idx_player_attribute_snapshots_source_player_id" ON "player_attribute_snapshots" ("source_player_id");
 
 CREATE TRIGGER "player_attribute_snapshots_no_update" BEFORE UPDATE ON "player_attribute_snapshots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -453,7 +461,7 @@ CREATE TRIGGER "player_attribute_snapshots_successful_unit" BEFORE INSERT ON "pl
 
 CREATE TABLE "player_tendency_snapshots" (
   "snapshot_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "shot_tendency_raw" INTEGER,
   "drive_tendency_raw" INTEGER,
@@ -503,12 +511,70 @@ CREATE TABLE "player_tendency_snapshots" (
   "block_shot_tendency_raw" INTEGER,
   "foul_tendency_raw" INTEGER,
   "hard_foul_tendency_raw" INTEGER,
-  UNIQUE ("player_id","unit_id")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "shot_area_close_left_tendency_raw" INTEGER CHECK (shot_area_close_left_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_close_center_tendency_raw" INTEGER CHECK (shot_area_close_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_close_right_tendency_raw" INTEGER CHECK (shot_area_close_right_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_medium_left_tendency_raw" INTEGER CHECK (shot_area_medium_left_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_medium_left_center_tendency_raw" INTEGER CHECK (shot_area_medium_left_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_medium_center_tendency_raw" INTEGER CHECK (shot_area_medium_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_medium_right_center_tendency_raw" INTEGER CHECK (shot_area_medium_right_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_medium_right_tendency_raw" INTEGER CHECK (shot_area_medium_right_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_three_left_tendency_raw" INTEGER CHECK (shot_area_three_left_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_three_left_center_tendency_raw" INTEGER CHECK (shot_area_three_left_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_three_center_tendency_raw" INTEGER CHECK (shot_area_three_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_three_right_center_tendency_raw" INTEGER CHECK (shot_area_three_right_center_tendency_raw BETWEEN 0 AND 255),
+  "shot_area_three_right_tendency_raw" INTEGER CHECK (shot_area_three_right_tendency_raw BETWEEN 0 AND 255),
+  "use_glass_tendency_raw" INTEGER CHECK (use_glass_tendency_raw BETWEEN 0 AND 255),
+  "drive_right_tendency_raw" INTEGER CHECK (drive_right_tendency_raw BETWEEN 0 AND 255),
+  "triple_threat_pump_fake_tendency_raw" INTEGER CHECK (triple_threat_pump_fake_tendency_raw BETWEEN 0 AND 255),
+  "triple_threat_jab_step_tendency_raw" INTEGER CHECK (triple_threat_jab_step_tendency_raw BETWEEN 0 AND 255),
+  "triple_threat_nothing_tendency_raw" INTEGER CHECK (triple_threat_nothing_tendency_raw BETWEEN 0 AND 255),
+  "triple_threat_shoot_tendency_raw" INTEGER CHECK (triple_threat_shoot_tendency_raw BETWEEN 0 AND 255),
+  "setup_sizeup_tendency_raw" INTEGER CHECK (setup_sizeup_tendency_raw BETWEEN 0 AND 255),
+  "setup_hesitation_tendency_raw" INTEGER CHECK (setup_hesitation_tendency_raw BETWEEN 0 AND 255),
+  "setup_nothing_tendency_raw" INTEGER CHECK (setup_nothing_tendency_raw BETWEEN 0 AND 255),
+  "dribble_crossover_tendency_raw" INTEGER CHECK (dribble_crossover_tendency_raw BETWEEN 0 AND 255),
+  "dribble_spin_tendency_raw" INTEGER CHECK (dribble_spin_tendency_raw BETWEEN 0 AND 255),
+  "dribble_step_back_tendency_raw" INTEGER CHECK (dribble_step_back_tendency_raw BETWEEN 0 AND 255),
+  "dribble_half_spin_tendency_raw" INTEGER CHECK (dribble_half_spin_tendency_raw BETWEEN 0 AND 255),
+  "dribble_double_cross_tendency_raw" INTEGER CHECK (dribble_double_cross_tendency_raw BETWEEN 0 AND 255),
+  "dribble_behind_back_tendency_raw" INTEGER CHECK (dribble_behind_back_tendency_raw BETWEEN 0 AND 255),
+  "dribble_hesitation_tendency_raw" INTEGER CHECK (dribble_hesitation_tendency_raw BETWEEN 0 AND 255),
+  "dribble_in_and_out_tendency_raw" INTEGER CHECK (dribble_in_and_out_tendency_raw BETWEEN 0 AND 255),
+  "dribble_nothing_tendency_raw" INTEGER CHECK (dribble_nothing_tendency_raw BETWEEN 0 AND 255),
+  "iso_vs_elite_tendency_raw" INTEGER CHECK (iso_vs_elite_tendency_raw BETWEEN 0 AND 255),
+  "iso_vs_good_tendency_raw" INTEGER CHECK (iso_vs_good_tendency_raw BETWEEN 0 AND 255),
+  "iso_vs_average_tendency_raw" INTEGER CHECK (iso_vs_average_tendency_raw BETWEEN 0 AND 255),
+  "iso_vs_poor_tendency_raw" INTEGER CHECK (iso_vs_poor_tendency_raw BETWEEN 0 AND 255),
+  "post_shimmy_shot_tendency_raw" INTEGER CHECK (post_shimmy_shot_tendency_raw BETWEEN 0 AND 255),
+  "post_face_up_tendency_raw" INTEGER CHECK (post_face_up_tendency_raw BETWEEN 0 AND 255),
+  "post_back_down_tendency_raw" INTEGER CHECK (post_back_down_tendency_raw BETWEEN 0 AND 255),
+  "post_aggressive_back_down_tendency_raw" INTEGER CHECK (post_aggressive_back_down_tendency_raw BETWEEN 0 AND 255),
+  "post_shoot_tendency_raw" INTEGER CHECK (post_shoot_tendency_raw BETWEEN 0 AND 255),
+  "post_hook_left_tendency_raw" INTEGER CHECK (post_hook_left_tendency_raw BETWEEN 0 AND 255),
+  "post_hook_right_tendency_raw" INTEGER CHECK (post_hook_right_tendency_raw BETWEEN 0 AND 255),
+  "post_fade_left_tendency_raw" INTEGER CHECK (post_fade_left_tendency_raw BETWEEN 0 AND 255),
+  "post_fade_right_tendency_raw" INTEGER CHECK (post_fade_right_tendency_raw BETWEEN 0 AND 255),
+  "post_up_and_under_tendency_raw" INTEGER CHECK (post_up_and_under_tendency_raw BETWEEN 0 AND 255),
+  "post_hop_shot_tendency_raw" INTEGER CHECK (post_hop_shot_tendency_raw BETWEEN 0 AND 255),
+  "post_stepback_shot_tendency_raw" INTEGER CHECK (post_stepback_shot_tendency_raw BETWEEN 0 AND 255),
+  "post_drive_tendency_raw" INTEGER CHECK (post_drive_tendency_raw BETWEEN 0 AND 255),
+  "post_spin_tendency_raw" INTEGER CHECK (post_spin_tendency_raw BETWEEN 0 AND 255),
+  "post_drop_step_outside_tendency_raw" INTEGER CHECK (post_drop_step_outside_tendency_raw BETWEEN 0 AND 255),
+  "post_drop_step_inside_tendency_raw" INTEGER CHECK (post_drop_step_inside_tendency_raw BETWEEN 0 AND 255),
+  "is_play_initiator_raw" INTEGER CHECK (is_play_initiator_raw IN (0,1)),
+  UNIQUE ("player_id","unit_id"),
+  UNIQUE ("source_player_id","unit_id"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_tendency_snapshots_player_id" ON "player_tendency_snapshots" ("player_id");
 
 CREATE INDEX "idx_player_tendency_snapshots_unit_id" ON "player_tendency_snapshots" ("unit_id");
+
+CREATE INDEX "idx_player_tendency_snapshots_source_player_id" ON "player_tendency_snapshots" ("source_player_id");
 
 CREATE TRIGGER "player_tendency_snapshots_no_update" BEFORE UPDATE ON "player_tendency_snapshots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -550,16 +616,23 @@ CREATE TRIGGER "player_badge_values_successful_unit" BEFORE INSERT ON "player_ba
 
 CREATE TABLE "player_play_type_slots" (
   "play_type_observation_id" TEXT NOT NULL PRIMARY KEY,
-  "player_id" TEXT NOT NULL REFERENCES players(player_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
   "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
   "slot_index" INTEGER NOT NULL CHECK (slot_index>=0),
   "native_play_code" TEXT,
-  UNIQUE ("player_id","unit_id","slot_index")
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "layout_version" TEXT,
+  "native_play_label" TEXT,
+  UNIQUE ("player_id","unit_id","slot_index"),
+  UNIQUE ("source_player_id","unit_id","slot_index"),
+  CHECK (player_id IS NOT NULL OR source_player_id IS NOT NULL)
 ) STRICT;
 
 CREATE INDEX "idx_player_play_type_slots_player_id" ON "player_play_type_slots" ("player_id");
 
 CREATE INDEX "idx_player_play_type_slots_unit_id" ON "player_play_type_slots" ("unit_id");
+
+CREATE INDEX "idx_player_play_type_slots_source_player_id" ON "player_play_type_slots" ("source_player_id");
 
 CREATE TRIGGER "player_play_type_slots_no_update" BEFORE UPDATE ON "player_play_type_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -2488,6 +2561,12 @@ CREATE TRIGGER player_health_observations_native_source_unit BEFORE INSERT ON pl
 CREATE TRIGGER player_morale_observations_native_source_unit BEFORE INSERT ON player_morale_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER market_state_observations_native_source_unit BEFORE INSERT ON market_state_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_attribute_snapshots_native_source_unit BEFORE INSERT ON player_attribute_snapshots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_tendency_snapshots_native_source_unit BEFORE INSERT ON player_tendency_snapshots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
+
+CREATE TRIGGER player_play_type_slots_native_source_unit BEFORE INSERT ON player_play_type_slots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;
 

@@ -91,7 +91,15 @@ def main():
     state_query=sub.add_parser('native-player-state');state_query.add_argument('database');state_query.add_argument('--subject-name');state_query.add_argument('--source-index',type=int);state_query.add_argument('--unit-id');state_query.add_argument('--after-index',type=int,default=-1);state_query.add_argument('--limit',type=int,default=20)
     affiliation_capture=sub.add_parser('capture-affiliations');affiliation_capture.add_argument('pid',type=int);affiliation_capture.add_argument('save_directory');affiliation_capture.add_argument('loaded_filename');affiliation_capture.add_argument('new_output_directory')
     affiliation_query=sub.add_parser('native-affiliations');affiliation_query.add_argument('database');affiliation_query.add_argument('--subject-name');affiliation_query.add_argument('--source-index',type=int);affiliation_query.add_argument('--flag');affiliation_query.add_argument('--flag-value',type=int,default=1);affiliation_query.add_argument('--unit-id');affiliation_query.add_argument('--after-index',type=int,default=-1);affiliation_query.add_argument('--limit',type=int,default=20)
+    skill_capture=sub.add_parser('capture-player-skills');skill_capture.add_argument('pid',type=int);skill_capture.add_argument('save_directory');skill_capture.add_argument('loaded_filename');skill_capture.add_argument('new_output_directory')
+    skill_query=sub.add_parser('native-player-skills');skill_query.add_argument('database');skill_query.add_argument('--subject-name');skill_query.add_argument('--source-index',type=int);skill_query.add_argument('--unit-id');skill_query.add_argument('--after-index',type=int,default=-1);skill_query.add_argument('--limit',type=int,default=20)
     args=parser.parse_args()
+    if args.action=='capture-player-skills':
+        from player_skill_reader import capture_player_skills
+        print(json.dumps(capture_player_skills(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
+    if args.action=='native-player-skills':
+        from query import native_player_skills
+        print(json.dumps(native_player_skills(args.database,subject_name=args.subject_name,source_index=args.source_index,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
     if args.action=='capture-affiliations':
         from player_affiliation_reader import capture_player_affiliations
         print(json.dumps(capture_player_affiliations(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
