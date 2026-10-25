@@ -117,6 +117,8 @@ SQLite file ownership is **not** a role ACL. Keep the owner database and all sou
 
 ## Owner backup, recovery and storage measurement (increment 18)
 
+**Current Human direction:** capacity stress and storage optimization are deferred until actual complete-season data is available. Existing one-month exploratory models do not decide a retention horizon. See [capacity and retention policy](CAPACITY_AND_RETENTION_POLICY.md); other engineering and append-only history continue.
+
 `backup-facts DB NEW_DIRECTORY` uses SQLite's online backup API through a read-only source connection. A complete manifest is published only after validating every table's ordered row digest, the complete schema fingerprint, integrity/FKs, single-save identity and the backup file hash. This supports committed WAL content; an in-progress uncommitted writer is excluded. A failed/interrupted copy leaves no complete manifest. File sync is requested for completed database/manifest files; the implementation does not claim a real power-loss test or directory-fsync guarantee on Windows.
 
 `restore-facts BACKUP_DIRECTORY NEW_DATABASE --expected-save-id SAVE_ID` verifies the backup before writing, creates an exclusive new database candidate and verifies its full file/schema/table fingerprints again. Existing files are never overwritten, and the active save binding is not changed. This is recovery of the same save-local facts; it does not establish current live-game alignment, create a game-save branch or update the game. The fact ledger and external source hashes are preserved; raw evidence files remain separately retained owner artifacts and are not bundled/restored by these commands. Keep backup databases/manifests under owner access, just like the original facts database.
