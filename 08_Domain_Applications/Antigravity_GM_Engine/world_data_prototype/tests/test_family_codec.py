@@ -39,7 +39,8 @@ class RegisteredFamilyTests(unittest.TestCase):
         self.assertFalse(any('potential' in k for f in ('attributes','contracts','tendencies') for k in data[f]))
         self.assertEqual(len(data['tendencies']),48)
         self.assertNotIn('raw_0x4ba',data['tendencies'])
-        self.assertEqual(data['family_completeness']['badges'],'UNKNOWN_ENCODING_NOT_DECODED')
+        self.assertEqual(data['family_completeness']['badges'],'SEPARATE_NATIVE_DETAIL_CAPTURE; NOT_INCLUDED_BY_THIS_REGISTERED_FAMILY_FUNCTION')
+        self.assertNotIn('badges',data)
 
     def test_four_playtypes_preserve_order_and_nibbles(self):
         raw=bytearray(1264);raw[0x168]=0x51;raw[0x169]=0xF2
