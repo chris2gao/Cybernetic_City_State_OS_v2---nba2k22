@@ -9,6 +9,7 @@ from pathlib import Path
 from observation_scope import query_connection as connect
 from schema_model import TABLES, ident,NATIVE_PLAYER_STAT_MAP
 from family_codec import registered_rating_candidate,PROFILE
+from competition_views import game_box_snapshot,season_summary,player_seasons
 
 RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_raw'
                 for d in PROFILE['fields']['PLAYER'] if d.get('conversion')=='rating' and d['name']!='potential'}
@@ -95,6 +96,7 @@ def player_card(path,player_id):
             result['families'][name]=fields
         result['families']['player_badge_values']=player_badges(path,player_id)
         result['families']['player_play_type_slots']=player_play_types(path,player_id)
+        result['season_observations']=player_seasons(path,player_id)
     return result
 
 
@@ -304,14 +306,8 @@ def gameplan_card(path,team_id,opponent_team_id):
         return {'plan':dict(plan),'rotations':rotations,'defenses':defenses,'game_effect':'NOT_INFERRED_FROM_COMMIT_FLAG'}
 
 
-def game_box(path,game_id):
-    with closing(connect(path,True)) as c:
-        game=c.execute('SELECT * FROM games WHERE game_id=?',(game_id,)).fetchone()
-        if game is None:return {'game_id':game_id,'status':'NOT_OBSERVED'}
-    return {'game':dict(game),'states':history(path,'game_state_observations',entity_key='game_id',entity_id=game_id),
-            'period_scores':history(path,'game_period_scores',entity_key='game_id',entity_id=game_id),
-            'player_boxes':history(path,'player_game_boxes',entity_key='game_id',entity_id=game_id),
-            'team_boxes':history(path,'team_game_boxes',entity_key='game_id',entity_id=game_id)}
+def game_box(path,game_id,*,unit_id=None):
+    return game_box_snapshot(path,game_id,unit_id=unit_id)
 
 
 def schedule(path,*,season_id=None,status_code=None,limit=2000):

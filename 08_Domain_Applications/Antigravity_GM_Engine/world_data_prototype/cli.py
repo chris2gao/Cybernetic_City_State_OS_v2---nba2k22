@@ -10,7 +10,7 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from engine import create_database,connect,ingest_synthetic_capture,ingest_capture,summarize,migrate_v1,migrate_database
 from readers import replay_ag01d,replay_player_families
-from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card,settings_snapshot,rules_snapshot,record_book,native_honors
+from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card,settings_snapshot,rules_snapshot,record_book,native_honors,season_summary,player_seasons
 from owner_capture import recorded_game_capture
 
 
@@ -52,7 +52,9 @@ def main():
     families=sub.add_parser('replay-player-families');families.add_argument('database');families.add_argument('save_id');families.add_argument('--observed-at')
     stats=sub.add_parser('summary');stats.add_argument('database')
     card=sub.add_parser('player');card.add_argument('database');card.add_argument('player_id')
-    game=sub.add_parser('game');game.add_argument('database');game.add_argument('game_id')
+    game=sub.add_parser('game');game.add_argument('database');game.add_argument('game_id');game.add_argument('--unit-id')
+    season=sub.add_parser('season');season.add_argument('database');season.add_argument('season_id');season.add_argument('--phase-code');season.add_argument('--limit',type=int,default=1000)
+    player_season=sub.add_parser('player-seasons');player_season.add_argument('database');player_season.add_argument('player_id');player_season.add_argument('--season-id');player_season.add_argument('--phase-code');player_season.add_argument('--limit',type=int,default=100)
     hist=sub.add_parser('history');hist.add_argument('database');hist.add_argument('table');hist.add_argument('--entity-key');hist.add_argument('--entity-id');hist.add_argument('--limit',type=int,default=200)
     exp=sub.add_parser('export');exp.add_argument('database');exp.add_argument('table');exp.add_argument('destination');exp.add_argument('--limit',type=int,default=10000)
     mig=sub.add_parser('migrate-v1');mig.add_argument('source');mig.add_argument('new_database')
@@ -99,7 +101,7 @@ def main():
     restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
     storage=sub.add_parser('storage-profile');storage.add_argument('database')
     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
-    for read_parser in (card,game,hist,paged,exp,sched,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
+    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
     if getattr(args,'as_of',None) is not None:
@@ -211,7 +213,9 @@ def dispatch(args):
     if args.action=='smoke': print(json.dumps(smoke(),sort_keys=True));return
     if args.action=='summary':print(json.dumps(summarize(args.database),sort_keys=True));return
     if args.action=='player':print(json.dumps(player_card(args.database,args.player_id),ensure_ascii=False));return
-    if args.action=='game':print(json.dumps(game_box(args.database,args.game_id),ensure_ascii=False));return
+    if args.action=='game':print(json.dumps(game_box(args.database,args.game_id,unit_id=args.unit_id),ensure_ascii=False));return
+    if args.action=='season':print(json.dumps(season_summary(args.database,args.season_id,phase_code=args.phase_code,limit=args.limit),ensure_ascii=False));return
+    if args.action=='player-seasons':print(json.dumps(player_seasons(args.database,args.player_id,season_id=args.season_id,phase_code=args.phase_code,limit=args.limit),ensure_ascii=False));return
     if args.action=='inspect-source':print(json.dumps(inspect_source_capture(args.database,args.unit_id),ensure_ascii=False));return
     if args.action=='history':print(json.dumps(history(args.database,args.table,entity_key=args.entity_key,entity_id=args.entity_id,limit=args.limit),ensure_ascii=False));return
     if args.action=='export':print(json.dumps(export_jsonl(args.database,args.destination,args.table,limit=args.limit)));return
