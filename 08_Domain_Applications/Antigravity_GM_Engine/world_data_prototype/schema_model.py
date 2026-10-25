@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 15
+VERSION = 16
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -146,6 +146,23 @@ table('player_badge_values','badge_observation_id','RES-P','one observed native 
     unique=[('player_id','unit_id','badge_key'),('source_player_id','unit_id','badge_key')],checks=['player_id IS NOT NULL OR source_player_id IS NOT NULL'],
     source='Current PLAYERDATA field CRCs, all99 base-dispatch cases and BADGE/BADGE_LEVEL enums; legacy research labels remain historical')
 table('player_play_type_slots','play_type_observation_id','RES-P','one ordered player play type slot',[P(),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('native_play_code')],unique=[('player_id','unit_id','slot_index')],source='config/state_io_native/player.json PLAY_TYPE_NAMES; research only')
+_skill_profile=json.loads((BASE/'player_skill_native_profile.json').read_bytes())
+for _group,_table_name in [('attributes','player_attribute_snapshots'),('tendencies','player_tendency_snapshots'),('play_types','player_play_type_slots')]:
+    _table=TABLES[_table_name]
+    for _c in _table.columns:
+        if _c.name=='player_id':_c.required=False
+    _table.columns.extend([ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version')])
+    _table.unique.append(('source_player_id','unit_id','slot_index') if _group=='play_types' else ('source_player_id','unit_id'))
+    _table.checks.append('player_id IS NOT NULL OR source_player_id IS NOT NULL')
+    if _group=='play_types':continue
+    for _name,_field in _skill_profile[_group].items():
+        _source=f'CURRENT_NATIVE.PLAYERDATA.{_field["native_name"]} +{_field["offset"]} bit={_field["start_bit"]} width={_field["width"]}; player_skill_native_profile.json; earlier snapshots retain their executed registry'
+        _existing=next((c for c in _table.columns if c.name==_name),None)
+        if _existing:_existing.source=_source;_existing.unit='native unsigned storage; UI range/transform separate'
+        else:_table.columns.append(col(_name,'INTEGER',check=f'{_name} BETWEEN 0 AND 255',source=_source,unit='native unsigned byte; UI range/transform separate'))
+TABLES['player_tendency_snapshots'].columns.append(col('is_play_initiator_raw','INTEGER',check='is_play_initiator_raw IN (0,1)',source='CURRENT_NATIVE.PLAYERDATA.IsPlayInitiator +360 bit18; not an ability or numeric tendency',unit='native independent boolean flag'))
+TABLES['player_play_type_slots'].columns.append(col('native_play_label',source='CURRENT_NATIVE.PLAYERDATA_PLAYTYPE exact enum; unknown storage code retains NULL label'))
+TABLES['player_play_type_slots'].source='Current PLAYERDATA.PlayType1..4 and PLAYERDATA_PLAYTYPE enum; ordered source slots, not playbook categories or effect proof'
 _detail_profile=json.loads((BASE/'player_detail_native_profile.json').read_bytes())
 contract_cols=[]
 for name,r in _detail_profile['contract_fields'].items():
@@ -560,7 +577,7 @@ def schema_sql():
     out.append('''CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;''')
     out.append('''CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;''')
     out.append('''CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;''')
-    for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations','market_state_observations'):
+    for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations','market_state_observations','player_attribute_snapshots','player_tendency_snapshots','player_play_type_slots'):
         out.append(f'''CREATE TRIGGER {name}_native_source_unit BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;''')
     out.append('''CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
