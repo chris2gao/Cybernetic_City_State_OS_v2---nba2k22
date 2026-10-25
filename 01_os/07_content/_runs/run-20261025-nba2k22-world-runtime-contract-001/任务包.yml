@@ -1,0 +1,46 @@
+task_packet:
+  task_id: nba2k22-world-runtime-and-prototype-contract-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+  branch: task/nba2k22-world-runtime-and-prototype-contract-20261025
+  objective: >-
+    Record Human's NBA2K22 prototype Native scene investigation, eight test windows,
+    incremental acquisition, Human-triggered production season cadence and model
+    decision handoff, while explicitly separating all bottom-layer read/write/CRUD,
+    semantic/validation infrastructure from future GM/Coach/Player agency decisions.
+    Publish canonical domain contract with discoverable agent/index/intent links.
+    Do not alter current Codex engineering task or grant new game write authority.
+  source_evidence:
+    - Human 2026-10-25 multi-turn explicit rules on 8 prototype test scenes and incremental capture
+    - Human 2026-10-25 production game cadence and manual Human trigger clarifications
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/README.md
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_WORLD_RUNTIME_AND_PROTOTYPE_SCENE_CONTRACT_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/AGENTS.md
+    - 01_os/07_content/_runs/run-20261025-nba2k22-world-runtime-contract-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261025-nba2k22-world-runtime-contract-001/verification_plan.json
+  required_tests: []
+  prohibitions:
+    - modify_core_owned_OS_or_root_agent_rules
+    - modify_active_Codex_engineering_branch_or_runtime
+    - game_process_access_or_game_save_write
+    - implement_persona_decisions_or_automatic_scheduler
+    - force_push_or_rewrite_history
+    - merge_master_without_explicit_Human_confirmation_and_required_review
+  required_completion_pointer: 01_os/07_content/_runs/run-20261025-nba2k22-world-runtime-contract-001/completion_pointer.json
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_yet_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_head: 7742568ac677b3c16079887463f05e81cb1191ed
+  verification_profile:
+    static_document_links_and_scope: required
+    independent_reviewer: separate_session_required_for_master
+    managed_verify: not_run_for_docs_only
