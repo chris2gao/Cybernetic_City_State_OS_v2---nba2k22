@@ -1,0 +1,32 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Add real Native game-mode stage observations and a public query, preserving
+    the distinction between game-mode stages, schedule periods and stat phases.
+  implementation_or_review_method: >-
+    Verify six current metadata types and800 bytes of getter/selector/call-path
+    code; copy-upgrade v18 to v19, acquire one ordinary source, compare its24-byte
+    prefix independently and verify every prior row except the version header.
+  supportability_rationale: >-
+    The31-value native GAMEMODE_TIMEPERIOD enum names offseason substages and
+    playing periods. Actual REGULARSEASON is observed through a checked virtual
+    getter and repeated public prefix. Position24 is shared by five periods,
+    so no unique cumulative-stat phase is inferred from that slot.
+  feasibility_rationale: >-
+    Schema v19 has87 STRICT tables and1404 columns.206 tests plus SQLite smoke
+    pass at the candidate. All1374390 prior rows across86 tables remain preserved
+    apart from the required saves.schema_version18-to19 header change.
+  exact_result_or_candidate_ref: 3057547feaec7d4dbc73588a26b4513d40a76681
+  verification_evidence:
+    - 06_执行/increment26/actual-game-mode-report.json
+    - 06_执行/increment26/queries/game-mode.json
+    - 06_执行/increment26/queries/season-calendar-separate-source.json
+    - 06_执行/increment26/verification/operations_report.json
+    - 06_执行/increment26/native-sources.archive.json
+    - 06_执行/increment26/world-v19.snapshot.json
+  residual_risk_or_unproved_limits:
+    - Only REGULARSEASON is an actual current stage sample; no unobserved transition is claimed.
+    - CurrentYear and DraftYear raw bytes have no generalized absolute-year conversion.
+    - Shared stat slot24 does not establish the phase of accumulated records.
+    - Native stage labels and dates do not establish UI localization or game effects.
+    - Full-season capacity and full-system independent/Human acceptance remain open.
