@@ -12,6 +12,7 @@ from schema_model import VERSION
 # Ordered source dependencies: schedule establishes current player/team identities.
 SOURCES={
     'schedule':('schedule_reader','capture_season','BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS',None),
+    'game-mode':('game_mode_reader','capture_game_mode','BOUND_NATIVE_GAME_MODE_PERIOD',None),
     'organization':('organization_reader','capture_organization','BOUND_CORE_ORGANIZATION',None),
     'market':('market_reader','capture_market','BOUND_NATIVE_MARKET_SOURCES',None),
     'planning':('planning_reader','capture_planning','BOUND_PLANNING_AND_TRAINING',None),
