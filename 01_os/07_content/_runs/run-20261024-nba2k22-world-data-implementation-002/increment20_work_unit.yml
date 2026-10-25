@@ -1,0 +1,33 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Return single-acquisition Game Boxes and add exact-period season summaries,
+    player season observations and same-row derived per-game/shooting rates.
+  implementation_or_review_method: >-
+    Select one successful game unit with timezone-aware ordering, qualify canonical
+    score sums against exact captured active Native IDs/team/points and keep all
+    score provenance explicit. Select totals by exact phase/scope/team keys and
+    derive rates without cross-unit field carry. Compare with independent main SQL.
+  supportability_rationale: >-
+    All1232 games and9745 public selected Box/state/period rows match direct SQL;
+    every game also supports an earlier unit pin. Actual369 player and30 team
+    totals pass6783 rate comparisons and369 player-season queries. Unresolved
+    participants withhold qualified scores rather than silently dropping points.
+  feasibility_rationale: >-
+    Existing immutable units and typed totals support the change without a new
+    source acquisition, schema migration or database copy.151 tests and SQLite
+    smoke pass. Missing denominators, zero attempts and unknown phase/finality
+    remain explicit. Original database hash and save binding remain unchanged.
+  exact_result_or_candidate_ref: f4fb41ce85d50d29610392b0bdc5e078ded8b720
+  verification_evidence:
+    - 06_执行/increment20/actual-competition-report.json
+    - 06_执行/increment20/game-unit-comparisons.json
+    - 06_执行/increment20/queries/season-season-native-year-2022.json
+    - 06_执行/increment20/verification/operations_report.json
+    - 06_执行/increment20/verification/tests.stderr.log
+  residual_risk_or_unproved_limits:
+    - Captured-row sums do not establish missing canonical identities or historical lifecycle.
+    - Unknown phase/scope/finality and raw time units are not promoted to UI semantics.
+    - No team-stint/career sum, official conference seed or tiebreak is inferred.
+    - Full real-season evidence precedes capacity and retention evaluation under Human direction.
+    - Whole-candidate Native/UI coverage and independent/Human final acceptance remain open.
