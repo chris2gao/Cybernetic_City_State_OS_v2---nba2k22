@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **86**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **87**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -84,6 +84,7 @@ Actual tables: **86**. Every table is STRICT and append-only. A SQLite owner can
 | `native_box_observations` | RES-D | one captured Box row before canonical player identity is proven | `box_observation_id` | game_id -> games(game_id); unit_id -> capture_units(unit_id) | ADD |
 | `game_source_checks` | RES-G | one current game-header check and explicit Box acquisition/reuse decision | `check_id` | game_id -> games(game_id); unit_id -> capture_units(unit_id); prior_full_unit_id -> capture_units(unit_id) | ADD |
 | `season_calendar_observations` | RES-L | one observed SEASON calendar/period and native schedule-control window | `calendar_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
+| `game_mode_observations` | RES-L | one Native GAMEMODE public prefix and verified current-stat selector observation | `mode_observation_id` | season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_player_stat_observations` | RES-H | one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates | `stat_observation_id` | unit_id -> capture_units(unit_id) | ADD |
 | `native_player_stat_links` | RES-H | one native fixed-array SeasonStats reference, preserving empty/outside/after-empty slots | `stat_link_id` | unit_id -> capture_units(unit_id); player_source_id -> native_player_sources(player_source_id); stat_observation_id -> native_player_stat_observations(stat_observation_id) | ADD |
 | `gameplan_observations` | RES-C | one stored owner/opponent GAMEPLAN observation; commit flag is not game-effect proof | `plan_id` | team_id -> teams(team_id); opponent_team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |

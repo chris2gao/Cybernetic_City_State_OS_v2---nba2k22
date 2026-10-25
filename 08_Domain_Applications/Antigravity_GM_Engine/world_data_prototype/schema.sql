@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=18),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=19),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -2375,6 +2375,48 @@ CREATE TRIGGER "season_calendar_observations_no_update" BEFORE UPDATE ON "season
 CREATE TRIGGER "season_calendar_observations_no_delete" BEFORE DELETE ON "season_calendar_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "season_calendar_observations_successful_unit" BEFORE INSERT ON "season_calendar_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "game_mode_observations" (
+  "mode_observation_id" TEXT NOT NULL PRIMARY KEY,
+  "season_id" TEXT NOT NULL REFERENCES seasons(season_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "num_teams_raw" INTEGER NOT NULL CHECK (num_teams_raw BETWEEN 0 AND 255),
+  "num_draft_teams_raw" INTEGER NOT NULL CHECK (num_draft_teams_raw BETWEEN 0 AND 255),
+  "current_year_byte_raw" INTEGER NOT NULL CHECK (current_year_byte_raw BETWEEN 0 AND 255),
+  "draft_year_byte_raw" INTEGER NOT NULL CHECK (draft_year_byte_raw BETWEEN 0 AND 255),
+  "mode_raw" INTEGER NOT NULL CHECK (mode_raw BETWEEN 0 AND 4294967295),
+  "league_raw" INTEGER NOT NULL CHECK (league_raw BETWEEN 0 AND 4294967295),
+  "period_raw" INTEGER NOT NULL CHECK (period_raw BETWEEN 0 AND 4294967295),
+  "previous_period_raw" INTEGER NOT NULL CHECK (previous_period_raw BETWEEN 0 AND 4294967295),
+  "mode_label" TEXT,
+  "league_label" TEXT,
+  "period_label" TEXT,
+  "previous_period_label" TEXT,
+  "today_word_raw" INTEGER CHECK (today_word_raw BETWEEN 0 AND 4294967295),
+  "today_id_raw" INTEGER CHECK (today_id_raw BETWEEN 0 AND 31),
+  "today_minutes_since_midnight_raw" INTEGER CHECK (today_minutes_since_midnight_raw BETWEEN 0 AND 2047),
+  "today_day_raw" INTEGER CHECK (today_day_raw BETWEEN 0 AND 31),
+  "today_month_raw" INTEGER CHECK (today_month_raw BETWEEN 0 AND 15),
+  "today_base_year_offset_raw" INTEGER CHECK (today_base_year_offset_raw BETWEEN 0 AND 127),
+  "today_month_label" TEXT,
+  "today_native_iso_date" TEXT,
+  "today_native_time_hhmm" TEXT,
+  "today_decode_status" TEXT,
+  "current_stat_array_position" INTEGER NOT NULL CHECK (current_stat_array_position IN (0,24)),
+  "stat_selector_rule" TEXT NOT NULL,
+  "stat_selector_status" TEXT NOT NULL,
+  UNIQUE ("unit_id")
+) STRICT;
+
+CREATE INDEX "idx_game_mode_observations_season_id" ON "game_mode_observations" ("season_id");
+
+CREATE INDEX "idx_game_mode_observations_unit_id" ON "game_mode_observations" ("unit_id");
+
+CREATE TRIGGER "game_mode_observations_no_update" BEFORE UPDATE ON "game_mode_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "game_mode_observations_no_delete" BEFORE DELETE ON "game_mode_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "game_mode_observations_successful_unit" BEFORE INSERT ON "game_mode_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "native_player_stat_observations" (
   "stat_observation_id" TEXT NOT NULL PRIMARY KEY,

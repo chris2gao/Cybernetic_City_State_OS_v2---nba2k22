@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 18
+VERSION = 19
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -482,6 +482,14 @@ table('season_calendar_observations','calendar_id','RES-L','one observed SEASON 
     S(),U()]+_calendar_date_columns('current_')+[
     col('period_raw','INTEGER',check='period_raw BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.SEASON.Period; SEASON_TIMEPERIOD enum'),col('period_label',source='Exact native SEASON_TIMEPERIOD label, not a franchise offseason substage'),
     *[col(name,'INTEGER',check=f'{name} BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.SEASON / SEASON_SCHEDULE / BOXSCORE_STATBANK named scalar; no sentinel or index semantics inferred') for name in ('current_index_raw','next_index_raw','declared_game_count_raw','source_slot10_count_raw','game_capacity_verified','next_game_id_raw','allstar_game_index_raw','rookie_sophomore_game_index_raw','box_current_stat_line_raw','box_stat_capacity_verified')]],unique=[('season_id','unit_id')])
+
+_mode_profile=json.loads((BASE/'game_mode_native_profile.json').read_bytes())
+_mode_fields={'num_teams_raw':'NumTeams','num_draft_teams_raw':'NumDraftTeams','current_year_byte_raw':'CurrentYear','draft_year_byte_raw':'DraftYear','mode_raw':'Mode','league_raw':'League','period_raw':'Period','previous_period_raw':'PreviousPeriod'}
+table('game_mode_observations','mode_observation_id','RES-L','one Native GAMEMODE public prefix and verified current-stat selector observation',[
+    S(),U()]+[col(column,'INTEGER',required=True,check=f'{column} BETWEEN 0 AND {(1<<_mode_profile["bindings"][name]["width"])-1}',source='CURRENT_NATIVE.GAMEMODE.'+name,unit='native unsigned storage; year bytes have no generalized absolute-year conversion') for column,name in _mode_fields.items()]+[
+    col(name,source='Exact Native GAMEMODE_MODE / GAMEMODE_LEAGUE / GAMEMODE_TIMEPERIOD enum label; NULL for an unregistered raw code') for name in ('mode_label','league_label','period_label','previous_period_label')]+_calendar_date_columns('today_')+[
+    col('current_stat_array_position','INTEGER',required=True,check='current_stat_array_position IN (0,24)',source='CURRENT_NATIVE current-timeperiod selector and GetOrCreate path; index24 is shared across multiple periods',unit='zero-based SeasonStats array position; not a cumulative-phase label'),
+    col('stat_selector_rule',required=True,source='game_mode_native_profile.json verified switch/getter/call path'),col('stat_selector_status',required=True,source='Native named period or explicit default-zero selector for an unregistered period')],unique=[('unit_id',)],source='CURRENT_NATIVE.GAMEMODE public24-byte prefix; repeated pointer/vtable/getter controls; no method invocation')
 
 _native_stat_profile=json.loads((BASE/'award_native_profile.json').read_bytes())
 _native_stat_cols=[]

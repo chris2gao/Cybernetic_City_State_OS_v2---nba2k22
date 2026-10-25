@@ -69,6 +69,8 @@ def main():
     season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory');season_capture.add_argument('--recheck-frozen',action='store_true')
     sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--period-code',type=int);sched.add_argument('--game-type-code',type=int);sched.add_argument('--native-date-from');sched.add_argument('--native-date-to');sched.add_argument('--limit',type=int,default=2000)
     calendar=sub.add_parser('calendar');calendar.add_argument('database');calendar.add_argument('--season-id');calendar.add_argument('--limit',type=int,default=20)
+    mode_read=sub.add_parser('game-mode');mode_read.add_argument('database');mode_read.add_argument('--season-id');mode_read.add_argument('--limit',type=int,default=20)
+    mode_capture=sub.add_parser('capture-game-mode');mode_capture.add_argument('pid',type=int);mode_capture.add_argument('save_directory');mode_capture.add_argument('loaded_filename');mode_capture.add_argument('new_output_directory')
     org=sub.add_parser('capture-organization');org.add_argument('pid',type=int);org.add_argument('save_directory');org.add_argument('loaded_filename');org.add_argument('new_output_directory')
     team=sub.add_parser('team');team.add_argument('database');team.add_argument('team_id')
     staff=sub.add_parser('staff');staff.add_argument('database');staff.add_argument('staff_id')
@@ -105,7 +107,7 @@ def main():
     restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
     storage=sub.add_parser('storage-profile');storage.add_argument('database')
     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
-    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,native_seasons,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
+    for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,mode_read,team,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,native_seasons,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
     if getattr(args,'as_of',None) is not None:
@@ -119,6 +121,12 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='game-mode':
+        from query import game_mode
+        print(json.dumps(game_mode(args.database,season_id=args.season_id,limit=args.limit),ensure_ascii=False));return
+    if args.action=='capture-game-mode':
+        from game_mode_reader import capture_game_mode
+        print(json.dumps(capture_game_mode(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
     if args.action=='native-player-seasons':
         from query import native_player_seasons
         print(json.dumps(native_player_seasons(args.database,player_id=args.player_id,subject_name=args.subject_name,source_index=args.source_index,year=args.year,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return

@@ -357,6 +357,22 @@ def game_box(path,game_id,*,unit_id=None):
     return game_box_snapshot(path,game_id,unit_id=unit_id)
 
 
+def game_mode(path,*,season_id=None,limit=20):
+    from observation_scope import utc_stamp
+    if type(limit) is not int or not 1<=limit<=1000:raise ValueError('game-mode limit must be1..1000')
+    with closing(connect(path,True)) as c:
+        c.create_function('game_mode_utc',1,utc_stamp,deterministic=True);where=' AND m.season_id=?' if season_id else '';args=[season_id] if season_id else []
+        rows=[dict(r) for r in c.execute('''WITH ranked AS (SELECT m.*,u.observed_at,u.effective_at,r.source_grade,
+            row_number() OVER(PARTITION BY m.season_id ORDER BY game_mode_utc(u.observed_at) DESC,u.unit_id DESC) AS recency
+            FROM game_mode_observations m JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
+            WHERE u.unit_status='success' '''+where+''') SELECT * FROM ranked WHERE recency=1 ORDER BY season_id''',args)]
+    if len(rows)>limit:raise ValueError('game-mode result exceeds explicit cap; no truncation')
+    for row in rows:row.pop('recency')
+    return {'records':rows,'scope':'Named Native GAMEMODE period/substage and current-stat array selector; separate from SEASON period and cumulative-stat phase',
+            'stat_position24':'Shared by LOTTERY_TOURNAMENT, SUMMER_LEAGUE, HOOPS_SUMMIT, PRESEASON and PLAYOFFS; no single phase assigned',
+            'ui_stage_acceptance':'NOT_ASSERTED','current_and_draft_year_bytes':'RAW_STORAGE; NO_GENERALIZED_ABSOLUTE_YEAR_CONVERSION'}
+
+
 def league_calendar(path,*,season_id=None,limit=20):
     from observation_scope import utc_stamp
     if type(limit) is not int or not 1<=limit<=1000:raise ValueError('calendar limit must be1..1000')
