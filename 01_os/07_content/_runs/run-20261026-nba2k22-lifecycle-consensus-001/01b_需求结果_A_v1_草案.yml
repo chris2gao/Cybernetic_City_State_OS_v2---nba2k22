@@ -3,7 +3,7 @@
   "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 7,
+  "draft_number": 8,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,7 +12,7 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-07",
+      "version": "A-v1-DRAFT-08",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
@@ -305,27 +305,42 @@
           "result_item_id": "RES-05",
           "title": "统一可授权Native写入与大批量操作执行结果",
           "kind": "function",
-          "review_status": "RESULT_SPECIFICATION_RR05_PENDING_HUMAN",
-          "expected_end_state": "提供未来受Human逐任务授权的确定性原生操作接口；按具体字段/对象/阶段合法条件预检，经可追溯的一致性单元执行、原生读回与必要保存/重载验证，输出可定位、可恢复的批量结果；不在01b或当前规划执行任何真实写入。",
+          "review_status": "RR05_B_APPROVED_SUCCESS_PROOF_TIER_PENDING",
+          "expected_end_state": "提供受Human按测试档、操作类别、对象/字段范围另行明确授权的统一Native写入及大批量执行结果契约：根据目标实体、值域、期望旧值、游戏阶段、操作依赖和角色权限预检并先生成计划；把可独立执行的属性字段簇与跨多个字段/对象的签约、交易、归属/财务联动分别划定逻辑一致性单元。单元内修改不能全部满足已证条件或任何操作失败时，停止该单元后续步骤，记录实际已尝试/确认/未知修改，不将局部写入冒充完整业务成功；仅在已证安全且得到本次授权许可的范围内采用补偿修复，否则隔离异常待Human裁决。已完成独立单元的已证成功成果和Native/数据库观察历史得以保留，不因其他单元失败假定整个游戏内存支持跨单元事务回滚。完成标准包括逐单元的读回、必要持久化、失败检测和恢复证据；具体何时需要保存/重载的验证强度由RR-05B另行确认。",
           "components": [
             "对象/字段确定性寻址与期望旧值版本条件",
             "合法值域/联动规则/权限/来源身份预检与dry-run方案",
             "有限批大小、一致性单元、幂等执行ID和批准范围记录",
             "字段级/对象级Native写后读回、游戏覆盖与保存/重载证据",
             "部分失败/冲突/补偿或失败停止、成功与失败明细",
-            "区分低频世界线设置与常改球员技能/徽章/合同等领域及复合签约操作"
+            "区分低频世界线设置与常改球员技能/徽章/合同等领域及复合签约操作",
+            "按业务完整性划分unit_id：例如彼此独立的球员属性修改可以按已证字段组或对象形成单元；签约/交易/球队归属与合同等跨字段或跨对象必要联动应作为一个逻辑一致性单元，具体包含哪些真实游戏字段由02/03证据确定",
+            "所有允许执行的单元需有完整的写入计划和预检结果：save/season/object identity、当前Native旧值、目标值、合法范围、共享类别Writer认证、关联对象/名单和合同约束、权限及操作顺序",
+            "每个单元输出状态至少区分未授权、预检拒绝、未执行、执行中、已读回验证成功、部分执行但不一致、失败后安全补偿成功、失败且需Human裁决；状态枚举只是结果模型建议，实际接口命名由03定稿",
+            "单元失败必须停止该单元后续写入并阻断依赖该单元的后续业务操作；其他无依赖且独立已证成功的单元可保留。部分实机写入可能已生效，不得自动当作已回滚",
+            "若有已证可靠的字段级/业务级补偿方法，依据写前快照和明确授权尝试恢复并进行Native读回；若无安全补偿，保存真实差异、证据、风险状态并请求Human后续决定",
+            "每次计划执行提供dry-run与实际执行分离、幂等执行键、权限范围/测试档绑定、源/旧值冲突阻断、每个步骤与单元的尝试/实际读回/未确认明细，支持审计和精确续行或人工处理",
+            "游戏原生事实与外挂计划按RES-04分离：只有读回确认且属于有效完整业务结果的观察事实可用于相应已确认当前投影；部分复合写入仍须保留实际观察证据，但业务单元不得标为已完成"
           ],
           "relations": [
-            "RES-03 capability/permission -> write plan -> authorized Native control -> readback -> RES-04 observed DB and RES-06 audit"
+            "RES-03 verified class writer/capability and Human explicit permission -> scoped batch plan -> logical consistency units -> full-unit preflight -> ordered Native steps -> per-step verified readback -> unit outcome -> RES-04 observed factual evidence plus separate operation receipt -> RES-06 independent acceptance",
+            "independent validated units may retain success when other units fail; dependent units of a failed or uncertain unit cannot claim success",
+            "partially applied Native effects -> actual evidence and inconsistent state marker -> only proven safe compensating action -> verified recovery OR Human-controlled exception, never an assumed transaction rollback"
           ],
           "inputs_outputs": [
-            "输入：Human明确批准的存档、字段、对象、期望旧值、目标值及范围",
-            "输出：预检失败/未获授权/执行成功及可复查读回、部分失败和恢复信息"
+            "输入：Human单独授权的物理测试档、场景、目标对象、字段类别/组合业务动作、允许目标值/旧值、独立单元和业务依赖",
+            "预检输出：具体各业务单元的目标名单、条件、影响范围、次序、可验证值域、失败/补偿限制及可执行/拒绝结论（不触碰游戏）",
+            "执行输出：每个步骤和单元的实际Native旧值/写后读回/身份、尝试时点、成功/失败/部分状态、原因、已证恢复证据或待Human决定的异常",
+            "跨批次输出：已经验证成功的独立单元清单、不得继续的依赖单元、需要单独复核的游戏状态和可供数据库事实入库的Native读回记录，不按整个请求单一布尔成功掩盖部分失败"
           ],
-          "completeness_rule": "离线/受控测试通过数据验证与错误注入，真实游戏写入的成功只能在单独明确授权并核验的测试档里按范围宣称；单字段可写不证明多对象业务自动成功，不能承诺批量绝对零错误。",
+          "completeness_rule": "在实际授予操作权限以后，统一Native写入结果须按游戏业务完整性将字段簇和跨对象联动操作分为逻辑一致性单元，每单元执行前整体预检、确认对象/权限/值域/旧值/依赖，执行后按真实Native读回以及必要持久性证据逐项核对；单元内任一步骤失败或未确认时，立即停止该单元剩余步骤和相关依赖单元，不把部分完成冒充签约、交易等业务成功。若恢复方法确有实证且在授权范围内，可安全补偿并核验；否则标记隔离异常并由Human决定后续处理。独立且已实际成功的单元在不受依赖或全局污染影响时可以保留；不得要求或者假称游戏进程有跨批次数据库式原子回滚。输出逐目标、逐步骤和逐单元状态/读回/恢复证据，确保RES-04仅用可信原生观察更新游戏当前事实。未来实机写入仍需Human单独授权，错误注入和受控测试完成后才能宣称对应范围已实证，不承诺零错误；读回及保存/重载的场景分级在RR-05B确定。",
           "known_facts": [
             {
               "item": "Human批准的是统一读写架构目标和分阶段开发原则，不是直接游戏内存写入。",
+              "evidence_status": "human_requirement"
+            },
+            {
+              "item": "Human于2026-10-26选择RR-05=B，无额外补充；按业务一致性单元预检和执行，单元失败停止、经证明安全时补偿、其他独立已证成功单元保留，并记录实际执行差异和Human裁决项。",
               "evidence_status": "human_requirement"
             }
           ],
@@ -338,8 +353,14 @@
             },
             {
               "question_id": "RR-05",
-              "scope": "多字段/多对象Native写入批次以什么逻辑一致性单元验收，发生部分成功时是否终止、如何审计及恢复、能否独立提交其他已经验证的单元。",
-              "closure_evidence": "Human确定多对象业务变更与独立字段簇的成功/失败边界及必需恢复性质；02/03再按Native证据选择适用操作方法。",
+              "scope": "批量写入采用业务一致性单元；单元内部完整成功才可认定业务完成，单元失败中止其剩余依赖并仅在证实安全时补偿，其他独立已证单元可保留。",
+              "closure_evidence": "2026-10-26 Human明确选择RR-05=B，无额外补充；结果规则已固定，Native具体补偿方法需日后证据。",
+              "status": "human_approved_B_2026_10_26"
+            },
+            {
+              "question_id": "RR-05B",
+              "scope": "跨字段/对象修改的正式成功验证等级：仅Native内存读回、按风险区分内存生效与存档持久生效、或者每单元一律保存/重载。",
+              "closure_evidence": "Human选择单元类型对应的即时读回和保存/重载验收责任，后续02/03按实际游戏能力细化。",
               "status": "human_decision_pending"
             }
           ],
@@ -526,6 +547,16 @@
           "id": "RR-05",
           "result_item_id": "RES-05",
           "topic": "RES-05 authorized multi-field and multi-object native write batch: logical consistency-unit boundary, partial failure, rollback/compensating repair and clear evidence",
+          "status": "APPROVED_B_2026_10_26",
+          "recommended_choice": "B",
+          "human_choice": "B",
+          "human_supplement": "无额外补充。",
+          "disposition": "定义业务一致性单元，单元整体预检；失败停该单元和依赖项，只能用已证安全补偿恢复，否则隔离真实部分修改等待Human决定；其余已证成功的独立单元保留，逐项审计，不声称全局原子回滚。"
+        },
+        {
+          "id": "RR-05B",
+          "result_item_id": "RES-05",
+          "topic": "Native write completion evidence: only in-memory readback, tiered immediate/persisted acceptance by field/operation risk, or mandatory save/reload per unit",
           "status": "ACTIVE_PENDING_HUMAN_DECISION",
           "recommended_choice": "B"
         },
@@ -538,7 +569,7 @@
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-07"
+        "version": "A-v1-DRAFT-08"
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
     }
@@ -597,6 +628,15 @@
       "result_item_id": "RES-04",
       "status": "approved",
       "interpretation": "Native observed game facts remain canonical; external proposed values/plans and action receipts are separate, real current observations append only on authorized and verified Native readback. No game operations authorized now."
+    },
+    {
+      "id": "RR-05",
+      "date": "2026-10-26",
+      "selected": "B",
+      "human_supplement": "无额外补充。",
+      "result_item_id": "RES-05",
+      "status": "approved",
+      "interpretation": "Native writes execute in authorized logical consistency units; full-unit validation, stop on failures, proven-only compensation, isolate unresolved partial states, independent verified units retained, explicit per-step receipt. No real writing authorization granted."
     }
   ]
 }
