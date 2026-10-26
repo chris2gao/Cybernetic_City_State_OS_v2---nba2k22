@@ -498,7 +498,7 @@ for _native_name,_column in NATIVE_PLAYER_STAT_MAP.items():
     _native_stat_cols.append(col(_column,'INTEGER',check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',
         source=f'CURRENT_PLAYERSTATDATA.{_native_name} CRC={_f["name_crc"]:08x} offset={_f["offset"]} size={_f["size"]} start={_f["start_bit"]} width={_f["width"]}; award_native_profile.json',
         unit='native unsigned field representation; UI/award-instance acceptance separate'))
-table('native_player_stat_observations','stat_observation_id','RES-H','one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates',[
+table('native_player_stat_observations','stat_observation_id','RES-H','one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate',[
     U(),col('source_stat_index','INTEGER',required=True,check='source_stat_index>=0'),
     col('stat_year','INTEGER',source='PLAYERSTATDATA.CompactYear unsigned byte +1900; not season finalization'),
     col('scoring_identity_status',source='EVIDENCE_RAW_POINTS_COMPARISON; inconsistent source retained')]+_native_stat_cols,
@@ -512,7 +512,7 @@ table('native_player_sources','player_source_id','RES-D','one PLAYER pool source
     col('current_core_roster_status',source='EVIDENCE_CURRENT_TEAM_POINTER_AND_ROSTER_SLOT'),col('current_roster_slot','INTEGER'),
     ref('player_id','players',required=False),col('canonical_link_status',source='EVIDENCE_CURRENT_MATCH_ONLY; not historical lifecycle certification')],
     unique=[('unit_id','source_player_index')])
-table('native_player_stat_links','stat_link_id','RES-H','one native fixed-array SeasonStats reference, preserving empty/outside/after-empty slots',[
+table('native_player_stat_links','stat_link_id','RES-H','one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position',[
     U(),ref('player_source_id','native_player_sources'),col('history_slot_index','INTEGER',required=True,check='history_slot_index>=0'),
     col('native_stat_index_raw','INTEGER',required=True,check='native_stat_index_raw BETWEEN 0 AND 65535'),
     ref('stat_observation_id','native_player_stat_observations',required=False),col('link_status',required=True,source='EVIDENCE_FIXED_25_ELEMENT_ARRAY_REFERENCE; no contiguous-history assumption')],

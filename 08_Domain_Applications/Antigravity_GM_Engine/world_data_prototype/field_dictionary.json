@@ -20505,8 +20505,8 @@
     {
       "name": "native_player_stat_observations",
       "domain": "RES-H",
-      "grain": "one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates",
-      "reason_for_table": "one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates; independent identity/lifecycle or consistency unit",
+      "grain": "one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate",
+      "reason_for_table": "one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate; independent identity/lifecycle or consistency unit",
       "primary_key": "stat_observation_id",
       "unique_keys": [
         [
@@ -20523,7 +20523,7 @@
         {
           "name": "stat_observation_id",
           "sqlite_type": "TEXT",
-          "meaning": "one complete native PLAYERSTATDATA source slot; includes unowned/unallocated candidates identity",
+          "meaning": "one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate identity",
           "required": true,
           "default": null,
           "null_meaning": null,
@@ -21260,8 +21260,8 @@
     {
       "name": "native_player_stat_links",
       "domain": "RES-H",
-      "grain": "one native fixed-array SeasonStats reference, preserving empty/outside/after-empty slots",
-      "reason_for_table": "one native fixed-array SeasonStats reference, preserving empty/outside/after-empty slots; independent identity/lifecycle or consistency unit",
+      "grain": "one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position",
+      "reason_for_table": "one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position; independent identity/lifecycle or consistency unit",
       "primary_key": "stat_link_id",
       "unique_keys": [
         [
@@ -21279,7 +21279,7 @@
         {
           "name": "stat_link_id",
           "sqlite_type": "TEXT",
-          "meaning": "one native fixed-array SeasonStats reference, preserving empty/outside/after-empty slots identity",
+          "meaning": "one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position identity",
           "required": true,
           "default": null,
           "null_meaning": null,
