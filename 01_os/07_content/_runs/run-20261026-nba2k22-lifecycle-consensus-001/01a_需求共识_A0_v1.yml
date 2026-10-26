@@ -1,0 +1,129 @@
+schema_version: nba2k22.stage01a.consensus_candidate.v1
+task_id: nba2k22-lifecycle-scene-consensus-01
+consensus_version: A0-v1
+derived_from: Q1_A_Q2_C_Q3_A_Q4_B_Q5_B_Q6_B
+human_choices_individually_confirmed: true
+human_exact_consolidated_version_confirmation: PENDING
+planning_readiness: SUBSTANTIVELY_COMPLETE_READY_FOR_01B
+stage01_complete: false
+date: 2026-10-26
+source_implementation_candidate: a3927fb150a213201e404cca043ced4f57409bd1
+source_tested_sha: b847f717df6702fe6251872d64aed476ac707f6f
+consensus:
+  objective: >-
+    Complete and verify reusable NBA2K22 PC offline MyLEAGUE readable Native
+    container/data-source coverage across actual lifecycle scenes, classify
+    field read/write capabilities and provenance, and establish requirements
+    for a safe unified acquisition and future Human-authorized batch Native I/O
+    layer without reimplementing the existing v25 world-data foundation.
+  success_directions:
+    - id: SC-01
+      observable: true
+      description: >-
+        At applicable actual scenes, each accepted container has proven Native
+        structure/source, real object enumeration, typed ingestion and query.
+    - id: SC-02
+      observable: true
+      description: >-
+        Stage-not-yet-generated evidence is separated from observed-empty,
+        missing sources, decode failures and unsupported fields.
+    - id: SC-03
+      observable: true
+      description: >-
+        The unified field catalog records read maturity, operation permissions,
+        value semantics, valid ranges, native authority, security and dependencies;
+        noncritical ambiguous fields have independently trackable gaps.
+    - id: SC-04
+      observable: true
+      description: >-
+        Every prototype scene yields machine-comparable coverage, source,
+        verification and gap evidence; existing v25 capabilities are reused.
+    - id: SC-05
+      observable: true
+      description: >-
+        A future unified batch I/O result contract specifies deterministic
+        target selection, authorization, range/dependency precheck, readback,
+        per-unit outcome and recoverable failure; real writes only with separately
+        granted Human permission and verified in a later bounded work package.
+  scope:
+    target_game: NBA2K22 PC offline MyLEAGUE
+    prototype_scenes: S1-S8 with S7 separately staged by actual game availability
+    foundation: v25 world-data engineering candidate with 20 Reader families
+    future_interface: unified field and Native data read/authorized write contracts
+    implementation_model: one design and bounded independent task packages
+  boundaries:
+    - No automatic game clock advancement, native writes or save edits.
+    - No unattended watchers, auto-GM/Coach/Player dispatch or decision algorithms.
+    - Do not infer future All-Star, postseason, offseason or draft data before it is generated.
+    - No forced cross-save merge and no cross-time multiple current owners.
+    - No promotion of UNKNOWN semantics into known/safe-writable classifications.
+    - Do not turn v25 developer evidence into independent acceptance or merge master.
+    - No promise of error-free massive batch writes without real verification.
+  constraints:
+    - Q1=A one continuously progressed test worldline with protected checkpoints;
+      Human controls changes; distinct saved files are not automatically one DB identity.
+    - Q2=C risk-tiered scene evidence preservation; Human alone decides when to advance.
+    - Q3=A one field capability contract; ambiguous noncritical fields may become
+      separate future extensions; unsafe requested operations remain blocked.
+    - Q4=B container structure plus at least one applicable bounded real-scene
+      end-to-end enumeration/read/typed-ingest/query proof, or grounded existing proof.
+    - Q5=B standardized machine-comparable scene delivery and evidence-based
+      stage-generated-versus-absent judgments.
+    - Q6=B a unified requirements/result model and independently bounded
+      engineering/verification packages, integrated only after separate acceptance.
+    - Append-only historical facts, per-save DB isolation and role-based privacy apply.
+  terminology:
+    - term: 原型容器
+      meaning: Reusable target game Native object or data pool structure, Reader/Codec and typed fill/query contract; not fixed business sample values.
+    - term: 正式游戏当前状态
+      meaning: Evidence-qualified game state at a chosen observation time, distinct from previously retained historical observations.
+    - term: 阶段尚未生成
+      meaning: Data/source not yet generated or exposed at the observed game scene, only when grounded by actual evidence, not guessed from stage name.
+    - term: 可读
+      meaning: Field/native source has a read and evidence maturity, separate from any write permission.
+    - term: 可写
+      meaning: A capability category requiring proven target/range/effects plus specific Human execution authorization; UI editability alone is insufficient.
+    - term: 完整原型验收
+      meaning: Completion only for the actually verified container/field subset and scene applicability; tracked gaps remain explicit.
+    - term: 统一规划与有界开发
+      meaning: Shared result contract followed by independently scoped task packages with evidence, review and no open-ended extension.
+  related_domains:
+    - NBA2K22 native objects/Reader and scene availability
+    - SQLite per-save world facts, historical observations and source ledger
+    - players, teams, staff, game/season statistics, awards and records
+    - postseason structure and offseason draft/market/contract pools
+    - game/worldline/settings and authorized operation surfaces
+    - access control, privacy, batch I/O verification and failure recovery
+    - OS review, version binding and publication governance
+  assumptions_for_stage02_verification:
+    - assumption: v25 implemented facilities can be selectively reused in later scenes
+      if_false: Flag affected Reader/family as unsupported; bound the new source repair without replacing the whole database.
+    - assumption: Some target data containers are generated only at specific game scenes
+      if_false: Use actual native/UI evidence to correct timing; never manufacture an event or conflate an empty container with an absent one.
+    - assumption: Verified target field values and write effects can be described by per-field capability contracts
+      if_false: Defer unsafe operations independently, retain safe read capabilities and explicit gaps.
+  unresolved_ambiguities:
+    - ambiguity: Exact Native layout and availability of post-season and offseason scene containers
+      impact: medium
+      blocks: [02_scene_specific_source_verification, 03_specific_container_implementation]
+      closure: Evidence from Human-triggered real game windows.
+    - ambiguity: v25 candidate independent machine/source review and master integration status
+      impact: medium
+      blocks: [production_adoption, protected_master_merge]
+      closure: Separate independent review and OS release gate.
+    - ambiguity: Authoritative mapping/rollback of checkpoint saves and physical per-save database bindings
+      impact: medium
+      blocks: [runtime_checkpoint_restore_or_rebind]
+      closure: Define testable mapping rules in 01b, validate evidence in 02/03.
+    - ambiguity: Which exact Native fields/combined operations can safely be written
+      impact: high
+      blocks: [real_native_write_execution]
+      closure: Field-level source/valid range/identity/dependency and readback proofs plus explicit Human write authorization.
+handoff:
+  stage01b_next: >-
+    Draft precise result model A with stable result_item IDs, outputs, mappings,
+    observability/coverage, acceptance criteria, known v25 evidence vs UNKNOWN
+    and task package boundaries; do not finalize physical schema before 02/03.
+  human_confirmation_rule: >-
+    Human must confirm this exact consolidated A0-v1 version for formal version
+    binding; Human must separately confirm the final complete 01b A version.
