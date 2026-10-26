@@ -13,6 +13,34 @@ from competition_views import game_box_snapshot,season_summary,player_seasons,st
 from league_views import league_standings,player_leaderboard
 from fact_queries import fact_fields,query_facts,export_filtered_facts
 
+
+def annual_facts(path,family,year,*,limit=100,cursor=None):
+    """Compose baseline plus unique accepted additions with original source time."""
+    from datetime import datetime,timezone
+    from cadence import validate_period
+    from annual_ledger import baseline_row,PRIMARY_TABLES
+    from observation_scope import current_scope,observed_as_of
+    validate_period(family,year)
+    if current_scope() is None:
+        cutoff=cursor['observed_through'] if isinstance(cursor,dict) and 'observed_through' in cursor else datetime.now(timezone.utc).isoformat()
+        with observed_as_of(path,cutoff):return annual_facts(path,family,year,limit=limit,cursor=cursor)
+    with closing(connect(path,True)) as c:
+        baseline=baseline_row(c,family,year)
+        if baseline is None:return {'family':family,'period_year':year,'status':'NO_VERIFIED_ANNUAL_BASELINE','records':[],'next_cursor':None}
+        filters=[{'column':'baseline_unit_id','op':'eq','value':baseline['unit_id']},{'column':'refresh_family','op':'eq','value':family},{'column':'refresh_period_year','op':'eq','value':year}]
+        page=query_facts(path,'annual_fact_claims',filters=filters,limit=limit,cursor=cursor);records=[]
+        for entry in page['records']:
+            claim=entry['values'];table=claim['table_name'];field=claim['field_name']
+            if table not in PRIMARY_TABLES[family] or not TABLES[table].public:raise PermissionError('invalid annual fact target')
+            if field is not None and not any(col.name==field and col.visibility=='GM_PUBLIC' for col in TABLES[table].columns):raise PermissionError('restricted annual fact column')
+            source=c.execute('SELECT * FROM '+ident(table)+' WHERE '+ident(TABLES[table].key)+'=? AND unit_id=?',(claim['record_key'],claim['unit_id'])).fetchone()
+            if source is None:raise ValueError('annual fact claim target missing in observed ledger')
+            values={field:source[field]} if field is not None else dict(source)
+            kind='NATIVE_FIELD_VALUE' if claim['fact_key'].startswith('VALUE:') else 'NATIVE_HONOR_FLAG' if field else 'SOURCE_ROW_OR_CANONICAL_FACT'
+            records.append({'claim_id':claim['claim_id'],'kind':kind,'table':table,'record_key':claim['record_key'],'field_name':field,'values':values,'provenance':entry['provenance']})
+    return {'family':family,'period_year':year,'baseline_unit_id':baseline['unit_id'],'status':'ACCEPTED_BASELINE_PLUS_UNIQUE_ADDITIONS','records':records,'has_more':page['has_more'],'next_cursor':page['next_cursor'],'observation_scope':page['observation_scope'],
+        'scope':'Native honor flags remain raw source facts, not canonical recipients/final awards or proved calendar/identity; ordinary source-unit queries remain unit-specific'}
+
 RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_raw'
                 for d in PROFILE['fields']['PLAYER'] if d.get('conversion')=='rating' and d['name']!='potential'}
 
@@ -582,17 +610,21 @@ def schedule(path,*,season_id=None,status_code=None,period_code=None,game_type_c
         SELECT b.game_id,u.unit_id,u.observed_at,r.source_grade,
         row_number() OVER (PARTITION BY b.game_id ORDER BY competition_utc(u.observed_at) DESC,u.unit_id DESC) AS recency
         FROM box_units b JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE u.unit_status='success'),
-      state AS (SELECT b.*,s.status_code,s.is_final FROM selected b LEFT JOIN game_state_observations s ON s.game_id=b.game_id AND s.unit_id=b.unit_id),
+      state AS (SELECT s.*,u.observed_at,r.source_grade,
+        row_number() OVER(PARTITION BY s.game_id ORDER BY competition_utc(u.observed_at) DESC,u.unit_id DESC) AS recency
+        FROM game_state_observations s JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE u.unit_status='success'),
       header_checks AS (SELECT c.*,u.observed_at AS header_observed_at,row_number() OVER(PARTITION BY c.game_id ORDER BY competition_utc(u.observed_at) DESC,c.unit_id DESC) AS recency
         FROM game_source_checks c JOIN capture_units u USING(unit_id))
       SELECT g.*,h.display_name AS home_team_name,a.display_name AS away_team_name,
         s.status_code,s.is_final,s.observed_at,s.source_grade,s.unit_id,
+        b.unit_id AS box_unit_id,b.observed_at AS box_observed_at,b.source_grade AS box_source_grade,
         hc.unit_id AS calendar_unit_id,hc.header_observed_at AS calendar_observed_at,hc.scheduled_native_iso_date AS native_game_date,hc.scheduled_native_time_hhmm AS native_game_time,
         hc.played_native_iso_date AS native_played_date,hc.time_period_raw,hc.time_period_label,hc.game_type_raw,hc.game_type_label,hc.status_label,
         NULL AS home_points_derived,NULL AS away_points_derived,0 AS canonical_box_complete,
         'NO_COMPLETE_QUALIFIED_SCORE' AS score_provenance
       FROM games g JOIN teams h ON h.team_id=g.home_team_id JOIN teams a ON a.team_id=g.away_team_id
         LEFT JOIN state s ON s.game_id=g.game_id AND s.recency=1
+        LEFT JOIN selected b ON b.game_id=g.game_id AND b.recency=1
         LEFT JOIN header_checks hc ON hc.game_id=g.game_id AND hc.recency=1 '''
     sql+=where+' ORDER BY g.season_id,CAST(g.native_game_id AS INTEGER),g.game_id LIMIT ?'
     with closing(connect(path,True)) as c:
@@ -602,7 +634,7 @@ def schedule(path,*,season_id=None,status_code=None,period_code=None,game_type_c
         if count>limit:raise ValueError(f'schedule needs limit >= {count}; no silent truncation')
         records=[dict(row) for row in c.execute(sql,args+[limit])]
         for record in records:
-            coverage,derived,_=strict_box_coverage(c,record,record['unit_id'])
+            coverage,derived,_=strict_box_coverage(c,record,record['box_unit_id'])
             complete=all(side['status']=='ALL_CAPTURED_NATIVE_PARTICIPANTS_RESOLVED' for side in coverage.values())
             record.update(home_points_derived=derived['HOME'],away_points_derived=derived['AWAY'],canonical_box_complete=int(complete),box_coverage=coverage,
                 score_provenance='DERIVED_CANONICAL_BOX_SUM_MATCHING_CAPTURED_NATIVE_WINDOW' if complete else 'NO_COMPLETE_QUALIFIED_SCORE')

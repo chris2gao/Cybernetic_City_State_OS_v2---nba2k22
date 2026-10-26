@@ -1,0 +1,78 @@
+...............EEE...............................................................................................................................................................................................................................E..E.........................................................................F........
+======================================================================
+ERROR: test_repeated_capture_skips_both_expensive_sources_and_closes_handle (test_cadence.AnnualCadenceTests.test_repeated_capture_skips_both_expensive_sources_and_closes_handle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_cadence.py", line 87, in test_repeated_capture_skips_both_expensive_sources_and_closes_handle
+    self.seed(c,'record-period',year=2101)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_cadence.py", line 43, in seed
+    conn.execute('''INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        VALUES(?,?,?,?,?,?)''',(token,'s','2026-10-24T00:00:00Z',grade,family,year))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: CHECK constraint failed: (refresh_kind IS NULL)=(refresh_family IS NULL)
+
+======================================================================
+ERROR: test_research_replay_does_not_consume_live_period (test_cadence.AnnualCadenceTests.test_research_replay_does_not_consume_live_period)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_cadence.py", line 63, in test_research_replay_does_not_consume_live_period
+    self.seed(c,'research',grade='RESEARCH_FIXTURE')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_cadence.py", line 43, in seed
+    conn.execute('''INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        VALUES(?,?,?,?,?,?)''',(token,'s','2026-10-24T00:00:00Z',grade,family,year))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: CHECK constraint failed: (refresh_kind IS NULL)=(refresh_family IS NULL)
+
+======================================================================
+ERROR: test_success_once_retry_after_failure_and_new_year (test_cadence.AnnualCadenceTests.test_success_once_retry_after_failure_and_new_year)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_cadence.py", line 50, in test_success_once_retry_after_failure_and_new_year
+    self.seed(c,'failed',status='failed')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_cadence.py", line 43, in seed
+    conn.execute('''INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        VALUES(?,?,?,?,?,?)''',(token,'s','2026-10-24T00:00:00Z',grade,family,year))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: CHECK constraint failed: (refresh_kind IS NULL)=(refresh_family IS NULL)
+
+======================================================================
+ERROR: test_annual_skip_must_reference_existing_same_year_live_receipt (test_refresh.RefreshTests.test_annual_skip_must_reference_existing_same_year_live_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_refresh.py", line 40, in test_annual_skip_must_reference_existing_same_year_live_receipt
+    key=self.unit('records')
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_refresh.py", line 24, in unit
+    conn.execute('INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year) VALUES(?,?,?,?,?,?)',(key,'season:native-year:'+str(year),'2026-10-25T00:00:00Z',grade,annual,year if annual else None))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: CHECK constraint failed: (refresh_kind IS NULL)=(refresh_family IS NULL)
+
+======================================================================
+ERROR: test_ordinary_skip_and_wrong_annual_bucket_are_rejected (test_refresh.RefreshTests.test_ordinary_skip_and_wrong_annual_bucket_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_refresh.py", line 73, in test_ordinary_skip_and_wrong_annual_bucket_are_rejected
+    key=self.unit('records',year=2021)
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_refresh.py", line 24, in unit
+    conn.execute('INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year) VALUES(?,?,?,?,?,?)',(key,'season:native-year:'+str(year),'2026-10-25T00:00:00Z',grade,annual,year if annual else None))
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: CHECK constraint failed: (refresh_kind IS NULL)=(refresh_family IS NULL)
+
+======================================================================
+FAIL: test_ddl_dictionary_and_every_relation_are_executable (test_world_data.WorldDataIntegrationTests.test_ddl_dictionary_and_every_relation_are_executable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\tests\test_world_data.py", line 33, in test_ddl_dictionary_and_every_relation_are_executable
+    self.assertEqual(len(TABLES),100)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+AssertionError: 101 != 100
+
+----------------------------------------------------------------------
+Ran 327 tests in 94.551s
+
+FAILED (failures=1, errors=5)

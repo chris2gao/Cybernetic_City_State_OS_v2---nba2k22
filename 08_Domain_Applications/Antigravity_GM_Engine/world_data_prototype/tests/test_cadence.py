@@ -40,8 +40,8 @@ class AnnualCadenceTests(unittest.TestCase):
         # Direct SQL exercises the race guard, not acquisition provenance.
         with conn:
             conn.execute("INSERT OR IGNORE INTO seasons(season_id,season_code) VALUES('s','TEST')")
-            conn.execute('''INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year)
-                VALUES(?,?,?,?,?,?)''',(token,'s','2026-10-24T00:00:00Z',grade,family,year))
+            conn.execute('''INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year,refresh_kind)
+                VALUES(?,?,?,?,?,?,?)''',(token,'s','2026-10-24T00:00:00Z',grade,family,year,'BASELINE'))
             conn.execute('''INSERT INTO capture_units(unit_id,run_id,source_key,payload_sha256,unit_status,observed_at)
                 VALUES(?,?,?,?,?,?)''',(token,token,'TEST_SQL_CONTROL','0'*64,status,'2026-10-24T00:00:00Z'))
 

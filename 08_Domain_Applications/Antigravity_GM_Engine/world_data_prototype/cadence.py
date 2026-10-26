@@ -17,20 +17,34 @@ def validate_period(family,year):
 def validate_refresh_metadata(payload):
     family=payload.get('refresh_family');year=payload.get('refresh_period_year')
     if family is None and year is None:
+        if any(payload.get(k) is not None for k in ('refresh_kind','refresh_baseline_unit_id','refresh_request_sha256','refresh_evidence_sha256')):raise ValueError('ordinary capture cannot carry annual addition metadata')
         if payload.get('evidence_grade')=='LIVE_READ' and payload['source_key'] in ANNUAL_FAMILIES.values():
             raise ValueError('live historical/award refresh requires annual period metadata')
         return
     validate_period(family,year)
     if payload['source_key']!=ANNUAL_FAMILIES[family]:raise ValueError('annual family/source mismatch')
+    kind=payload.get('refresh_kind','BASELINE')
+    if kind not in ('BASELINE','ADDITION'):raise ValueError('invalid annual refresh kind')
+    if kind=='BASELINE':
+        if any(payload.get(k) is not None for k in ('refresh_baseline_unit_id','refresh_request_sha256','refresh_evidence_sha256')):raise ValueError('annual baseline cannot masquerade as an addition')
+    else:
+        if payload.get('evidence_grade')!='LIVE_READ' or not isinstance(payload.get('refresh_baseline_unit_id'),str) or not payload['refresh_baseline_unit_id']:raise ValueError('annual addition requires verified source and explicit baseline')
+        for name in ('refresh_request_sha256','refresh_evidence_sha256'):
+            value=payload.get(name)
+            if not isinstance(value,str) or len(value)!=64 or any(c not in '0123456789abcdef' for c in value):raise ValueError('annual addition needs SHA256 '+name)
+        proof=payload.get('annual_addition_scope',{})
+        if not isinstance(proof,dict):raise ValueError('annual addition requires a typed acquisition scope')
+        if proof.get('format')!='TARGETED_NATIVE_ANNUAL_ADDITION_V1' or type(proof.get('requested_records')) is not int or not 1<=proof['requested_records']<=128 or proof.get('untargeted_history_full_record_reads')!=0:raise ValueError('annual addition requires bounded targeted acquisition evidence')
+        if payload['refresh_evidence_sha256'] not in {a.get('sha256') for a in payload.get('artifacts',[])}:raise ValueError('annual addition evidence artifact missing')
 
 
 def annual_status(conn,family,year):
     validate_period(family,year)
     columns={r[1] for r in conn.execute('PRAGMA table_info(capture_runs)')}
-    if not {'refresh_family','refresh_period_year'}<=columns:raise ValueError('copy-upgrade the fact database before annual refresh')
+    if not {'refresh_family','refresh_period_year','refresh_kind'}<=columns:raise ValueError('copy-upgrade the fact database before annual refresh')
     row=conn.execute('''SELECT u.unit_id,u.observed_at,r.source_grade FROM capture_runs r
         JOIN capture_units u USING(run_id) WHERE r.refresh_family=? AND r.refresh_period_year=?
-        AND r.source_grade='LIVE_READ' AND u.unit_status='success'
+        AND r.source_grade='LIVE_READ' AND u.unit_status='success' AND r.refresh_kind='BASELINE'
         ORDER BY u.observed_at,u.unit_id LIMIT 1''',(family,year)).fetchone()
     return None if row is None else {'status':'already_refreshed','refresh_family':family,'refresh_period_year':year,
         'previous_unit_id':row['unit_id'],'previous_observed_at':row['observed_at'],'previous_source_grade':row['source_grade'],
@@ -71,4 +85,5 @@ def attach_annual_period(payload,family,year):
     validate_period(family,year)
     if payload['source_key']!=ANNUAL_FAMILIES[family]:raise ValueError('annual family/source mismatch')
     payload['refresh_family']=family;payload['refresh_period_year']=year
+    payload['refresh_kind']='BASELINE'
     return payload

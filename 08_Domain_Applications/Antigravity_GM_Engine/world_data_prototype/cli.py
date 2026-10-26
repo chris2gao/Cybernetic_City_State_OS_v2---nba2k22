@@ -70,6 +70,9 @@ def main():
     owner=sub.add_parser('replay-owner-capture');owner.add_argument('capture_directory');owner.add_argument('database');owner.add_argument('research_save_id')
     inspect=sub.add_parser('inspect-source');inspect.add_argument('database');inspect.add_argument('unit_id')
     conflicts=sub.add_parser('inspect-conflicts',help='Owner-only conflict receipt/digest diagnostic');conflicts.add_argument('database');conflicts.add_argument('--proposed-unit-id');conflicts.add_argument('--limit',type=int,default=100)
+    from cadence import ANNUAL_FAMILIES
+    annual_add=sub.add_parser('capture-annual-additions');annual_add.add_argument('pid',type=pid_argument);annual_add.add_argument('save_directory');annual_add.add_argument('loaded_filename');annual_add.add_argument('request_file');annual_add.add_argument('new_output_directory')
+    annual_read=sub.add_parser('annual-facts');annual_read.add_argument('database');annual_read.add_argument('family',choices=list(ANNUAL_FAMILIES));annual_read.add_argument('year',type=int);annual_read.add_argument('--limit',type=int,default=100);annual_read.add_argument('--cursor-json');annual_read.add_argument('--as-of')
     bound=sub.add_parser('init-save');bound.add_argument('save_directory');bound.add_argument('save_id');bound.add_argument('native_save_file')
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
     from refresh import SOURCES
@@ -145,6 +148,12 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='capture-annual-additions':
+        from annual_additions import capture_annual_additions
+        print(json.dumps(capture_annual_additions(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,args.request_file),ensure_ascii=False));return
+    if args.action=='annual-facts':
+        from query import annual_facts
+        print(json.dumps(annual_facts(args.database,args.family,args.year,limit=args.limit,cursor=json.loads(args.cursor_json) if args.cursor_json is not None else None),ensure_ascii=False));return
     if args.action=='inspect-conflicts':
         from query import inspect_conflicts
         print(json.dumps(inspect_conflicts(args.database,proposed_unit_id=args.proposed_unit_id,limit=args.limit),ensure_ascii=False));return

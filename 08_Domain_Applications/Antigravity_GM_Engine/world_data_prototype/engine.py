@@ -11,7 +11,7 @@ from schema_model import TABLES, VERSION, LEGACY_TABLES, dictionary, ident
 SCHEMA=Path(__file__).with_name('schema.sql')
 ALLOWED_CAPTURE_FIELDS=frozenset(c.name for c in TABLES['player_attribute_snapshots'].columns if c.name not in ('snapshot_id','player_id','unit_id'))
 ALLOWED_TENDENCIES=frozenset(c.name for c in TABLES['player_tendency_snapshots'].columns if c.name not in ('snapshot_id','player_id','unit_id'))
-RESERVED={'saves','seasons','capture_runs','capture_units','source_artifacts'}
+RESERVED={'saves','seasons','capture_runs','capture_units','source_artifacts','annual_fact_claims'}
 BLOCKED_INPUT={'player_restricted_observations'}
 
 
@@ -145,14 +145,20 @@ def ingest_capture(conn,payload,*,_live_receipt=None):
         return 'already_applied'
     unit=payload['unit_id'];season=payload['season']
     with conn:
-        conn.execute('BEGIN')
+        conn.execute('BEGIN IMMEDIATE' if payload.get('refresh_kind')=='ADDITION' else 'BEGIN')
         conn.execute('PRAGMA defer_foreign_keys=ON')
+        from annual_ledger import addition_plan,insert_claims,index_baseline
+        planned_facts,claims=addition_plan(conn,payload)
+        if payload.get('refresh_kind')=='ADDITION' and not claims:return 'annual_addition_already_applied'
         _ensure_record(conn,'seasons','season_id',{'season_id':season['season_id'],'season_code':season['season_code']})
         for period in payload.get('referenced_seasons',[]):_ensure_record(conn,'seasons','season_id',period)
         _ensure_record(conn,'capture_runs','run_id',{'run_id':payload['run_id'],'season_id':season['season_id'],
             'observed_at':_utc(payload['observed_at']),'source_grade':payload['evidence_grade'],
             'decoder_version':payload.get('decoder_version'),'save_binding_ref':payload.get('save_binding_ref'),
-            'refresh_family':payload.get('refresh_family'),'refresh_period_year':payload.get('refresh_period_year')})
+            'refresh_family':payload.get('refresh_family'),'refresh_period_year':payload.get('refresh_period_year'),
+            'refresh_kind':payload.get('refresh_kind','BASELINE' if payload.get('refresh_family') else None),
+            'refresh_baseline_unit_id':payload.get('refresh_baseline_unit_id'),'refresh_request_sha256':payload.get('refresh_request_sha256'),
+            'refresh_evidence_sha256':payload.get('refresh_evidence_sha256')})
         status=payload.get('unit_status','success')
         _insert(conn,'capture_units',{'unit_id':unit,'run_id':payload['run_id'],'source_key':payload['source_key'],
             'payload_sha256':digest,'unit_status':status,'observed_at':_utc(payload['observed_at']),'effective_at':payload.get('effective_at'),
@@ -161,16 +167,21 @@ def ingest_capture(conn,payload,*,_live_receipt=None):
             record={'artifact_id':f'{unit}:artifact:{n}','unit_id':unit,'restricted':1,**a}
             if record['unit_id']!=unit:raise ValueError('artifact scope mismatch')
             _insert(conn,'source_artifacts',record)
+        if claims:insert_claims(conn,unit,payload['refresh_baseline_unit_id'],payload['refresh_family'],payload['refresh_period_year'],claims)
         for name in TABLES:
-            if name not in payload.get('facts',{}):continue
+            if name not in planned_facts:continue
             spec=TABLES[name]
-            for n,original in enumerate(payload['facts'][name]):
+            for n,original in enumerate(planned_facts[name]):
                 item=dict(original);cols={c.name for c in spec.columns}
                 if 'unit_id' in cols:item.setdefault('unit_id',unit)
                 if 'save_id' in cols:item.setdefault('save_id',payload['save_id'])
                 item.setdefault(spec.key,f'{unit}:{name}:{n}')
                 if not spec.observation or name=='native_fields':_ensure_record(conn,name,spec.key,item)
                 else:_insert(conn,name,item)
+        for claim in claims:
+            target=conn.execute('SELECT unit_id FROM '+ident(claim['table_name'])+' WHERE '+ident(TABLES[claim['table_name']].key)+'=?',(claim['record_key'],)).fetchone()
+            if target is None or target['unit_id']!=unit:raise ValueError('annual claim does not reference an accepted same-unit typed fact')
+        if payload.get('refresh_family') and payload.get('refresh_kind','BASELINE')=='BASELINE' and payload['evidence_grade']=='LIVE_READ':index_baseline(conn,unit,payload['refresh_family'],payload['refresh_period_year'])
     return 'failed_recorded' if status=='failed' else 'ingested'
 
 
@@ -241,7 +252,7 @@ def ingest_or_quarantine(conn,payload,*,_live_receipt=None):
     """
     try:return ingest_capture(conn,payload,_live_receipt=_live_receipt)
     except sqlite3.IntegrityError as exc:
-        if not ('frozen game conflict' in str(exc) or 'already finalized' in str(exc)):raise
+        if not any(label in str(exc) for label in ('frozen game conflict','already finalized','frozen annual fact conflict')):raise
         _quarantine_verified_conflict(conn,payload,exc,_live_receipt)
         return 'quarantined_pending_human'
 
@@ -290,10 +301,15 @@ def migrate_database(source,new_path):
                     for name in TABLES:
                         if name not in names or name=='saves':continue
                         ordering=' ORDER BY box_mode' if name=='game_source_checks' else ''
-                        for row in old.execute(f'SELECT * FROM {ident(name)}'+ordering):_insert(new,name,dict(row))
+                        for row in old.execute(f'SELECT * FROM {ident(name)}'+ordering):
+                            item=dict(row)
+                            if name=='capture_runs' and 'refresh_kind' not in item:item['refresh_kind']='BASELINE' if item.get('refresh_family') else None
+                            _insert(new,name,item)
                     for name in names-{'saves'}:
                         if old.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]!=new.execute(f'SELECT count(*) FROM {ident(name)}').fetchone()[0]:raise RuntimeError('migration count mismatch '+name)
                     _seed_registry(new,only_missing=True)
+                    from annual_ledger import backfill_baselines
+                    backfill_baselines(new)
                     if new.execute('PRAGMA foreign_key_check').fetchall():raise ValueError('migration foreign key failure')
         except BaseException:
             dst.unlink(missing_ok=True);raise
