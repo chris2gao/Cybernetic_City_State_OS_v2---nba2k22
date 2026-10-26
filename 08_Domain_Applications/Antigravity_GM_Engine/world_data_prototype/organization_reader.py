@@ -231,7 +231,7 @@ def organization_payload(binding,manifest,artifacts,observed_at,token):
             facts['team_playbook_slots'].extend({'team_id':team,'slot_index':i,'play_code':f'{crc:08x}',
                 'play_name':None,'playbook_native_id':str(book['native_book_id'])} for i,crc in enumerate(book['play_crc_slots']))
     facts['field_gaps']=[{'affected_domain':domain,'target_field':target,'reason':reason,'impact':impact} for domain,target,reason,impact in (
-        ('RES-M','FINANCE_UI_UNITS_AND_CASH_SIGN','Registered TEAM uint32 fields read; current UI meaning/sign not observed','Keep unsigned raw values; no spending/cap inference'),
+        ('RES-M','LEGACY_FINANCE_WORDS_AND_UI_UNITS','Legacy finance aliases retain unsigned words: payroll_raw=ExpPayroll, cash_raw=BankBalance; finance source supplies verified Native signed fields','Use native_team_finance_observations for typed fields; no UI scale or spending/cap inference'),
         ('RES-M','CAP_SPACE_LUXURY_TAX_AND_HARD_CAP','No accepted current source offset in this adapter','Fields remain NULL; no external CBA arithmetic substituted'),
         ('RES-C','PLAY_NAMES_FROM_NATIVE_CRCS','Ordered loaded book CRC slots observed, text labels not acquired','Keep native CRC text and NULL play_name'),
         ('RES-C','TEAM_TRAINING_AND_MENTORSHIP','This unit reads assigned staff/default tactics, not training/mentor objects','No fabricated settings or relations'),

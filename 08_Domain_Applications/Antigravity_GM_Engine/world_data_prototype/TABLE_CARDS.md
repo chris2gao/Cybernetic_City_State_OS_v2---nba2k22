@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **87**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **88**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -49,6 +49,7 @@ Actual tables: **87**. Every table is STRICT and append-only. A SQLite owner can
 | `team_training_settings` | RES-C | one team actual training settings | `training_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `mentorship_relations` | RES-C | observed actual mentor association | `mentor_id` | player_id -> players(player_id); mentor_player_id -> players(player_id); team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `team_finance_observations` | RES-M | native financial snapshot, not external CBA inference | `finance_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
+| `native_team_finance_observations` | RES-M | one typed Native core TEAM finance projection; observation season is context, not accounting coverage | `native_finance_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); observation_season_id -> seasons(season_id) | ADD |
 | `team_state_observations` | RES-T | one team observed native chemistry/fan state | `state_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `market_state_observations` | RES-M | native or external market state with explicit origin | `market_id` | player_id -> players(player_id); staff_id -> staff_members(staff_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id) | ADD |
 | `external_transaction_events` | RES-M | explicit completed external transaction, never roster-diff inference | `transaction_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |

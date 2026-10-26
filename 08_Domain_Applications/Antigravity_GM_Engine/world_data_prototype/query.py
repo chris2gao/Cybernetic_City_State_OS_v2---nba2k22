@@ -142,7 +142,27 @@ def team_card(path,team_id):
             FROM team_playbook_slots a JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
             WHERE a.team_id=? AND a.unit_id=? ORDER BY a.slot_index''',(team_id,book[0]))]
     result['season_totals']=history(path,'team_season_totals',entity_key='team_id',entity_id=team_id)
+    result['native_finance']=native_team_finance(path,team_id=team_id)
+    result['legacy_finance_qualification']='team_finance_observations keeps original unsigned source words; payroll_raw=ExpPayroll, cash_raw=BankBalance; see typed Native finance for signed values; no UI scale or cap-space inference'
     return result
+
+
+def native_team_finance(path,*,team_id=None,unit_id=None):
+    """A complete latest source unit; never combine fields from different captures."""
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            unit=c.execute('''SELECT a.unit_id FROM native_team_finance_observations a JOIN capture_units u USING(unit_id)
+                WHERE (? IS NULL OR a.team_id=?) ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(team_id,team_id)).fetchone()
+            unit_id=None if unit is None else unit[0]
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.effective_at,u.completeness,u.source_key,r.source_grade
+            FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=?
+            AND EXISTS (SELECT 1 FROM native_team_finance_observations a WHERE a.unit_id=u.unit_id)''',(unit_id,)).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED','records':[]}
+        rows=[dict(r) for r in c.execute('''SELECT a.*,t.display_name FROM native_team_finance_observations a JOIN teams t USING(team_id)
+            WHERE a.unit_id=? AND (? IS NULL OR a.team_id=?) ORDER BY a.team_id''',(unit_id,team_id,team_id))]
+        mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit_id,)).fetchone()
+        return {'status':'OBSERVED' if rows else 'TEAM_NOT_IN_SELECTED_UNIT','source':dict(unit),'game_mode':dict(mode) if mode else None,'records':rows,
+            'qualification':'Native signed int32, unsigned u32, float32 word/finite REAL and exact enum labels. Observation season and mode are same-unit context, not financial accounting duration. UI currency/scale, legal spending, cap space and derived profit remain unproved; NULL float REAL with a non-NULL word means nonfinite source.'}
 
 
 def prospect_card(path,prospect_id):

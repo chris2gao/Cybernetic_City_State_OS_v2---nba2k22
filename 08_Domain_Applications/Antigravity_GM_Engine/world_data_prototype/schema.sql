@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=19),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=20),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -1319,6 +1319,89 @@ CREATE TRIGGER "team_finance_observations_no_update" BEFORE UPDATE ON "team_fina
 CREATE TRIGGER "team_finance_observations_no_delete" BEFORE DELETE ON "team_finance_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "team_finance_observations_successful_unit" BEFORE INSERT ON "team_finance_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_team_finance_observations" (
+  "native_finance_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "observation_season_id" TEXT NOT NULL REFERENCES seasons(season_id) ON DELETE RESTRICT,
+  "salary_raw" INTEGER NOT NULL CHECK (salary_raw BETWEEN 0 AND 4294967295),
+  "metro_population_raw" INTEGER NOT NULL CHECK (metro_population_raw BETWEEN 0 AND 4294967295),
+  "metro_income_raw" INTEGER NOT NULL CHECK (metro_income_raw BETWEEN 0 AND 4294967295),
+  "tv_homes_raw" INTEGER NOT NULL CHECK (tv_homes_raw BETWEEN 0 AND 4294967295),
+  "promo_yearly_expense_raw" INTEGER NOT NULL CHECK (promo_yearly_expense_raw BETWEEN -2147483648 AND 2147483647),
+  "operations_yearly_expense_raw" INTEGER NOT NULL CHECK (operations_yearly_expense_raw BETWEEN -2147483648 AND 2147483647),
+  "facilities_yearly_expense_raw" INTEGER NOT NULL CHECK (facilities_yearly_expense_raw BETWEEN -2147483648 AND 2147483647),
+  "game_day_expense_raw" INTEGER NOT NULL CHECK (game_day_expense_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_gate_raw" INTEGER NOT NULL CHECK (rev_gate_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_merch_raw" INTEGER NOT NULL CHECK (rev_merch_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_concession_raw" INTEGER NOT NULL CHECK (rev_concession_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_media_raw" INTEGER NOT NULL CHECK (rev_media_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_advertising_raw" INTEGER NOT NULL CHECK (rev_advertising_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_league_raw" INTEGER NOT NULL CHECK (rev_league_raw BETWEEN -2147483648 AND 2147483647),
+  "rev_playoffs_raw" INTEGER NOT NULL CHECK (rev_playoffs_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_payroll_raw" INTEGER NOT NULL CHECK (exp_payroll_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_game_day_raw" INTEGER NOT NULL CHECK (exp_game_day_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_promo_raw" INTEGER NOT NULL CHECK (exp_promo_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_staff_raw" INTEGER NOT NULL CHECK (exp_staff_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_operations_raw" INTEGER NOT NULL CHECK (exp_operations_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_salary_tax_raw" INTEGER NOT NULL CHECK (exp_salary_tax_raw BETWEEN -2147483648 AND 2147483647),
+  "exp_playoffs_raw" INTEGER NOT NULL CHECK (exp_playoffs_raw BETWEEN -2147483648 AND 2147483647),
+  "bank_balance_raw" INTEGER NOT NULL CHECK (bank_balance_raw BETWEEN -2147483648 AND 2147483647),
+  "player_budget_raw" INTEGER NOT NULL CHECK (player_budget_raw BETWEEN -2147483648 AND 2147483647),
+  "staff_budget_raw" INTEGER NOT NULL CHECK (staff_budget_raw BETWEEN -2147483648 AND 2147483647),
+  "delta_budget_raw" INTEGER NOT NULL CHECK (delta_budget_raw BETWEEN -2147483648 AND 2147483647),
+  "buzz_word_u32" INTEGER NOT NULL CHECK (buzz_word_u32 BETWEEN 0 AND 4294967295),
+  "buzz_real" REAL,
+  "baseline_fan_demand_word_u32" INTEGER NOT NULL CHECK (baseline_fan_demand_word_u32 BETWEEN 0 AND 4294967295),
+  "baseline_fan_demand_real" REAL,
+  "ticket_price_word_u32" INTEGER NOT NULL CHECK (ticket_price_word_u32 BETWEEN 0 AND 4294967295),
+  "ticket_price_real" REAL,
+  "parking_price_word_u32" INTEGER NOT NULL CHECK (parking_price_word_u32 BETWEEN 0 AND 4294967295),
+  "parking_price_real" REAL,
+  "hot_dog_price_word_u32" INTEGER NOT NULL CHECK (hot_dog_price_word_u32 BETWEEN 0 AND 4294967295),
+  "hot_dog_price_real" REAL,
+  "soda_price_word_u32" INTEGER NOT NULL CHECK (soda_price_word_u32 BETWEEN 0 AND 4294967295),
+  "soda_price_real" REAL,
+  "burger_price_word_u32" INTEGER NOT NULL CHECK (burger_price_word_u32 BETWEEN 0 AND 4294967295),
+  "burger_price_real" REAL,
+  "coffee_price_word_u32" INTEGER NOT NULL CHECK (coffee_price_word_u32 BETWEEN 0 AND 4294967295),
+  "coffee_price_real" REAL,
+  "nachos_price_word_u32" INTEGER NOT NULL CHECK (nachos_price_word_u32 BETWEEN 0 AND 4294967295),
+  "nachos_price_real" REAL,
+  "ice_cream_price_word_u32" INTEGER NOT NULL CHECK (ice_cream_price_word_u32 BETWEEN 0 AND 4294967295),
+  "ice_cream_price_real" REAL,
+  "restaurant_price_word_u32" INTEGER NOT NULL CHECK (restaurant_price_word_u32 BETWEEN 0 AND 4294967295),
+  "restaurant_price_real" REAL,
+  "program_price_word_u32" INTEGER NOT NULL CHECK (program_price_word_u32 BETWEEN 0 AND 4294967295),
+  "program_price_real" REAL,
+  "hat_price_word_u32" INTEGER NOT NULL CHECK (hat_price_word_u32 BETWEEN 0 AND 4294967295),
+  "hat_price_real" REAL,
+  "souvenir_price_word_u32" INTEGER NOT NULL CHECK (souvenir_price_word_u32 BETWEEN 0 AND 4294967295),
+  "souvenir_price_real" REAL,
+  "city_tax_break_word_u32" INTEGER NOT NULL CHECK (city_tax_break_word_u32 BETWEEN 0 AND 4294967295),
+  "city_tax_break_real" REAL,
+  "is_luxury_tax_team_raw" INTEGER NOT NULL CHECK (is_luxury_tax_team_raw BETWEEN 0 AND 1),
+  "facility_luxury_suites_raw" INTEGER NOT NULL CHECK (facility_luxury_suites_raw BETWEEN 0 AND 7),
+  "facility_luxury_suites_label" TEXT,
+  "facility_parking_raw" INTEGER NOT NULL CHECK (facility_parking_raw BETWEEN 0 AND 7),
+  "facility_parking_label" TEXT,
+  "budget_tier_raw" INTEGER NOT NULL CHECK (budget_tier_raw BETWEEN 0 AND 3),
+  "budget_tier_label" TEXT,
+  UNIQUE ("team_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_native_team_finance_observations_team_id" ON "native_team_finance_observations" ("team_id");
+
+CREATE INDEX "idx_native_team_finance_observations_unit_id" ON "native_team_finance_observations" ("unit_id");
+
+CREATE INDEX "idx_native_team_finance_observations_observation_season_id" ON "native_team_finance_observations" ("observation_season_id");
+
+CREATE TRIGGER "native_team_finance_observations_no_update" BEFORE UPDATE ON "native_team_finance_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_team_finance_observations_no_delete" BEFORE DELETE ON "native_team_finance_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_team_finance_observations_successful_unit" BEFORE INSERT ON "native_team_finance_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "team_state_observations" (
   "state_id" TEXT NOT NULL PRIMARY KEY,
