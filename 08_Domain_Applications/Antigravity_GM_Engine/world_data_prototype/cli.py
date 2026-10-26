@@ -87,6 +87,7 @@ def main():
     staff_capture=sub.add_parser('capture-staff');staff_capture.add_argument('pid',type=int);staff_capture.add_argument('save_directory');staff_capture.add_argument('loaded_filename');staff_capture.add_argument('new_output_directory')
     staff_slots=sub.add_parser('staff-slots');staff_slots.add_argument('database');staff_slots.add_argument('team_id');staff_slots.add_argument('--unit-id')
     staff_history=sub.add_parser('staff-history');staff_history.add_argument('database');staff_history.add_argument('--staff-id');staff_history.add_argument('--subject-name');staff_history.add_argument('--source-index',type=int);staff_history.add_argument('--unit-id');staff_history.add_argument('--after-index',type=int,default=-1);staff_history.add_argument('--limit',type=int,default=10)
+    staff_history.add_argument('--reference-position',type=int)
     market=sub.add_parser('capture-market');market.add_argument('pid',type=int);market.add_argument('save_directory');market.add_argument('loaded_filename');market.add_argument('new_output_directory')
     market_read=sub.add_parser('market');market_read.add_argument('database');market_read.add_argument('--team-id');market_read.add_argument('--limit',type=int,default=10000)
     prospect=sub.add_parser('prospect');prospect.add_argument('database');prospect.add_argument('prospect_id')
@@ -137,7 +138,7 @@ def main():
 def dispatch(args):
     if args.action=='staff-history':
         from query import native_staff_history
-        print(json.dumps(native_staff_history(args.database,staff_id=args.staff_id,subject_name=args.subject_name,source_index=args.source_index,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+        print(json.dumps(native_staff_history(args.database,staff_id=args.staff_id,subject_name=args.subject_name,source_index=args.source_index,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit,reference_position=args.reference_position),ensure_ascii=False));return
     if args.action=='native-staff':
         from query import native_staff
         print(json.dumps(native_staff(args.database,staff_id=args.staff_id,subject_name=args.subject_name,source_index=args.source_index,person_type=args.person_type,status_label=args.native_status,team_id=args.team_id,current_core_only=not args.all_sources,include_details=args.include_details,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return

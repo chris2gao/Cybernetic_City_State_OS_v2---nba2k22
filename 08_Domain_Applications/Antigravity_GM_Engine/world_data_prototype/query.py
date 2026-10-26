@@ -229,12 +229,14 @@ def native_staff(path,*,staff_id=None,subject_name=None,source_index=None,person
             'qualification':'Complete COACHDATA descriptor slots and public field projections. NORMAL/RELEASED/RETIRED/INACTIVE, team pointers and core role slots are independent observations; absent core roles or a status label do not prove hiring eligibility. Canonical aliases require a single reciprocal role, globally unique current pool ID and exact existing name. Allocation/lifecycle, UI wages/grade scale and behavioral effects remain unproved. Annual staff stat references and growth/max-grade bytes are not acquired.'}
 
 
-def native_staff_history(path,*,staff_id=None,subject_name=None,source_index=None,unit_id=None,after_index=-1,limit=10):
+def native_staff_history(path,*,staff_id=None,subject_name=None,source_index=None,unit_id=None,after_index=-1,limit=10,reference_position=None):
     if type(limit) is not int or not 1<=limit<=50 or type(after_index) is not int or after_index< -1:raise ValueError('staff-history limit1..50 and after-index>=-1 required')
     if after_index>=0 and unit_id is None:raise ValueError('continued staff history pages require an explicit unit')
+    if reference_position is not None and (type(reference_position) is not int or not 0<=reference_position<40):raise ValueError('reference-position0..39 required')
+    from staff_history_semantics import reference_roles,PROFILE as storage_profile
     with closing(connect(path,True)) as c:
         condition=' AND u.unit_id=?' if unit_id else '';args=[unit_id] if unit_id else []
-        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.refresh_family,r.refresh_period_year FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_ANNUAL_STAFF_STATS' AND u.unit_status='success' '''+condition+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.refresh_family,r.refresh_period_year,r.decoder_version FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_ANNUAL_STAFF_STATS' AND u.unit_status='success' '''+condition+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
         if unit is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'next_after_index':None}
         args=[unit['unit_id'],after_index];where=['unit_id=?','source_staff_index>?']
         for column,value in (('staff_id',staff_id),('observed_name',subject_name),('source_staff_index',source_index)):
@@ -242,9 +244,11 @@ def native_staff_history(path,*,staff_id=None,subject_name=None,source_index=Non
         rows=[dict(r) for r in c.execute('SELECT * FROM native_staff_history_subjects WHERE '+' AND '.join(where)+' ORDER BY source_staff_index LIMIT ?',args+[limit+1])];more=len(rows)>limit;rows=rows[:limit]
         columns=','.join('s.'+ident(spec['column']) for spec in json.loads((Path(__file__).with_name('staff_history_native_profile.json')).read_bytes())['stat_fields'].values())
         for row in rows:
-            row['references']=[dict(r) for r in c.execute('SELECT l.*,s.source_stat_index,s.stat_year,s.subject_reference_count,'+columns+' FROM native_staff_stat_links l LEFT JOIN native_coach_stat_observations s ON s.coach_stat_id=l.coach_stat_id AND s.unit_id=l.unit_id WHERE l.history_subject_id=? AND l.unit_id=? ORDER BY l.array_position',(row['history_subject_id'],unit['unit_id']))]
+            ref_where=' AND l.array_position=?' if reference_position is not None else '';ref_args=(row['history_subject_id'],unit['unit_id'])+((reference_position,) if reference_position is not None else ())
+            row['references']=[dict(r) for r in c.execute('SELECT l.*,s.source_stat_index,s.stat_year,s.subject_reference_count,'+columns+' FROM native_staff_stat_links l LEFT JOIN native_coach_stat_observations s ON s.coach_stat_id=l.coach_stat_id AND s.unit_id=l.unit_id WHERE l.history_subject_id=? AND l.unit_id=?'+ref_where+' ORDER BY l.array_position',ref_args)]
+            for ref_row in row['references']:ref_row['storage_roles']=reference_roles(ref_row['array_position'],ref_row['next_free_raw'],unit['decoder_version'])
         count=c.execute('SELECT count(*) FROM native_staff_history_subjects WHERE unit_id=?',(unit['unit_id'],)).fetchone()[0]
-        return {'status':'OBSERVED','source':dict(unit),'source_staff_count':count,'records':rows,'has_more':more,'next_after_index':rows[-1]['source_staff_index'] if more else None,'qualification':'Annual Native source. All40 signed references are independent; zero may resolve, negatives and out-of-bank values do not. Array positions have no proved calendar/current/phase meaning; stat_year stays NULL. Shared bank references do not prove unique historical ownership. Raw title/coach-of-year bytes are not canonical award events. Original observation time is retained.'}
+        return {'status':'OBSERVED','source':dict(unit),'source_staff_count':count,'reference_position':reference_position,'storage_role_profile':{'rule':storage_profile['rule'],'interpretation':'CODE_DERIVED_NOT_AN_OBSERVED_FIELD','calendar_year_mapping':'UNKNOWN','limits':storage_profile['limits']},'records':rows,'has_more':more,'next_after_index':rows[-1]['source_staff_index'] if more else None,'qualification':'Annual Native source. All40 signed references are independent; zero may resolve, negatives and out-of-bank values do not. Code-derived position0 update role does not establish a calendar year or finalized season; stat_year stays NULL. NextFree marker annotations do not prove free-list reachability or unique historical ownership. Raw title/coach-of-year bytes are not canonical award events. Original observation time is retained.'}
 
 
 def staff_team_slots(path,team_id,*,unit_id=None):
