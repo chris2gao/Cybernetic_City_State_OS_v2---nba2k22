@@ -1,0 +1,106 @@
+schema_version: nba2k22.stage02.research_plan.v1
+task_id: nba2k22-lifecycle-scene-consensus-01
+stage: 02_information_collection_and_refinement
+status: PLANNED_NOT_EXECUTED
+created_on: 2026-10-26
+approved_requirement_result:
+  version: A-v1-RC01
+  source_ref: 01b_需求结果_A_v1_草案.yml
+  human_approved: true
+  approved_source_blob_sha: b60570547c6686261a1e7ae756605dce5e37429a
+support_question: >-
+  What fixed-version repository and original Native/UI evidence would show
+  all critical scene containers can be identified, read, typed and inserted
+  into the one-save SQLite structure, and that the planned authorized
+  category writer and post-write fresh capture verification are technically
+  feasible?
+refutation_question: >-
+  What observed absent source, ambiguous object identity, failed readback,
+  invalid cross-season mapping, unauditable bulk failure, or volume limit
+  would show the approved A is impossible or materially constrained?
+research_questions:
+  - id: RQ-02-01
+    type: 开放发现
+    capture_unit: a_distinguishable_PC22_game_container_or_source_domain
+    question: S1-S8/S7实际目标来源全集与v25已支持来源的差集是什么
+    requirement_ids: [RES-01, RES-02]
+    ambiguity_ids: [EVQ-01, EVQ-02, EVQ-03]
+    evidence_status: PENDING
+    use: Define source completeness and exact bounded extension candidates
+  - id: RQ-02-02
+    type: 定向核实
+    capture_unit: null
+    question: v25固定候选实际表字段关系、Reader、来源证据与声明的完成度是否一致
+    requirement_ids: [RES-01, RES-04, RES-06]
+    ambiguity_ids: [EVQ-02, EVQ-05, EVQ-07]
+    evidence_status: PENDING
+    use: Verify existing baseline and prevent duplicate development
+  - id: RQ-02-03
+    type: 定向核实
+    capture_unit: null
+    question: 相同Schema跨赛季身份、时点/历史、权限和状态绑定的真实可验证程度
+    requirement_ids: [RES-02, RES-04]
+    ambiguity_ids: [EVQ-05, EVQ-08]
+    evidence_status: PENDING
+    use: Establish limits on append-only observations and fixed logical schema reuse
+  - id: RQ-02-04
+    type: 开放发现
+    capture_unit: an_evidence_distinct_Native_field_write_mechanism_class
+    question: 游戏机制/值域/Native编码与共享Writer机制怎样划分类别及例外
+    requirement_ids: [RES-03]
+    ambiguity_ids: [EVQ-04, EVQ-06]
+    evidence_status: PENDING
+    use: Identify candidate classes, exceptions and future authorization evidence
+  - id: RQ-02-05
+    type: 定向核实
+    capture_unit: null
+    question: 人类授权后的写入清单、业务单元、全新采集与数据库对账是否有可验证的实现前提
+    requirement_ids: [RES-04, RES-05]
+    ambiguity_ids: [EVQ-06]
+    evidence_status: PENDING
+    use: Scope proposed later runtime testing and reject unsupported claims
+  - id: RQ-02-06
+    type: 定向核实
+    capture_unit: null
+    question: 未来万字段/数百球员加合同归属的批量自动化验收需要哪些观测指标与反证
+    requirement_ids: [RES-05, RES-06]
+    ambiguity_ids: [EVQ-07, EVQ-09]
+    evidence_status: PENDING
+    use: Make final scale test falsifiable without running or developing it now
+  - id: RQ-02-07
+    type: 定向核实
+    capture_unit: null
+    question: 统一Schema一档存储一百个赛季的结构完整性和容量增长约束是什么
+    requirement_ids: [RES-01, RES-02, RES-04]
+    ambiguity_ids: [EVQ-08]
+    evidence_status: PENDING
+    use: Identify evidence-driven schema/physical storage and later stress testing risks
+domain_register:
+  - domain: fixed_version_repository_Schema_Reader_and_tests
+    question_ids: [RQ-02-01, RQ-02-02, RQ-02-03]
+    omission_risk: Mistaking a candidate implementation for independently proven complete coverage
+  - domain: actual_game_lifecycle_and_Native_observability
+    question_ids: [RQ-02-01, RQ-02-03]
+    omission_risk: Confusing not-yet-generated scenes with an absent or failing source
+  - domain: game_field_class_semantics_and_Native_writer
+    question_ids: [RQ-02-04, RQ-02-05]
+    omission_risk: Assigning unsafe writes to all fields with a similar numeric range
+  - domain: SQLite_identity_provenance_history_and_query
+    question_ids: [RQ-02-02, RQ-02-03, RQ-02-07]
+    omission_risk: Misbinding seasons or overwriting immutable observations
+  - domain: bulk_write_capture_comparison_and_failure_isolation
+    question_ids: [RQ-02-05, RQ-02-06]
+    omission_risk: Accepting a single field test as proof of large-scale business batch correctness
+evidence_constraints:
+  - source_reliability_separate_from_evidence_credibility
+  - original_source_and_exact_sha_or_line_anchor_required
+  - key_claims_need_two_independent_origins_or_explicit_single_source_unresolved
+  - do_not_treat_developer_test_claims_as_independent_acceptance
+  - open_discovery_capture_unit_declared; no_capture_recapture_for_targeted_verification
+  - negative_results_and_inaccessible_game_sources_remain_visible
+  - frozen_requirement_change_must_return_to_01b_Human
+  - no_game_process_access_or_save_files_or_Native_writes_or_engineering_development
+next_planned_read_only_task: RQ-02-02_v25_source_and_artifact_evidence_inventory
+stage02_final_evidence_index: NOT_CREATED
+stage02_feasibility_verdict: NOT_ASSESSED
+stage02_stop_decision: NOT_MADE
