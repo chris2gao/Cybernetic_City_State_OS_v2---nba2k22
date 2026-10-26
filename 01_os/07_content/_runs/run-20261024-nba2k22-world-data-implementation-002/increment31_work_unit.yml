@@ -1,0 +1,35 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Handle frequent same-save process restarts and quota-interrupted development
+    without requiring repeated Human PID/restart announcements. Separate reconnect
+    evidence from actual world-data capture and recover prior committed observations.
+  implementation_or_review_method: >-
+    Add bounded Windows executable discovery, process creation-time evidence,
+    Native date/stage checkpoints and terminated-controller receipt reconciliation.
+    Run254 tests/SQLite smoke at the exact code commit and a bounded elevated
+    public game-mode verification against the actual restarted game process.
+  supportability_rationale: >-
+    A PID/creation-time change proves a new process epoch, not a new save or data
+    update. The Human-declared file binding persists. Each source resolves fresh
+    roots and metadata. Recovered observations keep their original times and
+    provenance rather than claiming new observations in the replacement process.
+  feasibility_rationale: >-
+    Two actual reconnects preserve the full database hash; a fresh auto-discovered
+    game-mode acquisition succeeds and a subsequent resume adds zero units.
+    Deterministic tests cover missing/multiple games, live/unknown controller state,
+    changed progress or explicit updates, missing legacy progress, interrupted
+    commits, artifact corruption, binding mismatches and mid-batch date changes.
+  exact_result_or_candidate_ref: 6fcf3db2f29c346cd601af0343dc4a97ff931c54
+  verification_evidence:
+    - 06_执行/increment31/verification/operations_report.json
+    - 06_执行/increment31/worker-result.json
+    - 06_执行/increment31/worker-terminal.json
+    - 06_执行/increment31/native-evidence.archive.json
+    - 06_执行/increment31/computer-use-text-observation.json
+  residual_risk_or_unproved_limits:
+    - Equal Native dates do not establish unchanged save contents or loaded-save identity.
+    - Actual later-month gameplay advancement and controller termination were not induced; their branches use fixtures.
+    - Computer Use exposes only the top-level game window, so UI navigation/value correspondence remain unproved.
+    - Missing or denied controller-liveness evidence does not authorize launching a second worker.
+    - Full-system independent/Human acceptance and full-season capacity evaluation remain open.
