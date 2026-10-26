@@ -33,7 +33,7 @@ research_questions:
     question: v25固定候选实际表字段关系、Reader、来源证据与声明的完成度是否一致
     requirement_ids: [RES-01, RES-04, RES-06]
     ambiguity_ids: [EVQ-02, EVQ-05, EVQ-07]
-    evidence_status: PENDING
+    evidence_status: PARTIAL_STATIC_VERIFIED_RUNTIME_NOT_REPLAYED
     use: Verify existing baseline and prevent duplicate development
   - id: RQ-02-03
     type: 定向核实
@@ -101,6 +101,8 @@ evidence_constraints:
   - frozen_requirement_change_must_return_to_01b_Human
   - no_game_process_access_or_save_files_or_Native_writes_or_engineering_development
 next_planned_read_only_task: RQ-02-02_v25_source_and_artifact_evidence_inventory
-stage02_final_evidence_index: NOT_CREATED
+stage02_partial_evidence_index: 证据索引_v1.yml
+stage02_partial_static_inventory: 01_v25_结构与Reader只读盘点_v1.json
+stage02_final_evidence_index: NOT_COMPLETE
 stage02_feasibility_verdict: NOT_ASSESSED
 stage02_stop_decision: NOT_MADE
