@@ -2,6 +2,8 @@
 
 Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engineering candidate**: executable all-domain structure, historical adapters and an operator-bound live game/player adapter; full live-source coverage, whole-system acceptance and independent review are outstanding.
 
+Human baseline closeout2026-10-26: the active bounded increment is finished and this regular-season engineering candidate is frozen for separate independent review. Start with [BASELINE_HANDOFF.md](BASELINE_HANDOFF.md) for the exact code/database,20Reader families, actual validation, semantic gaps and next-task lifecycle acquisition entry. This is not full underlying-system acceptance; continued feature/Native work stops after closeout.
+
 Human scope update2026-10-26: overall rating is deferred and may be omitted from this task. No unfinished overall reader/schema/query is active; v24 remains the implemented database. Direct observed ability fields remain available. The final delivery will include [difficult items and future scheduling](DIFFICULT_ITEMS.md), with evidence, user impact and the conditions needed for deeper work. Only explicitly deferred items are treated as such; other unresolved sources remain transparent for Human review.
 
 ## Implemented structure
