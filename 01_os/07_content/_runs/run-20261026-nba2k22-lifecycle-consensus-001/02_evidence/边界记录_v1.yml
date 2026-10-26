@@ -1,0 +1,41 @@
+schema_version: nba2k22.stage02.boundary_register.v1
+status: PARTIAL_READ_ONLY_AUDIT_OPEN
+as_of: 2026-10-26
+fixed_sha: a3927fb150a213201e404cca043ced4f57409bd1
+searched:
+  - research_question_id: RQ-02-02
+    paths:
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+      - 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+      - 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/
+    result: static_schema_fields_and_20_reader_registry_independently_inspected; archived_test_and_migration_logs_read_not_executed
+empty_returns: []
+truncations: []
+inaccessible_sources:
+  - source: authorized live PC NBA2K22 game process and protected save/world-specific scenes
+    reason: no runtime access/permission requested or granted in this phase
+    handling: future explicit Human authorization or provision of exact evidence
+  - source: independent v25 Windows runtime regression replay and real v24 SQLite copy
+    reason: no local Windows data source or authorized run used in this pass
+    handling: prepare bounded independent verification task if Human approves
+unverified:
+  - all actual target scene source/Reader/UI field mapping and generation timing
+  - Native member-value ranges and write safety (1394 values UNKNOWN in dictionary)
+  - last-12-game audit's two incomplete box flags, until native/game stage established
+  - whether fixture-only tests also pass independently with actual Native runtime conditions
+  - whole-system architecture across 100 seasons and bulk modifications of 10000 plus fields
+search_asymmetry:
+  - lanes: [direct_static_reconstruction, archived_developer_logs]
+    difference: static structure was independently counted whereas runtime findings are archival execution claims by the same development process
+    effect_on_coverage: do not infer two independent sources or use capture-recapture for targeted RQ-02-02
+stopping:
+  RQ-02-02: not_fully_closed
+  stage02: not_finished
+  next_information_gain: independent verifiable runtime evidence and scene-specific source catalogue could change whether accepted A is achievable
+permissions:
+  process_access: false
+  game_write: false
+  code_change: false
+  master_merge: false
