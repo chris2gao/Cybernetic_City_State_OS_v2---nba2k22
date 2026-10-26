@@ -1,0 +1,97 @@
+schema_version: nba2k22.stage02.evidence_index.v1
+status: PARTIAL_RQ02_02_ONLY_NO_STAGE02_FEASIBILITY_VERDICT
+version: v1
+created_at: 2026-10-26
+upstream_A: A-v1-RC01
+original_candidate_sha: a3927fb150a213201e404cca043ced4f57409bd1
+entries:
+  - evidence_id: E-02-001
+    research_question_ids: [RQ-02-02]
+    claim: current candidate SQL defines 101 STRICT tables and 1789 columns and matches column names/types in the field dictionary
+    direction: 支持
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
+        origin: primary_project_source
+        blob_sha: fc4bdb36d328996cd7774849e5bff75db5170e5a
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
+        origin: generated_catalog_same_project_origin_not_independent_source
+    evidence_credibility: static_source_cross_checked
+    source_reliability_assessment: original_repository_source_same_codebase
+    applicability: v25_fixed_candidate_only
+    A_links: [RES-01, RES-04]
+    limits: does not prove Native correctness or runtime data or writes
+  - evidence_id: E-02-002
+    research_question_ids: [RQ-02-02, RQ-02-04]
+    claim: field dictionary leaves 1394 native legal game ranges UNKNOWN and 305 field-source strings prefixed UNKNOWN
+    direction: 限制
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
+        origin: primary_project_source
+    evidence_credibility: static_direct_count
+    applicability: exact v25 field dictionary; UNKNOWN may reflect missing independent certification
+    A_links: [RES-01, RES-03, RES-06]
+    limits: NOT_APPLICABLE for 395 other fields; unknown does not prove field cannot be read
+  - evidence_id: E-02-003
+    research_question_ids: [RQ-02-02]
+    claim: 20 registered Reader families have concrete modules and capture functions
+    direction: 支持
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+        origin: primary_project_source
+        blob_sha: 0a33e666bbaab27bca6fddd5a0f33854b8ccaad1
+    evidence_credibility: static_source_direct_count
+    applicability: reader registration not per-scene real evidence
+    A_links: [RES-01, RES-02, RES-04]
+  - evidence_id: E-02-004
+    research_question_ids: [RQ-02-02, RQ-02-01]
+    claim: prior coverage log lists 20 LIVE_READ latest captures but marks all 20 PARTIAL and no new live read in the closeout
+    direction: 限制
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: historic_developer_report
+    evidence_credibility: logged_record_present_not_runtime_reproduced
+    applicability: prior captured units and reported source scopes only
+    A_links: [RES-01, RES-02, RES-06]
+  - evidence_id: E-02-005
+    research_question_ids: [RQ-02-02, RQ-02-03]
+    claim: v24 prior report records 100/1775 and 42 successful units, 1470952 rows; v25 copy migration reports 100 preserved old tables and new 101/1789 target, without accessing game
+    direction: 支持
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/verification-report.json
+        origin: developer_report
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/v24-copy-migration-final.json
+        origin: developer_migration_report
+    evidence_credibility: archived_report_not_independently_replayed
+    applicability: v24 to v25 controlled migration receipt
+    A_links: [RES-02, RES-04]
+    limits: v24 and v25 counts must not be conflated
+  - evidence_id: E-02-006
+    research_question_ids: [RQ-02-02]
+    claim: archived Windows test log says 329 tests OK and targeted review log says 28 tests OK
+    direction: 支持
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/tests.stderr.log
+        origin: original_developer_test_log
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/review-tests.stderr.log
+        origin: original_developer_test_log
+    evidence_credibility: exact_log_text_verified_existence_test_execution_not_reproduced
+    applicability: frozen candidate's previously executed developer harness
+    A_links: [RES-01, RES-06]
+    limits: no new tests were run by this audit; review remains NOT_RUN independently
+  - evidence_id: E-02-007
+    research_question_ids: [RQ-02-02, RQ-02-01]
+    claim: copied-data query audit marks two of twelve sample game boxes canonical_box_complete false
+    direction: 未决
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/real-copy-query-audit.json
+        origin: developer_query_audit
+    evidence_credibility: exact_logged_flags_checked_not_live_game_reproduced
+    applicability: first 12 games sampled by this audit, not all games
+    A_links: [RES-01, RES-02, RES-06]
+    next_evidence: actual game stage and Native player/box coverage for games 6 and 10; may be legitimately incomplete
+assessment:
+  RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
+  stage02_all_questions_completed: false
+  native_write_authorization: false
+  feasibility_verdict: NOT_ASSESSED
+  critical_hypothesis: Native scenario and field-legal-range/identity proof remains required even after code and archived logs are inspected
