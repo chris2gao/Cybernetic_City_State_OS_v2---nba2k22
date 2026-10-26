@@ -1,6 +1,6 @@
 {
   "schema_version": "citystate.workflow.requirement_result.draft.v1",
-  "status": "01B_A_V1_CONSOLIDATED_CANDIDATE_PENDING_EXPLICIT_HUMAN_VERSION_CONFIRMATION",
+  "status": "STAGE01_COMPLETE_A0_V1_AND_A_V1_RC01_HUMAN_APPROVED",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
   "draft_number": 10,
@@ -624,11 +624,17 @@
         }
       ],
       "human_complete_A_confirmation": {
-        "confirmed": false,
+        "confirmed": true,
         "version": "A-v1-RC01",
         "approval_scope": "RES-01_to_RES-06_merged_result_and_acceptance_rules",
-        "confirmation_requested": true,
-        "approval_not_implicit_from_item_votes": true
+        "human_explicit_confirmation_text": "批准 NBA2K22 01b 完整需求结果模型 A-v1-RC01。无额外补充。请绑定 Human 正式版本确认，检查阶段01完成门，进入阶段02信息收集与实证规划；不启动工程开发、不操作游戏、不合并master。",
+        "human_confirmation_date": "2026-10-26",
+        "human_confirmation_source": "Human_chat_current_conversation_2026_10_26",
+        "approved_source_blob_sha": "b60570547c6686261a1e7ae756605dce5e37429a",
+        "approved_source_commit_sha": "8919bd85fb9952115b8f5ffe35abeed7b5d4569a",
+        "approval_not_implicit_from_item_votes": true,
+        "engineering_or_game_authority_granted": false,
+        "master_merge_authority_granted": false
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft.",
       "final_artifact_contract": {
@@ -697,9 +703,11 @@
         "open_product_definition_disputes": [],
         "downstream_evidence_unknowns_expected": true,
         "independent_runtime_or_code_tests_run_in_this_planning_task": false,
-        "full_A_ready_for_exact_Human_version_review": true,
-        "stage01_complete": false,
-        "reason": "01b定义了最终形态/组成字段域/身份与时点关系/读取和授权写入交付/可消费示例/分包+最终脚本验收/缺口证据；物理表数字和Native具体事实须02/03逐项验证，故此时仅A-v1-RC01待Human批准。"
+        "full_A_ready_for_exact_Human_version_review": false,
+        "stage01_complete": true,
+        "reason": "01b定义了最终形态/组成字段域/身份与时点关系/读取和授权写入交付/可消费示例/分包+最终脚本验收/缺口证据；物理表数字和Native具体事实须02/03逐项验证，故此时仅A-v1-RC01待Human批准。",
+        "human_exact_version_confirmed": true,
+        "stage01_gate_status": "PASSED_SEMANTIC_GATE_HUMAN_APPROVED"
       }
     }
   },
@@ -785,5 +793,13 @@
       "status": "approved",
       "interpretation": "Package-level real valid extraction or one-time class-representative write may pass independently, but final acceptance additionally requires executable large-batch automation after all packages are built, actual game UI Human sampling, fresh acquisition full-list verification for tens of thousands of candidate write fields and multi-object contracts/rosters. Test is not run or authorized now."
     }
-  ]
+  ],
+  "stage_transition": {
+    "from": "01a_consensus_01b_result",
+    "to": "02_information_collection_evidence_planning",
+    "stage01_completion_date": "2026-10-26",
+    "stage01_semantic_gate": "PASS",
+    "stage02_status": "PLANNING_STARTED_NO_EVIDENCE_VERDICTS",
+    "note": "Approved A-v1-RC01 semantic result contract frozen by prior blob SHA. No scope to change game save, game process, engineering implementation, independent master merge."
+  }
 }
