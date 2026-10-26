@@ -12,6 +12,7 @@ from engine import create_database,connect,ingest_synthetic_capture,ingest_captu
 from readers import replay_ag01d,replay_player_families
 from query import player_card,game_box,history,export_jsonl,inspect_source_capture,schedule,team_card,staff_card,market_snapshot,prospect_card,planning_snapshot,gameplan_card,settings_snapshot,rules_snapshot,record_book,native_honors,season_summary,player_seasons
 from owner_capture import recorded_game_capture
+from process_session import pid_argument
 
 
 def synthetic_payload(save_id='demo-alpha',run_id='run-1',unit_id='unit-1',observed_at='2026-10-24T00:00:00Z'):
@@ -64,7 +65,8 @@ def main():
     bound=sub.add_parser('init-save');bound.add_argument('save_directory');bound.add_argument('save_id');bound.add_argument('native_save_file')
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
     from refresh import SOURCES
-    refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=int);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES))
+    refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=pid_argument);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES));refresh.add_argument('--resume-report');refresh.add_argument('--data-updated',action='store_true')
+    session=sub.add_parser('reconnect-game');session.add_argument('save_directory');session.add_argument('loaded_filename');session.add_argument('new_output_directory');session.add_argument('--pid',type=pid_argument,default=None)
     saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
     season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory');season_capture.add_argument('--recheck-frozen',action='store_true')
     sched=sub.add_parser('schedule');sched.add_argument('database');sched.add_argument('--season-id');sched.add_argument('--status-code');sched.add_argument('--period-code',type=int);sched.add_argument('--game-type-code',type=int);sched.add_argument('--native-date-from');sched.add_argument('--native-date-to');sched.add_argument('--limit',type=int,default=2000)
@@ -176,10 +178,13 @@ def dispatch(args):
         print(json.dumps(league_calendar(args.database,season_id=args.season_id,limit=args.limit),ensure_ascii=False));return
     if args.action=='refresh-world':
         from refresh import refresh_world,RefreshFailed
-        try:result=refresh_world(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,families=args.families)
+        try:result=refresh_world(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory,families=args.families,resume_report=args.resume_report,data_updated=args.data_updated)
         except RefreshFailed as error:
             print(json.dumps(error.report,ensure_ascii=False));raise SystemExit(2) from None
         print(json.dumps(result,ensure_ascii=False));return
+    if args.action=='reconnect-game':
+        from process_session import reconnect
+        print(json.dumps(reconnect(args.save_directory,args.loaded_filename,args.new_output_directory,pid=args.pid),ensure_ascii=False));return
     if args.action=='history-page':
         from query import history_page
         print(json.dumps(history_page(args.database,args.table,entity_key=args.entity_key,entity_id=args.entity_id,limit=args.limit,cursor=json.loads(args.cursor_json) if args.cursor_json else None),ensure_ascii=False));return
