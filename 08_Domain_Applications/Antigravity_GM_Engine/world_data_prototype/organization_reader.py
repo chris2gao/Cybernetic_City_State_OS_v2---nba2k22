@@ -8,7 +8,7 @@ from collections import Counter
 from datetime import datetime,timezone
 import hashlib,importlib.util,json,struct,sys,zlib
 from pathlib import Path
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from family_codec import extract_unsigned,decode_fixed_utf16
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import read_binding,bound_database,_json,_AcquisitionReceipt

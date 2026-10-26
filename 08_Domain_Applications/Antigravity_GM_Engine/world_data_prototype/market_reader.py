@@ -7,7 +7,7 @@ from collections import Counter
 from datetime import datetime,timezone
 import hashlib,importlib.util,json,struct
 from pathlib import Path
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from schema_model import DOMAIN
 from family_codec import decode_fixed_utf16,public_player_families
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA

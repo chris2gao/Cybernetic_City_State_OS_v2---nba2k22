@@ -69,6 +69,7 @@ def main():
     upgrade=sub.add_parser('upgrade');upgrade.add_argument('source');upgrade.add_argument('new_database')
     owner=sub.add_parser('replay-owner-capture');owner.add_argument('capture_directory');owner.add_argument('database');owner.add_argument('research_save_id')
     inspect=sub.add_parser('inspect-source');inspect.add_argument('database');inspect.add_argument('unit_id')
+    conflicts=sub.add_parser('inspect-conflicts',help='Owner-only conflict receipt/digest diagnostic');conflicts.add_argument('database');conflicts.add_argument('--proposed-unit-id');conflicts.add_argument('--limit',type=int,default=100)
     bound=sub.add_parser('init-save');bound.add_argument('save_directory');bound.add_argument('save_id');bound.add_argument('native_save_file')
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
     from refresh import SOURCES
@@ -144,6 +145,9 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='inspect-conflicts':
+        from query import inspect_conflicts
+        print(json.dumps(inspect_conflicts(args.database,proposed_unit_id=args.proposed_unit_id,limit=args.limit),ensure_ascii=False));return
     if args.action=='fact-fields':
         from query import fact_fields
         print(json.dumps(fact_fields(args.table),ensure_ascii=False));return

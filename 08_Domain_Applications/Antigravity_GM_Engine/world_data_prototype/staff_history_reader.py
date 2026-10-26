@@ -5,7 +5,7 @@ import hashlib,json,struct
 from pathlib import Path
 from award_reader import read_native_fields
 from cadence import prepare_annual_capture,attach_annual_period,observed_game_season_year
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from game_mode_reader import collect_game_mode,game_mode_payload
 from live_reader import ReadOnlyGameProcess
 from live_world import read_binding,bound_database,_json,_AcquisitionReceipt

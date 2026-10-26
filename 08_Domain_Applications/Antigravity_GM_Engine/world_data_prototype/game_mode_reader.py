@@ -8,7 +8,7 @@ from calendar_codec import PROFILE as CALENDAR_PROFILE,native_unsigned,date_colu
 from cadence import observed_game_season_year
 from live_reader import ReadOnlyGameProcess
 from live_world import read_binding,bound_database,_json,_AcquisitionReceipt
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 
 PROFILE_PATH=Path(__file__).with_name('game_mode_native_profile.json');PROFILE=json.loads(PROFILE_PATH.read_bytes());LAYOUT=PROFILE['layout']
 RAW_FIELDS={'num_teams_raw':'NumTeams','num_draft_teams_raw':'NumDraftTeams','current_year_byte_raw':'CurrentYear','draft_year_byte_raw':'DraftYear','mode_raw':'Mode','league_raw':'League','period_raw':'Period','previous_period_raw':'PreviousPeriod'}

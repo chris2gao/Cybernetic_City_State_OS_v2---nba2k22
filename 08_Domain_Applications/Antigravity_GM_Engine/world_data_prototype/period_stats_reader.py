@@ -9,7 +9,7 @@ from stat_reference import verify_native_reference_contract,PROFILE_PATH as REFE
 from player_detail_reader import collect_public_player_pool,reconstruct_projection
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import RESTRICTED_PLAYER_RANGES,read_binding,bound_database,_json,_AcquisitionReceipt
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from schema_model import NATIVE_PLAYER_STAT_MAP
 
 STAT_PROFILE=json.loads(STAT_PROFILE_PATH.read_bytes());LAYOUT='CURRENT_NATIVE_SELECTED_PERIOD_PLAYER_STATS_V1'
