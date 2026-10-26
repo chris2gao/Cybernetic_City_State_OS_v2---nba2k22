@@ -25,10 +25,10 @@ task_packet:
   stage01_semantic_gate: PASS
   stage01_status: COMPLETE
   stage01b_approved_original_blob_sha: b60570547c6686261a1e7ae756605dce5e37429a
-  stage02_state: PLANNING_OPEN_NO_EVIDENCE_VERDICT
+  stage02_state: PARTIAL_SOURCE_READ_ONLY_AUDIT_NOT_VERDICT
   stage02_plan_ref: 02_信息收集与实证规划_v1.md
   stage02_research_plan_ref: 02_evidence/00_挖掘目标与领域_v1.yml
-  stage02_next_question: RQ-02-02
+  stage02_next_question: RQ-02-01_static_scene_coverage_then_independent_runtime_RQ-02-02
   stage01b_semantic_completeness: COMPLETE_AND_HUMAN_APPROVED
   stage01b_completeness_review: 01b_结果A完整性与Human版本确认_20261026.md
   stage01b_decisions:
@@ -65,7 +65,10 @@ task_packet:
     human_choice_recorded_without_invented_answers: required
     repo_scope_and_remote_readback: required
     implementation_test: not_applicable
-    independent_review: not_yet_started
+    independent_review: partial_static_only_runtime_not_replayed
+    stage02_first_source_audit: 101_STRICT_tables_1789_cols_20_registered_Readers
+    stage02_known_unknown_ranges: 1394
+    stage02_feasibility_verdict: NOT_ASSESSED
   completion_policy: >-
     Human explicitly approved A0-v1 and the exact consolidated A-v1-RC01
     result model. Stage01 semantic gate is complete, but Stage02 is only
