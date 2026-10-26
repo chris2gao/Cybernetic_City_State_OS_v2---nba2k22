@@ -83,7 +83,7 @@ def skill_payload(binding,m,artifacts,stamp,token,canonical=None):
             if not isinstance(code,str) or not code.isdigit() or str(int(code))!=code or not 0<=int(code)<=15 or slot['native_play_label']!=play_label(int(code)):raise ValueError('invalid native play code/label')
             facts['player_play_type_slots'].append({**subject,**slot})
     facts['field_gaps']=[dict(affected_domain='RES-P',target_field=target,reason=reason,impact=impact) for target,reason,impact in (
-        ('CURRENT_OVERALL_RATING','CachedOverall_NeverCall/validity/getter semantics are not established; PreviousOverallAbility is a different source','overall_raw is not filled or derived from previous/cached values'),
+        ('CURRENT_OVERALL_RATING','HUMAN_DEFERRED_20261026: overall may be omitted from this task; static cache/getter clues retained outside the active app, not live/UI proof; PreviousOverallAbility is a different source','overall_raw remains unfilled by this source; do not synthesize/recompute or resume deep overall work without later Human scheduling'),
         ('SKILL_UI_UNITS_AND_EFFECTS','Exact bytes, field names and play enum are observed; rating transforms/UI acceptance and behavior remain separate','Do not treat byte storage width or sample maxima as UI legal ranges'),
         ('SKILL_SOURCE_LIFECYCLE','Complete native source pool and qualified current links do not prove historical/cross-session identities','Source-only subjects retain observations without new canonical people'))]
     return {'save_id':binding['save_id'],'run_id':unit,'unit_id':unit,'source_key':'BOUND_PUBLIC_PLAYER_SKILLS','observed_at':stamp,'evidence_grade':'RESEARCH_FIXTURE','decoder_version':LAYOUT,
