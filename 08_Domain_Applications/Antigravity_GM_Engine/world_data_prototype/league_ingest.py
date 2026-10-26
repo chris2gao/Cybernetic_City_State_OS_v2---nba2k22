@@ -4,7 +4,7 @@ from datetime import datetime,timezone
 import hashlib,json
 from pathlib import Path
 from cadence import attach_annual_period,prepare_annual_capture
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from league_reader import PROFILE_PATH,collect_league_source
 from live_reader import ReadOnlyGameProcess
 from live_world import _AcquisitionReceipt,_json,bound_database,read_binding

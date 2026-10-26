@@ -10,7 +10,7 @@ from pathlib import Path
 from live_reader import ReadOnlyGameProcess,SEASON_RVA,ROSTER_RVA,GAME_OFFSET,GAME_STRIDE,STATBANK_OFFSET,RESEARCH_GAME_CAPACITY,RESEARCH_STAT_CAPACITY
 from readers import _module
 from live_world import collect_world,world_payload,read_binding,bound_database,_json,_AcquisitionReceipt
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from owner_capture import STAT_MAP
 from schema_model import DOMAIN
 from calendar_codec import game_calendar_fields,GAME_CAPACITY

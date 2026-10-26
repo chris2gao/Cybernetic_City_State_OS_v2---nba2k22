@@ -1,0 +1,10 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/任务包.yml",
+  "checks": [
+    {"id":"PYTHON_UNIT","argv":["@python","-X","utf8","-m","unittest","discover","-s","08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests","-p","test_*.py"],"timeout_seconds":600,"expected_exit_code":0},
+    {"id":"SQLITE_SMOKE","argv":["@python","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py","smoke"],"timeout_seconds":120,"expected_exit_code":0},
+    {"id":"V24_COPY_MIGRATION","description":"Verify original v24 hash before/after; migrate to a new file and compare every preexisting table/row except the explicitly versioned header; integrity/FK and privacy/save isolation remain valid."}
+  ],
+  "acceptance":"Evidence-backed same-year additions after 2022 baseline with idempotency and frozen conflict isolation; all three Box counterexamples rejected; legitimate receipt-preserving LIVE_READ quarantine; original v24 preserved. Independent acceptance is separate."
+}

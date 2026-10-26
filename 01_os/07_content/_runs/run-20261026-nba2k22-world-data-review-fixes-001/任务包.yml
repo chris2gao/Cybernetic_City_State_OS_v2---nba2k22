@@ -1,0 +1,49 @@
+task_packet:
+  task_id: nba2k22-world-data-review-fixes-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  exact_base_sha: 17ec1cea88c2bb6c36264792f70c94bef9a8bdb4
+  master_at_plan_creation: 7742568ac677b3c16079887463f05e81cb1191ed
+  branch: task/nba2k22-world-data-review-fixes-20261026
+  parent_branch: task/nba2k22-world-data-full-implementation-20261024
+  risk_tier: T2_semantic
+  publisher:
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    publication_transport: local_git
+    source_branch_publication: Human_authorized_task_delivery_only
+    master_write_authorized: false
+  objective: >-
+    Implement only independent-review F-01 annual evidence-backed append-only
+    additions, F-02 strict schedule/Box completeness parity, and F-03 legitimate
+    LIVE_READ frozen-conflict quarantine. Preserve the v24 original and existing
+    immutable history. Deliver tested source, copy-migration proof and a formal
+    completion pointer, then stop for separate independent review.
+  human_scope_ref: HUMAN_TASK.md
+  ownership:
+    engineering_owner: Codex
+    independent_acceptance: separate_review_not_this_executor
+  sources:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cadence.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/engine.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/competition_views.py
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**
+    - 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/**
+  required_tests:
+    - PYTHON_UNIT
+    - SQLITE_SMOKE
+    - V24_COPY_MIGRATION
+  verification_plan: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/verification_plan.json
+  prohibitions:
+    - reopen_original_unbounded_development
+    - merge_or_write_master_without_Human_authorization
+    - overwrite_original_v24_database_or_native_save
+    - new_game_memory_reads_writes_or_date_advance
+    - remove_annual_baseline_once_guard_or_allow_arbitrary_full_rereads
+    - lower_or_fabricate_LIVE_READ_grade_or_acquisition_evidence
+    - cross_save_links_hidden_Potential_leaks_or_historical_overwrite
+    - new_Overall_research_personality_logic_or_capacity_tests
+  completion_scope: F01_F02_F03_only_then_stop
+  independent_review: NOT_RUN

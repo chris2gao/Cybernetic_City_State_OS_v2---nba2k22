@@ -9,7 +9,7 @@ from pathlib import Path
 from observation_scope import query_connection as connect
 from schema_model import TABLES, ident,NATIVE_PLAYER_STAT_MAP
 from family_codec import registered_rating_candidate,PROFILE
-from competition_views import game_box_snapshot,season_summary,player_seasons
+from competition_views import game_box_snapshot,season_summary,player_seasons,strict_box_coverage,BOX_TABLES
 from league_views import league_standings,player_leaderboard
 from fact_queries import fact_fields,query_facts,export_filtered_facts
 
@@ -577,35 +577,36 @@ def schedule(path,*,season_id=None,status_code=None,period_code=None,game_type_c
             clauses.append('hc.scheduled_native_iso_date'+operator+'?');args.append(value)
     if native_date_from and native_date_to and native_date_from>native_date_to:raise ValueError('native date range is reversed')
     where=' WHERE '+' AND '.join(clauses) if clauses else ''
-    sql='''WITH state AS (
-        SELECT s.*,u.observed_at,r.source_grade,
-        row_number() OVER (PARTITION BY s.game_id ORDER BY u.observed_at DESC,s.unit_id DESC) AS recency
-        FROM game_state_observations s JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)),
-      header_checks AS (SELECT c.*,u.observed_at AS header_observed_at,row_number() OVER(PARTITION BY c.game_id ORDER BY u.observed_at DESC,c.unit_id DESC) AS recency
-        FROM game_source_checks c JOIN capture_units u USING(unit_id)),
-      box AS (SELECT game_id,unit_id,team_id,count(*) AS rows,sum(points) AS points
-        FROM player_game_boxes GROUP BY game_id,unit_id,team_id),
-      expected AS (SELECT game_id,unit_id,side,sum(in_use) AS rows FROM native_box_observations GROUP BY game_id,unit_id,side)
+    box_units=' UNION '.join('SELECT game_id,unit_id FROM '+ident(table) for table in BOX_TABLES)
+    sql='''WITH box_units AS ('''+box_units+'''), selected AS (
+        SELECT b.game_id,u.unit_id,u.observed_at,r.source_grade,
+        row_number() OVER (PARTITION BY b.game_id ORDER BY competition_utc(u.observed_at) DESC,u.unit_id DESC) AS recency
+        FROM box_units b JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE u.unit_status='success'),
+      state AS (SELECT b.*,s.status_code,s.is_final FROM selected b LEFT JOIN game_state_observations s ON s.game_id=b.game_id AND s.unit_id=b.unit_id),
+      header_checks AS (SELECT c.*,u.observed_at AS header_observed_at,row_number() OVER(PARTITION BY c.game_id ORDER BY competition_utc(u.observed_at) DESC,c.unit_id DESC) AS recency
+        FROM game_source_checks c JOIN capture_units u USING(unit_id))
       SELECT g.*,h.display_name AS home_team_name,a.display_name AS away_team_name,
         s.status_code,s.is_final,s.observed_at,s.source_grade,s.unit_id,
         hc.unit_id AS calendar_unit_id,hc.header_observed_at AS calendar_observed_at,hc.scheduled_native_iso_date AS native_game_date,hc.scheduled_native_time_hhmm AS native_game_time,
         hc.played_native_iso_date AS native_played_date,hc.time_period_raw,hc.time_period_label,hc.game_type_raw,hc.game_type_label,hc.status_label,
-        CASE WHEN hb.rows=he.rows AND hb.rows>0 THEN hb.points END AS home_points_derived,
-        CASE WHEN ab.rows=ae.rows AND ab.rows>0 THEN ab.points END AS away_points_derived,
-        CASE WHEN hb.rows=he.rows AND ab.rows=ae.rows AND hb.rows>0 AND ab.rows>0 THEN 1 ELSE 0 END AS canonical_box_complete,
-        'DERIVED_CANONICAL_BOX_SUM_WHEN_ALL_NATIVE_PARTICIPANTS_RESOLVED' AS score_provenance
+        NULL AS home_points_derived,NULL AS away_points_derived,0 AS canonical_box_complete,
+        'NO_COMPLETE_QUALIFIED_SCORE' AS score_provenance
       FROM games g JOIN teams h ON h.team_id=g.home_team_id JOIN teams a ON a.team_id=g.away_team_id
         LEFT JOIN state s ON s.game_id=g.game_id AND s.recency=1
-        LEFT JOIN header_checks hc ON hc.game_id=g.game_id AND hc.recency=1
-        LEFT JOIN box hb ON hb.game_id=g.game_id AND hb.unit_id=s.unit_id AND hb.team_id=g.home_team_id
-        LEFT JOIN box ab ON ab.game_id=g.game_id AND ab.unit_id=s.unit_id AND ab.team_id=g.away_team_id
-        LEFT JOIN expected he ON he.game_id=g.game_id AND he.unit_id=s.unit_id AND he.side='HOME'
-        LEFT JOIN expected ae ON ae.game_id=g.game_id AND ae.unit_id=s.unit_id AND ae.side='AWAY' '''
+        LEFT JOIN header_checks hc ON hc.game_id=g.game_id AND hc.recency=1 '''
     sql+=where+' ORDER BY g.season_id,CAST(g.native_game_id AS INTEGER),g.game_id LIMIT ?'
     with closing(connect(path,True)) as c:
+        from observation_scope import utc_stamp
+        c.create_function('competition_utc',1,utc_stamp,deterministic=True)
         count=c.execute('SELECT count(*) FROM ('+sql+')',args+[10001]).fetchone()[0]
         if count>limit:raise ValueError(f'schedule needs limit >= {count}; no silent truncation')
-        return [dict(row) for row in c.execute(sql,args+[limit])]
+        records=[dict(row) for row in c.execute(sql,args+[limit])]
+        for record in records:
+            coverage,derived,_=strict_box_coverage(c,record,record['unit_id'])
+            complete=all(side['status']=='ALL_CAPTURED_NATIVE_PARTICIPANTS_RESOLVED' for side in coverage.values())
+            record.update(home_points_derived=derived['HOME'],away_points_derived=derived['AWAY'],canonical_box_complete=int(complete),box_coverage=coverage,
+                score_provenance='DERIVED_CANONICAL_BOX_SUM_MATCHING_CAPTURED_NATIVE_WINDOW' if complete else 'NO_COMPLETE_QUALIFIED_SCORE')
+        return records
 
 
 def inspect_source_capture(path,unit_id):
@@ -619,6 +620,17 @@ def inspect_source_capture(path,unit_id):
         canonical=c.execute('SELECT count(*) FROM player_game_boxes WHERE unit_id=?',(unit_id,)).fetchone()[0]
         return {'unit':dict(unit),'typed_native_box_staging':staged,'period_sums':periods,
                 'canonical_player_box_rows':canonical,'gaps':gaps,'status':'RESEARCH_SOURCE_NOT_CANONICAL_PLAYER_ACCEPTANCE'}
+
+
+def inspect_conflicts(path,*,proposed_unit_id=None,limit=100,role='OWNER'):
+    """Owner diagnostics: immutable proposal digests/receipts, never raw values."""
+    if role!='OWNER':raise PermissionError('conflict evidence is an owner-only diagnostic')
+    if type(limit) is not int or not 1<=limit<=1000:raise ValueError('conflict diagnostic limit must be 1..1000')
+    where=' WHERE f.object_ref=?' if proposed_unit_id is not None else '';args=[proposed_unit_id] if proposed_unit_id is not None else []
+    with closing(connect(path,True)) as c:
+        rows=[dict(r) for r in c.execute('''SELECT f.*,u.observed_at,u.completeness,u.source_key,u.payload_sha256,r.source_grade,r.decoder_version,r.save_binding_ref
+            FROM fact_conflicts f JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)'''+where+' ORDER BY u.observed_at DESC,f.conflict_id LIMIT ?',args+[limit])]
+    return {'role':'OWNER','records':rows,'scope':'Independent quarantine evidence only; proposals were not accepted; Human decisions remain separate immutable records'}
 
 
 def player_badges(path,player_id):

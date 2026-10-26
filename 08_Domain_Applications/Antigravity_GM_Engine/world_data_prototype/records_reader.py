@@ -11,7 +11,7 @@ from schema_model import DOMAIN
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import _json,read_binding,bound_database,_AcquisitionReceipt
 from schedule_reader import bounded_block
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 
 RECORD_STRIDE=52
 RECORD_GETTER_RVA=0xF400A0

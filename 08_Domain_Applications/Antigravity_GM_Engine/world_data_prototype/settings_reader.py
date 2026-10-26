@@ -12,7 +12,7 @@ from schema_model import DOMAIN
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import _json,read_binding,bound_database,_AcquisitionReceipt
 from schedule_reader import bounded_block
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 
 CATALOG_DIR=DOMAIN/'config/state_io_native'
 CATALOGS={name:json.loads((CATALOG_DIR/(name+'.json')).read_bytes()) for name in ('world','settings','court')}

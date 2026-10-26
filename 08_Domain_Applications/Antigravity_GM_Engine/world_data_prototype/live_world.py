@@ -12,7 +12,7 @@ import json
 from pathlib import Path
 import re
 import struct
-from engine import create_database,connect,ingest_capture,migrate_database,_digest
+from engine import create_database,connect,ingest_acquired_capture as ingest_capture,migrate_database,_digest
 from family_codec import public_player_families,decode_fixed_utf16
 from live_reader import ReadOnlyGameProcess,collect_known_game,ROSTER_RVA,SEASON_RVA,GAME_OFFSET,GAME_STRIDE,STATBANK_OFFSET
 from owner_capture import STAT_MAP

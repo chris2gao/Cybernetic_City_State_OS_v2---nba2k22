@@ -4,7 +4,7 @@ import hashlib,json,struct,zlib
 from pathlib import Path
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import _json,RESTRICTED_PLAYER_RANGES,_public_raw,read_binding,bound_database,_AcquisitionReceipt
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from schedule_reader import bounded_block
 from family_codec import decode_fixed_utf16
 from collections import Counter

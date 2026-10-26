@@ -192,25 +192,66 @@ def ingest_synthetic_capture(conn,payload):
     return ingest_capture(conn,translated)
 
 
-def ingest_or_quarantine(conn,payload):
+class CaptureQuarantined(RuntimeError):
+    """A verified proposal was retained for Human review, not accepted as facts."""
+    def __init__(self,payload):
+        self.proposed_unit_id=payload['unit_id'];self.quarantine_unit_id=quarantine_unit_id(payload)
+        super().__init__('verified capture quarantined pending Human: '+self.quarantine_unit_id+'; proposed unit '+self.proposed_unit_id)
+
+
+def quarantine_unit_id(payload):return 'quarantine:'+payload['unit_id']+':'+_digest(payload)[:24]
+
+
+def _quarantine_verified_conflict(conn,payload,error,receipt):
+    # Validate the original receipt again, never mint a receipt for altered bytes.
+    # The ledger below records the disposition of the original verified proposal;
+    # it is not a second acquisition or an accepted copy of its domain facts.
+    _check_envelope(conn,payload,receipt);digest=_digest(payload);unit=quarantine_unit_id(payload)
+    prior=conn.execute('SELECT payload_sha256 FROM capture_units WHERE unit_id=?',(unit,)).fetchone()
+    if prior:
+        if prior['payload_sha256']!=digest:raise ValueError('quarantine identity collision')
+        return
+    games=sorted({row['game_id'] for rows in payload.get('facts',{}).values() for row in rows if row.get('game_id')})
+    seasons=sorted({payload['season']['season_id']}|{row['season_id'] for rows in payload.get('facts',{}).values() for row in rows if row.get('season_id')})
+    evidence={'error_type':type(error).__name__,'error':str(error),'proposed_game_ids':games,'proposed_season_ids':seasons,
+        'proposed_run_id':payload['run_id'],'proposed_unit_id':payload['unit_id'],'proposed_source_key':payload['source_key'],
+        'source_grade':payload['evidence_grade'],'refresh_family':payload.get('refresh_family'),'refresh_period_year':payload.get('refresh_period_year'),
+        'receipt_verified':payload['evidence_grade']=='LIVE_READ','accepted_fact_scope':'Existing immutable facts remain unchanged; proposed domain rows were rolled back'}
+    with conn:
+        conn.execute('BEGIN');conn.execute('PRAGMA defer_foreign_keys=ON')
+        season=payload['season'];_ensure_record(conn,'seasons','season_id',{'season_id':season['season_id'],'season_code':season['season_code']})
+        run='quarantine:'+payload['run_id']+':'+digest[:24]
+        _insert(conn,'capture_runs',{'run_id':run,'season_id':season['season_id'],'observed_at':_utc(payload['observed_at']),
+            'source_grade':payload['evidence_grade'],'decoder_version':payload.get('decoder_version'),'save_binding_ref':payload.get('save_binding_ref'),
+            'refresh_family':None,'refresh_period_year':None})
+        _insert(conn,'capture_units',{'unit_id':unit,'run_id':run,'source_key':'quarantine:'+payload['source_key'],'payload_sha256':digest,
+            'unit_status':'success','observed_at':_utc(payload['observed_at']),'effective_at':payload.get('effective_at'),
+            'layout_version':payload.get('decoder_version'),'completeness':'PARTIAL'})
+        for index,artifact in enumerate(payload.get('artifacts',[])):
+            item=dict(artifact);item.update(artifact_id=unit+':artifact:'+str(index),unit_id=unit,restricted=1);_insert(conn,'source_artifacts',item)
+        _insert(conn,'fact_conflicts',{'conflict_id':unit+':conflict','unit_id':unit,'object_ref':payload['unit_id'],
+            'evidence_a':json.dumps(evidence,ensure_ascii=False,sort_keys=True),'evidence_b':'PROPOSED_PAYLOAD_SHA256:'+digest,'review_status':'PENDING_HUMAN'})
+
+
+def ingest_or_quarantine(conn,payload,*,_live_receipt=None):
     """Keep proposed conflicting historical facts out of accepted fact tables.
 
     The quarantine stores digests, not restricted proposed bytes. Human decisions
     arrive as new immutable records, never an UPDATE of old game history.
     """
-    try:return ingest_capture(conn,payload)
+    try:return ingest_capture(conn,payload,_live_receipt=_live_receipt)
     except sqlite3.IntegrityError as exc:
         if not ('frozen game conflict' in str(exc) or 'already finalized' in str(exc)):raise
-        digest=_digest(payload)
-        quarantine=dict(payload)
-        quarantine['unit_id']='quarantine:'+payload['unit_id']
-        quarantine['source_key']='quarantine:'+payload['source_key']
-        quarantine['required_fields']={}
-        quarantine['facts']={'fact_conflicts':[{'object_ref':payload['unit_id'],
-            'evidence_a':'Existing immutable game/season history; '+str(exc),
-            'evidence_b':'PROPOSED_PAYLOAD_SHA256:'+digest,'review_status':'PENDING_HUMAN'}]}
-        ingest_capture(conn,quarantine)
+        _quarantine_verified_conflict(conn,payload,exc,_live_receipt)
         return 'quarantined_pending_human'
+
+
+def ingest_acquired_capture(conn,payload,*,_live_receipt=None):
+    """Live adapter boundary; a quarantine is an explicit non-success outcome."""
+    if payload.get('evidence_grade')!='LIVE_READ':raise ValueError('acquired capture boundary requires LIVE_READ with its actual receipt')
+    status=ingest_or_quarantine(conn,payload,_live_receipt=_live_receipt)
+    if status=='quarantined_pending_human':raise CaptureQuarantined(payload)
+    return status
 
 
 def read_gm_observations(path,player_id):

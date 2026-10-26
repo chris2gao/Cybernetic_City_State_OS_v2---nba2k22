@@ -3,7 +3,7 @@ from collections import Counter,defaultdict
 from datetime import datetime,timezone
 import hashlib,json,struct
 from pathlib import Path
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 from family_codec import decode_fixed_utf16
 from game_mode_reader import collect_game_mode,game_mode_payload
 from live_reader import ReadOnlyGameProcess

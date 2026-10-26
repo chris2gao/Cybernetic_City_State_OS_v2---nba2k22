@@ -10,7 +10,7 @@ from family_codec import decode_fixed_utf16
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import read_binding,bound_database,_json,_AcquisitionReceipt,RESTRICTED_PLAYER_RANGES
 from player_detail_reader import collect_public_player_pool,reconstruct_projection
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 
 PROFILE_PATH=Path(__file__).with_name('lineup_native_profile.json');PROFILE=json.loads(PROFILE_PATH.read_bytes());LAYOUT=PROFILE['layout'];CORE_IDS=set(range(7))|set(range(8,30))|{31}
 LINEUP_KINDS=tuple(n for n in PROFILE['arrays'] if n not in ('CustomLineupName','AdvancedRotationPlayerId','LineupPlayer'))

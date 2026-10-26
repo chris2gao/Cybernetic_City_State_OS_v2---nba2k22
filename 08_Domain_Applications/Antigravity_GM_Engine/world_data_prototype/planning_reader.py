@@ -15,7 +15,7 @@ from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import _json,read_binding,bound_database,_AcquisitionReceipt
 from organization_reader import native_metadata,CORE_IDS,COACH_PROFILE
 from schedule_reader import bounded_block
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 
 TRAINING_PROFILE_PATH=DOMAIN/'config/state_io_native/training.json'
 TRAINING_PROFILE=json.loads(TRAINING_PROFILE_PATH.read_bytes())

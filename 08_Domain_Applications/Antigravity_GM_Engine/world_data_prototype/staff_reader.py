@@ -9,7 +9,7 @@ from game_mode_reader import collect_game_mode
 from live_reader import ReadOnlyGameProcess,ROSTER_RVA
 from live_world import read_binding,bound_database,_json,_AcquisitionReceipt
 from family_codec import decode_fixed_utf16
-from engine import connect,ingest_capture
+from engine import connect,ingest_acquired_capture as ingest_capture
 
 PROFILE_PATH=Path(__file__).with_name('staff_native_profile.json');PROFILE=json.loads(PROFILE_PATH.read_bytes());LAYOUT=PROFILE['layout'];CORE_IDS=set(range(7))|set(range(8,30))|{31}
 

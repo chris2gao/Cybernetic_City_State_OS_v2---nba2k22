@@ -12,6 +12,36 @@ def connect(path,readonly):
     conn.create_function('competition_utc',1,utc_stamp,deterministic=True)
     return conn
 
+
+def strict_box_coverage(conn,game,unit,canonical_rows=None):
+    """Shared schedule/Box contract over exactly one captured Native window."""
+    game_id=game['game_id']
+    if canonical_rows is None:canonical_rows=conn.execute('SELECT * FROM player_game_boxes WHERE game_id=? AND unit_id=?',(game_id,unit)).fetchall()
+    native=[dict(r) for r in conn.execute('''SELECT side,count(*) AS captured_rows,sum(in_use) AS active_rows,
+        sum(CASE WHEN in_use=1 THEN points END) AS captured_active_points,
+        sum(CASE WHEN in_use=1 AND points IS NULL THEN 1 ELSE 0 END) AS active_rows_without_points,
+        min(CASE WHEN in_use=1 THEN native_team_id END) AS min_team_id,max(CASE WHEN in_use=1 THEN native_team_id END) AS max_team_id
+        FROM native_box_observations WHERE game_id=? AND unit_id=? GROUP BY side''',(game_id,unit))]
+    native={r['side']:r for r in native};coverage={};derived={};native_points={}
+    for side in ('HOME','AWAY'):
+        team=game['home_team_id' if side=='HOME' else 'away_team_id'];observed=native.get(side);canonical=[r for r in canonical_rows if r['team_id']==team and r['in_use']!=0]
+        points=None if not canonical or any(r['points'] is None for r in canonical) else sum(r['points'] for r in canonical)
+        team_row=conn.execute('SELECT native_team_id FROM teams WHERE team_id=?',(team,)).fetchone();native_team=team_row['native_team_id'] if team_row else None
+        team_match=bool(observed and native_team is not None and str(observed['min_team_id'])==str(native_team)==str(observed['max_team_id']))
+        all_active_known=all(r['in_use']==1 for r in canonical)
+        native_rows=conn.execute('SELECT native_player_id,points,identity_status FROM native_box_observations WHERE game_id=? AND unit_id=? AND side=? AND in_use=1',(game_id,unit,side)).fetchall()
+        canonical_ids=[conn.execute('SELECT native_player_id FROM players WHERE player_id=?',(r['player_id'],)).fetchone() for r in canonical]
+        canonical_pairs=[(str(p['native_player_id']),r['points']) for p,r in zip(canonical_ids,canonical) if p and p['native_player_id'] is not None]
+        native_pairs=[(str(r['native_player_id']),r['points']) for r in native_rows]
+        identities_match=bool(native_pairs and len({p[0] for p in native_pairs})==len(native_pairs) and len(canonical_pairs)==len(canonical) and Counter(canonical_pairs)==Counter(native_pairs) and all(r['identity_status']=='CURRENT_CONTEXT_RESOLVED' for r in native_rows))
+        full=bool(observed and observed['active_rows']>0 and len(canonical)==observed['active_rows'] and team_match and all_active_known and identities_match and points is not None and observed['active_rows_without_points']==0 and points==observed['captured_active_points'])
+        status='ALL_CAPTURED_NATIVE_PARTICIPANTS_RESOLVED' if full else ('NO_CAPTURED_NATIVE_WINDOW' if observed is None else 'PARTIAL_OR_MISMATCHED_CAPTURED_NATIVE_COVERAGE')
+        coverage[side]={'team_id':team,'canonical_active_rows':len(canonical),'canonical_captured_points':points,'native_captured_rows':observed['captured_rows'] if observed else None,
+            'native_active_rows':observed['active_rows'] if observed else None,'native_team_id_matches':team_match if observed else None,'native_player_ids_and_points_match':identities_match if observed else None,'status':status,
+            'scope':'Coverage of this captured Native window; not historical player lifecycle or UI acceptance'}
+        derived[side]=points if full else None;native_points[side]=observed['captured_active_points'] if observed and observed['active_rows'] and observed['active_rows_without_points']==0 else None
+    return coverage,derived,native_points
+
 def game_box_snapshot(path,game_id,*,unit_id=None):
     with closing(connect(path,True)) as conn:
         game=conn.execute('SELECT * FROM games WHERE game_id=?',(game_id,)).fetchone()
@@ -25,29 +55,7 @@ def game_box_snapshot(path,game_id,*,unit_id=None):
         for key,table,order in [('states','game_state_observations','a.observation_id'),('period_scores','game_period_scores','a.team_id,a.period_index'),('player_boxes','player_game_boxes','a.team_id,a.player_id'),('team_boxes','team_game_boxes','a.team_id')]:
             rows[key]=[dict(r) for r in conn.execute('SELECT a.*,u.observed_at,u.effective_at,u.completeness,r.source_grade FROM '+ident(table)+''' a JOIN capture_units u USING(unit_id)
                 JOIN capture_runs r USING(run_id) WHERE a.game_id=? AND a.unit_id=? ORDER BY '''+order,(game_id,unit))]
-        native=[dict(r) for r in conn.execute('''SELECT side,count(*) AS captured_rows,sum(in_use) AS active_rows,
-            sum(CASE WHEN in_use=1 THEN points END) AS captured_active_points,
-            sum(CASE WHEN in_use=1 AND points IS NULL THEN 1 ELSE 0 END) AS active_rows_without_points,
-            min(CASE WHEN in_use=1 THEN native_team_id END) AS min_team_id,max(CASE WHEN in_use=1 THEN native_team_id END) AS max_team_id
-            FROM native_box_observations WHERE game_id=? AND unit_id=? GROUP BY side''',(game_id,unit))]
-        native={r['side']:r for r in native};coverage={};derived={};native_points={}
-        for side in ('HOME','AWAY'):
-            team=game['home_team_id' if side=='HOME' else 'away_team_id'];observed=native.get(side);canonical=[r for r in rows['player_boxes'] if r['team_id']==team and r['in_use']!=0]
-            points=None if not canonical or any(r['points'] is None for r in canonical) else sum(r['points'] for r in canonical)
-            team_row=conn.execute('SELECT native_team_id FROM teams WHERE team_id=?',(team,)).fetchone();native_team=team_row['native_team_id'] if team_row else None
-            team_match=bool(observed and native_team is not None and str(observed['min_team_id'])==str(native_team)==str(observed['max_team_id']))
-            all_active_known=all(r['in_use']==1 for r in canonical)
-            native_rows=conn.execute('SELECT native_player_id,points,identity_status FROM native_box_observations WHERE game_id=? AND unit_id=? AND side=? AND in_use=1',(game_id,unit,side)).fetchall()
-            canonical_ids=[conn.execute('SELECT native_player_id FROM players WHERE player_id=?',(r['player_id'],)).fetchone() for r in canonical]
-            canonical_pairs=[(str(p['native_player_id']),r['points']) for p,r in zip(canonical_ids,canonical) if p and p['native_player_id'] is not None]
-            native_pairs=[(str(r['native_player_id']),r['points']) for r in native_rows]
-            identities_match=bool(native_pairs and len({p[0] for p in native_pairs})==len(native_pairs) and len(canonical_pairs)==len(canonical) and Counter(canonical_pairs)==Counter(native_pairs) and all(r['identity_status']=='CURRENT_CONTEXT_RESOLVED' for r in native_rows))
-            full=bool(observed and observed['active_rows']>0 and len(canonical)==observed['active_rows'] and team_match and all_active_known and identities_match and points is not None and observed['active_rows_without_points']==0 and points==observed['captured_active_points'])
-            status='ALL_CAPTURED_NATIVE_PARTICIPANTS_RESOLVED' if full else ('NO_CAPTURED_NATIVE_WINDOW' if observed is None else 'PARTIAL_OR_MISMATCHED_CAPTURED_NATIVE_COVERAGE')
-            coverage[side]={'team_id':team,'canonical_active_rows':len(canonical),'canonical_captured_points':points,'native_captured_rows':observed['captured_rows'] if observed else None,
-                'native_active_rows':observed['active_rows'] if observed else None,'native_team_id_matches':team_match if observed else None,'native_player_ids_and_points_match':identities_match if observed else None,'status':status,
-                'scope':'Coverage of this captured Native window; not historical player lifecycle or UI acceptance'}
-            derived[side]=points if full else None;native_points[side]=observed['captured_active_points'] if observed and observed['active_rows'] and observed['active_rows_without_points']==0 else None
+        coverage,derived,native_points=strict_box_coverage(conn,game,unit,rows['player_boxes'])
         state=rows['states'][0] if rows['states'] else None;observed_points={side:state['home_points' if side=='HOME' else 'away_points'] if state else None for side in ('HOME','AWAY')}
         check=conn.execute('''SELECT c.*,u.observed_at AS header_observed_at,r.source_grade FROM game_source_checks c JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id)
             WHERE c.game_id=? AND u.unit_status='success' ORDER BY competition_utc(u.observed_at) DESC,u.unit_id DESC LIMIT 1''',(game_id,)).fetchone()
