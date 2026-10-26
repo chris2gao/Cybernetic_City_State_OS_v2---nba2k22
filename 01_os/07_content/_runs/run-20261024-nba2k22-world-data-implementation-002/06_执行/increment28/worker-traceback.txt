@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\refresh.py", line 118, in refresh_world
+    result=_capture(entry['family'],pid,save_directory,loaded_filename,out/entry['directory'])
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\refresh.py", line 66, in _capture
+    return getattr(importlib.import_module(module),function)(pid,save_directory,loaded_filename,directory,**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\finance_reader.py", line 114, in capture_finance
+    reader=ReadOnlyGameProcess(pid);manifest,blobs=collect_finance(reader);reader.close()
+                                                   ~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\finance_reader.py", line 67, in collect_finance
+    mode,blobs=collect_game_mode(reader);mode_blobs=dict(blobs);metadata=verify_finance_metadata(reader);controls=[]
+                                                                         ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\finance_reader.py", line 57, in verify_finance_metadata
+    if raw!=bytes.fromhex(spec['dimension_control_hex']):raise ValueError('finance Native name dimensions changed: '+name)
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: finance Native name dimensions changed: UnlocalizedTeamName
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\01_os\07_content\_runs\run-20261024-nba2k22-world-data-implementation-002\_runtime\run_finance_worker.py", line 15, in <module>
+    batch=refresh_world(int(sys.argv[1]),save,'MyLEAGUE0003',runtime/'finance-refresh-01',families=['finance']);report.update(status='FINANCE_UPGRADE_AND_CAPTURE_SUCCEEDED',batch_id=batch['batch_id'],unit_id=batch['sources'][0]['unit']['unit_id'],after_database_sha256=file_sha256(bound_database(save,new_binding)),old_database_sha256=file_sha256(old))
+  File "C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\08_Domain_Applications\Antigravity_GM_Engine\world_data_prototype\refresh.py", line 130, in refresh_world
+    raise RefreshFailed(report) from error
+refresh.RefreshFailed: world refresh stopped; completed source units retained; inspect C:\Users\gk\Documents\ChatGPT\nba2k22\world-data-full-implementation-01\01_os\07_content\_runs\run-20261024-nba2k22-world-data-implementation-002\_runtime\finance-refresh-01\refresh-report.json

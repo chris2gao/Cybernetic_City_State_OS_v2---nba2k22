@@ -1,0 +1,32 @@
+{
+  "id": "NBA2K22-WGC-CAPTURE-20261025",
+  "date": "2026-10-25",
+  "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "task": "nba2k22-world-data-full-implementation-01 / increment28 UI source check",
+  "status": "unresolved",
+  "failure_signature": "Windows.Graphics.Capture frame/window capture timeout through computer-use @oai/sky",
+  "target_window_id": 327854,
+  "repairs": [
+    {
+      "remedy": "Re-identify, restore and refocus the initially minimized NBA2K22 window",
+      "result": "window capture timed out: timed out waiting on channel"
+    },
+    {
+      "remedy": "Human changed NBA2K22 to windowed mode; reacquire the returned window and capture",
+      "result": "FrameArrived timed out: timed out waiting on channel"
+    },
+    {
+      "remedy": "Activate the windowed game in the foreground, rehydrate its window object and capture again",
+      "result": "window capture timed out: timed out waiting on channel"
+    }
+  ],
+  "readonly_display_evidence": {
+    "active_output_technology": 10,
+    "output_meaning": "DISPLAYPORT_EXTERNAL",
+    "desktop_resolution": "3840x2160",
+    "reported_adapter": "Intel Iris Plus Graphics 640"
+  },
+  "impact": "No game page image obtained; UI source/units acceptance remains unproved. Native engineering can continue.",
+  "joint_research_question": "Does the same Computer Use WGC backend fail for a non-game window on this display path, or only NBA2K22? No ordinary-window control capture is established.",
+  "scope": "No game buttons/keys, display/driver changes, Native game writes or alternate screenshot helper were used."
+}
