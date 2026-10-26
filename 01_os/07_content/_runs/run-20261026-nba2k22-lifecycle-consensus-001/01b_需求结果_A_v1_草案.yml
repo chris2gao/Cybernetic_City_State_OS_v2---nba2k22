@@ -1,9 +1,9 @@
 {
   "schema_version": "citystate.workflow.requirement_result.draft.v1",
-  "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
+  "status": "01B_A_V1_CONSOLIDATED_CANDIDATE_PENDING_EXPLICIT_HUMAN_VERSION_CONFIRMATION",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 9,
+  "draft_number": 10,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,14 +12,14 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-09",
+      "version": "A-v1-RC01",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
           "result_item_id": "RES-01",
           "title": "游戏可读来源与数据容器全集",
           "kind": "entity",
-          "review_status": "RR01_B_APPROVED_REMAINING_DETAIL_MODELLING",
+          "review_status": "RESULT_DEFINITION_COMPLETE_RR01_B_APPROVED_SOURCE_EVIDENCE_OPEN",
           "expected_end_state": "生成可随游戏阶段扩展的、按实际 PC22 离线 MyLEAGUE UI/目标对象穷举的数据容器/Native 来源/字段双向目录。每个被接受的容器都可指向已验证读取、解码、SQLite填充与查询路径；后生成、空池、缺源与读取失败各自有证据状态。非关键模糊字段单独扩展。",
           "components": [
             "游戏实际页面与编辑/设置页的目标字段/文本/数值目标目录；非图像输出，不从其他 NBA2K 版本推断",
@@ -27,7 +27,8 @@
             "来源/Reader/Codec/Native描述符或动态索引、版本布局、可用场景、原生字段与UI文字/数值对照",
             "每容器记录来源存在性、可读阶段、对象枚举、身份范围、字段名称/类型/取值口径/成熟度、保存/退出条件",
             "字段级受限权限、未知字段与目标容器缺口分别登记，不把已发现字节冒充已解码语义",
-            "已有 v25 20族 Reader/42采集单元、字段目录、来源覆盖矩阵和已验证证据的精确复用与差异盘点（这些数字目前是已提交的开发者证据，并不代表独立通过）"
+            "已有 v25 20族 Reader/42采集单元、字段目录、来源覆盖矩阵和已验证证据的精确复用与差异盘点（这些数字目前是已提交的开发者证据，并不代表独立通过）",
+            "物理成品结果清单要求：固定Schema的具体表名/数量、每表全部字段及类型/含义/单位、主外键与索引、原生来源、游戏UI双向映射、采集与读回方法、更新/历史规则、设计理由和可执行SQL DDL；01b确定必须交付这些完整结果，v25已有实现清单当候选，02逐字段审查，03以证据定稿而不是01b编造最终数字"
           ],
           "relations": [
             "target_game_page/tab/field -> scene/window -> native_container -> source_descriptor/reader/decoder -> typed logical_field -> SQLite column/view -> query/export",
@@ -39,9 +40,10 @@
             "输入：目标游戏版本、Human 声明的存档与场景、已存在的 v25 覆盖矩阵及来源证据",
             "输出：机器可比较的 container_catalog、field_coverage、scene_applicability、source_provenance、gap_register",
             "查询示例：某场景的全明星/季后赛/休赛期来源是否已生成；可用 Reader 是谁；有哪些已证字段/不明字段",
-            "查询示例：某目标 UI 列从哪个 Native 对象读到，存入什么已核证的 typed 字段，能用什么实际查询重现"
+            "查询示例：某目标 UI 列从哪个 Native 对象读到，存入什么已核证的 typed 字段，能用什么实际查询重现",
+            "完整业务领域目录逐个核销：实际MyLEAGUE可见页面/Tab与设置页的有据字段与已出现/尚未生成容器标记；原生字段全集由固定来源证据和02调查最终证实，对现有v25逐表逐Reader做证据复用"
           ],
-          "completeness_rule": "每个已确认的目标游戏页面/对象/阶段来源都要纳入可比较覆盖矩阵并有证据状态，不靠表数、非NULL、Reader注册数宣布完整。对每个场景的核心容器，必须有实际场景的对象枚举→Native读取/解码→字段合法性与身份核对→typed入库→查询的可复验证据，或经核实可复用的等价已有真实证据；核心容器未完成则该目标场景不能标记为完整原型验收。非核心容器可登记具体缺口、影响、证明及独立扩展任务，并且仅在Human明确批准具体延期例外后允许主体按已验证范围验收；被延期容器本身仍是未完成。字段含义模糊按Q3留UNKNOWN，不得自动上升到可安全写入。尚未到生成窗口与实源缺失/空池/读取错误须区别。每个场景核心/非核心的具体容器清单与依据在01b/02形成场景验收矩阵，由Human批准绑定版本，不能由Codex事后为了过关自行降级。",
+          "completeness_rule": "每个已确认的目标游戏页面/对象/阶段来源都要纳入可比较覆盖矩阵并有证据状态，不靠表数、非NULL、Reader注册数宣布完整。对每个场景的核心容器，必须有实际场景的对象枚举→Native读取/解码→字段合法性与身份核对→typed入库→查询的可复验证据，或经核实可复用的等价已有真实证据；核心容器未完成则该目标场景不能标记为完整原型验收。非核心容器可登记具体缺口、影响、证明及独立扩展任务，并且仅在Human明确批准具体延期例外后允许主体按已验证范围验收；被延期容器本身仍是未完成。字段含义模糊按Q3留UNKNOWN，不得自动上升到可安全写入。尚未到生成窗口与实源缺失/空池/读取错误须区别。每个场景核心/非核心的具体容器清单与依据在01b/02形成场景验收矩阵，由Human批准绑定版本，不能由Codex事后为了过关自行降级。 另须在02/03交付以具体表及字段为核心的完整数据模型与SQL DDL：确切表数、各表业务范围/列清单/主外键/索引/游戏来源/合法值域/更新规则/理由均须可核对；当前仅定义最终必需成品，不能将v25宣称的表数与字段数当独立最终事实。",
           "known_facts": [
             {
               "item": "Human已裁决S1–S8多场景研究、先拿可复用容器结构，Q4要求真实填充验证，Q5要求机器证据且后生成来源不算赛季初错误。",
@@ -173,7 +175,7 @@
           "title": "统一字段来源/权限/值域/可修改性契约",
           "kind": "interface",
           "review_status": "RESULT_DEFINITION_COMPLETE_RR03_B_RR03B_B_APPROVED_IMPLEMENTATION_EVIDENCE_OPEN",
-          "expected_end_state": "完整统一字段级能力字典：对游戏原生类别、游戏机制与攻略/用户可读分组、合法值域建立可追溯字段类别；类别内代表字段经另行Human明确授权的Native写入/读回/必要保存重载及关联验证，再在类别成员具有共同Native编码、寻址/写入器机制及适用条件的实际证据时，将代表已证的共通修改机制继承到同类成员，不强制每一字段分别人工试写。取值范围和游戏语义一致用于归类，但不能单凭其推断底层写入行为；特殊字段单列例外，未证字段保持UNKNOWN或候选，且技术可写不等于允许GM/教练/球员执行。字段身份、读写权限、原始/显示/派生数值、枚举和范围、游戏自然变化及写入副作用/依赖都要表达，并提供未来批处理可验证的机器输出。",
+          "expected_end_state": "完整统一字段级能力字典：对游戏原生类别、游戏机制与攻略/用户可读分组、合法值域建立可追溯字段类别；类别内代表字段经另行Human明确授权的Native写入/触发新采集入库对账及必要关联验证，再在类别成员具有共同Native编码、寻址/写入器机制及适用条件的实际证据时，将代表已证的共通修改机制继承到同类成员，不强制每一字段分别人工试写。取值范围和游戏语义一致用于归类，但不能单凭其推断底层写入行为；特殊字段单列例外，未证字段保持UNKNOWN或候选，且技术可写不等于允许GM/教练/球员执行。字段身份、读写权限、原始/显示/派生数值、枚举和范围、游戏自然变化及写入副作用/依赖都要表达，并提供未来批处理可验证的机器输出。",
           "components": [
             "只读比赛/历史原生事实，低频世界线/全局设置，高频球员教练球队状态，跨对象复合业务状态四类使用场景",
             "与修改频率独立的readable/write_candidate/write_validated/write_authorized等操作成熟度和角色权限",
@@ -224,7 +226,7 @@
           "unknowns": [
             {
               "question_id": "EVQ-04",
-              "scope": "Native各字段合法值域、写入可行性及副作用",
+              "scope": "Native各字段合法值域、实时内存写入可行性及副作用；仅就内存修改通过新采集入库对账验收，不要求游戏保存/重载",
               "closure_evidence": "实证Native代码/UI/授权测试档的分层验证；不能仅凭名字或旧研究",
               "status": "unknown"
             },
@@ -257,7 +259,8 @@
             "游戏事实为当前值的查询投影必须保留已证时点与新鲜度；尚未复采的上次有效值只能以“最近一次已证观察”呈现，不能冒充当前刚读；模拟、计算、候选值另行标识及访问控制",
             "每次正常采集历史只追加、不重扫已收集的全部历史；对新发现缺失按证据补录一次，矛盾登记冲突而不改写历史。赛季最终累计与赛中当前累计区分，并按赛季同型容器承载",
             "操作回执需要指向拟议计划、Human许可范围、读取前值、尝试后Native读回值与存档/赛季/对象身份，供未来RES-05同一逻辑操作的受控执行和RES-06复验使用",
-            "RR-05B补充：执行后重新采集必须关联execution_id与read_capture_batch_id，比较只使用这次新采Native真实入库数据，不得用以前的观察或计划数据冒充"
+            "RR-05B补充：执行后重新采集必须关联execution_id与read_capture_batch_id，比较只使用这次新采Native真实入库数据，不得用以前的观察或计划数据冒充",
+            "终验RR-06要求：面向上万个修改目标的全列表写后fresh Native采集入库及批次对账接口，实际测试在开发完成之后的受控测试期按Human授权执行"
           ],
           "relations": [
             "RES-01/02 source evidence -> RES-03 policy -> acquisition -> SQLite facts -> public/owner query, RES-06 verification",
@@ -328,7 +331,8 @@
             "对账规则为清单每一预期对象×字段与本次采集同一对象×字段的实际typed数据库值按合法类型、枚举、单位/转换规则确定性比较；涵盖需要联动的业务一致性单元的全部必要字段/关联，无缺项且值一致才认定实时内存层面SUCCESS",
             "未读到、错误对象、不同存档/赛季、源失败、值不符、关系不一致或原生/显示口径不一致都必须作为未验收/失败状态写明证据；把差异报告、影响单元、采集故障可能性与Human通知纳入交付，不擅自宣布写入失败原因已确认",
             "失败处理必须保留预检结果、写入尝试、原生再次采集和数据库对比轨迹，给Human清晰的差异、可能来源及下一次测试的预防改进清单；后续是否重新执行或补偿仍按已有RR-05权限和安全边界",
-            "不进行以验证持久化为目的的游戏保存、载入或存档文件修改；本任务只支持明确授权的实时游戏内存写入验证，不宣称写入会被存档永久保留"
+            "不进行以验证持久化为目的的游戏保存、载入或存档文件修改；本任务只支持明确授权的实时游戏内存写入验证，不宣称写入会被存档永久保留",
+            "RR-06最终集成依赖：单字段类别代表测试只证明机制，完整写入引擎还必须在全部工程模块完成后通过自动化批量脚本模拟上万个数据点与多对象业务联动的实际对账，不能凭单次写成功单独宣称总体系统合格"
           ],
           "relations": [
             "Human authorized plan with exact expected values -> RES-03 field capability and object/range guard -> RES-05 consistency units -> Native runtime memory attempted writes -> explicitly triggered fresh RES-04 Reader acquisition -> database typed fact records tagged by read_capture_batch_id -> deterministic checklist comparison -> per-unit real-time success/failure -> RES-06 evidence/audit",
@@ -387,28 +391,47 @@
           "result_item_id": "RES-06",
           "title": "覆盖缺口、自动验证、版本演进及有界工程交付",
           "kind": "document",
-          "review_status": "RR06_PACKAGE_FINAL_ACCEPTANCE_PENDING_HUMAN",
-          "expected_end_state": "所有实际游戏场景、容器/字段、Reader/操作契约及测试形成机器可比对覆盖矩阵和标准场景交付包；模糊字段有界延期并可独立补全；每个工程包具备固定证据/版本、独立复验、适用范围和发布门禁。",
+          "review_status": "RESULT_DEFINITION_COMPLETE_RR06_B_HUMAN_APPROVED_FINAL_INTEGRATION_TEST_PENDING_FUTURE_ENGINEERING",
+          "expected_end_state": "一套可供工程包和Human逐层验收的标准化交付/证据系统：各工程包分别交付已证数据采集、Reader/Schema/查询、字段类别代表性Native单次写入测试、错误诊断与字段缺口，每包有可查看有效实际游戏数据、固定源码与可复核证据、独立验收和缺口处理。完成所有相关模块后必须由单独有界的自动化批量写入脚本在经Human明确授权的真实游戏测试环境中模拟未来真实GM/教练/球员操作负载（单次决策可能涉及上万个数据项），覆盖跨数百名球员的倾向/能力类别，以及合同和球队归属等复合联动操作；Human可参与游戏可见数据现场核对，执行后用RR-05B修改清单→全新Native采集→数据库逐对象逐字段全量对账证明整批实时内存写入按业务单元真实成功，输出可运行脚本、自动比对报告、异常诊断与必要Human验收证据。全部核心测试场景与验收标准满足，且需Human批准的非核心延期例外明确，才允许宣布整体底座系统工程合格。",
           "components": [
             "S1–S8及S7子窗口的scene_manifest、来源状态与覆盖报告",
             "Native原始证据指纹与只读/typed查询比对",
             "已验证能力 vs 仅开发者声明 vs UNKNOWN/延期缺口、来源成熟度",
             "自动化场景一致性/身份/值域/分页/权限/恢复/容量范围测试",
             "现有v25能力对账与增量差异报告，预防重复开发",
-            "按统一01/01b目标拆分有界工程包及集中集成验收，100季容量按真实完整赛季再评估"
+            "按统一01/01b目标拆分有界工程包及集中集成验收，100季容量按真实完整赛季再评估",
+            "分包验收第一层（读取/采集）：Human可以直接查看采集后的有效游戏数值或文字，核对对象/球队/赛季/字段及结构对应关系；Reader/Codec→数据库入库→SQL查询或导出闭环具备自动核查与最小真实样本，不能把随意非NULL值当有效采集",
+            "分包验收第一层（字段写入机制）：按RES-03同类Native路径选代表字段，Future Human另行授权下证明一次修改有效，之后以新采集或原生可追溯实值证明其共通操作路径；类别例外和联动风险单列，不要求第一层预先证明数万项批量成功",
+            "分包验收输出：独立工程包所含固定版本/受支持场景/范围、实际数据样本或原生写入清单、测试脚本/步骤、结果、Reader/表字段对照、独立复验结论及已知缺口，成功成果可冻结复用，禁止据开发者自报测试直接认定未经证实内容",
+            "终验第二层（工程全部模块开发完成后才执行）：独立的一键或有限指令自动化批量写入脚本/可复现实操场景，可自动调用已证分类Writer、完整预检、业务单元执行、写后新采集与数据库清单逐项核对，且可反复运行于经Human准许的测试场景",
+            "终验真实规模：配置覆盖预期单次决策上万个字段值的高负载批次（按真实清单和设备实证明确测试批次，不先杜撰固定安全吞吐），含数百球员能力/倾向批量更新以及多球员合同、所属球队与必要名单/财务业务依赖变更；须有基本容量/耗时、完整性及差异报告",
+            "终验Human可视对照：Human可以参与并查看游戏UI中抽样的实际能力/倾向/合同/球队成员和相关数据，核对自动化脚本带来的真实变化；针对全部被声明成功的清单项目由写后新采集的程序全量比对，不要求Human肉眼检查上万项",
+            "终验运行报告必须区分每个一致性单元及整批成功、失败、未采到、拒绝/例外等，写入效果与数据库新采值全量一致且必要关联正确才认定相应单元通过；失败则保留差异、通知Human并改进后重测，不以仅运行脚本、仅单次Writer通过或部分可视样本正确宣布整体验收",
+            "本阶段形成最终规模自动化脚本的交付要求、场景包及验收矩阵；自动化脚本真正开发/执行、游戏进程写入及Human现场测试均留待后续有权限工程阶段"
           ],
           "relations": [
-            "RES-01–05 -> evidence and acceptance matrix -> independent reviews -> Human gates"
+            "RES-01–05 -> evidence and acceptance matrix -> independent reviews -> Human gates",
+            "engineering_package_v25_reuse_or_new -> fixed source/Reader/schema/capability evidence + independent package acceptance -> merged result contract -> one automated bulk test harness -> planned human-visible test scene -> authorized Native script run -> RES-05B fresh capture full-list compare -> Human/UI spotcheck -> final OS acceptance and master release gate",
+            "first-level single-reader or representative-writer passes are evidence of mechanism not proof of large-batch robustness; final large-scale integrated test uses same scoped units, error reports and database truth",
+            "RR-01 core containers/approved exceptions + RR-02 stable 100-season schema + RR-03 category writer proof + RR-04 canonical truth + RR-05/RR-05B consistency/capture compare -> RR-06 final readiness"
           ],
           "inputs_outputs": [
             "输入：场景证据、受控执行输出、源/字段字典、OS run记录",
-            "输出：完成状态、每项对应的真实证据、缺口扩展任务及可比较的版本报告"
+            "输出：完成状态、每项对应的真实证据、缺口扩展任务及可比较的版本报告",
+            "输入：冻结v25及后续各工程包的实证数据/测试日志/场景manifest/覆盖矩阵/版本和先前Human例外决策；每包输出可查实际采集样本、对象/字段映射与验证结论",
+            "最终验收脚本输入：Human另行明确批准的真实测试档/操作范围、可用游戏场景、符合值域的高负载修改清单（含数百球员倾向与跨对象合同/归属）、业务一致性单元和目标值",
+            "自动化脚本输出：运行命令或入口、执行摘要、计划列表、真实Native操作回执、fresh_capture_batch、typed数据库新采值与完整清单逐项对照、每单元状态、失败原因线索和重新测试记录",
+            "Human可消费输出：游戏UI可视抽样核验清单/截图或观察记录（如被提供）、全量自动对账报告、明确缺口例外、独立工程包验收及整体验收结果"
           ],
-          "completeness_rule": "能逐个追踪结果项/场景/容器/字段/操作的完成或明确缺口状态；按要求生成可复查测试证据且不把未生成或未测试项标成DONE；独立审核和master权限另行办理。",
+          "completeness_rule": "RES-06按RR-06=B+补充完成结果定义：各包保留独立验收（采集能力有真实、有效、可供Human查看的数据；同质Writer类别以单次代表实测及可靠源证据认定机制），优先复用v25实证，不要求每工程包都提前进行数万项批量测试。所有相关模块完成后须额外交付可实际运行的自动化大批量脚本，在未来另行Human明确授权的游戏测试范围内模拟未来真实单次决策负载（可能超过一万个字段值，覆盖数百名球员倾向、合同及球队归属等），自动完成操作、触发一次新采集入库并对全部修改清单按字段/对象/业务单元逐项验收；Human参与核查部分游戏实际可视值作独立抽查。全部核心容器及必要写入类型的批量脚本测试应成功、相关数据库对账完整、联动状态正确、没有未解决的关键不一致；未解决或失败项报告Human、复现修复后重试。只有Human明确批准的非核心缺口可以有界延期，被延期内容不得宣称PASS。每包与最终集成均提交证据、固定版本及适用范围；独立工程复核和OS保护发布门仍须遵守。不要求游戏存档持久性验收，不因为Human本次规划选择授权实际游戏写入。",
           "known_facts": [
             {
               "item": "Q2=C风险分级、Q5=B标准场景包、Q6=B有界分包；v25修复交付目前仍独立审核NOT_RUN。",
               "evidence_status": "human_requirement_plus_developer_repository_evidence"
+            },
+            {
+              "item": "Human 2026-10-26 RR-06=B。分包采集看到有效数据即可按范围核验；单次Write测试证明共用机制，但统一自动化批量写入脚本在全部开发完成后才做；Human参与观看游戏可视数据，覆盖数百球员倾向及合同、球队归属等，最终要可自动运行且应满足上万个值单次决策工作量。",
+              "evidence_status": "human_requirement"
             }
           ],
           "unknowns": [
@@ -420,9 +443,15 @@
             },
             {
               "question_id": "RR-06",
-              "scope": "统一结果架构分多个有界工程包交付时，工程包自身通过、场景完整性与最终跨包集成验收怎样区分；独立复核/旧证据复用/非核心缺口例外是否进入正式门禁",
-              "closure_evidence": "Human裁决标准化包验收+跨包集成的责任和范围，再由02/03定稿可执行验收矩阵",
-              "status": "human_decision_pending"
+              "scope": "工程包独立验证+最终集成验收：Human认可先验收可视有效采集和单次代表写入，后在模块完成后用自动化批量脚本测试真实规模，含Human可视核对及全部清单写后采集数据库对账。",
+              "closure_evidence": "Human 2026-10-26选择RR-06=B且补充上述双级验收及终验自动化脚本；未来测试环境/确切清单由Human在工程阶段审批。",
+              "status": "human_approved_B_with_bulk_script_supplement_2026_10_26"
+            },
+            {
+              "question_id": "EVQ-09",
+              "scope": "终验高负载脚本的确切数据规模、可复现样本/合法值域、现实性能、异常注入和整体成功证据。模型要求覆盖单次上万个数据、数百球员和复合操作，但不在01b虚构吞吐性能实测。",
+              "closure_evidence": "工程模块完成后，在Human另行授权的受控场景配置实际清单，自动脚本全量执行及重采集对账、UI代表样本复核，并留存执行容量/耗时及失败改进记录。",
+              "status": "unknown_downstream_test"
             }
           ],
           "acceptance_criterion_ids": [
@@ -587,15 +616,91 @@
           "id": "RR-06",
           "result_item_id": "RES-06",
           "topic": "RES-06 independent engineering package acceptance and final integrated handoff, reusing existing v25 evidence and Human-authorized noncore exceptions",
-          "status": "ACTIVE_PENDING_HUMAN_DECISION",
-          "recommended_choice": "B"
+          "status": "APPROVED_B_WITH_FULL_BULK_INTEGRATION_SUPPLEMENT_2026_10_26",
+          "recommended_choice": "B",
+          "human_choice": "B",
+          "human_supplement": "单独测试，比如采集的部分，我们是可以看到采集到的数据的，如果是有效数据就ok了。写入部分，我们做的测试，可以证明单次写入是有效的，但是要做批量写入内容的脚本，这个全部开发完成后做，这个自动化脚本的测试，我可以参与，查看游戏可视数据来验证批量写入是否有效，模拟真实游戏发生的写入，因为开发完成后，每次决策最多可能会写入上万个数据，比如批量更多几百个球员的倾向等，批量更新合同和球队归属信息等。一旦完成这些，实现自动化脚本运行，就算合格。",
+          "disposition": "一阶段逐工程包验证真实采集数据有效与同类Writer单次代表测试；各模块完成后再开发和运行自动化脚本，测试上万个字段级决策、数百球员倾向及合同/球队归属复合变更；Human可核查游戏UI，脚本自动写后采集入库且按清单全量对账，合格时才确认最终集成结果。"
         }
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-09"
+        "version": "A-v1-RC01",
+        "approval_scope": "RES-01_to_RES-06_merged_result_and_acceptance_rules",
+        "confirmation_requested": true,
+        "approval_not_implicit_from_item_votes": true
       },
-      "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
+      "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft.",
+      "final_artifact_contract": {
+        "shape": "同一统一SQLite逻辑Schema（计划100季）+ 目标游戏来源与字段完整双向映射 + 具证Reader/Codec和有界采集/查询接口 + 字段类别读写能力矩阵 + 经授权的实时Native批量变更/新采集对账引擎 + 脚本与可复现证据交付包",
+        "physical_schema_result_requirements": [
+          "全目标PC22离线MyLEAGUE页面、Tab、设置域及生命周期S1-S8/S7子窗口 → Native对象/Reader/Codec → typed数据库表字段 → 查询与导出；应有逐字段覆盖/缺口矩阵",
+          "最终准确表数、每表业务领域/列/字段类型/含义/合法值域/单位、跨赛季身份与历史模型、PK/FK/索引/关联、物理DDL及Schema设计理由必须在最终工程成品中可查；现有v25声明的101表不是本阶段核准的最终物理数",
+          "赛季数据复用同型固定逻辑容器，按照实际生成窗口按赛季ID填充不同值，一档一库、追加历史、不开发数据库时点回档系统"
+        ],
+        "intake_and_query_result_examples": [
+          "查询一个赛季的全明星名单/赛程：如果目标游戏此时尚未生成则带证据标记为未生成；出现后可映射到具体Native来源/表字段并查询已核验实际数据",
+          "查询指定球员某场比赛基础/高阶统计、合同、球队归属及其观察时点：返回有权访问的已证Native或计算值、类型/来源/时点，不伪造最近未采字段",
+          "外挂提出1000个候选倾向目标值：只产生待执行清单；未执行之前数据库Native实际值不变",
+          "Human另行授权的300名球员高负载倾向修改及合同归属关联清单：独立业务单元执行，触发一次新采集，数据库全量按清单新值对账，Human可在游戏UI抽样复核，不以保存/重载验证"
+        ],
+        "completion_by_layer": [
+          {
+            "gate": "PACKAGE_READ",
+            "criterion": "有效实际游戏采集数据可供查看；对应正确对象和时间/字段；入库、查询与来源映射一致，RR-01核心容器无缺项",
+            "evidence": "Native来源、Reader、typed数据库、实际UI/原生样本、固定版本、测试报告"
+          },
+          {
+            "gate": "PACKAGE_CLASS_WRITER",
+            "criterion": "经独立Human未来实机许可，对每个共用Native修改机制的代表字段单次写入并通过新采集对账；成员继承机制有证据，例外列出",
+            "evidence": "类别成员/值域/Native Writer共享证据、实测代表清单、读后采集和数据库对比"
+          },
+          {
+            "gate": "FINAL_BULK_INTEGRATION",
+            "criterion": "全部相关模块开发完成后，用可运行脚本在真实授权测试游戏里模拟上万个字段级清单、数百球员倾向和合同/球队归属联动；逐对象/字段按新采数据全量对账，必要关系完整，Human可观察游戏UI抽样，无未解决核心错误",
+            "evidence": "执行清单、批次日志、时间/规模、Native新采集批次及逐项比较结果、Human实际可视核查证据、失败修复及重试"
+          },
+          {
+            "gate": "OS_REVIEW_AND_RELEASE",
+            "criterion": "每个工程包有独立审查和冻结版本，现有v25候选先证据复核；非核心容器缺口需Human逐例外许可，最终A版本必须Human另行精确确认，master合并和实机权限独立批准",
+            "evidence": "OS运行记录、源与字段覆盖矩阵、Human批准事项与git固定sha；不能用模型草案当发布许可"
+          }
+        ],
+        "no_automatic_authority": "Human批准RR-06或完整A只批准结果要求，不执行脚本、不连接游戏进程、不写Native实时内存、不合并master；实际实机写入和游戏可见测试另行由Human指定档案及操作范围。"
+      },
+      "known_vs_unknown_summary": {
+        "confirmed_human_requirements": "Q1-Q6 与 RR-01、RR-02、RR-02B、RR-03、RR-03B、RR-04、RR-05、RR-05B、RR-06 已逐轮获得Human明确选择；只确认应交付的成果和验收方式。",
+        "developer_evidence_unverified": "固定v25数据库/Reader候选、其来源覆盖和测试为待独立复核的工程材料，不能当作终验已通过；master集成未执行。",
+        "downstream_evidence_gaps": [
+          "S2-S8/S7子窗口原生场景何时产生容器、哪个UI/Native字段实际可读及长期字段全集",
+          "固定逻辑Schema的最终准确表数、字段总数、类型、主外键、索引、DDL及其与v25兼容的物理设计",
+          "每个字段类别内共享Native写入路径的真正证据和特殊成员、副作用",
+          "按单档百年目标的真实体量/性能证明与长期存储设计",
+          "独立包及最终单次上万个值级脚本的真实规模、性能、全量读后对账、错误隔离与Human UI抽查"
+        ],
+        "location_of_downstream_work": "02事实/缺口验证、03方案B和SQL定稿、04证据驱动测试、05任务拆分、06执行、07测试执行；所有实机操作单独Human许可。"
+      },
+      "semantic_completeness_assessment": {
+        "date": "2026-10-26",
+        "scope": "阶段01b结果A的定义完整性，不是工程能力完成",
+        "stable_result_ids": [
+          "RES-01",
+          "RES-02",
+          "RES-03",
+          "RES-04",
+          "RES-05",
+          "RES-06"
+        ],
+        "result_contracts_defined": true,
+        "human_single_item_decisions_complete": true,
+        "result_object_dependencies_and_acceptance_complete": true,
+        "open_product_definition_disputes": [],
+        "downstream_evidence_unknowns_expected": true,
+        "independent_runtime_or_code_tests_run_in_this_planning_task": false,
+        "full_A_ready_for_exact_Human_version_review": true,
+        "stage01_complete": false,
+        "reason": "01b定义了最终形态/组成字段域/身份与时点关系/读取和授权写入交付/可消费示例/分包+最终脚本验收/缺口证据；物理表数字和Native具体事实须02/03逐项验证，故此时仅A-v1-RC01待Human批准。"
+      }
     }
   },
   "decision_log": [
@@ -670,6 +775,15 @@
       "result_item_id": "RES-05",
       "status": "approved",
       "interpretation": "Scoped real-time memory write checklist followed by fresh Native acquisition into the database, deterministic compare new captured values against expected targets, notify Human for failed/missing evidence; save/reload/persistent save effects out of scope."
+    },
+    {
+      "id": "RR-06",
+      "date": "2026-10-26",
+      "selected": "B",
+      "human_supplement": "单独测试，比如采集的部分，我们是可以看到采集到的数据的，如果是有效数据就ok了。写入部分，我们做的测试，可以证明单次写入是有效的，但是要做批量写入内容的脚本，这个全部开发完成后做，这个自动化脚本的测试，我可以参与，查看游戏可视数据来验证批量写入是否有效，模拟真实游戏发生的写入，因为开发完成后，每次决策最多可能会写入上万个数据，比如批量更多几百个球员的倾向等，批量更新合同和球队归属信息等。一旦完成这些，实现自动化脚本运行，就算合格。",
+      "result_item_id": "RES-06",
+      "status": "approved",
+      "interpretation": "Package-level real valid extraction or one-time class-representative write may pass independently, but final acceptance additionally requires executable large-batch automation after all packages are built, actual game UI Human sampling, fresh acquisition full-list verification for tens of thousands of candidate write fields and multi-object contracts/rosters. Test is not run or authorized now."
     }
   ]
 }
