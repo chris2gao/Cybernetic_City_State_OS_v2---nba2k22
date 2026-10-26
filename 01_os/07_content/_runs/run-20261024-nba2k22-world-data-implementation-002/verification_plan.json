@@ -1,7 +1,7 @@
 {
   "schema_version": "citystate.verification_plan.v1",
   "task_packet": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/任务包.yml",
-  "note": "During development, execute lightweight relevant tests only. Formal checks after complete candidate. Commands are prospective, not reported as run.",
+  "note": "Human2026-10-26 requests bounded centralized closeout of the current regular-season engineering baseline. Actual results are in increment37/verification-report.json and verification/operations.json; the plan alone is not run evidence. Full underlying-system/lifecycle acceptance and independent review remain separate.",
   "checks": [
     {
       "id": "PYTHON_UNIT",
@@ -30,5 +30,6 @@
       "expected_exit_code": 0
     }
   ],
-  "final_human_readable_acceptance": "Coverage and provenance for every RES domain, exact table/column dictionary, Native source or UNKNOWN/Q10, review after full development candidate; this is not an executable managed_verify check."
+  "baseline_result_ref": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/verification-report.json",
+  "final_human_readable_acceptance": "Current regular-season engineering candidate only: exact implemented schema, retained real-source database/snapshot and reader/query interfaces, source maturity/gaps and explicit deferrals. Full lifecycle, 100-season capacity, game writes, independent acceptance and master integration are not established by this closeout."
 }

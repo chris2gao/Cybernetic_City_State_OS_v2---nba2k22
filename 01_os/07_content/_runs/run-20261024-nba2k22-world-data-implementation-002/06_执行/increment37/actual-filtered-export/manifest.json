@@ -1,0 +1,117 @@
+{
+  "format": "WORLD_FILTERED_FACT_EXPORT_V1",
+  "status": "COMPLETE_PUBLIC_FACT_EXPORT",
+  "table": "player_season_totals",
+  "role": "GM",
+  "columns": [
+    "player_id",
+    "games_played",
+    "points",
+    "phase_code"
+  ],
+  "filters": [
+    {
+      "column": "unit_id",
+      "op": "eq",
+      "value": "live-world:62052310fffb4ca792946781"
+    },
+    {
+      "column": "games_played",
+      "op": "gte",
+      "value": 10
+    },
+    {
+      "column": "points",
+      "op": "gte",
+      "value": 100
+    }
+  ],
+  "rows": 230,
+  "file": "facts.jsonl",
+  "sha256": "0277f55568dbd2201a99f5003a0e5f6ea8cab43ff701fed1283adb7f5fbf2a49",
+  "bytes": 113539,
+  "observation_scope": {
+    "time_basis": "CAPTURE_OBSERVED_AT_NOT_GAME_DATE",
+    "observed_through": "2026-10-26T15:30:31.650896+00:00",
+    "save_id": "nba2k22_test_01",
+    "schema_version": 24,
+    "committed_success_units": 42,
+    "scope_sha256": "d1e9347910e2d2d4e328e8327878df1e85c574e9176802ee122c0e555418971f"
+  },
+  "field_metadata": {
+    "table": "player_season_totals",
+    "domain": "RES-L",
+    "grain": "native cumulative player season totals observation",
+    "key": "total_id",
+    "role": "GM",
+    "columns": [
+      {
+        "name": "player_id",
+        "kind": "TEXT",
+        "meaning": "Reference to the evidenced players record",
+        "required": true,
+        "ref": "players(player_id)",
+        "source": "ENGINEERING_IDENTITY_CONTRACT",
+        "unit": "save-local identifier",
+        "check": null,
+        "default": null,
+        "visibility": "GM_PUBLIC",
+        "null_meaning": null
+      },
+      {
+        "name": "phase_code",
+        "kind": "TEXT",
+        "meaning": "",
+        "required": false,
+        "ref": null,
+        "source": "UNKNOWN: native mapping or UI semantics not yet evidenced",
+        "unit": "UNKNOWN/native representation",
+        "check": null,
+        "default": null,
+        "visibility": "GM_PUBLIC",
+        "null_meaning": null
+      },
+      {
+        "name": "games_played",
+        "kind": "INTEGER",
+        "meaning": "games played",
+        "required": false,
+        "ref": null,
+        "source": "AG_NATIVE_01D Slot24 48-byte PLAYER_STATS candidate",
+        "unit": "count or signed count; native/UI range UNKNOWN",
+        "check": "\"games_played\" IS NULL OR \"games_played\">=0",
+        "default": null,
+        "visibility": "GM_PUBLIC",
+        "null_meaning": null
+      },
+      {
+        "name": "points",
+        "kind": "INTEGER",
+        "meaning": "points",
+        "required": false,
+        "ref": null,
+        "source": "AG_NATIVE_01D Slot24 48-byte PLAYER_STATS candidate",
+        "unit": "count or signed count; native/UI range UNKNOWN",
+        "check": "\"points\" IS NULL OR \"points\">=0",
+        "default": null,
+        "visibility": "GM_PUBLIC",
+        "null_meaning": null
+      }
+    ],
+    "operators": [
+      "eq",
+      "ne",
+      "lt",
+      "lte",
+      "gt",
+      "gte",
+      "in",
+      "is_null",
+      "not_null"
+    ],
+    "filter_scope": "AND of typed column predicates; row observations, not per-field latest assembly",
+    "permission_scope": "Public typed fields only; no owner artifacts or restricted Potential storage"
+  },
+  "selection_scope": "Matching row observations only; no synthetic history, latest-state merge or inferred missing fields",
+  "game_access": false
+}
