@@ -1,0 +1,34 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Continue world-data implementation with annual Native staff history subjects,
+    all40 signed stat references, complete typed coach-stat fields and source-aware queries.
+  implementation_or_review_method: >-
+    Verify live COACHDATA/COACHSTATDATA metadata and extents, stat-bank getter and
+    signed-index consumer code. Capture bounded names/references/UIDs and distinct
+    referenced12-byte rows, compare every typed scalar/link with raw bytes, and
+    compare all prior table columns after copy-upgrade. Run261 tests and SQLite smoke.
+  supportability_rationale: >-
+    Native metadata establishes seven unsigned fields and40 signed references;
+    code establishes Slot21 stride12 and independent negative/bounds rejection.
+    Index0 can resolve and a prior negative slot does not invalidate later slots.
+    Historical year/phase/current-slot/allocation semantics remain explicitly unproved.
+  feasibility_rationale: >-
+    A fourth independent annual family preserves existing annual buckets and
+    keeps ordinary staff reads unchanged. v23 is a copied fact file with v22
+    retained. Paging pins one source unit; raw flag bytes, shared references and
+    unmatched identities stay visible without invented awards or persistent subjects.
+  exact_result_or_candidate_ref: 9db85720f4c00587c296eacae0c035018104f22b
+  verification_evidence:
+    - 06_执行/increment32/verification-final/operations_report.json
+    - 06_执行/increment32/actual-staff-history-report.json
+    - 06_执行/increment32/queries/first-staff-history-page.json
+    - 06_执行/increment32/queries/before-source-as-of.json
+    - 06_执行/increment32/native-history-evidence.archive.json
+    - 06_执行/increment32/world-v23.snapshot.json
+  residual_risk_or_unproved_limits:
+    - Statistical rows have no proved calendar year, current-slot, phase, team or finalized-season meaning.
+    - Shared bank references and NextFree do not prove allocation or unique historical ownership.
+    - Native title and coach-of-year bytes do not establish canonical award events or UI interpretation.
+    - Staff aliases use current unique IDs and exact existing names; cross-session lifecycle remains unproved.
+    - Full-season capacity and complete-system independent/Human acceptance remain open.
