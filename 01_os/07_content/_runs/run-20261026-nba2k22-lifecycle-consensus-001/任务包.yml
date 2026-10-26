@@ -1,15 +1,21 @@
 task_packet:
   task_id: nba2k22-lifecycle-scene-consensus-01
   objective: >-
-    Record Human's new lifecycle-scene task consensus decisions one by one
-    before result modelling and prototype scene modelling; do not start
-    Native exploration, Codex engineering or game activity.
+    Record Human's lifecycle-scene consensus and expanded goal for full
+    readable-source coverage, field operation classification and future
+    authorized unified Native read/write capability. Decide task boundaries
+    before result/prototype modelling; do not start engineering or game activity.
   repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
   source_base_sha: a3927fb150a213201e404cca043ced4f57409bd1
   branch: task/nba2k22-lifecycle-consensus-20261026
   task_type: project_planning_and_consensus
   scope: NBA2K22_domain_only
-  current_decision: Q1=A_Human_confirmed_2026-10-26
+  current_decisions:
+    Q1: A_same_worldline_checkpoints_Human_confirmed_2026-10-26
+    Q2: C_risk_tiered_scene_exit_Human_confirmed_2026-10-26
+  new_product_goal: full_source_coverage_field_classification_unified_batch_read_write
+  implementation_bundle: proposal_pending_Human_discussion
+  explicit_game_write_authority: NOT_GRANTED
   allowed_changed_paths:
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_LIFECYCLE_SCENE_CONSENSUS_V1.md
     - 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/**
@@ -23,7 +29,7 @@ task_packet:
     - merge_or_publish_to_master
     - assume_checkpoint_lineage_by_filename
     - infer_cross_save_identity_or_merge_database
-    - treat_pending_Q2_as_approved
+    - treat_proposed_Q3_or_engineering_split_as_approved
     - auto_dispatch_Codex_or_GM_Coach_Player
   verification:
     human_choice_recorded_without_invented_answers: required
