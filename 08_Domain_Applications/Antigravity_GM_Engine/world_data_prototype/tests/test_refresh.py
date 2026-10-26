@@ -29,7 +29,7 @@ class RefreshTests(unittest.TestCase):
     def run_batch(self,**kwargs):
         with patch('refresh._context',return_value={'epoch':deepcopy(EPOCH),'read_trace':[]}),patch('refresh._capture',side_effect=self.adapter):return refresh_world(123,self.save,'MyLEAGUE0003',self.out,**kwargs)
     def test_all_registered_adapters_exist_and_order_keeps_identity_source_first(self):
-        self.assertEqual(len(SOURCES),19);self.assertEqual(next(iter(SOURCES)),'schedule');self.assertEqual(sum(bool(v[3]) for v in SOURCES.values()),4)
+        self.assertEqual(len(SOURCES),20);self.assertEqual(next(iter(SOURCES)),'schedule');self.assertEqual(sum(bool(v[3]) for v in SOURCES.values()),4)
         for module,function,_,_ in SOURCES.values():self.assertTrue(callable(getattr(importlib.import_module(module),function)))
     def test_successful_batch_normalizes_order_and_checks_each_epoch(self):
         with patch('refresh._context',return_value={'epoch':deepcopy(EPOCH),'read_trace':[]}) as context,patch('refresh._capture',side_effect=self.adapter):

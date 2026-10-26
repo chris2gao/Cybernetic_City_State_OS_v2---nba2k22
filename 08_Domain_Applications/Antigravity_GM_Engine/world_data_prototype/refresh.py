@@ -17,6 +17,7 @@ SOURCES={
     'period-stats':('period_stats_reader','capture_period_stats','BOUND_NATIVE_CURRENT_PERIOD_PLAYER_STATS',None),
     'organization':('organization_reader','capture_organization','BOUND_CORE_ORGANIZATION',None),
     'staff':('staff_reader','capture_staff','BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL',None),
+    'coach-stats':('current_coach_stat_reader','capture_current_coach_stats','BOUND_NATIVE_CURRENT_COACH_STATS',None),
     'lineups':('lineup_reader','capture_lineups','BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION',None),
     'finance':('finance_reader','capture_finance','BOUND_NATIVE_TYPED_TEAM_FINANCE',None),
     'market':('market_reader','capture_market','BOUND_NATIVE_MARKET_SOURCES',None),

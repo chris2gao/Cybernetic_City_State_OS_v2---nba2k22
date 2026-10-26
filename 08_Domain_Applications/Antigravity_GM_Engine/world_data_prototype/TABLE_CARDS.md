@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **99**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **100**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -59,6 +59,7 @@ Actual tables: **99**. Every table is STRICT and append-only. A SQLite owner can
 | `native_staff_tactic_observations` | RES-C | one complete public Native staff tactics field family; source-only identities retained | `staff_tactic_id` | unit_id -> capture_units(unit_id); source_staff_id -> native_staff_sources(staff_source_id) | ADD |
 | `native_staff_team_slots` | RES-C | one of eight complete current core TEAM.Coach_Internal pointer slots, including missing/unmatched references | `staff_slot_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); source_staff_id -> native_staff_sources(staff_source_id) | ADD |
 | `native_staff_history_subjects` | RES-H | one annual staff descriptor identity, independent of ordinary staff acquisition | `history_subject_id` | unit_id -> capture_units(unit_id); staff_id -> staff_members(staff_id) | ADD |
+| `native_current_coach_stat_observations` | RES-C | one staff source with exactly position0 Native increment-target reference and current win/loss observation, independent of annual history | `current_coach_stat_id` | unit_id -> capture_units(unit_id); staff_id -> staff_members(staff_id) | ADD |
 | `native_coach_stat_observations` | RES-H | one referenced COACHSTATDATA bank row observed in an annual staff history source | `coach_stat_id` | unit_id -> capture_units(unit_id) | ADD |
 | `native_staff_stat_links` | RES-H | one of40 independent signed Native COACHDATA.SeasonStats references, including rejected indices | `staff_stat_link_id` | unit_id -> capture_units(unit_id); history_subject_id -> native_staff_history_subjects(history_subject_id); coach_stat_id -> native_coach_stat_observations(coach_stat_id) | ADD |
 | `team_state_observations` | RES-T | one team observed native chemistry/fan state | `state_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
