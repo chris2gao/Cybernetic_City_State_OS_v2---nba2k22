@@ -211,6 +211,42 @@ def native_honors(path,*,flag=None,year=None,subject_name=None,unit_id=None,afte
             'canonical_award_instances':'NOT_ESTABLISHED_BY_THIS_QUERY','reference_count_and_year':'OBSERVED_WORDS_NOT_ALLOCATION_OR_SEASON_CLOSURE_PROOF'}
 
 
+def current_period_stats(path,*,player_id=None,subject_name=None,source_index=None,current_roster_only=True,unit_id=None,after_index=-1,limit=20):
+    """One selected Native reference per source, with a same-unit game-mode context."""
+    from observation_scope import utc_stamp
+    from award_reader import AWARD_COLUMNS
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1 or type(current_roster_only) is not bool:raise ValueError('invalid current-period stat page')
+    if source_index is not None and (type(source_index) is not int or source_index<0):raise ValueError('invalid period-stat source index')
+    if after_index>=0 and unit_id is None:raise ValueError('pin unit_id when continuing current-period pages')
+    with closing(connect(path,True)) as c:
+        c.create_function('period_stat_utc',1,utc_stamp,deterministic=True);pin=' AND u.unit_id=?' if unit_id is not None else '';args=[unit_id] if unit_id is not None else []
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,r.source_grade,r.season_id AS observation_season_id FROM capture_units u JOIN capture_runs r USING(run_id)
+            WHERE u.source_key='BOUND_NATIVE_CURRENT_PERIOD_PLAYER_STATS' AND u.unit_status='success' '''+pin+' ORDER BY period_stat_utc(u.observed_at) DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED','unit':None,'records':[],'has_more':False,'next_after_index':None}
+        context=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit['unit_id'],)).fetchone()
+        if context is None:raise ValueError('selected-period source lacks its same-unit Native mode context')
+        clauses=['p.unit_id=?','p.source_player_index>?'];args=[unit['unit_id'],after_index]
+        if current_roster_only:clauses.append("p.current_core_roster_status='CURRENT_CORE_ROSTER'")
+        for column,value in (('player_id',player_id),('source_player_index',source_index),('observed_name',subject_name)):
+            if value is not None:clauses.append('p.'+ident(column)+'=?'+(' COLLATE NOCASE' if column=='observed_name' else ''));args.append(value)
+        rows=[dict(row) for row in c.execute('''SELECT p.player_source_id,p.source_player_index,p.native_unique_id_raw,p.preserved_id_raw,p.observed_name,p.name_status,
+            p.native_team_id,p.current_core_roster_status,p.current_roster_slot,p.player_id,p.canonical_link_status FROM native_player_sources p WHERE '''+' AND '.join(clauses)+' ORDER BY p.source_player_index LIMIT ?',args+[limit+1])]
+        more=len(rows)>limit;rows=rows[:limit];columns=('stat_observation_id','source_stat_index','stat_year','scoring_identity_status',*(name for name in NATIVE_PLAYER_STAT_MAP.values() if name not in AWARD_COLUMNS));projection=','.join(ident(name) for name in columns)
+        for row in rows:
+            refs=c.execute('SELECT history_slot_index,native_stat_index_raw,link_status,stat_observation_id FROM native_player_stat_links WHERE unit_id=? AND player_source_id=?',(unit['unit_id'],row['player_source_id'])).fetchall()
+            if len(refs)!=1 or refs[0]['history_slot_index']!=context['current_stat_array_position']:raise ValueError('current-period reference differs from same-unit selector')
+            reference=dict(refs[0]);record=None
+            if reference['stat_observation_id'] is not None:
+                found=c.execute('SELECT '+projection+' FROM native_player_stat_observations WHERE unit_id=? AND stat_observation_id=? AND source_stat_index=?',(unit['unit_id'],reference['stat_observation_id'],reference['native_stat_index_raw'])).fetchone()
+                if found is None:raise ValueError('period stat cannot borrow a record from another unit/index')
+                record=dict(found)
+            row.update({'selected_reference':reference,'record':record,'phase_code':None,'record_year_status':'NO_CAPTURED_RECORD' if record is None else 'RECORD_YEAR_MATCHES_OBSERVATION_SEASON' if unit['observation_season_id']=='season:native-year:'+str(record['stat_year']) else 'RECORD_YEAR_DIFFERS; RAW_YEAR_RETAINED_NOT_RELABELED'})
+        return {'status':'OBSERVED_NATIVE_SELECTED_PERIOD_PLAYER_STATS','unit':dict(unit),'game_mode':dict(context),'current_roster_only':current_roster_only,'records':rows,'has_more':more,'next_after_index':rows[-1]['source_player_index'] if more else None,
+                'scope':'Complete captured public source pool, optionally current core rosters; one Native selected reference and same-unit mode/date context',
+                'phase_and_identity':'Current selector association only; shared lane allocation, accumulated phase and historical subject lifecycle remain separate',
+                'annual_award_fields':'WITHHELD_BY_ORDINARY_SOURCE; use annual native-honors at its original acquisition time'}
+
+
 def native_player_seasons(path,*,player_id=None,subject_name=None,source_index=None,year=None,unit_id=None,after_index=-1,limit=20):
     """All captured fixed-array slots, resolved independently against one source unit."""
     from observation_scope import utc_stamp
