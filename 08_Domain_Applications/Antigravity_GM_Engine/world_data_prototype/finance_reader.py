@@ -43,6 +43,13 @@ def decode_finance(raw):
     return result
 
 
+def validate_name_dimension(field,spec,raw):
+    # The runtime initializes other control words (observed +8 becomes2).
+    # Only the one-dimensional extent has an evidenced layout meaning here.
+    if len(raw)!=24 or field['words'][5]>>16!=1 or struct.unpack_from('<I',raw)[0]!=spec['extent']:
+        raise ValueError('finance Native name dimensions changed')
+
+
 def verify_finance_metadata(reader):
     metadata=[]
     for entry in PROFILE['types']:
@@ -54,7 +61,7 @@ def verify_finance_metadata(reader):
                 if old['enum_pointer'] and current['enum_pointer']!=reader.module_base+old['enum_pointer']-0x140000000:raise ValueError('finance Native enum binding changed: '+name)
                 if 'extent' in spec:
                     ptr=current['words'][6]|current['words'][7]<<32;raw=reader.read(ptr,24,'FINANCE_NAME_DIMENSION:'+name)
-                    if raw!=bytes.fromhex(spec['dimension_control_hex']):raise ValueError('finance Native name dimensions changed: '+name)
+                    validate_name_dimension(current,spec,raw);current['runtime_dimension_control_hex']=raw.hex()
                     if reader.read(ptr,24,'FINANCE_NAME_DIMENSION_RECHECK:'+name)!=raw:raise ValueError('finance name dimensions unstable')
         else:
             value=read_native_enum(reader,entry);expected={(int(k),v['name_crc']) for k,v in PROFILE['enum_labels'][entry['name']].items()}
