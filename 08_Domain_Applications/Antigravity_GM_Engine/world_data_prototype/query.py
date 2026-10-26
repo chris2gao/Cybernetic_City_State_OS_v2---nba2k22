@@ -122,6 +122,7 @@ def staff_card(path,staff_id):
         result={'staff':dict(row),'families':_scalar_families(c,'staff_id',staff_id,
             ('staff_contract_observations','staff_skill_observations','coach_preferences'))}
     result['assignments']=history(path,'staff_team_assignments',entity_key='staff_id',entity_id=staff_id)
+    result['native_source']=native_staff(path,staff_id=staff_id,include_details=True)
     return result
 
 
@@ -144,6 +145,7 @@ def team_card(path,team_id):
     result['season_totals']=history(path,'team_season_totals',entity_key='team_id',entity_id=team_id)
     result['native_finance']=native_team_finance(path,team_id=team_id)
     result['native_lineups']=team_lineups(path,team_id)
+    result['native_staff_slots']=staff_team_slots(path,team_id)
     result['legacy_finance_qualification']='team_finance_observations keeps original unsigned source words; payroll_raw=ExpPayroll, cash_raw=BankBalance; see typed Native finance for signed values; no UI scale or cap-space inference'
     return result
 
@@ -199,6 +201,39 @@ def native_player_rotation(path,*,player_id=None,subject_name=None,source_index=
         if current_roster_only:where.append("p.current_core_roster_status='CURRENT_CORE_ROSTER'")
         rows=[dict(r) for r in c.execute('''SELECT a.*,p.source_player_index,p.observed_name,p.native_unique_id_raw,p.preserved_id_raw,p.native_team_id,p.current_core_roster_status,p.canonical_link_status FROM native_player_rotation_observations a JOIN native_player_sources p ON p.player_source_id=a.source_player_id AND p.unit_id=a.unit_id WHERE '''+' AND '.join(where)+' ORDER BY p.source_player_index LIMIT ?',args+[limit+1])];more=len(rows)>limit;rows=rows[:limit]
         return {'status':'OBSERVED','source':dict(unit),'records':rows,'has_more':more,'next_after_index':rows[-1]['source_player_index'] if more else None,'qualification':'Native seven-bit PlayingTime and exact ForceNonStarter enum. UI minutes/units, active effects and historical subject lifecycle are unproved. Source-only subjects remain distinct.'}
+
+
+def _staff_source_unit(c,unit_id=None):
+    condition='AND u.unit_id=?' if unit_id is not None else '';args=(unit_id,) if unit_id is not None else ()
+    return c.execute('''SELECT u.unit_id,u.observed_at,u.source_key,u.completeness,r.source_grade FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL' AND u.unit_status='success' '''+condition+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+
+
+def native_staff(path,*,staff_id=None,subject_name=None,source_index=None,person_type=None,status_label=None,team_id=None,current_core_only=True,include_details=False,unit_id=None,after_index=-1,limit=20):
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('staff limit1..100 and after-index>=-1 required')
+    if after_index>=0 and unit_id is None:raise ValueError('continued staff pages require an explicit source unit')
+    with closing(connect(path,True)) as c:
+        unit=_staff_source_unit(c,unit_id)
+        if unit is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'next_after_index':None}
+        unit_id=unit['unit_id'];where=['s.unit_id=?','s.source_staff_index>?'];args=[unit_id,after_index]
+        for column,value in (('s.staff_id',staff_id),('s.observed_name',subject_name),('s.source_staff_index',source_index),('s.person_type_label',person_type),('s.status_label',status_label),('s.current_core_team_id',team_id)):
+            if value is not None:where.append(column+'=?');args.append(value)
+        if current_core_only:where.append("s.assignment_status='RECIPROCAL_CURRENT_TEAM_ROLE'")
+        rows=[dict(r) for r in c.execute('SELECT s.* FROM native_staff_sources s WHERE '+' AND '.join(where)+' ORDER BY s.source_staff_index LIMIT ?',args+[limit+1])];more=len(rows)>limit;rows=rows[:limit]
+        if include_details:
+            for row in rows:
+                for name,table in (('profile','native_staff_profile_observations'),('tactics','native_staff_tactic_observations')):
+                    value=c.execute('SELECT * FROM '+ident(table)+' WHERE source_staff_id=? AND unit_id=?',(row['staff_source_id'],unit_id)).fetchone();row[name]=dict(value) if value else None
+        mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit_id,)).fetchone();count=c.execute('SELECT count(*) FROM native_staff_sources WHERE unit_id=?',(unit_id,)).fetchone()[0]
+        return {'status':'OBSERVED','source':dict(unit),'game_mode':dict(mode) if mode else None,'source_staff_count':count,'include_details':include_details,'current_core_only':current_core_only,'records':rows,'has_more':more,'next_after_index':rows[-1]['source_staff_index'] if more else None,
+            'qualification':'Complete COACHDATA descriptor slots and public field projections. NORMAL/RELEASED/RETIRED/INACTIVE, team pointers and core role slots are independent observations; absent core roles or a status label do not prove hiring eligibility. Canonical aliases require a single reciprocal role, globally unique current pool ID and exact existing name. Allocation/lifecycle, UI wages/grade scale and behavioral effects remain unproved. Annual staff stat references and growth/max-grade bytes are not acquired.'}
+
+
+def staff_team_slots(path,team_id,*,unit_id=None):
+    with closing(connect(path,True)) as c:
+        unit=_staff_source_unit(c,unit_id)
+        if unit is None:return {'status':'NOT_OBSERVED','team_id':team_id,'records':[]}
+        rows=[dict(r) for r in c.execute('''SELECT a.*,s.source_staff_index,s.staff_id,s.native_staff_id_raw,s.observed_name,s.name_status,s.person_type_raw,s.person_type_label,s.status_raw,s.status_label,s.assignment_status,s.current_team_native_id_raw,s.canonical_link_status FROM native_staff_team_slots a LEFT JOIN native_staff_sources s ON s.staff_source_id=a.source_staff_id AND s.unit_id=a.unit_id WHERE a.unit_id=? AND a.team_id=? ORDER BY a.role_slot_index''',(unit['unit_id'],team_id))]
+        return {'status':'OBSERVED' if rows else 'TEAM_NOT_IN_SELECTED_UNIT','source':dict(unit),'team_id':team_id,'records':rows,'qualification':'All eight Native current TEAM.Coach_Internal pointer slots, including null/outside/misaligned or nonreciprocal referents. Pointer addresses remain restricted artifacts; no job availability or future hiring is inferred.'}
 
 
 def prospect_card(path,prospect_id):

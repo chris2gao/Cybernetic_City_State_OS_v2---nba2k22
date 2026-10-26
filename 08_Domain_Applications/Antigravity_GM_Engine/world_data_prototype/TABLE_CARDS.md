@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **92**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **96**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -54,6 +54,10 @@ Actual tables: **92**. Every table is STRICT and append-only. A SQLite owner can
 | `team_rotation_slots` | RES-T | one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role | `slot_id` | team_id -> teams(team_id); player_id -> players(player_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id) | ADD |
 | `team_lineup_slots` | RES-T | one slot in each complete Native named five-player TEAM lineup | `lineup_slot_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); player_id -> players(player_id) | ADD |
 | `team_advanced_rotation_slots` | RES-T | one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values | `advanced_rotation_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
+| `native_staff_sources` | RES-C | one COACHDATA descriptor slot with current source identity and independently qualified role/pointer/status observations | `staff_source_id` | unit_id -> capture_units(unit_id); staff_id -> staff_members(staff_id); current_core_team_id -> teams(team_id); assigned_core_team_id -> teams(team_id) | ADD |
+| `native_staff_profile_observations` | RES-C | one complete public Native staff profile field family; source-only identities retained | `staff_profile_id` | unit_id -> capture_units(unit_id); source_staff_id -> native_staff_sources(staff_source_id) | ADD |
+| `native_staff_tactic_observations` | RES-C | one complete public Native staff tactics field family; source-only identities retained | `staff_tactic_id` | unit_id -> capture_units(unit_id); source_staff_id -> native_staff_sources(staff_source_id) | ADD |
+| `native_staff_team_slots` | RES-C | one of eight complete current core TEAM.Coach_Internal pointer slots, including missing/unmatched references | `staff_slot_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); source_staff_id -> native_staff_sources(staff_source_id) | ADD |
 | `team_state_observations` | RES-T | one team observed native chemistry/fan state | `state_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `market_state_observations` | RES-M | native or external market state with explicit origin | `market_id` | player_id -> players(player_id); staff_id -> staff_members(staff_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id) | ADD |
 | `external_transaction_events` | RES-M | explicit completed external transaction, never roster-diff inference | `transaction_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |
