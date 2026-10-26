@@ -20,8 +20,10 @@ task_packet:
     Q6: B_one_shared_design_multiple_bounded_engineering_packages_Human_confirmed_2026-10-26
   consensus_A0_version: A0-v1_Human_confirmed_2026-10-26
   stage01b_draft: 01b_需求结果_A_v1_草案.yml
-  stage01b_draft_version: A-v1-DRAFT-09
-  stage01b_human_complete_A_confirmation: PENDING
+  stage01b_draft_version: A-v1-RC01
+  stage01b_human_complete_A_confirmation: PENDING_EXACT_A-v1-RC01
+  stage01b_semantic_completeness: COMPLETE_PENDING_HUMAN_VERSION_CONFIRMATION
+  stage01b_completeness_review: 01b_结果A完整性与Human版本确认_20261026.md
   stage01b_decisions:
     RR-01: B_core_container_verified_noncore_explicit_exception_Human_approved_2026-10-26
     RR-02: D_custom_reusable_single_season_schema_no_DB_time_restore_Human_approved_2026-10-26
@@ -31,7 +33,7 @@ task_packet:
     RR-04: B_native_observed_fact_separate_from_proposed_and_verified_readback_Human_approved_2026-10-26
     RR-05: B_per_business_unit_preflight_stop_proven_compensation_Human_approved_2026-10-26
     RR-05B: D_runtime_memory_checklist_fresh_capture_compare_no_save_reload_Human_approved_2026-10-26
-    RR-06: PENDING
+    RR-06: B_package_independent_acceptance_and_final_realtime_bulk_automation_Human_approved_2026-10-26
   new_product_goal: full_source_coverage_field_classification_unified_batch_read_write
   implementation_bundle: B_bounded_packages_approved_specific_tasks_pending_01b
   explicit_game_write_authority: NOT_GRANTED
@@ -58,8 +60,10 @@ task_packet:
     implementation_test: not_applicable
     independent_review: not_yet_started
   completion_policy: >-
-    Q1-Q6 and consolidated A0-v1 are Human-approved. Stage01b is now
-    drafting the result model A-v1; it cannot close until the complete
-    final A version receives a separate Human confirmation. No code,
-    live Native/game operation, protected master integration, or game-write
-    authorization is granted by this planning transition.
+    Q1-Q6, A0-v1 and all RR decisions are approved individually, and the
+    A-v1-RC01 consolidated result requirements are semantically complete as
+    a Human-review candidate only. Exact consolidated A version approval is
+    outstanding; stage01 not yet closed. Stage02 can be planned only after
+    the Human version gate, with no implied Codex auto-dispatch, engineering
+    implementation, game/native memory writes, master integration or
+    authorization for final batch-script testing.
