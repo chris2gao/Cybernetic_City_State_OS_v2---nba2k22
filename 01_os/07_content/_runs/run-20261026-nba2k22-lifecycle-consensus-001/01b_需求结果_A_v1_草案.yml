@@ -3,7 +3,7 @@
   "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 3,
+  "draft_number": 4,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,7 +12,7 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-03",
+      "version": "A-v1-DRAFT-04",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
@@ -97,8 +97,8 @@
           "result_item_id": "RES-02",
           "title": "全生命周期场景适配与可重复填充接口",
           "kind": "function",
-          "review_status": "RR02_D_HUMAN_APPROVED_CROSS_SEASON_RESULT_DETAIL_PENDING",
-          "expected_end_state": "研发阶段通过 Human 推进真实 MyLEAGUE 同一世界线的多场景，对已有 v25 常规赛容器进行复用并发现、验证、补齐全明星/季后赛/休赛期/选秀等场景中的逻辑对象、Native 来源与数据结构及其数据库表/字段/关系，使统一数据架构原则上能够容纳一个完整赛季各阶段的游戏实际数据。每一适用场景至少证明一次已支持对象的读取→typed入库→查询，形成未来每个赛季按当前场景填充数据库的可复用采集路径。当前任务不以数据库时间回档、回滚历史或检查点分叉系统为研发目标。",
+          "review_status": "RESULT_DEFINITION_COMPLETE_RR02_CUSTOM_D_RR02B_A_HUMAN_APPROVED_IMPLEMENTATION_EVIDENCE_OPEN",
+          "expected_end_state": "通过一次完整赛季的真实多场景原型补全和验收，形成固定、可重复使用的统一数据库逻辑容器体系（目标游戏Native来源到逻辑对象/键-值字段、关系、物理表/列映射），让同一套结构能够容纳后续每个赛季同类游戏数据，并按照既定100年产品目标持续保存不同赛季的实际值。每个赛季的数据由相同结构的逻辑容器/赛季记录承载，不为新赛季重新设计同名表或重做整季原型。研究多场景是补齐数据架构而非时间回档系统，也不授权当前实时Native写入。",
           "components": [
             "固定八窗口与可变化的实际Native阶段映射",
             "场景前/后短暂来源的最低证据与退出风险提示",
@@ -106,24 +106,30 @@
             "常规赛/季后赛/全明星/市场池/选秀对象特定语义与阶段状态",
             "基于既有v25物理数据库/逻辑实体和Reader，逐阶段比较已覆盖与新生成的容器，新增且确有必要的表、列、引用和采集适配器需在02/03有证据设计；不得提前宣称所有物理表/字段已完整",
             "研究数据库副本可通过真实场景产生的样本数据验证各阶段容器能够正确容纳及查询；真实样本与可复用的数据结构成果分开评价，不将测试样本作为后续正式游戏的固定事实",
-            "阶段覆盖完成后形成可复用的单赛季数据模型及输入/输出映射，供以后同档每赛季逐阶段采集新值，而不是每年重新开发同样结构",
             "研究检查点仅用于Human控制真实场景取证、必要证据保存；不要求设计数据库恢复到过去日期或默认合并不同物理存档事实",
-            "完整赛季容器可以支持未来经验证的外部读取/计算与授权修改接口，但真实Native写入、合同注入和其他复合操作的安全性仍由RES-03/RES-05单独实证"
+            "完整赛季容器可以支持未来经验证的外部读取/计算与授权修改接口，但真实Native写入、合同注入和其他复合操作的安全性仍由RES-03/RES-05单独实证",
+            "单一固定逻辑Schema通过赛季/档案/对象/比赛的身份键表达多赛季数据，不生成每赛季一套不同的业务Schema；物理分区或存储优化留待有证据的02/03设计，不在01b假定按年度建表",
+            "完整一个赛季后S1–S8目标字段、类型、值域、逻辑实体和表/关系形成稳定容器目录；后续第二年至第一百年使用同样容器，仅追加所属赛季的具体数据值和按采集时点历史",
+            "后续赛季无新增完整数据库模式验证或同结构Reader重复逆向开发的交付义务；通常采集仍校验存档/赛季身份、Native地址有效性、目标对象与值合法性，防止把数据写入错误赛季/对象",
+            "若真实游戏出现此前目录未定义的新页面/字段/容器，只能按证据登记为扩展缺口并另立有界版本演进，不以此推翻既定一套稳定业务Schema的产品目标，也不静默伪造或写入任意列",
+            "既定百年目标是同一套容器的长期可扩展性；具体百年容量、性能、数据库物理优化的实测证明留给后续专门验收，不冒充已经完成"
           ],
           "relations": [
-            "game scene/phase -> container availability -> Native source -> Reader/Codec -> logical data structure/typed SQLite tables -> query/export",
-            "regular-season existing v25 structure + newly evidenced All-Star/postseason/offseason/draft containers -> versioned unified single-season-capable schema model (not independent per-scene databases)",
-            "one reusable schema and interface contract across actual seasons; each physical save database holds only that save's authorized observations and history, with original fact immutability",
-            "stage-specific research samples validate model structure; subsequent live data is observed at its actual game time; current-state queries must not conflate different times",
-            "RES-02 source/scene adaptation feeds RES-01 source catalog, RES-04 real data collection, RES-03/RES-05 downstream reading/write capability, RES-06 coverage proof"
+            "一个固定的业务逻辑字段定义/容器类型 -> 多个赛季同型记录/逻辑实例；通过save_id、season_id、game_id、object identity关联，身份确切物理键以02/03实证定稿",
+            "一个物理游戏存档 -> 一个独立数据库实例；该数据库里的相同容器记录涵盖该存档的多个赛季；不同物理存档事实不自动合并",
+            "真实S1–S8研发样本 -> 源/字段/关联已证映射 -> 固定Schema及可复用Reader -> 未来任何已支持赛季的真实数据按年填充；非原型样本常量",
+            "历史观察事实追加不覆盖；按所选赛季和时点派生各自当前状态，禁止跨年把不同状态合并成同一时点当前态",
+            "Native内存位置/PID/动态根每次访问要核对有效性，但这属于实时进程连接有效性，不是每年重新定义数据库表字段",
+            "RES-01/RES-02来源与Schema -> RES-04采集查询 -> RES-03及RES-05未来授权的外部读写协议 -> RES-06验收"
           ],
           "inputs_outputs": [
-            "输入：v25既有数据模型与Reader来源、Human主动进入的真实游戏场景、场景时点/存档身份和目标容器证据",
-            "开发期间输出：按真实场景查漏补齐的逻辑容器/数据库表结构候选、Reader/字段映射、适用阶段/版本、真实入库查询验证与场景覆盖缺口",
-            "产品阶段输出：在相同已证结构与适用条件下，任一当期场景的真实NBA2K22数据能按该保存档单独填充到统一架构并供外部读取、查询与后续经授权的修改调用；不是复制研发样本",
-            "不产生的成果：强制数据库时点回滚、不同存档事实自动混合、通过本次读取原型直接获得实时内存写入权限"
+            "输入（研发）：v25现有字段表/来源Reader与Human按时机提供的完整单赛季S1–S8 Native场景证据",
+            "输出（研发）：适用于一个完整赛季的固定逻辑数据模型、数据库表/字段/关系需求和游戏来源双向映射，以及每个核心场景真实采集入库查询的可复查证明；实际物理SQL增量由02/03确定",
+            "输入（长期运行）：任意已支持年度的场景当前游戏数据与同档身份/赛季/对象键，通过固定Reader接口读取",
+            "输出（长期运行）：同一份稳定业务Schema中不同年度、同型容器的合法数值/文本/对象关系及历史和确定性查询；可供外部受限读取、计算，以及日后经明确授权的Native写入框架使用",
+            "非目标：每年重新创建不同数据库业务结构、每年重做完整原型、为研发测试实施数据库时间回滚、此阶段进行真实游戏写入"
           ],
-          "completeness_rule": "以整套容器能正确承载一个完整单赛季的已列明目标数据结构为验收方向，分别逐场景核对原有结构复用与真正新增的表/字段/关系/Reader；对实际出现且按RR-01划定的核心容器，必须实证至少一次对象枚举→读取/解码→入库→查询闭环或有等价可复查旧证据；非核心容器须登记缺口、Human批准例外才可延期且不算已完成；阶段尚未生成不算失败。最终结果能在今后同类赛季逐阶段采入新的实际值，但不能仅凭一个赛季就声称已对未来所有赛季布局、100年容量或真实写入正确性完成验证。研发不要求数据库回到旧时间点或建设检查点分库/分叉架构；任何不同物理存档的实际数据绑定仍按既定一档一库和证据/append-only不变量。",
+          "completeness_rule": "RES-02的结果契约已确定：完成S1–S8及适用S7子窗口的核心容器建模、原生来源/字段映射和最少一次实际读取→校验→入库→查询的证据，形成同一套跨赛季可复用逻辑容器/表关系架构；同档第一、第二、直至计划一百个赛季各自作为同型业务数据实例写入该档数据库并可按赛季区别查询。后续赛季不重复整季数据库模式审查或重新研发容器；仅保留每次真实采集必需的对象身份、时间、原生访问有效性和值域/状态一致性校验，不允许错档或错赛季污染。若真实出现新类别按独立扩展处理，不更改“原有结构长期复用”的基线承诺。百年实际压力测试和物理存储选型将在后续02/03/验证任务形成实证，不能在本次需求裁决中宣称已通过。RR-01核心/例外门禁持续有效；真实写入另获权限。",
           "known_facts": [
             {
               "item": "S1–S8及Q1/Q2/Q4/Q5边界已获Human确认；v25记录了部分实际普通/年度Reader路径。",
@@ -145,15 +151,15 @@
             },
             {
               "question_id": "RR-02B",
-              "scope": "同一已证容器跨未来赛季复用时，采用怎样的最小结构兼容性验证而不重复整个原型研发",
-              "closure_evidence": "Human逐项决定跨赛季可复用性验证门槛；02/03拿真实layout版本和场景数据证明",
-              "status": "human_decision_pending"
+              "scope": "Human批准固定单赛季完整数据容器/键值结构在计划100年各赛季复用；每年填充当季实际值，不重做完整结构验证。Native运行期连接有效性仍按已有契约核对。",
+              "closure_evidence": "Human于2026-10-26明确选择RR-02B=A，补充固定字段-值业务Schema、一年完整后多季共享同型容器和一百年长期承载目标。",
+              "status": "human_approved_A_2026_10_26"
             },
             {
               "question_id": "EVQ-08",
-              "scope": "完整单赛季模型跨赛季的 Native/游戏版本/自定义联盟布局是否持续相同，以及新增动态容器是否改变表结构",
-              "closure_evidence": "以后在已授权的真实赛季起点/变更场景比对场景、来源描述符、字段字典与实际样本，发现差异进入有界扩展",
-              "status": "unknown"
+              "scope": "作为02/03实现事实，需核实已开发固定Schema可在各已覆盖场景中正确绑定不同赛季和对象；若出现真正新增类别，如何以独立扩展记录，不要求每季重新检验整个业务Schema。",
+              "closure_evidence": "实际完整单赛季S1–S8与后续适当样本/场景的赛季身份、Reader填充、SQL/字段字典比对；百年规模另行压力测试。不得将Native进程地址变化等同于数据库逻辑结构变化。",
+              "status": "unknown_nonblocking_to_RES02_result_definition"
             }
           ],
           "acceptance_criterion_ids": [
@@ -423,14 +429,18 @@
           "id": "RR-02B",
           "result_item_id": "RES-02",
           "topic": "Reusable single-season container compatibility gate for later seasons: no check vs light version/layout source check vs redo full-scene prototype",
-          "status": "ACTIVE_PENDING_HUMAN_DECISION",
-          "recommended_choice": "B"
+          "status": "APPROVED_A_2026_10_26",
+          "recommended_choice": "B",
+          "human_choice": "A",
+          "human_supplement": "数据结构就是存储游戏中的数据，游戏中的数据基本都是字段和值的键值对，也就是说是我们确定的这些键值对所构成的，这个结构不会变，如果会变，那我们还做什么数据库啊？新赛季，按照我们一百年的规划，就存储在第二年相同的数据结构里，或者说，我们开发好一个赛季的容器，那么这个容器可以有多个，对应多个赛季。但容器都是一样的。",
+          "disposition": "固定逻辑业务Schema及字段-值容器完成一个完整赛季后跨赛季（目标100年）复用；不同年度仅增加同型数据实例。无需每季重复全量结构检查或重做数据库模型；Native访问正确性与值域/身份校验不因此免除。"
         },
         {
           "id": "RR-03",
           "result_item_id": "RES-03",
-          "topic": "Field write capability maturity, value-range, semantic guards and complex operations",
-          "status": "PENDING"
+          "topic": "RES-03 actual writable field acceptance tiers and proof before a field can be exposed to future authorized bulk Native write",
+          "status": "ACTIVE_PENDING_HUMAN_DECISION",
+          "recommended_choice": "B"
         },
         {
           "id": "RR-04",
@@ -453,7 +463,7 @@
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-03"
+        "version": "A-v1-DRAFT-04"
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
     }
@@ -476,6 +486,15 @@
       "result_item_id": "RES-02",
       "status": "approved",
       "interpretation": "Container/schema construction through real lifecycle scenes, validated by sampling real data; afterward reusable for each season’s actual data. Database time restoration/branch architecture is not a required result. Downstream read/write interfaces future-scoped."
+    },
+    {
+      "id": "RR-02B",
+      "date": "2026-10-26",
+      "selected": "A",
+      "human_supplement": "数据结构就是存储游戏中的数据，游戏中的数据基本都是字段和值的键值对，也就是说是我们确定的这些键值对所构成的，这个结构不会变，如果会变，那我们还做什么数据库啊？新赛季，按照我们一百年的规划，就存储在第二年相同的数据结构里，或者说，我们开发好一个赛季的容器，那么这个容器可以有多个，对应多个赛季。但容器都是一样的。",
+      "result_item_id": "RES-02",
+      "status": "approved",
+      "interpretation": "Fixed single-season-complete database structure reused across the planned century. Each season carries values in identical logical containers; ordinary Native connection/value checks remain, not annual schema redevelopment."
     }
   ]
 }
