@@ -3,7 +3,7 @@
   "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 1,
+  "draft_number": 2,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,14 +12,14 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-01",
+      "version": "A-v1-DRAFT-02",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
           "result_item_id": "RES-01",
           "title": "游戏可读来源与数据容器全集",
           "kind": "entity",
-          "review_status": "FIRST_ROUND_PENDING_HUMAN_REVIEW",
+          "review_status": "RR01_B_APPROVED_REMAINING_DETAIL_MODELLING",
           "expected_end_state": "生成可随游戏阶段扩展的、按实际 PC22 离线 MyLEAGUE UI/目标对象穷举的数据容器/Native 来源/字段双向目录。每个被接受的容器都可指向已验证读取、解码、SQLite填充与查询路径；后生成、空池、缺源与读取失败各自有证据状态。非关键模糊字段单独扩展。",
           "components": [
             "游戏实际页面与编辑/设置页的目标字段/文本/数值目标目录；非图像输出，不从其他 NBA2K 版本推断",
@@ -41,7 +41,7 @@
             "查询示例：某场景的全明星/季后赛/休赛期来源是否已生成；可用 Reader 是谁；有哪些已证字段/不明字段",
             "查询示例：某目标 UI 列从哪个 Native 对象读到，存入什么已核证的 typed 字段，能用什么实际查询重现"
           ],
-          "completeness_rule": "每一个已确认目标游戏页面/对象/阶段来源在覆盖矩阵中有唯一范围和明确状态，不能凭容器数量、SQLite非NULL值或Reader注册数断言完整。对声明完成的容器，需有适用真实游戏窗口中枚举→解码→合法值核查→typed入库→查询的可复验证据，或被独立核对为等价的既有真实证据。阶段尚未生成与其他失败状态严格分开。模糊字段可独立挂缺口，不造假；整个RES-01对缺整容器与缺字段如何关门由RR-01裁决。",
+          "completeness_rule": "每个已确认的目标游戏页面/对象/阶段来源都要纳入可比较覆盖矩阵并有证据状态，不靠表数、非NULL、Reader注册数宣布完整。对每个场景的核心容器，必须有实际场景的对象枚举→Native读取/解码→字段合法性与身份核对→typed入库→查询的可复验证据，或经核实可复用的等价已有真实证据；核心容器未完成则该目标场景不能标记为完整原型验收。非核心容器可登记具体缺口、影响、证明及独立扩展任务，并且仅在Human明确批准具体延期例外后允许主体按已验证范围验收；被延期容器本身仍是未完成。字段含义模糊按Q3留UNKNOWN，不得自动上升到可安全写入。尚未到生成窗口与实源缺失/空池/读取错误须区别。每个场景核心/非核心的具体容器清单与依据在01b/02形成场景验收矩阵，由Human批准绑定版本，不能由Codex事后为了过关自行降级。",
           "known_facts": [
             {
               "item": "Human已裁决S1–S8多场景研究、先拿可复用容器结构，Q4要求真实填充验证，Q5要求机器证据且后生成来源不算赛季初错误。",
@@ -67,9 +67,9 @@
             },
             {
               "question_id": "RR-01",
-              "scope": "缺整个容器、缺重要字段、非关键模糊字段应分别怎样影响RES-01总体验收",
-              "closure_evidence": "Human在01b首轮明确分级完整性与例外处理方式",
-              "status": "human_decision_pending"
+              "scope": "核心容器必须完整实证；非核心容器经Human按具体缺口批准例外可延期；模糊非关键字段单独登记不阻断。",
+              "closure_evidence": "2026-10-26 Human明确选择RR-01=B、无额外补充。场景核心清单与例外证据在后续01b逐项固定。",
+              "status": "human_approved_B_2026_10_26"
             }
           ],
           "acceptance_criterion_ids": [
@@ -77,13 +77,27 @@
             "SC-02",
             "SC-03",
             "SC-04"
+          ],
+          "acceptance_criteria_detail": [
+            {
+              "criterion_id": "SC-01",
+              "required_outcome": "每个按目标场景标为核心的容器，其当前支持字段和对象枚举有实际读取-入库-查回成功证据。"
+            },
+            {
+              "criterion_id": "SC-02",
+              "required_outcome": "场景尚未生成或可见的容器保留待取证状态；实测已存在却未能采集的关键容器记为缺陷，不冒充尚未生成。"
+            },
+            {
+              "criterion_id": "SC-04",
+              "required_outcome": "非核心容器延期必须有具体Human批准的例外ID/范围、原因、影响及后续独立扩展路径。未完成容器状态独立保留。"
+            }
           ]
         },
         {
           "result_item_id": "RES-02",
           "title": "全生命周期场景适配与可重复填充接口",
           "kind": "function",
-          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "review_status": "RR02_INPUT_OUTPUT_BOUNDARY_UNDER_DISCUSSION",
           "expected_end_state": "S1–S8（含休赛期各子窗口）都具备来源时机及被证实容器的可重用采集流程；在 Human 主动选择的实际游戏时点正确识别阶段、实际存在的池子及变化来源，并保存一致性单元而不自动推进游戏。",
           "components": [
             "固定八窗口与可变化的实际Native阶段映射",
@@ -113,6 +127,12 @@
               "scope": "S2–S8 实际 Native 阶段、临时池生命周期和已支持源覆盖",
               "closure_evidence": "真实场景分阶段读取/manifest与必要Native/UI校验",
               "status": "unknown"
+            },
+            {
+              "question_id": "RR-02",
+              "scope": "同一连续世界线的阶段检查点如何绑定物理存档、数据库与时间线，恢复旧检查点后怎样防止旧状态污染最新当前态，同时保持append-only与场景取证便捷性。",
+              "closure_evidence": "Human在01b明确检查点与原活动档身份/分叉/数据库隔离的行为结果，然后02/03验证可实施方案。",
+              "status": "human_decision_pending"
             }
           ],
           "acceptance_criterion_ids": [
@@ -363,14 +383,17 @@
           "id": "RR-01",
           "result_item_id": "RES-01",
           "topic": "Missing whole containers versus ambiguous fields: completion gate and Human exceptions",
-          "status": "PENDING",
-          "recommended_choice": "B"
+          "status": "APPROVED_B_2026_10_26",
+          "recommended_choice": "B",
+          "human_choice": "B",
+          "human_supplement": "无额外补充。",
+          "disposition": "核心容器实测填充通过后该目标场景才可标记相应能力完成；非核心容器需Human逐项批准例外才可延期并允许整体验收，延期自身不得标记PASS。"
         },
         {
           "id": "RR-02",
           "result_item_id": "RES-02",
-          "topic": "Scene-by-scene operational deliverables and checkpoint evidence",
-          "status": "PENDING"
+          "topic": "Same-worldline protected checkpoints: physical save file and one-save-one-database binding, restoring an older checkpoint versus append-only current chronology",
+          "status": "ACTIVE_PENDING_HUMAN_DECISION"
         },
         {
           "id": "RR-03",
@@ -399,9 +422,20 @@
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-01"
+        "version": "A-v1-DRAFT-02"
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
     }
-  }
+  },
+  "decision_log": [
+    {
+      "id": "RR-01",
+      "date": "2026-10-26",
+      "selected": "B",
+      "human_supplement": "无额外补充。",
+      "result_item_id": "RES-01",
+      "status": "approved",
+      "interpretation": "Core containers must have proven true-scene end-to-end fill; non-core may be deferred only with an explicit Human exception. Deferred containers remain incomplete."
+    }
+  ]
 }
