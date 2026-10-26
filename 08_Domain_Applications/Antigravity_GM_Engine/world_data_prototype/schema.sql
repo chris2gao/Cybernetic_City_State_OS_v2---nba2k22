@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=21),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=22),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -1515,6 +1515,280 @@ CREATE TRIGGER "team_advanced_rotation_slots_no_delete" BEFORE DELETE ON "team_a
 
 CREATE TRIGGER "team_advanced_rotation_slots_successful_unit" BEFORE INSERT ON "team_advanced_rotation_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "native_staff_sources" (
+  "staff_source_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_staff_index" INTEGER NOT NULL CHECK (source_staff_index>=0),
+  "staff_id" TEXT REFERENCES staff_members(staff_id) ON DELETE RESTRICT,
+  "native_staff_id_raw" INTEGER NOT NULL CHECK (native_staff_id_raw BETWEEN 0 AND 65535),
+  "first_name" TEXT,
+  "last_name" TEXT,
+  "observed_name" TEXT,
+  "name_status" TEXT NOT NULL,
+  "person_type_raw" INTEGER NOT NULL CHECK (person_type_raw BETWEEN 0 AND 15),
+  "person_type_label" TEXT,
+  "status_raw" INTEGER NOT NULL CHECK (status_raw BETWEEN 0 AND 3),
+  "status_label" TEXT,
+  "current_team_native_id_raw" INTEGER CHECK (current_team_native_id_raw BETWEEN 0 AND 65535),
+  "previous_team_native_id_raw" INTEGER CHECK (previous_team_native_id_raw BETWEEN 0 AND 65535),
+  "myteam_team_native_id_raw" INTEGER CHECK (myteam_team_native_id_raw BETWEEN 0 AND 65535),
+  "current_team_pointer_status" TEXT NOT NULL,
+  "previous_team_pointer_status" TEXT NOT NULL,
+  "myteam_team_pointer_status" TEXT NOT NULL,
+  "current_core_team_id" TEXT REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "assigned_core_team_id" TEXT REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "assigned_role_slot" INTEGER CHECK (assigned_role_slot BETWEEN 0 AND 7),
+  "core_slot_reference_count" INTEGER NOT NULL CHECK (core_slot_reference_count BETWEEN 0 AND 240),
+  "assignment_status" TEXT NOT NULL,
+  "canonical_link_status" TEXT NOT NULL,
+  UNIQUE ("unit_id","source_staff_index")
+) STRICT;
+
+CREATE INDEX "idx_native_staff_sources_unit_id" ON "native_staff_sources" ("unit_id");
+
+CREATE INDEX "idx_native_staff_sources_staff_id" ON "native_staff_sources" ("staff_id");
+
+CREATE INDEX "idx_native_staff_sources_current_core_team_id" ON "native_staff_sources" ("current_core_team_id");
+
+CREATE INDEX "idx_native_staff_sources_assigned_core_team_id" ON "native_staff_sources" ("assigned_core_team_id");
+
+CREATE TRIGGER "native_staff_sources_no_update" BEFORE UPDATE ON "native_staff_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_sources_no_delete" BEFORE DELETE ON "native_staff_sources" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_sources_successful_unit" BEFORE INSERT ON "native_staff_sources" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_staff_profile_observations" (
+  "staff_profile_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_staff_id" TEXT NOT NULL REFERENCES native_staff_sources(staff_source_id) ON DELETE RESTRICT,
+  "unique_signature_id_raw" INTEGER NOT NULL CHECK (unique_signature_id_raw BETWEEN 0 AND 4294967295),
+  "audio_signature_id_raw" INTEGER NOT NULL CHECK (audio_signature_id_raw BETWEEN 0 AND 4294967295),
+  "original_patience_raw" INTEGER NOT NULL CHECK (original_patience_raw BETWEEN 0 AND 7),
+  "original_patience_label" TEXT,
+  "original_involvement_raw" INTEGER NOT NULL CHECK (original_involvement_raw BETWEEN 0 AND 7),
+  "original_involvement_label" TEXT,
+  "low_morale_job_security_penalty_applied_raw" INTEGER NOT NULL CHECK (low_morale_job_security_penalty_applied_raw BETWEEN 0 AND 1),
+  "banned_from_poaching_raw" INTEGER NOT NULL CHECK (banned_from_poaching_raw BETWEEN 0 AND 1),
+  "my_team_include_raw" INTEGER NOT NULL CHECK (my_team_include_raw BETWEEN 0 AND 1),
+  "is_generated_raw" INTEGER NOT NULL CHECK (is_generated_raw BETWEEN 0 AND 1),
+  "special_ability1_raw" INTEGER NOT NULL CHECK (special_ability1_raw BETWEEN 0 AND 63),
+  "special_ability1_label" TEXT,
+  "special_ability2_raw" INTEGER NOT NULL CHECK (special_ability2_raw BETWEEN 0 AND 63),
+  "special_ability2_label" TEXT,
+  "special_ability3_raw" INTEGER NOT NULL CHECK (special_ability3_raw BETWEEN 0 AND 63),
+  "special_ability3_label" TEXT,
+  "is_heavy_raw" INTEGER NOT NULL CHECK (is_heavy_raw BETWEEN 0 AND 1),
+  "wage_raw" INTEGER NOT NULL CHECK (wage_raw BETWEEN 0 AND 16777215),
+  "emotion_raw" INTEGER NOT NULL CHECK (emotion_raw BETWEEN 0 AND 255),
+  "sound_id_bits_raw" INTEGER NOT NULL CHECK (sound_id_bits_raw BETWEEN 0 AND 2047),
+  "sound_id_signed" INTEGER NOT NULL CHECK (sound_id_signed BETWEEN -1024 AND 1023),
+  "graphic_id_raw" INTEGER NOT NULL CHECK (graphic_id_raw BETWEEN 0 AND 16383),
+  "is_pending_acquired_staff_raw" INTEGER NOT NULL CHECK (is_pending_acquired_staff_raw BETWEEN 0 AND 1),
+  "coach_offense_raw" INTEGER NOT NULL CHECK (coach_offense_raw BETWEEN 0 AND 15),
+  "coach_offense_label" TEXT,
+  "coach_defense_raw" INTEGER NOT NULL CHECK (coach_defense_raw BETWEEN 0 AND 15),
+  "coach_defense_label" TEXT,
+  "training_raw" INTEGER NOT NULL CHECK (training_raw BETWEEN 0 AND 15),
+  "training_label" TEXT,
+  "scouting_raw" INTEGER NOT NULL CHECK (scouting_raw BETWEEN 0 AND 15),
+  "scouting_label" TEXT,
+  "contract_negotiation_raw" INTEGER NOT NULL CHECK (contract_negotiation_raw BETWEEN 0 AND 15),
+  "contract_negotiation_label" TEXT,
+  "trade_negotiation_raw" INTEGER NOT NULL CHECK (trade_negotiation_raw BETWEEN 0 AND 15),
+  "trade_negotiation_label" TEXT,
+  "business_savvy_raw" INTEGER NOT NULL CHECK (business_savvy_raw BETWEEN 0 AND 15),
+  "business_savvy_label" TEXT,
+  "emotional_i_q_raw" INTEGER NOT NULL CHECK (emotional_i_q_raw BETWEEN 0 AND 15),
+  "emotional_i_q_label" TEXT,
+  "my_team_color_raw" INTEGER NOT NULL CHECK (my_team_color_raw BETWEEN 0 AND 15),
+  "my_team_color_label" TEXT,
+  "must_retire_flag_raw" INTEGER NOT NULL CHECK (must_retire_flag_raw BETWEEN 0 AND 1),
+  "target_market_raw" INTEGER NOT NULL CHECK (target_market_raw BETWEEN 0 AND 3),
+  "target_market_label" TEXT,
+  "is_special_raw" INTEGER NOT NULL CHECK (is_special_raw BETWEEN 0 AND 1),
+  "franchise_morale_raw" INTEGER NOT NULL CHECK (franchise_morale_raw BETWEEN 0 AND 7),
+  "franchise_morale_label" TEXT,
+  "franchise_profit_raw" INTEGER NOT NULL CHECK (franchise_profit_raw BETWEEN 0 AND 7),
+  "franchise_profit_label" TEXT,
+  "team_success_raw" INTEGER NOT NULL CHECK (team_success_raw BETWEEN 0 AND 7),
+  "team_success_label" TEXT,
+  "fan_perception_raw" INTEGER NOT NULL CHECK (fan_perception_raw BETWEEN 0 AND 7),
+  "fan_perception_label" TEXT,
+  "patience_raw" INTEGER NOT NULL CHECK (patience_raw BETWEEN 0 AND 7),
+  "patience_label" TEXT,
+  "involvement_raw" INTEGER NOT NULL CHECK (involvement_raw BETWEEN 0 AND 7),
+  "involvement_label" TEXT,
+  "original_franchise_morale_raw" INTEGER NOT NULL CHECK (original_franchise_morale_raw BETWEEN 0 AND 7),
+  "original_franchise_morale_label" TEXT,
+  "timeout_stop_run_frequency_raw" INTEGER NOT NULL CHECK (timeout_stop_run_frequency_raw BETWEEN 0 AND 7),
+  "timeout_stop_run_frequency_label" TEXT,
+  "target_person_type_raw" INTEGER NOT NULL CHECK (target_person_type_raw BETWEEN 0 AND 15),
+  "target_person_type_label" TEXT,
+  "years_with_team_raw" INTEGER NOT NULL CHECK (years_with_team_raw BETWEEN 0 AND 127),
+  "years_in_league_raw" INTEGER NOT NULL CHECK (years_in_league_raw BETWEEN 0 AND 127),
+  "years_left_raw" INTEGER NOT NULL CHECK (years_left_raw BETWEEN 0 AND 15),
+  "years_of_acquired_staff_bits_raw" INTEGER NOT NULL CHECK (years_of_acquired_staff_bits_raw BETWEEN 0 AND 63),
+  "years_of_acquired_staff_signed" INTEGER NOT NULL CHECK (years_of_acquired_staff_signed BETWEEN -32 AND 31),
+  "signing_cooldown_left_raw" INTEGER NOT NULL CHECK (signing_cooldown_left_raw BETWEEN 0 AND 63),
+  "roster_quality0_raw" INTEGER NOT NULL CHECK (roster_quality0_raw BETWEEN 0 AND 15),
+  "roster_quality0_label" TEXT,
+  "roster_quality0_scope_raw" INTEGER NOT NULL CHECK (roster_quality0_scope_raw BETWEEN 0 AND 15),
+  "roster_quality0_scope_label" TEXT,
+  "roster_quality1_raw" INTEGER NOT NULL CHECK (roster_quality1_raw BETWEEN 0 AND 15),
+  "roster_quality1_label" TEXT,
+  "roster_quality1_scope_raw" INTEGER NOT NULL CHECK (roster_quality1_scope_raw BETWEEN 0 AND 15),
+  "roster_quality1_scope_label" TEXT,
+  "roster_quality2_raw" INTEGER NOT NULL CHECK (roster_quality2_raw BETWEEN 0 AND 15),
+  "roster_quality2_label" TEXT,
+  "roster_quality2_scope_raw" INTEGER NOT NULL CHECK (roster_quality2_scope_raw BETWEEN 0 AND 15),
+  "roster_quality2_scope_label" TEXT,
+  "lynchpin_position_raw" INTEGER NOT NULL CHECK (lynchpin_position_raw BETWEEN 0 AND 15),
+  "lynchpin_position_label" TEXT,
+  "lynchpin_player_type_raw" INTEGER NOT NULL CHECK (lynchpin_player_type_raw BETWEEN 0 AND 15),
+  "lynchpin_player_type_label" TEXT,
+  "player_unique_id_raw" INTEGER NOT NULL CHECK (player_unique_id_raw BETWEEN 0 AND 4294967295),
+  "date_last_chit_chat_used_raw" INTEGER NOT NULL CHECK (date_last_chit_chat_used_raw BETWEEN 0 AND 4294967295),
+  "expressiveness_raw" INTEGER NOT NULL CHECK (expressiveness_raw BETWEEN 0 AND 7),
+  "expressiveness_label" TEXT,
+  "my_team_auctionable_raw" INTEGER NOT NULL CHECK (my_team_auctionable_raw BETWEEN 0 AND 1),
+  UNIQUE ("unit_id","source_staff_id")
+) STRICT;
+
+CREATE INDEX "idx_native_staff_profile_observations_unit_id" ON "native_staff_profile_observations" ("unit_id");
+
+CREATE INDEX "idx_native_staff_profile_observations_source_staff_id" ON "native_staff_profile_observations" ("source_staff_id");
+
+CREATE TRIGGER "native_staff_profile_observations_no_update" BEFORE UPDATE ON "native_staff_profile_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_profile_observations_no_delete" BEFORE DELETE ON "native_staff_profile_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_profile_observations_successful_unit" BEFORE INSERT ON "native_staff_profile_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_staff_tactic_observations" (
+  "staff_tactic_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_staff_id" TEXT NOT NULL REFERENCES native_staff_sources(staff_source_id) ON DELETE RESTRICT,
+  "off_ball_def_aggressiveness_raw" INTEGER NOT NULL CHECK (off_ball_def_aggressiveness_raw BETWEEN 0 AND 255),
+  "on_ball_def_aggressiveness_raw" INTEGER NOT NULL CHECK (on_ball_def_aggressiveness_raw BETWEEN 0 AND 255),
+  "fastbreak_raw" INTEGER NOT NULL CHECK (fastbreak_raw BETWEEN 0 AND 255),
+  "crashboard_raw" INTEGER NOT NULL CHECK (crashboard_raw BETWEEN 0 AND 255),
+  "bench_depth_raw" INTEGER NOT NULL CHECK (bench_depth_raw BETWEEN 0 AND 255),
+  "lineup_form_factor_raw" INTEGER NOT NULL CHECK (lineup_form_factor_raw BETWEEN 0 AND 255),
+  "run_play_tendency_raw" INTEGER NOT NULL CHECK (run_play_tendency_raw BETWEEN 0 AND 255),
+  "double_team_tendency_raw" INTEGER NOT NULL CHECK (double_team_tendency_raw BETWEEN 0 AND 255),
+  "zone_usage_raw" INTEGER NOT NULL CHECK (zone_usage_raw BETWEEN 0 AND 255),
+  "shot_inside_tendency_raw" INTEGER NOT NULL CHECK (shot_inside_tendency_raw BETWEEN 0 AND 255),
+  "shot_close_tendency_raw" INTEGER NOT NULL CHECK (shot_close_tendency_raw BETWEEN 0 AND 255),
+  "shot_medium_tendency_raw" INTEGER NOT NULL CHECK (shot_medium_tendency_raw BETWEEN 0 AND 255),
+  "shot_three_tendency_raw" INTEGER NOT NULL CHECK (shot_three_tendency_raw BETWEEN 0 AND 255),
+  "drive_tendency_raw" INTEGER NOT NULL CHECK (drive_tendency_raw BETWEEN 0 AND 255),
+  "post_up_tendency_raw" INTEGER NOT NULL CHECK (post_up_tendency_raw BETWEEN 0 AND 255),
+  "alley_oop_tendency_raw" INTEGER NOT NULL CHECK (alley_oop_tendency_raw BETWEEN 0 AND 255),
+  "preference_system_proficiency_raw" INTEGER NOT NULL CHECK (preference_system_proficiency_raw BETWEEN 0 AND 255),
+  "system_balanced_raw" INTEGER NOT NULL CHECK (system_balanced_raw BETWEEN 0 AND 255),
+  "system_grit_and_grind_raw" INTEGER NOT NULL CHECK (system_grit_and_grind_raw BETWEEN 0 AND 255),
+  "system_pace_and_space_raw" INTEGER NOT NULL CHECK (system_pace_and_space_raw BETWEEN 0 AND 255),
+  "system_perimeter_raw" INTEGER NOT NULL CHECK (system_perimeter_raw BETWEEN 0 AND 255),
+  "system_post_raw" INTEGER NOT NULL CHECK (system_post_raw BETWEEN 0 AND 255),
+  "system_triangle_raw" INTEGER NOT NULL CHECK (system_triangle_raw BETWEEN 0 AND 255),
+  "system_seven_seconds_raw" INTEGER NOT NULL CHECK (system_seven_seconds_raw BETWEEN 0 AND 255),
+  "system_defense_first_raw" INTEGER NOT NULL CHECK (system_defense_first_raw BETWEEN 0 AND 255),
+  "sim_pace_raw" INTEGER NOT NULL CHECK (sim_pace_raw BETWEEN 0 AND 7),
+  "sim_pace_label" TEXT,
+  "sim_press_raw" INTEGER NOT NULL CHECK (sim_press_raw BETWEEN 0 AND 3),
+  "sim_press_label" TEXT,
+  "sim_help_def_raw" INTEGER NOT NULL CHECK (sim_help_def_raw BETWEEN 0 AND 3),
+  "sim_help_def_label" TEXT,
+  "sim_off_reb_raw" INTEGER NOT NULL CHECK (sim_off_reb_raw BETWEEN 0 AND 3),
+  "sim_off_reb_label" TEXT,
+  "sim_def_reb_raw" INTEGER NOT NULL CHECK (sim_def_reb_raw BETWEEN 0 AND 3),
+  "sim_def_reb_label" TEXT,
+  "freelance_type_raw" INTEGER NOT NULL CHECK (freelance_type_raw BETWEEN 0 AND 63),
+  "freelance_type_label" TEXT,
+  "playbook_i_d_raw" INTEGER NOT NULL CHECK (playbook_i_d_raw BETWEEN 0 AND 255),
+  "playbook_i_d_label" TEXT,
+  "preferred_system_raw" INTEGER NOT NULL CHECK (preferred_system_raw BETWEEN 0 AND 15),
+  "preferred_system_label" TEXT,
+  "active_system_raw" INTEGER NOT NULL CHECK (active_system_raw BETWEEN 0 AND 15),
+  "active_system_label" TEXT,
+  "bench_utilization_raw" INTEGER NOT NULL CHECK (bench_utilization_raw BETWEEN 0 AND 255),
+  "original_bench_utilization_raw" INTEGER NOT NULL CHECK (original_bench_utilization_raw BETWEEN 0 AND 255),
+  "preference_player_age_raw" INTEGER NOT NULL CHECK (preference_player_age_raw BETWEEN 0 AND 255),
+  "early_offense_raw" INTEGER NOT NULL CHECK (early_offense_raw BETWEEN 0 AND 255),
+  "p_o_e_defense_raw" INTEGER NOT NULL CHECK (p_o_e_defense_raw BETWEEN 0 AND 31),
+  "p_o_e_defense_label" TEXT,
+  "p_o_e_defense2_raw" INTEGER NOT NULL CHECK (p_o_e_defense2_raw BETWEEN 0 AND 31),
+  "p_o_e_defense2_label" TEXT,
+  "p_o_e_defense3_raw" INTEGER NOT NULL CHECK (p_o_e_defense3_raw BETWEEN 0 AND 31),
+  "p_o_e_defense3_label" TEXT,
+  "p_o_e_offense_raw" INTEGER NOT NULL CHECK (p_o_e_offense_raw BETWEEN 0 AND 31),
+  "p_o_e_offense_label" TEXT,
+  "p_o_e_offense2_raw" INTEGER NOT NULL CHECK (p_o_e_offense2_raw BETWEEN 0 AND 31),
+  "p_o_e_offense2_label" TEXT,
+  "p_o_e_offense3_raw" INTEGER NOT NULL CHECK (p_o_e_offense3_raw BETWEEN 0 AND 31),
+  "p_o_e_offense3_label" TEXT,
+  "focus_rating_raw" INTEGER NOT NULL CHECK (focus_rating_raw BETWEEN 0 AND 255),
+  "position_rating_raw" INTEGER NOT NULL CHECK (position_rating_raw BETWEEN 0 AND 255),
+  "location_rating_raw" INTEGER NOT NULL CHECK (location_rating_raw BETWEEN 0 AND 255),
+  "team_state_preference__steady_raw" INTEGER NOT NULL CHECK (team_state_preference__steady_raw BETWEEN 0 AND 255),
+  "team_state_preference__buying_raw" INTEGER NOT NULL CHECK (team_state_preference__buying_raw BETWEEN 0 AND 255),
+  "team_state_preference__selling_raw" INTEGER NOT NULL CHECK (team_state_preference__selling_raw BETWEEN 0 AND 255),
+  "team_state_preference__rebuilding_raw" INTEGER NOT NULL CHECK (team_state_preference__rebuilding_raw BETWEEN 0 AND 255),
+  "wage_importance_raw" INTEGER NOT NULL CHECK (wage_importance_raw BETWEEN 0 AND 255),
+  "original_franchise_profit_raw" INTEGER NOT NULL CHECK (original_franchise_profit_raw BETWEEN 0 AND 7),
+  "original_franchise_profit_label" TEXT,
+  "original_team_success_raw" INTEGER NOT NULL CHECK (original_team_success_raw BETWEEN 0 AND 7),
+  "original_team_success_label" TEXT,
+  "original_fan_perception_raw" INTEGER NOT NULL CHECK (original_fan_perception_raw BETWEEN 0 AND 7),
+  "original_fan_perception_label" TEXT,
+  "tempo_raw" INTEGER NOT NULL CHECK (tempo_raw BETWEEN 0 AND 255),
+  "help_defense_raw" INTEGER NOT NULL CHECK (help_defense_raw BETWEEN 0 AND 255),
+  "is_new_f_a_raw" INTEGER NOT NULL CHECK (is_new_f_a_raw BETWEEN 0 AND 1),
+  "freelance_type2_raw" INTEGER NOT NULL CHECK (freelance_type2_raw BETWEEN 0 AND 63),
+  "freelance_type2_label" TEXT,
+  "should_accept_minimum_wage_raw" INTEGER NOT NULL CHECK (should_accept_minimum_wage_raw BETWEEN 0 AND 255),
+  "my_team_theme_raw" INTEGER NOT NULL CHECK (my_team_theme_raw BETWEEN 0 AND 4294967295),
+  "freelance_type3_raw" INTEGER NOT NULL CHECK (freelance_type3_raw BETWEEN 0 AND 63),
+  "freelance_type3_label" TEXT,
+  "freelance_type4_raw" INTEGER NOT NULL CHECK (freelance_type4_raw BETWEEN 0 AND 63),
+  "freelance_type4_label" TEXT,
+  UNIQUE ("unit_id","source_staff_id")
+) STRICT;
+
+CREATE INDEX "idx_native_staff_tactic_observations_unit_id" ON "native_staff_tactic_observations" ("unit_id");
+
+CREATE INDEX "idx_native_staff_tactic_observations_source_staff_id" ON "native_staff_tactic_observations" ("source_staff_id");
+
+CREATE TRIGGER "native_staff_tactic_observations_no_update" BEFORE UPDATE ON "native_staff_tactic_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_tactic_observations_no_delete" BEFORE DELETE ON "native_staff_tactic_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_tactic_observations_successful_unit" BEFORE INSERT ON "native_staff_tactic_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_staff_team_slots" (
+  "staff_slot_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "role_slot_index" INTEGER NOT NULL CHECK (role_slot_index BETWEEN 0 AND 7),
+  "source_staff_id" TEXT REFERENCES native_staff_sources(staff_source_id) ON DELETE RESTRICT,
+  "pointer_status" TEXT NOT NULL,
+  "reciprocal_status" TEXT NOT NULL,
+  UNIQUE ("team_id","unit_id","role_slot_index")
+) STRICT;
+
+CREATE INDEX "idx_native_staff_team_slots_team_id" ON "native_staff_team_slots" ("team_id");
+
+CREATE INDEX "idx_native_staff_team_slots_unit_id" ON "native_staff_team_slots" ("unit_id");
+
+CREATE INDEX "idx_native_staff_team_slots_source_staff_id" ON "native_staff_team_slots" ("source_staff_id");
+
+CREATE TRIGGER "native_staff_team_slots_no_update" BEFORE UPDATE ON "native_staff_team_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_team_slots_no_delete" BEFORE DELETE ON "native_staff_team_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_team_slots_successful_unit" BEFORE INSERT ON "native_staff_team_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "team_state_observations" (
   "state_id" TEXT NOT NULL PRIMARY KEY,
   "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
@@ -2909,6 +3183,12 @@ CREATE TRIGGER player_tendency_snapshots_native_source_unit BEFORE INSERT ON pla
 CREATE TRIGGER player_play_type_slots_native_source_unit BEFORE INSERT ON player_play_type_slots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;
+
+CREATE TRIGGER native_staff_profile_observations_source_unit BEFORE INSERT ON native_staff_profile_observations WHEN NEW.source_staff_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_staff_sources s WHERE s.staff_source_id=NEW.source_staff_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit Native staff source'); END;
+
+CREATE TRIGGER native_staff_tactic_observations_source_unit BEFORE INSERT ON native_staff_tactic_observations WHEN NEW.source_staff_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_staff_sources s WHERE s.staff_source_id=NEW.source_staff_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit Native staff source'); END;
+
+CREATE TRIGGER native_staff_team_slots_source_unit BEFORE INSERT ON native_staff_team_slots WHEN NEW.source_staff_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_staff_sources s WHERE s.staff_source_id=NEW.source_staff_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit Native staff source'); END;
 
 CREATE TRIGGER native_player_rotation_observations_native_rotation_subject BEFORE INSERT ON native_player_rotation_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native rotation subject'); END;
 
