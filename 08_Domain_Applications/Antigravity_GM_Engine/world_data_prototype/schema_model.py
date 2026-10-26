@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 19
+VERSION = 20
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -35,6 +35,7 @@ class Column:
     check: str | None = None
     default: str | None = None
     visibility: str = 'GM_PUBLIC'
+    null_meaning: str | None = None
 
     def sql(self):
         parts = [ident(self.name), self.kind]
@@ -244,7 +245,24 @@ for name,offset in {'total_salary_raw':0xCBC,'payroll_raw':0xFF4,'budget_raw':0x
     if c is None:
         c=col(name,'INTEGER',meaning='Observed native '+name);spec.columns.append(c)
     c.source=f'src/config.py and src/dump_teams_info.py TEAM +{offset:#x} uint32; registered meaning not target UI acceptance'
-    c.unit='unsigned native integer; no signed reinterpretation or CBA inference'
+    c.unit='legacy unsigned source word; Native int sign is represented only in native_team_finance_observations; no UI/CBA inference'
+
+_finance_profile=json.loads((BASE/'finance_native_profile.json').read_bytes())
+_finance_columns=[T(),U(),ref('observation_season_id','seasons','season_id')]
+for _native,_spec in _finance_profile['scalars'].items():
+    _column=_spec['column'];_primitive=_spec['primitive'];_f=_spec['binding']
+    _source=f'CURRENT_NATIVE.TEAMDATA.{_native} primitive={_primitive} CRC={_f["words"][1]:08x} offset={_f["offset"]}; finance_native_profile.json'
+    if _primitive=='float':
+        _finance_columns.extend([col(_column+'_word_u32','INTEGER',required=True,check=f'{_column}_word_u32 BETWEEN 0 AND 4294967295',source=_source,unit='original IEEE754 float32 bits; survives nonfinite values'),
+            col(_column+'_real','REAL',source=_source,unit='finite Native float32; UI scale unknown',null_meaning='NONFINITE_SOURCE_FLOAT32; original bits are retained in the required word_u32 column')])
+    else:
+        _bounds='0 AND 4294967295' if _primitive=='u32' else '-2147483648 AND 2147483647'
+        _finance_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} BETWEEN {_bounds}',source=_source,unit='Native '+_primitive+' representation; monetary scale/accounting period/legal ranges unproved'))
+for _native,_spec in _finance_profile['packed'].items():
+    _column=_spec['column'];_f=_spec['binding']
+    _finance_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',source=f'CURRENT_NATIVE.TEAMDATA.{_native} offset={_f["offset"]} bit={_f["start_bit"]} width={_f["width"]}',unit='named Native flag/enum; neighboring packed bits excluded'))
+    if 'enum' in _spec:_finance_columns.append(col(_column.removesuffix('_raw')+'_label',source='CURRENT_NATIVE '+_spec['enum']+' exact enum label',null_meaning='UNREGISTERED_NATIVE_ENUM_CODE; original raw code is retained'))
+table('native_team_finance_observations','native_finance_id','RES-M','one typed Native core TEAM finance projection; observation season is context, not accounting coverage',_finance_columns,unique=[('team_id','unit_id')],source='CURRENT_NATIVE_TEAMDATA_SIGNED_UNSIGNED_FLOAT_ENUM; same-unit game_mode_observations; no derived cap-space/profit/legal-spending assertion')
 table('team_state_observations','state_id','RES-T','one team observed native chemistry/fan state',[T(),U()]+
     [col('chemistry_raw','REAL',source='src/config.py TEAM +0xEC4 float32',unit='native float; UI scale not newly observed'),
      col('fan_interest_raw','REAL',source='src/config.py TEAM +0xF7C float32',unit='native float; no percentage conversion')],unique=[('team_id','unit_id')])
@@ -649,7 +667,7 @@ def dictionary():
              'source_status':t.source,'v1_mapping':'EXTEND_PRESERVE' if t.name in LEGACY_TABLES else 'ADD', 'columns':[]}
         for c in t.columns:
             row['columns'].append({'name':c.name,'sqlite_type':c.kind,'meaning':c.meaning or c.name.replace('_',' '),
-                'required':c.required,'default':c.default,'null_meaning':None if c.required else 'NOT_OBSERVED in this unit; not zero or previous value',
+                'required':c.required,'default':c.default,'null_meaning':None if c.required else c.null_meaning or 'NOT_OBSERVED in this unit; not zero or previous value',
                 'unit':c.unit,'foreign_key':c.ref,'sql_constraint':c.check,'legal_game_range':'NOT_APPLICABLE' if c.source.startswith(('ENGINEERING_','SYSTEM_','ACQUISITION_','EVIDENCE_','HUMAN_')) else 'UNKNOWN',
                 'source':c.source,'visibility':c.visibility if t.public else 'OWNER_ONLY',
                 'time_semantics':'observation time from unit_id; effective game time separately recorded' if t.observation else 'immutable identity or metadata'})

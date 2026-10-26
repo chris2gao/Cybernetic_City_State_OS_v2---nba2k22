@@ -1,0 +1,1629 @@
+{
+  "layout": "NATIVE_TEAM_FINANCE_TYPED_V1",
+  "struct_size": 4696,
+  "types": [
+    {
+      "name": "TEAMDATA",
+      "type_rva": 80191920,
+      "field_array_rva": 51898256,
+      "schema_rva": 51886496,
+      "name_rva": 35907312,
+      "static_auxiliary_word5_uninterpreted": 67584,
+      "initializer_rva": 639611,
+      "constructor_rva": 31801136,
+      "initializer_hex": "4c8d0d6e241a0248894424204c8d0512f70d03488d15fb240e03488d0d14dfbd04e88f7cdb01",
+      "initializer_sha256": "291a65ca662d91de642b1319aecea71ad0fea36f3d577ed8342287c0f699616e",
+      "expected_size": 4696,
+      "expected_field_count": 294,
+      "field_signature_sha256": "d7171f0ea6e3e869e8480438e62843800204a8ffbdcdc16569f8b51b07a31430"
+    },
+    {
+      "name": "TEAMDATA_BUDGET_TIER",
+      "type_rva": 80191792,
+      "field_array_rva": 51886392,
+      "schema_rva": 51886352,
+      "name_rva": 35907216,
+      "static_auxiliary_word5_uninterpreted": 0,
+      "initializer_rva": 639024,
+      "constructor_rva": 31800976,
+      "initializer_hex": "4c8d0d59261a024c8d05d2f80d03488d15f3f80d03488d0de4e0bd04e93f7edb01",
+      "initializer_sha256": "9cd3dd4485eee5c43fd33d92b55bbeaf4bdb0563556fd21333b101ff3f856e05"
+    },
+    {
+      "name": "TEAMDATA_FACILITY_LEVEL",
+      "type_rva": 80191728,
+      "field_array_rva": 51886312,
+      "schema_rva": 51886240,
+      "name_rva": 35907136,
+      "static_auxiliary_word5_uninterpreted": 0,
+      "initializer_rva": 639120,
+      "constructor_rva": 31800976,
+      "initializer_hex": "4c8d0da9251a024c8d0502f80d03488d1543f80d03488d0d44e0bd04e9df7ddb01",
+      "initializer_sha256": "0e09fe612b4b90be131e99716d4cdc392e254976b87651a74339cc4c3b33e02e"
+    }
+  ],
+  "scalars": {
+    "Salary": {
+      "column": "salary_raw",
+      "primitive": "u32",
+      "binding": {
+        "name_crc": 2478816839,
+        "offset": 3260,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2478816839,
+          2445756185,
+          3260,
+          4,
+          603987968,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "Salary"
+        ],
+        "primitive_literal_candidates": [
+          "u32"
+        ]
+      }
+    },
+    "MetroPopulation": {
+      "column": "metro_population_raw",
+      "primitive": "u32",
+      "binding": {
+        "name_crc": 2161527803,
+        "offset": 3968,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2161527803,
+          2445756185,
+          3968,
+          4,
+          603987968,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "MetroPopulation"
+        ],
+        "primitive_literal_candidates": [
+          "u32"
+        ]
+      }
+    },
+    "MetroIncome": {
+      "column": "metro_income_raw",
+      "primitive": "u32",
+      "binding": {
+        "name_crc": 4137145421,
+        "offset": 3972,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          4137145421,
+          2445756185,
+          3972,
+          4,
+          603987968,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "MetroIncome"
+        ],
+        "primitive_literal_candidates": [
+          "u32"
+        ]
+      }
+    },
+    "TVHomes": {
+      "column": "tv_homes_raw",
+      "primitive": "u32",
+      "binding": {
+        "name_crc": 175041274,
+        "offset": 3976,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          175041274,
+          2445756185,
+          3976,
+          4,
+          603987968,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "TVHomes"
+        ],
+        "primitive_literal_candidates": [
+          "u32"
+        ]
+      }
+    },
+    "PromoYearlyExpense": {
+      "column": "promo_yearly_expense_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 3150246559,
+        "offset": 4040,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          3150246559,
+          340908721,
+          4040,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "PromoYearlyExpense"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "OperationsYearlyExpense": {
+      "column": "operations_yearly_expense_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 3371490782,
+        "offset": 4044,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          3371490782,
+          340908721,
+          4044,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "OperationsYearlyExpense"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "FacilitiesYearlyExpense": {
+      "column": "facilities_yearly_expense_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 2881591695,
+        "offset": 4048,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2881591695,
+          340908721,
+          4048,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "FacilitiesYearlyExpense"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "GameDayExpense": {
+      "column": "game_day_expense_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 2708054899,
+        "offset": 4052,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2708054899,
+          340908721,
+          4052,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "GameDayExpense"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevGate": {
+      "column": "rev_gate_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1053836496,
+        "offset": 4056,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1053836496,
+          340908721,
+          4056,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevGate"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevMerch": {
+      "column": "rev_merch_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 2156089525,
+        "offset": 4060,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2156089525,
+          340908721,
+          4060,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevMerch"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevConcession": {
+      "column": "rev_concession_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 3640955179,
+        "offset": 4064,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          3640955179,
+          340908721,
+          4064,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevConcession"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevMedia": {
+      "column": "rev_media_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 454811481,
+        "offset": 4068,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          454811481,
+          340908721,
+          4068,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevMedia"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevAdvertising": {
+      "column": "rev_advertising_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1917819885,
+        "offset": 4072,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1917819885,
+          340908721,
+          4072,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevAdvertising"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevLeague": {
+      "column": "rev_league_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 633622813,
+        "offset": 4076,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          633622813,
+          340908721,
+          4076,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevLeague"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "RevPlayoffs": {
+      "column": "rev_playoffs_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 80516884,
+        "offset": 4080,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          80516884,
+          340908721,
+          4080,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RevPlayoffs"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpPayroll": {
+      "column": "exp_payroll_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1736183531,
+        "offset": 4084,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1736183531,
+          340908721,
+          4084,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpPayroll"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpGameDay": {
+      "column": "exp_game_day_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1908457832,
+        "offset": 4088,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1908457832,
+          340908721,
+          4088,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpGameDay"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpPromo": {
+      "column": "exp_promo_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1728758415,
+        "offset": 4092,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1728758415,
+          340908721,
+          4092,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpPromo"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpStaff": {
+      "column": "exp_staff_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 2507647974,
+        "offset": 4096,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2507647974,
+          340908721,
+          4096,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpStaff"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpOperations": {
+      "column": "exp_operations_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 4151441709,
+        "offset": 4100,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          4151441709,
+          340908721,
+          4100,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpOperations"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpSalaryTax": {
+      "column": "exp_salary_tax_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1698000484,
+        "offset": 4104,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1698000484,
+          340908721,
+          4104,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpSalaryTax"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "ExpPlayoffs": {
+      "column": "exp_playoffs_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 575354254,
+        "offset": 4108,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          575354254,
+          340908721,
+          4108,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ExpPlayoffs"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "BankBalance": {
+      "column": "bank_balance_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1015243083,
+        "offset": 4112,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1015243083,
+          340908721,
+          4112,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "BankBalance"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "PlayerBudget": {
+      "column": "player_budget_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1495645807,
+        "offset": 4116,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1495645807,
+          340908721,
+          4116,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "PlayerBudget"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "StaffBudget": {
+      "column": "staff_budget_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 85932481,
+        "offset": 4120,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          85932481,
+          340908721,
+          4120,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "StaffBudget"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "DeltaBudget": {
+      "column": "delta_budget_raw",
+      "primitive": "int",
+      "binding": {
+        "name_crc": 1086909904,
+        "offset": 4124,
+        "size": 4,
+        "format": 603987968,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1086909904,
+          340908721,
+          4124,
+          4,
+          603987968,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "DeltaBudget"
+        ],
+        "primitive_literal_candidates": [
+          "int"
+        ]
+      }
+    },
+    "Buzz": {
+      "column": "buzz",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 660859983,
+        "offset": 3964,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          660859983,
+          3383058069,
+          3964,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "Buzz"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "BaselineFanDemand": {
+      "column": "baseline_fan_demand",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 1117667017,
+        "offset": 3980,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1117667017,
+          3383058069,
+          3980,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "BaselineFanDemand"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "TicketPrice": {
+      "column": "ticket_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 3798722345,
+        "offset": 3992,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          3798722345,
+          3383058069,
+          3992,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "TicketPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "ParkingPrice": {
+      "column": "parking_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 915002957,
+        "offset": 3996,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          915002957,
+          3383058069,
+          3996,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ParkingPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "HotDogPrice": {
+      "column": "hot_dog_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 2187112795,
+        "offset": 4000,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2187112795,
+          3383058069,
+          4000,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "HotDogPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "SodaPrice": {
+      "column": "soda_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 3580335555,
+        "offset": 4004,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          3580335555,
+          3383058069,
+          4004,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "SodaPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "BurgerPrice": {
+      "column": "burger_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 2750884007,
+        "offset": 4008,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2750884007,
+          3383058069,
+          4008,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "BurgerPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "CoffeePrice": {
+      "column": "coffee_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 1906362246,
+        "offset": 4012,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1906362246,
+          3383058069,
+          4012,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoffeePrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "NachosPrice": {
+      "column": "nachos_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 2317308807,
+        "offset": 4016,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2317308807,
+          3383058069,
+          4016,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "NachosPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "IceCreamPrice": {
+      "column": "ice_cream_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 745537913,
+        "offset": 4020,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          745537913,
+          3383058069,
+          4020,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "IceCreamPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "RestaurantPrice": {
+      "column": "restaurant_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 486527804,
+        "offset": 4024,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          486527804,
+          3383058069,
+          4024,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "RestaurantPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "ProgramPrice": {
+      "column": "program_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 1140585273,
+        "offset": 4028,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1140585273,
+          3383058069,
+          4028,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "ProgramPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "HatPrice": {
+      "column": "hat_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 4010013815,
+        "offset": 4032,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          4010013815,
+          3383058069,
+          4032,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "HatPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "SouvenirPrice": {
+      "column": "souvenir_price",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 3551186036,
+        "offset": 4036,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          3551186036,
+          3383058069,
+          4036,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "SouvenirPrice"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    },
+    "CityTaxBreak": {
+      "column": "city_tax_break",
+      "primitive": "float",
+      "binding": {
+        "name_crc": 2756765372,
+        "offset": 4156,
+        "size": 4,
+        "format": 587210752,
+        "width": 32,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2756765372,
+          3383058069,
+          4156,
+          4,
+          587210752,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CityTaxBreak"
+        ],
+        "primitive_literal_candidates": [
+          "float"
+        ]
+      }
+    }
+  },
+  "packed": {
+    "IsLuxuryTaxTeam": {
+      "column": "is_luxury_tax_team_raw",
+      "primitive": "bool32",
+      "binding": {
+        "name_crc": 3343374133,
+        "offset": 4148,
+        "size": 4,
+        "format": 622723328,
+        "width": 1,
+        "start_bit": 30,
+        "enum_pointer": 0,
+        "words": [
+          3343374133,
+          4054322895,
+          4148,
+          4,
+          622723328,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "IsLuxuryTaxTeam"
+        ],
+        "primitive_literal_candidates": [
+          "bool32"
+        ]
+      }
+    },
+    "Facilities_LuxurySuites_Level": {
+      "column": "facility_luxury_suites_raw",
+      "primitive": "enum",
+      "enum": "TEAMDATA_FACILITY_LEVEL",
+      "binding": {
+        "name_crc": 878441921,
+        "offset": 4160,
+        "size": 4,
+        "format": 655885056,
+        "width": 3,
+        "start_bit": 24,
+        "enum_pointer": 5448900848,
+        "words": [
+          878441921,
+          2046618628,
+          4160,
+          4,
+          655885056,
+          1,
+          0,
+          0,
+          1153933552,
+          1
+        ],
+        "literal_names": [
+          "Facilities_LuxurySuites_Level"
+        ],
+        "primitive_literal_candidates": [
+          "TEAMDATA_FACILITY_LEVEL"
+        ]
+      }
+    },
+    "Facilities_Parking_Level": {
+      "column": "facility_parking_raw",
+      "primitive": "enum",
+      "enum": "TEAMDATA_FACILITY_LEVEL",
+      "binding": {
+        "name_crc": 2571762703,
+        "offset": 4160,
+        "size": 4,
+        "format": 656081664,
+        "width": 3,
+        "start_bit": 27,
+        "enum_pointer": 5448900848,
+        "words": [
+          2571762703,
+          2046618628,
+          4160,
+          4,
+          656081664,
+          1,
+          0,
+          0,
+          1153933552,
+          1
+        ],
+        "literal_names": [
+          "Facilities_Parking_Level"
+        ],
+        "primitive_literal_candidates": [
+          "TEAMDATA_FACILITY_LEVEL"
+        ]
+      }
+    },
+    "BudgetTier": {
+      "column": "budget_tier_raw",
+      "primitive": "enum",
+      "enum": "TEAMDATA_BUDGET_TIER",
+      "binding": {
+        "name_crc": 683858453,
+        "offset": 4160,
+        "size": 4,
+        "format": 656278016,
+        "width": 2,
+        "start_bit": 30,
+        "enum_pointer": 5448900912,
+        "words": [
+          683858453,
+          497045749,
+          4160,
+          4,
+          656278016,
+          1,
+          0,
+          0,
+          1153933616,
+          1
+        ],
+        "literal_names": [
+          "BudgetTier"
+        ],
+        "primitive_literal_candidates": [
+          "TEAMDATA_BUDGET_TIER"
+        ]
+      }
+    }
+  },
+  "identity": {
+    "Id": {
+      "column": "native_team_id",
+      "primitive": "u16",
+      "binding": {
+        "name_crc": 717046770,
+        "offset": 3240,
+        "size": 2,
+        "format": 335548416,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          717046770,
+          2761744770,
+          3240,
+          2,
+          335548416,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "Id"
+        ],
+        "primitive_literal_candidates": [
+          "u16"
+        ]
+      }
+    },
+    "UnlocalizedTeamName": {
+      "primitive": "char16",
+      "extent": 25,
+      "dimension_control_hex": "190000000000000000000000000000000000000000000000",
+      "binding": {
+        "name_crc": 690619015,
+        "offset": 692,
+        "size": 2,
+        "format": 369102848,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          690619015,
+          1273519784,
+          692,
+          2,
+          369102848,
+          65537,
+          1125486584,
+          1,
+          0,
+          0
+        ],
+        "literal_names": [
+          "UnlocalizedTeamName"
+        ],
+        "primitive_literal_candidates": [
+          "char16"
+        ]
+      }
+    },
+    "UnlocalizedCityName": {
+      "primitive": "char16",
+      "extent": 18,
+      "dimension_control_hex": "120000000000000000000000000000000000000000000000",
+      "binding": {
+        "name_crc": 1586492075,
+        "offset": 742,
+        "size": 2,
+        "format": 369102848,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          1586492075,
+          1273519784,
+          742,
+          2,
+          369102848,
+          65537,
+          1125486608,
+          1,
+          0,
+          0
+        ],
+        "literal_names": [
+          "UnlocalizedCityName"
+        ],
+        "primitive_literal_candidates": [
+          "char16"
+        ]
+      }
+    },
+    "UnlocalizedShortTeamName": {
+      "primitive": "char16",
+      "extent": 7,
+      "dimension_control_hex": "070000000000000000000000000000000000000000000000",
+      "binding": {
+        "name_crc": 432365536,
+        "offset": 778,
+        "size": 2,
+        "format": 369102848,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          432365536,
+          1273519784,
+          778,
+          2,
+          369102848,
+          65537,
+          1125486632,
+          1,
+          0,
+          0
+        ],
+        "literal_names": [
+          "UnlocalizedShortTeamName"
+        ],
+        "primitive_literal_candidates": [
+          "char16"
+        ]
+      }
+    }
+  },
+  "enum_labels": {
+    "TEAMDATA_BUDGET_TIER": {
+      "0": {
+        "label": "CAP_TEAM",
+        "name_crc": 1169203440
+      },
+      "1": {
+        "label": "TAX_TEAM",
+        "name_crc": 3751615151
+      },
+      "2": {
+        "label": "UNLIMITED",
+        "name_crc": 2555557643
+      }
+    },
+    "TEAMDATA_FACILITY_LEVEL": {
+      "0": {
+        "label": "LEVEL_0",
+        "name_crc": 951176283
+      },
+      "1": {
+        "label": "LEVEL_1",
+        "name_crc": 1337392333
+      },
+      "2": {
+        "label": "LEVEL_2",
+        "name_crc": 3602886007
+      },
+      "3": {
+        "label": "LEVEL_3",
+        "name_crc": 2713230817
+      },
+      "4": {
+        "label": "LEVEL_4",
+        "name_crc": 1071384642
+      },
+      "5": {
+        "label": "LEVEL_5",
+        "name_crc": 1222326484
+      }
+    }
+  },
+  "units": "Native representation; monetary scale, UI presentation, legal ranges, accounting duration and CBA arithmetic unproved",
+  "legacy_aliases": {
+    "total_salary_raw": "Salary/u32",
+    "payroll_raw": "ExpPayroll/int stored as unsigned legacy word",
+    "cash_raw": "BankBalance/int stored as unsigned legacy word",
+    "budget_raw": "PlayerBudget/int stored as unsigned legacy word",
+    "staff_budget_raw": "StaffBudget/int stored as unsigned legacy word",
+    "gate_revenue_raw": "RevGate/int stored as unsigned legacy word",
+    "merch_revenue_raw": "RevMerch/int stored as unsigned legacy word",
+    "media_revenue_raw": "RevMedia/int stored as unsigned legacy word"
+  }
+}
