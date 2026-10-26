@@ -1,0 +1,68 @@
+schema_version: nba2k22.stage02.internal_evidence.v1
+status: PARTIAL_READ_ONLY_REPO_EVIDENCE_NOT_STAGE02_CLOSEOUT
+as_of: 2026-10-26
+requirement_A: A-v1-RC01
+research_question: RQ-02-02
+fixed_candidate:
+  sha: a3927fb150a213201e404cca043ced4f57409bd1
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  engineering_status: CANDIDATE_NOT_INDEPENDENTLY_ACCEPTED
+evidence_entries:
+  - id: IE-01
+    claim: v25 SQL contains 101 CREATE TABLE definitions, all STRICT, with exactly 1789 physical column definitions
+    grade: STATIC_SOURCE_DIRECTLY_COUNTED
+    primary_source: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
+    source_blob_sha: fc4bdb36d328996cd7774849e5bff75db5170e5a
+    corroboration: field_dictionary.json and schema_model.py at same fixed commit; per-table name/type counts match with zero mismatches
+    limitations: Code-level structural existence is not evidence of runtime schema migration, Native field completeness, real data quality or successful massive writes
+  - id: IE-02
+    claim: Native field dictionary has 101 tables, 1789 fields; 1394 legal_game_range UNKNOWN and 395 NOT_APPLICABLE; 305 field source markers start UNKNOWN
+    grade: STATIC_SOURCE_DIRECTLY_COUNTED
+    primary_source: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
+    proof_receipt: 01_v25_结构与Reader只读盘点_v1.json
+    limitations: Number with UNKNOWN source is based on textual source marker prefix; all actual numeric legal game ranges remain uncertified in this dictionary; do not infer non-writability or absence solely from UNKNOWN
+  - id: IE-03
+    claim: refresh.py SOURCES registers exactly 20 named Reader families with concrete module and capture function references
+    grade: STATIC_SOURCE_DIRECTLY_COUNTED
+    primary_source: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+    source_blob_sha: 0a33e666bbaab27bca6fddd5a0f33854b8ccaad1
+    corroboration: increment37/source-coverage.json also lists 20 Reader families
+    limitations: Registration and prior recorded LIVE_READ labels do not independently prove latest save or full lifecycle scene completeness
+  - id: IE-04
+    claim: source-coverage.json records 20 latest Reader captures with source_grade LIVE_READ but completeness PARTIAL; none newly live validated in increment37 closeout
+    grade: EXISTING_DEVELOPER_EVIDENCE_INDEX_OBSERVED_NOT_REEXECUTED
+    primary_source: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+    limitations: PARTIAL refers to recorded source unit scope and must not be treated as a conclusion about all target fields or all scenes; actual live Native samples not replayed by this audit
+  - id: IE-05
+    claim: historical v24 report records 100 tables, 1775 columns, 1470952 rows including metadata, 42 successful units; full lifecycle false, independent review NOT_RUN
+    grade: RECORDED_DEVELOPER_REPORT_NOT_INDEPENDENTLY_REEXECUTED
+    primary_source: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/verification-report.json
+    limitations: This is a v24 report, NOT the current v25 physical model size; rows include source/metadata and reference rows; source tests not run by this ChatGPT turn
+  - id: IE-06
+    claim: v25 migration receipt reports v24 100-table/1470952-row preservation with integrity ok and zero foreign key errors; copy query report records 101 STRICT tables and 1561421 rows
+    grade: RECORDED_DEVELOPER_MIGRATION_AND_COPY_QUERY_NOT_REEXECUTED
+    primary_source: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/v24-copy-migration-final.json
+    related_sources:
+      - 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/real-copy-query-audit.json
+    limitations: game_access=false in both receipts; historic Native-derived source data in copied DB does not prove new live read in this audit
+  - id: IE-07
+    claim: existing v25 test log states 329 tests ran OK; targeted F01-F03 log states 28 tests OK
+    grade: RECORDED_DEVELOPER_TEST_LOG_NOT_INDEPENDENTLY_RUN
+    primary_source: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/tests.stderr.log
+    related_sources:
+      - 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/review-tests.stderr.log
+      - 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/regression.json
+    limitations: Not tested by the current model in an actual Windows/game environment; test success does not certify full Native lifecycle or authorized write safety
+  - id: IE-08
+    claim: first 12 sampled games in v25 copied-query audit show 10 canonical_box_complete=true and game 6 and game 10 false
+    grade: EXISTING_DEVELOPER_QUERY_AUDIT_OBSERVED_NOT_REEXECUTED
+    primary_source: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/real-copy-query-audit.json
+    limitations: Two false flags are not automatically implementation defects; require game stage and source evidence to classify missing/unfinished/nonapplicable items
+unverified_needed:
+  - source_full_lifecycle_S1_S8_and_actual_native_binding
+  - actual_v25_database_copy_integrity_independent_replay
+  - complete_field_semantics_and_native_legal_value_ranges
+  - annual_native_reader_and_reproduction_evidence
+  - safe_write_classes_and_actual_native_write_readback_evidence
+  - bulk_run_10000_plus_item_capture_compare_and_performance
+next_step: evidence_index_and_independent_review_or_Human_authorized_scene_proof_later
