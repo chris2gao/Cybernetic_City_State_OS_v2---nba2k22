@@ -10,6 +10,7 @@ from observation_scope import query_connection as connect
 from schema_model import TABLES, ident,NATIVE_PLAYER_STAT_MAP
 from family_codec import registered_rating_candidate,PROFILE
 from competition_views import game_box_snapshot,season_summary,player_seasons
+from league_views import league_standings,player_leaderboard
 
 RATING_COLUMNS={('three_point_shot' if d['name']=='3pt_shot' else d['name'])+'_raw'
                 for d in PROFILE['fields']['PLAYER'] if d.get('conversion')=='rating' and d['name']!='potential'}
