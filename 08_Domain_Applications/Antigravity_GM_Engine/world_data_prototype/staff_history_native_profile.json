@@ -1,0 +1,521 @@
+{
+  "layout": "NATIVE_ANNUAL_COACH_STATS_SIGNED_REFERENCE_V1",
+  "types": [
+    {
+      "name": "COACHSTATDATA",
+      "type_rva": 87902128,
+      "field_array_rva": 59535768,
+      "schema_rva": 59535488,
+      "name_rva": 38942448,
+      "static_auxiliary_word5_uninterpreted": 1,
+      "initializer_rva": 1276875,
+      "constructor_rva": 31801136,
+      "initializer_hex": "4c8d0d1ebb3e0248894424204c8d05a2f47803488d15b3f57803488d0dc4cb2905e83fc3d101",
+      "initializer_sha256": "daaae34a31f03ba91d7bbcc4e67ebd9b5fce04fe9650a99d76c79b0289f1c134",
+      "expected_field_count": 7,
+      "field_signature_sha256": "401e319705f26b190fba65ff050ef2579ce1a8dc2fe4f39687720412adf08448"
+    },
+    {
+      "name": "COACHDATA",
+      "type_rva": 80284224,
+      "field_array_rva": 52020832,
+      "schema_rva": 52015152,
+      "name_rva": 36005728,
+      "static_auxiliary_word5_uninterpreted": 2048,
+      "initializer_rva": 643595,
+      "constructor_rva": 31801136,
+      "initializer_hex": "4c8d0d4e951b0248894424204c8d0512de0f03488d153bf40f03488d0d1438bf04e8ff6cdb01",
+      "initializer_sha256": "eb9f724cdca9125d640c49d0197d308b0a1f2e839ff8ea3354f43b3dd30fe839",
+      "expected_field_count": 142,
+      "field_signature_sha256": "d5b182bf1f105038ba70e77c50b80b11dca62540ab814d9e567ba84a799b845b"
+    }
+  ],
+  "stat_fields": {
+    "NextFree": {
+      "column": "next_free_raw",
+      "binding": {
+        "name_crc": 2814383293,
+        "offset": 0,
+        "size": 2,
+        "format": 335548416,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2814383293,
+          2761744770,
+          0,
+          2,
+          335548416,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "NextFree"
+        ],
+        "primitive_literal_candidates": [
+          "u16"
+        ]
+      }
+    },
+    "CoachWins": {
+      "column": "coach_wins_raw",
+      "binding": {
+        "name_crc": 563101257,
+        "offset": 2,
+        "size": 2,
+        "format": 335548416,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          563101257,
+          2761744770,
+          2,
+          2,
+          335548416,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoachWins"
+        ],
+        "primitive_literal_candidates": [
+          "u16"
+        ]
+      }
+    },
+    "CoachLosses": {
+      "column": "coach_losses_raw",
+      "binding": {
+        "name_crc": 883420502,
+        "offset": 4,
+        "size": 2,
+        "format": 335548416,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          883420502,
+          2761744770,
+          4,
+          2,
+          335548416,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoachLosses"
+        ],
+        "primitive_literal_candidates": [
+          "u16"
+        ]
+      }
+    },
+    "CoachPlayoffWins": {
+      "column": "coach_playoff_wins_raw",
+      "binding": {
+        "name_crc": 2900596769,
+        "offset": 6,
+        "size": 2,
+        "format": 335548416,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2900596769,
+          2761744770,
+          6,
+          2,
+          335548416,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoachPlayoffWins"
+        ],
+        "primitive_literal_candidates": [
+          "u16"
+        ]
+      }
+    },
+    "CoachPlayoffLosses": {
+      "column": "coach_playoff_losses_raw",
+      "binding": {
+        "name_crc": 2788591447,
+        "offset": 8,
+        "size": 2,
+        "format": 335548416,
+        "width": 16,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2788591447,
+          2761744770,
+          8,
+          2,
+          335548416,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoachPlayoffLosses"
+        ],
+        "primitive_literal_candidates": [
+          "u16"
+        ]
+      }
+    },
+    "CoachWonTitle": {
+      "column": "coach_won_title_raw",
+      "binding": {
+        "name_crc": 636654882,
+        "offset": 10,
+        "size": 1,
+        "format": 67110912,
+        "width": 8,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          636654882,
+          999499730,
+          10,
+          1,
+          67110912,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoachWonTitle"
+        ],
+        "primitive_literal_candidates": [
+          "u8"
+        ]
+      }
+    },
+    "CoachWonCoachOfTheYear": {
+      "column": "coach_won_coach_of_the_year_raw",
+      "binding": {
+        "name_crc": 2541603281,
+        "offset": 11,
+        "size": 1,
+        "format": 67110912,
+        "width": 8,
+        "start_bit": 0,
+        "enum_pointer": 0,
+        "words": [
+          2541603281,
+          999499730,
+          11,
+          1,
+          67110912,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        "literal_names": [
+          "CoachWonCoachOfTheYear"
+        ],
+        "primitive_literal_candidates": [
+          "u8"
+        ]
+      }
+    }
+  },
+  "identity": {
+    "FirstName": {
+      "name_crc": 2707629045,
+      "offset": 48,
+      "size": 2,
+      "format": 369102848,
+      "width": 16,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        2707629045,
+        1273519784,
+        48,
+        2,
+        369102848,
+        65537,
+        1125747904,
+        1,
+        0,
+        0
+      ],
+      "literal_names": [
+        "FirstName"
+      ],
+      "primitive_literal_candidates": [
+        "char16"
+      ]
+    },
+    "LastName": {
+      "name_crc": 1751152862,
+      "offset": 88,
+      "size": 2,
+      "format": 369102848,
+      "width": 16,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1751152862,
+        1273519784,
+        88,
+        2,
+        369102848,
+        65537,
+        1125747928,
+        1,
+        0,
+        0
+      ],
+      "literal_names": [
+        "LastName"
+      ],
+      "primitive_literal_candidates": [
+        "char16"
+      ]
+    },
+    "UniqueId": {
+      "name_crc": 834505462,
+      "offset": 216,
+      "size": 2,
+      "format": 335548416,
+      "width": 16,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        834505462,
+        2761744770,
+        216,
+        2,
+        335548416,
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "literal_names": [
+        "UniqueId"
+      ],
+      "primitive_literal_candidates": [
+        "u16"
+      ]
+    },
+    "CurrentTeam_Internal": {
+      "name_crc": 1185899687,
+      "offset": 24,
+      "size": 4696,
+      "format": 939524096,
+      "width": 0,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1185899687,
+        2084109425,
+        24,
+        4696,
+        939524096,
+        2048,
+        0,
+        0,
+        0,
+        0
+      ],
+      "literal_names": [
+        "CurrentTeam_Internal"
+      ],
+      "primitive_literal_candidates": [
+        "TEAMDATA"
+      ]
+    },
+    "PreviousTeam": {
+      "name_crc": 1204180470,
+      "offset": 32,
+      "size": 4696,
+      "format": 939524096,
+      "width": 0,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1204180470,
+        2084109425,
+        32,
+        4696,
+        939524096,
+        2048,
+        0,
+        0,
+        0,
+        0
+      ],
+      "literal_names": [
+        "PreviousTeam"
+      ],
+      "primitive_literal_candidates": [
+        "TEAMDATA"
+      ]
+    },
+    "MyTeamTeam": {
+      "name_crc": 1001436840,
+      "offset": 40,
+      "size": 4696,
+      "format": 939524096,
+      "width": 0,
+      "start_bit": 0,
+      "enum_pointer": 0,
+      "words": [
+        1001436840,
+        2084109425,
+        40,
+        4696,
+        939524096,
+        2048,
+        0,
+        0,
+        0,
+        0
+      ],
+      "literal_names": [
+        "MyTeamTeam"
+      ],
+      "primitive_literal_candidates": [
+        "TEAMDATA"
+      ]
+    },
+    "PersonType": {
+      "name_crc": 2912363814,
+      "offset": 268,
+      "size": 1,
+      "format": 655492096,
+      "width": 4,
+      "start_bit": 18,
+      "enum_pointer": 5448900208,
+      "words": [
+        2912363814,
+        571663985,
+        268,
+        1,
+        655492096,
+        1,
+        0,
+        0,
+        1153932912,
+        1
+      ],
+      "literal_names": [
+        "PersonType"
+      ],
+      "primitive_literal_candidates": [
+        "COACHDATA_PERSONTYPE"
+      ]
+    },
+    "Status": {
+      "name_crc": 2091671594,
+      "offset": 272,
+      "size": 1,
+      "format": 655229440,
+      "width": 2,
+      "start_bit": 14,
+      "enum_pointer": 5448993024,
+      "words": [
+        2091671594,
+        2905069004,
+        272,
+        1,
+        655229440,
+        1,
+        0,
+        0,
+        1154025728,
+        1
+      ],
+      "literal_names": [
+        "Status"
+      ],
+      "primitive_literal_candidates": [
+        "COACHDATA_STATUS"
+      ]
+    }
+  },
+  "season_stats": {
+    "name_crc": 3413519356,
+    "offset": 136,
+    "size": 2,
+    "format": 335548416,
+    "width": 16,
+    "start_bit": 0,
+    "enum_pointer": 0,
+    "words": [
+      3413519356,
+      2685508912,
+      136,
+      2,
+      335548416,
+      65536,
+      1125747952,
+      1,
+      0,
+      0
+    ],
+    "array_dimension_hex": "280000000000000002000000000000000000000000000000",
+    "literal_names": [
+      "SeasonStats"
+    ],
+    "primitive_literal_candidates": [
+      "s16"
+    ]
+  },
+  "history_positions": 40,
+  "staff_slot": 19,
+  "staff_stride": 352,
+  "stats_slot": 21,
+  "stats_stride": 12,
+  "roster_pointer_rva": 104101664,
+  "code_windows": [
+    {
+      "rva": 15399216,
+      "code_hex": "48895c24084889742410574883ec204963c033db8bf20fb7bc41880000006685ff0f880d010000488d0d62ba4705e87d6432008bcb4885c074068b88500100000fbfc73bc10f8de900000033c9e81eca0800488bd08d86c0feffff83f8050f87be0000004c8d05650615ff4898418b8c8078faea004903c8ffe1480fbfc7488d0c400fb75c8a028bc3488b5c2430488b7424384883c4205fc3480fbfc7488d0c400fb75c8a048bc3488b5c2430488b7424384883c4205fc3480fbfc7488d0c400fb75c8a068bc3488b5c2430488b7424384883c4205fc3480fbfc7488d0c400fb75c8a088bc3488b5c2430488b7424384883c4205fc3480fbfc7488d0c400fb65c8a0a8bc3488b5c2430488b7424384883c4205fc3480fbfc7488d0c400fb65c8a0b8bc3488b5c2430488b7424384883c4205fc3488b5c243033c0488b7424384883c4205fc36690aaf9ea00c9f9ea00e8f9ea0007faea0026faea0045faea00",
+      "sha256": "12132e09db52df929448b7a4565fe7715420d1594ef26e1f8f576f9ac563852b"
+    },
+    {
+      "rva": 15975328,
+      "code_hex": "40534883ec604863d9488d0d10f03e05e82b9a29004885c0740583fbff750a33db8bc34883c4605bc385db78203b98500100007318488b8058010000488d0c5b488d1c88488bc34883c4605bc3488d057852af01c744244401000000488944244833db488d0516bb0200895c24404889442450e8b8ce0200e853d0faff488d4c244048894c24384c8d0d9aa3b401488d0dab9fb4014c8b4008488d15b074320148894c2430488d0dac9fb401c74424282100000048894c2420488d0db8b52d01e86b56f10085c07401cc488bc34883c4605bc3",
+      "sha256": "373aadede55482fada851a4053f3d6ed721f869ebb88278166bb5b95102fd4b5"
+    },
+    {
+      "rva": 18701792,
+      "code_hex": "488b0539191705c3",
+      "sha256": "5f8635907c9b5c88542eeb5fb789040e965a4923ffe795a5583af5a8633da0cd"
+    }
+  ],
+  "limits": [
+    "All40 signed16 reference positions are independently resolved, as in the Native getter; no stop-at-first-sentinel rule.",
+    "Any negative reference or reference >= current bank count is rejected by the Native getter. Zero is an ordinary bounded index.",
+    "No calendar year, team, phase, finalized-season status, bank allocation or chronological array-position meaning has been proved.",
+    "Native flag bytes retain0..255 storage; no UI boolean, title event or award recipient is inferred.",
+    "No ordinary source reads annual reference arrays; this new family refreshes once per save/Native game season year."
+  ]
+}

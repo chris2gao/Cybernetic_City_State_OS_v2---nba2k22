@@ -30,6 +30,7 @@ SOURCES={
     'records':('records_reader','capture_records','BOUND_RECORD_BOOK','RECORD_BOOK'),
     'honors':('award_reader','capture_native_honors','BOUND_NATIVE_HONOR_STATS','NATIVE_HONOR_STATS'),
     'league-history':('league_ingest','capture_league','BOUND_LEAGUE_HISTORY_AND_AWARDS','LEAGUE_HISTORY_AWARDS'),
+    'staff-history':('staff_history_reader','capture_staff_history','BOUND_NATIVE_ANNUAL_STAFF_STATS','STAFF_SEASON_HISTORY'),
 }
 
 class RefreshFailed(RuntimeError):
