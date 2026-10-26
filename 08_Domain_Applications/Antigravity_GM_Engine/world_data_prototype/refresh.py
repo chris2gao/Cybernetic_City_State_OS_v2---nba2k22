@@ -8,6 +8,7 @@ from engine import connect
 from live_reader import ReadOnlyGameProcess
 from live_world import read_binding,bound_database
 from schema_model import VERSION
+from process_session import resolve_pid,owner_identity,owner_is_live
 
 # Ordered source dependencies: schedule establishes current player/team identities.
 SOURCES={
@@ -59,7 +60,14 @@ def _context(pid):
         pe=reader.read(reader.module_base+offset,24,'REFRESH_PE_HEADER')
         if pe[:4]!=b'PE\0\0' or struct.unpack_from('<H',pe,4)[0]!=0x8664 or struct.unpack_from('<I',pe,8)[0]!=1652287197:raise ValueError('unsupported game executable build')
         year=observed_game_season_year(reader)
-        return {'epoch':{'pid':pid,'creation_filetime':created,'module_base':hex(reader.module_base),'module_size':reader.module_size,'pe_timestamp':1652287197,'game_season_year':year},'read_trace':reader.trace}
+        from game_mode_reader import collect_game_mode
+        mode,_=collect_game_mode(reader)
+        if mode['season_year']!=year:raise ValueError('game season changed while reconnecting')
+        # Public Native date/stage are progress evidence, never loaded-save proof.
+        keys=('today_native_iso_date','today_minutes_since_midnight_raw','period_raw','mode_raw','league_raw','current_year_byte_raw','draft_year_byte_raw')
+        progress={key:mode['observation'][key] for key in keys if key in mode['observation']}
+        if not progress.get('today_native_iso_date'):raise ValueError('current Native game date unavailable')
+        return {'epoch':{'pid':reader.pid,'creation_filetime':created,'module_base':hex(reader.module_base),'module_size':reader.module_size,'pe_timestamp':1652287197,'game_season_year':year},'game_progress':progress,'read_trace':reader.trace}
     finally:reader.close()
 
 def _capture(family,pid,save_directory,loaded_filename,directory):
@@ -83,39 +91,104 @@ def _unit_receipt(database,result,family,year):
             if unit['refresh_family']!=annual or unit['refresh_period_year']!=year or previous is None or previous['previous_unit_id']!=key:raise ValueError('annual receipt does not match the current save/season bucket')
     return dict(unit)
 
-def refresh_world(pid,save_directory,loaded_filename,new_output_directory,*,families=None):
+def _recover_child_unit(database,family,directory,source_root,year):
+    """Find committed child provenance, including death before result JSON.
+
+    A child result string alone is insufficient. The DB unit must own actual
+    child artifacts with matching bytes. No committed facts are changed.
+    """
+    if not isinstance(directory,str) or Path(directory).name!=directory or directory in ('.','..'):return None
+    prefix=directory+'/'
+    with closing(connect(database,True)) as conn:
+        rows=conn.execute('''SELECT DISTINCT u.unit_id FROM capture_units u JOIN source_artifacts a USING(unit_id)
+            WHERE u.source_key=? AND substr(a.payload_ref,1,?)=?''',(SOURCES[family][2],len(prefix),prefix)).fetchall()
+        if not rows:return None
+        if len(rows)!=1:raise ValueError('ambiguous prior child units; inspect original evidence')
+        key=rows[0]['unit_id'];artifacts=conn.execute('SELECT payload_ref,sha256,byte_count FROM source_artifacts WHERE unit_id=? AND substr(payload_ref,1,?)=?',(key,len(prefix),prefix)).fetchall()
+    for artifact in artifacts:
+        relative=Path(artifact['payload_ref'])
+        if len(relative.parts)!=2 or relative.parts[1] in ('.','..'):raise ValueError('invalid committed child artifact reference')
+        path=source_root/relative;digest=hashlib.sha256();size=0
+        with path.open('rb') as src:
+            while block:=src.read(1024*1024):digest.update(block);size+=len(block)
+        if digest.hexdigest()!=artifact['sha256'] or size!=artifact['byte_count']:raise ValueError('prior committed child artifact changed or incomplete')
+    return _unit_receipt(database,{'status':'ingested','unit_id':key},family,year)
+
+
+def refresh_world(pid,save_directory,loaded_filename,new_output_directory,*,families=None,resume_report=None,data_updated=False):
     """Fail fast, retain committed units, and permit selective reruns in a NEW directory.
 
     This is a sequence of independently atomic source observations, not a global
     point-in-time snapshot, season completion, scheduler or acceptance decision.
     """
-    if type(pid) is not int or pid<=0:raise ValueError('positive explicit process ID required')
+    if type(data_updated) is not bool:raise ValueError('data_updated must be a boolean declaration')
     requested=list(SOURCES) if families is None else list(families)
     if not requested or len(set(requested))!=len(requested) or any(f not in SOURCES for f in requested):raise ValueError('choose distinct registered refresh families')
     requested=[key for key in SOURCES if key in requested]
     binding,binding_hash=read_binding(save_directory,loaded_filename);database=bound_database(save_directory,binding)
     with closing(connect(database,True)) as conn:
         if conn.execute('PRAGMA user_version').fetchone()[0]!=VERSION:raise ValueError('copy-upgrade facts before world refresh')
+    prior=None
+    if resume_report is not None:
+        prior=json.loads(Path(resume_report).read_bytes())
+        if prior.get('save_id')!=binding['save_id'] or prior.get('native_save_filename')!=loaded_filename or prior.get('database_file')!=database.name or prior.get('binding_sha256')!=binding_hash:raise ValueError('resume report save/database binding differs')
+        if prior.get('status')=='RUNNING' and owner_is_live(prior.get('controller')):raise ValueError('prior refresh controller is still live; do not start another worker')
+        if prior.get('status') not in ('RUNNING','STOPPED_PARTIAL','COMPLETED_REQUESTED_SOURCES'):raise ValueError('unsupported resume report status')
+        old_plan=prior.get('requested_families')
+        if not isinstance(old_plan,list) or not old_plan or len(set(old_plan))!=len(old_plan) or any(f not in SOURCES for f in old_plan):raise ValueError('invalid prior source plan')
+        if families is None:requested=[f for f in SOURCES if f in old_plan]
+        elif any(f not in old_plan for f in requested):raise ValueError('resume selected sources must belong to prior batch')
+        entries=prior.get('sources',[])
+        if len(entries)!=len(old_plan) or {e.get('family') for e in entries}!=set(old_plan):raise ValueError('prior source ledger does not match plan')
+    pid=resolve_pid(pid)
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);token=uuid.uuid4().hex[:12];base=Path(__file__).resolve().parent
     files=sorted(base.glob('*.py'))+sorted(base.glob('*profile.json'))+[base/'schema.sql',base/'field_dictionary.json']
-    report={'format_version':1,'batch_id':token,'status':'RUNNING','save_id':binding['save_id'],'native_save_filename':loaded_filename,'database_file':database.name,
+    report={'format_version':2,'batch_id':token,'status':'RUNNING','controller':owner_identity(),'save_id':binding['save_id'],'native_save_filename':loaded_filename,'database_file':database.name,
         'binding_sha256':binding_hash,'started_at':_stamp(),'finished_at':None,'requested_families':requested,'report_file':str(out/'refresh-report.json'),
         'code_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
         'sources':[{'family':family,'status':'PENDING','directory':token+'-'+str(i).zfill(2)+'-'+family} for i,family in enumerate(requested)],
         'consistency_scope':'INDEPENDENT_ATOMIC_SOURCE_UNITS_WITHIN_ONE_CHECKED_PROCESS_AND_GAME_SEASON; NOT_ONE_GLOBAL_SNAPSHOT',
-        'save_identity_basis':binding['identity_basis'],'game_writes':False,'scheduler_started':False,'full_goal_complete':False}
+        'save_identity_basis':binding['identity_basis'],'data_update_declared':data_updated,'resume_report':str(Path(resume_report).resolve()) if prior else None,
+        'game_writes':False,'scheduler_started':False,'full_goal_complete':False}
     path=out/'refresh-report.json';_write(path,report);epoch=None;active=None
     def checkpoint(label):
         current,current_hash=read_binding(save_directory,loaded_filename)
         if current_hash!=binding_hash or bound_database(save_directory,current)!=database:raise ValueError('save binding changed during refresh')
         context=_context(pid);_write(out/(label+'-context.json'),context)
         if epoch is not None and context['epoch']!=epoch:raise ValueError('process/build/game-season context changed during refresh')
+        if 'game_progress' in report and context.get('game_progress')!=report['game_progress']:raise ValueError('game date/stage changed during refresh')
+        if epoch is None:report['game_progress']=context.get('game_progress')
         return context['epoch']
     try:
+        if prior:
+            epoch=checkpoint('resume');report['game_season_year']=epoch['game_season_year'];report['process_epoch']=epoch
+            progress=report.get('game_progress');old_progress=prior.get('game_progress')
+            recapture=data_updated or not progress or not old_progress or progress!=old_progress or prior.get('game_season_year')!=epoch['game_season_year']
+            report['resume_policy']='RECAPTURE_REQUESTED_SOURCES' if recapture else 'RETAIN_VERIFIED_PRIOR_OBSERVATIONS_AND_CAPTURE_REMAINDER'
+            report['resume_basis']='Native progress comparison and Human update declaration; equal dates do not prove unchanged content'
+            if not recapture:
+                report['consistency_scope']='INDEPENDENT_SOURCE_OBSERVATIONS_WITH_ORIGINAL_PROCESS_AND_TIMES; RETAINED_UNITS_NOT_REOBSERVED_IN_CURRENT_PROCESS'
+                old_entries={e['family']:e for e in prior['sources']}
+                for entry in report['sources']:
+                    old=old_entries[entry['family']];unit=old.get('unit');claim=old.get('adapter_claim')
+                    if unit is not None:
+                        claim={'status':'already_refreshed','previous_unit_id':unit['unit_id']} if old.get('status')=='ANNUAL_ALREADY_REFRESHED' else {'status':'ingested','unit_id':unit['unit_id']}
+                    if unit is None:
+                        recovered=_recover_child_unit(database,entry['family'],old.get('directory'),Path(resume_report).resolve().parent,epoch['game_season_year'])
+                        if recovered:claim={'status':'ingested','unit_id':recovered['unit_id']}
+                        elif claim is not None:raise ValueError('prior child claim has no matching committed artifact provenance')
+                    if claim is not None:
+                        receipt=_unit_receipt(database,claim,entry['family'],epoch['game_season_year'])
+                        if unit is not None and receipt!=unit:raise ValueError('prior committed receipt changed or does not match database')
+                        entry.update({'status':'RETAINED_PRIOR_OBSERVATION','commit_status':'COMMITTED_SUCCESS_VERIFIED','unit':receipt,
+                            'origin_batch_id':old.get('origin_batch_id',prior['batch_id']),'origin_process_epoch':old.get('origin_process_epoch',prior.get('process_epoch')),
+                            'fresh_native_capture':False,'retention_basis':'VERIFIED_DATABASE_RECEIPT; ORIGINAL_OBSERVATION_TIME_RETAINED'})
+            _write(path,report)
         for index,entry in enumerate(report['sources']):
+            if entry['status']=='RETAINED_PRIOR_OBSERVATION':continue
             active=entry;entry['started_at']=_stamp();entry['status']='RUNNING';_write(path,report)
             observed=checkpoint(str(index).zfill(2)+'-before')
-            if epoch is None:epoch=observed;report['game_season_year']=epoch['game_season_year']
+            if epoch is None:epoch=observed;report['game_season_year']=epoch['game_season_year'];report['process_epoch']=epoch
             entry['commit_status']='UNKNOWN_UNTIL_RECEIPT_VERIFIED';_write(path,report)
             result=_capture(entry['family'],pid,save_directory,loaded_filename,out/entry['directory'])
             entry['adapter_claim']={key:result[key] for key in ('status','unit_id','previous_unit_id') if key in result}

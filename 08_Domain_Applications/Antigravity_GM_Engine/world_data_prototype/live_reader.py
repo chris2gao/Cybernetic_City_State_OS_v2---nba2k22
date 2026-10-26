@@ -33,6 +33,8 @@ class ReadOnlyGameProcess:
     """Minimal handle whose requested access is VM_READ | QUERY_LIMITED_INFO."""
     def __init__(self,pid):
         if os.name!='nt':raise OSError('Windows process reader unavailable on this platform')
+        from process_session import resolve_pid
+        pid=resolve_pid(pid)
         self.pid=pid;self.trace=[];self.handle=None
         k=ctypes.WinDLL('kernel32',use_last_error=True);self.k=k
         k.OpenProcess.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.DWORD];k.OpenProcess.restype=wintypes.HANDLE
@@ -49,6 +51,9 @@ class ReadOnlyGameProcess:
             if not k.QueryFullProcessImageNameW(self.handle,0,buffer,ctypes.byref(size)):raise ctypes.WinError(ctypes.get_last_error())
             if Path(buffer.value).name.lower()!='nba2k22.exe':raise PermissionError('PID is not NBA2K22.exe')
             self.image_name='NBA2K22.exe'
+            from process_session import handle_creation_time
+            self.creation_filetime=handle_creation_time(k,self.handle)
+            self.trace.append({'operation':'GetProcessTimes','pid':pid,'creation_filetime':self.creation_filetime,'success':True})
             self.module_base,self.module_size=self._module()
         except BaseException:
             self.close();raise
