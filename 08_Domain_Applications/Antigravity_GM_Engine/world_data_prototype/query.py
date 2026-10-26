@@ -143,6 +143,7 @@ def team_card(path,team_id):
             WHERE a.team_id=? AND a.unit_id=? ORDER BY a.slot_index''',(team_id,book[0]))]
     result['season_totals']=history(path,'team_season_totals',entity_key='team_id',entity_id=team_id)
     result['native_finance']=native_team_finance(path,team_id=team_id)
+    result['native_lineups']=team_lineups(path,team_id)
     result['legacy_finance_qualification']='team_finance_observations keeps original unsigned source words; payroll_raw=ExpPayroll, cash_raw=BankBalance; see typed Native finance for signed values; no UI scale or cap-space inference'
     return result
 
@@ -163,6 +164,41 @@ def native_team_finance(path,*,team_id=None,unit_id=None):
         mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit_id,)).fetchone()
         return {'status':'OBSERVED' if rows else 'TEAM_NOT_IN_SELECTED_UNIT','source':dict(unit),'game_mode':dict(mode) if mode else None,'records':rows,
             'qualification':'Native signed int32, unsigned u32, float32 word/finite REAL and exact enum labels. Observation season and mode are same-unit context, not financial accounting duration. UI currency/scale, legal spending, cap space and derived profit remain unproved; NULL float REAL with a non-NULL word means nonfinite source.'}
+
+
+def team_lineups(path,team_id,*,unit_id=None,include_advanced=False):
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            row=c.execute('''SELECT a.unit_id FROM team_lineup_observations a JOIN capture_units u USING(unit_id) WHERE a.team_id=? ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''',(team_id,)).fetchone();unit_id=row[0] if row else None
+        context=c.execute('''SELECT a.* FROM team_lineup_observations a WHERE a.team_id=? AND a.unit_id=?''',(team_id,unit_id)).fetchone()
+        if context is None:return {'status':'NOT_OBSERVED','team_id':team_id,'records':[]}
+        unit=c.execute('SELECT u.unit_id,u.observed_at,u.source_key,u.completeness,r.source_grade FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=?',(unit_id,)).fetchone();mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit_id,)).fetchone()
+        def slots(table):return [dict(r) for r in c.execute(f'''SELECT a.*,p.source_player_index,p.observed_name,p.native_unique_id_raw,p.preserved_id_raw,p.native_team_id,p.current_core_roster_status,r.playing_time_raw,r.force_non_starter_raw,r.force_non_starter_label
+            FROM {ident(table)} a LEFT JOIN native_player_sources p ON p.player_source_id=a.source_player_id AND p.unit_id=a.unit_id
+            LEFT JOIN native_player_rotation_observations r ON r.source_player_id=p.player_source_id AND r.unit_id=a.unit_id
+            WHERE a.team_id=? AND a.unit_id=? ORDER BY a.slot_index''',(team_id,unit_id))]
+        named={}
+        for row in slots('team_lineup_slots'):named.setdefault(row['lineup_kind'],[]).append(row)
+        advanced=[dict(r) for r in c.execute('SELECT * FROM team_advanced_rotation_slots WHERE team_id=? AND unit_id=? ORDER BY axis0_index,axis1_index',(team_id,unit_id))] if include_advanced else None
+        return {'status':'OBSERVED','team_id':team_id,'source':dict(unit),'game_mode':dict(mode) if mode else None,'settings':dict(context),'global_slots':slots('team_rotation_slots'),'named_lineups':named,
+            'advanced':{'dimensions':[context['advanced_axis0_count'],context['advanced_axis1_count']],'included':include_advanced,'slots':advanced,'qualification':'Native axes/strides and raw uint16 IDs only; no inferred minute/position labels or player-ID namespace'},
+            'qualification':'Stored Native TEAM global pointer arrays, flags and PLAYER PlayingTime. All slots including null/stale/unmatched references are retained. PlayingTime UI minutes/units and actual lineup deployment are unproved; planned_minutes/role_code remain NULL. Source aliases require current reciprocal roster and exact unique identifiers/name; historical lifecycle is unproved.'}
+
+
+def native_player_rotation(path,*,player_id=None,subject_name=None,source_index=None,current_roster_only=True,unit_id=None,after_index=-1,limit=20):
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('limit1..100 and after-index>=-1 required')
+    if after_index>=0 and unit_id is None:raise ValueError('continued rotation pages require an explicit source unit')
+    with closing(connect(path,True)) as c:
+        if unit_id is None:
+            row=c.execute('''SELECT a.unit_id FROM native_player_rotation_observations a JOIN capture_units u USING(unit_id) ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1''').fetchone();unit_id=row[0] if row else None
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.source_key,r.source_grade FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=? AND EXISTS(SELECT 1 FROM native_player_rotation_observations x WHERE x.unit_id=u.unit_id)''',(unit_id,)).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'next_after_index':None}
+        where=['a.unit_id=?','p.source_player_index>?'];args=[unit_id,after_index]
+        for column,value in (('p.player_id',player_id),('p.observed_name',subject_name),('p.source_player_index',source_index)):
+            if value is not None:where.append(column+'=?');args.append(value)
+        if current_roster_only:where.append("p.current_core_roster_status='CURRENT_CORE_ROSTER'")
+        rows=[dict(r) for r in c.execute('''SELECT a.*,p.source_player_index,p.observed_name,p.native_unique_id_raw,p.preserved_id_raw,p.native_team_id,p.current_core_roster_status,p.canonical_link_status FROM native_player_rotation_observations a JOIN native_player_sources p ON p.player_source_id=a.source_player_id AND p.unit_id=a.unit_id WHERE '''+' AND '.join(where)+' ORDER BY p.source_player_index LIMIT ?',args+[limit+1])];more=len(rows)>limit;rows=rows[:limit]
+        return {'status':'OBSERVED','source':dict(unit),'records':rows,'has_more':more,'next_after_index':rows[-1]['source_player_index'] if more else None,'qualification':'Native seven-bit PlayingTime and exact ForceNonStarter enum. UI minutes/units, active effects and historical subject lifecycle are unproved. Source-only subjects remain distinct.'}
 
 
 def prospect_card(path,prospect_id):

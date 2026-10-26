@@ -75,6 +75,9 @@ def main():
     period_capture=sub.add_parser('capture-period-stats');period_capture.add_argument('pid',type=int);period_capture.add_argument('save_directory');period_capture.add_argument('loaded_filename');period_capture.add_argument('new_output_directory')
     org=sub.add_parser('capture-organization');org.add_argument('pid',type=int);org.add_argument('save_directory');org.add_argument('loaded_filename');org.add_argument('new_output_directory')
     team=sub.add_parser('team');team.add_argument('database');team.add_argument('team_id')
+    lineup_read=sub.add_parser('lineups');lineup_read.add_argument('database');lineup_read.add_argument('team_id');lineup_read.add_argument('--unit-id');lineup_read.add_argument('--include-advanced',action='store_true')
+    lineup_capture=sub.add_parser('capture-lineups');lineup_capture.add_argument('pid',type=int);lineup_capture.add_argument('save_directory');lineup_capture.add_argument('loaded_filename');lineup_capture.add_argument('new_output_directory')
+    rotation_read=sub.add_parser('native-player-rotation');rotation_read.add_argument('database');rotation_read.add_argument('--player-id');rotation_read.add_argument('--subject-name');rotation_read.add_argument('--source-index',type=int);rotation_read.add_argument('--unit-id');rotation_read.add_argument('--all-sources',action='store_true');rotation_read.add_argument('--after-index',type=int,default=-1);rotation_read.add_argument('--limit',type=int,default=20)
     finance_read=sub.add_parser('finance');finance_read.add_argument('database');finance_read.add_argument('--team-id');finance_read.add_argument('--unit-id')
     finance_capture=sub.add_parser('capture-finance');finance_capture.add_argument('pid',type=int);finance_capture.add_argument('save_directory');finance_capture.add_argument('loaded_filename');finance_capture.add_argument('new_output_directory')
     staff=sub.add_parser('staff');staff.add_argument('database');staff.add_argument('staff_id')
@@ -113,6 +116,7 @@ def main():
     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
     for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,mode_read,period_read,team,finance_read,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,native_seasons,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
+    for read_parser in (lineup_read,rotation_read):read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
     if getattr(args,'as_of',None) is not None:
         from observation_scope import observed_as_of
@@ -125,6 +129,15 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='lineups':
+        from query import team_lineups
+        print(json.dumps(team_lineups(args.database,args.team_id,unit_id=args.unit_id,include_advanced=args.include_advanced),ensure_ascii=False));return
+    if args.action=='native-player-rotation':
+        from query import native_player_rotation
+        print(json.dumps(native_player_rotation(args.database,player_id=args.player_id,subject_name=args.subject_name,source_index=args.source_index,current_roster_only=not args.all_sources,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+    if args.action=='capture-lineups':
+        from lineup_reader import capture_lineups
+        print(json.dumps(capture_lineups(args.pid,args.save_directory,args.loaded_filename,args.new_output_directory),ensure_ascii=False));return
     if args.action=='finance':
         from query import native_team_finance
         print(json.dumps(native_team_finance(args.database,team_id=args.team_id,unit_id=args.unit_id),ensure_ascii=False));return
