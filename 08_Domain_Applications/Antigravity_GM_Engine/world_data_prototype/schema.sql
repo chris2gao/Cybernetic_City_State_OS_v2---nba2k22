@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=22),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=23),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -92,7 +92,7 @@ CREATE TABLE "capture_runs" (
   "game_date" TEXT,
   "decoder_version" TEXT,
   "save_binding_ref" TEXT,
-  "refresh_family" TEXT CHECK (refresh_family IN ('RECORD_BOOK','NATIVE_HONOR_STATS','LEAGUE_HISTORY_AWARDS')),
+  "refresh_family" TEXT CHECK (refresh_family IN ('RECORD_BOOK','NATIVE_HONOR_STATS','LEAGUE_HISTORY_AWARDS','STAFF_SEASON_HISTORY')),
   "refresh_period_year" INTEGER CHECK (refresh_period_year BETWEEN 1 AND 9999),
   CHECK ((refresh_family IS NULL)=(refresh_period_year IS NULL))
 ) STRICT;
@@ -1789,6 +1789,75 @@ CREATE TRIGGER "native_staff_team_slots_no_delete" BEFORE DELETE ON "native_staf
 
 CREATE TRIGGER "native_staff_team_slots_successful_unit" BEFORE INSERT ON "native_staff_team_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
+CREATE TABLE "native_staff_history_subjects" (
+  "history_subject_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "staff_id" TEXT REFERENCES staff_members(staff_id) ON DELETE RESTRICT,
+  "source_staff_index" INTEGER NOT NULL CHECK (source_staff_index>=0),
+  "native_staff_id_raw" INTEGER NOT NULL CHECK (native_staff_id_raw BETWEEN 0 AND 65535),
+  "observed_name" TEXT,
+  "name_status" TEXT NOT NULL,
+  "canonical_link_status" TEXT NOT NULL,
+  UNIQUE ("unit_id","source_staff_index")
+) STRICT;
+
+CREATE INDEX "idx_native_staff_history_subjects_unit_id" ON "native_staff_history_subjects" ("unit_id");
+
+CREATE INDEX "idx_native_staff_history_subjects_staff_id" ON "native_staff_history_subjects" ("staff_id");
+
+CREATE TRIGGER "native_staff_history_subjects_no_update" BEFORE UPDATE ON "native_staff_history_subjects" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_history_subjects_no_delete" BEFORE DELETE ON "native_staff_history_subjects" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_history_subjects_successful_unit" BEFORE INSERT ON "native_staff_history_subjects" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_coach_stat_observations" (
+  "coach_stat_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_stat_index" INTEGER NOT NULL CHECK (source_stat_index>=0),
+  "stat_year" INTEGER CHECK (stat_year IS NULL),
+  "subject_reference_count" INTEGER NOT NULL CHECK (subject_reference_count>=1),
+  "next_free_raw" INTEGER NOT NULL CHECK (next_free_raw BETWEEN 0 AND 65535),
+  "coach_wins_raw" INTEGER NOT NULL CHECK (coach_wins_raw BETWEEN 0 AND 65535),
+  "coach_losses_raw" INTEGER NOT NULL CHECK (coach_losses_raw BETWEEN 0 AND 65535),
+  "coach_playoff_wins_raw" INTEGER NOT NULL CHECK (coach_playoff_wins_raw BETWEEN 0 AND 65535),
+  "coach_playoff_losses_raw" INTEGER NOT NULL CHECK (coach_playoff_losses_raw BETWEEN 0 AND 65535),
+  "coach_won_title_raw" INTEGER NOT NULL CHECK (coach_won_title_raw BETWEEN 0 AND 255),
+  "coach_won_coach_of_the_year_raw" INTEGER NOT NULL CHECK (coach_won_coach_of_the_year_raw BETWEEN 0 AND 255),
+  UNIQUE ("unit_id","source_stat_index")
+) STRICT;
+
+CREATE INDEX "idx_native_coach_stat_observations_unit_id" ON "native_coach_stat_observations" ("unit_id");
+
+CREATE TRIGGER "native_coach_stat_observations_no_update" BEFORE UPDATE ON "native_coach_stat_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_coach_stat_observations_no_delete" BEFORE DELETE ON "native_coach_stat_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_coach_stat_observations_successful_unit" BEFORE INSERT ON "native_coach_stat_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_staff_stat_links" (
+  "staff_stat_link_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "history_subject_id" TEXT NOT NULL REFERENCES native_staff_history_subjects(history_subject_id) ON DELETE RESTRICT,
+  "array_position" INTEGER NOT NULL CHECK (array_position BETWEEN 0 AND 39),
+  "native_stat_index_signed" INTEGER NOT NULL CHECK (native_stat_index_signed BETWEEN -32768 AND 32767),
+  "coach_stat_id" TEXT REFERENCES native_coach_stat_observations(coach_stat_id) ON DELETE RESTRICT,
+  "link_status" TEXT NOT NULL,
+  UNIQUE ("unit_id","history_subject_id","array_position")
+) STRICT;
+
+CREATE INDEX "idx_native_staff_stat_links_unit_id" ON "native_staff_stat_links" ("unit_id");
+
+CREATE INDEX "idx_native_staff_stat_links_history_subject_id" ON "native_staff_stat_links" ("history_subject_id");
+
+CREATE INDEX "idx_native_staff_stat_links_coach_stat_id" ON "native_staff_stat_links" ("coach_stat_id");
+
+CREATE TRIGGER "native_staff_stat_links_no_update" BEFORE UPDATE ON "native_staff_stat_links" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_stat_links_no_delete" BEFORE DELETE ON "native_staff_stat_links" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_staff_stat_links_successful_unit" BEFORE INSERT ON "native_staff_stat_links" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
 CREATE TABLE "team_state_observations" (
   "state_id" TEXT NOT NULL PRIMARY KEY,
   "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
@@ -3151,6 +3220,10 @@ CREATE TRIGGER "native_mentor_relation_observations_successful_unit" BEFORE INSE
 CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;
 
 CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;
+
+CREATE TRIGGER staff_history_link_subject_unit BEFORE INSERT ON native_staff_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_staff_history_subjects s WHERE s.history_subject_id=NEW.history_subject_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit staff history subject'); END;
+
+CREATE TRIGGER staff_history_link_stat_unit BEFORE INSERT ON native_staff_stat_links WHEN NEW.coach_stat_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_coach_stat_observations s WHERE s.coach_stat_id=NEW.coach_stat_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_signed) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched coach stat'); END;
 
 CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;
 
