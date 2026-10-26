@@ -1,0 +1,17 @@
+{
+  "layout": "NATIVE_COACH_INCREMENT_TARGET_WIN_LOSS_V1",
+  "metadata_profile": "staff_history_native_profile.json",
+  "storage_role_profile": "staff_history_semantics_native_profile.json",
+  "reference_position": 0,
+  "staff_projection_ranges": [[48,128],[136,138],[216,218]],
+  "stat_projection_range": [0,10],
+  "excluded_staff_history_reference_range": [138,216],
+  "excluded_stat_award_range": [10,12],
+  "stat_fields": ["NextFree","CoachWins","CoachLosses","CoachPlayoffWins","CoachPlayoffLosses"],
+  "limits": [
+    "Position0 is the Native read/add/write target, not a proved calendar year or finalization label.",
+    "Only one signed reference per staff source is acquired; positions1..39 and annual title/coach-of-year bytes are physically excluded.",
+    "Native names and UID qualify source identity; allocation, historical ownership, current job and hiring eligibility are not inferred.",
+    "Each explicit ordinary refresh preserves a separate observation; annual history and award buckets are not consumed."
+  ]
+}

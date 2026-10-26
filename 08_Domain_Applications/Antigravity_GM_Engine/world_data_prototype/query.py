@@ -124,6 +124,7 @@ def staff_card(path,staff_id):
     result['assignments']=history(path,'staff_team_assignments',entity_key='staff_id',entity_id=staff_id)
     result['native_source']=native_staff(path,staff_id=staff_id,include_details=True)
     result['native_history']=native_staff_history(path,staff_id=staff_id)
+    result['native_increment_stats']=current_coach_stats(path,staff_id=staff_id)
     return result
 
 
@@ -227,6 +228,22 @@ def native_staff(path,*,staff_id=None,subject_name=None,source_index=None,person
         mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit_id,)).fetchone();count=c.execute('SELECT count(*) FROM native_staff_sources WHERE unit_id=?',(unit_id,)).fetchone()[0]
         return {'status':'OBSERVED','source':dict(unit),'game_mode':dict(mode) if mode else None,'source_staff_count':count,'include_details':include_details,'current_core_only':current_core_only,'records':rows,'has_more':more,'next_after_index':rows[-1]['source_staff_index'] if more else None,
             'qualification':'Complete COACHDATA descriptor slots and public field projections. NORMAL/RELEASED/RETIRED/INACTIVE, team pointers and core role slots are independent observations; absent core roles or a status label do not prove hiring eligibility. Canonical aliases require a single reciprocal role, globally unique current pool ID and exact existing name. Allocation/lifecycle, UI wages/grade scale and behavioral effects remain unproved. Annual staff stat references and growth/max-grade bytes are not acquired.'}
+
+
+def current_coach_stats(path,*,staff_id=None,subject_name=None,source_index=None,resolved_only=True,unit_id=None,after_index=-1,limit=20):
+    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('coach-stats limit1..100 and after-index>=-1 required')
+    if after_index>=0 and unit_id is None:raise ValueError('continued coach-stat pages require an explicit unit')
+    with closing(connect(path,True)) as c:
+        condition=' AND u.unit_id=?' if unit_id else '';args=[unit_id] if unit_id else []
+        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.decoder_version FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_CURRENT_COACH_STATS' AND u.unit_status='success' '''+condition+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
+        if unit is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'next_after_index':None}
+        args=[unit['unit_id'],after_index];where=['unit_id=?','source_staff_index>?']
+        for column,value in (('staff_id',staff_id),('observed_name',subject_name),('source_staff_index',source_index)):
+            if value is not None:where.append(column+'=?');args.append(value)
+        if resolved_only:where.append('source_stat_index IS NOT NULL')
+        rows=[dict(r) for r in c.execute('SELECT * FROM native_current_coach_stat_observations WHERE '+' AND '.join(where)+' ORDER BY source_staff_index LIMIT ?',args+[limit+1])];more=len(rows)>limit;rows=rows[:limit]
+        count=c.execute('SELECT count(*) FROM native_current_coach_stat_observations WHERE unit_id=?',(unit['unit_id'],)).fetchone()[0];mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit['unit_id'],)).fetchone()
+        return {'status':'OBSERVED','source':dict(unit),'game_mode':dict(mode) if mode else None,'source_staff_count':count,'reference_position':0,'resolved_only':resolved_only,'records':rows,'has_more':more,'next_after_index':rows[-1]['source_staff_index'] if more else None,'qualification':'Ordinary Native position0 read/add/write-target observation. One signed reference and four win/loss counters only; annual positions1..39 and title/coach-of-year bytes are physically excluded. Native observation season does not establish counter calendar year, phase, team scope or finalization. Missing records remain NULL. Marker equality and shared references do not prove allocation reachability, job/hiring eligibility or historical ownership. Annual history keeps its independent source/time/cadence.'}
 
 
 def native_staff_history(path,*,staff_id=None,subject_name=None,source_index=None,unit_id=None,after_index=-1,limit=10,reference_position=None):
