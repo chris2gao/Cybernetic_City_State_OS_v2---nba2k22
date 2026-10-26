@@ -3,7 +3,7 @@
   "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 2,
+  "draft_number": 3,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,7 +12,7 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-02",
+      "version": "A-v1-DRAFT-03",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
@@ -97,24 +97,33 @@
           "result_item_id": "RES-02",
           "title": "全生命周期场景适配与可重复填充接口",
           "kind": "function",
-          "review_status": "RR02_INPUT_OUTPUT_BOUNDARY_UNDER_DISCUSSION",
-          "expected_end_state": "S1–S8（含休赛期各子窗口）都具备来源时机及被证实容器的可重用采集流程；在 Human 主动选择的实际游戏时点正确识别阶段、实际存在的池子及变化来源，并保存一致性单元而不自动推进游戏。",
+          "review_status": "RR02_D_HUMAN_APPROVED_CROSS_SEASON_RESULT_DETAIL_PENDING",
+          "expected_end_state": "研发阶段通过 Human 推进真实 MyLEAGUE 同一世界线的多场景，对已有 v25 常规赛容器进行复用并发现、验证、补齐全明星/季后赛/休赛期/选秀等场景中的逻辑对象、Native 来源与数据结构及其数据库表/字段/关系，使统一数据架构原则上能够容纳一个完整赛季各阶段的游戏实际数据。每一适用场景至少证明一次已支持对象的读取→typed入库→查询，形成未来每个赛季按当前场景填充数据库的可复用采集路径。当前任务不以数据库时间回档、回滚历史或检查点分叉系统为研发目标。",
           "components": [
             "固定八窗口与可变化的实际Native阶段映射",
             "场景前/后短暂来源的最低证据与退出风险提示",
             "自动识别已有且适用的Reader与阶段刚生成的目标容器",
             "常规赛/季后赛/全明星/市场池/选秀对象特定语义与阶段状态",
-            "Human声明的检查点、物理存档绑定与可回档可复验证据（具体约束由02/03确认）"
+            "基于既有v25物理数据库/逻辑实体和Reader，逐阶段比较已覆盖与新生成的容器，新增且确有必要的表、列、引用和采集适配器需在02/03有证据设计；不得提前宣称所有物理表/字段已完整",
+            "研究数据库副本可通过真实场景产生的样本数据验证各阶段容器能够正确容纳及查询；真实样本与可复用的数据结构成果分开评价，不将测试样本作为后续正式游戏的固定事实",
+            "阶段覆盖完成后形成可复用的单赛季数据模型及输入/输出映射，供以后同档每赛季逐阶段采集新值，而不是每年重新开发同样结构",
+            "研究检查点仅用于Human控制真实场景取证、必要证据保存；不要求设计数据库恢复到过去日期或默认合并不同物理存档事实",
+            "完整赛季容器可以支持未来经验证的外部读取/计算与授权修改接口，但真实Native写入、合同注入和其他复合操作的安全性仍由RES-03/RES-05单独实证"
           ],
           "relations": [
-            "RES-01 containers -> scene availability -> RES-04 ingestion; RES-06 scene evidence",
-            "current state at one observed time distinct from multiple historical observations"
+            "game scene/phase -> container availability -> Native source -> Reader/Codec -> logical data structure/typed SQLite tables -> query/export",
+            "regular-season existing v25 structure + newly evidenced All-Star/postseason/offseason/draft containers -> versioned unified single-season-capable schema model (not independent per-scene databases)",
+            "one reusable schema and interface contract across actual seasons; each physical save database holds only that save's authorized observations and history, with original fact immutability",
+            "stage-specific research samples validate model structure; subsequent live data is observed at its actual game time; current-state queries must not conflate different times",
+            "RES-02 source/scene adaptation feeds RES-01 source catalog, RES-04 real data collection, RES-03/RES-05 downstream reading/write capability, RES-06 coverage proof"
           ],
           "inputs_outputs": [
-            "场景manifest和Human声明的物理存档/游戏阶段 -> 受控采集候选清单、时点状态、可用结构、只读完整性结果",
-            "场景退出报告给Human，是否继续由Human决定"
+            "输入：v25既有数据模型与Reader来源、Human主动进入的真实游戏场景、场景时点/存档身份和目标容器证据",
+            "开发期间输出：按真实场景查漏补齐的逻辑容器/数据库表结构候选、Reader/字段映射、适用阶段/版本、真实入库查询验证与场景覆盖缺口",
+            "产品阶段输出：在相同已证结构与适用条件下，任一当期场景的真实NBA2K22数据能按该保存档单独填充到统一架构并供外部读取、查询与后续经授权的修改调用；不是复制研发样本",
+            "不产生的成果：强制数据库时点回滚、不同存档事实自动混合、通过本次读取原型直接获得实时内存写入权限"
           ],
-          "completeness_rule": "逐场景至少保存适用目标容器结构/发生时点/可用来源及一次实证或可验证等价证据；尚未生成、真实空池、读取失败各有独立状态；场景缺口仅根据Human/OS范围批准例外。",
+          "completeness_rule": "以整套容器能正确承载一个完整单赛季的已列明目标数据结构为验收方向，分别逐场景核对原有结构复用与真正新增的表/字段/关系/Reader；对实际出现且按RR-01划定的核心容器，必须实证至少一次对象枚举→读取/解码→入库→查询闭环或有等价可复查旧证据；非核心容器须登记缺口、Human批准例外才可延期且不算已完成；阶段尚未生成不算失败。最终结果能在今后同类赛季逐阶段采入新的实际值，但不能仅凭一个赛季就声称已对未来所有赛季布局、100年容量或真实写入正确性完成验证。研发不要求数据库回到旧时间点或建设检查点分库/分叉架构；任何不同物理存档的实际数据绑定仍按既定一档一库和证据/append-only不变量。",
           "known_facts": [
             {
               "item": "S1–S8及Q1/Q2/Q4/Q5边界已获Human确认；v25记录了部分实际普通/年度Reader路径。",
@@ -130,9 +139,21 @@
             },
             {
               "question_id": "RR-02",
-              "scope": "同一连续世界线的阶段检查点如何绑定物理存档、数据库与时间线，恢复旧检查点后怎样防止旧状态污染最新当前态，同时保持append-only与场景取证便捷性。",
-              "closure_evidence": "Human在01b明确检查点与原活动档身份/分叉/数据库隔离的行为结果，然后02/03验证可实施方案。",
+              "scope": "研发多场景目的是逐步完成可重复使用的单赛季数据库结构/容器，真实数据用于证明可填充；不要求将数据库恢复到某时点或自动构建checkpoint分叉。",
+              "closure_evidence": "Human于2026-10-26选择RR-02=D并提供自定义完整产品语义，已用于改写RES-02预期结果/结构和验收条件。",
+              "status": "human_approved_custom_D_2026_10_26"
+            },
+            {
+              "question_id": "RR-02B",
+              "scope": "同一已证容器跨未来赛季复用时，采用怎样的最小结构兼容性验证而不重复整个原型研发",
+              "closure_evidence": "Human逐项决定跨赛季可复用性验证门槛；02/03拿真实layout版本和场景数据证明",
               "status": "human_decision_pending"
+            },
+            {
+              "question_id": "EVQ-08",
+              "scope": "完整单赛季模型跨赛季的 Native/游戏版本/自定义联盟布局是否持续相同，以及新增动态容器是否改变表结构",
+              "closure_evidence": "以后在已授权的真实赛季起点/变更场景比对场景、来源描述符、字段字典与实际样本，发现差异进入有界扩展",
+              "status": "unknown"
             }
           ],
           "acceptance_criterion_ids": [
@@ -392,8 +413,18 @@
         {
           "id": "RR-02",
           "result_item_id": "RES-02",
-          "topic": "Same-worldline protected checkpoints: physical save file and one-save-one-database binding, restoring an older checkpoint versus append-only current chronology",
-          "status": "ACTIVE_PENDING_HUMAN_DECISION"
+          "topic": "Human-approved reinterpretation: multi-scene development completes a reusable game-data database schema, not checkpoint/database time-rollback implementation",
+          "status": "APPROVED_CUSTOM_D_2026_10_26",
+          "human_choice": "D",
+          "human_supplement": "我们不需要恢复数据库到某个时间点，我们的数据库就是一个容器，能装载我们游戏过程的数据，之所以要多场景写入数据库，为了就是制造一个更完整的容器，也就是我们做的数据结构，各种数据库表组成的数据建模架构。由于每个赛季的数据都基本一致，我们把这些场景跑完，整个数据库的容器，基本就能存储任何单一赛季的数据了，我们得到了一个完整的容器。而通过这个容器保存的数据，可以提供给我们外部使用，读取，修改并插入到游戏实时内存中等",
+          "disposition": "研究多场景填充验证是为了逐步完善统一的单赛季数据容器与表/字段/关系建模；以后赛季在游戏实时生成数据时按已经验证的结构重新采集实际值。无数据库时点恢复或检查点分支开发义务；原一档一库、append-only与真正的Native写入另行授权边界保持。"
+        },
+        {
+          "id": "RR-02B",
+          "result_item_id": "RES-02",
+          "topic": "Reusable single-season container compatibility gate for later seasons: no check vs light version/layout source check vs redo full-scene prototype",
+          "status": "ACTIVE_PENDING_HUMAN_DECISION",
+          "recommended_choice": "B"
         },
         {
           "id": "RR-03",
@@ -422,7 +453,7 @@
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-02"
+        "version": "A-v1-DRAFT-03"
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
     }
@@ -436,6 +467,15 @@
       "result_item_id": "RES-01",
       "status": "approved",
       "interpretation": "Core containers must have proven true-scene end-to-end fill; non-core may be deferred only with an explicit Human exception. Deferred containers remain incomplete."
+    },
+    {
+      "id": "RR-02",
+      "date": "2026-10-26",
+      "selected": "D_CUSTOM",
+      "human_supplement": "我们不需要恢复数据库到某个时间点，我们的数据库就是一个容器，能装载我们游戏过程的数据，之所以要多场景写入数据库，为了就是制造一个更完整的容器，也就是我们做的数据结构，各种数据库表组成的数据建模架构。由于每个赛季的数据都基本一致，我们把这些场景跑完，整个数据库的容器，基本就能存储任何单一赛季的数据了，我们得到了一个完整的容器。而通过这个容器保存的数据，可以提供给我们外部使用，读取，修改并插入到游戏实时内存中等",
+      "result_item_id": "RES-02",
+      "status": "approved",
+      "interpretation": "Container/schema construction through real lifecycle scenes, validated by sampling real data; afterward reusable for each season’s actual data. Database time restoration/branch architecture is not a required result. Downstream read/write interfaces future-scoped."
     }
   ]
 }
