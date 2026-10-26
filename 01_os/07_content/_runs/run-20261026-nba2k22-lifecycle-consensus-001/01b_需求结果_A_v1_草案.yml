@@ -3,7 +3,7 @@
   "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 5,
+  "draft_number": 6,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,7 +12,7 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-05",
+      "version": "A-v1-DRAFT-06",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
@@ -172,8 +172,8 @@
           "result_item_id": "RES-03",
           "title": "统一字段来源/权限/值域/可修改性契约",
           "kind": "interface",
-          "review_status": "RR03_B_APPROVED_CLASS_REPRESENTATIVE_VALIDATION_PENDING_CLASS_BOUNDARY",
-          "expected_end_state": "构建全目标字段统一可机器查询的来源、值域、权限、自然变化/外挂操作类别和写入成熟度契约；未来使用按游戏机制、功能语义与合法取值范围划分的同质字段类别，允许在明确类别成员、共通Native操作机制/布局证据的适用范围内，用一项代表字段经单独授权的真实修改、Native读回及必要持久化/关联检查，作为该类别共享写入路径可复用的类别级证明，不要求每个成员逐一人工实写。未能证明共享路径、独立副作用或未知字段进入子类/例外和单独验证，不能凭范围相同自动放行；执行任何实际游戏写入仍须单独Human授权。",
+          "review_status": "RESULT_DEFINITION_COMPLETE_RR03_B_RR03B_B_APPROVED_IMPLEMENTATION_EVIDENCE_OPEN",
+          "expected_end_state": "完整统一字段级能力字典：对游戏原生类别、游戏机制与攻略/用户可读分组、合法值域建立可追溯字段类别；类别内代表字段经另行Human明确授权的Native写入/读回/必要保存重载及关联验证，再在类别成员具有共同Native编码、寻址/写入器机制及适用条件的实际证据时，将代表已证的共通修改机制继承到同类成员，不强制每一字段分别人工试写。取值范围和游戏语义一致用于归类，但不能单凭其推断底层写入行为；特殊字段单列例外，未证字段保持UNKNOWN或候选，且技术可写不等于允许GM/教练/球员执行。字段身份、读写权限、原始/显示/派生数值、枚举和范围、游戏自然变化及写入副作用/依赖都要表达，并提供未来批处理可验证的机器输出。",
           "components": [
             "只读比赛/历史原生事实，低频世界线/全局设置，高频球员教练球队状态，跨对象复合业务状态四类使用场景",
             "与修改频率独立的readable/write_candidate/write_validated/write_authorized等操作成熟度和角色权限",
@@ -186,21 +186,26 @@
             "经单独授权选定类别内一个代表字段，进行可逆或可保护的测试：旧值/目标值、原生写入、实际Native读回、UI/保存重载及联动核验按该类别需要保存证据，类别共享Writer能力据此认证；该证据证明共用操作机制而非假称每个字段都曾测试",
             "字段级状态与类别级状态分开：单字段真实验证、同类已验证机制继承、个别字段例外/待查、真实业务操作授权，所有返回状态都保留证据和范围；不得把可能同类等同于全类已实测",
             "特殊类别或复合操作如合同签约、球员球队归属变更不能仅凭同一个数字取值范围沿用普通能力/倾向写入；跨对象关联和游戏原生副作用单独处理",
-            "把同类代表验证作为减少大规模手工重复写入的主方法；上千/上万字段的实际安全批量修改仍须批次预检、成员值域检查、正确对象寻址、写后读回与失败报告，不预先宣称零错误"
+            "把同类代表验证作为减少大规模手工重复写入的主方法；上千/上万字段的实际安全批量修改仍须批次预检、成员值域检查、正确对象寻址、写后读回与失败报告，不预先宣称零错误",
+            "Human批准的类别继承门槛：同一游戏语义/机制类别与适用合法值域，并有Native结构/编码/寻址模式或共用Writer的直接证据；必须同时满足才能继承代表字段的‘共通写入机制已证’等级",
+            "类别代表实测成功范围显式声明：测试字段、目标对象、测试的值和时间、操作的持久化条件、关联副作用、适用Native布局/版本；未单项实测成员以‘同类机制继承’标识，不假称每个字段都经真实实机验证",
+            "特殊成员例外规则：如果编码、业务语义、字段值域、Native副作用、关联约束或对象身份条件不同，拆为新子类或另立单字段证据要求；类别内部无法证实的成员可按Q3独立扩展，不阻断已证同类成员"
           ],
           "relations": [
             "RES-01 native source fields -> capability contract -> RES-04 read/query and RES-05 potential mutation/validation",
             "field -> field_class(classification evidence + value range + game semantic family) -> representative_test -> class_native_write_mechanism_evidence -> eligible class members (subject to per-member range/target and explicit runtime authorization)",
             "field_class membership/compatibility supported by Native writer/encoding evidence separately from UI/game-guides categorization; individual exceptions override category inheritance",
-            "game-provided UI/settings grouping and outside game-guide categories are possible classification leads, not independently sufficient proof of identical memory write behavior"
+            "game-provided UI/settings grouping and outside game-guide categories are possible classification leads, not independently sufficient proof of identical memory write behavior",
+            "classified_field_member + verified_class_native_mechanism + matching_applicability_constraints -> inherited_write_mechanism_capability; exceptions or unknown dependencies -> pending, never automatically verified"
           ],
           "inputs_outputs": [
             "输入：实证字段字典/Native证据/UI目标/历史权限规则",
             "输出：可查询字段能力目录和操作合法性检查信息，任何UNKNOWN都带缺口及扩展条件",
             "输入：已批准游戏字段类别目录与类别成员、Human批准的某代表字段可写验证请求、Native写入/读回证据和可追溯游戏机制材料",
-            "输出：类别级操作能力状态+代表实验证据+同机制字段继承名单+例外/UNKNOWN列表，供未来统一批量引擎决定哪些操作可进入预检而不是直接执行"
+            "输出：类别级操作能力状态+代表实验证据+同机制字段继承名单+例外/UNKNOWN列表，供未来统一批量引擎决定哪些操作可进入预检而不是直接执行",
+            "输出：类别级认证凭证、成员映射及来源证据、实测代表字段、同类机制继承字段、成员例外、操作批准范围；供未来RES-05预检使用"
           ],
-          "completeness_rule": "已证字段的来源、读能力、类别、取值域、权限及操作成熟度明确。按Human RR-03=B建立类别代表字段测试：游戏定义/攻略/UI分组与同值域用于初始归类，类别内一项可单独授权试写成功并读回、必要时保存重载与联动核对；当共享Native定位/编码/Writer路径及成员适用条件有证据时，可将类别写机制标记为代表验证可复用，不逐成员人工试写。个别字段语义、布局、字段效果有差异或未知时需保留成员级例外，不承诺整类每个字段都经过直接实测；未证明共用操作机制或关键联动的字段不得自动提升为可安全批量写入。写权限与类别技术成熟度独立，未来单批次均须目标身份/取值范围/旧值、权限与读回校验。UNKNOWN可延期不阻断其它已证类；禁止未经Human单独批准的真实Native写入。",
+          "completeness_rule": "所有目标字段进入有来源/游戏类别/合法值域/读能力/业务权限/写入成熟度/UNKNOWN的统一字典。字段类别先按游戏语义机制与值域建立，类别内部必须有共通Native编码、寻址和写入器操作路径的实证或可核查证据，才允许把经另行批准的代表字段写入及读回验证结果继承为‘该类共享机制已证’，不要求同类成员逐项人工实写。任何特殊成员的独立副作用、合法范围、编码、权限或身份差异都独立列例外或拆子类并延后。‘已继承机制’和‘已逐字段实测’严格区分。每个未来修改请求仍须字段和对象身份、合法目标值、期望旧值、权限与Native写后读回校验；一次代表验证不等于后续大批量操作已经通过实测。非关键模糊字段可按Q3独立扩展，实机写入授权另议。",
           "known_facts": [
             {
               "item": "Q3已决定全字段统一契约与非关键模糊项独立扩展。",
@@ -208,6 +213,10 @@
             },
             {
               "item": "Human 2026-10-26 RR-03=B：希望同类别只通过一个代表字段的修改成功证明整类可复用，类别依据同值域、相同游戏定义/机制或攻略语义（例如全局设置、能力、倾向）；类别不明采用讨论机制确认。",
+              "evidence_status": "human_requirement"
+            },
+            {
+              "item": "Human RR-03B=B，无额外补充。代表字段类别继承要求同游戏机制/值域并有实际共同Native写入路径、编码和依赖证据；例外不可直接继承。",
               "evidence_status": "human_requirement"
             }
           ],
@@ -220,9 +229,9 @@
             },
             {
               "question_id": "RR-03B",
-              "scope": "如何正式界定“代表字段验证通过后整类生效”的边界：仅游戏类别和值域即可；还是需可核证共享Native写入机制后继承，特殊成员单列例外；或使用Human其他定义。",
-              "closure_evidence": "Human对类别继承证据等级及例外边界作出裁决，不重复讨论已定的同类取值范围/游戏语义分类来源。",
-              "status": "human_decision_pending"
+              "scope": "Human选择B：类别归属/合法值域与共同Native底层修改机制证据共同确定代表字段的类别继承范围，特殊成员单列例外。",
+              "closure_evidence": "NBA2K22 01b 需求结果建模 RR-03B（RES-03 类别级写入能力继承）：我选择 B。无额外补充。请记录正式裁决，评估 RES-03 是否完整，并继续下一项结果建模；不启动工程开发。",
+              "status": "human_approved_B_2026_10_26"
             }
           ],
           "acceptance_criterion_ids": [
@@ -234,14 +243,15 @@
           "result_item_id": "RES-04",
           "title": "统一批量采集、不可变数据库及确定性查询",
           "kind": "function",
-          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "review_status": "RESULT_SPECIFICATION_RR04_PENDING_HUMAN",
           "expected_end_state": "复用和扩展v25单档SQLite、Reader/Codec、来源账本、追加历史、按时点视图、增量与年度有证据补录；提供有界、幂等、可分页、跨对象且受权限约束的采集、查询和导出。",
           "components": [
             "存档绑定、版本/进程安全重连、源有效性检查",
             "原生身份/对象目录及年度/阶段特定增量采集",
             "采集一致性单元、partial失效与freshness、历史不可覆盖",
             "按时点查询、Native vs canonical 与计算值标识、权限裁剪",
-            "局部失败隔离、恢复、快照、校验与数据迁移副本"
+            "局部失败隔离、恢复、快照、校验与数据迁移副本",
+            "外部模型候选目标值/变更计划与原生实读事实的状态层次需要在RR-04确认；保持游戏权威事实与计算/建议值可区分"
           ],
           "relations": [
             "RES-01/02 source evidence -> RES-03 policy -> acquisition -> SQLite facts -> public/owner query, RES-06 verification"
@@ -263,6 +273,12 @@
               "scope": "新阶段容器所需的Schema/Reader增量及现有v25与正式主线兼容方式",
               "closure_evidence": "固定候选对账、独立审查、02/03证据驱动物理设计",
               "status": "unknown"
+            },
+            {
+              "question_id": "RR-04",
+              "scope": "外挂建议修改值与游戏原生实际读回值是否分离保存，什么时候允许更新数据库标为已确认的当前状态，怎样避免修改了目标值但游戏未成功写入而污染世界数据。",
+              "closure_evidence": "Human 对原生观察事实、提案与执行结果的数据边界作出明确裁决。",
+              "status": "human_decision_pending"
             }
           ],
           "acceptance_criterion_ids": [
@@ -470,14 +486,18 @@
           "id": "RR-03B",
           "result_item_id": "RES-03",
           "topic": "Boundaries of representative-field class inheritance: game semantic grouping and equal ranges versus proven shared Native write mechanism and member exceptions",
-          "status": "ACTIVE_PENDING_HUMAN_DECISION",
-          "recommended_choice": "B"
+          "status": "APPROVED_B_2026_10_26",
+          "recommended_choice": "B",
+          "human_choice": "B",
+          "human_supplement": "无额外补充。",
+          "disposition": "按游戏分组和值域分类，必须有同类共用Native定位/编码/Writer路径及适用条件的证据后代表字段写入结果才可继承整组已证共通机制；特例列出，成员值域和权限独立核对，不强制逐个实写。"
         },
         {
           "id": "RR-04",
           "result_item_id": "RES-04",
-          "topic": "Acquire frequency and incremental reads versus observed state plus snapshot contract",
-          "status": "PENDING"
+          "topic": "RES-04 game-native observation versus external proposed modifications versus authorized execution receipt/readback: which value becomes canonical current state",
+          "status": "ACTIVE_PENDING_HUMAN_DECISION",
+          "recommended_choice": "B"
         },
         {
           "id": "RR-05",
@@ -494,7 +514,7 @@
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-05"
+        "version": "A-v1-DRAFT-06"
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
     }
@@ -535,6 +555,15 @@
       "result_item_id": "RES-03",
       "status": "approved",
       "interpretation": "Layered writable-field certification with one authorized representative write/readback per materially homogeneous field class rather than repeated manual writes for each field; game range and semantic class guide grouping, Native writer commonality and exceptions must be evidenced. No game write authorized now."
+    },
+    {
+      "id": "RR-03B",
+      "date": "2026-10-26",
+      "selected": "B",
+      "human_supplement": "无额外补充。",
+      "result_item_id": "RES-03",
+      "status": "approved",
+      "interpretation": "Shared native writer/addressing mechanism plus game-class/value-domain affinity allows representative test evidence to certify a class-wide mechanism; different side effects/permissions/identities remain exceptions. Separate Human grant required for real writes."
     }
   ]
 }
