@@ -21,8 +21,15 @@ task_packet:
   consensus_A0_version: A0-v1_Human_confirmed_2026-10-26
   stage01b_draft: 01b_需求结果_A_v1_草案.yml
   stage01b_draft_version: A-v1-RC01
-  stage01b_human_complete_A_confirmation: PENDING_EXACT_A-v1-RC01
-  stage01b_semantic_completeness: COMPLETE_PENDING_HUMAN_VERSION_CONFIRMATION
+  stage01b_human_complete_A_confirmation: CONFIRMED_2026_10_26_A-v1-RC01
+  stage01_semantic_gate: PASS
+  stage01_status: COMPLETE
+  stage01b_approved_original_blob_sha: b60570547c6686261a1e7ae756605dce5e37429a
+  stage02_state: PLANNING_OPEN_NO_EVIDENCE_VERDICT
+  stage02_plan_ref: 02_信息收集与实证规划_v1.md
+  stage02_research_plan_ref: 02_evidence/00_挖掘目标与领域_v1.yml
+  stage02_next_question: RQ-02-02
+  stage01b_semantic_completeness: COMPLETE_AND_HUMAN_APPROVED
   stage01b_completeness_review: 01b_结果A完整性与Human版本确认_20261026.md
   stage01b_decisions:
     RR-01: B_core_container_verified_noncore_explicit_exception_Human_approved_2026-10-26
@@ -51,7 +58,7 @@ task_packet:
     - assume_checkpoint_lineage_by_filename
     - infer_cross_save_identity_or_merge_database
     - require_checkpoint_database_time_rollback_or_branch_work_as_a_result
-    - treat_stage01b_final_A_as_Human_approved_without_confirmation
+    - change_approved_A_product_semantics_without_new_Human_version_confirmation
     - promote_ambiguous_field_to_proven_safe_writable_without_evidence
     - auto_dispatch_Codex_or_GM_Coach_Player
   verification:
@@ -60,10 +67,9 @@ task_packet:
     implementation_test: not_applicable
     independent_review: not_yet_started
   completion_policy: >-
-    Q1-Q6, A0-v1 and all RR decisions are approved individually, and the
-    A-v1-RC01 consolidated result requirements are semantically complete as
-    a Human-review candidate only. Exact consolidated A version approval is
-    outstanding; stage01 not yet closed. Stage02 can be planned only after
-    the Human version gate, with no implied Codex auto-dispatch, engineering
-    implementation, game/native memory writes, master integration or
-    authorization for final batch-script testing.
+    Human explicitly approved A0-v1 and the exact consolidated A-v1-RC01
+    result model. Stage01 semantic gate is complete, but Stage02 is only
+    planning its evidence questions and sources; feasibility verdict and
+    factual field/source verification have not run. No Codex auto-dispatch,
+    engineering implementation, game/native memory writes, protected master
+    integration or authorization for future full batch-script testing.
