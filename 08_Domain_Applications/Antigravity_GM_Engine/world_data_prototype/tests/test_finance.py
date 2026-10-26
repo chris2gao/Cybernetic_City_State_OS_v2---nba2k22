@@ -4,7 +4,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 BASE=Path(__file__).resolve().parents[1];sys.path.insert(0,str(BASE))
-from finance_reader import PROFILE,STRIDE,CORE_IDS,decode_finance,finance_projection_ranges,collect_finance,finance_payload,verify_finance_metadata
+from finance_reader import PROFILE,STRIDE,CORE_IDS,decode_finance,finance_projection_ranges,collect_finance,finance_payload,verify_finance_metadata,validate_name_dimension
 from game_mode_reader import decode_game_mode
 from engine import create_database,connect,ingest_capture
 from query import native_team_finance,team_card
@@ -76,6 +76,12 @@ class FinanceTests(unittest.TestCase):
     def test_primitive_binding_change_is_not_hidden_by_same_format(self):
         fields=[copy.deepcopy(s['binding']) for s in (PROFILE['scalars']|PROFILE['packed']|PROFILE['identity']).values()];fields[0]['words'][1]^=1
         with patch('finance_reader.read_native_fields',return_value={'fields':fields}),self.assertRaisesRegex(ValueError,'primitive changed'):verify_finance_metadata(FinanceMemory())
+    def test_runtime_initialized_dimension_words_do_not_replace_extent_validation(self):
+        spec=PROFILE['identity']['UnlocalizedTeamName'];field=copy.deepcopy(spec['binding']);raw=bytearray.fromhex(spec['dimension_control_hex']);struct.pack_into('<I',raw,8,2);validate_name_dimension(field,spec,raw)
+        struct.pack_into('<I',raw,0,24)
+        with self.assertRaisesRegex(ValueError,'dimensions changed'):validate_name_dimension(field,spec,raw)
+        struct.pack_into('<I',raw,0,25);field['words'][5]=1
+        with self.assertRaisesRegex(ValueError,'dimensions changed'):validate_name_dimension(field,spec,raw)
     def test_typed_ingest_history_cutoff_and_same_unit_mode(self):
         with TemporaryDirectory() as tmp:
             db=Path(tmp)/'world.sqlite';create_database(db,'fixture');one=self.payload();two=self.payload('two','2026-10-26T00:00:00Z',-500)
