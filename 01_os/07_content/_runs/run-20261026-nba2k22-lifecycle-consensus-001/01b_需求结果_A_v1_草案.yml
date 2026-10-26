@@ -1,0 +1,407 @@
+{
+  "schema_version": "citystate.workflow.requirement_result.draft.v1",
+  "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
+  "task_id": "nba2k22-lifecycle-scene-consensus-01",
+  "date": "2026-10-26",
+  "draft_number": 1,
+  "engineering_work_started": false,
+  "stage01": {
+    "consensus_A0": {
+      "version": "A0-v1",
+      "human_confirmed": true,
+      "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
+    },
+    "requirement_result_A": {
+      "version": "A-v1-DRAFT-01",
+      "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
+      "result_items": [
+        {
+          "result_item_id": "RES-01",
+          "title": "游戏可读来源与数据容器全集",
+          "kind": "entity",
+          "review_status": "FIRST_ROUND_PENDING_HUMAN_REVIEW",
+          "expected_end_state": "生成可随游戏阶段扩展的、按实际 PC22 离线 MyLEAGUE UI/目标对象穷举的数据容器/Native 来源/字段双向目录。每个被接受的容器都可指向已验证读取、解码、SQLite填充与查询路径；后生成、空池、缺源与读取失败各自有证据状态。非关键模糊字段单独扩展。",
+          "components": [
+            "游戏实际页面与编辑/设置页的目标字段/文本/数值目标目录；非图像输出，不从其他 NBA2K 版本推断",
+            "对象容器族：赛季/比赛/常规赛和季后赛 Box 及高级统计、球员与职业资料、球队与轮换、教练与职员、战术与训练、财务及市场、选秀及资产、联盟设置与 sliders、荣誉纪录新闻及历史",
+            "来源/Reader/Codec/Native描述符或动态索引、版本布局、可用场景、原生字段与UI文字/数值对照",
+            "每容器记录来源存在性、可读阶段、对象枚举、身份范围、字段名称/类型/取值口径/成熟度、保存/退出条件",
+            "字段级受限权限、未知字段与目标容器缺口分别登记，不把已发现字节冒充已解码语义",
+            "已有 v25 20族 Reader/42采集单元、字段目录、来源覆盖矩阵和已验证证据的精确复用与差异盘点（这些数字目前是已提交的开发者证据，并不代表独立通过）"
+          ],
+          "relations": [
+            "target_game_page/tab/field -> scene/window -> native_container -> source_descriptor/reader/decoder -> typed logical_field -> SQLite column/view -> query/export",
+            "native_container -> object_collection -> native_object_identity -> season/save/game/team/player/staff linkage (only when identity evidenced)",
+            "source_state -> observed_at/game_phase/game_year/provenance -> evidence_grade/coverage_gap",
+            "source_container -> read_capability; write_permission is an independent result in RES-03"
+          ],
+          "inputs_outputs": [
+            "输入：目标游戏版本、Human 声明的存档与场景、已存在的 v25 覆盖矩阵及来源证据",
+            "输出：机器可比较的 container_catalog、field_coverage、scene_applicability、source_provenance、gap_register",
+            "查询示例：某场景的全明星/季后赛/休赛期来源是否已生成；可用 Reader 是谁；有哪些已证字段/不明字段",
+            "查询示例：某目标 UI 列从哪个 Native 对象读到，存入什么已核证的 typed 字段，能用什么实际查询重现"
+          ],
+          "completeness_rule": "每一个已确认目标游戏页面/对象/阶段来源在覆盖矩阵中有唯一范围和明确状态，不能凭容器数量、SQLite非NULL值或Reader注册数断言完整。对声明完成的容器，需有适用真实游戏窗口中枚举→解码→合法值核查→typed入库→查询的可复验证据，或被独立核对为等价的既有真实证据。阶段尚未生成与其他失败状态严格分开。模糊字段可独立挂缺口，不造假；整个RES-01对缺整容器与缺字段如何关门由RR-01裁决。",
+          "known_facts": [
+            {
+              "item": "Human已裁决S1–S8多场景研究、先拿可复用容器结构，Q4要求真实填充验证，Q5要求机器证据且后生成来源不算赛季初错误。",
+              "evidence_status": "human_requirement"
+            },
+            {
+              "item": "v25交付材料列明20族Reader、101表/1789列和现有源覆盖/成熟度目录；仍处待独立审核的工程候选。",
+              "evidence_status": "developer_provided_repository_evidence_not_independent_final_acceptance"
+            }
+          ],
+          "unknowns": [
+            {
+              "question_id": "EVQ-01",
+              "scope": "哪些 S2–S8/S7 子窗口的数据容器游戏实际生成且何时可读",
+              "closure_evidence": "Human推进到目标场景后 Native/UI/游戏日期阶段一致的场景证据",
+              "status": "unknown"
+            },
+            {
+              "question_id": "EVQ-02",
+              "scope": "每个目标容器已被v25适配器完整支持的范围以及尚缺结构或字段",
+              "closure_evidence": "固定提交盘点、已有真实证据/缺口矩阵、必要的目标场景受控读取与字段对照",
+              "status": "unknown"
+            },
+            {
+              "question_id": "RR-01",
+              "scope": "缺整个容器、缺重要字段、非关键模糊字段应分别怎样影响RES-01总体验收",
+              "closure_evidence": "Human在01b首轮明确分级完整性与例外处理方式",
+              "status": "human_decision_pending"
+            }
+          ],
+          "acceptance_criterion_ids": [
+            "SC-01",
+            "SC-02",
+            "SC-03",
+            "SC-04"
+          ]
+        },
+        {
+          "result_item_id": "RES-02",
+          "title": "全生命周期场景适配与可重复填充接口",
+          "kind": "function",
+          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "expected_end_state": "S1–S8（含休赛期各子窗口）都具备来源时机及被证实容器的可重用采集流程；在 Human 主动选择的实际游戏时点正确识别阶段、实际存在的池子及变化来源，并保存一致性单元而不自动推进游戏。",
+          "components": [
+            "固定八窗口与可变化的实际Native阶段映射",
+            "场景前/后短暂来源的最低证据与退出风险提示",
+            "自动识别已有且适用的Reader与阶段刚生成的目标容器",
+            "常规赛/季后赛/全明星/市场池/选秀对象特定语义与阶段状态",
+            "Human声明的检查点、物理存档绑定与可回档可复验证据（具体约束由02/03确认）"
+          ],
+          "relations": [
+            "RES-01 containers -> scene availability -> RES-04 ingestion; RES-06 scene evidence",
+            "current state at one observed time distinct from multiple historical observations"
+          ],
+          "inputs_outputs": [
+            "场景manifest和Human声明的物理存档/游戏阶段 -> 受控采集候选清单、时点状态、可用结构、只读完整性结果",
+            "场景退出报告给Human，是否继续由Human决定"
+          ],
+          "completeness_rule": "逐场景至少保存适用目标容器结构/发生时点/可用来源及一次实证或可验证等价证据；尚未生成、真实空池、读取失败各有独立状态；场景缺口仅根据Human/OS范围批准例外。",
+          "known_facts": [
+            {
+              "item": "S1–S8及Q1/Q2/Q4/Q5边界已获Human确认；v25记录了部分实际普通/年度Reader路径。",
+              "evidence_status": "human_requirement_plus_developer_repository_evidence"
+            }
+          ],
+          "unknowns": [
+            {
+              "question_id": "EVQ-03",
+              "scope": "S2–S8 实际 Native 阶段、临时池生命周期和已支持源覆盖",
+              "closure_evidence": "真实场景分阶段读取/manifest与必要Native/UI校验",
+              "status": "unknown"
+            }
+          ],
+          "acceptance_criterion_ids": [
+            "SC-01",
+            "SC-02",
+            "SC-04"
+          ]
+        },
+        {
+          "result_item_id": "RES-03",
+          "title": "统一字段来源/权限/值域/可修改性契约",
+          "kind": "interface",
+          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "expected_end_state": "每个目标字段拥有统一且可机器校验的读取、原生值/显示值、取值范围、来源权威、读写权限、时间变化特征和跨字段对象依赖描述，支持明确的UNKNOWN扩展，不把可读冒充可写。",
+          "components": [
+            "只读比赛/历史原生事实，低频世界线/全局设置，高频球员教练球队状态，跨对象复合业务状态四类使用场景",
+            "与修改频率独立的readable/write_candidate/write_validated/write_authorized等操作成熟度和角色权限",
+            "typed类型、合法值域、枚举、特殊值、来源单位/UI单位、变换及版本",
+            "源端游戏引擎自然变化与外部决定变更的区分",
+            "对象身份/阶段/关联/敏感字段/禁止角色读取与导出规则",
+            "字段或操作未知时只阻断相关危险操作，其余已实证读能力可继续"
+          ],
+          "relations": [
+            "RES-01 native source fields -> capability contract -> RES-04 read/query and RES-05 potential mutation/validation"
+          ],
+          "inputs_outputs": [
+            "输入：实证字段字典/Native证据/UI目标/历史权限规则",
+            "输出：可查询字段能力目录和操作合法性检查信息，任何UNKNOWN都带缺口及扩展条件"
+          ],
+          "completeness_rule": "已实证范围字段逐项有权限、来源、值域及变化类别；缺证字段不赋写权限；受限字段在普通查询中不可泄漏；可提供机器验证报告。",
+          "known_facts": [
+            {
+              "item": "Q3已决定全字段统一契约与非关键模糊项独立扩展。",
+              "evidence_status": "human_requirement"
+            }
+          ],
+          "unknowns": [
+            {
+              "question_id": "EVQ-04",
+              "scope": "Native各字段合法值域、写入可行性及副作用",
+              "closure_evidence": "实证Native代码/UI/授权测试档的分层验证；不能仅凭名字或旧研究",
+              "status": "unknown"
+            }
+          ],
+          "acceptance_criterion_ids": [
+            "SC-03",
+            "SC-05"
+          ]
+        },
+        {
+          "result_item_id": "RES-04",
+          "title": "统一批量采集、不可变数据库及确定性查询",
+          "kind": "function",
+          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "expected_end_state": "复用和扩展v25单档SQLite、Reader/Codec、来源账本、追加历史、按时点视图、增量与年度有证据补录；提供有界、幂等、可分页、跨对象且受权限约束的采集、查询和导出。",
+          "components": [
+            "存档绑定、版本/进程安全重连、源有效性检查",
+            "原生身份/对象目录及年度/阶段特定增量采集",
+            "采集一致性单元、partial失效与freshness、历史不可覆盖",
+            "按时点查询、Native vs canonical 与计算值标识、权限裁剪",
+            "局部失败隔离、恢复、快照、校验与数据迁移副本"
+          ],
+          "relations": [
+            "RES-01/02 source evidence -> RES-03 policy -> acquisition -> SQLite facts -> public/owner query, RES-06 verification"
+          ],
+          "inputs_outputs": [
+            "输入：Human触发的单次采集请求/限定字段族与场景/独立存档绑定",
+            "输出：当次数据填充结果、受控查询、导出、历史观察与缺口/冲突证据"
+          ],
+          "completeness_rule": "目标场景经验证读取数据可正确入库查回，源时间不虚刷新，已冻结事实不可改，重复请求幂等，跨档隔离、权限、生存期/恢复按可观察测试通过；已存在v25能力优先复用。",
+          "known_facts": [
+            {
+              "item": "v25提供20族Reader、单档数据库及年度补录和Box严格性候选；其329回归及迁移检查为开发者机器记录，独立审核另行进行。",
+              "evidence_status": "developer_provided_repository_evidence_not_independent_final_acceptance"
+            }
+          ],
+          "unknowns": [
+            {
+              "question_id": "EVQ-05",
+              "scope": "新阶段容器所需的Schema/Reader增量及现有v25与正式主线兼容方式",
+              "closure_evidence": "固定候选对账、独立审查、02/03证据驱动物理设计",
+              "status": "unknown"
+            }
+          ],
+          "acceptance_criterion_ids": [
+            "SC-01",
+            "SC-03",
+            "SC-04"
+          ]
+        },
+        {
+          "result_item_id": "RES-05",
+          "title": "统一可授权Native写入与大批量操作执行结果",
+          "kind": "function",
+          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "expected_end_state": "提供未来受Human逐任务授权的确定性原生操作接口；按具体字段/对象/阶段合法条件预检，经可追溯的一致性单元执行、原生读回与必要保存/重载验证，输出可定位、可恢复的批量结果；不在01b或当前规划执行任何真实写入。",
+          "components": [
+            "对象/字段确定性寻址与期望旧值版本条件",
+            "合法值域/联动规则/权限/来源身份预检与dry-run方案",
+            "有限批大小、一致性单元、幂等执行ID和批准范围记录",
+            "字段级/对象级Native写后读回、游戏覆盖与保存/重载证据",
+            "部分失败/冲突/补偿或失败停止、成功与失败明细",
+            "区分低频世界线设置与常改球员技能/徽章/合同等领域及复合签约操作"
+          ],
+          "relations": [
+            "RES-03 capability/permission -> write plan -> authorized Native control -> readback -> RES-04 observed DB and RES-06 audit"
+          ],
+          "inputs_outputs": [
+            "输入：Human明确批准的存档、字段、对象、期望旧值、目标值及范围",
+            "输出：预检失败/未获授权/执行成功及可复查读回、部分失败和恢复信息"
+          ],
+          "completeness_rule": "离线/受控测试通过数据验证与错误注入，真实游戏写入的成功只能在单独明确授权并核验的测试档里按范围宣称；单字段可写不证明多对象业务自动成功，不能承诺批量绝对零错误。",
+          "known_facts": [
+            {
+              "item": "Human批准的是统一读写架构目标和分阶段开发原则，不是直接游戏内存写入。",
+              "evidence_status": "human_requirement"
+            }
+          ],
+          "unknowns": [
+            {
+              "question_id": "EVQ-06",
+              "scope": "具体字段/目标游戏运行阶段的写入安全、副作用、持久化与复合交易/签约一致性",
+              "closure_evidence": "需独立Human授权后分领域实机读回、保存/加载及副作用证据",
+              "status": "unknown"
+            }
+          ],
+          "acceptance_criterion_ids": [
+            "SC-03",
+            "SC-05"
+          ]
+        },
+        {
+          "result_item_id": "RES-06",
+          "title": "覆盖缺口、自动验证、版本演进及有界工程交付",
+          "kind": "document",
+          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "expected_end_state": "所有实际游戏场景、容器/字段、Reader/操作契约及测试形成机器可比对覆盖矩阵和标准场景交付包；模糊字段有界延期并可独立补全；每个工程包具备固定证据/版本、独立复验、适用范围和发布门禁。",
+          "components": [
+            "S1–S8及S7子窗口的scene_manifest、来源状态与覆盖报告",
+            "Native原始证据指纹与只读/typed查询比对",
+            "已验证能力 vs 仅开发者声明 vs UNKNOWN/延期缺口、来源成熟度",
+            "自动化场景一致性/身份/值域/分页/权限/恢复/容量范围测试",
+            "现有v25能力对账与增量差异报告，预防重复开发",
+            "按统一01/01b目标拆分有界工程包及集中集成验收，100季容量按真实完整赛季再评估"
+          ],
+          "relations": [
+            "RES-01–05 -> evidence and acceptance matrix -> independent reviews -> Human gates"
+          ],
+          "inputs_outputs": [
+            "输入：场景证据、受控执行输出、源/字段字典、OS run记录",
+            "输出：完成状态、每项对应的真实证据、缺口扩展任务及可比较的版本报告"
+          ],
+          "completeness_rule": "能逐个追踪结果项/场景/容器/字段/操作的完成或明确缺口状态；按要求生成可复查测试证据且不把未生成或未测试项标成DONE；独立审核和master权限另行办理。",
+          "known_facts": [
+            {
+              "item": "Q2=C风险分级、Q5=B标准场景包、Q6=B有界分包；v25修复交付目前仍独立审核NOT_RUN。",
+              "evidence_status": "human_requirement_plus_developer_repository_evidence"
+            }
+          ],
+          "unknowns": [
+            {
+              "question_id": "EVQ-07",
+              "scope": "全量覆盖表逐个页面/阶段的实际目标、自动化测试性能和可分包边界",
+              "closure_evidence": "01b Human确认、02证据核对、03设计与04/07测试",
+              "status": "unknown"
+            }
+          ],
+          "acceptance_criterion_ids": [
+            "SC-01",
+            "SC-02",
+            "SC-03",
+            "SC-04",
+            "SC-05"
+          ]
+        }
+      ],
+      "coverage": [
+        {
+          "success_criterion_id": "SC-01",
+          "result_item_ids": [
+            "RES-01",
+            "RES-02",
+            "RES-04",
+            "RES-06"
+          ],
+          "evidence_questions": [
+            "EVQ-01",
+            "EVQ-02",
+            "EVQ-03",
+            "EVQ-05"
+          ]
+        },
+        {
+          "success_criterion_id": "SC-02",
+          "result_item_ids": [
+            "RES-01",
+            "RES-02",
+            "RES-06"
+          ],
+          "evidence_questions": [
+            "EVQ-01",
+            "EVQ-03"
+          ]
+        },
+        {
+          "success_criterion_id": "SC-03",
+          "result_item_ids": [
+            "RES-01",
+            "RES-03",
+            "RES-04",
+            "RES-05"
+          ],
+          "evidence_questions": [
+            "EVQ-02",
+            "EVQ-04",
+            "EVQ-06"
+          ]
+        },
+        {
+          "success_criterion_id": "SC-04",
+          "result_item_ids": [
+            "RES-01",
+            "RES-02",
+            "RES-04",
+            "RES-06"
+          ],
+          "evidence_questions": [
+            "EVQ-01",
+            "EVQ-05",
+            "EVQ-07"
+          ]
+        },
+        {
+          "success_criterion_id": "SC-05",
+          "result_item_ids": [
+            "RES-03",
+            "RES-05",
+            "RES-06"
+          ],
+          "evidence_questions": [
+            "EVQ-04",
+            "EVQ-06"
+          ]
+        }
+      ],
+      "deliberation_queue": [
+        {
+          "id": "RR-01",
+          "result_item_id": "RES-01",
+          "topic": "Missing whole containers versus ambiguous fields: completion gate and Human exceptions",
+          "status": "PENDING",
+          "recommended_choice": "B"
+        },
+        {
+          "id": "RR-02",
+          "result_item_id": "RES-02",
+          "topic": "Scene-by-scene operational deliverables and checkpoint evidence",
+          "status": "PENDING"
+        },
+        {
+          "id": "RR-03",
+          "result_item_id": "RES-03",
+          "topic": "Field write capability maturity, value-range, semantic guards and complex operations",
+          "status": "PENDING"
+        },
+        {
+          "id": "RR-04",
+          "result_item_id": "RES-04",
+          "topic": "Acquire frequency and incremental reads versus observed state plus snapshot contract",
+          "status": "PENDING"
+        },
+        {
+          "id": "RR-05",
+          "result_item_id": "RES-05",
+          "topic": "Write-plan/rollback/partial failure and scoped real game write proof",
+          "status": "PENDING"
+        },
+        {
+          "id": "RR-06",
+          "result_item_id": "RES-06",
+          "topic": "Final acceptance scope, gap exceptions, bounded task handoffs",
+          "status": "PENDING"
+        }
+      ],
+      "human_complete_A_confirmation": {
+        "confirmed": false,
+        "version": "A-v1-DRAFT-01"
+      },
+      "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
+    }
+  }
+}
