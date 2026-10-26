@@ -11,7 +11,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
 DOMAIN = BASE.parent
-VERSION = 20
+VERSION = 21
 PROFILE_REF = 'config/memory_field_profile.json'
 PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
 PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
@@ -263,6 +263,20 @@ for _native,_spec in _finance_profile['packed'].items():
     _finance_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',source=f'CURRENT_NATIVE.TEAMDATA.{_native} offset={_f["offset"]} bit={_f["start_bit"]} width={_f["width"]}',unit='named Native flag/enum; neighboring packed bits excluded'))
     if 'enum' in _spec:_finance_columns.append(col(_column.removesuffix('_raw')+'_label',source='CURRENT_NATIVE '+_spec['enum']+' exact enum label',null_meaning='UNREGISTERED_NATIVE_ENUM_CODE; original raw code is retained'))
 table('native_team_finance_observations','native_finance_id','RES-M','one typed Native core TEAM finance projection; observation season is context, not accounting coverage',_finance_columns,unique=[('team_id','unit_id')],source='CURRENT_NATIVE_TEAMDATA_SIGNED_UNSIGNED_FLOAT_ENUM; same-unit game_mode_observations; no derived cap-space/profit/legal-spending assertion')
+_lineup_profile=json.loads((BASE/'lineup_native_profile.json').read_bytes())
+TABLES['team_rotation_slots'].columns.extend([ref('source_player_id','native_player_sources','player_source_id',False),col('source_kind',source='CURRENT_NATIVE.TEAMDATA.LineupPlayer pointer array; NULL for legacy observations'),col('pointer_status',source='EVIDENCE_POINTER_ALIGNMENT_POOL_RANGE_AND_RECIPROCAL_ROSTER'),col('native_playing_time_raw','INTEGER',check='native_playing_time_raw BETWEEN 0 AND 127',source='CURRENT_NATIVE.PLAYERDATA.PlayingTime unsigned7 bits at+248 bit18; same-unit source pointer',unit='Native value; UI minutes, units and actual deployment unproved')])
+TABLES['team_rotation_slots'].grain='one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role'
+_lineup_columns=[T(),U(),ref('observation_season_id','seasons','season_id'),col('custom_lineup_name',source='CURRENT_NATIVE.TEAMDATA.CustomLineupName UTF16[12]',null_meaning='EMPTY_OR_INVALID_NATIVE_NAME; custom_name_status distinguishes cases'),col('custom_name_status',required=True,source='EVIDENCE_UTF16_PREFIX_VALIDATION'),col('number_of_lineup_players_raw','INTEGER',required=True,check='number_of_lineup_players_raw BETWEEN 0 AND 15',source='CURRENT_NATIVE.TEAMDATA.NumberOfLineupPlayers unsigned4 bits; not array extent'),col('advanced_axis0_count','INTEGER',required=True,source='CURRENT_NATIVE AdvancedRotationPlayerId dimension0 extent; no clock-unit inference'),col('advanced_axis1_count','INTEGER',required=True,source='CURRENT_NATIVE AdvancedRotationPlayerId dimension1 extent; no position-label inference')]
+for _native,_column in _lineup_profile['team_flag_columns'].items():
+    _f=_lineup_profile['team_flags'][_native];_lineup_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} IN (0,1)',source=f'CURRENT_NATIVE.TEAMDATA.{_native} offset={_f["offset"]} bit={_f["start_bit"]}',unit='observed Native bool32 flag; no played-game effect asserted'))
+table('team_lineup_observations','lineup_observation_id','RES-T','one Native global lineup/control context for a core team',_lineup_columns,unique=[('team_id','unit_id')],source='CURRENT_NATIVE_TEAMDATA_POINTER_ARRAYS_DIMENSIONS_FLAGS_AND_CUSTOM_NAME')
+table('native_player_rotation_observations','player_rotation_id','RES-P','one public Native PLAYER rotation field pair, independent of a current lineup',[
+    U(),ref('source_player_id','native_player_sources','player_source_id'),ref('player_id','players',required=False),col('playing_time_raw','INTEGER',required=True,check='playing_time_raw BETWEEN 0 AND 127',source='CURRENT_NATIVE.PLAYERDATA.PlayingTime +248 bit18 width7',unit='Native unsigned value; no UI minutes conversion'),col('force_non_starter_raw','INTEGER',required=True,check='force_non_starter_raw BETWEEN 0 AND 3',source='CURRENT_NATIVE.PLAYERDATA.ForceNonStarter +764 bit26 width2'),col('force_non_starter_label',source='CURRENT_NATIVE PLAYERDATA_FORCE_NON_STARTER_TYPE exact enum',null_meaning='UNREGISTERED_NATIVE_ENUM_CODE; raw code retained')],unique=[('source_player_id','unit_id')])
+table('team_lineup_slots','lineup_slot_id','RES-T','one slot in each complete Native named five-player TEAM lineup',[
+    T(),U(),col('lineup_kind',required=True,source='CURRENT_NATIVE TEAMDATA field literal: Starter, LineupBench/Tall/Quick/Defense/3Pter/FreeThrow/Custom'),col('slot_index','INTEGER',required=True,check='slot_index BETWEEN 0 AND 4',source='zero-based Native pointer-array position; UI position names unproved'),ref('source_player_id','native_player_sources','player_source_id',False),ref('player_id','players',required=False),col('pointer_status',required=True,source='EVIDENCE_POINTER_ALIGNMENT_POOL_RANGE_AND_RECIPROCAL_ROSTER')],unique=[('team_id','unit_id','lineup_kind','slot_index')],source='CURRENT_NATIVE TEAMDATA named PLAYERDATA pointer arrays; actual pointer addresses remain restricted artifacts')
+table('team_advanced_rotation_slots','advanced_rotation_id','RES-T','one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values',[
+    T(),U(),col('axis0_index','INTEGER',required=True,check='axis0_index BETWEEN 0 AND 47',source='CURRENT_NATIVE array dimension0/stride10; period/minute labels unproved'),col('axis1_index','INTEGER',required=True,check='axis1_index BETWEEN 0 AND 4',source='CURRENT_NATIVE array dimension1/stride2; position labels unproved'),col('native_player_id_raw','INTEGER',required=True,check='native_player_id_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.TEAMDATA.AdvancedRotationPlayerId uint16[48][5]'),col('namespace_status',required=True,source='UNVERIFIED Native ID namespace; no source/canonical player assigned')],unique=[('team_id','unit_id','axis0_index','axis1_index')])
+
 table('team_state_observations','state_id','RES-T','one team observed native chemistry/fan state',[T(),U()]+
     [col('chemistry_raw','REAL',source='src/config.py TEAM +0xEC4 float32',unit='native float; UI scale not newly observed'),
      col('fan_interest_raw','REAL',source='src/config.py TEAM +0xF7C float32',unit='native float; no percentage conversion')],unique=[('team_id','unit_id')])
@@ -598,9 +612,10 @@ for c in TABLES['game_period_scores'].columns:
 # move that source parent ahead of badges/contracts for DDL, ingest and migration.
 _ordered={}
 for _name,_table in TABLES.items():
-    if _name=='player_vitals_observations':
+    if _name=='team_rotation_slots':
         _ordered['native_player_sources']=TABLES['native_player_sources'];_ordered['native_college_observations']=TABLES['native_college_observations']
-    if _name not in ('native_player_sources','native_college_observations'):_ordered[_name]=_table
+    if _name=='team_lineup_slots':_ordered['team_rotation_slots']=TABLES['team_rotation_slots']
+    if _name not in ('native_player_sources','native_college_observations','team_rotation_slots'):_ordered[_name]=_table
 TABLES=_ordered
 
 
@@ -628,6 +643,11 @@ def schema_sql():
     for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations','market_state_observations','player_attribute_snapshots','player_tendency_snapshots','player_play_type_slots'):
         out.append(f'''CREATE TRIGGER {name}_native_source_unit BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;''')
     out.append('''CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;''')
+    for name in ('native_player_rotation_observations','team_rotation_slots','team_lineup_slots'):
+        out.append(f'''CREATE TRIGGER {name}_native_rotation_subject BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native rotation subject'); END;''')
+    for name in ('team_lineup_slots','team_advanced_rotation_slots'):
+        out.append(f'''CREATE TRIGGER {name}_lineup_context BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) BEGIN SELECT RAISE(ABORT,'Native lineup slot lacks same-unit team context'); END;''')
+    out.append('''CREATE TRIGGER native_global_lineup_context BEFORE INSERT ON team_rotation_slots WHEN NEW.source_kind='LineupPlayer' AND (NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) OR NEW.planned_minutes IS NOT NULL OR NEW.role_code IS NOT NULL OR (NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_rotation_observations r WHERE r.unit_id=NEW.unit_id AND r.source_player_id=NEW.source_player_id AND r.playing_time_raw IS NEW.native_playing_time_raw))) BEGIN SELECT RAISE(ABORT,'Native global lineup lacks matching source or invents minutes/role'); END;''')
     for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
         out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
     for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:

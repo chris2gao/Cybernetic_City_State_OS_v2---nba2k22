@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=20),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=21),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -245,29 +245,6 @@ CREATE TRIGGER "roster_memberships_no_update" BEFORE UPDATE ON "roster_membershi
 CREATE TRIGGER "roster_memberships_no_delete" BEFORE DELETE ON "roster_memberships" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "roster_memberships_successful_unit" BEFORE INSERT ON "roster_memberships" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
-
-CREATE TABLE "team_rotation_slots" (
-  "slot_id" TEXT NOT NULL PRIMARY KEY,
-  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
-  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
-  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
-  "slot_index" INTEGER NOT NULL CHECK (slot_index>=0),
-  "planned_minutes" INTEGER,
-  "role_code" TEXT,
-  UNIQUE ("team_id","unit_id","slot_index")
-) STRICT;
-
-CREATE INDEX "idx_team_rotation_slots_team_id" ON "team_rotation_slots" ("team_id");
-
-CREATE INDEX "idx_team_rotation_slots_player_id" ON "team_rotation_slots" ("player_id");
-
-CREATE INDEX "idx_team_rotation_slots_unit_id" ON "team_rotation_slots" ("unit_id");
-
-CREATE TRIGGER "team_rotation_slots_no_update" BEFORE UPDATE ON "team_rotation_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
-
-CREATE TRIGGER "team_rotation_slots_no_delete" BEFORE DELETE ON "team_rotation_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
-
-CREATE TRIGGER "team_rotation_slots_successful_unit" BEFORE INSERT ON "team_rotation_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "native_player_sources" (
   "player_source_id" TEXT NOT NULL PRIMARY KEY,
@@ -1402,6 +1379,141 @@ CREATE TRIGGER "native_team_finance_observations_no_update" BEFORE UPDATE ON "na
 CREATE TRIGGER "native_team_finance_observations_no_delete" BEFORE DELETE ON "native_team_finance_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "native_team_finance_observations_successful_unit" BEFORE INSERT ON "native_team_finance_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "team_lineup_observations" (
+  "lineup_observation_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "observation_season_id" TEXT NOT NULL REFERENCES seasons(season_id) ON DELETE RESTRICT,
+  "custom_lineup_name" TEXT,
+  "custom_name_status" TEXT NOT NULL,
+  "number_of_lineup_players_raw" INTEGER NOT NULL CHECK (number_of_lineup_players_raw BETWEEN 0 AND 15),
+  "advanced_axis0_count" INTEGER NOT NULL,
+  "advanced_axis1_count" INTEGER NOT NULL,
+  "has_advanced_rotation_raw" INTEGER NOT NULL CHECK (has_advanced_rotation_raw IN (0,1)),
+  "uses_custom_lineup_name_raw" INTEGER NOT NULL CHECK (uses_custom_lineup_name_raw IN (0,1)),
+  "enable_lineup_custom_raw" INTEGER NOT NULL CHECK (enable_lineup_custom_raw IN (0,1)),
+  "manual_build_starter_raw" INTEGER NOT NULL CHECK (manual_build_starter_raw IN (0,1)),
+  "manual_build_lineup_bench_raw" INTEGER NOT NULL CHECK (manual_build_lineup_bench_raw IN (0,1)),
+  "manual_build_lineup_tall_raw" INTEGER NOT NULL CHECK (manual_build_lineup_tall_raw IN (0,1)),
+  "manual_build_lineup_quick_raw" INTEGER NOT NULL CHECK (manual_build_lineup_quick_raw IN (0,1)),
+  "manual_build_lineup_defense_raw" INTEGER NOT NULL CHECK (manual_build_lineup_defense_raw IN (0,1)),
+  "manual_build_lineup3_pter_raw" INTEGER NOT NULL CHECK (manual_build_lineup3_pter_raw IN (0,1)),
+  "manual_build_lineup_free_throw_raw" INTEGER NOT NULL CHECK (manual_build_lineup_free_throw_raw IN (0,1)),
+  "manual_build_lineup_custom_raw" INTEGER NOT NULL CHECK (manual_build_lineup_custom_raw IN (0,1)),
+  UNIQUE ("team_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_team_lineup_observations_team_id" ON "team_lineup_observations" ("team_id");
+
+CREATE INDEX "idx_team_lineup_observations_unit_id" ON "team_lineup_observations" ("unit_id");
+
+CREATE INDEX "idx_team_lineup_observations_observation_season_id" ON "team_lineup_observations" ("observation_season_id");
+
+CREATE TRIGGER "team_lineup_observations_no_update" BEFORE UPDATE ON "team_lineup_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_lineup_observations_no_delete" BEFORE DELETE ON "team_lineup_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_lineup_observations_successful_unit" BEFORE INSERT ON "team_lineup_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "native_player_rotation_observations" (
+  "player_rotation_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "source_player_id" TEXT NOT NULL REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "playing_time_raw" INTEGER NOT NULL CHECK (playing_time_raw BETWEEN 0 AND 127),
+  "force_non_starter_raw" INTEGER NOT NULL CHECK (force_non_starter_raw BETWEEN 0 AND 3),
+  "force_non_starter_label" TEXT,
+  UNIQUE ("source_player_id","unit_id")
+) STRICT;
+
+CREATE INDEX "idx_native_player_rotation_observations_unit_id" ON "native_player_rotation_observations" ("unit_id");
+
+CREATE INDEX "idx_native_player_rotation_observations_source_player_id" ON "native_player_rotation_observations" ("source_player_id");
+
+CREATE INDEX "idx_native_player_rotation_observations_player_id" ON "native_player_rotation_observations" ("player_id");
+
+CREATE TRIGGER "native_player_rotation_observations_no_update" BEFORE UPDATE ON "native_player_rotation_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_rotation_observations_no_delete" BEFORE DELETE ON "native_player_rotation_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "native_player_rotation_observations_successful_unit" BEFORE INSERT ON "native_player_rotation_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "team_rotation_slots" (
+  "slot_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "slot_index" INTEGER NOT NULL CHECK (slot_index>=0),
+  "planned_minutes" INTEGER,
+  "role_code" TEXT,
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "source_kind" TEXT,
+  "pointer_status" TEXT,
+  "native_playing_time_raw" INTEGER CHECK (native_playing_time_raw BETWEEN 0 AND 127),
+  UNIQUE ("team_id","unit_id","slot_index")
+) STRICT;
+
+CREATE INDEX "idx_team_rotation_slots_team_id" ON "team_rotation_slots" ("team_id");
+
+CREATE INDEX "idx_team_rotation_slots_player_id" ON "team_rotation_slots" ("player_id");
+
+CREATE INDEX "idx_team_rotation_slots_unit_id" ON "team_rotation_slots" ("unit_id");
+
+CREATE INDEX "idx_team_rotation_slots_source_player_id" ON "team_rotation_slots" ("source_player_id");
+
+CREATE TRIGGER "team_rotation_slots_no_update" BEFORE UPDATE ON "team_rotation_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_rotation_slots_no_delete" BEFORE DELETE ON "team_rotation_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_rotation_slots_successful_unit" BEFORE INSERT ON "team_rotation_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "team_lineup_slots" (
+  "lineup_slot_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "lineup_kind" TEXT NOT NULL,
+  "slot_index" INTEGER NOT NULL CHECK (slot_index BETWEEN 0 AND 4),
+  "source_player_id" TEXT REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
+  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
+  "pointer_status" TEXT NOT NULL,
+  UNIQUE ("team_id","unit_id","lineup_kind","slot_index")
+) STRICT;
+
+CREATE INDEX "idx_team_lineup_slots_team_id" ON "team_lineup_slots" ("team_id");
+
+CREATE INDEX "idx_team_lineup_slots_unit_id" ON "team_lineup_slots" ("unit_id");
+
+CREATE INDEX "idx_team_lineup_slots_source_player_id" ON "team_lineup_slots" ("source_player_id");
+
+CREATE INDEX "idx_team_lineup_slots_player_id" ON "team_lineup_slots" ("player_id");
+
+CREATE TRIGGER "team_lineup_slots_no_update" BEFORE UPDATE ON "team_lineup_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_lineup_slots_no_delete" BEFORE DELETE ON "team_lineup_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_lineup_slots_successful_unit" BEFORE INSERT ON "team_lineup_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "team_advanced_rotation_slots" (
+  "advanced_rotation_id" TEXT NOT NULL PRIMARY KEY,
+  "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "axis0_index" INTEGER NOT NULL CHECK (axis0_index BETWEEN 0 AND 47),
+  "axis1_index" INTEGER NOT NULL CHECK (axis1_index BETWEEN 0 AND 4),
+  "native_player_id_raw" INTEGER NOT NULL CHECK (native_player_id_raw BETWEEN 0 AND 65535),
+  "namespace_status" TEXT NOT NULL,
+  UNIQUE ("team_id","unit_id","axis0_index","axis1_index")
+) STRICT;
+
+CREATE INDEX "idx_team_advanced_rotation_slots_team_id" ON "team_advanced_rotation_slots" ("team_id");
+
+CREATE INDEX "idx_team_advanced_rotation_slots_unit_id" ON "team_advanced_rotation_slots" ("unit_id");
+
+CREATE TRIGGER "team_advanced_rotation_slots_no_update" BEFORE UPDATE ON "team_advanced_rotation_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_advanced_rotation_slots_no_delete" BEFORE DELETE ON "team_advanced_rotation_slots" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "team_advanced_rotation_slots_successful_unit" BEFORE INSERT ON "team_advanced_rotation_slots" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "team_state_observations" (
   "state_id" TEXT NOT NULL PRIMARY KEY,
@@ -2797,6 +2909,18 @@ CREATE TRIGGER player_tendency_snapshots_native_source_unit BEFORE INSERT ON pla
 CREATE TRIGGER player_play_type_slots_native_source_unit BEFORE INSERT ON player_play_type_slots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;
 
 CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;
+
+CREATE TRIGGER native_player_rotation_observations_native_rotation_subject BEFORE INSERT ON native_player_rotation_observations WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native rotation subject'); END;
+
+CREATE TRIGGER team_rotation_slots_native_rotation_subject BEFORE INSERT ON team_rotation_slots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native rotation subject'); END;
+
+CREATE TRIGGER team_lineup_slots_native_rotation_subject BEFORE INSERT ON team_lineup_slots WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native rotation subject'); END;
+
+CREATE TRIGGER team_lineup_slots_lineup_context BEFORE INSERT ON team_lineup_slots WHEN NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) BEGIN SELECT RAISE(ABORT,'Native lineup slot lacks same-unit team context'); END;
+
+CREATE TRIGGER team_advanced_rotation_slots_lineup_context BEFORE INSERT ON team_advanced_rotation_slots WHEN NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) BEGIN SELECT RAISE(ABORT,'Native lineup slot lacks same-unit team context'); END;
+
+CREATE TRIGGER native_global_lineup_context BEFORE INSERT ON team_rotation_slots WHEN NEW.source_kind='LineupPlayer' AND (NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) OR NEW.planned_minutes IS NOT NULL OR NEW.role_code IS NOT NULL OR (NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_rotation_observations r WHERE r.unit_id=NEW.unit_id AND r.source_player_id=NEW.source_player_id AND r.playing_time_raw IS NEW.native_playing_time_raw))) BEGIN SELECT RAISE(ABORT,'Native global lineup lacks matching source or invents minutes/role'); END;
 
 CREATE TRIGGER "gameplan_rotation_observations_same_unit" BEFORE INSERT ON gameplan_rotation_observations WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit gameplan child'); END;
 

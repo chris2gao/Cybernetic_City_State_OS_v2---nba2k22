@@ -79,7 +79,7 @@ def query_connection(path,readonly=False):
 
 PUBLIC_QUERIES=frozenset(('history','history_page','player_card','staff_card','team_card','prospect_card','market_snapshot','native_honors','native_player_seasons','record_book','settings_snapshot','rules_snapshot','planning_snapshot','gameplan_card','game_box','schedule','player_badges','player_play_types','native_player_details','native_player_state','native_player_skills','native_affiliations','awards','league_history','native_news','native_transactions','export_jsonl','season_summary','player_seasons','league_calendar','game_mode','current_period_stats'))
 
-PUBLIC_QUERIES=PUBLIC_QUERIES|{'native_team_finance'}
+PUBLIC_QUERIES=PUBLIC_QUERIES|{'native_team_finance','team_lineups','native_player_rotation'}
 
 def query_at(database,observed_through,query_name,*args,**kwargs):
     if query_name not in PUBLIC_QUERIES:raise PermissionError('unsupported historical public query')

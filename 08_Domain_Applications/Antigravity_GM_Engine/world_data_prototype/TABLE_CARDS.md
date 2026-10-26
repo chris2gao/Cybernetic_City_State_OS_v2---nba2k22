@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **88**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **92**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -20,7 +20,6 @@ Actual tables: **88**. Every table is STRICT and append-only. A SQLite owner can
 | `fact_conflicts` | RES-D | one quarantined conflict with an existing fact | `conflict_id` | unit_id -> capture_units(unit_id) | ADD |
 | `team_seasons` | RES-T | team participation in one season | `team_season_id` | team_id -> teams(team_id); season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
 | `roster_memberships` | RES-T | observed player team membership; not a transfer event | `membership_id` | player_id -> players(player_id); team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
-| `team_rotation_slots` | RES-T | one ordered team rotation setting | `slot_id` | team_id -> teams(team_id); player_id -> players(player_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_player_sources` | RES-D | one PLAYER pool source projection with both native identity fields and optional current canonical match | `player_source_id` | unit_id -> capture_units(unit_id); player_id -> players(player_id) | ADD |
 | `native_college_observations` | RES-P | one distinct pointed COLLEGEDATA referent in a capture unit | `college_observation_id` | unit_id -> capture_units(unit_id) | ADD |
 | `player_vitals_observations` | RES-P | one actual vitals observation | `observation_id` | player_id -> players(player_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); native_college_obs_id -> native_college_observations(college_observation_id) | ADD |
@@ -50,6 +49,11 @@ Actual tables: **88**. Every table is STRICT and append-only. A SQLite owner can
 | `mentorship_relations` | RES-C | observed actual mentor association | `mentor_id` | player_id -> players(player_id); mentor_player_id -> players(player_id); team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `team_finance_observations` | RES-M | native financial snapshot, not external CBA inference | `finance_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_team_finance_observations` | RES-M | one typed Native core TEAM finance projection; observation season is context, not accounting coverage | `native_finance_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); observation_season_id -> seasons(season_id) | ADD |
+| `team_lineup_observations` | RES-T | one Native global lineup/control context for a core team | `lineup_observation_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); observation_season_id -> seasons(season_id) | ADD |
+| `native_player_rotation_observations` | RES-P | one public Native PLAYER rotation field pair, independent of a current lineup | `player_rotation_id` | unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); player_id -> players(player_id) | ADD |
+| `team_rotation_slots` | RES-T | one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role | `slot_id` | team_id -> teams(team_id); player_id -> players(player_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id) | ADD |
+| `team_lineup_slots` | RES-T | one slot in each complete Native named five-player TEAM lineup | `lineup_slot_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); player_id -> players(player_id) | ADD |
+| `team_advanced_rotation_slots` | RES-T | one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values | `advanced_rotation_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `team_state_observations` | RES-T | one team observed native chemistry/fan state | `state_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `market_state_observations` | RES-M | native or external market state with explicit origin | `market_id` | player_id -> players(player_id); staff_id -> staff_members(staff_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id) | ADD |
 | `external_transaction_events` | RES-M | explicit completed external transaction, never roster-diff inference | `transaction_id` | save_id -> saves(save_id); unit_id -> capture_units(unit_id) | ADD |
