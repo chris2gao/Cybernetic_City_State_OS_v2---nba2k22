@@ -8,6 +8,8 @@ from schema_model import ident,VERSION,TABLES,dictionary
 from database_operations import file_sha256
 source=root/'01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/_runtime/world-saves/nba2k22_test_01/world-v24.sqlite'
 final_copy='--final-copy' in sys.argv
+managed_readonly='--managed-readonly' in sys.argv
+if managed_readonly:assert '--verify-existing-copy' in sys.argv and final_copy
 target=run/('_runtime/migration/world-v25-final.sqlite' if final_copy else '_runtime/migration/world-v25.sqlite');target.parent.mkdir(parents=True,exist_ok=True)
 def write(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
 before=file_sha256(source);assert before=='f76b943e4c716748b4df1c8f6c94779fb57ebb312bbeeb9e4d4dfd97a024b218'
@@ -41,4 +43,5 @@ assert new.execute('SELECT count(*) FROM player_restricted_observations').fetcho
 baselines=[dict(r) for r in new.execute("SELECT refresh_family,refresh_period_year,refresh_kind,count(*) AS runs FROM capture_runs WHERE refresh_kind='BASELINE' GROUP BY refresh_family,refresh_period_year")]
 claims=new.execute('SELECT count(*) FROM annual_fact_claims').fetchone()[0];header={'old':dict(old.execute('SELECT * FROM saves').fetchone()),'new':dict(new.execute('SELECT * FROM saves').fetchone())};old.close();new.close();after=file_sha256(source);assert before==after
 report={'status':'V24_ORIGINAL_AND_ALL_OLD_ROWS_PRESERVED_IN_NEW_V25_COPY','source':str(source),'target':str(target),'source_sha256_before':before,'source_sha256_after':after,'target_sha256':file_sha256(target),'schema_version':25,'tables_compared':len(results),'old_rows_preserved':sum(r['rows'] for r in results),'old_field_values_except_schema_header_unchanged':True,'new_catalog_rows':14,'initial_comparison_adjustment':'native_fields intentionally appends14 new-schema catalog rows; every old key/value is still compared; initial strict checker retained as evidence','comparison':results,'header':header,'annual_baselines':baselines,'backfilled_identity_claims':claims,'integrity':'ok','foreign_key_errors':0,'restricted_rows':0,'active_save_binding_changed':False,'game_access':False,'elapsed_seconds':round(time.monotonic()-start,2)}
-write(out/('v24-copy-migration-final.json' if final_copy else 'v24-copy-migration.json'),report);print(json.dumps({k:v for k,v in report.items() if k not in ('comparison','header','annual_baselines')},ensure_ascii=False))
+if not managed_readonly:write(out/('v24-copy-migration-final.json' if final_copy else 'v24-copy-migration.json'),report)
+print(json.dumps(report if managed_readonly else {k:v for k,v in report.items() if k not in ('comparison','header','annual_baselines')},ensure_ascii=False))
