@@ -21,7 +21,7 @@ class RefreshTests(unittest.TestCase):
         self.counter+=1;key='synthetic-unit-'+str(self.counter);source=SOURCES[family][2];annual=SOURCES[family][3]
         with connect(self.db) as conn:
             conn.execute('INSERT OR IGNORE INTO seasons(season_id,season_code,save_id) VALUES(?,?,?)',('season:native-year:'+str(year),'NATIVE_YEAR:'+str(year),'fixture'))
-            conn.execute('INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year) VALUES(?,?,?,?,?,?)',(key,'season:native-year:'+str(year),'2026-10-25T00:00:00Z',grade,annual,year if annual else None))
+            conn.execute('INSERT INTO capture_runs(run_id,season_id,observed_at,source_grade,refresh_family,refresh_period_year,refresh_kind) VALUES(?,?,?,?,?,?,?)',(key,'season:native-year:'+str(year),'2026-10-25T00:00:00Z',grade,annual,year if annual else None,'BASELINE' if annual else None))
             conn.execute('INSERT INTO capture_units(unit_id,run_id,source_key,payload_sha256,unit_status,observed_at) VALUES(?,?,?,?,?,?)',(key,key,source,'0'*64,'success','2026-10-25T00:00:00Z'))
         return key
     def adapter(self,family,pid,save,filename,directory):

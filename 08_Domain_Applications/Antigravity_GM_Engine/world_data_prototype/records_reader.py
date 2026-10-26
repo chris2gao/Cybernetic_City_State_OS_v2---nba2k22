@@ -114,6 +114,8 @@ def records_payload(binding,manifest,artifacts,observed_at,token):
     if len(indices)!=len(set(indices)) or any(type(i) is not int or not 0<=i<count for i in indices):raise ValueError('invalid/duplicate record source index')
     if coverage=='COMPLETE_NATIVE_COUNT':
         if set(indices)!=set(range(count)):raise ValueError('incomplete native record count')
+    elif coverage=='EVIDENCED_NATIVE_INCREMENTAL_SUBSET':
+        if set(indices)!=set(manifest['selected_source_indices']):raise ValueError('incremental record selection mismatch')
     elif coverage!='CURATED_RESEARCH_SUBSET':raise ValueError('record source coverage must be explicit')
     facts={'season_record_entries':[],'field_gaps':[]}
     for row in rows:
@@ -145,7 +147,10 @@ def records_payload(binding,manifest,artifacts,observed_at,token):
         'facts':facts,'artifacts':artifacts,'completeness':'PARTIAL'}
 
 
-def capture_records(pid,save_directory,loaded_filename,new_output_directory):
+def capture_records(pid,save_directory,loaded_filename,new_output_directory,*,addition_request=None):
+    if addition_request is not None:
+        from annual_additions import capture_annual_additions
+        return capture_annual_additions(pid,save_directory,loaded_filename,new_output_directory,addition_request,family='RECORD_BOOK')
     from cadence import prepare_annual_capture,attach_annual_period
     binding,binding_hash=read_binding(save_directory,loaded_filename)
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);reader=None;stamp=datetime.now(timezone.utc).isoformat()

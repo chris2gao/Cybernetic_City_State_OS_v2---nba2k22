@@ -26,7 +26,7 @@ class ReviewBoxCompletenessTests(unittest.TestCase):
         facts=self.fixture.boxes();facts['native_box_observations'][0]['identity_status']='UNRESOLVED';self.assertRejected(facts)
     def test_later_native_only_partial_unit_does_not_borrow_old_state_or_boxes(self):
         self.fixture.put('old','2026-10-24T00:00:00Z',self.fixture.boxes());facts=self.fixture.boxes();self.fixture.put('partial','2026-10-25T00:00:00Z',{'native_box_observations':facts['native_box_observations']})
-        value=schedule(self.db)[0];self.assertEqual(value['unit_id'],'partial');self.assertEqual(value['canonical_box_complete'],0);self.assertIsNone(value['home_points_derived']);self.assertEqual(value['unit_id'],game_box(self.db,'g')['selected_unit_id'])
+        value=schedule(self.db)[0];self.assertEqual(value['box_unit_id'],'partial');self.assertEqual(value['unit_id'],'old');self.assertEqual(value['status_code'],'2');self.assertEqual(value['canonical_box_complete'],0);self.assertIsNone(value['home_points_derived']);self.assertEqual(value['box_unit_id'],game_box(self.db,'g')['selected_unit_id'])
     def test_source_order_compares_utc_and_microseconds(self):
         self.fixture.put('local','2026-10-24T08:00:00+08:00',self.fixture.boxes());self.fixture.put('utc','2026-10-24T00:00:00.000001Z',self.fixture.boxes());self.assertEqual(schedule(self.db)[0]['unit_id'],'utc')
 

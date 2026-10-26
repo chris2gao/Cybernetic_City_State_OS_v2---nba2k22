@@ -2,7 +2,7 @@
 
 Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
 
-Actual tables: **100**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+Actual tables: **101**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
 
 | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
 |---|---|---|---|---|---|
@@ -12,12 +12,13 @@ Actual tables: **100**. Every table is STRICT and append-only. A SQLite owner ca
 | `players` | RES-P | stable save-local player instance | `player_id` |  | EXTEND/PRESERVE |
 | `staff_members` | RES-C | save-local staff identity | `staff_id` |  | ADD |
 | `games` | RES-G | one identified season game, not its changing observed state | `game_id` | season_id -> seasons(season_id); home_team_id -> teams(team_id); away_team_id -> teams(team_id) | EXTEND/PRESERVE |
-| `capture_runs` | RES-D | one acquisition session | `run_id` | season_id -> seasons(season_id) | EXTEND/PRESERVE |
+| `capture_runs` | RES-D | one acquisition session | `run_id` | season_id -> seasons(season_id); refresh_baseline_unit_id -> capture_units(unit_id) | EXTEND/PRESERVE |
 | `capture_units` | RES-D | one immutable atomic source consistency unit | `unit_id` | run_id -> capture_runs(run_id) | EXTEND/PRESERVE |
 | `source_artifacts` | RES-D | one bounded source artifact hash, no public raw bytes | `artifact_id` | unit_id -> capture_units(unit_id) | EXTEND/PRESERVE |
 | `native_fields` | RES-D | versioned source-field mapping metadata | `field_id` |  | EXTEND/PRESERVE |
 | `field_gaps` | RES-D | one unresolved target-field gap or Human exception | `gap_id` | field_id -> native_fields(field_id) | EXTEND/PRESERVE |
 | `fact_conflicts` | RES-D | one quarantined conflict with an existing fact | `conflict_id` | unit_id -> capture_units(unit_id) | ADD |
+| `annual_fact_claims` | RES-D | idempotent annual typed-record membership; no business values stored in this ledger | `claim_id` | unit_id -> capture_units(unit_id); baseline_unit_id -> capture_units(unit_id) | ADD |
 | `team_seasons` | RES-T | team participation in one season | `team_season_id` | team_id -> teams(team_id); season_id -> seasons(season_id); unit_id -> capture_units(unit_id) | ADD |
 | `roster_memberships` | RES-T | observed player team membership; not a transfer event | `membership_id` | player_id -> players(player_id); team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
 | `native_player_sources` | RES-D | one PLAYER pool source projection with both native identity fields and optional current canonical match | `player_source_id` | unit_id -> capture_units(unit_id); player_id -> players(player_id) | ADD |

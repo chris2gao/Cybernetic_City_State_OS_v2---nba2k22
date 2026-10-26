@@ -82,6 +82,7 @@ PUBLIC_QUERIES=frozenset(('history','history_page','player_card','staff_card','t
 PUBLIC_QUERIES=PUBLIC_QUERIES|{'native_team_finance','team_lineups','native_player_rotation','native_staff','staff_team_slots','native_staff_history','current_coach_stats'}
 PUBLIC_QUERIES=PUBLIC_QUERIES|{'league_standings','player_leaderboard'}
 PUBLIC_QUERIES=PUBLIC_QUERIES|{'query_facts','export_filtered_facts'}
+PUBLIC_QUERIES=PUBLIC_QUERIES|{'annual_facts'}
 
 def query_at(database,observed_through,query_name,*args,**kwargs):
     if query_name not in PUBLIC_QUERIES:raise PermissionError('unsupported historical public query')

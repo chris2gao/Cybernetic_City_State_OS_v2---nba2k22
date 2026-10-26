@@ -1,5 +1,7 @@
 # NBA2K22 per-save world database — full-system development
 
+Bounded review-fix candidate2026-10-26: [F-01/F-02/F-03 repair contract and commands](REVIEW_FIXES_F01_F02_F03.md), schema v25/101 tables/1789 columns. This is a separate repair branch from frozen17ec1cea; the original v24 database/binding and closed regular-season baseline remain retained. Annual full baselines remain once per family/year; explicit evidence-backed targeted additions and receipt-preserving conflict isolation are separate. Final verification/migration/delivery pointers live in `run-20261026-nba2k22-world-data-review-fixes-001`.
+
 Task: `nba2k22-world-data-full-implementation-01`. This is an **in-progress engineering candidate**: executable all-domain structure, historical adapters and an operator-bound live game/player adapter; full live-source coverage, whole-system acceptance and independent review are outstanding.
 
 Human baseline closeout2026-10-26: the active bounded increment is finished and this regular-season engineering candidate is frozen for separate independent review. Start with [BASELINE_HANDOFF.md](BASELINE_HANDOFF.md) for the exact code/database,20Reader families, actual validation, semantic gaps and next-task lifecycle acquisition entry. This is not full underlying-system acceptance; continued feature/Native work stops after closeout.

@@ -41,11 +41,16 @@ def league_payload(binding,manifest,artifacts,observed_at,token,existing=None):
         value={'season_id':f'season:native-year:{y}','season_code':f'NATIVE_YEAR:{y}'};periods[y]=value;return value['season_id']
     if mode=='HISTORY_AWARDS':
         rows=manifest['history'];count=manifest['history_descriptor']['count']
-        if len(rows)!=count or {r['source_row_index'] for r in rows}!=set(range(count)):raise ValueError('incomplete/duplicate native history slots')
+        incremental=manifest.get('incremental_selection',False)
+        if incremental:
+            if len(rows)!=len(manifest['selected_history_indices']) or {r['source_row_index'] for r in rows}!=set(manifest['selected_history_indices']) or any(not 0<=r['source_row_index']<count for r in rows):raise ValueError('targeted history selection mismatch')
+        elif len(rows)!=count or {r['source_row_index'] for r in rows}!=set(range(count)):raise ValueError('incomplete/duplicate native history slots')
         facts.update({'native_league_history_observations':[],'season_award_instances':[],'award_recipients':[],'fact_conflicts':[]})
         groups=defaultdict(list);links={}
         for r in rows:
             label=r['type_label'];y=r['values']['Year'];i=r['source_row_index']
+            if incremental:
+                links[i]=(None,'TARGETED_RAW_SOURCE_ONLY; CANONICAL_GROUP_COMPLETENESS_UNPROVED');continue
             if label not in AWARD_SUBJECTS:links[i]=(None,'NOT_AWARD_CATEGORY');continue
             if not 1<=y<year:links[i]=(None,'SOURCE_YEAR_NOT_CLOSED');continue
             groups[y,label].append(r)
@@ -85,11 +90,12 @@ def league_payload(binding,manifest,artifacts,observed_at,token,existing=None):
                 v=r['stat_values'][native];item.update({prefix+'_stat_word_raw':v['word_u32'],prefix+'_stat_real':v['value_real'],prefix+'_stat_text':v['value_text']})
             facts['native_league_history_observations'].append(item)
         matrix=manifest['award_winner_matrix']
-        if len(matrix)!=75 or {(r['award_slot_index'],r['recipient_slot_index']) for r in matrix}!={(a,b) for a in range(15) for b in range(5)}:raise ValueError('incomplete award matrix')
+        expected_matrix={tuple(p) for p in manifest['selected_matrix_slots']} if incremental else {(a,b) for a in range(15) for b in range(5)}
+        if len(matrix)!=len(expected_matrix) or {(r['award_slot_index'],r['recipient_slot_index']) for r in matrix}!=expected_matrix:raise ValueError('incomplete award matrix')
         facts['native_award_matrix_observations']=matrix
         manager=manifest['manager_slot40_candidate'];chain=manager.get('free_chain') or {}
         control.update({'history_slot_count':count,'manager_first_free_candidate':manager['first_word'],
-            'free_chain_status':chain.get('status'),'free_chain_count':len(chain['indices']) if 'indices' in chain else None,'matrix_cell_count':75})
+            'free_chain_status':chain.get('status'),'free_chain_count':len(chain['indices']) if 'indices' in chain else None,'matrix_cell_count':len(matrix)})
         gaps=[('HISTORICAL_SUBJECT_LIFECYCLE','Inline historical identities are retained without binding current PLAYER/TEAM/STAFF','No name/ID-only canonical subject transition'),
             ('HISTORY_WORLD_SCOPE','Native roster history is source-recorded archival history, not a claim of this save simulating old events','Award type/finality basis is explicit; current-year matrix is not final'),
             ('LEAGUE_MANAGER_SLOT40_IDENTITY','Free-chain candidate is corroborative; exact manager slot identity is not yet independently proven','No allocator validity inferred solely from manager candidate')]
@@ -136,7 +142,11 @@ def league_payload(binding,manifest,artifacts,observed_at,token,existing=None):
         'facts':facts,'artifacts':artifacts,'completeness':'PARTIAL'}
 
 
-def capture_league(pid,save_directory,loaded_filename,new_output_directory,*,mode):
+def capture_league(pid,save_directory,loaded_filename,new_output_directory,*,mode,addition_request=None):
+    if addition_request is not None:
+        if mode!='HISTORY_AWARDS':raise ValueError('annual additions are not ordinary message refreshes')
+        from annual_additions import capture_annual_additions
+        return capture_annual_additions(pid,save_directory,loaded_filename,new_output_directory,addition_request,family='LEAGUE_HISTORY_AWARDS')
     if mode not in ('HISTORY_AWARDS','NEWS_TRANSACTIONS'):raise ValueError('explicit league mode required')
     binding,binding_hash=read_binding(save_directory,loaded_filename);db=bound_database(save_directory,binding)
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);reader=None;stamp=datetime.now(timezone.utc).isoformat()

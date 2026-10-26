@@ -72,14 +72,19 @@ def collect_staff_history(reader):
 
 
 def staff_history_payload(binding,m,artifacts,stamp,token,canonical):
-    if sorted(s['source_staff_index'] for s in m['staff'])!=list(range(m['staff_count'])):raise ValueError('incomplete or duplicate annual staff source directory')
+    incremental=m.get('incremental_selection',False)
+    indices=[s['source_staff_index'] for s in m['staff']]
+    if incremental:
+        if len(set(indices))!=len(indices) or any(not 0<=i<m['staff_count'] for i in indices):raise ValueError('invalid targeted staff identity context')
+    elif sorted(indices)!=list(range(m['staff_count'])):raise ValueError('incomplete or duplicate annual staff source directory')
     needed=defaultdict(set)
     for s in m['staff']:
         if len(s['references'])!=40:raise ValueError('complete40-position annual staff reference array required')
         for index in s['references']:
             status=classify_reference(index,m['stat_bank_count'])
             if status.startswith('RESOLVED'):needed[index].add(s['source_staff_index'])
-    if len(m['stats'])!=len(needed) or {r['source_stat_index'] for r in m['stats']}!=set(needed):raise ValueError('referenced annual coach stat records are incomplete or duplicated')
+    selected=set(m['selected_stat_indices']) if incremental else set(needed)
+    if not selected<=set(needed) or len(m['stats'])!=len(selected) or {r['source_stat_index'] for r in m['stats']}!=selected:raise ValueError('referenced annual coach stat records are incomplete or duplicated')
     expected={s['column'] for s in PROFILE['stat_fields'].values()}|{'source_stat_index','stat_year','subject_reference_count'}
     for r in m['stats']:
         if set(r)!=expected or r['stat_year'] is not None or r['subject_reference_count']!=len(needed[r['source_stat_index']]):raise ValueError('coach stat field family/year/shared-reference count inconsistent')
@@ -88,7 +93,9 @@ def staff_history_payload(binding,m,artifacts,stamp,token,canonical):
         index=row['source_staff_index'];subjects[index]=subject=f'{unit}:staff:{index}';key='staff:native:'+str(row['native_staff_id_raw']);accepted=uid[row['native_staff_id_raw']]==1 and row['name_status']=='OBSERVED_UTF16' and canonical.get(key)==row['observed_name']
         facts['native_staff_history_subjects'].append({k:v for k,v in row.items() if k!='references'}|{'history_subject_id':subject,'staff_id':key if accepted else None,'canonical_link_status':'UNIQUE_CURRENT_POOL_ID_AND_EXACT_EXISTING_NAME; LIFECYCLE_UNPROVED' if accepted else 'SOURCE_ONLY_CANONICAL_LINK_WITHHELD'})
         if len(row['references'])!=40:raise ValueError('complete40-position annual staff reference array required')
-        for position,index in enumerate(row['references']):facts['native_staff_stat_links'].append({'history_subject_id':subject,'array_position':position,'native_stat_index_signed':index,'coach_stat_id':stats.get(index),'link_status':classify_reference(index,m['stat_bank_count'])})
+        for position,index in enumerate(row['references']):
+            if incremental and index not in selected:continue
+            facts['native_staff_stat_links'].append({'history_subject_id':subject,'array_position':position,'native_stat_index_signed':index,'coach_stat_id':stats.get(index),'link_status':classify_reference(index,m['stat_bank_count'])})
     for row in m['stats']:facts['native_coach_stat_observations'].append({'coach_stat_id':stats[row['source_stat_index']],**row})
     facts['game_mode_observations']=game_mode_payload(binding,m['game_mode'],[],stamp,token)['facts']['game_mode_observations']
     facts['field_gaps']=[{'affected_domain':'RES-H','target_field':name,'reason':reason,'impact':impact} for name,reason,impact in (
@@ -98,7 +105,10 @@ def staff_history_payload(binding,m,artifacts,stamp,token,canonical):
     return attach_annual_period(payload,FAMILY,m['season_year'])
 
 
-def capture_staff_history(pid,save_directory,loaded_filename,new_output_directory):
+def capture_staff_history(pid,save_directory,loaded_filename,new_output_directory,*,addition_request=None):
+    if addition_request is not None:
+        from annual_additions import capture_annual_additions
+        return capture_annual_additions(pid,save_directory,loaded_filename,new_output_directory,addition_request,family=FAMILY)
     binding,bhash=read_binding(save_directory,loaded_filename);db=bound_database(save_directory,binding);out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);reader=None;stamp=datetime.now(timezone.utc).isoformat()
     try:
         reader=ReadOnlyGameProcess(pid);year,previous=prepare_annual_capture(reader,db,FAMILY)

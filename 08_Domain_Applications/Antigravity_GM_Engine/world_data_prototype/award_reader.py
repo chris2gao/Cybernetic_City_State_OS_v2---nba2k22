@@ -212,6 +212,8 @@ def honors_payload(binding,manifest,artifacts,observed_at,token,canonical_legacy
     if any(not 0<=i<tables[1]['count'] for i in pi) or any(not 0<=i<tables[24]['count'] for i in si):raise ValueError('native source index outside descriptor')
     if manifest['source_coverage']=='COMPLETE_NATIVE_PLAYER_POOL_AND_STAT_BANK':
         if set(pi)!=set(range(tables[1]['count'])) or set(si)!=set(range(tables[24]['count'])):raise ValueError('incomplete native pool coverage')
+    elif manifest['source_coverage']=='EVIDENCED_NATIVE_INCREMENTAL_SUBSET':
+        if set(si)!=set(manifest['selected_stat_indices']) or players or links:raise ValueError('targeted stat-only increment must not invent subject identity context')
     elif manifest['source_coverage']!='CURATED_RESEARCH_SUBSET':raise ValueError('native source coverage must be explicit')
     facts={k:[] for k in ('native_fields','native_player_stat_observations','native_player_sources','native_player_stat_links','native_identity_links','field_gaps')}
     bindings=json.loads(PROFILE_PATH.read_bytes())['stat_fields']
@@ -265,7 +267,10 @@ def honors_payload(binding,manifest,artifacts,observed_at,token,canonical_legacy
         'facts':facts,'artifacts':artifacts,'completeness':'PARTIAL'}
 
 
-def capture_native_honors(pid,save_directory,loaded_filename,new_output_directory):
+def capture_native_honors(pid,save_directory,loaded_filename,new_output_directory,*,addition_request=None):
+    if addition_request is not None:
+        from annual_additions import capture_annual_additions
+        return capture_annual_additions(pid,save_directory,loaded_filename,new_output_directory,addition_request,family='NATIVE_HONOR_STATS')
     from cadence import prepare_annual_capture,attach_annual_period
     binding,binding_hash=read_binding(save_directory,loaded_filename)
     out=Path(new_output_directory).resolve();out.mkdir(parents=True,exist_ok=False);reader=None;stamp=datetime.now(timezone.utc).isoformat()

@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
 CREATE TABLE "saves" (
   "singleton" INTEGER NOT NULL PRIMARY KEY,
   "save_id" TEXT NOT NULL,
-  "schema_version" INTEGER NOT NULL CHECK (schema_version=24),
+  "schema_version" INTEGER NOT NULL CHECK (schema_version=25),
   "created_at" TEXT NOT NULL,
   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
   "game_build" TEXT,
@@ -94,10 +94,18 @@ CREATE TABLE "capture_runs" (
   "save_binding_ref" TEXT,
   "refresh_family" TEXT CHECK (refresh_family IN ('RECORD_BOOK','NATIVE_HONOR_STATS','LEAGUE_HISTORY_AWARDS','STAFF_SEASON_HISTORY')),
   "refresh_period_year" INTEGER CHECK (refresh_period_year BETWEEN 1 AND 9999),
-  CHECK ((refresh_family IS NULL)=(refresh_period_year IS NULL))
+  "refresh_kind" TEXT CHECK (refresh_kind IN ('BASELINE','ADDITION')),
+  "refresh_baseline_unit_id" TEXT REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "refresh_request_sha256" TEXT,
+  "refresh_evidence_sha256" TEXT,
+  CHECK ((refresh_family IS NULL)=(refresh_period_year IS NULL)),
+  CHECK ((refresh_kind IS NULL)=(refresh_family IS NULL)),
+  CHECK (refresh_kind IS NOT 'ADDITION' OR (refresh_baseline_unit_id IS NOT NULL AND length(refresh_request_sha256)=64 AND refresh_request_sha256 IS NOT NULL AND length(refresh_evidence_sha256)=64 AND refresh_evidence_sha256 IS NOT NULL))
 ) STRICT;
 
 CREATE INDEX "idx_capture_runs_season_id" ON "capture_runs" ("season_id");
+
+CREATE INDEX "idx_capture_runs_refresh_baseline_unit_id" ON "capture_runs" ("refresh_baseline_unit_id");
 
 CREATE TRIGGER "capture_runs_no_update" BEFORE UPDATE ON "capture_runs" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
@@ -200,6 +208,30 @@ CREATE TRIGGER "fact_conflicts_no_update" BEFORE UPDATE ON "fact_conflicts" BEGI
 CREATE TRIGGER "fact_conflicts_no_delete" BEFORE DELETE ON "fact_conflicts" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
 
 CREATE TRIGGER "fact_conflicts_successful_unit" BEFORE INSERT ON "fact_conflicts" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+
+CREATE TABLE "annual_fact_claims" (
+  "claim_id" TEXT NOT NULL PRIMARY KEY,
+  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "baseline_unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
+  "refresh_family" TEXT NOT NULL,
+  "refresh_period_year" INTEGER NOT NULL,
+  "table_name" TEXT NOT NULL,
+  "record_key" TEXT NOT NULL,
+  "field_name" TEXT,
+  "fact_key" TEXT NOT NULL,
+  "fact_sha256" TEXT NOT NULL CHECK (length(fact_sha256)=64),
+  UNIQUE ("baseline_unit_id","table_name","fact_key")
+) STRICT;
+
+CREATE INDEX "idx_annual_fact_claims_unit_id" ON "annual_fact_claims" ("unit_id");
+
+CREATE INDEX "idx_annual_fact_claims_baseline_unit_id" ON "annual_fact_claims" ("baseline_unit_id");
+
+CREATE TRIGGER "annual_fact_claims_no_update" BEFORE UPDATE ON "annual_fact_claims" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "annual_fact_claims_no_delete" BEFORE DELETE ON "annual_fact_claims" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
+
+CREATE TRIGGER "annual_fact_claims_successful_unit" BEFORE INSERT ON "annual_fact_claims" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
 
 CREATE TABLE "team_seasons" (
   "team_season_id" TEXT NOT NULL PRIMARY KEY,
@@ -1851,13 +1883,13 @@ CREATE TABLE "native_coach_stat_observations" (
   "source_stat_index" INTEGER NOT NULL CHECK (source_stat_index>=0),
   "stat_year" INTEGER CHECK (stat_year IS NULL),
   "subject_reference_count" INTEGER NOT NULL CHECK (subject_reference_count>=1),
-  "next_free_raw" INTEGER NOT NULL CHECK (next_free_raw BETWEEN 0 AND 65535),
-  "coach_wins_raw" INTEGER NOT NULL CHECK (coach_wins_raw BETWEEN 0 AND 65535),
-  "coach_losses_raw" INTEGER NOT NULL CHECK (coach_losses_raw BETWEEN 0 AND 65535),
-  "coach_playoff_wins_raw" INTEGER NOT NULL CHECK (coach_playoff_wins_raw BETWEEN 0 AND 65535),
-  "coach_playoff_losses_raw" INTEGER NOT NULL CHECK (coach_playoff_losses_raw BETWEEN 0 AND 65535),
-  "coach_won_title_raw" INTEGER NOT NULL CHECK (coach_won_title_raw BETWEEN 0 AND 255),
-  "coach_won_coach_of_the_year_raw" INTEGER NOT NULL CHECK (coach_won_coach_of_the_year_raw BETWEEN 0 AND 255),
+  "next_free_raw" INTEGER CHECK (next_free_raw BETWEEN 0 AND 65535),
+  "coach_wins_raw" INTEGER CHECK (coach_wins_raw BETWEEN 0 AND 65535),
+  "coach_losses_raw" INTEGER CHECK (coach_losses_raw BETWEEN 0 AND 65535),
+  "coach_playoff_wins_raw" INTEGER CHECK (coach_playoff_wins_raw BETWEEN 0 AND 65535),
+  "coach_playoff_losses_raw" INTEGER CHECK (coach_playoff_losses_raw BETWEEN 0 AND 65535),
+  "coach_won_title_raw" INTEGER CHECK (coach_won_title_raw BETWEEN 0 AND 255),
+  "coach_won_coach_of_the_year_raw" INTEGER CHECK (coach_won_coach_of_the_year_raw BETWEEN 0 AND 255),
   UNIQUE ("unit_id","source_stat_index")
 ) STRICT;
 
@@ -3261,7 +3293,27 @@ CREATE TRIGGER staff_history_link_stat_unit BEFORE INSERT ON native_staff_stat_l
 
 CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;
 
-CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_family IS NOT NULL AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;
+CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_kind='BASELINE' AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ' AND r.refresh_kind='BASELINE') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;
+
+CREATE TRIGGER annual_addition_requires_baseline BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n WHERE n.run_id=NEW.run_id AND n.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM capture_runs n JOIN capture_units b ON b.unit_id=n.refresh_baseline_unit_id JOIN capture_runs r ON r.run_id=b.run_id WHERE n.run_id=NEW.run_id AND n.source_grade='LIVE_READ' AND b.unit_status='success' AND r.source_grade='LIVE_READ' AND r.refresh_kind='BASELINE' AND r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year) BEGIN SELECT RAISE(ABORT,'annual addition requires matching verified baseline'); END;
+
+CREATE UNIQUE INDEX annual_addition_request_once ON capture_runs(refresh_family,refresh_period_year,refresh_request_sha256) WHERE refresh_kind='ADDITION' AND source_grade='LIVE_READ';
+
+CREATE TRIGGER native_coach_stat_baseline_complete BEFORE INSERT ON native_coach_stat_observations WHEN (NEW."next_free_raw" IS NULL OR NEW."coach_wins_raw" IS NULL OR NEW."coach_losses_raw" IS NULL OR NEW."coach_playoff_wins_raw" IS NULL OR NEW."coach_playoff_losses_raw" IS NULL OR NEW."coach_won_title_raw" IS NULL OR NEW."coach_won_coach_of_the_year_raw" IS NULL) AND NOT EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') BEGIN SELECT RAISE(ABORT,'non-addition coach history requires complete Native fields'); END;
+
+CREATE TRIGGER season_record_entries_annual_addition_claim BEFORE INSERT ON "season_record_entries" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='season_record_entries' AND c.record_key=NEW.record_id AND c.refresh_family='RECORD_BOOK') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
+
+CREATE TRIGGER native_player_stat_observations_annual_addition_claim BEFORE INSERT ON "native_player_stat_observations" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='native_player_stat_observations' AND c.record_key=NEW.stat_observation_id AND c.refresh_family='NATIVE_HONOR_STATS') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
+
+CREATE TRIGGER native_league_history_observations_annual_addition_claim BEFORE INSERT ON "native_league_history_observations" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='native_league_history_observations' AND c.record_key=NEW.history_observation_id AND c.refresh_family='LEAGUE_HISTORY_AWARDS') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
+
+CREATE TRIGGER native_award_matrix_observations_annual_addition_claim BEFORE INSERT ON "native_award_matrix_observations" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='native_award_matrix_observations' AND c.record_key=NEW.matrix_observation_id AND c.refresh_family='LEAGUE_HISTORY_AWARDS') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
+
+CREATE TRIGGER season_award_instances_annual_addition_claim BEFORE INSERT ON "season_award_instances" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='season_award_instances' AND c.record_key=NEW.award_id AND c.refresh_family='LEAGUE_HISTORY_AWARDS') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
+
+CREATE TRIGGER award_recipients_annual_addition_claim BEFORE INSERT ON "award_recipients" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='award_recipients' AND c.record_key=NEW.recipient_id AND c.refresh_family='LEAGUE_HISTORY_AWARDS') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
+
+CREATE TRIGGER native_coach_stat_observations_annual_addition_claim BEFORE INSERT ON "native_coach_stat_observations" WHEN EXISTS(SELECT 1 FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_id=NEW.unit_id AND r.refresh_kind='ADDITION') AND NOT EXISTS(SELECT 1 FROM annual_fact_claims c WHERE c.unit_id=NEW.unit_id AND c.table_name='native_coach_stat_observations' AND c.record_key=NEW.coach_stat_id AND c.refresh_family='STAFF_SEASON_HISTORY') BEGIN SELECT RAISE(ABORT,'annual addition typed fact lacks claim'); END;
 
 CREATE TRIGGER game_source_reuse_origin BEFORE INSERT ON game_source_checks WHEN NEW.box_mode='REUSED_FROZEN_BOX' AND NOT EXISTS(SELECT 1 FROM game_source_checks o JOIN game_state_observations s ON s.game_id=o.game_id AND s.unit_id=o.unit_id JOIN capture_units u ON u.unit_id=o.unit_id WHERE o.game_id=NEW.game_id AND o.unit_id=NEW.prior_full_unit_id AND o.box_mode='FULL_NATIVE_BOX' AND o.header_sha256=NEW.header_sha256 AND s.is_final=1 AND u.unit_status='success') BEGIN SELECT RAISE(ABORT,'game reuse lacks matching frozen full source'); END;
 
