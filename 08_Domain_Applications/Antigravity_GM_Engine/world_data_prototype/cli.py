@@ -60,6 +60,9 @@ def main():
     from league_views import PLAYER_METRICS
     leaders=sub.add_parser('player-leaderboard');leaders.add_argument('database');leaders.add_argument('season_id');leaders.add_argument('--metric',choices=PLAYER_METRICS,default='points_per_game');leaders.add_argument('--phase-code');leaders.add_argument('--team-scope');leaders.add_argument('--team-id');leaders.add_argument('--min-games',type=int,default=1);leaders.add_argument('--min-attempts',type=int,default=0);leaders.add_argument('--ascending',action='store_true');leaders.add_argument('--unit-id');leaders.add_argument('--offset',type=int,default=0);leaders.add_argument('--limit',type=int,default=20)
     leaders.add_argument('--null-team-scope',action='store_true',help='Select literal NULL team_scope in a mixed-scope source unit')
+    field_query=sub.add_parser('fact-fields');field_query.add_argument('table')
+    fact_query=sub.add_parser('query-facts');fact_query.add_argument('database');fact_query.add_argument('table');fact_query.add_argument('--columns-json');fact_query.add_argument('--filters-json');fact_query.add_argument('--limit',type=int,default=100);fact_query.add_argument('--cursor-json')
+    filtered_export=sub.add_parser('export-filtered');filtered_export.add_argument('database');filtered_export.add_argument('table');filtered_export.add_argument('new_output_directory');filtered_export.add_argument('--columns-json');filtered_export.add_argument('--filters-json');filtered_export.add_argument('--max-rows',type=int,default=10000)
     hist=sub.add_parser('history');hist.add_argument('database');hist.add_argument('table');hist.add_argument('--entity-key');hist.add_argument('--entity-id');hist.add_argument('--limit',type=int,default=200)
     exp=sub.add_parser('export');exp.add_argument('database');exp.add_argument('table');exp.add_argument('destination');exp.add_argument('--limit',type=int,default=10000)
     mig=sub.add_parser('migrate-v1');mig.add_argument('source');mig.add_argument('new_database')
@@ -128,7 +131,7 @@ def main():
     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
     for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,mode_read,period_read,team,finance_read,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,native_seasons,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
-    for read_parser in (lineup_read,rotation_read,staff_native,staff_slots,staff_history,coach_stats,standings,leaders):read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
+    for read_parser in (lineup_read,rotation_read,staff_native,staff_slots,staff_history,coach_stats,standings,leaders,fact_query,filtered_export):read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
     args=parser.parse_args()
     if getattr(args,'as_of',None) is not None:
         from observation_scope import observed_as_of
@@ -141,6 +144,15 @@ def main():
 
 
 def dispatch(args):
+    if args.action=='fact-fields':
+        from query import fact_fields
+        print(json.dumps(fact_fields(args.table),ensure_ascii=False));return
+    if args.action=='query-facts':
+        from query import query_facts
+        print(json.dumps(query_facts(args.database,args.table,columns=json.loads(args.columns_json) if args.columns_json is not None else None,filters=json.loads(args.filters_json) if args.filters_json is not None else None,limit=args.limit,cursor=json.loads(args.cursor_json) if args.cursor_json is not None else None),ensure_ascii=False));return
+    if args.action=='export-filtered':
+        from query import export_filtered_facts
+        print(json.dumps(export_filtered_facts(args.database,args.new_output_directory,args.table,columns=json.loads(args.columns_json) if args.columns_json is not None else None,filters=json.loads(args.filters_json) if args.filters_json is not None else None,max_rows=args.max_rows),ensure_ascii=False));return
     if args.action=='standings':
         from query import league_standings
         print(json.dumps(league_standings(args.database,args.season_id,phase_code=args.phase_code,unit_id=args.unit_id,offset=args.offset,limit=args.limit),ensure_ascii=False));return
