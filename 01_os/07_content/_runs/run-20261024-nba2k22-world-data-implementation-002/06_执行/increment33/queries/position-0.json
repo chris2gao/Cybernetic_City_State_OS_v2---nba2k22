@@ -1,0 +1,106 @@
+{
+  "status": "OBSERVED",
+  "source": {
+    "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+    "observed_at": "2026-10-26T09:13:49.850725+00:00",
+    "completeness": "PARTIAL",
+    "source_grade": "LIVE_READ",
+    "refresh_family": "STAFF_SEASON_HISTORY",
+    "refresh_period_year": 2022,
+    "decoder_version": "NATIVE_ANNUAL_COACH_STATS_SIGNED_REFERENCE_V1"
+  },
+  "source_staff_count": 1470,
+  "reference_position": 0,
+  "storage_role_profile": {
+    "rule": "NATIVE_COACH_STAT_STORAGE_ROLES_V1",
+    "interpretation": "CODE_DERIVED_NOT_AN_OBSERVED_FIELD",
+    "calendar_year_mapping": "UNKNOWN",
+    "limits": [
+      "Position0 is the Native stat read/add/write target; calendar year, phase and finalization are not established by this role.",
+      "Cleanup visits positions0..38; the meaning of untouched position39 is UNKNOWN, not assumed to be career totals.",
+      "NextFree65535 matches the marker written when a node is removed from the free list and tested before reinsertion. A marker is not free-list reachability, ownership or historical person proof.",
+      "Derived query annotations preserve original raw values and stored stat_year=NULL. No getter or mutator is invoked."
+    ]
+  },
+  "records": [
+    {
+      "history_subject_id": "native-staff-history:bbfad4dcf2acda8b0c224761:staff:0",
+      "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+      "staff_id": "staff:native:70",
+      "source_staff_index": 0,
+      "native_staff_id_raw": 70,
+      "observed_name": "Doc Rivers",
+      "name_status": "OBSERVED_UTF16",
+      "canonical_link_status": "UNIQUE_CURRENT_POOL_ID_AND_EXACT_EXISTING_NAME; LIFECYCLE_UNPROVED",
+      "references": [
+        {
+          "staff_stat_link_id": "native-staff-history:bbfad4dcf2acda8b0c224761:native_staff_stat_links:0",
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "history_subject_id": "native-staff-history:bbfad4dcf2acda8b0c224761:staff:0",
+          "array_position": 0,
+          "native_stat_index_signed": 203,
+          "coach_stat_id": "native-staff-history:bbfad4dcf2acda8b0c224761:stat:203",
+          "link_status": "RESOLVED_CURRENT_BANK_INDEX; HISTORICAL_YEAR_AND_OWNERSHIP_UNPROVED",
+          "source_stat_index": 203,
+          "stat_year": null,
+          "subject_reference_count": 1,
+          "next_free_raw": 65535,
+          "coach_wins_raw": 10,
+          "coach_losses_raw": 6,
+          "coach_playoff_wins_raw": 0,
+          "coach_playoff_losses_raw": 0,
+          "coach_won_title_raw": 0,
+          "coach_won_coach_of_the_year_raw": 0,
+          "storage_roles": {
+            "basis": "CODE_DERIVED:NATIVE_COACH_STAT_STORAGE_ROLES_V1",
+            "position_role": "NATIVE_INCREMENT_TARGET_POSITION",
+            "native_increment_target": true,
+            "native_clear_loop_visits": true,
+            "next_free_marker_status": "MATCHES_NATIVE_ALLOCATION_MARKER"
+          }
+        }
+      ]
+    },
+    {
+      "history_subject_id": "native-staff-history:bbfad4dcf2acda8b0c224761:staff:1",
+      "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+      "staff_id": "staff:native:90",
+      "source_staff_index": 1,
+      "native_staff_id_raw": 90,
+      "observed_name": "Mike Budenholzer",
+      "name_status": "OBSERVED_UTF16",
+      "canonical_link_status": "UNIQUE_CURRENT_POOL_ID_AND_EXACT_EXISTING_NAME; LIFECYCLE_UNPROVED",
+      "references": [
+        {
+          "staff_stat_link_id": "native-staff-history:bbfad4dcf2acda8b0c224761:native_staff_stat_links:40",
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "history_subject_id": "native-staff-history:bbfad4dcf2acda8b0c224761:staff:1",
+          "array_position": 0,
+          "native_stat_index_signed": 187,
+          "coach_stat_id": "native-staff-history:bbfad4dcf2acda8b0c224761:stat:187",
+          "link_status": "RESOLVED_CURRENT_BANK_INDEX; HISTORICAL_YEAR_AND_OWNERSHIP_UNPROVED",
+          "source_stat_index": 187,
+          "stat_year": null,
+          "subject_reference_count": 1,
+          "next_free_raw": 65535,
+          "coach_wins_raw": 11,
+          "coach_losses_raw": 5,
+          "coach_playoff_wins_raw": 0,
+          "coach_playoff_losses_raw": 0,
+          "coach_won_title_raw": 0,
+          "coach_won_coach_of_the_year_raw": 0,
+          "storage_roles": {
+            "basis": "CODE_DERIVED:NATIVE_COACH_STAT_STORAGE_ROLES_V1",
+            "position_role": "NATIVE_INCREMENT_TARGET_POSITION",
+            "native_increment_target": true,
+            "native_clear_loop_visits": true,
+            "next_free_marker_status": "MATCHES_NATIVE_ALLOCATION_MARKER"
+          }
+        }
+      ]
+    }
+  ],
+  "has_more": true,
+  "next_after_index": 1,
+  "qualification": "Annual Native source. All40 signed references are independent; zero may resolve, negatives and out-of-bank values do not. Code-derived position0 update role does not establish a calendar year or finalized season; stat_year stays NULL. NextFree marker annotations do not prove free-list reachability or unique historical ownership. Raw title/coach-of-year bytes are not canonical award events. Original observation time is retained."
+}
