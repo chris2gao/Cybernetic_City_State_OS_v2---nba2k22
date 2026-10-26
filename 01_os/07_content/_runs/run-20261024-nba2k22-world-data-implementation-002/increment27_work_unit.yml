@@ -1,0 +1,31 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Capture the complete Native public player pool with one current-selector stat
+    reference per source, ingest non-award stats and expose a same-unit mode query.
+  implementation_or_review_method: >-
+    Recalibrate the restarted process, verify Native metadata/code, read bounded
+    96-byte public projections and only valid referenced48-byte stats, repeat all
+    subject/stat/roster/mode controls and compare raw fields with typed query output.
+  supportability_rationale: >-
+    3390 sources and3390 references are captured.461 current roster subjects include
+    370 records and91 explicit missing references.11840 raw-stat comparisons and
+    50850 protected-free PLAYER interval checks pass. Annual bucket units are unchanged.
+  feasibility_rationale: >-
+    All216 tests plus SQLite smoke pass at the executed candidate. Existing v19
+    tables are reused without migration. All1374426 prior rows in87 tables remain
+    equal by every column, and save binding is unchanged after the process restart.
+  exact_result_or_candidate_ref: 3c8860a79fef8835704ac37b2d54034d25abc0e7
+  verification_evidence:
+    - 06_执行/increment27/actual-period-stat-report.json
+    - 06_执行/increment27/queries/stephen-curry.json
+    - 06_执行/increment27/queries/current-native-mode.json
+    - 06_执行/increment27/verification/operations_report.json
+    - 06_执行/increment27/native-sources.archive.json
+    - 06_执行/increment27/world-v19.snapshot.json
+  residual_risk_or_unproved_limits:
+    - Actual current sample selects position0; special-position live transitions remain unobserved.
+    - Raw record years are never relabeled and accumulated phase remains unproved.
+    - Shared source records, allocation and historical subject lifecycle remain qualified.
+    - Packed source award bits are not imported or exposed by the ordinary adapter.
+    - UI units, full-season capacity and complete-system independent/Human acceptance remain open.
