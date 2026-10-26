@@ -3,7 +3,7 @@
   "status": "01B_DRAFT_HUMAN_REVIEW_IN_PROGRESS",
   "task_id": "nba2k22-lifecycle-scene-consensus-01",
   "date": "2026-10-26",
-  "draft_number": 6,
+  "draft_number": 7,
   "engineering_work_started": false,
   "stage01": {
     "consensus_A0": {
@@ -12,7 +12,7 @@
       "human_confirmation_ref": "Human chat message 2026-10-26: 批准 NBA2K22 下一阶段需求共识 A0-v1 合并版本，正式进入 01b 需求结果建模。"
     },
     "requirement_result_A": {
-      "version": "A-v1-DRAFT-06",
+      "version": "A-v1-DRAFT-07",
       "objective": "在保留v25既有基础的前提下，取得PC NBA2K22 MyLEAGUE全生命周期可用目标原生容器/字段的可追溯结构与真实填充能力；统一字段/操作契约，并形成可独立授权的确定性批量读写底层及可复验工程交付。该版本只是预期结果模型，不是已经实施的功能。",
       "result_items": [
         {
@@ -243,28 +243,42 @@
           "result_item_id": "RES-04",
           "title": "统一批量采集、不可变数据库及确定性查询",
           "kind": "function",
-          "review_status": "RESULT_SPECIFICATION_RR04_PENDING_HUMAN",
-          "expected_end_state": "复用和扩展v25单档SQLite、Reader/Codec、来源账本、追加历史、按时点视图、增量与年度有证据补录；提供有界、幂等、可分页、跨对象且受权限约束的采集、查询和导出。",
+          "review_status": "RESULT_DEFINITION_COMPLETE_RR04_B_APPROVED_IMPLEMENTATION_EVIDENCE_OPEN",
+          "expected_end_state": "在复用现有v25单档SQLite/Reader/Codec基础上，建立跨赛季统一批量采集、逐时点追加历史、确定性权限查询与结构化导出成果；严格区分原生游戏读取或经授权原生写后成功读回的实际观察事实、外挂模型计算/候选目标值、操作计划和执行回执。模型计划中的新数值不覆盖游戏事实；只有经实际Native读回确认且满足相关对象/一致性单元约束的新数值，才能形成附来源/采集或核验时点的新原生状态事实，并按确定性查询规则成为该时点的当前投影。先前已确认历史不修改。失败/未经执行/未经确认的变更只保留计划、失败和未知状态，游戏事实保持最近一次已证观察并标注新鲜度，而不假报已同步。",
           "components": [
             "存档绑定、版本/进程安全重连、源有效性检查",
             "原生身份/对象目录及年度/阶段特定增量采集",
             "采集一致性单元、partial失效与freshness、历史不可覆盖",
             "按时点查询、Native vs canonical 与计算值标识、权限裁剪",
             "局部失败隔离、恢复、快照、校验与数据迁移副本",
-            "外部模型候选目标值/变更计划与原生实读事实的状态层次需要在RR-04确认；保持游戏权威事实与计算/建议值可区分"
+            "分层事实/计划/执行记录：Native游戏实际观察值（含按游戏原生发生的改变）、外挂拟议目标值/计算结论、经Human授权的操作意图、Native执行与读回回执。各层独立索引、不可互相伪装，实际分表/视图/列设计在02/03定稿",
+            "状态迁移成果：提出修改≠已授权≠已执行≠已生效；经目标存档/对象/字段/有效场景的Native成功读回验证，才有资格新增已确认游戏观察事实。失败、部分成功和异步未核验的部分不得提升",
+            "游戏事实为当前值的查询投影必须保留已证时点与新鲜度；尚未复采的上次有效值只能以“最近一次已证观察”呈现，不能冒充当前刚读；模拟、计算、候选值另行标识及访问控制",
+            "每次正常采集历史只追加、不重扫已收集的全部历史；对新发现缺失按证据补录一次，矛盾登记冲突而不改写历史。赛季最终累计与赛中当前累计区分，并按赛季同型容器承载",
+            "操作回执需要指向拟议计划、Human许可范围、读取前值、尝试后Native读回值与存档/赛季/对象身份，供未来RES-05同一逻辑操作的受控执行和RES-06复验使用"
           ],
           "relations": [
-            "RES-01/02 source evidence -> RES-03 policy -> acquisition -> SQLite facts -> public/owner query, RES-06 verification"
+            "RES-01/02 source evidence -> RES-03 policy -> acquisition -> SQLite facts -> public/owner query, RES-06 verification",
+            "game_native_read(source/effective_at/save/season/object) -> immutable_observed_fact -> current_state_as_of(validated_time) / previous_observation; planned_external_target -> operation_plan -> separately_authorized_execution -> native_readback_receipt -> new_verified_observed_fact_only_on_proven_success",
+            "proposals/readback/observed facts share explicit save/season/object/field identity and permission scopes; any conflicting or failed stage is never silently promoted to game source authority",
+            "original source/native display/converted and calculated values remain separately identified; historical corrections stored as appended evidence and Human-approved facts, not destructive overwrite"
           ],
           "inputs_outputs": [
             "输入：Human触发的单次采集请求/限定字段族与场景/独立存档绑定",
-            "输出：当次数据填充结果、受控查询、导出、历史观察与缺口/冲突证据"
+            "输出：当次数据填充结果、受控查询、导出、历史观察与缺口/冲突证据",
+            "输入（外挂）：外部角色依据授权可见的最新已证游戏数据产生的目标值82、计划与原因；输出：待执行目标及状态，不改变游戏实读值75",
+            "输入（获另行授权执行后）：针对已证明目标的原生操作及读回结果；输出：只有读回确认变为82且必要关联条件满足时新增实际观察82并可作为该时点当前值；否则原已证75仍保留并显示观察时间，另存未成功/不完整执行证据",
+            "查询示例：同一球员字段同时返回最近已确认游戏值、该值观察时间/新鲜度、可授权查看的待执行目标、执行状态与读回证据；普通角色不得读取其无权访问的计划或隐藏字段"
           ],
-          "completeness_rule": "目标场景经验证读取数据可正确入库查回，源时间不虚刷新，已冻结事实不可改，重复请求幂等，跨档隔离、权限、生存期/恢复按可观察测试通过；已存在v25能力优先复用。",
+          "completeness_rule": "RES-04结果要求以已证的单档Native实际观察/成功读回为游戏当前事实的来源，原始事实与历史只追加；外挂建议值、未批准目标、执行请求及回执分别保存，不得直接覆盖原生当前值。获授权的成功执行只有在目标对象/字段/值域/关系及Native读回核对后才能追加新实际状态；没有读回证据的尝试仍标记待证/失败/部分成功，不能假称已更新。所有返回值附来源、赛季、游戏/采集时点、新鲜度及权限；同档同结构支持跨100赛季，正常采集增量而不重复历史；已存在v25能力沿用，按目标场景真实读取→typed入库→查询、幂等与跨档隔离证据验收。成功写入批次的原子性/中断/修复由RES-05另行定义，不能由本次RR-04=B直接推导真实操作安全。",
           "known_facts": [
             {
               "item": "v25提供20族Reader、单档数据库及年度补录和Box严格性候选；其329回归及迁移检查为开发者机器记录，独立审核另行进行。",
               "evidence_status": "developer_provided_repository_evidence_not_independent_final_acceptance"
+            },
+            {
+              "item": "Human于2026-10-26 RR-04选择B、无额外补充：游戏实际值与外挂目标值分开；外部目标不会成为原生事实，必须另行授权执行并完成Native读回，才新增已确认实际状态。",
+              "evidence_status": "human_requirement"
             }
           ],
           "unknowns": [
@@ -276,9 +290,9 @@
             },
             {
               "question_id": "RR-04",
-              "scope": "外挂建议修改值与游戏原生实际读回值是否分离保存，什么时候允许更新数据库标为已确认的当前状态，怎样避免修改了目标值但游戏未成功写入而污染世界数据。",
-              "closure_evidence": "Human 对原生观察事实、提案与执行结果的数据边界作出明确裁决。",
-              "status": "human_decision_pending"
+              "scope": "游戏原生已证当前观察，与外挂计算/待执行目标、执行回执分层保存；成功经原生读回之后才新增游戏实际状态，未执行/失败不污染原有事实。",
+              "closure_evidence": "Human在2026-10-26明确选择RR-04=B，无额外补充；本结果的原生读取/真实写入实现与独立授权不在01b执行。",
+              "status": "human_approved_B_2026_10_26"
             }
           ],
           "acceptance_criterion_ids": [
@@ -291,7 +305,7 @@
           "result_item_id": "RES-05",
           "title": "统一可授权Native写入与大批量操作执行结果",
           "kind": "function",
-          "review_status": "CATALOG_DRAFT_NOT_YET_REVIEWED",
+          "review_status": "RESULT_SPECIFICATION_RR05_PENDING_HUMAN",
           "expected_end_state": "提供未来受Human逐任务授权的确定性原生操作接口；按具体字段/对象/阶段合法条件预检，经可追溯的一致性单元执行、原生读回与必要保存/重载验证，输出可定位、可恢复的批量结果；不在01b或当前规划执行任何真实写入。",
           "components": [
             "对象/字段确定性寻址与期望旧值版本条件",
@@ -321,6 +335,12 @@
               "scope": "具体字段/目标游戏运行阶段的写入安全、副作用、持久化与复合交易/签约一致性",
               "closure_evidence": "需独立Human授权后分领域实机读回、保存/加载及副作用证据",
               "status": "unknown"
+            },
+            {
+              "question_id": "RR-05",
+              "scope": "多字段/多对象Native写入批次以什么逻辑一致性单元验收，发生部分成功时是否终止、如何审计及恢复、能否独立提交其他已经验证的单元。",
+              "closure_evidence": "Human确定多对象业务变更与独立字段簇的成功/失败边界及必需恢复性质；02/03再按Native证据选择适用操作方法。",
+              "status": "human_decision_pending"
             }
           ],
           "acceptance_criterion_ids": [
@@ -496,14 +516,18 @@
           "id": "RR-04",
           "result_item_id": "RES-04",
           "topic": "RES-04 game-native observation versus external proposed modifications versus authorized execution receipt/readback: which value becomes canonical current state",
-          "status": "ACTIVE_PENDING_HUMAN_DECISION",
-          "recommended_choice": "B"
+          "status": "APPROVED_B_2026_10_26",
+          "recommended_choice": "B",
+          "human_choice": "B",
+          "human_supplement": "无额外补充。",
+          "disposition": "分离已证Native游戏值、外挂待执行目标值、操作计划与执行读回证据；只有经另外Human许可的Native执行后读回证实成功，才能新增实测游戏当前状态事实。未经证实值不覆盖原事实，历史追加保持。"
         },
         {
           "id": "RR-05",
           "result_item_id": "RES-05",
-          "topic": "Write-plan/rollback/partial failure and scoped real game write proof",
-          "status": "PENDING"
+          "topic": "RES-05 authorized multi-field and multi-object native write batch: logical consistency-unit boundary, partial failure, rollback/compensating repair and clear evidence",
+          "status": "ACTIVE_PENDING_HUMAN_DECISION",
+          "recommended_choice": "B"
         },
         {
           "id": "RR-06",
@@ -514,7 +538,7 @@
       ],
       "human_complete_A_confirmation": {
         "confirmed": false,
-        "version": "A-v1-DRAFT-06"
+        "version": "A-v1-DRAFT-07"
       },
       "phase_gate_note": "01a Human confirmed, 01b is drafting. 02 source verification / 03 design / engine coding and game writes NOT authorized by this draft."
     }
@@ -564,6 +588,15 @@
       "result_item_id": "RES-03",
       "status": "approved",
       "interpretation": "Shared native writer/addressing mechanism plus game-class/value-domain affinity allows representative test evidence to certify a class-wide mechanism; different side effects/permissions/identities remain exceptions. Separate Human grant required for real writes."
+    },
+    {
+      "id": "RR-04",
+      "date": "2026-10-26",
+      "selected": "B",
+      "human_supplement": "无额外补充。",
+      "result_item_id": "RES-04",
+      "status": "approved",
+      "interpretation": "Native observed game facts remain canonical; external proposed values/plans and action receipts are separate, real current observations append only on authorized and verified Native readback. No game operations authorized now."
     }
   ]
 }
