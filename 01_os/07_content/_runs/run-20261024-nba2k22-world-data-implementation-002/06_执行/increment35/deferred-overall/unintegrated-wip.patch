@@ -1,0 +1,483 @@
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md
+index befbbd21..15c86c52 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md
+@@ -2,7 +2,7 @@
+ 
+ Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.
+ 
+-Actual tables: **100**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
++Actual tables: **101**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.
+ 
+ | Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |
+ |---|---|---|---|---|---|
+@@ -51,6 +51,7 @@ Actual tables: **100**. Every table is STRICT and append-only. A SQLite owner ca
+ | `native_team_finance_observations` | RES-M | one typed Native core TEAM finance projection; observation season is context, not accounting coverage | `native_finance_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); observation_season_id -> seasons(season_id) | ADD |
+ | `team_lineup_observations` | RES-T | one Native global lineup/control context for a core team | `lineup_observation_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); observation_season_id -> seasons(season_id) | ADD |
+ | `native_player_rotation_observations` | RES-P | one public Native PLAYER rotation field pair, independent of a current lineup | `player_rotation_id` | unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); player_id -> players(player_id) | ADD |
++| `native_player_overall_observations` | RES-P | one Native overall cache word/validity observation and explicitly qualified conversion results; no getter invocation | `overall_observation_id` | unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); player_id -> players(player_id) | ADD |
+ | `team_rotation_slots` | RES-T | one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role | `slot_id` | team_id -> teams(team_id); player_id -> players(player_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id) | ADD |
+ | `team_lineup_slots` | RES-T | one slot in each complete Native named five-player TEAM lineup | `lineup_slot_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id); source_player_id -> native_player_sources(player_source_id); player_id -> players(player_id) | ADD |
+ | `team_advanced_rotation_slots` | RES-T | one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values | `advanced_rotation_id` | team_id -> teams(team_id); unit_id -> capture_units(unit_id) | ADD |
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py
+index 5d25cc67..e62fbc69 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py
+@@ -118,13 +118,14 @@ def main():
+     affiliation_query=sub.add_parser('native-affiliations');affiliation_query.add_argument('database');affiliation_query.add_argument('--subject-name');affiliation_query.add_argument('--source-index',type=int);affiliation_query.add_argument('--flag');affiliation_query.add_argument('--flag-value',type=int,default=1);affiliation_query.add_argument('--unit-id');affiliation_query.add_argument('--after-index',type=int,default=-1);affiliation_query.add_argument('--limit',type=int,default=20)
+     skill_capture=sub.add_parser('capture-player-skills');skill_capture.add_argument('pid',type=int);skill_capture.add_argument('save_directory');skill_capture.add_argument('loaded_filename');skill_capture.add_argument('new_output_directory')
+     skill_query=sub.add_parser('native-player-skills');skill_query.add_argument('database');skill_query.add_argument('--subject-name');skill_query.add_argument('--source-index',type=int);skill_query.add_argument('--unit-id');skill_query.add_argument('--after-index',type=int,default=-1);skill_query.add_argument('--limit',type=int,default=20)
++    overall_query=sub.add_parser('player-overall');overall_query.add_argument('database');overall_query.add_argument('--player-id');overall_query.add_argument('--subject-name');overall_query.add_argument('--source-index',type=int);overall_query.add_argument('--all-sources',action='store_true');overall_query.add_argument('--valid-only',action='store_true');overall_query.add_argument('--unit-id');overall_query.add_argument('--after-index',type=int,default=-1);overall_query.add_argument('--limit',type=int,default=20)
+     backup=sub.add_parser('backup-facts');backup.add_argument('database');backup.add_argument('new_output_directory')
+     restore=sub.add_parser('restore-facts');restore.add_argument('backup_directory');restore.add_argument('new_database');restore.add_argument('--expected-save-id',required=True)
+     storage=sub.add_parser('storage-profile');storage.add_argument('database')
+     paged=sub.add_parser('history-page');paged.add_argument('database');paged.add_argument('table');paged.add_argument('--entity-key');paged.add_argument('--entity-id');paged.add_argument('--limit',type=int,default=200);paged.add_argument('--cursor-json')
+     for read_parser in (card,game,season,player_season,hist,paged,exp,sched,calendar,mode_read,period_read,team,finance_read,staff,market_read,prospect,planning,gp,settings_cmd,rules_cmd,records_cmd,honor_query,native_seasons,award_cmd,history_cmd,news_cmd,tx_cmd,detail_query,badge_query,state_query,affiliation_query,skill_query):
+         read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
+-    for read_parser in (lineup_read,rotation_read,staff_native,staff_slots,staff_history,coach_stats):read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
++    for read_parser in (lineup_read,rotation_read,staff_native,staff_slots,staff_history,coach_stats,overall_query):read_parser.add_argument('--as-of',help='Timezone-aware acquisition cutoff; this is not a native game date')
+     args=parser.parse_args()
+     if getattr(args,'as_of',None) is not None:
+         from observation_scope import observed_as_of
+@@ -137,6 +138,9 @@ def main():
+ 
+ 
+ def dispatch(args):
++    if args.action=='player-overall':
++        from query import native_player_overall
++        print(json.dumps(native_player_overall(args.database,player_id=args.player_id,subject_name=args.subject_name,source_index=args.source_index,current_core_only=not args.all_sources,valid_only=args.valid_only,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+     if args.action=='coach-stats':
+         from query import current_coach_stats
+         print(json.dumps(current_coach_stats(args.database,staff_id=args.staff_id,subject_name=args.subject_name,source_index=args.source_index,resolved_only=not args.all_sources,unit_id=args.unit_id,after_index=args.after_index,limit=args.limit),ensure_ascii=False));return
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
+index d6ef3331..0848e6a3 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/field_dictionary.json
+@@ -1,6 +1,6 @@
+ {
+-  "schema_version": 24,
+-  "table_count": 100,
++  "schema_version": 25,
++  "table_count": 101,
+   "evidence_policy": "Native legal ranges UNKNOWN unless separately certified; registration and fixture replay are not live acceptance",
+   "tables": [
+     {
+@@ -61,7 +61,7 @@
+           "null_meaning": null,
+           "unit": "UNKNOWN/native representation",
+           "foreign_key": null,
+-          "sql_constraint": "schema_version=24",
++          "sql_constraint": "schema_version=25",
+           "legal_game_range": "NOT_APPLICABLE",
+           "source": "ENGINEERING_SCHEMA_VERSION",
+           "visibility": "OWNER_ONLY",
+@@ -12732,6 +12732,238 @@
+         }
+       ]
+     },
++    {
++      "name": "native_player_overall_observations",
++      "domain": "RES-P",
++      "grain": "one Native overall cache word/validity observation and explicitly qualified conversion results; no getter invocation",
++      "reason_for_table": "one Native overall cache word/validity observation and explicitly qualified conversion results; no getter invocation; independent identity/lifecycle or consistency unit",
++      "primary_key": "overall_observation_id",
++      "unique_keys": [
++        [
++          "source_player_id",
++          "unit_id"
++        ]
++      ],
++      "checks": [
++        "cache_valid_raw=1 OR (native_float_result_f32 IS NULL AND display_input_kind IS NULL AND display_scaled_nearest_f32 IS NULL AND display_nearest_even_candidate IS NULL AND rounding_independent_integer IS NULL)"
++      ],
++      "append_only": true,
++      "gm_queryable": true,
++      "source_status": "UNKNOWN",
++      "v1_mapping": "ADD",
++      "columns": [
++        {
++          "name": "overall_observation_id",
++          "sqlite_type": "TEXT",
++          "meaning": "one Native overall cache word/validity observation and explicitly qualified conversion results; no getter invocation identity",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "save-local immutable row identifier",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "ENGINEERING_IDENTITY_CONTRACT",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "unit_id",
++          "sqlite_type": "TEXT",
++          "meaning": "Reference to the evidenced capture_units record",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "save-local identifier",
++          "foreign_key": "capture_units(unit_id)",
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "ENGINEERING_IDENTITY_CONTRACT",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "source_player_id",
++          "sqlite_type": "TEXT",
++          "meaning": "Reference to the evidenced native_player_sources record",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "save-local identifier",
++          "foreign_key": "native_player_sources(player_source_id)",
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "ENGINEERING_IDENTITY_CONTRACT",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "player_id",
++          "sqlite_type": "TEXT",
++          "meaning": "Reference to the evidenced players record",
++          "required": false,
++          "default": null,
++          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
++          "unit": "save-local identifier",
++          "foreign_key": "players(player_id)",
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "ENGINEERING_IDENTITY_CONTRACT",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "cache_word_raw",
++          "sqlite_type": "INTEGER",
++          "meaning": "cache word raw",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": "cache_word_raw BETWEEN 0 AND 4294967295",
++          "legal_game_range": "UNKNOWN",
++          "source": "CURRENT_NATIVE.PLAYERDATA.CachedOverall_NeverCall +364 float32 original word",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "cache_value_f32",
++          "sqlite_type": "REAL",
++          "meaning": "cache value f32",
++          "required": false,
++          "default": null,
++          "null_meaning": "NONFINITE_WORD; original word retained",
++          "unit": "Native cached float; invalid cache may contain stale/undefined value",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "UNKNOWN",
++          "source": "CURRENT_NATIVE.IEEE754 word decode; finite values only",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "cache_valid_raw",
++          "sqlite_type": "INTEGER",
++          "meaning": "cache valid raw",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": "cache_valid_raw IN (0,1)",
++          "legal_game_range": "UNKNOWN",
++          "source": "CURRENT_NATIVE.PLAYERDATA.CachedOverallValid +796 bit6 width1",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "native_float_result_f32",
++          "sqlite_type": "REAL",
++          "meaning": "native float result f32",
++          "required": false,
++          "default": null,
++          "null_meaning": "INVALID_CACHE_OR_NONFINITE; no recomputation",
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_VERIFIED_NATIVE_FLOAT_GETTER_VALID_CACHE_BRANCH; invalid or nonfinite withheld",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "display_input_kind",
++          "sqlite_type": "TEXT",
++          "meaning": "display input kind",
++          "required": false,
++          "default": null,
++          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_VERIFIED_CONVERTER_NORMALIZED_OR_ABSOLUTE_INPUT_BRANCH",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "display_scaled_nearest_f32",
++          "sqlite_type": "REAL",
++          "meaning": "display scaled nearest f32",
++          "required": false,
++          "default": null,
++          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_FLOAT32_SCALE_CANDIDATE_ASSUMING_NEAREST_EVEN; actual game-thread MXCSR unobserved",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "display_nearest_even_candidate",
++          "sqlite_type": "INTEGER",
++          "meaning": "display nearest even candidate",
++          "required": false,
++          "default": null,
++          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": "display_nearest_even_candidate BETWEEN 25 AND 99",
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_CVTSS2SI_CANDIDATE_ASSUMING_NEAREST_EVEN; NOT_UI_ACCEPTANCE",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "rounding_independent_integer",
++          "sqlite_type": "INTEGER",
++          "meaning": "rounding independent integer",
++          "required": false,
++          "default": null,
++          "null_meaning": "NOT_OBSERVED in this unit; not zero or previous value",
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": "rounding_independent_integer BETWEEN 25 AND 99",
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_EXACT_INTEGRAL_ABSOLUTE_INPUT_OR_EXACT_INTEGRAL_PRODUCT; invariant across SSE rounding modes; UI separate",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "availability_status",
++          "sqlite_type": "TEXT",
++          "meaning": "availability status",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_VALIDITY_FINITE_WORD_AND_READ_ONLY_NO_RECOMPUTATION",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        },
++        {
++          "name": "rounding_status",
++          "sqlite_type": "TEXT",
++          "meaning": "rounding status",
++          "required": true,
++          "default": null,
++          "null_meaning": null,
++          "unit": "UNKNOWN/native representation",
++          "foreign_key": null,
++          "sql_constraint": null,
++          "legal_game_range": "NOT_APPLICABLE",
++          "source": "EVIDENCE_CONVERSION_DOMAIN_EXACTNESS_OR_EXPLICIT_ROUNDING_ASSUMPTION",
++          "visibility": "GM_PUBLIC",
++          "time_semantics": "observation time from unit_id; effective game time separately recorded"
++        }
++      ]
++    },
+     {
+       "name": "team_rotation_slots",
+       "domain": "RES-T",
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+index e94a60a0..2df8ec00 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+@@ -79,7 +79,7 @@ def query_connection(path,readonly=False):
+ 
+ PUBLIC_QUERIES=frozenset(('history','history_page','player_card','staff_card','team_card','prospect_card','market_snapshot','native_honors','native_player_seasons','record_book','settings_snapshot','rules_snapshot','planning_snapshot','gameplan_card','game_box','schedule','player_badges','player_play_types','native_player_details','native_player_state','native_player_skills','native_affiliations','awards','league_history','native_news','native_transactions','export_jsonl','season_summary','player_seasons','league_calendar','game_mode','current_period_stats'))
+ 
+-PUBLIC_QUERIES=PUBLIC_QUERIES|{'native_team_finance','team_lineups','native_player_rotation','native_staff','staff_team_slots','native_staff_history','current_coach_stats'}
++PUBLIC_QUERIES=PUBLIC_QUERIES|{'native_team_finance','team_lineups','native_player_rotation','native_staff','staff_team_slots','native_staff_history','current_coach_stats','native_player_overall'}
+ 
+ def query_at(database,observed_through,query_name,*args,**kwargs):
+     if query_name not in PUBLIC_QUERIES:raise PermissionError('unsupported historical public query')
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+index b79b4a20..be3409da 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+@@ -230,6 +230,24 @@ def native_staff(path,*,staff_id=None,subject_name=None,source_index=None,person
+             'qualification':'Complete COACHDATA descriptor slots and public field projections. NORMAL/RELEASED/RETIRED/INACTIVE, team pointers and core role slots are independent observations; absent core roles or a status label do not prove hiring eligibility. Canonical aliases require a single reciprocal role, globally unique current pool ID and exact existing name. Allocation/lifecycle, UI wages/grade scale and behavioral effects remain unproved. Annual staff stat references and growth/max-grade bytes are not acquired.'}
+ 
+ 
++def native_player_overall(path,*,player_id=None,subject_name=None,source_index=None,current_core_only=True,valid_only=False,unit_id=None,after_index=-1,limit=20):
++    if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('player-overall limit1..100 and after-index>=-1 required')
++    if after_index>=0 and unit_id is None:raise ValueError('continued overall pages require an explicit unit')
++    from overall_codec import PROFILE as overall_profile
++    with closing(connect(path,True)) as c:
++        condition=' AND u.unit_id=?' if unit_id else '';args=[unit_id] if unit_id else []
++        unit=c.execute('''SELECT u.unit_id,u.observed_at,u.completeness,r.source_grade,r.decoder_version FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.source_key='BOUND_NATIVE_PLAYER_OVERALL_CACHE' AND u.unit_status='success' '''+condition+' ORDER BY u.observed_at DESC,u.unit_id DESC LIMIT 1',args).fetchone()
++        if unit is None:return {'status':'NOT_OBSERVED','records':[],'has_more':False,'next_after_index':None}
++        where=['o.unit_id=?','s.source_player_index>?'];args=[unit['unit_id'],after_index]
++        for column,value in (('o.player_id',player_id),('s.observed_name',subject_name),('s.source_player_index',source_index)):
++            if value is not None:where.append(column+'=?');args.append(value)
++        if current_core_only:where.append("s.current_core_roster_status='CURRENT_CORE_ROSTER'")
++        if valid_only:where.append('o.native_float_result_f32 IS NOT NULL')
++        rows=[dict(row) for row in c.execute('''SELECT o.*,s.source_player_index,s.native_unique_id_raw,s.preserved_id_raw,s.observed_name,s.name_status,s.native_team_id,s.current_core_roster_status,s.current_roster_slot,s.canonical_link_status FROM native_player_overall_observations o JOIN native_player_sources s ON s.player_source_id=o.source_player_id AND s.unit_id=o.unit_id WHERE '''+' AND '.join(where)+' ORDER BY s.source_player_index LIMIT ?',args+[limit+1])];more=len(rows)>limit;rows=rows[:limit]
++        mode=c.execute('SELECT * FROM game_mode_observations WHERE unit_id=?',(unit['unit_id'],)).fetchone();count=c.execute('SELECT count(*) FROM native_player_overall_observations WHERE unit_id=?',(unit['unit_id'],)).fetchone()[0]
++        return {'status':'OBSERVED','source':dict(unit),'game_mode':dict(mode) if mode else None,'source_player_count':count,'current_core_only':current_core_only,'valid_only':valid_only,'records':rows,'has_more':more,'next_after_index':rows[-1]['source_player_index'] if more else None,'qualification':overall_profile['limits'],'display_candidate_policy':'Nearest-even is assumed, not observed game-thread rounding. Only rounding_independent_integer is invariant where exactness is proved. UI acceptance remains unproved; legacy overall_raw is unchanged.'}
++
++
+ def current_coach_stats(path,*,staff_id=None,subject_name=None,source_index=None,resolved_only=True,unit_id=None,after_index=-1,limit=20):
+     if type(limit) is not int or not 1<=limit<=100 or type(after_index) is not int or after_index< -1:raise ValueError('coach-stats limit1..100 and after-index>=-1 required')
+     if after_index>=0 and unit_id is None:raise ValueError('continued coach-stat pages require an explicit unit')
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+index 4c0bb085..c2a831a3 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+@@ -27,6 +27,7 @@ SOURCES={
+     'player-state':('player_state_reader','capture_player_state','BOUND_PLAYER_VITALS_HEALTH_MORALE',None),
+     'affiliations':('player_affiliation_reader','capture_player_affiliations','BOUND_PLAYER_AFFILIATION_CLASSIFICATION',None),
+     'player-skills':('player_skill_reader','capture_player_skills','BOUND_PUBLIC_PLAYER_SKILLS',None),
++    'player-overall':('overall_reader','capture_overall','BOUND_NATIVE_PLAYER_OVERALL_CACHE',None),
+     'news':('league_ingest','capture_league','BOUND_NATIVE_NEWS_AND_TRANSACTIONS',None),
+     'records':('records_reader','capture_records','BOUND_RECORD_BOOK','RECORD_BOOK'),
+     'honors':('award_reader','capture_native_honors','BOUND_NATIVE_HONOR_STATS','NATIVE_HONOR_STATS'),
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
+index e609c4dd..8a26e3ae 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql
+@@ -4,7 +4,7 @@ PRAGMA foreign_keys=ON;
+ CREATE TABLE "saves" (
+   "singleton" INTEGER NOT NULL PRIMARY KEY,
+   "save_id" TEXT NOT NULL,
+-  "schema_version" INTEGER NOT NULL CHECK (schema_version=24),
++  "schema_version" INTEGER NOT NULL CHECK (schema_version=25),
+   "created_at" TEXT NOT NULL,
+   "source_grade" TEXT NOT NULL DEFAULT 'SYNTHETIC_ONLY',
+   "game_build" TEXT,
+@@ -1439,6 +1439,37 @@ CREATE TRIGGER "native_player_rotation_observations_no_delete" BEFORE DELETE ON
+ 
+ CREATE TRIGGER "native_player_rotation_observations_successful_unit" BEFORE INSERT ON "native_player_rotation_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
+ 
++CREATE TABLE "native_player_overall_observations" (
++  "overall_observation_id" TEXT NOT NULL PRIMARY KEY,
++  "unit_id" TEXT NOT NULL REFERENCES capture_units(unit_id) ON DELETE RESTRICT,
++  "source_player_id" TEXT NOT NULL REFERENCES native_player_sources(player_source_id) ON DELETE RESTRICT,
++  "player_id" TEXT REFERENCES players(player_id) ON DELETE RESTRICT,
++  "cache_word_raw" INTEGER NOT NULL CHECK (cache_word_raw BETWEEN 0 AND 4294967295),
++  "cache_value_f32" REAL,
++  "cache_valid_raw" INTEGER NOT NULL CHECK (cache_valid_raw IN (0,1)),
++  "native_float_result_f32" REAL,
++  "display_input_kind" TEXT,
++  "display_scaled_nearest_f32" REAL,
++  "display_nearest_even_candidate" INTEGER CHECK (display_nearest_even_candidate BETWEEN 25 AND 99),
++  "rounding_independent_integer" INTEGER CHECK (rounding_independent_integer BETWEEN 25 AND 99),
++  "availability_status" TEXT NOT NULL,
++  "rounding_status" TEXT NOT NULL,
++  UNIQUE ("source_player_id","unit_id"),
++  CHECK (cache_valid_raw=1 OR (native_float_result_f32 IS NULL AND display_input_kind IS NULL AND display_scaled_nearest_f32 IS NULL AND display_nearest_even_candidate IS NULL AND rounding_independent_integer IS NULL))
++) STRICT;
++
++CREATE INDEX "idx_native_player_overall_observations_unit_id" ON "native_player_overall_observations" ("unit_id");
++
++CREATE INDEX "idx_native_player_overall_observations_source_player_id" ON "native_player_overall_observations" ("source_player_id");
++
++CREATE INDEX "idx_native_player_overall_observations_player_id" ON "native_player_overall_observations" ("player_id");
++
++CREATE TRIGGER "native_player_overall_observations_no_update" BEFORE UPDATE ON "native_player_overall_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
++
++CREATE TRIGGER "native_player_overall_observations_no_delete" BEFORE DELETE ON "native_player_overall_observations" BEGIN SELECT RAISE(ABORT,'immutable history'); END;
++
++CREATE TRIGGER "native_player_overall_observations_successful_unit" BEFORE INSERT ON "native_player_overall_observations" WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status='success') BEGIN SELECT RAISE(ABORT,'capture unit is not successful'); END;
++
+ CREATE TABLE "team_rotation_slots" (
+   "slot_id" TEXT NOT NULL PRIMARY KEY,
+   "team_id" TEXT NOT NULL REFERENCES teams(team_id) ON DELETE RESTRICT,
+@@ -3255,6 +3286,8 @@ CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_obse
+ 
+ CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;
+ 
++CREATE TRIGGER native_overall_source_unit BEFORE INSERT ON native_player_overall_observations WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native overall subject'); END;
++
+ CREATE TRIGGER staff_history_link_subject_unit BEFORE INSERT ON native_staff_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_staff_history_subjects s WHERE s.history_subject_id=NEW.history_subject_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit staff history subject'); END;
+ 
+ CREATE TRIGGER staff_history_link_stat_unit BEFORE INSERT ON native_staff_stat_links WHEN NEW.coach_stat_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_coach_stat_observations s WHERE s.coach_stat_id=NEW.coach_stat_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_signed) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched coach stat'); END;
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
+index 996ae803..f285870e 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
+@@ -11,7 +11,7 @@ from pathlib import Path
+ 
+ BASE = Path(__file__).resolve().parent
+ DOMAIN = BASE.parent
+-VERSION = 24
++VERSION = 25
+ PROFILE_REF = 'config/memory_field_profile.json'
+ PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
+ PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
+@@ -272,6 +272,9 @@ for _native,_column in _lineup_profile['team_flag_columns'].items():
+ table('team_lineup_observations','lineup_observation_id','RES-T','one Native global lineup/control context for a core team',_lineup_columns,unique=[('team_id','unit_id')],source='CURRENT_NATIVE_TEAMDATA_POINTER_ARRAYS_DIMENSIONS_FLAGS_AND_CUSTOM_NAME')
+ table('native_player_rotation_observations','player_rotation_id','RES-P','one public Native PLAYER rotation field pair, independent of a current lineup',[
+     U(),ref('source_player_id','native_player_sources','player_source_id'),ref('player_id','players',required=False),col('playing_time_raw','INTEGER',required=True,check='playing_time_raw BETWEEN 0 AND 127',source='CURRENT_NATIVE.PLAYERDATA.PlayingTime +248 bit18 width7',unit='Native unsigned value; no UI minutes conversion'),col('force_non_starter_raw','INTEGER',required=True,check='force_non_starter_raw BETWEEN 0 AND 3',source='CURRENT_NATIVE.PLAYERDATA.ForceNonStarter +764 bit26 width2'),col('force_non_starter_label',source='CURRENT_NATIVE PLAYERDATA_FORCE_NON_STARTER_TYPE exact enum',null_meaning='UNREGISTERED_NATIVE_ENUM_CODE; raw code retained')],unique=[('source_player_id','unit_id')])
++table('native_player_overall_observations','overall_observation_id','RES-P','one Native overall cache word/validity observation and explicitly qualified conversion results; no getter invocation',[
++    U(),ref('source_player_id','native_player_sources','player_source_id'),ref('player_id','players',required=False),col('cache_word_raw','INTEGER',required=True,check='cache_word_raw BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.PLAYERDATA.CachedOverall_NeverCall +364 float32 original word'),col('cache_value_f32','REAL',source='CURRENT_NATIVE.IEEE754 word decode; finite values only',unit='Native cached float; invalid cache may contain stale/undefined value',null_meaning='NONFINITE_WORD; original word retained'),col('cache_valid_raw','INTEGER',required=True,check='cache_valid_raw IN (0,1)',source='CURRENT_NATIVE.PLAYERDATA.CachedOverallValid +796 bit6 width1'),col('native_float_result_f32','REAL',source='EVIDENCE_VERIFIED_NATIVE_FLOAT_GETTER_VALID_CACHE_BRANCH; invalid or nonfinite withheld',null_meaning='INVALID_CACHE_OR_NONFINITE; no recomputation'),col('display_input_kind',source='EVIDENCE_VERIFIED_CONVERTER_NORMALIZED_OR_ABSOLUTE_INPUT_BRANCH'),col('display_scaled_nearest_f32','REAL',source='EVIDENCE_FLOAT32_SCALE_CANDIDATE_ASSUMING_NEAREST_EVEN; actual game-thread MXCSR unobserved'),col('display_nearest_even_candidate','INTEGER',check='display_nearest_even_candidate BETWEEN 25 AND 99',source='EVIDENCE_CVTSS2SI_CANDIDATE_ASSUMING_NEAREST_EVEN; NOT_UI_ACCEPTANCE'),col('rounding_independent_integer','INTEGER',check='rounding_independent_integer BETWEEN 25 AND 99',source='EVIDENCE_EXACT_INTEGRAL_ABSOLUTE_INPUT_OR_EXACT_INTEGRAL_PRODUCT; invariant across SSE rounding modes; UI separate'),col('availability_status',required=True,source='EVIDENCE_VALIDITY_FINITE_WORD_AND_READ_ONLY_NO_RECOMPUTATION'),col('rounding_status',required=True,source='EVIDENCE_CONVERSION_DOMAIN_EXACTNESS_OR_EXPLICIT_ROUNDING_ASSUMPTION')],unique=[('source_player_id','unit_id')],checks=['cache_valid_raw=1 OR (native_float_result_f32 IS NULL AND display_input_kind IS NULL AND display_scaled_nearest_f32 IS NULL AND display_nearest_even_candidate IS NULL AND rounding_independent_integer IS NULL)'])
++
+ table('team_lineup_slots','lineup_slot_id','RES-T','one slot in each complete Native named five-player TEAM lineup',[
+     T(),U(),col('lineup_kind',required=True,source='CURRENT_NATIVE TEAMDATA field literal: Starter, LineupBench/Tall/Quick/Defense/3Pter/FreeThrow/Custom'),col('slot_index','INTEGER',required=True,check='slot_index BETWEEN 0 AND 4',source='zero-based Native pointer-array position; UI position names unproved'),ref('source_player_id','native_player_sources','player_source_id',False),ref('player_id','players',required=False),col('pointer_status',required=True,source='EVIDENCE_POINTER_ALIGNMENT_POOL_RANGE_AND_RECIPROCAL_ROSTER')],unique=[('team_id','unit_id','lineup_kind','slot_index')],source='CURRENT_NATIVE TEAMDATA named PLAYERDATA pointer arrays; actual pointer addresses remain restricted artifacts')
+ table('team_advanced_rotation_slots','advanced_rotation_id','RES-T','one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values',[
+@@ -667,6 +670,7 @@ def schema_sql():
+             out.append(f'CREATE TRIGGER "{t.name}_successful_unit" BEFORE INSERT ON {ident(t.name)} WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status=\'success\') BEGIN SELECT RAISE(ABORT,\'capture unit is not successful\'); END;')
+     out.append('''CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;''')
+     out.append('''CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;''')
++    out.append('''CREATE TRIGGER native_overall_source_unit BEFORE INSERT ON native_player_overall_observations WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native overall subject'); END;''')
+     out.append('''CREATE TRIGGER staff_history_link_subject_unit BEFORE INSERT ON native_staff_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_staff_history_subjects s WHERE s.history_subject_id=NEW.history_subject_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit staff history subject'); END;''')
+     out.append('''CREATE TRIGGER staff_history_link_stat_unit BEFORE INSERT ON native_staff_stat_links WHEN NEW.coach_stat_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_coach_stat_observations s WHERE s.coach_stat_id=NEW.coach_stat_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_signed) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched coach stat'); END;''')
+     out.append('''CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;''')
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_refresh.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_refresh.py
+index ccb7c1f0..040766af 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_refresh.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_refresh.py
+@@ -29,7 +29,7 @@ class RefreshTests(unittest.TestCase):
+     def run_batch(self,**kwargs):
+         with patch('refresh._context',return_value={'epoch':deepcopy(EPOCH),'read_trace':[]}),patch('refresh._capture',side_effect=self.adapter):return refresh_world(123,self.save,'MyLEAGUE0003',self.out,**kwargs)
+     def test_all_registered_adapters_exist_and_order_keeps_identity_source_first(self):
+-        self.assertEqual(len(SOURCES),20);self.assertEqual(next(iter(SOURCES)),'schedule');self.assertEqual(sum(bool(v[3]) for v in SOURCES.values()),4)
++        self.assertEqual(len(SOURCES),21);self.assertEqual(next(iter(SOURCES)),'schedule');self.assertEqual(sum(bool(v[3]) for v in SOURCES.values()),4)
+         for module,function,_,_ in SOURCES.values():self.assertTrue(callable(getattr(importlib.import_module(module),function)))
+     def test_successful_batch_normalizes_order_and_checks_each_epoch(self):
+         with patch('refresh._context',return_value={'epoch':deepcopy(EPOCH),'read_trace':[]}) as context,patch('refresh._capture',side_effect=self.adapter):
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_world_data.py b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_world_data.py
+index 814af963..e375e967 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_world_data.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_world_data.py
+@@ -30,7 +30,7 @@ class WorldDataIntegrationTests(unittest.TestCase):
+                 'season':{'season_id':'s1','season_code':'2021-22'},'facts':{}}
+ 
+     def test_ddl_dictionary_and_every_relation_are_executable(self):
+-        self.assertEqual(len(TABLES),100)
++        self.assertEqual(len(TABLES),101)
+         self.assertEqual(schema_sql(),(BASE/'schema.sql').read_text())
+         self.assertEqual(dictionary(),json.loads((BASE/'field_dictionary.json').read_text()))
+         with connect(self.path) as c:
