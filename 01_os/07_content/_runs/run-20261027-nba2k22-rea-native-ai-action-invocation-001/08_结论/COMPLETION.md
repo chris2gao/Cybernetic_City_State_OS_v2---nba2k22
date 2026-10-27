@@ -4,6 +4,8 @@
 
 完整报告：`08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/REPORT_20261027.md`。运行入口：同目录`README.md`；能力目录：`action_atlas.json`；原始索引：`evidence/manifest.json`与`evidence/extension_manifest.json`。
 
+工程验证指针：`07_测试执行/EXTENSION_VERIFICATION.md`；代码候选`d8fc13d86fba5fe2b8627e70accca69fa5d81d8f`的managed run/inspect四项全部成功。保留日志及哈希清单可独立复查；最后收尾HEAD另外做精确候选检查。
+
 | 验收点 | 结果与实际边界 |
 |---|---|
 | NativeActionSpec/Invoker与真实桥 | C1类型与REA编排器；C4 NativeTradeSpec/私有提案/native规则检查/提交脚本；固定构建、fresh对象、Win64 ABI及GUI线程 |
