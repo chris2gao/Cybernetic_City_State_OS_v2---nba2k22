@@ -1,5 +1,5 @@
 schema_version: nba2k22.stage02.evidence_index.v1
-status: PARTIAL_RQ02_02_ONLY_NO_STAGE02_FEASIBILITY_VERDICT
+status: PARTIAL_RQ02_02_STATIC_AND_RQ02_01_GAP_SYNTHESIS_NO_STAGE02_FEASIBILITY_VERDICT
 version: v1
 created_at: 2026-10-26
 upstream_A: A-v1-RC01
@@ -89,6 +89,44 @@ entries:
     applicability: first 12 games sampled by this audit, not all games
     A_links: [RES-01, RES-02, RES-06]
     next_evidence: actual game stage and Native player/box coverage for games 6 and 10; may be legitimately incomplete
+  - evidence_id: E-02-008
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: historical source-local gap ledger has 149 entries but only 69 distinct affected_domain plus target_field literal key combinations
+    direction: 限制
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: original_developer_source_ledger
+        blob_sha: 46d43f0e827030ecc7c20df4390dfb4a16d4f33f
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/02_evidence/03_RQ02-01_来源缺口归并与场景优先级_v1.md
+        origin: same_source_derived_synthesis_not_independent_corroboration
+    evidence_credibility: direct_read_grouped_from_historical_json_not_runtime_retested
+    applicability: exact historical source-local ledger and fixed v25 planning comparison only
+    A_links: [RES-01, RES-02, RES-06]
+    limits: 69 literal group labels are not 69 unique product requirements, confirmed defects or development tasks; source-local gaps can be superseded by later readers
+  - evidence_id: E-02-009
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: historical reader ledger records specific typed table-row outputs for 20 source families, including schedule, market, honors, league-history and planning, but across different capture units
+    direction: 支持
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: original_developer_source_ledger
+        blob_sha: 46d43f0e827030ecc7c20df4390dfb4a16d4f33f
+    evidence_credibility: archived_logged_unit_counts_directly_inspected_not_independently_replayed
+    applicability: exact historical latest unit for each source family; not a combined same-time coherent snapshot
+    A_links: [RES-01, RES-02, RES-04, RES-06]
+    limits: neither field correctness nor S1-S8 scene applicability nor safe Native Writer follows from logged row counts
+  - evidence_id: E-02-010
+    research_question_ids: [RQ-02-01, RQ-02-03]
+    claim: historical gap targets explicitly identify Box player ID resolution, season phase/splits, draft-pool initialization, and staff market lifecycle as unresolved source-specific semantics
+    direction: 未决
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: original_developer_source_ledger
+        blob_sha: 46d43f0e827030ecc7c20df4390dfb4a16d4f33f
+    evidence_credibility: historical_report_existence_checked_provenance_and_later_supersession_pending
+    applicability: historical source family and affected domain; not a present-tense global absence claim
+    A_links: [RES-01, RES-02, RES-04, RES-06]
+    next_evidence: match each gap to the latest applicable Reader and scene source, then obtain bounded Native and UI evidence if still unresolved
 assessment:
   RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
   stage02_all_questions_completed: false
