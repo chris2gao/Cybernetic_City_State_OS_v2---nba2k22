@@ -6,12 +6,13 @@ try {
  if(-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){throw 'Administrator required'}
  if(Test-Path -LiteralPath (Join-Path $Output 'evidence.json')){throw 'Fresh output directory required'}
  $scriptHash=(Get-FileHash -LiteralPath $Script -Algorithm SHA256).Hash.ToLowerInvariant()
- $effectful=[bool](Select-String -LiteralPath $Script -Pattern 'native-action-poc-receipt' -Quiet)
+ $effectful=[bool](Select-String -LiteralPath $Script -Pattern 'native-(action|trade)-[a-z-]*receipt' -Quiet)
  if($effectful){
   if(-not $ApprovalReceipt){throw 'Exact-script Human approval receipt required for native PoC'}
   $approval=Get-Content -LiteralPath $ApprovalReceipt -Raw -Encoding UTF8 | ConvertFrom-Json
   if($approval.execution_status -eq 'CONSUMED'){throw 'This bounded approval has already been consumed; do not replay'}
-  if($approval.Human_scope_approval -ne 'APPROVED' -or $approval.experiment_id -ne 'EXP-NATIVE-ACTION-01' -or $approval.script_sha256 -ne $scriptHash -or $approval.native_call_budget -ne 3){throw 'Native PoC approval scope mismatch'}
+  $budgets=@{'EXP-NATIVE-ACTION-01'=3;'EXP-NATIVE-TRADE-BUILD-01'=3;'EXP-NATIVE-TRADE-QUALIFY-01'=4;'EXP-NATIVE-TRADE-SWAP-01'=4;'EXP-NATIVE-COACH-VISIBLE-01'=1}
+  if($approval.Human_scope_approval -ne 'APPROVED' -or -not $budgets.ContainsKey($approval.experiment_id) -or $approval.script_sha256 -ne $scriptHash -or $approval.native_call_budget -ne $budgets[$approval.experiment_id]){throw 'Native PoC approval scope mismatch'}
   if($DurationMs -lt 2400 -or $DurationMs -gt 5000){throw 'PoC observation window must cover restore and stay bounded'}
  }
  $games=@(Get-Process NBA2K22 -ErrorAction Stop)

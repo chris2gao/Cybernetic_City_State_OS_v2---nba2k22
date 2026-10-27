@@ -34,7 +34,7 @@ assert owned['game_native_calls']==0 and all(row['range_report'] is None and row
 chain=load(e/'static/chained_bodies.json')['functions'][0];assert chain['unwind_chain'][0]['flags']==4 and chain['unwind_chain'][-1]['begin']==21424800
 callers=load(e/'static/apply_callers.json');assert callers['target_rva']==21424800 and len(callers['direct_call_or_tailjump_refs'])==3
 atlas=load(root/'action_atlas.json');assert {c['id'] for c in atlas['categories']}=={'C1','C2','C3','C4','C5','C6'}
-assert [c['id'] for c in atlas['categories'] if c['status']=='REAL_GAME_EFFECT_VERIFIED']==['C1']
+assert [c['id'] for c in atlas['categories'] if c['status']=='REAL_GAME_EFFECT_VERIFIED']==['C1','C4']
 assert not atlas['production_replacement_qualified']
 run=repo/'01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001'
 for file,tag in [('HUMAN_POC_APPROVAL.json','shadow-failure'),('HUMAN_POC_REPAIR_APPROVAL.json','verified-poc')]:

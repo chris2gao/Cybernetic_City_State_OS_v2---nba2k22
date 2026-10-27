@@ -1,29 +1,30 @@
 # NBA2K22-REA-NATIVE-AI-ACTION-01 完成指针
 
-**任务核心结果：SUCCESS_BOUNDED_C1_NATIVE_SETTING_POC。** 当前NBA2K22实际进程接受外部防守重点13，经游戏自身Gameplan→Coach原生业务服务改变IND/Rick Carlisle教练设置14→13，再通过同函数恢复14，fresh读回与完整对象/关联设置对账通过。独立审核、生产替代、原版AI独有调用链及持久存档均不在此成功声明中。
+**结果：C1真实原生设置变更、C4真实跨队交易效果通过；Human确认机制成功并要求停止测试。** 最终交付是待独立审核的研究候选，未获得生产替代、独立审核或master集成资格。
 
-首要复查入口：`08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/README.md`、`action_atlas.json`、`evidence/live/verified-poc/evidence.json`。
+完整报告：`08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/REPORT_20261027.md`。运行入口：同目录`README.md`；能力目录：`action_atlas.json`；原始索引：`evidence/manifest.json`与`evidence/extension_manifest.json`。
 
-## 对照原任务交付
+| 验收点 | 结果与实际边界 |
+|---|---|
+| NativeActionSpec/Invoker与真实桥 | C1类型与REA编排器；C4 NativeTradeSpec/私有提案/native规则检查/提交脚本；固定构建、fresh对象、Win64 ABI及GUI线程 |
+| 原任务C1 PoC | 原生14→13→14、完整352-byte Coach和关联对象校验，恢复稳定；累计4次外部调用，2次真实Coach调用 |
+| Human追加C4 | Nwora9842 MIL→WAS、Gill9879 WAS→MIL，完整私有Check通过；真实结果由独立REA前后读回及Human成功反馈确认 |
+| 最终留结果测试 | 交易保留；C1另调用一次将IND/Rick Carlisle14→13保留，完整即时及750ms读回通过 |
+| 交易不明状态处理 | 实际提交没有脚本消息；不把退出0当成功、不重试提交；原生返回/事件/调用数未观测仍UNKNOWN，独立效果收据单独派生 |
+| 交易对账 | 两队只交换选定两人；当前/合同球队对应；合同字段不变；常规人数14/15及30队记录摘要不变 |
+| 六类动作目录 | C1/C4实际效果；C2/C3/C5/C6保留明确缺口，未盲调用、不推进场景 |
+| 工程检查 | 8项合同/负向证据测试、离线预检、原C1原始字节校验及扩展证据校验；精确候选managed记录另列 |
+| 交付边界 | 本Run与research/rea_native_action；草稿PR以前一原型分支为base；不合并master、生产或冻结B |
 
-| 要求 | 当前证明 | 状态 |
-|---|---|---|
-| NativeActionSpec及真实参数/ABI/来源 | native_action.py、C1完整入口及chained unwind、3个manager/Gameplan调用点、当前字段元数据 | 已交付；C1为共享游戏业务服务，AI caller未证 |
-| NativeActionInvoker及真实调用桥 | invoker.py、cli.py、run_rea_admin.ps1、build_invoker.py、实际执行JS及SHA批准绑定 | 已真实运行，非Python模拟 |
-| 至少一个游戏级设置PoC | ev_010ee377ef98e54b1ce96b64838c5dd4e56f96283e630a9527b945abc1236673 | 真实目标值接受、读回与原生恢复通过 |
-| 完整对象/关联设置与隔离许可 | 两份Human批准、测试存档确认、352-byte Coach、880-byte原Gameplan、manager flags、对照Coach | 仅目标字节316变化；恢复后无差异 |
-| 六类能力目录 | action_atlas.json逐类字段、静态局部候选和有界未找到结论 | C1成功，C2/C3/C4/C5/C6各自缺口明确；不宣称不存在 |
-| 条件性第二领域PoC | C3没有可传入单项目标值且上下文合格的Setter；训练成长分支不能冒充 | NOT_EXECUTED_WITH_REASON，未盲调用 |
-| 原系统替代判断 | C1仍需持久计划/非空引用/更广线程上下文验证；其余目录各有KEEP/NO_SAFE_PATH | 没有全面替换现有Memory/外部事务方案 |
-| 原始日志、失败与成本 | 四阶段REA，UTF8启动修复、私有分配映射诊断、实际调用3+1计数 | 首轮私有1次失败保留；成功轮13.458秒、17830字节，清理成功 |
-| 源码/验证/草稿PR交接 | 6项有意义合同测试、离线CLI、原始Evidence/已跟踪字节校验；精确候选managed run/inspect与远端回读另列 | 工程完成供独立审阅，不等于独立PASS |
+关键证据：
 
-## 结果的精确边界
+- 原C1成功：`ev_010ee377ef98e54b1ce96b64838c5dd4e56f96283e630a9527b945abc1236673`。
+- 重启后的交易前读：`ev_360262a341f7bfb461a47afd1eba115c741eab2dca5dcb1bc2515a93162c0445`。
+- 私有完整Check：`ev_e31c4aeefa4bf96b9a924249ec0288136d7c94a53119892ea3e6f925a2f52691`。
+- 实际提交/无消息：`ev_4c161466825988012a12745b93a75b11eadc7fe8d2bc77cbd1af568b3b547812`。
+- 独立交易后读：`ev_d992aee885c991b50ab99aed9a1598de74c76945444f72921aa6f49f5e3aa422`。
+- 最后保留Coach13：`ev_209f11937350bac44df9ed29b938661294afc74094b1ac6b67a5139db5b3b14f`。
 
-入口`0x146eaa0`，Win64 `void(const GAMEPLAN*, COACHDATA*)`。真实调用2次为设置与恢复，另2次私有副本调用（含首个读回失败）；累计4次符合Human补充许可。成功轮防守存值14→13→13→14→14，只变字节316；即时、750ms、恢复后和1500ms恢复读回均通过。静态无嵌套查找的null-playbook分支在Frida agent thread通过副本和真实对象验证。其他分支/线程场景需要新证据。
+新增10条REA记录共119.107秒整体工具时间；含实际提交37.384秒，不能等同纯原生函数时间或全部研发时间。没有可靠的REA费用/token货币拆分。实际提交的精确返回与回执缺口仍需下轮工程化，不继续在本轮测试。最值得后续规划的是分阶段持久收据、独立对账和禁止不明状态自动重试，再补交易历史/签权/失败路径/SaveReload。
 
-未提交原Gameplan模板、未重进UI、未Save/Reload、未证明战术效益；不改游戏控制权、日期或进行交易/签约/选秀。原始payload中的`system_proficiency`标签仅代表+0x148位17..24的保留值，业务语义未证。
-
-分支从指定PR10发布头cfce2c88派生；工程实际接手规划头`7397332bac36406704a290f70099f02025174ce9`。本轮只改新rea_native_action目录和本Run。新草稿PR以前一实验分支为base，不合并master，不重写历史、不改冻结B、旧原型或生产系统。
-
-独立审核优先核对：Native函数确为游戏所有、入口不是unwind中段、两个参数与范围一致、真实调用没有被Memory写替代、恢复和不变字段证据完整、六类缺口没有被SUCCESS总标记掩盖。下一轮优先持久Gameplan业务提交与C3实际属性应用callee；不以本完成指针自动启动。
+**未证项目**：原版AI自主caller、交易历史/事件落盘、全部选秀权池、其他28队完整字节不变、失败原子性、UI逐字段记录、持久Save/Reload及比赛策略效益。Human成功反馈不被扩大成这些逐项验收。早期“playbook”引用标签已纠正为未定引用对象槽，旧日志不改写。C1历史阶段见C1_CHECKPOINT.md。

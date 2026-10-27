@@ -5,7 +5,7 @@ task_packet:
   exact_base_sha: 7397332bac36406704a290f70099f02025174ce9
   inherited_prototype_sha: cfce2c88bcaf38362ff7270242cd982bd9757415
   branch: task/nba2k22-rea-native-ai-action-invocation-20261027
-  objective: Locate and qualify native AI or shared game mutators; build a typed real-call bridge, cover C1-C6, and obtain at least one authorized actual game mutation with fresh readback when technically qualified. No fixture substitution for game success.
+  objective: Locate and qualify native AI or shared game mutators; build a typed real-call bridge, cover C1-C6, and obtain real game parameter effects. Following the Human extension, prioritize the native AI/shared trade validation and commit path, complete one verified two-team player swap, and leave final tests of verified mechanisms visible in the isolated game for Human inspection. No fixture or TeamID-only substitution for native transaction success.
   source_evidence:
     - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/11
     - 71bf36391514074e693ba0d1a38b501ed012cf59:01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001/01_任务输入/CODEX_NATIVE_AI_ACTION_TASK_v1.md
@@ -15,7 +15,7 @@ task_packet:
     - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/**
     - 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001/**
   verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001/01_任务输入/verification_plan.json
-  required_tests: [native-contract-tests, offline-preflight, artifact-integrity]
+  required_tests: [native-contract-tests, offline-preflight, artifact-integrity, extended-native-evidence]
   prohibitions:
     - master_merge_or_history_rewrite
     - unknown_native_function_blind_call
@@ -32,8 +32,8 @@ task_packet:
   big_task: true
   big_task_confirmation_closure:
     enabled: true
-    known_confirmation_required_actions: [first_effectful_game_native_PoC, repair_retry_additional_three_native_calls]
-    preconfirmed_actions: [first_effectful_game_native_PoC, repair_retry_additional_three_native_calls]
+    known_confirmation_required_actions: [first_effectful_game_native_PoC, repair_retry_additional_three_native_calls, Human_extended_native_trade_and_retained_verified_tests]
+    preconfirmed_actions: [first_effectful_game_native_PoC, repair_retry_additional_three_native_calls, Human_extended_native_trade_and_retained_verified_tests]
     uncovered_actions: []
   publisher:
     principal_binding: local_authenticated
@@ -41,7 +41,7 @@ task_packet:
     source_branch_publication: task_scope_default
     master_integration_confirmation: not_requested
     expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
-    expected_remote_head: 7397332bac36406704a290f70099f02025174ce9
+    expected_remote_head: 660e68448c7b99b94d9179b5d4264e41ff26127f
   executor_profile:
     provider: Codex
     surface: Codex_desktop
@@ -61,3 +61,4 @@ task_packet:
     first_effectful_call: EXP_NATIVE_ACTION_01_APPROVED_EXACT_SCRIPT_MAX_3_CALLS
     approval_ref: 04_执行准备/HUMAN_POC_APPROVAL.json
     repair_approval_ref: 04_执行准备/HUMAN_POC_REPAIR_APPROVAL.json
+    trade_and_visible_test_authorization_ref: 01_任务输入/HUMAN_TRADE_AND_VISIBLE_TEST_EXTENSION.md

@@ -1,14 +1,204 @@
 {
-  "task_id":"NBA2K22-REA-NATIVE-AI-ACTION-01",
-  "game_build_sha256":"1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
-  "categories":[
-    {"id":"C1","domain":"教练攻防重点","external_input":{"team_id":20,"defense":13,"expected_before":14},"entry_rva":21424800,"signature":"void(const GAMEPLAN*, COACHDATA*)","abi":"win64 RCX/RDX","provenance":"SHARED_NATIVE_GAMEPLAN_TO_COACH_SERVICE_STATIC_CALLERS_AND_REAL_PARAMETER_EFFECT","AI_caller_proven":false,"status":"REAL_GAME_EFFECT_VERIFIED","success_readback":"352-byte Coach exact target low5 change 14->13, unchanged original Gameplan/manager flags/comparison coach, same native service restores14; delayed readbacks match","context":"Fresh IND Rick Carlisle and reciprocal TEAM; isolated test save; three null freelance pointers; temporary input marshals all other current settings; Frida-agent-thread branch has no nested native calls, shadow ABI and canaries verified","scope_limits":["Current Coach projection only; original Gameplan template unchanged","No UI reentry, Save/Reload, AI strategy benefit or non-null-playbook invocation claim","First private-shadow read failure preserved; cumulative native calls4, private2 plus real change1 and restore1"],"evidence":["static/apply_callers.json","static/chained_bodies.json","live/preflight/evidence.json","live/shadow-failure/evidence.json","live/owned-buffer/evidence.json","live/verified-poc/evidence.json"],"replacement":"NATIVE_CANDIDATE_MORE_EVIDENCE","next_cost":"Production use needs persistent/default Gameplan update contract, non-null freelance lookup branch and broader thread/context validation; do not replay consumed approvals"},
-    {"id":"C2","domain":"轮换、战术、训练","external_input":"team + date + training type/intensity/focus; rotation player/minutes separately","entry_rva":20078352,"candidate_name":"FRANCHISE_TRAINING::SetTrainingForTeamOnDate","signature":"UNKNOWN; RCX nullable object, EDX scalar, R8 pointer observed statically; remaining stack contract unresolved","abi":"Windows x64; full logical types unresolved","provenance":"FRANCHISE_TRAINING_NATIVE_MUTATOR_CANDIDATE","AI_caller_proven":false,"status":"CANDIDATE_ONLY","success_readback":"Team/date training entry plus intensity/focus and unchanged unrelated dates/players; rotation minutes sum and lineup slots if pursued","context":"Training manager/date data and native accepted ranges unknown","evidence":["static/atlas_search.json","static/domain_candidates.json"],"replacement":"KEEP_EXISTING_MEMORY_OR_EXTERNAL_EXECUTOR","next_cost":"Focused training callsite/parameter reconstruction and read-only date/manager binding before a separate reversible PoC"},
-    {"id":"C3","domain":"球员属性、倾向、徽章","external_input":"player_id + property_id + target_value","entry_rva":null,"related_candidates":[{"rva":19926672,"name":"FRANCHISE_TRAINING::ShouldProgressOrRegressAttribute","role":"growth decision; not an arbitrary attribute setter"},{"rva":19927568,"name":"FRANCHISE_TRAINING::HandlePlayerTraining","role":"training progression with additional state; not yet isolated to one property"}],"signature":"UNKNOWN","abi":"UNKNOWN_FOR_A_SINGLE_PROPERTY_MUTATOR","provenance":"NATIVE_TRAINING_RELATED_BRANCHES_ONLY","AI_caller_proven":false,"status":"NO_SINGLE_PROPERTY_SETTER_FOUND_IN_BOUNDED_SEARCH","success_readback":"Exact selected property, dependent ratings/cache as required by actual service, unrelated player data unchanged","context":"Current player identity plus property storage/value encoding and training context still required; MyCAREER upgrade-point menu excluded as evidence","evidence":["static/atlas_search.json","static/domain_candidates.json"],"replacement":"KEEP_EXISTING_MEMORY_OR_EXTERNAL_EXECUTOR","next_cost":"Trace progression's actual property write/apply callee; no unsupported arbitrary ability/badge edits"},
-    {"id":"C4","domain":"AI-AI交易","external_input":"two teams + complete players/picks/assets offer","entry_rva":null,"related_candidates":[{"rva":6548464,"name":"MYLEAGUEMENU_THREETEAMTRADE::GameEventHandler","role":"UI caller evidence only; 108 calls, shared transaction core not yet separated"}],"signature":"UNKNOWN_FOR_VALIDATOR_AND_COMMIT","abi":"UNKNOWN","provenance":"HUMAN_UI_CALLER_AND_EXISTING_AI_EVALUATION_NAME_NOT_TRANSACTION_PROOF","AI_caller_proven":false,"status":"NO_COMPLETE_NATIVE_TRANSACTION_CHAIN_FOUND_IN_SEARCH_SCOPE","success_readback":"Both rosters, ownership, contracts, payroll, picks and transaction/event records consistent; failure atomicity","context":"Typed complete offer, league trade rules/current date, isolated save and all asset invariants required; team-ID setters do not constitute a trade","evidence":["static/atlas_search.json","static/domain_candidates.json"],"replacement":"KEEP_EXISTING_MEMORY_OR_EXTERNAL_EXECUTOR","next_cost":"Follow event handler into validator/commit and verify transaction data contract; no current transaction call"},
-    {"id":"C5","domain":"签约、自由球员、续约","external_input":"team + free-agent player + complete contract terms/options","entry_rva":null,"signature":"UNKNOWN","abi":"UNKNOWN","provenance":"CONTRACT_TYPE_AND_MYGm_CAREER_UI_NAMES_ONLY_IN_EXACT_QUERY_SCOPE","AI_caller_proven":false,"status":"NO_ENTRY_FOUND_IN_SEARCH_SCOPE","success_readback":"Roster slot, player/team contract linkage, salary/options and team financial aggregates/transaction record consistent","context":"Existing signing execution eligibility is not upgraded; market/contract validator and commit unresolved","evidence":["static/atlas_search.json"],"replacement":"NO_SAFE_PATH","next_cost":"Target franchise market/contract type methods or shared signing callsite, then complete asset readback contract; exact-name misses do not imply absence"},
-    {"id":"C6","domain":"选秀与签权","external_input":"team + pick/round/slot + prospect identity","entry_rva":15504912,"candidate_name":"Draft_DraftPlayer","signature":"UNKNOWN; RCX and RDX retained by function; draft/session object and player contract unresolved","abi":"Windows x64; native function has multiple callees and writes drafting-related state","provenance":"DRAFT_OPERATION_NAME_AND_LOCAL_MUTATING_CODE_NOT_YET_AI_VALIDATED","AI_caller_proven":false,"status":"CANDIDATE_ONLY_NOT_CURRENT_SCENE_QUALIFIED","success_readback":"Correct drafted ownership/status/pick consumption and required rookie-contract/roster/event invariants","context":"Current scene is calendar after one month, not a verified draft session; no season advancement performed","evidence":["static/atlas_search.json","static/domain_candidates.json"],"replacement":"NO_SAFE_PATH","next_cost":"Recover draft/session/player parameter contract with a naturally available isolated draft save; no forced season advance"}
+  "task_id": "NBA2K22-REA-NATIVE-AI-ACTION-01",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "categories": [
+    {
+      "id": "C1",
+      "domain": "教练攻防重点",
+      "external_input": {
+        "team_id": 20,
+        "defense": 13,
+        "expected_before": 14
+      },
+      "entry_rva": 21424800,
+      "signature": "void(const GAMEPLAN*, COACHDATA*)",
+      "abi": "win64 RCX/RDX",
+      "provenance": "SHARED_NATIVE_GAMEPLAN_TO_COACH_SERVICE_STATIC_CALLERS_AND_REAL_PARAMETER_EFFECT",
+      "AI_caller_proven": false,
+      "status": "REAL_GAME_EFFECT_VERIFIED",
+      "success_readback": "352-byte Coach exact target low5 change 14->13, unchanged original Gameplan/manager flags/comparison coach, same native service restores14; delayed readbacks match",
+      "context": "Fresh IND Rick Carlisle and reciprocal TEAM; isolated test save; three null freelance pointers; temporary input marshals all other current settings; Frida-agent-thread branch has no nested native calls, shadow ABI and canaries verified",
+      "scope_limits": [
+        "Current Coach projection only; original Gameplan template unchanged",
+        "No UI reentry, Save/Reload, AI strategy benefit or non-null-playbook invocation claim",
+        "First private-shadow read failure preserved; cumulative native calls4, private2 plus real change1 and restore1"
+      ],
+      "evidence": [
+        "static/apply_callers.json",
+        "static/chained_bodies.json",
+        "live/preflight/evidence.json",
+        "live/shadow-failure/evidence.json",
+        "live/owned-buffer/evidence.json",
+        "live/verified-poc/evidence.json"
+      ],
+      "replacement": "NATIVE_CANDIDATE_MORE_EVIDENCE",
+      "next_cost": "Production use needs persistent/default Gameplan update contract, non-null freelance lookup branch and broader thread/context validation; do not replay consumed approvals",
+      "retained_final_test": {
+        "team_id": 20,
+        "coach": "Rick Carlisle",
+        "defense": 13,
+        "entry_rva": 21424800,
+        "thread": "game GUI main-window thread",
+        "evidence": "live/coach-visible/evidence.json"
+      }
+    },
+    {
+      "id": "C2",
+      "domain": "轮换、战术、训练",
+      "external_input": "team + date + training type/intensity/focus; rotation player/minutes separately",
+      "entry_rva": 20078352,
+      "candidate_name": "FRANCHISE_TRAINING::SetTrainingForTeamOnDate",
+      "signature": "UNKNOWN; RCX nullable object, EDX scalar, R8 pointer observed statically; remaining stack contract unresolved",
+      "abi": "Windows x64; full logical types unresolved",
+      "provenance": "FRANCHISE_TRAINING_NATIVE_MUTATOR_CANDIDATE",
+      "AI_caller_proven": false,
+      "status": "CANDIDATE_ONLY",
+      "success_readback": "Team/date training entry plus intensity/focus and unchanged unrelated dates/players; rotation minutes sum and lineup slots if pursued",
+      "context": "Training manager/date data and native accepted ranges unknown",
+      "evidence": [
+        "static/atlas_search.json",
+        "static/domain_candidates.json"
+      ],
+      "replacement": "KEEP_EXISTING_MEMORY_OR_EXTERNAL_EXECUTOR",
+      "next_cost": "Focused training callsite/parameter reconstruction and read-only date/manager binding before a separate reversible PoC"
+    },
+    {
+      "id": "C3",
+      "domain": "球员属性、倾向、徽章",
+      "external_input": "player_id + property_id + target_value",
+      "entry_rva": null,
+      "related_candidates": [
+        {
+          "rva": 19926672,
+          "name": "FRANCHISE_TRAINING::ShouldProgressOrRegressAttribute",
+          "role": "growth decision; not an arbitrary attribute setter"
+        },
+        {
+          "rva": 19927568,
+          "name": "FRANCHISE_TRAINING::HandlePlayerTraining",
+          "role": "training progression with additional state; not yet isolated to one property"
+        }
+      ],
+      "signature": "UNKNOWN",
+      "abi": "UNKNOWN_FOR_A_SINGLE_PROPERTY_MUTATOR",
+      "provenance": "NATIVE_TRAINING_RELATED_BRANCHES_ONLY",
+      "AI_caller_proven": false,
+      "status": "NO_SINGLE_PROPERTY_SETTER_FOUND_IN_BOUNDED_SEARCH",
+      "success_readback": "Exact selected property, dependent ratings/cache as required by actual service, unrelated player data unchanged",
+      "context": "Current player identity plus property storage/value encoding and training context still required; MyCAREER upgrade-point menu excluded as evidence",
+      "evidence": [
+        "static/atlas_search.json",
+        "static/domain_candidates.json"
+      ],
+      "replacement": "KEEP_EXISTING_MEMORY_OR_EXTERNAL_EXECUTOR",
+      "next_cost": "Trace progression's actual property write/apply callee; no unsupported arbitrary ability/badge edits"
+    },
+    {
+      "id": "C4",
+      "domain": "AI-AI交易",
+      "external_input": {
+        "offering_team_id": 1,
+        "counterparty_team_id": 2,
+        "players": [
+          {
+            "id": 9842,
+            "from": 1,
+            "to": 2
+          },
+          {
+            "id": 9879,
+            "from": 2,
+            "to": 1
+          }
+        ],
+        "IsAIInitiated": true,
+        "ForceLegalMoney": false,
+        "picks": []
+      },
+      "entry_rva": 20101184,
+      "related_candidates": [
+        {
+          "rva": 19786784,
+          "name": "AddPlayerElement",
+          "role": "native proposal builder, private real calls verified"
+        },
+        {
+          "rva": 19843376,
+          "name": "Validate",
+          "role": "basic ownership/structure"
+        },
+        {
+          "rva": 19798016,
+          "name": "Full Check",
+          "role": "full native legality verified1 on private proposal"
+        },
+        {
+          "rva": 19829680,
+          "name": "Process",
+          "role": "shared transaction core reached through wrapper by submitted source; native return not observed"
+        }
+      ],
+      "signature": "int Wrapper(FRANCHISE_TRADE*,int32* optional_output); local branch FullCheck then Process",
+      "abi": "Win64 RCX/RDX; actual game-window thread once",
+      "provenance": "SHARED_NATIVE_TRADE_CORE_STATIC_ABI_PRIVATE_FULL_CHECK_PLUS_INDEPENDENT_REAL_EFFECT_READBACK",
+      "AI_caller_proven": false,
+      "status": "REAL_GAME_EFFECT_VERIFIED",
+      "success_readback": "Exact one-for-one roster set delta; both current and contract team links; selected contract fields unchanged; team counts/money and all30 core summaries unchanged",
+      "context": "Pinned build; isolated save; fresh UID/name/ownership/contracts; private Check1; local lifecycle ready; GUI thread; no forced legality/controller changes",
+      "evidence": [
+        "live/trade-qualified/evidence.json",
+        "live/trade-swap-attempt/evidence.json",
+        "live/trade-independent-after/evidence.json",
+        "dossiers/C4-independent-trade-receipt.json",
+        "static/trade/trade_process_complete.json"
+      ],
+      "replacement": "BOUNDED_NATIVE_PROTOTYPE_PROVEN_KEEP_EXISTING_PRODUCTION_EXECUTOR",
+      "next_cost": "Fix incremental transaction receipt/timeout protocol first; independently verify history/pick pool/failed transaction/SaveReload before production replacement",
+      "native_return_receipt_observed": false,
+      "transaction_history_picks_failure_atomicity_save_reload_proven": false,
+      "Human_success_feedback": true
+    },
+    {
+      "id": "C5",
+      "domain": "签约、自由球员、续约",
+      "external_input": "team + free-agent player + complete contract terms/options",
+      "entry_rva": null,
+      "signature": "UNKNOWN",
+      "abi": "UNKNOWN",
+      "provenance": "CONTRACT_TYPE_AND_MYGm_CAREER_UI_NAMES_ONLY_IN_EXACT_QUERY_SCOPE",
+      "AI_caller_proven": false,
+      "status": "NO_ENTRY_FOUND_IN_SEARCH_SCOPE",
+      "success_readback": "Roster slot, player/team contract linkage, salary/options and team financial aggregates/transaction record consistent",
+      "context": "Existing signing execution eligibility is not upgraded; market/contract validator and commit unresolved",
+      "evidence": [
+        "static/atlas_search.json"
+      ],
+      "replacement": "NO_SAFE_PATH",
+      "next_cost": "Target franchise market/contract type methods or shared signing callsite, then complete asset readback contract; exact-name misses do not imply absence"
+    },
+    {
+      "id": "C6",
+      "domain": "选秀与签权",
+      "external_input": "team + pick/round/slot + prospect identity",
+      "entry_rva": 15504912,
+      "candidate_name": "Draft_DraftPlayer",
+      "signature": "UNKNOWN; RCX and RDX retained by function; draft/session object and player contract unresolved",
+      "abi": "Windows x64; native function has multiple callees and writes drafting-related state",
+      "provenance": "DRAFT_OPERATION_NAME_AND_LOCAL_MUTATING_CODE_NOT_YET_AI_VALIDATED",
+      "AI_caller_proven": false,
+      "status": "CANDIDATE_ONLY_NOT_CURRENT_SCENE_QUALIFIED",
+      "success_readback": "Correct drafted ownership/status/pick consumption and required rookie-contract/roster/event invariants",
+      "context": "Current scene is calendar after one month, not a verified draft session; no season advancement performed",
+      "evidence": [
+        "static/atlas_search.json",
+        "static/domain_candidates.json"
+      ],
+      "replacement": "NO_SAFE_PATH",
+      "next_cost": "Recover draft/session/player parameter contract with a naturally available isolated draft save; no forced season advance"
+    }
   ],
-  "production_replacement_qualified":false,
-  "fixture_success_promoted_to_game_proof":false
+  "production_replacement_qualified": false,
+  "fixture_success_promoted_to_game_proof": false,
+  "Human_ended_tests": true,
+  "current_report": "REPORT_20261027.md"
 }

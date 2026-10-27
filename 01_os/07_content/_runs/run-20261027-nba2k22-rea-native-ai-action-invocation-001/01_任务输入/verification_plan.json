@@ -4,6 +4,7 @@
   "checks":[
     {"id":"native-contract-tests","argv":["@python","-B","-X","utf8","-m","unittest","discover","-s","08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/tests","-v"],"timeout_seconds":60,"expected_exit_code":0},
     {"id":"offline-preflight","argv":["@python","-B","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/cli.py","preflight","--offline"],"timeout_seconds":60,"expected_exit_code":0},
-    {"id":"artifact-integrity","argv":["@python","-B","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/verify_artifacts.py"],"timeout_seconds":60,"expected_exit_code":0}
+    {"id":"artifact-integrity","argv":["@python","-B","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/verify_artifacts.py"],"timeout_seconds":60,"expected_exit_code":0},
+    {"id":"extended-native-evidence","argv":["@python","-B","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/verify_extension.py"],"timeout_seconds":60,"expected_exit_code":0}
   ]
 }

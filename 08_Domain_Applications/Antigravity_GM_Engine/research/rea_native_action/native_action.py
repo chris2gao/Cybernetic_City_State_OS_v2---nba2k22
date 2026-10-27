@@ -21,7 +21,7 @@ class NativeActionSpec:
  source_input_offset:int=0x181
  destination_word_offset:int=316
  allowed_values:tuple=(0,13,14,15)
- thread_model:str='FRIDA_AGENT_THREAD_ONLY_FOR_STATIC_NULL_PLAYBOOK_NO_NESTED_CALL_BRANCH'
+ thread_model:str='FRIDA_AGENT_THREAD_PROVEN_FOR_NULL_REFERENCED_OBJECT_BRANCH; FINAL_VISIBLE_TEST_ALSO_PROVEN_ON_GAME_GUI_THREAD'
  AI_caller_proven:bool=False
  service_provenance:str='GAME_OWNED_GAMEPLAN_TO_COACH_APPLY_WITH_THREE_STATIC_MANAGER_CALLERS'
  effects:str='Apply whole bounded coach-setting projection; marshal all other inputs to current values; verify full 352 bytes and original Gameplan remain unchanged except requested low5 bits.'
@@ -45,7 +45,7 @@ def expected_word(before,defense):return (before&~31)|defense
 def encode_input_from_coach(gameplan,coach,defense):
  if len(gameplan)!=880 or len(coach)!=352:raise ValueError('exact current native object sizes required')
  if defense not in NativeActionSpec().allowed_values:raise ValueError('invalid defense')
- if any(coach[0x120:0x138]):raise ValueError('first PoC null-playbook branch only')
+ if any(coach[0x120:0x138]):raise ValueError('first PoC null-referenced-object branch only')
  b=bytearray(gameplan);word=int.from_bytes(coach[316:320],'little')
  for offset,shift in zip(range(0x17e,0x184),(15,20,25,0,5,10)):b[offset]=(word>>shift)&31
  b[0x181]=defense
