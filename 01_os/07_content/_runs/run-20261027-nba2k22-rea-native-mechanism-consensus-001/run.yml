@@ -1,0 +1,84 @@
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+run_id: run-20261027-nba2k22-rea-native-mechanism-consensus-001
+lifecycle: research_only
+stage: 01a_需求共识建模
+phase_state: A0_V0_CANDIDATE_AWAITING_HUMAN_ROUND1
+human_request_date: '2026-10-27'
+priority: P0_ABOVE_NBA2K22_WORLD_DATA_STAGE02
+paused_parent_task_id: nba2k22-lifecycle-scene-consensus-01
+paused_parent_branch: task/nba2k22-lifecycle-consensus-20261026
+paused_parent_head_at_start: 4b78156106bb9ccd000171462e89bfcde9ecc21e
+paused_parent_stage02_verdict: NOT_ASSESSED
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+branch: task/nba2k22-rea-native-mechanism-consensus-20261027
+ownership: NBA2K22_DOMAIN_GPT_REQUIREMENT_AND_PLANNING_ONLY
+future_engineering_owner: Codex
+rea_public_source: https://github.com/morluto/rea
+rea_pinned_source_commit_for_reference: 570abe95f2a35b5c580a5ec2fca90c33d4114bdc
+human_provided_rea_overall_report: REA_DIFFICULT_ITEMS_EVALUATION_20261027.md_CHAT_ATTACHMENT
+human_report_status: PROVISIONAL_SIX_OVERALL_VALID_CACHES_NOT_COMPLETE_REVERSE_ENGINEERING
+human_goal: >-
+  Discover and verify actual NBA2K22 offline MyLEAGUE native mechanics,
+  data layouts, function/control flow and feasibility of reusing original
+  mechanisms for external GM/Coach/Player actions rather than assuming
+  all effects must be achieved via external simulation or raw memory edits.
+stop_reason_for_parent_stage02: HUMAN_EXPLICIT_HIGHER_PRIORITY_DEPENDENCY_2026_10_27
+allowlist:
+  - 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/**
+prohibitions:
+  - no_game_operation_or_memory_attach_in_current_GPT_planning_task
+  - no_native_function_injection_or_write_or_Save_mutation
+  - no_Codex_dispatch_until_Human_approved_A0_and_complete_A_and_execution_task_scope
+  - no_modify_prior_Human_approved_A_or_ADR
+  - no_claim_that_REA_automatically_enables_safe_native_calls
+  - no_automatic_master_merge_or_rebase_or_force_push
+  - no_repeat_unbounded_ghidra_whole_exe_analysis_without_new_method_and_budget
+required_outputs:
+  - 01a_需求共识模型_A0_v0_待Human裁决.md
+  - 01a_承重追问_Round01_v1.md
+  - Codex_机制逆向任务候选_未派发_v0.md
+  - verification_plan_candidate_v1.json
+completion_state: IN_PROGRESS_NOT_HUMAN_APPROVED_NOT_ENGINEERING_DISPATCHED
+task_packet:
+  task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+  branch: task/nba2k22-rea-native-mechanism-consensus-20261027
+  objective: HUMAN_CONFIRMED_SCOPE_AND_CODEX_EXPLORATION_REQUIREMENT_MODELS
+  source_evidence:
+    - github:morluto/rea@570abe95f2a35b5c580a5ec2fca90c33d4114bdc
+    - CHAT_ATTACHMENT:REA_DIFFICULT_ITEMS_EVALUATION_20261027.md
+    - github:chris2gao/Cybernetic_City_State_OS_v2---nba2k22@a3927fb150a213201e404cca043ced4f57409bd1:08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/DIFFICULT_ITEMS.md
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/verification_plan_candidate_v1.json
+  required_tests: [REQ-01, REQ-02, REQ-03, REQ-04]
+  prohibitions: [modify_master_without_required_Human_confirmation, force_push, rebase, squash, native_runtime_operation]
+  required_completion_pointer: exact_A0_and_A_Human_approvals_and_future_bounded_Codex_packet
+  big_task: true
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+  big_task_confirmation_closure:
+    enabled: false
+    known_confirmation_required_actions: [future_real_game_native_attach_or_function_invocation, future_master_integration]
+    preconfirmed_actions: []
+    uncovered_actions: [future_real_game_native_attach_or_function_invocation, future_master_integration]
+  executor_profile:
+    provider: Codex
+    model: future_execution_profile_to_be_selected
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: HUMAN_APPROVED_SINGLE_OWNER_FOR_NATIVE_RUNTIME_ENGINEERING
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: Human_or_future_independent_model_to_be_assigned
+    different_model_family: true
+    different_measurement_tool: true
