@@ -1,0 +1,99 @@
+schema_version: nba2k22.stage02.source_catalog.v1
+date: '2026-10-27'
+status: STATIC_AND_HUMAN_UPLOADED_SOURCES_NOT_INDEPENDENT_RUNTIME_REPLAY
+separation_rule: source_platform_reliability_is_not_claim_evidence_confidence
+sources:
+  - source_id: SRC-02-01
+    名称: NBA2K22 主要工程候选固定 GitHub 源码与数据字典
+    地址: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    类型: 工程代码
+    信源可靠性: A
+    可靠性理由: Git固定SHA和blob支持精确内容复核；不意味着原作者声明的Native效果独立验证
+    发布时间或版本: a3927fb150a213201e404cca043ced4f57409bd1
+    访问日期: '2026-10-27'
+    检索限制:
+      索引偏向: 本轮对批准范围内文件定向查阅；未实机运行或穷尽未知文件
+      返回上限: 需按路径及工具响应长度分批查看
+      付费墙: 无
+      时间覆盖: v25冻结候选及其静态历史资料
+      术语壁垒: 代码注册、Native实读、UI语义和安全写入是不同证据级别
+    可访问性: 模型可直接访问
+  - source_id: SRC-02-02
+    名称: v24/v25开发者历史数据与测试报告归档
+    地址: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/
+    类型: 内部证据
+    信源可靠性: B
+    可靠性理由: 具体归档报告/运行单元和样本行数可检查；报告为开发团队同源自述，未在本Run独立复跑
+    发布时间或版本: v24_and_v25_original_developer_closeout
+    访问日期: '2026-10-27'
+    检索限制:
+      索引偏向: 历史latest-unit截面不等于全库、全部阶段或真实游戏当前状态
+      返回上限: 仅现有报告和固定已读证据
+      付费墙: 无
+      时间覆盖: 截至旧开发采集及归档时点
+      术语壁垒: LIVE_READ、PARTIAL、成功unit、真实UI字段覆盖须严格区分
+    可访问性: 模型可直接访问
+  - source_id: SRC-02-03
+    名称: Human正式批准的第一大任务A与原型协作V0.4/ADR
+    地址: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/ ; task/nba2k22-task1-01b-requirement-result-20261023
+    类型: 内部证据
+    信源可靠性: A
+    可靠性理由: 真实Human批准记录可通过历史分支与关联task恢复；产品权限来源非Native实现证据
+    发布时间或版本: Human_approved_original_A_v1_9_and_V0_4_ADR_2026_10_24
+    访问日期: '2026-10-27'
+    检索限制:
+      索引偏向: 历史分支中有旧candidate标题，需要和后继Human批准单独判读
+      返回上限: 固定任务分支文档
+      付费墙: 无
+      时间覆盖: '2026-10-23 to 2026-10-24'
+      术语壁垒: 九业务领域RES不同于2026-10-26新六项RES
+    可访问性: 模型可直接访问
+  - source_id: SRC-02-04
+    名称: Human批准的生命周期与统一Native I/O需求结果A
+    地址: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/
+    类型: 内部证据
+    信源可靠性: A
+    可靠性理由: A0-v1/A-v1-RC01批准语句、范围及来源blob已精确绑定
+    发布时间或版本: 2026-10-26_A-v1-RC01_original_blob_b60570547c6686261a1e7ae756605dce5e37429a
+    访问日期: '2026-10-27'
+    检索限制:
+      索引偏向: 需求批准不证明工程可实现或场景已读取
+      返回上限: 无已知重大截断
+      付费墙: 无
+      时间覆盖: '2026-10-26'
+      术语壁垒: 已批准结果A与阶段02/03实证成熟度不同
+    可访问性: 模型可直接访问
+  - source_id: SRC-02-05
+    名称: Human提供的Codex REA困难项实测评估
+    地址: CHAT_ATTACHMENT_REA_DIFFICULT_ITEMS_EVALUATION_20261027.md_NOT_YET_GITHUB_PINNED
+    类型: 内部证据
+    信源可靠性: C
+    可靠性理由: 报告列出采集方法、实读精度、元数据位置、证据ID和失败预算，但原始二进制/脚本和独立重复测试未在本Run核对
+    发布时间或版本: '2026-10-27'
+    访问日期: '2026-10-27'
+    检索限制:
+      索引偏向: 六名球员有效缓存样本；不是全面Overall/其他困难项的实机完成证明
+      返回上限: 用户上传的69行评估报告；原始工具证据尚未固定为当前GitHub引用
+      付费墙: 无
+      时间覆盖: 该次特定exe构建与game进程
+      术语壁垒: 缓存实读float32与UI基本整数候选/加成值不是同一字段成熟度
+    可访问性: 需人工
+  - source_id: SRC-02-06
+    名称: 当前OS阶段02和阶段协同推演规范
+    地址: 01_os/01_workflow/02_信息收集与提炼/ ; 01_os/03_mechanisms/stage_collaborative_deliberation/
+    类型: 权威标准
+    信源可靠性: A
+    可靠性理由: 当前项目治理原始规范与相关profile，定义研究、Human讨论、证据和阶段门要求
+    发布时间或版本: master_7742568ac677b3c16079887463f05e81cb1191ed_at_2026_10_27
+    访问日期: '2026-10-27'
+    检索限制:
+      索引偏向: 工作流规范不是Native游戏事实首发来源
+      返回上限: 相关README/方法论/schema与执行清单定向阅读
+      付费墙: 无
+      时间覆盖: 本轮master已查版本
+      术语壁垒: 证据成熟度和Human批准权限必须分开记录
+    可访问性: 模型可直接访问
+independence_limit: >-
+  SRC-02-01 and SRC-02-02 largely share original development provenance;
+  SRC-02-05 is a later Codex delegated study but not independent acceptance.
+  Product approval sources validate requirements, not runtime game behavior.
