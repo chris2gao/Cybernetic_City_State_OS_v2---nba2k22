@@ -1,6 +1,8 @@
 task: NBA2K22-REA-AI-PROTOTYPE-EXPLORATION-01
 type: EXPLORATORY_ENGINEERING_PROTOTYPE
-lifecycle: GITHUB_ISSUE_POSTED_READY_FOR_CODEX_PICKUP
+lifecycle: candidate_pending_validation
+prior_handoff_lifecycle: GITHUB_ISSUE_POSTED_READY_FOR_CODEX_PICKUP
+current_executor_receipt: Human opened Issue9 in the current Codex desktop session; engineering accepted, not a GitHub agent-assignment claim.
 date: '2026-10-27'
 engineer_owner: Codex
 project: NBA2K22
@@ -72,7 +74,7 @@ stop_conditions:
 progress_state:
   Codex_assigned_via_external_agent_channel: ATTEMPTED_GITHUB_ASSIGNEE_REJECTED_422
   GitHub_issue_created: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/9
-  actual_engineering_started: NOT_VERIFIED
+  actual_engineering_started: VERIFIED_CURRENT_CODEX_SESSION
   game_process_attached: false
   Codex_evidence_claimed_to_be_game_native_L3_L4: false
 
@@ -81,4 +83,4 @@ GitHub_issue_assignee: NONE_GITHUB_API_RETURNED_422_FOR_CODEX
 GitHub_issue_handoff_ref: 01_任务输入/CODEX_HANDOFF_RECEIPT_v1.md
 GitHub_issue_body_contains_task_url: true
 GitHub_software_agent_actual_run: NOT_OBSERVED
-Human_next_needed_for_agent_start: OPEN_ISSUE_IN_CODEX_APP_OR_ENABLE_GITHUB_AGENT_ASSIGNMENT
+Human_next_needed_for_agent_start: SATISFIED_BY_CURRENT_HUMAN_TASK_MESSAGE
