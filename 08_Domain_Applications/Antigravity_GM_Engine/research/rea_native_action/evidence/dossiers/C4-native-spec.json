@@ -1,0 +1,23 @@
+{
+  "action_id": "C4-NATIVE-ONE-FOR-ONE-TRADE",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "mode": "PC22_OFFLINE_MYLEAGUE_ISOLATED_RECOVERABLE_TEST_SAVE",
+  "add_player_rva": 19786784,
+  "validate_rva": 19843376,
+  "full_check_rva": 19798016,
+  "commit_wrapper_rva": 20101184,
+  "process_rva": 19829680,
+  "abi": "win64",
+  "proposal_bytes": 1668,
+  "element_bytes": 92,
+  "element_limit": 18,
+  "signature": "int Add(TRADE*,TEAM* from,TEAM* to,PLAYER*); int Validate(TRADE*); int Wrapper(TRADE*,int32* optional_output)",
+  "full_check_signature": "int Check(TRADE*,bool current_team_in_trade,context*,int enable_checks,int zero,int32* output)",
+  "thread_model": "FRESH_GAME_WINDOW_THREAD_PEEKMESSAGEA_ONLEAVE_ONCE",
+  "control_scope": "IsAIInitiated is an input bit; do not infer original autonomous AI caller or engine-controller ownership",
+  "qualification": "Pinned build/code; fresh player UID/name, reciprocal current/contract team and roster membership; identical eligible contracts; private native full Check succeeded; context and lifecycle ready",
+  "lifetime": "Private 1668-byte proposal plus canaries retained through synchronous native wrapper return; game-owned objects are freshly resolved",
+  "result_semantics": "Wrapper0 after Check1 and Process1; missing instrumentation receipt remains UNKNOWN and requires independent readback before any retry",
+  "rollback": "No automatic second transaction or direct-memory rollback; preserve evidence and reload recoverable test save only if Human chooses",
+  "production_replacement_qualified": false
+}
