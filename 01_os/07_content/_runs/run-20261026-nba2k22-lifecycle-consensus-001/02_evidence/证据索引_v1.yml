@@ -242,6 +242,57 @@ entries:
     applicability: only previous latest successful unit of each of 20 reader families
     A_links: [RES-01, RES-02, RES-04]
     limits: base entities, future lifecycle facts, standalone metadata or prior nonlatest units may legitimately not occur in this slice; no claim of 27 missing game containers
+  - evidence_id: E-02-018
+    research_question_ids: [RQ-02-03, RQ-02-05]
+    claim: existing v25 historical as-of query freezes committed capture units by UTC capture observed_at and source refresh carries independent atomic units instead of a single global simultaneous snapshot
+    direction: 部分支持与限制
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+        origin: fixed_original_source
+        blob_sha: 6d906f7b88ff3c6e35f033ab841fa3f34379c33f
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+        origin: same_fixed_engineering_project
+        blob_sha: 4c0bb0859361f6a962fdb1cb1372cef02c481e0a
+    evidence_credibility: direct_source_static_review_not_cross_year_native_test
+    applicability: v25 as_of unit and refresh semantics as implemented, not complete cross-year/source semantic correctness
+    A_links: [RES-02, RES-04, RES-05]
+    limits: old retained unit has fresh_native_capture false; cannot satisfy execution-bound new capture proof
+  - evidence_id: E-02-019
+    research_question_ids: [RQ-02-03, RQ-02-05]
+    claim: v25 has explicit season_finalizations table and season totals insert guards that reject insertion after same season closure, so distinguishing regular season closure from playoff finality is a high-impact future S4/S6 evidence test
+    direction: 部分支持与限制
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
+        origin: original_fixed_schema_builder
+        blob_sha: 677b115b39b2f6cd93011143c658107b8000d6ff
+    evidence_credibility: direct_source_code_consequence_not_a_proven_S4_S6_runtime_bug
+    applicability: finality data model design when same year regular and playoff stages exist
+    A_links: [RES-02, RES-04]
+    limits: code behavior alone does not show that an actual S4 run inserts closure early or that S6 is rejected; targeted tests need source stage proof
+  - evidence_id: E-02-020
+    research_question_ids: [RQ-02-07]
+    claim: v25 storage_profile measures current SQLite pages and rows while project_observations is a linear fixed-population projection explicitly not an executed 100 season capacity test
+    direction: 部分支持与限制
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/database_operations.py
+        origin: original_fixed_engineering_source
+        blob_sha: c77cf13f177a64b501c14cd373d33d9711b3d0ae
+    evidence_credibility: direct_read_of_code_not_real_multiseason_load_test
+    applicability: early B physical storage constraints; real 100 season performance verdict remains open
+    A_links: [RES-02, RES-04, RES-06]
+    limits: excludes population change, index allocation, backups, raw artifact retention, query latency and actual runtime conditions
+  - evidence_id: E-02-021
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: fixed v25 schema contains preexisting derived_game_scores and derived_player_box_metrics views marked derived and these are not evidence that building new basketball accumulation or ranking engines is necessary
+    direction: 限制扩张
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
+        origin: fixed_original_schema_builder
+        blob_sha: 677b115b39b2f6cd93011143c658107b8000d6ff
+    evidence_credibility: direct_code_read_plus_current_Human_scope_interpretation
+    applicability: existing derived view provenance only, not user authorization to remove or expand views
+    A_links: [RES-01, RES-04]
+    limits: no newly designed basketball analytics; game-native values remain source of truth for current product target
 assessment:
   RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
   stage02_all_questions_completed: false
