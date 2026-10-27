@@ -1,0 +1,3344 @@
+{
+  "schema_version": "nba2k22.stage02.container_domain_reader_crosswalk.v1",
+  "date": "2026-10-27",
+  "status": "STATIC_CONTAINER_INVENTORY_AND_DEVELOPER_ARCHIVE_ONLY_NOT_SCENE_RUNTIME_ACCEPTANCE",
+  "engineer_fixed_sha": "a3927fb150a213201e404cca043ced4f57409bd1",
+  "source_sha": {
+    "inventory": "cfbeb2fd8103ea87935825cee460dcda6e26df22",
+    "source_coverage": "46d43f0e827030ecc7c20df4390dfb4a16d4f33f",
+    "table_cards": "1e9ab7731ef50b466f1f7e92973941d782e5bed9"
+  },
+  "important_limit": "Prior latest-unit counts prove only archived developer bookkeeping. Uncounted table may be legitimate infrastructure, historical-only, or need a particular source; do not mark missing. Candidate scenes are research priorities, not Native applicability claims.",
+  "summary": {
+    "table_count": 101,
+    "column_count": 1789,
+    "reader_family_count": 20,
+    "domains": {
+      "RES-P": 16,
+      "RES-G": 8,
+      "RES-T": 8,
+      "RES-C": 19,
+      "RES-M": 14,
+      "RES-L": 6,
+      "RES-H": 12,
+      "RES-S": 3,
+      "RES-D": 15
+    },
+    "tables_with_archived_latest_nonzero": 74,
+    "tables_without_archived_latest_nonzero": 27
+  },
+  "registered_readers": [
+    {
+      "family": "schedule",
+      "module": "schedule_reader",
+      "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+      "prior_successful_units": 7,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "game-mode",
+      "module": "game_mode_reader",
+      "source_key": "BOUND_NATIVE_GAME_MODE_PERIOD",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "period-stats",
+      "module": "period_stats_reader",
+      "source_key": "BOUND_NATIVE_CURRENT_PERIOD_PLAYER_STATS",
+      "prior_successful_units": 1,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "organization",
+      "module": "organization_reader",
+      "source_key": "BOUND_CORE_ORGANIZATION",
+      "prior_successful_units": 3,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "staff",
+      "module": "staff_reader",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL",
+      "prior_successful_units": 1,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "coach-stats",
+      "module": "current_coach_stat_reader",
+      "source_key": "BOUND_NATIVE_CURRENT_COACH_STATS",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "lineups",
+      "module": "lineup_reader",
+      "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION",
+      "prior_successful_units": 1,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "finance",
+      "module": "finance_reader",
+      "source_key": "BOUND_NATIVE_TYPED_TEAM_FINANCE",
+      "prior_successful_units": 1,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "market",
+      "module": "market_reader",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "planning",
+      "module": "planning_reader",
+      "source_key": "BOUND_PLANNING_AND_TRAINING",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "settings",
+      "module": "settings_reader",
+      "source_key": "BOUND_SETTINGS_AND_RULES",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "player-details",
+      "module": "player_detail_reader",
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "player-state",
+      "module": "player_state_reader",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "affiliations",
+      "module": "player_affiliation_reader",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "player-skills",
+      "module": "player_skill_reader",
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "news",
+      "module": "league_ingest",
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "records",
+      "module": "records_reader",
+      "source_key": "BOUND_RECORD_BOOK",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "honors",
+      "module": "award_reader",
+      "source_key": "BOUND_NATIVE_HONOR_STATS",
+      "prior_successful_units": 2,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "league-history",
+      "module": "league_ingest",
+      "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS",
+      "prior_successful_units": 1,
+      "actual_scene_scope_verified": false
+    },
+    {
+      "family": "staff-history",
+      "module": "staff_history_reader",
+      "source_key": "BOUND_NATIVE_ANNUAL_STAFF_STATS",
+      "prior_successful_units": 1,
+      "actual_scene_scope_verified": false
+    }
+  ],
+  "scene_domain_research_interest": {
+    "S1": [
+      "RES-P",
+      "RES-G",
+      "RES-T",
+      "RES-C",
+      "RES-M",
+      "RES-L",
+      "RES-S",
+      "RES-D"
+    ],
+    "S2": [
+      "RES-P",
+      "RES-G",
+      "RES-H",
+      "RES-D"
+    ],
+    "S3": [
+      "RES-P",
+      "RES-T",
+      "RES-C",
+      "RES-M",
+      "RES-D"
+    ],
+    "S4": [
+      "RES-P",
+      "RES-G",
+      "RES-T",
+      "RES-L",
+      "RES-H",
+      "RES-D"
+    ],
+    "S5": [
+      "RES-G",
+      "RES-P",
+      "RES-T",
+      "RES-L",
+      "RES-H",
+      "RES-D"
+    ],
+    "S6": [
+      "RES-P",
+      "RES-G",
+      "RES-T",
+      "RES-L",
+      "RES-H",
+      "RES-D"
+    ],
+    "S7": [
+      "RES-P",
+      "RES-T",
+      "RES-C",
+      "RES-M",
+      "RES-S",
+      "RES-H",
+      "RES-D"
+    ],
+    "S8": [
+      "RES-P",
+      "RES-G",
+      "RES-T",
+      "RES-C",
+      "RES-M",
+      "RES-L",
+      "RES-S",
+      "RES-H",
+      "RES-D"
+    ]
+  },
+  "tables": [
+    {
+      "table": "saves",
+      "domain": "RES-D",
+      "columns": 7,
+      "purpose": "one independent game save per SQLite file",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "seasons",
+      "domain": "RES-L",
+      "columns": 3,
+      "purpose": "one save-local season",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "teams",
+      "domain": "RES-T",
+      "columns": 4,
+      "purpose": "stable save-local team identity",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "players",
+      "domain": "RES-P",
+      "columns": 4,
+      "purpose": "stable save-local player instance",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "staff_members",
+      "domain": "RES-C",
+      "columns": 4,
+      "purpose": "save-local staff identity",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "games",
+      "domain": "RES-G",
+      "columns": 7,
+      "purpose": "one identified season game, not its changing observed state",
+      "prior_source_status": "SEASON_GAME 60-byte candidate",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "capture_runs",
+      "domain": "RES-D",
+      "columns": 13,
+      "purpose": "one acquisition session",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 6,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "capture_units",
+      "domain": "RES-D",
+      "columns": 9,
+      "purpose": "one immutable atomic source consistency unit",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 7,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 1,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "game-mode",
+          "rows": 1,
+          "unit_id": "native-game-mode:496e3e911bb214cfa21f65c1",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "period-stats",
+          "rows": 1,
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "organization",
+          "rows": 1,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "staff",
+          "rows": 1,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "coach-stats",
+          "rows": 1,
+          "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "lineups",
+          "rows": 1,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "finance",
+          "rows": 1,
+          "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "market",
+          "rows": 1,
+          "unit_id": "market:09a4f4bfa4be905bebdb2f86",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "planning",
+          "rows": 1,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "settings",
+          "rows": 1,
+          "unit_id": "settings:e5d19c4f77d4513c672b9d47",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-details",
+          "rows": 1,
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-state",
+          "rows": 1,
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "affiliations",
+          "rows": 1,
+          "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-skills",
+          "rows": 1,
+          "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "news",
+          "rows": 1,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "records",
+          "rows": 1,
+          "unit_id": "records:385449b5f4470a90df76d8f9",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "honors",
+          "rows": 1,
+          "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "league-history",
+          "rows": 1,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "staff-history",
+          "rows": 1,
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "source_artifacts",
+      "domain": "RES-D",
+      "columns": 8,
+      "purpose": "one bounded source artifact hash, no public raw bytes",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 6,
+      "source_unknown_columns": 6,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 951,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "game-mode",
+          "rows": 5,
+          "unit_id": "native-game-mode:496e3e911bb214cfa21f65c1",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "period-stats",
+          "rows": 407,
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "organization",
+          "rows": 393,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "staff",
+          "rows": 37,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "coach-stats",
+          "rows": 1509,
+          "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "lineups",
+          "rows": 67,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "finance",
+          "rows": 36,
+          "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "market",
+          "rows": 825,
+          "unit_id": "market:09a4f4bfa4be905bebdb2f86",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "planning",
+          "rows": 2713,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "settings",
+          "rows": 49,
+          "unit_id": "settings:e5d19c4f77d4513c672b9d47",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-details",
+          "rows": 33,
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-state",
+          "rows": 34,
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "affiliations",
+          "rows": 34,
+          "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-skills",
+          "rows": 33,
+          "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "news",
+          "rows": 6,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "records",
+          "rows": 7,
+          "unit_id": "records:385449b5f4470a90df76d8f9",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "honors",
+          "rows": 39,
+          "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "league-history",
+          "rows": 5,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "staff-history",
+          "rows": 1691,
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_fields",
+      "domain": "RES-D",
+      "columns": 16,
+      "purpose": "versioned source-field mapping metadata",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 15,
+      "source_unknown_columns": 15,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "field_gaps",
+      "domain": "RES-D",
+      "columns": 9,
+      "purpose": "one unresolved target-field gap or Human exception",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 7,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "fact_conflicts",
+      "domain": "RES-D",
+      "columns": 7,
+      "purpose": "one quarantined conflict with an existing fact",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "annual_fact_claims",
+      "domain": "RES-D",
+      "columns": 10,
+      "purpose": "idempotent annual typed-record membership; no business values stored in this ledger",
+      "prior_source_status": "F01 source observations remain typed; canonical frozen identities reject changed content",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 6,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_seasons",
+      "domain": "RES-T",
+      "columns": 7,
+      "purpose": "team participation in one season",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 34,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "organization",
+          "rows": 30,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "roster_memberships",
+      "domain": "RES-T",
+      "columns": 6,
+      "purpose": "observed player team membership; not a transfer event",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 455,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "planning",
+          "rows": 461,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_player_sources",
+      "domain": "RES-D",
+      "columns": 12,
+      "purpose": "one PLAYER pool source projection with both native identity fields and optional current canonical match",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 6,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "period-stats",
+          "rows": 3390,
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "lineups",
+          "rows": 3390,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-details",
+          "rows": 3390,
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-state",
+          "rows": 3390,
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "affiliations",
+          "rows": 3390,
+          "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-skills",
+          "rows": 3390,
+          "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "honors",
+          "rows": 3390,
+          "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_college_observations",
+      "domain": "RES-P",
+      "columns": 12,
+      "purpose": "one distinct pointed COLLEGEDATA referent in a capture unit",
+      "prior_source_status": "Current COLLEGEDATA header/field signature; native name[34], CRC, group, packed raw IDs and high-school flag; no inferred nationality",
+      "game_range_unknown": 10,
+      "source_unknown_columns": 10,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "affiliations",
+          "rows": 322,
+          "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_vitals_observations",
+      "domain": "RES-P",
+      "columns": 40,
+      "purpose": "one actual vitals observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 35,
+      "source_unknown_columns": 18,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 455,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-state",
+          "rows": 3390,
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "affiliations",
+          "rows": 3390,
+          "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_attribute_snapshots",
+      "domain": "RES-P",
+      "columns": 62,
+      "purpose": "one player successful typed attribute family observation",
+      "prior_source_status": "config/memory_field_profile.json",
+      "game_range_unknown": 58,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 455,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-skills",
+          "rows": 3390,
+          "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_tendency_snapshots",
+      "domain": "RES-P",
+      "columns": 105,
+      "purpose": "one player named tendency family observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 101,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 455,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-skills",
+          "rows": 3390,
+          "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_badge_values",
+      "domain": "RES-P",
+      "columns": 12,
+      "purpose": "one observed native base badge/boolean flag, canonical or source-only; absence is not unowned",
+      "prior_source_status": "Current PLAYERDATA field CRCs, all99 base-dispatch cases and BADGE/BADGE_LEVEL enums; legacy research labels remain historical",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "player-details",
+          "rows": 332220,
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_play_type_slots",
+      "domain": "RES-P",
+      "columns": 8,
+      "purpose": "one ordered player play type slot",
+      "prior_source_status": "Current PLAYERDATA.PlayType1..4 and PLAYERDATA_PLAYTYPE enum; ordered source slots, not playbook categories or effect proof",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 1820,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-skills",
+          "rows": 13560,
+          "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_contract_observations",
+      "domain": "RES-M",
+      "columns": 25,
+      "purpose": "one actual contract source observation, not inferred signing event",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 20,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 455,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "player-details",
+          "rows": 3390,
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_health_observations",
+      "domain": "RES-P",
+      "columns": 39,
+      "purpose": "observed health separate from attribute durability",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 35,
+      "source_unknown_columns": 8,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "player-state",
+          "rows": 3390,
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_morale_observations",
+      "domain": "RES-P",
+      "columns": 18,
+      "purpose": "observed native morale/role, not AI personality",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 14,
+      "source_unknown_columns": 7,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "player-state",
+          "rows": 3390,
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_training_observations",
+      "domain": "RES-P",
+      "columns": 13,
+      "purpose": "observed personal training settings",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 9,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 456,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "game_state_observations",
+      "domain": "RES-G",
+      "columns": 11,
+      "purpose": "observed status and native score if actually available",
+      "prior_source_status": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+      "game_range_unknown": 8,
+      "source_unknown_columns": 8,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 1030,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "game_period_scores",
+      "domain": "RES-G",
+      "columns": 6,
+      "purpose": "one team one actual period score observation",
+      "prior_source_status": "SEASON_GAME +44..51; OT byte is aggregate, not individually split",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 288,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_game_boxes",
+      "domain": "RES-G",
+      "columns": 26,
+      "purpose": "one game team native box observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 22,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 72,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_game_boxes",
+      "domain": "RES-G",
+      "columns": 28,
+      "purpose": "one game player native box observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 23,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 893,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "playoff_series",
+      "domain": "RES-G",
+      "columns": 6,
+      "purpose": "one identified native playoff series",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 1,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "playoff_series_games",
+      "domain": "RES-G",
+      "columns": 5,
+      "purpose": "evidenced series-to-game association",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 1,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_season_totals",
+      "domain": "RES-L",
+      "columns": 29,
+      "purpose": "native cumulative player season totals observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 24,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 370,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_season_totals",
+      "domain": "RES-L",
+      "columns": 35,
+      "purpose": "native cumulative team season observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 31,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 30,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "staff_team_assignments",
+      "domain": "RES-C",
+      "columns": 5,
+      "purpose": "evidenced actual staff role assignment",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 1,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 240,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "staff_contract_observations",
+      "domain": "RES-C",
+      "columns": 5,
+      "purpose": "one staff contract observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 240,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "staff_skill_observations",
+      "domain": "RES-C",
+      "columns": 10,
+      "purpose": "one staff typed skill family observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 240,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "coach_preferences",
+      "domain": "RES-C",
+      "columns": 6,
+      "purpose": "one coach preferences observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 30,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_tactic_settings",
+      "domain": "RES-C",
+      "columns": 31,
+      "purpose": "one team actual tactics settings observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 28,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 30,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_playbook_slots",
+      "domain": "RES-C",
+      "columns": 7,
+      "purpose": "one ordered actual team playbook entry",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 2040,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_training_settings",
+      "domain": "RES-C",
+      "columns": 12,
+      "purpose": "one team actual training settings",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 9,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 30,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "mentorship_relations",
+      "domain": "RES-C",
+      "columns": 10,
+      "purpose": "observed actual mentor association",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 61,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_finance_observations",
+      "domain": "RES-M",
+      "columns": 15,
+      "purpose": "native financial snapshot, not external CBA inference",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 12,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 30,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_team_finance_observations",
+      "domain": "RES-M",
+      "columns": 67,
+      "purpose": "one typed Native core TEAM finance projection; observation season is context, not accounting coverage",
+      "prior_source_status": "CURRENT_NATIVE_TEAMDATA_SIGNED_UNSIGNED_FLOAT_ENUM; same-unit game_mode_observations; no derived cap-space/profit/legal-spending assertion",
+      "game_range_unknown": 63,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "finance",
+          "rows": 30,
+          "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_lineup_observations",
+      "domain": "RES-T",
+      "columns": 20,
+      "purpose": "one Native global lineup/control context for a core team",
+      "prior_source_status": "CURRENT_NATIVE_TEAMDATA_POINTER_ARRAYS_DIMENSIONS_FLAGS_AND_CUSTOM_NAME",
+      "game_range_unknown": 15,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "lineups",
+          "rows": 30,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_player_rotation_observations",
+      "domain": "RES-P",
+      "columns": 7,
+      "purpose": "one public Native PLAYER rotation field pair, independent of a current lineup",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "lineups",
+          "rows": 3390,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_rotation_slots",
+      "domain": "RES-T",
+      "columns": 11,
+      "purpose": "one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "lineups",
+          "rows": 390,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_lineup_slots",
+      "domain": "RES-T",
+      "columns": 8,
+      "purpose": "one slot in each complete Native named five-player TEAM lineup",
+      "prior_source_status": "CURRENT_NATIVE TEAMDATA named PLAYERDATA pointer arrays; actual pointer addresses remain restricted artifacts",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "lineups",
+          "rows": 1200,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_advanced_rotation_slots",
+      "domain": "RES-T",
+      "columns": 7,
+      "purpose": "one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "lineups",
+          "rows": 7200,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_staff_sources",
+      "domain": "RES-C",
+      "columns": 25,
+      "purpose": "one COACHDATA descriptor slot with current source identity and independently qualified role/pointer/status observations",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 12,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff",
+          "rows": 1470,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_staff_profile_observations",
+      "domain": "RES-C",
+      "columns": 93,
+      "purpose": "one complete public Native staff profile field family; source-only identities retained",
+      "prior_source_status": "CURRENT_NATIVE_COACHDATA_PUBLIC_FIELDS; no growth/max-grade or annual SeasonStats acquisition",
+      "game_range_unknown": 90,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff",
+          "rows": 1470,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_staff_tactic_observations",
+      "domain": "RES-C",
+      "columns": 87,
+      "purpose": "one complete public Native staff tactics field family; source-only identities retained",
+      "prior_source_status": "CURRENT_NATIVE_COACHDATA_PUBLIC_FIELDS; no growth/max-grade or annual SeasonStats acquisition",
+      "game_range_unknown": 84,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff",
+          "rows": 1470,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_staff_team_slots",
+      "domain": "RES-C",
+      "columns": 7,
+      "purpose": "one of eight complete current core TEAM.Coach_Internal pointer slots, including missing/unmatched references",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff",
+          "rows": 240,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_staff_history_subjects",
+      "domain": "RES-H",
+      "columns": 8,
+      "purpose": "one annual staff descriptor identity, independent of ordinary staff acquisition",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff-history",
+          "rows": 1470,
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_current_coach_stat_observations",
+      "domain": "RES-C",
+      "columns": 19,
+      "purpose": "one staff source with exactly position0 Native increment-target reference and current win/loss observation, independent of annual history",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 11,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "coach-stats",
+          "rows": 1470,
+          "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_coach_stat_observations",
+      "domain": "RES-H",
+      "columns": 12,
+      "purpose": "one referenced COACHSTATDATA bank row observed in an annual staff history source",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 9,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff-history",
+          "rows": 217,
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_staff_stat_links",
+      "domain": "RES-H",
+      "columns": 7,
+      "purpose": "one of40 independent signed Native COACHDATA.SeasonStats references, including rejected indices",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "staff-history",
+          "rows": 58800,
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "team_state_observations",
+      "domain": "RES-T",
+      "columns": 5,
+      "purpose": "one team observed native chemistry/fan state",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "organization",
+          "rows": 30,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "market_state_observations",
+      "domain": "RES-M",
+      "columns": 29,
+      "purpose": "native or external market state with explicit origin",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 24,
+      "source_unknown_columns": 6,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "affiliations",
+          "rows": 3390,
+          "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "external_transaction_events",
+      "domain": "RES-M",
+      "columns": 8,
+      "purpose": "explicit completed external transaction, never roster-diff inference",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_pick_assets",
+      "domain": "RES-M",
+      "columns": 6,
+      "purpose": "one actual draft pick identity",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "transaction_components",
+      "domain": "RES-M",
+      "columns": 10,
+      "purpose": "one evidenced external transaction component",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_pick_ownerships",
+      "domain": "RES-M",
+      "columns": 10,
+      "purpose": "observed or explicit event-backed pick ownership",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "market",
+          "rows": 300,
+          "unit_id": "market:09a4f4bfa4be905bebdb2f86",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_prospects",
+      "domain": "RES-M",
+      "columns": 7,
+      "purpose": "one named prospect source observation, separate from PLAYER instance",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_pool_slot_observations",
+      "domain": "RES-M",
+      "columns": 8,
+      "purpose": "one actual draft-pool slot observation, including uninitialized slots",
+      "prior_source_status": "ROSTERDATA Slot4 count/pointer, 1264-byte public template excluding Potential; allocated slots are not necessarily people",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "market",
+          "rows": 90,
+          "unit_id": "market:09a4f4bfa4be905bebdb2f86",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_prospect_attribute_snapshots",
+      "domain": "RES-P",
+      "columns": 58,
+      "purpose": "one named prospect public attribute observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 55,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_prospect_tendency_snapshots",
+      "domain": "RES-P",
+      "columns": 51,
+      "purpose": "one named prospect registered tendency observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 48,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_prospect_play_type_slots",
+      "domain": "RES-P",
+      "columns": 5,
+      "purpose": "one named prospect ordered native play-type observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "waived_salary_observations",
+      "domain": "RES-M",
+      "columns": 13,
+      "purpose": "one observed 136-byte native waived-salary source record; not an inferred release event",
+      "prior_source_status": "ROSTERDATA Slot61 stride136; TEAM pointer+8; candidate inline UTF16 surname+56/given+96",
+      "game_range_unknown": 6,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "market",
+          "rows": 222,
+          "unit_id": "market:09a4f4bfa4be905bebdb2f86",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "draft_results",
+      "domain": "RES-M",
+      "columns": 8,
+      "purpose": "actual source-backed draft result",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "worldline_config_versions",
+      "domain": "RES-S",
+      "columns": 6,
+      "purpose": "versioned desired configuration, never actual game state",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "game_setting_observations",
+      "domain": "RES-S",
+      "columns": 14,
+      "purpose": "one actual native setting word with typed value and qualified semantics",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "settings",
+          "rows": 546,
+          "unit_id": "settings:e5d19c4f77d4513c672b9d47",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "startup_config_checks",
+      "domain": "RES-S",
+      "columns": 6,
+      "purpose": "desired-vs-observed configuration check",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "league_rule_observations",
+      "domain": "RES-L",
+      "columns": 9,
+      "purpose": "one actual season rule observation, not external business policy",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "settings",
+          "rows": 35,
+          "unit_id": "settings:e5d19c4f77d4513c672b9d47",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_league_history_observations",
+      "domain": "RES-H",
+      "columns": 26,
+      "purpose": "one native 152-byte league history slot per acquisition",
+      "prior_source_status": "ROSTER Slot41 + current LEAGUEHISTORYDATA metadata; archived roster history, world occurrence not inferred",
+      "game_range_unknown": 23,
+      "source_unknown_columns": 9,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "league-history",
+          "rows": 6769,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "season_award_instances",
+      "domain": "RES-H",
+      "columns": 9,
+      "purpose": "actual source-recorded awarded honor; scope and finality basis explicit; leaders are not winners",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 6,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "league-history",
+          "rows": 764,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "award_recipients",
+      "domain": "RES-H",
+      "columns": 9,
+      "purpose": "one source-recorded award recipient, canonical or inline historical identity",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "league-history",
+          "rows": 2315,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_social_message_observations",
+      "domain": "RES-H",
+      "columns": 38,
+      "purpose": "one native social-message bank slot, including inactive storage",
+      "prior_source_status": "CURRENT_NATIVE.FRANCHISE.SocialMedia; generic parameters/text remain owner-only until rendered UI semantics verified",
+      "game_range_unknown": 36,
+      "source_unknown_columns": 9,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "news",
+          "rows": 4000,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_transaction_observations",
+      "domain": "RES-M",
+      "columns": 13,
+      "purpose": "one allocated native transaction slot, not an accepted external execution",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 11,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "news",
+          "rows": 250,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_transaction_item_observations",
+      "domain": "RES-M",
+      "columns": 6,
+      "purpose": "one native transaction parameter storage slot",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "news",
+          "rows": 9750,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_award_matrix_observations",
+      "domain": "RES-H",
+      "columns": 5,
+      "purpose": "one current franchise award matrix cell, not a final award",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "league-history",
+          "rows": 75,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_league_capture_controls",
+      "domain": "RES-D",
+      "columns": 12,
+      "purpose": "one source mode and allocator/count observations per acquisition",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 10,
+      "source_unknown_columns": 10,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "news",
+          "rows": 1,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "league-history",
+          "rows": 1,
+          "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "season_record_entries",
+      "domain": "RES-H",
+      "columns": 25,
+      "purpose": "one observed native record-book slot; source subjects and historical scopes need separate identity proof",
+      "prior_source_status": "ROSTERDATA Slot39; actual native getter count/pointer/52-byte stride, research field semantics",
+      "game_range_unknown": 15,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "records",
+          "rows": 69040,
+          "unit_id": "records:385449b5f4470a90df76d8f9",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "external_execution_receipts",
+      "domain": "RES-D",
+      "columns": 8,
+      "purpose": "external executor report, not proof of readback",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 4,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "external_readback_checks",
+      "domain": "RES-D",
+      "columns": 6,
+      "purpose": "separate observed readback reconciliation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_identity_links",
+      "domain": "RES-D",
+      "columns": 8,
+      "purpose": "one versioned native ID to actual save-local entity link",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "honors",
+          "rows": 461,
+          "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_restricted_observations",
+      "domain": "RES-P",
+      "columns": 6,
+      "purpose": "restricted external-storage metadata; raw Potential never in world facts",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 3,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "game_news_entries",
+      "domain": "RES-H",
+      "columns": 8,
+      "purpose": "one source-observed native news item observation",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 4,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "news",
+          "rows": 1281,
+          "unit_id": "native-league:af7f124b4809df57492f3dc2",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "season_finalizations",
+      "domain": "RES-D",
+      "columns": 5,
+      "purpose": "explicit evidenced season closure boundary",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [],
+      "provenance_level": "DDL_ONLY_OR_NONLATEST_UNIT_UNVERIFIED",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_box_observations",
+      "domain": "RES-D",
+      "columns": 27,
+      "purpose": "one captured Box row before canonical player identity is proven",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 24,
+      "source_unknown_columns": 7,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 930,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "game_source_checks",
+      "domain": "RES-G",
+      "columns": 45,
+      "purpose": "one current game-header check and explicit Box acquisition/reuse decision",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 41,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 1232,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "season_calendar_observations",
+      "domain": "RES-L",
+      "columns": 25,
+      "purpose": "one observed SEASON calendar/period and native schedule-control window",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 22,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "schedule",
+          "rows": 1,
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "organization",
+          "rows": 1,
+          "unit_id": "organization:d89edd8d725f12db37509bed",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "game_mode_observations",
+      "domain": "RES-L",
+      "columns": 28,
+      "purpose": "one Native GAMEMODE public prefix and verified current-stat selector observation",
+      "prior_source_status": "CURRENT_NATIVE.GAMEMODE public24-byte prefix; repeated pointer/vtable/getter controls; no method invocation",
+      "game_range_unknown": 25,
+      "source_unknown_columns": 0,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "game-mode",
+          "rows": 1,
+          "unit_id": "native-game-mode:496e3e911bb214cfa21f65c1",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "period-stats",
+          "rows": 1,
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "staff",
+          "rows": 1,
+          "unit_id": "native-staff:1102ee68991fd806a52698c3",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "coach-stats",
+          "rows": 1,
+          "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "lineups",
+          "rows": 1,
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "finance",
+          "rows": 1,
+          "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "staff-history",
+          "rows": 1,
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S4",
+        "S5",
+        "S6",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_player_stat_observations",
+      "domain": "RES-H",
+      "columns": 49,
+      "purpose": "one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate",
+      "prior_source_status": "CURRENT_NATIVE_PLAYERSTATDATA_48_BYTE_FIELDS; raw award fields are not fabricated final award instances",
+      "game_range_unknown": 46,
+      "source_unknown_columns": 1,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "period-stats",
+          "rows": 370,
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "honors",
+          "rows": 9773,
+          "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_player_stat_links",
+      "domain": "RES-H",
+      "columns": 7,
+      "purpose": "one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 2,
+      "source_unknown_columns": 2,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "period-stats",
+          "rows": 3390,
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "family": "honors",
+          "rows": 84750,
+          "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "gameplan_observations",
+      "domain": "RES-C",
+      "columns": 21,
+      "purpose": "one stored owner/opponent GAMEPLAN observation; commit flag is not game-effect proof",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 17,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 870,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "gameplan_rotation_observations",
+      "domain": "RES-C",
+      "columns": 9,
+      "purpose": "one stored plan ordered rotation entry, including sentinel slots",
+      "prior_source_status": "GAMEPLAN +6, 23 four-byte entries; canonical link only to exact current own roster UID",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 20010,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "gameplan_defense_observations",
+      "domain": "RES-C",
+      "columns": 28,
+      "purpose": "one stored plan defensive row, including empty sentinel rows",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 23,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 20010,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "player_training_slot_observations",
+      "domain": "RES-P",
+      "columns": 10,
+      "purpose": "one profile-bounded training slot; window capacity is not active player count",
+      "prior_source_status": "UNKNOWN",
+      "game_range_unknown": 8,
+      "source_unknown_columns": 3,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 786,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "mentor_manager_observations",
+      "domain": "RES-C",
+      "columns": 8,
+      "purpose": "one observed mentorship header per current franchise team",
+      "prior_source_status": "training.json franchise manager +0x132A8 first12 bytes; owner/count plausibility separate from effect",
+      "game_range_unknown": 5,
+      "source_unknown_columns": 5,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 30,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    },
+    {
+      "table": "native_mentor_relation_observations",
+      "domain": "RES-C",
+      "columns": 10,
+      "purpose": "one native mentorship relation header before canonical/effect claims",
+      "prior_source_status": "training.json relation entry204 first24 bytes; badge slots not read",
+      "game_range_unknown": 7,
+      "source_unknown_columns": 7,
+      "archived_prior_latest_unit_rows": [
+        {
+          "family": "planning",
+          "rows": 61,
+          "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "provenance_level": "DEVELOPER_RECORDED_NONZERO_UNIT_ROWS",
+      "scene_research_candidates": [
+        "S1",
+        "S3",
+        "S7",
+        "S8"
+      ],
+      "per_scene_actual_native_verified": false,
+      "ui_column_mapping_verified": false,
+      "read_write_category_verified": false
+    }
+  ]
+}
