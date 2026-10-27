@@ -5,7 +5,7 @@ p=argparse.ArgumentParser();p.add_argument('--stage',action='store_true');p.add_
 repo=Path(__file__).resolve().parents[5];base='4dbfde51bda76a3dbb3454d5ae42135592c8332e'
 def git(*args):return subprocess.check_output(['git',*args],cwd=repo)
 paths=sorted(set(git('diff','--name-only','-z',base).decode().split('\0')+git('ls-files','--others','--exclude-standard','-z').decode().split('\0'))-{''})
-allowed=['08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/*','08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_AI_MECHANISM_KNOWLEDGE_*','01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001/*']
+allowed=['08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/*','08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_AI_MECHANISM_KNOWLEDGE_V1.md','01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001/*']
 for path in paths:
  assert any(fnmatch.fnmatchcase(path,pattern) for pattern in allowed),path
  assert Path(path).suffix.lower() not in {'.exe','.dll','.iff','.dds','.scne','.sqlite','.db'},path
