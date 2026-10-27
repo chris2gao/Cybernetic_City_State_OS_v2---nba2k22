@@ -127,6 +127,54 @@ entries:
     applicability: historical source family and affected domain; not a present-tense global absence claim
     A_links: [RES-01, RES-02, RES-04, RES-06]
     next_evidence: match each gap to the latest applicable Reader and scene source, then obtain bounded Native and UI evidence if still unresolved
+  - evidence_id: E-02-011
+    research_question_ids: [RQ-02-01, RQ-02-02, RQ-02-03]
+    claim: fixed v25 source uses shared per-capture strict two-side Native/canonical Box identity and points comparison and rejects cross-unit Box fact borrowing
+    direction: 支持
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/competition_views.py
+        origin: primary_implementation_source
+        blob_sha: e75a87fa43183c1f7a38c978099886052c9df97e
+        location: lines 16-70
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+        origin: same_project_source_not_second_independent_origin
+        blob_sha: 54e70472088a65b9a92e107dc11dcae8a2451b4c
+        location: lines 588-641
+    evidence_credibility: directly_inspected_fixed_code_not_runtime_reproduced
+    applicability: v25 source contract; does not certify S1 in-game complete coverage
+    A_links: [RES-01, RES-02, RES-04, RES-06]
+    limits: code and same-codebase cross-reference are one developer origin; the current scene's real game source and identities have not been independently verified
+  - evidence_id: E-02-012
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: two of twelve historical game audit records are not canonical complete and both point to the same historical LIVE_READ PARTIAL schedule unit, but no per-side failing predicate was retained in that audit
+    direction: 未决
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-world-data-review-fixes-001/evidence/real-copy-query-audit.json
+        origin: developer_archived_copy_query_report
+        blob_sha: 3fa3e32b27021293f88737bfe4489f83448787ae
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: developer_archived_same_project_source_ledger
+        blob_sha: 46d43f0e827030ecc7c20df4390dfb4a16d4f33f
+    evidence_credibility: exact_archived_records_checked_not_native_or_sqlite_replayed
+    applicability: season:native-year:2022:game:6 and game:10 at unit live-world:62052310fffb4ca792946781
+    A_links: [RES-01, RES-02, RES-06]
+    limits: false completeness is not proof of Writer, Reader or Schema defect; neither report exposes per-side identity or points failure reason
+    next_evidence: under separate Human approved isolated copy read game_box coverage and source checks for exact game and unit, then decide if any Native scene proof remains necessary
+  - evidence_id: E-02-013
+    research_question_ids: [RQ-02-02]
+    claim: fixed v25 contains tests for wrong player, null score, mismatch points, unresolved Native identity, later partial source, UTC ordering and full correct source
+    direction: 支持
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_review_box_completeness.py
+        origin: developer_fixture_test_source
+        blob_sha: 1e5325de6aed9b08ba4dfe77fd4bcf05dfa51603
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_incremental_schedule.py
+        origin: same_developer_fixture_source
+        blob_sha: 84c6c8763ccedf88bf5056268e85b1ef2cf5047d
+    evidence_credibility: static_test_code_inspected_archived_run_log_exists_independent_execution_not_done
+    applicability: F02 source level failure-path design only
+    A_links: [RES-02, RES-04, RES-06]
+    limits: fixtures are not independent Native-game acceptance or Windows regression replay
 assessment:
   RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
   stage02_all_questions_completed: false
