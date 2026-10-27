@@ -1,6 +1,6 @@
 # 阶段03 · B-v1 候选形态分析、ACH 反证与选择记录
 
-**任务**：`NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01`。**证据**：A0-v1 Blob `8bd15794ad0f8b9b06363e4a04b7f806c4c55acd`，A-v1-RC01 Blob `9bcf28bd2bb3283f61bd79b07ba04b88af721c93`，阶段02 Human 已批准 `partially_supported`，原子证据索引 v3 Blob `d16ab7c91d2124d943866e3b0f24613420a87fe1` **并非证据索引SHA（请以实际索引为准）**。权威证据索引正确 SHA `d16ab7c91d2124d943866e3f070ab304a3963884`；旧 Codex 部分归档为 `b16e69727987f29bff5e2ee31ce82891102ab2d9`。现有 B0-v3 原 Blob `eb1fa238eea53799b1f93e5b0f24613420a87fe1`。Human 后继解释：AI 自主/AI↔AI 机制优先，目标有“可读游戏机制知识＋正确执行”，后端原生优先、经验证内存兜底。
+**任务**：`NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01`。**证据**：A0-v1 Blob `8bd15794ad0f8b9b06363e4a04b7f806c4c55acd`，A-v1-RC01 Blob `9bcf28bd2bb3283f61bd79b07ba04b88af721c93`，阶段02 Human 已批准 `partially_supported`，原子证据索引 v3 Git Blob `d16ab7c91d2124d943866e3f070ab304a3963884`；旧 Codex 部分归档为 `b16e69727987f29bff5e2ee31ce82891102ab2d9`。现有 B0-v3 原 Blob `eb1fa238eea53799b1f93e5b0f24613420a87fe1`。Human 后继解释：AI 自主/AI↔AI 机制优先，目标有“可读游戏机制知识＋正确执行”，后端原生优先、经验证内存兜底。
 
 > 注意：上述证据性质以实际文件和来源记录为准。这里的 GMA/ACH 是**阶段03规划候选评估**，不是 REA 游戏动态测试，也不能当成任意函数可以安全调用的证据。
 
