@@ -175,6 +175,42 @@ entries:
     applicability: F02 source level failure-path design only
     A_links: [RES-02, RES-04, RES-06]
     limits: fixtures are not independent Native-game acceptance or Windows regression replay
+  - evidence_id: E-02-014
+    research_question_ids: [RQ-02-01, RQ-02-02, RQ-02-03]
+    claim: v25 includes distinct game-native season/stat observations, historical annual award instance/recipient sources, and an explicit season closure table but S4/S6 source applicability and current-year finality remain unverified
+    direction: 部分支持与限制
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/period_stats_reader.py
+        origin: original_v25_source
+        blob_sha: 4240f77926e915c72f345b4274b4f8a67bd80d5b
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/award_reader.py
+        origin: same_project_original_source
+        blob_sha: c50f5fdd7c6e56704d54adf5b26d6409433695a3
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/league_ingest.py
+        origin: same_project_original_source
+        blob_sha: 147025041aa89d579c1d7f2b8aa414bb6ab19821
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md
+        origin: same_project_schema_catalog
+        blob_sha: 1e9ab7731ef50b466f1f7e92973941d782e5bed9
+    evidence_credibility: direct_fixed_code_read_only_no_S4_S6_Native_scene_replay
+    applicability: candidate v25 typed containers and old developer source records, not confirmed final PC22 S4 or S6 values
+    A_links: [RES-01, RES-02, RES-04, RES-06]
+    limits: archived history award winners and Native flag observations cannot establish a newly finalized award in the current played season; no independent stat recomputation planned
+    next_evidence: bounded Human-scoped S4/S6 UI Native Reader field-to-table comparisons when respective game scenes become available
+  - evidence_id: E-02-015
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: fixed historical source coverage records 370 player season total rows from a schedule unit, 370 selected-period stats observations, 9773 native honor stat source records and 2315 archived award recipient rows from mutually distinct units
+    direction: 支持与限制
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: archived_developer_capture_ledger
+        blob_sha: 46d43f0e827030ecc7c20df4390dfb4a16d4f33f
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/02_evidence/05_S4_S6_原生统计荣誉历史来源容器核销_v1.md
+        origin: derived_planning_synthesis_not_independent_corroboration
+    evidence_credibility: exact_developer_logged_counts_directly_inspected_not_cross_scene_retested
+    applicability: one historic latest-unit ledger per reader family
+    A_links: [RES-01, RES-02, RES-04]
+    limits: row count does not validate common capture time, actual season closure, UI coverage, field semantic correctness or any S4/S6 provenance
 assessment:
   RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
   stage02_all_questions_completed: false
