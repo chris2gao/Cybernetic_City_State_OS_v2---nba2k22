@@ -71,6 +71,12 @@ physical save [one independent SQLite database]
 - 100年真实数据库占用、各类来源成本与SQLite性能；需一整季样本后的合理成本估算/性能实测，不能先编数字。
 - 最终每表全部列的增减、DDL迁移与回填范围及变更后的精确总表数；03提供基于实际来源的差集设计，不能擅自把101写死为永远最终数量。
 
+### 2.4 场景阶段性定稿与现有派生视图的设计警告
+
+源证据见 `02_evidence/10_RQ02-03至07_原型可行性约束与证据差集_v1.md`。v25 `season_finalizations`为单`season_id`唯一，现有`player/team_season_totals`触发器阻断该season已关闭后的新增total。**阶段03务必验证S4常规赛结束与S6季后赛结束是否共享一个Native赛季ID并产生不同统计阶段**；不能在S4提前全局封季，也不能无场景实证就宣布现有trigger有bug或新增表必需。
+
+v25既有 `derived_game_scores`、`derived_player_box_metrics`计算视图是**已有代码**，不因为本次Human明确“不开发累计计算引擎”就擅自删除现有视图。后续查询需区分Native原生值与旧派生值的来源标签；**不再为它们增加新的统计研发任务**。
+
 ## 3. A级原型：跨S1–S8“食材发现→容器填充”接口设计
 
 **不是“每场景一套表”**；统一`SceneDiscoveryReport`候选承载以下结构：
