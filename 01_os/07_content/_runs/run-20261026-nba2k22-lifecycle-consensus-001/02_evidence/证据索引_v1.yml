@@ -293,6 +293,33 @@ entries:
     applicability: existing derived view provenance only, not user authorization to remove or expand views
     A_links: [RES-01, RES-04]
     limits: no newly designed basketball analytics; game-native values remain source of truth for current product target
+  - evidence_id: E-02-022
+    research_question_ids: [RQ-02-01, RQ-02-02, RQ-02-04]
+    claim: Human provided a Codex REA live assessment reporting matched current PLAYERDATA Overall cache metadata and six valid native float32 samples with partial basic-Overall UI correspondence, but no proven universal display rounding or bonus source
+    direction: 部分支持与限制
+    source_refs:
+      - path: CHAT_ATTACHMENT_ONLY_REA_DIFFICULT_ITEMS_EVALUATION_20261027.md
+        origin: Human_uploaded_Codex_assessment_not_persisted_git_not_independently_replayed
+        blob_sha: NOT_AVAILABLE_IN_REPOSITORY_YET
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/02_evidence/11_REA实时观测能力增量与Overall来源边界_阶段性报告_v1.md
+        origin: current_planning_summary_not_independent_corrob
+    evidence_credibility: delegated_engineering_live_observation_report_only_with_code_sample_id_claims_and_no_independent_game_ui_same_snapshot_replay
+    applicability: source-bound six sampled players of one described executable/build, not whole player pool, invalid-cache recomputation, boosted UI, or all seasons
+    A_links: [RES-01, RES-03, RES-04]
+    limits: earlier v25 DIFFICULT_ITEMS recorded Overall Human deferred; separate bounded research reopening does not automatically modify approved system acceptance; do not recalculate Overall or claim production integration
+    next_evidence: Codex final pinned branch/commit with raw REA evidence, attached build binding, valid/invalid flag handling and same-scene UI comparisons
+  - evidence_id: E-02-023
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: Codex REA report documents fast bounded Frida observations but four NBA2K22 whole-EXE Ghidra analysis variants ending in provider_timeout, so unrestricted whole-EXE analysis is not a verified engineering dependency
+    direction: 反证与限制
+    source_refs:
+      - path: CHAT_ATTACHMENT_ONLY_REA_DIFFICULT_ITEMS_EVALUATION_20261027.md
+        origin: Human_uploaded_Codex_assessment_not_persisted_git_not_independently_replayed
+        blob_sha: NOT_AVAILABLE_IN_REPOSITORY_YET
+    evidence_credibility: engineering_report_of_runtime_timings_without_independent_tool_call_replay
+    applicability: current tool/configuration and the specific NBA2K22 executable
+    A_links: [RES-01, RES-06]
+    limits: no inference that all REA functions fail or all resource budgets are exhausted; future dedicated local-analysis method may change result with new evidence
 assessment:
   RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
   stage02_all_questions_completed: false
