@@ -77,6 +77,10 @@ physical save [one independent SQLite database]
 
 v25既有 `derived_game_scores`、`derived_player_box_metrics`计算视图是**已有代码**，不因为本次Human明确“不开发累计计算引擎”就擅自删除现有视图。后续查询需区分Native原生值与旧派生值的来源标签；**不再为它们增加新的统计研发任务**。
 
+### 2.5 REA增量工具证据（Human提供Codex阶段性报告，非本GPT独立复测）
+
+2026-10-27的REA阶段性报告已由Human提供；本Run限定摘要见 `02_evidence/11_REA实时观测能力增量与Overall来源边界_阶段性报告_v1.md`。当前PLAYERDATA六份有效Overall float32缓存、有效位和元数据匹配给出了**源字段可读候选**；不能据此认定整个3390人池、无效缓存的重算、UI整数舍入或加成后Overall已验证。设计中需将`raw_float32 / validity / integer_candidate / game_base_UI / boosted_UI`明确分层，只对实际有证且有权限的字段允许确定性输出。v25旧困难清单标Overall当时可延期；新Human批准有界探索不自动使Overall成为本轮核心完工义务。REA整EXE Ghidra在当前配置下多次timeout，不作为Codex所有场景开发强制前置；后续需要Human提供该独立工程任务正式提交再升级来源成熟度。
+
 ## 3. A级原型：跨S1–S8“食材发现→容器填充”接口设计
 
 **不是“每场景一套表”**；统一`SceneDiscoveryReport`候选承载以下结构：
