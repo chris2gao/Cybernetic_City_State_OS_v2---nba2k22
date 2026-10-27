@@ -211,6 +211,37 @@ entries:
     applicability: one historic latest-unit ledger per reader family
     A_links: [RES-01, RES-02, RES-04]
     limits: row count does not validate common capture time, actual season closure, UI coverage, field semantic correctness or any S4/S6 provenance
+  - evidence_id: E-02-016
+    research_question_ids: [RQ-02-01, RQ-02-02, RQ-02-03, RQ-02-07]
+    claim: fixed v25 contains 101 STRICT typed table containers and 1789 columns distributed across nine original product domains, with 20 registered reader families; scene applicability and exact UI field mapping remain unverified
+    direction: 部分支持与限制
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/02_evidence/01_v25_结构与Reader只读盘点_v1.json
+        origin: directly_checked_fixed_v25_sql_field_dictionary_reader_registration
+        blob_sha: cfbeb2fd8103ea87935825cee460dcda6e26df22
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md
+        origin: same_v25_project_catalog
+        blob_sha: 1e9ab7731ef50b466f1f7e92973941d782e5bed9
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/02_evidence/08_v25_101表20Reader九领域静态映射_v1.json
+        origin: planning_derived_crosswalk_not_separate_evidence
+    evidence_credibility: fixed_version_static_sql_dictionary_registration_check
+    applicability: typed container schema only, not acceptance of all original UI game fields
+    A_links: [RES-01, RES-02, RES-04, RES-06]
+    limits: registered Reader modules and physical tables do not certify specific scenes or actual Native field validity; unknown original game range remains explicit
+  - evidence_id: E-02-017
+    research_question_ids: [RQ-02-01, RQ-02-02]
+    claim: developer archived latest successful units contain nonzero row-count records in 74 of the 101 typed tables; 27 do not appear with nonzero rows in that narrow latest-unit slice, which is not proof they are absent or broken
+    direction: 部分支持与限制
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+        origin: original_developer_unit_row_count_ledger
+        blob_sha: 46d43f0e827030ecc7c20df4390dfb4a16d4f33f
+      - path: 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/02_evidence/08_v25_101表20Reader九领域静态映射_v1.json
+        origin: planning_derived_table_row_count_index
+    evidence_credibility: counted_archived_records_not_independent_runtime_validation
+    applicability: only previous latest successful unit of each of 20 reader families
+    A_links: [RES-01, RES-02, RES-04]
+    limits: base entities, future lifecycle facts, standalone metadata or prior nonlatest units may legitimately not occur in this slice; no claim of 27 missing game containers
 assessment:
   RQ-02-02: PARTIAL_STATIC_VERIFIED_RUNTIME_INDEPENDENT_EVIDENCE_PENDING
   stage02_all_questions_completed: false
