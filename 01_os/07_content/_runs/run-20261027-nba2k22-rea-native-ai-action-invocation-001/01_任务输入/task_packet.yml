@@ -1,0 +1,63 @@
+task_packet:
+  task_id: NBA2K22-REA-NATIVE-AI-ACTION-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 7397332bac36406704a290f70099f02025174ce9
+  inherited_prototype_sha: cfce2c88bcaf38362ff7270242cd982bd9757415
+  branch: task/nba2k22-rea-native-ai-action-invocation-20261027
+  objective: Locate and qualify native AI or shared game mutators; build a typed real-call bridge, cover C1-C6, and obtain at least one authorized actual game mutation with fresh readback when technically qualified. No fixture substitution for game success.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/11
+    - 71bf36391514074e693ba0d1a38b501ed012cf59:01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001/01_任务输入/CODEX_NATIVE_AI_ACTION_TASK_v1.md
+    - cfce2c88bcaf38362ff7270242cd982bd9757415:inherited_REA_prototype_and_evidence
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_action/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/**
+    - 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-ai-action-invocation-001/01_任务输入/verification_plan.json
+  required_tests: [native-contract-tests, offline-preflight, artifact-integrity]
+  prohibitions:
+    - master_merge_or_history_rewrite
+    - unknown_native_function_blind_call
+    - effectful_call_before_specific_bounded_Human_approval
+    - high_impact_transaction_without_isolated_save_and_asset_reconciliation
+    - changing_engine_controller_flags
+    - game_UI_automation_as_native_action_substitute
+    - game_memory_patch_or_fixture_as_native_success
+    - secrets_game_assets_saves_or_absolute_memory_address_publication
+    - whole_game_unbounded_catalog_or_exhausted_Ghidra_retry
+    - production_personality_or_world_data_stage02_work
+  required_completion_pointer: 08_结论/COMPLETION.md
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: true
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: [first_effectful_game_native_PoC, repair_retry_additional_three_native_calls]
+    preconfirmed_actions: [first_effectful_game_native_PoC, repair_retry_additional_three_native_calls]
+    uncovered_actions: []
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_head: 7397332bac36406704a290f70099f02025174ce9
+  executor_profile:
+    provider: Codex
+    surface: Codex_desktop
+    model: runtime_selected_GPT_6_family_exact_variant_unexposed
+    reasoning_effort: inherited_runtime_setting_unexposed
+    mode: standard
+    routing_basis: Human supplied Issue11 to the current local window; single engineering owner, no delegation.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_future_session
+    different_model_family: true
+    different_measurement_tool: true
+  live_exploration:
+    existing_read_only_and_bounded_trace_authorization: preserved
+    staff_pool_alignment_and_controller_flags: evidence_hypotheses_not_universal_read_or_shared_setter_gates
+    first_effectful_call: EXP_NATIVE_ACTION_01_APPROVED_EXACT_SCRIPT_MAX_3_CALLS
+    approval_ref: 04_执行准备/HUMAN_POC_APPROVAL.json
+    repair_approval_ref: 04_执行准备/HUMAN_POC_REPAIR_APPROVAL.json
