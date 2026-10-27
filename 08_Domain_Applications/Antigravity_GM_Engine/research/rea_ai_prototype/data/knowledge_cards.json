@@ -1,0 +1,139 @@
+[
+  {
+    "mechanism_id": "AI_COACH_DEFENSE_M1",
+    "title": "AI教练防守重点：保护禁区（候选）",
+    "description_zh": "研究对象是教练/球队AI的防守重点选择和比赛消费。当前构建元数据与enum CRC已核对：POEDefense的13为PROTECT_PAINT；PHI和IND当前存值均为14中性防守。AI选择入口与比赛消费者仍未知。",
+    "mode": "PC22_OFFLINE_MYLEAGUE",
+    "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+    "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+    "original_game_rule": "UNKNOWN：不能承诺该值会改变真实场上防守站位或比赛结果。现有资料支持按教练重点字段开展定向观察。",
+    "field_semantics": [
+      {
+        "field_id": "POEDefense",
+        "meaning": "当前元数据及枚举匹配：0无偏好、13保护禁区、14中性防守、15限制外围；当前两队存值14。这里只验证类型/存值，不证明AI在比赛中应用。",
+        "unit": "CANDIDATE_ENUM",
+        "legal_write_scope": "NOT_QUALIFIED",
+        "consumer_and_refresh": "UNKNOWN",
+        "dependent_states": "共享POE位域、比赛缓存与应用时点待证"
+      }
+    ],
+    "decision_guidance": {
+      "status": "ILLUSTRATIVE_AI_STRATEGY_NOT_GAME_RULE",
+      "text": "教练可基于对手内线威胁提出保护禁区的候选意图；应考虑让出外围机会的风险。此为外部战术推理，非已破解的2K选择算法。"
+    },
+    "unknowns": [
+      "AI设置调用点与引擎控制标志",
+      "比赛消费者和刷新时点",
+      "对实际场上行为的因果效果",
+      "当前构建安全写入与存档保持"
+    ],
+    "source_refs": [
+      "SRC-COACH-PROFILE",
+      "SRC-COACH-READER",
+      "SRC-COACH-CODEC",
+      "SRC-LIVE-COACH",
+      "SRC-LIVE-TRACE"
+    ],
+    "source_origin_group": "LEGACY_PROFILE_PLUS_ISSUE9_CURRENT_READ; NO_INDEPENDENT_AI_BEHAVIOR_PROOF",
+    "can_reason": true,
+    "can_recommend": true,
+    "can_execute": false,
+    "role_visibility": [
+      "COACH",
+      "GM"
+    ],
+    "internal_native_research": {
+      "address_visibility": "INTERNAL_ONLY",
+      "current_game_call_qualified": false
+    },
+    "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "last_verified_at_or_unknown": "2026-10-27T16:56:43.1027726Z"
+  },
+  {
+    "mechanism_id": "AI_BADGE_NATURAL_GROWTH",
+    "title": "AI球员自然徽章成长：CatchAndShoot深入、CornerSpecialist对照",
+    "description_zh": "目标是终极联盟AI球员如何自然获得/提升徽章。导师关系的Progression等布局可提供观察接点；比赛命中率加成和MyCAREER徽章点数不属于成长门槛。",
+    "mode": "PC22_OFFLINE_MYLEAGUE",
+    "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+    "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+    "original_game_rule": "UNKNOWN：当前没有已证CatchAndShoot或CornerSpecialist自然成长属性阈值。",
+    "field_semantics": [
+      {
+        "field_id": "FRANCHISE_MENTOR.BADGE.Progression",
+        "meaning": "历史进程元数据里有该名称的32位字段；单位、增量与升级阈值未知。",
+        "unit": "UNKNOWN",
+        "legal_write_scope": "NOT_QUALIFIED",
+        "consumer_and_refresh": "UNKNOWN",
+        "dependent_states": "导师/学员身份、开始日期、有效徽章条目和DateLastChecked"
+      }
+    ],
+    "decision_guidance": {
+      "status": "REQUEST_EVIDENCE",
+      "text": "球员或教练可提出观察既有导师关系和自然进度；不能据字段名断言投篮达到某分值就升级，不能直接改徽章代替成长。"
+    },
+    "unknowns": [
+      "CatchAndShoot成长条件与触发周期",
+      "CornerSpecialist轻对照",
+      "MyCAREER NPC与MyLEAGUE AI是否共用成长算法"
+    ],
+    "source_refs": [
+      "SRC-PRIOR-METADATA",
+      "SRC-PRIOR-GROWTH",
+      "SRC-R04A-BADGES",
+      "SRC-R03-MENTOR"
+    ],
+    "source_origin_group": "CODEX_PRIOR_SINGLE_RUN_PLUS_PROJECT_GUIDES",
+    "can_reason": true,
+    "can_recommend": true,
+    "can_execute": false,
+    "role_visibility": [
+      "PLAYER",
+      "COACH",
+      "GM"
+    ],
+    "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "last_verified_at_or_unknown": "UNKNOWN_NO_CURRENT_MECHANISM_BEHAVIOR_TEST"
+  },
+  {
+    "mechanism_id": "AI_AI_GM_TRADE",
+    "title": "AI GM对AI GM交易：评估、资格与提交分层",
+    "description_zh": "候选研究必须区分AI自动提议/评估、合法性validator和commit。玩家交易确认对话不算AI路径；只改球员队伍ID不算完整交易。",
+    "mode": "PC22_OFFLINE_MYLEAGUE",
+    "proof_level": "L0_GUIDE_HYPOTHESIS",
+    "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+    "original_game_rule": "UNKNOWN：未证明可安全复用的原版AI-AI交易函数。现有外部交易执行器不能作为原生事务证明。",
+    "field_semantics": [
+      {
+        "field_id": "trade.affected_entities",
+        "meaning": "必须检查名单、合同/归属、薪资、选秀权、球队交易记录和事件；不是只检查一个TeamID。",
+        "unit": "ENTITY_SET",
+        "legal_write_scope": "NOT_QUALIFIED",
+        "consumer_and_refresh": "UNKNOWN",
+        "dependent_states": "全部关联身份、AI控制状态与原生事务窗口"
+      }
+    ],
+    "decision_guidance": {
+      "status": "ILLUSTRATIVE_GM_REASONING",
+      "text": "GM可提出交易目标与资产包，先核对双方引擎控制状态和可见资产；对合法性与公平性的判断分别标来源，未证原生提交时返回NO_SAFE_PATH。"
+    },
+    "unknowns": [
+      "AI自动交易入口",
+      "共享validator和AI调用点",
+      "原子commit与失败处置",
+      "完整副作用集合及持久化"
+    ],
+    "source_refs": [
+      "SRC-TRADE-EXECUTOR",
+      "SRC-R05B-TRADE"
+    ],
+    "source_origin_group": "LEGACY_TRADE_PROJECT_SINGLE_ORIGIN",
+    "can_reason": true,
+    "can_recommend": true,
+    "can_execute": false,
+    "role_visibility": [
+      "GM"
+    ],
+    "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "last_verified_at_or_unknown": "UNKNOWN_NO_CURRENT_MECHANISM_BEHAVIOR_TEST"
+  }
+]

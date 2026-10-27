@@ -34,6 +34,8 @@ required_task_inputs:
   - 01_任务输入/LIVE_GAME_EXPERIMENT_GATE_v1.md
 expected_code_directory: 08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/
 expected_research_cards: [AI_BADGE_NATURAL_GROWTH, AI_COACH_STRATEGY_APPLICATION, AI_AI_GM_TRADE]
+implemented_research_cards: [AI_BADGE_NATURAL_GROWTH, AI_COACH_DEFENSE_M1, AI_AI_GM_TRADE]
+card_naming_delta: Coach uses the showcase card ID AI_COACH_DEFENSE_M1; its research dossier is M2, not the M1 badge case.
 expected_real_artifacts:
   - runnable_fixture_demo_and_source
   - machine_readable_knowledge_card_and_field_semantics
@@ -49,10 +51,10 @@ permissions:
   owned_fixture_read_write_and_restore: GRANTED
   GitHub_issue_handoff: GRANTED
   optional_Antigravity_helper: SEQUENTIAL_OWNER_HANDOFF_ONLY
-  current_game_process_Frida_attach: REQUIRE_NEW_SCOPED_Human_AUTH
-  live_game_function_hook: REQUIRE_NEW_SCOPED_Human_AUTH
-  live_game_native_function_call: REQUIRE_NEW_SCOPED_Human_AUTH
-  live_game_memory_write: REQUIRE_NEW_SCOPED_Human_AUTH
+  current_game_process_Frida_attach: HUMAN_CURRENT_DEVELOPMENT_INSPECTION_GRANTED_AND_EXECUTED
+  live_game_function_hook: HUMAN_INSPECTION_SCOPE_BOUNDED_LOOKUP_TRACE_EXECUTED
+  live_game_native_function_call: TECHNICALLY_UNQUALIFIED_NOT_EXECUTED
+  live_game_memory_write: BUSINESS_EFFECT_PATH_UNQUALIFIED_NOT_EXECUTED
   actual_game_save_or_scene_change: REQUIRE_NEW_SCOPED_Human_AUTH
   master_merge: NOT_GRANTED
   prior_game_research_resume_automatically: false
@@ -75,7 +77,10 @@ progress_state:
   Codex_assigned_via_external_agent_channel: ATTEMPTED_GITHUB_ASSIGNEE_REJECTED_422
   GitHub_issue_created: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/9
   actual_engineering_started: VERIFIED_CURRENT_CODEX_SESSION
-  game_process_attached: false
+  game_process_attached: true
+  game_sessions_closed: true
+  native_business_calls: 0
+  explicit_business_memory_writes: 0
   Codex_evidence_claimed_to_be_game_native_L3_L4: false
 
 GitHub_issue_number: 9
