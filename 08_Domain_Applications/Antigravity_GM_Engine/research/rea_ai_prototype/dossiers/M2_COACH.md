@@ -6,9 +6,13 @@
 
 当前游戏元数据与enum CRC匹配：COACHDATA+316的共享32位字；POEDefense占低5位，0无偏好/13保护禁区/14中性防守/15限制外围；POEOffense占第15..19位，0无偏好、1GET_TO_BASKET、2GET_SHOOTERS_OPEN、3FEED_THE_POST、4PICK_AND_ROLL_OFFENSE、5NEUTRAL_OFFENSE_FOCUS、6RUN_OFFENSE_THROUGH_SCORER。
 
-本轮Human明确允许管理员开发查看后，通过REA真实读取PHI(team0)及IND(team20)。二者当前POEDefense=14、POEOffense=5，29条对手Gameplan投影前后稳定。教练UniqueId未从本次元数据取得，保留null；关联只限本次TEAM→coach指针与STAFF池范围，不产生永久人物ID。
+本轮Human明确允许管理员开发查看后，通过REA真实读取PHI(team0)及IND(team20)。二者当前POEDefense=14、POEOffense=5，29条对手Gameplan投影前后稳定。教练UniqueId未从本次元数据取得，保留null；TEAM→coach关联只限本次观察，不产生永久人物ID。STAFF池范围与对齐是待验证的布局/身份假设，不是只读许可条件。
 
-证据：`evidence/live_coach/read-success/`，ID `ev_69e7ab80b3250c3161dc85a8b4f965ad6379da3d152bcd0b3da73e689afa5390`；2.916秒、显式9308字节。第一probe被池身份guard拒绝，加入核心球队ID筛选后成功；第一probe缺少问题球队诊断，因此仅把历史别名视为修复假说，不声称已证实具体错误实体。
+证据：`evidence/live_coach/read-success/`，ID `ev_69e7ab80b3250c3161dc85a8b4f965ad6379da3d152bcd0b3da73e689afa5390`；2.916秒、显式9308字节。第一probe被池身份guard拒绝，核心球队筛选曾使读取成功，但不能据此排除其他可探索对象。
+
+Human纠正后新增`evidence/live_coach/identity-hypothesis/`，REA `ev_bd46ce8630c54ec93f8af0abe0ea545608ec76ad2b2576234413ca75ab1fe2d1`。不使用池/对齐或核心球队ID阻断，只检查实际映射可读性、有限读取、逐字段异常隔离。219条TEAM中有5条PHI/IND匹配：核心0/20分别关联姓名候选Doc Rivers/Rick Carlisle；目录64的PHI/5000和82的IND/5018教练引用NULL；目录149的IND/788关联David Copelovici可读记录。非空三记录均可读352字节，+0x30/+0x58姓名、+0x18反向TEAM链接、+316的POE14/5相互支持，引用重读稳定；第一字不指向主模块，没有RTTI证明。这证明旧核心筛选遗漏了可研究记录，不证明它的游戏业务角色。
+
+当前目录重建的第一个旧guard失败条件为PHI/5000的NULL引用；旧探针没有记录原始失败指针，不能将本次重建冒充历史地址确证。实际读取2724字节/65536预算、10.922秒、异常0、cleanup_error=null、游戏存活。此样本未发现可读非空池外对象，不能反推池外均无效。写入和原生调用身份资格均保持false。
 
 ## 存值→lookup（局部L2）
 

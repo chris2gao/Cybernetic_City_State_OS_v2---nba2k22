@@ -20,6 +20,7 @@
 | 创新与范围内B_DELTA | B_DELTA.md、OPPORTUNITIES.md | 未改冻B，未引入新生产或人格需求 |
 | PoC与实机准入 | Human后续授权记录、live_coach、backend_matrix G0–G7 | READ+短HOOK完成；原生业务调用0、显式业务写入0，conditional PoC NOT_EXECUTED |
 | 版本/原始证据/失败/清理 | source_registry、live_coach manifest、静态预算、首guard错误 | 同源不算独立证据；全部会话清理，未重跑Ghidra |
+| Human只读身份守卫纠正 | identity_policy.py、4项身份合同测试、identity-hypothesis原始REA | 池/对齐只是待验证假设；读范围/可读性/隔离保留，非核心IND/788可读；效力动作严格身份独立 |
 | Git/草稿PR | 本轮完成指针及实际远端readback | 指定分支、普通推送、草稿PR，禁止合并master |
 
 SC-REA-01..08的结果分别落实到atlas/dossiers、知识投影、M1、M2、M3、条件PoC NOT_EXECUTED、双后端矩阵及审计证据。它们支持探索性工程交付，不表示八项原版游戏能力均实证通过，也不宣布Human P0退出或阶段03独立审核通过。

@@ -1,6 +1,7 @@
 task: NBA2K22-REA-AI-PROTOTYPE-EXPLORATION-01
 type: EXPLORATORY_ENGINEERING_PROTOTYPE
-lifecycle: candidate_pending_validation
+lifecycle: candidate_ready_for_independent_review
+closure_record: 08_结论/COMPLETION.md
 prior_handoff_lifecycle: GITHUB_ISSUE_POSTED_READY_FOR_CODEX_PICKUP
 current_executor_receipt: Human opened Issue9 in the current Codex desktop session; engineering accepted, not a GitHub agent-assignment claim.
 date: '2026-10-27'
@@ -55,7 +56,7 @@ permissions:
   live_game_function_hook: HUMAN_INSPECTION_SCOPE_BOUNDED_LOOKUP_TRACE_EXECUTED
   live_game_native_function_call: TECHNICALLY_UNQUALIFIED_NOT_EXECUTED
   live_game_memory_write: BUSINESS_EFFECT_PATH_UNQUALIFIED_NOT_EXECUTED
-  actual_game_save_or_scene_change: REQUIRE_NEW_SCOPED_Human_AUTH
+  actual_game_save_or_scene_change: NOT_PERFORMED_IN_THIS_BOUNDED_OBSERVATION
   master_merge: NOT_GRANTED
   prior_game_research_resume_automatically: false
   world_data_stage02_resume_automatically: false
@@ -69,7 +70,7 @@ discovery_freedom:
 stop_conditions:
   - no_verified_AI_path_then_report_bounded_unknown
   - no_safe_backend_then_NO_SAFE_PATH
-  - live_activity_without_Human_exact_auth_then_NOT_EXECUTED
+  - activity_outside_current_Human_development_authorization_then_NOT_EXECUTED
   - security_privilege_or_game_state_mismatch_then_STOP_AND_REPORT
   - repeated_full_EXE_Ghidra_timeouts_without_new_plan_then_STOP
   - budget_exhausted_on_one_hypothesis_then_SWITCH_OR_REPORT
@@ -82,6 +83,8 @@ progress_state:
   native_business_calls: 0
   explicit_business_memory_writes: 0
   Codex_evidence_claimed_to_be_game_native_L3_L4: false
+  read_only_staff_pool_and_alignment_hard_gate: false
+  read_only_identity_followup: five_team_records_observed_without_core_id_filter
 
 GitHub_issue_number: 9
 GitHub_issue_assignee: NONE_GITHUB_API_RETURNED_422_FOR_CODEX

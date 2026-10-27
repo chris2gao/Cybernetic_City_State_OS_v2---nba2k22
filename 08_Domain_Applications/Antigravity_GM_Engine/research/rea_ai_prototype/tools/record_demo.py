@@ -1,8 +1,12 @@
 """Capture actual offline CLI/test outputs; no game attach."""
-import datetime,hashlib,json,os,subprocess,sys
+import argparse,datetime,hashlib,json,os,subprocess,sys
 from pathlib import Path
 root=Path(__file__).resolve().parents[1];repo=root.parents[3];run=repo/'01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001'
 output=run/'06_执行';logs=run/'07_测试执行';output.mkdir(parents=True,exist_ok=True);logs.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser();p.add_argument('--tag',default='');args=p.parse_args()
+if args.tag:
+ if not args.tag.replace('-','').isalnum():raise ValueError('tag must be alphanumeric with hyphens')
+ output=output/args.tag;logs=logs/args.tag;output.mkdir(exist_ok=True);logs.mkdir(exist_ok=True)
 commands=[('semantic-tests',[sys.executable,'-B','-X','utf8','-m','unittest','discover','-s',str(root/'tests'),'-v']),('demo',[sys.executable,'-B','-X','utf8',str(root/'cli.py'),'demo','--verify','--output',str(output/'demo_receipts.json')]),('knowledge-coach',[sys.executable,'-B','-X','utf8',str(root/'cli.py'),'knowledge','show','AI_COACH_DEFENSE_M1','--role','COACH']),('evidence-contract',[sys.executable,'-B','-X','utf8',str(root/'verify_evidence.py')])]
 records=[]
 for name,command in commands:

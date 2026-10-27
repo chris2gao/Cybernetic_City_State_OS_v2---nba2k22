@@ -47,18 +47,20 @@ Native模型部分失败 → EXECUTED_BUT_UNVERIFIED；不自动重试Memory
 | M2 AI教练防守重点 | 当前进程核对COACHDATA的位域与enum，PHI/IND存值防守14、进攻5，29个对手Gameplan双读稳定；静态lookup的35容量/880步长/FF缺失值与profile相符 | AI自动设置入口、实际引擎控制标志、比赛消费者和效果、合格Native Setter、完整Memory生效链 |
 | M3 AI GM↔AI GM交易 | 分开proposal/evaluation/validator/commit；找到EVALUATE_AI_TRADES名称、交易类型与异常资产访问器片段，排除把玩家交易菜单当AI证据 | 原生AI-AI validator/commit、完整薪资/合同/选秀权/事件联动及失败原子性 |
 
-M2实机：第1次被coach池身份guard拦截；补核心球队ID筛选后，第2次通过，2.916秒、显式9308字节，REA证据`ev_69e7ab80b3250c3161dc85a8b4f965ad6379da3d152bcd0b3da73e689afa5390`。修复后成功支持身份筛选方法；第一次没有输出问题球队，具体冲突记录身份仍未证，不将推测写成事实。
+M2实机：第1次被coach池身份guard拦截；曾用核心球队ID筛选取得第2次读取（2.916秒、9308字节）。这只完成了核心球队的定向观察，不能作为阻断其他只读对象的依据。根据Human纠正，当前探针将STAFF池范围、352步长对齐和字段取值域均记为身份/布局假设；只读可行性只要求实际可读、范围有限并隔离异常。`identity_policy.py`明确分开读取可行性与写入/原生调用身份资格；后者仍严格检查。
 
-随后对GetOpponentGameplanIndex候选进行900毫秒/最多12事件的有界hook，实际0事件。仅结论`NOT_OBSERVED_IN_WINDOW`，不是没有AI调用。两次成功会话与失败会话均cleanup_error=null、游戏存活，未主动调用游戏函数或显式写业务内存。Interceptor会临时安装代码探针，不称为完全被动读。
+新REA调查`identity-hypothesis/`未排除非核心球队：219条TEAM目录中找到5条PHI/IND记录，显式读取2724字节，上限65536字节，耗时10.922秒。当前重建的首个旧guard失败条件为目录64、PHI/5000、教练引用NULL；IND/5018也为NULL。此前核心ID筛选排除的IND/788却有可读教练记录，名字候选David Copelovici，与来源TEAM的反向链接一致。核心PHI/IND分别读到Doc Rivers、Rick Carlisle。三个非空记录都支持姓名+0x30/+0x58、球队链接+0x18、POE字+316的布局候选；没有取得RTTI类型证明或永久人物身份。原失败探针未记录具体指针，本次是当前目录重建，不能声称复原了历史绝对地址；也未在这5条中观察到可读的非空池外对象。
+
+对GetOpponentGameplanIndex候选的900毫秒/最多12事件有界hook实际0事件，仅结论`NOT_OBSERVED_IN_WINDOW`，不是没有AI调用。四次会话均cleanup_error=null、游戏存活，未主动调用游戏函数或显式写业务内存。Interceptor会临时安装代码探针，不称为完全被动读。
 
 详见[dossiers/M1_BADGE.md](dossiers/M1_BADGE.md)、[M2_COACH.md](dossiers/M2_COACH.md)、[M3_TRADE.md](dossiers/M3_TRADE.md)。事实等级按claim拆分：指南L0、类型/实例L1、局部静态分支L2；没有本轮L3 AI比赛行为或L4授权原生动作效果。
 
 ## 证据与复现
 
-- `evidence/source_registry.json`：9个固定Git来源的commit/blob/SHA256、3个本轮实机来源；同源文件不算独立证据。
+- `evidence/source_registry.json`：9个固定Git来源的commit/blob/SHA256、4个本轮实机来源；同源文件不算独立证据。
 - `evidence/static_ai_seams.json`、`static_ai_followup.json`：13+9个精确词项、每项最多12命中、120个引用上限；分别约0.827和0.868秒，实际17与27个引用。有命中截断，不是全游戏函数清单。
 - `evidence/candidate_function_fragments.json`：6个局部unwind片段，只有RVA和指令解释；不发布原始EXE字节或绝对内存地址。
-- `evidence/live_coach/`：本轮guard拒绝、成功读取、0事件追踪及脚本、哈希、目标/清理记录；不是重复发布旧52份档案。
+- `evidence/live_coach/`：本轮guard拒绝、成功读取、0事件追踪、身份假设重查的17份文件及哈希、目标/清理记录；不是重复发布旧52份档案。
 - `data/knowledge_cards.json`：3张角色可读部分机制卡；每张均能解释什么可知、为什么可建议、哪些不能执行。
 - `data/backend_matrix.json`：Native/Memory按机制分别判断及G0–G7缺口。
 - `examples/`与Run中的真实demo回执、测试日志用于复验。

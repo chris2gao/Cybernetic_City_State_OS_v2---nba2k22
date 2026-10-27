@@ -30,25 +30,25 @@ if(roster.isNull()||franchise.isNull())throw Error('no active roster/franchise')
 const teamDesc=read(root.add(0x88),32),tv=new DataView(teamDesc),teams=Number(tv.getBigUint64(0,true)),teamBase=u64(teamDesc,8),teamEnd=u64(teamDesc,24);
 if(teams<30||teams>1000||!teamBase.add(teams*4696).equals(teamEnd))throw Error('team directory');
 const staffDesc=read(root.add(0x138),32),staffCount=Number(new DataView(staffDesc).getBigUint64(0,true)),staffBase=u64(staffDesc,8),staffEnd=u64(staffDesc,24);
-if(staffCount<1||staffCount>10000||!staffBase.add(staffCount*352).equals(staffEnd))throw Error('staff directory');
+const staffDirectoryHypothesis={count_plausible:staffCount>=1&&staffCount<=10000,stride_equation_matches:staffBase.add(staffCount*352).equals(staffEnd),hard_read_gate:false};
 const chosen=[];
 for(let i=0;i<teams;i++){const team=teamBase.add(i*4696),tid=number(read(team.add(0xca8),2));if(!((tid>=0&&tid<=6)||(tid>=8&&tid<=29)||tid===31))continue;const abbr=text(read(team.add(0x30a),10));if(!plan.selected_abbreviations.includes(abbr))continue;
- const coach=u64(read(team.add(0xce8),8));if(coach.compare(staffBase)<0||coach.compare(staffEnd)>=0||coach.sub(staffBase).toUInt32()%352){send({kind:'guard-failure',code:'coach-pool-identity',team_id:tid,abbreviation:abbr,staff_count:staffCount,coach_is_null:coach.isNull(),inside_staff_pool:coach.compare(staffBase)>=0&&coach.compare(staffEnd)<0});throw Error('coach pool identity');}
- chosen.push({abbr,tid,team,coach});}
+ const coach=u64(read(team.add(0xce8),8)),inside=coach.compare(staffBase)>=0&&coach.compare(staffEnd)<0,aligned=coach.sub(staffBase).toUInt32()%352===0;
+ chosen.push({abbr,tid,team,coach,poolHypothesis:{inside_staff_pool:inside,aligned_to_staff_stride:aligned,status:'IDENTITY_HYPOTHESIS_ONLY_NOT_A_READ_PERMISSION_GATE'}});}
 if(chosen.length!==2||new Set(chosen.map(t=>t.tid)).size!==2)throw Error('selected teams missing');
 function snapshot(){const result=[];for(const t of chosen){
  if(number(read(t.team.add(0xca8),2))!==t.tid||!u64(read(t.team.add(0xce8),8)).equals(t.coach))throw Error('coach owner changed');
- const word=number(read(t.coach.add(316),4),0,4),values={};for(const [name,f] of Object.entries(plan.fields)){const raw=(word>>>f.start_bit)&((1<<f.width)-1);if(!Object.hasOwn(f.enum,String(raw)))throw Error('unknown current enum');values[name]={raw,label:f.enum[String(raw)]};}
+ const word=number(read(t.coach.add(316),4),0,4),values={};for(const [name,f] of Object.entries(plan.fields)){const raw=(word>>>f.start_bit)&((1<<f.width)-1);values[name]={raw,label:f.enum[String(raw)]??null,enum_domain_matches:Object.hasOwn(f.enum,String(raw))};}
  let unique=null;if(defs.UniqueId&&defs.UniqueId.offset+4<=352&&((defs.UniqueId.format>>>8)&255)===32)unique=number(read(t.coach.add(defs.UniqueId.offset),4),0,4);
  let manager=null;for(let s=0;s<36;s++){const p=franchise.add(plan.native.franchise_teams_offset+s*plan.native.franchise_team_stride);if(number(read(p,2))===t.tid){if(manager)throw Error('duplicate manager');manager=p;}}
  if(!manager)throw Error('manager missing');const plans=[];
  for(let j=0;j<35;j++){const p=manager.add(4+j*880),h=read(p,6),owner=number(h,2);if(owner===65535)continue;if(owner!==t.tid)throw Error('gameplan owner');const foe=number(h,4);const v=read(p.add(0x17e),6);plans.push({slot:j,owner,opponent:foe,is_in_use:number(h,0,1),is_tainted:number(h,1,1),poe_offense:Array.from(new Uint8Array(v.slice(0,3))),poe_defense:Array.from(new Uint8Array(v.slice(3,6)))});}
- result.push({team_abbreviation:t.abbr,team_id:t.tid,coach_unique_id:unique,coach_values:values,gameplans:plans,engine_control:'UNKNOWN_NOT_READ'});
+ result.push({team_abbreviation:t.abbr,team_id:t.tid,coach_unique_id:unique,coach_values:values,gameplans:plans,pool_identity_hypothesis:t.poolHypothesis,engine_control:'UNKNOWN_NOT_READ'});
  }return result;}
 const first=snapshot(),second=snapshot();if(JSON.stringify(first)!==JSON.stringify(second))throw Error('snapshot changed');
 if(hex(read(base.add(plan.native.coach_type_rva),64))!==hex(typeHead)||hex(read(root.add(0x88),32))!==hex(teamDesc)||hex(read(root.add(0x138),32))!==hex(staffDesc))throw Error('metadata/directory moved');
 if(!getter(plan.native.roster_getter_rva,'488b05',true).equals(roster)||!getter(plan.native.franchise_load_rva,'488b1d',false).equals(franchise))throw Error('active context changed');
-send({kind:'issue9-coach-read-only',field_proof:fieldProof,teams:first,stable_double_read:true,explicit_read_bytes:used,native_field_count:count,gameplay_consumer_observed:false,game_actor_dispatch_proven:false,hooks:0,native_calls:0,memory_writes:0,absolute_addresses_emitted:false});
+send({kind:'issue9-coach-read-only',field_proof:fieldProof,teams:first,staff_directory_hypothesis:staffDirectoryHypothesis,stable_double_read:true,explicit_read_bytes:used,native_field_count:count,gameplay_consumer_observed:false,game_actor_dispatch_proven:false,hooks:0,native_calls:0,memory_writes:0,absolute_addresses_emitted:false});
 '''
 out=Path(a.out);out.mkdir(parents=True,exist_ok=True);(out/'coach_read_probe.js').write_text(js.replace('__PLAN__',json.dumps(plan,separators=(',',':'))),encoding='utf-8')
 print(json.dumps({'script':str(out/'coach_read_probe.js'),'budget':65536,'hook_targets':0,'game_calls':0,'writes':0}))

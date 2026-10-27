@@ -7,10 +7,11 @@ completion_pointer: NBA2K22-REA-AI-PROTOTYPE-EXPLORATION-01
 ## 人可以直接验证的结果
 
 - `08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/README.md`有实际命令。
-- `06_执行/demo_receipts.json`为真实执行输出：知识→typed意图→资格/路由→fresh后置。Native接口模型、Memory状态模型、NO_SAFE_PATH及失败回执明确分开。
-- `07_测试执行/`保存开发期真实日志；27项语义检查与12个demo场景通过。最终候选还按同计划跑managed run/inspect，精确SHA由验证记录和实际发布回读指明。
+- `06_执行/identity-v2/demo_receipts.json`为最新真实执行输出：知识→typed意图→资格/路由→fresh后置。Native接口模型、Memory状态模型、NO_SAFE_PATH及失败回执明确分开；原开发快照保留。
+- `07_测试执行/identity-v2/`保存最新开发期真实日志；31项语义/身份合同检查与12个demo场景通过。最终候选还按同计划跑managed run/inspect，精确SHA由验证记录和实际发布回读指明。
 - 三份dossier与机读atlas/cards均给出来源、模式、AI/Human路径筛选和未知；M2新取得当前REA字段/存值，M1/M3有新局部PE候选。
 - 当前实机PHI/IND的POEDefense=14、POEOffense=5，各29对手Gameplan前后稳定。单候选900ms trace为0事件，不升级成AI路径证明。
+- 已执行Human要求的只读身份纠正：池范围/对齐不再阻断，物理可读性、有限读取、异常隔离保留。新探针5条PHI/IND记录中发现非核心IND/788的可读David Copelovici记录。当前重建首个旧拒绝条件为PHI/5000教练NULL；历史失败地址未记录，不能反推为历史确证。新调查10.922秒、2724字节/65536预算、异常0，严格写入/调用资格仍未取得。
 - 本轮游戏业务Native调用0、显式业务写入0、场景/日期/存档变更0；Frida观察及短hook已清理。fixture与游戏证据不混用。
 
 ## 明确不能执行什么

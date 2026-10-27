@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent;REPO=ROOT.parents[3];E=ROOT/'evidence'
 def load(path):return json.loads(path.read_text(encoding='utf-8-sig'))
-registry=load(E/'source_registry.json');sources={s['source_id']:s for s in registry['sources']};assert len(sources)==len(registry['sources'])==12
+registry=load(E/'source_registry.json');sources={s['source_id']:s for s in registry['sources']};assert len(sources)==len(registry['sources'])==13
 for source in sources.values():
  if 'commit' in source:
   raw=subprocess.check_output(['git','show',source['commit']+':'+source['path']],cwd=REPO)
@@ -18,6 +18,7 @@ for card in cards:
  assert card['proof_level'] not in {'L3_SAME_MODE_GAME_BEHAVIOR','L4_AUTHORIZED_CALL_WITH_FRESH_READBACK'}
  assert card['game_build_sha256']=='1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5'
 manifest=load(E/'live_coach/manifest.json')
+assert len(manifest['files'])==17
 for record in manifest['files']:
  raw=(ROOT/record['path']).read_bytes();assert len(raw)==record['bytes'] and hashlib.sha256(raw).hexdigest()==record['sha256'],record['path']
  relative=(ROOT/record['path']).relative_to(REPO).as_posix();blob=subprocess.check_output(['git','show',':'+relative],cwd=REPO)
@@ -33,7 +34,21 @@ assert all(t['coach_values']['POEDefense']['raw']==14 and t['coach_values']['POE
 trace=load(E/'live_coach/trace/coach-evidence.json');summary=next(m['payload'] for m in trace['normalized_result']['messages'] if m['type']=='send')
 assert summary['event_count']==0 and summary['hook_detached'] and not summary['ai_dispatch_proven']
 rejected=load(E/'live_coach/guard-rejection/coach-evidence.json');assert any(m['type']=='error' and 'coach pool identity' in m.get('description','') for m in rejected['normalized_result']['messages'])
-for tag,script in [('guard-rejection','coach_read_probe.js'),('read-success','coach_read_probe.js'),('trace','coach_trace_probe.js')]:
+identity=load(E/'live_coach/identity-hypothesis/coach-evidence.json')
+assert not any(m['type']=='error' for m in identity['normalized_result']['messages'])
+h=next(m['payload'] for m in identity['normalized_result']['messages'] if m['type']=='send')
+assert h['stable_directory_recheck'] and h['team_directory_count']==219
+assert h['explicit_read_bytes']==2724<=h['read_budget']==65536
+assert h['native_calls']==h['business_writes']==h['hooks']==0
+assert h['original_failed_absolute_pointer_was_recorded'] is False
+assert h['reconstructed_first_abort']['team_id']==5000 and h['reconstructed_first_abort']['coach_is_null']
+assert len(h['observations'])==5 and h['isolated_read_failures']==[]
+assert all(r['pool_membership_hypothesis']['hard_read_gate'] is False and r['writer_or_native_call_identity_qualified'] is False for r in h['observations'])
+extra=next(r for r in h['observations'] if r['team_id']==788)
+assert not extra['core_team_id'] and extra['mapping']['first_352_bytes_readable']
+assert next(f for f in extra['object_fields'] if f['field']=='last_name_candidate')['utf16_candidate']=='Copelovici'
+assert next(f for f in extra['object_fields'] if f['field']=='team_reciprocal_pointer_candidate')['equals_source_team']
+for tag,script in [('guard-rejection','coach_read_probe.js'),('read-success','coach_read_probe.js'),('trace','coach_trace_probe.js'),('identity-hypothesis','coach_identity_probe.js')]:
  target=load(E/f'live_coach/{tag}/coach-target.json');raw=load(E/f'live_coach/{tag}/coach-evidence.json')
  assert target['administrator'] and target['exe_sha256']==cards[0]['game_build_sha256']
  assert target['pid']==raw['normalized_result']['pid']
@@ -51,4 +66,4 @@ for file in ROOT.rglob('*.py'):ast.parse(file.read_text(encoding='utf-8'),filena
 assert not any(p.name=='SOURCE_MANIFEST.json' for p in ROOT.rglob('*')),'do not duplicate old52 manifest'
 assert not any(p.suffix.lower() in {'.exe','.iff','.dds','.dll','.scne'} for p in ROOT.rglob('*') if p.is_file())
 for name in ('M1_BADGE','M2_COACH','M3_TRADE'):assert (ROOT/'dossiers'/f'{name}.md').is_file()
-print(json.dumps({'source_records_verified':12,'live_files_verified':len(manifest['files']),'static_fragments':len(fragments),'AI_gameplay_or_native_action_claims':0,'game_business_writes':0,'current_build_stored_coach_fields':'VERIFIED','native_and_memory_business_eligibility':'NO_SAFE_PATH','result':'EVIDENCE_CONTRACT_PASS'}))
+print(json.dumps({'source_records_verified':len(sources),'live_files_verified':len(manifest['files']),'static_fragments':len(fragments),'identity_hypothesis_observations':len(h['observations']),'AI_gameplay_or_native_action_claims':0,'game_business_writes':0,'current_build_stored_coach_fields':'VERIFIED','native_and_memory_business_eligibility':'NO_SAFE_PATH','result':'EVIDENCE_CONTRACT_PASS'}))
