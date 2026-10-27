@@ -2,7 +2,7 @@ task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
 run_id: run-20261027-nba2k22-rea-native-mechanism-consensus-001
 lifecycle: research_only
 stage: 01a_需求共识建模
-phase_state: A0_V0_CANDIDATE_AWAITING_HUMAN_ROUND1
+phase_state: Q1_B_Q2_A_Q3_A_DECIDED_A0_V1_EXACT_CONFIRMATION_PENDING_01B_A_V0_DRAFT
 human_request_date: '2026-10-27'
 priority: P0_ABOVE_NBA2K22_WORLD_DATA_STAGE02
 paused_parent_task_id: nba2k22-lifecycle-scene-consensus-01
@@ -39,7 +39,11 @@ required_outputs:
   - 01a_承重追问_Round01_v1.md
   - Codex_机制逆向任务候选_未派发_v0.md
   - verification_plan_candidate_v1.json
-completion_state: IN_PROGRESS_NOT_HUMAN_APPROVED_NOT_ENGINEERING_DISPATCHED
+  - 01a_Human裁决记录_Round01_20261027.md
+  - 01a_需求共识模型_A0_v1_待Human版本确认.md
+  - 01b_需求结果模型_A_v0_讨论草案.yml
+  - 01b_承重追问_Round01_Q4至Q6_v1.md
+completion_state: 01A_ATOMIC_DECISIONS_CONFIRMED_A0_EXACT_PENDING_01B_DRAFT_NOT_CODEX_DISPATCHED
 task_packet:
   task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
   repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
@@ -82,3 +86,20 @@ task_packet:
     independent_reviewer: Human_or_future_independent_model_to_be_assigned
     different_model_family: true
     different_measurement_tool: true
+
+stage01a_Human_atomic_decisions: Q1_B_Q2_A_Q3_A
+stage01a_atomic_decision_ref: 01a_Human裁决记录_Round01_20261027.md
+stage01a_candidate_version: A0-v1
+stage01a_candidate_ref: 01a_需求共识模型_A0_v1_待Human版本确认.md
+stage01a_candidate_Human_exact_confirmation: PENDING
+stage01b_formal_start: NOT_OPEN_UNTIL_EXACT_A0_CONFIRMATION
+stage01b_preparatory_model_version: A-v0
+stage01b_preparatory_model_ref: 01b_需求结果模型_A_v0_讨论草案.yml
+stage01b_preparatory_inquiry_ref: 01b_承重追问_Round01_Q4至Q6_v1.md
+stage01b_pending_Human_decisions: [Q4, Q5, Q6]
+stage01b_final_result_version_confirmation: NOT_REQUESTED
+stage01b_goal_native_PoC_count: 1_TO_2_CONDITIONAL_ON_DIRECT_EVIDENCE_AND_SEPARATE_Human_ACTION_AUTHORIZATION
+stage01b_Q3_exit: THREE_REPRESENTATIVE_DOSSIERS_WITH_EVIDENCED_TRADE_FEASIBILITY_VERDICT_AND_Human_EXIT_GATE
+rea_real_memory_function_call_authority: NOT_GRANTED
+codex_REA_new_task_dispatch_status: NOT_DISPATCHED_BY_THIS_PLANNING_RUN
+world_data_stage02_resumption_status: PAUSED_UNTIL_Human_ACCEPTED_P0_REA_TASK_EXIT
