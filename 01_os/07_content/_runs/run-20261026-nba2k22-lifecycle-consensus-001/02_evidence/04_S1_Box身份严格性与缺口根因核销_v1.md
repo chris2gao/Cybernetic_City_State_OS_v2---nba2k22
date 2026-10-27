@@ -13,7 +13,7 @@
 | `world_data_prototype/query.py` | `54e70472088a65b9a92e107dc11dcae8a2451b4c` | 第588–641行 `schedule` 与同一严格覆盖谓词 |
 | `world_data_prototype/schedule_reader.py` | `d48ce685bb861fa5ddce6ca236a3633f8a05142d` | 第41–95行原生窗口读取/重读；第133–171行typed事实；第174–190行冻结源；第193–215行增量绑定/重采 |
 | `world_data_prototype/live_world.py` | `dab24dd38a67cc45c8cdbac4f584fbda414ded47` | 第101–188行Native-ID→当前PLAYER池唯一候选；第275–295行Native Box保留与canonical映射/显式缺口 |
-| `world_data_prototype/tests/test_review_box_completeness.py` | `1e5325de6aed9b08ba4dfe77fd4bcf05dfa51603` | 6个F-02定点fixture测试的方法与断言存在；本轮未执行 |
+| `world_data_prototype/tests/test_review_box_completeness.py` | `1e5325de6aed9b08ba4dfe77fd4bcf05dfa51603` | 7个F-02定点fixture测试的方法与断言存在；本轮未执行 |
 | `world_data_prototype/tests/test_competition_views.py` | `311062d2fa7b77ea4aeee819ca9818da37f6992a` | 测试跨单元禁止混拼、缺失/错误身份、得分缺口、不可推算零分 |
 | `world_data_prototype/tests/test_incremental_schedule.py` | `84c6c8763ccedf88bf5056268e85b1ef2cf5047d` | 第57–85行冻结复用、变更重采与部分单元不得覆盖旧完整证据 |
 | `world_data_prototype/REVIEW_FIXES_F01_F02_F03.md` | `60bd163d00afa417c1236b20d7cccceb85a2c249` | F-02设计边界；既有原作者修复说明非独立运行复现 |
