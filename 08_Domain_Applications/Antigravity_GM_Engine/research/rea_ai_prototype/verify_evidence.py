@@ -20,6 +20,8 @@ for card in cards:
 manifest=load(E/'live_coach/manifest.json')
 for record in manifest['files']:
  raw=(ROOT/record['path']).read_bytes();assert len(raw)==record['bytes'] and hashlib.sha256(raw).hexdigest()==record['sha256'],record['path']
+ relative=(ROOT/record['path']).relative_to(REPO).as_posix();blob=subprocess.check_output(['git','show',':'+relative],cwd=REPO)
+ assert hashlib.sha256(blob).hexdigest()==record['sha256'],'tracked Evidence bytes changed: '+relative
  live=json.loads(raw.decode('utf-8-sig')) if record['path'].endswith('.json') else None
  if live and 'normalized_result' in live:
   assert live['normalized_result']['cleanup_error'] is None
