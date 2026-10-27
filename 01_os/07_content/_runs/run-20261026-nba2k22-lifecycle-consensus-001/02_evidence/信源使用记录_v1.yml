@@ -1,0 +1,72 @@
+schema_version: nba2k22.stage02.source_use_log.v1
+date: '2026-10-27'
+status: ACTUAL_THIS_PLANNING_RUN_SOURCE_USE_WITH_MATURITY_LIMITS
+work_item: RQ-02-01_TO_RQ-02-07_STATIC_SOURCES_AND_PROVISIONAL_REA
+usage_records:
+  - source_id: SRC-02-01
+    action: github_fixed_commit_fetch_file_and_focused_source_inspection
+    inspected_paths:
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema_model.py
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/refresh.py
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/database_operations.py
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/TABLE_CARDS.md
+      - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/DIFFICULT_ITEMS.md
+    output_evidence: [E-02-001, E-02-002, E-02-003, E-02-016, E-02-018, E-02-019, E-02-020, E-02-021]
+    missing: independent_windows_source_code_execution_and_live_game_UI_matching
+  - source_id: SRC-02-02
+    action: read_original_archived_coverage_and_tests_with_static_grouping
+    inspected_paths:
+      - 01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json
+    output_evidence: [E-02-004, E-02-005, E-02-006, E-02-007, E-02-008, E-02-009, E-02-010, E-02-015, E-02-017]
+    missing: independent_native_replay_old_full_database_and_real_scene_mapping
+    important_limit: original_developer_reports_share_provenance_with_SRC_02_01
+  - source_id: SRC-02-03
+    action: fixed_historical_task_branch_Human_approval_and_V0_4_ADR_review
+    inspected_paths:
+      - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_TASK1_REQUIREMENT_RESULT_MODEL_V1_9.md
+      - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_TASK1_01B_HUMAN_APPROVAL_RECORD_20261024.md
+      - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_TASK1_STAGE02_03_V0_4_HUMAN_APPROVAL_20261024.md
+      - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_TASK1_INITIAL_PROTOTYPE_ADR01_ADR02_HUMAN_DECISION_20261024.md
+    result: confirms_original_nine_domains_prototype_discussion_cadence_Codex_single_owner_and_Human_approved_ADR
+    missing: independent_game_feasibility
+  - source_id: SRC-02-04
+    action: approved_2026_10_26_result_A_and_RR_decision_verification
+    inspected_paths:
+      - 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/01b_需求结果_A_v1_草案.yml
+      - 01_os/07_content/_runs/run-20261026-nba2k22-lifecycle-consensus-001/01b_结果A完整性与Human版本确认_20261026.md
+    result: six_result_contract_approved_and_no_engineering_or_game_authorization
+    missing: real_S1_S8_evidence
+  - source_id: SRC-02-05
+    action: read_69_line_Human_uploaded_Codex_REA_difficult_items_report
+    inspected_paths:
+      - CHAT_ATTACHMENT_ONLY_REA_DIFFICULT_ITEMS_EVALUATION_20261027.md
+    result: reported_bounded_live_overall_cache_validity_field_metadata_six_samples_and_whole_EXE_provider_timeout_limit
+    output_evidence: [E-02-022, E-02-023]
+    missing: final_Codex_Git_SHA_raw_evidence_file_links_independent_runtime_replay_and_full_UI_binding
+    not_assumed: separate_Codex_REA_task_complete_or_production_integrated
+  - source_id: SRC-02-06
+    action: GitHub_read_OS_stage02_evidence_schema_and_execution_checklist
+    inspected_paths:
+      - 01_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md
+      - 01_os/01_workflow/02_信息收集与提炼/实现/执行清单_v1.md
+    result: evidence_index_bearing_claim_sources_judgment_boundary_logs_stop_decision_required
+    missing: Human_formal_stage02_transition_gate
+retrieval_absence_records:
+  - target: independent_current_live_S2_to_S8_native_scene
+    result: NOT_REQUESTED_NOT_AUTHORIZED
+    interpretation: absence_of_live_scene_not_proof_of_nonexistent_data
+  - target: 100_season_real_storage_or_10k_Native_write_stress_run
+    result: NOT_REQUESTED_NOT_AUTHORIZED
+    interpretation: code_existing_and_linear_projection_not_accepted_runtime_validation
+  - target: separate_Codex_REA_final_result_and_primary_tool_logs
+    result: AWAITING_Human_future_official_sync
+    interpretation: current_attached_report_is_provisional_and_not_Git_fixed
+  - target: Overall_codec_py_under_fixed_v25_root
+    result: NOT_FOUND_AT_SPECIFIC_CHECKED_PATH
+    interpretation: do_not_claim_codec_absent_globally; REA_report_reuses_prior_codec_from_other_artifacts
+source_use_summary: >-
+  This log captures source categories and actually inspected primary documents
+  and explains inaccessible live scenes. It does not claim exhaustively
+  audited every UI tab or every raw field in the entire repository.
