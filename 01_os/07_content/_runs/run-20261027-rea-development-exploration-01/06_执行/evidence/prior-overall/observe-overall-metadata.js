@@ -1,0 +1,14 @@
+const plan={"type":{"name":"PLAYERDATA","type_rva":80186288,"field_array_rva":51826456,"schema_rva":51787936,"name_rva":35828032,"static_auxiliary_word5_uninterpreted":65537,"initializer_rva":632795,"constructor_rva":31801136,"initializer_hex":"4c8d0d5e09190248894424204c8d05b2900c03488d1523270d03488d0db4e3bd04e82f97db01","initializer_sha256":"017b09c550a9b0d68c9a6fc0c5f8913cbfde04d5e995aa1a444cca4e648e868d","expected_size":1264,"expected_field_count":963,"field_signature_sha256":"cf38d95d2e0d67c20922f001d96442b93d4d7be73db75c966091c41e2da81ab5"},"fields":[{"index":null,"name":"CachedOverall_NeverCall","words":[1370230541,3383058069,364,4,587210752,0,0,0,0,0]},{"index":null,"name":"CachedOverallValid","words":[2166828986,4054322895,796,4,621150464,1,0,0,0,0]}]},m=Process.mainModule;let total=0;const trace=[];
+const hex=a=>Array.from(new Uint8Array(a),b=>b.toString(16).padStart(2,'0')).join('');
+function read(p,n,label){if(n<1||n>38520||total+n>40000)throw Error('metadata budget');const raw=p.readByteArray(n);total+=n;trace.push({label,bytes:n});return raw;}
+const pointer=a=>ptr('0x'+Array.from(new Uint8Array(a)).reverse().map(b=>b.toString(16).padStart(2,'0')).join(''));
+const start=read(m.base.add(plan.type.initializer_rva),plan.type.initializer_hex.length/2,'type initializer');if(hex(start)!==plan.type.initializer_hex)throw Error('initializer changed');
+const header=read(m.base.add(plan.type.type_rva),64,'type header');const d=new DataView(header);if(Number(d.getBigUint64(0,true))!==963)throw Error('field count');
+const names=read(pointer(header.slice(40,48)),11,'PLAYERDATA type name');if(hex(names)!=='504c415945524441544100')throw Error('type name');
+const schema=read(pointer(header.slice(32,40)),40,'schema');if(new DataView(schema).getUint32(20,true)!==1264)throw Error('stride');
+const fields=pointer(header.slice(8,16)),result=[];
+const table=new DataView(read(fields,963*40,'field metadata table; no player values'));
+for(const f of plan.fields){const hits=[];for(let i=0;i<963;i++)if(table.getUint32(i*40,true)===f.words[0])hits.push(i);if(hits.length!==1)throw Error('metadata CRC uniqueness');f.index=hits[0];}
+for(const f of plan.fields){const raw=read(fields.add(f.index*40),40,'field:'+f.name);const v=new DataView(raw);const w=Array.from({length:10},(_,i)=>v.getUint32(i*4,true));if(w.slice(0,6).some((x,i)=>x!==f.words[i]))throw Error('field signature');if(hex(read(fields.add(f.index*40),40,'field recheck'))!==hex(raw))throw Error('field changed');result.push({name:f.name,index:f.index,words:w});}
+if(hex(read(m.base.add(plan.type.type_rva),64,'header recheck'))!==hex(header))throw Error('type moved');
+send({kind:'overall-native-metadata-match',fields:result,field_count:963,player_stride:1264,initializer_match:true,type_name_match:true,explicit_read_bytes:total,trace,player_value_bytes_read:0,getter_calls:0,hooks:0,memory_writes:0});

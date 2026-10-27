@@ -1,0 +1,61 @@
+{
+  "scope": "DISPOSABLE_OWNED_FIXTURE_ONLY; NO_GAME_WRITES",
+  "count": 4096,
+  "phases": [
+    {
+      "phase": "apply",
+      "elapsed_ms": 2965,
+      "response_bytes": 1570,
+      "evidence_id": "ev_d8ad1feda75f2ce85b10718213892bc6b1aec3feebebc6c7b2356cafd856d58a",
+      "rea": {
+        "kind": "owned-fixture-bulk-applied",
+        "records": 4096,
+        "stride": 16,
+        "cas_checks": 4096,
+        "negative_cas_abort_no_write": true,
+        "verified": 4096,
+        "bytes_written": 65536,
+        "explicit_bytes_read": 131072,
+        "game_target": false
+      },
+      "independent_child_check": {
+        "kind": "verify-applied",
+        "matches": 4096,
+        "mismatches": 0,
+        "sha256": "8f732ab39750bfec10a4d9ef9d0950c7e276e725bcf10571242bc15f3d77ce76"
+      },
+      "cleanup_error": null
+    },
+    {
+      "phase": "restore",
+      "elapsed_ms": 2810,
+      "response_bytes": 1568,
+      "evidence_id": "ev_c0ae9936761af4dcc1af7167886006b677496ffb41ed7a98ef0277b22b99bfe3",
+      "rea": {
+        "kind": "owned-fixture-restored",
+        "records": 4096,
+        "stride": 16,
+        "cas_checks": 4096,
+        "negative_cas_abort_no_write": null,
+        "verified": 4096,
+        "bytes_written": 65536,
+        "explicit_bytes_read": 131072,
+        "game_target": false
+      },
+      "independent_child_check": {
+        "kind": "verify-original",
+        "matches": 4096,
+        "mismatches": 0,
+        "sha256": "10aeba9c31b5617cec559647be5618debf6bb3de1f3b91feb3a5dcc89cc4e3d0"
+      },
+      "cleanup_error": null
+    }
+  ],
+  "owned_process_exit": 0,
+  "limitations": [
+    "fixture memory is deliberately quiescent; no concurrent game engine",
+    "whole-plan validation is not atomic native CAS",
+    "no allocator, native index, UI commit, persistence or game legality proof",
+    "Frida performs an actual write to the owned fixture"
+  ]
+}

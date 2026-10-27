@@ -1,0 +1,28 @@
+{
+  "source": "DIRECT_HUMAN_REPLY",
+  "evidence_class": "HUMAN_OBSERVED_UI",
+  "recorded_date": "2026-10-27",
+  "page": "球队名单",
+  "game_mode": null,
+  "simultaneous_with_memory_capture_verified": false,
+  "save_and_player_instance_binding_verified": false,
+  "user_text": "embiid是实际95，游戏加成显示是96，你说的没错",
+  "comparisons": [
+    {
+      "name": "Ben Simmons",
+      "memory_integer_candidate": 87,
+      "human_reported_overall": 87,
+      "result": "NUMERIC_MATCH_ONLY"
+    },
+    {
+      "name": "Joel Embiid",
+      "memory_integer_candidate": 95,
+      "human_reported_base_overall": 95,
+      "human_reported_boosted_display": 96,
+      "result": "BASE_NUMERIC_MATCH_ONLY; BOOST_NOT_EXPLAINED"
+    }
+  ],
+  "conclusion": "Two Human UI numeric matches support base Overall interpretation in this sample; boosted display and synchronized save/object binding remain unverified",
+  "superseded_user_text": "ben是87，embiid实际是96，但是游戏加成显示是97.在球队名单里查看的",
+  "correction": "Human explicitly corrected Embiid base96/boosted97 to base95/boosted96; prior mismatch conclusion withdrawn"
+}

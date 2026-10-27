@@ -43,6 +43,8 @@
 
 ## 4. 按问题恢复上下文（最小读取集）
 
+- **我需要用REA开展有界原生/资源探索或规划下一轮任务**：读[REA使用手册阶段稿](REA_DEVELOPMENT_PLAYBOOK_V1.md)及`01_os/07_content/_runs/run-20261027-rea-development-exploration-01/08_结论/PLANNING_HANDOFF.md`。此研究按Human要求暂停，阶段材料仅供规划；元数据/fixture/资源候选不证明游戏改写、关闭功能或生产验收，不自动恢复实验。
+
 - **我是NBA2K22开发规划/执行模型**：在OS启动文件后读取领域`AGENTS.md`所指向的[当前项目级跨模型规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)；旧规划中的Codex/Antigravity并行或先全研究再开发要求，以最新Human决定的顺序结对与原型驱动为准。
 - **我是新开发执行模型**：读OS入口 + [开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) + 当前task packet + 前置完成指针；需要具体能力时定位[40族总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json)中的1项。
 - **我是新规划模型**：读OS入口 + [规划入口](NBA2K22_PLANNING_MODEL_ENTRY_V1.md) + [路线图](OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md)/backlog对应节点 + 直属上游设计裁决。

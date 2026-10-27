@@ -1,0 +1,858 @@
+{
+  "package_version": "6.8.0",
+  "tool_count": 229,
+  "all_tool_names": [
+    "inspect_analysis_settings",
+    "update_analysis_settings",
+    "inspect_desktop_application",
+    "inspect_model_artifact",
+    "inspect_gpu_code_objects",
+    "annotate_native_function",
+    "inspect_native_load_image",
+    "inspect_native_data_type",
+    "inspect_native_instruction",
+    "resolve_native_call_targets",
+    "address_name",
+    "comment",
+    "current_address",
+    "current_procedure",
+    "current_document",
+    "goto_address",
+    "inline_comment",
+    "list_bookmarks",
+    "list_documents",
+    "list_names",
+    "list_procedures",
+    "list_segments",
+    "list_strings",
+    "next_address",
+    "prev_address",
+    "procedure_address",
+    "procedure_assembly",
+    "procedure_callees",
+    "procedure_callers",
+    "procedure_info",
+    "read_function_instructions",
+    "search_bytes",
+    "read_bytes",
+    "address_to_file_offset",
+    "procedure_references",
+    "procedure_pseudo_code",
+    "resolve_containing_procedure",
+    "search_procedures",
+    "search_strings",
+    "set_address_name",
+    "set_addresses_names",
+    "set_bookmark",
+    "set_comment",
+    "set_inline_comment",
+    "unset_bookmark",
+    "xrefs",
+    "trace_native_values",
+    "inspect_native_dispatch_metadata",
+    "get_objc_classes",
+    "get_objc_protocols",
+    "batch_decompile",
+    "decompile_all",
+    "get_call_graph",
+    "analyze_swift_types",
+    "find_xrefs_to_name",
+    "binary_overview",
+    "analyze_function",
+    "inspect_native_api",
+    "trace_feature",
+    "trace_call_path",
+    "trace_native_ui_action",
+    "observe_native_ui",
+    "capture_native_ui_scenario",
+    "observe_native_calls",
+    "inspect_macho",
+    "inspect_signature",
+    "inspect_plist",
+    "list_architectures",
+    "demangle_swift",
+    "inspect_artifact",
+    "extract_artifact",
+    "decode_interface_builder",
+    "inspect_keyed_archive",
+    "inspect_asset_catalog",
+    "trace_dylib_resolution",
+    "inspect_managed_artifact",
+    "inspect_managed_members",
+    "inspect_managed_native_boundaries",
+    "compare_managed_members",
+    "verify_managed_native_boundaries",
+    "import_managed_reconstruction",
+    "project_managed_application_graph",
+    "inspect_with_objdump",
+    "execute_rizin_command",
+    "list_frida_devices",
+    "list_frida_processes",
+    "start_frida_session",
+    "load_frida_script",
+    "resume_frida_session",
+    "unload_frida_script",
+    "frida_session_status",
+    "close_frida_session",
+    "instrument_with_frida",
+    "list_cutter_sessions",
+    "cutter_command",
+    "start_gdb_session",
+    "gdb_console",
+    "gdb_session_status",
+    "close_gdb_session",
+    "start_rizin_debug_session",
+    "rizin_debug_command",
+    "rizin_debug_session_status",
+    "close_rizin_debug_session",
+    "inspect_packet_capture",
+    "inspect_packet_fields",
+    "decode_signal_recording",
+    "inspect_signal_decoders",
+    "inspect_android_package",
+    "search_android_classes",
+    "inspect_android_class",
+    "inspect_android_method",
+    "trace_android_references",
+    "inspect_jeb_client",
+    "open_jeb_project",
+    "list_jeb_units",
+    "decompile_jeb_item",
+    "inspect_byte_entropy",
+    "inspect_binary_layout",
+    "inspect_analysis_view",
+    "inspect_pe_resources",
+    "inspect_native_exports",
+    "inspect_devicetree",
+    "inspect_elf_notes",
+    "inspect_apple_ips",
+    "inspect_kernel_module",
+    "inspect_pe_load_config",
+    "inspect_pe_certificates",
+    "inspect_pe_imports",
+    "inspect_go_binary",
+    "inspect_il2cpp_metadata",
+    "inspect_rust_binary",
+    "inspect_python_pyc",
+    "inspect_erlang_beam",
+    "compare_wasm_interfaces",
+    "inspect_wasm_artifact",
+    "inspect_apk_signature",
+    "inspect_evm_interface",
+    "inspect_sqlite_database",
+    "inspect_recorded_crash",
+    "inspect_firmware_regions",
+    "extract_firmware",
+    "trace_web_module_imports",
+    "trace_web_source_location",
+    "observe_web_execution",
+    "inspect_web_event_listeners",
+    "inspect_web_network_capture",
+    "recover_javascript_sources",
+    "inspect_adb_client",
+    "list_adb_devices",
+    "inspect_adb_device",
+    "list_adb_packages",
+    "pull_adb_package",
+    "read_adb_logcat",
+    "inspect_adb_package",
+    "pull_adb_file",
+    "push_adb_file",
+    "capture_adb_screen",
+    "list_adb_processes",
+    "list_adb_directory",
+    "list_adb_features",
+    "list_adb_services",
+    "inspect_adb_display",
+    "inspect_adb_window",
+    "read_adb_setting",
+    "collect_adb_bugreport",
+    "resolve_adb_packages",
+    "install_adb_package",
+    "uninstall_adb_package",
+    "start_adb_app",
+    "start_adb_activity",
+    "stop_adb_app",
+    "inspect_pcap_client",
+    "inspect_pcap_capture",
+    "identify_flutter_build",
+    "inspect_dart_aot",
+    "inspect_apktool_client",
+    "decode_android_resources",
+    "export_web_scripts",
+    "list_browser_targets",
+    "inspect_web_page",
+    "analyze_web_bundle",
+    "observe_web_session",
+    "discover_webmcp_tools",
+    "compare_web_captures",
+    "capture_web_screenshot",
+    "compare_web_screenshots",
+    "capture_browser_scenario",
+    "inspect_electron_fuses",
+    "list_electron_targets",
+    "inspect_electron_page",
+    "analyze_javascript_application",
+    "reconcile_javascript_runtime",
+    "capture_electron_scenario",
+    "list_javascript_runtime_targets",
+    "observe_javascript_runtime",
+    "trace_application_feature",
+    "trace_javascript_semantics",
+    "compare_application_versions",
+    "compare_source_to_bundle",
+    "compare_javascript_export_shapes",
+    "build_reconstruction_obligation_ledger",
+    "evaluate_reconstruction_coverage",
+    "export_environment_bundle",
+    "project_android_application_graph",
+    "project_apple_application_graph",
+    "project_harmony_application_graph",
+    "open_bundle_resources",
+    "open_binary",
+    "close_binary",
+    "binary_session",
+    "export_evidence_bundle",
+    "import_evidence_bundle",
+    "get_evidence_bundle",
+    "capture_process_scenario",
+    "compare_process_captures",
+    "compare_artifacts",
+    "compare_functions",
+    "match_native_functions",
+    "compare_bundles",
+    "find_changed_behavior",
+    "build_call_path",
+    "correlate_static_and_runtime",
+    "verify_reconstruction",
+    "list_unknowns",
+    "record_unknown",
+    "update_unknown",
+    "verify_unknown_resolution",
+    "get_navigation_context",
+    "inspect_address_context"
+  ],
+  "selected_tools": [
+    {
+      "name": "search_strings",
+      "purpose": "Search every provider-reported string object or candidate using literal matching by default or regex when requested. Results are deterministic and complete over that provider inventory, not every text sequence in artifact bytes. Kuna scans mapped sequences of at least five characters, including unterminated fragments, without computing references. Ghidra may omit packed or undefined literals, including Rust strings; an empty result does not prove text is absent. If an address is known, read_bytes and xrefs inspect its bytes and references. Hopper retains typed byte decoding, native display, and explicit decoding unknowns. Adjacent long-literal fragments match independently. Hopper regex mode uses ECMAScript Unicode syntax in a cancellable worker. The matching deadline is REA_REGEX_MATCHING_DEADLINE_MS (a positive decimal integer of milliseconds from 1 to 2147483647, default 5000). Unset keeps the default. A deadline failure names the effective milliseconds, source (default or setting), the default, and the maximum, and leaves the API usable. The worker old-generation request is REA_REGEX_WORKER_HEAP_REQUEST_MIB (a decimal integer of mebibytes from 7 to 16384, default 128). Unset keeps the default. A positive Node --max-old-space-size, including NODE_OPTIONS, overrides that request and is not limited by the setting's floor or maximum. A heap failure names the effective request, its source (default or setting), the default, the floor, and the maximum. Select detail summary for counts and retained native-inventory pages; complete remains the default.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "literal",
+              "regex"
+            ]
+          },
+          "case_sensitive": {
+            "type": "boolean"
+          },
+          "document": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "summary"
+            ]
+          }
+        },
+        "required": [
+          "pattern"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "trace_native_values",
+      "purpose": "Trace a bounded static dependency graph from one explicit native procedure. Includes high-p-code def-use, constants, operators, memory and branch operations, resolved call edges, and derived argument/parameter and return/output bindings. Missing bindings, alias semantics, persistent state and RNG roles remain unknown. Budgets bound depth, decompilations, graph size and payloads; nodes are paginated. A Ghidra per-function timeout does not bound the whole traversal; allow startup, every attempted function and other work, or reduce max_functions.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "procedure": {
+            "type": "string",
+            "minLength": 1
+          },
+          "max_depth": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 16
+          },
+          "max_functions": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 64
+          },
+          "max_call_sites": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4096
+          },
+          "max_nodes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20000
+          },
+          "max_edges": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40000
+          },
+          "offset": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5000
+          }
+        },
+        "required": [
+          "procedure"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "analyze_function",
+      "purpose": "Build a dossier for one native function identified by symbol or provider-returned address. Returns identity with complete inclusive analyzed body ranges or explicit unknown, provider-specific pseudocode and assembly, comments, calls, references, referenced strings/names, local CFG blocks, and available native API boundary observations. Ghidra terminal-call assumptions that may cut the analyzed body are reported in limitations with available callee identities. Default detail summary returns a compact dossier (identity, pseudocode size, facet counts, value-flow availability) and retains the complete dossier Evidence in this session; page pseudocode, references, assembly and value-flow through normalized_result.parent_evidence_id with inspect_analysis_view. detail complete returns the full dossier inline.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "procedure": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "summary"
+            ]
+          }
+        },
+        "required": [
+          "procedure"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "inspect_artifact",
+      "purpose": "Inspect an active archive or application package, including Node.js SEA carriers, in one call. By default returns the complete content-addressed artifact graph once, as the typed nested inventory Evidence, with root and integrity observations, integrity contradictions, hypotheses, unexplored branches, limitations, and next probes inline. For PCK and large containers prefer detail summary: it retains the complete inspection and returns its derived summary view; read exact paths, batch occurrence/content IDs and selected fields with inspect_analysis_view using parent_evidence_id. This changes delivery, not inventory coverage. Read-only DMG mounting is used automatically on supported macOS hosts. Integrity mismatches fail by default; record-and-continue keeps mismatches explicitly untrusted. It does not extract files; use extract_artifact to materialize regular contents of supported formats. DMG extraction is unavailable; use a caller-managed read-only mount on macOS to access its files.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "integrity_policy": {
+            "type": "string",
+            "enum": [
+              "fail",
+              "record-and-continue"
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "summary"
+            ]
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "extract_artifact",
+      "purpose": "Extract regular files (including Node.js SEA scripts and assets) exposed by a supported active archive reader into a fresh temporary directory chosen by REA. A nested archive exposed as a file is copied as a file; inspect and extract it separately to unpack its contents. The result includes its location. DMG extraction is unavailable; use a caller-managed read-only mount on macOS to access its files. Rejects traversal and symlink escapes, never overwrites, and verifies cleanup. Integrity mismatches fail by default; record-and-continue extracts the observed bytes and returns each mismatch as an explicitly untrusted integrity contradiction.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "integrity_policy": {
+            "type": "string",
+            "enum": [
+              "fail",
+              "record-and-continue"
+            ]
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_frida_processes",
+      "purpose": "List processes observed on a selected Frida device or caller-supplied remote endpoint. A remote connection is closed after discovery; authentication values are never returned or recorded.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "device_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "remote": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "certificate": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              },
+              "keepalive_interval": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "start_frida_session",
+      "purpose": "Attach Frida to one selected process or spawn one selected target. Spawned targets remain paused until resume_frida_session, allowing scripts to load before execution. Closing a session detaches instrumentation; it does not kill the target.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "attach",
+              "spawn"
+            ]
+          },
+          "device_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "remote": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "certificate": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              },
+              "keepalive_interval": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "additionalProperties": false
+          },
+          "pid": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "program": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\x00]*$"
+          },
+          "argv": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "mode"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "load_frida_script",
+      "purpose": "Load caller-supplied JavaScript into a Frida session. Scripts can read or change target memory and behavior and can access the target process's capabilities. Messages and script errors are returned inline as Evidence; source content is not persisted.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "source_kind": {
+            "type": "string",
+            "enum": [
+              "inline",
+              "file"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\x00]*$"
+          }
+        },
+        "required": [
+          "session_id",
+          "source_kind"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "unload_frida_script",
+      "purpose": "Unload one caller-selected Frida script from a live session. This removes that script's instrumentation from the target.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "script_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "session_id",
+          "script_id"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "frida_session_status",
+      "purpose": "Read observed Frida session state on each call. Default detail=complete returns queued script messages and capture truncation. detail=summary retains the complete observation in this session and returns identity, state, scripts, retained message count and truncation without payloads. Export the complete parent with export_evidence_bundle; retained summaries are historical and never refresh live state.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          },
+          "detail": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "summary"
+            ]
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "close_frida_session",
+      "purpose": "Unload session scripts and attempt to detach REA's Frida session. Then resume a still-paused spawned process if script cleanup or session detach confirms instrumentation was released. Cleanup failures are reported. REA never kills the target; its final state is reported as unknown.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+          }
+        },
+        "required": [
+          "session_id"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "instrument_with_frida",
+      "purpose": "Run one caller-authored Frida script against an explicitly selected process and detach when the observation window ends. The CLI and MCP share this ephemeral workflow; use MCP session operations for persistent sessions. Remote authentication is used only for this call and excluded from Evidence.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "attach",
+              "spawn"
+            ]
+          },
+          "device_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "remote": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 2048
+              },
+              "token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "certificate": {
+                "type": "string",
+                "minLength": 1
+              },
+              "origin": {
+                "type": "string",
+                "minLength": 1
+              },
+              "keepalive_interval": {
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              }
+            },
+            "required": [
+              "address"
+            ],
+            "additionalProperties": false
+          },
+          "pid": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "program": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\x00]*$"
+          },
+          "argv": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "source_kind": {
+            "type": "string",
+            "enum": [
+              "inline",
+              "file"
+            ]
+          },
+          "source": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[^\\x00]*$"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 60000
+          }
+        },
+        "required": [
+          "mode",
+          "source_kind"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "inspect_binary_layout",
+      "purpose": "Inspect an explicit local binary without launching it as a host process. Returns file-backed section/segment ranges, linked addresses, original symbol/REL/RELA table identities, complete encoded RELR tables and upstream-derived offsets with unknown per-word locations/addends, raw name bytes, dependency/interpreter names and static mitigation inferences inline with artifact SHA-256 Evidence. Profile: EXEC/DYN/REL ELF64 x86-64, ELF32 i386, ELF32 little-endian ARM and ELF32 little- or big-endian MIPS on Linux x64 via caller-supplied Python with unchanged pwntools 4.15.0, pyelftools 0.33 and Unicorn 2.1.2. Runtime addresses/library paths, overall relocation inventory completeness and complete derived GOT/PLT coverage remain unknown. Zero executable entry values mean absence; relocatable entries are not applicable. Upstream can emulate PLT instructions with Unicorn for derived static maps. Uses bounded complete output and owned temporary files/processes; malformed, unsupported or oversized objects return no partial success. Select detail summary to retain the complete layout Evidence in this session and receive only its summary view, then inspect sections, symbols, mitigations or linkage with inspect_analysis_view. pwntools_timeout_ms is each owned pwntools command's deadline (omitted means 30000 ms, range 1..2147483647, next call). cpuSeconds 30 and the output, diagnostic, and address-space byte allowances have no runtime override.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "pwntools_timeout_ms": {
+            "type": "integer"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "inspect_analysis_view",
+      "purpose": "Use javascript-routes collections to query route patterns, source-linked occurrences, source status, unknowns or summary counts from retained JavaScript application or web-bundle Evidence. Inspect selected views of supported completed Evidence without repeating analysis. Choose a view compatible with the parent operation described below. Command summary views preserve ordered GDB records or opaque objdump stdout/stderr once, source parameters, completion facts and parent identity. They do not establish current target state. Historical capture summaries return identity and counts without bodies or archive inventories. Capture views page retained records: view {kind: \"capture\", detail: \"preview\" | \"complete\", offset: 0, limit: 20}; preview selects recorded headline fields and binary descriptors, complete returns exact records with all sidecars. Offsets follow the selected parent record order, preserving original producer ordinals. Paging never reopens the source or reruns the decoder. Native export tables use kind native-exports, collection exports/issues, exact names or original indices, selected fields and matching-row pagination; parent Evidence plus source_index identifies each row. Source coverage stays separate from page coverage. BEAM views use kind beam, collections atoms/exports/imports/lambdas/chunks, exact names/indices/fields and matching-row pages; import modules intersects function names. source_index identifies original parent-and-collection rows, preserving every arity and raw atom index. beam.counts preserves null missing tables versus decoded empty tables; runtime absence remains unknown. PYC views use kind python-pyc, collection code_objects, names/indices/fields and paging; source_index scopes every same-name alternative to the parent, nested_code keeps code-constant references, and pyc.coverage preserves source coverage. Go metadata uses kind go, collection dependencies/settings, exact paths/keys or indices, fields and pagination. Row index refers to the original collection; empty selections return no rows, and dependency coverage remains unknown. Rust metadata uses kind rust, collection packages/edges, exact names/versions or original indices, selected fields, edge from_indices/to_indices and matching-row pagination. Embedded-record coverage is separate from unknown runtime dependencies. For inspect_pcap_capture parents, kind pcap pages endpoints, dns-queries, tls-sni, protocols, http-uris or unattributed-addresses. Select an exact query for dns-addresses, or a tshark/capinfos stream for UTF-16 diagnostics text. Page totals count retained facts; source coverage remains explicit. Qlog summaries keep profile/scope and counts; kind qlog pages traces, streams, loss-declarations, incomplete-records, contributions, ranges or final-sizes. Except traces, select trace_index; stream-specific facets also require exact stream_id and direction. Facts retain all-recorded-events-before-selection scope, and interval overlap or endpoint loss declarations do not prove retransmission or network loss. The api-surface view groups retained HAR requests by method, origin and format-rule path template; templated segments are inferences. It reads no headers or bodies and reports no query values. The environment-manifest view projects the same HAR requests on the primary origin (most JSON-like records) into a replayable tool surface: view {kind: \"environment-manifest\", template_rules: [\"after-uid-literal\", \"opaque-token\", \"sibling-variance\"], include_query_parameter_names: true}. Each tool has a deterministic name, a path template and parameters from the four format rules plus the selected opt-in rules, observed query parameter names, a value-free body shape for POST/PUT/PATCH, status and content-type sets and record ordinals; records are pointers into the parent, excluded groups carry a reason and three fixed unknowns are always stated. Templates, parameters and names are inferences; the view copies no header, cookie or body values and refuses parents inspected with sensitive values. A capture_browser_scenario parent that selected response bodies or header values projects the same way, one record per network transaction in request order; it relies on capture-time redaction of declared secrets instead of that refusal, and a transaction whose URL was redacted is left unrepresented. The environment-state view extracts, from the same parents, the initial state the recorded reads observed: view {kind: \"environment-state\", template_rules: [...]} with the rules of the manifest it accompanies. It reads response bodies recorded before the first related write and reports entity types with an identity field (proved by a path parameter or inferred from a field name), entities in collection order with per-view values where views differ, documents for non-parameterized reads that are not entities and have one initial request line (item-shaped paths stay recorded), and a render plan per read tool: item and list views reproduce their latest recordings from the state (a list also learns the filters, search, sort and paging its recordings verify, and answers new values of them from the state), and every other read tool is a recorded view with a reason. It also reports a write plan per state-changing tool (create, update, delete or document, built from its first successful call) and write_clock; a plan is served only when replaying the capture shows a later read confirming its effect and none contradicting it. Types and identity are inferences; values are recorded data, so it refuses parents inspected with sensitive values, and a scenario parent must have selected response bodies; its values keep the capture redaction markers, and a write whose URL it redacted ends the state of every type. The environment-coverage view, view {kind: \"environment-coverage\", template_rules: [...]}, summarizes that state without its entities: reads.state and reads.recorded count read tools answered from the state and replayed (recorded_reasons per view reason), writes.served lists the served write tools, and writes.withheld lists each other write tool with its reason, plan record, contradicting read and a hint about what to record next; it refuses what the environment-state view refuses. For a retained record use source: {kind: \"retained-evidence\", evidence_id: \"<parent_evidence_id>\"}. Use normalized_result.parent_evidence_id from a summary receipt. Source kind is required. Portable source uses {kind: \"inline\", evidence: <complete Evidence>}. A completed Evidence JSON file on this host uses {kind: \"evidence-file\", path: \"<absolute path>\"}: REA reads and authenticates it, then projects it like retained Evidence, so a large capture is bounded by the file reader rather than by inline-input accounting. The file may also be an Evidence bundle written by CLI --evidence_output or export_evidence_bundle; select evidence_id when it contains more than one record. For layout, JavaScript, inventory, WASM, Mach-O, Interface Builder, EVM, managed artifact, Android package and Dart AOT sources, request a summary with view: {kind: \"summary\"}; summary is a view kind and has no facet. The WASM summary gives validation, counts, WAT digest/length, tool profile and execution/network states without reading WAT text. Select a layout mitigations/linkage facet, one section/symbol/module, or a stable page. Module pages include assets, bundled and source modules; use node_id for ambiguous or unavailable paths. Typed module references use view {kind: \"javascript\", collection: \"modules\", projection: \"references\", where: {path: \"main.js\", kind: \"javascript-module\"}, offset: 0, limit: 64}; where matches exact retained strings (null selects unavailable paths). Rows include canonical identity, retained source-range count and observation support states. Source coverage and selection remain explicit; exhausting matching rows does not prove runtime loading or complete analysis. For exact file/native facts and processing gaps, use view {kind: \"javascript-facts\", where: {paths: [\"package.json\"]}, property_keys: [\"name\", \"operation\", \"analysis_status\"]}. Rows page original observations with canonical identities and Evidence; missing properties remain omitted. Paths match recorded artifact-path/source-range locations; optional kinds filter nodes. To discover field names without values, opt into include_available_property_keys: true with property_keys: []. Canonical identity and Evidence are separate from properties; keep each node_id/observation_id pair together when composing results. Inventory uses view: {kind: \"inventory\", collection: \"occurrences\", logical_paths: [\"package.json\"], offset: 0, limit: 64}. Inventory views page nodes, occurrences, edges or integrity contradictions. Occurrences accept exact logical_paths and occurrence_ids; nodes accept artifact_ids. Batch filters intersect (omitted means all available, [] means none); fields selects columns while retaining identity links. source_complete describes retained graph membership; source_coverage describes producer coverage, including unknown encrypted PCK directories. Page exhaustion does not prove absence in a partial source. WASM views use kind wasm and facet sections/imports/exports/candidates/glue/wat/headers/details/tool_profile; text facets use UTF-16 code units and source forms remain exact. Mach-O views use kind macho and facet entrypoints/architectures/build_metadata/load_commands/dependencies/imports/exports/segments/provenance; source_exhaustive false means unreturned rows may exist. Interface Builder views use kind interface-builder and collection documents/nodes/edges/coverage; nodes and edges accept an exact document relative_path. EVM summary returns all inferred interface candidates, carrier/decoded identities and explicit unknowns without hex or duplicate stdout. EVM views use kind evm and facet functions/bytecode_hex/stdout/stderr; function pages preserve the original candidate rows, and text offsets/limits count UTF-16 code units (hex has two characters per decoded byte). Exhausting candidate pages does not establish global interface completeness. Managed artifact summaries preserve complete identity/classification, metadata status, module/MVID, frameworks, coverage and limitations without unrelated inventories. Managed pages use kind managed and collection references/resources/attributes, retaining source coverage and build-local token scope; page exhaustion does not establish complete metadata. Managed member summaries keep identity, selection with unmatched names, coverage and per-collection counts; managed-members pages use collection types/exported_types/fields/methods/member_refs/call_edges/field_accesses/user_strings and carry the source selection and coverage. Android package summaries retain all declarations, engine identity and counts without decoded manifest text. Android manifest pages use kind android, facet manifest, offset and limit in UTF-16 code units; source_status preserves partial decoded coverage even when the retained text page is exhausted. Dart AOT summary preserves target/ABI/library identity, snapshot headers and pool lower bounds. String pages use kind dart-aot, collection package_uris/dart_uris/class_like_tokens; source coverage remains partial when the producer says partial. Protobuf views use kind protobuf, collection bodies/frames/fields, with record_ordinals, body_pointers and fields; field pages also select frame_indices, field_ids, field_numbers or schema_names. Byte identity, offset basis and body status remain present. Text and schema_value are opt-in page columns. APK signing views use kind apk-signature and collection signers/digests/lineage, with ids, signer_ids, schemes, fields and paging. Identity links remain when fields is empty. Declared identities and digest matches do not establish signature verification or authenticity. Model views use kind model-artifact and collection metadata (keys), tensors (names/types) or types (derived totals), with indices, fields and paging. Header SHA-256 scopes declarations; full-file identity remains unknown unless full hashing was selected. Arrays retain typed eight-element previews with explicit omissions. IL2CPP metadata views use kind il2cpp-metadata and collection sections/images/types/methods/fields/properties/events/parameters/string_literals/code_gen_modules/method_addresses/return_types/field_types/parameter_types/generic_method_instances/generic_method_issues. Select indices, fields and pages; sections/images/types/methods/fields/properties/events/parameters/return_types/field_types/parameter_types/generic_method_instances accept exact names (native type names match retained rendered values, preserving same-name rows; null names never match), types also accept image_indices/namespaces/declaring_types, and methods/members accept declaring_types. Parameters and parameter_types accept method_indices; code_gen_modules accept image_indices; method_addresses and generic_method_instances accept addresses/states (generic_method_instances also method_indices), preserving every folded alternative; generic_method_issues accept rows. Row index is scoped to the metadata digest; native pages add binary_source. Uncollected native tables have null counts and remain unavailable. Desktop directory views use kind desktop-application and collection files/omissions/candidates/components/next_probes, with fields and pagination; files and omissions accept exact paths or their stable IDs, and candidates accept families. Source coverage and stable row IDs remain available. Native inventory Evidence from list_names, list/search_procedures or list/search_strings uses view: {kind: \"native-inventory\", offset: 0, limit: 64, fields: [\"value\"]}. Rows keep source_index and address even with selected fields. Summary counts describe retained rows; provider discovery coverage remains unknown. Native function Evidence accepts kind summary for identity, availability and facet counts, or kind native for selected facts: view: {kind: \"native\", facet: \"procedure\"}. Facets select procedure, pseudocode, assembly, basic blocks, comments, callers/callees, references, unresolved calls, referenced strings/names, native API and high-pcode. Use nonnegative offset and a positive caller-selected limit (defaults 0 and 64); pseudocode uses UTF-16 code units, other native pages use rows. Returns artifact identity, parent Evidence ID, a distinct view digest, coverage, limitations and unknowns. Actual serialized size determines MCP transport admission; choose a smaller page or export the complete retained Evidence if needed.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "object"
+          },
+          "view": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "source",
+          "view"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "open_binary",
+      "purpose": "Open a local executable, application bundle, archive, JavaScript, source map, plist, or analysis database after validation. format=dos-com explicitly interprets 1..65280 headerless bytes as a DOS COM analysis image. format=raw-binary interprets headerless bytes with a required architecture and entry_point; file offset 0 maps at that address. Omission preserves header-based detection. provider_id selects one deep provider or deterministic auto selection; the binding remains stable until close or an explicit switch, with no failure fallback. Reopening the same target and profile retains its active database and metadata edits. An optional analysis snapshot is imported atomically and must match the binary identity, concrete provider, and canonical analysis profile exactly; importing into a session with metadata mutations requires closing and reopening it first. Call close_binary when the investigation is finished.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "architecture": {
+            "type": "string"
+          },
+          "entry_point": {
+            "type": "string"
+          },
+          "provider_id": {
+            "type": "string"
+          },
+          "snapshot_path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "close_binary",
+      "purpose": "When the investigation is finished, drain earlier provider requests, optionally write a provider-neutral analysis snapshot atomically to the caller-supplied path, then close the active analysis session and every provider resource started for it. Resource-only app sessions have no binary snapshot binding, so close them without snapshot_path. Later provider requests wait until this lifecycle operation finishes. Existing files require explicit overwrite; a failed save leaves the session open so cached analysis is not lost. Metadata edits prevent immutable snapshot saves until the session is recreated; export_evidence_bundle preserves mutable observations before closing without a snapshot.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "snapshot_path": {
+            "type": "string",
+            "minLength": 1,
+            "allOf": [
+              {
+                "pattern": "^[^\\x00]*$"
+              },
+              {
+                "pattern": "^(?:[\\\\/]|[A-Za-z]:[\\\\/])"
+              }
+            ]
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "export_evidence_bundle",
+      "purpose": "Atomically write the session's deterministic Evidence bundle to the requested local path. Existing files require overwrite: true; records and manifests use canonical byte-stable ordering.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "overwrite": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "compare_artifacts",
+      "purpose": "Compare complete artifact inventories by logical occurrence path, content identity, metadata, and graph relations. Pass the inventory Evidence nested in each inspect_artifact result as left and right, or pass its inspect_analysis_view summary while the complete parent Evidence remains retained in this session. Summary facts are not treated as a complete inventory; comparison resolves the exact retained parent. Every delta cites both complete inputs, and gaps yield truncated or unknown, never equivalence. Returns every change inline.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "left": {
+            "type": "object"
+          },
+          "right": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "left",
+          "right"
+        ],
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false
+      }
+    }
+  ],
+  "limitations": [
+    "catalog discovery is not backend or platform usability proof",
+    "same exact package version must be checked before reusing these schemas"
+  ]
+}

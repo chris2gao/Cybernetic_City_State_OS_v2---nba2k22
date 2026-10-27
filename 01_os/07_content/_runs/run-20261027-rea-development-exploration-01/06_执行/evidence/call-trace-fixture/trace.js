@@ -1,0 +1,3 @@
+const target={"pid": 9404, "writer": "0x1e8e6a30f88", "reader": "0x1e8e6a30fc0"};if(Process.id!==target.pid)throw Error('fixture identity');let captured=0;const handles=[];
+for(const name of ['writer','reader'])handles.push(Interceptor.attach(ptr(target[name]),{onEnter(args){this.keep=captured<16;if(this.keep){captured++;this.value=args[0].toInt32();this.thread=Process.getCurrentThreadId();}},onLeave(ret){if(this.keep)send({kind:'owned-call',name,argument:this.value,result:ret.toInt32(),thread_id:this.thread});}}));
+setTimeout(()=>{for(const h of handles)h.detach();send({kind:'owned-trace-stop',entry_events:captured,game_target:false});},350);

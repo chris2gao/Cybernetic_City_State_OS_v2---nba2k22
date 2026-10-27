@@ -1,0 +1,140 @@
+{
+  "layout": "NATIVE_VALID_PLAYER_OVERALL_CACHE_V1",
+  "cache_field": {
+    "name_crc": 1370230541,
+    "offset": 364,
+    "size": 4,
+    "format": 587210752,
+    "width": 32,
+    "start_bit": 0,
+    "enum_pointer": 0,
+    "words": [
+      1370230541,
+      3383058069,
+      364,
+      4,
+      587210752,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "literal_names": [
+      "CachedOverall_NeverCall"
+    ]
+  },
+  "valid_field": {
+    "name_crc": 2166828986,
+    "offset": 796,
+    "size": 4,
+    "format": 621150464,
+    "width": 1,
+    "start_bit": 6,
+    "enum_pointer": 0,
+    "words": [
+      2166828986,
+      4054322895,
+      796,
+      4,
+      621150464,
+      1,
+      0,
+      0,
+      0,
+      0
+    ],
+    "literal_names": [
+      "CachedOverallValid"
+    ]
+  },
+  "projection_ranges": [
+    [
+      0,
+      80
+    ],
+    [
+      96,
+      104
+    ],
+    [
+      244,
+      246
+    ],
+    [
+      364,
+      368
+    ],
+    [
+      760,
+      764
+    ],
+    [
+      796,
+      797
+    ]
+  ],
+  "code_windows": [
+    {
+      "rva": 9698800,
+      "code_hex": "40534883ec20f6811c03000040488bd9751533d2e867b80500f30f10836c0100004883c4205bc3f30f10816c0100004883c4205bc3",
+      "sha256": "c6041e3c462f30e51305225c0eac515bd774186a18e4c1625065b9b05b64fdab"
+    },
+    {
+      "rva": 9698864,
+      "code_hex": "40534883ec20f6811c03000040488bd9750733d2e827b80500f30f10836c0100004883c4205be9f5d30300",
+      "sha256": "9ffc0404d75ecd6546a67d232c69485fbe892679f8d2dffd22c67c260da2279e"
+    },
+    {
+      "rva": 9949776,
+      "code_hex": "f30f114424084883ec780f2f05073f89010f28c80f87c20000000f2f05cfaa8901720d0f2f05ee0b8a010f869b000000488d05e5430b02c7442440000000004889442458488d0585ac5e004889442460488d8424800000004889442448488d055cc54c014889442450c744244402000000e85ac25e004c8bc04c8d0dd026ba01488d4424404889442438488d15cf509101488d054826ba014889442430488d0ddc26ba01488d056d26ba01c74424287b0000004889442420e8c3474d0185c07401ccf30f108c2480000000f30f590d510b8a01f30f2dc14883c478c30f2f05e1dc8901720d0f2f0580809d010f869b000000488d0523430b02c7442440000000004889442458488d05c3ab5e004889442460488d8424800000004889442448488d059ac44c014889442450c744244402000000e898c15e004c8bc04c8d0d0e26ba01488d4424404889442438488d150d509101488d058625ba014889442430488d0d7a26ba01488d05ab25ba01c7442428810000004889442420e801474d0185c07401ccf30f108c2480000000f30f2dc14883c478c3",
+      "sha256": "1e1d2fd618ad2de414b9e5461a338123c77971cbeb6ea5a4bfd24e1627c44a4a"
+    }
+  ],
+  "constants": [
+    {
+      "rva": 35721576,
+      "hex": "0000803f",
+      "f32": 1.0
+    },
+    {
+      "rva": 35749184,
+      "hex": "0000803e",
+      "f32": 0.25
+    },
+    {
+      "rva": 35774056,
+      "hex": "a4707d3f",
+      "f32": 0.9900000095367432
+    },
+    {
+      "rva": 35774068,
+      "hex": "0000c842",
+      "f32": 100.0
+    },
+    {
+      "rva": 35762196,
+      "hex": "0000c841",
+      "f32": 25.0
+    },
+    {
+      "rva": 37049276,
+      "hex": "0000c642",
+      "f32": 99.0
+    }
+  ],
+  "display_converter": {
+    "normalized_min": 0.25,
+    "normalized_max": 0.9900000095367432,
+    "normalized_scale": 100.0,
+    "absolute_min": 25.0,
+    "absolute_max": 99.0
+  },
+  "limits": [
+    "A valid cache supplies the Native float getter branch; an invalid cache is unavailable and is never recalculated by this reader.",
+    "Native integer conversion uses f32 multiplication where normalized, followed by CVTSS2SI; the game thread MXCSR rounding mode has not been observed.",
+    "Nearest-even candidates explicitly assume default rounding. A rounding-independent integer is emitted only when the exact conversion input is integral without any multiplication ambiguity.",
+    "Native integer getter emulation is not UI display acceptance. overall_raw in legacy attribute snapshots is not populated or overwritten.",
+    "All registered protected PLAYER byte intervals are physically excluded; no Potential or recomputation inputs are acquired."
+  ]
+}

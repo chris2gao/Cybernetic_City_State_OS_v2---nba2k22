@@ -1,0 +1,87 @@
+{
+  "evidence_id": "ev_8ec8288b5dde1b1d79249e16a2152b30b1ae1e870eca86822c91c701c2875b80",
+  "subject": null,
+  "provider": {
+    "id": "rea-artifact-comparison",
+    "name": "REA artifact comparison",
+    "version": "1"
+  },
+  "analysis_profile": null,
+  "predicate_type": "rea.artifact-comparison",
+  "operation": "compare_artifacts",
+  "parameters": {
+    "left_evidence_ids": [
+      "ev_90039f1e4d46fe7cfa8b289ab91f6e9ef9a8f8c7f4b94d24c6b4fedc46a5557a"
+    ],
+    "right_evidence_ids": [
+      "ev_e27fe6b453d17b0aee3ccf22f4a2f4f49c84ceaa7f0fd9b23df8a037a4e5e46d"
+    ]
+  },
+  "raw_result": null,
+  "normalized_result": {
+    "status": "changed",
+    "left_manifest_id": "agm_ed62ae0a7543e9d6f9af55db13b9bebbdd6a286906afd4bd8d7a95244d5f5e3f",
+    "right_manifest_id": "agm_481a365d46009c57e4107187801f127cd48012158b66c42a0799df6411499dae",
+    "summary": {
+      "unchanged": 259,
+      "added": 0,
+      "removed": 0,
+      "changed": 2,
+      "unknown": 0,
+      "contradiction": 0
+    },
+    "changes": [
+      {
+        "classification": "changed",
+        "logical_path": ".",
+        "dimensions": [
+          "content",
+          "size"
+        ],
+        "left_occurrence_id": "occ_9cd6b68bcc574f9bb8979eb8df4514399fbe84809b1a82771597f99360c80b58",
+        "right_occurrence_id": "occ_6f5e58268d302a1ab387734a4e13ad22bcb0ebbdb8752af1a3078de302014be3",
+        "left_artifact_id": "art_2818f0b5556be1eb93a4f2140fc4954197e5f8ca9a2b0570281cac1be207821c",
+        "right_artifact_id": "art_94da70b1d549b964a32d2707e23021e0680fee18c0dffe2c27e38cd4df9755ba",
+        "evidence_links": [
+          "ev_90039f1e4d46fe7cfa8b289ab91f6e9ef9a8f8c7f4b94d24c6b4fedc46a5557a",
+          "ev_e27fe6b453d17b0aee3ccf22f4a2f4f49c84ceaa7f0fd9b23df8a037a4e5e46d"
+        ]
+      },
+      {
+        "classification": "changed",
+        "logical_path": "scorebug_intro.SCNE",
+        "dimensions": [
+          "content",
+          "relations"
+        ],
+        "left_occurrence_id": "occ_50c9d4908cc4f720c13753aa4c79690b2709f31bb49e31e0b1d387b55198c8d2",
+        "right_occurrence_id": "occ_47db0208a20b19ea16aa9aae3879de14536ca7382eb414a1bb72c2693a942739",
+        "left_artifact_id": "art_99c2afa491b9b8514690617f2b2c08b4596adcab70aa0338ea801f6504774c99",
+        "right_artifact_id": "art_03b5d2bce503d5d5548fe723bc6bb5e533236b86b5d4ce80e856e9bb328ec80f",
+        "evidence_links": [
+          "ev_90039f1e4d46fe7cfa8b289ab91f6e9ef9a8f8c7f4b94d24c6b4fedc46a5557a",
+          "ev_e27fe6b453d17b0aee3ccf22f4a2f4f49c84ceaa7f0fd9b23df8a037a4e5e46d"
+        ]
+      }
+    ],
+    "integrity_mismatch_evidence_ids": [],
+    "limitations": [
+      "Left: ZIP inventory lists central-directory entries only. Non-entry bytes, including leading bytes before the first entry such as a self-extractor stub, an APK Signing Block before the central directory or a ZIP comment after it, are not occurrences.",
+      "Right: ZIP inventory lists central-directory entries only. Non-entry bytes, including leading bytes before the first entry such as a self-extractor stub, an APK Signing Block before the central directory or a ZIP comment after it, are not occurrences."
+    ]
+  },
+  "confidence": "derived",
+  "authority": "analyst-inference",
+  "environment": null,
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Left: ZIP inventory lists central-directory entries only. Non-entry bytes, including leading bytes before the first entry such as a self-extractor stub, an APK Signing Block before the central directory or a ZIP comment after it, are not occurrences.",
+    "Right: ZIP inventory lists central-directory entries only. Non-entry bytes, including leading bytes before the first entry such as a self-extractor stub, an APK Signing Block before the central directory or a ZIP comment after it, are not occurrences."
+  ],
+  "relationship_coverage": null,
+  "locations": [],
+  "evidence_links": [
+    "ev_90039f1e4d46fe7cfa8b289ab91f6e9ef9a8f8c7f4b94d24c6b4fedc46a5557a",
+    "ev_e27fe6b453d17b0aee3ccf22f4a2f4f49c84ceaa7f0fd9b23df8a037a4e5e46d"
+  ]
+}

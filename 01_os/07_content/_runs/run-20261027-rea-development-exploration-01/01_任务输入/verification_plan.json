@@ -1,7 +1,8 @@
 {
-  "schema_version": "citystate.managed_verification.plan.v1",
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/01_任务输入/task_packet.yml",
   "checks": [
-    {"id": "artifact-integrity-and-scope", "argv": ["python", "-X", "utf8", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_development/verify_delivery.py", "--integrity"]},
-    {"id": "evidence-and-document-contract", "argv": ["python", "-X", "utf8", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_development/verify_delivery.py", "--evidence"]}
+    {"id": "artifact-integrity-and-scope", "argv": ["@python", "-B", "-X", "utf8", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_development/verify_delivery.py", "--integrity"], "timeout_seconds": 60, "expected_exit_code": 0},
+    {"id": "evidence-and-document-contract", "argv": ["@python", "-B", "-X", "utf8", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_development/verify_delivery.py", "--evidence"], "timeout_seconds": 60, "expected_exit_code": 0}
   ]
 }
