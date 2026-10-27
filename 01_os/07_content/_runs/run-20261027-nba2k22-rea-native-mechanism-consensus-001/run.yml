@@ -2,7 +2,7 @@ task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
 run_id: run-20261027-nba2k22-rea-native-mechanism-consensus-001
 lifecycle: research_only
 stage: 02_信息收集与提炼
-phase_state: STAGE01_HUMAN_APPROVED_STAGE02_OPEN_FIXED_CODEX_REA_SOURCE_EVIDENCE_PARTIAL
+phase_state: STAGE01_HUMAN_APPROVED_STAGE02_STATIC_SOURCE_COVERAGE_AND_PARTIAL_FEASIBILITY_DRAFT
 human_request_date: '2026-10-27'
 priority: P0_ABOVE_NBA2K22_WORLD_DATA_STAGE02
 paused_parent_task_id: nba2k22-lifecycle-scene-consensus-01
@@ -51,6 +51,16 @@ required_outputs:
   - 02_信息收集与实证规划_v1.md
   - 02_evidence/01_Codex_REA暂停探索_固定来源核销与可继承能力矩阵_v1.md
   - 02_evidence/证据索引_v1.yml
+  - 02_evidence/00_挖掘目标与领域_v1.yml
+  - 02_evidence/02_旧游戏机制资料与REA来源交叉索引_v1.md
+  - 02_evidence/证据索引_v2.yml
+  - 02_evidence/信源清单_v1.yml
+  - 02_evidence/信源使用记录_v1.yml
+  - 02_evidence/边界记录_v1.yml
+  - 02_evidence/可行性判断_候选_v1.yml
+  - 03_Mechanism_Atlas数据契约_B0设计候选_v1.yml
+  - 04_M1_M2_M3现场证据合同与原生调用安全准入_B0候选_v1.md
+  - 05_阶段02收敛与阶段03结果B输入_候选_v1.md
 completion_state: STAGE01_FULL_A_APPROVED_STAGE02_EVIDENCE_GATHERING_NOT_ASSESSED
 task_packet:
   task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
@@ -129,7 +139,7 @@ stage01b_A_v1_RC01_Human_approval_ref: 01b_A_v1_RC01_Human正式版本确认与�
 stage01b_A_v1_RC01_approved_original_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
 stage01_completed_semantically: true
 stage02_research_plan_ref: 02_信息收集与实证规划_v1.md
-stage02_evidence_index_ref: 02_evidence/证据索引_v1.yml
+stage02_evidence_index_ref: 02_evidence/证据索引_v2.yml
 stage02_legacy_Codex_handoff_ref: 02_evidence/01_Codex_REA暂停探索_固定来源核销与可继承能力矩阵_v1.md
 stage02_legacy_Codex_source_branch: task/rea-development-exploration-01
 stage02_legacy_Codex_fixed_commit: b16e69727987f29bff5e2ee31ce82891102ab2d9
@@ -141,8 +151,25 @@ stage02_unproven_business_mechanisms: MYLEAGUE_BADGE_UPGRADE_THRESHOLD_COACH_APP
 stage02_evidence_verdict: NOT_ASSESSED
 stage02_current_activity: READ_ONLY_SOURCE_MAPPING_AND_CODEX_POC_FEASIBILITY_PLANNING
 stage02_Human_transition_scope: STAGE01_APPROVAL_AND_STAGE02_PLANNING_ONLY_NOT_GAME_OR_CODEX_DISPATCH
-stage02_next_planning_focus: RQ_REA_02_03_04_05_CORE_SOURCE_GAPS_AND_FEASIBILITY_CANDIDATE
+stage02_next_planning_focus: OS_STAGE02_EVIDENCE_COMPLETENESS_AND_BEARING_FEASIBILITY_GATE_REVIEW_THEN_STAGE03_RESULT_B_IF_Human_APPROVED
 stage02_Human_stage03_gate: NOT_REQUESTED
 stage02_native_runtime_and_function_call_authority: NOT_GRANTED
 stage02_Codex_execution_status: NOT_DISPATCHED_BY_THIS_RUN
 stage02_master_integration_status: NOT_REQUESTED
+
+stage02_source_reuse_scope: OLD_GAME_GUIDES_DEV07_COACHING_R05B_TRADE_R04A_BADGE_AND_REA_PARTIAL_EXPLORATION_FIXED_TO_MASTER_7742568_AND_CODEX_B16E697
+stage02_research_targets_ref: 02_evidence/00_挖掘目标与领域_v1.yml
+stage02_source_crosswalk_ref: 02_evidence/02_旧游戏机制资料与REA来源交叉索引_v1.md
+stage02_mechanism_atlas_B0_design_ref: 03_Mechanism_Atlas数据契约_B0设计候选_v1.yml
+stage02_M1_M2_M3_evidence_contract_ref: 04_M1_M2_M3现场证据合同与原生调用安全准入_B0候选_v1.md
+stage02_source_platforms_ref: 02_evidence/信源清单_v1.yml
+stage02_source_use_ref: 02_evidence/信源使用记录_v1.yml
+stage02_boundaries_ref: 02_evidence/边界记录_v1.yml
+stage02_feasibility_candidate_ref: 02_evidence/可行性判断_候选_v1.yml
+stage02_feasibility_candidate_judgment: PARTIALLY_SUPPORTED_TOOL_AND_RESEARCH_ROUTE_ONLY
+stage02_stage03_B_design_input_candidate_ref: 05_阶段02收敛与阶段03结果B输入_候选_v1.md
+stage02_legacy_guides_numeric_claims: GUIDE_HYPOTHESIS_ONLY_NOT_MYLEAGUE_PROVEN_THRESHOLD_OR_TRAINER_MULTIPLIER
+stage02_data_vs_behavior_vs_callability: L1_LAYOUT_L2_STATIC_FUNCTION_L3_GAME_APPLIED_L4_AUTHORIZED_POC_STRICTLY_SEPARATE
+stage02_nonindependent_sources: OLD_Codex_ONE_RUN_AND_ORIGINAL_GUIDE_REFERRALS_NOT_DOUBLE_COUNTED
+stage02_current_M1_M2_M3_game_experiments: NOT_PERFORMED
+stage02_next_required_Human_confirmation: STAGE02_OFFICIAL_GATE_ONLY_AFTER_OS_REVIEW_NO_NEW_BEARING_REQUIREMENT_Q_IDENTIFIED
