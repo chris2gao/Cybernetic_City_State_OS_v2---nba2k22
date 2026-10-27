@@ -1,0 +1,73 @@
+task_packet:
+  task_id: REA-DEVELOPMENT-EXPLORATION-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+  branch: task/rea-development-exploration-01
+  objective: >-
+    Explore REA development capabilities against project stages one through three;
+    investigate MyLEAGUE badge/growth conditions and match immersion/presentation,
+    including dormant candidates and information injection seams; deliver reusable
+    Codex usage documentation, actual bounded experiments, evidence and limitations.
+  source_evidence:
+    - Human current objective and corrected Overall UI observations
+    - docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md
+    - docs/development/OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md
+    - a3927fb150a213201e404cca043ced4f57409bd1:08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/DIFFICULT_ITEMS.md
+    - local prior REA evaluation-20261027 with pinned evidence IDs
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_development/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_DEVELOPMENT_PLAYBOOK_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+    - 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/01_任务输入/verification_plan.json
+  required_tests: [artifact-integrity-and-scope, evidence-and-document-contract]
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - production_db_or_save_changes
+    - game_memory_writes_or_native_function_calls
+    - ordinary_player_ability_potential_badge_mutation
+    - expose_protected_player_values
+    - restart_exhausted_full_exe_ghidra_analysis
+    - runtime_scheduler_activation
+    - secret_credential_access
+  runtime_scope:
+    target: E:/Games/NBA 2K22/NBA2K22.exe
+    sha256: 1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5
+    administrator_attach: authorized_by_Human
+    method: bounded_REA_Frida_read_only_scripts_and_offline_artifact_analysis
+    hooks: no_hooks_without_new_bounded_rationale_and_scope_record
+    player_data: public_field_projections_only_excluding_protected_intervals
+    scene_control: no_UI_or_simulation_actions
+    per_probe_read_cap_bytes: 1048576
+    per_probe_observation_cap_ms: 1500
+    injection_test: disposable_owned_fixture_only_no_game_writes
+  required_completion_pointer: 08_结论/COMPLETION.md
+  big_task: true
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    surface: Codex_desktop
+    model: runtime_selected_GPT_6_family_exact_variant_unexposed
+    reasoning_effort: inherited_runtime_setting_unexposed
+    mode: standard
+    routing_basis: Existing Human-selected owner; native research and durable engineering documentation fit current tool-capable session. No model switching or delegation.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_future_session
+    different_model_family: true
+    different_measurement_tool: true
