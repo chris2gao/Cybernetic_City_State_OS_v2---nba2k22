@@ -1,0 +1,454 @@
+schema_version: nba2k22.workflow.stage01b.requirement_result.v1
+status: A_V1_RC01_COMPLETE_CANDIDATE_PENDING_EXACT_HUMAN_APPROVAL_NOT_CODEX_DISPATCHED
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+stage01:
+  consensus_A0:
+    version: A0-v1
+    source_ref: 01a_需求共识模型_A0_v1_待Human版本确认.md
+    human_atomic_decisions: {Q1: B, Q2: A, Q3: A}
+    human_exact_version_confirmation: APPROVED_2026_10_27
+    exact_approval_ref: 01a_A0_v1_Human正式版本确认_20261027.md
+    original_blob_sha: 8bd15794ad0f8b9b06363e4a04b7f806c4c55acd
+  requirement_result_A:
+    version: A-v1-RC01
+    human_complete_A_confirmation: PENDING_EXACT_VERSION_CONFIRMATION
+    current_Human_decisions: {Q1: B, Q2: A, Q3: A, Q4: A, Q5: A, Q6: B}
+    01b_Human_decision_ref: 01b_Human裁决记录_Round01_Q4至Q6_20261027.md
+    objective: >-
+      Produce a bounded, evidence-based REA Native Mechanism Atlas and
+      three representative NBA2K22 offline MyLEAGUE mechanism dossiers
+      (badge thresholds/upgrade trigger, coach offense-defense strategy
+      settings, trade validation/commit state path), plus conditional
+      representative game-native function-call PoC specification and
+      evidence when separately authorized and technically feasible,
+      with an explicit safe-integration feasibility verdict for future
+      GM/Coach/Player external decision systems.
+    immutable_prior_decisions:
+      Q1_B: EVIDENCE_RESEARCH_PLUS_ONE_TO_TWO_CONDITIONALLY_AUTHORIZED_NATIVE_CALL_POC
+      Q2_A: BADGE_COACH_TRADE_REPRESENTATIVES_WITH_OPTIONAL_SIGNING_CONTROL
+      Q3_A: THREE_BOUNDED_EVIDENCE_DOSSIERS_AND_FUNCTION_REUSE_VERDICT_SUFFICIENT_TO_REQUEST_TASK_EXIT
+      Q4_A: ONE_BADGE_FULL_REPRESENTATIVE_WITH_SECOND_BADGE_LIGHT_REFERENCE
+      Q5_A: ONE_OFFENSE_OR_DEFENSE_SETTING_TRACED_UI_TO_NATIVE_TO_GAME_CONSUMPTION_WITH_OPPOSITE_SIDE_LIGHT_REFERENCE
+      Q6_B: COACH_SETTING_CALL_POC_FIRST_IF_SAFETY_PROVEN_AND_SEPARATELY_HUMAN_AUTHORIZED_TRADE_FUNCTION_ONLY_THEN
+      parent_world_data_stage02: PAUSED_NOT_ASSESSED
+      game_scope: PC_NBA2K22_OFFLINE_MYLEAGUE
+      owner: CODEX_ONLY_FOR_GAME_NATIVE_ENGINEERING_GPT_FOR_PLANNING
+    non_goals:
+      - fully_reverse_engineer_all_GAME_functions_or_every_badge
+      - produce_an_unbounded_executable_dump_or_entire_game_static_analysis
+      - implement_production_GM_COACH_PLAYER_native_function_execution_engine
+      - auto_replace_existing_approved_transaction_signing_draft_external_path
+      - auto_patch_game_memory_or_hook_without_new_Human_authorization
+      - bypass_online_protection_or_export_commercial_game_binaries
+      - create_undocumented_game_simulation_rules_as_factual_evidence
+    result_items:
+      - result_item_id: RES-REA-01
+        title: 游戏原生机制索引与来源证据目录_Mechanism_Atlas
+        kind: structured_document_and_machine_catalog
+        expected_end_state: >-
+          Versioned inspectable catalog of bounded targeted mechanics
+          with game-build and actual REA provider provenance, candidate
+          inputs, state outputs, function/data layout links, source
+          reliability, proof levels, negative evidence and unknowns.
+        components:
+          - mechanism_id_unique_and_game_build_sha
+          - actual_in_game_scene_and_UI_target_or_source_only_reason
+          - guide_claim_source_version_and_hypothesis
+          - native_object_type_pointer_layout_field_enum_and_constant_sources
+          - candidate_entry_function_and_callers_callees_xrefs_control_flow
+          - game_state_preconditions_branches_callbacks_cache_and_side_effects
+          - evidence_sources_readonly_samples_and_counterexamples
+          - capability_levels_L0_L5_and_runtime_code_confidence_separate
+          - native_reuse_candidate_and_external_simulation_fallback_rationale
+          - unresolved_gaps_cost_limits_next_action
+        relations:
+          - each_mechanism_has_evidence_ids_and_parent_guide_hypotheses
+          - each_function_candidate_may_support_multiple_mechanisms_but_no_automatic_safe_call_inheritance
+          - each_game_scene_and_sample_binds_build_save_game_stage_and_time
+        inputs_outputs:
+          - query_mechanic_badge_show_native_threshold_source_or_bounded_unknown
+          - query_trade_show_validation_vs_commit_nodes_and_side_effect_scope
+          - export_machine_catalog_plus_human_readable_mechanism_dossiers
+        completeness_rule: >-
+          Index must contain all three approved representative mechanism
+          records and a bounded optional other-mechanic lead directory;
+          all asserted facts have inspectable trace or are classified
+          hypothesis, rejection or unknown, not silently inferred.
+        known_facts:
+          - item: Human_Q2_A_names_the_three_representative_mechanism_families
+            evidence_status: HUMAN_DECISION
+          - item: Official_REA_supports_bounded_native_function_code_type_analysis
+            evidence_status: PINNED_OFFICIAL_TOOL_DOC_GENERAL_CAPABILITY_NOT_GAME_VALIDATION
+        unknowns:
+          - question_id: EVQ-REA-01
+            scope: feasibility_of_real_game_function_graph_recovery_on_Human_Windows_environment
+            closure_evidence: Codex_bounded_provider_run_log_and_source_artifacts_or_typed_unavailable_result
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-01, SC-REA-02]
+      - result_item_id: RES-REA-02
+        title: 徽章升级与阈值代表机制档案
+        kind: domain_mechanism_dossier
+        expected_end_state: >-
+          Evidence-grounded account for one Human-approved or representative
+          one chosen badge upgrade/check path, from in-game badge identity
+          to real original comparison/eligibility rules where they exist,
+          trigger timing, underlying source layout and readback of relevant
+          game state. A second badge is a light source/semantics contrast
+          only, not a second full closure obligation.
+        components:
+          - chosen_badge_identity_native_and_UI_name_and_edition
+          - source_fields_current_grade_input_attributes_and_tier_or_eligibility
+          - per_branch_threshold_comparison_if_discovered_with_units_and_conditions
+          - function_entry_call_path_and_invalidation_or_update_effects
+          - positive_and_negative_boundary_case_or_documented_inaccessibility
+          - player_identity_and_scene_scope
+          - strict_separation_of_Game_threshold_from_guide_hypothesis
+          - Q4_A_one_badge_deep_with_representative_selection_evidence
+          - second_badge_light_contrast_only_not_full_function_trace
+          - source_proved_that_threshold_exists_or_explicit_no_proof
+          - before_boundary_at_after_sample_when_safe_observable_or_bounded_reason
+        relations:
+          - candidate_badge_to_player_to_attribute_and_game_stage
+          - threshold_branch_to_function_source_and_observation_artifact
+        inputs_outputs:
+          - show_exact_native_comparison_and_UI_counterpart_if_proved
+          - otherwise_EXPLICIT_BOUNDED_UNKNOWN_with_attempt_budget_and_no_fabricated_threshold
+        completeness_rule: >-
+          Q4=A: the selected badge gets a deep, reproducible link between
+          UI/current level/native source, observed upgrade conditions,
+          input attributes and threshold only if real game evidence proves
+          such a condition, trigger and state transition; a second badge
+          needs only a bounded comparison source. A trace not closed must
+          state which exact branch/source is missing, what was attempted,
+          and what safe next evidence would close it. Never invent threshold
+          values or award a full L3 verdict for L1 source data alone.
+        known_facts:
+          - item: Human_prioritized_badge_upgrade_rules_not_new_custom_badge_algorithm
+            evidence_status: HUMAN_DECISION
+          - item: Human_Q4_A_exact_one_badge_deep_one_light_comparison
+            evidence_status: HUMAN_DECISION_2026_10_27
+        unknowns:
+          - question_id: EVQ-REA-02
+            scope: which_specific_badge_and_game_conditions_allow_threshold_discovery
+            closure_evidence: badge_UI_sample_native_function_comparison_and_negative_condition_or_documented_negative
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-03]
+      - result_item_id: RES-REA-03
+        title: 教练攻防设置和战术生效代表机制档案
+        kind: domain_mechanism_dossier
+        expected_end_state: >-
+          Q5=A: one accessible offense OR defense setting is the deep
+          representative to follow from UI parameter through original
+          coach/team native ownership and consuming function path to actual
+          game-side applied state where evidence permits. The opposite
+          side is a light comparison only. A persisted setting is never
+          represented as an already-effective on-court result without
+          distinct evidence.
+        components:
+          - named_offensive_or_defensive_UI_setting_and_valid_values
+          - coach_vs_team_ownership_and_actual_native_field_path
+          - setter_or_consumer_function_candidates_with_control_flow_evidence
+          - formation_playbook_POE_ACE_Freelance_only_where_directly_related
+          - cached_vs_applied_vs_displayed_value_states
+          - source_and_gameplay_observation_counterexamples
+          - role_permissions_and_real_game_scene_prerequisites
+          - Q5_A_one_deep_offense_or_defense_setting_selected_by_evidence
+          - opposite_side_light_native_or_UI_contrast
+          - persisted_vs_consumed_vs_applied_tristate_and_counterexample
+        relations:
+          - coach_staff_team_season_setting_and_application_context
+          - setting_change_or_UI_action_linked_to_native_derived_state
+        inputs_outputs:
+          - settings_to_native_to_function_path_with_risk_and_actual_known_effect
+          - unknown_application_boundary_preserved_if_no_gameplay_evidence
+        completeness_rule: >-
+          Q5=A: the selected offense OR defense setting has the strongest
+          available UI→native storage/owner→reader/consumer function→actual
+          application trace with source IDs and negative controls; the
+          other side only needs a light contrast. If actual effective
+          gameplay state cannot be safely observed, mark it unverified
+          instead of claiming a completed L3 application loop. Report
+          bounded obstacles and precise follow-up without making all
+          ACE/POE/Playbook/Freelance families part of this P0 exit gate.
+        known_facts:
+          - item: Q2_A_explicitly_prioritizes_coach_offense_defense_mechanism
+            evidence_status: HUMAN_DECISION
+          - item: Human_Q5_A_exact_one_setting_deep_opposite_side_light
+            evidence_status: HUMAN_DECISION_2026_10_27
+        unknowns:
+          - question_id: EVQ-REA-03
+            scope: relationship_between_actual_set_UI_and_internal_battle_tactics_application
+            closure_evidence: native_field_to_function_and_game_state_or_bounded_negative
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-04]
+      - result_item_id: RES-REA-04
+        title: 交易验证与生效路径原生函数可行性档案
+        kind: domain_mechanism_dossier
+        expected_end_state: >-
+          Separate transaction validation, execution/commit, bookkeeping
+          and UI-controller function candidates; identify legal inputs,
+          state dependencies, completeness of affected objects, safe-call
+          or noncallability conditions without claiming business use
+          from a raw address alone.
+        components:
+          - trade_proposal_teams_players_picks_and_salaries_context
+          - actual_native_validator_function_and_legal_business_reasons_if_identified
+          - trade_commit_vs_UI_command_vs_event_queue_trace
+          - exact_necessary_thread_this_ABI_object_lifecycle_safeguards
+          - linked_roster_salary_contract_pick_history_news_side_effect_inventory
+          - rollback_unavailable_partial_failure_and_global_invariant_risks
+          - signing_as_evidence_bounded_fallback_if_trade_untraceable
+          - FEASIBLE_INFEASIBLE_BOUNDED_UNKNOWN_verdict_with_support
+          - validation_function_distinct_from_state_commit_and_UI_dispatch
+          - side_effect_completeness_checks_roster_salary_contract_pick_events
+          - no_trade_PoC_required_for_first_PoC_under_Q6_B
+        relations:
+          - trade_preflight_to_commit_to_affected_entity_and_source
+          - function_candidate_to_callsite_and_runtime_scene
+        inputs_outputs:
+          - external_GM_trade_decision_to_game_native_execution_option_matrix
+          - reject_incomplete_transaction_as_success_even_if_one_field_changes
+        completeness_rule: >-
+          Trade case must reach a bounded and evidenced callability
+          conclusion including negative/unknown states and recommended
+          fallback; successful transaction invocation is not required
+          when conditions cannot be established or separately authorized.
+        known_facts:
+          - item: Q2_A_trade_validation_commit_is_first_business_transaction_mechanism
+            evidence_status: HUMAN_DECISION
+          - item: previously_approved_external_trade_path_is_not_automatically_replaced
+            evidence_status: PRIOR_HUMAN_REQUIREMENT_BOUNDARY
+        unknowns:
+          - question_id: EVQ-REA-04
+            scope: safe_invocable_game_thread_transaction_context_and_side_effect_completeness
+            closure_evidence: localized_call_graph_dependencies_and_real_game_pre_post_evidence_or_bounded_refutation
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-05]
+      - result_item_id: RES-REA-05
+        title: 受控原生函数调用代表PoC或安全否定结论
+        kind: conditional_engineering_poc_result
+        expected_end_state: >-
+          Q6=B: attempt one or two safe, technically justified game-native
+          call PoCs with the coach-setting candidate first, and trade
+          only if all its separate high-risk transaction prerequisites
+          and exact Human permission are met. If safety, valid game
+          context or permission is absent, report a documented blocked,
+          negative or bounded-unknown callability conclusion, with PoC
+          explicitly NOT_EXECUTED rather than a fictional success.
+        components:
+          - candidate_selection_matrix_and_precondition_validation
+          - build_digest_module_identity_function_and_ABI_class
+          - isolated_game_save_and_Human_exact_action_authorization_record
+          - pre_value_state_full_affected_entities_and_related_invariants
+          - bounded_call_attempt_logs_and_failure_cleanup_disposition
+          - fresh_game_Native_capture_and_DB_if_available_identity_readback
+          - exact_expected_actual_field_state_transaction_diff
+          - positive_negative_and_abort_cases
+          - evidence_grade_and_NO_POC_WHEN_UNSAFE_or_NOT_AUTHORIZED_status
+          - Q6_B_coach_first_then_trade_conditional_selection_reason
+          - coach_UI_native_saved_applied_side_effect_verification
+          - trade_cross_team_roster_contract_salary_pick_transaction_only_if_later_permitted
+          - explicitly_no_call_if_game_thread_ABI_this_lifetime_or_failure_handling_unproved
+          - no_silent_success_when_no_fresh_native_capture_or_game_state_reflects_old_value
+        relations:
+          - every_attempt_binds_authorization_action_source_session_save_and_time
+          - every_claimed_success_binds_new_capture_and_relevant_UI_when_available
+        inputs_outputs:
+          - qualified_attempt_result_1_to_2_with_precise_reused_game_function_evidence
+          - coach_first_target_or_clearly_evidenced_no_safe_coach_target
+          - or_NO_SAFE_CALLABLE_CANDIDATE_and_denial_rationale
+          - or_NOT_AUTHORIZED_NO_CALL_MADE_state
+        completeness_rule: >-
+          Q1=B and Q6=B: evaluate coach setting first and trade later;
+          up to two credible PoCs only when source signatures, ABI, this,
+          executing game thread, object lifetime, state dependencies,
+          cross-object side effects and Human's per-action permission
+          can be proven and controlled. Verification requires a new
+          post-attempt Native read and actual affected-state comparison.
+          Q3=A allows an evidence-backed negative or bounded unknown
+          as a research outcome, but a missing/unpermitted PoC is
+          NOT_EXECUTED, never successful. Task exit still requires
+          Human's explicit acceptance of the bounded result.
+        known_facts:
+          - item: Human_Q1_B_only_authorizes_research_goal_not_future_native_effectful_call
+            evidence_status: HUMAN_DECISION_AND_OS_ACTION_BOUNDARY
+          - item: Human_Q6_B_coach_first_trade_if_safe_next
+            evidence_status: HUMAN_DECISION_2026_10_27
+        unknowns:
+          - question_id: EVQ-REA-05
+            scope: which_game_native_function_can_be_called_safely_in_an_isolated_save
+            closure_evidence: exact_write_authorization_after_stage01_and_Codex_poc_preconditions_then_fresh_readback
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-06]
+      - result_item_id: RES-REA-06
+        title: 原生业务复用评估与外挂架构决策输入
+        kind: architecture_impact_evaluation
+        expected_end_state: >-
+          Recommendation per target mechanism between GAME_NATIVE_REUSE,
+          DIRECT_MEMORY_EDIT, EXTERNAL_SIMULATION, HYBRID or
+          UNDECIDED, with evidence for what original functions really
+          update versus what proposed external decision engines must
+          own, preserving prior Human architecture until later approved change.
+        components:
+          - GM_coach_player_scope_and_mechanic_ownership_matrix
+          - native_reuse_benefits_source_function_confidence_and_unknowns
+          - required_reader_codec_and_database_source_mapping
+          - call_interop_rollback_partial_transaction_and_consistency_protection
+          - external_simulation_fallback_and_comparison_with_native
+          - implementation_cost_risk_portability_and_game_build_change_limit
+          - bounded_followup_tasks_p0_exit_and_resume_world_data_stage02_conditions
+        relations:
+          - every_recommendation_links_to_RES_REA_02_03_04_05_evidence
+          - Human_only_may_change_older_approved_transaction_execution_path
+        inputs_outputs:
+          - decision_matrix_for_future_unified_native_IO_and_GM_persona_work
+          - proposed_specific_impact_on_existing_world_data_stage02_03_if_any
+        completeness_rule: >-
+          For all three representatives provide concrete reuse/alternative
+          recommendations with source grade and explicit negative cases.
+          Broad atlas items outside three only require targeted lead list.
+        known_facts:
+          - item: Human_sees_native_transaction_reuse_as_potential_future_improvement
+            evidence_status: HUMAN_RESEARCH_GOAL_NOT_FEASIBILITY_PROOF
+        unknowns:
+          - question_id: EVQ-REA-06
+            scope: whether_trade_or_coach_native_execution_beats_custom_external_simulation_in_this_game
+            closure_evidence: Coded_source_atlas+bounded_transaction_trace+authorized_PoC_if_safe
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-07]
+      - result_item_id: RES-REA-07
+        title: 完整逆向来源包与可恢复的Codex研究交接
+        kind: evidence_and_execution_report_package
+        expected_end_state: >-
+          Durable source index of exact REA/Git/game binary builds,
+          source guides, logs, function dossiers, xrefs, pseudocode
+          excerpts within legal bounds, raw sample refs, negative/timeout
+          cases, replication steps and limitation/cleanup receipts
+          for each investigation and attempted authorized PoC.
+        components:
+          - fixed_game_exe_build_hash_environment_REA_revision_provider_versions
+          - evidence_index_raw_artefact_paths_digests_and_source_authority
+          - per_mechanic_question_hypothesis_support_refutation_unknown
+          - bounded_static_search_and_live_observation_attempt_log
+          - time_and_resource_budget_timeout_and_stop_reason
+          - minimum_replayable_function_trace_and_scenario_sample
+          - full_mechanism_ID_linkage_and_coverage_gaps
+          - safety_isolation_cleanup_and_no_call_when_not_authorized
+          - Codex_developer_self_check_distinguished_from_independent_audit
+        relations:
+          - accepted_claims_map_to_Evidence_ID_and_exact_artifact
+          - time_specific_runtime_samples_map_to_exact_game_scene
+        inputs_outputs:
+          - retained_machine_manifest_human_summary_and_next_research_packets
+          - independent_reviewer_can_reproduce_or_mark_not_reproducible
+        completeness_rule: >-
+          Every required representative has both a readable dossier
+          and checkable retained evidence or a bounded negative/unknown
+          research log; summary-only claims are never independently verified.
+        known_facts:
+          - item: Earlier_REA_Overall_interim_report_has_evidence_leads_but_not_complete_trade_PoC
+            evidence_status: PRIOR_DELEGATED_ENGINEER_REPORT_NOT_INDEPENDENT_ACCEPTANCE
+        unknowns:
+          - question_id: EVQ-REA-07
+            scope: availability_of_existing_guide_sources_and_original_runtime_reproducible_logs
+            closure_evidence: Codex_content_inventory_and_manifest_with_exact_sources_and_access_limits
+            status: UNKNOWN
+        acceptance_criterion_ids: [SC-REA-01, SC-REA-08]
+    coverage:
+      - success_criterion_id: SC-REA-01
+        result_item_ids: [RES-REA-01, RES-REA-07]
+        assertion: three_mechanic_cases_have_indexed_Evidence_ID_source_version_and_unknown_status
+      - success_criterion_id: SC-REA-02
+        result_item_ids: [RES-REA-01]
+        assertion: atlas_sources_mechanisms_functions_side_effects_and_platform_versions_are_distinct
+      - success_criterion_id: SC-REA-03
+        result_item_ids: [RES-REA-02]
+        assertion: Q4_A_one_badge_deep_source_trigger_threshold_if_proven_plus_second_light_comparison_or_bounded_negative
+      - success_criterion_id: SC-REA-04
+        result_item_ids: [RES-REA-03]
+        assertion: Q5_A_one_coach_offense_or_defense_deep_UI_native_consumer_actual_effect_or_explicit_gap_plus_opposite_light_control
+      - success_criterion_id: SC-REA-05
+        result_item_ids: [RES-REA-04]
+        assertion: native_trade_validator_vs_commit_and_effects_are_distinguished_and_callability_evaluated
+      - success_criterion_id: SC-REA-06
+        result_item_ids: [RES-REA-05]
+        assertion: Q6_B_coach_first_then_trade_optional_one_to_two_conditional_separately_authorized_calls_fresh_postread_or_explicit_NOT_EXECUTED
+      - success_criterion_id: SC-REA-07
+        result_item_ids: [RES-REA-06]
+        assertion: external_GM_decision_plus_native_execution_tradeoff_compared_and_prior_A_not_overwritten
+      - success_criterion_id: SC-REA-08
+        result_item_ids: [RES-REA-07]
+        assertion: negative_timeout_and_cleanup_records_enable_independent_review
+    dependencies_and_Human_gates:
+      - exact_Human_A0_v1_confirmation_APPROVED_2026_10_27
+      - Q4_A_one_badge_deep_decided_Human_2026_10_27
+      - Q5_A_one_coach_setting_deep_decided_Human_2026_10_27
+      - Q6_B_coach_call_PoC_first_decided_Human_2026_10_27
+      - final_01b_A_version_Human_exact_confirmation
+      - later_approved_Codex_real_environment_and_native_effectful_call_authorizations
+    p0_exit_gate_candidate: >-
+      Q3=A: three representative mechanism dossiers with traceable source
+      evidence at their available verified level, clear specific negative
+      or bounded unknown explanations where full execution cannot be
+      observed, and a trade-native validator/commit callability verdict
+      of FEASIBLE/INFEASIBLE/BOUNDED_UNKNOWN. Q4=A one badge deep with
+      second comparison only; Q5=A one coach setting deep with other
+      side light; Q6=B coach native call is first PoC candidate, trade
+      only secondary if independently safe and authorized. Keep raw
+      evidence, timeouts, contradictory observations, side-effects,
+      fallback system architectures and remaining research roadmap.
+      Any PoC not run is declared NOT_EXECUTED and not L4. The P0
+      research is eligible for Human acceptance and resumption of
+      the paused world-data Stage02 only after independent evidence
+      limitations and residual risk are visible, not automatically
+      upon Codex self-report.
+    bounded_result_rules:
+      representative_badge_selection:
+        choose_by: most_observable_real_MyLEAGUE_UI_native_event_and_negative_boundary_in_the_test_build
+        full_case_count: 1
+        second_case: light_contrast_lead_not_required_to_reach_same_depth
+        badge_threshold_rule: only_claim_numeric_threshold_when_game_native_branch_or_real_original_table_and_boundary_prove_it
+        fallback_when_no_upgrade_event: report_data_layout_and_branch_hypothesis_with_inaccessible_event_reasons_never_invent_upgrade
+      coach_mechanism_selection:
+        choose_by: one_of_offense_or_defense_with_observable_setting_and_original_consumption_path
+        full_case_count: 1
+        opposite_side: bounded_comparison_not_second_full_trace
+        evidence_states: [UI_DISPLAY, NATIVE_PERSISTED, CONSUMER_CODE_SEEN, GAME_APPLIED_OBSERVED]
+        disallow: UI_PERSISTED_AUTO_EQUALS_GAME_APPLIED
+      conditional_PoC:
+        order: [COACH_SETTING_FIRST, TRADE_SECOND_ONLY_IF_PROVEN_AND_SEPARATELY_AUTHORIZED]
+        target_count_max: 2
+        minimum_count_if_no_safe_target_or_authorization: 0_WITH_EXPLICIT_NOT_EXECUTED
+        concrete_authorization_fields: [game_build_sha, offline_test_save_id, game_scene, target_function, target_object, exact_intended_action, affected_fields, permitted_time, failure_stop_and_recovery]
+        prereq_checks: [ABI, this_pointer, game_thread, object_lifetime, native_preconditions, dependent_state, scope_and_protection, failure_handling]
+        required_result: new_native_capture_plus_game_observable_affected_entity_consistency
+        stop_on: [unverified_call_context, unbounded_side_effect, missing_authorization, invalid_test_save, protected_online_context, unknown_failure_recovery, irreversible_risk]
+      atlas_provenance:
+        source_classes: [GAME_GUIDE_HYPOTHESIS, REA_STATIC_PATH, REALTIME_READ_OBSERVATION, NATIVE_FUNCTION_EFFECT_AUTHORIZED, HUMAN_UI_CROSSCHECK, INDEPENDENT_REVIEW]
+        proof_level_definitions: L0_TO_L5_AS_APPROVED_IN_A0_V1
+        code_address_reproducibility: require_game_EXE_hash_REA_and_native_provider_revision_and_RVA_not_unqualified_address
+        unsupported_claim_status: UNKNOWN_NOT_ACCEPTED_AS_FACT
+      evidence_budget:
+        default_method: bounded_local_mechanism_search_by_real_page_field_or_observable_transition
+        banned_shortcut: unbounded_whole_EXE_ghidra_provider_timeout_reruns_without_new_hypothesis_or_resource_budget
+        research_failure: retain_errors_bounds_and_counterexamples_without_falsely_marking_criterion_pass
+      stage_and_roles:
+        Human: approve_A_v1_exact_version_and_future_game_action_authorization_and_P0_exit
+        GPT: requirement_architecture_roadmap_Codex_task_decomposition_and_scope_review_only
+        Codex: future_primary_reverse_engineering_runtime_observation_call_PoC_implementation_and_raw_artifacts
+        REA: reverse_engineering_tool_source_not_itself_a_safe_game_business_executor
+        paused_world_data: remains_NOT_ASSESSED_until_Human_accepts_this_P0_task_exit
+    unapproved_extensions:
+      - production_transaction_and_signing_native_engine_integration
+      - mass_reverse_engineering_all_coach_options_and_all_badges
+      - replacing_existing_approved_external_trade_draft_signing_path_without_a_new_Human_change_decision
+      - automatically_authorizing_live_attach_Hook_or_native_calls
+      - claiming_reported_Overall_read_equals_ability_to_call_or_recompute_game_mechanics
+    exact_version_Human_review:
+      candidate: A-v1-RC01
+      source_baseline: A-v0_blob_6912e1915f8902439ccc7095c5a6cc898061fa58
+      approved_consensus: A0-v1_blob_8bd15794ad0f8b9b06363e4a04b7f806c4c55acd
+      Human_atomic_decisions: [Q1_B, Q2_A, Q3_A, Q4_A, Q5_A, Q6_B]
+      result_items_expected: 7
+      acceptance_criteria_expected: 8
+      Human_approval_status: PENDING_EXACT_VERSION_CONFIRMATION

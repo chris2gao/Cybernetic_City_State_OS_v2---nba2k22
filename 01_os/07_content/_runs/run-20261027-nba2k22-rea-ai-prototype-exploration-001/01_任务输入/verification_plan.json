@@ -1,0 +1,9 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001/01_任务输入/task_packet.yml",
+  "checks": [
+    {"id":"semantic-tests","argv":["@python","-B","-X","utf8","-m","unittest","discover","-s","08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/tests","-v"],"timeout_seconds":90,"expected_exit_code":0},
+    {"id":"offline-cli-demo","argv":["@python","-B","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/cli.py","demo","--verify"],"timeout_seconds":60,"expected_exit_code":0},
+    {"id":"evidence-contract","argv":["@python","-B","-X","utf8","08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/verify_evidence.py"],"timeout_seconds":60,"expected_exit_code":0}
+  ]
+}

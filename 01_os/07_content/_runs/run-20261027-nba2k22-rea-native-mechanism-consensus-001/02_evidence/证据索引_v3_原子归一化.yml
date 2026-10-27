@@ -1,0 +1,468 @@
+schema_version: nba2k22.rea.stage02.atomic_evidence_index.v3
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+date: '2026-10-27'
+status: NORMALIZED_ATOMIC_SOURCE_CLAIMS_FOR_HUMAN_STAGE02_GATE_REVIEW
+approved_A: A-v1-RC01
+original_A_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+fixed_codex_source: b16e69727987f29bff5e2ee31ce82891102ab2d9
+source_catalog_ref: 02_evidence/信源清单_v2.yml
+evidence_version: v3
+independence_policy: same_Codex_run_or_legacy_project_guide_cannot_count_twice_as_independent_game_fact
+evidence:
+  - evidence_id: E-REA02-101
+    research_question_ids: [RQ-REA-07]
+    主张: "The interrupted Codex handoff exists as a Git-pinned source document and explicitly reports unfinished work"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/08_结论/PLANNING_HANDOFF.md"
+        source_blob_or_date: "9c3dbc11ee5268a3e4e4a9ed28dcdd5a2a6e1376"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 4
+    可信度理由: "fixed planning handoff exists, not a completed reverse engineering task"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "fixed planning handoff exists, not a completed reverse engineering task"
+    与A的关系:
+      supports_success_criteria: [SC-REA-08]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "The interrupted Codex handoff exists as a Git-pinned source document and explicitly reports unfinished work"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-102
+    research_question_ids: [RQ-REA-07]
+    主张: "The paused source manifest declares exactly 52 evidence file entries"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/SOURCE_MANIFEST.json"
+        source_blob_or_date: "c26a28615f5b87544088a3f9716eedf6fbdde897"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 4
+    可信度理由: "manifest count only, full set not independently rehashed"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "manifest count only, full set not independently rehashed"
+    与A的关系:
+      supports_success_criteria: [SC-REA-01]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "The paused source manifest declares exactly 52 evidence file entries"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-103
+    research_question_ids: [RQ-REA-01]
+    主张: "Archived game-process metadata findings list 13 native type definitions, not 13 live object instances"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/metadata-findings.json"
+        source_blob_or_date: "11cc8909b104067ee2cecdff08e88965469ba94f"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 3
+    可信度理由: "real game type definition observation claimed in one Codex run, no independent replay"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "real game type definition observation claimed in one Codex run, no independent replay"
+    与A的关系:
+      supports_success_criteria: [SC-REA-02]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Archived game-process metadata findings list 13 native type definitions, not 13 live object instances"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-104
+    research_question_ids: [RQ-REA-02]
+    主张: "Archived growth findings list nine typed definitions including FRANCHISE progression-related candidates"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-findings.json"
+        source_blob_or_date: "a799c013f7dbd86a76dde0d8b72c6627e9a5f181"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 3
+    可信度理由: "type names and candidate fields, not concrete threshold values"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "type names and candidate fields, not concrete threshold values"
+    与A的关系:
+      supports_success_criteria: [SC-REA-03]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Archived growth findings list nine typed definitions including FRANCHISE progression-related candidates"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-105
+    research_question_ids: [RQ-REA-02]
+    主张: "Growth evidence does not establish a live MyLEAGUE badge-level upgrade event or exact attribute predicate"
+    方向: 限制
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-evidence.json"
+        source_blob_or_date: "89345f04c77170dcb1d0d19900306f43b6851142"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 3
+    可信度理由: "absence within examined experiment, not proof threshold does not exist"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "absence within examined experiment, not proof threshold does not exist"
+    与A的关系:
+      supports_success_criteria: [SC-REA-03]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Growth evidence does not establish a live MyLEAGUE badge-level upgrade event or exact attribute predicate"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-106
+    research_question_ids: [RQ-REA-05]
+    主张: "Owned fixture reports 4096 controlled record write/read/restore cases with game_target false"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/bulk-fixture/bulk-fixture-results.json"
+        source_blob_or_date: "593e5e3740fb85f0fb9985e0d9875ee61bb2b423"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 4
+    可信度理由: "valid only for engineered owned test process, not game"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "valid only for engineered owned test process, not game"
+    与A的关系:
+      supports_success_criteria: [SC-REA-06]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Owned fixture reports 4096 controlled record write/read/restore cases with game_target false"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-107
+    research_question_ids: [RQ-REA-05]
+    主张: "Owned native ABI fixture reports 16 traced call events with game_target false"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/call-trace-fixture/call-trace-results.json"
+        source_blob_or_date: "290d40661d8a677664f77427c662e8a320f7081f"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 4
+    可信度理由: "tracing owned functions not game trade or coach calls"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "tracing owned functions not game trade or coach calls"
+    与A的关系:
+      supports_success_criteria: [SC-REA-06]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Owned native ABI fixture reports 16 traced call events with game_target false"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-108
+    research_question_ids: [RQ-REA-01]
+    主张: "Archived REA playbook reports four time-limited Ghidra whole EXE analyses failing by timeout"
+    方向: 限制
+    source_refs:
+      - source_id: SRC-REA-03
+        location: "08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_DEVELOPMENT_PLAYBOOK_V1.md"
+        source_blob_or_date: "aa2dda60421c59b8db37831cf271a46979a7324f"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: CODEX_ONE_RUN
+    信息可信度: 3
+    可信度理由: "specific prior provider strategy, not universal inability to analyze any function"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "specific prior provider strategy, not universal inability to analyze any function"
+    与A的关系:
+      supports_success_criteria: [SC-REA-02]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Archived REA playbook reports four time-limited Ghidra whole EXE analyses failing by timeout"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-109
+    research_question_ids: [RQ-REA-02]
+    主张: "R04A catalog labels 80 gameplay badges and 20 personality candidates, explicitly marked research not native badge dictionary"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-05
+        location: "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json"
+        source_blob_or_date: "f3902a8e3f80296a2d790b24a2b989216d18315f"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: LEGACY_BADGE_RESEARCH
+    信息可信度: 4
+    可信度理由: "catalog entries and caveat established, exact PC22 Native IDs not proven"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "catalog entries and caveat established, exact PC22 Native IDs not proven"
+    与A的关系:
+      supports_success_criteria: [SC-REA-03]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "R04A catalog labels 80 gameplay badges and 20 personality candidates, explicitly marked research not native badge dictionary"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-110
+    research_question_ids: [RQ-REA-03, RQ-REA-06]
+    主张: "Historical DEV07 coaching runbook reports controlled direct-memory setting changes and conditional restore"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-05
+        location: "08_Domain_Applications/Antigravity_GM_Engine/docs/40_COACHING_EXECUTION_RUNBOOK.md"
+        source_blob_or_date: "42eb6b1b276de95d4a6d986b7bb689169b5d6a42"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: LEGACY_DEV07_COACH
+    信息可信度: 3
+    可信度理由: "developer acceptance reports not equivalent native game setter/consumer calls"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "developer acceptance reports not equivalent native game setter/consumer calls"
+    与A的关系:
+      supports_success_criteria: [SC-REA-04, SC-REA-07]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Historical DEV07 coaching runbook reports controlled direct-memory setting changes and conditional restore"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-111
+    research_question_ids: [RQ-REA-04]
+    主张: "R05B historical trade catalog lists 16 researched menu candidates and many explicitly unverified PC22 effect flags"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-05
+        location: "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+        source_blob_or_date: "58769beb2fcf0026ea03588caf03a1a449f7e039"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: LEGACY_TRADE_RESEARCH
+    信息可信度: 4
+    可信度理由: "menu vocabulary source leads not original validator function"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "menu vocabulary source leads not original validator function"
+    与A的关系:
+      supports_success_criteria: [SC-REA-05]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "R05B historical trade catalog lists 16 researched menu candidates and many explicitly unverified PC22 effect flags"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-112
+    research_question_ids: [RQ-REA-04, RQ-REA-06]
+    主张: "R05B historical trade catalog lists 14 roster native layout entries and does not itself prove transaction commit completeness"
+    方向: 限制
+    source_refs:
+      - source_id: SRC-REA-05
+        location: "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json"
+        source_blob_or_date: "58769beb2fcf0026ea03588caf03a1a449f7e039"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: LEGACY_TRADE_RESEARCH
+    信息可信度: 4
+    可信度理由: "existing fields are candidate side effects, not full original trade side-effect set"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "existing fields are candidate side effects, not full original trade side-effect set"
+    与A的关系:
+      supports_success_criteria: [SC-REA-05, SC-REA-07]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "R05B historical trade catalog lists 14 roster native layout entries and does not itself prove transaction commit completeness"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-113
+    research_question_ids: [RQ-REA-02]
+    主张: "Older mentorship guide contains numerical trainer growth and badge acceleration claims not verified by Codex growth type reads"
+    方向: 未决
+    source_refs:
+      - source_id: SRC-REA-05
+        location: "08_Domain_Applications/Antigravity_GM_Engine/docs/12_NATIVE_MENTORSHIP_AND_STAFF_GUIDE.md"
+        source_blob_or_date: "ff8a8b25e86fe5e5fd6fd31f92d5d18d6e4e4ce3"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: LEGACY_MENTOR_GUIDE
+    信息可信度: 4
+    可信度理由: "claim existence verified, numeric game truth not validated; numbers cannot be imported as constants"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "claim existence verified, numeric game truth not validated; numbers cannot be imported as constants"
+    与A的关系:
+      supports_success_criteria: [SC-REA-03]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Older mentorship guide contains numerical trainer growth and badge acceleration claims not verified by Codex growth type reads"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-114
+    research_question_ids: [RQ-REA-03]
+    主张: "2K's 2021-09-08 announcement explicitly scopes Conditional Coaching and MySTAFF details to PS5/Xbox Series MyNBA"
+    方向: 限制
+    source_refs:
+      - source_id: SRC-REA-09
+        location: "https://newsroom.2k.com/news/nbar-2k22-adds-new-features-to-mynba-for-playstation-5-and-xbox-series-xs-consoles"
+        source_blob_or_date: "WEB_2021_09_08"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: 2K_OFFICIAL_NEXT_GEN
+    信息可信度: 5
+    可信度理由: "official statement has clear new-generation scope; does not show absence/presence on PC22"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "official statement has clear new-generation scope; does not show absence/presence on PC22"
+    与A的关系:
+      supports_success_criteria: [SC-REA-04]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Verify PC22 mode independently; do not replicate new-gen Conditional Coaching"
+    事实与推断:
+      读到的事实: "2K's 2021-09-08 announcement explicitly scopes Conditional Coaching and MySTAFF details to PS5/Xbox Series MyNBA"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-115
+    research_question_ids: [RQ-REA-02]
+    主张: "Operation Sports April 2021 players described a MyLEAGUE mentorship page as a badge progress observation lead"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-10
+        location: "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/908209-can-myleague-players-earn-new-badges"
+        source_blob_or_date: "WEB_2021_04_01_TO_05"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: OLD_PLAYER_FORUM_2021
+    信息可信度: 3
+    可信度理由: "pre-2K22 historical community anecdote, not PC22 capability proof"
+    时间适用性: HISTORICAL_VERSION_SPECIFIC
+    适用边界: "pre-2K22 historical community anecdote, not PC22 capability proof"
+    与A的关系:
+      supports_success_criteria: [SC-REA-03]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "Operation Sports April 2021 players described a MyLEAGUE mentorship page as a badge progress observation lead"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-116
+    research_question_ids: [RQ-REA-04]
+    主张: "2K22 sliders guide lists named trade restrictions and trade override as game-setting research leads"
+    方向: 支持
+    source_refs:
+      - source_id: SRC-REA-11
+        location: "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes"
+        source_blob_or_date: "WEB_2K22_SLIDER_ARTICLE"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: COMMUNITY_SLIDERS_2K22
+    信息可信度: 3
+    可信度理由: "secondary guide, mixed current/next-gen; not in-game validator trace"
+    时间适用性: FIXED_SOURCE_SCOPE_ONLY
+    适用边界: "secondary guide, mixed current/next-gen; not in-game validator trace"
+    与A的关系:
+      supports_success_criteria: [SC-REA-05]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "2K22 sliders guide lists named trade restrictions and trade override as game-setting research leads"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+  - evidence_id: E-REA02-117
+    research_question_ids: [RQ-REA-03]
+    主张: "A December 2020 coach slider forum discussion distinguishes MyLEAGUE Gameplan from roster-editor setting availability"
+    方向: 限制
+    source_refs:
+      - source_id: SRC-REA-12
+        location: "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/904316-where-is-the-help-defense-coaching-slider"
+        source_blob_or_date: "WEB_2020_12"
+        original_source: true
+    独立性:
+      independent_source_count: 1
+      shared_origin: OLD_PLAYER_FORUM_2020
+    信息可信度: 3
+    可信度理由: "pre-2K22 version; only design a scope test, no PC22 true value assertion"
+    时间适用性: HISTORICAL_VERSION_SPECIFIC
+    适用边界: "pre-2K22 version; only design a scope test, no PC22 true value assertion"
+    与A的关系:
+      supports_success_criteria: [SC-REA-04]
+      tests_assumptions: [EVIDENCE_BASED_NATIVE_DISCOVERY_WITH_SEPARATE_SAFE_CALL_GATE]
+      resolves_ambiguities: []
+    对B的约束: "Preserve version/source/mode maturity; do not upgrade from document, typed layout or fixture to PC22 game-executed mechanics"
+    对测试的潜在线索: "Use this source as one candidate lead or negative test boundary"
+    事实与推断:
+      读到的事实: "A December 2020 coach slider forum discussion distinguishes MyLEAGUE Gameplan from roster-editor setting availability"
+      合并方推断: "Source-derived proposition only within its precise limits; actual PC22 MyLEAGUE behavior unknown until same-mode live evidence"
+unresolved_core:
+  - id: GAP-REA02-01
+    RQ: RQ-REA-02
+    claim: MyLEAGUE badge natural upgrade actual instance, trigger, numeric threshold
+    status: SINGLE_ORIGIN_TYPE_DEFINITION_ONLY_NOT_VERIFIED
+    handoff: FUTURE_CODEX_AUTHORIZED_SAME_MODE_EVENT
+  - id: GAP-REA02-02
+    RQ: RQ-REA-03
+    claim: coach parameter original consumer, game-applied effect and safe setter
+    status: HISTORIC_MEMORY_WRITES_DO_NOT_ESTABLISH_NATIVE_CALL
+    handoff: FUTURE_CODEX_GAME_CONSUMER_EVIDENCE
+  - id: GAP-REA02-03
+    RQ: RQ-REA-04
+    claim: trade legality validator, commit, complete side-effects
+    status: ORIGINAL_FUNCTION_PATH_NOT_OBSERVED
+    handoff: FUTURE_CODEX_CONTROL_FLOW_TRACE
+  - id: GAP-REA02-04
+    RQ: RQ-REA-05
+    claim: exact ABI/thread/this and safe externally invoked game function
+    status: NOT_PROVED_AND_NOT_HUMAN_AUTHORIZED
+    handoff: FUTURE_CODEX_CANDIDATE_THEN_HUMAN_EXACT_ACTION_PERMISSION
+  - id: GAP-REA02-05
+    RQ: RQ-REA-07
+    claim: independent same-mode runtime acceptance of archive claims
+    status: PRIOR_CODEX_SINGLE_ORIGIN
+    handoff: FUTURE_INDEPENDENT_REPLAY_OR_HUMAN_SCOPE_DISPOSITION
+review_note: >-
+  These atomic evidence records do not turn public guide posts into
+  first-hand code proof. Negative search or unobserved source is never
+  proof that a native game feature does not exist. Candidate feasibility
+  remains partially_supported and the formal stage02 verdict awaits
+  Human stage gate.
