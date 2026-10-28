@@ -1,0 +1,246 @@
+schema_version: os_prms.design_acceptance.v1_RC01_candidate
+source_model: OS_PRMS_设计B_v1_RC01_待Human审核_20261028.md
+status: DESIGN_CANDIDATE_NOT_EXECUTED
+human_approved_requirement_A: OS-PRMS-A-v1-RC02
+human_approved_design_B: false
+validation_claims: []
+scenarios:
+- id: B-01
+  type: static_plus_integration
+  covers:
+  - RES-017
+  - RES-019
+  name: G1 full within-scope discovery
+  expected: catalog exposes canonical refs, source commits, published vs activated states, and unregistered/missing
+    counts
+  evidence: NOT_RUN
+- id: B-02
+  type: integration
+  covers:
+  - RES-017
+  - RES-019
+  name: NBA draft PR18 domain classification
+  expected: P00-P12 classified without claiming thirteen published mechanisms, P04/P09 on-demand
+  evidence: NOT_RUN
+- id: B-03
+  type: integration_negative
+  covers:
+  - RES-017
+  - RES-019
+  name: Empty Maths domain
+  expected: NOT_POPULATED and no NBA source injected
+  evidence: NOT_RUN
+- id: B-04
+  type: integration_negative
+  covers:
+  - RES-020
+  name: Human rejects optional G2
+  expected: G2 body not loaded, dependent task blocked or restricted
+  evidence: NOT_RUN
+- id: B-05
+  type: integration
+  covers:
+  - RES-010
+  - RES-011
+  - RES-020
+  name: Mandatory B0 independent of optional memory
+  expected: all mandatory safety and boot material loaded and checked
+  evidence: NOT_RUN
+- id: B-06
+  type: new_session
+  covers:
+  - RES-001
+  - RES-002
+  - RES-003
+  - RES-010
+  - RES-011
+  - RES-017
+  - RES-020
+  name: Multi-window T1 series recovery
+  expected: Stable role ID, role template version and assignment preserved; exact Human decisions and open items
+    recovered with source hashes
+  evidence: NOT_RUN
+- id: B-07
+  type: integration_negative
+  covers:
+  - RES-006
+  - RES-017
+  name: Terminal vs unknown tasks
+  expected: unknown discoverable, terminal hidden only with valid closure evidence
+  evidence: NOT_RUN
+- id: B-08
+  type: integration
+  covers:
+  - RES-018
+  - RES-019
+  name: Incremental stale propagation
+  expected: affected cards stale, unrelated cards stay valid, source refs retained
+  evidence: NOT_RUN
+- id: B-09
+  type: unit
+  covers:
+  - RES-010
+  - RES-019
+  name: Filtered no-hit query
+  expected: reports scope and excluded counts, no whole-repository absence claim
+  evidence: NOT_RUN
+- id: B-10
+  type: github_isolated_state_ref
+  covers:
+  - RES-004
+  - RES-016
+  name: Concurrent owner epoch update
+  expected: stale expected version rejected, remote readback validates winner
+  evidence: NOT_RUN
+- id: B-11
+  type: github_security_negative
+  covers:
+  - RES-004
+  - RES-016
+  name: Stale direct writer bypass attempt
+  expected: enforcement evidence or explicit FENCING_NOT_ENFORCEABLE blocking result
+  evidence: NOT_RUN
+- id: B-12
+  type: github_fault_injection
+  covers:
+  - RES-005
+  - RES-006
+  - RES-007
+  - RES-012
+  name: Interrupted staged commit
+  expected: previous valid CURRENT remains visible, partial artifacts not promoted
+  evidence: NOT_RUN
+- id: B-13
+  type: integration
+  covers:
+  - RES-015
+  name: Full memory content copy
+  expected: item by item copies match fixed source and target CURRENT evolves separately
+  evidence: NOT_RUN
+- id: B-14
+  type: governance_negative
+  covers:
+  - RES-008
+  - RES-009
+  - RES-013
+  name: Unapproved experience promotion
+  expected: candidate stays unpublished and action rights unchanged
+  evidence: NOT_RUN
+- id: B-15
+  type: cross_repo_integration
+  covers:
+  - RES-013
+  - RES-017
+  name: Core to domain upgrade
+  expected: domain-owned 09 untouched, exact inherited core commit and conflicts reported
+  evidence: NOT_RUN
+- id: B-16
+  type: real_new_window
+  covers:
+  - RES-010
+  - RES-011
+  - RES-018
+  - RES-020
+  name: GPT and Codex context recovery comparison
+  expected: Human decisions, omissions, sources, budget and resume actions compared to frozen ground truth
+  evidence: NOT_RUN
+- id: B-17
+  type: independent_review_negative
+  covers:
+  - RES-009
+  - RES-014
+  name: Reviewer context segregation
+  expected: default no executor narrative injection, open-read residual risk disclosed
+  evidence: NOT_RUN
+- id: B-18
+  type: optional_tool_negative
+  covers:
+  - RES-009
+  - RES-020
+  name: Unverified REA reference
+  expected: not available for execution merely because tool is listed in a catalog
+  evidence: NOT_RUN
+- id: B-19
+  type: source_and_run_reconciliation
+  covers:
+  - RES-005
+  - RES-007
+  - RES-012
+  name: Human approval recorded while run pointer stale
+  expected: APPROVED_BUT_POINTER_STALE until real state file write and remote readback succeed
+  evidence: NOT_RUN
+- id: B-20
+  type: cross_repo_security
+  covers:
+  - RES-005
+  - RES-017
+  name: Core mutable memory is not distributed
+  expected: state not contained in core master merge tree and not propagated into NBA/Maths code branches
+  evidence: NOT_RUN
+- id: B-21
+  type: authenticated_session_negative
+  covers:
+  - RES-004
+  - RES-016
+  name: Session claimed by self-declared model
+  expected: Untrusted session claim or copied token cannot gain active owner write status
+  evidence: NOT_RUN
+- id: B-22
+  type: github_ref_concurrency
+  covers:
+  - RES-005
+  - RES-007
+  name: Two competing fast-forward children
+  expected: Exactly one ref advance accepted and no successful claim for the losing commit
+  evidence: NOT_RUN
+- id: B-23
+  type: github_readback_unknown
+  covers:
+  - RES-006
+  - RES-007
+  - RES-012
+  name: Timeout after possible ref update
+  expected: Read operation_id and remote ref to resolve prior effect; do not blindly append duplicate event
+  evidence: NOT_RUN
+- id: B-24
+  type: core_domain_ownership
+  covers:
+  - RES-013
+  - RES-017
+  name: Dedicated role state not in Core merge tree
+  expected: Core/master tree and per-domain merge updates never include mutable state or private credentials
+  evidence: NOT_RUN
+- id: B-25
+  type: state_repo_permissions
+  covers:
+  - RES-004
+  - RES-005
+  - RES-016
+  name: Read-only model credential direct-write bypass
+  expected: Direct REST and Git ref mutations by stale/read-only credential denied, privileged-admin limitation
+    disclosed
+  evidence: NOT_RUN
+- id: B-26
+  type: full_copy_completeness
+  covers:
+  - RES-003
+  - RES-015
+  name: Copy full source bytes not only references
+  expected: All source byte digests equal target item digests; permissions/session claims not transferred
+  evidence: NOT_RUN
+- id: B-27
+  type: handoff_bootstrap
+  covers:
+  - RES-011
+  - RES-020
+  name: New window missing durable event
+  expected: Recovery reports provenance gap; does not hallucinate unsaved chat/hidden previous context
+  evidence: NOT_RUN
+- id: B-28
+  type: domain_index_stale
+  covers:
+  - RES-018
+  - RES-019
+  name: Draft PR18 source changes after catalog freeze
+  expected: Affected G2 candidate entries stale, other entries preserved, all actual exclusions counted
+  evidence: NOT_RUN
