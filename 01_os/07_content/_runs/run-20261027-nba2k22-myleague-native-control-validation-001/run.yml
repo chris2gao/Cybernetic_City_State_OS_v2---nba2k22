@@ -1,0 +1,55 @@
+task_id: NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-VALIDATION-01
+date: '2026-10-27'
+task_class: EXPLORATORY_NATIVE_FUNCTIONAL_VALIDATION
+state: PREPARED_FOR_LOCAL_CODEX_PICKUP_NO_GAME_EXECUTION
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+branch: task/nba2k22-myleague-native-control-validation-20261027
+source_PR: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/14
+source_frozen_commit: 2bdda79c6513f463252d7d01834218edb590eec9
+source_discovery_notes_blob: 41c897c3a503770f6463d0624b9929a430b40787
+source_next_test_handoff_blob: 4667f21981b527d9c37af3d63e30add3e0efb792
+source_previous_live_success: [C1_COACH_DEFENSE_POE_14_TO_13, C4_ONE_FOR_ONE_PLAYER_TRADE]
+catalog_baseline:
+  total_actions: 61
+  native_bindings_and_layouts: 36
+  runtime_handler_types: 19
+  data_read_datasets: 12
+  fully_covered_data_read_datasets: 0
+  mature_action_entries: 3
+  recovered_call_logic_entries: 21
+  partially_bound_entries: 29
+  reference_or_bounded_search_miss_entries: 8
+source_status: PR14_DRAFT_NOT_MERGED_MASTER
+Human_scope_constraints:
+  decision_model_selects_exact_targets_assets_and_values: true
+  native_controller_executes_supplied_request_without_substitution: true
+  game_owns_original_legality_decisions: true
+  no_automatic_matchmaking_or_salary_search: true
+  no_duplicate_prior_trade_or_same_coach_setting_test: true
+  no_deep_behavioral_strategy_or_game_save_reload_study: true
+  next_phase_is_functional_testing: true
+required_task_file: 01_任务输入/CODEX_NATIVE_CONTROL_FUNCTIONAL_VALIDATION_v1.md
+priorities:
+  - READ_EXISTING_BOUND_SUBSETS_AND_CURRENT_PUBLIC_PROSPECTS
+  - ONE_LOW_IMPACT_NEW_COACH_FIELD_OR_TEAM_TRAINING_NATIVE_ACTION
+  - SCOUT_ASSIGN_EXACT_GM_REQUESTED_PROSPECT_UIDS
+  - CONDITIONAL_ONLY_SCOUT_TRIP_EXECUTION
+  - CONDITIONAL_ONLY_ACTIVE_DRAFT_PICK_NATIVE_SELECTION
+  - CONDITIONAL_ONLY_SPECIFIED_TRADE_PICKS_OR_MIXED_ASSETS
+explicitly_not_ready_for_live:
+  - SIGNING_OFFER_PROCESS_WITH_UNKNOWN_INIT
+  - PLAYER_EDITOR_PARENT_CHILD_COPY_REFRESH
+  - COMPLETE_PLAYBOOK_AND_ROTATION
+  - MENTOR_MANAGER_PARAMETERS
+  - WAIVE_EIGHT_ARGUMENT_FLAGS
+permissions:
+  documentation_and_isolated_test_code_development: ALLOWED
+  preflight_and_static_review: ALLOWED
+  new_real_game_attach_read_or_hook: REQUIRE_NEW_Human_SCOPED_BATCH_AUTHORIZATION
+  real_native_mutation_or_draft_scouting_transaction: REQUIRE_NEW_Human_SCOPED_BATCH_AUTHORIZATION
+  reuse_old_authorization: FORBIDDEN
+  master_merge: NOT_ALLOWED
+  actual_game_or_native_execution_in_this_planning_turn: NONE
+  CodeX_agent_auto_dispatched: false
+phase_gate: HUMAN_APPROVAL_OF_EXPERIMENT_BATCH_BEFORE_LIVE_TEST
+GitHub_issue: PENDING
