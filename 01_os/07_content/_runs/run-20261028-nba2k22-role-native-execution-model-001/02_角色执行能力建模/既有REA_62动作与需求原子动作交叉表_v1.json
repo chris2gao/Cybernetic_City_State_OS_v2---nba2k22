@@ -1,0 +1,1136 @@
+{
+  "schema": "nba2k22.native_execution_crosswalk.v1",
+  "source_requirement_file": "02_角色执行能力建模/三角色及世界控制_原子操作目录_v1.json",
+  "source_runtime_registry": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/data/action_registry.json",
+  "runtime_registry_action_count": 62,
+  "requirements_total": 183,
+  "manual_crosswalk_count": 50,
+  "unmapped_requirement_count": 134,
+  "warning": "Mapping a requirement to a native action with status PRIOR_LIVE_SUCCESS does not prove every value or target is verified. No new testing performed.",
+  "known_mappings": [
+    {
+      "capability_id": "GM.TRADE.EXECUTE_AGREED",
+      "rea_action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.TRADE.MULTI_PLAYER",
+      "rea_action_id": "TRADE_MULTI_PLAYER_PACKAGE",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.TRADE.PICK_ONLY",
+      "rea_action_id": "TRADE_PICKS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.TRADE.MIXED",
+      "rea_action_id": "TRADE_MIXED_ASSETS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.CONTRACT.FA_SIGN",
+      "rea_action_id": "SIGN_FREE_AGENT",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Private proposal init/enums/flags and status handling need static closure; no automatic wage generation"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.CONTRACT.EXTEND",
+      "rea_action_id": "RE_SIGN_PLAYER",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Extension signing type and eligible phase/counterparty status unresolved"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.CONTRACT.TEAM_OPTION",
+      "rea_action_id": "CONTRACT_OPTION_ACTION",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Need native option-marking setter before ProcessMarkedOptions; do not edit option memory directly"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.CONTRACT.PLAYER_OPTION",
+      "rea_action_id": "CONTRACT_OPTION_ACTION",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Need native option-marking setter before ProcessMarkedOptions; do not edit option memory directly"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.CONTRACT.WAIVE",
+      "rea_action_id": "RELEASE_WAIVE_PLAYER",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Eight-argument waiver service found; flags and public wrapper not closed; no guessed bypass"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.ROSTER.STARTER_SET",
+      "rea_action_id": "TEAM_SET_STARTERS",
+      "rea_status": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.ROSTER.ROSTER_SLOT_SWAP",
+      "rea_action_id": "TEAM_SET_ROSTER_ASSIGNMENT",
+      "rea_status": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.ROSTER.ROSTER_LEGALITY_READ",
+      "rea_action_id": "READ_TEAM_ROSTER_BASIC",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.PROSPECT_LIST",
+      "rea_action_id": "SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.PROSPECT_PROFILE",
+      "rea_action_id": "SCOUT_READ_PROSPECT_INFO",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.GOAL_REPLACE",
+      "rea_action_id": "SCOUT_SET_EXISTING_GOAL_TARGETS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.GOAL_APPEND",
+      "rea_action_id": "SCOUT_ASSIGN_TARGETS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.SCOUT_EXECUTE",
+      "rea_action_id": "SCOUT_EXECUTE_CURRENT_TRIP",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.SCOUT_PROGRESS",
+      "rea_action_id": "SCOUT_READ_PROGRESS_RAW",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.SCOUT.SCOUT_REPORT",
+      "rea_action_id": "SCOUT_READ_PROGRESS_REPORT",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.DRAFT.CURRENT_PICK_READ",
+      "rea_action_id": "READ_CURRENT_DRAFT_PICK",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.DRAFT.DRAFT_SPECIFIED",
+      "rea_action_id": "DRAFT_SELECT_PROSPECT",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.DRAFT.PICK_OWNER_READ",
+      "rea_action_id": "DRAFT_STAGE_REQUIRED_CONTEXT",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.STRATEGY.POE_O1",
+      "rea_action_id": "COACH_APPLY_OFFENSE_POE",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.STRATEGY.POE_D1",
+      "rea_action_id": "COACH_APPLY_DEFENSE_POE",
+      "rea_status": "PRIOR_LIVE_SUCCESS",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.STRATEGY.RUN_PLAY",
+      "rea_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.STRATEGY.ZONE_USAGE",
+      "rea_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.STRATEGY.BENCH_DEPTH",
+      "rea_action_id": "COACH_SET_ROTATION_POLICY",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.STRATEGY.BENCH_USE",
+      "rea_action_id": "COACH_SET_ROTATION_POLICY",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.PLAYBOOK.OPPONENT_PLAN_FIND",
+      "rea_action_id": "COACH_ENSURE_OPPONENT_GAMEPLAN",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.PLAYBOOK.OPPONENT_PLAN_EDIT",
+      "rea_action_id": "COACH_SET_GAMEPLAN",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Creating an opponent plan and applying a projection does not restore full persistent Gameplan commit"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.PLAYBOOK.PLAYBOOK_SELECT",
+      "rea_action_id": "COACH_REPLACE_PLAYBOOK",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.PLAYBOOK.BOOK_ADD",
+      "rea_action_id": "COACH_ADD_REPLACE_PLAY",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.PLAYBOOK.BOOK_REPLACE",
+      "rea_action_id": "COACH_ADD_REPLACE_PLAY",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.ROTATION.ROTATION_ORDER",
+      "rea_action_id": "TEAM_SET_MINUTES_ROTATION",
+      "rea_status": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "COACH.ROTATION.STARTING_FIVE",
+      "rea_action_id": "TEAM_SET_STARTERS",
+      "rea_status": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "TRAIN.TEAM_SCHEDULE",
+      "rea_action_id": "TRAIN_TEAM_SET_SCHEDULE",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "TRAIN.TEAM_INTENSITY",
+      "rea_action_id": "TRAIN_TEAM_SET_INTENSITY",
+      "rea_status": "CALL_LOGIC_RECOVERED",
+      "has_runtime_handler": true,
+      "unknowns": [],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "TRAIN.MENTOR_ASSIGN",
+      "rea_action_id": "TRAIN_PLAYER_MENTOR_ASSIGNMENT",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Manager/list/UID mapping and complete arguments unresolved"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.ATTR_SET",
+      "rea_action_id": "PLAYER_SET_ATTRIBUTE",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.TENDENCY_SET",
+      "rea_action_id": "PLAYER_SET_TENDENCY",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.BADGE_SET",
+      "rea_action_id": "PLAYER_SET_BADGE",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.PLAY_TYPE_1",
+      "rea_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.PLAY_TYPE_2",
+      "rea_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.PLAY_TYPE_3",
+      "rea_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.PLAY_TYPE_4",
+      "rea_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.PLAYER_VITALS",
+      "rea_action_id": "PLAYER_SET_EDITABLE_INFO",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "PLAYER.EDIT.INJURY_STATUS",
+      "rea_action_id": "PLAYER_SET_EDITABLE_INFO",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.STAFF.STAFF_ATTRIBUTE_SET",
+      "rea_action_id": "STAFF_SET_ATTRIBUTE",
+      "rea_status": "REFERENCE_ONLY",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Staff/Coach raw layouts exist but no qualified arbitrary staff-attribute native mutator is recovered"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.STAFF.HIRE",
+      "rea_action_id": "TEAM_MANAGE_STAFF",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Staff offer struct recovered; hire/fire lifecycle and full ABI incomplete"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    },
+    {
+      "capability_id": "GM.STAFF.FIRE",
+      "rea_action_id": "TEAM_MANAGE_STAFF",
+      "rea_status": "PARTIAL_BINDING",
+      "has_runtime_handler": false,
+      "unknowns": [
+        "Staff offer struct recovered; hire/fire lifecycle and full ABI incomplete"
+      ],
+      "notes": "静态动作ID对应仅供绑定成熟度参照；任何实机成功按具体实例另证。"
+    }
+  ],
+  "unmapped_requirements": [
+    {
+      "id": "GM.ROSTER.LIST_MOVE",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.BENCH_ASSIGN",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.POSITION_ASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.ROLE_ASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.G_LEAGUE_ASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.G_LEAGUE_RECALL",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.INACTIVE_SET",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.WAIVE",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.ROSTER.TEAM_ASSIGN_CONTRACT",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.TRADE.THREE_TEAM",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.TRADE.TRADE_BLOCK_ADD",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.TRADE.TRADE_BLOCK_REMOVE",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.TRADE.PICK_ASSIGNMENT",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.TRADE.FINDER_READ",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.TRADE.TRADE_HISTORY_READ",
+      "status": "READ_RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.RE_SIGN",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.CONTRACT_OFFER",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.OFFER_ACCEPT_OR_REJECT",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.QUALIFYING_OFFER",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.MATCH_RFA",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.RENOUNCE_RIGHTS",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.CAP_HOLD_RELEASE",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.HARDSHIP_SIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.TWO_WAY_SIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.ROOKIE_SIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.CONTRACT_EDIT",
+      "status": "WORLD_EDIT",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.CONTRACT.CONTRACT_RENEGOTIATE",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.STAFF.STAFF_POOL_READ",
+      "status": "READ_RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.STAFF.EXTEND",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.STAFF.REASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.STAFF.REPLACE_HEAD_COACH",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.STAFF.STAFF_BUDGET_SET",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_PRIORITY",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_AUTOMATION",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_STAFF_ASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.WORKOUT_ASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.MEDICAL_REPORT",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.BIG_BOARD_VIEW",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.SCOUT.BIG_BOARD_SET",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.PICK_RIGHTS_TRANSFER",
+      "status": "PARTIAL",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.LOTTERY_READ",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_RESULT_READ",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_CLASS_SET",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_CLASS_IMPORT",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_CLASS_EDIT",
+      "status": "WORLD_EDIT",
+      "reference_source": "GM"
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_RIGHTS_STASH",
+      "status": "RESEARCH",
+      "reference_source": "GM"
+    },
+    {
+      "id": "COACH.STRATEGY.POE_O2",
+      "status": "STATIC",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.POE_O3",
+      "status": "STATIC",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.POE_D2",
+      "status": "STATIC",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.POE_D3",
+      "status": "STATIC",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.PREFERRED_SYSTEM",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.ACTIVE_SYSTEM",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.HELP_DEFENSE",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.TEMPO",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.ACE_MODE",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.STRATEGY.COACH_AUTOMATION",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_SLOT_READ",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_REMOVE",
+      "status": "PARTIAL",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_SWAP",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_REGULAR",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_BENCH",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_ENDGAME",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_FAVORITE",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.PLAY_POOL_LIST",
+      "status": "READ_RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.PLAY_PREVIEW",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_1",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_2",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_3",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_4",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.PRESS_ON",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.PRESS_OFF",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.FORCE_DIRECTION",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.ONBALL_SCREEN",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.HEDGE",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.OFFBALL_SCREEN",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.POST_DEFENSE",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.DOUBLE_PERIMETER",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.DOUBLE_POST",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.SCREEN_ONBALL5",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.HEDGE5",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.SWITCH_RULE",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.ONBALL_HELP",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.SCREEN_HELP",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.EXTEND_PRESSURE",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.TAG_ON_ROLL",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.STAY_ATTACHED",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.DEFENSE.PRE_ROTATE",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.PLAYER_MINUTES",
+      "status": "PARTIAL",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.SECOND_UNIT",
+      "status": "PARTIAL",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.PLAYER_ROLE",
+      "status": "PARTIAL",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.SITUATIONAL_LINEUPS",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.INJURY_SUBSTITUTION",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.MATCHUP_ASSIGN",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.LIVE_SUBSTITUTION",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "COACH.ROTATION.LIVE_CALL_PLAY",
+      "status": "RESEARCH",
+      "reference_source": "COACH"
+    },
+    {
+      "id": "TRAIN.TEAM_FOCUS",
+      "status": "STATIC",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.TEAM_PROFILE",
+      "status": "STATIC",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.HOME_AWAY_INTENSITY",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.AUTOMATION",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.B2B_REST",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.PLAYER_FOCUS",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.PLAYER_INTENSITY",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.PLAYER_RECOVERY",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.TEAM_RECOVERY",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.MENTOR_REMOVE",
+      "status": "PARTIAL",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "TRAIN.HEALTH_INFO",
+      "status": "READ_RESEARCH",
+      "reference_source": "TRAIN"
+    },
+    {
+      "id": "PLAYER.EDIT.ATTR_BATCH",
+      "status": "PARTIAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.EDIT.TENDENCY_BATCH",
+      "status": "PARTIAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.EDIT.BADGE_REMOVE",
+      "status": "PARTIAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.EDIT.PLAY_INITIATOR",
+      "status": "PROJECT_NATIVE",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.EDIT.DURABILITY_SET",
+      "status": "PARTIAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.EDIT.POTENTIAL_SET",
+      "status": "PARTIAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.EDIT.DNA_IMPORT",
+      "status": "RESEARCH",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.TRADE_REQUEST",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.CONTRACT_RESPONSE",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.ROLE_REQUEST",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.TRAINING_REQUEST",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.MENTOR_REQUEST",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.PLAYSTYLE_REQUEST",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.EXTENSION_PREFERENCE",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.MORALE_FEEDBACK",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "PLAYER.AGENCY.INJURY_REPORT",
+      "status": "EXTERNAL",
+      "reference_source": "PLAYER"
+    },
+    {
+      "id": "WORLD.SETUP_OPTIONS",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.GAMEPLAY_SLIDERS",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.SIMULATION_SLIDERS",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.NORMALIZE",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.TEAM_AUTOMATION",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.CPU_CONTROL",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.ADVANCE_DATE",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.SIMULATE_GAME",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.SIMCAST_MODE",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.OFFSEASON_STEP",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.LEAGUE_RULE_CHANGE",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    },
+    {
+      "id": "WORLD.DRAFT_CLASS_WORLD",
+      "status": "RESEARCH",
+      "reference_source": "WORLD"
+    }
+  ]
+}
