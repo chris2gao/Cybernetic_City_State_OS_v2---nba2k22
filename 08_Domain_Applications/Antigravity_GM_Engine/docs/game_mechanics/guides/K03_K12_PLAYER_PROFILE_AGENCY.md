@@ -544,3 +544,7 @@ R04既没有替历史线决定谁必须夺冠，也没有按真实职业史提�
 当前角色接口只向普通GM开放经host明确授予的Intangibles例外；其它能力/耐久技术接口限明确世界编辑。普通角色可按授权使用48个已命名倾向；Player仅能指向自身UID。技术可写不产生角色自我强化许可，未知倾向只供明确世界编辑且不虚构含义。徽章已恢复四参数原生候选与UI flag0调用，但其联动/互斥及标签尚未闭合，因此保持不可调用。新增均为静态与离线证据，未证明UI/模拟/自然成长或持久化；R04历史研究不重开。
 
 Follow-up static Badge discovery recovered all99 native internal enum names and bit/max layouts, including80 maximum4 fields and19 maximum1 entries with the NONE sentinel. Effective levels also read signed linked modifiers, and personality groups enforce original coupling/assertions. These are distinct from21 historical research candidates and from verified MyLEAGUE UI options; see [Badge recovery](../../../research/rea_native_control/BADGE_NATIVE_RECOVERY.md). The candidate remains noncallable, with no new live evidence or role edit grant.
+
+## 32. 徽章原版规则的明确状态工程接口
+
+后续独立工程已接入98个非NONE字段的原版flag0 Setter。调用者须明确整个可能联动组的前后状态；原版规则不能产生该after状态或会触发断言时停止，不能用内部递归flag1绕过。当前修正链经有界快照及原版有效Getter交叉核对，全部未指定属性/徽章位和修正节点要求保持。角色入口限明确WORLD_ADMIN，普通人格没有徽章自增权；原生内部名称不等于MyLEAGUE菜单认证。详见[徽章调用合同](../../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)。这仍是静态/离线工程，不是本轮游戏调用、自然成长、UI或持久化证明。

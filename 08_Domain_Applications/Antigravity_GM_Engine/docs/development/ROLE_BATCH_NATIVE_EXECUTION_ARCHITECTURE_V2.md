@@ -160,3 +160,7 @@ submit_decided_actions(actor_uid, role_action_batch)
 ## 9. PR #19工程接口增量：索引属性/倾向（2026-10-28）
 
 四个属性/倾向单字段或显式批量接口调用原版索引UI Setter，并保留其原生缓存/通知路径；不经过整个PLAYER父对象复制。角色卡区分原规划actor与当前政策：GM能力字段只允许明确授予的Intangibles例外，其余54项中已合格能力/耐久字段供获授权的WORLD_ADMIN；普通角色倾向字段限48个已有名称，世界编辑可显式使用99个位置且未知名称保持UNKNOWN。Player须匹配自身UID。参数全部预检、同字段冲突拒绝、交易占用整球员资源；不自动改值。原生技术能力与身份许可独立。Potential刷新、徽章耦合及其它资料仍有缺口，全部新增能力尚未实机验收。见[准确合同](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)和当前工程进度。
+
+## 10. PR #19徽章原版规则工程接口（2026-10-28）
+
+`PLAYER.EDIT.BADGE_SET`使用`field_id,value`以及完整可能联动组的`expected_before,expected_after`，只允许明确WORLD_ADMIN授权。原版flag0 Setter会保留互斥和表达类规则；执行器以有界当前修正链及原版只读Getter交叉核对有效等级，拒绝断言前提和after状态不匹配。汇总资源包括可能修改及规则读取的徽章，避免跨规则冲突。98个非哨兵内部名称及上限已恢复，内部名称不等于原版UI认证。见[调用合同](../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)。新工程没有实机/独立/持久化验收，完整M0–M5仍在推进。

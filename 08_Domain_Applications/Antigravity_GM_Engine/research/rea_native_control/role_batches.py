@@ -313,6 +313,11 @@ class ExecutionAggregator:
             return
         if 'team_id' not in p or p['team_id'] not in profile.team_scope:
             raise PermissionError('TARGET_TEAM_OUTSIDE_ROLE_SCOPE')
+        if handler == 'player.badges':
+            from badge_fields import REQUIREMENT, validate_parameters
+            if intent.action_id != REQUIREMENT or profile.role_type != 'WORLD_ADMIN':
+                raise PermissionError('BADGE_EDITOR_ROLE_SCOPE_ESCAPE')
+            validate_parameters(self.service.badge_fields, p)
         if handler == 'player.stats':
             from player_fields import ACTION_FAMILIES, ROLE_FIELDS, allowed_fields, validate_values
             family = ACTION_FAMILIES[native['action_id']]
@@ -343,8 +348,7 @@ class ExecutionAggregator:
                 if field == 'BenchDepth':
                     raise ValueError('UNKNOWN_UI_RANGE_REQUIRES_FIELD_CONTRACT')
 
-    @staticmethod
-    def _resources(native, p, requirement):
+    def _resources(self, native, p, requirement):
         handler = native['runtime_handler']
         if handler.startswith('trade.'):
             return tuple(sorted(['player/' + str(x) for x in p['players_a'] + p['players_b']] +
@@ -369,6 +373,10 @@ class ExecutionAggregator:
             from player_fields import ACTION_FAMILIES, selected_values
             return tuple('player/' + str(p['player_id']) + '/stat/' + ACTION_FAMILIES[native['action_id']] + '/' + key
                          for key in sorted(selected_values(native['action_id'], p)))
+        if handler == 'player.badges':
+            from badge_fields import resource_fields
+            return tuple('player/' + str(p['player_id']) + '/badges/' + name
+                         for name in resource_fields(self.service.badge_fields, p))
         if handler == 'draft.select':
             return ('draft/current-selection', 'player/' + str(p['player_id']), 'pick/' + str(p['pick_id']))
         return (team + '/native-context',)

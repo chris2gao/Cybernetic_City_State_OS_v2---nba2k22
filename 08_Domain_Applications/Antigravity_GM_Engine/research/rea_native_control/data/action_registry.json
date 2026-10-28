@@ -735,37 +735,171 @@
     {
       "action_id": "PLAYER_SET_BADGE",
       "domain": "D03",
-      "title": "指定球员徽章ID和等级",
+      "title": "原版规则下设置指定徽章并匹配明确的联动前后状态",
       "decision_roles": [
-        "GM",
-        "COACH",
-        "PLAYER"
+        "WORLD_ADMIN"
       ],
       "kind": "MUTATE",
       "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
         "player_id": {
           "type": "integer",
+          "minimum": 0,
           "maximum": 65534
         },
         "field_id": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "Acrobat",
+            "AlphaDog",
+            "AnkleBraces",
+            "AnkleBreaker",
+            "BackdownPunisher",
+            "BailOut",
+            "BallAndChain",
+            "BallStripper",
+            "BigEgo",
+            "BigMarketPlayer",
+            "Blinders",
+            "Box",
+            "BreakStarter",
+            "BrickWall",
+            "BulletPasser",
+            "CareerGymEliminator",
+            "CatchAndShoot",
+            "ChasedownArtist",
+            "Chef",
+            "CircusThrees",
+            "Clamps",
+            "ClutchShooter",
+            "CornerSpecialist",
+            "Deadeye",
+            "DefensiveLeader",
+            "DifficultShots",
+            "Dimer",
+            "Downhill",
+            "DreamShake",
+            "Enforcer",
+            "Expressive",
+            "FadeAce",
+            "FairWeatherPlayer",
+            "FastTwitch",
+            "FearlessFinisher",
+            "FloorGeneral",
+            "GiantSlayer",
+            "GlueHands",
+            "GraceUnderPressure",
+            "GreenMachine",
+            "HandlesForDays",
+            "HighFriendliness",
+            "HighWorkEthic",
+            "HookSpecialist",
+            "HotSpotHunter",
+            "Hustler",
+            "Hyperdrive",
+            "Interceptor",
+            "Intimidator",
+            "LaidBack",
+            "LimitlessSpotUp",
+            "LimitlessTakeoff",
+            "LobCityFinisher",
+            "LowFriendliness",
+            "LuckyNumber7",
+            "Menace",
+            "MismatchExpert",
+            "MouseInTheHouse",
+            "NeedleThreader",
+            "NegativelyMotivated",
+            "OffBallPest",
+            "OnCourtCoach",
+            "PickDodger",
+            "PickPocket",
+            "Pogostick",
+            "PositivelyMotivated",
+            "PostDropStepper",
+            "PostLockdown",
+            "PostPlaymaker",
+            "PostSpinTechnician",
+            "Posterizer",
+            "ProTouch",
+            "PutbackArtist",
+            "QuickFirstStep",
+            "ReboundChaser",
+            "RhythmShooter",
+            "RimProtector",
+            "RiseUp",
+            "SetShooter",
+            "SlipperyOffball",
+            "SlitheryFinisher",
+            "SmallEgo",
+            "Sniper",
+            "SpaceCreator",
+            "SpecialDelivery",
+            "StopAndGo",
+            "StopAndPop",
+            "TaxAvoiderPlayer",
+            "TearDropper",
+            "TightHandles",
+            "TirelessDefender",
+            "TripleThreatJuke",
+            "Unpluckable",
+            "Unpredictable",
+            "Unstrippable",
+            "VeryHighWorkEthic",
+            "VolumeShooter",
+            "Worm"
+          ]
         },
         "value": {
-          "type": "integer"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "expected_before": {
+          "type": "object",
+          "description": "Exact possible coupled group of raw levels from the current approved snapshot"
+        },
+        "expected_after": {
+          "type": "object",
+          "description": "Explicit complete coupled group after-state; must match original rules, never guessed or substituted"
         }
       },
-      "capability": "PARTIAL_BINDING",
-      "runtime_handler": null,
-      "unknowns": [
-        "Internal names,99 raw fields, per-ID maxima and signed modifier fields are recovered; current-mode rights/sentinel exclusions, effective-modifier lifecycle/list invariants, coupled-change scope/assertion preflight and runtime identity/thread/readback remain unqualified; do not dispatch"
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.badges",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new real-game invocation, independent observer, UI, simulation or Save/Reload evidence",
+        "Host must attest the current league editor scene and exact save/process context; a generic delegate footprint alone is not scene authorization",
+        "Internal technical flag availability and UI labels per mode remain unverified; technical editor selection is explicit",
+        "Modifier provenance/lifetime is not asserted; current bounded snapshots and Native read-only Getter comparisons qualify only this operation",
+        "Any asynchronous change, failed assertion preflight, mismatch or interruption defers or leaves UNKNOWN without retry or rollback"
       ],
-      "coverage_unknowns": [],
       "call_sequence": [
         {
-          "operation": "RECOVERED_BADGE_CANDIDATE_DO_NOT_DISPATCH",
-          "binding_id": "player.badge_set_candidate",
+          "operation": "RESOLVE_AND_VALIDATE_BADGE_CONTEXT",
+          "binding_id": "player.badge_context"
+        },
+        {
+          "operation": "COMPARE_READ_ONLY_EFFECTIVE_LEVELS",
+          "binding_id": "player.badge_effective_level",
           "arguments": {
-            "normal_ui_rule_flag": 0
+            "badge_ids": [
+              5,
+              21,
+              24
+            ],
+            "normalization": 0
+          }
+        },
+        {
+          "operation": "SET_EXACT_BADGE_WITH_ORIGINAL_RULES",
+          "binding_id": "player.set_badge",
+          "arguments": {
+            "rule_flag": 0
           }
         }
       ],
@@ -776,7 +910,19 @@
         "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
       ],
       "executed_this_task": false,
-      "scope_note": null
+      "scope_note": null,
+      "role_policy": {
+        "roles": [
+          "WORLD_ADMIN"
+        ],
+        "policy": "Badge technical editing requires explicit world-editor authority; ordinary GM/Coach/Player self-improvement is unavailable"
+      },
+      "effect_contract": {
+        "input_meaning": "Choose one internal named Badge field and level; explicitly acknowledge the complete possible coupled group before/after",
+        "value_meaning": "Recovered raw level0..per-field maximum1/4. Internal enum names and technical flags do not certify original UI/mode semantics.",
+        "rules": "Normal original flag0. Exclusive counterparts and Expressive/Unpredictable/LaidBack traits may change; reject if supplied after-state differs from original effects.",
+        "rights": "Explicit WORLD_ADMIN grant only; NONE sentinel cannot be submitted; no ordinary persona Badge editing."
+      }
     },
     {
       "action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",

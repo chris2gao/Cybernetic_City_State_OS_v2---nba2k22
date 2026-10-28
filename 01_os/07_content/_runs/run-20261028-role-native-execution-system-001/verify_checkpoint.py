@@ -64,7 +64,16 @@ badge = next(b for b in candidate['bindings'] if b['binding_id'] == 'player.badg
 assert badge['input_layout']['not_callable'] and len(badge['parameters']) == 4
 assert badge['input_layout']['normal_ui_flag'] == 0
 badge_req = next(row for row in current['requirements'] if row['capability_id'] == 'PLAYER.EDIT.BADGE_SET')
-assert not badge_req['call_logic_available'] and badge_req['role_endpoint'] is None
+assert badge_req['call_logic_available'] and badge_req['role_endpoint'] == 'submit_decided_actions'
+assert badge_req['roles'] == ['WORLD_ADMIN'] and badge_req['new_live_validation'] == 'NOT_RUN'
+assert badge_req['native_effect_contract']['rights'].startswith('Explicit WORLD_ADMIN')
+runtime_badges = json.loads((d / 'research/rea_native_control/data/player_badge_fields.json').read_text(encoding='utf8'))
+assert len([field for field in runtime_badges['by_id'] if not field['sentinel_name']]) == 98
+context = next(b for b in candidate['bindings'] if b['binding_id'] == 'player.badge_context')
+assert context['input_layout']['catalog'] == runtime_badges
+setter = next(b for b in candidate['bindings'] if b['binding_id'] == 'player.set_badge')
+assert not setter['unknowns'] and setter['input_layout']['normal_ui_flag'] == 0
+assert [parameter['type'] for parameter in setter['parameters']] == ['pointer', 'int', 'uint8', 'int']
 badge_fields = json.loads((run / 'static/player_badge_names_fields_and_modifiers_025.json').read_text(encoding='utf8'))
 assert badge_fields['game_access'] is False and len(badge_fields['fields']) == 99
 assert len({field['internal_name'] for field in badge_fields['fields']}) == 99
@@ -80,4 +89,11 @@ for delta in json.loads((run / 'CHECKPOINT_006_SOURCE_DELTA.json').read_text(enc
     raw = subprocess.run(['git', 'show', delta['source_commit'] + ':' + delta['path']], cwd=root, capture_output=True, check=True).stdout
     assert hashlib.sha256(raw).hexdigest() == delta['baseline_blob_sha256']
     assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loads(raw)
-print('PASS: sources/index,183 dispositions, scoped minute/PlayType/stat interfaces; signing/parent/badge noncallable; full M0-M5 completion NOT asserted')
+delta = json.loads((run / 'CHECKPOINT_008_SOURCE_DELTA.json').read_text(encoding='utf8'))['native_field_source']
+raw = subprocess.run(['git', 'show', delta['source_commit'] + ':' + delta['path']], cwd=root, capture_output=True, check=True).stdout
+assert hashlib.sha256(raw).hexdigest() == delta['baseline_blob_sha256']
+assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loads(raw)
+for mid in ('P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
+    module = next(x for x in modules if x['id'] == mid)
+    assert 'research/rea_native_control/BADGE_NATIVE_CONTRACT.md' in module['docs']
+print('PASS: sources/index,183 dispositions, scoped minute/PlayType/stat and world-only explicit-state Badge interfaces; signing/parent/candidate noncallable; full M0-M5 completion NOT asserted')

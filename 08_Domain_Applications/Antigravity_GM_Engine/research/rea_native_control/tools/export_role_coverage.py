@@ -25,6 +25,7 @@ def coverage():
             'submission_parameter_schema': desc['native_parameter_schema'],
             'allowed_values': service.get_allowed_values(key, profile),
             'known_effect': desc['known_effect'], 'required_phase': desc['phase_requirement'],
+            'native_effect_contract': desc['native_effect_contract'],
             'native_action_id': native_id,
             'call_sequence': action['call_sequence'] if action else [],
             'source_maturity': desc['source_maturity'], 'native_maturity': desc['native_maturity'],

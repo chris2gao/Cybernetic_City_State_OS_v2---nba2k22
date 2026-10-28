@@ -119,7 +119,8 @@
         "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
         "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
-        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md"
+        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "docs/game_mechanics/guides/",
@@ -131,7 +132,10 @@
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
         "research/rea_native_control/runtime/player_stats.js",
-        "research/rea_native_control/tools/recover_badge_fields.py"
+        "research/rea_native_control/tools/recover_badge_fields.py",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "40 groups and 694 heterogeneous trace records; not 694 verified setters.",
@@ -142,7 +146,8 @@
       "latest_task_refs": [
         "DEV29_R07_RESEARCH_COMPLETE_20261021",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -155,7 +160,8 @@
       "docs": [
         "docs/04_GM_DECISION_ENGINE.md",
         "docs/35_WEB_GPT_BASELINES_AND_MEMORY_PROTOCOL.md",
-        "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md"
+        "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "src/gm_core/",
@@ -163,14 +169,18 @@
         "src/gm_data_access/",
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
-        "research/rea_native_control/runtime/player_stats.js"
+        "research/rea_native_control/runtime/player_stats.js",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "Actual autonomous 30-GM deployment not certified here."
       ],
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_49 / bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / Badge static only; no new live game evidence",
       "latest_task_refs": [
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -186,7 +196,8 @@
         "research/rea_native_control/ROTATION_MINUTES_CONTRACT.md",
         "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
         "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
-        "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md"
+        "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "web_gm/manuals/",
@@ -198,7 +209,10 @@
         "research/rea_native_control/runtime/player_playtypes.js",
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
-        "research/rea_native_control/runtime/player_stats.js"
+        "research/rea_native_control/runtime/player_stats.js",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "19 setting candidates / 18 opponent defense settings; only specific real-game examples verified.",
@@ -207,7 +221,8 @@
       ],
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_49 / bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / Badge static only; no new live game evidence",
       "latest_task_refs": [
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -222,7 +237,8 @@
         "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
         "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
-        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md"
+        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "config/state_io_native/player.json",
@@ -231,7 +247,10 @@
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
         "research/rea_native_control/runtime/player_stats.js",
-        "research/rea_native_control/tools/recover_badge_fields.py"
+        "research/rea_native_control/tools/recover_badge_fields.py",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "Persona requests are not direct native player edit permission.",
@@ -240,7 +259,8 @@
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_49 / bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / Badge static only; no new live game evidence",
       "latest_task_refs": [
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -288,7 +308,8 @@
         "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
         "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
-        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md"
+        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "research/rea_native_control/facade.py",
@@ -307,7 +328,10 @@
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
         "research/rea_native_control/runtime/player_stats.js",
-        "research/rea_native_control/tools/recover_badge_fields.py"
+        "research/rea_native_control/tools/recover_badge_fields.py",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "Source handoff b7e0f51 blob 4cc0b2c4; REA read/ABI/live experiences are bounded.",
@@ -320,7 +344,8 @@
         "PR#17@84195f471354400a75877f16c3c3de8a3af6b5b2",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -341,7 +366,8 @@
         "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
         "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
-        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md"
+        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/",
@@ -356,7 +382,10 @@
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
         "research/rea_native_control/runtime/player_stats.js",
-        "research/rea_native_control/tools/recover_badge_fields.py"
+        "research/rea_native_control/tools/recover_badge_fields.py",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
@@ -368,7 +397,8 @@
         "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -406,7 +436,8 @@
         "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
         "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
-        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md"
+        "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
+        "research/rea_native_control/BADGE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json",
@@ -419,7 +450,10 @@
         "research/rea_native_control/player_fields.py",
         "research/rea_native_control/data/player_stat_fields.json",
         "research/rea_native_control/runtime/player_stats.js",
-        "research/rea_native_control/tools/recover_badge_fields.py"
+        "research/rea_native_control/tools/recover_badge_fields.py",
+        "research/rea_native_control/badge_fields.py",
+        "research/rea_native_control/data/player_badge_fields.json",
+        "research/rea_native_control/runtime/player_badges.js"
       ],
       "notes": [
         "Past snapshots are not up-to-date proof of live state.",
@@ -429,7 +463,8 @@
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_49 / bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / Badge static only; no new live game evidence",
       "latest_task_refs": [
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4 / MANAGED_CHECKPOINT_007_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint008 / explicit-state Badge runtime; verification pending"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true

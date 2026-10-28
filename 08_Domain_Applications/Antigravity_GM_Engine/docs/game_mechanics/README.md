@@ -75,3 +75,5 @@ K01逐场比赛/赛程；K02球队和球员普通/高级统计；K03球员和名
 ## 新增球员系统研究与涌现方向
 
 玩家确定：所有游戏机制知识必须让**GM/球员/教练/媒体作为独立角色**拥有真实可观察状态、合法可选行为、协商权、信息限制与比赛/历史反馈，而非强制产生最优决策。R03仍研究训练/恢复一般机制；**R04独立研究NBA2K20–23的全部球员身份、属性、潜力、倾向、徽章、人格徽章、耐久/伤病、合同偏好（Play for Win/Financial Security/Loyalty）、球员职业自主权及字段双语义**；原经营R04顺延R05，其余后移。详情：[R04专项任务书](../development_tasks/DEV29_R04_PLAYER_FULL_PROFILE_AND_AGENCY_RESEARCH_SPEC_V1.md)。原生Ability/Potential/Badge仅正常读取观察，自主Agent同意与**真实玩家的存档写入批准**分开；人格记忆优先外挂SQLite，不擅占仍有效的原生字段。**当前R01/R02已结案，R03/R04/R05均已获用户批准研究结案；R05保持`R05_RESEARCH_CLOSED_WITH_PC22_NATIVE_CAPABILITY_GAPS`。R06-A已发布，下一轮R06-B尚未启动**。今后研究窗口只负责各R轮研究交付，独立完整性审核由其他模型负责。
+
+2026-10-28徽章执行工程后续：[明确联动前后状态的原版规则接口](../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)已接入98个非哨兵内部字段，保留有效等级修正、原版互斥/表达规则及断言检查；只限明确世界编辑。新的静态/离线能力不提升UI/模拟/存档或R04历史研究验收。

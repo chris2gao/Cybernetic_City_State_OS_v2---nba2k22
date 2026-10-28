@@ -107,3 +107,7 @@ Player模型现在可以使用外部系统已有数据作决策，并提出已�
 ### 属性与倾向的角色参数增量
 
 `PLAYER.EDIT.ATTR_SET` / `.ATTR_BATCH`与`.TENDENCY_SET` / `.TENDENCY_BATCH`使用当前球队/球员UID，单字段为`field_id,value`，批量为非空`values`字典。通过`get_allowed_values`加载当前角色的具体字段含义和范围；能力/耐久UI整数25..99，倾向整数0..100，执行器不自动钳位或替模型决定数值。普通GM仅有明确授予的Intangibles例外；其余能力/耐久只向获授权的世界编辑身份开放。48个已命名倾向可按明确授权提供给GM/Coach/Player，Player还须匹配自身UID；51个未命名位置只供明确世界编辑，含义保持UNKNOWN。Potential和未分类能力不开放，徽章仍不可调用。完整参数、原生副作用与未实测范围见[合同](PLAYER_STAT_NATIVE_CONTRACT.md)。
+
+### 徽章的明确联动接口
+
+`PLAYER.EDIT.BADGE_SET`只向明确授权的WORLD_ADMIN身份开放；普通GM/Coach/Player不能自增徽章。通过`get_allowed_values`取得98个非NONE内部名称、每项上限1/4和完整联动组；输入`team_id,player_id,field_id,value,expected_before,expected_after`。两个状态对象必须完整列出可能联动的对或三元组，单独技能则只有一个字段。执行器保留原版flag0规则、检查临时有效等级及断言条件；原版规则与明确after状态不符就拒绝，不改选值或绕过规则。内部名称不等于已认证MyLEAGUE UI选项。详见[徽章合同](BADGE_NATIVE_CONTRACT.md)，目前只有静态和离线证据。

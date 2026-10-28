@@ -76,16 +76,19 @@ class RoleCapabilityService:
         self.play_type_names = json.loads((self.registry.root.parents[1] / 'config/state_io_native/player.json').read_text(encoding='utf-8'))['PLAY_TYPE_NAMES']
         from player_fields import load_fields
         self.player_stat_fields = load_fields(self.registry.root)
+        from badge_fields import load_fields as load_badges
+        self.badge_fields = load_badges(self.registry.root)
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
             'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
             'player_stat_fields': self.player_stat_fields,
+            'badge_fields': self.badge_fields,
             'bindings': {k: b.to_dict() for k, b in self.registry.bindings.items()},
             'live': self.registry.live_validation,
             'effective_mapping': self.mapping,
             'service_contract_code': {
                 name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py')},
+                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py', 'badge_fields.py')},
             'runtime_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted((self.registry.root / 'runtime').glob('*.js'))},
         }, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
@@ -108,11 +111,13 @@ class RoleCapabilityService:
             'phase_requirement': req['phase'], 'known_effect': req['effect'],
             'source_maturity': req['baseline_status'],
             'is_external_request': req['baseline_status'] == 'EXTERNAL',
-            'world_editor_only': req['baseline_status'] == 'WORLD_EDIT',
+            'world_editor_only': req['baseline_status'] == 'WORLD_EDIT' or bool(
+                native and native.get('kind') == 'MUTATE' and self.allowed_roles(action_id) == ['WORLD_ADMIN']),
             'identity_permission': action_id in profile.allowed_actions and profile.role_type in self.allowed_roles(action_id),
             'executor_action_id': native_id,
             'native_parameter_schema': self._role_schema(action_id, native, profile),
             'native_maturity': native['capability'] if native else 'NOT_BOUND',
+            'native_effect_contract': deepcopy(native.get('effect_contract')) if native else None,
             'call_logic_available': self._callable(native),
             'unknowns': self._gaps(native),
             'historical_exact_live_evidence': self._historical_example(action_id, native),
@@ -132,6 +137,15 @@ class RoleCapabilityService:
         if native is None:
             return None
         schema = deepcopy(native['input_schema'])
+        from badge_fields import REQUIREMENT
+        if action_id == REQUIREMENT:
+            fields = {name: field for name, field in self.badge_fields['fields'].items()
+                      if profile.role_type == 'WORLD_ADMIN' and not field['sentinel_name']}
+            schema['field_id']['enum'] = sorted(fields)
+            for key in ('expected_before', 'expected_after'):
+                schema[key].update(minProperties=1, additionalProperties=False,
+                    properties={name: {'type': 'integer', 'minimum': 0, 'maximum': field['maximum']}
+                                for name, field in fields.items()})
         from role_batches import PLAY_TYPE_SLOTS
         if action_id in PLAY_TYPE_SLOTS:
             slot = PLAY_TYPE_SLOTS[action_id]
@@ -196,6 +210,17 @@ class RoleCapabilityService:
     def get_allowed_values(self, action_id, profile):
         desc = self.describe_action(action_id, profile)
         fields = {}
+        from badge_fields import REQUIREMENT, affected_fields
+        if action_id == REQUIREMENT:
+            available = {name: field for name, field in self.badge_fields['fields'].items()
+                         if profile.role_type == 'WORLD_ADMIN' and not field['sentinel_name']}
+            fields['field_id'] = {'values': {name: {
+                'meaning': 'Recovered internal Native Badge enum ' + name,
+                'minimum': 0, 'maximum': field['maximum'], 'ui_label_verified': False,
+                'explicit_coupled_group': list(affected_fields(self.badge_fields, name))}
+                for name, field in available.items()},
+                'status': 'RECOVERED_INTERNAL_ENUM_AND_RAW_LEVELS',
+                'policy': 'Explicit world-editor grant only. Caller supplies exact coupled before/after states; original flag0 rules must agree. No ordinary persona Badge editing.'}
         from player_fields import ROLE_FIELDS, allowed_fields
         if action_id in ROLE_FIELDS:
             available = allowed_fields(self.player_stat_fields, ROLE_FIELDS[action_id], profile.role_type)

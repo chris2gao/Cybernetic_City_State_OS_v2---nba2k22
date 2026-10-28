@@ -39,7 +39,10 @@ class RoleConsumers(unittest.TestCase):
         from export_role_coverage import coverage
         rows = {row['capability_id']: row for row in coverage()['requirements']}
         self.assertIsNone(rows['GM.ROSTER.LIST_MOVE']['role_endpoint'])
-        self.assertIsNone(rows['PLAYER.EDIT.BADGE_SET']['role_endpoint'])
+        unbound_player = [row for key, row in rows.items() if key.startswith('PLAYER.EDIT.') and not row['call_logic_available']]
+        self.assertTrue(unbound_player)
+        self.assertTrue(all(row['role_endpoint'] is None for row in unbound_player))
+        self.assertEqual(rows['PLAYER.EDIT.BADGE_SET']['role_endpoint'], 'submit_decided_actions')
         self.assertEqual(rows['PLAYER.EDIT.PLAY_TYPE_1']['role_endpoint'], 'submit_decided_actions')
         self.assertEqual(rows['GM.TRADE.EXECUTE_AGREED']['role_endpoint'], 'submit_decided_actions')
 

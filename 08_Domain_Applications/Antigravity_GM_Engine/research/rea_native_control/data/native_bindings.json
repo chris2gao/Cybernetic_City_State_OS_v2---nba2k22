@@ -4227,6 +4227,3572 @@
         "notification_slot": 4472,
         "static_field_contract_evidence": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
       }
+    },
+    {
+      "binding_id": "player.set_badge",
+      "rva": 10038592,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "badge_id",
+          "type": "int"
+        },
+        {
+          "name": "level",
+          "type": "uint8"
+        },
+        {
+          "name": "recursive_or_rule_flag",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Current exact PLAYER;99 packed badge fields"
+      ],
+      "lifecycle": [
+        "Use original normal rule flag0 only; explicit coupled before/after states and effective/assertion preflight required",
+        "No source Player copy, direct game field writes, recursive-flag bypass, retry or rollback"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_badge_setter_014.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_coupling_helpers_017.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_setter_callers_018.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "normal_ui_flag": 0,
+        "code_signatures": [
+          {
+            "rva": 10038592,
+            "bytes": 8892,
+            "fnv32": 3612432075
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "player.badge_effective_level",
+      "rva": 9943152,
+      "return_type": "uint8",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "badge_id",
+          "type": "int"
+        },
+        {
+          "name": "normalize_boolean",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact current roster PLAYER, prevalidated bounded acyclic modifier list"
+      ],
+      "lifecycle": [
+        "Read only with normalization flag0; compare against signed modifier snapshot before any setter"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 9943152,
+            "bytes": 2044,
+            "fnv32": 2735888478
+          },
+          {
+            "rva": 9870128,
+            "bytes": 1400,
+            "fnv32": 2180464779
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "player.badge_context",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Host-attested current league Player editor scene and explicit world-edit authority",
+        "Current delegate must have known team getter and no-op Badge notification; exact roster ownership and uid"
+      ],
+      "lifecycle": [
+        "Inspect at most1024 modifier nodes as a technical read budget, not a game population limit",
+        "Snapshot list/selector/fields, compare Native effective Getter, preserve all unrequested stat and Badge bits"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "root_rva": 103972696,
+        "required_slots": {
+          "736": 18713280,
+          "4472": 2343072
+        },
+        "maximum_modifier_nodes": 1024,
+        "modifier_node_bytes": 128,
+        "catalog": {
+          "source": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json",
+          "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+          "fields": {
+            "NONE": {
+              "badge_id": 0,
+              "internal_name": "NONE",
+              "ui_label_verified": false,
+              "sentinel_name": true,
+              "byte_offset": 1211,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "AlphaDog": {
+              "badge_id": 1,
+              "internal_name": "AlphaDog",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "CatchAndShoot": {
+              "badge_id": 2,
+              "internal_name": "CatchAndShoot",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "CornerSpecialist": {
+              "badge_id": 3,
+              "internal_name": "CornerSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Enforcer": {
+              "badge_id": 4,
+              "internal_name": "Enforcer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "LowFriendliness": {
+              "badge_id": 5,
+              "internal_name": "LowFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 24,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "DifficultShots": {
+              "badge_id": 6,
+              "internal_name": "DifficultShots",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FearlessFinisher": {
+              "badge_id": 7,
+              "internal_name": "FearlessFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HighFriendliness": {
+              "badge_id": 8,
+              "internal_name": "HighFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 14,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "SmallEgo": {
+              "badge_id": 9,
+              "internal_name": "SmallEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 12,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "Acrobat": {
+              "badge_id": 10,
+              "internal_name": "Acrobat",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TearDropper": {
+              "badge_id": 11,
+              "internal_name": "TearDropper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BigEgo": {
+              "badge_id": 12,
+              "internal_name": "BigEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 2,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "HighWorkEthic": {
+              "badge_id": 13,
+              "internal_name": "HighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 0,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "BrickWall": {
+              "badge_id": 14,
+              "internal_name": "BrickWall",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PostSpinTechnician": {
+              "badge_id": 15,
+              "internal_name": "PostSpinTechnician",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "VeryHighWorkEthic": {
+              "badge_id": 16,
+              "internal_name": "VeryHighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 22,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "NegativelyMotivated": {
+              "badge_id": 17,
+              "internal_name": "NegativelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 20,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "PostDropStepper": {
+              "badge_id": 18,
+              "internal_name": "PostDropStepper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PutbackArtist": {
+              "badge_id": 19,
+              "internal_name": "PutbackArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PositivelyMotivated": {
+              "badge_id": 20,
+              "internal_name": "PositivelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 10,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "Expressive": {
+              "badge_id": 21,
+              "internal_name": "Expressive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 8,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "AnkleBreaker": {
+              "badge_id": 22,
+              "internal_name": "AnkleBreaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Hyperdrive": {
+              "badge_id": 23,
+              "internal_name": "Hyperdrive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Unpredictable": {
+              "badge_id": 24,
+              "internal_name": "Unpredictable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 30,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "LaidBack": {
+              "badge_id": 25,
+              "internal_name": "LaidBack",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 28,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "BreakStarter": {
+              "badge_id": 26,
+              "internal_name": "BreakStarter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LobCityFinisher": {
+              "badge_id": 27,
+              "internal_name": "LobCityFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "OnCourtCoach": {
+              "badge_id": 28,
+              "internal_name": "OnCourtCoach",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 18,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "CareerGymEliminator": {
+              "badge_id": 29,
+              "internal_name": "CareerGymEliminator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 16,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "GlueHands": {
+              "badge_id": 30,
+              "internal_name": "GlueHands",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Dimer": {
+              "badge_id": 31,
+              "internal_name": "Dimer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BigMarketPlayer": {
+              "badge_id": 32,
+              "internal_name": "BigMarketPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "FairWeatherPlayer": {
+              "badge_id": 33,
+              "internal_name": "FairWeatherPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "PickPocket": {
+              "badge_id": 34,
+              "internal_name": "PickPocket",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "RimProtector": {
+              "badge_id": 35,
+              "internal_name": "RimProtector",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TaxAvoiderPlayer": {
+              "badge_id": 36,
+              "internal_name": "TaxAvoiderPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "PickDodger": {
+              "badge_id": 37,
+              "internal_name": "PickDodger",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 1,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 22,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ChasedownArtist": {
+              "badge_id": 38,
+              "internal_name": "ChasedownArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 4,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 18,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Box": {
+              "badge_id": 39,
+              "internal_name": "Box",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 14,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Clamps": {
+              "badge_id": 40,
+              "internal_name": "Clamps",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 10,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "DefensiveLeader": {
+              "badge_id": 41,
+              "internal_name": "DefensiveLeader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 6,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BallAndChain": {
+              "badge_id": 42,
+              "internal_name": "BallAndChain",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 2,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Interceptor": {
+              "badge_id": 43,
+              "internal_name": "Interceptor",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Intimidator": {
+              "badge_id": 44,
+              "internal_name": "Intimidator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HookSpecialist": {
+              "badge_id": 45,
+              "internal_name": "HookSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Posterizer": {
+              "badge_id": 46,
+              "internal_name": "Posterizer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "OffBallPest": {
+              "badge_id": 47,
+              "internal_name": "OffBallPest",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ReboundChaser": {
+              "badge_id": 48,
+              "internal_name": "ReboundChaser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Pogostick": {
+              "badge_id": 49,
+              "internal_name": "Pogostick",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PostLockdown": {
+              "badge_id": 50,
+              "internal_name": "PostLockdown",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TirelessDefender": {
+              "badge_id": 51,
+              "internal_name": "TirelessDefender",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "MismatchExpert": {
+              "badge_id": 52,
+              "internal_name": "MismatchExpert",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Worm": {
+              "badge_id": 53,
+              "internal_name": "Worm",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BackdownPunisher": {
+              "badge_id": 54,
+              "internal_name": "BackdownPunisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "RiseUp": {
+              "badge_id": 55,
+              "internal_name": "RiseUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LuckyNumber7": {
+              "badge_id": 56,
+              "internal_name": "LuckyNumber7",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Blinders": {
+              "badge_id": 57,
+              "internal_name": "Blinders",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "CircusThrees": {
+              "badge_id": 58,
+              "internal_name": "CircusThrees",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FadeAce": {
+              "badge_id": 59,
+              "internal_name": "FadeAce",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LimitlessSpotUp": {
+              "badge_id": 60,
+              "internal_name": "LimitlessSpotUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Chef": {
+              "badge_id": 61,
+              "internal_name": "Chef",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "GiantSlayer": {
+              "badge_id": 62,
+              "internal_name": "GiantSlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ProTouch": {
+              "badge_id": 63,
+              "internal_name": "ProTouch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "RhythmShooter": {
+              "badge_id": 64,
+              "internal_name": "RhythmShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SlitheryFinisher": {
+              "badge_id": 65,
+              "internal_name": "SlitheryFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BailOut": {
+              "badge_id": 66,
+              "internal_name": "BailOut",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Downhill": {
+              "badge_id": 67,
+              "internal_name": "Downhill",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "DreamShake": {
+              "badge_id": 68,
+              "internal_name": "DreamShake",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HandlesForDays": {
+              "badge_id": 69,
+              "internal_name": "HandlesForDays",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "NeedleThreader": {
+              "badge_id": 70,
+              "internal_name": "NeedleThreader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SetShooter": {
+              "badge_id": 71,
+              "internal_name": "SetShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "QuickFirstStep": {
+              "badge_id": 72,
+              "internal_name": "QuickFirstStep",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SpaceCreator": {
+              "badge_id": 73,
+              "internal_name": "SpaceCreator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "StopAndGo": {
+              "badge_id": 74,
+              "internal_name": "StopAndGo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TightHandles": {
+              "badge_id": 75,
+              "internal_name": "TightHandles",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Unpluckable": {
+              "badge_id": 76,
+              "internal_name": "Unpluckable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ClutchShooter": {
+              "badge_id": 77,
+              "internal_name": "ClutchShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Deadeye": {
+              "badge_id": 78,
+              "internal_name": "Deadeye",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Sniper": {
+              "badge_id": 79,
+              "internal_name": "Sniper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "StopAndPop": {
+              "badge_id": 80,
+              "internal_name": "StopAndPop",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "GreenMachine": {
+              "badge_id": 81,
+              "internal_name": "GreenMachine",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HotSpotHunter": {
+              "badge_id": 82,
+              "internal_name": "HotSpotHunter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Unstrippable": {
+              "badge_id": 83,
+              "internal_name": "Unstrippable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "MouseInTheHouse": {
+              "badge_id": 84,
+              "internal_name": "MouseInTheHouse",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BulletPasser": {
+              "badge_id": 85,
+              "internal_name": "BulletPasser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SpecialDelivery": {
+              "badge_id": 86,
+              "internal_name": "SpecialDelivery",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "AnkleBraces": {
+              "badge_id": 87,
+              "internal_name": "AnkleBraces",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LimitlessTakeoff": {
+              "badge_id": 88,
+              "internal_name": "LimitlessTakeoff",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "GraceUnderPressure": {
+              "badge_id": 89,
+              "internal_name": "GraceUnderPressure",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "VolumeShooter": {
+              "badge_id": 90,
+              "internal_name": "VolumeShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FloorGeneral": {
+              "badge_id": 91,
+              "internal_name": "FloorGeneral",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SlipperyOffball": {
+              "badge_id": 92,
+              "internal_name": "SlipperyOffball",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FastTwitch": {
+              "badge_id": 93,
+              "internal_name": "FastTwitch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Menace": {
+              "badge_id": 94,
+              "internal_name": "Menace",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PostPlaymaker": {
+              "badge_id": 95,
+              "internal_name": "PostPlaymaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TripleThreatJuke": {
+              "badge_id": 96,
+              "internal_name": "TripleThreatJuke",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BallStripper": {
+              "badge_id": 97,
+              "internal_name": "BallStripper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Hustler": {
+              "badge_id": 98,
+              "internal_name": "Hustler",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            }
+          },
+          "by_id": [
+            {
+              "badge_id": 0,
+              "internal_name": "NONE",
+              "ui_label_verified": false,
+              "sentinel_name": true,
+              "byte_offset": 1211,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 1,
+              "internal_name": "AlphaDog",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 2,
+              "internal_name": "CatchAndShoot",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 3,
+              "internal_name": "CornerSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 4,
+              "internal_name": "Enforcer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 5,
+              "internal_name": "LowFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 24,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 6,
+              "internal_name": "DifficultShots",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 7,
+              "internal_name": "FearlessFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 8,
+              "internal_name": "HighFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 14,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 9,
+              "internal_name": "SmallEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 12,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 10,
+              "internal_name": "Acrobat",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 11,
+              "internal_name": "TearDropper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 12,
+              "internal_name": "BigEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 2,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 13,
+              "internal_name": "HighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 0,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 14,
+              "internal_name": "BrickWall",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 15,
+              "internal_name": "PostSpinTechnician",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 16,
+              "internal_name": "VeryHighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 22,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 17,
+              "internal_name": "NegativelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 20,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 18,
+              "internal_name": "PostDropStepper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 19,
+              "internal_name": "PutbackArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 20,
+              "internal_name": "PositivelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 10,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 21,
+              "internal_name": "Expressive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 8,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 22,
+              "internal_name": "AnkleBreaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 23,
+              "internal_name": "Hyperdrive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 24,
+              "internal_name": "Unpredictable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 30,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 25,
+              "internal_name": "LaidBack",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 28,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 26,
+              "internal_name": "BreakStarter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 27,
+              "internal_name": "LobCityFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 28,
+              "internal_name": "OnCourtCoach",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 18,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 29,
+              "internal_name": "CareerGymEliminator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 16,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 30,
+              "internal_name": "GlueHands",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 31,
+              "internal_name": "Dimer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 32,
+              "internal_name": "BigMarketPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 33,
+              "internal_name": "FairWeatherPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 34,
+              "internal_name": "PickPocket",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 35,
+              "internal_name": "RimProtector",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 36,
+              "internal_name": "TaxAvoiderPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 37,
+              "internal_name": "PickDodger",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 1,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 22,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 38,
+              "internal_name": "ChasedownArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 4,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 18,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 39,
+              "internal_name": "Box",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 14,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 40,
+              "internal_name": "Clamps",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 10,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 41,
+              "internal_name": "DefensiveLeader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 6,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 42,
+              "internal_name": "BallAndChain",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 2,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 43,
+              "internal_name": "Interceptor",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 44,
+              "internal_name": "Intimidator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 45,
+              "internal_name": "HookSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 46,
+              "internal_name": "Posterizer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 47,
+              "internal_name": "OffBallPest",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 48,
+              "internal_name": "ReboundChaser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 49,
+              "internal_name": "Pogostick",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 50,
+              "internal_name": "PostLockdown",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 51,
+              "internal_name": "TirelessDefender",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 52,
+              "internal_name": "MismatchExpert",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 53,
+              "internal_name": "Worm",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 54,
+              "internal_name": "BackdownPunisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 55,
+              "internal_name": "RiseUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 56,
+              "internal_name": "LuckyNumber7",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 57,
+              "internal_name": "Blinders",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 58,
+              "internal_name": "CircusThrees",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 59,
+              "internal_name": "FadeAce",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 60,
+              "internal_name": "LimitlessSpotUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 61,
+              "internal_name": "Chef",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 62,
+              "internal_name": "GiantSlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 63,
+              "internal_name": "ProTouch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 64,
+              "internal_name": "RhythmShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 65,
+              "internal_name": "SlitheryFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 66,
+              "internal_name": "BailOut",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 67,
+              "internal_name": "Downhill",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 68,
+              "internal_name": "DreamShake",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 69,
+              "internal_name": "HandlesForDays",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 70,
+              "internal_name": "NeedleThreader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 71,
+              "internal_name": "SetShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 72,
+              "internal_name": "QuickFirstStep",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 73,
+              "internal_name": "SpaceCreator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 74,
+              "internal_name": "StopAndGo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 75,
+              "internal_name": "TightHandles",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 76,
+              "internal_name": "Unpluckable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 77,
+              "internal_name": "ClutchShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 78,
+              "internal_name": "Deadeye",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 79,
+              "internal_name": "Sniper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 80,
+              "internal_name": "StopAndPop",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 81,
+              "internal_name": "GreenMachine",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 82,
+              "internal_name": "HotSpotHunter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 83,
+              "internal_name": "Unstrippable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 84,
+              "internal_name": "MouseInTheHouse",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 85,
+              "internal_name": "BulletPasser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 86,
+              "internal_name": "SpecialDelivery",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 87,
+              "internal_name": "AnkleBraces",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 88,
+              "internal_name": "LimitlessTakeoff",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 89,
+              "internal_name": "GraceUnderPressure",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 90,
+              "internal_name": "VolumeShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 91,
+              "internal_name": "FloorGeneral",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 92,
+              "internal_name": "SlipperyOffball",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 93,
+              "internal_name": "FastTwitch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 94,
+              "internal_name": "Menace",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 95,
+              "internal_name": "PostPlaymaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 96,
+              "internal_name": "TripleThreatJuke",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 97,
+              "internal_name": "BallStripper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 98,
+              "internal_name": "Hustler",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            }
+          ],
+          "exclusive_groups": [
+            [
+              "LowFriendliness",
+              "HighFriendliness"
+            ],
+            [
+              "SmallEgo",
+              "BigEgo"
+            ],
+            [
+              "HighWorkEthic",
+              "VeryHighWorkEthic"
+            ],
+            [
+              "NegativelyMotivated",
+              "PositivelyMotivated"
+            ]
+          ],
+          "coupled_groups": [
+            [
+              "LowFriendliness",
+              "HighFriendliness"
+            ],
+            [
+              "SmallEgo",
+              "BigEgo"
+            ],
+            [
+              "HighWorkEthic",
+              "VeryHighWorkEthic"
+            ],
+            [
+              "NegativelyMotivated",
+              "PositivelyMotivated"
+            ],
+            [
+              "Expressive",
+              "Unpredictable",
+              "LaidBack"
+            ]
+          ],
+          "field_policy": "Explicit world-editor grant only. NONE unavailable. Internal names do not certify UI or mode semantics."
+        },
+        "code_signatures": [
+          {
+            "rva": 9945280,
+            "bytes": 1996,
+            "fnv32": 80137102
+          },
+          {
+            "rva": 26542320,
+            "bytes": 151,
+            "fnv32": 422274814
+          },
+          {
+            "rva": 9896800,
+            "bytes": 380,
+            "fnv32": 1088146660
+          },
+          {
+            "rva": 18713280,
+            "bytes": 8,
+            "fnv32": 3017607810
+          },
+          {
+            "rva": 2343072,
+            "bytes": 1,
+            "fnv32": 1191916037
+          }
+        ]
+      }
     }
   ]
 }
