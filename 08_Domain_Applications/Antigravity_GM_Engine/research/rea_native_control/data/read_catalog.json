@@ -1,0 +1,454 @@
+{
+  "schema_version": "nba2k22.native_control.read_catalog.v1",
+  "datasets": [
+    {
+      "dataset_id": "league.settings_calendar",
+      "action_id": "READ_LEAGUE_SETTINGS_AND_CALENDAR",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "available_scope": "League settings, save season/calendar/phase; existing source declarations only",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "coverage_unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "game_calendar_detection",
+          "provenance": "Existing configuration section; no new game observation"
+        },
+        {
+          "source_id": "career_identity_detection",
+          "provenance": "Existing configuration section; no new game observation"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "team.roster_rotation_finance",
+      "action_id": "READ_TEAM_ROSTER_ROTATION_FINANCE",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "read.team",
+      "available_scope": "Known roster plus salary/payroll summary; complete rotation/finance not restored",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "coverage_unknowns": [
+        "Rotation/minutes, full financial subobjects and complete pick holdings are not provided by this subset"
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-independent-after/evidence.json"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "team_state",
+          "legacy_declared_status": "VERIFIED_OBSERVED_FIELDS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        },
+        {
+          "source_id": "active_rosters_contracts",
+          "legacy_declared_status": "VERIFIED_PARTIAL_FIELDS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "player.profile",
+      "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "read.player",
+      "available_scope": "Native UID lookup, identity and raw contract subset; complete child objects/tendencies/badges UNKNOWN",
+      "coverage_complete": false,
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "coverage_unknowns": [
+        "Only identity/current-contract teams and existing contract profile fields emitted; full ability/tendency/badge child objects not bound"
+      ],
+      "evidence": [
+        "../../config/memory_field_profile.json",
+        "../../src/source_extensions.py"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "global_players",
+          "legacy_declared_status": "VERIFIED_PARTIAL_FIELDS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        },
+        {
+          "source_id": "full_player_models",
+          "legacy_declared_status": "VERIFIED_PARTIAL_ATTRIBUTES",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        },
+        {
+          "source_id": "active_rosters_contracts",
+          "legacy_declared_status": "VERIFIED_PARTIAL_FIELDS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "player.statistics",
+      "action_id": "READ_PLAYER_MATCH_SEASON_CAREER_STATS",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "available_scope": "Legacy source_extensions.stats_record and player_statistics; native unified match/career getter not restored",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "coverage_unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "games_box_scores_standings",
+          "legacy_declared_status": "VERIFIED_PARTIAL_SEASON_TOTALS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "staff.coach_gameplan_training",
+      "action_id": "READ_COACH_STAFF_GAMEPLAN_TRAINING",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "read.coach",
+      "available_scope": "Current Coach subset; full staff/profile/Gameplan/training query remains incomplete",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "coverage_unknowns": [
+        "Other staff, complete Gameplan/training subobjects remain separate unresolved readers"
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/coach-visible/evidence.json"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "coaching_tactics",
+          "legacy_declared_status": "FIRST_PRODUCTION_CAPTURED_AND_PUBLISHED",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        },
+        {
+          "source_id": "staff_pool",
+          "legacy_declared_status": "VERIFIED_RECIPROCAL_TEAM_ROLES",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "games.standings_awards_history",
+      "action_id": "READ_GAMES_STANDINGS_AWARDS_HISTORY",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "available_scope": "Legacy season totals exist; full game/award/history/event coverage UNKNOWN",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "coverage_unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "games_box_scores_standings",
+          "legacy_declared_status": "VERIFIED_PARTIAL_SEASON_TOTALS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "draft.assets_class_reports",
+      "action_id": "READ_DRAFT_CLASS_PICKS_AND_SCOUT_REPORTS",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "available_scope": "Separate prospect/current-pick readers below; complete asset list/report facade not restored",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "coverage_unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "legacy_sources": [
+        {
+          "source_id": "draft_picks_assets_free_agency",
+          "legacy_declared_status": "VERIFIED_SIMPLE_FUTURE_PICKS",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        },
+        {
+          "source_id": "historical_draft_catalog",
+          "legacy_declared_status": "VERIFIED_CLASSIFIER",
+          "provenance": "Existing source_catalog declaration; not recaptured or retested"
+        }
+      ],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "draft.current_pick",
+      "action_id": "READ_CURRENT_DRAFT_PICK",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "draft.context",
+      "available_scope": "Native draft type/round/slot, exact pick UID, owner and selected player; current UI phase not implied",
+      "coverage_complete": false,
+      "input_schema": {},
+      "coverage_unknowns": [],
+      "evidence": [
+        "evidence/static/bodies-draft-09.json",
+        "evidence/static/pick_getter_leaf.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "scout.current_public_prospects",
+      "action_id": "SCOUT_LIST_DRAFT_PROSPECTS",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.list",
+      "available_scope": "Current class150 maximum; unhidden PLAYER identity only",
+      "coverage_complete": false,
+      "input_schema": {
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "coverage_unknowns": [],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "scout.prospect_info",
+      "action_id": "SCOUT_READ_PROSPECT_INFO",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "scout.info",
+      "available_scope": "Public identity/global rank bytes only; displayed ranks and ability/report getter remain UNKNOWN",
+      "coverage_complete": false,
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_id": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "coverage_unknowns": [
+        "Visible ability estimate/presentation getters unresolved; only public identity and raw public-ranking arrays available"
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "scout.progress_report",
+      "action_id": "SCOUT_READ_PROGRESS_REPORT",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "scout.progress",
+      "available_scope": "Per-team ScoutingPoints raw, workout/medical flags; report/disclosure conversion UNKNOWN",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "coverage_unknowns": [
+        "Game report text and revealed-rating/disclosure presentation not mapped; raw team scouting progress only"
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
+    },
+    {
+      "dataset_id": "scout.staff_capacity_schedule",
+      "action_id": "SCOUT_READ_STAFF_CAPACITY_SCHEDULE",
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "scout.budget",
+      "available_scope": "Native remaining-trip budget and goal count only; staff schedule/capacity subfields UNKNOWN",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "coverage_unknowns": [
+        "Staff capability/schedule unavailable; only trip budget and existing goal count"
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json",
+        "evidence/static/bodies-core-01.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
+    }
+  ],
+  "legacy_profile_inventory": {
+    "PLAYER": {
+      "declared_field_count": 72,
+      "groups": [
+        "attributes",
+        "contract"
+      ],
+      "source": "../../config/memory_field_profile.json",
+      "status": "LEGACY_LAYOUT_REFERENCE_NOT_NEW_NATIVE_READER_SUCCESS"
+    },
+    "STAFF": {
+      "declared_field_count": 13,
+      "groups": [
+        "attributes",
+        "style",
+        "vitals"
+      ],
+      "source": "../../config/memory_field_profile.json",
+      "status": "LEGACY_LAYOUT_REFERENCE_NOT_NEW_NATIVE_READER_SUCCESS"
+    },
+    "TEAM_STATS": {
+      "declared_field_count": 27,
+      "groups": [
+        "totals"
+      ],
+      "source": "../../config/memory_field_profile.json",
+      "status": "LEGACY_LAYOUT_REFERENCE_NOT_NEW_NATIVE_READER_SUCCESS"
+    },
+    "PLAYER_STATS": {
+      "declared_field_count": 34,
+      "groups": [
+        "totals"
+      ],
+      "source": "../../config/memory_field_profile.json",
+      "status": "LEGACY_LAYOUT_REFERENCE_NOT_NEW_NATIVE_READER_SUCCESS"
+    }
+  },
+  "existing_reader_reuse_points": [
+    {
+      "file": "../../src/source_extensions.py",
+      "functions": [
+        "roster_directory(mem,root)",
+        "stats_record(mem,directory,kind,index,season_year)",
+        "player_details(raw,team_ids,game_date)",
+        "staff_details(mem,name_anchor,slot,teams)"
+      ],
+      "kind": "Existing calibrated decoder APIs; no import/capture performed this task"
+    },
+    {
+      "file": "../../src/coaching_reader.py",
+      "functions": [
+        "coaching_snapshot(locator,context,...)",
+        "gameplans(locator,tid)"
+      ],
+      "kind": "Existing read-only methods; not auto-called by new facade"
+    }
+  ],
+  "visibility": "No hidden prospect ratings or potential dump; raw progress is not an unlocked report; config/derived policies are not native game facts",
+  "game_capture_performed": false,
+  "source_catalog_capture_profile_reference": "full_verified_v1"
+}
