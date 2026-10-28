@@ -1,6 +1,7 @@
 """Checks this intermediate checkpoint only, not M0-M5 completion."""
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 run = Path(__file__).resolve().parent
@@ -16,4 +17,13 @@ for mid in ['P09', 'P10']:
     assert any('ROLE-NATIVE-EXECUTION-SYSTEM-01' in ref for ref in m['latest_task_refs'])
     assert (d / 'research/rea_native_control/role_capabilities.py').is_file()
 assert '尚未完成' in (d / 'PROJECT_INDEX.md').read_text(encoding='utf-8')
-print('PASS: source hashes and intermediate index links; full M0-M5 completion NOT asserted')
+sys.path.insert(0, str(d / 'research/rea_native_control/tools'))
+from export_role_coverage import coverage
+current = json.loads((run / 'coverage_current.json').read_text(encoding='utf-8'))
+assert current == coverage(), 'Per-requirement checkpoint is stale'
+assert len({r['capability_id'] for r in current['requirements']}) == 183
+assert current['game_access_performed'] is False
+candidate = json.loads((d / 'research/rea_native_control/data/native_bindings.json').read_text(encoding='utf-8'))
+binding = next(b for b in candidate['bindings'] if b['binding_id'] == 'sign.acquire_or_reset_candidate')
+assert binding['unknowns'] and binding['input_layout']['not_callable']
+print('PASS: source hashes, index, complete requirement dispositions and non-callable signing candidate; full M0-M5 completion NOT asserted')

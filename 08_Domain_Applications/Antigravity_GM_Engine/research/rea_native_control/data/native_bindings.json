@@ -1381,6 +1381,35 @@
           }
         ]
       }
+    },
+    {
+      "binding_id": "sign.acquire_or_reset_candidate",
+      "rva": 19609776,
+      "return_type": "UNKNOWN",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Real PLAYER and TEAM identity; native signing pool ownership unresolved"
+      ],
+      "lifecycle": [
+        "May acquire, allocate or RESET a live native signing record; not inert private preparation"
+      ],
+      "evidence": [
+        "SIGNING_RECOVERY_PROGRESS.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_lifecycle_helpers_001.json"
+      ],
+      "unknowns": [
+        "Full ABI and fifth/sixth argument meanings remain unresolved",
+        "Existing-offer ownership and reset branch conditions require complete caller closure",
+        "No live test, readback or signing completion proof"
+      ],
+      "input_layout": {
+        "recovered_span_bytes": 1642,
+        "unwind_fragments": 7,
+        "not_callable": true,
+        "parameters_empty_means_unknown_not_zero_arguments": true
+      }
     }
   ]
 }

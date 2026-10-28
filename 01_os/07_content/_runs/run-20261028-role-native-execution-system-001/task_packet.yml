@@ -24,7 +24,7 @@ task_packet:
     - 01_os/07_content/_runs/run-20261028-role-native-execution-system-001/**
   planned_capability_changes: [M0_ROLE_CAPABILITY_SERVICE, M1_BATCH_EXECUTION, M2_GM_NATIVE, M3_COACH_NATIVE, M4_PLAYER_NATIVE_AND_REQUESTS, M5_COMPLETE_COVERAGE_HANDOFF]
   verification_plan: 01_os/07_content/_runs/run-20261028-role-native-execution-system-001/verification_plan.json
-  required_tests: [M0_CONSUMER_BOUNDARY, SOURCE_AND_INDEX_CHECKPOINT]
+  required_tests: [M0_M1_CONSUMER_AND_BATCH_PROTOCOL, SOURCE_AND_INDEX_CHECKPOINT]
   prohibitions: [modify_master, merge_pull_requests, alter_existing_data_pipeline, direct_game_business_memory_writes, replay_old_live_batches, live_state_changes_without_approved_scenarios, force_push, secrets_access]
   publisher:
     principal_binding: local_authenticated
