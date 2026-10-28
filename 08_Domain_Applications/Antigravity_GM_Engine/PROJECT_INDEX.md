@@ -52,6 +52,18 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 | **P11 知识/战术/历史数据支撑** | 球队画像、历史选秀轮回、战术池、比赛规则辅助知识，按来源成熟度读取 | `docs/development_research/`、`docs/game_mechanics/SOURCES.md`、`web_gm/knowledge/` | `docs/06_HISTORICAL_DRAFT_SYSTEM.md`、`web_gm/knowledge/plays/` |
 | **P12 治理与历史证据归档** | 2026-10-22原始能力总账、任务和来源历史；使用时查更新版本，不作为当前执行成功数 | `docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json`、`docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json`、`docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md` | Draft PR #10、#12、#14、#16→集成PR #17→规划PR #18 |
 
+### 1.1 不能遗漏的“第一大任务”世界数据库工程分支（不在当前PR #17/#18文件树内）
+
+**这属于现成的独立开发成果，不能因为在当前分支找不到`world_data_prototype/`就重新造一套数据库。**
+
+| 状态/来源 | 固定版本与实际可复用内容 |
+|---|---|
+| **世界数据工程基线** | `task/nba2k22-world-data-full-implementation-20261024@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4`；[源码/README](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/17ec1cea88c2bb6c36264792f70c94bef9a8bdb4/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/README.md)，[BASELINE_HANDOFF](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/17ec1cea88c2bb6c36264792f70c94bef9a8bdb4/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md)。原常规赛工程基线v24：100张STRICT表/1775列、20个Reader源族、42个成功采集单元、受控的事实库/查询/备份与回执；**不是全生命周期正式验收**。 |
+| **定点审核修复分支** | `task/nba2k22-world-data-review-fixes-20261026@a3927fb150a213201e404cca043ced4f57409bd1`；[修复说明](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/a3927fb150a213201e404cca043ced4f57409bd1/08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/REVIEW_FIXES_F01_F02_F03.md)。候选v25：101张表/1789列；F-01年度有证据的追加、F-02赛程/Box一致性、F-03有效receipt的冲突隔离；**仍需独立审核/集成裁决**。 |
+| **后续使用原则** | 数据底座开发任务应先fetch上述分支的`world_data_prototype/`及`01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/`、`run-20261026-nba2k22-world-data-review-fixes-001/`证据；明确是否在目标分支拥有相关代码，再决定继承、Cherry-pick、整合或另建模块。未经Human批准不得合并数据分支或修改当前正式数据库。 |
+
+> **同时存在两套不同成熟度的数据资产**：当前集成树的第一代`database/schema.sql`及`src/gm_state_io/`是现有业务实现；上述独立的`world_data_prototype/`是更完整的世界数据工程候选。**本次只建立可发现的索引，不修改数据实现、SQLite，也不合并这两套结构。**新执行架构继续沿用获准的数据来源，后续再决定实际采集服务与世界库怎么接入。
+
 > **版本提示**：当前规划PR #18的base是集成PR #17，**master还没有纳入新REA或新索引**。新任务先读取fresh master和实际目标分支；找不到成果时先查正确分支，不能因此判断文件不存在。
 
 ## 2. 新窗口/新开发任务最小加载协议
