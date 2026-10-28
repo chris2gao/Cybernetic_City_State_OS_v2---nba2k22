@@ -1,5 +1,5 @@
 """Audit retained real-game observations; never connect to or alter the game."""
-import hashlib,json,sys
+import hashlib,json,sys,subprocess
 from pathlib import Path
 root=Path(__file__).resolve().parents[5]
 run=root/'01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001'
@@ -14,6 +14,8 @@ for n in ['01','02','03','04']:
     finished=load(folder/'launcher-finished.json');assert finished['exit_code']==0
     retained=load(folder/'manifest.json');prepared=run/f'03_方案设计/prepared-experiment-batch-{n}'
     batch=load(prepared/'batch.json');calls=0
+    batch_blob=subprocess.check_output(['git','show','HEAD:'+(prepared/'batch.json').relative_to(root).as_posix()],cwd=root)
+    assert hashlib.sha256(batch_blob).hexdigest()==sha(prepared/'batch.json'),'Repository batch bytes must match executed manifest'
     for row in retained['files']:
         assert sha(folder/row['path'])==row['sha256'],row['path']
     for c in batch['cases']:
@@ -21,6 +23,8 @@ for n in ['01','02','03','04']:
         assert actual['batch_sha256']==sha(prepared/'batch.json')
         assert actual['result']['original_request']==c['parameters']
         assert sha(folder/f'raw/{c["case_id"]}/program.js')==c['script_sha256']
+        program_blob=subprocess.check_output(['git','show','HEAD:'+(prepared/c['script']).relative_to(root).as_posix()],cwd=root)
+        assert hashlib.sha256(program_blob).hexdigest()==c['script_sha256'],'Repository program bytes must match executed script'
         native=actual['result']['native_result'];assert native['first_hand_game_calls']<=c['maximum_game_calls']
         calls+=native['first_hand_game_calls']
     assert all(s['cleanup_error'] is None and not s['messages_truncated'] and s['message_errors']==0 for s in retained['sessions'])
