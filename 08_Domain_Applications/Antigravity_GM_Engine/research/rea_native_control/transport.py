@@ -9,6 +9,7 @@ class LiveExecutionContext:
  allowed_action_ids:frozenset[str]
  maximum_game_calls:int
  enabled:bool=False
+ expected_pid:int|None=None
 class ReaCliTransport:
  def __init__(self,runtime_directory,context:LiveExecutionContext,*,duration_ms=15000,node_path=None,rea_path=None):
   self.runtime=Path(runtime_directory).resolve();self.context=context;self.duration_ms=duration_ms
@@ -20,6 +21,7 @@ class ReaCliTransport:
   if not 1000<=self.duration_ms<=120000:raise ValueError('Bounded REA observation window required')
   output=self.runtime/uuid.uuid4().hex;output.mkdir(parents=True,exist_ok=False);program=output/'program.js';program.write_text(script,encoding='utf-8')
   manifest={'action_id':action_id,'request_id':request_id,'authorization_ref':self.context.authorization_ref,'game_build_sha256':BUILD,'script_sha256':hashlib.sha256(program.read_bytes()).hexdigest(),'maximum_game_calls':maximum_game_calls}
+  if self.context.expected_pid is not None:manifest['expected_pid']=self.context.expected_pid
   (output/'request.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2),encoding='utf-8')
   command=['powershell.exe','-NoProfile','-ExecutionPolicy','Bypass','-File',str(Path(__file__).with_name('run_native_program.ps1')),'-Directory',str(output),'-NodePath',str(self.node),'-ReaPath',str(self.rea),'-DurationMs',str(self.duration_ms)]
   # No elevation, installation, retries or alternate targets behind the caller's back.

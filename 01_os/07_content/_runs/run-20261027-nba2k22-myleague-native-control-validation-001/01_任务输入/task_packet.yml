@@ -1,0 +1,56 @@
+task_packet:
+  task_id: NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-VALIDATION-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T3_high_risk
+  exact_base_sha: 0008af1d7ca1c67a6d5f747b35c57062d1bde7d6
+  inherited_source_sha: 2bdda79c6513f463252d7d01834218edb590eec9
+  branch: task/nba2k22-myleague-native-control-validation-20261027
+  objective: Validate the existing native-control prototype with minimal Human-supplied exact inputs. Prepare an inspectable hashed batch first; attach/read/call the game only after fresh Human approval of that batch and recoverable save. Independently read back a new native effect where authorized and applicable, retain rejections and unknowns, and deliver capability updates and a Draft PR.
+  source_evidence:
+    - 01_任务输入/CODEX_NATIVE_CONTROL_FUNCTIONAL_VALIDATION_v1.md
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/15
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/NEXT_TEST_HANDOFF.md
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/**
+    - 01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/01_任务输入/verification_plan.json
+  required_tests: [validation-source-readability]
+  verification_scope: Syntax checks prove source readability only. Functional claims require the separately approved exact batch, original native services and independent actual readback; no fabricated effects or replay of old permissions.
+  prohibitions:
+    - live_game_access_before_fresh_Human_batch_and_save_approval
+    - substitute_targets_values_assets_or_dates_to_get_a_success
+    - repeat_previous_defense_14_to_13_or_one_for_one_trade
+    - automatic_second_submission_on_missing_receipt_or_unknown_state
+    - advance_calendar_to_manufacture_draft_scene_or_unapproved_scout_trip_consumption
+    - unknown_ABI_signing_waive_editor_rotation_mentor_calls
+    - rewrite_old_evidence_production_writer_PR12_PR14_or_master
+    - force_push_history_rewrite_secrets_or_security_tool_changes
+  required_completion_pointer: 08_结论/COMPLETION.md
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: true
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: [EXPERIMENT_BATCH_01_LIVE_GAME_ACCESS]
+    preconfirmed_actions: [EXPERIMENT_BATCH_01_LIVE_GAME_ACCESS]
+    confirmation_ref: 03_方案设计/HUMAN_APPROVAL_BATCH_01.md
+    uncovered_actions: []
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_head: 0008af1d7ca1c67a6d5f747b35c57062d1bde7d6
+  executor_profile:
+    provider: Codex
+    surface: Codex_desktop
+    model: runtime_selected_GPT_6_family_exact_variant_unexposed
+    reasoning_effort: inherited_runtime_setting_unexposed
+    mode: standard
+    routing_basis: Human directly assigned this task to the current unique local Owner.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_future_session
+    different_model_family: true
+    different_measurement_tool: true

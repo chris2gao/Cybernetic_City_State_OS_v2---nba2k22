@@ -1,0 +1,72 @@
+{
+  "case_id": "coach_before",
+  "batch_sha256": "b6074763b5260c5ac6e30a454ecb6a8a832853ec6f1afb964ea0ee3b10f4d8a8",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "READ_COACH_CURRENT",
+    "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+    "original_request": {
+      "team_id": 20
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "READ_COACH_CURRENT",
+      "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+      "details": {
+        "read_only": true,
+        "data": {
+          "team_id": 20,
+          "reciprocal_owner_matches": true,
+          "class_identity": "PRIOR_LAYOUT_WITH_RECIPROCAL_LINK",
+          "name": "Rick Carlisle",
+          "offense": 5,
+          "offense2": 8,
+          "offense3": 11,
+          "defense": 13,
+          "defense2": 17,
+          "defense3": 20,
+          "known_current_settings": {
+            "POEOffense": 5,
+            "POEOffense2": 8,
+            "POEOffense3": 11,
+            "POEDefense": 13,
+            "POEDefense2": 17,
+            "POEDefense3": 20,
+            "RunPlayTendency": 90,
+            "ZoneUsage": 10,
+            "BenchDepth": 10,
+            "BenchUtilization": 100
+          },
+          "projection_fingerprint_fnv32": 461825746,
+          "reference_slots_null": [
+            true,
+            true,
+            true
+          ]
+        },
+        "coverage": "Bounded current Coach-pointer observation; no staff pool/alignment hard gate; ten mapped current fields, not full rotation or persistent Gameplan"
+      },
+      "first_hand_game_calls": 0,
+      "read_bytes": 846,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_3130c2a0d058fc8fd2b0dfa849fdd9970d7735be8ed671f5bd98f78def6df9db",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-01\\raw\\a2e3a0bd80d44432ab2e9a2ed9556412"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_unknowns": []
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": true,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}
