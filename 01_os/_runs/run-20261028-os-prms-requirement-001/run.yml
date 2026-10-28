@@ -216,3 +216,24 @@ candidate_A_independent_review:
   need_Human_confirmation_of_complete_A: true
   engineering_implemented: false
   stage02_authorized: false
+
+memory_classification_deliberation:
+  mode: full
+  trigger: Human_requests_collaborative_requirement_modeling
+  stage_profile: workflow_stage_01_requirement_modeling
+  human_source: 01_任务输入/13_Human记忆内容分类及新窗口批准加载要求_v1.md
+  draft_model: 03_需求建模/27_01b全局领域任务记忆分层与Human加载讨论模型_v0.1.md
+  status: AWAITING_HUMAN_DECISION_Q52
+  question_Q52: global_OS_and_domain_mechanism_load_depth
+  Q52_choice_confirmed: false
+  other_questions: needs_triggered_discussion_not_preapproved
+  applies_to:
+    - RES-017
+    - RES-018
+    - RES-019
+    - RES-020
+  possible_new_result_families: pending_scope_review
+  prior_Human_decisions_Q1_Q51_unchanged: true
+  complete_A_confirmed: false
+  stage02_authorized: false
+  engineering_implemented: false
