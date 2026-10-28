@@ -1,0 +1,193 @@
+{
+  "schema_version": "os_prms.catalog_acceptance_scenarios.v1",
+  "source_design": "B-v1-RC01-ADDENDUM-CATALOG-01",
+  "status": "PLANNED_NOT_EXECUTED",
+  "scenarios": [
+    {
+      "id": "CAT-01",
+      "name": "7 G1 mechanism definitions discovered with exact sources",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "Seven mechanism README paths and blob SHAs appear; differences become explicit",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-02",
+      "name": "Seven workflow stages are discoverable",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "Seven stage README paths are indexed separately from mechanism definitions",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-03",
+      "name": "Seven boot manifests discovered",
+      "covers": [
+        "RES-020"
+      ],
+      "expected": "Boot manifests are cataloged, but not incorrectly treated as seven fully preloaded bodies",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-04",
+      "name": "All Core registry YAMLs discovered",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "Thirteen current registry YAML paths with blob fingerprints and non-authority status",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-05",
+      "name": "Default directory vs full body",
+      "covers": [
+        "RES-020"
+      ],
+      "expected": "All applicable directory cards visible, only triggered canonical bodies loaded",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-06",
+      "name": "Core master vs installed domain Core version",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "Mismatch is explicitly reported, newer Core rules are not presumed installed",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-07",
+      "name": "Wrong domain G2 source rejected",
+      "covers": [
+        "RES-019"
+      ],
+      "expected": "maths2.0 cannot load nba2k22 G2 when domain_id is maths2.0",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-08",
+      "name": "Uninitialized G2 catalog is visible gap",
+      "covers": [
+        "RES-019"
+      ],
+      "expected": "Missing 09 returns DOMAIN_CATALOG_UNINITIALIZED, no fabricated published entries",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-09",
+      "name": "NBA P00-P12 all accounted",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "All thirteen project modules classified without declaring thirteen formal G2 mechanisms",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-10",
+      "name": "Core mechanism vs domain P00 separation",
+      "covers": [
+        "RES-019"
+      ],
+      "expected": "P00 references canonical Core G1; does not override OS Core governance",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-11",
+      "name": "08 source and 09 formal reference check",
+      "covers": [
+        "RES-019"
+      ],
+      "expected": "G2 published entry must point to valid domain 08 source and valid publisher evidence",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-12",
+      "name": "Changed source invalidates summary only where dependent",
+      "covers": [
+        "RES-018"
+      ],
+      "expected": "Exact blob change marks affected summaries/index stale; others retain validity",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-13",
+      "name": "Unregistered new mechanism is reported",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "Repo source scan enumerates unregistered entry and count; no silent exclusion",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-14",
+      "name": "Registered missing source fails closed",
+      "covers": [
+        "RES-017"
+      ],
+      "expected": "Missing canonical source is included in missing and blocks dependent load",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-15",
+      "name": "Filtered scope reports counts",
+      "covers": [
+        "RES-019"
+      ],
+      "expected": "Filtered historical results cannot claim exhaustive coverage",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-16",
+      "name": "Unknown lifecycle task remains discoverable",
+      "covers": [
+        "RES-018"
+      ],
+      "expected": "Unknown or freeform lifecycle does not automatically hide T1 or claim archived",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-17",
+      "name": "Insufficient context budget preserves B0",
+      "covers": [
+        "RES-020"
+      ],
+      "expected": "Required bodies not silently truncated; receipt BLOCKED with budget diagnostics",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-18",
+      "name": "Human optional choice bound to current session",
+      "covers": [
+        "RES-020"
+      ],
+      "expected": "New session surfaces prior choice but does not silently inherit optional authorization",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-19",
+      "name": "TOCTOU source commit drift",
+      "covers": [
+        "RES-020"
+      ],
+      "expected": "Changed commit between discovery and load causes re-resolve or BLOCKED, not stale READY",
+      "result": "NOT_RUN"
+    },
+    {
+      "id": "CAT-20",
+      "name": "Receipt distinguishes directory summary from full loading",
+      "covers": [
+        "RES-020"
+      ],
+      "expected": "Receipt reports exact body bytes/blob, summary-only, missing, stale and effect/auth separately",
+      "result": "NOT_RUN"
+    }
+  ],
+  "invariants": [
+    "Catalog completeness is scoped to actually enumerated source trees",
+    "Full content loading and mechanism authorization are separate facts",
+    "No cross-domain G2 content injection",
+    "Unverified actual runtime never labelled passed"
+  ]
+}
