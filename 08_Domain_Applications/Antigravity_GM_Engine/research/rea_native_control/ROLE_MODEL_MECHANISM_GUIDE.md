@@ -1,6 +1,6 @@
 # 给外部GM、Coach、Player模型的机制与执行说明
 
-> **当前角色入口（PR #19工程候选）**：角色先通过`RoleCapabilityService`的`list_role_capabilities`、`describe_action`、`get_allowed_values`加载身份许可和准确参数，再提交逻辑需求ID的`RoleActionBatch`，由`submit_decided_actions`核对host身份、阶段和范围。下文Native action示例用于说明执行器的底层格式，不能替代角色授权。[批次合同](ROLE_BATCH_EXECUTION.md)与[四槽PlayType合同](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)记录当前接口；完整M0–M5仍未完成，也没有因工程接入而新增实机许可。
+> **当前角色入口（PR #19工程候选）**：角色先通过`RoleCapabilityService`的`list_role_capabilities`、`describe_action`、`get_allowed_values`加载身份许可和准确参数，再提交逻辑需求ID的`RoleActionBatch`，由`submit_decided_actions`核对host身份、阶段和范围。下文Native action示例用于说明执行器的底层格式，不能替代角色授权。[批次合同](ROLE_BATCH_EXECUTION.md)、[四槽PlayType合同](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)与[属性/倾向合同](PLAYER_STAT_NATIVE_CONTRACT.md)记录当前接口；完整M0–M5仍未完成，也没有因工程接入而新增实机许可。
 
 适用：本仓库PC NBA2K22离线MyLEAGUE，固定EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。本目录为研发接口候选，实机范围见[验证报告](VALIDATION_RESULTS.md)与[data/native_live_validation.json](data/native_live_validation.json)。角色名称表示使用者，不是原生权限机制。
 
@@ -103,3 +103,7 @@ Player模型现在可以使用外部系统已有数据作决策，并提出已�
 回执保留原始请求、实际调用链与次数、原生返回、独立回读前后值、其它受检字段、错误或UNKNOWN及原始证据位置。对一次请求不自动改值、追加业务、恢复或重试；缺回执先独立读状态。外部模型根据回执决定下一条请求，本执行器不代替它们决策。
 
 本轮原始证据和例外在[当前验证报告](VALIDATION_RESULTS.md)，全部静态动作在[ACTION_SURFACE.md](ACTION_SURFACE.md)。成熟度按**具体字段/输入组合**登记，存在源码接口不代表实机通过。
+
+### 属性与倾向的角色参数增量
+
+`PLAYER.EDIT.ATTR_SET` / `.ATTR_BATCH`与`.TENDENCY_SET` / `.TENDENCY_BATCH`使用当前球队/球员UID，单字段为`field_id,value`，批量为非空`values`字典。通过`get_allowed_values`加载当前角色的具体字段含义和范围；能力/耐久UI整数25..99，倾向整数0..100，执行器不自动钳位或替模型决定数值。普通GM仅有明确授予的Intangibles例外；其余能力/耐久只向获授权的世界编辑身份开放。48个已命名倾向可按明确授权提供给GM/Coach/Player，Player还须匹配自身UID；51个未命名位置只供明确世界编辑，含义保持UNKNOWN。Potential和未分类能力不开放，徽章仍不可调用。完整参数、原生副作用与未实测范围见[合同](PLAYER_STAT_NATIVE_CONTRACT.md)。

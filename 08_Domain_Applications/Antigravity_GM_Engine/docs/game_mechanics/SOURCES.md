@@ -501,3 +501,7 @@
 本项为内部固定构建证据，不占用公开网页SRC编号，也不提升R02/R07历史验收状态。任务`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`；PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。
 
 证据位于仓库`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/`：`rotation_adjust_and_system_setter_001.json`、`rotation_leaf_field_candidates_002.json`、`rotation_virtual_field_join_002.json`、`rotation_qualified_entry_windows_003.json`、`rotation_team_refresh_business_001.json`及其dependencies/leaf windows。它们支持UI调用ABI、0..48边界、指定球员分钟原生Setter与固定球队标记路径；没有游戏附加、当前存档、UI、模拟或持久性证据。详细路径、参数、反例与限制见[原生分钟合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)。工具为本地PE/Capstone有界分析，未冒充REA Provider或实机调用日志。
+
+## 2026-10-28 Player索引Stat与徽章候选静态来源
+
+同一固定PC22构建与工程Run的`static/player_indexed_stat_setters_012.json`、`player_indexed_stat_field_contract_015.json`、`player_stat_delegate_thunk_016.json`恢复156项索引分派、54个已合格能力/耐久叶函数、99个倾向字节与Potential特殊刷新分支。字段名复用既有`config/memory_field_profile.json`、`config/state_io_native/player.json`，不修改采集/数据库。完整8892字节徽章函数、耦合helper和原始flag0 UI调用见014/017/018；019的首个误对齐前缀不是ABI证据。精确输入、权限与局限见[Stat合同](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)。工具为本地PE/Capstone，非REA Provider或游戏实测日志；没有新增网页SRC和实机/持久化证据。

@@ -577,7 +577,7 @@
     {
       "action_id": "PLAYER_SET_ATTRIBUTE",
       "domain": "D03",
-      "title": "指定球员单项能力ID和目标值",
+      "title": "按明确字段设置球员能力/耐久评级",
       "decision_roles": [
         "GM",
         "COACH",
@@ -585,6 +585,10 @@
       ],
       "kind": "MUTATE",
       "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
         "player_id": {
           "type": "integer",
           "maximum": 65534
@@ -593,39 +597,65 @@
           "type": "string"
         },
         "value": {
-          "type": "integer"
+          "type": "integer",
+          "minimum": 25,
+          "maximum": 99
         }
       },
-      "capability": "PARTIAL_BINDING",
-      "runtime_handler": null,
-      "unknowns": [
-        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions"
       ],
-      "coverage_unknowns": [],
       "call_sequence": [
         {
-          "operation": "STATIC_COPY_LEAD_DO_NOT_DISPATCH",
-          "binding_id": "player.copy_parent_candidate",
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
           "arguments": {
-            "destination_player": "Resolve/encode from unchanged request: destination_player",
-            "source_player": "Resolve/encode from unchanged request: source_player"
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
           }
         }
       ],
       "evidence": [
-        "evidence/static/player_editor_closure_11.json",
-        "evidence/static/editor_copy_entry_windows.json",
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
         "../../config/memory_field_profile.json",
-        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
-        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
+        "../../config/state_io_native/player.json"
       ],
       "executed_this_task": false,
-      "scope_note": null
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "WORLD_ADMIN"
+        ],
+        "family": "attributes",
+        "gm_attribute_exception": "intangibles",
+        "unnamed_fields_world_editor_only": true
+      }
     },
     {
       "action_id": "PLAYER_SET_TENDENCY",
       "domain": "D03",
-      "title": "指定球员倾向ID和目标值",
+      "title": "按明确字段设置球员倾向",
       "decision_roles": [
         "GM",
         "COACH",
@@ -633,6 +663,10 @@
       ],
       "kind": "MUTATE",
       "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
         "player_id": {
           "type": "integer",
           "maximum": 65534
@@ -641,34 +675,62 @@
           "type": "string"
         },
         "value": {
-          "type": "integer"
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
         }
       },
-      "capability": "PARTIAL_BINDING",
-      "runtime_handler": null,
-      "unknowns": [
-        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions"
       ],
-      "coverage_unknowns": [],
       "call_sequence": [
         {
-          "operation": "STATIC_COPY_LEAD_DO_NOT_DISPATCH",
-          "binding_id": "player.copy_parent_candidate",
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
           "arguments": {
-            "destination_player": "Resolve/encode from unchanged request: destination_player",
-            "source_player": "Resolve/encode from unchanged request: source_player"
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
           }
         }
       ],
       "evidence": [
-        "evidence/static/player_editor_closure_11.json",
-        "evidence/static/editor_copy_entry_windows.json",
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
         "../../config/memory_field_profile.json",
-        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
-        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
+        "../../config/state_io_native/player.json"
       ],
       "executed_this_task": false,
-      "scope_note": null
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "COACH",
+          "PLAYER",
+          "WORLD_ADMIN"
+        ],
+        "family": "tendencies",
+        "gm_attribute_exception": null,
+        "unnamed_fields_world_editor_only": true
+      }
     },
     {
       "action_id": "PLAYER_SET_BADGE",
@@ -695,25 +757,22 @@
       "capability": "PARTIAL_BINDING",
       "runtime_handler": null,
       "unknowns": [
-        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
+        "Four-argument indexed Native badge setter is recovered, but coupling/identity scope and raw-name mapping are not qualified; no dispatch"
       ],
       "coverage_unknowns": [],
       "call_sequence": [
         {
-          "operation": "STATIC_COPY_LEAD_DO_NOT_DISPATCH",
-          "binding_id": "player.copy_parent_candidate",
+          "operation": "RECOVERED_BADGE_CANDIDATE_DO_NOT_DISPATCH",
+          "binding_id": "player.badge_set_candidate",
           "arguments": {
-            "destination_player": "Resolve/encode from unchanged request: destination_player",
-            "source_player": "Resolve/encode from unchanged request: source_player"
+            "normal_ui_rule_flag": 0
           }
         }
       ],
       "evidence": [
-        "evidence/static/player_editor_closure_11.json",
-        "evidence/static/editor_copy_entry_windows.json",
-        "../../config/memory_field_profile.json",
-        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
-        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_badge_setter_014.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_coupling_helpers_017.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_setter_callers_018.json"
       ],
       "executed_this_task": false,
       "scope_note": null
@@ -3208,6 +3267,154 @@
       ],
       "executed_this_task": false,
       "scope_note": "New static ABI/call-chain recovery and deferred handler. Does not use career clamp or UI menu callbacks; no game access during implementation."
+    },
+    {
+      "action_id": "PLAYER_PATCH_ATTRIBUTES",
+      "domain": "D03",
+      "title": "按明确字段集合批量设置球员能力/耐久评级",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "values": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
+          "arguments": {
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
+        "../../config/memory_field_profile.json",
+        "../../config/state_io_native/player.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "WORLD_ADMIN"
+        ],
+        "family": "attributes",
+        "gm_attribute_exception": "intangibles",
+        "unnamed_fields_world_editor_only": true
+      }
+    },
+    {
+      "action_id": "PLAYER_PATCH_TENDENCIES",
+      "domain": "D03",
+      "title": "按明确字段集合批量设置球员倾向",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "values": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
+          "arguments": {
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
+        "../../config/memory_field_profile.json",
+        "../../config/state_io_native/player.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "COACH",
+          "PLAYER",
+          "WORLD_ADMIN"
+        ],
+        "family": "tendencies",
+        "gm_attribute_exception": null,
+        "unnamed_fields_world_editor_only": true
+      }
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

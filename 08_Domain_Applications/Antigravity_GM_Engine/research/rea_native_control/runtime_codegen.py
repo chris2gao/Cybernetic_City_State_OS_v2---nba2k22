@@ -16,6 +16,7 @@ def render_program(plan:NativeActionPlan,registry):
  handlers['training.patch']='training_patch.js'
  handlers['rotation.minutes']='rotation_minutes.js'
  handlers['player.playtypes']='player_playtypes.js'
+ handlers['player.stats']='player_stats.js'
  if handler not in handlers:raise ValueError('No recovered runtime implementation for '+str(handler))
  bindings={step.binding_id:registry.binding(step.binding_id).to_dict() for step in plan.steps if step.binding_id}
  parameters=dict(plan.request);limit=1
@@ -81,6 +82,9 @@ def render_program(plan:NativeActionPlan,registry):
   slots=parameters['slot_values']
   if not slots or any(type(key) is not str or key not in {'1','2','3','4'} or type(value) is not int or not 0<=value<=15 for key,value in slots.items()):raise ValueError('Explicit slot keys1..4 and PlayType enum integers0..15 required')
   limit=len(slots)
+ if handler=='player.stats':
+  from player_fields import load_fields,validate_values
+  limit=len(validate_values(load_fields(registry.root),plan.action_id,parameters))
  source=(root/'runtime/common.js').read_text(encoding='utf-8')+'\n'+(root/'runtime'/handlers[handler]).read_text(encoding='utf-8')+'\n'+(root/'runtime/gui_once.js').read_text(encoding='utf-8')
  player_fields=json.loads((root/'data/player_contract_fields.json').read_text(encoding='utf-8'))['fields']
  source=source.replace('__REQUEST__',json.dumps({'action_id':plan.action_id,'parameters':parameters},ensure_ascii=False,separators=(',',':'))).replace('__BINDINGS__',json.dumps(bindings,separators=(',',':'))).replace('__LIMITS__',json.dumps({'maximum_game_calls':limit,'read_bytes':1048576},separators=(',',':'))).replace('__COACH_FIELDS__',json.dumps(coach_fields,separators=(',',':'))).replace('__PLAYER_CONTRACT_FIELDS__',json.dumps(player_fields,separators=(',',':')))

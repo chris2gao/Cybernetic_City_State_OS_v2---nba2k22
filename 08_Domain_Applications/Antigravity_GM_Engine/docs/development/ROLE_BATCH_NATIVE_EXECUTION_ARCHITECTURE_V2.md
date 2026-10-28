@@ -156,3 +156,7 @@ submit_decided_actions(actor_uid, role_action_batch)
 四项`PLAYER.EDIT.PLAY_TYPE_1..4`现在通过专用Native Setter接入。角色指令参数为`team_id`、`player_id`及`slot_values`对象，例如槽位1要求`{"1":4}`。每个逻辑动作只准提交自己的一个槽位；完整Native接口可接收显式多槽对象，但不能借一项角色权限修改其它槽。合法类别0..15及含义来自既有PC22枚举。模型决定对象/槽位/值，执行器不补零、不换值、不决定顺序偏好；原生调用按槽号稳定排序。
 
 同一球员不同槽可放在一个批次，目标槽冲突必须回角色解决。Player人格需有明确动作授权并匹配自己的`player_scope`；技术可修改不产生默认权限。中断结果不重试。现有数据链未改变，界面/模拟/存档效果仍待各自真实证据。[完整调用与角色合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)及当前`coverage_current.json`记录实际输入模型；保留PR #18初版需求作来源，不回写历史为已实测。
+
+## 9. PR #19工程接口增量：索引属性/倾向（2026-10-28）
+
+四个属性/倾向单字段或显式批量接口调用原版索引UI Setter，并保留其原生缓存/通知路径；不经过整个PLAYER父对象复制。角色卡区分原规划actor与当前政策：GM能力字段只允许明确授予的Intangibles例外，其余54项中已合格能力/耐久字段供获授权的WORLD_ADMIN；普通角色倾向字段限48个已有名称，世界编辑可显式使用99个位置且未知名称保持UNKNOWN。Player须匹配自身UID。参数全部预检、同字段冲突拒绝、交易占用整球员资源；不自动改值。原生技术能力与身份许可独立。Potential刷新、徽章耦合及其它资料仍有缺口，全部新增能力尚未实机验收。见[准确合同](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)和当前工程进度。

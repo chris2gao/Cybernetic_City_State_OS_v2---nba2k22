@@ -51,4 +51,25 @@ delta = json.loads((run / 'CHECKPOINT_005_SOURCE_DELTA.json').read_text(encoding
 raw = subprocess.run(['git', 'show', delta['source_commit'] + ':' + delta['path']], cwd=root, capture_output=True, check=True).stdout
 assert hashlib.sha256(raw).hexdigest() == delta['baseline_blob_sha256']
 assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loads(raw)
-print('PASS: sources/index,183 dispositions, noncallable signing/parent copy and scoped static minute/PlayType interfaces; full M0-M5 completion NOT asserted')
+for requirement in ('ATTR_SET', 'ATTR_BATCH', 'TENDENCY_SET', 'TENDENCY_BATCH'):
+    row = next(row for row in current['requirements'] if row['capability_id'] == 'PLAYER.EDIT.' + requirement)
+    assert row['call_logic_available'] and row['role_endpoint'] == 'submit_decided_actions'
+    assert row['new_live_validation'] == 'NOT_RUN'
+fields = json.loads((d / 'research/rea_native_control/data/player_stat_fields.json').read_text(encoding='utf8'))['families']
+assert sum(field['callable'] for field in fields['attributes'].values()) == 54
+assert not fields['attributes']['potential']['callable']
+assert len(fields['tendencies']) == 99
+assert sum(field['name_known'] for field in fields['tendencies'].values()) == 48
+badge = next(b for b in candidate['bindings'] if b['binding_id'] == 'player.badge_set_candidate')
+assert badge['input_layout']['not_callable'] and len(badge['parameters']) == 4
+assert badge['input_layout']['normal_ui_flag'] == 0
+badge_req = next(row for row in current['requirements'] if row['capability_id'] == 'PLAYER.EDIT.BADGE_SET')
+assert not badge_req['call_logic_available'] and badge_req['role_endpoint'] is None
+for mid in ('P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
+    module = next(x for x in modules if x['id'] == mid)
+    assert 'research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md' in module['docs']
+for delta in json.loads((run / 'CHECKPOINT_006_SOURCE_DELTA.json').read_text(encoding='utf8'))['new_consumer_sources']:
+    raw = subprocess.run(['git', 'show', delta['source_commit'] + ':' + delta['path']], cwd=root, capture_output=True, check=True).stdout
+    assert hashlib.sha256(raw).hexdigest() == delta['baseline_blob_sha256']
+    assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loads(raw)
+print('PASS: sources/index,183 dispositions, scoped minute/PlayType/stat interfaces; signing/parent/badge noncallable; full M0-M5 completion NOT asserted')

@@ -210,8 +210,7 @@ class ExecutionAggregator:
                        ('world_id', 'save_instance_id', 'generation_id', 'season_id', 'phase', 'snapshot_ref')):
                     raise ValueError('ROLE_CONTEXT_MISMATCH')
                 req = self.service._requirement(intent.action_id)
-                if intent.action_id not in profile.allowed_actions or (profile.role_type not in req['actor'] and
-                        not (profile.role_type == 'WORLD_ADMIN' and req['baseline_status'] == 'WORLD_EDIT')):
+                if intent.action_id not in profile.allowed_actions or profile.role_type not in self.service.allowed_roles(intent.action_id):
                     raise PermissionError('ROLE_ACTION_NOT_GRANTED')
                 if req['baseline_status'] == 'WORLD_EDIT' and profile.role_type != 'WORLD_ADMIN':
                     raise PermissionError('WORLD_EDIT_NOT_ROLE_SELF_SERVICE')
@@ -314,6 +313,17 @@ class ExecutionAggregator:
             return
         if 'team_id' not in p or p['team_id'] not in profile.team_scope:
             raise PermissionError('TARGET_TEAM_OUTSIDE_ROLE_SCOPE')
+        if handler == 'player.stats':
+            from player_fields import ACTION_FAMILIES, ROLE_FIELDS, allowed_fields, validate_values
+            family = ACTION_FAMILIES[native['action_id']]
+            if ROLE_FIELDS.get(intent.action_id) != family:
+                raise PermissionError('PLAYER_STAT_REQUIREMENT_SCOPE_ESCAPE')
+            values = validate_values(self.service.player_stat_fields, native['action_id'], p)
+            fields = allowed_fields(self.service.player_stat_fields, family, profile.role_type)
+            if set(values) - set(fields):
+                raise PermissionError('PLAYER_STAT_FIELD_OUTSIDE_ROLE_SCOPE')
+            if profile.role_type == 'PLAYER' and p['player_id'] not in profile.player_scope:
+                raise PermissionError('PLAYER_EDIT_IDENTITY_OUTSIDE_ROLE_SCOPE')
         if handler == 'player.playtypes':
             if intent.action_id not in PLAY_TYPE_SLOTS or set(p['slot_values']) != {PLAY_TYPE_SLOTS[intent.action_id]}:
                 raise PermissionError('SHARED_HANDLER_SLOT_SCOPE_ESCAPE')
@@ -355,6 +365,10 @@ class ExecutionAggregator:
             return ('player/' + str(p['player_id']) + '/rotation/minutes',)
         if handler == 'player.playtypes':
             return tuple('player/' + str(p['player_id']) + '/playtypes/' + key for key in sorted(p['slot_values']))
+        if handler == 'player.stats':
+            from player_fields import ACTION_FAMILIES, selected_values
+            return tuple('player/' + str(p['player_id']) + '/stat/' + ACTION_FAMILIES[native['action_id']] + '/' + key
+                         for key in sorted(selected_values(native['action_id'], p)))
         if handler == 'draft.select':
             return ('draft/current-selection', 'player/' + str(p['player_id']), 'pick/' + str(p['pick_id']))
         return (team + '/native-context',)

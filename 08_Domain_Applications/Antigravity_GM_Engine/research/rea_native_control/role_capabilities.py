@@ -70,17 +70,22 @@ class RoleCapabilityService:
         self.mapping['TRAIN.TEAM_FOCUS'] = 'TRAIN_TEAM_PATCH_FOCUS_RAW'
         self.mapping['TRAIN.TEAM_PROFILE'] = 'TRAIN_TEAM_PATCH_PROFILE_RAW'
         self.mapping['COACH.ROTATION.PLAYER_MINUTES'] = 'COACH_ROTATION_SET_PLAYER_MINUTES'
+        self.mapping['PLAYER.EDIT.ATTR_BATCH'] = 'PLAYER_PATCH_ATTRIBUTES'
+        self.mapping['PLAYER.EDIT.TENDENCY_BATCH'] = 'PLAYER_PATCH_TENDENCIES'
         self.coach_fields = json.loads((self.registry.root / 'data/coach_settings.json').read_text(encoding='utf-8'))['fields']
         self.play_type_names = json.loads((self.registry.root.parents[1] / 'config/state_io_native/player.json').read_text(encoding='utf-8'))['PLAY_TYPE_NAMES']
+        from player_fields import load_fields
+        self.player_stat_fields = load_fields(self.registry.root)
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
             'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
+            'player_stat_fields': self.player_stat_fields,
             'bindings': {k: b.to_dict() for k, b in self.registry.bindings.items()},
             'live': self.registry.live_validation,
             'effective_mapping': self.mapping,
             'service_contract_code': {
                 name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py')},
+                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py')},
             'runtime_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted((self.registry.root / 'runtime').glob('*.js'))},
         }, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
@@ -98,14 +103,15 @@ class RoleCapabilityService:
         return {
             'action_id': action_id, 'meaning': req['label'],
             'required_role_inputs': deepcopy(req['input']),
-            'role_candidates': deepcopy(req['actor']),
+            'role_candidates': self.allowed_roles(action_id),
+            'source_role_candidates': deepcopy(req['actor']),
             'phase_requirement': req['phase'], 'known_effect': req['effect'],
             'source_maturity': req['baseline_status'],
             'is_external_request': req['baseline_status'] == 'EXTERNAL',
             'world_editor_only': req['baseline_status'] == 'WORLD_EDIT',
-            'identity_permission': action_id in profile.allowed_actions,
+            'identity_permission': action_id in profile.allowed_actions and profile.role_type in self.allowed_roles(action_id),
             'executor_action_id': native_id,
-            'native_parameter_schema': self._role_schema(action_id, native),
+            'native_parameter_schema': self._role_schema(action_id, native, profile),
             'native_maturity': native['capability'] if native else 'NOT_BOUND',
             'call_logic_available': self._callable(native),
             'unknowns': self._gaps(native),
@@ -114,7 +120,15 @@ class RoleCapabilityService:
             'game_build_sha256': self.registry.catalog['game_build_sha256'],
         }
 
-    def _role_schema(self, action_id, native):
+    def allowed_roles(self, action_id):
+        req = self._requirement(action_id)
+        native_id = self.mapping.get(action_id)
+        native = self.registry.get(native_id) if native_id else None
+        if native and native.get('role_policy'):
+            return list(native['role_policy']['roles'])
+        return ['WORLD_ADMIN'] if req['baseline_status'] == 'WORLD_EDIT' else deepcopy(req['actor'])
+
+    def _role_schema(self, action_id, native, profile):
         if native is None:
             return None
         schema = deepcopy(native['input_schema'])
@@ -123,6 +137,15 @@ class RoleCapabilityService:
             slot = PLAY_TYPE_SLOTS[action_id]
             schema['slot_values'].update(properties={slot: {'type': 'integer', 'minimum': 0, 'maximum': 15}},
                                          required=[slot], additionalProperties=False)
+        from player_fields import ROLE_FIELDS, allowed_fields
+        if action_id in ROLE_FIELDS:
+            fields = allowed_fields(self.player_stat_fields, ROLE_FIELDS[action_id], profile.role_type)
+            if 'field_id' in schema:
+                schema['field_id']['enum'] = sorted(fields)
+            else:
+                schema['values'].update(minProperties=1, additionalProperties=False,
+                    properties={key: {'type': 'integer', 'minimum': value['minimum'], 'maximum': value['maximum']}
+                                for key, value in fields.items()})
         return schema
 
     def _historical_example(self, action_id, native):
@@ -168,12 +191,18 @@ class RoleCapabilityService:
 
     def list_role_capabilities(self, profile):
         return [self.describe_action(key, profile) for key, req in self.requirements.items()
-                if profile.role_type in req['actor'] or
-                (profile.role_type == 'WORLD_ADMIN' and req['baseline_status'] == 'WORLD_EDIT')]
+                if profile.role_type in self.allowed_roles(key)]
 
     def get_allowed_values(self, action_id, profile):
         desc = self.describe_action(action_id, profile)
         fields = {}
+        from player_fields import ROLE_FIELDS, allowed_fields
+        if action_id in ROLE_FIELDS:
+            available = allowed_fields(self.player_stat_fields, ROLE_FIELDS[action_id], profile.role_type)
+            fields['field_id'] = {'values': {key: {name: value[name] for name in
+                ('meaning', 'minimum', 'maximum', 'name_known', 'encoding')} for key, value in available.items()},
+                'status': 'RECOVERED_NATIVE_UI_VALUES',
+                'policy': 'Explicit role grant required; ordinary GM attribute scope is intangibles only; unnamed tendencies are editor-only'}
         from role_batches import PLAY_TYPE_SLOTS
         if action_id in PLAY_TYPE_SLOTS:
             fields['play_type'] = {'values': deepcopy(self.play_type_names), 'status': 'EXISTING_PC22_ENUM',

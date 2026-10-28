@@ -17,7 +17,7 @@ class RoleConsumers(unittest.TestCase):
     def test_all_requirements_remain_discoverable_without_invented_bindings(self):
         self.assertEqual(len(self.service.requirements), 183)
         self.assertEqual(self.service.source_mapping_count, 50)
-        self.assertEqual(len(self.service.mapping), 57)
+        self.assertEqual(len(self.service.mapping), 59)
         trade = self.service.describe_action('GM.TRADE.EXECUTE_AGREED', self.profile)
         self.assertTrue(trade['call_logic_available'])
         self.assertFalse(trade['identity_permission'])
@@ -39,7 +39,7 @@ class RoleConsumers(unittest.TestCase):
         from export_role_coverage import coverage
         rows = {row['capability_id']: row for row in coverage()['requirements']}
         self.assertIsNone(rows['GM.ROSTER.LIST_MOVE']['role_endpoint'])
-        self.assertIsNone(rows['PLAYER.EDIT.ATTR_SET']['role_endpoint'])
+        self.assertIsNone(rows['PLAYER.EDIT.BADGE_SET']['role_endpoint'])
         self.assertEqual(rows['PLAYER.EDIT.PLAY_TYPE_1']['role_endpoint'], 'submit_decided_actions')
         self.assertEqual(rows['GM.TRADE.EXECUTE_AGREED']['role_endpoint'], 'submit_decided_actions')
 

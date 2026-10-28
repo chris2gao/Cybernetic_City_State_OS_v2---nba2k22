@@ -1,6 +1,6 @@
 # MyLEAGUE Native Control：机制说明与Issue15功能验证
 
-> 当前工程增量：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` 已在历史62动作上增加2项[日期训练局部操作](TRAINING_PATCH_CONTRACT.md)及1项[明确球员分钟的原生执行](ROTATION_MINUTES_CONTRACT.md)，并将此前不可调用的[四槽PlayType动作](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)接入专用原生Setter。当前登记65动作、47绑定/布局（含明确不可调用的签约/父对象复制候选）。[角色能力与批次接口](ROLE_BATCH_EXECUTION.md)保留183项需求、57项有效映射；映射数未因已有动作的恢复而虚增。[发现与排除的调用链](CONTROL_CALLBACK_DISCOVERY.md)有固定静态证据。新增工程仅有离线证据，整体M0–M5尚未完成；下方Issue15内容保留对应历史范围。
+> 当前工程增量：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` 已在历史62动作上增加2项[日期训练局部操作](TRAINING_PATCH_CONTRACT.md)及1项[明确球员分钟的原生执行](ROTATION_MINUTES_CONTRACT.md)，并将此前不可调用的[四槽PlayType动作](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)接入专用原生Setter。另增加2项[属性/倾向显式批量操作](PLAYER_STAT_NATIVE_CONTRACT.md)，恢复原有单字段动作的索引Native Setter。当前登记67动作、50绑定/布局（含明确不可调用的签约/父对象复制候选）。[角色能力与批次接口](ROLE_BATCH_EXECUTION.md)保留183项需求、59项有效映射；映射数未因已有动作的恢复而虚增。[发现与排除的调用链](CONTROL_CALLBACK_DISCOVERY.md)有固定静态证据。新增工程仅有离线证据，整体M0–M5尚未完成；下方Issue15内容保留对应历史范围。
 
 本目录是PC NBA2K22离线MyLEAGUE的函数发现与执行接口研发候选。**角色模型首先阅读[机制与执行说明](ROLE_MODEL_MECHANISM_GUIDE.md)**：可设置项、取值、已知影响、输入和执行方法都从该页进入。外部GM/Coach/Player模型负责分析、协商、检查和决定；本层执行确定请求，不估值、不配平、不开发经营策略。
 
@@ -51,7 +51,7 @@ result = control.dispatch(request)   # 默认返回PREPARED_NOT_EXECUTED或UNKNO
 - **球探**：当前届次、公开候选身份、原始排名/点数、剩余次数；指定对象目标构造与原生追加链；显式执行已配置specific-prospect目标的考察。不会在无目标时调用原版自动择人分支，也不把原始点数当成已解锁能力报告。
 - **选秀**：读取当前原生选择记录、用原生函数反核模型指定pick_id、核对归属/未使用，再选指定当前届次新秀。仅当前活跃选秀场景，不推进到未来顺位。UI场景、编号展示及副作用留待下一任务。
 
-签约/续约、裁员、员工属性、完整球员属性/倾向/徽章/四PlayTypes、完整轮换/分钟、Playbook提交等仍有明确缺口。复制函数/原始布局、MyTEAM/MyCAREER或创建球员编辑器状态不直接晋级为MyLEAGUE可调用业务服务。
+签约/续约、裁员、员工属性、球员Potential/徽章/其它资料、完整轮换、Playbook提交等仍有明确缺口。复制函数/原始布局、MyTEAM/MyCAREER或创建球员编辑器状态不直接晋级为MyLEAGUE可调用业务服务。
 
 读取接口区分`unknowns`（阻止该调用的结构缺口）与`coverage_unknowns`（已绑定Reader仅返回已知子集）。例如球员读取当前只输出身份和合同，不称完整属性/徽章已实现；球探返回原始进度与UNKNOWN报告字段。所有数据集都有`coverage_complete:false`。
 
