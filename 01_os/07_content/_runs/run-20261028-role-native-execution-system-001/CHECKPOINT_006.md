@@ -16,7 +16,7 @@ Selected PE/Capstone artifacts009..019 under `static/` preserve field writers, c
 
 The full8892-byte badge setter is now a precise four-argument candidate with normal UI rule flag0. Some positive levels trigger mutual exclusions or other badge changes; exact labels and safe coupled scope remain unqualified. It remains noncallable. The first prefix window at `0x97c6b0` in019 is misaligned and is not an entry or ABI proof. It must not be used to construct a call.
 
-Eight focused offline tests passed for all54 qualified attribute leaves and99 tendency byte positions, boundaries, untouched fields/cache flags, wrong delegate, partial interruption, role field policy, own-player scope and scalar/batch conflicts. Fixed-commit Managed Run/Inspect is pending and must be recorded only after execution. Tests use a synthetic Native ABI/memory model, not the game binary's executed behavior.
+Eight focused offline tests passed for all54 qualified attribute leaves and99 tendency byte positions, boundaries, untouched fields/cache flags, wrong delegate, partial interruption, role field policy, own-player scope and scalar/batch conflicts. Managed Run and Inspect subsequently passed49 offline tests and the source/index checkpoint for exact code candidate `6c9a5d663abc07427955b7af028f1d024268f3d3`. Actual runner receipts and byte-preserving outputs are retained in `MANAGED_CHECKPOINT_006_EVIDENCE.json`. Later documentation/receipt updates are not another whole-candidate Managed run. Tests use a synthetic Native ABI/memory model, not the game binary's executed behavior.
 
 ## Remaining full-task work
 
