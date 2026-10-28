@@ -29,7 +29,9 @@ def coverage():
             'call_sequence': action['call_sequence'] if action else [],
             'source_maturity': desc['source_maturity'], 'native_maturity': desc['native_maturity'],
             'call_logic_available': desc['call_logic_available'],
-            'role_endpoint': 'submit_decided_actions' if kind == 'EXTERNAL_REQUEST' or (action and action['kind'] == 'MUTATE') else 'read_role_visible_data',
+            'role_endpoint': ('submit_decided_actions' if kind == 'EXTERNAL_REQUEST' else
+                              'read_role_visible_data' if action and action['kind'] == 'READ' else
+                              'submit_decided_actions' if action and desc['call_logic_available'] else None),
             'historical_exact_live_evidence': desc['historical_exact_live_evidence'],
             'remaining_gaps': desc['unknowns'],
             'new_live_validation': 'NOT_RUN',

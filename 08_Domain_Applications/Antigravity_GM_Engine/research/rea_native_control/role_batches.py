@@ -12,6 +12,8 @@ from pathlib import Path
 
 from contracts import NativeActionRequest, Outcome
 
+PLAY_TYPE_SLOTS = {'PLAYER.EDIT.PLAY_TYPE_' + str(slot): str(slot) for slot in range(1, 5)}
+
 
 def encode(value):
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
@@ -312,6 +314,11 @@ class ExecutionAggregator:
             return
         if 'team_id' not in p or p['team_id'] not in profile.team_scope:
             raise PermissionError('TARGET_TEAM_OUTSIDE_ROLE_SCOPE')
+        if handler == 'player.playtypes':
+            if intent.action_id not in PLAY_TYPE_SLOTS or set(p['slot_values']) != {PLAY_TYPE_SLOTS[intent.action_id]}:
+                raise PermissionError('SHARED_HANDLER_SLOT_SCOPE_ESCAPE')
+            if profile.role_type == 'PLAYER' and p['player_id'] not in profile.player_scope:
+                raise PermissionError('PLAYER_EDIT_IDENTITY_OUTSIDE_ROLE_SCOPE')
         if handler in {'coach.settings', 'coach.poe'}:
             fields = COACH_FIELDS.get(intent.action_id)
             if not fields:
@@ -346,6 +353,8 @@ class ExecutionAggregator:
             return (day,)
         if handler == 'rotation.minutes':
             return ('player/' + str(p['player_id']) + '/rotation/minutes',)
+        if handler == 'player.playtypes':
+            return tuple('player/' + str(p['player_id']) + '/playtypes/' + key for key in sorted(p['slot_values']))
         if handler == 'draft.select':
             return ('draft/current-selection', 'player/' + str(p['player_id']), 'pick/' + str(p['pick_id']))
         return (team + '/native-context',)

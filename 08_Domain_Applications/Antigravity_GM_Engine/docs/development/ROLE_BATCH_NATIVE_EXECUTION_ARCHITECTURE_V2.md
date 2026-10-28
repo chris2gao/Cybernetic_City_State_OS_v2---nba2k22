@@ -148,3 +148,11 @@ submit_decided_actions(actor_uid, role_action_batch)
 5. 更新`PROJECT_INDEX.md`和`PROJECT_MODULE_REGISTRY_V2.json`中相关模块，链接到具体PR、Evidence与新的已知缺口。
 
 **本PR只规定架构，不实现RoleCapabilityProfile服务、汇总器或Native批处理执行。** 数据底座和已有游戏研究文档不被本轮修改，等Human审定完183项第一轮动作和能力值域再制定新Codex任务。
+
+## 8. PR #19工程接口增量：PlayType槽位（2026-10-28）
+
+上一节末尾的“本PR只规定架构”指来源PR #18。工程PR #19已实现角色服务/汇总/日志候选，并持续扩展Native能力；完整M0–M5仍在施工。当前精确工程状态以`research/rea_native_control/ROLE_EXECUTION_PROGRESS.md`及任务Run的`PROGRESS_POINTER.json`为准，不能据本节宣称实机或独立验收完成。
+
+四项`PLAYER.EDIT.PLAY_TYPE_1..4`现在通过专用Native Setter接入。角色指令参数为`team_id`、`player_id`及`slot_values`对象，例如槽位1要求`{"1":4}`。每个逻辑动作只准提交自己的一个槽位；完整Native接口可接收显式多槽对象，但不能借一项角色权限修改其它槽。合法类别0..15及含义来自既有PC22枚举。模型决定对象/槽位/值，执行器不补零、不换值、不决定顺序偏好；原生调用按槽号稳定排序。
+
+同一球员不同槽可放在一个批次，目标槽冲突必须回角色解决。Player人格需有明确动作授权并匹配自己的`player_scope`；技术可修改不产生默认权限。中断结果不重试。现有数据链未改变，界面/模拟/存档效果仍待各自真实证据。[完整调用与角色合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)及当前`coverage_current.json`记录实际输入模型；保留PR #18初版需求作来源，不回写历史为已实测。

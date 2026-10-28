@@ -1088,13 +1088,39 @@
       ],
       "lifecycle": [],
       "evidence": [
-        "evidence/static/editor_copy_entry_windows.json"
+        "evidence/static/editor_copy_entry_windows.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json",
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "unknowns": [
-        "Generic parent copy exceeds selected24KiB/32-fragment bound; remaining ABI/complete footprint not recovered",
-        "Child object schemas, source ownership, callback and mandatory refresh sequence unresolved; not a standalone field setter"
+        "Complete31509-byte parent body is recovered, but a safe field-specific input/ownership and normalization contract is not yet implemented",
+        "Parent copy transfers pointers and has conditional identity/context callbacks; mandatory refresh and child effects remain unqualified for a standalone attribute/tendency/badge operation"
       ],
-      "input_layout": {}
+      "input_layout": {
+        "not_callable": true,
+        "complete_selected_unwind_extent_bytes": 31509,
+        "full_extent_evidence": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "pointer_transfer_offsets": [
+          120,
+          128,
+          136,
+          144,
+          152,
+          160,
+          168,
+          176,
+          184,
+          192,
+          200,
+          208,
+          216,
+          224
+        ],
+        "context_predicate_rva": 18833616,
+        "destination_pool_predicate_rva": 18823392,
+        "context_predicates_are_not_a_safe_clone_or_refresh_contract": true
+      }
     },
     {
       "binding_id": "team.set_chemistry",
@@ -1659,6 +1685,266 @@
         },
         "return_contract": "Return ignored by the UI path",
         "effect": "Exact kind1 branch: native team eligibility query, franchise lookup and flag+0x11ff9=0; no automatic minute rebalance observed in the recovered path"
+      }
+    },
+    {
+      "binding_id": "player.set_playtype_1",
+      "rva": 15852400,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "play_type",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact current roster PLAYER, supplied team and UID, no fabricated editor or child-object pointers"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread call; host-attested current save and explicitly granted edit scope"
+      ],
+      "evidence": [
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_native_leaf_windows_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_registration_leads_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_property_setter_descriptors_006.json",
+        "../../config/state_io_native/player.json",
+        "../../docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15852400,
+            "bytes": 17,
+            "fnv32": 3164179538
+          }
+        ],
+        "slot": 1,
+        "word_offset": 360,
+        "start_bit": 0,
+        "width": 4,
+        "accepted_wrapper_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "native_effect": "Native straight-line leaf changes only this4-bit field; no calls, branches or ownership changes",
+        "return_contract": "Adapter discards return; no source-language return type is inferred"
+      }
+    },
+    {
+      "binding_id": "player.set_playtype_2",
+      "rva": 15852432,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "play_type",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact current roster PLAYER, supplied team and UID, no fabricated editor or child-object pointers"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread call; host-attested current save and explicitly granted edit scope"
+      ],
+      "evidence": [
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_native_leaf_windows_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_registration_leads_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_property_setter_descriptors_006.json",
+        "../../config/state_io_native/player.json",
+        "../../docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15852432,
+            "bytes": 23,
+            "fnv32": 574632823
+          }
+        ],
+        "slot": 2,
+        "word_offset": 360,
+        "start_bit": 4,
+        "width": 4,
+        "accepted_wrapper_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "native_effect": "Native straight-line leaf changes only this4-bit field; no calls, branches or ownership changes",
+        "return_contract": "Adapter discards return; no source-language return type is inferred"
+      }
+    },
+    {
+      "binding_id": "player.set_playtype_3",
+      "rva": 15852464,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "play_type",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact current roster PLAYER, supplied team and UID, no fabricated editor or child-object pointers"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread call; host-attested current save and explicitly granted edit scope"
+      ],
+      "evidence": [
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_native_leaf_windows_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_registration_leads_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_property_setter_descriptors_006.json",
+        "../../config/state_io_native/player.json",
+        "../../docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15852464,
+            "bytes": 23,
+            "fnv32": 527552704
+          }
+        ],
+        "slot": 3,
+        "word_offset": 360,
+        "start_bit": 8,
+        "width": 4,
+        "accepted_wrapper_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "native_effect": "Native straight-line leaf changes only this4-bit field; no calls, branches or ownership changes",
+        "return_contract": "Adapter discards return; no source-language return type is inferred"
+      }
+    },
+    {
+      "binding_id": "player.set_playtype_4",
+      "rva": 15852496,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "play_type",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact current roster PLAYER, supplied team and UID, no fabricated editor or child-object pointers"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread call; host-attested current save and explicitly granted edit scope"
+      ],
+      "evidence": [
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_native_leaf_windows_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_registration_leads_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_property_setter_descriptors_006.json",
+        "../../config/state_io_native/player.json",
+        "../../docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15852496,
+            "bytes": 23,
+            "fnv32": 594371503
+          }
+        ],
+        "slot": 4,
+        "word_offset": 360,
+        "start_bit": 12,
+        "width": 4,
+        "accepted_wrapper_values": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "native_effect": "Native straight-line leaf changes only this4-bit field; no calls, branches or ownership changes",
+        "return_contract": "Adapter discards return; no source-language return type is inferred"
       }
     }
   ]

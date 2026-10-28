@@ -116,23 +116,27 @@
         "docs/game_mechanics/PROGRESS.md",
         "docs/game_mechanics/SOURCES.md",
         "research/rea_native_control/ROTATION_MINUTES_CONTRACT.md",
-        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md"
+        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
+        "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "docs/game_mechanics/guides/",
         "docs/game_mechanics/catalogs/",
         "research/rea_native_control/runtime/rotation_minutes.js",
         "research/rea_native_control/tools/recover_script_callbacks.py",
-        "research/rea_native_control/tools/recover_entry_windows.py"
+        "research/rea_native_control/tools/recover_entry_windows.py",
+        "research/rea_native_control/runtime/player_playtypes.js"
       ],
       "notes": [
         "40 groups and 694 heterogeneous trace records; not 694 verified setters.",
-        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress."
+        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
+        "Checkpoint005: four existing PlayType requirements now use dedicated Native setters; individual slot and persona UID scope enforced.65 actions,47 bindings/layouts,57 mappings; no live acceptance."
       ],
-      "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_34 / f66ace84ee75f6730fd06caf41ea327588d18901 / no new live game evidence",
+      "last_verified_evidence": "OFFLINE_FOCUSED_PLAYTYPE_6_AND_ENDPOINT_CONSUMER_1 / no new game evidence",
       "latest_task_refs": [
         "DEV29_R07_RESEARCH_COMPLETE_20261021",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / checkpoint005 / PROGRESS_POINTER.json"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -168,7 +172,8 @@
         "docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
         "docs/39_COACHING_TACTICS.md",
         "research/rea_native_control/ROTATION_MINUTES_CONTRACT.md",
-        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md"
+        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
+        "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "web_gm/manuals/",
@@ -176,15 +181,18 @@
         "research/rea_native_control/",
         "research/rea_native_control/runtime/rotation_minutes.js",
         "research/rea_native_control/tools/recover_script_callbacks.py",
-        "research/rea_native_control/tools/recover_entry_windows.py"
+        "research/rea_native_control/tools/recover_entry_windows.py",
+        "research/rea_native_control/runtime/player_playtypes.js"
       ],
       "notes": [
         "19 setting candidates / 18 opponent defense settings; only specific real-game examples verified.",
-        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress."
+        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
+        "Checkpoint005: four existing PlayType requirements now use dedicated Native setters; individual slot and persona UID scope enforced.65 actions,47 bindings/layouts,57 mappings; no live acceptance."
       ],
-      "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_34 / f66ace84ee75f6730fd06caf41ea327588d18901 / no new live game evidence",
+      "last_verified_evidence": "OFFLINE_FOCUSED_PLAYTYPE_6_AND_ENDPOINT_CONSUMER_1 / no new game evidence",
       "latest_task_refs": [
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / checkpoint005 / PROGRESS_POINTER.json"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -196,17 +204,22 @@
       "status": "PLAYER_PROFILE_RESEARCH_PERSONA_PENDING",
       "docs": [
         "docs/game_mechanics/guides/K03_K12_PLAYER_PROFILE_AGENCY.md",
-        "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json"
+        "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+        "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "config/state_io_native/player.json",
-        "web_gm/knowledge/"
+        "web_gm/knowledge/",
+        "research/rea_native_control/runtime/player_playtypes.js"
       ],
       "notes": [
-        "Persona requests are not direct native player edit permission."
+        "Persona requests are not direct native player edit permission.",
+        "Checkpoint005: four existing PlayType requirements now use dedicated Native setters; individual slot and persona UID scope enforced.65 actions,47 bindings/layouts,57 mappings; no live acceptance."
       ],
-      "last_verified_evidence": null,
-      "latest_task_refs": [],
+      "last_verified_evidence": "OFFLINE_FOCUSED_PLAYTYPE_6_AND_ENDPOINT_CONSUMER_1 / no new game evidence",
+      "latest_task_refs": [
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / checkpoint005 / PROGRESS_POINTER.json"
+      ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
     },
@@ -250,7 +263,8 @@
         "research/rea_native_control/SIGNING_RECOVERY_PROGRESS.md",
         "research/rea_native_control/TRAINING_PATCH_CONTRACT.md",
         "research/rea_native_control/ROTATION_MINUTES_CONTRACT.md",
-        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md"
+        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
+        "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "research/rea_native_control/facade.py",
@@ -263,18 +277,22 @@
         "research/rea_native_control/runtime/training_patch.js",
         "research/rea_native_control/runtime/rotation_minutes.js",
         "research/rea_native_control/tools/recover_script_callbacks.py",
-        "research/rea_native_control/tools/recover_entry_windows.py"
+        "research/rea_native_control/tools/recover_entry_windows.py",
+        "research/rea_native_control/runtime/player_playtypes.js",
+        "research/rea_native_control/tools/recover_field_writers.py"
       ],
       "notes": [
         "Source handoff b7e0f51 blob 4cc0b2c4; REA read/ABI/live experiences are bounded.",
-        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress."
+        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
+        "Checkpoint005: four existing PlayType requirements now use dedicated Native setters; individual slot and persona UID scope enforced.65 actions,47 bindings/layouts,57 mappings; no live acceptance."
       ],
-      "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_34 / f66ace84ee75f6730fd06caf41ea327588d18901 / no new live game evidence",
+      "last_verified_evidence": "OFFLINE_FOCUSED_PLAYTYPE_6_AND_ENDPOINT_CONSUMER_1 / no new game evidence",
       "latest_task_refs": [
         "PR#16@7c970db264809ef0c82c978fd13953cdee00fb24",
         "PR#17@84195f471354400a75877f16c3c3de8a3af6b5b2",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / checkpoint005 / PROGRESS_POINTER.json"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -292,7 +310,8 @@
         "research/rea_native_control/SIGNING_RECOVERY_PROGRESS.md",
         "research/rea_native_control/TRAINING_PATCH_CONTRACT.md",
         "research/rea_native_control/ROTATION_MINUTES_CONTRACT.md",
-        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md"
+        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
+        "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/",
@@ -302,17 +321,20 @@
         "research/rea_native_control/runtime/training_patch.js",
         "research/rea_native_control/runtime/rotation_minutes.js",
         "research/rea_native_control/tools/recover_script_callbacks.py",
-        "research/rea_native_control/tools/recover_entry_windows.py"
+        "research/rea_native_control/tools/recover_entry_windows.py",
+        "research/rea_native_control/runtime/player_playtypes.js"
       ],
       "notes": [
         "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
-        "183 requirements retained; source crosswalk50 mappings, current57 mappings; an available binding is not live acceptance or role permission."
+        "183 requirements retained; source crosswalk50 mappings, current57 mappings; an available binding is not live acceptance or role permission.",
+        "Checkpoint005: four existing PlayType requirements now use dedicated Native setters; individual slot and persona UID scope enforced.65 actions,47 bindings/layouts,57 mappings; no live acceptance."
       ],
-      "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_34 / f66ace84ee75f6730fd06caf41ea327588d18901 / no new live game evidence",
+      "last_verified_evidence": "OFFLINE_FOCUSED_PLAYTYPE_6_AND_ENDPOINT_CONSUMER_1 / no new game evidence",
       "latest_task_refs": [
         "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / checkpoint005 / PROGRESS_POINTER.json"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -347,22 +369,27 @@
         "docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md",
         "docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json",
         "research/rea_native_control/ROTATION_MINUTES_CONTRACT.md",
-        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md"
+        "research/rea_native_control/CONTROL_CALLBACK_DISCOVERY.md",
+        "research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md"
       ],
       "artifacts": [
         "docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json",
         "../../01_os/07_content/_runs/",
         "research/rea_native_control/runtime/rotation_minutes.js",
         "research/rea_native_control/tools/recover_script_callbacks.py",
-        "research/rea_native_control/tools/recover_entry_windows.py"
+        "research/rea_native_control/tools/recover_entry_windows.py",
+        "research/rea_native_control/runtime/player_playtypes.js",
+        "research/rea_native_control/tools/recover_field_writers.py"
       ],
       "notes": [
         "Past snapshots are not up-to-date proof of live state.",
-        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress."
+        "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
+        "Checkpoint005: four existing PlayType requirements now use dedicated Native setters; individual slot and persona UID scope enforced.65 actions,47 bindings/layouts,57 mappings; no live acceptance."
       ],
-      "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_34 / f66ace84ee75f6730fd06caf41ea327588d18901 / no new live game evidence",
+      "last_verified_evidence": "OFFLINE_FOCUSED_PLAYTYPE_6_AND_ENDPOINT_CONSUMER_1 / no new game evidence",
       "latest_task_refs": [
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested f66ace84ee75f6730fd06caf41ea327588d18901 / MANAGED_CHECKPOINT_004_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / checkpoint005 / PROGRESS_POINTER.json"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true

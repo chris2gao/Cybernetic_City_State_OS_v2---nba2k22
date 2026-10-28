@@ -37,4 +37,18 @@ assert all(profile['slots']['5848'] == 0x11b2bb0 for profile in binding['input_l
 for mid in ['P04', 'P06', 'P09', 'P10', 'P12']:
     module = next(x for x in modules if x['id'] == mid)
     assert 'research/rea_native_control/ROTATION_MINUTES_CONTRACT.md' in module['docs']
-print('PASS: source hashes, index,183 dispositions, non-callable signing and static-only exact-minute scope; full M0-M5 completion NOT asserted')
+for slot in range(1, 5):
+    row = next(row for row in current['requirements'] if row['capability_id'] == 'PLAYER.EDIT.PLAY_TYPE_' + str(slot))
+    assert row['call_logic_available'] and row['role_endpoint'] == 'submit_decided_actions'
+    assert row['submission_parameter_schema']['slot_values']['required'] == [str(slot)]
+    assert row['new_live_validation'] == 'NOT_RUN'
+parent = next(b for b in candidate['bindings'] if b['binding_id'] == 'player.copy_parent_candidate')
+assert parent['input_layout']['not_callable'] and parent['unknowns']
+assert parent['input_layout']['complete_selected_unwind_extent_bytes'] == 31509
+module = next(x for x in modules if x['id'] == 'P07')
+assert 'research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md' in module['docs']
+delta = json.loads((run / 'CHECKPOINT_005_SOURCE_DELTA.json').read_text(encoding='utf8'))['new_consumer_source']
+raw = subprocess.run(['git', 'show', delta['source_commit'] + ':' + delta['path']], cwd=root, capture_output=True, check=True).stdout
+assert hashlib.sha256(raw).hexdigest() == delta['baseline_blob_sha256']
+assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loads(raw)
+print('PASS: sources/index,183 dispositions, noncallable signing/parent copy and scoped static minute/PlayType interfaces; full M0-M5 completion NOT asserted')

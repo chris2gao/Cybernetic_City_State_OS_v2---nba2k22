@@ -599,7 +599,7 @@
       "capability": "PARTIAL_BINDING",
       "runtime_handler": null,
       "unknowns": [
-        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
       ],
       "coverage_unknowns": [],
       "call_sequence": [
@@ -615,7 +615,9 @@
       "evidence": [
         "evidence/static/player_editor_closure_11.json",
         "evidence/static/editor_copy_entry_windows.json",
-        "../../config/memory_field_profile.json"
+        "../../config/memory_field_profile.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
       ],
       "executed_this_task": false,
       "scope_note": null
@@ -645,7 +647,7 @@
       "capability": "PARTIAL_BINDING",
       "runtime_handler": null,
       "unknowns": [
-        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
       ],
       "coverage_unknowns": [],
       "call_sequence": [
@@ -661,7 +663,9 @@
       "evidence": [
         "evidence/static/player_editor_closure_11.json",
         "evidence/static/editor_copy_entry_windows.json",
-        "../../config/memory_field_profile.json"
+        "../../config/memory_field_profile.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
       ],
       "executed_this_task": false,
       "scope_note": null
@@ -691,7 +695,7 @@
       "capability": "PARTIAL_BINDING",
       "runtime_handler": null,
       "unknowns": [
-        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
       ],
       "coverage_unknowns": [],
       "call_sequence": [
@@ -707,7 +711,9 @@
       "evidence": [
         "evidence/static/player_editor_closure_11.json",
         "evidence/static/editor_copy_entry_windows.json",
-        "../../config/memory_field_profile.json"
+        "../../config/memory_field_profile.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
       ],
       "executed_this_task": false,
       "scope_note": null
@@ -715,7 +721,7 @@
     {
       "action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
       "domain": "D03",
-      "title": "指定球员战术类型与最多四个槽位的位置/顺序（真实性待PC22证实）",
+      "title": "按明确槽位和值调用球员四个战术类型原生Setter",
       "decision_roles": [
         "GM",
         "COACH",
@@ -723,37 +729,87 @@
       ],
       "kind": "MUTATE",
       "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
         "player_id": {
           "type": "integer",
+          "minimum": 0,
           "maximum": 65534
         },
         "slot_values": {
-          "type": "array"
+          "type": "object",
+          "description": "Nonempty exact slot keys1..4, each maps to an integer PlayType enum0..15"
         }
       },
-      "capability": "PARTIAL_BINDING",
-      "runtime_handler": null,
-      "unknowns": [
-        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.playtypes",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live invocation, independently observed effect, UI, CPU selection or Save/Reload evidence",
+        "Direct-call scan found no slot1 caller; actual startup LEA references install these dedicated setters in property descriptors",
+        "No parent/child editor copy or refresh is used; scene-specific cache behavior and later AI overrides remain unverified",
+        "Existing TEAM resolver covers15 roster slots; technical mutability never grants a persona permission"
       ],
-      "coverage_unknowns": [],
       "call_sequence": [
         {
-          "operation": "STATIC_COPY_LEAD_DO_NOT_DISPATCH",
-          "binding_id": "player.copy_parent_candidate",
+          "operation": "RESOLVE_EXACT_ROSTER_PLAYER",
           "arguments": {
-            "destination_player": "Resolve/encode from unchanged request: destination_player",
-            "source_player": "Resolve/encode from unchanged request: source_player"
+            "team_id": "supplied team",
+            "player_id": "supplied native PLAYER UID16"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_1",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[1]"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_2",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[2]"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_3",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[3]"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_4",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[4]"
+          }
+        },
+        {
+          "operation": "RAW_READBACK_WITHOUT_RETRY",
+          "arguments": {
+            "check": "entire+0x168 word equals original patched only at supplied slots; recheck roster identity"
           }
         }
       ],
       "evidence": [
-        "evidence/static/player_editor_closure_11.json",
-        "evidence/static/editor_copy_entry_windows.json",
-        "../../config/memory_field_profile.json"
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_native_leaf_windows_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_registration_leads_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_property_setter_descriptors_006.json",
+        "../../config/state_io_native/player.json",
+        "../../docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
       ],
       "executed_this_task": false,
-      "scope_note": null
+      "scope_note": "Promotes prior noncallable PlayType lead to a deferred dedicated-setter implementation. Group schema is an explicit slot object; each role requirement is constrained to its own single slot. No new live effect."
     },
     {
       "action_id": "STAFF_SET_ATTRIBUTE",
@@ -814,7 +870,7 @@
       "capability": "PARTIAL_BINDING",
       "runtime_handler": null,
       "unknowns": [
-        "Native editor flush0x141f880 reaches parent/subobject copies and refresh, but independent attribute/tendency/badge/PlayType field apply and child ownership are not restored"
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
       ],
       "coverage_unknowns": [],
       "call_sequence": [
@@ -830,7 +886,9 @@
       "evidence": [
         "evidence/static/player_editor_closure_11.json",
         "evidence/static/editor_copy_entry_windows.json",
-        "../../config/memory_field_profile.json"
+        "../../config/memory_field_profile.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
       ],
       "executed_this_task": false,
       "scope_note": null

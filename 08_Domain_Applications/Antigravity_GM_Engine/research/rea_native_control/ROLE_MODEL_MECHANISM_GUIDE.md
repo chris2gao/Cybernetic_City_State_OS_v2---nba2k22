@@ -1,5 +1,7 @@
 # 给外部GM、Coach、Player模型的机制与执行说明
 
+> **当前角色入口（PR #19工程候选）**：角色先通过`RoleCapabilityService`的`list_role_capabilities`、`describe_action`、`get_allowed_values`加载身份许可和准确参数，再提交逻辑需求ID的`RoleActionBatch`，由`submit_decided_actions`核对host身份、阶段和范围。下文Native action示例用于说明执行器的底层格式，不能替代角色授权。[批次合同](ROLE_BATCH_EXECUTION.md)与[四槽PlayType合同](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)记录当前接口；完整M0–M5仍未完成，也没有因工程接入而新增实机许可。
+
 适用：本仓库PC NBA2K22离线MyLEAGUE，固定EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。本目录为研发接口候选，实机范围见[验证报告](VALIDATION_RESULTS.md)与[data/native_live_validation.json](data/native_live_validation.json)。角色名称表示使用者，不是原生权限机制。
 
 外挂中的GM、教练和球员模型根据外部数据作决定，GM之间负责协商并检查交易。这里说明机制和确定参数的执行方法；执行器不生成策略、不评估球员、不配平薪资、不在失败后换资产或目标。收到确定请求后，解析当前游戏对象、编码输入、调用原生函数并独立读回。
@@ -15,6 +17,10 @@
 角色模型只交逻辑ID和值；执行者从当前进程解析指针，角色模型不传内存地址。执行前后读取是检查对象及效果，不重新判断经营决策。类型、UID归属、数组长度、EXE/ABI、可读内存和生命周期检查属于正确调用所必需的技术条件；薪资匹配、能力匹配、交易公平性与双方是否同意属于外部决策。
 
 `prepare`和`render`不访问游戏；提供显式启用的管理员REA transport后，`dispatch`才运行。函数返回与实际效果分开：`REJECTED_BY_GAME`保留原输入；`NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED`还需独立读取；缺回执为`UNKNOWN`，先查状态，不能直接重放。`REAL_NATIVE_EFFECT_VERIFIED`只说明该次原生状态发生了预期变化，不等于UI、存盘重载或生产集成通过。
+
+### 1.1 四槽PlayType接口增量
+
+**PlayType增量**：`PLAYER.EDIT.PLAY_TYPE_1..4`各自只允许对应的单槽对象，例如槽位1参数`{team_id,player_id,slot_values:{"1":4}}`。类别0..15有既有PC22名称；共享Native action可处理显式多槽，但单槽角色权限不能越到其它槽。Player还必须匹配自己的`player_scope`。四个专用Setter已有静态恢复和离线实现，UI/模拟/持久化未实测；详见[调用合同](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)。
 
 ## 2. 交易：执行外部已经同意的资产包
 

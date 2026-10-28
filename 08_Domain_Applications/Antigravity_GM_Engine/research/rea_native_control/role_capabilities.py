@@ -71,9 +71,10 @@ class RoleCapabilityService:
         self.mapping['TRAIN.TEAM_PROFILE'] = 'TRAIN_TEAM_PATCH_PROFILE_RAW'
         self.mapping['COACH.ROTATION.PLAYER_MINUTES'] = 'COACH_ROTATION_SET_PLAYER_MINUTES'
         self.coach_fields = json.loads((self.registry.root / 'data/coach_settings.json').read_text(encoding='utf-8'))['fields']
+        self.play_type_names = json.loads((self.registry.root.parents[1] / 'config/state_io_native/player.json').read_text(encoding='utf-8'))['PLAY_TYPE_NAMES']
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
-            'actions': self.registry.catalog, 'coach': self.coach_fields,
+            'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
             'bindings': {k: b.to_dict() for k, b in self.registry.bindings.items()},
             'live': self.registry.live_validation,
             'effective_mapping': self.mapping,
@@ -104,7 +105,7 @@ class RoleCapabilityService:
             'world_editor_only': req['baseline_status'] == 'WORLD_EDIT',
             'identity_permission': action_id in profile.allowed_actions,
             'executor_action_id': native_id,
-            'native_parameter_schema': deepcopy(native['input_schema']) if native else None,
+            'native_parameter_schema': self._role_schema(action_id, native),
             'native_maturity': native['capability'] if native else 'NOT_BOUND',
             'call_logic_available': self._callable(native),
             'unknowns': self._gaps(native),
@@ -112,6 +113,17 @@ class RoleCapabilityService:
             'catalog_version': self.version,
             'game_build_sha256': self.registry.catalog['game_build_sha256'],
         }
+
+    def _role_schema(self, action_id, native):
+        if native is None:
+            return None
+        schema = deepcopy(native['input_schema'])
+        from role_batches import PLAY_TYPE_SLOTS
+        if action_id in PLAY_TYPE_SLOTS:
+            slot = PLAY_TYPE_SLOTS[action_id]
+            schema['slot_values'].update(properties={slot: {'type': 'integer', 'minimum': 0, 'maximum': 15}},
+                                         required=[slot], additionalProperties=False)
+        return schema
 
     def _historical_example(self, action_id, native):
         example = native.get('live_validation') if native else None
@@ -162,6 +174,11 @@ class RoleCapabilityService:
     def get_allowed_values(self, action_id, profile):
         desc = self.describe_action(action_id, profile)
         fields = {}
+        from role_batches import PLAY_TYPE_SLOTS
+        if action_id in PLAY_TYPE_SLOTS:
+            fields['play_type'] = {'values': deepcopy(self.play_type_names), 'status': 'EXISTING_PC22_ENUM',
+                                  'exact_slot_key': PLAY_TYPE_SLOTS[action_id],
+                                  'meaning': 'Assigned ordered PlayType category; not a specific play CRC or guaranteed CPU usage'}
         if desc['executor_action_id'] in {
                 'COACH_SET_KNOWN_CURRENT_SETTINGS', 'COACH_SET_ROTATION_POLICY',
                 'COACH_APPLY_DEFENSE_POE', 'COACH_APPLY_OFFENSE_POE'}:

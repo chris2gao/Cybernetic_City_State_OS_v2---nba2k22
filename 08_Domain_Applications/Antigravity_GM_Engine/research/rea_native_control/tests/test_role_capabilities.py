@@ -34,6 +34,15 @@ class RoleConsumers(unittest.TestCase):
         granted = replace(self.profile, allowed_actions=frozenset({'GM.TRADE.EXECUTE_AGREED'}))
         self.assertTrue(self.service.describe_action('GM.TRADE.EXECUTE_AGREED', granted)['identity_permission'])
 
+    def test_unbound_mutations_do_not_advertise_a_read_or_submit_endpoint(self):
+        sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+        from export_role_coverage import coverage
+        rows = {row['capability_id']: row for row in coverage()['requirements']}
+        self.assertIsNone(rows['GM.ROSTER.LIST_MOVE']['role_endpoint'])
+        self.assertIsNone(rows['PLAYER.EDIT.ATTR_SET']['role_endpoint'])
+        self.assertEqual(rows['PLAYER.EDIT.PLAY_TYPE_1']['role_endpoint'], 'submit_decided_actions')
+        self.assertEqual(rows['GM.TRADE.EXECUTE_AGREED']['role_endpoint'], 'submit_decided_actions')
+
     def test_snapshot_identity_projection_and_hidden_nested_values(self):
         profile = replace(self.profile, read_grants=(('players', ('public',)),))
         envelope = {key: getattr(profile, key) for key in

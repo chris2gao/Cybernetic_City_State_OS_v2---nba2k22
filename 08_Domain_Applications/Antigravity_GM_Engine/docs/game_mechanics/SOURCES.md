@@ -496,6 +496,8 @@
 
 ## 2026-10-28 Native轮换分钟工程静态来源
 
+同日Player增量：任务Run的`static/player_playtype_native_leaf_windows_002.json`、`player_playtype_registration_leads_005.json`和`player_property_setter_descriptors_006.json`记录四个专用PlayType Setter及动态描述符安装；固定构建SHA同下。名称与值继续复用`config/state_io_native/player.json`及R04B目录。直接CALL/静态绝对指针搜索的零结果被后续正向LEA注册证据补充，不能解释为函数未被使用。模型可读参数、逐槽许可与所有未验证作用见[PlayType合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)。没有新网页SRC、游戏调用或持久化证据。
+
 本项为内部固定构建证据，不占用公开网页SRC编号，也不提升R02/R07历史验收状态。任务`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`；PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。
 
 证据位于仓库`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/`：`rotation_adjust_and_system_setter_001.json`、`rotation_leaf_field_candidates_002.json`、`rotation_virtual_field_join_002.json`、`rotation_qualified_entry_windows_003.json`、`rotation_team_refresh_business_001.json`及其dependencies/leaf windows。它们支持UI调用ABI、0..48边界、指定球员分钟原生Setter与固定球队标记路径；没有游戏附加、当前存档、UI、模拟或持久性证据。详细路径、参数、反例与限制见[原生分钟合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)。工具为本地PE/Capstone有界分析，未冒充REA Provider或实机调用日志。
