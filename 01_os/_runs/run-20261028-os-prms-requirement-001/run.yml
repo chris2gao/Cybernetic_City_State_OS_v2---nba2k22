@@ -14,9 +14,9 @@ human_confirmed_A0:
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v0.9-DRAFT
+  version: OS-PRMS-A-v0.10-DRAFT
   confirmed: false
-  source: 03_需求建模/15_需求结果模型A_v0.9_字段接口证据验收收口入口.md
+  source: 03_需求建模/20_需求结果模型A_v0.10_索引概要按需加载专题收口入口.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -131,6 +131,26 @@ requirement_A_closure:
   decision_trace_matrix: 03_需求建模/13_Av0.9_裁决需求证据验收追踪矩阵.md
   evidence_acceptance_matrix: 03_需求建模/14_Av0.9_证据缺口和验收矩阵.md
   ready_for_final_A_confirmation: false
+human_priority_followup:
+  source: 01_任务输入/11_Human继续收口与上下文索引概要按需加载优先_v1.md
+  priority: persistent_memory_index_summary_lazy_loading
+  interpretation: continue_01b_closure_not_complete_A_approval
+  applies_to_res:
+    - RES-017
+    - RES-018
+    - RES-019
+    - RES-020
+  stage02_evidence_needed: true
+  stage03_design_needed: true
+memory_subsystem_requirements:
+  layered_storage_and_summary: 03_需求建模/16_Av0.10_持久记忆分层与概要生成合同.md
+  multidimensional_index_and_updates: 03_需求建模/17_Av0.10_多维索引与增量维护合同.md
+  on_demand_context_and_recovery: 03_需求建模/18_Av0.10_按需加载与上下文预算恢复合同.md
+  verification_matrix: 03_需求建模/19_Av0.10_索引概要检索验收与证据计划.md
+  original_result_items: 16
+  added_result_items: 4
+  total_result_items_candidate: 20
+  status: DRAFT_UNIMPLEMENTED
 draft_history:
   - 03_需求建模/02_需求结果模型A_v0.1_候选.md
   - 03_需求建模/03_需求结果模型A_v0.2_含首轮裁决.md
@@ -141,4 +161,5 @@ draft_history:
   - 03_需求建模/08_需求结果模型A_v0.7_含前五轮裁决.md
   - 03_需求建模/09_需求结果模型A_v0.8_含前七轮裁决.md
   - 03_需求建模/15_需求结果模型A_v0.9_字段接口证据验收收口入口.md
-next_step: 01b_A_v0.9_field_level_closure_and_matrix_audit_not_approval
+  - 03_需求建模/20_需求结果模型A_v0.10_索引概要按需加载专题收口入口.md
+next_step: 01b_A_v0.10_memory_subsystem_field_validation_and_result_A_RC_review_not_approval
