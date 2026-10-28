@@ -85,7 +85,7 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 
 ## 4. 当前任务与证据路径
 
-- 当前工程窗口：[Draft PR #19](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/19)，独立于来源PR #18；已验证代码候选`bd6ffcee0e07103b7c4a0b3b53ee561166bee0c4`（49项离线检查及Managed Run/Inspect；含属性/倾向工程及徽章静态字段/名称/修正源核对），完整M0–M5仍在施工。准确进度指针：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/PROGRESS_POINTER.json`，不是全任务完成指针。
+- 当前工程窗口：[Draft PR #19](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/19)，独立于来源PR #18；已验证代码候选`b6b8a0c7aabf4bb9b04e6c417429e006013bc60d`（58项离线检查及Managed Run/Inspect；含徽章明确联动接口、有效Getter/修正源及角色冲突核对），完整M0–M5仍在施工。准确进度指针：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/PROGRESS_POINTER.json`，不是全任务完成指针。
 
 - **进行中：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)、[日期训练局部Apply](research/rea_native_control/TRAINING_PATCH_CONTRACT.md)、[明确球员分钟Native链](research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留183项需求；原有50映射保留为历史来源，当前59项有效映射含4项POE、2项训练局部操作、1项分钟操作及2项属性/倾向批量操作，交易变体统一直接Process。P04/P06机制资料与P09/P10源码同步；离线协议/字节验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
 
