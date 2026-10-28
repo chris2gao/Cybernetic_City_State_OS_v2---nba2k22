@@ -24,6 +24,6 @@ Fresh NBA2K22 remote master remains `7742568ac677b3c16079887463f05e81cb1191ed`; 
 
 ## Verification and continuation
 
-Focused new checks:9 passed (minute path6, callback decoder3). Fixed-commit Managed Run/Inspect is pending at the code checkpoint commit; its exact result will be added to `PROGRESS_POINTER.json` after the run. This checkpoint itself does not claim a34-test managed result prematurely.
+Focused new checks:9 passed (minute path6, callback decoder3). Managed Run and Inspect subsequently passed for exact code candidate `f66ace84ee75f6730fd06caf41ea327588d18901`:34 offline tests and the source/index checkpoint. Actual runner result, finished receipts and exact output bytes are retained in `MANAGED_CHECKPOINT_004_EVIDENCE.json`. Documentation/receipt updates after this code commit are not a new whole-candidate Managed test claim.
 
 P04/P06 mechanism knowledge and P09/P10 execution/navigation are synchronized in the same engineering branch. P12 points at the durable evidence. Existing data acquisition/SQLite/history chains are unchanged. Signing, staff, remaining Coach/Book/Freelance/rotation order, Player edits, full role-context/readback integration, Human-approved live scenarios and final independent review remain open.
