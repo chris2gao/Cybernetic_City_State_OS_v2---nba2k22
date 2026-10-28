@@ -1,5 +1,11 @@
 # NBA2K22 GM project instructions
 
+> **2026-10-28 | NBA2K22领域新任务默认索引（Human最新指令，优先于下方旧版执行链条的历史描述）**：进入本领域任何Codex/GPT/Antigravity规划、开发、逆向或审阅任务，在完成根AGENTS和OS最小启动后，**必须先读取[全项目总索引](PROJECT_INDEX.md)和[项目模块机读表](docs/development/PROJECT_MODULE_REGISTRY_V2.json)**，然后按影响模块加载对应源码、[游戏机制资料库](docs/game_mechanics/README.md)及[REA上下文/逆向经验交接](research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md)等所需材料。**先查已有系统，不从旧聊天或单个Native函数出发重新发明模块。**任务包记录`affected_module_ids`与实际读取源；完成任务要在同一PR更新受影响模块的索引/成熟度/证据/任务指针，按[索引同步合同](docs/development/PROJECT_INDEX_SYNC_CONTRACT_V1.md)完成交接。索引存在于PR #18目标分支、尚未进master的情形必须检查真实HEAD。此领域规则不修改任何core-owned OS启动协议或赋予游戏运行权限。
+
+> **2026-10-28 | 最新执行架构**：[角色身份能力加载→自主决策/协商→批量指令汇总→REA Native统一执行](docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md)，**既有游戏数据读取/数据库链暂不改变**。GM、Coach、Player模型决定对象和值；控制层只提供可操作能力/值域/含义、执行明确参数，不能配平薪资、改选交易对象或代替决策。旧六阶段文档保留历史和数据/角色协作研究价值，但**下文旧“执行主要靠直接改内存/人工逐条触发”不能作为当前Native执行架构的优先描述**。新架构是规划，真实批量执行功能是否已实现依证据判定。
+
+
+
 > **最新技术研发方法（2026-10-21）**：[根据R01–R07和现有原生工程反推的UI→完整对象→数据生产/查询源→数据库镜像→受控操作V2蓝图](docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md)。以NBA2K22 PC真实页面、各页面全部数据列/控件及原生对象/索引/Getter为研究边界；不能按GM/人格预期挑几个字段补采。内存表状结构不等于证明游戏内部SQL库；完整PLAYER必须包含能力、倾向、徽章、统计等全部原生子对象。旧Native I/O V1已撤回，V2是待验证规划，不自动授权DEV28开发/游戏写入。
 
 > **NBA2K22 项目级默认协作规范（2026-10-24；最新Human裁决）**：[跨模型协作与原型驱动开发规范 V2](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)。**GPT规划与Human重大架构决策，Codex为工程实现唯一Owner，Antigravity只做有界Native逆向及重复性辅助**；两者共用本地仓库/测试环境时必须**顺序工作、交接HEAD与工作区状态，不能并行执行**。先明确全域原型，再由Codex连续实现并依据真实发现迭代；开发期做必要轻量验证，完整候选后集中独立审核。项目既有任务是新主线的技术背景，不自动成为其阶段依赖；实际OS权限、独立审核与master发布门禁继续适用。旧[V1跨模型规范](docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md)保留历史及不冲突条款（含subagent证明/禁用规则）。
