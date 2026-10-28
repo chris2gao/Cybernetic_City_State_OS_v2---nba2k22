@@ -344,6 +344,8 @@ class ExecutionAggregator:
             if handler == 'training.patch':
                 return (day + '/focus',) if native['action_id'] == 'TRAIN_TEAM_PATCH_FOCUS_RAW' else (day + '/profile', day + '/subfocus')
             return (day,)
+        if handler == 'rotation.minutes':
+            return ('player/' + str(p['player_id']) + '/rotation/minutes',)
         if handler == 'draft.select':
             return ('draft/current-selection', 'player/' + str(p['player_id']), 'pick/' + str(p['pick_id']))
         return (team + '/native-context',)

@@ -1,5 +1,7 @@
 # NBA2K20–23 终极联盟游戏机制知识库
 
+> **2026-10-28 Native工程增量（静态恢复，未实机验收）**：[K04补充§22](guides/K04_COACH_AND_PLAYS.md#22-pc22原生轮换分钟调用链2026-10-28工程增量)及[完整调用合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)记录明确球员分钟0..48的原生Setter/球队变更路径，排除可能截断输入的MyCareer分支。它不证明当前存档、UI、模拟或持久化效果，不改变历史R02/R07验收状态。
+
 > **最新R07修复断点（2026-10-21）**：研究已按[独立审核](../development_reviews/DEV29_R07_INDEPENDENT_REVIEW_20261021.md)完成A/B两项定向修正并[提交自检回执](../development_reviews/DEV29_R07_TARGETED_CATALOG_REPAIR_20261021.md)，状态`R07_TARGETED_CATALOG_REPAIR_SUBMITTED_FOR_INDEPENDENT_RECHECK`。两个R01目录ID现明示为人工指南主题别名，8个能力组的模型查询层已与执行/审批/存档真实性分开。**正在等待独立简短复验，不能自行声称DEV29研究已经正式结案。**
 
 

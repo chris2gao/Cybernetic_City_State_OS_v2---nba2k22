@@ -493,3 +493,9 @@
 | **SRC-0199** | [OS 2K22 PS4 Orlando Magic Dynasty设置](https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/916690-the-orlando-magic-dynasty) | 2K22 PS4本世代玩家公开82赛季/BO7、真实与Sim、Normalize设置；个人配置不代表PC默认 |
 
 [R06-C中文攻略](guides/K11_SEASON_SAVE_PERSISTENCE_R06C.md)及[38类候选机读目录](catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json)均为**研究原料，不是38项已测本机原生偏移**。本轮不进行游戏推进/存档/重启实验，不开发Agent或DEV28。
+
+## 2026-10-28 Native轮换分钟工程静态来源
+
+本项为内部固定构建证据，不占用公开网页SRC编号，也不提升R02/R07历史验收状态。任务`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`；PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。
+
+证据位于仓库`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/`：`rotation_adjust_and_system_setter_001.json`、`rotation_leaf_field_candidates_002.json`、`rotation_virtual_field_join_002.json`、`rotation_qualified_entry_windows_003.json`、`rotation_team_refresh_business_001.json`及其dependencies/leaf windows。它们支持UI调用ABI、0..48边界、指定球员分钟原生Setter与固定球队标记路径；没有游戏附加、当前存档、UI、模拟或持久性证据。详细路径、参数、反例与限制见[原生分钟合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)。工具为本地PE/Capstone有界分析，未冒充REA Provider或实机调用日志。

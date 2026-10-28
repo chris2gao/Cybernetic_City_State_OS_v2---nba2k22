@@ -1410,6 +1410,256 @@
         "not_callable": true,
         "parameters_empty_means_unknown_not_zero_arguments": true
       }
+    },
+    {
+      "binding_id": "rotation.current_delegate",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Fresh current delegate and exact TEAM/PLAYER/franchise identities; supported slot profile only"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread invocation; host must attest current save and TEAM_ROTATION phase"
+      ],
+      "evidence": [
+        "ROTATION_MINUTES_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_adjust_and_system_setter_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_leaf_field_candidates_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_virtual_field_join_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_business_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_qualified_entry_windows_003.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_notification_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_leaf_windows_004.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "root_rva": 103972696,
+        "allowed_profiles": [
+          {
+            "static_vtable_candidate_rva": 45374200,
+            "slots": {
+              "736": 18713280,
+              "1288": 18838960,
+              "1336": 19019616,
+              "5840": 2552304,
+              "5848": 18557872
+            }
+          },
+          {
+            "static_vtable_candidate_rva": 45381672,
+            "slots": {
+              "736": 18713280,
+              "1288": 18838960,
+              "1336": 19019616,
+              "5840": 2552304,
+              "5848": 18557872
+            }
+          },
+          {
+            "static_vtable_candidate_rva": 45389144,
+            "slots": {
+              "736": 18713280,
+              "1288": 21564384,
+              "1336": 19019616,
+              "5840": 2552304,
+              "5848": 18557872
+            }
+          }
+        ],
+        "code_signatures": [
+          {
+            "rva": 8849794,
+            "bytes": 24,
+            "fnv32": 1172217694
+          },
+          {
+            "rva": 2552304,
+            "bytes": 6,
+            "fnv32": 4288917119
+          },
+          {
+            "rva": 19019616,
+            "bytes": 16,
+            "fnv32": 112752173
+          },
+          {
+            "rva": 18713280,
+            "bytes": 8,
+            "fnv32": 3017607810
+          },
+          {
+            "rva": 18838960,
+            "bytes": 22,
+            "fnv32": 100093333
+          },
+          {
+            "rva": 21564384,
+            "bytes": 230,
+            "fnv32": 1700454156
+          }
+        ],
+        "proof_scope": "Observed UI virtual-slot contract; each used slot must match a recovered general delegate profile; career clamp11b2900 is excluded"
+      }
+    },
+    {
+      "binding_id": "rotation.franchise_team_index",
+      "rva": 15593440,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Fresh current delegate and exact TEAM/PLAYER/franchise identities; supported slot profile only"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread invocation; host must attest current save and TEAM_ROTATION phase"
+      ],
+      "evidence": [
+        "ROTATION_MINUTES_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_adjust_and_system_setter_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_leaf_field_candidates_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_virtual_field_join_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_business_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_qualified_entry_windows_003.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_notification_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_leaf_windows_004.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15593440,
+            "bytes": 31,
+            "fnv32": 1519052376
+          }
+        ],
+        "native_invalid_index": 255
+      }
+    },
+    {
+      "binding_id": "rotation.set_player_minutes",
+      "rva": 18557872,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "delegate",
+          "type": "pointer"
+        },
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "minutes",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Fresh current delegate and exact TEAM/PLAYER/franchise identities; supported slot profile only"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread invocation; host must attest current save and TEAM_ROTATION phase"
+      ],
+      "evidence": [
+        "ROTATION_MINUTES_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_adjust_and_system_setter_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_leaf_field_candidates_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_virtual_field_join_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_business_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_qualified_entry_windows_003.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_notification_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_leaf_windows_004.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 18557872,
+            "bytes": 42,
+            "fnv32": 820819507
+          }
+        ],
+        "parameter_contract": "UI supplies explicit next assigned minutes as R8D; wrapper accepts0..48, never relies on native saturation127",
+        "return_contract": "Native callers ignore the return; void is the adapter ABI discard policy, not proof of a source-language void declaration",
+        "effect": "Native leaf updates PLAYER+0xf8 bits18..24; does not redistribute other players minutes"
+      }
+    },
+    {
+      "binding_id": "rotation.mark_team_change",
+      "rva": 19735024,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        },
+        {
+          "name": "change_kind",
+          "type": "int"
+        },
+        {
+          "name": "flag",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Fresh current delegate and exact TEAM/PLAYER/franchise identities; supported slot profile only"
+      ],
+      "lifecycle": [
+        "Deferred GUI-thread invocation; host must attest current save and TEAM_ROTATION phase"
+      ],
+      "evidence": [
+        "ROTATION_MINUTES_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_adjust_and_system_setter_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_leaf_field_candidates_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_virtual_field_join_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_business_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_qualified_entry_windows_003.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_notification_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_delegate_leaf_windows_004.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19735024,
+            "bytes": 161,
+            "fnv32": 67780532
+          },
+          {
+            "rva": 15594624,
+            "bytes": 92,
+            "fnv32": 2414502331
+          },
+          {
+            "rva": 16623408,
+            "bytes": 183,
+            "fnv32": 273503650
+          }
+        ],
+        "exact_arguments": {
+          "change_kind": 1,
+          "flag": 0
+        },
+        "return_contract": "Return ignored by the UI path",
+        "effect": "Exact kind1 branch: native team eligibility query, franchise lookup and flag+0x11ff9=0; no automatic minute rebalance observed in the recovered path"
+      }
     }
   ]
 }

@@ -1,6 +1,6 @@
 # NBA2K22 外挂系统 · 全项目总索引（所有新任务先读）
 
-**索引版本**：v2.0 / 2026-10-28 · **状态**：项目领域级导航，随 Draft PR #18 提交；不代表已合并 master。  
+**索引版本**：v2.1 / 2026-10-28 · **状态**：项目领域级导航，继承 Draft PR #18，工程增量在 Draft PR #19；不代表已合并 master。
 **项目位置**：`08_Domain_Applications/Antigravity_GM_Engine/`（下文默认此路径为 D）。  
 **适用**：GPT 规划、Codex 工程、Antigravity、GM/Coach/Player 人格开发、数据采集与分析、独立审核。
 
@@ -44,11 +44,11 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 | **P03 游戏原生数据/Decoder** | 本机字段profile、各类对象登记、局部Reader与未闭合覆盖 | `config/source_catalog.json`、`config/memory_field_profile.json`、`docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md` | `config/state_io_native/`、`research/` |
 | **P04 游戏机制资料库（**必读**）** | DEV29 R01–R07：攻略、功能、19项Coach、18项对手防守、Playbook、训练、选秀、财务、历史；40组/694异构参考项，**不是当前Native执行全集** | **`docs/game_mechanics/README.md`**、`docs/game_mechanics/PROGRESS.md`、`docs/game_mechanics/SOURCES.md` | `docs/game_mechanics/guides/`、`docs/game_mechanics/catalogs/` |
 | **P05 GM决策系统** | 现有GM决策/数据输入/多队经营代码与部分人格参考；不能将全部球队完整自动GM视为已通过 | `docs/04_GM_DECISION_ENGINE.md`、`docs/35_WEB_GPT_BASELINES_AND_MEMORY_PROTOCOL.md`、`web_gm/START_HERE.md` | `src/gm_core/`、`web_gm/`、`src/gm_data_access/` |
-| **P06 Coach角色与战术** | Coach参数、对手防守、12战术类别、68槽Book、4Freelance的研究/部分工程；独立Coach人格仍是待开发能力 | `docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md`、`docs/39_COACHING_TACTICS.md` | `web_gm/manuals/`、`config/state_io_native/settings.json`、REA能力目录 |
+| **P06 Coach角色与战术** | Coach参数、对手防守、12战术类别、68槽Book、4Freelance的研究/部分工程；新增明确分钟Native调用实现，静态恢复且未实测；独立Coach人格仍待开发 | `docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md`、`research/rea_native_control/ROTATION_MINUTES_CONTRACT.md` | `web_gm/manuals/`、`config/state_io_native/settings.json`、REA能力目录 |
 | **P07 Player角色与成长** | Player档案、能力/倾向/徽章、合同、训练/生命线/个人请求的研究；独立Player人格未验收 | `docs/game_mechanics/guides/K03_K12_PLAYER_PROFILE_AGENCY.md`、`docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json` | `config/state_io_native/player.json`、`web_gm/knowledge/` |
 | **P08 交易/签约/选秀/球探/训练** | GM/Coach跨域业务机制与执行材料；交易特定实例和球探已有Goal实机验证，签约与Draft待补 | `docs/game_mechanics/guides/K07_K08_K09_FRANCHISE_OPERATIONS.md`、`docs/game_mechanics/guides/K06_TRAINING_HEALTH_GROWTH.md` | `research/rea_native_control/`、`src/gm_state_io/` |
-| **P09 REA原生执行（**必读**）** | 交易原生Process、Coach Apply、球探Goal的具体实机效果，62动作的静态/部分调用登记；**不是62个实机验收** | `research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md`、`research/rea_native_control/ROLE_MODEL_MECHANISM_GUIDE.md`、`research/rea_native_control/VALIDATION_RESULTS.md` | `research/rea_native_control/data/action_registry.json`、`data/native_bindings.json`、`facade.py`、`runtime/` |
-| **P10 角色能力与批量执行规划** | 183个初版原子需求/14组、现有REA 62动作映射50、40资料组对照12 Reader；**正在Human共识阶段，不等于实现** | `docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md`、本PR #18 的Run | `01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/` |
+| **P09 REA原生执行（**必读**）** | 交易原生Process、Coach Apply、球探Goal的具体历史实机效果；当前65动作、43绑定/布局含新分钟链；**登记与静态实现不等于实机验收** | `research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md`、`research/rea_native_control/ROLE_EXECUTION_PROGRESS.md`、`research/rea_native_control/VALIDATION_RESULTS.md` | `research/rea_native_control/data/action_registry.json`、`data/native_bindings.json`、`facade.py`、`runtime/` |
+| **P10 角色能力与批量执行** | 保留183个初版需求/14组；来源50映射，当前57有效映射；角色服务/汇总/去重已有离线工程，**完整M0–M5仍在施工** | `docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md`、`research/rea_native_control/ROLE_BATCH_EXECUTION.md` | `research/rea_native_control/role_capabilities.py`、`role_batches.py`、工程PR #19及其Run |
 | **P11 知识/战术/历史数据支撑** | 球队画像、历史选秀轮回、战术池、比赛规则辅助知识，按来源成熟度读取 | `docs/development_research/`、`docs/game_mechanics/SOURCES.md`、`web_gm/knowledge/` | `docs/06_HISTORICAL_DRAFT_SYSTEM.md`、`web_gm/knowledge/plays/` |
 | **P12 治理与历史证据归档** | 2026-10-22原始能力总账、任务和来源历史；使用时查更新版本，不作为当前执行成功数 | `docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json`、`docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json`、`docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md` | Draft PR #10、#12、#14、#16→集成PR #17→规划PR #18 |
 
@@ -87,7 +87,7 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 
 - 当前工程窗口：[Draft PR #19](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/19)，独立于来源PR #18；已验证代码候选`c9a4ed227d6e23b92d22dad467fcb528c755c2d0`（25项离线检查及Managed Run/Inspect），完整M0–M5仍在施工。准确进度指针：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/PROGRESS_POINTER.json`，不是全任务完成指针。
 
-- **进行中：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。P08/P09/P10新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)、[日期训练局部Apply](research/rea_native_control/TRAINING_PATCH_CONTRACT.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留183项需求；原有50映射保留为历史来源，当前56项有效映射含4项POE及2项训练局部操作，交易变体统一直接Process。离线协议/字节验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
+- **进行中：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)、[日期训练局部Apply](research/rea_native_control/TRAINING_PATCH_CONTRACT.md)、[明确球员分钟Native链](research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留183项需求；原有50映射保留为历史来源，当前57项有效映射含4项POE、2项训练局部操作和1项分钟操作，交易变体统一直接Process。P04/P06机制资料与P09/P10源码同步；离线协议/字节验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
 
 - PR #17：从 #10、#12、#14、#16整合研发成果，未进入master。
 - PR #18：角色执行能力全量需求盘点，新增本索引、REA交接原文和最新批量原生执行链；目前Draft，尚需Human逐项审议。

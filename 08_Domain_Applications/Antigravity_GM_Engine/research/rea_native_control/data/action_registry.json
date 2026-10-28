@@ -3066,6 +3066,90 @@
       ],
       "executed_this_task": false,
       "scope_note": "New parameterized composition of recovered Native getter/setter; not a new function discovery or live validation."
+    },
+    {
+      "action_id": "COACH_ROTATION_SET_PLAYER_MINUTES",
+      "domain": "D04",
+      "title": "为指定本队球员设置明确轮换分钟；不自动补齐全队分钟",
+      "decision_roles": [
+        "Coach"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 48
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "rotation.minutes",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No live test, independently observed effect, UI refresh, game simulation or Save/Reload evidence",
+        "Only active delegate profiles with recovered generic setter, allow predicate and team-change thunk are accepted",
+        "Existing TEAM resolver exposes15 roster slots; additional roster representations are not covered",
+        "A set of exact minutes can have a non240 sum; executor neither validates a basketball strategy nor silently balances it"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_NATIVE_DELEGATE_SLOT_PROFILE",
+          "binding_id": "rotation.current_delegate",
+          "arguments": {}
+        },
+        {
+          "operation": "VALIDATE_EXACT_FRANCHISE_TEAM_INDEX",
+          "binding_id": "rotation.franchise_team_index",
+          "arguments": {
+            "team": "TEAM supplied by role"
+          }
+        },
+        {
+          "operation": "CALL_EXACT_MINUTES",
+          "binding_id": "rotation.set_player_minutes",
+          "arguments": {
+            "delegate": "same current delegate",
+            "player": "exact supplied current roster PLAYER",
+            "minutes": "unchanged supplied integer0..48"
+          }
+        },
+        {
+          "operation": "NATIVE_TEAM_CHANGE_NOTIFICATION",
+          "binding_id": "rotation.mark_team_change",
+          "arguments": {
+            "team": "same TEAM",
+            "change_kind": 1,
+            "flag": 0
+          }
+        },
+        {
+          "operation": "RAW_READBACK_WITHOUT_RETRY",
+          "arguments": {
+            "verify": "exact supplied minutes, all other roster words unchanged and native change flag0"
+          }
+        }
+      ],
+      "evidence": [
+        "ROTATION_MINUTES_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_adjust_and_system_setter_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_leaf_field_candidates_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_virtual_field_join_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_business_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_qualified_entry_windows_003.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "New static ABI/call-chain recovery and deferred handler. Does not use career clamp or UI menu callbacks; no game access during implementation."
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

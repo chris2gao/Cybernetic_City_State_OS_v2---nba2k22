@@ -17,7 +17,7 @@ class RoleConsumers(unittest.TestCase):
     def test_all_requirements_remain_discoverable_without_invented_bindings(self):
         self.assertEqual(len(self.service.requirements), 183)
         self.assertEqual(self.service.source_mapping_count, 50)
-        self.assertEqual(len(self.service.mapping), 56)
+        self.assertEqual(len(self.service.mapping), 57)
         trade = self.service.describe_action('GM.TRADE.EXECUTE_AGREED', self.profile)
         self.assertTrue(trade['call_logic_available'])
         self.assertFalse(trade['identity_permission'])

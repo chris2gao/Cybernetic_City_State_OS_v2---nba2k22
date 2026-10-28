@@ -29,4 +29,12 @@ assert current['game_access_performed'] is False
 candidate = json.loads((d / 'research/rea_native_control/data/native_bindings.json').read_text(encoding='utf-8'))
 binding = next(b for b in candidate['bindings'] if b['binding_id'] == 'sign.acquire_or_reset_candidate')
 assert binding['unknowns'] and binding['input_layout']['not_callable']
-print('PASS: source hashes, index, complete requirement dispositions and non-callable signing candidate; full M0-M5 completion NOT asserted')
+minutes = next(row for row in current['requirements'] if row['capability_id'] == 'COACH.ROTATION.PLAYER_MINUTES')
+assert minutes['native_action_id'] == 'COACH_ROTATION_SET_PLAYER_MINUTES' and minutes['call_logic_available']
+assert minutes['new_live_validation'] == 'NOT_RUN'
+binding = next(b for b in candidate['bindings'] if b['binding_id'] == 'rotation.current_delegate')
+assert all(profile['slots']['5848'] == 0x11b2bb0 for profile in binding['input_layout']['allowed_profiles'])
+for mid in ['P04', 'P06', 'P09', 'P10', 'P12']:
+    module = next(x for x in modules if x['id'] == mid)
+    assert 'research/rea_native_control/ROTATION_MINUTES_CONTRACT.md' in module['docs']
+print('PASS: source hashes, index,183 dispositions, non-callable signing and static-only exact-minute scope; full M0-M5 completion NOT asserted')

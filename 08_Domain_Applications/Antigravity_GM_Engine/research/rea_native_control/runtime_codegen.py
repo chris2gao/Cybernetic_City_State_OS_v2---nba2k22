@@ -14,6 +14,7 @@ def render_program(plan:NativeActionPlan,registry):
  handlers={'coach.poe':'coach_poe.js','coach.settings':'coach_settings.js','trade.players':'trade.js','trade.assets':'trade.js','read.team':'read_team.js','read.coach':'read_coach.js','read.player':'read_player.js','training.team_date':'training.js','training.intensity':'training_intensity.js','gameplan.ensure':'gameplan.js','scout.existing_goal':'scout_goal.js','scout.append_goal':'scout_append.js','scout.list':'scout_read.js','scout.info':'scout_read.js','scout.progress':'scout_read.js','scout.budget':'scout_read.js','scout.execute_trip':'scout_execute.js','draft.select':'draft.js','draft.context':'draft.js'}
  handlers['trade.agreed']='trade.js'
  handlers['training.patch']='training_patch.js'
+ handlers['rotation.minutes']='rotation_minutes.js'
  if handler not in handlers:raise ValueError('No recovered runtime implementation for '+str(handler))
  bindings={step.binding_id:registry.binding(step.binding_id).to_dict() for step in plan.steps if step.binding_id}
  parameters=dict(plan.request);limit=1
@@ -72,6 +73,9 @@ def render_program(plan:NativeActionPlan,registry):
  if handler=='read.player':limit=1
  if handler=='training.intensity':limit=2
  if handler=='training.patch':limit=2
+ if handler=='rotation.minutes':
+  if type(parameters['minutes']) is not int or not 0<=parameters['minutes']<=48:raise ValueError('Minutes must be an explicit integer in the recovered UI range0..48')
+  limit=3
  source=(root/'runtime/common.js').read_text(encoding='utf-8')+'\n'+(root/'runtime'/handlers[handler]).read_text(encoding='utf-8')+'\n'+(root/'runtime/gui_once.js').read_text(encoding='utf-8')
  player_fields=json.loads((root/'data/player_contract_fields.json').read_text(encoding='utf-8'))['fields']
  source=source.replace('__REQUEST__',json.dumps({'action_id':plan.action_id,'parameters':parameters},ensure_ascii=False,separators=(',',':'))).replace('__BINDINGS__',json.dumps(bindings,separators=(',',':'))).replace('__LIMITS__',json.dumps({'maximum_game_calls':limit,'read_bytes':1048576},separators=(',',':'))).replace('__COACH_FIELDS__',json.dumps(coach_fields,separators=(',',':'))).replace('__PLAYER_CONTRACT_FIELDS__',json.dumps(player_fields,separators=(',',':')))

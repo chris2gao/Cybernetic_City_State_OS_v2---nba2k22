@@ -69,6 +69,7 @@ class RoleCapabilityService:
             self.mapping['COACH.STRATEGY.' + suffix] = 'COACH_SET_KNOWN_CURRENT_SETTINGS'
         self.mapping['TRAIN.TEAM_FOCUS'] = 'TRAIN_TEAM_PATCH_FOCUS_RAW'
         self.mapping['TRAIN.TEAM_PROFILE'] = 'TRAIN_TEAM_PATCH_PROFILE_RAW'
+        self.mapping['COACH.ROTATION.PLAYER_MINUTES'] = 'COACH_ROTATION_SET_PLAYER_MINUTES'
         self.coach_fields = json.loads((self.registry.root / 'data/coach_settings.json').read_text(encoding='utf-8'))['fields']
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
@@ -177,6 +178,10 @@ class RoleCapabilityService:
         return {'action_id': action_id, 'parameters': desc['native_parameter_schema'],
                 'field_values': fields, 'catalog_version': self.version,
                 'native_value_contract': {
+                    'COACH.ROTATION.PLAYER_MINUTES': {'minutes': {'minimum': 0, 'maximum': 48,
+                        'meaning': 'Explicit assigned rotation minutes for the supplied roster player; 0 assigns no minutes',
+                        'representation': 'integer', 'team_sum_rule': 'NO_AUTOMATIC_BALANCING',
+                        'scene': 'Host-attested TEAM_ROTATION and a recovered active Native delegate implementation'}},
                     'TRAIN.TEAM_FOCUS': {'focus_values_raw': {'length': 3, 'type': 'finite_float32',
                         'units': 'UNKNOWN_NATIVE_SCALE', 'slot_meanings': 'UNKNOWN', 'conversion_or_sum_rule': 'NONE_INFERRED'}},
                     'TRAIN.TEAM_PROFILE': {'profile_values_raw': {'length': 3, 'type': 'uint8', 'enum_names': 'UNKNOWN'},
