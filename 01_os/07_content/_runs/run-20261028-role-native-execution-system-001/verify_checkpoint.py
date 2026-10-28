@@ -65,6 +65,14 @@ assert badge['input_layout']['not_callable'] and len(badge['parameters']) == 4
 assert badge['input_layout']['normal_ui_flag'] == 0
 badge_req = next(row for row in current['requirements'] if row['capability_id'] == 'PLAYER.EDIT.BADGE_SET')
 assert not badge_req['call_logic_available'] and badge_req['role_endpoint'] is None
+badge_fields = json.loads((run / 'static/player_badge_names_fields_and_modifiers_025.json').read_text(encoding='utf8'))
+assert badge_fields['game_access'] is False and len(badge_fields['fields']) == 99
+assert len({field['internal_name'] for field in badge_fields['fields']}) == 99
+assert sum(field['maximum'] == 1 for field in badge_fields['fields']) == 19
+assert sum(field['maximum'] == 4 for field in badge_fields['fields']) == 80
+assert badge_fields['fields'][0]['internal_name'] == 'NONE'
+assert all(field['signed_modifier_field']['signed_width'] in (2, 4) for field in badge_fields['fields'])
+assert not any(field['ui_label_verified'] for field in badge_fields['fields'])
 for mid in ('P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
     module = next(x for x in modules if x['id'] == mid)
     assert 'research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md' in module['docs']

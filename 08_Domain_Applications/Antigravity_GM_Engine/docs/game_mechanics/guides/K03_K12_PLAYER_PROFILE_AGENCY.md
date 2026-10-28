@@ -542,3 +542,5 @@ R04既没有替历史线决定谁必须夺冠，也没有按真实职业史提�
 上述独立工程任务继续恢复原版156项Stat索引Setter：54个已命名能力/耐久字段使用UI25..99和原生缓存失效路径，99个倾向位置使用0..100，其中48个现有名称、51个含义仍UNKNOWN。不把外站99个标签硬配到本机未知字节。Potential虽已定位，但会触发额外未闭合刷新，暂不调用；另两个未分类属性索引也不可用。精确字段、枚举、源码及原生副作用见[属性/倾向合同](../../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)。
 
 当前角色接口只向普通GM开放经host明确授予的Intangibles例外；其它能力/耐久技术接口限明确世界编辑。普通角色可按授权使用48个已命名倾向；Player仅能指向自身UID。技术可写不产生角色自我强化许可，未知倾向只供明确世界编辑且不虚构含义。徽章已恢复四参数原生候选与UI flag0调用，但其联动/互斥及标签尚未闭合，因此保持不可调用。新增均为静态与离线证据，未证明UI/模拟/自然成长或持久化；R04历史研究不重开。
+
+Follow-up static Badge discovery recovered all99 native internal enum names and bit/max layouts, including80 maximum4 fields and19 maximum1 entries with the NONE sentinel. Effective levels also read signed linked modifiers, and personality groups enforce original coupling/assertions. These are distinct from21 historical research candidates and from verified MyLEAGUE UI options; see [Badge recovery](../../../research/rea_native_control/BADGE_NATIVE_RECOVERY.md). The candidate remains noncallable, with no new live evidence or role edit grant.

@@ -62,3 +62,5 @@ result = control.dispatch(request)   # 默认返回PREPARED_NOT_EXECUTED或UNKNO
 次世代参考使用[2K官方MyNBA功能公告](https://newsroom-uk.2k.com/news/nbar-2k22-adds-new-features-to-mynba-for-playstation-5-and-xbox-series-xs-consoles)，只补MySTAFF、训练与Conditional Coaching的功能线索；实际PC22绑定均取本地PC22证据。见`data/reference_leads.json`，没有移植次世代地址。
 
 原始静态文件保留字节与哈希，不上传EXE、资产、存档、凭据或绝对运行时地址。旧Writer和PR12证据不改写。仅指定分支提交与Draft PR，不合并master。交付语法检查不能证明代码功能、游戏操作、持久性或独立审核通过。
+
+Current noncallable Badge follow-up: [raw fields,99 internal names, effective modifiers and coupling](BADGE_NATIVE_RECOVERY.md). A recovered internal enum or bit layout does not authorize a role or establish safe scene/mode execution.

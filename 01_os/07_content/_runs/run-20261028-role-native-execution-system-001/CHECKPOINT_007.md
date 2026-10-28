@@ -1,0 +1,13 @@
+# Checkpoint007: Badge raw/effective model and precise remaining gaps
+
+Full task `NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` remains active and incomplete across M0–M5. PR18 fixed source remains `094f1aa641f93dec2277707ad9dbf5bdb0341247`. No game process attachment or state change occurred. No earlier successful Native batch was replayed.
+
+Following checkpoint006, static research recovered all99 original internal UTF-16 Badge enum names, all99 packed raw bit fields, per-ID maxima and99 signed effective-modifier fields. Every raw field is cross-checked against the matching Setter clear mask and no two fields overlap.19 entries have maximum1, including the NONE sentinel;80 have maximum4. These are not99 approved MyLEAGUE edit options or verified UI labels. Two initial functions lacked unwind entries; actual jump tables then bounded their precise straight-line paths. No whole-game importer was retried.
+
+The original positive-level rules include four mutual-exclusion arrays and the Expressive/Unpredictable/LaidBack trait helper. The effective Getter additionally traverses linked modifiers and influences coupling guards/assertions. Raw bytes alone therefore cannot prove that a future invocation is safe. Native flag0 must retain original rules; recursive flag1 is not an approved bypass. Existing research personality labels must not be guessed onto these newly recovered IDs.
+
+Detailed inputs, code locations, names, examples, limits and exact remaining work are in `research/rea_native_control/BADGE_NATIVE_RECOVERY.md`. Packaged `tools/recover_badge_fields.py` completed directly against the pinned PE. Primary artifacts020..025 are retained;022 predates the internal name/modifier join and is not rewritten. Earlier019's misaligned prefix remains explicitly disqualified.
+
+Action/binding metadata now replaces the closed raw-name gap with precise open gaps: current-mode rights/sentinel exclusion, modifier lifecycle/list invariants, effective-level and coupled-change/assertion preflight, Native runtime/current identity/thread/readback. The binding remains not_callable, action runtime_handler is null and role mutation endpoint is null. Counts remain67 actions,50 bindings/layouts,59 effective mappings and183 retained requirements. Project/knowledge/module indexes are synchronized.
+
+The new fixed metadata/source candidate Managed Run/Inspect is pending until actual execution and receipt retention. Prior49-test candidate remains separately recorded until then. This evidence does not establish actual UI, simulation, natural growth, persistence or independent acceptance. M0/M2/M3/M4 integration and full M5 completion remain open; this checkpoint does not narrow the full objective.
