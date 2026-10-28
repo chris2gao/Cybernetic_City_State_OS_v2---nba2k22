@@ -1,0 +1,1210 @@
+{
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "source_kind": "STATIC_BINARY",
+  "functions": [
+    {
+      "requested_rva": 21424832,
+      "unwind_range_rva": [
+        21424832,
+        21425225
+      ],
+      "boundary_evidence": "PE_UNWIND_RANGE_MAY_BE_FRAGMENT",
+      "unwind_chain": [
+        {
+          "begin": 21424832,
+          "end": 21425225,
+          "unwind_rva": 50915308,
+          "flags": 4
+        },
+        {
+          "begin": 21424800,
+          "end": 21424832,
+          "unwind_rva": 50609340,
+          "flags": 0
+        }
+      ],
+      "chained_primary_instructions": [
+        {
+          "rva": 21424800,
+          "mnemonic": "test",
+          "operands": "rdx, rdx"
+        },
+        {
+          "rva": 21424803,
+          "mnemonic": "je",
+          "operands": "RVA+0x146ec49"
+        },
+        {
+          "rva": 21424809,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x18], rbx"
+        },
+        {
+          "rva": 21424814,
+          "mnemonic": "push",
+          "operands": "rdi"
+        },
+        {
+          "rva": 21424815,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x20"
+        },
+        {
+          "rva": 21424819,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x184]"
+        },
+        {
+          "rva": 21424826,
+          "mnemonic": "mov",
+          "operands": "rdi, rcx"
+        },
+        {
+          "rva": 21424829,
+          "mnemonic": "mov",
+          "operands": "rbx, rdx"
+        }
+      ],
+      "body_sha256": "9f2789b1989c43213f96e057393bcb62bc26b82ea6d9966f43e8f99609149da8",
+      "instructions": [
+        {
+          "rva": 21424832,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x30], rbp"
+        },
+        {
+          "rva": 21424837,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 21424840,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x38], rsi"
+        },
+        {
+          "rva": 21424845,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 21424847,
+          "mnemonic": "mov",
+          "operands": "esi, 3"
+        },
+        {
+          "rva": 21424852,
+          "mnemonic": "mov",
+          "operands": "ebp, 0xffff"
+        },
+        {
+          "rva": 21424857,
+          "mnemonic": "cmovne",
+          "operands": "r8d, eax"
+        },
+        {
+          "rva": 21424861,
+          "mnemonic": "and",
+          "operands": "dword ptr [rdx + 0x148], 0xfe01ffff"
+        },
+        {
+          "rva": 21424871,
+          "mnemonic": "mov",
+          "operands": "eax, 0xff"
+        },
+        {
+          "rva": 21424876,
+          "mnemonic": "cmp",
+          "operands": "r8d, eax"
+        },
+        {
+          "rva": 21424879,
+          "mnemonic": "cmovb",
+          "operands": "eax, r8d"
+        },
+        {
+          "rva": 21424883,
+          "mnemonic": "shl",
+          "operands": "eax, 0x11"
+        },
+        {
+          "rva": 21424886,
+          "mnemonic": "or",
+          "operands": "dword ptr [rdx + 0x148], eax"
+        },
+        {
+          "rva": 21424892,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x185]"
+        },
+        {
+          "rva": 21424899,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rdx + 0xe0], al"
+        },
+        {
+          "rva": 21424905,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x186]"
+        },
+        {
+          "rva": 21424912,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rdx + 0xe2], al"
+        },
+        {
+          "rva": 21424918,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x187]"
+        },
+        {
+          "rva": 21424925,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rdx + 0xde], al"
+        },
+        {
+          "rva": 21424931,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x188]"
+        },
+        {
+          "rva": 21424938,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rdx + 0x138], al"
+        },
+        {
+          "rva": 21424944,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x189]"
+        },
+        {
+          "rva": 21424951,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rdx + 0xdf], al"
+        },
+        {
+          "rva": 21424957,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x18a]"
+        },
+        {
+          "rva": 21424964,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rdx + 0x109], al"
+        },
+        {
+          "rva": 21424970,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x18b]"
+        },
+        {
+          "rva": 21424977,
+          "mnemonic": "shl",
+          "operands": "eax, 0x19"
+        },
+        {
+          "rva": 21424980,
+          "mnemonic": "xor",
+          "operands": "eax, dword ptr [rdx + 0xfc]"
+        },
+        {
+          "rva": 21424986,
+          "mnemonic": "and",
+          "operands": "eax, 0x7e000000"
+        },
+        {
+          "rva": 21424991,
+          "mnemonic": "xor",
+          "operands": "dword ptr [rdx + 0xfc], eax"
+        },
+        {
+          "rva": 21424997,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rcx + 0x17e]"
+        },
+        {
+          "rva": 21425004,
+          "mnemonic": "shl",
+          "operands": "eax, 0xf"
+        },
+        {
+          "rva": 21425007,
+          "mnemonic": "xor",
+          "operands": "eax, dword ptr [rdx + 0x13c]"
+        },
+        {
+          "rva": 21425013,
+          "mnemonic": "and",
+          "operands": "eax, 0xf8000"
+        },
+        {
+          "rva": 21425018,
+          "mnemonic": "xor",
+          "operands": "dword ptr [rdx + 0x13c], eax"
+        },
+        {
+          "rva": 21425024,
+          "mnemonic": "movzx",
+          "operands": "ecx, byte ptr [rcx + 0x17f]"
+        },
+        {
+          "rva": 21425031,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [rdx + 0x13c]"
+        },
+        {
+          "rva": 21425037,
+          "mnemonic": "shl",
+          "operands": "ecx, 0x14"
+        },
+        {
+          "rva": 21425040,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 21425042,
+          "mnemonic": "and",
+          "operands": "ecx, 0x1f00000"
+        },
+        {
+          "rva": 21425048,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 21425050,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rdx + 0x13c], ecx"
+        },
+        {
+          "rva": 21425056,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rdi + 0x180]"
+        },
+        {
+          "rva": 21425063,
+          "mnemonic": "shl",
+          "operands": "eax, 0x19"
+        },
+        {
+          "rva": 21425066,
+          "mnemonic": "xor",
+          "operands": "eax, ecx"
+        },
+        {
+          "rva": 21425068,
+          "mnemonic": "and",
+          "operands": "eax, 0x3e000000"
+        },
+        {
+          "rva": 21425073,
+          "mnemonic": "xor",
+          "operands": "eax, ecx"
+        },
+        {
+          "rva": 21425075,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rdx + 0x13c], eax"
+        },
+        {
+          "rva": 21425081,
+          "mnemonic": "movzx",
+          "operands": "ecx, byte ptr [rdi + 0x181]"
+        },
+        {
+          "rva": 21425088,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 21425090,
+          "mnemonic": "and",
+          "operands": "ecx, 0x1f"
+        },
+        {
+          "rva": 21425093,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 21425095,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rdx + 0x13c], ecx"
+        },
+        {
+          "rva": 21425101,
+          "mnemonic": "movzx",
+          "operands": "edx, byte ptr [rdi + 0x182]"
+        },
+        {
+          "rva": 21425108,
+          "mnemonic": "shl",
+          "operands": "edx, 5"
+        },
+        {
+          "rva": 21425111,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 21425113,
+          "mnemonic": "and",
+          "operands": "edx, 0x3e0"
+        },
+        {
+          "rva": 21425119,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 21425121,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rbx + 0x13c], edx"
+        },
+        {
+          "rva": 21425127,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rdi + 0x183]"
+        },
+        {
+          "rva": 21425134,
+          "mnemonic": "shl",
+          "operands": "eax, 0xa"
+        },
+        {
+          "rva": 21425137,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 21425139,
+          "mnemonic": "and",
+          "operands": "eax, 0x7c00"
+        },
+        {
+          "rva": 21425144,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 21425146,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rbx + 0x13c], eax"
+        },
+        {
+          "rva": 21425152,
+          "mnemonic": "add",
+          "operands": "rbx, 0x120"
+        },
+        {
+          "rva": 21425159,
+          "mnemonic": "add",
+          "operands": "rdi, 0x178"
+        },
+        {
+          "rva": 21425166,
+          "mnemonic": "nop",
+          "operands": ""
+        },
+        {
+          "rva": 21425168,
+          "mnemonic": "movzx",
+          "operands": "eax, word ptr [rdi]"
+        },
+        {
+          "rva": 21425171,
+          "mnemonic": "cmp",
+          "operands": "ax, bp"
+        },
+        {
+          "rva": 21425174,
+          "mnemonic": "je",
+          "operands": "RVA+0x146ec22"
+        },
+        {
+          "rva": 21425176,
+          "mnemonic": "movzx",
+          "operands": "ecx, ax"
+        },
+        {
+          "rva": 21425179,
+          "mnemonic": "call",
+          "operands": "RVA+0xf3f580"
+        },
+        {
+          "rva": 21425184,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x146ec24"
+        },
+        {
+          "rva": 21425186,
+          "mnemonic": "xor",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 21425188,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rbx], rax"
+        },
+        {
+          "rva": 21425191,
+          "mnemonic": "add",
+          "operands": "rdi, 2"
+        },
+        {
+          "rva": 21425195,
+          "mnemonic": "add",
+          "operands": "rbx, 8"
+        },
+        {
+          "rva": 21425199,
+          "mnemonic": "sub",
+          "operands": "rsi, 1"
+        },
+        {
+          "rva": 21425203,
+          "mnemonic": "jne",
+          "operands": "RVA+0x146ec10"
+        },
+        {
+          "rva": 21425205,
+          "mnemonic": "mov",
+          "operands": "rsi, qword ptr [rsp + 0x38]"
+        },
+        {
+          "rva": 21425210,
+          "mnemonic": "mov",
+          "operands": "rbp, qword ptr [rsp + 0x30]"
+        },
+        {
+          "rva": 21425215,
+          "mnemonic": "mov",
+          "operands": "rbx, qword ptr [rsp + 0x40]"
+        },
+        {
+          "rva": 21425220,
+          "mnemonic": "add",
+          "operands": "rsp, 0x20"
+        },
+        {
+          "rva": 21425224,
+          "mnemonic": "pop",
+          "operands": "rdi"
+        }
+      ],
+      "status": "STATIC_FRAGMENT_REQUIRES_CONTEXT_AND_ABI_VERIFICATION"
+    },
+    {
+      "requested_rva": 8031529,
+      "unwind_range_rva": [
+        8031529,
+        8031775
+      ],
+      "boundary_evidence": "PE_UNWIND_RANGE_MAY_BE_FRAGMENT",
+      "unwind_chain": [
+        {
+          "begin": 8031529,
+          "end": 8031775,
+          "unwind_rva": 50261948,
+          "flags": 4
+        },
+        {
+          "begin": 8031216,
+          "end": 8031249,
+          "unwind_rva": 49980340,
+          "flags": 0
+        }
+      ],
+      "chained_primary_instructions": [
+        {
+          "rva": 8031216,
+          "mnemonic": "push",
+          "operands": "rdi"
+        },
+        {
+          "rva": 8031218,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x30"
+        },
+        {
+          "rva": 8031222,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 8031225,
+          "mnemonic": "lea",
+          "operands": "rdx, [rsp + 0x50]"
+        },
+        {
+          "rva": 8031230,
+          "mnemonic": "call",
+          "operands": "RVA+0xfe72c0"
+        },
+        {
+          "rva": 8031235,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [rax]"
+        },
+        {
+          "rva": 8031237,
+          "mnemonic": "cmp",
+          "operands": "ecx, 0x68ddf2fe"
+        },
+        {
+          "rva": 8031243,
+          "mnemonic": "je",
+          "operands": "RVA+0x7a90ff"
+        }
+      ],
+      "body_sha256": "1d4fbe24684e947962177ac157193f1f5dd5be1633529924680cccf2262c44a0",
+      "instructions": [
+        {
+          "rva": 8031529,
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 8031531,
+          "mnemonic": "call",
+          "operands": "RVA+0x9cd2a0"
+        },
+        {
+          "rva": 8031536,
+          "mnemonic": "mov",
+          "operands": "rsi, rax"
+        },
+        {
+          "rva": 8031539,
+          "mnemonic": "test",
+          "operands": "rax, rax"
+        },
+        {
+          "rva": 8031542,
+          "mnemonic": "je",
+          "operands": "RVA+0x7a8d14"
+        },
+        {
+          "rva": 8031544,
+          "mnemonic": "movzx",
+          "operands": "ecx, byte ptr [rip + 0x2f79e19]"
+        },
+        {
+          "rva": 8031551,
+          "mnemonic": "lea",
+          "operands": "rbx, [rip + 0x2f79e1a]"
+        },
+        {
+          "rva": 8031558,
+          "mnemonic": "shl",
+          "operands": "ecx, 0xf"
+        },
+        {
+          "rva": 8031561,
+          "mnemonic": "lea",
+          "operands": "rdi, [rip + 0x2f79e1c]"
+        },
+        {
+          "rva": 8031568,
+          "mnemonic": "xor",
+          "operands": "ecx, dword ptr [rax + 0x13c]"
+        },
+        {
+          "rva": 8031574,
+          "mnemonic": "and",
+          "operands": "ecx, 0xf8000"
+        },
+        {
+          "rva": 8031580,
+          "mnemonic": "xor",
+          "operands": "dword ptr [rax + 0x13c], ecx"
+        },
+        {
+          "rva": 8031586,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [rax + 0x13c]"
+        },
+        {
+          "rva": 8031592,
+          "mnemonic": "movzx",
+          "operands": "edx, byte ptr [rip + 0x2f79dea]"
+        },
+        {
+          "rva": 8031599,
+          "mnemonic": "shl",
+          "operands": "edx, 0x14"
+        },
+        {
+          "rva": 8031602,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8031604,
+          "mnemonic": "and",
+          "operands": "edx, 0x1f00000"
+        },
+        {
+          "rva": 8031610,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8031612,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rax + 0x13c], edx"
+        },
+        {
+          "rva": 8031618,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rip + 0x2f79dd1]"
+        },
+        {
+          "rva": 8031625,
+          "mnemonic": "shl",
+          "operands": "eax, 0x19"
+        },
+        {
+          "rva": 8031628,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8031630,
+          "mnemonic": "and",
+          "operands": "eax, 0x3e000000"
+        },
+        {
+          "rva": 8031635,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8031637,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsi + 0x13c], eax"
+        },
+        {
+          "rva": 8031643,
+          "mnemonic": "movzx",
+          "operands": "ecx, byte ptr [rip + 0x2f79db9]"
+        },
+        {
+          "rva": 8031650,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 8031652,
+          "mnemonic": "and",
+          "operands": "ecx, 0x1f"
+        },
+        {
+          "rva": 8031655,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 8031657,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsi + 0x13c], ecx"
+        },
+        {
+          "rva": 8031663,
+          "mnemonic": "movzx",
+          "operands": "edx, byte ptr [rip + 0x2f79da6]"
+        },
+        {
+          "rva": 8031670,
+          "mnemonic": "shl",
+          "operands": "edx, 5"
+        },
+        {
+          "rva": 8031673,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8031675,
+          "mnemonic": "and",
+          "operands": "edx, 0x3e0"
+        },
+        {
+          "rva": 8031681,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8031683,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsi + 0x13c], edx"
+        },
+        {
+          "rva": 8031689,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rip + 0x2f79d8d]"
+        },
+        {
+          "rva": 8031696,
+          "mnemonic": "shl",
+          "operands": "eax, 0xa"
+        },
+        {
+          "rva": 8031699,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8031701,
+          "mnemonic": "and",
+          "operands": "eax, 0x7c00"
+        },
+        {
+          "rva": 8031706,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8031708,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsi + 0x13c], eax"
+        },
+        {
+          "rva": 8031714,
+          "mnemonic": "add",
+          "operands": "rsi, 0x120"
+        },
+        {
+          "rva": 8031721,
+          "mnemonic": "nop",
+          "operands": "dword ptr [rax]"
+        },
+        {
+          "rva": 8031728,
+          "mnemonic": "mov",
+          "operands": "r8d, dword ptr [rbx]"
+        },
+        {
+          "rva": 8031731,
+          "mnemonic": "cmp",
+          "operands": "r8d, -1"
+        },
+        {
+          "rva": 8031735,
+          "mnemonic": "je",
+          "operands": "RVA+0x7a8e08"
+        },
+        {
+          "rva": 8031737,
+          "mnemonic": "mov",
+          "operands": "edx, 4"
+        },
+        {
+          "rva": 8031742,
+          "mnemonic": "mov",
+          "operands": "rcx, rbp"
+        },
+        {
+          "rva": 8031745,
+          "mnemonic": "call",
+          "operands": "RVA+0x944db0"
+        },
+        {
+          "rva": 8031750,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x7a8e0a"
+        },
+        {
+          "rva": 8031752,
+          "mnemonic": "xor",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 8031754,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsi], rax"
+        },
+        {
+          "rva": 8031757,
+          "mnemonic": "add",
+          "operands": "rbx, 4"
+        },
+        {
+          "rva": 8031761,
+          "mnemonic": "add",
+          "operands": "rsi, 8"
+        },
+        {
+          "rva": 8031765,
+          "mnemonic": "cmp",
+          "operands": "rbx, rdi"
+        },
+        {
+          "rva": 8031768,
+          "mnemonic": "jl",
+          "operands": "RVA+0x7a8df0"
+        },
+        {
+          "rva": 8031770,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x7a8d14"
+        }
+      ],
+      "status": "STATIC_FRAGMENT_REQUIRES_CONTEXT_AND_ABI_VERIFICATION"
+    },
+    {
+      "requested_rva": 8032511,
+      "unwind_range_rva": [
+        8032511,
+        8032784
+      ],
+      "boundary_evidence": "PE_UNWIND_RANGE_MAY_BE_FRAGMENT",
+      "unwind_chain": [
+        {
+          "begin": 8032511,
+          "end": 8032784,
+          "unwind_rva": 50261996,
+          "flags": 4
+        },
+        {
+          "begin": 8031216,
+          "end": 8031249,
+          "unwind_rva": 49980340,
+          "flags": 0
+        }
+      ],
+      "chained_primary_instructions": [
+        {
+          "rva": 8031216,
+          "mnemonic": "push",
+          "operands": "rdi"
+        },
+        {
+          "rva": 8031218,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x30"
+        },
+        {
+          "rva": 8031222,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 8031225,
+          "mnemonic": "lea",
+          "operands": "rdx, [rsp + 0x50]"
+        },
+        {
+          "rva": 8031230,
+          "mnemonic": "call",
+          "operands": "RVA+0xfe72c0"
+        },
+        {
+          "rva": 8031235,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [rax]"
+        },
+        {
+          "rva": 8031237,
+          "mnemonic": "cmp",
+          "operands": "ecx, 0x68ddf2fe"
+        },
+        {
+          "rva": 8031243,
+          "mnemonic": "je",
+          "operands": "RVA+0x7a90ff"
+        }
+      ],
+      "body_sha256": "83e5a9a20abafd3684689bdb56d66d3db7841b3126660bdb26f192788166ba09",
+      "instructions": [
+        {
+          "rva": 8032511,
+          "mnemonic": "cmp",
+          "operands": "dword ptr [rip + 0x2f79a4a], 0"
+        },
+        {
+          "rva": 8032518,
+          "mnemonic": "je",
+          "operands": "RVA+0x7a91d1"
+        },
+        {
+          "rva": 8032524,
+          "mnemonic": "call",
+          "operands": "RVA+0xede340"
+        },
+        {
+          "rva": 8032529,
+          "mnemonic": "mov",
+          "operands": "rcx, rax"
+        },
+        {
+          "rva": 8032532,
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 8032534,
+          "mnemonic": "call",
+          "operands": "RVA+0x9cd2a0"
+        },
+        {
+          "rva": 8032539,
+          "mnemonic": "mov",
+          "operands": "r8, rax"
+        },
+        {
+          "rva": 8032542,
+          "mnemonic": "test",
+          "operands": "rax, rax"
+        },
+        {
+          "rva": 8032545,
+          "mnemonic": "je",
+          "operands": "RVA+0x7a91c7"
+        },
+        {
+          "rva": 8032551,
+          "mnemonic": "movzx",
+          "operands": "ecx, byte ptr [rip + 0x2f79a2a]"
+        },
+        {
+          "rva": 8032558,
+          "mnemonic": "shl",
+          "operands": "ecx, 0xf"
+        },
+        {
+          "rva": 8032561,
+          "mnemonic": "xor",
+          "operands": "ecx, dword ptr [rax + 0x13c]"
+        },
+        {
+          "rva": 8032567,
+          "mnemonic": "and",
+          "operands": "ecx, 0xf8000"
+        },
+        {
+          "rva": 8032573,
+          "mnemonic": "xor",
+          "operands": "dword ptr [rax + 0x13c], ecx"
+        },
+        {
+          "rva": 8032579,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [rax + 0x13c]"
+        },
+        {
+          "rva": 8032585,
+          "mnemonic": "movzx",
+          "operands": "edx, byte ptr [rip + 0x2f79a09]"
+        },
+        {
+          "rva": 8032592,
+          "mnemonic": "shl",
+          "operands": "edx, 0x14"
+        },
+        {
+          "rva": 8032595,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8032597,
+          "mnemonic": "and",
+          "operands": "edx, 0x1f00000"
+        },
+        {
+          "rva": 8032603,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8032605,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rax + 0x13c], edx"
+        },
+        {
+          "rva": 8032611,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rip + 0x2f799f0]"
+        },
+        {
+          "rva": 8032618,
+          "mnemonic": "shl",
+          "operands": "eax, 0x19"
+        },
+        {
+          "rva": 8032621,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8032623,
+          "mnemonic": "and",
+          "operands": "eax, 0x3e000000"
+        },
+        {
+          "rva": 8032628,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8032630,
+          "mnemonic": "mov",
+          "operands": "dword ptr [r8 + 0x13c], eax"
+        },
+        {
+          "rva": 8032637,
+          "mnemonic": "movzx",
+          "operands": "ecx, byte ptr [rip + 0x2f799d7]"
+        },
+        {
+          "rva": 8032644,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 8032646,
+          "mnemonic": "and",
+          "operands": "ecx, 0x1f"
+        },
+        {
+          "rva": 8032649,
+          "mnemonic": "xor",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 8032651,
+          "mnemonic": "mov",
+          "operands": "dword ptr [r8 + 0x13c], ecx"
+        },
+        {
+          "rva": 8032658,
+          "mnemonic": "movzx",
+          "operands": "edx, byte ptr [rip + 0x2f799c3]"
+        },
+        {
+          "rva": 8032665,
+          "mnemonic": "shl",
+          "operands": "edx, 5"
+        },
+        {
+          "rva": 8032668,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8032670,
+          "mnemonic": "and",
+          "operands": "edx, 0x3e0"
+        },
+        {
+          "rva": 8032676,
+          "mnemonic": "xor",
+          "operands": "edx, ecx"
+        },
+        {
+          "rva": 8032678,
+          "mnemonic": "mov",
+          "operands": "dword ptr [r8 + 0x13c], edx"
+        },
+        {
+          "rva": 8032685,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [rip + 0x2f799a9]"
+        },
+        {
+          "rva": 8032692,
+          "mnemonic": "shl",
+          "operands": "eax, 0xa"
+        },
+        {
+          "rva": 8032695,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8032697,
+          "mnemonic": "and",
+          "operands": "eax, 0x7c00"
+        },
+        {
+          "rva": 8032702,
+          "mnemonic": "xor",
+          "operands": "eax, edx"
+        },
+        {
+          "rva": 8032704,
+          "mnemonic": "mov",
+          "operands": "dword ptr [r8 + 0x13c], eax"
+        },
+        {
+          "rva": 8032711,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rip + 0x2f7997f], 0"
+        },
+        {
+          "rva": 8032721,
+          "mnemonic": "movups",
+          "operands": "xmm0, xmmword ptr [rip + 0x1cd91f0]"
+        },
+        {
+          "rva": 8032728,
+          "mnemonic": "mov",
+          "operands": "r9d, 3"
+        },
+        {
+          "rva": 8032734,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x2f79b37]"
+        },
+        {
+          "rva": 8032741,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x2f79980]"
+        },
+        {
+          "rva": 8032748,
+          "mnemonic": "movups",
+          "operands": "xmmword ptr [rip + 0x2f79b29], xmm0"
+        },
+        {
+          "rva": 8032755,
+          "mnemonic": "lea",
+          "operands": "edx, [r9 + 0x18]"
+        },
+        {
+          "rva": 8032759,
+          "mnemonic": "movups",
+          "operands": "xmmword ptr [rip + 0x2f79b2e], xmm0"
+        },
+        {
+          "rva": 8032766,
+          "mnemonic": "movups",
+          "operands": "xmmword ptr [rip + 0x2f79b37], xmm0"
+        },
+        {
+          "rva": 8032773,
+          "mnemonic": "call",
+          "operands": "RVA+0x7a64f0"
+        },
+        {
+          "rva": 8032778,
+          "mnemonic": "add",
+          "operands": "rsp, 0x30"
+        },
+        {
+          "rva": 8032782,
+          "mnemonic": "pop",
+          "operands": "rdi"
+        },
+        {
+          "rva": 8032783,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "status": "STATIC_FRAGMENT_REQUIRES_CONTEXT_AND_ABI_VERIFICATION"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+ "schema_version":"nba2k22.rea.ai_mechanism_atlas.prototype.v1",
+ "build_sha256":"1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+ "mode":"PC22_OFFLINE_MYLEAGUE",
+ "mechanisms":[
+  {"mechanism_id":"AI_BADGE_NATURAL_GROWTH","research_case":"M1","subject":"AI_PLAYER","deep_case":"CatchAndShoot","light_control":"CornerSpecialist","dossier":"dossiers/M1_BADGE.md","disposition":"BOUNDED_UNKNOWN","actor_scope_verdict":"AI_PATH_UNVERIFIED","claims":[
+   {"claim_id":"CL-M1-LAYOUT","claim":"Archived mentor badge Progression and DateLastChecked definitions exist; units and growth predicates unknown","source_refs":["SRC-PRIOR-METADATA","SRC-PRIOR-GROWTH"],"kind":"REAL_GAME_ARCHIVED_TYPE_DEFINITIONS","proof_level":"L1_NATIVE_TYPE_OR_INSTANCE","origin":"CODEX_PRIOR_SINGLE_RUN"},
+   {"claim_id":"CL-M1-FRAGMENTS","claim":"Current pinned EXE has selected LinkMentor/SetMentors literal references and bounded unwind fragments; not proven growth formula","artifact":"evidence/candidate_function_fragments.json","kind":"STATIC_BINARY","proof_level":"L2_STATIC_FUNCTION_BRANCH"}
+  ]},
+  {"mechanism_id":"AI_COACH_DEFENSE_M1","research_case":"M2","subject":"AI_COACH","deep_case":"POEDefense","light_control":"POEOffense","dossier":"dossiers/M2_COACH.md","disposition":"BOUNDED_UNKNOWN","actor_scope_verdict":"AI_PATH_UNVERIFIED","claims":[
+   {"claim_id":"CL-M2-STORED","claim":"Current enum/bitfield match and two stable PHI/IND stored values; neither AI controller flag nor game consumer proven","source_refs":["SRC-LIVE-COACH","SRC-LIVE-COACH-RAW"],"kind":"REAL_GAME","proof_level":"L1_NATIVE_TYPE_OR_INSTANCE","origin":"ISSUE9_CURRENT_READ_AND_TRACE_SINGLE_OWNER"},
+   {"claim_id":"CL-M2-LOOKUP","claim":"Selected static lookup fragment has stride880, loop35 and byteFF not-found; does not prove AI selection or applied strategy","artifact":"evidence/candidate_function_fragments.json","kind":"STATIC_BINARY","proof_level":"L2_STATIC_FUNCTION_BRANCH"},
+   {"claim_id":"CL-M2-TRACE","claim":"No lookup events observed during900ms bounded calendar window; no negative claim about all AI execution","source_refs":["SRC-LIVE-TRACE"],"kind":"REAL_GAME","proof_level":"L1_NATIVE_TYPE_OR_INSTANCE","outcome":"NOT_OBSERVED_IN_WINDOW"}
+  ]},
+  {"mechanism_id":"AI_AI_GM_TRADE","research_case":"M3","subject":"AI_GM_TO_AI_GM","deep_case":"proposal_evaluate_validate_commit_affected_set","dossier":"dossiers/M3_TRADE.md","disposition":"BOUNDED_UNKNOWN","actor_scope_verdict":"AI_PATH_UNVERIFIED","claims":[
+   {"claim_id":"CL-M3-NAMES","claim":"Selected static queries found EVALUATE_AI_TRADES and trade type names, not actual validator/commit callsites","artifact":"evidence/static_ai_seams.json","kind":"STATIC_BINARY","proof_level":"L0_GUIDE_HYPOTHESIS"},
+   {"claim_id":"CL-M3-ACCESSOR","claim":"Two trade exception access fragments are not transaction qualification or commit proof","artifact":"evidence/candidate_function_fragments.json","kind":"STATIC_BINARY","proof_level":"L2_STATIC_FUNCTION_BRANCH"},
+   {"claim_id":"CL-M3-LEGACY","claim":"Legacy ownership_transfer_v2 declares limited fields; not certification of a current game native transaction","source_refs":["SRC-TRADE-EXECUTOR","SRC-R05B-TRADE"],"kind":"PROJECT_GUIDE","proof_level":"L0_GUIDE_HYPOTHESIS"}
+  ]}
+ ],
+ "live_native_business_calls":0,
+ "live_business_writes":0,
+ "L3_AI_behavior_proven":false,
+ "L4_game_call_proven":false,
+ "independent_acceptance":"NOT_ESTABLISHED"
+}

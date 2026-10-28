@@ -1,0 +1,50 @@
+{
+  "case_id": "scout_set_existing",
+  "batch_sha256": "2e41c4ca36a733e55e7fc5e3b635dab11a48820f7ed3e85a19ad57d2088fdd91",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "SCOUT_SET_EXISTING_GOAL_TARGETS",
+    "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+    "original_request": {
+      "team_id": 20,
+      "goal_index": 0,
+      "player_ids": [
+        33143
+      ]
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "SCOUT_SET_EXISTING_GOAL_TARGETS",
+      "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+      "details": {
+        "scope": "Replace targets of existing goal only; no automatic goal creation, trip execution, date advance or hidden-data report",
+        "focus_type_raw": 2,
+        "num_targets_raw": 1,
+        "requested_player_ids": [
+          33143
+        ]
+      },
+      "first_hand_game_calls": 1,
+      "read_bytes": 2489,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_c71c0d11cd9dbc166e91d8e2057247191e21c5253b15803ad26761dd41018c97",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-03\\raw\\431525c8cb8244e0a838dd5054d15faf"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_unknowns": []
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": false,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}

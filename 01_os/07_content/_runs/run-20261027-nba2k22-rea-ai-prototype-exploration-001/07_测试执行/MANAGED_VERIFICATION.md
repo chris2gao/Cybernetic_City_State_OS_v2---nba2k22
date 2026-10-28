@@ -1,0 +1,11 @@
+# 精确候选验证回执
+
+最终身份纠正的代码候选为`e05a310a38599264edfa623b38c2124bcc2de30f`。当前OS的`managed_verify.py run`与同候选`inspect`均返回success，计划SHA256为`9963c8f08738f616a59fe52141c9c631bcb24ba275083f00dcd2593aa3987c6d`。三个检查：31项语义/身份合同测试、12场景离线CLI、13个来源/17份实机文件及6段静态片段的证据合同。
+
+原始检查输出和结果保存在`managed-identity-03/`，日志哈希另列。开发期的知识CLI及完整demo回执另在`identity-v2/`和`06_执行/identity-v2/`。这些是执行者管理验证，不等于阶段03独立审核或实机L3/L4。
+
+此前`28086d505665323580c15809d6697586126da7dd`也通过同计划，但不覆盖后来的身份纠正；早先allowlist输入拒绝见`managed_input_repair.md`。本轮首次调用误用短SHA，被runner的`exact_40_character_candidate_required`输入检查拒绝，未执行测试；改为完整40字符SHA后完成验证，没有修改runner或放宽检查。
+
+本回执为后续文档提交添加。发布头在草稿PR中记录并再次以完整SHA执行相同run/inspect；不得把上述代码候选SHA冒充包含本回执的提交SHA。
+
+完成前的closure_preflight首次发现任务包缺少`terminal_lifecycle_state`；补充为既定交付边界`candidate_ready_for_independent_review`后重查。没有改变审核权或扩大任务范围。

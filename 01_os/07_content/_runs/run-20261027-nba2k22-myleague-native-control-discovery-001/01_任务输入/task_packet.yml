@@ -1,0 +1,55 @@
+task_packet:
+  task_id: NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-DISCOVERY-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: f8746503a29b86b7cdb3a0d624a0cd5603c69f19
+  inherited_live_source_sha: f6b2f5deb73218406f034c5418896c4bfade8e64
+  branch: task/nba2k22-myleague-native-control-discovery-20261027
+  objective: Restore PC22 offline MyLEAGUE native action bindings across all nine Human domains, integrate the prior successful Coach and trade services into a unified Registry/Binding/Plan/Facade, and prepare concrete next-task tests. External models supply exact decisions. This task performs static discovery and implementation only, with no new live, fixture or regression tests.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/13
+    - 01_任务输入/CODEX_NATIVE_CONTROL_FUNCTION_FIRST_v1.md
+    - 01_任务输入/DECISION_VS_NATIVE_EXECUTION_BOUNDARY_v1.md
+    - 02_能力建模/MyLEAGUE_AI_Native_Control_Capability_Model_v1.yml
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/**
+    - 01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-discovery-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-discovery-001/01_任务输入/verification_plan.json
+  required_tests: [delivery-source-readability]
+  verification_scope: Human permits syntax/format readability only. No action execution, fixtures, functional or regression tests, old success replay, new game attach/read/write/hook or native calls.
+  prohibitions:
+    - new_game_attach_read_write_injection_native_calls_or_UI_operations
+    - fixture_regression_or_game_mechanism_tests_this_task
+    - auto_select_targets_salary_match_or_change_external_AI_decisions
+    - repeat_trade_return_receipt_persistence_or_exhaustive_rule_research
+    - modify_production_writers_or_previous_research_artifacts
+    - master_merge_force_push_history_rewrite_or_secrets_publication
+    - unsupported_PC22_binding_claims_or_new_live_success_claims
+  required_completion_pointer: 08_结论/COMPLETION.md
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: true
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_head: f8746503a29b86b7cdb3a0d624a0cd5603c69f19
+  executor_profile:
+    provider: Codex
+    surface: Codex_desktop
+    model: runtime_selected_GPT_6_family_exact_variant_unexposed
+    reasoning_effort: inherited_runtime_setting_unexposed
+    mode: standard
+    routing_basis: Human directly assigned Issue13 to this single primary engineering owner.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_future_session
+    different_model_family: true
+    different_measurement_tool: true

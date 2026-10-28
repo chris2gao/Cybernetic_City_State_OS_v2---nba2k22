@@ -1,0 +1,9 @@
+# 候选验证与发布边界
+
+代码/证据候选`cd0dae81483bf8c45163cda3169f17523bba322e`的managed run与同候选inspect均success。计划SHA256：`59e0e769e5ac0d2a18c000c1896bb28b63f649af989dc1800b87c974740cf8d8`。
+
+实际检查为6项native-contract-tests、offline-preflight、artifact-integrity。后者读取原始REA四阶段证据、批准/脚本哈希、已跟踪Git字节、真实14→13→14和全部关联检查；没有以离线测试代替Native游戏证据。开发期另有成功执行脚本的Node语法检查，输出在development/。managed完整输出及哈希保存在managed-code-01/。
+
+任务preflight、closure_preflight及MWU artifact validator均已通过。原启动任务包在许可未知时不能声称big-task确认闭合；静态/只读依照Human任务书继续，待具体实验和补充预算两次实际批准后才闭合该字段。没有把历史未覆盖的许可改写成已批准。
+
+本记录是随后添加的文档/日志提交，不把代码候选SHA冒充包含本记录的发布SHA。最终发布头在草稿PR中另列，以完整40字符SHA再次运行同计划run/inspect后推送。执行者受控验证不等于独立审核，publication hook也不授予master合并。

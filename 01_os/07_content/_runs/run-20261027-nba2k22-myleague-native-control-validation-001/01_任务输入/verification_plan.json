@@ -1,0 +1,31 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/01_任务输入/task_packet.yml",
+  "checks": [
+    {
+      "id": "validation-source-readability",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/source_readability.py"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "retained-live-observation-audit",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/audit_live_observations.py",
+        "--check"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    }
+  ]
+}

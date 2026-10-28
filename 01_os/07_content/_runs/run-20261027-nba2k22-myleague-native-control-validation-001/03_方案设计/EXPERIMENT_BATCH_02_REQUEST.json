@@ -1,0 +1,13 @@
+{
+  "batch_id": "EXPERIMENT_BATCH_02_IND_SCOUT_APPEND_AND_PLAYER_READ",
+  "save_context": "Same approved recoverable MyLEAGUE calendar test save, PID10940; new batch permission still required",
+  "cases": [
+    {"case_id": "player_read", "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES", "parameters": {"player_id": 7239}, "input_source": "Actual first IND roster player Malcolm Brogdon observed in batch01; bound identity/contract subset only"},
+    {"case_id": "prospect_read", "action_id": "SCOUT_READ_PROSPECT_INFO", "parameters": {"player_id": 33143}, "input_source": "Actual public Sam Perkins UID33143 observed in batch01; Owner selected one identity under explicit Human delegation"},
+    {"case_id": "progress_before", "action_id": "SCOUT_READ_PROGRESS_RAW", "parameters": {"team_id": 20, "player_id": 33143}, "input_source": "Exact selected IND and public prospect; points/flags only"},
+    {"case_id": "scout_before", "action_id": "SCOUT_READ_TRIP_BUDGET", "parameters": {"team_id": 20}, "input_source": "Fresh exact IND goal identities and budget before native append"},
+    {"case_id": "scout_append", "action_id": "SCOUT_ASSIGN_TARGETS", "parameters": {"team_id": 20, "player_ids": [33143]}, "input_source": "Human delegated test values; one explicit Sam Perkins target. Expect native rejection because IND has3 goals; do not remove or replace old goals", "requires_successful_cases": ["prospect_read", "scout_before"]},
+    {"case_id": "scout_after", "action_id": "SCOUT_READ_TRIP_BUDGET", "parameters": {"team_id": 20}, "input_source": "Independent readback of same IND slots/identities/budget after accepted or rejected native append"},
+    {"case_id": "progress_after", "action_id": "SCOUT_READ_PROGRESS_RAW", "parameters": {"team_id": 20, "player_id": 33143}, "input_source": "Independent readback of exact selected public prospect progress; no scouting-trip execution"}
+  ]
+}

@@ -1,0 +1,2701 @@
+{
+  "source_kind": "STATIC_PC22_PE_FILE_NO_TARGET_EXECUTION",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "queries": {
+    "D03": "(?:(?:Set|Apply|Assign|Modify|Edit).*(?:Badge|Tendency|PlayType|PlayerAttribute|PlayerRating)|(?:Badge|Tendency|PlayType|PlayerAttribute|PlayerRating).*(?:Set|Apply|Assign|Modify))",
+    "D05": "(?:(?:Set|Apply|Assign|Swap|Add|Remove).*(?:Rotation|Minutes|Lineup|Starter|Roster|Position|Staff)|(?:Rotation|Minutes|Lineup|Starter|Roster).*(?:Set|Apply|Assign|Swap))",
+    "D04": "(?:(?:Set|Apply|Assign|Add|Remove).*(?:Playbook|Freelance|Gameplan|System|Scheme)|(?:Playbook|Freelance|Gameplan).*(?:Set|Apply|Assign|Add|Remove))",
+    "D07": "(?:Training.*(?:Set|Apply|Assign|Change)|(?:Set|Apply|Assign|Change).*Training)",
+    "D08": "(?:Get|Read|Find).*(?:CareerStats|SeasonStats|TeamStats|PlayerStats|Award|Standings|History|Calendar)",
+    "EXTRA": "^Franchise_Player_(?:Retire|Waive|Release|Set)|^Franchise_Team_.*(?:Waive|Release)"
+  },
+  "strings": {
+    "D03": [
+      {
+        "rva": 35839904,
+        "literal": "PreviousSetupSizeupTendencyRaw",
+        "domain": "D03"
+      },
+      {
+        "rva": 35839935,
+        "literal": "PreviousSetupHesitationTendencyRaw",
+        "domain": "D03"
+      },
+      {
+        "rva": 35839970,
+        "literal": "PreviousSetupNothingTendencyRaw",
+        "domain": "D03"
+      },
+      {
+        "rva": 35844258,
+        "literal": "SetupSizeupTendencyRaw",
+        "domain": "D03"
+      },
+      {
+        "rva": 35844281,
+        "literal": "SetupHesitationTendencyRaw",
+        "domain": "D03"
+      },
+      {
+        "rva": 35844308,
+        "literal": "SetupNothingTendencyRaw",
+        "domain": "D03"
+      },
+      {
+        "rva": 35846676,
+        "literal": "SetShooterBadge",
+        "domain": "D03"
+      },
+      {
+        "rva": 35849153,
+        "literal": "IsSetShooterBadgeBoostable",
+        "domain": "D03"
+      },
+      {
+        "rva": 36363759,
+        "literal": "PLAYERDATA_ATTRIBUTE_SetupSizeupTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 36363800,
+        "literal": "PLAYERDATA_ATTRIBUTE_SetupHesitationTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 36363845,
+        "literal": "PLAYERDATA_ATTRIBUTE_SetupNothingTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 37047260,
+        "literal": "SetupSizeupTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 37047280,
+        "literal": "SetupHesitationTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 37047304,
+        "literal": "SetupNothingTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 37322105,
+        "literal": "SetShooterBadge",
+        "domain": "D03"
+      },
+      {
+        "rva": 37336690,
+        "literal": "BadgeBoostSetShooter",
+        "domain": "D03"
+      },
+      {
+        "rva": 38272624,
+        "literal": "FRANCHISE_MENTOR::MENU_MENTORBADGES::SetCurrentPlayers",
+        "domain": "D03"
+      },
+      {
+        "rva": 38925936,
+        "literal": "PlayerData_Badge_SetPlayerExpressiveness",
+        "domain": "D03"
+      },
+      {
+        "rva": 43629496,
+        "literal": "MYTEAM_APPLY_HOF_BADGE",
+        "domain": "D03"
+      },
+      {
+        "rva": 45619360,
+        "literal": "CAREERMODE_PROGRESSION::BADGES::SetLevel",
+        "domain": "D03"
+      },
+      {
+        "rva": 45622208,
+        "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+        "domain": "D03"
+      },
+      {
+        "rva": 45728699,
+        "literal": "SETUP_SIZE_UP_TENDENCY",
+        "domain": "D03"
+      },
+      {
+        "rva": 45728722,
+        "literal": "SETUP_HESITATION_TENDENCY",
+        "domain": "D03"
+      },
+      {
+        "rva": 45728748,
+        "literal": "SETUP_NOTHING_TENDENCY",
+        "domain": "D03"
+      },
+      {
+        "rva": 46457696,
+        "literal": "PLAYERDATA_ATTRIBUTE_SetupSizeupTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 46457744,
+        "literal": "PLAYERDATA_ATTRIBUTE_SetupHesitationTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 46457792,
+        "literal": "PLAYERDATA_ATTRIBUTE_SetupNothingTendency",
+        "domain": "D03"
+      },
+      {
+        "rva": 46515272,
+        "literal": "OnlineMetric_MyTeam_ApplyBadgeToPlayer",
+        "domain": "D03"
+      },
+      {
+        "rva": 46515456,
+        "literal": "myteam_apply_badge.json",
+        "domain": "D03"
+      },
+      {
+        "rva": 46515480,
+        "literal": "APPLY_BADGE_TO_PLAYER",
+        "domain": "D03"
+      },
+      {
+        "rva": 46544592,
+        "literal": "MYTEAM::EDIT_CARD_MENU::ApplyBadgeCallback",
+        "domain": "D03"
+      },
+      {
+        "rva": 47795616,
+        "literal": "AI_BADGE_SET_SHOOTER",
+        "domain": "D03"
+      }
+    ],
+    "D05": [
+      {
+        "rva": 35920537,
+        "literal": "GLOBALDATA_SETTING_ROTATION",
+        "domain": "D05"
+      },
+      {
+        "rva": 36392150,
+        "literal": "TIMELINE_2K22_BR_MP_STARTER_ARC_SETUP",
+        "domain": "D05"
+      },
+      {
+        "rva": 36436736,
+        "literal": "Use SetScrollHereY() or SetScrollFromPosY() to scroll to a given position.",
+        "domain": "D05"
+      },
+      {
+        "rva": 36862224,
+        "literal": "MYPLAYERNATION_GAME::SetupMyplayerInRoster",
+        "domain": "D05"
+      },
+      {
+        "rva": 36929149,
+        "literal": "ADD_TO_LINEUP",
+        "domain": "D05"
+      },
+      {
+        "rva": 36990392,
+        "literal": "MYGM_TASKS::TASK_MAKE_STARTER::Setup",
+        "domain": "D05"
+      },
+      {
+        "rva": 37338672,
+        "literal": "MYTEAM::MYTEAM_CLUTCH_TIME::SetScenarioLineup",
+        "domain": "D05"
+      },
+      {
+        "rva": 37338728,
+        "literal": "MYTEAM::MYTEAM_CLUTCH_TIME::SetScenarioLineup_Callback",
+        "domain": "D05"
+      },
+      {
+        "rva": 37861520,
+        "literal": "LINE_GRAPH_CLONE_CALLBACK::ResetClonePosition",
+        "domain": "D05"
+      },
+      {
+        "rva": 37875048,
+        "literal": "CAREER_CREATOR_PLAYER_EDIT::SetPosition",
+        "domain": "D05"
+      },
+      {
+        "rva": 38161368,
+        "literal": "MYLEAGUE_ONLINE_LINEUPS_VETTER::CanApply",
+        "domain": "D05"
+      },
+      {
+        "rva": 38162208,
+        "literal": "ONTHEFLY_LINEUPS_MENU::SetListFocus",
+        "domain": "D05"
+      },
+      {
+        "rva": 38170632,
+        "literal": "FRANCHISE_SALARY_CAP_LINEGRAPH::ResetClonePosition",
+        "domain": "D05"
+      },
+      {
+        "rva": 38187721,
+        "literal": "SET_STAFF_RETIREMENTS",
+        "domain": "D05"
+      },
+      {
+        "rva": 38188452,
+        "literal": "SET_POSITION_SETTINGS",
+        "domain": "D05"
+      },
+      {
+        "rva": 38392208,
+        "literal": "ROSTER_MENU::AssignPlayerToTeam",
+        "domain": "D05"
+      },
+      {
+        "rva": 38392568,
+        "literal": "ROSTER_MENU::SetEditType",
+        "domain": "D05"
+      },
+      {
+        "rva": 38451160,
+        "literal": "Tattoo_Placement_Menu_ResetPosition",
+        "domain": "D05"
+      },
+      {
+        "rva": 38926544,
+        "literal": "PlayerData_Created_RemovePlayerFromMainRoster",
+        "domain": "D05"
+      },
+      {
+        "rva": 43290224,
+        "literal": "void GlobalData_ResetRosterPageInGooey()",
+        "domain": "D05"
+      },
+      {
+        "rva": 43387536,
+        "literal": "bool Roster_AssignPlayerToTeam()",
+        "domain": "D05"
+      },
+      {
+        "rva": 43387712,
+        "literal": "void Roster_SetMode(string_crc mode)",
+        "domain": "D05"
+      },
+      {
+        "rva": 43388056,
+        "literal": "void Roster_SetEditType(string_crc editType)",
+        "domain": "D05"
+      },
+      {
+        "rva": 43388768,
+        "literal": "void Roster_SetSelectedPlayerInSlot()",
+        "domain": "D05"
+      },
+      {
+        "rva": 43389712,
+        "literal": "void Roster_SetView(string_crc view)",
+        "domain": "D05"
+      },
+      {
+        "rva": 43391248,
+        "literal": "void Roster_ChooseTeamOverlay_Init()",
+        "domain": "D05"
+      },
+      {
+        "rva": 43391432,
+        "literal": "void Roster_ChooseTeamOverlay_Deinit()",
+        "domain": "D05"
+      },
+      {
+        "rva": 43391616,
+        "literal": "void Roster_ChooseTeamOverlay_UpdateTeamSlot()",
+        "domain": "D05"
+      },
+      {
+        "rva": 43393640,
+        "literal": "void StatMenuCommon_SetPerMinuteModifier( int Minutes )",
+        "domain": "D05"
+      },
+      {
+        "rva": 43424136,
+        "literal": "AUDIO::STREAM::ApplyPosition3DParameters",
+        "domain": "D05"
+      },
+      {
+        "rva": 43452402,
+        "literal": "RosterResetDisabled",
+        "domain": "D05"
+      },
+      {
+        "rva": 44171872,
+        "literal": "COACHSCLIPBOARD::COACHSCLIPBOARD_ONTHEFLY_PANEL_DEFENSIVEPLAYS::SetPositionSelected",
+        "domain": "D05"
+      },
+      {
+        "rva": 44338512,
+        "literal": "CareerMode_SetupOfflineRosterPlayer",
+        "domain": "D05"
+      },
+      {
+        "rva": 44580568,
+        "literal": "DraftClass_AddToRoster",
+        "domain": "D05"
+      },
+      {
+        "rva": 44590312,
+        "literal": "ROSTERDATA::GetPlayerCareerPresetDataByIndex",
+        "domain": "D05"
+      },
+      {
+        "rva": 44593240,
+        "literal": "ROSTERDATA_TEAM_PLAYER_ITERATOR::ResetToFirstRosterType",
+        "domain": "D05"
+      },
+      {
+        "rva": 44593384,
+        "literal": "RosterData_Reset",
+        "domain": "D05"
+      },
+      {
+        "rva": 45424904,
+        "literal": "CACHEDROSTER_FILEIO::SetInfoForSave",
+        "domain": "D05"
+      },
+      {
+        "rva": 45425016,
+        "literal": "CACHEDROSTER_FILEIO::SetInfoForLoad",
+        "domain": "D05"
+      },
+      {
+        "rva": 45431392,
+        "literal": "GameMode_SetInGameOrOutOfRosterPlayerInjury",
+        "domain": "D05"
+      },
+      {
+        "rva": 45432360,
+        "literal": "RESET_ROSTER_JOB::Update",
+        "domain": "D05"
+      },
+      {
+        "rva": 45691763,
+        "literal": "SelfAssignedMinutes_Min",
+        "domain": "D05"
+      },
+      {
+        "rva": 45691787,
+        "literal": "SelfAssignedMinutes_Max",
+        "domain": "D05"
+      },
+      {
+        "rva": 45846652,
+        "literal": "AdditionalMaxMinutesForPlayoffs",
+        "domain": "D05"
+      },
+      {
+        "rva": 46256352,
+        "literal": "LOADINGANIMATION_LINEUPDATA::SetCurrentLineupType",
+        "domain": "D05"
+      },
+      {
+        "rva": 46308432,
+        "literal": "PlayerCreateMenu_UpdateAfterRosterTypeSet",
+        "domain": "D05"
+      },
+      {
+        "rva": 46563176,
+        "literal": "MYTEAM::GAMESETUP::CheckIsLineupValid",
+        "domain": "D05"
+      },
+      {
+        "rva": 46566352,
+        "literal": "MYTEAM::GAMESETUP_ONLINE::ExtractLineupFromSessionData",
+        "domain": "D05"
+      },
+      {
+        "rva": 46594880,
+        "literal": "image_defsettings_diagram_screenhelprules_help_norotation.iff",
+        "domain": "D05"
+      },
+      {
+        "rva": 47159824,
+        "literal": "MYTEAM::LINEUP::SetPosition",
+        "domain": "D05"
+      },
+      {
+        "rva": 47159856,
+        "literal": "LINEUP_SETUP",
+        "domain": "D05"
+      },
+      {
+        "rva": 47161984,
+        "literal": "MYTEAM::LINEUP_MANAGEMENT::SetActiveLineupReceiveCallback",
+        "domain": "D05"
+      },
+      {
+        "rva": 47933397,
+        "literal": "RotationOffsetToApply",
+        "domain": "D05"
+      },
+      {
+        "rva": 47933718,
+        "literal": "RotationToApplyNext",
+        "domain": "D05"
+      },
+      {
+        "rva": 47933738,
+        "literal": "IsRotationToApplyNextSet",
+        "domain": "D05"
+      }
+    ],
+    "D04": [
+      {
+        "rva": 36625967,
+        "literal": "disableFreelanceReset",
+        "domain": "D04"
+      },
+      {
+        "rva": 36925600,
+        "literal": "GAMEPLAN_MATCHUP_DEFENSIVE_SETTINGS",
+        "domain": "D04"
+      },
+      {
+        "rva": 38281520,
+        "literal": "MYLEAGUE_ONLINE_GAMEPLAN_VETTER::CanApply",
+        "domain": "D04"
+      },
+      {
+        "rva": 38920584,
+        "literal": "CoachData_SetSystemAbilityByIndex",
+        "domain": "D04"
+      },
+      {
+        "rva": 43360176,
+        "literal": "void PlaybookMenu_AssignPlays_Initialize(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43360384,
+        "literal": "void PlaybookMenu_AssignPlays_Update(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43360584,
+        "literal": "void PlaybookMenu_AssignPlays_Deinitialize(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43360800,
+        "literal": "void PlaybookMenu_AssignPlays_PopOverlay(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43361008,
+        "literal": "bool PlaybookMenu_AssignPlays_NextTeam(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43361208,
+        "literal": "bool PlaybookMenu_AssignPlays_PrevTeam(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43361416,
+        "literal": "bool PlaybookMenu_AssignPlays_NextPlayer(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 43361632,
+        "literal": "bool PlaybookMenu_AssignPlays_PrevPlayer(void)",
+        "domain": "D04"
+      },
+      {
+        "rva": 45423440,
+        "literal": "FranchiseTuningContextState == LOADED || VCSystem()->GetOperatingEnvironment() == \"DEVELOPMENT\"",
+        "domain": "D04"
+      },
+      {
+        "rva": 46007600,
+        "literal": "FRANCHISE_GAMEPLAN_MANAGER::AddGameplan",
+        "domain": "D04"
+      },
+      {
+        "rva": 46965760,
+        "literal": "TK_WORLD::ACTIVITY_2KWORLD_LEVEL_COMPONENT::AddEnvironmentToPropSystem",
+        "domain": "D04"
+      },
+      {
+        "rva": 47720294,
+        "literal": "FREELANCE_SET",
+        "domain": "D04"
+      }
+    ],
+    "D07": [
+      {
+        "rva": 37019320,
+        "literal": "TRAINING_PLAYER_CHANGE",
+        "domain": "D07"
+      },
+      {
+        "rva": 37019343,
+        "literal": "TRAINING_SCHEDULE_CHANGE",
+        "domain": "D07"
+      },
+      {
+        "rva": 37019368,
+        "literal": "TRAINING_TEAM_CHANGE",
+        "domain": "D07"
+      },
+      {
+        "rva": 37019865,
+        "literal": "TRAINING_PLAYER_CHANGE",
+        "domain": "D07"
+      },
+      {
+        "rva": 37019888,
+        "literal": "TRAINING_SCHEDULE_CHANGE",
+        "domain": "D07"
+      },
+      {
+        "rva": 37019913,
+        "literal": "TRAINING_TEAM_CHANGE",
+        "domain": "D07"
+      },
+      {
+        "rva": 38316888,
+        "literal": "MYGMMENU_TRAININGSCHEDULE::SetListSelectedIndex",
+        "domain": "D07"
+      },
+      {
+        "rva": 46062992,
+        "literal": "FRANCHISE_TRAINING::SetTrainingForTeamOnDate",
+        "domain": "D07"
+      }
+    ],
+    "D08": [
+      {
+        "rva": 38079208,
+        "literal": "MyCareer_Notification_GetAwardLogoByType",
+        "domain": "D08"
+      },
+      {
+        "rva": 38079360,
+        "literal": "MyCareer_Notification_GetAwardModeByType",
+        "domain": "D08"
+      },
+      {
+        "rva": 38090304,
+        "literal": "TextElement->Values->Get( \"Index\", ElementIndex ) && ElementIndex > -1 && ElementIndex < MyCareer_PNG_CalendarData.SliceArr.GetCount()",
+        "domain": "D08"
+      },
+      {
+        "rva": 44591824,
+        "literal": "ROSTERDATA::GetLeagueHistoryManagerDataByIndex",
+        "domain": "D08"
+      },
+      {
+        "rva": 44591872,
+        "literal": "ROSTERDATA::GetLeagueHistoryDataByIndex",
+        "domain": "D08"
+      },
+      {
+        "rva": 45987128,
+        "literal": "Franchise_GetTeamSignatureIdAtLastRealLifeSeasonStandingsRank",
+        "domain": "D08"
+      },
+      {
+        "rva": 46064248,
+        "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+        "domain": "D08"
+      },
+      {
+        "rva": 46064496,
+        "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointAverageForTeam",
+        "domain": "D08"
+      },
+      {
+        "rva": 46064592,
+        "literal": "FRANCHISE_TRAINING::GetIntensityHistoryAverage_AsFloat",
+        "domain": "D08"
+      },
+      {
+        "rva": 46064688,
+        "literal": "FRANCHISE_TRAINING::GetIntensityHistoryPointsAvailable",
+        "domain": "D08"
+      },
+      {
+        "rva": 46608416,
+        "literal": "SCORETRACK_MENU::GetHistoryReplayTime",
+        "domain": "D08"
+      },
+      {
+        "rva": 47421128,
+        "literal": "SCHEDULEDATE::GetEndOfCalendarDay",
+        "domain": "D08"
+      }
+    ],
+    "EXTRA": [
+      {
+        "rva": 46023192,
+        "literal": "Franchise_Player_Retire",
+        "domain": "EXTRA"
+      },
+      {
+        "rva": 46024232,
+        "literal": "Franchise_Player_RetirePlayerJersey",
+        "domain": "EXTRA"
+      },
+      {
+        "rva": 46050664,
+        "literal": "Franchise_Team_WaivePlayer",
+        "domain": "EXTRA"
+      },
+      {
+        "rva": 46050904,
+        "literal": "Franchise_Team_ReleasePlayer",
+        "domain": "EXTRA"
+      }
+    ]
+  },
+  "references": [
+    {
+      "rva": 36925600,
+      "literal": "GAMEPLAN_MATCHUP_DEFENSIVE_SETTINGS",
+      "domain": "D04",
+      "instruction_rva": 943236,
+      "unwind_chain": [
+        {
+          "begin": 943232,
+          "end": 943283,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 943232
+    },
+    {
+      "rva": 47795616,
+      "literal": "AI_BADGE_SET_SHOOTER",
+      "domain": "D03",
+      "instruction_rva": 1869236,
+      "unwind_chain": [
+        {
+          "begin": 1869232,
+          "end": 1869283,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 1869232
+    },
+    {
+      "rva": 36436736,
+      "literal": "Use SetScrollHereY() or SetScrollFromPosY() to scroll to a given position.",
+      "domain": "D05",
+      "instruction_rva": 3196169,
+      "unwind_chain": [
+        {
+          "begin": 3193831,
+          "end": 3196824,
+          "unwind_rva": 50022300,
+          "flags": 4
+        },
+        {
+          "begin": 3192596,
+          "end": 3193831,
+          "unwind_rva": 50022280,
+          "flags": 4
+        },
+        {
+          "begin": 3190790,
+          "end": 3192596,
+          "unwind_rva": 50022216,
+          "flags": 4
+        },
+        {
+          "begin": 3190775,
+          "end": 3190790,
+          "unwind_rva": 50022196,
+          "flags": 4
+        },
+        {
+          "begin": 3190736,
+          "end": 3190775,
+          "unwind_rva": 50022184,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 3190736
+    },
+    {
+      "rva": 36862224,
+      "literal": "MYPLAYERNATION_GAME::SetupMyplayerInRoster",
+      "domain": "D05",
+      "instruction_rva": 4254611,
+      "unwind_chain": [
+        {
+          "begin": 4254528,
+          "end": 4254700,
+          "unwind_rva": 50087956,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 4254528
+    },
+    {
+      "rva": 36862224,
+      "literal": "MYPLAYERNATION_GAME::SetupMyplayerInRoster",
+      "domain": "D05",
+      "instruction_rva": 4254847,
+      "unwind_chain": [
+        {
+          "begin": 4254720,
+          "end": 4255136,
+          "unwind_rva": 50087992,
+          "flags": 4
+        },
+        {
+          "begin": 4254700,
+          "end": 4254720,
+          "unwind_rva": 50087968,
+          "flags": 4
+        },
+        {
+          "begin": 4254528,
+          "end": 4254700,
+          "unwind_rva": 50087956,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 4254528
+    },
+    {
+      "rva": 36990392,
+      "literal": "MYGM_TASKS::TASK_MAKE_STARTER::Setup",
+      "domain": "D05",
+      "instruction_rva": 4441134,
+      "unwind_chain": [
+        {
+          "begin": 4440976,
+          "end": 4441212,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 4440976
+    },
+    {
+      "rva": 37338672,
+      "literal": "MYTEAM::MYTEAM_CLUTCH_TIME::SetScenarioLineup",
+      "domain": "D05",
+      "instruction_rva": 5302174,
+      "unwind_chain": [
+        {
+          "begin": 5302016,
+          "end": 5302343,
+          "unwind_rva": 50134164,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 5302016
+    },
+    {
+      "rva": 37338672,
+      "literal": "MYTEAM::MYTEAM_CLUTCH_TIME::SetScenarioLineup",
+      "domain": "D05",
+      "instruction_rva": 5302564,
+      "unwind_chain": [
+        {
+          "begin": 5302552,
+          "end": 5302720,
+          "unwind_rva": 50143236,
+          "flags": 4
+        },
+        {
+          "begin": 5302016,
+          "end": 5302343,
+          "unwind_rva": 50134164,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 5302016
+    },
+    {
+      "rva": 37338728,
+      "literal": "MYTEAM::MYTEAM_CLUTCH_TIME::SetScenarioLineup_Callback",
+      "domain": "D05",
+      "instruction_rva": 5302901,
+      "unwind_chain": [
+        {
+          "begin": 5302720,
+          "end": 5303063,
+          "unwind_rva": 50044364,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 5302720
+    },
+    {
+      "rva": 37861520,
+      "literal": "LINE_GRAPH_CLONE_CALLBACK::ResetClonePosition",
+      "domain": "D05",
+      "instruction_rva": 5928268,
+      "unwind_chain": [
+        {
+          "begin": 5928064,
+          "end": 5928369,
+          "unwind_rva": 50098344,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 5928064
+    },
+    {
+      "rva": 37875048,
+      "literal": "CAREER_CREATOR_PLAYER_EDIT::SetPosition",
+      "domain": "D05",
+      "instruction_rva": 5956793,
+      "unwind_chain": [
+        {
+          "begin": 5956720,
+          "end": 5957145,
+          "unwind_rva": 50177656,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 5956720
+    },
+    {
+      "rva": 38079360,
+      "literal": "MyCareer_Notification_GetAwardModeByType",
+      "domain": "D08",
+      "instruction_rva": 6100797,
+      "unwind_chain": [
+        {
+          "begin": 6100480,
+          "end": 6101244,
+          "unwind_rva": 50219052,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 6100480
+    },
+    {
+      "rva": 38161368,
+      "literal": "MYLEAGUE_ONLINE_LINEUPS_VETTER::CanApply",
+      "domain": "D05",
+      "instruction_rva": 6160088,
+      "unwind_chain": [
+        {
+          "begin": 6160018,
+          "end": 6160289,
+          "unwind_rva": 50246416,
+          "flags": 4
+        },
+        {
+          "begin": 6159984,
+          "end": 6160018,
+          "unwind_rva": 50043212,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 6159984
+    },
+    {
+      "rva": 38079208,
+      "literal": "MyCareer_Notification_GetAwardLogoByType",
+      "domain": "D08",
+      "instruction_rva": 7153803,
+      "unwind_chain": [
+        {
+          "begin": 7153664,
+          "end": 7153976,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 7153664
+    },
+    {
+      "rva": 38170632,
+      "literal": "FRANCHISE_SALARY_CAP_LINEGRAPH::ResetClonePosition",
+      "domain": "D05",
+      "instruction_rva": 7348754,
+      "unwind_chain": [
+        {
+          "begin": 7348528,
+          "end": 7348845,
+          "unwind_rva": 49969536,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 7348528
+    },
+    {
+      "rva": 38162208,
+      "literal": "ONTHEFLY_LINEUPS_MENU::SetListFocus",
+      "domain": "D05",
+      "instruction_rva": 7375600,
+      "unwind_chain": [
+        {
+          "begin": 7375536,
+          "end": 7375911,
+          "unwind_rva": 49982452,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 7375536
+    },
+    {
+      "rva": 38090304,
+      "literal": "TextElement->Values->Get( \"Index\", ElementIndex ) && ElementIndex > -1 && ElementIndex < MyCareer_PNG_CalendarData.SliceArr.GetCount()",
+      "domain": "D08",
+      "instruction_rva": 7501807,
+      "unwind_chain": [
+        {
+          "begin": 7501312,
+          "end": 7503170,
+          "unwind_rva": 50224416,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 7501312
+    },
+    {
+      "rva": 38090304,
+      "literal": "TextElement->Values->Get( \"Index\", ElementIndex ) && ElementIndex > -1 && ElementIndex < MyCareer_PNG_CalendarData.SliceArr.GetCount()",
+      "domain": "D08",
+      "instruction_rva": 7502191,
+      "unwind_chain": [
+        {
+          "begin": 7501312,
+          "end": 7503170,
+          "unwind_rva": 50224416,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 7501312
+    },
+    {
+      "rva": 38281520,
+      "literal": "MYLEAGUE_ONLINE_GAMEPLAN_VETTER::CanApply",
+      "domain": "D04",
+      "instruction_rva": 7674792,
+      "unwind_chain": [
+        {
+          "begin": 7674744,
+          "end": 7674891,
+          "unwind_rva": 50279960,
+          "flags": 4
+        },
+        {
+          "begin": 7674352,
+          "end": 7674391,
+          "unwind_rva": 50279908,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 7674352
+    },
+    {
+      "rva": 38316888,
+      "literal": "MYGMMENU_TRAININGSCHEDULE::SetListSelectedIndex",
+      "domain": "D07",
+      "instruction_rva": 8333351,
+      "unwind_chain": [
+        {
+          "begin": 8333260,
+          "end": 8333643,
+          "unwind_rva": 50303080,
+          "flags": 4
+        },
+        {
+          "begin": 8332992,
+          "end": 8333260,
+          "unwind_rva": 50132876,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 8332992
+    },
+    {
+      "rva": 38316888,
+      "literal": "MYGMMENU_TRAININGSCHEDULE::SetListSelectedIndex",
+      "domain": "D07",
+      "instruction_rva": 8333497,
+      "unwind_chain": [
+        {
+          "begin": 8333260,
+          "end": 8333643,
+          "unwind_rva": 50303080,
+          "flags": 4
+        },
+        {
+          "begin": 8332992,
+          "end": 8333260,
+          "unwind_rva": 50132876,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 8332992
+    },
+    {
+      "rva": 38272624,
+      "literal": "FRANCHISE_MENTOR::MENU_MENTORBADGES::SetCurrentPlayers",
+      "domain": "D03",
+      "instruction_rva": 8422029,
+      "unwind_chain": [
+        {
+          "begin": 8421849,
+          "end": 8422362,
+          "unwind_rva": 50285012,
+          "flags": 4
+        },
+        {
+          "begin": 8421808,
+          "end": 8421849,
+          "unwind_rva": 50285000,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 8421808
+    },
+    {
+      "rva": 38272624,
+      "literal": "FRANCHISE_MENTOR::MENU_MENTORBADGES::SetCurrentPlayers",
+      "domain": "D03",
+      "instruction_rva": 8422237,
+      "unwind_chain": [
+        {
+          "begin": 8421849,
+          "end": 8422362,
+          "unwind_rva": 50285012,
+          "flags": 4
+        },
+        {
+          "begin": 8421808,
+          "end": 8421849,
+          "unwind_rva": 50285000,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 8421808
+    },
+    {
+      "rva": 38392208,
+      "literal": "ROSTER_MENU::AssignPlayerToTeam",
+      "domain": "D05",
+      "instruction_rva": 8614487,
+      "unwind_chain": [
+        {
+          "begin": 8614400,
+          "end": 8614581,
+          "unwind_rva": 50318368,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 8614400
+    },
+    {
+      "rva": 38392568,
+      "literal": "ROSTER_MENU::SetEditType",
+      "domain": "D05",
+      "instruction_rva": 9036329,
+      "unwind_chain": [
+        {
+          "begin": 9036208,
+          "end": 9036467,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 9036208
+    },
+    {
+      "rva": 38451160,
+      "literal": "Tattoo_Placement_Menu_ResetPosition",
+      "domain": "D05",
+      "instruction_rva": 9091978,
+      "unwind_chain": [
+        {
+          "begin": 9091710,
+          "end": 9092264,
+          "unwind_rva": 50309212,
+          "flags": 4
+        },
+        {
+          "begin": 9091664,
+          "end": 9091710,
+          "unwind_rva": 50178748,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 9091664
+    },
+    {
+      "rva": 38920584,
+      "literal": "CoachData_SetSystemAbilityByIndex",
+      "domain": "D04",
+      "instruction_rva": 9371584,
+      "unwind_chain": [
+        {
+          "begin": 9371408,
+          "end": 9371696,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 9371408
+    },
+    {
+      "rva": 38925936,
+      "literal": "PlayerData_Badge_SetPlayerExpressiveness",
+      "domain": "D03",
+      "instruction_rva": 9896904,
+      "unwind_chain": [
+        {
+          "begin": 9896800,
+          "end": 9897180,
+          "unwind_rva": 49970440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 9896800
+    },
+    {
+      "rva": 38926544,
+      "literal": "PlayerData_Created_RemovePlayerFromMainRoster",
+      "domain": "D05",
+      "instruction_rva": 9908019,
+      "unwind_chain": [
+        {
+          "begin": 9907936,
+          "end": 9908105,
+          "unwind_rva": 50218868,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 9907936
+    },
+    {
+      "rva": 43424136,
+      "literal": "AUDIO::STREAM::ApplyPosition3DParameters",
+      "domain": "D05",
+      "instruction_rva": 12275142,
+      "unwind_chain": [
+        {
+          "begin": 12275067,
+          "end": 12275447,
+          "unwind_rva": 50466700,
+          "flags": 4
+        },
+        {
+          "begin": 12274848,
+          "end": 12275067,
+          "unwind_rva": 50466676,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12274848
+    },
+    {
+      "rva": 43290224,
+      "literal": "void GlobalData_ResetRosterPageInGooey()",
+      "domain": "D05",
+      "instruction_rva": 12399947,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43360176,
+      "literal": "void PlaybookMenu_AssignPlays_Initialize(void)",
+      "domain": "D04",
+      "instruction_rva": 12440981,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43360384,
+      "literal": "void PlaybookMenu_AssignPlays_Update(void)",
+      "domain": "D04",
+      "instruction_rva": 12441095,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43360584,
+      "literal": "void PlaybookMenu_AssignPlays_Deinitialize(void)",
+      "domain": "D04",
+      "instruction_rva": 12441209,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43360800,
+      "literal": "void PlaybookMenu_AssignPlays_PopOverlay(void)",
+      "domain": "D04",
+      "instruction_rva": 12441323,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43361008,
+      "literal": "bool PlaybookMenu_AssignPlays_NextTeam(void)",
+      "domain": "D04",
+      "instruction_rva": 12441437,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43361208,
+      "literal": "bool PlaybookMenu_AssignPlays_PrevTeam(void)",
+      "domain": "D04",
+      "instruction_rva": 12441551,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43361416,
+      "literal": "bool PlaybookMenu_AssignPlays_NextPlayer(void)",
+      "domain": "D04",
+      "instruction_rva": 12441665,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43361632,
+      "literal": "bool PlaybookMenu_AssignPlays_PrevPlayer(void)",
+      "domain": "D04",
+      "instruction_rva": 12441779,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43387536,
+      "literal": "bool Roster_AssignPlayerToTeam()",
+      "domain": "D05",
+      "instruction_rva": 12456301,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43387712,
+      "literal": "void Roster_SetMode(string_crc mode)",
+      "domain": "D05",
+      "instruction_rva": 12456408,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43388056,
+      "literal": "void Roster_SetEditType(string_crc editType)",
+      "domain": "D05",
+      "instruction_rva": 12456622,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43388768,
+      "literal": "void Roster_SetSelectedPlayerInSlot()",
+      "domain": "D05",
+      "instruction_rva": 12457050,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43389712,
+      "literal": "void Roster_SetView(string_crc view)",
+      "domain": "D05",
+      "instruction_rva": 12457692,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43391248,
+      "literal": "void Roster_ChooseTeamOverlay_Init()",
+      "domain": "D05",
+      "instruction_rva": 12458655,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43391432,
+      "literal": "void Roster_ChooseTeamOverlay_Deinit()",
+      "domain": "D05",
+      "instruction_rva": 12458762,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43391616,
+      "literal": "void Roster_ChooseTeamOverlay_UpdateTeamSlot()",
+      "domain": "D05",
+      "instruction_rva": 12458869,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 43393640,
+      "literal": "void StatMenuCommon_SetPerMinuteModifier( int Minutes )",
+      "domain": "D05",
+      "instruction_rva": 12460153,
+      "unwind_chain": [
+        {
+          "begin": 12395216,
+          "end": 12465668,
+          "unwind_rva": 50316088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 12395216
+    },
+    {
+      "rva": 44171872,
+      "literal": "COACHSCLIPBOARD::COACHSCLIPBOARD_ONTHEFLY_PANEL_DEFENSIVEPLAYS::SetPositionSelected",
+      "domain": "D05",
+      "instruction_rva": 15039374,
+      "unwind_chain": [
+        {
+          "begin": 15039216,
+          "end": 15039496,
+          "unwind_rva": 49993444,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15039216
+    },
+    {
+      "rva": 44338512,
+      "literal": "CareerMode_SetupOfflineRosterPlayer",
+      "domain": "D05",
+      "instruction_rva": 15374217,
+      "unwind_chain": [
+        {
+          "begin": 15374096,
+          "end": 15375579,
+          "unwind_rva": 50609216,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15374096
+    },
+    {
+      "rva": 44338512,
+      "literal": "CareerMode_SetupOfflineRosterPlayer",
+      "domain": "D05",
+      "instruction_rva": 15374604,
+      "unwind_chain": [
+        {
+          "begin": 15374096,
+          "end": 15375579,
+          "unwind_rva": 50609216,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15374096
+    },
+    {
+      "rva": 44338512,
+      "literal": "CareerMode_SetupOfflineRosterPlayer",
+      "domain": "D05",
+      "instruction_rva": 15374719,
+      "unwind_chain": [
+        {
+          "begin": 15374096,
+          "end": 15375579,
+          "unwind_rva": 50609216,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15374096
+    },
+    {
+      "rva": 44580568,
+      "literal": "DraftClass_AddToRoster",
+      "domain": "D05",
+      "instruction_rva": 15497784,
+      "unwind_chain": [
+        {
+          "begin": 15497015,
+          "end": 15498278,
+          "unwind_rva": 50613108,
+          "flags": 4
+        },
+        {
+          "begin": 15496773,
+          "end": 15497015,
+          "unwind_rva": 50613080,
+          "flags": 4
+        },
+        {
+          "begin": 15496752,
+          "end": 15496773,
+          "unwind_rva": 50613068,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15496752
+    },
+    {
+      "rva": 44591824,
+      "literal": "ROSTERDATA::GetLeagueHistoryManagerDataByIndex",
+      "domain": "D08",
+      "instruction_rva": 15757348,
+      "unwind_chain": [
+        {
+          "begin": 15757232,
+          "end": 15757509,
+          "unwind_rva": 49971036,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15757232
+    },
+    {
+      "rva": 44593240,
+      "literal": "ROSTERDATA_TEAM_PLAYER_ITERATOR::ResetToFirstRosterType",
+      "domain": "D05",
+      "instruction_rva": 15965468,
+      "unwind_chain": [
+        {
+          "begin": 15965376,
+          "end": 15965558,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15965376
+    },
+    {
+      "rva": 44591872,
+      "literal": "ROSTERDATA::GetLeagueHistoryDataByIndex",
+      "domain": "D08",
+      "instruction_rva": 15981334,
+      "unwind_chain": [
+        {
+          "begin": 15981200,
+          "end": 15981410,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15981200
+    },
+    {
+      "rva": 44590312,
+      "literal": "ROSTERDATA::GetPlayerCareerPresetDataByIndex",
+      "domain": "D05",
+      "instruction_rva": 15987344,
+      "unwind_chain": [
+        {
+          "begin": 15987216,
+          "end": 15987420,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 15987216
+    },
+    {
+      "rva": 44593384,
+      "literal": "RosterData_Reset",
+      "domain": "D05",
+      "instruction_rva": 16013502,
+      "unwind_chain": [
+        {
+          "begin": 16013136,
+          "end": 16013572,
+          "unwind_rva": 50160220,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 16013136
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18294697,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18294859,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18295189,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18295334,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18295532,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18295631,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18296075,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45622208,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::ApplyServerData",
+      "domain": "D03",
+      "instruction_rva": 18296223,
+      "unwind_chain": [
+        {
+          "begin": 18294448,
+          "end": 18296367,
+          "unwind_rva": 50771588,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18294448
+    },
+    {
+      "rva": 45423440,
+      "literal": "FranchiseTuningContextState == LOADED || VCSystem()->GetOperatingEnvironment() == \"DEVELOPMENT\"",
+      "domain": "D04",
+      "instruction_rva": 18567477,
+      "unwind_chain": [
+        {
+          "begin": 18567380,
+          "end": 18567581,
+          "unwind_rva": 50753352,
+          "flags": 4
+        },
+        {
+          "begin": 18566578,
+          "end": 18566609,
+          "unwind_rva": 50753156,
+          "flags": 4
+        },
+        {
+          "begin": 18566560,
+          "end": 18566578,
+          "unwind_rva": 50753144,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18566560
+    },
+    {
+      "rva": 45425016,
+      "literal": "CACHEDROSTER_FILEIO::SetInfoForLoad",
+      "domain": "D05",
+      "instruction_rva": 18578420,
+      "unwind_chain": [
+        {
+          "begin": 18578320,
+          "end": 18578473,
+          "unwind_rva": 49996424,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18578320
+    },
+    {
+      "rva": 45431392,
+      "literal": "GameMode_SetInGameOrOutOfRosterPlayerInjury",
+      "domain": "D05",
+      "instruction_rva": 18600138,
+      "unwind_chain": [
+        {
+          "begin": 18599984,
+          "end": 18600689,
+          "unwind_rva": 50736228,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18599984
+    },
+    {
+      "rva": 45431392,
+      "literal": "GameMode_SetInGameOrOutOfRosterPlayerInjury",
+      "domain": "D05",
+      "instruction_rva": 18600532,
+      "unwind_chain": [
+        {
+          "begin": 18599984,
+          "end": 18600689,
+          "unwind_rva": 50736228,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 18599984
+    },
+    {
+      "rva": 45424904,
+      "literal": "CACHEDROSTER_FILEIO::SetInfoForSave",
+      "domain": "D05",
+      "instruction_rva": 19012083,
+      "unwind_chain": [
+        {
+          "begin": 19011824,
+          "end": 19012134,
+          "unwind_rva": 50759088,
+          "flags": 4
+        },
+        {
+          "begin": 19011648,
+          "end": 19011715,
+          "unwind_rva": 50057524,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19011648
+    },
+    {
+      "rva": 45619360,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::SetLevel",
+      "domain": "D03",
+      "instruction_rva": 19014628,
+      "unwind_chain": [
+        {
+          "begin": 19014416,
+          "end": 19014753,
+          "unwind_rva": 50029296,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19014416
+    },
+    {
+      "rva": 45619360,
+      "literal": "CAREERMODE_PROGRESSION::BADGES::SetLevel",
+      "domain": "D03",
+      "instruction_rva": 19014975,
+      "unwind_chain": [
+        {
+          "begin": 19014768,
+          "end": 19015096,
+          "unwind_rva": 50440012,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19014768
+    },
+    {
+      "rva": 45432360,
+      "literal": "RESET_ROSTER_JOB::Update",
+      "domain": "D05",
+      "instruction_rva": 19111849,
+      "unwind_chain": [
+        {
+          "begin": 19111280,
+          "end": 19112199,
+          "unwind_rva": 50054204,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19111280
+    },
+    {
+      "rva": 46007600,
+      "literal": "FRANCHISE_GAMEPLAN_MANAGER::AddGameplan",
+      "domain": "D04",
+      "instruction_rva": 19153595,
+      "unwind_chain": [
+        {
+          "begin": 19153505,
+          "end": 19153686,
+          "unwind_rva": 50818472,
+          "flags": 4
+        },
+        {
+          "begin": 19153456,
+          "end": 19153505,
+          "unwind_rva": 50087772,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19153456
+    },
+    {
+      "rva": 45987128,
+      "literal": "Franchise_GetTeamSignatureIdAtLastRealLifeSeasonStandingsRank",
+      "domain": "D08",
+      "instruction_rva": 19391797,
+      "unwind_chain": [
+        {
+          "begin": 19391536,
+          "end": 19391840,
+          "unwind_rva": 50016996,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19391536
+    },
+    {
+      "rva": 46023192,
+      "literal": "Franchise_Player_Retire",
+      "domain": "EXTRA",
+      "instruction_rva": 19494941,
+      "unwind_chain": [
+        {
+          "begin": 19494711,
+          "end": 19495187,
+          "unwind_rva": 50791268,
+          "flags": 4
+        },
+        {
+          "begin": 19494684,
+          "end": 19494711,
+          "unwind_rva": 50791244,
+          "flags": 4
+        },
+        {
+          "begin": 19494672,
+          "end": 19494684,
+          "unwind_rva": 50603440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19494672
+    },
+    {
+      "rva": 46023192,
+      "literal": "Franchise_Player_Retire",
+      "domain": "EXTRA",
+      "instruction_rva": 19495084,
+      "unwind_chain": [
+        {
+          "begin": 19494711,
+          "end": 19495187,
+          "unwind_rva": 50791268,
+          "flags": 4
+        },
+        {
+          "begin": 19494684,
+          "end": 19494711,
+          "unwind_rva": 50791244,
+          "flags": 4
+        },
+        {
+          "begin": 19494672,
+          "end": 19494684,
+          "unwind_rva": 50603440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19494672
+    },
+    {
+      "rva": 46024232,
+      "literal": "Franchise_Player_RetirePlayerJersey",
+      "domain": "EXTRA",
+      "instruction_rva": 19514623,
+      "unwind_chain": [
+        {
+          "begin": 19514237,
+          "end": 19515057,
+          "unwind_rva": 50791644,
+          "flags": 4
+        },
+        {
+          "begin": 19514160,
+          "end": 19514237,
+          "unwind_rva": 50791632,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19514160
+    },
+    {
+      "rva": 46024232,
+      "literal": "Franchise_Player_RetirePlayerJersey",
+      "domain": "EXTRA",
+      "instruction_rva": 19514715,
+      "unwind_chain": [
+        {
+          "begin": 19514237,
+          "end": 19515057,
+          "unwind_rva": 50791644,
+          "flags": 4
+        },
+        {
+          "begin": 19514160,
+          "end": 19514237,
+          "unwind_rva": 50791632,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19514160
+    },
+    {
+      "rva": 46050904,
+      "literal": "Franchise_Team_ReleasePlayer",
+      "domain": "EXTRA",
+      "instruction_rva": 19729551,
+      "unwind_chain": [
+        {
+          "begin": 19729248,
+          "end": 19730481,
+          "unwind_rva": 50218940,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19729248
+    },
+    {
+      "rva": 46050904,
+      "literal": "Franchise_Team_ReleasePlayer",
+      "domain": "EXTRA",
+      "instruction_rva": 19729808,
+      "unwind_chain": [
+        {
+          "begin": 19729248,
+          "end": 19730481,
+          "unwind_rva": 50218940,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19729248
+    },
+    {
+      "rva": 46050664,
+      "literal": "Franchise_Team_WaivePlayer",
+      "domain": "EXTRA",
+      "instruction_rva": 19744227,
+      "unwind_chain": [
+        {
+          "begin": 19744078,
+          "end": 19744400,
+          "unwind_rva": 50804720,
+          "flags": 4
+        },
+        {
+          "begin": 19744071,
+          "end": 19744078,
+          "unwind_rva": 50804700,
+          "flags": 4
+        },
+        {
+          "begin": 19744064,
+          "end": 19744071,
+          "unwind_rva": 50804680,
+          "flags": 4
+        },
+        {
+          "begin": 19744048,
+          "end": 19744064,
+          "unwind_rva": 50804668,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19744048
+    },
+    {
+      "rva": 46064496,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointAverageForTeam",
+      "domain": "D08",
+      "instruction_rva": 19858306,
+      "unwind_chain": [
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064496,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointAverageForTeam",
+      "domain": "D08",
+      "instruction_rva": 19858434,
+      "unwind_chain": [
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D08",
+      "instruction_rva": 19858631,
+      "unwind_chain": [
+        {
+          "begin": 19858538,
+          "end": 19859018,
+          "unwind_rva": 50816088,
+          "flags": 4
+        },
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D08",
+      "instruction_rva": 19858762,
+      "unwind_chain": [
+        {
+          "begin": 19858538,
+          "end": 19859018,
+          "unwind_rva": 50816088,
+          "flags": 4
+        },
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D08",
+      "instruction_rva": 19859187,
+      "unwind_chain": [
+        {
+          "begin": 19859072,
+          "end": 19859484,
+          "unwind_rva": 50816032,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19859072
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D08",
+      "instruction_rva": 19859315,
+      "unwind_chain": [
+        {
+          "begin": 19859072,
+          "end": 19859484,
+          "unwind_rva": 50816032,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19859072
+    },
+    {
+      "rva": 46064592,
+      "literal": "FRANCHISE_TRAINING::GetIntensityHistoryAverage_AsFloat",
+      "domain": "D08",
+      "instruction_rva": 19868233,
+      "unwind_chain": [
+        {
+          "begin": 19868016,
+          "end": 19868451,
+          "unwind_rva": 49994456,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19868016
+    },
+    {
+      "rva": 46064688,
+      "literal": "FRANCHISE_TRAINING::GetIntensityHistoryPointsAvailable",
+      "domain": "D08",
+      "instruction_rva": 19868612,
+      "unwind_chain": [
+        {
+          "begin": 19868496,
+          "end": 19869002,
+          "unwind_rva": 50209716,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19868496
+    },
+    {
+      "rva": 46064592,
+      "literal": "FRANCHISE_TRAINING::GetIntensityHistoryAverage_AsFloat",
+      "domain": "D08",
+      "instruction_rva": 19868772,
+      "unwind_chain": [
+        {
+          "begin": 19868496,
+          "end": 19869002,
+          "unwind_rva": 50209716,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19868496
+    },
+    {
+      "rva": 46062992,
+      "literal": "FRANCHISE_TRAINING::SetTrainingForTeamOnDate",
+      "domain": "D07",
+      "instruction_rva": 20078478,
+      "unwind_chain": [
+        {
+          "begin": 20078352,
+          "end": 20078974,
+          "unwind_rva": 50833120,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20078352
+    },
+    {
+      "rva": 46308432,
+      "literal": "PlayerCreateMenu_UpdateAfterRosterTypeSet",
+      "domain": "D05",
+      "instruction_rva": 20883867,
+      "unwind_chain": [
+        {
+          "begin": 20883821,
+          "end": 20883956,
+          "unwind_rva": 50857876,
+          "flags": 4
+        },
+        {
+          "begin": 20883200,
+          "end": 20883283,
+          "unwind_rva": 50213132,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20883200
+    },
+    {
+      "rva": 46256352,
+      "literal": "LOADINGANIMATION_LINEUPDATA::SetCurrentLineupType",
+      "domain": "D05",
+      "instruction_rva": 21108228,
+      "unwind_chain": [
+        {
+          "begin": 21108160,
+          "end": 21108320,
+          "unwind_rva": 49994696,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 21108160
+    },
+    {
+      "rva": 46544592,
+      "literal": "MYTEAM::EDIT_CARD_MENU::ApplyBadgeCallback",
+      "domain": "D03",
+      "instruction_rva": 22026849,
+      "unwind_chain": [
+        {
+          "begin": 22026768,
+          "end": 22027237,
+          "unwind_rva": 49979380,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22026768
+    },
+    {
+      "rva": 46563176,
+      "literal": "MYTEAM::GAMESETUP::CheckIsLineupValid",
+      "domain": "D05",
+      "instruction_rva": 22079910,
+      "unwind_chain": [
+        {
+          "begin": 22079584,
+          "end": 22079963,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22079584
+    },
+    {
+      "rva": 46563176,
+      "literal": "MYTEAM::GAMESETUP::CheckIsLineupValid",
+      "domain": "D05",
+      "instruction_rva": 22080040,
+      "unwind_chain": [
+        {
+          "begin": 22079963,
+          "end": 22080124,
+          "unwind_rva": 50941424,
+          "flags": 4
+        },
+        {
+          "begin": 22079584,
+          "end": 22079963,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22079584
+    },
+    {
+      "rva": 46566352,
+      "literal": "MYTEAM::GAMESETUP_ONLINE::ExtractLineupFromSessionData",
+      "domain": "D05",
+      "instruction_rva": 22150762,
+      "unwind_chain": [
+        {
+          "begin": 22150480,
+          "end": 22150835,
+          "unwind_rva": 50941272,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22150480
+    },
+    {
+      "rva": 46566352,
+      "literal": "MYTEAM::GAMESETUP_ONLINE::ExtractLineupFromSessionData",
+      "domain": "D05",
+      "instruction_rva": 22151008,
+      "unwind_chain": [
+        {
+          "begin": 22150835,
+          "end": 22151260,
+          "unwind_rva": 50941292,
+          "flags": 4
+        },
+        {
+          "begin": 22150480,
+          "end": 22150835,
+          "unwind_rva": 50941272,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22150480
+    },
+    {
+      "rva": 46566352,
+      "literal": "MYTEAM::GAMESETUP_ONLINE::ExtractLineupFromSessionData",
+      "domain": "D05",
+      "instruction_rva": 22151126,
+      "unwind_chain": [
+        {
+          "begin": 22150835,
+          "end": 22151260,
+          "unwind_rva": 50941292,
+          "flags": 4
+        },
+        {
+          "begin": 22150480,
+          "end": 22150835,
+          "unwind_rva": 50941272,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22150480
+    },
+    {
+      "rva": 46566352,
+      "literal": "MYTEAM::GAMESETUP_ONLINE::ExtractLineupFromSessionData",
+      "domain": "D05",
+      "instruction_rva": 22151303,
+      "unwind_chain": [
+        {
+          "begin": 22151260,
+          "end": 22151449,
+          "unwind_rva": 50941316,
+          "flags": 4
+        },
+        {
+          "begin": 22150480,
+          "end": 22150835,
+          "unwind_rva": 50941272,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22150480
+    },
+    {
+      "rva": 46566352,
+      "literal": "MYTEAM::GAMESETUP_ONLINE::ExtractLineupFromSessionData",
+      "domain": "D05",
+      "instruction_rva": 22151381,
+      "unwind_chain": [
+        {
+          "begin": 22151260,
+          "end": 22151449,
+          "unwind_rva": 50941316,
+          "flags": 4
+        },
+        {
+          "begin": 22150480,
+          "end": 22150835,
+          "unwind_rva": 50941272,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22150480
+    },
+    {
+      "rva": 46515272,
+      "literal": "OnlineMetric_MyTeam_ApplyBadgeToPlayer",
+      "domain": "D03",
+      "instruction_rva": 22446175,
+      "unwind_chain": [
+        {
+          "begin": 22445193,
+          "end": 22446835,
+          "unwind_rva": 50953584,
+          "flags": 4
+        },
+        {
+          "begin": 22444640,
+          "end": 22445193,
+          "unwind_rva": 50953564,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22444640
+    },
+    {
+      "rva": 46515456,
+      "literal": "myteam_apply_badge.json",
+      "domain": "D03",
+      "instruction_rva": 22446235,
+      "unwind_chain": [
+        {
+          "begin": 22445193,
+          "end": 22446835,
+          "unwind_rva": 50953584,
+          "flags": 4
+        },
+        {
+          "begin": 22444640,
+          "end": 22445193,
+          "unwind_rva": 50953564,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22444640
+    },
+    {
+      "rva": 46515480,
+      "literal": "APPLY_BADGE_TO_PLAYER",
+      "domain": "D03",
+      "instruction_rva": 22446251,
+      "unwind_chain": [
+        {
+          "begin": 22445193,
+          "end": 22446835,
+          "unwind_rva": 50953584,
+          "flags": 4
+        },
+        {
+          "begin": 22444640,
+          "end": 22445193,
+          "unwind_rva": 50953564,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22444640
+    },
+    {
+      "rva": 46515272,
+      "literal": "OnlineMetric_MyTeam_ApplyBadgeToPlayer",
+      "domain": "D03",
+      "instruction_rva": 22494436,
+      "unwind_chain": [
+        {
+          "begin": 22494368,
+          "end": 22494789,
+          "unwind_rva": 50961764,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22494368
+    },
+    {
+      "rva": 46515456,
+      "literal": "myteam_apply_badge.json",
+      "domain": "D03",
+      "instruction_rva": 22494558,
+      "unwind_chain": [
+        {
+          "begin": 22494368,
+          "end": 22494789,
+          "unwind_rva": 50961764,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22494368
+    },
+    {
+      "rva": 46515480,
+      "literal": "APPLY_BADGE_TO_PLAYER",
+      "domain": "D03",
+      "instruction_rva": 22494574,
+      "unwind_chain": [
+        {
+          "begin": 22494368,
+          "end": 22494789,
+          "unwind_rva": 50961764,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22494368
+    },
+    {
+      "rva": 46608416,
+      "literal": "SCORETRACK_MENU::GetHistoryReplayTime",
+      "domain": "D08",
+      "instruction_rva": 22849063,
+      "unwind_chain": [
+        {
+          "begin": 22849008,
+          "end": 22849325,
+          "unwind_rva": 49970440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 22849008
+    },
+    {
+      "rva": 46965760,
+      "literal": "TK_WORLD::ACTIVITY_2KWORLD_LEVEL_COMPONENT::AddEnvironmentToPropSystem",
+      "domain": "D04",
+      "instruction_rva": 23692590,
+      "unwind_chain": [
+        {
+          "begin": 23692461,
+          "end": 23692982,
+          "unwind_rva": 51010588,
+          "flags": 4
+        },
+        {
+          "begin": 23692457,
+          "end": 23692461,
+          "unwind_rva": 51010568,
+          "flags": 4
+        },
+        {
+          "begin": 23692453,
+          "end": 23692457,
+          "unwind_rva": 51010548,
+          "flags": 4
+        },
+        {
+          "begin": 23692432,
+          "end": 23692453,
+          "unwind_rva": 50013880,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 23692432
+    },
+    {
+      "rva": 46965760,
+      "literal": "TK_WORLD::ACTIVITY_2KWORLD_LEVEL_COMPONENT::AddEnvironmentToPropSystem",
+      "domain": "D04",
+      "instruction_rva": 23692688,
+      "unwind_chain": [
+        {
+          "begin": 23692461,
+          "end": 23692982,
+          "unwind_rva": 51010588,
+          "flags": 4
+        },
+        {
+          "begin": 23692457,
+          "end": 23692461,
+          "unwind_rva": 51010568,
+          "flags": 4
+        },
+        {
+          "begin": 23692453,
+          "end": 23692457,
+          "unwind_rva": 51010548,
+          "flags": 4
+        },
+        {
+          "begin": 23692432,
+          "end": 23692453,
+          "unwind_rva": 50013880,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 23692432
+    },
+    {
+      "rva": 47161984,
+      "literal": "MYTEAM::LINEUP_MANAGEMENT::SetActiveLineupReceiveCallback",
+      "domain": "D05",
+      "instruction_rva": 24854364,
+      "unwind_chain": [
+        {
+          "begin": 24854339,
+          "end": 24854546,
+          "unwind_rva": 51049832,
+          "flags": 4
+        },
+        {
+          "begin": 24853680,
+          "end": 24853795,
+          "unwind_rva": 51049796,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 24853680
+    },
+    {
+      "rva": 47159824,
+      "literal": "MYTEAM::LINEUP::SetPosition",
+      "domain": "D05",
+      "instruction_rva": 24857183,
+      "unwind_chain": [
+        {
+          "begin": 24856992,
+          "end": 24857393,
+          "unwind_rva": 50548252,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 24856992
+    },
+    {
+      "rva": 47159856,
+      "literal": "LINEUP_SETUP",
+      "domain": "D05",
+      "instruction_rva": 24857203,
+      "unwind_chain": [
+        {
+          "begin": 24856992,
+          "end": 24857393,
+          "unwind_rva": 50548252,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 24856992
+    },
+    {
+      "rva": 47421128,
+      "literal": "SCHEDULEDATE::GetEndOfCalendarDay",
+      "domain": "D08",
+      "instruction_rva": 26536309,
+      "unwind_chain": [
+        {
+          "begin": 26536240,
+          "end": 26536455,
+          "unwind_rva": 49970440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 26536240
+    }
+  ],
+  "bounds": {
+    "per_domain_strings": 100,
+    "references": 1400
+  },
+  "limitations": [
+    "ASCII name and RIP-relative reference are leads, not ABI or executed effect proof",
+    "unwind fragments require chain recovery",
+    "string caps may omit other operations"
+  ],
+  "elapsed_ms": 1834
+}
