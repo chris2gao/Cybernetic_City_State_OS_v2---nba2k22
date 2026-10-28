@@ -220,17 +220,19 @@
       "id": "P09",
       "name": "REA native-action controller",
       "domain": "REA_NATIVE_CONTROL",
-      "status": "RESEARCH_PROTOTYPE_SELECTED_LIVE_EFFECTS",
+      "status": "RESEARCH_PROTOTYPE_SELECTED_LIVE_EFFECTS_ROLE_EXECUTION_ENGINEERING_IN_PROGRESS",
       "docs": [
         "research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md",
         "research/rea_native_control/ROLE_MODEL_MECHANISM_GUIDE.md",
-        "research/rea_native_control/VALIDATION_RESULTS.md"
+        "research/rea_native_control/VALIDATION_RESULTS.md",
+        "research/rea_native_control/ROLE_EXECUTION_PROGRESS.md"
       ],
       "artifacts": [
         "research/rea_native_control/facade.py",
         "research/rea_native_control/data/action_registry.json",
         "research/rea_native_control/data/native_bindings.json",
-        "research/rea_native_control/data/read_catalog.json"
+        "research/rea_native_control/data/read_catalog.json",
+        "research/rea_native_control/role_capabilities.py"
       ],
       "notes": [
         "Source handoff b7e0f51 blob 4cc0b2c4; REA read/ABI/live experiences are bounded."
@@ -238,7 +240,8 @@
       "last_verified_evidence": null,
       "latest_task_refs": [
         "PR#16@7c970db264809ef0c82c978fd13953cdee00fb24",
-        "PR#17@84195f471354400a75877f16c3c3de8a3af6b5b2"
+        "PR#17@84195f471354400a75877f16c3c3de8a3af6b5b2",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -247,20 +250,23 @@
       "id": "P10",
       "name": "Role action inventory/batched native execution",
       "domain": "ROLE_BATCH_EXECUTION_DESIGN",
-      "status": "HUMAN_REVIEW_REQUIREMENTS_FIRST_PASS",
+      "status": "HUMAN_REVIEW_REQUIREMENTS_FIRST_PASS_ROLE_EXECUTION_ENGINEERING_IN_PROGRESS",
       "docs": [
         "docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md",
-        "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/02_角色执行能力建模/GM教练球员_可执行能力盘点_A_v1.md"
+        "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/02_角色执行能力建模/GM教练球员_可执行能力盘点_A_v1.md",
+        "research/rea_native_control/ROLE_EXECUTION_PROGRESS.md"
       ],
       "artifacts": [
-        "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/"
+        "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/",
+        "research/rea_native_control/role_capabilities.py"
       ],
       "notes": [
         "183 initial heterogeneous actions/requests/world controls, 50 mapped, 133 not explicit matched."
       ],
       "last_verified_evidence": null,
       "latest_task_refs": [
-        "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1"
+        "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
