@@ -49,10 +49,12 @@ function effective(id){
  return Math.max(0,Math.min(4,signed));
 }
 const initial=Array.from(new Uint8Array(read(player.add(0x41f),196))),flagsBefore=u32(read(player.add(0x31c),4));
-let rosterReads=0;
 const context={request,bindingSpecs:specs,base,Uint8Array,Object,Number,Math,Set,read,ptrAt,u32,equal,
  team(id){if(id!==20)throw Error('TEAM_SUBSTITUTED');return TEAM;},
- rosterPlayer(team,id){if(team!==TEAM||id!==55)throw Error('PLAYER_SUBSTITUTED');rosterReads++;return options.roster_changed_after&&rosterReads>=3?new Pointer(1):player;},
+ rosterPlayer(team,id){if(team!==TEAM||id!==55)throw Error('PLAYER_SUBSTITUTED');
+  const changed=(options.roster_changed_after&&calls.some(row=>row.binding==='player.set_badge'))||
+   (options.roster_changed_during_getters&&calls.some(row=>row.binding==='player.badge_effective_level'));
+  return changed?new Pointer(1):player;},
  call(binding,...args){
   if(!args[0].equals(player))throw Error('WRONG_NATIVE_PLAYER');
   if(binding==='player.badge_effective_level'){

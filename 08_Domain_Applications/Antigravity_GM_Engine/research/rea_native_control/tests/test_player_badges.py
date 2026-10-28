@@ -129,7 +129,7 @@ class PlayerBadges(unittest.TestCase):
 
     def test_context_preservation_and_interruption_do_not_claim_effect_success(self):
         p=self.parameters('CatchAndShoot',4)
-        for options,expected_writes in [({'wrong_delegate':True},0),({'state_changes_during_getter':True},0),
+        for options,expected_writes in [({'wrong_delegate':True},0),({'state_changes_during_getter':True},0),({'roster_changed_during_getters':True},0),
             ({'corrupt_unrequested':True},1),({'corrupt_padding':True},1),({'missing_invalidation':True},1),
             ({'nodes':[{'values':{}}],'modifier_changed_after_set':True},1),({'roster_changed_after':True},1),({'fail_after_set':True},1)]:
             result=self.simulate(p,**options)
