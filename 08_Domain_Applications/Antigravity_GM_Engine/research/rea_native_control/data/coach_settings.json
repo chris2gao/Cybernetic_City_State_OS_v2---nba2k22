@@ -1,0 +1,119 @@
+{
+  "source": "../../config/coach_tactics_profile.json plus prior complete native Apply body",
+  "fields": {
+    "POEOffense": {
+      "coach_offset": 316,
+      "start_bit": 15,
+      "width": 5,
+      "storage_bytes": 4,
+      "gameplan_offset": 382,
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "1": "GET_TO_BASKET",
+        "2": "GET_SHOOTERS_OPEN",
+        "3": "FEED_THE_POST",
+        "4": "PICK_AND_ROLL_OFFENSE",
+        "5": "NEUTRAL_OFFENSE_FOCUS",
+        "6": "RUN_OFFENSE_THROUGH_SCORER"
+      }
+    },
+    "POEOffense2": {
+      "coach_offset": 316,
+      "start_bit": 20,
+      "width": 5,
+      "storage_bytes": 4,
+      "gameplan_offset": 383,
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "7": "PATIENT_OFFENSE",
+        "8": "NEUTRAL_OFFENSE_TEMPO",
+        "9": "SHOOT_AT_WILL"
+      }
+    },
+    "POEOffense3": {
+      "coach_offset": 316,
+      "start_bit": 25,
+      "width": 5,
+      "storage_bytes": 4,
+      "gameplan_offset": 384,
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "10": "CRASH_OFFENSIVE_BOARDS",
+        "11": "NEUTRAL_OFFENSE_REBOUND",
+        "12": "LIMIT_TRANSITION"
+      }
+    },
+    "POEDefense": {
+      "coach_offset": 316,
+      "start_bit": 0,
+      "width": 5,
+      "storage_bytes": 4,
+      "gameplan_offset": 385,
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "13": "PROTECT_PAINT",
+        "14": "NEUTRAL_DEFENSE_FOCUS",
+        "15": "LIMIT_PERIMETER_SHOTS"
+      }
+    },
+    "POEDefense2": {
+      "coach_offset": 316,
+      "start_bit": 5,
+      "width": 5,
+      "storage_bytes": 4,
+      "gameplan_offset": 386,
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "16": "PLAY_CONSERVATIVE",
+        "17": "NEUTRAL_DEFENSE_TEMPO",
+        "18": "PLAY_PHYSICAL"
+      }
+    },
+    "POEDefense3": {
+      "coach_offset": 316,
+      "start_bit": 10,
+      "width": 5,
+      "storage_bytes": 4,
+      "gameplan_offset": 387,
+      "enum": {
+        "0": "NO_PREFERENCE",
+        "19": "CRASH_DEFENSIVE_BOARDS",
+        "20": "NEUTRAL_DEFENSE_REBOUND",
+        "21": "RUN_IN_TRANSITION"
+      }
+    },
+    "RunPlayTendency": {
+      "coach_offset": 224,
+      "start_bit": 0,
+      "width": 8,
+      "storage_bytes": 1,
+      "gameplan_offset": 389,
+      "enum": null
+    },
+    "ZoneUsage": {
+      "coach_offset": 226,
+      "start_bit": 0,
+      "width": 8,
+      "storage_bytes": 1,
+      "gameplan_offset": 390,
+      "enum": null
+    },
+    "BenchDepth": {
+      "coach_offset": 222,
+      "start_bit": 0,
+      "width": 8,
+      "storage_bytes": 1,
+      "gameplan_offset": 391,
+      "enum": null
+    },
+    "BenchUtilization": {
+      "coach_offset": 312,
+      "start_bit": 0,
+      "width": 8,
+      "storage_bytes": 1,
+      "gameplan_offset": 392,
+      "enum": null
+    }
+  },
+  "scope": "Ten current-Coach projection fields only; original persistent Gameplan remains unchanged"
+}
