@@ -14,9 +14,9 @@ human_confirmed_A0:
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v0.10-DRAFT
+  version: OS-PRMS-A-v1-RC01-CANDIDATE
   confirmed: false
-  source: 03_需求建模/20_需求结果模型A_v0.10_索引概要按需加载专题收口入口.md
+  source: 03_需求建模/24_OS-PRMS_完整需求结果模型A_v1-RC01_待Human确认.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -130,7 +130,7 @@ requirement_A_closure:
   interface_and_failure_contract: 03_需求建模/12_Av0.9_操作接口和失败回执.md
   decision_trace_matrix: 03_需求建模/13_Av0.9_裁决需求证据验收追踪矩阵.md
   evidence_acceptance_matrix: 03_需求建模/14_Av0.9_证据缺口和验收矩阵.md
-  ready_for_final_A_confirmation: false
+  ready_for_final_A_confirmation: candidate_prepared_pending_Human
 human_priority_followup:
   source: 01_任务输入/11_Human继续收口与上下文索引概要按需加载优先_v1.md
   priority: persistent_memory_index_summary_lazy_loading
@@ -151,6 +151,21 @@ memory_subsystem_requirements:
   added_result_items: 4
   total_result_items_candidate: 20
   status: DRAFT_UNIMPLEMENTED
+human_continue_instruction:
+  source: 01_任务输入/11_Human继续收口与上下文索引概要按需加载优先_v1.md
+  approval_scope: continued_01b_result_closure
+  is_complete_A_approval: false
+requirement_A_review_candidate:
+  version: OS-PRMS-A-v1-RC01
+  status: CANDIDATE_PENDING_HUMAN
+  source: 03_需求建模/24_OS-PRMS_完整需求结果模型A_v1-RC01_待Human确认.md
+  res_items_total: 20
+  human_decisions_traced: Q1_Q51
+  new_field_level_contract: 03_需求建模/21_Av0.11_记忆概要索引与上下文装配字段级收口.md
+  new_operation_contract: 03_需求建模/22_Av0.11_索引概要按需检索输入输出及状态转换.md
+  updated_trace_delta: 03_需求建模/23_Av0.11_二十项交付与五十一项裁决追踪增量.md
+  engineering_implemented: false
+  entry_to_stage02_authorized: false
 draft_history:
   - 03_需求建模/02_需求结果模型A_v0.1_候选.md
   - 03_需求建模/03_需求结果模型A_v0.2_含首轮裁决.md
@@ -162,4 +177,5 @@ draft_history:
   - 03_需求建模/09_需求结果模型A_v0.8_含前七轮裁决.md
   - 03_需求建模/15_需求结果模型A_v0.9_字段接口证据验收收口入口.md
   - 03_需求建模/20_需求结果模型A_v0.10_索引概要按需加载专题收口入口.md
-next_step: 01b_A_v0.10_memory_subsystem_field_validation_and_result_A_RC_review_not_approval
+  - 03_需求建模/24_OS-PRMS_完整需求结果模型A_v1-RC01_待Human确认.md
+next_step: Human_review_complete_requirement_A_v1_RC01_candidate_then_explicit_version_confirmation
