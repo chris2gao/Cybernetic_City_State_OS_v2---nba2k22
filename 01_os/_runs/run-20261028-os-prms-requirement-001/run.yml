@@ -14,9 +14,9 @@ human_confirmed_A0:
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v0.7-DRAFT
+  version: OS-PRMS-A-v0.8-DRAFT
   confirmed: false
-  source: 03_需求建模/08_需求结果模型A_v0.7_含前五轮裁决.md
+  source: 03_需求建模/09_需求结果模型A_v0.8_含前七轮裁决.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -92,6 +92,27 @@ core_promotion_maturity:
   runtime_implementation_delivered_by_stage03: false
   separate_migration_project_required: false
   target_repository_protected_publication_rules_still_apply: true
+human_confirmed_01b_round_6:
+  q40: B
+  q41: C
+  q42: A
+  q43: B
+  source: 01_任务输入/08_01b第六轮Human裁决_Q40-Q43_v1.md
+  status: confirmed_partial_A_not_complete
+  publication_note: recovered_after_previous_tool_failure
+human_confirmed_01b_round_7:
+  q44: B
+  q45: B
+  q46: A
+  q47: B
+  source: 01_任务输入/09_01b第七轮Human裁决_Q44-Q47_v1.md
+  status: confirmed_partial_A_not_complete
+critical_result_combinations:
+  Q41_C_and_Q44_B: automatic_takeover_effective_after_GitHub_verified_owner_update
+  Q42_A_and_Q45_B: full_copy_source_memory_snapshot_target_has_own_current
+  Q42_A_and_Q46_A: one_time_copy_then_independent_evolution
+  Q42_A_and_Q47_B: complete_copy_with_provenance_and_risk_report
+  Q35_C_and_Q36_B: after_stage03_approved_design_direct_OS_core_planning_upgrade
 draft_history:
   - 03_需求建模/02_需求结果模型A_v0.1_候选.md
   - 03_需求建模/03_需求结果模型A_v0.2_含首轮裁决.md
@@ -100,4 +121,5 @@ draft_history:
   - 03_需求建模/06_需求结果模型A_v0.5_含前三轮裁决.md
   - 03_需求建模/07_需求结果模型A_v0.6_含前四轮裁决.md
   - 03_需求建模/08_需求结果模型A_v0.7_含前五轮裁决.md
-next_step: 01b_R6_Human_questions_Q40_Q43
+  - 03_需求建模/09_需求结果模型A_v0.8_含前七轮裁决.md
+next_step: 01b_R8_Human_questions_Q48_Q51
