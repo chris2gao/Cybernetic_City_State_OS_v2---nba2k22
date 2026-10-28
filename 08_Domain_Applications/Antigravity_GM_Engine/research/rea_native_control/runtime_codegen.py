@@ -23,6 +23,8 @@ def render_program(plan:NativeActionPlan,registry):
   if parameters['team_a']==parameters['team_b']:raise ValueError('Distinct team objects required')
   if any(type(p) is not int or not 0<=p<65535 for p in players_a+players_b):raise ValueError('Native PLAYER UID16 required')
   if any(type(p) is not int or not 0<=p<4294967295 for p in picks):raise ValueError('Native PICK UID32 required')
+  if not players_a+players_b+picks:raise ValueError('At least one exact asset required')
+  if len(set(players_a+players_b))!=len(players_a+players_b) or len(set(picks))!=len(picks):raise ValueError('Each requested asset must occur once')
   if len(players_a)+len(players_b)+len(picks)>18:raise ValueError('Native proposal has18 element slots')
   limit=len(players_a)+len(players_b)+3*len(picks)+2
   parameters['execution_mode']='AGREED_DIRECT_PROCESS' if handler=='trade.agreed' else 'LEGACY_NATIVE_FULL_CHECK'
@@ -39,6 +41,7 @@ def render_program(plan:NativeActionPlan,registry):
  if handler in ['scout.existing_goal','scout.append_goal']:
   ids=parameters['player_ids']
   if len(ids)>17 or any(type(v) is not int or not 0<=v<65535 for v in ids):raise ValueError('0..17 exact prospect PLAYER UIDs16 required')
+  if len(set(ids))!=len(ids):raise ValueError('Each requested prospect UID must occur once')
   if handler=='scout.append_goal':
    if not ids:raise ValueError('Native caller only appends nonempty specified-prospect goals')
    limit=3

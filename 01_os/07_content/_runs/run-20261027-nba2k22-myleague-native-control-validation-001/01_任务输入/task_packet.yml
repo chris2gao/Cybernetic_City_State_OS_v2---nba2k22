@@ -5,7 +5,7 @@ task_packet:
   exact_base_sha: 0008af1d7ca1c67a6d5f747b35c57062d1bde7d6
   inherited_source_sha: 2bdda79c6513f463252d7d01834218edb590eec9
   branch: task/nba2k22-myleague-native-control-validation-20261027
-  objective: Validate the existing native-control prototype with minimal Human-supplied exact inputs. Prepare an inspectable hashed batch first; attach/read/call the game only after fresh Human approval of that batch and recoverable save. Independently read back a new native effect where authorized and applicable, retain rejections and unknowns, and deliver capability updates and a Draft PR.
+  objective: Validate the existing native-control prototype with minimal Human-supplied exact inputs. Record exact hashed batches under the applicable direct Human authority and recoverable test save; later standing authority and execution-only scope are recorded in HUMAN_EXECUTION_ONLY_SCOPE_UPDATE.md. Independently read back a new native effect where authorized and applicable, retain rejections and unknowns, and deliver capability updates and a Draft PR.
   source_evidence:
     - 01_任务输入/CODEX_NATIVE_CONTROL_FUNCTIONAL_VALIDATION_v1.md
     - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/15
@@ -14,7 +14,7 @@ task_packet:
     - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/**
     - 01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/**
   verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/01_任务输入/verification_plan.json
-  required_tests: [validation-source-readability]
+  required_tests: [validation-source-readability, retained-live-observation-audit]
   verification_scope: Syntax checks prove source readability only. Functional claims require the separately approved exact batch, original native services and independent actual readback; no fabricated effects or replay of old permissions.
   prohibitions:
     - live_game_access_without_recorded_Human_authority_and_bounded_batch
@@ -30,8 +30,8 @@ task_packet:
   big_task: true
   big_task_confirmation_closure:
     enabled: true
-    known_confirmation_required_actions: [EXPERIMENT_BATCH_01_LIVE_GAME_ACCESS, EXPERIMENT_BATCH_02_LIVE_GAME_ACCESS]
-    preconfirmed_actions: [EXPERIMENT_BATCH_01_LIVE_GAME_ACCESS, EXPERIMENT_BATCH_02_LIVE_GAME_ACCESS]
+    known_confirmation_required_actions: [EXPERIMENT_BATCH_01_LIVE_GAME_ACCESS, EXPERIMENT_BATCH_02_LIVE_GAME_ACCESS, STANDING_SCOUT_GOAL_AND_AGREED_TRADE_TEST]
+    preconfirmed_actions: [EXPERIMENT_BATCH_01_LIVE_GAME_ACCESS, EXPERIMENT_BATCH_02_LIVE_GAME_ACCESS, STANDING_SCOUT_GOAL_AND_AGREED_TRADE_TEST]
     confirmation_ref: 01_任务输入/HUMAN_EXECUTION_ONLY_SCOPE_UPDATE.md
     uncovered_actions: []
   publisher:

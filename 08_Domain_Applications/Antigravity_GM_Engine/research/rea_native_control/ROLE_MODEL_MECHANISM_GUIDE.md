@@ -25,13 +25,13 @@
   "action_id":"TRADE_EXECUTE_AGREED_PACKAGE",
   "parameters":{
     "team_a":20,"players_a":[7239],"picks_a":[],
-    "team_b":1,"players_b":[9842],"picks_b":[]
+    "team_b":1,"players_b":[7716],"picks_b":[]
   },
   "request_id":"agreed-trade-example-replace-with-current-ids"
 }
 ```
 
-上例仅展示格式，不能当执行指令；实际本轮测试双方与结果以验证报告为准。`players_a/picks_a`从A转给B，B侧反向。输入须完整提供六个键，空数组表示无该类资产。球队必须不同；球员ID整数0..65534，签权ID整数0..4294967294；所有资产合计最多18个原生提案槽。球员必须确实在输入一侧当前名单且当前/合同TEAM关系一致；签权须由原生Getter核对UID和当前归属。不要重复同一资产。这里没有“薪资必须接近”或“能力必须匹配”的输入规则。
+上例是本轮已经消费的实测输入格式，不能重复提交；实际效果见验证报告。`players_a/picks_a`从A转给B，B侧反向。输入须完整提供六个键，空数组表示无该类资产。球队必须不同；球员ID整数0..65534，签权ID整数0..4294967294；所有资产合计最多18个原生提案槽。球员必须确实在输入一侧当前名单且当前/合同TEAM关系一致；签权须由原生Getter核对UID和当前归属。同一资产只能出现一次，不能提交空资产包。这里没有“薪资必须接近”或“能力必须匹配”的输入规则。
 
 调用：构造私有1668字节TRADE → 对每个球员`AddPlayer`，对签权`GetByID/UniqueID/AddPick` → 原生上下文Getter `0xbaa7e0` → `int Process(TRADE*,context*,int32*)`，RVA `0x12e93b0`。**不调用外围FullCheck，也不额外调用Validate或旧提交Wrapper**。Process内部固有的资产存在/归属等检查仍可能拒绝，不能承诺任意输入必成功。没有修改函数代码、薪资、合同报价或安全工具。
 

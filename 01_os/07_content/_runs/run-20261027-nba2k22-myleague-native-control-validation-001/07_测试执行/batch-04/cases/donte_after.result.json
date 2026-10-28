@@ -1,0 +1,75 @@
+{
+  "case_id": "donte_after",
+  "batch_sha256": "1c037007c0fd6ad0881e6b6f5b450048a41e0abf32df4b08c8ca33deef4114d7",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+    "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+    "original_request": {
+      "player_id": 7716
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+      "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+      "details": {
+        "read_only": true,
+        "data": {
+          "player_id": 7716,
+          "name": "Donte DiVincenzo",
+          "current_team_id": 20,
+          "contract_team_id": 20,
+          "contract_raw": {
+            "bird_years": 3,
+            "original_contract_years": 4,
+            "years_left_on_contract": 1,
+            "contract_option": 0,
+            "no_trade": 0,
+            "extension_length": 0,
+            "extension_option": 0,
+            "extension_no_trade": 0,
+            "contract_year_1": 4675830,
+            "contract_year_2": 0,
+            "contract_year_3": 0,
+            "contract_year_4": 0,
+            "contract_year_5": 0,
+            "contract_year_6": 0,
+            "contract_type": 0,
+            "euro_stash_years_left": 0,
+            "two_way_days_left": 0
+          }
+        },
+        "unknown_fields": [
+          "complete_attributes",
+          "tendencies",
+          "badges",
+          "child_objects"
+        ],
+        "scope": "Identity and contract only; no potential or arbitrary player-byte dump"
+      },
+      "first_hand_game_calls": 1,
+      "read_bytes": 1316,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_a608c9a995d26ebca24251a41881952477af0f37390c34dce1218915af036211",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-04\\raw\\d1d338c13ecd4eaf99e9cdfdfb9a455c"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "PARTIAL_BINDING",
+      "coverage_unknowns": [
+        "Only identity/current-contract teams and existing contract profile fields emitted; full ability/tendency/badge child objects not bound"
+      ]
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": true,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}

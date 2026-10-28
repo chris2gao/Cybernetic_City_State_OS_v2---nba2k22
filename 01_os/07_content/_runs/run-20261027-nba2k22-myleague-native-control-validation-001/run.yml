@@ -1,7 +1,7 @@
 task_id: NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-VALIDATION-01
 date: '2026-10-27'
 task_class: EXPLORATORY_NATIVE_FUNCTIONAL_VALIDATION
-state: PREPARED_FOR_LOCAL_CODEX_PICKUP_NO_GAME_EXECUTION
+state: FUNCTIONAL_VALIDATION_AND_ROLE_MECHANISM_GUIDE_DELIVERED
 repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
 branch: task/nba2k22-myleague-native-control-validation-20261027
 source_PR: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/14
@@ -23,7 +23,8 @@ source_status: PR14_DRAFT_NOT_MERGED_MASTER
 Human_scope_constraints:
   decision_model_selects_exact_targets_assets_and_values: true
   native_controller_executes_supplied_request_without_substitution: true
-  game_owns_original_legality_decisions: true
+  game_owns_original_legality_decisions: false
+  execution_only_scope_ref: 01_任务输入/HUMAN_EXECUTION_ONLY_SCOPE_UPDATE.md
   no_automatic_matchmaking_or_salary_search: true
   no_duplicate_prior_trade_or_same_coach_setting_test: true
   no_deep_behavioral_strategy_or_game_save_reload_study: true
@@ -45,20 +46,22 @@ explicitly_not_ready_for_live:
 permissions:
   documentation_and_isolated_test_code_development: ALLOWED
   preflight_and_static_review: ALLOWED
-  new_real_game_attach_read_or_hook: REQUIRE_NEW_Human_SCOPED_BATCH_AUTHORIZATION
-  real_native_mutation_or_draft_scouting_transaction: REQUIRE_NEW_Human_SCOPED_BATCH_AUTHORIZATION
+  new_real_game_attach_read_or_hook: AUTHORIZED_BY_BATCH01_BATCH02_AND_LATER_DIRECT_STANDING_HUMAN_GRANT
+  real_native_mutation_or_draft_scouting_transaction: EXACT_RECORDED_BOUNDED_INPUTS_UNDER_STANDING_SCOPE
   reuse_old_authorization: FORBIDDEN
   master_merge: NOT_ALLOWED
   actual_game_or_native_execution_in_this_planning_turn: NONE
   CodeX_agent_auto_dispatched: false
-phase_gate: HUMAN_APPROVAL_OF_EXPERIMENT_BATCH_BEFORE_LIVE_TEST
-lifecycle: candidate_pending_validation
+phase_gate: FOUR_RECORDED_EXACT_BATCHES_COMPLETED
+lifecycle: candidate_ready_for_independent_review
 local_owner_pickup:
   starting_head: 0008af1d7ca1c67a6d5f747b35c57062d1bde7d6
   fresh_master_at_pickup: 7742568ac677b3c16079887463f05e81cb1191ed
-  current_phase: BATCH_01_NEW_COACH_EFFECT_VERIFIED_SCOUT_CAPACITY_FULL
-  game_access_this_task: APPROVED_BATCH_01_EXECUTED
-  native_business_calls_this_task: 1
-  human_batch_approval: 03_方案设计/HUMAN_APPROVAL_BATCH_01.md
-  new_live_capabilities_verified: 1
+  current_phase: COACH_SCOUT_GOAL_AND_AGREED_TRADE_EFFECTS_VERIFIED
+  game_access_this_task: FOUR_BOUNDED_AUTHORIZED_BATCHES_EXECUTED
+  external_native_calls_this_task: 14
+  finite_attach_sessions_this_task: 29
+  human_authority: 01_任务输入/HUMAN_EXECUTION_ONLY_SCOPE_UPDATE.md
+  new_live_example_families_verified: 3
 GitHub_issue: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/15
+completion_pointer: 08_结论/COMPLETION.md

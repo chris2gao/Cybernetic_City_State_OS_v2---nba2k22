@@ -1,4 +1,4 @@
-"""Prepare immutable exact-input programs, then execute one approved case once.
+"""Prepare immutable exact-input programs, then execute one authorized case once.
 
 Preparation never discovers or attaches a process. Human approval is recorded by
 the local Owner; this file is an accidental-execution guard, not authentication.
@@ -118,7 +118,7 @@ def execute(batch_file, approval_file, case_id, runtime):
     batch_file, runtime = Path(batch_file).resolve(), Path(runtime).resolve()
     batch, approval = load(batch_file), load(approval_file)
     if approval.get('batch_sha256') != digest(batch_file) or not approval.get('human_confirmation_ref'):
-        raise PermissionError('Fresh direct Human approval of this exact batch is required')
+        raise PermissionError('Recorded Human authority covering this exact batch is required')
     if approval.get('recoverable_test_save_confirmed') is not True:
         raise PermissionError('Current recoverable test save has not been confirmed')
     if approval.get('administrator_runtime_launch_approved') is not True:
