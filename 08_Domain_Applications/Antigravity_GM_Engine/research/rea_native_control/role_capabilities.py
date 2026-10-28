@@ -80,12 +80,14 @@ class RoleCapabilityService:
         self.badge_fields = load_badges(self.registry.root)
         from signing_fields import load_schema
         self.signing_schema = load_schema(self.registry.root)
+        self.player_contract_fields = json.loads((self.registry.root / 'data/player_contract_fields.json').read_text(encoding='utf8'))
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
             'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
             'player_stat_fields': self.player_stat_fields,
             'badge_fields': self.badge_fields,
             'signing_schema': self.signing_schema,
+            'player_contract_fields': self.player_contract_fields,
             'read_catalog': json.loads((self.registry.root / 'data/read_catalog.json').read_text(encoding='utf8')),
             'bindings': {k: b.to_dict() for k, b in self.registry.bindings.items()},
             'live': self.registry.live_validation,
@@ -218,6 +220,7 @@ class RoleCapabilityService:
             fields['contract'] = {'status':'RECOVERED_NATIVE_ENCODING_ONLY',
                 'enums':deepcopy(self.signing_schema['enums']),
                 'maturity':deepcopy(self.signing_schema['maturity']),
+                'salary_consumer_semantics':deepcopy(self.player_contract_fields['salary_consumer_semantics']),
                 'policy':'Caller decides all terms. No automatic prices, no force/accept flags, no completed signing claim from offer return/status.'}
         from badge_fields import REQUIREMENT, affected_fields
         if action_id == REQUIREMENT:

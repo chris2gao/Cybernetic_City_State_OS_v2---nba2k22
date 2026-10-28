@@ -4118,6 +4118,62 @@
         "source": "Registered44-byte records in the game-owned pool; explicit Team UID, statuses and archive inclusion",
         "interpretation": "ACCEPTED6 and SIGNED8 remain distinct; status alone is not an independent effect check"
       }
+    },
+    {
+      "action_id": "READ_PLAYER_CONTRACT_STATE",
+      "domain": "D02",
+      "title": "指定球员的原版合同Getter与原始合同字段只读观察",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER",
+        "WORLD_ADMIN"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.player_contract",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new game capture, live acceptance, currency/UI or persistence proof",
+        "Lookup uses existing global UID service; no complete global/FA/reserve runtime coverage is certified",
+        "Host save/world/phase identity, observation provenance and role-sanitized provider remain required",
+        "Invalid encoded year sums are returned raw; original assertion-bearing Getter is deliberately not called",
+        "Same-handler brackets do not prove atomicity/ABA or independent completion of signing"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_EXACT_PLAYER_UID",
+          "binding_id": "player.by_id"
+        },
+        {
+          "operation": "BRACKET_REGISTERED_CONTRACT_FIELDS",
+          "binding_id": "player.contract_read_context"
+        },
+        {
+          "operation": "READ_SIX_YEAR_SALARIES",
+          "binding_id": "player.get_salary"
+        },
+        {
+          "operation": "GUARDED_YEARS_WITH_AND_WITHOUT_OPTIONS",
+          "binding_id": "player.get_remaining_contract_years"
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_contract_native_readback_021.json"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Original contract Getters and scoped raw fields only; no offer/process/mark write",
+        "remaining_years": "Raw base5 bits + extension3 bits + optional0/1/2 years, guarded at6",
+        "salary": "Six Native31-bit wage values; no price optimization or unit conversion"
+      }
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

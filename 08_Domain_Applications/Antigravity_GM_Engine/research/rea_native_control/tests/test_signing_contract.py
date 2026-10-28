@@ -167,7 +167,7 @@ class SigningContract(unittest.TestCase):
         with self.assertRaises(ValueError):self.facade.render(NativeActionRequest('SIGN_FREE_AGENT',{'team_id':20,'player_id':55,'contract':self.terms()}))
         acquire=self.facade.registry.binding('sign.acquire_or_reset_candidate')
         self.assertTrue(acquire.input_layout['not_callable']);self.assertTrue(any('salary Setter' in value for value in acquire.lifecycle))
-        self.assertEqual(len(NativeReadCatalog().list()),14)
+        self.assertEqual(len(NativeReadCatalog().list()),15)
         self.assertEqual(NativeReadFacade(self.facade).read(NativeReadQuery(DATASET,self.query())).outcome,Outcome.PREPARED)
 
 

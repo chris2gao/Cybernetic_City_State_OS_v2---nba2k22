@@ -92,7 +92,8 @@
         "config/source_catalog.json",
         "docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md",
         "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "config/memory_field_profile.json",
@@ -104,14 +105,18 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": "Identified field != complete runtime reader. Also check external_branch_assets for world_data_prototype absent from current branch.",
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_78 / 74b1c78f0304cc53898565982d03a02e3eef8ad8 / role batch/editor reads/edits and signing codec/pool synthetic ABI; no new game evidence",
       "latest_task_refs": [
         "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
         "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -132,7 +137,8 @@
         "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
         "research/rea_native_control/BADGE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "docs/game_mechanics/guides/",
@@ -154,7 +160,10 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "40 groups and 694 heterogeneous trace records; not 694 verified setters.",
@@ -165,7 +174,8 @@
       "latest_task_refs": [
         "DEV29_R07_RESEARCH_COMPLETE_20261021",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -181,7 +191,8 @@
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
         "research/rea_native_control/BADGE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "src/gm_core/",
@@ -199,14 +210,18 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "Actual autonomous 30-GM deployment not certified here."
       ],
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_78 / 74b1c78f0304cc53898565982d03a02e3eef8ad8 / role batch/editor reads/edits and signing codec/pool synthetic ABI; no new game evidence",
       "latest_task_refs": [
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -268,7 +283,8 @@
         "research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md",
         "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
         "research/rea_native_control/BADGE_NATIVE_CONTRACT.md",
-        "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md"
+        "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "config/state_io_native/player.json",
@@ -283,7 +299,10 @@
         "research/rea_native_control/runtime/player_badges.js",
         "research/rea_native_control/player_editor_state.py",
         "research/rea_native_control/runtime/read_player_editor.js",
-        "research/rea_native_control/runtime/player_modifiers.js"
+        "research/rea_native_control/runtime/player_modifiers.js",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "Persona requests are not direct native player edit permission.",
@@ -292,7 +311,8 @@
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_78 / 74b1c78f0304cc53898565982d03a02e3eef8ad8 / role batch/editor reads/edits and signing codec/pool synthetic ABI; no new game evidence",
       "latest_task_refs": [
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -306,7 +326,8 @@
         "docs/game_mechanics/guides/K07_K08_K09_FRANCHISE_OPERATIONS.md",
         "docs/game_mechanics/guides/K06_TRAINING_HEALTH_GROWTH.md",
         "research/rea_native_control/TRAINING_PATCH_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "research/rea_native_control/",
@@ -315,7 +336,10 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "Distinguish one-for-one trade and existing scout goal proof from untested asset classes."
@@ -323,7 +347,8 @@
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_78 / 74b1c78f0304cc53898565982d03a02e3eef8ad8 / role batch/editor reads/edits and signing codec/pool synthetic ABI; no new game evidence",
       "latest_task_refs": [
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -348,7 +373,8 @@
         "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
         "research/rea_native_control/BADGE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "research/rea_native_control/facade.py",
@@ -377,7 +403,10 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "Source handoff b7e0f51 blob 4cc0b2c4; REA read/ABI/live experiences are bounded.",
@@ -390,7 +419,8 @@
         "PR#17@84195f471354400a75877f16c3c3de8a3af6b5b2",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -414,7 +444,8 @@
         "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
         "research/rea_native_control/BADGE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/",
@@ -439,7 +470,10 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "Checkpoint004: recovered exact player-minute Native setter and fixed team-change path; generic delegate profiles only; focused offline checks, no live acceptance; full M0-M5 remains in progress.",
@@ -451,7 +485,8 @@
         "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01@task/role-native-execution-system-20261028",
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -492,7 +527,8 @@
         "research/rea_native_control/BADGE_NATIVE_RECOVERY.md",
         "research/rea_native_control/BADGE_NATIVE_CONTRACT.md",
         "research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md",
-        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md"
+        "research/rea_native_control/SIGNING_NATIVE_CONTRACT.md",
+        "research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md"
       ],
       "artifacts": [
         "docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json",
@@ -515,7 +551,10 @@
         "research/rea_native_control/signing_fields.py",
         "research/rea_native_control/data/signing_schema.json",
         "research/rea_native_control/runtime/read_signing_offers.js",
-        "research/rea_native_control/tools/recover_signing_schema.py"
+        "research/rea_native_control/tools/recover_signing_schema.py",
+        "research/rea_native_control/data/player_contract_fields.json",
+        "research/rea_native_control/runtime/read_player_contract.js",
+        "research/rea_native_control/tools/recover_contract_readback.py"
       ],
       "notes": [
         "Past snapshots are not up-to-date proof of live state.",
@@ -525,7 +564,8 @@
       "last_verified_evidence": "OFFLINE_MANAGED_RUN_INSPECT_78 / 74b1c78f0304cc53898565982d03a02e3eef8ad8 / role batch/editor reads/edits and signing codec/pool synthetic ABI; no new game evidence",
       "latest_task_refs": [
         "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint007 / Badge static fields/names/modifiers; not callable",
-        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json"
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / Draft PR19 / tested 74b1c78f0304cc53898565982d03a02e3eef8ad8 / MANAGED_CHECKPOINT_010_EVIDENCE.json",
+        "NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 / checkpoint011 / original contract readback and5-bit raw-year correction / CHECKPOINT_011.md"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true

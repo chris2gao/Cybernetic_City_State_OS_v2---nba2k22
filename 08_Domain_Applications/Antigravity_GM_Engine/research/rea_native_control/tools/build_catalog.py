@@ -130,7 +130,17 @@ profile=json.loads((ROOT.parents[1]/'config/coach_tactics_profile.json').read_te
 for name,src_off in [('POEOffense',382),('POEOffense2',383),('POEOffense3',384),('POEDefense',385),('POEDefense2',386),('POEDefense3',387),('RunPlayTendency',389),('ZoneUsage',390),('BenchDepth',391),('BenchUtilization',392)]:
  field=profile['fields'][name];projection[name]={'coach_offset':field['offset'],'start_bit':field['start_bit'],'width':field['width'],'storage_bytes':field['storage_bytes'],'gameplan_offset':src_off,'enum':field.get('enum')}
 (data/'coach_settings.json').write_text(json.dumps({'source':'../../config/coach_tactics_profile.json plus prior complete native Apply body','fields':projection,'scope':'Ten current-Coach projection fields only; original persistent Gameplan remains unchanged'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-player_profile=json.loads((ROOT.parents[1]/'config/memory_field_profile.json').read_text(encoding='utf-8'));(data/'player_contract_fields.json').write_text(json.dumps({'source':'../../config/memory_field_profile.json','fields':[f for f in player_profile['fields']['PLAYER'] if f['group']=='contract']},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+player_profile=json.loads((ROOT.parents[1]/'config/memory_field_profile.json').read_text(encoding='utf-8'))
+contract_source='01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_contract_native_readback_021.json'
+contract_native=json.loads((ROOT.parents[3]/contract_source).read_text(encoding='utf8'))
+contract_fields=[f for f in player_profile['fields']['PLAYER'] if f['group']=='contract']
+next(field for field in contract_fields if field['name']=='years_left_on_contract').update(
+ bits=5,meaning=contract_native['raw_field_override']['meaning'],native_source=contract_source)
+(data/'player_contract_fields.json').write_text(json.dumps({'source':'../../config/memory_field_profile.json','fields':contract_fields,
+ 'native_overrides':{'source':contract_source,'production_profile_modified':False,
+  'remaining_year_formula':contract_native['remaining_year_getter']['formula'],'assertion_sum_maximum':6,
+  'option_year_counts':contract_native['remaining_year_getter']['option_year_counts']},
+ 'salary_consumer_semantics':contract_native['salary_semantics']},ensure_ascii=False,indent=2)+'\n',encoding='utf8')
 for row in actions:
  if row['action_id']=='COACH_APPLY_OFFENSE_POE':row['input_schema']['value']['enum']=[int(k) for k in profile['fields']['POEOffense']['enum']]
  for s in row['call_sequence']:

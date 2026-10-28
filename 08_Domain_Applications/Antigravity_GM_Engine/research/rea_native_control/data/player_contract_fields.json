@@ -18,9 +18,11 @@
     {
       "name": "years_left_on_contract",
       "offset": 814,
-      "bits": 4,
+      "bits": 5,
       "start_bit": 2,
-      "group": "contract"
+      "group": "contract",
+      "meaning": "Stored base non-option years; excludes extension and optional years",
+      "native_source": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_contract_native_readback_021.json"
     },
     {
       "name": "contract_option",
@@ -147,5 +149,23 @@
       "start_bit": 2,
       "group": "contract"
     }
-  ]
+  ],
+  "native_overrides": {
+    "source": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_contract_native_readback_021.json",
+    "production_profile_modified": false,
+    "remaining_year_formula": "((PLAYER[0x32c] >>18)&31) + ((PLAYER[0x340] >>15)&7) + (include_options ? option_years :0)",
+    "assertion_sum_maximum": 6,
+    "option_year_counts": {
+      "0": 0,
+      "1": 1,
+      "2": 1,
+      "3": 2
+    }
+  },
+  "salary_consumer_semantics": {
+    "slots": 6,
+    "stored_value_bits": 31,
+    "upper_bit": "Preserved by original Setter; masked by original Getter",
+    "setter_input_above_maximum": "Unsigned clamp to0x7fffffff; proposal uint32 encoding is not exact salary application"
+  }
 }

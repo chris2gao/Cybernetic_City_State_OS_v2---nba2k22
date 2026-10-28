@@ -784,6 +784,33 @@
       ],
       "legacy_sources": [],
       "executed_this_task": false
+    },
+    {
+      "dataset_id": "player.contract_state",
+      "action_id": "READ_PLAYER_CONTRACT_STATE",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.player_contract",
+      "available_scope": "17 scoped raw contract fields, six original salary Getter values, guarded remaining years with/without options and current/contract Team IDs",
+      "coverage_complete": false,
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        }
+      },
+      "coverage_unknowns": [
+        "No new game capture, live acceptance, currency/UI or persistence proof",
+        "Lookup uses existing global UID service; no complete global/FA/reserve runtime coverage is certified",
+        "Host save/world/phase identity, observation provenance and role-sanitized provider remain required",
+        "Invalid encoded year sums are returned raw; original assertion-bearing Getter is deliberately not called",
+        "Same-handler brackets do not prove atomicity/ABA or independent completion of signing"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_contract_native_readback_021.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
     }
   ],
   "legacy_profile_inventory": {

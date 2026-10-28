@@ -1,0 +1,21 @@
+# Checkpoint011: original contract readback and exact field semantics
+
+Full NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01 remains active across M0–M5. PR18 source094f1aa641f93dec2277707ad9dbf5bdb0341247 and remote master7742568ac677b3c16079887463f05e81cb1191ed remain separate from engineering Draft PR19. The preceding checkpoint made concrete implementation/evidence progress. No new game attachment/capture, state mutation or production pipeline operation occurred.
+
+## Evidence changes the next implementation
+
+Original Process consumers distinguish explicit ForcedWage salary application from generated distribution, ten-day and two-way calculations. Salary Getter/Setter dispatch tables were recovered for all six indices. Player salary values use31 bits; Setter clamps unsigned inputs and preserves the upper bit. Proposal uint32 encoding therefore does not imply exact Player salary application.
+
+Original remaining-year Getter0x9886c0 exposed a concrete technical Reader defect: the RAW base-year field is5 bits, not the inherited4. Its returned total also includes extension years and, with flag1,0/1/1/2 option years. Unsigned sums above6 reach assertion code. The control-layer descriptor now applies the fixed Native override; production memory_field_profile.json is unchanged. Both the existing profile handler and new reader are tested against RAW17 to prove that the high bit is retained rather than silently becoming1.
+
+New player.contract_state / READ_PLAYER_CONTRACT_STATE uses exact global UID lookup,17 scoped RAW fields, six original salary Getters and guarded years Getters, then re-resolves UID and brackets selected fields, current/contract Team links/IDs and relevant flags. Maximum10 direct calls. Each unsafe year Getter is skipped independently and returns explicit null/blocked status; raw evidence is retained. No salary Setter, signing/option processor, UI dialog or selection-mark write is called. A matching bracket is not atomicity/ABA, Native save identity or independent signing completion proof; current runtime global/FA/reserve coverage and a sanitized host provider remain integration gaps.
+
+Option recovery found only one accepted direct caller of ProcessMarkedOptions: a whole-league phase loop that also refreshes teams and advances phase state. The UI mark producer opens a dialog on implicit current selection, and another global producer makes game decisions/reset marks. The130 bit9 field is reused by unrelated systems. These are counterexamples to treating the offset or the global processor as an exact individual option Setter. SIGN_FREE_AGENT and CONTRACT_OPTION_ACTION remain unavailable.
+
+## Verification and handoff
+
+Nine focused tests and packaged recovery replay pass offline. The complete fixed-candidate Managed Run/Inspect is pending execution and receipt retention. Tests run actual new/existing handlers against synthetic memory, covering six salary slots/high flags,5-bit RAW regression, option counts, individual assertion guards, Getter mismatch, selected changes, null team links, unrelated stat changes and unavailable writer paths. Static hashes/source/index checks retain183 requirements and15 technical datasets. Current70 actions,59 bindings/layouts and59 effective role mappings are not acceptance counts.
+
+P03/P04/P05/P07/P08/P09/P10/P12 point to PLAYER_CONTRACT_READ_CONTRACT.md and exact source/data/runtime. M2 still needs exact fresh explicit-term construction/submission/modes/context, safe option decisions, current global identity and independent roster/contract completion. Other GM/staff, full Coach/Book/Freelance/rotation/training, remaining Player/body/development/global/child operations, real host/role/observer integration, concentrated Human-approved scenarios, independent review and M5 final audit remain required.
+
+A file-edit-worker write failure was diagnosed after an original failure and two failed path remedies. The third remedy, invoking the existing apply_patch executable through the configured terminal route, succeeded without ACL changes. The premature failure-log count was corrected and the task route marked resolved. No source work is currently blocked by that tooling issue.

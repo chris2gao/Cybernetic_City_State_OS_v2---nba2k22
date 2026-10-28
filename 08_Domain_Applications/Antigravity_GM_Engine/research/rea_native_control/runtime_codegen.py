@@ -20,6 +20,7 @@ def render_program(plan:NativeActionPlan,registry):
  handlers['player.badges']='player_badges.js'
  handlers['read.player_editor']='read_player_editor.js'
  handlers['read.signing_offers']='read_signing_offers.js'
+ handlers['read.player_contract']='read_player_contract.js'
  if handler not in handlers:raise ValueError('No recovered runtime implementation for '+str(handler))
  bindings={step.binding_id:registry.binding(step.binding_id).to_dict() for step in plan.steps if step.binding_id}
  parameters=dict(plan.request);limit=1
@@ -76,6 +77,7 @@ def render_program(plan:NativeActionPlan,registry):
  if handler=='draft.select':limit=3
  if handler=='draft.context':limit=2
  if handler=='read.player':limit=1
+ if handler=='read.player_contract':limit=10
  if handler=='training.intensity':limit=2
  if handler=='training.patch':limit=2
  if handler=='rotation.minutes':

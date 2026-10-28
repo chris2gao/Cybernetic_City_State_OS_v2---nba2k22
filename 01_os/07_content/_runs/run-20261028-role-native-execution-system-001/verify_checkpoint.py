@@ -96,7 +96,7 @@ assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loa
 for mid in ('P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
     module = next(x for x in modules if x['id'] == mid)
     assert 'research/rea_native_control/BADGE_NATIVE_CONTRACT.md' in module['docs']
-assert current['read_dataset_count'] == 14 and len(current['read_datasets']) == 14
+assert current['read_dataset_count'] == 15 and len(current['read_datasets']) == 15
 read = next(row for row in current['read_datasets'] if row['dataset_id'] == 'player.editor_state')
 assert read['native_call_logic_available'] and read['snapshot_provider'] == 'PlayerEditorSnapshotProvider'
 assert read['new_game_capture'] == 'NOT_RUN' and not read['coverage_complete']
@@ -136,4 +136,25 @@ assert {row['rva'] for row in binding['input_layout']['code_signatures']} == {0x
 for mid in ('P03', 'P04', 'P05', 'P08', 'P09', 'P10', 'P12'):
     module = next(row for row in modules if row['id'] == mid)
     assert 'research/rea_native_control/SIGNING_NATIVE_CONTRACT.md' in module['docs']
-print('PASS: sources/index,183 dispositions,14 read datasets, selected Player read/provider, original Getter receipts and signing encoding/pool read; full M0-M5 completion NOT asserted')
+delta = json.loads((run / 'CHECKPOINT_011_SOURCE_DELTA.json').read_text(encoding='utf8'))
+assert not delta['game_access']
+for source in delta['static_sources']:
+    assert hashlib.sha256((root / source['path']).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == source['normalized_lf_sha256']
+source = delta['unchanged_production_profile']
+raw = subprocess.run(['git', 'show', source['source_commit'] + ':' + source['path']], cwd=root, capture_output=True, check=True).stdout
+assert hashlib.sha256(raw).hexdigest() == source['baseline_blob_sha256']
+assert json.loads(raw) == json.loads((root / source['path']).read_text(encoding='utf8'))
+contract_fields = json.loads((d / 'research/rea_native_control/data/player_contract_fields.json').read_text(encoding='utf8'))
+assert next(row for row in contract_fields['fields'] if row['name'] == 'years_left_on_contract')['bits'] == 5
+context = next(row for row in candidate['bindings'] if row['binding_id'] == 'player.contract_read_context')
+assert context['input_layout']['fields'] == contract_fields['fields']
+contract_source = json.loads((run / 'static/player_contract_native_readback_021.json').read_text(encoding='utf8'))
+assert contract_source['salary_semantics']['stored_value_bits'] == 31
+assert contract_source['remaining_year_getter']['option_year_counts'] == {'0': 0, '1': 1, '2': 1, '3': 2}
+for kind in ('getter', 'setter'):
+    assert [row['player_offset'] for row in contract_source['salary_dispatch'][kind]['cases']] == list(range(0x1a4, 0x1bc, 4))
+read = next(row for row in current['read_datasets'] if row['dataset_id'] == 'player.contract_state')
+assert read['native_call_logic_available'] and not read['coverage_complete'] and read['new_game_capture'] == 'NOT_RUN'
+for mid in ('P03', 'P04', 'P05', 'P07', 'P08', 'P09', 'P10', 'P12'):
+    assert 'research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md' in next(row for row in modules if row['id'] == mid)['docs']
+print('PASS: sources/index,183 dispositions,15 read datasets, scoped Player/contract Getters, raw5-bit override and signing boundaries; full M0-M5 completion NOT asserted')
