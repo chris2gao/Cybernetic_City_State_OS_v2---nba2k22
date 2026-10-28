@@ -1,0 +1,324 @@
+schema_version: nba2k22.rea.native_control.capability_model.v1
+date: '2026-10-27'
+task_id: NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-DISCOVERY-01
+document_status: HUMAN_SCOPE_NINE_DOMAINS_FUNCTION_FIRST_NOT_TESTED_THIS_TASK
+game_target: NBA2K22_PC_OFFLINE_MYLEAGUE
+reference_policy:
+  PC22_game_native_bindings: MUST_ORIGINATE_FROM_PC22
+  NextGen_MyNBA_feature_information: HIGH_VALUE_REFERENCE_NOT_DIRECT_PC22_BINARY_PROOF
+  prior_live_evidence_commit: f6b2f5deb73218406f034c5418896c4bfade8e64
+  prior_live_success: [COACH_DEFENSE_POE_14_TO_13, NATIVE_PLAYER_ONE_FOR_ONE_TRADE]
+  player_involving_draft_picks: NOT_YET_PROVEN
+  actual_AI_autonomous_caller: NOT_PROVEN_FOR_TWO_SHARED_NATIVE_SERVICES
+design_priority: IMPLEMENT_RECOVERED_KNOWN_CALL_LOGIC_FIRST_DISCOVER_UNMAPPED_ACTIONS
+current_task_testing: NONE_ALL_NEW_TESTS_DEFERRED
+controller_contract:
+  DECISION_MODEL: SELECT_EXACT_ACTION_TARGETS_ASSETS_VALUES_TERMS_AND_SCOUT_TARGETS
+  CODEX_NATIVE_CONTROL: RESOLVE_ENTITIES_ENCODE_PARAMS_BIND_NATIVE_FUNCTIONS_AND_DISPATCH_REQUEST
+  NBA2K22_NATIVE_GAME: VALIDATE_AND_ACCEPT_OR_REJECT_WITHOUT_EXECUTOR_AUTO_SUBSTITUTION
+  rejected_requests: RETURN_UNCHANGED_REQUEST_AND_GAME_REJECTION_NOT_AUTOMATIC_REMATCH
+  scouting_scope: READ_VISIBLE_INFO_AND_ASSIGN_GM_SELECTED_SCOUT_TARGETS_NO_SCOUT_TARGET_RANKING_BY_CODEX
+maturity_levels:
+  PRIOR_LIVE_SUCCESS_BOUND_1_FOR_1: previous_only_one_for_one_players_real_game_effect
+  PRIOR_LIVE_SUCCESS_CURRENT_COACH_PROJECTION: previous_only_current_coach_14_TO_13_native_apply
+  PARTIAL_NATIVE_READ_PRIOR_COACH_OBJECT: coach_related_native_read_has_prior_evidence_not_full_domain_coverage
+  STATIC_FUNCTION_CANDIDATE_DRAFT_DRAFTPLAYER: Draft_DraftPlayer_static_candidate_not_invoked
+  STATIC_FUNCTION_CANDIDATE_SETTRAININGFORTEAMONDATE: static_training_function_candidate_not_invoked
+  UI_REFERENCE_PC22_PROSPECT_SCOUTING: PC22_scouting_UI_reference_only_not_native_call
+  READ_SURFACE_INVENTORY_PENDING: UI_or_requirement_scope_not_verified_complete_read_API
+  DISCOVER_PC_NATIVE_READ: no_qualified_reader_binding_yet
+  DISCOVER_PC_NATIVE_BINDING: no_qualified_mutator_binding_yet
+data_visibility_rule: >
+  Scouting reports are read according to the current in-game scouting
+  disclosure and progress when that logic is found. Existence of underlying
+  hidden prospect data does not mean it is already a team-visible report.
+domain_count: 9
+domains:
+  - id: D01
+    name: 交易
+    decision_owner: GM
+    subactions:
+      - id: TRADE_PLAYERS
+        intent: "指定双方球队与球员集合"
+        status: PRIOR_LIVE_SUCCESS_BOUND_1_FOR_1
+        native_binding: PRIOR_VERIFIED_SCOPE_ONLY
+        test_in_this_task: false
+      - id: TRADE_PICKS
+        intent: "指定双方选秀权资产及归属"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TRADE_MIXED_ASSETS
+        intent: "指定球员与选秀权混合交易包"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TRADE_VALIDATE_COMMIT
+        intent: "同一笔外部提案调用游戏原生合法性检查与提交"
+        status: PRIOR_LIVE_SUCCESS_BOUND_1_FOR_1
+        native_binding: PRIOR_VERIFIED_SCOPE_ONLY
+        test_in_this_task: false
+  - id: D02
+    name: 签约与合同
+    decision_owner: GM
+    subactions:
+      - id: SIGN_FREE_AGENT
+        intent: "指定球队球员和合同年限薪资与选项"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: RE_SIGN_PLAYER
+        intent: "指定球员续约合同"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: RELEASE_WAIVE_PLAYER
+        intent: "指定球员裁员或放弃操作"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: CONTRACT_OPTION_ACTION
+        intent: "指定球员合同选项与选择值"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D03
+    name: 球员和员工属性修改
+    decision_owner: GM_COACH_PLAYER
+    subactions:
+      - id: PLAYER_SET_ATTRIBUTE
+        intent: "指定球员单项能力ID和目标值"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: PLAYER_SET_TENDENCY
+        intent: "指定球员倾向ID和目标值"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: PLAYER_SET_BADGE
+        intent: "指定球员徽章ID和等级"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: PLAYER_SET_PLAY_TYPES_1_TO_4
+        intent: "指定球员战术类型与最多四个槽位的位置/顺序（真实性待PC22证实）"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: STAFF_SET_ATTRIBUTE
+        intent: "指定教练或其他员工能力字段和目标值（具体允许项待证实）"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: PLAYER_SET_EDITABLE_INFO
+        intent: "指定球员其他可修改资料字段和值"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D04
+    name: 教练机制与战术
+    decision_owner: COACH
+    subactions:
+      - id: COACH_APPLY_OFFENSE_POE
+        intent: "指定球队教练与进攻重点"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: COACH_APPLY_DEFENSE_POE
+        intent: "指定球队教练与防守重点枚举"
+        status: PRIOR_LIVE_SUCCESS_CURRENT_COACH_PROJECTION
+        native_binding: PRIOR_VERIFIED_SCOPE_ONLY
+        test_in_this_task: false
+      - id: COACH_SET_GAMEPLAN
+        intent: "指定球队/对手场景与完整Gameplan参数"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: COACH_ADD_REPLACE_PLAY
+        intent: "指定战术、目标槽位、添加或替换"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: COACH_REPLACE_PLAYBOOK
+        intent: "指定球队、战术手册ID"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: COACH_SET_SYSTEM_FREELANCE_ACE
+        intent: "指定攻防体系、自由战术或ACE设置"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: COACH_SET_ROTATION_POLICY
+        intent: "指定教练相关轮换决策参数"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D05
+    name: 球队管理
+    decision_owner: GM_COACH
+    subactions:
+      - id: TEAM_SET_ROSTER_ASSIGNMENT
+        intent: "指定球员的球队归属或名单位置；以原生合法业务操作执行"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TEAM_SET_STARTERS
+        intent: "指定首发5人及位置"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TEAM_SET_MINUTES_ROTATION
+        intent: "指定球员轮换顺序与上场时间"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TEAM_SET_PLAYER_ROLE_POSITION
+        intent: "指定球员角色/位置"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TEAM_MANAGE_STAFF
+        intent: "指定工作人员聘用解雇或职责"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TEAM_OTHER_SUPPORTED_OPERATIONS
+        intent: "根据PC22实际功能目录追加球队管理动作"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D06
+    name: 选秀大会
+    decision_owner: GM
+    subactions:
+      - id: DRAFT_SELECT_PROSPECT
+        intent: "指定选秀权/顺位/球队和候选球员ID，执行本次选秀"
+        status: STATIC_FUNCTION_CANDIDATE_DRAFT_DRAFTPLAYER
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: DRAFT_PICK_RIGHTS_ACTION
+        intent: "指定选秀权归属或权利处理，需区分交易业务"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: DRAFT_STAGE_REQUIRED_CONTEXT
+        intent: "恢复选秀大会执行所需原生会话、顺位和对象关系"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D07
+    name: 训练系统
+    decision_owner: COACH_PLAYER
+    subactions:
+      - id: TRAIN_TEAM_SET_SCHEDULE
+        intent: "指定球队训练日期与项目"
+        status: STATIC_FUNCTION_CANDIDATE_SETTRAININGFORTEAMONDATE
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TRAIN_TEAM_SET_INTENSITY
+        intent: "指定球队训练强度和重点"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TRAIN_PLAYER_SET_FOCUS
+        intent: "指定球员训练项目、方向或强度"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: TRAIN_PLAYER_MENTOR_ASSIGNMENT
+        intent: "指定球员导师关系（真实原生能力需确认）"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D08
+    name: 游戏数据读取
+    decision_owner: GM_COACH_PLAYER
+    subactions:
+      - id: READ_LEAGUE_SETTINGS_AND_CALENDAR
+        intent: "读取存档赛季、联盟设置、时间表和阶段"
+        status: READ_SURFACE_INVENTORY_PENDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: READ_TEAM_ROSTER_ROTATION_FINANCE
+        intent: "读取球队资料、名单、轮换、战绩、工资/合同和选秀权"
+        status: READ_SURFACE_INVENTORY_PENDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES
+        intent: "读取球员身份、当前数值、倾向、徽章、伤病与合同"
+        status: READ_SURFACE_INVENTORY_PENDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: READ_PLAYER_MATCH_SEASON_CAREER_STATS
+        intent: "读取比赛/赛季/职业统计及可见进阶数据"
+        status: READ_SURFACE_INVENTORY_PENDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: READ_COACH_STAFF_GAMEPLAN_TRAINING
+        intent: "读取工作人员资料、教练战术及训练设置"
+        status: PARTIAL_NATIVE_READ_PRIOR_COACH_OBJECT
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: READ_GAMES_STANDINGS_AWARDS_HISTORY
+        intent: "读取赛程、比赛结果、排名、奖项、历史与新闻记录"
+        status: READ_SURFACE_INVENTORY_PENDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: READ_DRAFT_CLASS_PICKS_AND_SCOUT_REPORTS
+        intent: "读取候选新秀、选秀权和当前已获知的球探报告"
+        status: READ_SURFACE_INVENTORY_PENDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+  - id: D09
+    name: 球探与新秀考察
+    decision_owner: GM
+    subactions:
+      - id: SCOUT_LIST_DRAFT_PROSPECTS
+        intent: "根据当前赛季/适用届次读取将参加选秀的候选名单及现有公开资料"
+        status: UI_REFERENCE_PC22_PROSPECT_SCOUTING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: SCOUT_READ_PROSPECT_INFO
+        intent: "按候选人ID读取当前可见能力、预测、排名、球探进度等字段，存在才返回"
+        status: DISCOVER_PC_NATIVE_READ
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: SCOUT_ASSIGN_TARGETS
+        intent: "由外部GM提供候选球员或球探目标，找原生考察分派/确认入口"
+        status: DISCOVER_PC_NATIVE_BINDING
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: SCOUT_READ_PROGRESS_REPORT
+        intent: "读取考察已揭示的数据及进度，区分尚未开放字段"
+        status: DISCOVER_PC_NATIVE_READ
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+      - id: SCOUT_READ_STAFF_CAPACITY_SCHEDULE
+        intent: "读取球探人员、可用任务槽位和考察周期（是否存在需实证）"
+        status: DISCOVER_PC_NATIVE_READ
+        native_binding: UNRESOLVED_STATIC_DISCOVERY
+        test_in_this_task: false
+discovery_handoff:
+  known_first:
+    - bind_prior_live_coach_POE_action_without_new_live_call
+    - bind_prior_live_one_for_one_player_trade_without_salary_search
+    - include_existing_coach_read_and_native_training_and_draft_candidates
+  unknowns:
+    - prioritize_native_mutators_and_readers_for_each_unresolved_subaction
+    - document_exact_parameters_object_context_and_call_order_where_available
+    - mark_any_missed_game_function_as_UNKNOWN_NOT_NONEXISTENT
+  deliverables:
+    - NativeActionRegistry
+    - NativeBindingManifest
+    - GM_Coach_Player_TypeSafeFacade
+    - ReadDataCoverageAtlas
+    - ScoutingProspectRosterAndAssignmentInterface
+    - NextTaskTestHandoffOnly_NoExecutionNow
+  no_extra_work:
+    - no_native_transaction_return_receipt_research
+    - no_save_reload
+    - no_exhaustive_trade_rules_or_auto_salary_matching
+    - no_auto_target_selection_for_scouter_or_draft
+    - no_new_live_or_fixture_tests
