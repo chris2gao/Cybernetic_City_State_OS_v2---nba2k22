@@ -1,0 +1,296 @@
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+run_id: run-20261027-nba2k22-rea-native-mechanism-consensus-001
+lifecycle: research_only
+stage: 03_结果建模
+phase_state: STAGE03_B_V1_RC01_Human_EXACT_APPROVED_INDEPENDENT_REVIEW_PACKET_PREPARED_NOT_ACCEPTED
+human_request_date: '2026-10-27'
+priority: P0_ABOVE_NBA2K22_WORLD_DATA_STAGE02
+paused_parent_task_id: nba2k22-lifecycle-scene-consensus-01
+paused_parent_branch: task/nba2k22-lifecycle-consensus-20261026
+paused_parent_head_at_start: 4b78156106bb9ccd000171462e89bfcde9ecc21e
+paused_parent_stage02_verdict: NOT_ASSESSED
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+branch: task/nba2k22-rea-native-mechanism-consensus-20261027
+ownership: NBA2K22_DOMAIN_GPT_REQUIREMENT_AND_PLANNING_ONLY
+future_engineering_owner: Codex
+rea_public_source: https://github.com/morluto/rea
+rea_pinned_source_commit_for_reference: 570abe95f2a35b5c580a5ec2fca90c33d4114bdc
+human_provided_rea_overall_report: REA_DIFFICULT_ITEMS_EVALUATION_20261027.md_CHAT_ATTACHMENT
+human_report_status: PROVISIONAL_SIX_OVERALL_VALID_CACHES_NOT_COMPLETE_REVERSE_ENGINEERING
+human_goal: >-
+  Discover and verify actual NBA2K22 offline MyLEAGUE native mechanics,
+  data layouts, function/control flow and feasibility of reusing original
+  mechanisms for external GM/Coach/Player actions rather than assuming
+  all effects must be achieved via external simulation or raw memory edits.
+stop_reason_for_parent_stage02: HUMAN_EXPLICIT_HIGHER_PRIORITY_DEPENDENCY_2026_10_27
+allowlist:
+  - 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/**
+prohibitions:
+  - no_game_operation_or_memory_attach_in_current_GPT_planning_task
+  - no_native_function_injection_or_write_or_Save_mutation
+  - no_Codex_dispatch_until_Human_approved_A0_and_complete_A_and_execution_task_scope
+  - no_modify_prior_Human_approved_A_or_ADR
+  - no_claim_that_REA_automatically_enables_safe_native_calls
+  - no_automatic_master_merge_or_rebase_or_force_push
+  - no_repeat_unbounded_ghidra_whole_exe_analysis_without_new_method_and_budget
+required_outputs:
+  - 01a_需求共识模型_A0_v0_待Human裁决.md
+  - 01a_承重追问_Round01_v1.md
+  - Codex_机制逆向任务候选_未派发_v0.md
+  - verification_plan_candidate_v1.json
+  - 01a_Human裁决记录_Round01_20261027.md
+  - 01a_需求共识模型_A0_v1_待Human版本确认.md
+  - 01b_需求结果模型_A_v0_讨论草案.yml
+  - 01b_承重追问_Round01_Q4至Q6_v1.md
+  - 01a_A0_v1_Human正式版本确认_20261027.md
+  - 01b_Human裁决记录_Round01_Q4至Q6_20261027.md
+  - 01b_需求结果模型_A_v1_RC01_待Human正式确认.yml
+  - 01b_A_v1_RC01_完整性审查与Human正式确认包.md
+  - 01b_A_v1_RC01_Human正式版本确认与阶段01完成门_20261027.md
+  - 02_信息收集与实证规划_v1.md
+  - 02_evidence/01_Codex_REA暂停探索_固定来源核销与可继承能力矩阵_v1.md
+  - 02_evidence/证据索引_v1.yml
+  - 02_evidence/00_挖掘目标与领域_v1.yml
+  - 02_evidence/02_旧游戏机制资料与REA来源交叉索引_v1.md
+  - 02_evidence/证据索引_v2.yml
+  - 02_evidence/信源清单_v1.yml
+  - 02_evidence/信源使用记录_v1.yml
+  - 02_evidence/边界记录_v1.yml
+  - 02_evidence/可行性判断_候选_v1.yml
+  - 03_Mechanism_Atlas数据契约_B0设计候选_v1.yml
+  - 04_M1_M2_M3现场证据合同与原生调用安全准入_B0候选_v1.md
+  - 05_阶段02收敛与阶段03结果B输入_候选_v1.md
+  - 02_evidence/03_公开原始资料定向核实与平台模式边界_v1.md
+  - 02_evidence/01_内部证据_v1.yml
+  - 02_evidence/信源清单_v2.yml
+  - 02_evidence/证据索引_v3_原子归一化.yml
+  - 02_evidence/信源使用记录_v2.yml
+  - 02_evidence/边界记录_v2.yml
+  - 02_evidence/可行性判断_v2_停止判定候选.yml
+  - 02_evidence/阶段02静态引用一致性验证_v1.json
+  - 06_阶段02证据完成门审查与Human结果确认候选_v1.md
+  - 02_阶段02Human正式确认与03准入记录_20261027.md
+  - 03_GitHub连接器同步检验_20261027.md
+  - NBA2K22_REA_03_B0_结果模型_v1.yml
+  - NBA2K22_REA_03_B0_评审与交接_v1.md
+  - NBA2K22_REA_03_B0_本地静态核验_v1.json
+  - 03_Human机制主体边界裁决_AI与AI优先_20261027.md
+  - 03_Human最终目标补充_机制知识与双执行路径_20261027.md
+  - NBA2K22_REA_03_B0_结果模型_v2_AI_ONLY候选.yml
+  - NBA2K22_REA_03_B0_结果模型_v3_AI机制知识与双后端候选.yml
+  - 03_阶段03_B0_v3_双轨成果模型审查与执行路由准则_v1.md
+  - 03_B_v1_形态分析与ACH冲突审查_v1.md
+  - NBA2K22_REA_03_完整结果模型_B_v1_RC01_待Human确认.yml
+  - 03_B_v1_RC01_静态合同与覆盖核验_v1.json
+  - 03_B_v1_RC01_完整性审查与Human版本确认候选_v1.md
+  - 03_B_v1_RC01_Human正式版本确认_20261027.md
+  - 03_B_v1_RC01_独立审核任务包_候选_v1.md
+  - 03_B_v1_RC01_独立审核委托与门控_候选_v1.yml
+completion_state: STAGE01_AND_STAGE02_HUMAN_APPROVED_STAGE03_B_Human_APPROVED_INDEPENDENT_REVIEW_REQUIRED
+task_packet:
+  task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+  branch: task/nba2k22-rea-native-mechanism-consensus-20261027
+  objective: HUMAN_CONFIRMED_SCOPE_AND_CODEX_EXPLORATION_REQUIREMENT_MODELS
+  source_evidence:
+    - github:morluto/rea@570abe95f2a35b5c580a5ec2fca90c33d4114bdc
+    - CHAT_ATTACHMENT:REA_DIFFICULT_ITEMS_EVALUATION_20261027.md
+    - github:chris2gao/Cybernetic_City_State_OS_v2---nba2k22@a3927fb150a213201e404cca043ced4f57409bd1:08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/DIFFICULT_ITEMS.md
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/verification_plan_candidate_v1.json
+  required_tests: [REQ-01, REQ-02, REQ-03, REQ-04]
+  prohibitions: [modify_master_without_required_Human_confirmation, force_push, rebase, squash, native_runtime_operation]
+  required_completion_pointer: exact_A0_and_A_Human_approvals_and_future_bounded_Codex_packet
+  big_task: true
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+  big_task_confirmation_closure:
+    enabled: false
+    known_confirmation_required_actions: [future_real_game_native_attach_or_function_invocation, future_master_integration]
+    preconfirmed_actions: []
+    uncovered_actions: [future_real_game_native_attach_or_function_invocation, future_master_integration]
+  executor_profile:
+    provider: Codex
+    model: future_execution_profile_to_be_selected
+    reasoning_effort: high
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: HUMAN_APPROVED_SINGLE_OWNER_FOR_NATIVE_RUNTIME_ENGINEERING
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: Human_or_future_independent_model_to_be_assigned
+    different_model_family: true
+    different_measurement_tool: true
+
+stage01a_Human_atomic_decisions: Q1_B_Q2_A_Q3_A
+stage01a_atomic_decision_ref: 01a_Human裁决记录_Round01_20261027.md
+stage01a_candidate_version: A0-v1
+stage01a_candidate_ref: 01a_需求共识模型_A0_v1_待Human版本确认.md
+stage01a_candidate_Human_exact_confirmation: APPROVED_2026_10_27
+stage01b_formal_start: OPEN_AFTER_EXACT_A0_V1_HUMAN_CONFIRMATION
+stage01b_preparatory_model_version: A-v0_HISTORICAL_ONLY
+stage01b_preparatory_model_ref: 01b_需求结果模型_A_v0_讨论草案.yml
+stage01b_preparatory_inquiry_ref: 01b_承重追问_Round01_Q4至Q6_v1.md
+stage01b_pending_Human_decisions: []
+stage01b_final_result_version_confirmation: HUMAN_APPROVED_2026_10_27
+stage01b_goal_native_PoC_count: 1_TO_2_CONDITIONAL_ON_DIRECT_EVIDENCE_AND_SEPARATE_Human_ACTION_AUTHORIZATION
+stage01b_Q3_exit: THREE_REPRESENTATIVE_DOSSIERS_WITH_EVIDENCED_TRADE_FEASIBILITY_VERDICT_AND_Human_EXIT_GATE
+rea_real_memory_function_call_authority: NOT_GRANTED
+codex_REA_new_task_dispatch_status: NOT_DISPATCHED_BY_THIS_PLANNING_RUN
+world_data_stage02_resumption_status: PAUSED_UNTIL_Human_ACCEPTED_P0_REA_TASK_EXIT
+
+stage01a_human_approval_ref: 01a_A0_v1_Human正式版本确认_20261027.md
+stage01a_human_approved_exact_blob: 8bd15794ad0f8b9b06363e4a04b7f806c4c55acd
+stage01b_Human_round01_decisions: Q4_A_Q5_A_Q6_B
+stage01b_Human_round01_decisions_ref: 01b_Human裁决记录_Round01_Q4至Q6_20261027.md
+stage01b_result_model_candidate_ref: 01b_需求结果模型_A_v1_RC01_待Human正式确认.yml
+stage01b_result_model_candidate_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+stage01b_result_model_candidate_review_ref: 01b_A_v1_RC01_完整性审查与Human正式确认包.md
+stage01b_Human_exact_result_A_confirmation: APPROVED_EXACT_BLOB_9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+stage01b_result_object_count: 7
+stage01b_success_criteria_count: 8
+stage01b_evidence_questions_count: 7
+stage01b_next_action: COMPLETE; FOLLOW_STAGE02_EVIDENCE_AND_FEASIBILITY_PROCESS
+
+stage01b_A_v1_RC01_Human_approval_ref: 01b_A_v1_RC01_Human正式版本确认与阶段01完成门_20261027.md
+stage01b_A_v1_RC01_approved_original_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+stage01_completed_semantically: true
+stage02_research_plan_ref: 02_信息收集与实证规划_v1.md
+stage02_evidence_index_ref: 02_evidence/证据索引_v3_原子归一化.yml
+stage02_legacy_Codex_handoff_ref: 02_evidence/01_Codex_REA暂停探索_固定来源核销与可继承能力矩阵_v1.md
+stage02_legacy_Codex_source_branch: task/rea-development-exploration-01
+stage02_legacy_Codex_fixed_commit: b16e69727987f29bff5e2ee31ce82891102ab2d9
+stage02_legacy_Codex_source_state: PARTIAL_HUMAN_PAUSED
+stage02_legacy_Codex_manifest_declared_file_count: 52
+stage02_legacy_Codex_manifest_integrity_scope: REPORTED_HASH_MANIFEST_NOT_INDEPENDENTLY_REHASHED_52_FILES
+stage02_supported_tool_capabilities: FIXED_BUILD_FRIDA_METADATA_READ_AND_OWNED_FIXTURE_4096_WRITE_RESTORE_16_NATIVE_ABI_TRACE
+stage02_unproven_business_mechanisms: MYLEAGUE_BADGE_UPGRADE_THRESHOLD_COACH_APPLIED_TACTICS_TRADE_VALIDATE_COMMIT_NATIVE_CALL
+stage02_evidence_verdict: partially_supported
+stage02_current_activity: READ_ONLY_SOURCE_MAPPING_AND_CODEX_POC_FEASIBILITY_PLANNING
+stage02_Human_transition_scope: STAGE01_APPROVAL_AND_STAGE02_PLANNING_ONLY_NOT_GAME_OR_CODEX_DISPATCH
+stage02_next_planning_focus: HUMAN_SCOPE_CONFIRMATION_OF_PARTIALLY_SUPPORTED_AND_FIVE_ESCALATED_NATIVE_GAPS_THEN_STAGE03_RESULT_B
+stage02_Human_stage03_gate: APPROVED_2026_10_27
+stage02_native_runtime_and_function_call_authority: NOT_GRANTED
+stage02_Codex_execution_status: NOT_DISPATCHED_BY_THIS_RUN
+stage02_master_integration_status: NOT_REQUESTED
+
+stage02_source_reuse_scope: OLD_GAME_GUIDES_DEV07_COACHING_R05B_TRADE_R04A_BADGE_AND_REA_PARTIAL_EXPLORATION_FIXED_TO_MASTER_7742568_AND_CODEX_B16E697
+stage02_research_targets_ref: 02_evidence/00_挖掘目标与领域_v1.yml
+stage02_source_crosswalk_ref: 02_evidence/02_旧游戏机制资料与REA来源交叉索引_v1.md
+stage02_mechanism_atlas_B0_design_ref: 03_Mechanism_Atlas数据契约_B0设计候选_v1.yml
+stage02_M1_M2_M3_evidence_contract_ref: 04_M1_M2_M3现场证据合同与原生调用安全准入_B0候选_v1.md
+stage02_source_platforms_ref: 02_evidence/信源清单_v2.yml
+stage02_source_use_ref: 02_evidence/信源使用记录_v2.yml
+stage02_boundaries_ref: 02_evidence/边界记录_v2.yml
+stage02_feasibility_candidate_ref: 02_evidence/可行性判断_v2_停止判定候选.yml
+stage02_feasibility_candidate_judgment: PARTIALLY_SUPPORTED_TOOL_AND_RESEARCH_ROUTE_ONLY
+stage02_stage03_B_design_input_candidate_ref: 05_阶段02收敛与阶段03结果B输入_候选_v1.md
+stage02_legacy_guides_numeric_claims: GUIDE_HYPOTHESIS_ONLY_NOT_MYLEAGUE_PROVEN_THRESHOLD_OR_TRAINER_MULTIPLIER
+stage02_data_vs_behavior_vs_callability: L1_LAYOUT_L2_STATIC_FUNCTION_L3_GAME_APPLIED_L4_AUTHORIZED_POC_STRICTLY_SEPARATE
+stage02_nonindependent_sources: OLD_Codex_ONE_RUN_AND_ORIGINAL_GUIDE_REFERRALS_NOT_DOUBLE_COUNTED
+stage02_current_M1_M2_M3_game_experiments: NOT_PERFORMED
+stage02_next_required_Human_confirmation: COMPLETED_HUMAN_APPROVED_2026_10_27
+
+stage02_atomic_evidence_count: 17
+stage02_source_platforms_count: 12
+stage02_research_questions_count: 7
+stage02_native_evidence_gaps_count: 5
+stage02_static_crosswalk_check_ref: 02_evidence/阶段02静态引用一致性验证_v1.json
+stage02_static_crosswalk_check_result: PASSED_ALL_15_REFERENTIAL_AND_SAFETY_STATUS_CHECKS_WITHOUT_RUNTIME_TEST
+stage02_public_primary_scoping_ref: 02_evidence/03_公开原始资料定向核实与平台模式边界_v1.md
+stage02_internal_primary_evidence_ref: 02_evidence/01_内部证据_v1.yml
+stage02_static_source_stop_decision: TRUE_EIG_LOW_WITH_NEXT_TRIGGER_NEW_CODEX_REAL_SCENE
+stage02_feasibility_Human_gate_document_ref: 06_阶段02证据完成门审查与Human结果确认候选_v1.md
+stage02_proposed_formal_judgment: partially_supported
+stage02_proposed_03_scope: CONDITIONAL_MECHANISM_ATLAS_AND_NATIVE_CALLABILITY_DESIGN_WITH_PROVED_VS_UNKNOWN_SEPARATION
+stage02_Human_decision_status: APPROVED_2026_10_27
+stage03_started: true
+stage02_independent_runtime_game_acceptance: NOT_RUN
+stage02_legacy_Codex_work_automatically_resumed: false
+
+stage02_Human_approval_ref: 02_阶段02Human正式确认与03准入记录_20261027.md
+stage02_Human_approved_candidate_blob: 36c216429d8ae1a300a6e7b88243e72879f5eda8
+stage02_Human_accepted_gaps: [GAP-REA02-01, GAP-REA02-02, GAP-REA02-03, GAP-REA02-04, GAP-REA02-05]
+stage02_human_static_collection_stop_confirmed: true
+stage03_result_model_status: B_V1_RC01_Human_EXACT_APPROVED_INDEPENDENT_REVIEW_PENDING
+stage03_B0_result_ref: NBA2K22_REA_03_B0_结果模型_v1.yml
+stage03_B0_review_ref: NBA2K22_REA_03_B0_评审与交接_v1.md
+stage03_B0_local_validation_ref: NBA2K22_REA_03_B0_本地静态核验_v1.json
+stage03_B0_result_original_blob: 79243bae4ab4ec69299357c3bead468f813206e7
+stage03_B0_review_original_blob: 11e70890eef10f4fbd640380feec7fc118838d36
+stage03_B0_validation_original_blob: cc9892988abc28fce7c7f67003760ccb05cb7825
+stage03_B0_original_local_sync_markers: HISTORICAL_PRE_SYNC_STATE_NOT_CURRENT_AFTER_GITHUB_CONNECTOR_UPLOAD
+stage03_B0_exact_bytes_verified_against_original_zip: true
+stage03_B0_GitHub_connector_sync: VERIFIED_2026_10_27
+stage03_next: HUMAN_APPROVED_SEPARATE_EXPLORATORY_CODEX_PROTOTYPE_TASK_NO_RESTATEMENT_OF_IR_AS_ACCEPTED
+stage03_human_formal_B_approval: APPROVED_EXACT_2026_10_27
+stage03_independent_review: PREPARED_NOT_DISPATCHED_NOT_ACCEPTED
+stage03_Codex_development_permission: NOT_GRANTED
+stage03_game_operation_permission: NOT_GRANTED
+stage03_native_function_call_permission: NOT_GRANTED
+stage03_master_merge_permission: NOT_GRANTED
+
+stage03_Human_AI_scope_directive_ref: 03_Human机制主体边界裁决_AI与AI优先_20261027.md
+stage03_Human_KnowledgeAndDualBackend_directive_ref: 03_Human最终目标补充_机制知识与双执行路径_20261027.md
+stage03_current_B0_design_ref: NBA2K22_REA_03_B0_结果模型_v3_AI机制知识与双后端候选.yml
+stage03_B0_AI_ONLY_previous_ref: NBA2K22_REA_03_B0_结果模型_v2_AI_ONLY候选.yml
+stage03_B0_v3_review_ref: 03_阶段03_B0_v3_双轨成果模型审查与执行路由准则_v1.md
+stage03_B0_v3_static_review_ref: 03_B0_v3_AI机制与双执行路径_静态核销记录_v1.json
+stage03_B0_v3_model_is_approved: false
+stage03_B0_v3_objectives: [AI_ORIGINAL_GAME_KNOWLEDGE_FOR_GM_COACH_PLAYER, VERIFIED_NATIVE_FIRST, SEMANTICALLY_VALIDATED_LIVE_MEMORY_FALLBACK, NO_SAFE_PATH_WHEN_BOTH_UNPROVEN]
+stage03_approved_A_scope_not_auto_expanded: true
+stage03_original_A_exact_blob_unchanged: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+stage03_AI_scope_target: PC22_OFFLINE_MYLEAGUE_AI_ENTITY_AI_TO_AI_ONLY
+stage03_Native_backend_status: NOT_GAME_PROVEN
+stage03_Memory_backend_status: OLD_REPORTED_WRITES_NOT_NEW_CURRENT_BUILD_SAFE_ACTION_AUTHORIZED
+stage03_future_runtime_action_permission: NOT_GRANTED
+stage03_p0_exit_goal: THREE_REPRESENTATIVES_AND_Human_COMPLETION_GATE_NOT_WHOLE_GAME_ENCYCLOPEDIA
+
+stage03_B_v1_RC01_model_ref: NBA2K22_REA_03_完整结果模型_B_v1_RC01_待Human确认.yml
+stage03_B_v1_RC01_model_blob: f711261d00b0df202906992597fdae7b895fcfb0
+stage03_B_v1_RC01_morphology_ACH_ref: 03_B_v1_形态分析与ACH冲突审查_v1.md
+stage03_B_v1_RC01_static_receipt_ref: 03_B_v1_RC01_静态合同与覆盖核验_v1.json
+stage03_B_v1_RC01_review_ref: 03_B_v1_RC01_完整性审查与Human版本确认候选_v1.md
+stage03_B_v1_RC01_result_object_count: 7
+stage03_B_v1_RC01_acceptance_criterion_count: 8
+stage03_B_v1_RC01_counterexample_count: 14
+stage03_B_v1_RC01_static_checks_passed: 18
+stage03_B_v1_RC01_method_types_bounded_to: [配置, 文档, 流程]
+stage03_B_v1_RC01_Human_exact_version_confirmation: APPROVED_2026_10_27_EXACT_BLOB
+stage03_B_v1_RC01_independent_review: REJECTED_AS_REPORTED_BY_HUMAN_REPORT_NOT_READ
+stage03_B_v1_RC01_ready_for_stage04: false
+stage03_B_v1_RC01_current_scope: THREE_AI_REPRESENTATIVE_MECHANISMS_KNOWLEDGE_AND_DUAL_BACKEND_CONTRACT_ONLY
+stage03_B_v1_RC01_Codex_runtime_new_authority: NONE
+stage03_B_v1_RC01_master_change_authority: NONE
+
+stage03_B_v1_RC01_Human_approval_ref: 03_B_v1_RC01_Human正式版本确认_20261027.md
+stage03_B_v1_RC01_Human_approval_commit: 11ad263a154f98b11d9fa4a59cc6ee9889fc6baf
+stage03_B_v1_RC01_Human_approval_exact_blob: f711261d00b0df202906992597fdae7b895fcfb0
+stage03_B_v1_RC01_independent_review_packet_ref: 03_B_v1_RC01_独立审核任务包_候选_v1.md
+stage03_B_v1_RC01_independent_review_machine_packet_ref: 03_B_v1_RC01_独立审核委托与门控_候选_v1.yml
+stage03_B_v1_RC01_independent_review_identity: NONE_YET
+stage03_B_v1_RC01_independent_review_receipt: NOT_PRESENT
+stage03_B_v1_RC01_completion_gate: NOT_NORMAL_COMPLETION_HUMAN_EXPLORATORY_PROTOTYPE_EXCEPTION
+stage03_B_v1_RC01_stage04_start: FORBIDDEN_BEFORE_GATE
+stage03_B_v1_RC01_original_candidate_commit: 8b547e0f928a0d3b5da51fda34fa24fa03672f8c
+stage03_B_v1_RC01_Human_approval_version_drift: NONE_FILE_BYTES_UNCHANGED
+stage03_B_v1_RC01_reviewer_must_not_be_planning_author: true
+
+stage03_Human_review_decision_ref: 03_Human审核裁决与探索原型开发例外_20261027.md
+stage03_independent_report_attachment_read: false
+stage03_independent_report_outcome_as_Human_described: NOT_PASSED
+stage03_human_design_prototype_acceptance: ACCEPTED_FOR_EXPLORATORY_DEVELOPMENT
+stage03_human_exploration_task_authorized: true
+stage03_formal_stage04_05_06_gate_auto_granted: false
+stage03_legacy_B_frozen_no_rewrite: true
+stage03_future_Codex_task_is_separate_exploratory_run: true
+stage03_runtime_injection_or_effectful_game_permission_from_this_turn: NOT_GRANTED

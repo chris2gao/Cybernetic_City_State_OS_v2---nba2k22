@@ -1,0 +1,55 @@
+{
+  "mechanism_id": "AI_COACH_DEFENSE_M1",
+  "title": "AI教练防守重点：保护禁区（候选）",
+  "description_zh": "研究对象是教练/球队AI的防守重点选择和比赛消费。当前构建元数据与enum CRC已核对：POEDefense的13为PROTECT_PAINT；PHI和IND当前存值均为14中性防守。AI选择入口与比赛消费者仍未知。",
+  "mode": "PC22_OFFLINE_MYLEAGUE",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "last_verified_at_or_unknown": "2026-10-27T16:56:43.1027726Z",
+  "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+  "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+  "original_game_rule": "UNKNOWN：不能承诺该值会改变真实场上防守站位或比赛结果。现有资料支持按教练重点字段开展定向观察。",
+  "field_semantics": [
+    {
+      "field_id": "POEDefense",
+      "meaning": "当前元数据及枚举匹配：0无偏好、13保护禁区、14中性防守、15限制外围；当前两队存值14。这里只验证类型/存值，不证明AI在比赛中应用。",
+      "unit": "CANDIDATE_ENUM",
+      "legal_write_scope": "NOT_QUALIFIED",
+      "consumer_and_refresh": "UNKNOWN",
+      "dependent_states": "共享POE位域、比赛缓存与应用时点待证"
+    }
+  ],
+  "decision_guidance": {
+    "status": "ILLUSTRATIVE_AI_STRATEGY_NOT_GAME_RULE",
+    "text": "教练可基于对手内线威胁提出保护禁区的候选意图；应考虑让出外围机会的风险。此为外部战术推理，非已破解的2K选择算法。"
+  },
+  "unknowns": [
+    "AI设置调用点与引擎控制标志",
+    "比赛消费者和刷新时点",
+    "对实际场上行为的因果效果",
+    "当前构建安全写入与存档保持"
+  ],
+  "source_refs": [
+    "SRC-COACH-PROFILE",
+    "SRC-COACH-READER",
+    "SRC-COACH-CODEC",
+    "SRC-LIVE-COACH",
+    "SRC-LIVE-TRACE"
+  ],
+  "can_reason": true,
+  "can_recommend": true,
+  "can_execute": false,
+  "role_visibility": [
+    "COACH",
+    "GM"
+  ],
+  "source_origin_group": "LEGACY_PROFILE_PLUS_ISSUE9_CURRENT_READ; NO_INDEPENDENT_AI_BEHAVIOR_PROOF",
+  "provenance": {
+    "origin_groups": [
+      "ISSUE9_CURRENT_READ_AND_TRACE_SINGLE_OWNER",
+      "LEGACY_COACH_PROJECT_SINGLE_ORIGIN"
+    ],
+    "origin_count": 2,
+    "classification": "MULTIPLE_ORIGINS_NOT_INDEPENDENT_CONFIRMATION",
+    "independent_AI_game_confirmation": false
+  }
+}

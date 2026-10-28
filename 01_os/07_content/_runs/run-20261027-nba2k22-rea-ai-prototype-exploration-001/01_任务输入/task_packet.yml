@@ -1,0 +1,74 @@
+task_packet:
+  task_id: NBA2K22-REA-AI-PROTOTYPE-EXPLORATION-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 4dbfde51bda76a3dbb3454d5ae42135592c8332e
+  branch: task/nba2k22-rea-ai-mechanism-prototype-exploration-20261027
+  objective: Deliver runnable knowledge-to-intent-to-native-first-or-qualified-memory-or-blocked fixture prototype plus source-bound AI badge, AI coach and AI-AI trade dossiers, evidence and draft PR under Issue9.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/9
+    - 4a7f198440648e9e5e43e5a891de0c2210e08cb4:01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001/01_任务输入/CODEX_MAIN_TASK_v1.md
+    - git_blob:f711261d00b0df202906992597fdae7b895fcfb0
+    - git_blob:d16ab7c91d2124d943866e3f070ab304a3963884
+    - b16e69727987f29bff5e2ee31ce82891102ab2d9:prior-paused-REA-research
+    - morluto/rea@570abe95f2a35b5c580a5ec2fca90c33d4114bdc
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_ai_prototype/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_AI_MECHANISM_KNOWLEDGE_V1.md
+    - 01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261027-nba2k22-rea-ai-prototype-exploration-001/01_任务输入/verification_plan.json
+  required_tests: [semantic-tests, offline-cli-demo, evidence-contract]
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - game_activity_outside_persistent_Human_development_authorization
+    - game_business_action_without_verified_identity_context_and_effect_contract
+    - changing_engine_controller_flags
+    - production_or_world_data_stage02_work
+    - modifying_frozen_B_or_old_run
+    - full_game_unbounded_scan_or_exhausted_ghidra_retry
+    - uploading_exe_assets_saves_absolute_memory_addresses_or_secrets
+    - duplicating_old_52_file_manifest_or_claiming_independent_acceptance
+  required_completion_pointer: 08_结论/COMPLETION.md
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: true
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_head: 28086d505665323580c15809d6697586126da7dd
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    surface: Codex_desktop
+    model: runtime_selected_GPT_6_family_exact_variant_unexposed
+    reasoning_effort: inherited_runtime_setting_unexposed
+    mode: standard
+    routing_basis: Human opened Issue9 in this existing tool-capable Codex session; sole engineering owner for source, bounded static research and fixture. No delegation.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_future_session
+    different_model_family: true
+    different_measurement_tool: true
+  Human_exception:
+    engineering_prototype_allowed: true
+    prior_independent_review: NOT_PASSED_REPORTED_BY_HUMAN
+    normal_stage03_04_05_acceptance: NOT_ESTABLISHED
+  live_game_authorization:
+    status: HUMAN_GRANTED_CURRENT_DEVELOPMENT_INSPECTION
+    decision_ref: 01_任务输入/HUMAN_LIVE_INSPECTION_APPROVAL.md
+    active_probe: bounded_administrator_read_only_coach_identity_metadata_and_gameplan_projection
+    no_unknown_native_business_calls: true
+    Human_guard_override: May autonomously revise replace or remove executor-created overrestrictive guards within the task; preserve truthful identity and effect evidence.
+    read_only_identity_correction_ref: 01_任务输入/READ_ONLY_IDENTITY_CORRECTION.md
+    staff_pool_and_alignment: hypotheses_not_read_only_blockers
+    effectful_identity_qualification: remains_strict_and_separate
