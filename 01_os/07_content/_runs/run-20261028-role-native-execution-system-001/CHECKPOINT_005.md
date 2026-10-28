@@ -22,6 +22,8 @@ The parent copy body now has its complete31509-byte unwind extent and eight call
 
 ## Verification and continuation
 
-Six focused compiler/planner/JS-handler tests and one new endpoint-consumer check passed offline. One local fixture injected four cancelling neighbor-bit flips; it was repaired to inject one lasting corruption. No failure exhausted three repairs. Fixed-commit Managed Run/Inspect is pending at the code checkpoint and will be recorded after execution; no41-test result is claimed in advance.
+Six focused compiler/planner/JS-handler tests and one new endpoint-consumer check passed offline. One local fixture injected four cancelling neighbor-bit flips; it was repaired to inject one lasting corruption. No failure exhausted three repairs. Managed Run and Inspect subsequently passed for exact code candidate `25e241ede63e17d19a8c0bfbc1e072cdbbe6b59a`:41 offline tests and the source/index checkpoint. Runner result, finished receipts and byte-preserving outputs are retained in `MANAGED_CHECKPOINT_005_EVIDENCE.json`. Later documentation/receipt updates are not a new whole-candidate Managed result.
 
 P04/P06/P07/P09/P10/P12 navigation and mechanism/interface documents are synchronized in this engineering branch. Data acquisition/SQLite/history systems remain unchanged. Continue parent field safety/refresh, signing/staff, remaining Coach/Book/Freelance/rotation/training and actual context/readback integration, preserving all183 requirements. Live scenarios require concentrated Human approval; this checkpoint is not the final handoff.
+
+Fresh remote master readback through Git transport returned `7742568ac677b3c16079887463f05e81cb1191ed`. The preceding GitHub API TLS handshake timed out; no proxy/configuration change or server restart was made.
