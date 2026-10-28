@@ -14,9 +14,9 @@ human_confirmed_A0:
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v0.5-DRAFT
+  version: OS-PRMS-A-v0.6-DRAFT
   confirmed: false
-  source: 03_需求建模/06_需求结果模型A_v0.5_含前三轮裁决.md
+  source: 03_需求建模/07_需求结果模型A_v0.6_含前四轮裁决.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -58,7 +58,7 @@ human_scope_clarification:
   applies_to: OS_core_and_NBA2K22_extension_development_roles
   excludes_this_stage: NBA2K22_game_world_GM_Coach_persona_identity
   choice_changes: none
-  os_core_repo_migration: future_separate_task
+  os_core_repo_migration: superseded_by_Human_Q35_C_direct_upgrade_goal
 human_confirmed_01b_round_3:
   q28: B
   q29: B
@@ -66,10 +66,24 @@ human_confirmed_01b_round_3:
   q31: B
   source: 01_任务输入/05_01b第三轮Human裁决_Q28-Q31_v1.md
   status: confirmed_partial_A_not_complete
+human_confirmed_01b_round_4:
+  q32: B
+  q33: B
+  q34: B
+  q35: C
+  source: 01_任务输入/06_01b第四轮Human裁决_Q32-Q35_v1.md
+  status: confirmed_partial_A_not_complete
+core_upgrade_goal:
+  choice: Q35_C_direct_upgrade_at_planning_completion
+  timing_and_deliverable: pending_Human_Q36
+  this_task_authorizes_core_repo_write: false
+  master_modification: prohibited
+  engineering_execution: prohibited
 draft_history:
   - 03_需求建模/02_需求结果模型A_v0.1_候选.md
   - 03_需求建模/03_需求结果模型A_v0.2_含首轮裁决.md
   - 03_需求建模/04_需求结果模型A_v0.3_含前两轮裁决.md
   - 03_需求建模/05_需求结果模型A_v0.4_范围澄清.md
   - 03_需求建模/06_需求结果模型A_v0.5_含前三轮裁决.md
-next_step: 01b_R4_Human_questions_Q32_Q35
+  - 03_需求建模/07_需求结果模型A_v0.6_含前四轮裁决.md
+next_step: 01b_R5_Human_questions_Q36_Q39
