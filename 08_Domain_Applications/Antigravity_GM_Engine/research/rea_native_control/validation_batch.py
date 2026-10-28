@@ -144,6 +144,10 @@ def execute(batch_file, approval_file, case_id, runtime):
     target = json.loads(identity.stdout)
     if target['exe_sha256'] != BUILD:
         raise ValueError('Pinned PC22 executable mismatch')
+    if approval.get('expected_pid') is not None and target['pid'] != approval['expected_pid']:
+        raise ValueError('Human-approved game PID has changed')
+    if approval.get('expected_process_start_utc') is not None and target['process_start_utc'] != approval['expected_process_start_utc']:
+        raise ValueError('Human-approved game lifetime has changed')
     pinned_file = runtime/'pinned_target.json'
     if pinned_file.exists():
         if load(pinned_file) != target:
@@ -164,13 +168,13 @@ def execute(batch_file, approval_file, case_id, runtime):
 def sequence(batch_file, approval_file, runtime):
     """Run only prepared cases, isolating independent reads from failed probes.
 
-    This first sequence supports one exact Coach setter. Scouting assignment is
-    prepared separately after public UIDs have actually been observed.
+    Each approved sequence supports at most one exact business submission.
+    Scouting may be natively rejected for capacity; never replace existing goals.
     """
     batch, runtime = load(batch_file), Path(runtime).resolve()
     effects = [c for c in batch['cases'] if c['kind'] == 'NATIVE_EFFECT']
-    if len(effects) > 1 or any(c['action_id'] != 'COACH_SET_KNOWN_CURRENT_SETTINGS' for c in effects):
-        raise ValueError('First sequence permits at most one new Coach-field submission')
+    if len(effects) > 1:
+        raise ValueError('One exact new business submission per approved sequence')
     records = {}
     effect_unclear = False
     for case in batch['cases']:
@@ -194,6 +198,10 @@ def sequence(batch_file, approval_file, runtime):
             readable = readable and data.get('team_id') == 20 and data.get('abbreviation', '').strip().upper() == 'IND'
         if case['action_id'] == 'READ_COACH_CURRENT':
             readable = readable and data.get('team_id') == 20 and data.get('reciprocal_owner_matches') is True and data.get('reference_slots_null') == [True, True, True]
+        if case['action_id'] == 'SCOUT_READ_PROSPECT_INFO':
+            readable = readable and data.get('player_id') == case['parameters']['player_id']
+        if case['action_id'] == 'SCOUT_READ_TRIP_BUDGET':
+            readable = readable and details.get('team_id') == case['parameters']['team_id'] and details.get('quality_flags') == []
         record['owner_reviewed_prerequisite_satisfied'] = bool(readable)
         record['prerequisite_review_method'] = 'DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE'
         if case['kind'] == 'NATIVE_EFFECT':
@@ -201,7 +209,7 @@ def sequence(batch_file, approval_file, runtime):
         records[case['case_id']] = record
         write(runtime/(case['case_id']+'.result.json'), record)
     verdict = {'status': 'NO_NEW_EFFECT_PROVEN', 'automatic_second_submission': False}
-    if effects:
+    if effects and effects[0]['action_id'] == 'COACH_SET_KNOWN_CURRENT_SETTINGS':
         effect = effects[0]
         before = records.get('coach_before', {}).get('result', {}).get('native_result') or {}
         after = records.get('coach_after', {}).get('result', {}).get('native_result') or {}
@@ -218,8 +226,25 @@ def sequence(batch_file, approval_file, runtime):
         confirmed = native_returned and projection_checked and readback_received and same_identity and old is not None and old != value and actual == value and unchanged_other_settings
         # This compares separate real sessions; simulated data must never be fed here.
         verdict = {'action_id': effect['action_id'], 'field': field, 'before': old, 'requested': value, 'independent_after': actual, 'same_identity': same_identity, 'other_known_settings_unchanged': unchanged_other_settings, 'native_return_observed': native_returned, 'in_function_full_projection_matches': projection_checked, 'status': 'REAL_NATIVE_EFFECT_VERIFIED' if confirmed else 'ALREADY_AT_TARGET_NOT_NEW_EFFECT' if old == actual == value else 'EXECUTED_EFFECT_UNVERIFIED' if observed else 'NOT_EXECUTED_OR_RESULT_UNKNOWN', 'UI_correspondence': 'UNKNOWN_NOT_OBSERVED', 'save_reload': 'NOT_STUDIED', 'automatic_second_submission': False}
-    write(runtime/'sequence-summary.json', {'batch_sha256': digest(batch_file), 'cases': records, 'coach_effect': verdict})
-    print(json.dumps({'summary': str(runtime/'sequence-summary.json'), 'coach_effect': verdict}, ensure_ascii=False))
+    scout_verdict = None
+    if effects and effects[0]['action_id'] == 'SCOUT_ASSIGN_TARGETS':
+        effect = effects[0]
+        observed = records.get(effect['case_id'], {}).get('result', {}).get('native_result') or {}
+        before = (records.get('scout_before', {}).get('result', {}).get('native_result') or {}).get('details', {})
+        after = (records.get('scout_after', {}).get('result', {}).get('native_result') or {}).get('details', {})
+        previous, current = before.get('goals', []), after.get('goals', [])
+        before_count, after_count = before.get('num_existing_goals'), after.get('num_existing_goals')
+        appended = current[before_count] if isinstance(before_count, int) and before_count < len(current) else {}
+        actual_ids = [t.get('player_id') for t in appended.get('targets', [])]
+        identities_match = before.get('team_id') == after.get('team_id') == effect['parameters']['team_id']
+        unchanged_old = identities_match and isinstance(before_count, int) and len(previous) == before_count and previous == current[:before_count]
+        trips_unchanged = identities_match and before.get('remaining_trips_raw') == after.get('remaining_trips_raw')
+        accepted = observed.get('outcome') == 'NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED'
+        verified = accepted and isinstance(before_count, int) and after_count == before_count+1 and actual_ids == effect['parameters']['player_ids'] and unchanged_old and trips_unchanged
+        rejected = observed.get('outcome') == 'REJECTED_BY_GAME'
+        scout_verdict = {'action_id': effect['action_id'], 'exact_request': effect['parameters'], 'native_append_result': observed.get('details', {}).get('native_append_result'), 'before_goals': before_count, 'after_goals': after_count, 'old_goals_unchanged': unchanged_old, 'trip_budget_unchanged': trips_unchanged, 'status': 'REAL_NATIVE_EFFECT_VERIFIED' if verified else 'REJECTED_BY_GAME' if rejected else 'EXECUTED_EFFECT_UNVERIFIED', 'rejection_unchanged_state_verified': rejected and unchanged_old and before_count == after_count and trips_unchanged, 'automatic_second_submission': False}
+    write(runtime/'sequence-summary.json', {'batch_sha256': digest(batch_file), 'cases': records, 'coach_effect': verdict, 'scout_effect': scout_verdict})
+    print(json.dumps({'summary': str(runtime/'sequence-summary.json'), 'coach_effect': verdict, 'scout_effect': scout_verdict}, ensure_ascii=False))
 
 
 def main():

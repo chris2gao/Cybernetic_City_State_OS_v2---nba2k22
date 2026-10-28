@@ -8,9 +8,12 @@ class NativeActionRegistry:
  def __init__(self,root=ROOT):
   self.root=Path(root);self.catalog=json.loads((self.root/'data/action_registry.json').read_text(encoding='utf-8'));raw=json.loads((self.root/'data/native_bindings.json').read_text(encoding='utf-8'))
   self.actions={r['action_id']:r for r in self.catalog['actions']};self.bindings={r['binding_id']:NativeBinding(**(r|{'parameters':tuple(r.get('parameters',[])),'object_requirements':tuple(r.get('object_requirements',[])),'lifecycle':tuple(r.get('lifecycle',[])),'evidence':tuple(r.get('evidence',[])),'unknowns':tuple(r.get('unknowns',[]))})) for r in raw['bindings']}
+  index=self.root/'data/native_live_validation.json';self.live_validation=json.loads(index.read_text(encoding='utf-8'))['actions'] if index.exists() else {}
  def get(self,action_id):
   if action_id not in self.actions:raise KeyError('Unknown action ID: '+action_id)
-  return deepcopy(self.actions[action_id])
+  action=deepcopy(self.actions[action_id])
+  if action_id in self.live_validation:action['live_validation']=deepcopy(self.live_validation[action_id])
+  return action
  def list(self,domain=None):return [deepcopy(r) for r in self.actions.values() if domain is None or r['domain']==domain]
  def validate_request(self,request:NativeActionRequest):
   action=self.get(request.action_id);data=deepcopy(dict(request.parameters));schema=action['input_schema'];allowed=set(schema);missing=[k for k,v in schema.items() if v.get('required',True) and k not in data]

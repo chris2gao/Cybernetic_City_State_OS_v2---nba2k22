@@ -1,0 +1,30 @@
+{
+  "schema": "pc22.native_live_validation.v1",
+  "task": "NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-VALIDATION-01",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "scope": "Per-example evidence overlays the static registry. No promotion of untested fields, argument combinations, full coverage, UI or persistence.",
+  "actions": {
+    "COACH_SET_KNOWN_CURRENT_SETTINGS": {
+      "status": "REAL_NATIVE_EFFECT_VERIFIED_SUBSET",
+      "exact_input": {"team_id": 20, "settings": {"RunPlayTendency": 55}},
+      "before": 90,
+      "independent_after": 55,
+      "native_call_count_observed": 1,
+      "other_nine_known_fields_unchanged": true,
+      "native_full_projection_matches": true,
+      "original_gameplan_unchanged": true,
+      "repeated_previous_success": false,
+      "source_commit": "8bda78883cbb8f9b10eeabf9a8f08a116fe296db",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/batch-01/sequence-summary.json",
+      "native_evidence_id": "ev_fdcd36d4e4bca9a380d8ad3622943f0c6c5b2c12fac332e59037a92a0536ad26",
+      "independent_read_evidence_id": "ev_0b3698af41a6a33fdaeeefb4e519d4579024bb616b918266bea25978ad6321e4",
+      "UI_correspondence": "UNKNOWN_NOT_OBSERVED",
+      "save_reload": "NOT_STUDIED",
+      "independent_reviewer": "NOT_THIS_EXECUTOR"
+    },
+    "READ_TEAM_ROSTER_BASIC": {"status": "REAL_BOUND_SUBSET_READ", "exact_input": {"team_id": 20}, "identity": "IND;15 roster players", "UI_comparison": "NOT_OBSERVED", "coverage_complete": false},
+    "READ_COACH_CURRENT": {"status": "REAL_BOUND_SUBSET_READ", "exact_input": {"team_id": 20}, "identity": "Rick Carlisle, reciprocal TEAM link", "known_fields_read": 10, "UI_comparison": "NOT_OBSERVED", "coverage_complete": false},
+    "SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS": {"status": "REAL_BOUND_SUBSET_READ", "exact_input": {"limit": 20}, "public_identity_rows": 20, "first_UIDs": [33142, 33143, 33144], "UI_comparison": "NOT_OBSERVED", "coverage_complete": false},
+    "SCOUT_READ_TRIP_BUDGET": {"status": "REAL_BOUND_SUBSET_READ", "exact_input": {"team_id": 20}, "franchise_record_index": 18, "num_goals": 3, "remaining_trips_raw": 7, "UI_comparison": "NOT_OBSERVED", "coverage_complete": false}
+  }
+}
