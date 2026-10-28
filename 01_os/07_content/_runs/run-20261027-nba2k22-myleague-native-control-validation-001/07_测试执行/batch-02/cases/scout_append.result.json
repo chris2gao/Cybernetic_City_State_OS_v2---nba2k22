@@ -1,0 +1,49 @@
+{
+  "case_id": "scout_append",
+  "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "SCOUT_ASSIGN_TARGETS",
+    "outcome": "REJECTED_BY_GAME",
+    "original_request": {
+      "team_id": 20,
+      "player_ids": [
+        33143
+      ]
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "SCOUT_ASSIGN_TARGETS",
+      "outcome": "REJECTED_BY_GAME",
+      "details": {
+        "native_append_result": 0,
+        "requested_player_ids": [
+          33143
+        ],
+        "num_goals_after": 3,
+        "scope": "Append exact targets through native per-team aggregation; no trip execution or automatic replacement"
+      },
+      "first_hand_game_calls": 3,
+      "read_bytes": 3242,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_f5926e49fa75f29d1f4d75d11d99d97dab4170df7e9faa5a0c963e4c57a0d83f",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\5e460592243f475aab1ba850701d4960"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_unknowns": []
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": false,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}

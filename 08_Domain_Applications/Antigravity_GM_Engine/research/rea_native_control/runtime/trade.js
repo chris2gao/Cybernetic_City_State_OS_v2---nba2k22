@@ -7,6 +7,11 @@ function executeAction(){const p=request.parameters,a=team(p.team_a),b=team(p.te
  const guard=()=>equal(allocation.readByteArray(16),canary.buffer)&&equal(proposal.add(1668).readByteArray(16),canary.buffer);
  for(const x of playerTransfers){if(call('trade.add_player',proposal,x.from,x.to,x.player)!==1){result('REJECTED_BY_GAME',{step:'ADD_REQUESTED_PLAYER'});return;}if(!guard())throw Error('PRIVATE_PROPOSAL_CANARY');}
  for(const x of pickTransfers){if(call('trade.add_pick',proposal,x.from,x.to,x.pick)!==1){result('REJECTED_BY_GAME',{step:'ADD_REQUESTED_PICK'});return;}if(!guard())throw Error('PRIVATE_PROPOSAL_CANARY');}
+ if(p.execution_mode==='AGREED_DIRECT_PROCESS'){
+  const context=call('trade.context');if(context.isNull())throw Error('NATIVE_TRADE_CONTEXT_NULL');read(context,8);
+  const ret=call('trade.process',proposal,context,out);
+  result(ret!==0?'NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED':'REJECTED_BY_GAME',{process_return:ret,game_output_code:out.readU32(),same_requested_assets:true,private_canaries_intact:guard(),submission_mode:'AGREED_DIRECT_PROCESS',external_valuation_or_salary_check:false,full_check_called:false,native_process_internal_identity_validation:true});return;
+ }
  if(call('trade.validate',proposal)!==1){result('REJECTED_BY_GAME',{step:'VALIDATE'});return;}if(!guard())throw Error('PRIVATE_PROPOSAL_CANARY');
  // The wrapper itself calls original FullCheck and Process; no duplicated rules.
  const ret=call('trade.commit_wrapper',proposal,out);result(ret===0?'NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED':'REJECTED_BY_GAME',{wrapper_return:ret,game_output_code:out.readU32(),same_requested_assets:true,private_canaries_intact:guard()});

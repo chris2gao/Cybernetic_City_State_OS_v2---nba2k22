@@ -1,4 +1,6 @@
-# 下一任务最小交接：本轮不执行
+# PR14历史测试建议（Issue15结果另列）
+
+下文保留PR14静态交接时的历史建议，不是Issue15当前状态或新许可要求。Issue15已有Coach新字段、既有球探Goal与薪资不等直接Process交易实测，见[验证报告](VALIDATION_RESULTS.md)。角色模型阅读[机制说明](ROLE_MODEL_MECHANISM_GUIDE.md)，默认交易走新增执行路径；此处旧Wrapper/FullCheck建议不再是当前GM执行要求。后续仅保留训练、选秀、签权/混合包和球探消费等具体未测缺口，不自动开展。
 
 先继承本分支最终提交、Registry/Bindings/ReadCatalog和原始证据。以下目标与数值均由Human或外部GM/Coach/Player模型提供，测试执行者不得自行寻找配平资产、替换人选或优化设置。本轮无任何新游戏/Fixture/单元/回归测试结果。
 
