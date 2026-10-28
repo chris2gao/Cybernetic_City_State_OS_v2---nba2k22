@@ -14,9 +14,9 @@ human_confirmed_A0:
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v0.8-DRAFT
+  version: OS-PRMS-A-v0.9-DRAFT
   confirmed: false
-  source: 03_需求建模/09_需求结果模型A_v0.8_含前七轮裁决.md
+  source: 03_需求建模/15_需求结果模型A_v0.9_字段接口证据验收收口入口.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -113,6 +113,24 @@ critical_result_combinations:
   Q42_A_and_Q46_A: one_time_copy_then_independent_evolution
   Q42_A_and_Q47_B: complete_copy_with_provenance_and_risk_report
   Q35_C_and_Q36_B: after_stage03_approved_design_direct_OS_core_planning_upgrade
+human_confirmed_01b_round_8:
+  q48: B
+  q49: B
+  q50: B
+  q51: B
+  source: 01_任务输入/10_01b第八轮Human裁决_Q48-Q51_v1.md
+  status: confirmed_partial_A_not_complete
+requirement_A_closure:
+  phase: logical_fields_relations_interfaces_evidence_acceptance_in_progress
+  res_items: 16
+  decisions_traced: Q1_Q51
+  logical_entity_candidates: 19
+  field_inventory: 03_需求建模/10_Av0.9_逻辑字段清单.md
+  relation_and_value_domains: 03_需求建模/11_Av0.9_实体关系和主要值域.md
+  interface_and_failure_contract: 03_需求建模/12_Av0.9_操作接口和失败回执.md
+  decision_trace_matrix: 03_需求建模/13_Av0.9_裁决需求证据验收追踪矩阵.md
+  evidence_acceptance_matrix: 03_需求建模/14_Av0.9_证据缺口和验收矩阵.md
+  ready_for_final_A_confirmation: false
 draft_history:
   - 03_需求建模/02_需求结果模型A_v0.1_候选.md
   - 03_需求建模/03_需求结果模型A_v0.2_含首轮裁决.md
@@ -122,4 +140,5 @@ draft_history:
   - 03_需求建模/07_需求结果模型A_v0.6_含前四轮裁决.md
   - 03_需求建模/08_需求结果模型A_v0.7_含前五轮裁决.md
   - 03_需求建模/09_需求结果模型A_v0.8_含前七轮裁决.md
-next_step: 01b_R8_Human_questions_Q48_Q51
+  - 03_需求建模/15_需求结果模型A_v0.9_字段接口证据验收收口入口.md
+next_step: 01b_A_v0.9_field_level_closure_and_matrix_audit_not_approval
