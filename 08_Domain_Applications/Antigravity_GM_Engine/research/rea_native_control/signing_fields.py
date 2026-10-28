@@ -91,3 +91,30 @@ def contract_parameter_schema(schema=None):
         no_trade_clause={'type':'boolean','description':'Explicit supplied clause bit; eligibility unverified'})
     return {'type':'object','properties':properties,'required':list(properties),'additionalProperties':False,
         'description':'Private explicit-term encoding only; fresh offer lifecycle and runtime dispatch remain unresolved'}
+
+
+def validate_fa_offer_contract(contract,schema=None):
+    """Qualified exact-term FA-period subset; reject unsupported terms, never replace them."""
+    schema=schema or load_schema()
+    encode_explicit_contract(0,0,contract,schema=schema)
+    if contract['signing_type']!='FREE_AGENT' or contract['contract_type'] not in {'NORMAL','HARDSHIP'} or contract['distribution']!='CUSTOM':
+        raise ValueError('Recovered offer path requires FREE_AGENT NORMAL/HARDSHIP and explicit CUSTOM wages')
+    years=contract['years_native'];wages=contract['annual_wages_native']
+    counts={'NO_OPTION':0,'TEAM_OPTION':1,'PLAYER_OPTION':1,'TEAM_OPTION_2':2}
+    if not 1<=years<=6 or years<counts[contract['option_type']]:
+        raise ValueError('Exact1..6 total years must contain the selected Native option years')
+    if any(not 0<value<=2147483647 for value in wages[:years]) or any(wages[years:]):
+        raise ValueError('Active wage slots must be positive31-bit values and unused slots explicitly zero')
+    return contract
+
+
+def encode_fresh_fa_offer(template,player_id,team_id,contract,*,schema=None):
+    """Model the registered POD initializer on private bytes; never acquire/reset a live record."""
+    schema=schema or load_schema();validate_fa_offer_contract(contract,schema)
+    if decode_record(template,schema)['Status']!=0:raise ValueError('Fresh constructor requires an observed EMPTY pool template')
+    raw=bytearray(encode_explicit_contract(player_id,team_id,contract,schema=schema))
+    word=int.from_bytes(raw[32:36],'little')|(1<<18)|(3<<8)
+    raw[32:36]=word.to_bytes(4,'little')
+    preserved=int.from_bytes(template[40:44],'little')&0xffffe000
+    raw[40:44]=(int.from_bytes(raw[40:44],'little')|preserved).to_bytes(4,'little')
+    return bytes(raw)

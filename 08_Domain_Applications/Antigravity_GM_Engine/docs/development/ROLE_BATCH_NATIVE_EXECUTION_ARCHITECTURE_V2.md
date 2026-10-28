@@ -1,5 +1,7 @@
 # NBA2K22 外挂系统 · 身份能力驱动的批量原生执行架构 V2
 
+> **工程checkpoint012**：[明确FA报价提交合同](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)将`GM.CONTRACT.CONTRACT_OFFER`接入现有身份/批次链。宿主提供GM团队权限、阶段grant、`FA_SIGNING_OFFERS`子场景和当前存档上下文；原生处理器另核验父阶段22及可用球员身份。角色给定六个薪资槽、总年限、选项、合同类型和条款，汇总器不能更改；同Player的竞争报价交角色解决。未独立确认的返回继续占有Player资源，不因新request_id重放。该动作只提交报价，`GM.CONTRACT.FA_SIGN`仍不可调用；无实机验收或数据链改造。
+
 **架构状态**：Human 于2026-10-28明确的新目标执行链；本文件是**架构规划与接口合同**，不是宣称执行器已经批处理实现，也不改变现有数据采集/SQLite。源码变更与实机操作另按OS阶段授权。  
 **继承证据**：[REA最新窗口交接](../../research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md)、[PR16角色指南](../../research/rea_native_control/ROLE_MODEL_MECHANISM_GUIDE.md)、[PR16真实效果](../../research/rea_native_control/VALIDATION_RESULTS.md)。
 

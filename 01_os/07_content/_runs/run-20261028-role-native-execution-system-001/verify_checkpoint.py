@@ -157,4 +157,27 @@ read = next(row for row in current['read_datasets'] if row['dataset_id'] == 'pla
 assert read['native_call_logic_available'] and not read['coverage_complete'] and read['new_game_capture'] == 'NOT_RUN'
 for mid in ('P03', 'P04', 'P05', 'P07', 'P08', 'P09', 'P10', 'P12'):
     assert 'research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md' in next(row for row in modules if row['id'] == mid)['docs']
-print('PASS: sources/index,183 dispositions,15 read datasets, scoped Player/contract Getters, raw5-bit override and signing boundaries; full M0-M5 completion NOT asserted')
+delta = json.loads((run / 'CHECKPOINT_012_SOURCE_DELTA.json').read_text(encoding='utf8'))
+assert not delta['game_access']
+for source in delta['static_sources']:
+    assert hashlib.sha256((root / source['path']).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == source['normalized_lf_sha256']
+fa = json.loads((root / delta['canonical_runtime_source']).read_text(encoding='utf8'))
+assert not fa['game_access'] and len(fa['periods']) == 31
+assert fa['periods'][22]['name'] == 'FA_SIGNING' and fa['periods'][20]['name'] == 'CONTRACT_OPTIONS'
+assert {key: fa['roots'][key]['global_rva'] for key in ('period','pool','rules')} == {'period':0x632b470,'pool':0x632b478,'rules':0x632b498}
+context = next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.fa_offer_context')['input_layout']
+for key in ('roots','delegate_profiles','code_signatures','available_pool'):
+    assert context[key] == fa[key]
+assert context['schema'] == schema and len(context['contract_fields']) == 17
+offer = next(row for row in current['requirements'] if row['capability_id'] == 'GM.CONTRACT.CONTRACT_OFFER')
+assert offer['call_logic_available'] and offer['native_action_id'] == 'CONTRACT_SUBMIT_FREE_AGENT_OFFER'
+assert offer['roles'] == ['GM'] and offer['new_live_validation'] == 'NOT_RUN'
+assert offer['allowed_values']['field_values']['contract']['maturity']['signing_completion_qualified'] is False
+assert not next(row for row in current['requirements'] if row['capability_id'] == 'GM.CONTRACT.FA_SIGN')['call_logic_available']
+assert next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.offer_contract')['unknowns']
+qualified = next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.offer_fa_phase')
+assert qualified['rva'] == 0x12bd4c0 and not qualified['unknowns']
+assert current['effective_mapping_count'] == 60 and len(signing['actions']) == 71 and len(candidate['bindings']) == 63
+for mid in ('P03','P04','P05','P07','P08','P09','P10','P12'):
+    assert 'research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md' in next(row for row in modules if row['id'] == mid)['docs']
+print('PASS: sources/index,183 dispositions,15 read datasets, Player/contract Getters, exact FA-period offer subset and final-signing boundaries; full M0-M5 completion NOT asserted')

@@ -1,5 +1,7 @@
 # K07 / K08 / K09 — NBA2K22终极联盟经营机制：薪资、合同、市场、财务、员工与选秀
 
+> **PC22工程checkpoint012补充**：[明确FA合同报价](../../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)仅在宿主确认报价子场景且原生阶段为22 FA_SIGNING时，提交角色已决定的NORMAL/HARDSHIP、CUSTOM六薪资/总年限/选项/条款。原生验证仍可拒绝；OFFERED1不等于ACCEPTED6或SIGNED8。该静态/离线子集没有完成签约、当前存档或Save证明，也不实现自动报价策略。来源[SRC-NATIVE-FA-OFFER-012](../SOURCES.md)。
+
 > **DEV29 V3 / R05-A首轮正式研究（2026-10-21）**。范围为K07工资帽/合同与球队资金、K08市场签约/交易相关约束的首批机制。**R05-B研究球员及选秀权交易与市场规则，R05-C研究员工/球探/选秀、R05-D整合经营原料与版本缺口；R05未在本轮整体结案。**
 >
 > **工作定位**：这里只研究游戏中有什么真实信息、可选操作及值域、NBA2K20–23机制效果、PC22本机有什么实际数据接口与限制。**不为GM写报价决策程序、不设计球员谈判人格、不开发Agent/执行器、不修改游戏、不自动给出“最优薪资方案”**。游戏世界从2021–22开始、历史选秀按1984–2020轮回；法律参考不能反过来决定当前模拟世界发生过什么。来源见[SOURCES](../SOURCES.md) SRC-0114..0128及已有[SRC-0101](../SOURCES.md)、原仓库[FA P0研究](../../development_reviews/DEV_20261017_04_OFFSEASON_FA_P0_RESEARCH.md)、[签约执行](../../38_APPROVED_SIGNING_EXECUTION.md)、[财务工作台](../../GM_FINANCE_WORKBENCH.md)。

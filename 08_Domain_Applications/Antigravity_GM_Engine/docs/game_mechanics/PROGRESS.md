@@ -1,5 +1,7 @@
 # DEV29 游戏机制知识库：研究进度与断点恢复
 
+> Native工程checkpoint012：[原生FA阶段明确合同报价](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)确认阶段22为FA_SIGNING、20为CONTRACT_OPTIONS，并恢复原生可用球员池和明确报价提交子集。报价发出、接受与完成签约分别记录；仅静态/离线工程，无新实机、UI或持久性证明。
+
 > Native工程checkpoint011：[原版合同读回](../../research/rea_native_control/PLAYER_CONTRACT_READ_CONTRACT.md)确认六个薪资槽为31位、基础剩余年限为5位；原版Getter另加续约及可选年数，总和>6有断言路径。技术Reader修正并保护该路径，生产字段表/采集链不变。仅静态及离线合成测试，无新实机/UI/Save验收；40族研究成熟度不升级。
 
 > Native工程checkpoint010：[签约枚举/字段与报价读取](../../research/rea_native_control/SIGNING_NATIVE_CONTRACT.md)恢复25字段、27内部枚举及六个工资槽；ACCEPTED6不等于SIGNED8。原版GenerateContract会推导/调整条款，acquire/reset可修改球员薪资；均不作为无副作用初始化。仅静态/离线证据，无新游戏捕获/写入、UI或Save验收，原有40族研究成熟度不升级。

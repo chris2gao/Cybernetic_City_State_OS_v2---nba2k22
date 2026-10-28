@@ -4174,6 +4174,155 @@
         "remaining_years": "Raw base5 bits + extension3 bits + optional0/1/2 years, guarded at6",
         "salary": "Six Native31-bit wage values; no price optimization or unit conversion"
       }
+    },
+    {
+      "action_id": "CONTRACT_SUBMIT_FREE_AGENT_OFFER",
+      "domain": "D02",
+      "title": "在原生FA_SIGNING阶段提交明确自由球员合同报价",
+      "decision_roles": [
+        "GM"
+      ],
+      "role_policy": {
+        "roles": [
+          "GM"
+        ]
+      },
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "signing_type": {
+              "type": "string",
+              "enum": [
+                "FREE_AGENT"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "option_type": {
+              "type": "string",
+              "enum": [
+                "NO_OPTION",
+                "TEAM_OPTION",
+                "PLAYER_OPTION",
+                "TEAM_OPTION_2"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "contract_type": {
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "HARDSHIP"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "distribution": {
+              "type": "string",
+              "enum": [
+                "CUSTOM"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "annual_wages_native": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              "description": "Exactly six caller-supplied slots: active years positive31-bit, remaining slots explicitly zero"
+            },
+            "years_native": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6,
+              "description": "Explicit total years1..6 including the selected0/1/2 option years"
+            },
+            "no_trade_clause": {
+              "type": "boolean",
+              "description": "Explicit supplied clause bit; eligibility unverified"
+            }
+          },
+          "required": [
+            "signing_type",
+            "option_type",
+            "contract_type",
+            "distribution",
+            "annual_wages_native",
+            "years_native",
+            "no_trade_clause"
+          ],
+          "additionalProperties": false,
+          "description": "Exact fresh FA-period offer terms; NORMAL/HARDSHIP, CUSTOM wages, no automatic generation; submission does not complete signing"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "sign.fa_offer",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, UI, persistence or independent acceptance",
+        "Native period22 is checked; FA offer substate/current save/world are host attestations, not Native identity detection",
+        "Only fresh available-player NORMAL/HARDSHIP CUSTOM offers; extensions, other periods/types/distributions and replacing existing offers remain unqualified",
+        "OfferContract can update negotiation/player-response/quota state; return/status is not final signing",
+        "Same-handler terms/record/contract-subset brackets are not atomicity or independent completion proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "QUALIFY_NATIVE_FA_PERIOD_ROOTS_AND_EMPTY_TEMPLATE",
+          "binding_id": "sign.fa_offer_context"
+        },
+        {
+          "operation": "CHECK_ORIGINAL_AVAILABLE_COUNT",
+          "binding_id": "sign.fa_available_count"
+        },
+        {
+          "operation": "CHECK_EXACT_AVAILABLE_POOL_MEMBERSHIP_AND_BRACKET",
+          "binding_id": "sign.fa_available_pool"
+        },
+        {
+          "operation": "RESOLVE_EXACT_UID_AND_RECHECK_AFTER",
+          "binding_id": "player.by_id"
+        },
+        {
+          "operation": "VERIFY_EXPLICIT_FREE_AGENT_TYPE_NOT_CHOOSE_TARGET",
+          "binding_id": "sign.default_type"
+        },
+        {
+          "operation": "SUBMIT_ORIGINAL_OFFER_ONCE",
+          "binding_id": "sign.offer_fa_phase",
+          "arguments": {
+            "context_or_null": null,
+            "origin_flag": 0,
+            "mode_flag": 0
+          }
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_fa_offer_runtime_contract_027.json",
+        "FA_OFFER_NATIVE_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Native fresh offer submission only, not completed signing",
+        "native_scene_requirement": "FA_SIGNING period22 plus trusted host FA_SIGNING_OFFERS current-subscene attestation",
+        "caller_values": "Exact supplied Player/Team, six wages, years, option and no-trade clause; no pricing or substitution",
+        "completion_boundary": "Observed pending offer is distinct from acceptance/roster-contract application; independent readback remains required",
+        "known_effects": "Original validation/negotiation may reject, create pending/rejected records, change quota and response state",
+        "unsupported": "No Native generator/acquire-reset/direct pool writes, direct Process, phase advance, offer replacement or automatic retry"
+      }
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

@@ -1,5 +1,7 @@
 # Signing terms and team-offer observation — checkpoint010
 
+> Checkpoint012 follow-up: [Exact FA-period offer submission](FA_OFFER_NATIVE_CONTRACT.md) adds the distinct `GM.CONTRACT.CONTRACT_OFFER` action with qualified private construction and original submission. `SIGN_FREE_AGENT` remains unavailable. Historical lifecycle/mode UNKNOWN statements below describe checkpoint010; newer evidence identifies period22 as FA_SIGNING and `0xee0180` as the current-period setter. The inert EMPTY codec and its own maturity remain unchanged.
+
 Static/offline engineering against PC22 build SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`. No new process attachment, capture, business call, write, UI or persistence evidence. `SIGN_FREE_AGENT` remains unavailable. Full M0–M5 remains active.
 
 ## Registered fields and enum meanings

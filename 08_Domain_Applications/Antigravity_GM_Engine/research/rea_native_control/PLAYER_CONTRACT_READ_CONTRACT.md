@@ -34,6 +34,8 @@ SIGN_FREE_AGENT and CONTRACT_OPTION_ACTION remain unavailable. Next is exact-ter
 
 ## Evidence and reproduction
 
+Checkpoint012 supersedes the period-service UNKNOWN above: the complete `0xee0180` setter and indexed CRC table prove values0 NONE,20 CONTRACT_OPTIONS and22 FA_SIGNING. This does not prove calendar advancement or persistence and does not qualify the whole-league option loops as individual decisions. [Exact FA-period offer submission](FA_OFFER_NATIVE_CONTRACT.md) uses the original available-player pool plus zero base/extension years, while final signing and contract-option actions remain unavailable.
+
 Run-relative static sources012..021 preserve complete consumers/UID resolvers, distribution/submission callers, leaf windows, bounded mark-writer candidates, marked-option callers, the phase loop and mark producers. The writer scan examined663 candidate instructions across489 candidate entries within4,758,923 decoded bytes. Candidates are not qualified setters; scopes, limits and missing unwind entries remain in the evidence.
 
 ```powershell

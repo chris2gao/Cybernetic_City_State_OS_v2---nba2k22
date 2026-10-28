@@ -72,6 +72,7 @@ class RoleCapabilityService:
         self.mapping['COACH.ROTATION.PLAYER_MINUTES'] = 'COACH_ROTATION_SET_PLAYER_MINUTES'
         self.mapping['PLAYER.EDIT.ATTR_BATCH'] = 'PLAYER_PATCH_ATTRIBUTES'
         self.mapping['PLAYER.EDIT.TENDENCY_BATCH'] = 'PLAYER_PATCH_TENDENCIES'
+        self.mapping['GM.CONTRACT.CONTRACT_OFFER'] = 'CONTRACT_SUBMIT_FREE_AGENT_OFFER'
         self.coach_fields = json.loads((self.registry.root / 'data/coach_settings.json').read_text(encoding='utf-8'))['fields']
         self.play_type_names = json.loads((self.registry.root.parents[1] / 'config/state_io_native/player.json').read_text(encoding='utf-8'))['PLAY_TYPE_NAMES']
         from player_fields import load_fields
@@ -216,12 +217,17 @@ class RoleCapabilityService:
     def get_allowed_values(self, action_id, profile):
         desc = self.describe_action(action_id, profile)
         fields = {}
-        if desc['executor_action_id'] == 'SIGN_FREE_AGENT':
+        if desc['executor_action_id'] in {'SIGN_FREE_AGENT','CONTRACT_SUBMIT_FREE_AGENT_OFFER'}:
             fields['contract'] = {'status':'RECOVERED_NATIVE_ENCODING_ONLY',
                 'enums':deepcopy(self.signing_schema['enums']),
                 'maturity':deepcopy(self.signing_schema['maturity']),
                 'salary_consumer_semantics':deepcopy(self.player_contract_fields['salary_consumer_semantics']),
                 'policy':'Caller decides all terms. No automatic prices, no force/accept flags, no completed signing claim from offer return/status.'}
+            if desc['executor_action_id']=='CONTRACT_SUBMIT_FREE_AGENT_OFFER':
+                fields['contract']['status']='RECOVERED_FA_PERIOD_EXPLICIT_OFFER_SUBMISSION'
+                fields['contract']['maturity']={'fresh_offer_submission_qualified':True,'dispatch_implemented':True,
+                    'signing_completion_qualified':False,'native_period':'FA_SIGNING',
+                    'supported_types':['NORMAL','HARDSHIP'],'wage_distribution':'CUSTOM'}
         from badge_fields import REQUIREMENT, affected_fields
         if action_id == REQUIREMENT:
             available = {name: field for name, field in self.badge_fields['fields'].items()

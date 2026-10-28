@@ -1,5 +1,7 @@
 # 游戏攻略、官方资料与社区证据登记
 
+**SRC-NATIVE-FA-OFFER-012（2026-10-28）**：[明确报价原生合同](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)，固定PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`；主证据为任务Run `static/sign_fa_offer_runtime_contract_027.json`及022..026窗口，恢复工具`recover_fa_offer_contract.py`可离线重放。支持31个阶段CRC名称、独立根指针、原生可用球员池、44字节初始化及指定FA阶段原版报价提交子集。证据级别`PINNED_LOCAL_PE_CAPSTONE_NOT_REA_PROVIDER / OFFLINE_SYNTHETIC_HANDLER`。不证明当前存档、报价子状态、实机资格、最终签约、UI或持久性，不提升历史40族实机成熟度。
+
 研究窗口应在此登记每轮**真正打开并核对过**的资料。来源应注明主题、适用版本/模式/平台、发布日期（如可得）、原始链接、支持的结论与限制。来源本身不是游戏内存认证。
 
 | Source ID | 来源 | 适用游戏/版本 | 研究用途 | 证据级别 | 状态 |

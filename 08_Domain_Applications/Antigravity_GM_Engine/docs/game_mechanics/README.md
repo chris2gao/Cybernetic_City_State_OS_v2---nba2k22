@@ -1,5 +1,7 @@
 # NBA2K20–23 终极联盟游戏机制知识库
 
+> **2026-10-28 合同原生工程checkpoint012（静态/离线）**：[FA阶段明确报价提交](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)恢复原生阶段22、可用球员池与指定合同报价子集；报价提交、接受和完成签约分别举证。来源`SRC-NATIVE-FA-OFFER-012`登记于[SOURCES](SOURCES.md)。没有新的实机/UI/Save验收；旧研究矩阵与历史不可调用判断按各自版本保留，当前工程成熟度以对应合同和机读目录为准。
+
 > **2026-10-28 Player原生工程增量（静态恢复，未实机验收）**：[四槽PlayType合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)恢复4个独立Setter，并复用既有0..15类别名称。每个逻辑动作限制自己的槽位，Player无默认编辑权限；另有独立[属性/倾向工程增量](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)：54项能力/耐久与99个倾向位置恢复原版索引Setter，角色权限按字段限制；Potential/徽章仍不可调用。完整父对象复制体保留为研究候选。
 
 > **2026-10-28 Native工程增量（静态恢复，未实机验收）**：[K04补充§22](guides/K04_COACH_AND_PLAYS.md#22-pc22原生轮换分钟调用链2026-10-28工程增量)及[完整调用合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)记录明确球员分钟0..48的原生Setter/球队变更路径，排除可能截断输入的MyCareer分支。它不证明当前存档、UI、模拟或持久化效果，不改变历史R02/R07验收状态。
