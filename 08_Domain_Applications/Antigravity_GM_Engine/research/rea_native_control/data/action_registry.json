@@ -2936,6 +2936,136 @@
       ],
       "executed_this_task": false,
       "scope_note": "No executor salary/ability/consent checks. Process intrinsic asset identity checks remain. Player/pick variants beyond actual retained cases remain unverified."
+    },
+    {
+      "action_id": "TRAIN_TEAM_PATCH_FOCUS_RAW",
+      "domain": "D07",
+      "title": "仅更新指定日三个原生训练重点值",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "date": {
+          "type": "integer",
+          "maximum": 2147483647
+        },
+        "focus_values_raw": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "training.patch",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Raw values only; UI units, per-slot labels and scene effects remain unverified",
+        "No new live game test or Save/Reload evidence"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_EXISTING_NATIVE_DAILY_RECORD",
+          "binding_id": "training.daily_by_date",
+          "arguments": {
+            "team": "exact supplied TEAM",
+            "date": "exact supplied native date key"
+          }
+        },
+        {
+          "operation": "PATCH_PRIVATE_INPUT_ONLY",
+          "arguments": {
+            "input": "64-byte private input, daily copy at+8",
+            "fields": [
+              "focus_values_raw"
+            ]
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.set_team_on_date",
+          "arguments": {
+            "team": "same TEAM",
+            "date": "same supplied native date key",
+            "input": "private copied input"
+          }
+        }
+      ],
+      "evidence": [
+        "TRAINING_PATCH_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "scope_note": "New parameterized composition of recovered Native getter/setter; not a new function discovery or live validation."
+    },
+    {
+      "action_id": "TRAIN_TEAM_PATCH_PROFILE_RAW",
+      "domain": "D07",
+      "title": "仅更新指定日训练类型与子项目原生值",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "date": {
+          "type": "integer",
+          "maximum": 2147483647
+        },
+        "profile_values_raw": {
+          "type": "array"
+        },
+        "subfocus_points_raw": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "training.patch",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Raw values only; UI units, per-slot labels and scene effects remain unverified",
+        "No new live game test or Save/Reload evidence"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_EXISTING_NATIVE_DAILY_RECORD",
+          "binding_id": "training.daily_by_date",
+          "arguments": {
+            "team": "exact supplied TEAM",
+            "date": "exact supplied native date key"
+          }
+        },
+        {
+          "operation": "PATCH_PRIVATE_INPUT_ONLY",
+          "arguments": {
+            "input": "64-byte private input, daily copy at+8",
+            "fields": [
+              "profile_values_raw",
+              "subfocus_points_raw"
+            ]
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.set_team_on_date",
+          "arguments": {
+            "team": "same TEAM",
+            "date": "same supplied native date key",
+            "input": "private copied input"
+          }
+        }
+      ],
+      "evidence": [
+        "TRAINING_PATCH_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "scope_note": "New parameterized composition of recovered Native getter/setter; not a new function discovery or live validation."
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

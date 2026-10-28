@@ -2,6 +2,7 @@
 import hashlib
 import json
 import sys
+import subprocess
 from pathlib import Path
 
 run = Path(__file__).resolve().parent
@@ -10,7 +11,9 @@ d = root / '08_Domain_Applications/Antigravity_GM_Engine'
 inventory = json.loads((run / 'source_inventory.json').read_text(encoding='utf-8'))
 for source in inventory['sources']:
     path = root / source['path']
-    assert hashlib.sha256(path.read_bytes()).hexdigest() == source['sha256'], source['path']
+    assert path.is_file(), source['path']
+    raw = subprocess.run(['git','show',inventory['baseline']+':'+source['path']],cwd=root,capture_output=True,check=True).stdout
+    assert hashlib.sha256(raw).hexdigest() == source['baseline_blob_sha256'], source['path']
 modules = json.loads((d / 'docs/development/PROJECT_MODULE_REGISTRY_V2.json').read_text(encoding='utf-8'))['modules']
 for mid in ['P09', 'P10']:
     m = next(x for x in modules if x['id'] == mid)

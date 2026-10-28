@@ -1,5 +1,7 @@
 # MyLEAGUE Native Control：机制说明与Issue15功能验证
 
+> 当前工程增量：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` 已在历史62动作上增加2项[日期训练局部操作](TRAINING_PATCH_CONTRACT.md)，当前登记64动作、39绑定/布局（含1项明确不可调用的签约候选）。[角色能力与批次接口](ROLE_BATCH_EXECUTION.md)保留183项需求、56项有效映射。新增工程仅有离线证据，整体M0–M5尚未完成；下方Issue15内容保留对应历史范围。
+
 本目录是PC NBA2K22离线MyLEAGUE的函数发现与执行接口研发候选。**角色模型首先阅读[机制与执行说明](ROLE_MODEL_MECHANISM_GUIDE.md)**：可设置项、取值、已知影响、输入和执行方法都从该页进入。外部GM/Coach/Player模型负责分析、协商、检查和决定；本层执行确定请求，不估值、不配平、不开发经营策略。
 
 Issue13/PR14原来只作静态发现，Issue15在Human授权的独立测试存档进行功能验证。**当前真实结果见[VALIDATION_RESULTS.md](VALIDATION_RESULTS.md)**。`data/native_live_validation.json`按具体输入覆盖静态登记；不存在“目录里有接口便是实机通过”的推断。PR12旧防守与旧交易证据保持不变。

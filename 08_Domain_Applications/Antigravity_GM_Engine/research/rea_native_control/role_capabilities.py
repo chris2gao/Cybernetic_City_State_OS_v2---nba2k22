@@ -67,6 +67,8 @@ class RoleCapabilityService:
             self.mapping[key] = 'TRADE_EXECUTE_AGREED_PACKAGE'
         for suffix in ('POE_O2', 'POE_O3', 'POE_D2', 'POE_D3'):
             self.mapping['COACH.STRATEGY.' + suffix] = 'COACH_SET_KNOWN_CURRENT_SETTINGS'
+        self.mapping['TRAIN.TEAM_FOCUS'] = 'TRAIN_TEAM_PATCH_FOCUS_RAW'
+        self.mapping['TRAIN.TEAM_PROFILE'] = 'TRAIN_TEAM_PATCH_PROFILE_RAW'
         self.coach_fields = json.loads((self.registry.root / 'data/coach_settings.json').read_text(encoding='utf-8'))['fields']
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
@@ -76,7 +78,9 @@ class RoleCapabilityService:
             'effective_mapping': self.mapping,
             'service_contract_code': {
                 name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                for name in ('role_capabilities.py', 'role_batches.py')},
+                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py')},
+            'runtime_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                                for p in sorted((self.registry.root / 'runtime').glob('*.js'))},
         }, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
 
     def _requirement(self, action_id):
@@ -172,6 +176,12 @@ class RoleCapabilityService:
                     fields[key] = {'status': 'UNKNOWN_UI_RANGE', 'values': None}
         return {'action_id': action_id, 'parameters': desc['native_parameter_schema'],
                 'field_values': fields, 'catalog_version': self.version,
+                'native_value_contract': {
+                    'TRAIN.TEAM_FOCUS': {'focus_values_raw': {'length': 3, 'type': 'finite_float32',
+                        'units': 'UNKNOWN_NATIVE_SCALE', 'slot_meanings': 'UNKNOWN', 'conversion_or_sum_rule': 'NONE_INFERRED'}},
+                    'TRAIN.TEAM_PROFILE': {'profile_values_raw': {'length': 3, 'type': 'uint8', 'enum_names': 'UNKNOWN'},
+                        'subfocus_points_raw': {'length': 38, 'type': 'uint8', 'slot_meanings': 'UNKNOWN'}}
+                }.get(action_id),
                 'warning': 'Encoding bounds do not certify UI semantics or role permission'}
 
     def read_role_visible_data(self, profile, dataset_id, *, provider):

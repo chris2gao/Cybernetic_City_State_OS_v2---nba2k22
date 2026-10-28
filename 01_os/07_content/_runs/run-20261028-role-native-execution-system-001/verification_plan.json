@@ -2,7 +2,7 @@
   "schema_version": "citystate.verification_plan.v1",
   "task_packet": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/task_packet.yml",
   "checks": [
-    {"id": "M0_M1_CONSUMER_AND_BATCH_PROTOCOL", "argv": ["@python", "-X", "utf8", "-B", "-m", "unittest", "discover", "-s", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests", "-p", "test_role_*.py", "-v"], "timeout_seconds": 60, "expected_exit_code": 0},
+    {"id": "M0_M1_CONSUMER_AND_BATCH_PROTOCOL", "argv": ["@python", "-X", "utf8", "-B", "-m", "unittest", "discover", "-s", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests", "-p", "test_*.py", "-v"], "timeout_seconds": 60, "expected_exit_code": 0},
     {"id": "SOURCE_AND_INDEX_CHECKPOINT", "argv": ["@python", "-X", "utf8", "-B", "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/verify_checkpoint.py"], "timeout_seconds": 60, "expected_exit_code": 0}
   ]
 }

@@ -85,7 +85,7 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 
 ## 4. 当前任务与证据路径
 
-- **进行中：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。P09/P10新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留183项需求；原有50映射保留为历史来源，当前54项有效映射含4项复用已知Apply的POE，交易变体统一直接Process。离线协议验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
+- **进行中：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。P08/P09/P10新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)、[日期训练局部Apply](research/rea_native_control/TRAINING_PATCH_CONTRACT.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留183项需求；原有50映射保留为历史来源，当前56项有效映射含4项POE及2项训练局部操作，交易变体统一直接Process。离线协议/字节验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
 
 - PR #17：从 #10、#12、#14、#16整合研发成果，未进入master。
 - PR #18：角色执行能力全量需求盘点，新增本索引、REA交接原文和最新批量原生执行链；目前Draft，尚需Human逐项审议。

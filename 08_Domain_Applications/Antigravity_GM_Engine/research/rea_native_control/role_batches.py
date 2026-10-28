@@ -338,7 +338,12 @@ class ExecutionAggregator:
         if handler.startswith('scout.'):
             return (team + '/scouting',)
         if handler.startswith('training.'):
-            return (team + '/training/' + str(p['date']),)
+            day = team + '/training/' + str(p['date'])
+            if handler == 'training.intensity':
+                return (day + '/intensity',)
+            if handler == 'training.patch':
+                return (day + '/focus',) if native['action_id'] == 'TRAIN_TEAM_PATCH_FOCUS_RAW' else (day + '/profile', day + '/subfocus')
+            return (day,)
         if handler == 'draft.select':
             return ('draft/current-selection', 'player/' + str(p['player_id']), 'pick/' + str(p['pick_id']))
         return (team + '/native-context',)
