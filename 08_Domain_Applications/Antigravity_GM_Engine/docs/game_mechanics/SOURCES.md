@@ -509,3 +509,5 @@
 Badge follow-up: the same fixed PE contains an original UTF-16 name array at0x24c6970, raw Getter table0x97c700, maximum remap0x1950124 and signed modifier Getter table0x969f1c. The packaged tool independently joins99 fields and checks every Setter preservation mask; output`static/player_badge_names_fields_and_modifiers_025.json` retains primary evidence. These are internal names, not external labels guessed onto Native IDs. [Recovery contract](../../research/rea_native_control/BADGE_NATIVE_RECOVERY.md) records the NONE sentinel, linked effective modifiers and coupling/assertion gaps; no webpage SRC or live acceptance is added.
 
 徽章工程消费边界：后续`BADGE_NATIVE_CONTRACT.md`及`runtime/player_badges.js`使用上述025原始证据、014完整Setter、017有效Getter/trait-helper和018原版flag0调用。新增参数/角色合同要求完整联动前后状态，以有界当前修正快照对照原版只读Getter，并保持原版断言前提；新增证据仍为离线JS/ABI模型及源对应检查，没有新增游戏附加、UI/模拟/SaveReload证明。
+
+固定构建读取证据补充：`static/player_stat_read_getter_contract_026.json`跟踪Getter0x978360的159项分派表中153个已合格字段路径，与Setter偏移逐一对照，未发现选中路径调用或内存目标写入；保留原始one-third和25常量及签名。工具为本地PE/Capstone，非REA Provider/实际游戏捕获。新增只读数据集、冻结角色Provider和原版Getter前后值的语义边界见[读取合同](../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)。

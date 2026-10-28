@@ -96,4 +96,24 @@ assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loa
 for mid in ('P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
     module = next(x for x in modules if x['id'] == mid)
     assert 'research/rea_native_control/BADGE_NATIVE_CONTRACT.md' in module['docs']
-print('PASS: sources/index,183 dispositions, scoped minute/PlayType/stat and world-only explicit-state Badge interfaces; signing/parent/candidate noncallable; full M0-M5 completion NOT asserted')
+assert current['read_dataset_count'] == 13 and len(current['read_datasets']) == 13
+read = next(row for row in current['read_datasets'] if row['dataset_id'] == 'player.editor_state')
+assert read['native_call_logic_available'] and read['snapshot_provider'] == 'PlayerEditorSnapshotProvider'
+assert read['new_game_capture'] == 'NOT_RUN' and not read['coverage_complete']
+delta = json.loads((run / 'CHECKPOINT_009_SOURCE_DELTA.json').read_text(encoding='utf8'))['new_static_source']
+raw = (root / delta['path']).read_bytes().replace(b'\r\n', b'\n')
+assert hashlib.sha256(raw).hexdigest() == delta['normalized_lf_sha256']
+getter_source = json.loads(raw)
+assert not getter_source['game_access'] and len(getter_source['selected_fields']) == 153
+stat_fields = json.loads((d / 'research/rea_native_control/data/player_stat_fields.json').read_text(encoding='utf8'))['families']
+for row in getter_source['selected_fields']:
+    field = stat_fields[row['family']][row['field_id']]
+    assert field['callable'] and field['native_index'] == row['native_index'] and field['offset'] == row['byte_offset']
+getter = next(b for b in candidate['bindings'] if b['binding_id'] == 'player.get_stat_ui')
+assert getter['rva'] == 0x978360 and getter['return_type'] == 'int'
+assert [p['type'] for p in getter['parameters']] == ['pointer', 'int']
+assert {constant['rva'] for constant in getter_source['float_constants']} <= {sig['rva'] for sig in getter['input_layout']['code_signatures']}
+for mid in ('P03', 'P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
+    module = next(x for x in modules if x['id'] == mid)
+    assert 'research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md' in module['docs']
+print('PASS: sources/index,183 dispositions,13 read datasets, selected Player read/provider and original Getter receipts; full M0-M5 completion NOT asserted')

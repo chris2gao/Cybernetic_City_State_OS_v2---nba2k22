@@ -38,13 +38,26 @@ def coverage():
             'new_live_validation': 'NOT_RUN',
             'phase_target_permission': 'EXPLICIT_HOST_PROFILE_AND_CURRENT_PHASE_ATTESTATION_REQUIRED',
         })
+    readers = []
+    read_catalog = json.loads((service.registry.root / 'data/read_catalog.json').read_text(encoding='utf8'))
+    for dataset in read_catalog['datasets']:
+        action = service.registry.get(dataset['action_id'])
+        readers.append({'dataset_id': dataset['dataset_id'], 'native_action_id': dataset['action_id'],
+            'available_scope': dataset['available_scope'], 'input_schema': action['input_schema'],
+            'native_maturity': action['capability'], 'native_call_logic_available': service._callable(action),
+            'coverage_complete': dataset['coverage_complete'], 'remaining_gaps': service._gaps(action),
+            'technical_entry': 'NativeReadFacade.read', 'role_entry': 'read_role_visible_data',
+            'snapshot_provider': 'PlayerEditorSnapshotProvider' if dataset['dataset_id'] == 'player.editor_state' else 'Explicit sanitized host provider required',
+            'permission': 'EXPLICIT_HOST_DATASET_FIELD_READ_GRANTS_AND_CONTEXT_REQUIRED',
+            'new_game_capture': 'NOT_RUN'})
     return {'task_id': 'NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01',
             'status': 'IN_PROGRESS_NOT_M0_M5_COMPLETION',
             'catalog_version': service.version,
             'source_requirement_count': len(service.requirements),
             'historical_mapping_count': service.source_mapping_count,
             'effective_mapping_count': len(service.mapping),
-            'game_access_performed': False, 'requirements': rows}
+            'game_access_performed': False, 'requirements': rows,
+            'read_dataset_count': len(readers), 'read_datasets': readers}
 
 
 if __name__ == '__main__':
@@ -55,4 +68,4 @@ if __name__ == '__main__':
         raise SystemExit('Use a new output file; do not overwrite prior evidence')
     result = coverage()
     dest.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps({k: v for k, v in result.items() if k != 'requirements'}))
+    print(json.dumps({k: v for k, v in result.items() if k not in {'requirements', 'read_datasets'}}))

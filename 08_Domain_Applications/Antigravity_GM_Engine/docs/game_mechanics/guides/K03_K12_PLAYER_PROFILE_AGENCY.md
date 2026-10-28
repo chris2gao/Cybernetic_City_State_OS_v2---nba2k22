@@ -548,3 +548,7 @@ Follow-up static Badge discovery recovered all99 native internal enum names and 
 ## 32. 徽章原版规则的明确状态工程接口
 
 后续独立工程已接入98个非NONE字段的原版flag0 Setter。调用者须明确整个可能联动组的前后状态；原版规则不能产生该after状态或会触发断言时停止，不能用内部递归flag1绕过。当前修正链经有界快照及原版有效Getter交叉核对，全部未指定属性/徽章位和修正节点要求保持。角色入口限明确WORLD_ADMIN，普通人格没有徽章自增权；原生内部名称不等于MyLEAGUE菜单认证。详见[徽章调用合同](../../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)。这仍是静态/离线工程，不是本轮游戏调用、自然成长、UI或持久化证明。
+
+## 33. 显式Player读取与原版Getter前后值
+
+控制工程新增`player.editor_state`，按明确字段数组读54属性/耐久、99倾向、98非NONE原始/有效徽章和4个有序槽位。属性/倾向153项原版Getter路径已与既有Setter字段逐一对应，代码/浮点常量有固定构建证据；编辑回执也改为原版Getter前后值。角色消费已捕获回执时按精确读取授权投影，并保留目标/来源，不产生自增属性/徽章权。资料指南：[读取合同](../../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)。没有实际捕获或UI/模拟/存档证据，Potential/完整子对象及全局自由球员/储备解析仍有缺口。

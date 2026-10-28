@@ -19,28 +19,12 @@ function executeAction(){
   throw Error('UNRECOVERED_BADGE_DELEGATE');
  const t=team(p.team_id),player=rosterPlayer(t,p.player_id);
  const before=new Uint8Array(read(player.add(0x41f),196)),expected=Uint8Array.from(before);
- const flagsBefore=u32(read(player.add(0x31c),4)),stage=u32(read(player.add(0x354),4));
- const root=ptrAt(read(player.add(0xd8),8)),nodes=[],seen=new Set(),probes=[5,21,24],sums={5:0,21:0,24:0};
- let node=root;
- while(!node.isNull()){
-  const identity=node.toString();
-  if(seen.has(identity)||nodes.length>=layout.maximum_modifier_nodes)throw Error('BADGE_MODIFIER_CYCLE_OR_INSPECTION_BOUND');
-  seen.add(identity);
-  const bytes=read(node,layout.modifier_node_bytes),meta=u32(bytes,0x18);
-  nodes.push({pointer:node,bytes});
-  if(((meta>>>13)&7)<=(stage&7)&&(meta&0x1fff)===0x1fff){
-   for(const index of probes){
-    const spec=layout.catalog.by_id[index].signed_modifier_field;
-    sums[index]+=(u32(bytes,spec.dword_offset)<<spec.shift_left)>>spec.arithmetic_shift_right;
-   }
-  }
-  node=ptrAt(bytes,8);
- }
+ const flagsBefore=u32(read(player.add(0x31c),4)),probes=[5,21,24];
+ const modifiers=snapshotPlayerModifiers(player,layout.catalog,probes,layout);
  const raw=index=>{const spec=layout.catalog.by_id[index];return (before[spec.byte_offset-0x41f]>>>spec.shift)&spec.mask;};
  const effective={};
  for(const index of probes){
-  const baseLevel=raw(index),signedByte=((sums[index]+baseLevel)<<24)>>24;
-  effective[index]=sums[index]===0?baseLevel:Math.max(0,Math.min(4,signedByte));
+  effective[index]=modifiers.effective(index,raw(index));
  }
  for(const name of group)if(raw(fields[name].badge_id)!==p.expected_before[name])throw Error('BADGE_EXPECTED_BEFORE_MISMATCH');
  const predicted={...p.expected_before},changed=raw(field.badge_id)!==p.value;
@@ -60,10 +44,10 @@ function executeAction(){
  if(group.some(name=>predicted[name]!==p.expected_after[name]))throw Error('BADGE_EXPLICIT_AFTER_DIFFERS_FROM_ORIGINAL_RULES');
  for(const name of group){const spec=fields[name],at=spec.byte_offset-0x41f;expected[at]=(expected[at]&~(spec.mask<<spec.shift))|(predicted[name]<<spec.shift);}
  function stable(){
-  if(!rosterPlayer(t,p.player_id).equals(player)||!ptrAt(read(player.add(0xd8),8)).equals(root)||u32(read(player.add(0x354),4))!==stage||
+  if(!rosterPlayer(t,p.player_id).equals(player)||
     !ptrAt(read(base.add(layout.root_rva),8)).equals(delegate)||!ptrAt(read(delegate,8)).equals(vtable)||
     !Object.entries(layout.required_slots).every(([slot,rva])=>ptrAt(read(vtable.add(Number(slot)),8)).equals(base.add(rva))))throw Error('BADGE_CONTEXT_CHANGED');
-  for(const snapshot of nodes)if(!equal(read(snapshot.pointer,layout.modifier_node_bytes),snapshot.bytes))throw Error('BADGE_MODIFIER_SOURCE_CHANGED');
+  modifiers.assertStable();
  }
  stable();
  for(const index of probes)if(call('player.badge_effective_level',player,index,0)!==effective[index])throw Error('BADGE_EFFECTIVE_GETTER_MODEL_MISMATCH');
@@ -78,7 +62,7 @@ function executeAction(){
   team_id:p.team_id,player_id:p.player_id,field_id:p.field_id,value:p.value,
   observed_before_values:p.expected_before,observed_after_values:predicted,
   original_rule_flag:0,explicit_coupled_state_matched:true,unrequested_player_stat_badge_bits_preserved:true,
-  modifier_nodes_observed:nodes.length,original_unchanged_primary_return:!changed,
+  modifier_nodes_observed:modifiers.count,original_unchanged_primary_return:!changed,
   observation_scope:'Same-handler field and modifier readback only; independent effect, UI, mode semantics and Save/Reload unverified'
  });
 }

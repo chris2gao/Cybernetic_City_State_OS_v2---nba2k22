@@ -18,10 +18,12 @@ function read(pointer,n){const {block,at}=locate(pointer,n);return block.bytes.s
 const u32=(value,at=0)=>new DataView(value).getUint32(at,true),ptrAt=(value,at=0)=>new Pointer(Number(new DataView(value).getBigUint64(at,true)));
 const equal=(a,b)=>Buffer.from(a).equals(Buffer.from(b));
 const base=new Pointer(0x140000000),delegate=allocate(0x10000,16),vtable=allocate(0x20000,0x1700),player=allocate(0x30000,1264),TEAM={kind:'team20'};
-const layout=specs['player.badge_context'].input_layout,fields=layout.catalog.by_id;
-allocate(base.address+layout.root_rva,8);setPointer(base.add(layout.root_rva),delegate);setPointer(delegate,vtable);
-for(const [slot,target] of Object.entries(layout.required_slots))setPointer(vtable.add(Number(slot)),base.add(target));
-if(options.wrong_delegate)setPointer(vtable.add(4472),base.add(1));
+const reading=request.action_id==='READ_PLAYER_EDITOR_STATE';
+const sourceLayout=specs[reading?'player.editor_read_context':'player.badge_context'].input_layout;
+const layout=reading?{...sourceLayout,catalog:sourceLayout.badges}:sourceLayout,fields=layout.catalog.by_id;
+if(!reading){allocate(base.address+layout.root_rva,8);setPointer(base.add(layout.root_rva),delegate);setPointer(delegate,vtable);
+ for(const [slot,target] of Object.entries(layout.required_slots))setPointer(vtable.add(Number(slot)),base.add(target));
+ if(options.wrong_delegate)setPointer(vtable.add(4472),base.add(1));}
 for(let i=0;i<156;i++)set8(player.add(0x41f+i),(i*11+17)&255);
 const occupied=new Uint8Array(40);
 for(const field of fields)occupied[field.byte_offset-0x4bb]|=field.mask<<field.shift;
@@ -30,6 +32,12 @@ const raw=id=>{const field=fields[id];return new Uint8Array(read(player.add(fiel
 function assign(id,value){const field=fields[id],at=player.add(field.byte_offset),old=new Uint8Array(read(at,1))[0];set8(at,(old&~(field.mask<<field.shift))|(value<<field.shift));}
 for(const [name,value] of Object.entries(input.initial||{}))assign(layout.catalog.fields[name].badge_id,value);
 set32(player.add(0x31c),0x123456f1);set32(player.add(0x354),options.stage||0);
+set32(player.add(0x168),options.play_types_word===undefined?0xabcddcba:options.play_types_word);
+const statsByIndex={};
+if(reading)for(const [family,items] of Object.entries(layout.stats.families))for(const [name,field] of Object.entries(items)){
+ statsByIndex[field.native_index]={family,name,...field};
+ if(Object.prototype.hasOwnProperty.call(options.stat_raw||{},name))set8(player.add(field.offset),options.stat_raw[name]);
+}
 const nodeInputs=options.nodes||[],nodes=nodeInputs.map((_,i)=>allocate(0x40000+i*0x100,layout.modifier_node_bytes));
 for(let i=0;i<nodes.length;i++){
  const spec=nodeInputs[i];setPointer(nodes[i].add(8),nodes[i+1]||new Pointer(0));
@@ -53,16 +61,26 @@ const context={request,bindingSpecs:specs,base,Uint8Array,Object,Number,Math,Set
  team(id){if(id!==20)throw Error('TEAM_SUBSTITUTED');return TEAM;},
  rosterPlayer(team,id){if(team!==TEAM||id!==55)throw Error('PLAYER_SUBSTITUTED');
   const changed=(options.roster_changed_after&&calls.some(row=>row.binding==='player.set_badge'))||
-   (options.roster_changed_during_getters&&calls.some(row=>row.binding==='player.badge_effective_level'));
+   (options.roster_changed_during_getters&&calls.some(row=>['player.badge_effective_level','player.get_stat_ui'].includes(row.binding)));
   return changed?new Pointer(1):player;},
  call(binding,...args){
   if(!args[0].equals(player))throw Error('WRONG_NATIVE_PLAYER');
+  if(binding==='player.get_stat_ui'){
+   if(!reading||args.length!==2||!statsByIndex[args[1]])throw Error('WRONG_UI_GETTER_ABI_OR_INDEX');
+   const field=statsByIndex[args[1]],raw=new Uint8Array(read(player.add(field.offset),1))[0];
+   calls.push({binding,index:args[1]});
+   if(options.state_changes_during_getter)set8(player.add(0x452),0);
+   if(Object.prototype.hasOwnProperty.call(options.ui_values||{},field.name))return options.ui_values[field.name];
+   return field.family==='attributes'?Math.max(25,Math.min(99,Math.round(Math.fround(Math.fround(raw)*Math.fround(1/3))+25))):raw;
+  }
   if(binding==='player.badge_effective_level'){
    if(args.length!==3||args[2]!==0)throw Error('WRONG_EFFECTIVE_ABI_OR_NORMALIZATION');
    calls.push({binding,index:args[1]});const value=effective(args[1]);
    if(options.state_changes_during_getter&&calls.length===1)set8(player.add(0x452),0);
+   if(options.modifier_changed_during_getter&&nodes.length)set32(nodes[0].add(0x18),0);
    return value+(options.wrong_effective?1:0);
   }
+  if(reading)throw Error('READ_ATTEMPTED_MUTATION');
   if(binding!=='player.set_badge'||args.length!==4||args[3]!==0)throw Error('ORIGINAL_RULE_FLAG_OR_ABI_BYPASS');
   const id=args[1],value=args[2];calls.push({binding,index:id,value,flag:args[3]});
   if(raw(id)!==value){
@@ -85,6 +103,7 @@ const context={request,bindingSpecs:specs,base,Uint8Array,Object,Number,Math,Set
  result(outcome,details){messages.push({outcome,details});}
 };
 let error=null;
-try{vm.runInNewContext(fs.readFileSync(process.argv[2],'utf8')+'\nexecuteAction();',context,{timeout:1000});}catch(e){error=e.message;}
+try{const path=require('path'),helper=path.join(path.dirname(process.argv[2]),'player_modifiers.js');
+ vm.runInNewContext(fs.readFileSync(helper,'utf8')+'\n'+fs.readFileSync(process.argv[2],'utf8')+'\nexecuteAction();',context,{timeout:1000});}catch(e){error=e.message;}
 process.stdout.write(JSON.stringify({initial,after:Array.from(new Uint8Array(read(player.add(0x41f),196))),flagsBefore,
  flagsAfter:u32(read(player.add(0x31c),4)),calls,messages,error}));

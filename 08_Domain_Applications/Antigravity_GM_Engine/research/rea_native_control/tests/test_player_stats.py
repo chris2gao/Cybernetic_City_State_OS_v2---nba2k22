@@ -67,6 +67,17 @@ class PlayerStats(unittest.TestCase):
             with self.assertRaises((ValueError,TypeError)):
                 self.control.render(NativeActionRequest(action,{'team_id':20,'player_id':55,'field_id':key,'value':value}))
 
+    def test_original_getter_supplies_receipt_values_and_mismatch_is_not_success(self):
+        result=self.simulate('PLAYER_SET_ATTRIBUTE',{'driving_layup':75},getter_before={'driving_layup':57})
+        self.assertIsNone(result['error'])
+        self.assertEqual(result['messages'][0]['details']['observed_before_values'],{'driving_layup':57})
+        self.assertEqual(len(result['getterCalls']),2)
+        result=self.simulate('PLAYER_SET_ATTRIBUTE',{'driving_layup':75},getter_after={'driving_layup':74})
+        self.assertIn('AFTER_GETTER_MISMATCH',result['error'])
+        self.assertFalse(result['messages'])
+        program=self.control.render(NativeActionRequest('PLAYER_SET_ATTRIBUTE',{'team_id':20,'player_id':55,'field_id':'driving_layup','value':75}))
+        self.assertEqual(program.maximum_game_calls,3)
+
     def test_context_interruption_and_unrequested_changes_are_not_success(self):
         for options,expected_calls in [({'wrong_delegate':True},0),({'fail_after':1},1),
                                        ({'corrupt_other_field':True},2),({'missing_invalidation':True},2)]:

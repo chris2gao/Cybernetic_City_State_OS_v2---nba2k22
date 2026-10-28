@@ -164,3 +164,7 @@ submit_decided_actions(actor_uid, role_action_batch)
 ## 10. PR #19徽章原版规则工程接口（2026-10-28）
 
 `PLAYER.EDIT.BADGE_SET`使用`field_id,value`以及完整可能联动组的`expected_before,expected_after`，只允许明确WORLD_ADMIN授权。原版flag0 Setter会保留互斥和表达类规则；执行器以有界当前修正链及原版只读Getter交叉核对有效等级，拒绝断言前提和after状态不匹配。汇总资源包括可能修改及规则读取的徽章，避免跨规则冲突。98个非哨兵内部名称及上限已恢复，内部名称不等于原版UI认证。见[调用合同](../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)。新工程没有实机/独立/持久化验收，完整M0–M5仍在推进。
+
+## 11. 当前Player状态输入及角色只读投影
+
+`player.editor_state`以显式字段选择读原版Getter/原始槽位，并把已完成回执经冻结Provider交给`read_role_visible_data`。角色端按精确字段读取授权投影，保留identity和observation；读取不产生编辑权，不从Provider启动采集或替模型选择after状态。原属性/倾向写入回执现在使用Getter→Setter→Getter，不再猜测UI前值。仅同handler前后字节括号相等，不能声称原子快照、Native存档身份或独立效果确认。具体作用域与接口见[读取合同](../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)。

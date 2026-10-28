@@ -111,3 +111,7 @@ Player模型现在可以使用外部系统已有数据作决策，并提出已�
 ### 徽章的明确联动接口
 
 `PLAYER.EDIT.BADGE_SET`只向明确授权的WORLD_ADMIN身份开放；普通GM/Coach/Player不能自增徽章。通过`get_allowed_values`取得98个非NONE内部名称、每项上限1/4和完整联动组；输入`team_id,player_id,field_id,value,expected_before,expected_after`。两个状态对象必须完整列出可能联动的对或三元组，单独技能则只有一个字段。执行器保留原版flag0规则、检查临时有效等级及断言条件；原版规则与明确after状态不符就拒绝，不改选值或绕过规则。内部名称不等于已认证MyLEAGUE UI选项。详见[徽章合同](BADGE_NATIVE_CONTRACT.md)，目前只有静态和离线证据。
+
+### 当前Player字段的读取来源
+
+新增技术数据集`player.editor_state`使用明确的四族字段数组，不默认为读取全部。角色通过已捕获回执的`PlayerEditorSnapshotProvider`及原有`read_role_visible_data`读取`attributes.字段`、`tendencies.字段`、`badges.内部名称`、`play_types.槽位`。host须明确授予每个字段以及`identity,observation`，返回结果保留目标、观察来源和HOST_ATTESTED上下文。读取不会新增编辑许可，也不会自动附加进程或采集。Potential不返回。真实调用只由显式NativeReadFacade/授权transport启动，详见[读取合同](PLAYER_EDITOR_READ_CONTRACT.md)。

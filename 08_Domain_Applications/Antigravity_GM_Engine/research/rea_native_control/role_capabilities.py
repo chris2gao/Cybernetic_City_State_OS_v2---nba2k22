@@ -83,12 +83,13 @@ class RoleCapabilityService:
             'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
             'player_stat_fields': self.player_stat_fields,
             'badge_fields': self.badge_fields,
+            'read_catalog': json.loads((self.registry.root / 'data/read_catalog.json').read_text(encoding='utf8')),
             'bindings': {k: b.to_dict() for k, b in self.registry.bindings.items()},
             'live': self.registry.live_validation,
             'effective_mapping': self.mapping,
             'service_contract_code': {
                 name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py', 'badge_fields.py')},
+                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py', 'badge_fields.py', 'player_editor_state.py', 'readers.py')},
             'runtime_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted((self.registry.root / 'runtime').glob('*.js'))},
         }, sort_keys=True, ensure_ascii=False).encode()).hexdigest()

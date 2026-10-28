@@ -17,5 +17,9 @@ class NativeReadFacade:
  def __init__(self,control=None,catalog=None):self.control=control or NativeControlFacade();self.catalog=catalog or NativeReadCatalog()
  def read(self,query:NativeReadQuery):
   dataset=self.catalog.get(query.dataset_id)
-  # The catalog maps requested data, not preferred targets, and never creates a capture.
+  # Catalog lookup is inert; a supplied transport is used only for this explicit call.
+  if query.dataset_id=='player.editor_state':
+   from player_editor_state import validate_projection
+   if not isinstance(query.parameters,dict):raise ValueError('Exact Player read parameters required')
+   validate_projection(self.control.registry.root,query.parameters.get('projection'))
   return self.control.read(dataset['action_id'],query.parameters,request_id=query.request_id)

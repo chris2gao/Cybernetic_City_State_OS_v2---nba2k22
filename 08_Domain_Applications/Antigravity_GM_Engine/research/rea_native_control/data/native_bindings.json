@@ -7793,6 +7793,5363 @@
           }
         ]
       }
+    },
+    {
+      "binding_id": "player.get_stat_ui",
+      "rva": 9929568,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "stat_index",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact current roster PLAYER; explicit selected qualified index excluding Potential/unclassified cases"
+      ],
+      "lifecycle": [
+        "Pure selected Getter paths: no game memory writes or calls. Use original float conversion/rounding; no guessed JS attribute decoder"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_read_getter_contract_026.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 9929568,
+            "bytes": 2580,
+            "fnv32": 2751660889
+          },
+          {
+            "rva": 36408044,
+            "bytes": 4,
+            "fnv32": 1798808928
+          },
+          {
+            "rva": 35762196,
+            "bytes": 4,
+            "fnv32": 1487269050
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "player.editor_read_context",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Host-authorized read context; exact current roster/contract TEAM/PLAYER identity",
+        "Stable full stat/Badge bits, ordered slots, cache word and bounded modifier list across the read"
+      ],
+      "lifecycle": [
+        "Selected fields only; no setter or hidden Potential output",
+        "Read results have no Native save/world identity; host must bind observation provenance/context"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_read_getter_contract_026.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "stats": {
+          "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+          "source_evidence": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+          "families": {
+            "attributes": {
+              "driving_layup": {
+                "native_index": 0,
+                "offset": 1055,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / driving_layup",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "post_fadeaway": {
+                "native_index": 1,
+                "offset": 1056,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / post_fadeaway",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "post_hook": {
+                "native_index": 2,
+                "offset": 1057,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / post_hook",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "post_moves": {
+                "native_index": 3,
+                "offset": 1058,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / post_moves",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "draw_foul": {
+                "native_index": 4,
+                "offset": 1059,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / draw_foul",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "shot_close": {
+                "native_index": 5,
+                "offset": 1060,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / shot_close",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "mid_range_shot": {
+                "native_index": 6,
+                "offset": 1061,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / mid_range_shot",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "3pt_shot": {
+                "native_index": 7,
+                "offset": 1062,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / 3pt_shot",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "free_throw": {
+                "native_index": 8,
+                "offset": 1063,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / free_throw",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "ball_control": {
+                "native_index": 9,
+                "offset": 1064,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / ball_control",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "passing_iq": {
+                "native_index": 10,
+                "offset": 1065,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / passing_iq",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "passing_accuracy": {
+                "native_index": 11,
+                "offset": 1066,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / passing_accuracy",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "offensive_rebound": {
+                "native_index": 12,
+                "offset": 1067,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / offensive_rebound",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "defensive_rebound": {
+                "native_index": 13,
+                "offset": 1068,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / defensive_rebound",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "interior_defense": {
+                "native_index": 14,
+                "offset": 1069,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / interior_defense",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "perimeter_defense": {
+                "native_index": 15,
+                "offset": 1070,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / perimeter_defense",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "lateral_quickness": {
+                "native_index": 16,
+                "offset": 1071,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / lateral_quickness",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "pass_perception": {
+                "native_index": 17,
+                "offset": 1072,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / pass_perception",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "block": {
+                "native_index": 18,
+                "offset": 1073,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / block",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "steal": {
+                "native_index": 19,
+                "offset": 1074,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / steal",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "defensive_consistency": {
+                "native_index": 20,
+                "offset": 1075,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / defensive_consistency",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "help_defensive_iq": {
+                "native_index": 21,
+                "offset": 1076,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / help_defensive_iq",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "standing_dunk": {
+                "native_index": 22,
+                "offset": 1077,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / standing_dunk",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "driving_dunk": {
+                "native_index": 23,
+                "offset": 1078,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / driving_dunk",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "speed": {
+                "native_index": 24,
+                "offset": 1079,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / speed",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "speed_with_ball": {
+                "native_index": 25,
+                "offset": 1080,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / speed_with_ball",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "acceleration": {
+                "native_index": 26,
+                "offset": 1081,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / acceleration",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "vertical": {
+                "native_index": 27,
+                "offset": 1082,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / vertical",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "strength": {
+                "native_index": 28,
+                "offset": 1083,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / strength",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "stamina": {
+                "native_index": 29,
+                "offset": 1084,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / stamina",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "hustle": {
+                "native_index": 30,
+                "offset": 1085,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / hustle",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "shot_iq": {
+                "native_index": 31,
+                "offset": 1086,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / shot_iq",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "offensive_consistency": {
+                "native_index": 32,
+                "offset": 1087,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / offensive_consistency",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "intangibles": {
+                "native_index": 33,
+                "offset": 1088,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / intangibles",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "potential": {
+                "native_index": 34,
+                "offset": 1089,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": false,
+                "meaning": "attributes / potential",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": "Potential dispatch invokes an additional broad refresh path that is not yet qualified"
+              },
+              "head_durability": {
+                "native_index": 35,
+                "offset": 1090,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / head_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "neck_durability": {
+                "native_index": 36,
+                "offset": 1091,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / neck_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "back_durability": {
+                "native_index": 37,
+                "offset": 1092,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / back_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "left_shoulder_durability": {
+                "native_index": 38,
+                "offset": 1093,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / left_shoulder_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "right_shoulder_durability": {
+                "native_index": 39,
+                "offset": 1094,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / right_shoulder_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "left_elbow_durability": {
+                "native_index": 40,
+                "offset": 1095,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / left_elbow_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "right_elbow_durability": {
+                "native_index": 41,
+                "offset": 1096,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / right_elbow_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "left_hip_durability": {
+                "native_index": 42,
+                "offset": 1097,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / left_hip_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "right_hip_durability": {
+                "native_index": 43,
+                "offset": 1098,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / right_hip_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "left_knee_durability": {
+                "native_index": 44,
+                "offset": 1099,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / left_knee_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "right_knee_durability": {
+                "native_index": 45,
+                "offset": 1100,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / right_knee_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "left_ankle_durability": {
+                "native_index": 46,
+                "offset": 1101,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / left_ankle_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "right_ankle_durability": {
+                "native_index": 47,
+                "offset": 1102,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / right_ankle_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "left_foot_durability": {
+                "native_index": 48,
+                "offset": 1103,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / left_foot_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "right_foot_durability": {
+                "native_index": 49,
+                "offset": 1104,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / right_foot_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "misc_durability": {
+                "native_index": 50,
+                "offset": 1105,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / misc_durability",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "passing_vision": {
+                "native_index": 52,
+                "offset": 1107,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / passing_vision",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "pick_and_roll_defensive_iq": {
+                "native_index": 53,
+                "offset": 1108,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / pick_and_roll_defensive_iq",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "hands": {
+                "native_index": 54,
+                "offset": 1109,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / hands",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              },
+              "shot_contest": {
+                "native_index": 55,
+                "offset": 1110,
+                "minimum": 25,
+                "maximum": 99,
+                "name_known": true,
+                "callable": true,
+                "meaning": "attributes / shot_contest",
+                "encoding": "NATIVE_UI_INTEGER_RATING",
+                "expected_raw_formula": "3*value-75",
+                "blocked_reason": null
+              }
+            },
+            "tendencies": {
+              "SHOT_TENDENCY": {
+                "native_index": 57,
+                "offset": 1112,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SHOT_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "DRIVING_LAYUP_TENDENCY": {
+                "native_index": 58,
+                "offset": 1113,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "DRIVING_LAYUP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "STANDING_DUNK_TENDENCY": {
+                "native_index": 59,
+                "offset": 1114,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "STANDING_DUNK_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "DRIVING_DUNK_TENDENCY": {
+                "native_index": 60,
+                "offset": 1115,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "DRIVING_DUNK_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "FLASHY_DUNK_TENDENCY": {
+                "native_index": 61,
+                "offset": 1116,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "FLASHY_DUNK_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "ALLEY_OOP_TENDENCY": {
+                "native_index": 62,
+                "offset": 1117,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "ALLEY_OOP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "PUTBACK_TENDENCY": {
+                "native_index": 63,
+                "offset": 1118,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "PUTBACK_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "CRASH_TENDENCY": {
+                "native_index": 64,
+                "offset": 1119,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "CRASH_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SPIN_LAYUP_TENDENCY": {
+                "native_index": 65,
+                "offset": 1120,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SPIN_LAYUP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "HOP_STEP_LAYUP_TENDENCY": {
+                "native_index": 66,
+                "offset": 1121,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "HOP_STEP_LAYUP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "EURO_STEP_LAYUP_TENDENCY": {
+                "native_index": 67,
+                "offset": 1122,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "EURO_STEP_LAYUP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "FLOATER_TENDENCY": {
+                "native_index": 68,
+                "offset": 1123,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "FLOATER_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "STEP_THROUGH_SHOT_TENDENCY": {
+                "native_index": 69,
+                "offset": 1124,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "STEP_THROUGH_SHOT_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SHOT_UNDER_BASKET_TENDENCY": {
+                "native_index": 70,
+                "offset": 1125,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SHOT_UNDER_BASKET_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SHOT_CLOSE_TENDENCY": {
+                "native_index": 71,
+                "offset": 1126,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SHOT_CLOSE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_15": {
+                "native_index": 72,
+                "offset": 1127,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_15",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_16": {
+                "native_index": 73,
+                "offset": 1128,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_16",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_17": {
+                "native_index": 74,
+                "offset": 1129,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_17",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SHOT_MID_RANGE_TENDENCY": {
+                "native_index": 75,
+                "offset": 1130,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SHOT_MID_RANGE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SPOT_UP_SHOT_MID_RANGE": {
+                "native_index": 76,
+                "offset": 1131,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SPOT_UP_SHOT_MID_RANGE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "OFF_SCREEN_SHOT_MID_RANGE": {
+                "native_index": 77,
+                "offset": 1132,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "OFF_SCREEN_SHOT_MID_RANGE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_21": {
+                "native_index": 78,
+                "offset": 1133,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_21",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_22": {
+                "native_index": 79,
+                "offset": 1134,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_22",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_23": {
+                "native_index": 80,
+                "offset": 1135,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_23",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_24": {
+                "native_index": 81,
+                "offset": 1136,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_24",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_25": {
+                "native_index": 82,
+                "offset": 1137,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_25",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SHOT_THREE_TENDENCY": {
+                "native_index": 83,
+                "offset": 1138,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SHOT_THREE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SPOT_UP_SHOT_THREE": {
+                "native_index": 84,
+                "offset": 1139,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SPOT_UP_SHOT_THREE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "OFF_SCREEN_SHOT_THREE": {
+                "native_index": 85,
+                "offset": 1140,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "OFF_SCREEN_SHOT_THREE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_29": {
+                "native_index": 86,
+                "offset": 1141,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_29",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_30": {
+                "native_index": 87,
+                "offset": 1142,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_30",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_31": {
+                "native_index": 88,
+                "offset": 1143,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_31",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_32": {
+                "native_index": 89,
+                "offset": 1144,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_32",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_33": {
+                "native_index": 90,
+                "offset": 1145,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_33",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "CONTESTED_JUMPER_THREE": {
+                "native_index": 91,
+                "offset": 1146,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "CONTESTED_JUMPER_THREE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "CONTESTED_JUMPER_MID_RANGE": {
+                "native_index": 92,
+                "offset": 1147,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "CONTESTED_JUMPER_MID_RANGE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "STEPBACK_JUMPER_THREE": {
+                "native_index": 93,
+                "offset": 1148,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "STEPBACK_JUMPER_THREE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "STEPBACK_JUMPER_MID_RANGE": {
+                "native_index": 94,
+                "offset": 1149,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "STEPBACK_JUMPER_MID_RANGE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SPIN_JUMPER_TENDENCY": {
+                "native_index": 95,
+                "offset": 1150,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SPIN_JUMPER_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "TRANSITION_PULL_UP_THREE": {
+                "native_index": 96,
+                "offset": 1151,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "TRANSITION_PULL_UP_THREE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "DRIVE_PULL_UP_THREE": {
+                "native_index": 97,
+                "offset": 1152,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "DRIVE_PULL_UP_THREE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "DRIVE_PULL_UP_MID_RANGE": {
+                "native_index": 98,
+                "offset": 1153,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "DRIVE_PULL_UP_MID_RANGE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_42": {
+                "native_index": 99,
+                "offset": 1154,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_42",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "DRIVE_TENDENCY": {
+                "native_index": 100,
+                "offset": 1155,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "DRIVE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "SPOT_UP_DRIVE_TENDENCY": {
+                "native_index": 101,
+                "offset": 1156,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "SPOT_UP_DRIVE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "OFF_SCREEN_DRIVE_TENDENCY": {
+                "native_index": 102,
+                "offset": 1157,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "OFF_SCREEN_DRIVE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_46": {
+                "native_index": 103,
+                "offset": 1158,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_46",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_47": {
+                "native_index": 104,
+                "offset": 1159,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_47",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_48": {
+                "native_index": 105,
+                "offset": 1160,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_48",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_49": {
+                "native_index": 106,
+                "offset": 1161,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_49",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_50": {
+                "native_index": 107,
+                "offset": 1162,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_50",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_51": {
+                "native_index": 108,
+                "offset": 1163,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_51",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_52": {
+                "native_index": 109,
+                "offset": 1164,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_52",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_53": {
+                "native_index": 110,
+                "offset": 1165,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_53",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_54": {
+                "native_index": 111,
+                "offset": 1166,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_54",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_55": {
+                "native_index": 112,
+                "offset": 1167,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_55",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_56": {
+                "native_index": 113,
+                "offset": 1168,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_56",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_57": {
+                "native_index": 114,
+                "offset": 1169,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_57",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_58": {
+                "native_index": 115,
+                "offset": 1170,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_58",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_59": {
+                "native_index": 116,
+                "offset": 1171,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_59",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_60": {
+                "native_index": 117,
+                "offset": 1172,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_60",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_61": {
+                "native_index": 118,
+                "offset": 1173,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_61",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_62": {
+                "native_index": 119,
+                "offset": 1174,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_62",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "ATTACK_STRONG_ON_DRIVE": {
+                "native_index": 120,
+                "offset": 1175,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "ATTACK_STRONG_ON_DRIVE",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "DISH_TO_OPEN_MAN_TENDENCY": {
+                "native_index": 121,
+                "offset": 1176,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "DISH_TO_OPEN_MAN_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "TOUCHES_TENDENCY": {
+                "native_index": 122,
+                "offset": 1177,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "TOUCHES_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "POST_UP_TENDENCY": {
+                "native_index": 123,
+                "offset": 1178,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "POST_UP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "ROLL_VS_POP_TENDENCY": {
+                "native_index": 124,
+                "offset": 1179,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "ROLL_VS_POP_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "TRANSITION_SPOT_UP": {
+                "native_index": 125,
+                "offset": 1180,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "TRANSITION_SPOT_UP",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_69": {
+                "native_index": 126,
+                "offset": 1181,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_69",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_70": {
+                "native_index": 127,
+                "offset": 1182,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_70",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_71": {
+                "native_index": 128,
+                "offset": 1183,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_71",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_72": {
+                "native_index": 129,
+                "offset": 1184,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_72",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "PLAY_DISCIPLINE_TENDENCY": {
+                "native_index": 130,
+                "offset": 1185,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "PLAY_DISCIPLINE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_74": {
+                "native_index": 131,
+                "offset": 1186,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_74",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_75": {
+                "native_index": 132,
+                "offset": 1187,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_75",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_76": {
+                "native_index": 133,
+                "offset": 1188,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_76",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_77": {
+                "native_index": 134,
+                "offset": 1189,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_77",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_78": {
+                "native_index": 135,
+                "offset": 1190,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_78",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_79": {
+                "native_index": 136,
+                "offset": 1191,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_79",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_80": {
+                "native_index": 137,
+                "offset": 1192,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_80",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_81": {
+                "native_index": 138,
+                "offset": 1193,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_81",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_82": {
+                "native_index": 139,
+                "offset": 1194,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_82",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_83": {
+                "native_index": 140,
+                "offset": 1195,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_83",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_84": {
+                "native_index": 141,
+                "offset": 1196,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_84",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_85": {
+                "native_index": 142,
+                "offset": 1197,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_85",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_86": {
+                "native_index": 143,
+                "offset": 1198,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_86",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_87": {
+                "native_index": 144,
+                "offset": 1199,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_87",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_88": {
+                "native_index": 145,
+                "offset": 1200,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_88",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "UNIDENTIFIED_TENDENCY_89": {
+                "native_index": 146,
+                "offset": 1201,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": false,
+                "callable": true,
+                "meaning": "UNKNOWN_SEMANTICS_NATIVE_TENDENCY_SLOT_89",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "FLASHY_PASS_TENDENCY": {
+                "native_index": 147,
+                "offset": 1202,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "FLASHY_PASS_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "ALLEY_OOP_PASS_TENDENCY": {
+                "native_index": 148,
+                "offset": 1203,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "ALLEY_OOP_PASS_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "PASS_INTERCEPTION_TENDENCY": {
+                "native_index": 149,
+                "offset": 1204,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "PASS_INTERCEPTION_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "TAKE_CHARGE_TENDENCY": {
+                "native_index": 150,
+                "offset": 1205,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "TAKE_CHARGE_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "ON_BALL_STEAL_TENDENCY": {
+                "native_index": 151,
+                "offset": 1206,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "ON_BALL_STEAL_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "CONTEST_SHOT_TENDENCY": {
+                "native_index": 152,
+                "offset": 1207,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "CONTEST_SHOT_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "BLOCK_SHOT_TENDENCY": {
+                "native_index": 153,
+                "offset": 1208,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "BLOCK_SHOT_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "FOUL_TENDENCY": {
+                "native_index": 154,
+                "offset": 1209,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "FOUL_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              },
+              "HARD_FOUL_TENDENCY": {
+                "native_index": 155,
+                "offset": 1210,
+                "minimum": 0,
+                "maximum": 100,
+                "name_known": true,
+                "callable": true,
+                "meaning": "HARD_FOUL_TENDENCY",
+                "encoding": "NATIVE_UI_INTEGER_TENDENCY",
+                "expected_raw_formula": "value",
+                "blocked_reason": null
+              }
+            }
+          },
+          "unclassified_native_indices": [
+            51,
+            56
+          ],
+          "policy": "GM attribute access is intangibles only; other attribute edits require explicit WORLD_ADMIN grant. Unnamed tendencies are WORLD_ADMIN only."
+        },
+        "badges": {
+          "source": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json",
+          "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+          "fields": {
+            "NONE": {
+              "badge_id": 0,
+              "internal_name": "NONE",
+              "ui_label_verified": false,
+              "sentinel_name": true,
+              "byte_offset": 1211,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "AlphaDog": {
+              "badge_id": 1,
+              "internal_name": "AlphaDog",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "CatchAndShoot": {
+              "badge_id": 2,
+              "internal_name": "CatchAndShoot",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "CornerSpecialist": {
+              "badge_id": 3,
+              "internal_name": "CornerSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Enforcer": {
+              "badge_id": 4,
+              "internal_name": "Enforcer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "LowFriendliness": {
+              "badge_id": 5,
+              "internal_name": "LowFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 24,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "DifficultShots": {
+              "badge_id": 6,
+              "internal_name": "DifficultShots",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FearlessFinisher": {
+              "badge_id": 7,
+              "internal_name": "FearlessFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HighFriendliness": {
+              "badge_id": 8,
+              "internal_name": "HighFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 14,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "SmallEgo": {
+              "badge_id": 9,
+              "internal_name": "SmallEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 12,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "Acrobat": {
+              "badge_id": 10,
+              "internal_name": "Acrobat",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TearDropper": {
+              "badge_id": 11,
+              "internal_name": "TearDropper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BigEgo": {
+              "badge_id": 12,
+              "internal_name": "BigEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 2,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "HighWorkEthic": {
+              "badge_id": 13,
+              "internal_name": "HighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 0,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "BrickWall": {
+              "badge_id": 14,
+              "internal_name": "BrickWall",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PostSpinTechnician": {
+              "badge_id": 15,
+              "internal_name": "PostSpinTechnician",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "VeryHighWorkEthic": {
+              "badge_id": 16,
+              "internal_name": "VeryHighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 22,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "NegativelyMotivated": {
+              "badge_id": 17,
+              "internal_name": "NegativelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 20,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "PostDropStepper": {
+              "badge_id": 18,
+              "internal_name": "PostDropStepper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PutbackArtist": {
+              "badge_id": 19,
+              "internal_name": "PutbackArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PositivelyMotivated": {
+              "badge_id": 20,
+              "internal_name": "PositivelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 10,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "Expressive": {
+              "badge_id": 21,
+              "internal_name": "Expressive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 8,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "AnkleBreaker": {
+              "badge_id": 22,
+              "internal_name": "AnkleBreaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Hyperdrive": {
+              "badge_id": 23,
+              "internal_name": "Hyperdrive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Unpredictable": {
+              "badge_id": 24,
+              "internal_name": "Unpredictable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 30,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "LaidBack": {
+              "badge_id": 25,
+              "internal_name": "LaidBack",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 28,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "BreakStarter": {
+              "badge_id": 26,
+              "internal_name": "BreakStarter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LobCityFinisher": {
+              "badge_id": 27,
+              "internal_name": "LobCityFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "OnCourtCoach": {
+              "badge_id": 28,
+              "internal_name": "OnCourtCoach",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 18,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "CareerGymEliminator": {
+              "badge_id": 29,
+              "internal_name": "CareerGymEliminator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 16,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "GlueHands": {
+              "badge_id": 30,
+              "internal_name": "GlueHands",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Dimer": {
+              "badge_id": 31,
+              "internal_name": "Dimer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BigMarketPlayer": {
+              "badge_id": 32,
+              "internal_name": "BigMarketPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "FairWeatherPlayer": {
+              "badge_id": 33,
+              "internal_name": "FairWeatherPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "PickPocket": {
+              "badge_id": 34,
+              "internal_name": "PickPocket",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "RimProtector": {
+              "badge_id": 35,
+              "internal_name": "RimProtector",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TaxAvoiderPlayer": {
+              "badge_id": 36,
+              "internal_name": "TaxAvoiderPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            "PickDodger": {
+              "badge_id": 37,
+              "internal_name": "PickDodger",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 1,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 22,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ChasedownArtist": {
+              "badge_id": 38,
+              "internal_name": "ChasedownArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 4,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 18,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Box": {
+              "badge_id": 39,
+              "internal_name": "Box",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 14,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Clamps": {
+              "badge_id": 40,
+              "internal_name": "Clamps",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 10,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "DefensiveLeader": {
+              "badge_id": 41,
+              "internal_name": "DefensiveLeader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 6,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BallAndChain": {
+              "badge_id": 42,
+              "internal_name": "BallAndChain",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 2,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Interceptor": {
+              "badge_id": 43,
+              "internal_name": "Interceptor",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Intimidator": {
+              "badge_id": 44,
+              "internal_name": "Intimidator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HookSpecialist": {
+              "badge_id": 45,
+              "internal_name": "HookSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Posterizer": {
+              "badge_id": 46,
+              "internal_name": "Posterizer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "OffBallPest": {
+              "badge_id": 47,
+              "internal_name": "OffBallPest",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ReboundChaser": {
+              "badge_id": 48,
+              "internal_name": "ReboundChaser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Pogostick": {
+              "badge_id": 49,
+              "internal_name": "Pogostick",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PostLockdown": {
+              "badge_id": 50,
+              "internal_name": "PostLockdown",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TirelessDefender": {
+              "badge_id": 51,
+              "internal_name": "TirelessDefender",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "MismatchExpert": {
+              "badge_id": 52,
+              "internal_name": "MismatchExpert",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Worm": {
+              "badge_id": 53,
+              "internal_name": "Worm",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BackdownPunisher": {
+              "badge_id": 54,
+              "internal_name": "BackdownPunisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "RiseUp": {
+              "badge_id": 55,
+              "internal_name": "RiseUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LuckyNumber7": {
+              "badge_id": 56,
+              "internal_name": "LuckyNumber7",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Blinders": {
+              "badge_id": 57,
+              "internal_name": "Blinders",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "CircusThrees": {
+              "badge_id": 58,
+              "internal_name": "CircusThrees",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FadeAce": {
+              "badge_id": 59,
+              "internal_name": "FadeAce",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LimitlessSpotUp": {
+              "badge_id": 60,
+              "internal_name": "LimitlessSpotUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Chef": {
+              "badge_id": 61,
+              "internal_name": "Chef",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "GiantSlayer": {
+              "badge_id": 62,
+              "internal_name": "GiantSlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ProTouch": {
+              "badge_id": 63,
+              "internal_name": "ProTouch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "RhythmShooter": {
+              "badge_id": 64,
+              "internal_name": "RhythmShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SlitheryFinisher": {
+              "badge_id": 65,
+              "internal_name": "SlitheryFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BailOut": {
+              "badge_id": 66,
+              "internal_name": "BailOut",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Downhill": {
+              "badge_id": 67,
+              "internal_name": "Downhill",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "DreamShake": {
+              "badge_id": 68,
+              "internal_name": "DreamShake",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HandlesForDays": {
+              "badge_id": 69,
+              "internal_name": "HandlesForDays",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "NeedleThreader": {
+              "badge_id": 70,
+              "internal_name": "NeedleThreader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SetShooter": {
+              "badge_id": 71,
+              "internal_name": "SetShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "QuickFirstStep": {
+              "badge_id": 72,
+              "internal_name": "QuickFirstStep",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SpaceCreator": {
+              "badge_id": 73,
+              "internal_name": "SpaceCreator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "StopAndGo": {
+              "badge_id": 74,
+              "internal_name": "StopAndGo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TightHandles": {
+              "badge_id": 75,
+              "internal_name": "TightHandles",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Unpluckable": {
+              "badge_id": 76,
+              "internal_name": "Unpluckable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "ClutchShooter": {
+              "badge_id": 77,
+              "internal_name": "ClutchShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Deadeye": {
+              "badge_id": 78,
+              "internal_name": "Deadeye",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Sniper": {
+              "badge_id": 79,
+              "internal_name": "Sniper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "StopAndPop": {
+              "badge_id": 80,
+              "internal_name": "StopAndPop",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "GreenMachine": {
+              "badge_id": 81,
+              "internal_name": "GreenMachine",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "HotSpotHunter": {
+              "badge_id": 82,
+              "internal_name": "HotSpotHunter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Unstrippable": {
+              "badge_id": 83,
+              "internal_name": "Unstrippable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "MouseInTheHouse": {
+              "badge_id": 84,
+              "internal_name": "MouseInTheHouse",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BulletPasser": {
+              "badge_id": 85,
+              "internal_name": "BulletPasser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SpecialDelivery": {
+              "badge_id": 86,
+              "internal_name": "SpecialDelivery",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "AnkleBraces": {
+              "badge_id": 87,
+              "internal_name": "AnkleBraces",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "LimitlessTakeoff": {
+              "badge_id": 88,
+              "internal_name": "LimitlessTakeoff",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "GraceUnderPressure": {
+              "badge_id": 89,
+              "internal_name": "GraceUnderPressure",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "VolumeShooter": {
+              "badge_id": 90,
+              "internal_name": "VolumeShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FloorGeneral": {
+              "badge_id": 91,
+              "internal_name": "FloorGeneral",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "SlipperyOffball": {
+              "badge_id": 92,
+              "internal_name": "SlipperyOffball",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "FastTwitch": {
+              "badge_id": 93,
+              "internal_name": "FastTwitch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Menace": {
+              "badge_id": 94,
+              "internal_name": "Menace",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "PostPlaymaker": {
+              "badge_id": 95,
+              "internal_name": "PostPlaymaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "TripleThreatJuke": {
+              "badge_id": 96,
+              "internal_name": "TripleThreatJuke",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "BallStripper": {
+              "badge_id": 97,
+              "internal_name": "BallStripper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            "Hustler": {
+              "badge_id": 98,
+              "internal_name": "Hustler",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            }
+          },
+          "by_id": [
+            {
+              "badge_id": 0,
+              "internal_name": "NONE",
+              "ui_label_verified": false,
+              "sentinel_name": true,
+              "byte_offset": 1211,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 1,
+              "internal_name": "AlphaDog",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 2,
+              "internal_name": "CatchAndShoot",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 80,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 3,
+              "internal_name": "CornerSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1211,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 4,
+              "internal_name": "Enforcer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 5,
+              "internal_name": "LowFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 24,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 6,
+              "internal_name": "DifficultShots",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 7,
+              "internal_name": "FearlessFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1212,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 8,
+              "internal_name": "HighFriendliness",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 14,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 9,
+              "internal_name": "SmallEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 12,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 10,
+              "internal_name": "Acrobat",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 11,
+              "internal_name": "TearDropper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1213,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 12,
+              "internal_name": "BigEgo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 2,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 13,
+              "internal_name": "HighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 84,
+                "shift_left": 0,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 14,
+              "internal_name": "BrickWall",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 15,
+              "internal_name": "PostSpinTechnician",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1214,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 16,
+              "internal_name": "VeryHighWorkEthic",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 22,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 17,
+              "internal_name": "NegativelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 20,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 18,
+              "internal_name": "PostDropStepper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 19,
+              "internal_name": "PutbackArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1215,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 20,
+              "internal_name": "PositivelyMotivated",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 10,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 21,
+              "internal_name": "Expressive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 8,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 22,
+              "internal_name": "AnkleBreaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 23,
+              "internal_name": "Hyperdrive",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1216,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 88,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 24,
+              "internal_name": "Unpredictable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 30,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 25,
+              "internal_name": "LaidBack",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 28,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 26,
+              "internal_name": "BreakStarter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 27,
+              "internal_name": "LobCityFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1217,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 28,
+              "internal_name": "OnCourtCoach",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 18,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 29,
+              "internal_name": "CareerGymEliminator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 16,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 30,
+              "internal_name": "GlueHands",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 31,
+              "internal_name": "Dimer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1218,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 32,
+              "internal_name": "BigMarketPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 6,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 33,
+              "internal_name": "FairWeatherPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 1,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 4,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 34,
+              "internal_name": "PickPocket",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 2,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 92,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 35,
+              "internal_name": "RimProtector",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1219,
+              "shift": 5,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 36,
+              "internal_name": "TaxAvoiderPlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 0,
+              "mask": 1,
+              "minimum": 0,
+              "maximum": 1,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 26,
+                "arithmetic_shift_right": 30,
+                "signed_width": 2
+              }
+            },
+            {
+              "badge_id": 37,
+              "internal_name": "PickDodger",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 1,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 22,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 38,
+              "internal_name": "ChasedownArtist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1220,
+              "shift": 4,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 18,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 39,
+              "internal_name": "Box",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 14,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 40,
+              "internal_name": "Clamps",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1221,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 10,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 41,
+              "internal_name": "DefensiveLeader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 6,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 42,
+              "internal_name": "BallAndChain",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1222,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 96,
+                "shift_left": 2,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 43,
+              "internal_name": "Interceptor",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 44,
+              "internal_name": "Intimidator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1223,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 45,
+              "internal_name": "HookSpecialist",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 46,
+              "internal_name": "Posterizer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1224,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 47,
+              "internal_name": "OffBallPest",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 48,
+              "internal_name": "ReboundChaser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1225,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 49,
+              "internal_name": "Pogostick",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 50,
+              "internal_name": "PostLockdown",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1226,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 100,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 51,
+              "internal_name": "TirelessDefender",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 52,
+              "internal_name": "MismatchExpert",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1227,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 53,
+              "internal_name": "Worm",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 54,
+              "internal_name": "BackdownPunisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1228,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 55,
+              "internal_name": "RiseUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 56,
+              "internal_name": "LuckyNumber7",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1229,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 57,
+              "internal_name": "Blinders",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 58,
+              "internal_name": "CircusThrees",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1230,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 104,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 59,
+              "internal_name": "FadeAce",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 60,
+              "internal_name": "LimitlessSpotUp",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1231,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 61,
+              "internal_name": "Chef",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 62,
+              "internal_name": "GiantSlayer",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1232,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 63,
+              "internal_name": "ProTouch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 64,
+              "internal_name": "RhythmShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1233,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 65,
+              "internal_name": "SlitheryFinisher",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 66,
+              "internal_name": "BailOut",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1234,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 108,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 67,
+              "internal_name": "Downhill",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 68,
+              "internal_name": "DreamShake",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1235,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 69,
+              "internal_name": "HandlesForDays",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 70,
+              "internal_name": "NeedleThreader",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1236,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 71,
+              "internal_name": "SetShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 72,
+              "internal_name": "QuickFirstStep",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1237,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 73,
+              "internal_name": "SpaceCreator",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 74,
+              "internal_name": "StopAndGo",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1238,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 112,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 75,
+              "internal_name": "TightHandles",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 76,
+              "internal_name": "Unpluckable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1239,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 77,
+              "internal_name": "ClutchShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 78,
+              "internal_name": "Deadeye",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1240,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 79,
+              "internal_name": "Sniper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 80,
+              "internal_name": "StopAndPop",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1241,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 81,
+              "internal_name": "GreenMachine",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 82,
+              "internal_name": "HotSpotHunter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1242,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 116,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 83,
+              "internal_name": "Unstrippable",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 84,
+              "internal_name": "MouseInTheHouse",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1243,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 85,
+              "internal_name": "BulletPasser",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 86,
+              "internal_name": "SpecialDelivery",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1244,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 87,
+              "internal_name": "AnkleBraces",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 88,
+              "internal_name": "LimitlessTakeoff",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1245,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 89,
+              "internal_name": "GraceUnderPressure",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 90,
+              "internal_name": "VolumeShooter",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1246,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 120,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 91,
+              "internal_name": "FloorGeneral",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 28,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 92,
+              "internal_name": "SlipperyOffball",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1247,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 24,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 93,
+              "internal_name": "FastTwitch",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 20,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 94,
+              "internal_name": "Menace",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1248,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 16,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 95,
+              "internal_name": "PostPlaymaker",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 12,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 96,
+              "internal_name": "TripleThreatJuke",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1249,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 8,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 97,
+              "internal_name": "BallStripper",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 0,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 4,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            },
+            {
+              "badge_id": 98,
+              "internal_name": "Hustler",
+              "ui_label_verified": false,
+              "sentinel_name": false,
+              "byte_offset": 1250,
+              "shift": 3,
+              "mask": 7,
+              "minimum": 0,
+              "maximum": 4,
+              "signed_modifier_field": {
+                "dword_offset": 124,
+                "shift_left": 0,
+                "arithmetic_shift_right": 28,
+                "signed_width": 4
+              }
+            }
+          ],
+          "exclusive_groups": [
+            [
+              "LowFriendliness",
+              "HighFriendliness"
+            ],
+            [
+              "SmallEgo",
+              "BigEgo"
+            ],
+            [
+              "HighWorkEthic",
+              "VeryHighWorkEthic"
+            ],
+            [
+              "NegativelyMotivated",
+              "PositivelyMotivated"
+            ]
+          ],
+          "coupled_groups": [
+            [
+              "LowFriendliness",
+              "HighFriendliness"
+            ],
+            [
+              "SmallEgo",
+              "BigEgo"
+            ],
+            [
+              "HighWorkEthic",
+              "VeryHighWorkEthic"
+            ],
+            [
+              "NegativelyMotivated",
+              "PositivelyMotivated"
+            ],
+            [
+              "Expressive",
+              "Unpredictable",
+              "LaidBack"
+            ]
+          ],
+          "field_policy": "Explicit world-editor grant only. NONE unavailable. Internal names do not certify UI or mode semantics."
+        },
+        "maximum_modifier_nodes": 1024,
+        "modifier_node_bytes": 128,
+        "code_signatures": [
+          {
+            "rva": 9945280,
+            "bytes": 1996,
+            "fnv32": 80137102
+          }
+        ]
+      }
     }
   ]
 }
