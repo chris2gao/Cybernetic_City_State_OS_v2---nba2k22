@@ -16,7 +16,7 @@ Source: [FA offer contract](../../../../08_Domain_Applications/Antigravity_GM_En
 
 Current counts:71 actions,63 binding/layout records,60 effective role mappings versus50 historical mappings,15 technical read datasets; all183 requirements retained. Counts are not capability acceptance.
 
-The complete fixed-candidate Managed Run/Inspect is pending execution and receipt retention.
+Managed Run and Inspect passed99 offline tests and source/index checks for exact code candidate `c279e1a25fe51abc43f61d57e3eac94644370a8b`. Actual runner receipts and byte-preserving outputs are retained in MANAGED_CHECKPOINT_012_EVIDENCE.json; later documentation/receipt updates are not another whole-candidate Managed run.
 
 ## Remaining work and authority
 
