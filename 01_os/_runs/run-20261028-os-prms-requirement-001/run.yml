@@ -1,0 +1,42 @@
+task_id: os-prms-global-persistent-role-memory-20261028-001
+schema_version: citystate.os_run.v1_candidate
+objective: "OS全局持久角色与长期记忆系统：Human正式确认A0并启动01b需求结果建模"
+ownership: core
+risk_tier: T2_semantic
+exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
+base_ref: master
+branch: planning/os-prms-a0-confirmed-01b-20261028
+lifecycle: research_only
+stage: 01b_requirement_result_modeling_in_progress
+human_confirmed_A0:
+  version: OS-PRMS-A0-v1-RC01
+  confirmed: true
+  source: 01_任务输入/01_Human正式确认与任务边界_v1.md
+  q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
+requirement_A:
+  version: OS-PRMS-A-v0.1-DRAFT
+  confirmed: false
+  source: 03_需求建模/02_需求结果模型A_v0.1_候选.md
+source_evidence:
+  - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
+  - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
+  - 01_os/03_mechanisms/context_management/方法论_v1.md
+  - 01_os/03_mechanisms/model_routing/README.md
+  - 01_os/03_mechanisms/communication_system/README.md
+allowed_changed_paths:
+  - 01_os/_runs/run-20261028-os-prms-requirement-001/
+prohibitions:
+  - no_master_modification
+  - no_engineering_development
+  - no_runtime_activation
+  - no_PR18_or_REA_task_modification
+verification_plan:
+  - confirm_Human_A0_version_and_exact_Q1_Q19
+  - confirm_no_extra_decisions_and_all_three_risks_preserved
+  - confirm_01b_is_draft_not_Human_approved
+  - remote_readback_and_change_path_audit
+publication:
+  transport: github_api_connector
+  master_integration_confirmation: not_requested
+  head_after_each_commit: updated_from_GitHub
+next_step: 01b_R1_Human_questions_Q20_Q23
