@@ -17,11 +17,11 @@ task_packet:
     - 01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/
     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md
   allowed_changed_paths:
-    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/
-    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/
-    - 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/**
     - 08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
-    - 01_os/07_content/_runs/run-20261028-role-native-execution-system-001/
+    - 01_os/07_content/_runs/run-20261028-role-native-execution-system-001/**
   planned_capability_changes: [M0_ROLE_CAPABILITY_SERVICE, M1_BATCH_EXECUTION, M2_GM_NATIVE, M3_COACH_NATIVE, M4_PLAYER_NATIVE_AND_REQUESTS, M5_COMPLETE_COVERAGE_HANDOFF]
   verification_plan: 01_os/07_content/_runs/run-20261028-role-native-execution-system-001/verification_plan.json
   required_tests: [M0_CONSUMER_BOUNDARY, SOURCE_AND_INDEX_CHECKPOINT]
