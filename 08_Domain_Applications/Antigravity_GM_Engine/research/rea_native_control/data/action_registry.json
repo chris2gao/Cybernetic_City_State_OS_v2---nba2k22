@@ -2846,6 +2846,96 @@
       ],
       "executed_this_task": false,
       "scope_note": null
+    },
+    {
+      "action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "domain": "D01",
+      "title": "执行外部GM已同意的明确资产包（直接原生Process）",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "trade.agreed",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PLAYER",
+          "binding_id": "trade.add_player",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM(request.team_a/team_b) for the supplied asset side",
+            "to_team": "Opposite supplied TEAM",
+            "player": "Exact UID from request.players_a/players_b, resolved on from-team roster"
+          }
+        },
+        {
+          "operation": "RESOLVE_REQUESTED_PICK",
+          "binding_id": "pick.by_id",
+          "arguments": {}
+        },
+        {
+          "operation": "VERIFY_REQUESTED_PICK_UID",
+          "binding_id": "pick.unique_id",
+          "arguments": {}
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "trade.add_pick",
+          "arguments": {
+            "source": "Exact requested pick UID; none when empty"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.context",
+          "arguments": {}
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.process",
+          "arguments": {
+            "proposal": "Same owned1668-byte proposal",
+            "context": "Original no-argument getter result",
+            "output": "Owned int32; nonzero return means Process accepted"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_process_complete.json",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "No executor salary/ability/consent checks. Process intrinsic asset identity checks remain. Player/pick variants beyond actual retained cases remain unverified."
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

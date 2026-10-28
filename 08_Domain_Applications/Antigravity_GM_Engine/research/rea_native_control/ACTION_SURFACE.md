@@ -1,6 +1,8 @@
-# 操作覆盖清单（本轮均未实测）
+# 操作覆盖清单（静态基线与逐例实测分开）
 
-从Human九域模型派生，包含原定46项及静态发现/参考补充。PRIOR_LIVE_SUCCESS仅继承PR12；其他状态不代表新实机通过。部分Reader可返回明确子集，coverage_unknowns保留缺口。
+下表保留PR14静态能力基线。Issue15实测结果按输入记在[data/native_live_validation.json](data/native_live_validation.json)和[VALIDATION_RESULTS.md](VALIDATION_RESULTS.md)，Registry.get/list均加载该证据层。角色模型的取值与执行入口见[机制说明](ROLE_MODEL_MECHANISM_GUIDE.md)。`CALL_LOGIC_RECOVERED`本身不表示实测通过，Reader仍为子集覆盖。
+
+新增默认交易入口：`TRADE_EXECUTE_AGREED_PACKAGE`，输入`team_a,team_b,players_a,players_b,picks_a,picks_b`，handler=`trade.agreed`。外部GM决策完成后，私有提案直接调用原生Process；不调用外围FullCheck。原生`trade.context`为`pointer()` RVA0xbaa7e0；`trade.process`为`int(pointer,pointer,pointer)` RVA0x12e93b0，分别接收提案、原生上下文、私有int32输出。旧交易动作仍指原完整检查路径，不能与新增直接路径混为一个实测结果。
 
 | 动作ID | 域 | 成熟度 | 输入键 | 实现/缺口 |
 |---|---|---|---|---|

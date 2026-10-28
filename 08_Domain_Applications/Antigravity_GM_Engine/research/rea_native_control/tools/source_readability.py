@@ -14,7 +14,8 @@ if node:
   counts['javascript_syntax_parsed']+=1
 ps=shutil.which('powershell.exe');counts['powershell_syntax_parsed']=0
 if ps:
- r=subprocess.run([ps,'-NoProfile','-File',str(root/'tools/parse_powershell.ps1'),'-Path',str(root/'run_native_program.ps1')],capture_output=True,text=True)
- if r.returncode:raise SyntaxError(r.stdout+r.stderr)
- counts['powershell_syntax_parsed']=1
+ for p in root.glob('*.ps1'):
+  r=subprocess.run([ps,'-NoProfile','-File',str(root/'tools/parse_powershell.ps1'),'-Path',str(p)],capture_output=True,text=True)
+  if r.returncode:raise SyntaxError(r.stdout+r.stderr)
+  counts['powershell_syntax_parsed']+=1
 print(json.dumps({'result':'SOURCE_FILES_READABLE_ONLY',**counts,'business_code_imported_or_executed':False,'fixtures_or_functional_tests':False,'game_process_access':False}))

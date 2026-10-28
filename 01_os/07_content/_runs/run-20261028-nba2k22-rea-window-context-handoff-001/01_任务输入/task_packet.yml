@@ -1,0 +1,44 @@
+task_packet:
+  task_id: NBA2K22-REA-WINDOW-CONTEXT-HANDOFF-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T1_standard
+  exact_base_sha: 7c970db264809ef0c82c978fd13953cdee00fb24
+  branch: task/nba2k22-myleague-native-control-validation-20261027
+  objective: Consolidate this window's recorded REA experience, historical experiments, current native-control results, failures, authority clarifications and exact evidence navigation into one standalone Chinese handoff document for a new window. Documentation only; do not execute or repeat game operations.
+  source_evidence:
+    - Human current request to preserve this window context in a document
+    - b16e69727987f29bff5e2ee31ce82891102ab2d9
+    - cfce2c88bcaf38362ff7270242cd982bd9757415
+    - f6b2f5deb73218406f034c5418896c4bfade8e64
+    - 2bdda79c6513f463252d7d01834218edb590eec9
+    - 7c970db264809ef0c82c978fd13953cdee00fb24
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md
+    - 01_os/07_content/_runs/run-20261028-nba2k22-rea-window-context-handoff-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261028-nba2k22-rea-window-context-handoff-001/01_任务输入/verification_plan.json
+  required_tests: [retained-evidence-consistency]
+  verification_scope: Reuse the existing offline retained-observation audit; check document links, historical versus current status and exported file hash without accessing the game. No new functional tests or production changes.
+  prohibitions:
+    - game_attach_hook_native_call_business_write_or_calendar_save_operations
+    - modify_old_raw_evidence_or_existing_runtime_implementation
+    - infer_unknown_mechanisms_or_promote_fixture_static_UI_save_evidence
+    - modify_secrets_global_configuration_or_automatic_memory_files
+    - master_merge_force_push_or_new_task_auto_activation
+  required_completion_pointer: 08_结论/COMPLETION.md
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: false
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_head: 7c970db264809ef0c82c978fd13953cdee00fb24
+  executor_profile:
+    provider: Codex
+    surface: Codex_desktop
+    model: runtime_selected_exact_variant_unexposed
+    reasoning_effort: inherited_runtime_setting_unexposed
+    mode: standard
+    routing_basis: Human directly requested a documentation-only context export from this window.
+    authority: routing_only

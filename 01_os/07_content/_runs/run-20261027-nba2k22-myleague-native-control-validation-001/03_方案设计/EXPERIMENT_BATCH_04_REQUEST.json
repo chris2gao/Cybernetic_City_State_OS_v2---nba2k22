@@ -1,0 +1,15 @@
+{
+  "batch_id":"EXPERIMENT_BATCH_04",
+  "save_context":"Same independent recoverable MyLEAGUE calendar test save; Human requested salary-mismatch execution without restore",
+  "cases":[
+    {"case_id":"ind_before","action_id":"READ_TEAM_ROSTER_BASIC","parameters":{"team_id":20}},
+    {"case_id":"other_before","action_id":"READ_TEAM_ROSTER_BASIC","parameters":{"team_id":1}},
+    {"case_id":"brogdon_before","action_id":"READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES","parameters":{"player_id":7239}},
+    {"case_id":"donte_before","action_id":"READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES","parameters":{"player_id":7716}},
+    {"case_id":"trade_agreed","action_id":"TRADE_EXECUTE_AGREED_PACKAGE","parameters":{"team_a":20,"team_b":1,"players_a":[7239],"players_b":[7716],"picks_a":[],"picks_b":[]},"input_source":"Human expressly delegated mismatch trade test selection, no restore; choose Brogdon IND UID7239 raw21700000 for Donte MIL UID7716 raw4675830 from Batch03 fresh rosters; no valuation/matching/consent check","requires_successful_cases":["ind_before","other_before","brogdon_before","donte_before"]},
+    {"case_id":"ind_after","action_id":"READ_TEAM_ROSTER_BASIC","parameters":{"team_id":20}},
+    {"case_id":"other_after","action_id":"READ_TEAM_ROSTER_BASIC","parameters":{"team_id":1}},
+    {"case_id":"brogdon_after","action_id":"READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES","parameters":{"player_id":7239}},
+    {"case_id":"donte_after","action_id":"READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES","parameters":{"player_id":7716}}
+  ]
+}
