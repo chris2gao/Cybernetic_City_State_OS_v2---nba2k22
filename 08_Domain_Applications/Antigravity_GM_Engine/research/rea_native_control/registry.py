@@ -14,7 +14,7 @@ class NativeActionRegistry:
   action=deepcopy(self.actions[action_id])
   if action_id in self.live_validation:action['live_validation']=deepcopy(self.live_validation[action_id])
   return action
- def list(self,domain=None):return [deepcopy(r) for r in self.actions.values() if domain is None or r['domain']==domain]
+ def list(self,domain=None):return [self.get(r['action_id']) for r in self.actions.values() if domain is None or r['domain']==domain]
  def validate_request(self,request:NativeActionRequest):
   action=self.get(request.action_id);data=deepcopy(dict(request.parameters));schema=action['input_schema'];allowed=set(schema);missing=[k for k,v in schema.items() if v.get('required',True) and k not in data]
   if missing or set(data)-allowed:raise ValueError({'missing':missing,'unknown':sorted(set(data)-allowed)})

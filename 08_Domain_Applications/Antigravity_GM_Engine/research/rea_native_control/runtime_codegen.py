@@ -12,10 +12,11 @@ class NativeProgram:
 def render_program(plan:NativeActionPlan,registry):
  root=Path(__file__).parent;handler=plan.runtime_handler
  handlers={'coach.poe':'coach_poe.js','coach.settings':'coach_settings.js','trade.players':'trade.js','trade.assets':'trade.js','read.team':'read_team.js','read.coach':'read_coach.js','read.player':'read_player.js','training.team_date':'training.js','training.intensity':'training_intensity.js','gameplan.ensure':'gameplan.js','scout.existing_goal':'scout_goal.js','scout.append_goal':'scout_append.js','scout.list':'scout_read.js','scout.info':'scout_read.js','scout.progress':'scout_read.js','scout.budget':'scout_read.js','scout.execute_trip':'scout_execute.js','draft.select':'draft.js','draft.context':'draft.js'}
+ handlers['trade.agreed']='trade.js'
  if handler not in handlers:raise ValueError('No recovered runtime implementation for '+str(handler))
  bindings={step.binding_id:registry.binding(step.binding_id).to_dict() for step in plan.steps if step.binding_id}
  parameters=dict(plan.request);limit=1
- if handler in ['trade.players','trade.assets']:
+ if handler in ['trade.players','trade.assets','trade.agreed']:
   players_a=parameters['players_a'];players_b=parameters['players_b']
   picks=parameters.get('picks_a',[])+parameters.get('picks_b',[])
   if handler=='trade.players' and (picks or len(players_a)!=1 or len(players_b)!=1):raise ValueError('Inherited action is one player per side; choose explicit multi/mixed action for recovered new variants')
@@ -24,6 +25,7 @@ def render_program(plan:NativeActionPlan,registry):
   if any(type(p) is not int or not 0<=p<4294967295 for p in picks):raise ValueError('Native PICK UID32 required')
   if len(players_a)+len(players_b)+len(picks)>18:raise ValueError('Native proposal has18 element slots')
   limit=len(players_a)+len(players_b)+3*len(picks)+2
+  parameters['execution_mode']='AGREED_DIRECT_PROCESS' if handler=='trade.agreed' else 'LEGACY_NATIVE_FULL_CHECK'
  if handler=='training.team_date':
   config=parameters['training'];required={'percentage_per_focus','profile_per_focus','points_per_subfocus','intensity_raw'}
   if set(config)!=required:raise ValueError('Exact native daily training fields required')

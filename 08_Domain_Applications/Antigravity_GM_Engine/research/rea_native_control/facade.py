@@ -32,7 +32,7 @@ class NativeControlFacade:
   return NativeActionResult(request.action_id,outcome,original,r,{'automatic_retry':False,'request_substitution':False,'capability':plan.capability.value,'coverage_unknowns':list(plan.coverage_unknowns)})
  def gm_trade(self,team_a,players_a,team_b,players_b,*,picks_a=None,picks_b=None,request_id=''):
   picks_a=[] if picks_a is None else picks_a;picks_b=[] if picks_b is None else picks_b
-  action='TRADE_MIXED_ASSETS' if (players_a or players_b) and (picks_a or picks_b) else 'TRADE_PICKS' if picks_a or picks_b else 'TRADE_PLAYERS' if len(players_a)==len(players_b)==1 else 'TRADE_MULTI_PLAYER_PACKAGE'
+  action='TRADE_EXECUTE_AGREED_PACKAGE'
   return self.dispatch(NativeActionRequest(action,{'team_a':team_a,'players_a':players_a,'team_b':team_b,'players_b':players_b,'picks_a':picks_a,'picks_b':picks_b},request_id))
  def coach_defense(self,team_id,value,*,expected_before=None,request_id=''):
   data={'team_id':team_id,'value':value}

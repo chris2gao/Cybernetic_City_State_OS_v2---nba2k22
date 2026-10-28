@@ -21,7 +21,8 @@ READ_ACTIONS = {
     'SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS', 'SCOUT_READ_PROSPECT_INFO',
     'SCOUT_READ_PROGRESS_RAW', 'SCOUT_READ_TRIP_BUDGET',
 }
-EFFECT_ACTIONS = {'COACH_SET_KNOWN_CURRENT_SETTINGS', 'SCOUT_ASSIGN_TARGETS'}
+EFFECT_ACTIONS = {'COACH_SET_KNOWN_CURRENT_SETTINGS', 'SCOUT_ASSIGN_TARGETS',
+                  'SCOUT_SET_EXISTING_GOAL_TARGETS', 'TRADE_EXECUTE_AGREED_PACKAGE'}
 
 
 def digest(path):
@@ -169,7 +170,7 @@ def sequence(batch_file, approval_file, runtime):
     """Run only prepared cases, isolating independent reads from failed probes.
 
     Each approved sequence supports at most one exact business submission.
-    Scouting may be natively rejected for capacity; never replace existing goals.
+    Append and explicitly requested replacement are separate actions.
     """
     batch, runtime = load(batch_file), Path(runtime).resolve()
     effects = [c for c in batch['cases'] if c['kind'] == 'NATIVE_EFFECT']
@@ -195,7 +196,9 @@ def sequence(batch_file, approval_file, runtime):
         readable = native.get('outcome') == 'NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED' and details.get('read_only') is True
         data = details.get('data', {})
         if case['action_id'] == 'READ_TEAM_ROSTER_BASIC':
-            readable = readable and data.get('team_id') == 20 and data.get('abbreviation', '').strip().upper() == 'IND'
+            readable = readable and data.get('team_id') == case['parameters']['team_id']
+            if case['parameters']['team_id'] == 20:
+                readable = readable and data.get('abbreviation', '').strip().upper() == 'IND'
         if case['action_id'] == 'READ_COACH_CURRENT':
             readable = readable and data.get('team_id') == 20 and data.get('reciprocal_owner_matches') is True and data.get('reference_slots_null') == [True, True, True]
         if case['action_id'] == 'SCOUT_READ_PROSPECT_INFO':

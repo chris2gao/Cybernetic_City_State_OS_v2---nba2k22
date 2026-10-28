@@ -1312,6 +1312,75 @@
         "goal_bytes": 148,
         "trip_bytes": 960
       }
+    },
+    {
+      "binding_id": "trade.context",
+      "rva": 12232672,
+      "return_type": "pointer",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact original caller ABI; owned proposal/output; actual context getter result"
+      ],
+      "lifecycle": [
+        "Offline active MyLEAGUE context; Process intrinsic Validate remains; FullCheck is not invoked"
+      ],
+      "evidence": [
+        "../../../../../01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/02_研究分析/direct-business/",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 12232672,
+            "bytes": 8,
+            "fnv32": 3685854965
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.process",
+      "rva": 19829680,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        },
+        {
+          "name": "context",
+          "type": "pointer"
+        },
+        {
+          "name": "output",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact original caller ABI; owned proposal/output; actual context getter result"
+      ],
+      "lifecycle": [
+        "Offline active MyLEAGUE context; Process intrinsic Validate remains; FullCheck is not invoked"
+      ],
+      "evidence": [
+        "../../../../../01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/02_研究分析/direct-business/",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19829680,
+            "bytes": 64,
+            "fnv32": 2843881914
+          }
+        ]
+      }
     }
   ]
 }
