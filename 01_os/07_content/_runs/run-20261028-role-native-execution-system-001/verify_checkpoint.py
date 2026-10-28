@@ -96,7 +96,7 @@ assert json.loads((root / delta['path']).read_text(encoding='utf8')) == json.loa
 for mid in ('P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
     module = next(x for x in modules if x['id'] == mid)
     assert 'research/rea_native_control/BADGE_NATIVE_CONTRACT.md' in module['docs']
-assert current['read_dataset_count'] == 13 and len(current['read_datasets']) == 13
+assert current['read_dataset_count'] == 14 and len(current['read_datasets']) == 14
 read = next(row for row in current['read_datasets'] if row['dataset_id'] == 'player.editor_state')
 assert read['native_call_logic_available'] and read['snapshot_provider'] == 'PlayerEditorSnapshotProvider'
 assert read['new_game_capture'] == 'NOT_RUN' and not read['coverage_complete']
@@ -116,4 +116,24 @@ assert {constant['rva'] for constant in getter_source['float_constants']} <= {si
 for mid in ('P03', 'P04', 'P05', 'P06', 'P07', 'P09', 'P10', 'P12'):
     module = next(x for x in modules if x['id'] == mid)
     assert 'research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md' in module['docs']
-print('PASS: sources/index,183 dispositions,13 read datasets, selected Player read/provider and original Getter receipts; full M0-M5 completion NOT asserted')
+delta = json.loads((run / 'CHECKPOINT_010_SOURCE_DELTA.json').read_text(encoding='utf8'))
+assert delta['game_access'] is False
+for source in delta['static_sources'] + [delta['schema']]:
+    raw = (root / source['path']).read_bytes().replace(b'\r\n', b'\n')
+    assert hashlib.sha256(raw).hexdigest() == source['normalized_lf_sha256']
+schema = json.loads((d / 'research/rea_native_control/data/signing_schema.json').read_text(encoding='utf8'))
+assert len(schema['fields']) == 25 and sum(len(values) for values in schema['enums'].values()) == 27
+assert schema['enums']['Status']['6'] == 'ACCEPTED' and schema['enums']['Status']['8'] == 'SIGNED'
+assert not schema['maturity']['dispatch_implemented'] and not schema['maturity']['fresh_offer_lifecycle_qualified']
+signing = json.loads((d / 'research/rea_native_control/data/action_registry.json').read_text(encoding='utf8'))
+sign = next(row for row in signing['actions'] if row['action_id'] == 'SIGN_FREE_AGENT')
+assert sign['runtime_handler'] is None and sign['unknowns']
+read = next(row for row in current['read_datasets'] if row['dataset_id'] == 'signing.team_offers')
+assert read['native_call_logic_available'] and not read['coverage_complete'] and read['new_game_capture'] == 'NOT_RUN'
+binding = next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.pool_read_context')
+assert binding['input_layout']['schema'] == schema
+assert {row['rva'] for row in binding['input_layout']['code_signatures']} == {0x12b6520, 0x12ba5a0}
+for mid in ('P03', 'P04', 'P05', 'P08', 'P09', 'P10', 'P12'):
+    module = next(row for row in modules if row['id'] == mid)
+    assert 'research/rea_native_control/SIGNING_NATIVE_CONTRACT.md' in module['docs']
+print('PASS: sources/index,183 dispositions,14 read datasets, selected Player read/provider, original Getter receipts and signing encoding/pool read; full M0-M5 completion NOT asserted')

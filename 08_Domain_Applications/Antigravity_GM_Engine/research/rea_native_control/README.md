@@ -1,6 +1,6 @@
 # MyLEAGUE Native Control：机制说明与Issue15功能验证
 
-> 当前工程增量：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` 已在历史62动作上增加2项[日期训练局部操作](TRAINING_PATCH_CONTRACT.md)及1项[明确球员分钟的原生执行](ROTATION_MINUTES_CONTRACT.md)，并将此前不可调用的[四槽PlayType动作](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)接入专用原生Setter。另增加2项[属性/倾向显式批量操作](PLAYER_STAT_NATIVE_CONTRACT.md)，恢复原有单字段动作的索引Native Setter。[徽章原版规则接口](BADGE_NATIVE_CONTRACT.md)另接入98个非哨兵字段、明确联动前后状态及有效Getter交叉检查。[显式Player读取与角色快照](PLAYER_EDITOR_READ_CONTRACT.md)补入一个只读动作。当前登记68动作、55绑定/布局（含明确不可调用的签约/父对象复制候选）。[角色能力与批次接口](ROLE_BATCH_EXECUTION.md)保留183项需求、59项有效映射；映射数未因已有动作的恢复而虚增。[发现与排除的调用链](CONTROL_CALLBACK_DISCOVERY.md)有固定静态证据。新增工程仅有离线证据，整体M0–M5尚未完成；下方Issue15内容保留对应历史范围。
+> 当前工程增量：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` 已在历史62动作上增加2项[日期训练局部操作](TRAINING_PATCH_CONTRACT.md)及1项[明确球员分钟的原生执行](ROTATION_MINUTES_CONTRACT.md)，并将此前不可调用的[四槽PlayType动作](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)接入专用原生Setter。另增加2项[属性/倾向显式批量操作](PLAYER_STAT_NATIVE_CONTRACT.md)，恢复原有单字段动作的索引Native Setter。[徽章原版规则接口](BADGE_NATIVE_CONTRACT.md)另接入98个非哨兵字段、明确联动前后状态及有效Getter交叉检查。[显式Player读取与角色快照](PLAYER_EDITOR_READ_CONTRACT.md)补入一个只读动作。[合同编码与球队报价读取](SIGNING_NATIVE_CONTRACT.md)另恢复25字段/27内部枚举和只读报价查询，签约写入仍不可调用。当前登记69动作、56绑定/布局（含明确不可调用的签约/父对象复制候选）。[角色能力与批次接口](ROLE_BATCH_EXECUTION.md)保留183项需求、59项有效映射；映射数未因已有动作的恢复而虚增。[发现与排除的调用链](CONTROL_CALLBACK_DISCOVERY.md)有固定静态证据。新增工程仅有离线证据，整体M0–M5尚未完成；下方Issue15内容保留对应历史范围。
 
 本目录是PC NBA2K22离线MyLEAGUE的函数发现与执行接口研发候选。**角色模型首先阅读[机制与执行说明](ROLE_MODEL_MECHANISM_GUIDE.md)**：可设置项、取值、已知影响、输入和执行方法都从该页进入。外部GM/Coach/Player模型负责分析、协商、检查和决定；本层执行确定请求，不估值、不配平、不开发经营策略。
 

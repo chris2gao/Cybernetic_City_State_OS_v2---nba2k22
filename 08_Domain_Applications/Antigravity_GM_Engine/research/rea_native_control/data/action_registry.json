@@ -392,13 +392,86 @@
           "maximum": 65534
         },
         "contract": {
-          "type": "object"
+          "type": "object",
+          "properties": {
+            "signing_type": {
+              "type": "string",
+              "enum": [
+                "FREE_AGENT"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "option_type": {
+              "type": "string",
+              "enum": [
+                "NO_OPTION",
+                "TEAM_OPTION",
+                "PLAYER_OPTION",
+                "TEAM_OPTION_2"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "contract_type": {
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "TEN_DAY",
+                "HARDSHIP",
+                "TWO_WAY"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "distribution": {
+              "type": "string",
+              "enum": [
+                "CUSTOM",
+                "ASCEND_BIRD",
+                "ASCEND",
+                "FLAT",
+                "DESCEND"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "annual_wages_native": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              },
+              "description": "Six exact Native wage slots, including explicit unused zeros; no default price or unit conversion"
+            },
+            "years_native": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7,
+              "description": "Native3-bit encoding bounds only; legal duration and option-year meaning unverified"
+            },
+            "no_trade_clause": {
+              "type": "boolean",
+              "description": "Explicit supplied clause bit; eligibility unverified"
+            }
+          },
+          "required": [
+            "signing_type",
+            "option_type",
+            "contract_type",
+            "distribution",
+            "annual_wages_native",
+            "years_native",
+            "no_trade_clause"
+          ],
+          "additionalProperties": false,
+          "description": "Private explicit-term encoding only; fresh offer lifecycle and runtime dispatch remain unresolved"
         }
       },
       "capability": "PARTIAL_BINDING",
       "runtime_handler": null,
       "unknowns": [
-        "Private proposal init/enums/flags and status handling need static closure; no automatic wage generation"
+        "Explicit terms/enums encode privately, but fresh-offer lifecycle and safe origin/mode/context remain unqualified",
+        "Offer return1 and ACCEPTED status do not prove completed signing; independent roster/contract/readback and deferred completion remain unresolved"
       ],
       "coverage_unknowns": [],
       "call_sequence": [
@@ -433,10 +506,19 @@
         }
       ],
       "evidence": [
-        "evidence/static/surface-discovery.json"
+        "evidence/static/surface-discovery.json",
+        "evidence/static/types-signing-02.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_native_enums_007.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pool_lookup_and_allocate_003.json",
+        "SIGNING_RECOVERY_PROGRESS.md"
       ],
       "executed_this_task": false,
-      "scope_note": null
+      "scope_note": null,
+      "effect_contract": {
+        "scope": "Caller-decided free-agent terms; no wage generation, forced offer or accepted-status patching",
+        "encoding": "25 registered fields and27 enum values known; current Native currency units/legal terms remain unverified",
+        "dispatch": "UNAVAILABLE_FRESH_LIFECYCLE_NOT_QUALIFIED"
+      }
     },
     {
       "action_id": "RE_SIGN_PLAYER",
@@ -3962,6 +4044,79 @@
         "scope": "Read only with explicit projection; no setter or role-edit grant",
         "source": "Original stat/effective Badge Getters and packed ordered categories, not guessed attribute rounding",
         "unknowns": "No Potential, Native save identity, complete player child objects or inferred UI/persistence"
+      }
+    },
+    {
+      "action_id": "READ_TEAM_SIGNING_OFFERS",
+      "domain": "D02",
+      "title": "指定球队和状态的原生签约报价池只读观察",
+      "decision_roles": [
+        "GM",
+        "WORLD_ADMIN"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "statuses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "OFFERED",
+              "RFA_QUALIFIED",
+              "WAITING",
+              "REJECTED_WAIT",
+              "REJECTED",
+              "ACCEPTED",
+              "TEAM_DECLINED",
+              "SIGNED",
+              "BANNED",
+              "UNRECOGNIZED"
+            ]
+          },
+          "description": "Explicit selected internal statuses; EMPTY never emitted. UNRECOGNIZED explicitly selects raw10..15."
+        },
+        "include_archived": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1,
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.signing_offers",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new game attachment, capture or live acceptance",
+        "Internal pool status is not independent roster/contract signing completion proof",
+        "Currency/UI/term legality, native save/world/phase identity and atomicity/ABA remain unverified",
+        "Team-filtered signing pool only; not a complete contract ledger or pending UI transaction source"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_FILTERED_TEAM_SIGNING_POOL",
+          "binding_id": "sign.pool_read_context"
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-signing-02.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_native_enums_007.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pool_lookup_and_allocate_003.json"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Read only; no allocator/reset, GenerateContract, OfferContract or Process",
+        "source": "Registered44-byte records in the game-owned pool; explicit Team UID, statuses and archive inclusion",
+        "interpretation": "ACCEPTED6 and SIGNED8 remain distinct; status alone is not an independent effect check"
       }
     }
   ],

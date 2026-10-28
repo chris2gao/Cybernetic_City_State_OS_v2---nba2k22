@@ -1,5 +1,7 @@
 # DEV29 游戏机制知识库：研究进度与断点恢复
 
+> Native工程checkpoint010：[签约枚举/字段与报价读取](../../research/rea_native_control/SIGNING_NATIVE_CONTRACT.md)恢复25字段、27内部枚举及六个工资槽；ACCEPTED6不等于SIGNED8。原版GenerateContract会推导/调整条款，acquire/reset可修改球员薪资；均不作为无副作用初始化。仅静态/离线证据，无新游戏捕获/写入、UI或Save验收，原有40族研究成熟度不升级。
+
 ## 2026-10-21 R07 A/B独立复验通过：DEV29研究阶段正式结案
 
 **当前权威状态：`DEV29_RESEARCH_CLOSED_WITH_PC22_NATIVE_IO_GAPS` / `R07_RESEARCH_CLOSED_AFTER_INDEPENDENT_RECHECK`。** [新窗口独立复验和结案报告](../development_reviews/DEV29_R07_TARGETED_INDEPENDENT_RECHECK_AND_DEV29_CLOSURE_20261021.md)已直接核对7卷694/694唯一ID、682/682原始JSON记录、12个人工R01主题（10字面+2已明示章节别名）、40个功能族和86/86锚点、20/20继承R06缺口（P0=8/P1=10/P2=2），以及R06-B十项/R06-C七项仍无直证。与修复前版本比对，八个查询状态已和写入/政策/时间权限分离，其余32族及实时读回、发布、执行和Save成熟度未升级。**以下“待独立复验”段落保留为结案前历史记录，不再作为最新状态。**

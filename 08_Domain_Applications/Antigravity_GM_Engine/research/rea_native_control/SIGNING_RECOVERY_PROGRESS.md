@@ -1,4 +1,6 @@
-# Signing lifecycle recovery — static checkpoint002
+# Signing lifecycle recovery — static checkpoints002–010
+
+Latest checkpoint010: [Signing terms and team-offer contract](SIGNING_NATIVE_CONTRACT.md) restores25 registered fields,27 internal enum values and a filtered read-only team-offer query. Original GenerateContract changes prices/terms, and acquire/reset can call Player salary setters; neither is used as inert preparation. ACCEPTED6 and SIGNED8 are distinct. Explicit private encoding is available, but fresh lifecycle/origin/mode/context and independent completion are unresolved; SIGN_FREE_AGENT remains noncallable. Earlier questions below retain their historical context and are narrowed by the new contract/evidence.
 
 Target build SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`. No live attachment or state change. These are local PE/Capstone observations, **not** a REA Provider decompilation or game execution result.
 

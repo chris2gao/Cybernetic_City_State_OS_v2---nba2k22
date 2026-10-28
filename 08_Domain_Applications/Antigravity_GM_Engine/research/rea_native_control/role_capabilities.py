@@ -78,18 +78,21 @@ class RoleCapabilityService:
         self.player_stat_fields = load_fields(self.registry.root)
         from badge_fields import load_fields as load_badges
         self.badge_fields = load_badges(self.registry.root)
+        from signing_fields import load_schema
+        self.signing_schema = load_schema(self.registry.root)
         self.version = hashlib.sha256(json.dumps({
             'requirements': inventory, 'mapping': crosswalk,
             'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
             'player_stat_fields': self.player_stat_fields,
             'badge_fields': self.badge_fields,
+            'signing_schema': self.signing_schema,
             'read_catalog': json.loads((self.registry.root / 'data/read_catalog.json').read_text(encoding='utf8')),
             'bindings': {k: b.to_dict() for k, b in self.registry.bindings.items()},
             'live': self.registry.live_validation,
             'effective_mapping': self.mapping,
             'service_contract_code': {
                 name: hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest()
-                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py', 'badge_fields.py', 'player_editor_state.py', 'readers.py')},
+                for name in ('role_capabilities.py', 'role_batches.py', 'runtime_codegen.py', 'player_fields.py', 'badge_fields.py', 'player_editor_state.py', 'signing_fields.py', 'readers.py')},
             'runtime_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted((self.registry.root / 'runtime').glob('*.js'))},
         }, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
@@ -211,6 +214,11 @@ class RoleCapabilityService:
     def get_allowed_values(self, action_id, profile):
         desc = self.describe_action(action_id, profile)
         fields = {}
+        if desc['executor_action_id'] == 'SIGN_FREE_AGENT':
+            fields['contract'] = {'status':'RECOVERED_NATIVE_ENCODING_ONLY',
+                'enums':deepcopy(self.signing_schema['enums']),
+                'maturity':deepcopy(self.signing_schema['maturity']),
+                'policy':'Caller decides all terms. No automatic prices, no force/accept flags, no completed signing claim from offer return/status.'}
         from badge_fields import REQUIREMENT, affected_fields
         if action_id == REQUIREMENT:
             available = {name: field for name, field in self.badge_fields['fields'].items()

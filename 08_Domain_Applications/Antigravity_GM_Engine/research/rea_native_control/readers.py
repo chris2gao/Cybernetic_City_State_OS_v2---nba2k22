@@ -22,4 +22,7 @@ class NativeReadFacade:
    from player_editor_state import validate_projection
    if not isinstance(query.parameters,dict):raise ValueError('Exact Player read parameters required')
    validate_projection(self.control.registry.root,query.parameters.get('projection'))
+  if query.dataset_id=='signing.team_offers':
+   from signing_fields import load_schema,validate_pool_query
+   validate_pool_query(query.parameters,load_schema(self.control.registry.root))
   return self.control.read(dataset['action_id'],query.parameters,request_id=query.request_id)

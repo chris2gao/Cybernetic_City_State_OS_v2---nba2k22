@@ -7,6 +7,7 @@ rows=[
  ('team.roster_rotation_finance','READ_TEAM_ROSTER_ROTATION_FINANCE',['team_state','active_rosters_contracts'],'Known roster plus salary/payroll summary; complete rotation/finance not restored'),
  ('player.profile','READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES',['global_players','full_player_models','active_rosters_contracts'],'Native UID lookup, identity and raw contract subset; complete child objects/tendencies/badges UNKNOWN'),
  ('player.editor_state','READ_PLAYER_EDITOR_STATE',[],'Explicit selected153 stat fields,98 non-sentinel raw/effective Badge fields and4 PlayType slots; Potential and unclassified fields excluded; host-bound same-handler read only'),
+ ('signing.team_offers','READ_TEAM_SIGNING_OFFERS',[],'Explicit selected team/status/archive signing records:25 registered fields, six wage slots and27 internal enum values; zero business calls'),
  ('player.statistics','READ_PLAYER_MATCH_SEASON_CAREER_STATS',['games_box_scores_standings'],'Legacy source_extensions.stats_record and player_statistics; native unified match/career getter not restored'),
  ('staff.coach_gameplan_training','READ_COACH_STAFF_GAMEPLAN_TRAINING',['coaching_tactics','staff_pool'],'Current Coach subset; full staff/profile/Gameplan/training query remains incomplete'),
  ('games.standings_awards_history','READ_GAMES_STANDINGS_AWARDS_HISTORY',['games_box_scores_standings'],'Legacy season totals exist; full game/award/history/event coverage UNKNOWN'),

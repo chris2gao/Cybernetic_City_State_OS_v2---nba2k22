@@ -159,7 +159,7 @@ class PlayerEditorRead(unittest.TestCase):
         self.assertEqual(service.get_allowed_values('PLAYER.EDIT.BADGE_SET',profile)['field_values']['field_id']['values'],{})
 
     def test_read_catalog_dispatch_is_inert_without_transport_and_uses_exact_dynamic_budget(self):
-        catalog=NativeReadCatalog();self.assertEqual(len(catalog.list()),13)
+        catalog=NativeReadCatalog();self.assertEqual(len(catalog.list()),14)
         p=self.params(play_types=['2'])
         result=NativeReadFacade(self.facade,catalog).read(NativeReadQuery(DATASET,p))
         self.assertEqual(result.outcome,Outcome.PREPARED)

@@ -19,6 +19,7 @@ def render_program(plan:NativeActionPlan,registry):
  handlers['player.stats']='player_stats.js'
  handlers['player.badges']='player_badges.js'
  handlers['read.player_editor']='read_player_editor.js'
+ handlers['read.signing_offers']='read_signing_offers.js'
  if handler not in handlers:raise ValueError('No recovered runtime implementation for '+str(handler))
  bindings={step.binding_id:registry.binding(step.binding_id).to_dict() for step in plan.steps if step.binding_id}
  parameters=dict(plan.request);limit=1
@@ -95,6 +96,9 @@ def render_program(plan:NativeActionPlan,registry):
   from player_editor_state import validate_projection
   projection=validate_projection(registry.root,parameters['projection'])
   limit=len(projection['attributes'])+len(projection['tendencies'])+len(projection['badges'])
+ if handler=='read.signing_offers':
+  from signing_fields import load_schema,validate_pool_query
+  validate_pool_query(parameters,load_schema(registry.root))
  helper=(root/'runtime/player_modifiers.js').read_text(encoding='utf-8') if handler in {'player.badges','read.player_editor'} else ''
  source=(root/'runtime/common.js').read_text(encoding='utf-8')+'\n'+helper+'\n'+(root/'runtime'/handlers[handler]).read_text(encoding='utf-8')+'\n'+(root/'runtime/gui_once.js').read_text(encoding='utf-8')
  player_fields=json.loads((root/'data/player_contract_fields.json').read_text(encoding='utf-8'))['fields']

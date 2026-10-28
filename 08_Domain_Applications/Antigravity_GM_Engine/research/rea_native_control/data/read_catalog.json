@@ -726,6 +726,64 @@
       ],
       "legacy_sources": [],
       "executed_this_task": false
+    },
+    {
+      "dataset_id": "signing.team_offers",
+      "action_id": "READ_TEAM_SIGNING_OFFERS",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.signing_offers",
+      "available_scope": "Explicit selected team/status/archive signing records:25 registered fields, six wage slots and27 internal enum values; zero business calls",
+      "coverage_complete": false,
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "statuses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "OFFERED",
+              "RFA_QUALIFIED",
+              "WAITING",
+              "REJECTED_WAIT",
+              "REJECTED",
+              "ACCEPTED",
+              "TEAM_DECLINED",
+              "SIGNED",
+              "BANNED",
+              "UNRECOGNIZED"
+            ]
+          },
+          "description": "Explicit selected internal statuses; EMPTY never emitted. UNRECOGNIZED explicitly selects raw10..15."
+        },
+        "include_archived": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1,
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "coverage_unknowns": [
+        "No new game attachment, capture or live acceptance",
+        "Internal pool status is not independent roster/contract signing completion proof",
+        "Currency/UI/term legality, native save/world/phase identity and atomicity/ABA remain unverified",
+        "Team-filtered signing pool only; not a complete contract ledger or pending UI transaction source"
+      ],
+      "evidence": [
+        "evidence/static/types-signing-02.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_native_enums_007.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pool_lookup_and_allocate_003.json"
+      ],
+      "legacy_sources": [],
+      "executed_this_task": false
     }
   ],
   "legacy_profile_inventory": {
