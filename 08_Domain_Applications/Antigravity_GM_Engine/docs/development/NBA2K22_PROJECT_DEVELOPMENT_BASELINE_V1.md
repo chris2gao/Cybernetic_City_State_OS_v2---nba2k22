@@ -1,5 +1,8 @@
 # NBA2K22 项目正式开发基线 V1 — 开发模型必读
 
+> **2026-10-28当前项目总览入口**：[PROJECT_INDEX.md](../../PROJECT_INDEX.md)和[PROJECT_MODULE_REGISTRY_V2.json](PROJECT_MODULE_REGISTRY_V2.json)。此V1为2026-10-22的事实/任务快照，不能取代PR #17集成的REA原生调用、独立世界数据工程分支和PR #18的身份能力→批量指令→Native执行新架构。旧数据库物理Schema和“手动热写”不是当前最终目标；**本次改变执行规划，不变更数据采集链**。
+
+
 **性质**：NBA2K22领域长期工程知识入口；对当前新OS仓库中的候选业务源码做证据索引，**不构成独立源码验收、生产架构迁移或游戏写入许可**。更新日：2026-10-22。
 
 > **仓库与源版本**：正式开发仓库`chris2gao/Cybernetic_City_State_OS_v2---nba2k22`；领域根`08_Domain_Applications/Antigravity_GM_Engine/`；本索引构建在迁移候选`task/nba2k22-source-refresh-20261022@8bdae1700ecd3ed47d2ad197cca86ace388083bb`之上。**截至此基线生成时该候选与规划分支未并入master**；日后新任务必须实时重新读取`master`及各证据分支，不准把当前时间的候选状态写成未来永久事实。此文档所在分支也未自动获得master权威性。
