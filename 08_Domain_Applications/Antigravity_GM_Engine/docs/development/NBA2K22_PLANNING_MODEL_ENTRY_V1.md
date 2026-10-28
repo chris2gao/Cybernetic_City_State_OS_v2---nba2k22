@@ -1,5 +1,9 @@
 # NBA2K22 开发规划模型专用入口 V1
 
+> **2026-10-28最新项目级入口补充**：先按本文件原有OS加载顺序执行，进入NBA2K22业务前**必须读**`../../PROJECT_INDEX.md`、`PROJECT_MODULE_REGISTRY_V2.json`并按影响模块进入旧机制库和REA文档。长期历史开发基线V1是2026-10-22快照，最新研发以PR #17、当前需求规划以PR #18为增量；不要因旧文档没有提及REA而忽略已验实机结果。当前业务执行目标见`ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md`；已决定的数据采集/SQL事实来源暂不因该架构更新而修改。任务完成应按`PROJECT_INDEX_SYNC_CONTRACT_V1.md`在同一PR维护索引。
+
+
+
 **面向**开发规划GPT、架构设计与派单窗口；不授予编程、合并master、进入游戏、跨模型自动调度或DCR访问权限。2026-10-22。
 
 ## 1. 不读全仓的入场协议
