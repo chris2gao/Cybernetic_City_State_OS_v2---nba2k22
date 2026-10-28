@@ -1,0 +1,1562 @@
+{
+  "schema": "nba2k22.role_read_data_requirements.v1",
+  "date": "2026-10-28",
+  "role_data_visibility_rule": "ROLE_SCOPED_NO_HIDDEN_OR_UNDISCLOSED_PLAYER_POTENTIAL_LEAK; current_game_visible_and_authorized_native_access_only",
+  "status": "INITIAL_SOURCE_BASED_SCOPE_NOT_NATIVE_FIELD_COMPLETENESS",
+  "source_r07": "docs/game_mechanics/catalogs/R07_GAME_CAPABILITY_MATURITY_MATRIX_V1.json",
+  "source_read_implementation": "research/rea_native_control/data/read_catalog.json",
+  "prior_data_dimensions": 40,
+  "read_datasets_existing": 12,
+  "read_datasets_full_coverage": 0,
+  "read_capability_groups": [
+    {
+      "id": "READ.F01",
+      "source_group": "F01",
+      "name": "赛程、对阵及GameID",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "TEAM_PLAYER_GAME",
+      "when_to_refresh": "GAME_CALENDAR",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K01.GAME_SCHEDULE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SCHEDULE_CURRENT_GAME"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F02",
+      "source_group": "F02",
+      "name": "逐场球员及球队Game Logs",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "PLAYER_TEAM_GAME",
+      "when_to_refresh": "POST_GAME",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K01.GAME_LOGS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_GAME_LOG"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F03",
+      "source_group": "F03",
+      "name": "逐场双方Box与比赛细节",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "PLAYER_TEAM_GAME",
+      "when_to_refresh": "POST_GAME",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.GAME_BOX_PLAYER"
+        },
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.GAME_BOX_TEAM"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F04",
+      "source_group": "F04",
+      "name": "投篮图、热区及出手类型",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "PLAYER_TEAM_GAME",
+      "when_to_refresh": "POST_GAME_AND_MODE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.SHOT_CHART"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.SHOT_THREE"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F05",
+      "source_group": "F05",
+      "name": "球队赛季统计与战绩",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "TEAM",
+      "when_to_refresh": "GAME_END_AND_MONTH_CLOSE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.PER_GAME"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SEASON_LENGTH"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F06",
+      "source_group": "F06",
+      "name": "球员赛季累计与每场指标",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "PLAYER_TEAM",
+      "when_to_refresh": "GAME_END_AND_MONTH_CLOSE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/guides/K01_K02_GAME_STATS.md",
+          "array": "manual_research_topics",
+          "item_id": "K02.ADVANCED_STATS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+          "array": "entries",
+          "item_id": "PLAYER.attributes.driving_layup"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F07",
+      "source_group": "F07",
+      "name": "全球球员模型池及新秀身份",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "PLAYER_POOL",
+      "when_to_refresh": "FULL_CAPTURE_OR_DRAFT_IMPORT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+          "array": "entries",
+          "item_id": "PLAYER.attributes.driving_layup"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.HISTORIC_DRAFT_PICKER"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F08",
+      "source_group": "F08",
+      "name": "30队名单归属与人数核验",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "ROSTER",
+      "when_to_refresh": "TRADE_AND_FULL_CAPTURE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+          "array": "roster_native_layout",
+          "item_id": "TEAM.roster.regular_ptr_array"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+          "array": "roster_native_layout",
+          "item_id": "TEAM.roster.regular_count"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F09",
+      "source_group": "F09",
+      "name": "教练19项默认设置、POE与体系",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_SELF"
+      ],
+      "object_family": "COACH",
+      "when_to_refresh": "COACH_CHANGE_AND_PRE_GAME",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.COACH_SYSTEM"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.POE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.RUNPLAYS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F10",
+      "source_group": "F10",
+      "name": "整体防守与对手Gameplan",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_SELF"
+      ],
+      "object_family": "COACH",
+      "when_to_refresh": "BEFORE_SPECIFIC_MATCHUP",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.PERSONAL_DEFENSE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.GAME_FEEDBACK"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F11",
+      "source_group": "F11",
+      "name": "Playbook、战术与Freelance",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_SELF"
+      ],
+      "object_family": "COACH",
+      "when_to_refresh": "COACH_OR_PLAYBOOK_CHANGE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.TEAM_PLAYBOOK"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.FREELANCE"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F12",
+      "source_group": "F12",
+      "name": "ACE及真实战术执行反馈",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_SELF"
+      ],
+      "object_family": "COACH",
+      "when_to_refresh": "LIVE_GAME_AND_POST_GAME",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.ACE_RUNTIME"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.GAME_FEEDBACK"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F13",
+      "source_group": "F13",
+      "name": "个人属性、耐久、潜力数据",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF"
+      ],
+      "object_family": "PLAYER",
+      "when_to_refresh": "FULL_CAPTURE_AND_SEASON_PROGRESS",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/PLAYER_FIELD_AND_RIGHTS_MATRIX.json",
+          "array": "entries",
+          "item_id": "PLAYER.attributes.driving_layup"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.DURABILITY_RISK"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F14",
+      "source_group": "F14",
+      "name": "球员倾向及个人PlayTypes",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF"
+      ],
+      "object_family": "PLAYER_COACH",
+      "when_to_refresh": "PRE_GAME_AND_PLAYER_CHANGE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+          "array": "native_slots",
+          "item_id": "tendency.SHOT_THREE_TENDENCY"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K04_ROLE_CAPABILITY_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K04.PLAYER_PLAYTYPES"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F15",
+      "source_group": "F15",
+      "name": "球队/个人训练设置",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_SELF"
+      ],
+      "object_family": "PLAYER_COACH",
+      "when_to_refresh": "TRAINING_SESSION",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.TEAM_TRAINING_INTENSITY"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.PLAYER_FOCUS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F16",
+      "source_group": "F16",
+      "name": "实时体力、疲劳及伤病",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_WHEN_SELF"
+      ],
+      "object_family": "HEALTH",
+      "when_to_refresh": "INJURY_AND_GAME_EVENT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.INJURY_EVENT"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/K06_HEALTH_EVENTS_AND_ROLE_RIGHTS_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.FATIGUE_TIMESCALES"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F17",
+      "source_group": "F17",
+      "name": "自然成长与退化历史",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF"
+      ],
+      "object_family": "PLAYER",
+      "when_to_refresh": "SEASON_PROGRESS_OR_OFFSEASON",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/K06_TRAINING_ROLE_INPUTS_RESEARCH_V1.json",
+          "array": "capabilities",
+          "item_id": "K06.GAME_NATURAL_GROWTH"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.CAREER_PRIOR_SEASONS_STATS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F18",
+      "source_group": "F18",
+      "name": "Loyalty/财务偏好/人格徽章参考",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF"
+      ],
+      "object_family": "PLAYER",
+      "when_to_refresh": "PLAYER_STATUS_CHANGE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json",
+          "array": "native_motivations",
+          "item_id": "Loyalty"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R04C_PLAYER_MOTIVATIONS_PERSONALITY_V1.json",
+          "array": "personality_candidates",
+          "item_id": "PERSONALITY_REFERENCE_01"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F19",
+      "source_group": "F19",
+      "name": "合同条款、选项与Bird状态",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF"
+      ],
+      "object_family": "CONTRACT",
+      "when_to_refresh": "TRADE_CONTRACT_EVENT_OFFSEASON",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "PLAYER.contract.bird_years"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "PLAYER.contract.contract_year_1"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F20",
+      "source_group": "F20",
+      "name": "球队薪资与市场可支出能力",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "FINANCE",
+      "when_to_refresh": "ROSTER_TRADE_AND_OFFSEASON",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "TEAM_FINANCE.total_salary"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "TEAM_FINANCE.budget"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F21",
+      "source_group": "F21",
+      "name": "自由市场与真实签约",
+      "consumer_roles": [
+        "GM",
+        "COACH_IF_TEAM",
+        "PLAYER_IF_PUBLIC"
+      ],
+      "object_family": "CONTRACT",
+      "when_to_refresh": "OFFSEASON_FREE_AGENCY",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "FA.UFA"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.FA_MORATORIUM"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.FA_CONTRACT_OFFERS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F22",
+      "source_group": "F22",
+      "name": "普通球员交易与审批执行",
+      "consumer_roles": [
+        "GM",
+        "COACH_IF_TEAM",
+        "PLAYER_IF_PUBLIC"
+      ],
+      "object_family": "TRANSACTION",
+      "when_to_refresh": "TRADE_WINDOW",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "TRADE.SELECT_PLAYERS_OR_PICKS_AND_MAKE_OFFER"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json",
+          "array": "roster_native_layout",
+          "item_id": "TEAM.roster.regular_ptr_array"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F23",
+      "source_group": "F23",
+      "name": "简单选秀权权属及V4规则",
+      "consumer_roles": [
+        "GM",
+        "COACH_IF_TEAM",
+        "PLAYER_IF_PUBLIC"
+      ],
+      "object_family": "DRAFT",
+      "when_to_refresh": "DRAFT_AND_TRADE_EVENT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "data_research_rows",
+          "item_id": "DRAFT_ASSET.current_owner_ptr"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "TRADE.AVAILABLE_ASSETS_AND_MARKET_LIST"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F24",
+      "source_group": "F24",
+      "name": "Draft Class导入、轮回与真实选秀",
+      "consumer_roles": [
+        "GM",
+        "COACH_IF_TEAM",
+        "PLAYER_IF_PUBLIC"
+      ],
+      "object_family": "DRAFT",
+      "when_to_refresh": "DRAFT_STAGE_AND_COMPLETE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.PROJECT_DRAFT_ROTATION"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.HISTORIC_DRAFT_CYCLE_STEP"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "DRAFT.HISTORIC_DRAFT_CLASS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F25",
+      "source_group": "F25",
+      "name": "Scouting、Mock Draft及不完全信息",
+      "consumer_roles": [
+        "GM",
+        "COACH_IF_TEAM",
+        "PLAYER_IF_PUBLIC"
+      ],
+      "object_family": "SCOUT",
+      "when_to_refresh": "SCOUTING_AND_DRAFT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "SCOUT.DRAFTEXPRESS_RANK"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.DRAFT_PROSPECT_SCOUTING"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F26",
+      "source_group": "F26",
+      "name": "员工、职位、薪资及雇聘",
+      "consumer_roles": [
+        "GM",
+        "COACH_IF_TEAM",
+        "PLAYER_IF_PUBLIC"
+      ],
+      "object_family": "STAFF",
+      "when_to_refresh": "STAFF_CHANGE_OFFSEASON",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R05C_STAFF_SCOUT_DRAFT_MECHANICS_V1.json",
+          "array": "staff.native_fields",
+          "item_id": "STAFF.position"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R05D_FRANCHISE_CAPABILITIES_ATLAS_V1.json",
+          "array": "action_research_rows",
+          "item_id": "STAFF.HIRE"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F27",
+      "source_group": "F27",
+      "name": "Setup、Game Speed与世界设置",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "SAVE_CREATION_OR_SETUP_CHANGE",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "registry_candidates",
+          "item_id": "settings.game_settings.game_speed"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SETUP.GAME_SPEED"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F28",
+      "source_group": "F28",
+      "name": "日历Simulation引擎设置",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "CALENDAR_SIM",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.TEAM_PACE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.SHOT_THREE"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F29",
+      "source_group": "F29",
+      "name": "3D Gameplay与USER/CPU滑块",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "LIVE_3D_PRE_GAME",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.GAMEPLAY.3PT_SHOT_SUCCESS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.GAMEPLAY.SPEED_WITH_BALL_MAX"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F30",
+      "source_group": "F30",
+      "name": "Normalize Stats/Minutes与统计冲突",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "POST_GAME_AND_SIMCAST",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_MINUTES"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SETUP.NORMALIZE_PLAYED_TO_SIM_STATS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F31",
+      "source_group": "F31",
+      "name": "3D、SimCast、QuickSim模式事实",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "EACH_GAME",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SIMCAST_JUMPIN"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+          "array": "player_facing_menu_concepts",
+          "item_id": "R06A.SIMULATION.TEAM_PACE"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F32",
+      "source_group": "F32",
+      "name": "游戏时间、阶段、数据批次身份",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "EACH_CAPTURE_AND_PHASE_TRANSITION",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.NATIVE_GAME_DATE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.DEV14_SAVE_IDENTITY"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F33",
+      "source_group": "F33",
+      "name": "奖项、名人堂与历届获奖者",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "HISTORY",
+      "when_to_refresh": "END_SEASON_AND_HISTORY_QUERY",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.PAST_MVPS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.ROOKIE_OF_YEAR"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.AWARD_HISTORY_PERSISTENCE"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F34",
+      "source_group": "F34",
+      "name": "NBA纪录、生涯纪录及队史",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "HISTORY",
+      "when_to_refresh": "RECORD_EVENT_AND_HISTORY_QUERY",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.NBA_RECORDS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.CAREER_RECORD"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F35",
+      "source_group": "F35",
+      "name": "社交媒体、实力榜和新闻",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "MEDIA",
+      "when_to_refresh": "MEDIA_EVENT_AND_RANKING",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.SOCIAL_FEED"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.POWER_RANKINGS"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F36",
+      "source_group": "F36",
+      "name": "League Rule Changes与生效规则",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "WORLD",
+      "when_to_refresh": "OFFSEASON_RULE_EVENT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.RULE_PROPOSALS"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.ACTIVE_RULES"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F37",
+      "source_group": "F37",
+      "name": "Save、Autosave、重载和SteamCloud",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "SAVE",
+      "when_to_refresh": "SAVE_AND_RELOAD_EVENT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.SAVE_COMMAND"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.AUTOSAVE_MENU"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.STEAM_CLOUD_SYNC"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F38",
+      "source_group": "F38",
+      "name": "历史比赛、交易、选秀跨年留存",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "HISTORY",
+      "when_to_refresh": "AFTER_SEASON_TRANSITION",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_GAME_BOXSCORE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_TRADE_HISTORY"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.PAST_DRAFT_BOARD"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F39",
+      "source_group": "F39",
+      "name": "外挂全量采集/SQLite/发布与重发",
+      "consumer_roles": [
+        "WORLD_ADMIN",
+        "GM",
+        "COACH"
+      ],
+      "object_family": "PROJECT",
+      "when_to_refresh": "USER_TRIGGERED_FULL_VERIFIED_V1",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.FULL_VERIFIED_CAPTURE"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K11.DEV14_SAVE_IDENTITY"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    },
+    {
+      "id": "READ.F40",
+      "source_group": "F40",
+      "name": "三套时间轴、历史参考和历史重力",
+      "consumer_roles": [
+        "GM",
+        "COACH",
+        "PLAYER_SELF_OR_PUBLIC"
+      ],
+      "object_family": "WORLDLINE",
+      "when_to_refresh": "HISTORICAL_DRAFT_OR_APPROVED_WORLDLINE_EVENT",
+      "read_value_contract": [
+        "native_identity_or_key",
+        "value_and_original_unit",
+        "save_and_season_id",
+        "capture_time",
+        "source_status",
+        "field_visibility",
+        "known_fields_and_coverage_gaps"
+      ],
+      "current_read_status": "RESEARCH_COVERAGE_GROUP_NOT_COMPLETE_NATIVE_READER",
+      "evidence_refs": [
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.ERA_MODE_2K23"
+        },
+        {
+          "path": "docs/game_mechanics/catalogs/R06B_HISTORY_ERA_AWARDS_MEDIA_RESEARCH_V1.json",
+          "array": "fields",
+          "item_id": "K10.PROJECT_DRAFT_ROTATION"
+        }
+      ],
+      "external_biased_preference_excluded": true
+    }
+  ],
+  "baseline_read_datasets": [
+    {
+      "dataset_id": "league.settings_calendar",
+      "action_id": "READ_LEAGUE_SETTINGS_AND_CALENDAR",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "League settings, save season/calendar/phase; existing source declarations only",
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ]
+    },
+    {
+      "dataset_id": "team.roster_rotation_finance",
+      "action_id": "READ_TEAM_ROSTER_ROTATION_FINANCE",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Known roster plus salary/payroll summary; complete rotation/finance not restored",
+      "unknowns": [
+        "Rotation/minutes, full financial subobjects and complete pick holdings are not provided by this subset"
+      ]
+    },
+    {
+      "dataset_id": "player.profile",
+      "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Native UID lookup, identity and raw contract subset; complete child objects/tendencies/badges UNKNOWN",
+      "unknowns": [
+        "Only identity/current-contract teams and existing contract profile fields emitted; full ability/tendency/badge child objects not bound"
+      ]
+    },
+    {
+      "dataset_id": "player.statistics",
+      "action_id": "READ_PLAYER_MATCH_SEASON_CAREER_STATS",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Legacy source_extensions.stats_record and player_statistics; native unified match/career getter not restored",
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ]
+    },
+    {
+      "dataset_id": "staff.coach_gameplan_training",
+      "action_id": "READ_COACH_STAFF_GAMEPLAN_TRAINING",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Current Coach subset; full staff/profile/Gameplan/training query remains incomplete",
+      "unknowns": [
+        "Other staff, complete Gameplan/training subobjects remain separate unresolved readers"
+      ]
+    },
+    {
+      "dataset_id": "games.standings_awards_history",
+      "action_id": "READ_GAMES_STANDINGS_AWARDS_HISTORY",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Legacy season totals exist; full game/award/history/event coverage UNKNOWN",
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ]
+    },
+    {
+      "dataset_id": "draft.assets_class_reports",
+      "action_id": "READ_DRAFT_CLASS_PICKS_AND_SCOUT_REPORTS",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Separate prospect/current-pick readers below; complete asset list/report facade not restored",
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ]
+    },
+    {
+      "dataset_id": "draft.current_pick",
+      "action_id": "READ_CURRENT_DRAFT_PICK",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_complete": false,
+      "available_scope": "Native draft type/round/slot, exact pick UID, owner and selected player; current UI phase not implied",
+      "unknowns": []
+    },
+    {
+      "dataset_id": "scout.current_public_prospects",
+      "action_id": "SCOUT_LIST_DRAFT_PROSPECTS",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_complete": false,
+      "available_scope": "Current class150 maximum; unhidden PLAYER identity only",
+      "unknowns": []
+    },
+    {
+      "dataset_id": "scout.prospect_info",
+      "action_id": "SCOUT_READ_PROSPECT_INFO",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Public identity/global rank bytes only; displayed ranks and ability/report getter remain UNKNOWN",
+      "unknowns": [
+        "Visible ability estimate/presentation getters unresolved; only public identity and raw public-ranking arrays available"
+      ]
+    },
+    {
+      "dataset_id": "scout.progress_report",
+      "action_id": "SCOUT_READ_PROGRESS_REPORT",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Per-team ScoutingPoints raw, workout/medical flags; report/disclosure conversion UNKNOWN",
+      "unknowns": [
+        "Game report text and revealed-rating/disclosure presentation not mapped; raw team scouting progress only"
+      ]
+    },
+    {
+      "dataset_id": "scout.staff_capacity_schedule",
+      "action_id": "SCOUT_READ_STAFF_CAPACITY_SCHEDULE",
+      "capability": "PARTIAL_BINDING",
+      "coverage_complete": false,
+      "available_scope": "Native remaining-trip budget and goal count only; staff schedule/capacity subfields UNKNOWN",
+      "unknowns": [
+        "Staff capability/schedule unavailable; only trip budget and existing goal count"
+      ]
+    }
+  ],
+  "field_level_next_step": "Map native field/JSON columns and per-character access, no guessing of real values."
+}

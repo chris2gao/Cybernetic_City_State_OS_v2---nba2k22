@@ -1,0 +1,3333 @@
+{
+  "schema": "nba2k22.role_native_execution_inventory.v1",
+  "task": "NBA2K22_ROLE_EXECUTION_REQUIREMENTS_MODELING",
+  "date": "2026-10-28",
+  "status": "FIRST_PASS_SCOPE_FROM_PREVIOUS_GAME_MECHANICS_AND_REA_NOT_HUMAN_FROZEN",
+  "source_commit": "84195f471354400a75877f16c3c3de8a3af6b5b2",
+  "authority": {
+    "gameplay_sources": {
+      "GM": "docs/game_mechanics/guides/K07_K08_K09_FRANCHISE_OPERATIONS.md",
+      "COACH": "docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "TRAIN": "docs/game_mechanics/guides/K06_TRAINING_HEALTH_GROWTH.md",
+      "PLAYER": "docs/game_mechanics/guides/K03_K12_PLAYER_PROFILE_AGENCY.md",
+      "WORLD": "docs/research/NBA2K22_PC_MYLEAGUE_PLAYER_OPERATIONS_AND_SYSTEMS_GUIDE_V1.md",
+      "R07": "docs/game_mechanics/catalogs/R07_GAME_CAPABILITY_MATURITY_MATRIX_V1.json",
+      "NATIVE": "research/rea_native_control/ROLE_MODEL_MECHANISM_GUIDE.md"
+    },
+    "generation_framing": "HUMAN_UNIFIED_FRANCHISE_MECHANICS_SOURCE_TREATMENT",
+    "binary_binding": "TARGET_PC22_ONLY",
+    "decision_boundary": "EXTERNAL_MODELS_SELECT_NATIVE_LAYER_EXECUTES",
+    "source_documents_not_modified": true
+  },
+  "maturity_terms": {
+    "LIVE_EXACT": "该业务的某具体输入有前期实机独立读取证据；不推广至所有参数",
+    "STATIC": "静态源码已经恢复代表性Native调用链；此项未新实测",
+    "STATIC_REJECTION_OBSERVED": "追加原生调用曾因满槽返回拒绝；没有证明可追加成功",
+    "READ_SUBSET": "某个已知Reader可读取部分字段；非全部数据覆盖",
+    "PARTIAL": "有函数或编辑器线索但调用合同缺关键步骤",
+    "PROJECT_NATIVE": "旧研究存在原生字段枚举/可读写线索；执行函数尚不完整",
+    "RESEARCH": "游戏机制/页面参考，尚未确认PC22Native调用入口",
+    "READ_RESEARCH": "有查询需求或攻略页面，但原生Reader未完整恢复",
+    "EXTERNAL": "外挂角色之间消息或意图，不是原生游戏Setter",
+    "WORLD_EDIT": "游戏管理员/世界线编辑，不等同正常球员自主操作"
+  },
+  "group_count": 14,
+  "operation_count": 183,
+  "groups": [
+    {
+      "id": "GM.ROSTER",
+      "title": "GM：名单、阵容与人员归属",
+      "actor": "GM,COACH",
+      "src": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "count": 12
+    },
+    {
+      "id": "GM.TRADE",
+      "title": "GM：球员与选秀权交换",
+      "actor": "GM",
+      "src": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "count": 10
+    },
+    {
+      "id": "GM.CONTRACT",
+      "title": "GM：签约、合同与自由市场",
+      "actor": "GM,PLAYER",
+      "src": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "count": 16
+    },
+    {
+      "id": "GM.STAFF",
+      "title": "GM：教练与员工市场",
+      "actor": "GM",
+      "src": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "count": 8
+    },
+    {
+      "id": "GM.SCOUT",
+      "title": "GM：选秀球探与候选管理",
+      "actor": "GM",
+      "src": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "count": 14
+    },
+    {
+      "id": "GM.DRAFT",
+      "title": "GM：选秀大会及选秀班",
+      "actor": "GM",
+      "src": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "count": 10
+    },
+    {
+      "id": "COACH.STRATEGY",
+      "title": "教练：攻防设置和体系",
+      "actor": "COACH,GM",
+      "src": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "count": 16
+    },
+    {
+      "id": "COACH.PLAYBOOK",
+      "title": "教练：战术手册、战术和Freelance",
+      "actor": "COACH,GM",
+      "src": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "count": 18
+    },
+    {
+      "id": "COACH.DEFENSE",
+      "title": "教练：对指定对手球员的个人防守",
+      "actor": "COACH",
+      "src": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "count": 18
+    },
+    {
+      "id": "COACH.ROTATION",
+      "title": "教练：出场阵容、分钟与角色",
+      "actor": "COACH",
+      "src": "COACH",
+      "phase": "TEAM_ROTATION",
+      "count": 10
+    },
+    {
+      "id": "TRAIN",
+      "title": "团队/个人训练、康复与导师",
+      "actor": "GM,COACH,PLAYER",
+      "src": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "count": 14
+    },
+    {
+      "id": "PLAYER.EDIT",
+      "title": "球员原生属性/球风/资料编辑（独立于人格决策）",
+      "actor": "GM,COACH,PLAYER",
+      "src": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "count": 16
+    },
+    {
+      "id": "PLAYER.AGENCY",
+      "title": "球员人格的请求与回应（非原生编辑器）",
+      "actor": "PLAYER,GM,COACH",
+      "src": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "count": 9
+    },
+    {
+      "id": "WORLD",
+      "title": "世界线与比赛/赛季操作（非默认赋予任何角色）",
+      "actor": "WORLD_ADMIN",
+      "src": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "count": 12
+    }
+  ],
+  "operations": [
+    {
+      "id": "GM.ROSTER.LIST_MOVE",
+      "label": "指定球员进入/离开球队有效名单",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "roster_slot",
+        "destination"
+      ],
+      "effect": "原生名单归属变更",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.STARTER_SET",
+      "label": "指定首发五人",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "ordered_player_uids",
+        "positions"
+      ],
+      "effect": "更新首发",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.BENCH_ASSIGN",
+      "label": "指定替补及候补",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "role"
+      ],
+      "effect": "更新替补角色",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.POSITION_ASSIGN",
+      "label": "指定球员位置或副位置",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "primary_position",
+        "secondary_position"
+      ],
+      "effect": "更新球员位置",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.ROLE_ASSIGN",
+      "label": "指定球队角色/定位",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "role_id"
+      ],
+      "effect": "更新角色字段",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.ROSTER_SLOT_SWAP",
+      "label": "名单槽位调换",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "from_slot",
+        "to_slot"
+      ],
+      "effect": "调换名单排序",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.G_LEAGUE_ASSIGN",
+      "label": "下放G League",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid"
+      ],
+      "effect": "更新所属及双向关系",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.G_LEAGUE_RECALL",
+      "label": "召回G League球员",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid"
+      ],
+      "effect": "回归球队名单",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.INACTIVE_SET",
+      "label": "设置激活/非激活状态",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "active"
+      ],
+      "effect": "更新激活名册",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.WAIVE",
+      "label": "裁员/放弃指定球员",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "waiver_mode"
+      ],
+      "effect": "原版裁员事务",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.TEAM_ASSIGN_CONTRACT",
+      "label": "基于已同意合同指定归属",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "contract_ref"
+      ],
+      "effect": "原版签约归属",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.ROSTER.ROSTER_LEGALITY_READ",
+      "label": "读取名单占用与限制",
+      "actor": [
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "team_id"
+      ],
+      "effect": "球队可用槽、当前人数、约束",
+      "baseline_status": "READ_SUBSET",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.EXECUTE_AGREED",
+      "label": "直接执行已同意交易包",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_a",
+        "team_b",
+        "players_a",
+        "players_b",
+        "picks_a",
+        "picks_b"
+      ],
+      "effect": "原生Process处理双方给定资产",
+      "baseline_status": "LIVE_EXACT",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.MULTI_PLAYER",
+      "label": "多球员资产包交易",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_a",
+        "team_b",
+        "players_a",
+        "players_b"
+      ],
+      "effect": "原生交易提交",
+      "baseline_status": "STATIC",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.PICK_ONLY",
+      "label": "选秀权交换",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_a",
+        "team_b",
+        "picks_a",
+        "picks_b"
+      ],
+      "effect": "原生签权转移",
+      "baseline_status": "STATIC",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.MIXED",
+      "label": "球员加选秀权混合交换",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_a",
+        "team_b",
+        "players_a",
+        "players_b",
+        "picks_a",
+        "picks_b"
+      ],
+      "effect": "原生交易提交",
+      "baseline_status": "STATIC",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.THREE_TEAM",
+      "label": "三方交易指定资产流",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "teams",
+        "directed_assets"
+      ],
+      "effect": "三队交易事务",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.TRADE_BLOCK_ADD",
+      "label": "球员/签权列入交易货架",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "asset_uid",
+        "offer_meta"
+      ],
+      "effect": "更新可交易资产列表",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.TRADE_BLOCK_REMOVE",
+      "label": "移出交易货架",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "asset_uid"
+      ],
+      "effect": "移除交易候选",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.PICK_ASSIGNMENT",
+      "label": "指定选秀权权属操作",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "pick_uid",
+        "from_team",
+        "to_team"
+      ],
+      "effect": "原生签权归属变化",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.FINDER_READ",
+      "label": "读取游戏的Trade Finder候选",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "asset_uid"
+      ],
+      "effect": "返回游戏本身列出的提案",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.TRADE.TRADE_HISTORY_READ",
+      "label": "查看实际成交记录",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "season_id",
+        "team_id"
+      ],
+      "effect": "返回交易历史/联盟消息",
+      "baseline_status": "READ_RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_ALLOWED_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.FA_SIGN",
+      "label": "签约指定自由球员",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "years",
+        "annual_salary",
+        "clauses"
+      ],
+      "effect": "原生签约事务",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.EXTEND",
+      "label": "指定球员续约",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "years",
+        "salary_schedule",
+        "options"
+      ],
+      "effect": "更新续约合同",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.RE_SIGN",
+      "label": "原队重新签约",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "contract_terms"
+      ],
+      "effect": "合同与名单生效",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.CONTRACT_OFFER",
+      "label": "发出指定合同报价",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "terms"
+      ],
+      "effect": "生成原版报价",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.OFFER_ACCEPT_OR_REJECT",
+      "label": "对已发报价接受/拒绝",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "offer_uid",
+        "decision"
+      ],
+      "effect": "原生报价状态变化",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.TEAM_OPTION",
+      "label": "执行球队选项",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "contract_uid",
+        "accept"
+      ],
+      "effect": "下一年合同有效性",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.PLAYER_OPTION",
+      "label": "执行球员选项",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "contract_uid",
+        "accept"
+      ],
+      "effect": "球员合同选项生效",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.QUALIFYING_OFFER",
+      "label": "向指定RFA提供资质报价",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "offer_terms"
+      ],
+      "effect": "资质报价登记",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.MATCH_RFA",
+      "label": "匹配指定报价",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "offer_uid"
+      ],
+      "effect": "原版报价匹配",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.RENOUNCE_RIGHTS",
+      "label": "放弃指定自由球员权利",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "right_kind"
+      ],
+      "effect": "更新工资帽保留/签约权利",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.CAP_HOLD_RELEASE",
+      "label": "解除指定工资帽保留额",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "cap_hold_uid"
+      ],
+      "effect": "更新可用空间",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.HARDSHIP_SIGN",
+      "label": "按明确条款执行困难合同",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "contract_terms"
+      ],
+      "effect": "特殊合同事务",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.TWO_WAY_SIGN",
+      "label": "双向合同签约",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "contract_terms"
+      ],
+      "effect": "双向球员合同归属",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.ROOKIE_SIGN",
+      "label": "新秀合同签约",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "pick_uid",
+        "contract_terms"
+      ],
+      "effect": "新秀加盟与合同登记",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.CONTRACT_EDIT",
+      "label": "管理员编辑合同存值",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "contract_uid",
+        "field_id",
+        "new_value"
+      ],
+      "effect": "世界编辑，不是谈判自动执行",
+      "baseline_status": "WORLD_EDIT",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.CONTRACT.CONTRACT_RENEGOTIATE",
+      "label": "修改/替换待处理报价参数",
+      "actor": [
+        "GM",
+        "PLAYER"
+      ],
+      "input": [
+        "offer_uid",
+        "new_terms"
+      ],
+      "effect": "报价对象更新",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "FREE_AGENCY_OR_CONTRACT_WINDOW",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.STAFF_POOL_READ",
+      "label": "查看可聘员工池",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "role_code",
+        "filter"
+      ],
+      "effect": "人员候选及属性",
+      "baseline_status": "READ_RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.HIRE",
+      "label": "雇用指定员工",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "staff_uid",
+        "role_code",
+        "salary",
+        "years"
+      ],
+      "effect": "原生员工合同与岗位关联",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.FIRE",
+      "label": "解雇指定员工",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "staff_uid"
+      ],
+      "effect": "解除岗位与合同",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.EXTEND",
+      "label": "续聘指定员工",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "staff_uid",
+        "contract_terms"
+      ],
+      "effect": "更新职员合同",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.REASSIGN",
+      "label": "调整员工岗位",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "staff_uid",
+        "role_code"
+      ],
+      "effect": "球队岗位归属",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.REPLACE_HEAD_COACH",
+      "label": "更换球队主教练",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "new_coach_uid"
+      ],
+      "effect": "主教练关联及原版业务刷新",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.STAFF_BUDGET_SET",
+      "label": "设置员工预算（如可用）",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "budget_value"
+      ],
+      "effect": "原生员工预算状态",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.STAFF.STAFF_ATTRIBUTE_SET",
+      "label": "管理员调整职员能力字段",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "staff_uid",
+        "field_key",
+        "value"
+      ],
+      "effect": "职员能力/特性存值变更",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "IN_SEASON_OR_OFFSEASON",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.PROSPECT_LIST",
+      "label": "查询本届选秀候选人",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "draft_class_uid",
+        "filters"
+      ],
+      "effect": "当前可见候选身份列表",
+      "baseline_status": "READ_SUBSET",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.PROSPECT_PROFILE",
+      "label": "查询候选球员公开资料",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "prospect_uid",
+        "team_id"
+      ],
+      "effect": "已公开信息",
+      "baseline_status": "READ_SUBSET",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.GOAL_REPLACE",
+      "label": "替换已有球探目标槽",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "goal_index",
+        "prospect_uids"
+      ],
+      "effect": "原生既有Goal记录目标变更",
+      "baseline_status": "LIVE_EXACT",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.GOAL_APPEND",
+      "label": "新增球探任务",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "prospect_uids",
+        "priority"
+      ],
+      "effect": "向Trip添加Goal；满槽可能拒绝",
+      "baseline_status": "STATIC_REJECTION_OBSERVED",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_EXECUTE",
+      "label": "执行指定已配置球探行程",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "trip_ref"
+      ],
+      "effect": "消耗游戏考察行动并更新进度",
+      "baseline_status": "STATIC",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_PROGRESS",
+      "label": "查询考察进度",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "prospect_uid"
+      ],
+      "effect": "raw进度和已解锁的状态",
+      "baseline_status": "READ_SUBSET",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_REPORT",
+      "label": "查询已获得球探报告",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "prospect_uid"
+      ],
+      "effect": "真实可见评估/报告",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_PRIORITY",
+      "label": "指定球探任务优先级",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "goal_index",
+        "priority_raw"
+      ],
+      "effect": "更新任务优先级",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_AUTOMATION",
+      "label": "指定球探自动/手动",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "automation_value"
+      ],
+      "effect": "球探自动化配置",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.SCOUT_STAFF_ASSIGN",
+      "label": "指派指定球探人员",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "scout_uid",
+        "trip_or_region"
+      ],
+      "effect": "更改人员及考察任务关联",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.WORKOUT_ASSIGN",
+      "label": "安排新秀试训",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "prospect_uids",
+        "workout_slot"
+      ],
+      "effect": "赛前试训业务",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.MEDICAL_REPORT",
+      "label": "读取候选体测/体检",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "prospect_uid"
+      ],
+      "effect": "当前可见结果",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.BIG_BOARD_VIEW",
+      "label": "查询选秀大名单/自定义次序",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "draft_class_uid"
+      ],
+      "effect": "当前名单与用户顺位",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.SCOUT.BIG_BOARD_SET",
+      "label": "按给定顺位更新球队选秀名单",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "ordered_prospect_uids"
+      ],
+      "effect": "原生名单排序",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "BEFORE_AND_DURING_DRAFT",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.CURRENT_PICK_READ",
+      "label": "查询当前大会选秀权",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "draft_session"
+      ],
+      "effect": "当前签位及持有者",
+      "baseline_status": "STATIC",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_SPECIFIED",
+      "label": "使用当前指定选秀权选择指定候选",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "pick_uid",
+        "prospect_uid"
+      ],
+      "effect": "原生选择与签位消费",
+      "baseline_status": "STATIC",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.PICK_OWNER_READ",
+      "label": "查询选秀权当前所有者",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "pick_uid"
+      ],
+      "effect": "拥有者/年份/轮次",
+      "baseline_status": "READ_SUBSET",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.PICK_RIGHTS_TRANSFER",
+      "label": "执行明确的选秀权交易权属",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "pick_uid",
+        "new_team_id"
+      ],
+      "effect": "原生资产事务",
+      "baseline_status": "PARTIAL",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.LOTTERY_READ",
+      "label": "查询选秀顺位及抽签结果",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "season_id"
+      ],
+      "effect": "乐透结果及顺位",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_RESULT_READ",
+      "label": "获取已完成的选秀结果",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "season_id",
+        "round"
+      ],
+      "effect": "选中球员和签位",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_CLASS_SET",
+      "label": "选择使用指定Draft Class",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "season_id",
+        "class_uid"
+      ],
+      "effect": "更新本届候选池",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_CLASS_IMPORT",
+      "label": "导入指定选秀班",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "file_ref",
+        "season_id"
+      ],
+      "effect": "导入外部候选名单",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_CLASS_EDIT",
+      "label": "管理员调整候选球员档案",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "prospect_uid",
+        "field_id",
+        "value"
+      ],
+      "effect": "编辑新秀档案",
+      "baseline_status": "WORLD_EDIT",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "GM.DRAFT.DRAFT_RIGHTS_STASH",
+      "label": "指定海外球员签权/留队安排",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "prospect_uid",
+        "decision"
+      ],
+      "effect": "更新选秀权利业务",
+      "baseline_status": "RESEARCH",
+      "reference_source": "GM",
+      "phase": "DRAFT_SCENE_OR_DRAFT_CLASS_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.POE_O1",
+      "label": "进攻重点POEOffense",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "native_enum_0_6"
+      ],
+      "effect": "更新当前教练进攻重点",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.POE_O2",
+      "label": "进攻节奏倾向POEOffense2",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "native_enum_0_or_7_9"
+      ],
+      "effect": "更新当前教练取向",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.POE_O3",
+      "label": "进攻篮板与退防POEOffense3",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "native_enum_0_or_10_12"
+      ],
+      "effect": "更新当前教练取向",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.POE_D1",
+      "label": "防守重点POEDefense",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "native_enum_0_or_13_15"
+      ],
+      "effect": "更改当前教练防守重点",
+      "baseline_status": "LIVE_EXACT",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.POE_D2",
+      "label": "防守对抗取向POEDefense2",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "native_enum_0_or_16_18"
+      ],
+      "effect": "更新防守取向",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.POE_D3",
+      "label": "防守篮板与转换POEDefense3",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "native_enum_0_or_19_21"
+      ],
+      "effect": "更新防守取向",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.RUN_PLAY",
+      "label": "设置RunPlayTendency",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "value_0_100"
+      ],
+      "effect": "修改战术调用倾向",
+      "baseline_status": "LIVE_EXACT",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.ZONE_USAGE",
+      "label": "设置ZoneUsage",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "value_0_100"
+      ],
+      "effect": "修改联防使用倾向",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.BENCH_DEPTH",
+      "label": "设置BenchDepth",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "depth_integer"
+      ],
+      "effect": "修改板凳深度",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.BENCH_USE",
+      "label": "设置BenchUtilization",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "value_0_100"
+      ],
+      "effect": "修改替补使用倾向",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.PREFERRED_SYSTEM",
+      "label": "教练偏好体系",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "system_enum_0_7"
+      ],
+      "effect": "修改偏好体系",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.ACTIVE_SYSTEM",
+      "label": "球队当前体系",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "system_enum_0_7"
+      ],
+      "effect": "修改当前执行体系",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.HELP_DEFENSE",
+      "label": "协防倾向",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "value_0_100"
+      ],
+      "effect": "修改帮助防守设置",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.TEMPO",
+      "label": "球队比赛节奏参数",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "tempo_raw"
+      ],
+      "effect": "更改节奏取向",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.ACE_MODE",
+      "label": "设定ACE智能战术开关/模式",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "ace_mode"
+      ],
+      "effect": "启用或关闭自动调整",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.STRATEGY.COACH_AUTOMATION",
+      "label": "教练自动战术/轮换控制",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "automation_group",
+        "value"
+      ],
+      "effect": "指定自动化范围",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.PLAYBOOK_SELECT",
+      "label": "球队战术手册替换",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "book_id"
+      ],
+      "effect": "更新当前球队战术书",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_SLOT_READ",
+      "label": "读取4分区共68个战术槽",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "section"
+      ],
+      "effect": "返回CRC、顺序、槽位",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_ADD",
+      "label": "在指定分区/槽位添加战术",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "section",
+        "slot",
+        "play_crc"
+      ],
+      "effect": "加入具体战术",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_REPLACE",
+      "label": "替换指定已存在的战术",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "section",
+        "slot",
+        "play_crc"
+      ],
+      "effect": "替换该槽CRC",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_REMOVE",
+      "label": "删除指定战术槽",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "section",
+        "slot"
+      ],
+      "effect": "该槽释放",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_SWAP",
+      "label": "调换两条战术顺序",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "section",
+        "slot_a",
+        "slot_b"
+      ],
+      "effect": "调整战术优先级",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_REGULAR",
+      "label": "指定常规区战术内容",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "regular_slots_30"
+      ],
+      "effect": "原生常规区更新",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_BENCH",
+      "label": "指定替补区战术内容",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "bench_slots_20"
+      ],
+      "effect": "替补区更新",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_ENDGAME",
+      "label": "指定末段区战术内容",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "endgame_slots_10"
+      ],
+      "effect": "末段区更新",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.BOOK_FAVORITE",
+      "label": "指定偏好区战术内容",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "favorite_slots_8"
+      ],
+      "effect": "快捷战术更新",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.PLAY_POOL_LIST",
+      "label": "获取当前可选战术池与12类分类",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "category_id",
+        "filter"
+      ],
+      "effect": "候选战术CRC和名称",
+      "baseline_status": "READ_RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.PLAY_PREVIEW",
+      "label": "读取指定战术预览/说明",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "play_crc"
+      ],
+      "effect": "战术参与位置与已公开描述",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_1",
+      "label": "设置第一Freelance槽",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "freelance_enum"
+      ],
+      "effect": "更新有序自由进攻首槽",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_2",
+      "label": "设置第二Freelance槽",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "freelance_enum"
+      ],
+      "effect": "更新有序自由进攻第二槽",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_3",
+      "label": "设置第三Freelance槽",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "freelance_enum"
+      ],
+      "effect": "更新有序自由进攻第三槽",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.FREELANCE_4",
+      "label": "设置第四Freelance槽",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "freelance_enum"
+      ],
+      "effect": "更新有序自由进攻第四槽",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.OPPONENT_PLAN_FIND",
+      "label": "读取/创建指定对手的Gameplan",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "opponent_team_id"
+      ],
+      "effect": "返回或创建计划对象",
+      "baseline_status": "STATIC",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.PLAYBOOK.OPPONENT_PLAN_EDIT",
+      "label": "编辑指定对手完整Gameplan",
+      "actor": [
+        "COACH",
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "opponent_team_id",
+        "fields"
+      ],
+      "effect": "保存特殊对手计划",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "COACHING_AND_PLAYBOOK_EDIT",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.PRESS_ON",
+      "label": "持球压力",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置防守压力",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.PRESS_OFF",
+      "label": "无球压力",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置无球盯防",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.FORCE_DIRECTION",
+      "label": "逼迫进攻方向",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置方向",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.ONBALL_SCREEN",
+      "label": "防有球掩护策略",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置绕掩护",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.HEDGE",
+      "label": "掩护人防守策略",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置延阻/沉退",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.OFFBALL_SCREEN",
+      "label": "无球掩护防守",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置无球策略",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.POST_DEFENSE",
+      "label": "背身防守策略",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置低位守法",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.DOUBLE_PERIMETER",
+      "label": "外线包夹",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置包夹",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.DOUBLE_POST",
+      "label": "低位包夹",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置包夹",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.SCREEN_ONBALL5",
+      "label": "Center后缀有球策略",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "更新特殊有球策略",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.HEDGE5",
+      "label": "Center后缀延阻策略",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "更新特殊Hedge",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.SWITCH_RULE",
+      "label": "换防规则",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置换防",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.ONBALL_HELP",
+      "label": "持球协防",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置持球帮助",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.SCREEN_HELP",
+      "label": "掩护协防",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置掩护帮助",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.EXTEND_PRESSURE",
+      "label": "延伸防守压力",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "设置延伸压迫",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.TAG_ON_ROLL",
+      "label": "顺下补位",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "更新补位",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.STAY_ATTACHED",
+      "label": "保持盯防",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "native_enum"
+      ],
+      "effect": "更新盯防",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.DEFENSE.PRE_ROTATE",
+      "label": "提前轮转",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "opponent_uid",
+        "value_0_or_1"
+      ],
+      "effect": "设置预轮转",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "COACH",
+      "phase": "OPPONENT_GAMEPLAN",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.ROTATION_ORDER",
+      "label": "安排轮换先后顺序",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "ordered_player_uids"
+      ],
+      "effect": "更新轮换表",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.PLAYER_MINUTES",
+      "label": "设置某球员分钟数",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "minutes"
+      ],
+      "effect": "更新分钟分配",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.STARTING_FIVE",
+      "label": "设置五个首发",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "ordered_player_uids"
+      ],
+      "effect": "指定先发",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.SECOND_UNIT",
+      "label": "指定替补阵容",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "ordered_player_uids"
+      ],
+      "effect": "指定第二阵容",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.PLAYER_ROLE",
+      "label": "指定球员上场角色",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "role"
+      ],
+      "effect": "更新轮换角色",
+      "baseline_status": "PARTIAL",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.SITUATIONAL_LINEUPS",
+      "label": "配置情景五人组",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "lineup_type",
+        "player_uids"
+      ],
+      "effect": "关键时段阵容配置",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.INJURY_SUBSTITUTION",
+      "label": "伤病或缺阵触发轮换替代",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "missing_player_uid",
+        "replacement_uid"
+      ],
+      "effect": "更新可上场阵容",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.MATCHUP_ASSIGN",
+      "label": "指定对手球员/防守者关系",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "team_id",
+        "attacker_uid",
+        "defender_uid"
+      ],
+      "effect": "更改指定防守对位",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.LIVE_SUBSTITUTION",
+      "label": "比赛暂停时指定换人",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "game_id",
+        "player_out_uid",
+        "player_in_uid"
+      ],
+      "effect": "游戏原生临场换人",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "COACH.ROTATION.LIVE_CALL_PLAY",
+      "label": "比赛中指定某条已装载战术",
+      "actor": [
+        "COACH"
+      ],
+      "input": [
+        "game_id",
+        "play_crc",
+        "initiator_uid"
+      ],
+      "effect": "执行临场战术指令",
+      "baseline_status": "RESEARCH",
+      "reference_source": "COACH",
+      "phase": "TEAM_ROTATION",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.TEAM_SCHEDULE",
+      "label": "指定球队日期训练完整配置",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "native_date_key",
+        "training_payload"
+      ],
+      "effect": "更新该日训练",
+      "baseline_status": "STATIC",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.TEAM_INTENSITY",
+      "label": "仅修改该日训练强度",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "native_date_key",
+        "intensity_raw_0_7"
+      ],
+      "effect": "更新3bit强度并保留其它字段",
+      "baseline_status": "STATIC",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.TEAM_FOCUS",
+      "label": "设置球队训练重点比例",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "native_date_key",
+        "focus_percentages"
+      ],
+      "effect": "改变培养项目分配",
+      "baseline_status": "STATIC",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.TEAM_PROFILE",
+      "label": "设置训练类型/子项目",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "native_date_key",
+        "profile_types",
+        "subfocus_points"
+      ],
+      "effect": "改变训练内容",
+      "baseline_status": "STATIC",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.HOME_AWAY_INTENSITY",
+      "label": "设置主客场训练强度",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "home_intensity",
+        "away_intensity"
+      ],
+      "effect": "修改主客场训练负荷",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.AUTOMATION",
+      "label": "训练自动化开关",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "automation_enabled"
+      ],
+      "effect": "原生训练自动化状态",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.B2B_REST",
+      "label": "背靠背前后休息",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "rest_before",
+        "rest_after"
+      ],
+      "effect": "更新休息策略",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.PLAYER_FOCUS",
+      "label": "指定球员训练重点/类型",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "training_type"
+      ],
+      "effect": "设置球员培养方向",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.PLAYER_INTENSITY",
+      "label": "指定球员训练强度或覆盖",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "intensity",
+        "override"
+      ],
+      "effect": "指定个体负荷",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.PLAYER_RECOVERY",
+      "label": "为指定球员配置康复重点",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "player_uid",
+        "recovery_mode"
+      ],
+      "effect": "原生康复设置",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.TEAM_RECOVERY",
+      "label": "配置球队康复策略",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "injury_recovery"
+      ],
+      "effect": "更新球队康复开关",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.MENTOR_ASSIGN",
+      "label": "安排球员导师关系",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "mentor_uid",
+        "mentee_uid"
+      ],
+      "effect": "原生导师关联",
+      "baseline_status": "PARTIAL",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.MENTOR_REMOVE",
+      "label": "取消导师关系",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "team_id",
+        "mentor_uid",
+        "mentee_uid"
+      ],
+      "effect": "解除关系",
+      "baseline_status": "PARTIAL",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "TRAIN.HEALTH_INFO",
+      "label": "查询体力/疲劳/伤病进度",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "season_or_date"
+      ],
+      "effect": "返回游戏当前健康数据",
+      "baseline_status": "READ_RESEARCH",
+      "reference_source": "TRAIN",
+      "phase": "TRAINING_OR_GAME_DAY",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.ATTR_SET",
+      "label": "设置单项能力",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "attribute_key",
+        "value"
+      ],
+      "effect": "更新原生能力",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.ATTR_BATCH",
+      "label": "批量设置已给能力键",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "attribute_map"
+      ],
+      "effect": "更新多个能力",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.TENDENCY_SET",
+      "label": "设置单项倾向",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "tendency_key",
+        "value"
+      ],
+      "effect": "更新原生倾向",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.TENDENCY_BATCH",
+      "label": "批量设置倾向",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "tendency_map"
+      ],
+      "effect": "更新多个倾向",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.BADGE_SET",
+      "label": "设置球员徽章等级",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "badge_id",
+        "level"
+      ],
+      "effect": "更新徽章",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.BADGE_REMOVE",
+      "label": "删除指定徽章",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "badge_id"
+      ],
+      "effect": "移除徽章",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.PLAY_TYPE_1",
+      "label": "设置球员战术类型1槽",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "play_type_enum_0_15"
+      ],
+      "effect": "更新槽位1",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.PLAY_TYPE_2",
+      "label": "设置球员战术类型2槽",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "play_type_enum_0_15"
+      ],
+      "effect": "更新槽位2",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.PLAY_TYPE_3",
+      "label": "设置球员战术类型3槽",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "play_type_enum_0_15"
+      ],
+      "effect": "更新槽位3",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.PLAY_TYPE_4",
+      "label": "设置球员战术类型4槽",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "play_type_enum_0_15"
+      ],
+      "effect": "更新槽位4",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.PLAY_INITIATOR",
+      "label": "设置战术发起者标志",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "enabled"
+      ],
+      "effect": "更新战术发起权限",
+      "baseline_status": "PROJECT_NATIVE",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.PLAYER_VITALS",
+      "label": "编辑位置号码身高体重等资料",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "field_key",
+        "value"
+      ],
+      "effect": "管理员变更个人资料",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.DURABILITY_SET",
+      "label": "指定身体耐久字段",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "durability_key",
+        "value"
+      ],
+      "effect": "更新耐久性",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.INJURY_STATUS",
+      "label": "指定伤病状态字段",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "injury_key",
+        "value"
+      ],
+      "effect": "更新游戏伤病状态",
+      "baseline_status": "RESEARCH",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.POTENTIAL_SET",
+      "label": "指定潜力字段",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "potential_value"
+      ],
+      "effect": "世界线编辑行为",
+      "baseline_status": "PARTIAL",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.EDIT.DNA_IMPORT",
+      "label": "将指定DNA配置应用到球员",
+      "actor": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "input": [
+        "player_uid",
+        "dna_ref"
+      ],
+      "effect": "原生完整玩家资料应用",
+      "baseline_status": "RESEARCH",
+      "reference_source": "PLAYER",
+      "phase": "WORLD_EDIT_OR_ALLOWED_ROLE_CONTEXT",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.TRADE_REQUEST",
+      "label": "球员提出转队诉求",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "preferred_team_uids",
+        "conditions"
+      ],
+      "effect": "向GM提交外挂请求不直接改球队",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.CONTRACT_RESPONSE",
+      "label": "球员接受/拒绝外挂报价",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "offer_id",
+        "decision"
+      ],
+      "effect": "给GM模型的明确答复",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.ROLE_REQUEST",
+      "label": "提出首发/角色或分钟诉求",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "requested_role",
+        "requested_minutes"
+      ],
+      "effect": "向教练提出要求",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.TRAINING_REQUEST",
+      "label": "提出个人训练重点",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "focus",
+        "intensity"
+      ],
+      "effect": "向教练提出训练请求",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.MENTOR_REQUEST",
+      "label": "申请指定导师",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "mentor_uid"
+      ],
+      "effect": "向教练或GM提出请求",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.PLAYSTYLE_REQUEST",
+      "label": "提出四槽类型或打法偏好",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "play_types_or_tendency_pref"
+      ],
+      "effect": "经决策协商转业务设置",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.EXTENSION_PREFERENCE",
+      "label": "球员合同/续约偏好",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "term_preferences"
+      ],
+      "effect": "作为合同谈判输入",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.MORALE_FEEDBACK",
+      "label": "球员反映士气/球队角色",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "reason",
+        "desired_change"
+      ],
+      "effect": "外挂人格状态/事件",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "PLAYER.AGENCY.INJURY_REPORT",
+      "label": "球员请求休息/康复",
+      "actor": [
+        "PLAYER",
+        "GM",
+        "COACH"
+      ],
+      "input": [
+        "player_uid",
+        "health_context",
+        "requested_action"
+      ],
+      "effect": "向教练或球队提出请求",
+      "baseline_status": "EXTERNAL",
+      "reference_source": "PLAYER",
+      "phase": "CAREER_AND_CONVERSATION",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.SETUP_OPTIONS",
+      "label": "选择联盟结构、队数、季长等",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "save_id",
+        "settings_map"
+      ],
+      "effect": "世界线初始化",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.GAMEPLAY_SLIDERS",
+      "label": "设置USER/CPU Gameplay滑块",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "save_id",
+        "slider_key",
+        "value"
+      ],
+      "effect": "改变比赛环境参数",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.SIMULATION_SLIDERS",
+      "label": "设置日历模拟参数",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "save_id",
+        "setting_key",
+        "value"
+      ],
+      "effect": "改变Simulation Engine配置",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.NORMALIZE",
+      "label": "设置标准化分钟/统计开关",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "save_id",
+        "normalize_flags"
+      ],
+      "effect": "改变统计口径",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.TEAM_AUTOMATION",
+      "label": "设置球队自动管理开关",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "team_id",
+        "automation_fields"
+      ],
+      "effect": "移交或撤回原版自动化",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.CPU_CONTROL",
+      "label": "设置球队人类/AI控制位",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "team_id",
+        "controller_mode"
+      ],
+      "effect": "改变内建控制者；不等于外挂人格",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.ADVANCE_DATE",
+      "label": "推进指定联盟日期/阶段",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "save_id",
+        "target_date_or_event"
+      ],
+      "effect": "游戏内日历进展",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.SIMULATE_GAME",
+      "label": "模拟指定比赛",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "game_uid",
+        "mode"
+      ],
+      "effect": "产生真实比赛结果",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.SIMCAST_MODE",
+      "label": "选择SimCast/QuickSim/3D运行方式",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "game_uid",
+        "mode"
+      ],
+      "effect": "比赛执行方式",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.OFFSEASON_STEP",
+      "label": "执行指定休赛期阶段",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "save_id",
+        "phase_action"
+      ],
+      "effect": "休赛期状态改变",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.LEAGUE_RULE_CHANGE",
+      "label": "设定联盟规则变更",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "season_id",
+        "rule_id",
+        "decision"
+      ],
+      "effect": "联盟规则生效",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    },
+    {
+      "id": "WORLD.DRAFT_CLASS_WORLD",
+      "label": "选择赛季的选秀班来源",
+      "actor": [
+        "WORLD_ADMIN"
+      ],
+      "input": [
+        "season_id",
+        "class_id"
+      ],
+      "effect": "下一届选秀候选池变化",
+      "baseline_status": "RESEARCH",
+      "reference_source": "WORLD",
+      "phase": "SETUP_OR_SEASON_PHASE",
+      "notes": ""
+    }
+  ]
+}
