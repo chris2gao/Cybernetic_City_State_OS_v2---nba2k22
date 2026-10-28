@@ -14,9 +14,9 @@ human_confirmed_A0:
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v0.6-DRAFT
+  version: OS-PRMS-A-v0.7-DRAFT
   confirmed: false
-  source: 03_需求建模/07_需求结果模型A_v0.6_含前四轮裁决.md
+  source: 03_需求建模/08_需求结果模型A_v0.7_含前五轮裁决.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -75,10 +75,23 @@ human_confirmed_01b_round_4:
   status: confirmed_partial_A_not_complete
 core_upgrade_goal:
   choice: Q35_C_direct_upgrade_at_planning_completion
-  timing_and_deliverable: pending_Human_Q36
+  timing_and_deliverable: Q36_B_after_Human_confirmed_stage03_design_B_core_planning_only
   this_task_authorizes_core_repo_write: false
   master_modification: prohibited
   engineering_execution: prohibited
+human_confirmed_01b_round_5:
+  q36: B
+  q37: B
+  q38: B
+  q39: B
+  source: 01_任务输入/07_01b第五轮Human裁决_Q36-Q39_v1.md
+  status: confirmed_partial_A_not_complete
+core_promotion_maturity:
+  stage03_design_B_confirmed_required: true
+  target: OS_core_planning_specification
+  runtime_implementation_delivered_by_stage03: false
+  separate_migration_project_required: false
+  target_repository_protected_publication_rules_still_apply: true
 draft_history:
   - 03_需求建模/02_需求结果模型A_v0.1_候选.md
   - 03_需求建模/03_需求结果模型A_v0.2_含首轮裁决.md
@@ -86,4 +99,5 @@ draft_history:
   - 03_需求建模/05_需求结果模型A_v0.4_范围澄清.md
   - 03_需求建模/06_需求结果模型A_v0.5_含前三轮裁决.md
   - 03_需求建模/07_需求结果模型A_v0.6_含前四轮裁决.md
-next_step: 01b_R5_Human_questions_Q36_Q39
+  - 03_需求建模/08_需求结果模型A_v0.7_含前五轮裁决.md
+next_step: 01b_R6_Human_questions_Q40_Q43
