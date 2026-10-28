@@ -1,5 +1,9 @@
 # NBA 2K22 Antigravity 外部总经理引擎 (External GM Engine)
 
+> **最新项目导航（2026-10-28）**：**[NBA2K22 外挂系统全项目总索引](PROJECT_INDEX.md)** → [13模块机器注册表](docs/development/PROJECT_MODULE_REGISTRY_V2.json) → [旧游戏资料库](docs/game_mechanics/README.md) → [REA经验交接](research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md) → [角色批量原生执行架构](docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md)。**所有下一轮开发先加载导航和相关模块，完成后同步对应索引**。当前索引与架构仍在Draft PR #18，master未部署。以下旧双库物理划分/直接内存写/旧六阶段执行片段属于历史工程与数据流程描述；数据链暂不改，但执行目标已改为角色能力驱动的批量Native函数调用，具体看架构V2。
+
+
+
 > **OS治理下的NBA2K22项目开发知识入口（2026-10-22，候选）**：[正式开发基线](docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) · [开发规划模型入口](docs/development/NBA2K22_PLANNING_MODEL_ENTRY_V1.md) · [40族能力与交付总账](docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json) · [历史开发任务索引](docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json) · [16项后续工作Backlog](docs/development/NBA2K22_OS_TASK_BACKLOG_V1.json) · [文档权威/上下文恢复](docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md)。本业务树以OS仓库为写入目标；历史旧仓库URL只作固定SHA来源。**研究已发现/代码已实现/生产已发布/真实游戏验收分别标记**，任何进程写入及DCR本地访问均须玩家另行批准。该知识入口与业务刷新均处任务候选分支，尚未自动进入master。
 
 
