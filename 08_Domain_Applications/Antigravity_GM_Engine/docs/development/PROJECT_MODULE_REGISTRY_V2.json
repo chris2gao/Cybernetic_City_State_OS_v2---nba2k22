@@ -49,12 +49,12 @@
       "artifacts": [
         "docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md"
       ],
-      "notes": [
-        "Logical identity/history design exists; do not imply final schema deployed."
-      ],
+      "notes": "Logical identity/history design exists; do not imply final schema deployed. Also check external_branch_assets for world_data_prototype absent from current branch.",
       "last_verified_evidence": null,
       "latest_task_refs": [
-        "PARALLEL_WORLD_ARCHITECTURE_V2_DESIGN_20261022"
+        "PARALLEL_WORLD_ARCHITECTURE_V2_DESIGN_20261022",
+        "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1"
       ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
@@ -74,11 +74,12 @@
         "src/gm_data_access/",
         "published/index.json"
       ],
-      "notes": [
-        "Keep data flow unchanged in current execution redesign."
-      ],
+      "notes": "Keep data flow unchanged in current execution redesign. Also check external_branch_assets for world_data_prototype absent from current branch.",
       "last_verified_evidence": null,
-      "latest_task_refs": [],
+      "latest_task_refs": [
+        "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1"
+      ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
     },
@@ -96,11 +97,12 @@
         "config/state_io_native/",
         "research/"
       ],
-      "notes": [
-        "Identified field != complete runtime reader."
-      ],
+      "notes": "Identified field != complete runtime reader. Also check external_branch_assets for world_data_prototype absent from current branch.",
       "last_verified_evidence": null,
-      "latest_task_refs": [],
+      "latest_task_refs": [
+        "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1"
+      ],
       "last_update": "2026-10-28",
       "update_required_on_task_completion": true
     },
@@ -398,5 +400,24 @@
       "index_sync_commit"
     ],
     "no_game_automatic_authorization": true
-  }
+  },
+  "external_branch_assets": [
+    {
+      "id": "WORLD_DATA_ENGINEERING_BASELINE",
+      "branch": "task/nba2k22-world-data-full-implementation-20261024",
+      "head_sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "entry": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/README.md",
+      "handoff": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md",
+      "status": "INDEPENDENT_ENGINEERING_CANDIDATE_NOT_IN_THIS_PR_TREE",
+      "facts": "v24 100 tables 1775 columns 20 source Reader families, regular-season bound world and evidence. Not full acceptance."
+    },
+    {
+      "id": "WORLD_DATA_REVIEW_FIXES",
+      "branch": "task/nba2k22-world-data-review-fixes-20261026",
+      "head_sha": "a3927fb150a213201e404cca043ced4f57409bd1",
+      "entry": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/REVIEW_FIXES_F01_F02_F03.md",
+      "status": "UNMERGED_SEPARATE_BRANCH_PENDING_ACCEPTANCE",
+      "facts": "v25 101 tables 1789 columns, annual additions, Box consistency, conflict receipt isolation."
+    }
+  ]
 }
