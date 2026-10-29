@@ -1,6 +1,6 @@
 {
   "schema_version": "prms.acceptance_results.v1",
-  "candidate": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+  "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
   "command": [
     "@python",
     "-B",
@@ -23,9 +23,10 @@
   "scenario_status_counts": {
     "PASS_AT_OFFLINE_SCOPE": 30,
     "PASS_PINNED_REAL_SOURCE_LOADING": 2,
-    "NOT_RUN_REQUIRED_SCOPE": 12,
+    "NOT_RUN_REQUIRED_SCOPE": 11,
     "PASS_LOCAL_CROSS_REPO_FIXTURE": 3,
-    "PASS_REMOTE_PLANNING_RECONCILIATION": 1
+    "PASS_REMOTE_PLANNING_RECONCILIATION": 1,
+    "PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE": 1
   },
   "all_original_acceptance_passed": false,
   "scope_warning": "Each row passes only at its stated proof scope. Required real platform, model-window and independent review evidence remains NOT_RUN.",
@@ -604,16 +605,21 @@
         "RES-018",
         "RES-019"
       ],
-      "status": "NOT_RUN_REQUIRED_SCOPE",
-      "required_scope": "PINNED_REAL_SOURCE_MUTATION",
+      "status": "PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE",
+      "required_scope": "PINNED_SOURCE_DIFFERENTIAL_FIXTURE",
       "offline_analogue": "PASS",
       "executed_tests": [
         {
           "node": "test_memory.py::test_external_blob_change_invalidates_only_dependent_summary",
           "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
         }
       ],
-      "remaining_proof": "Synthetic dependency change tested. No PR18 source mutation authorized or made."
+      "remaining_proof": "The actual-source example copies verified PR18 bytes into an isolated Git fixture and changes one P09 body. Actual PR18 remote remains untouched.",
+      "additional_evidence": "g1_g2_actual_catalog_and_loading_example.json:pinned_source_differential"
     },
     {
       "id": "CAT-01",

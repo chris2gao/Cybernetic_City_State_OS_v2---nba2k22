@@ -139,3 +139,19 @@ boundary, real platform permission and fault tests, real GPT/Codex recovery
 windows, and a separate independent review. No autonomous repository creation,
 production ingress activation, new model session or master integration is part
 of this handoff. The full goal remains incomplete pending those gates.
+
+## B-28 source differential completion
+
+The subsequent code candidate `8690ed15f661181528da451d683390b9ab8ffa15` is now
+the verified implementation. It also passed all seven managed checks and inspect.
+Candidate module cards retain actual file blobs/directory-tree fingerprints;
+comparison revalidates the original catalog, marks changed modules selectively,
+and reports missing originals, added entries and filtered sources separately.
+The actual-source exercise copies verified PR18 bytes to an isolated Git fixture,
+changes only a P09 body, and proves P09 stale while P04 remains valid. Other
+uncopied sources stay explicitly missing. No real PR18 ref was mutated.
+
+B-28 is now PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE, with its exact proof scope
+recorded. Eleven required real-platform/model-window/independent-review scenarios
+remain NOT_RUN. The prior 65c42a1b and 27d9a000 checkpoints remain historical;
+the current completion pointer, matrix and verification receipt supersede them.
