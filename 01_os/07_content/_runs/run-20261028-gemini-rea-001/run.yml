@@ -1,7 +1,7 @@
 task_id: NBA2K22_GEMINI_REA_BOUNDED_EXPLORATION_01
 run_id: run-20261028-gemini-rea-001
 lifecycle: candidate_ready_for_independent_review
-closure_record: GREA_HANDOFF.md
+closure_record: W02_CONSOLIDATED_CODEX_HANDOFF.md
 stage: 03_结果建模
 date: '2026-10-28'
 branch: gemini_rea
@@ -34,12 +34,12 @@ controls:
   require_codex_independent_review: true
   commit_only_isolated_experimental_code_and_run_evidence: true
 current_task: GREA_WAVE_02_A_B_C
-current_task_status: GREA_01_CANDIDATE_REQUIRES_EVIDENCE_REPAIR
+current_task_status: WAVE_02_A_B_C_COMPLETED_READY_FOR_CODEX_REVIEW
 current_task_document: GREA_CONTINUOUS_RESEARCH_WAVE_02.md
 roadmap_document: README.md
 review_template: GREA_HANDOFF_TEMPLATE.md
 new_wave_requires_new_explicit_instruction: true
-overall_completion_status: WAVE_02_A_B_C_AUTHORIZED_NOT_IMPLEMENTED
+overall_completion_status: WAVE_02_A_B_C_COMPLETED_AWAITING_CODEX_REVIEW
 allowlist:
   - 01_os/07_content/_runs/run-20261028-gemini-rea-001/**
   - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/GREA_01/**
@@ -52,11 +52,19 @@ required_outputs:
   - NATIVE_CALL_CHAIN.json
   - REPRODUCTION.md
   - CODEX_REVIEW_REQUEST.md
+  - GREA_CONTINUOUS_RESEARCH_WAVE_02.md
+  - W02_A/HANDOFF.md
+  - W02_B/HANDOFF.md
+  - W02_C/HANDOFF.md
+  - W02_CONSOLIDATED_CODEX_HANDOFF.md
 verification:
   test_framework: pytest
-  test_target: 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/GREA_01/tests/test_grea_01_gameplan_opponent.py
+  test_targets:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/GREA_01/tests/test_grea_01_gameplan_opponent.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/W02_B/tests/test_w02_b_defense_18.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/W02_C/tests/test_w02_c_playbook_68.py
   result: PASSED
-  passed_count: 12
+  passed_count: 20
   failed_count: 0
   exit_code: 0
 
