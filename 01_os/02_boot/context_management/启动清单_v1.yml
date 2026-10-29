@@ -22,6 +22,9 @@ optional_extensions:
     registry: 01_os/05_registry/prms_v1.yml
     loader: 01_os/06_execution/boot/context_management/prms/cli.py
     invocation: explicit_authorized_foreground_only
+    task_continuity_contract: 01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md
+    task_adapter: 01_os/06_execution/boot/context_management/prms/task_cli.py
+    task_trigger: Human_requests_save_or_resume_of_durable_task
     state_repository: separately_authorized_external_repository_required
     starts_runtime: false
 receipt_required:

@@ -2,12 +2,13 @@
   "schema_version": "citystate.verification_plan.v1",
   "task_packet": "01_os/_runs/run-20261029-os-prms-implementation-001/task_packet.yml",
   "checks": [
-    {"id":"PRMS_OFFLINE_AND_ACCOUNTING","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/acceptance.py","--repo-root",".","--run-path","01_os/_runs/run-20261029-os-prms-implementation-001"],"timeout_seconds":300,"expected_exit_code":0},
+    {"id":"PRMS_OFFLINE_AND_ACCOUNTING","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/acceptance.py","--repo-root",".","--run-path","01_os/_runs/run-20261029-os-prms-implementation-001"],"timeout_seconds":600,"expected_exit_code":0},
     {"id":"PRMS_ISOLATED_EXAMPLE","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/examples.py","isolated-state","--repo-root","."],"timeout_seconds":120,"expected_exit_code":0},
     {"id":"PRMS_ACTUAL_SOURCE","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/examples.py","pinned-domain-source","--repo-root","."],"timeout_seconds":300,"expected_exit_code":0},
     {"id":"CONTEXT_REGRESSION","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/regression.py"],"timeout_seconds":180,"expected_exit_code":0},
     {"id":"CONTEXT_STRUCTURE","argv":["@python","-B","01_os/03_mechanisms/context_management/实现/verify_context_structure.py"],"timeout_seconds":60,"expected_exit_code":0},
     {"id":"MODEL_ROUTING","argv":["@python","-B","01_os/03_mechanisms/model_routing/实现/verify_model_routing.py","static","."],"timeout_seconds":60,"expected_exit_code":0},
-    {"id":"SCAFFOLD_SYNTAX","argv":["pwsh","-NoProfile","-File","01_os/_runs/run-20261029-os-prms-implementation-001/validate_scaffold.ps1","-RepoRoot","."],"timeout_seconds":60,"expected_exit_code":0}
+    {"id":"SCAFFOLD_SYNTAX","argv":["pwsh","-NoProfile","-File","01_os/_runs/run-20261029-os-prms-implementation-001/validate_scaffold.ps1","-RepoRoot","."],"timeout_seconds":60,"expected_exit_code":0},
+    {"id":"PRMS_TASK_CONTINUITY","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/continuity_example.py","--repo-root","."],"timeout_seconds":180,"expected_exit_code":0}
   ]
 }

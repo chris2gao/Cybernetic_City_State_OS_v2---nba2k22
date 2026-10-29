@@ -17,7 +17,7 @@ task_packet:
     - CORE_MANIFEST.yml
     - new-domain.ps1
   verification_plan: 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json
-  required_tests: [PRMS_OFFLINE_AND_ACCOUNTING, PRMS_ISOLATED_EXAMPLE, PRMS_ACTUAL_SOURCE, CONTEXT_REGRESSION, CONTEXT_STRUCTURE, MODEL_ROUTING, SCAFFOLD_SYNTAX]
+  required_tests: [PRMS_OFFLINE_AND_ACCOUNTING, PRMS_ISOLATED_EXAMPLE, PRMS_ACTUAL_SOURCE, CONTEXT_REGRESSION, CONTEXT_STRUCTURE, MODEL_ROUTING, SCAFFOLD_SYNTAX, PRMS_TASK_CONTINUITY]
   prohibitions:
     - modify_master
     - force_push_or_rewrite_history
@@ -54,6 +54,8 @@ task_packet:
     different_model_family: true
     different_measurement_tool: true
   success_criteria:
+    - Human clarified closure on 2026-10-29: correct task-plan-based memory management/loading and continuity across disposable windows. Human explicitly saves A before switching to B; task execution is normally sequential.
+    - Actual model-window/platform deployment acceptance stays separate and may remain NOT_RUN; it does not block this clarified engineering closure.
     - Runnable implementation and scoped tests for every approved requirement, with genuine gaps disclosed.
     - Core task branch and PR, exact remote readback, independent-review handoff.
     - No production permission claim from local Git or fixture evidence.

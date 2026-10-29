@@ -153,6 +153,17 @@ class WriterGate:
         protocol = json.loads(self.store.snapshot().get("protocol.json", b"{}"))
         if protocol.get("scope") != "ISOLATED_TEST_ONLY":
             raise PRMSError("AUTHORITY_UNVERIFIED", "isolated session issuer requires an explicit test repository")
+        return self._bind_host_session(session_id, allowed_roles, allowed_tasks=allowed_tasks,
+            allowed_operations=allowed_operations, allowed_copy_scopes=allowed_copy_scopes)
+
+    def _bind_host_session(self, session_id, allowed_roles, *, allowed_tasks,
+                           allowed_operations, allowed_copy_scopes):
+        """Internal host port. Callers receive no authority by declaring an ID.
+
+        TrustedIngress authenticates and revalidates on every external call;
+        open_isolated_session is the separately marked local test-only port.
+        Python object privacy is not a credential or process boundary.
+        """
         identifier(session_id)
         if session_id in self._issued_session_ids:
             raise PRMSError("REJECTED", "session identity already bound")
@@ -199,17 +210,14 @@ class WriterGate:
         if operations is not None and kind not in operations:
             raise PRMSError("AUTHORITY_UNVERIFIED", "operation outside host-provided task authority")
         tasks = self._task_scopes[capability]
-        if tasks is not None and kind in {"APPEND", "ASSIGN", "CHECKPOINT"} and task_id not in tasks:
+        if tasks is not None and kind in {"APPEND", "ASSIGN", "CHECKPOINT", "SAVE_TASK_CONTEXT"} and task_id not in tasks:
             raise PRMSError("AUTHORITY_UNVERIFIED", "task outside host-provided assignment scope")
         return session
 
     def authorize_copy(self, capability, source_role, target_role, source_commit, approval_ref):
         session = self.authorize_operation(capability, target_role, "COPY_ALL_MEMORY")
         copies = self._copy_scopes[capability]
-        if copies is None:
-            if self._task_scopes[capability] is not None:
-                raise PRMSError("AUTHORITY_UNVERIFIED", "task-scoped session requires an explicit host copy grant")
-        elif copies.get((source_role, target_role, source_commit)) != approval_ref:
+        if copies is None or copies.get((source_role, target_role, source_commit)) != approval_ref:
             raise PRMSError("AUTHORITY_UNVERIFIED", "copy outside host-bound source/target/approval scope")
         return session
 
@@ -283,6 +291,34 @@ class WriterGate:
                               "state": payload}
                 changes[prefix + f"checkpoints/{operation_id}.json"] = canonical(checkpoint)
                 current["checkpoint"] = operation_id
+            elif kind == "SAVE_TASK_CONTEXT":
+                from task_context import normalize_task_context
+                identity = json.loads(snapshot[prefix + "identity.json"])
+                record = normalize_task_context(payload, identity)
+                task_prefix = prefix + f'tasks/{identifier(record["task_id"])}/'
+                context_path = task_prefix + f'contexts/{operation_id}.json'
+                if context_path in snapshot:
+                    raise PRMSError("VERSION_CONFLICT", "task context history is immutable")
+                previous = json.loads(snapshot.get(task_prefix + 'CURRENT.json', b'{}'))
+                assignment_id = previous.get('assignment_id')
+                active_id = current.get('assignment_id')
+                if active_id:
+                    active = json.loads(snapshot[prefix + f'assignments/{active_id}.json'])
+                    if active['task_id'] == record['task_id']:
+                        assignment_id = active_id
+                record.update(role_id=role_id, operation_id=operation_id, state_version=expected_version + 1)
+                changes[context_path] = canonical(record)
+                event_paths = sorted(p for p in snapshot if p.startswith(prefix + 'events/')
+                    and json.loads(snapshot[p]).get('task_id') == record['task_id'])
+                checkpoint_path = prefix + f'checkpoints/{operation_id}.json'
+                if checkpoint_path in snapshot:
+                    raise PRMSError("VERSION_CONFLICT", "checkpoint history is immutable")
+                changes[checkpoint_path] = canonical({'checkpoint_id': operation_id, 'source_commit': frozen_head,
+                    'event_manifest': {p: digest(snapshot[p]) for p in event_paths}, 'state': record['task_plan']})
+                changes[task_prefix + 'CURRENT.json'] = canonical({'task_id': record['task_id'], 'role_id': role_id,
+                    'context_ref': context_path, 'checkpoint_ref': checkpoint_path, 'assignment_id': assignment_id,
+                    'state_version': expected_version + 1})
+                current['checkpoint'] = operation_id
             elif kind == "ASSIGN":
                 assignment_id = identifier(payload["assignment_id"])
                 if not isinstance(payload.get("task_id"), str) or not payload["task_id"] or not isinstance(payload.get("human_authority_ref"), str) or not payload["human_authority_ref"]:

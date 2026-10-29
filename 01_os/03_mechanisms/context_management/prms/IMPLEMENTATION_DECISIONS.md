@@ -15,9 +15,11 @@ change product architecture or authorize production deployment.
 3. **Enforcement is a deployment capability.** Local tests have a deliberately
    cooperative mode. Same-principal Git bypass is demonstrated and returns a
    production-blocking result. Isolated-session issuance refuses remote backends.
-   A GitHub protocol adapter does not authenticate clients or prove platform ACLs;
-   a separately authorized trusted ingress and negative platform tests are still
-   required. No host credential is stored in a source file or receipt.
+   The dormant TrustedIngress authenticates through a host-owned injectable port
+   and routes scoped calls to WriterGate/GitHub state. Its offline implementation
+   does not prove an identity provider or platform ACLs; actual host integration
+   and negative platform tests are still required. No host credential is stored
+   in a source file or receipt.
 4. **Discovery is not activation.** Enumerate frozen source trees and reconcile
    registry patterns rather than freezing the planning-time counts. Source scan
    completeness, registry consistency, publication records, loading and execution

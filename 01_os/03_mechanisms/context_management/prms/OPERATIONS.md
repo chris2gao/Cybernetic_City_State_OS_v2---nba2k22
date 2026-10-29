@@ -85,11 +85,11 @@ host scope. Revocation rejects later calls through that capability. Local code a
 filesystem access remain cooperative; a same-principal direct Git writer can
 bypass this library. `require_enforced()` deliberately refuses production claims.
 Every write interface, including full copy, uses the same operation authorization.
-A task-scoped session cannot turn a caller-supplied approval string into full-copy
+No session can turn a caller-supplied approval string into full-copy
 authority. The host must bind `allowed_copy_scopes` to the exact source role,
 frozen source commit, target role and approval reference; mismatches and revocation
-reject the copy before any state publication. Fully unrestricted isolated test
-sessions remain test-host grants, not authenticated production sessions.
+reject the copy before any state publication. Missing or empty copy scopes deny
+copy in every mode, including otherwise unrestricted isolated test sessions.
 
 Checkpoint publication commits its complete event-hash manifest and CURRENT in
 one Git tree. Recovery verifies those hashes and preserves exact Human-decision

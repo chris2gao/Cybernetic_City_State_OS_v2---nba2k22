@@ -180,13 +180,13 @@ def task_series_current(source, run_paths, *, series_id, related_task_ids, serie
 
 
 def copy_all_memory(source_store, target_gate, capability, source_role, target_role, *,
-                    source_head, operation_id, target_expected_head, scope_approval_ref):
+                    source_head, operation_id, target_expected_head, scope_approval_ref, before_publish=None):
     identifier(source_role)
     identifier(target_role)
     identifier(operation_id)
     if not isinstance(source_head, str) or not re.fullmatch(r"[0-9a-f]{40}", source_head):
         raise PRMSError("REJECTED", "full copy requires an explicit immutable source commit")
-    if not scope_approval_ref:
+    if not isinstance(scope_approval_ref, str) or not scope_approval_ref:
         raise PRMSError("AUTHORITY_UNVERIFIED", "explicit source/target copy scope required")
     session = target_gate.authorize_copy(capability, source_role, target_role, source_head, scope_approval_ref)
     source = source_store.snapshot(source_head)
@@ -233,6 +233,32 @@ def copy_all_memory(source_store, target_gate, capability, source_role, target_r
     identity.update(role_id=target_role, copied_from={"role_id": source_role, "commit": source_head},
                     copied_authority_valid=False)
     changes[tp + "identity.json"] = canonical(identity)
+    # Preserve usable per-task context while discarding operational assignment.
+    # Original bytes remain unchanged in copies/<operation>/; these canonical
+    # target records are explicitly derived from the frozen source role.
+    from task_context import read_task_context
+    for path in sorted(source):
+        if not path.startswith(sp + 'tasks/') or not path.endswith('/CURRENT.json'):
+            continue
+        task_id = identifier(path[len(sp + 'tasks/'):].split('/')[0])
+        task = read_task_context(source, source_role, task_id)
+        context_path = tp + f'tasks/{task_id}/contexts/{operation_id}.json'
+        checkpoint_path = tp + f'checkpoints/{operation_id}-task-{task_id}.json'
+        record = dict(task['record'])
+        record.update(role_id=target_role, state_version=1, operation_id=operation_id,
+                      copied_from={'role_id': source_role, 'commit': source_head})
+        changes[context_path] = canonical(record)
+        checkpoint = task['checkpoint']
+        event_manifest = {}
+        for original_path, expected in checkpoint['event_manifest'].items():
+            target_path = tp + original_path[len(sp):] if original_path.startswith(sp + 'events/') else ''
+            if not target_path or digest(changes.get(target_path, b'')) != expected:
+                raise PRMSError('COPY_INCOMPLETE', 'task checkpoint original unavailable')
+            event_manifest[target_path] = expected
+        changes[checkpoint_path] = canonical({**checkpoint, 'event_manifest': event_manifest,
+            'copied_from': {'role_id': source_role, 'commit': source_head}})
+        changes[tp + f'tasks/{task_id}/CURRENT.json'] = canonical({'role_id': target_role, 'task_id': task_id,
+            'context_ref': context_path, 'checkpoint_ref': checkpoint_path, 'assignment_id': None, 'state_version': 1})
     changes[tp + "owner.json"] = canonical({"session_id": session, "owner_epoch": 1})
     changes[tp + "CURRENT.json"] = canonical({"schema_version": "prms.current.v1", "role_id": target_role, "state_version": 1,
             "owner_epoch": 1, "operation_id": operation_id, "status": "PUBLISHED_CURRENT",
@@ -244,7 +270,7 @@ def copy_all_memory(source_store, target_gate, capability, source_role, target_r
                                         "role_id": target_role, "parent": target_expected_head})
     if any(digest(changes[e["target_path"]]) != e["sha256"] for e in manifest):
         raise PRMSError("COPY_INCOMPLETE", "target byte verification failed")
-    return target_gate.store.commit(target_expected_head, changes, operation_id)
+    return target_gate.store.commit(target_expected_head, changes, operation_id, before_publish=before_publish)
 
 
 def propose_experience(evidence_refs, counterexamples, scope, target_owner):

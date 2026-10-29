@@ -30,13 +30,25 @@ def create_recovery_package(gate, role_id, core_source, *, core_plan, core_choic
         raise PRMSError("REJECTED", "optional history needs L2 or deeper")
     snapshot = gate.store.snapshot(restored["source_commit"])
     prefix = f"roles/{role_id}/"
+    task_context = None
+    if prefix + f'tasks/{core_plan["task_id"]}/CURRENT.json' in snapshot:
+        from task_context import read_task_context
+        task_context = read_task_context(snapshot, role_id, core_plan['task_id'])
+        restored['checkpoint'] = task_context['checkpoint']
+        for path, expected in restored['checkpoint']['event_manifest'].items():
+            if path not in snapshot or digest(snapshot[path]) != expected:
+                raise PRMSError('SOURCE_MISSING', 'selected task checkpoint original unavailable')
+        restored['checkpoint_uncovered_event_paths'] = [p for p, raw in snapshot.items()
+            if p.startswith(prefix + 'events/') and json.loads(raw).get('task_id') == core_plan['task_id']
+            and p not in restored['checkpoint']['event_manifest']]
     warnings = []
     if restored["checkpoint"] is None:
         warnings.append("CURRENT_CHECKPOINT_MISSING")
     elif restored["checkpoint_uncovered_event_paths"]:
         warnings.append("CHECKPOINT_LAGS_DURABLE_EVENTS")
     assignment = None
-    assignment_id = restored["current"].get("assignment_id")
+    assignment_id = (task_context['pointer'].get('assignment_id') if task_context
+                     else restored["current"].get("assignment_id"))
     if assignment_id:
         path = prefix + f"assignments/{assignment_id}.json"
         if path not in snapshot:
@@ -54,6 +66,9 @@ def create_recovery_package(gate, role_id, core_source, *, core_plan, core_choic
         optional |= set(events) - required
     base = {"identity": restored["identity"], "current": restored["current"],
             "assignment": assignment, "checkpoint": restored["checkpoint"]}
+    if task_context:
+        base.update(task_context=task_context, checkpoint_scope='SELECTED_TASK',
+                    active_role_assignment_id=restored['current'].get('assignment_id'))
     used = core["used_bytes"] + len(canonical(base))
     selected, excluded = [], []
     summaries = []

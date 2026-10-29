@@ -49,7 +49,10 @@ def test_copy_physical_content_and_independent_target_current(tmp_path):
                     "domain_id": "core", "state_repository_id": "isolated"})
     source_events = events()
     frozen = store.commit(store.head(), source_events, "prepare-events")["authoritative_commit_sha"]
-    result = copy_all_memory(store, gate, caller, "r", "new-r", source_head=frozen,
+    copier = gate.open_isolated_session("copier", ["new-r"], allowed_copy_scopes=[{
+        "source_role": "r", "target_role": "new-r", "source_commit": frozen,
+        "approval_ref": "test Human authorized r to new-r"}])
+    result = copy_all_memory(store, gate, copier, "r", "new-r", source_head=frozen,
                              operation_id="copy", target_expected_head=frozen,
                              scope_approval_ref="test Human authorized r to new-r")
     snapshot = store.snapshot(result["authoritative_commit_sha"])
@@ -60,7 +63,7 @@ def test_copy_physical_content_and_independent_target_current(tmp_path):
     assert gate.recover("new-r")["current"]["state_version"] == 1
     assert gate.recover("new-r")["identity"]["copied_authority_valid"] is False
     assert len(gate.recover("new-r")["events"]) == 2
-    retry = copy_all_memory(store, gate, caller, "r", "new-r", source_head=frozen,
+    retry = copy_all_memory(store, gate, copier, "r", "new-r", source_head=frozen,
                             operation_id="copy", target_expected_head=frozen,
                             scope_approval_ref="test Human authorized r to new-r")
     assert retry["status"] == "ALREADY_APPLIED"
@@ -182,7 +185,19 @@ def test_invalid_source_checkpoint_prevents_target_copy_publication(tmp_path):
     # Direct local corruption is possible in cooperative mode; recovery must expose it.
     store.commit(store.head(), {checkpoint_path: canonical(invalid)}, "fixture-corruption")
     frozen = store.head()
+    copier = gate.open_isolated_session("copier", ["target"], allowed_copy_scopes=[{
+        "source_role": "source", "target_role": "target", "source_commit": frozen, "approval_ref": "fixture"}])
     with pytest.raises(PRMSError, match="COPY_INCOMPLETE"):
-        copy_all_memory(store, gate, caller, "source", "target", source_head=frozen,
+        copy_all_memory(store, gate, copier, "source", "target", source_head=frozen,
                         operation_id="copy", target_expected_head=frozen, scope_approval_ref="fixture")
     assert store.head() == frozen and not any(p.startswith("roles/target/") for p in store.snapshot())
+
+
+@pytest.mark.parametrize("tasks,copies", [(None, None), (None, []), (["task"], None), (["task"], [])])
+def test_no_host_mode_has_a_permissive_copy_default(tmp_path, tasks, copies):
+    store = LocalGitState.initialize_isolated(tmp_path / "state.git", sandbox_parent=tmp_path)
+    gate = WriterGate(store)
+    caller = gate.open_isolated_session("session", ["target"], allowed_tasks=tasks,
+        allowed_operations=["COPY_ALL_MEMORY"], allowed_copy_scopes=copies)
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        gate.authorize_copy(caller, "source", "target", "a" * 40, "caller approval")
