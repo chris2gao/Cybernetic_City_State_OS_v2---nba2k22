@@ -7,7 +7,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from source import GitSource, PRMSError
-from catalog import discover_g1, discover_g2, B0_PATHS
+from catalog import discover_g1, discover_g2, B0_PATHS, compatibility
 from context import plan_context, human_choice, assemble_context, verify_recovery
 
 ROOT = Path(__file__).resolve().parents[6]
@@ -113,3 +113,30 @@ def test_receipt_cannot_replace_choice_or_directory(src):
     receipt["directory_cards"].pop()
     with pytest.raises(PRMSError, match="SUMMARY_STALE"):
         verify_recovery(src, receipt, expected_plan=plan, expected_choice=choice)
+
+
+def test_core_inheritance_difference_and_toctou_commit_drift(src):
+    candidate_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT).decode().strip()
+    candidate = GitSource(ROOT, candidate_sha, src.repository)
+    assert compatibility(src, src)["status"] == "CORE_SOURCE_BLOBS_MATCH"
+    difference = compatibility(candidate, src)
+    assert difference["status"] == "CORE_VERSION_DIVERGED"
+    assert "01_os/02_boot/context_management/启动清单_v1.yml" in difference["different_paths"]
+    assert difference["merge_performed"] is False
+    plan = plan_context(src, discover_g1(src), session_id="s", role="independent_reviewer", task_id="task")
+    choice = human_choice(plan, session_id="s", selected_paths=[], decision_source="fixture")
+    with pytest.raises(PRMSError, match="SUMMARY_STALE"):
+        assemble_context(candidate, plan, choice, budget_bytes=1_000_000)
+
+
+def test_reviewer_default_does_not_load_executor_narrative_or_rea_body(src):
+    narrative = "01_os/_runs/executor-report.md"
+    rea = "08_Domain_Applications/research/rea.md"
+    plan = plan_context(src, discover_g1(src), session_id="review", role="independent_reviewer",
+                        task_id="task", optional_paths=[narrative, rea])
+    choice = human_choice(plan, session_id="review", selected_paths=[], decision_source="fixture independent review")
+    receipt = assemble_context(src, plan, choice, budget_bytes=1_000_000)
+    assert receipt["status"] == "READY"
+    assert set(receipt["excluded_optional"]) == {narrative, rea}
+    assert not any(x["source"]["path"] in (narrative, rea) for x in receipt["full_bodies"])
+    assert not receipt["action_authorized"]

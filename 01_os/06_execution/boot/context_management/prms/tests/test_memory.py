@@ -65,6 +65,19 @@ def test_copy_physical_content_and_independent_target_current(tmp_path):
                             scope_approval_ref="test Human authorized r to new-r")
     assert retry["status"] == "ALREADY_APPLIED"
     assert store.head() == result["authoritative_commit_sha"]
+    # A copied role evolves under its own CURRENT without rewriting source identity or history.
+    original_source = {p: raw for p, raw in snapshot.items() if p.startswith("roles/r/")}
+    target = gate.recover("new-r")["current"]
+    gate.apply(caller, "new-r", operation_id="claim-target", expected_head=store.head(),
+               expected_version=target["state_version"], expected_epoch=target["owner_epoch"],
+               kind="CLAIM", payload={})
+    target = gate.recover("new-r")["current"]
+    gate.apply(caller, "new-r", operation_id="evolve-target", expected_head=store.head(),
+               expected_version=target["state_version"], expected_epoch=target["owner_epoch"],
+               kind="CHECKPOINT", payload={"open_items": ["target-only work"]})
+    evolved = store.snapshot()
+    assert {p: raw for p, raw in evolved.items() if p.startswith("roles/r/")} == original_source
+    assert gate.recover("new-r")["checkpoint"]["state"]["open_items"] == ["target-only work"]
 
 
 def test_experience_never_promotes_on_self_claimed_refs():

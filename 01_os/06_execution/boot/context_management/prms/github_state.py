@@ -8,6 +8,7 @@ explicit deployment gate. No repository is created by this module.
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
 import re
 
@@ -50,8 +51,28 @@ class GitHubGitState:
             safe_path(item["path"])
             if item["mode"] != "100644":
                 raise PRMSError("REJECTED", "unexpected state file mode")
-            result[item["path"]] = base64.b64decode(self.api("GET", "git/blobs/" + item["sha"])["content"])
+            raw = base64.b64decode(self.api("GET", "git/blobs/" + item["sha"])["content"])
+            actual = hashlib.sha1(f"blob {len(raw)}\0".encode() + raw).hexdigest()
+            if actual != item["sha"]:
+                raise PRMSError("SUMMARY_STALE", "state blob does not match immutable tree")
+            result[item["path"]] = raw
         return result
+
+    def readback(self, candidate, changes):
+        current = self.head()
+        if current != candidate:
+            relation = self.api("GET", f"compare/{candidate}...{current}")
+            if relation.get("status") != "ahead":
+                raise PRMSError("PUBLISH_NOT_CONFIRMED", "authority does not contain attempted commit")
+        observed = self.snapshot(current)
+        if any(observed.get(p) != raw for p, raw in changes.items()):
+            raise PRMSError("PUBLISH_NOT_CONFIRMED", "content differs from attempted operation")
+        return current
+
+    def parents(self, head):
+        if not re.fullmatch(r"[0-9a-f]{40}", head):
+            raise PRMSError("REJECTED", "immutable audit commit required")
+        return [parent["sha"] for parent in self.api("GET", "git/commits/" + head)["parents"]]
 
     def commit(self, expected_head, changes, operation_id, *, before_publish=None):
         identifier(operation_id)
@@ -77,18 +98,14 @@ class GitHubGitState:
         except Exception as exc:
             # Query the attempted commit's actual operation record; never retry PATCH blindly.
             try:
-                current = self.head()
-                observed = self.snapshot(current)
-                if all(observed.get(p) == raw for p, raw in changes.items()):
-                    return {"status": "PUBLISHED_READBACK_AFTER_UNKNOWN", "authoritative_commit_sha": current,
-                            "candidate_commit_sha": candidate, "operation_id": operation_id,
-                            "retry_safety": "DO_NOT_REPLAY"}
+                current = self.readback(candidate, changes)
+                return {"status": "PUBLISHED_READBACK_AFTER_UNKNOWN", "authoritative_commit_sha": current,
+                        "candidate_commit_sha": candidate, "operation_id": operation_id,
+                        "retry_safety": "DO_NOT_REPLAY", "fencing_mode": self.fencing_mode}
             except Exception:
                 pass
             raise PRMSError("PUBLISH_NOT_CONFIRMED", f"uncertain ref result for operation {operation_id}") from exc
-        observed = self.snapshot(self.head())
-        if any(observed.get(p) != raw for p, raw in changes.items()):
-            raise PRMSError("PUBLISH_NOT_CONFIRMED", "content differs from accepted candidate")
-        return {"status": "PUBLISHED", "authoritative_commit_sha": candidate,
-                "readback_head": self.head(), "operation_id": operation_id,
+        current = self.readback(candidate, changes)
+        return {"status": "PUBLISHED", "authoritative_commit_sha": current,
+                "candidate_commit_sha": candidate, "readback_head": current, "operation_id": operation_id,
                 "retry_safety": "READ_OPERATION_BEFORE_RETRY", "fencing_mode": self.fencing_mode}

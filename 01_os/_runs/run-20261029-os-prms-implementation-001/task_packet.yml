@@ -17,7 +17,7 @@ task_packet:
     - CORE_MANIFEST.yml
     - new-domain.ps1
   verification_plan: 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json
-  required_tests: [PRMS_SCENARIOS, CONTEXT_REGRESSION, MODEL_ROUTING]
+  required_tests: [PRMS_OFFLINE_AND_ACCOUNTING, PRMS_ISOLATED_EXAMPLE, PRMS_ACTUAL_SOURCE, CONTEXT_REGRESSION, CONTEXT_STRUCTURE, MODEL_ROUTING, SCAFFOLD_SYNTAX]
   prohibitions:
     - modify_master
     - force_push_or_rewrite_history

@@ -73,6 +73,19 @@ def test_formal_g2_uses_frozen_domain_body_and_matching_publication_evidence(tmp
     assert result["entries"][0]["source"]["commit"] == body_commit
     assert result["entries"][0]["publication_verification"].startswith("MATCHING_PUBLISHED_RECORDS")
     assert result["entries"][0]["action_authorized"] is False
+    from catalog import discover_g1
+    from context import plan_context, human_choice, assemble_context
+    from domain_context import plan_domain_context, choose_domain_context, assemble_domain_context
+    core_root = Path(__file__).resolve().parents[6]
+    core = GitSource(core_root, "446ca66ad48831f5fcdb1af18f37d07619e048c4", "fixture/core")
+    cp = plan_context(core, discover_g1(core), session_id="s", role="planner", task_id="task")
+    cc = human_choice(cp, session_id="s", selected_paths=[], decision_source="fixture")
+    cr = assemble_context(core, cp, cc, budget_bytes=1_000_000)
+    dp = plan_domain_context(source, result, cp, role="planner")
+    dc = choose_domain_context(dp, session_id="s", selected_ids=[], decision_source="Human declines optional G2")
+    dr = assemble_domain_context(source, cr, dp, dc, budget_bytes=1_000_000)
+    assert dr["reads"] == [] and dr["skipped"][0]["reason"] == "NOT_SELECTED"
+    assert not dr["action_authorized"]  # omission never grants the dependent operation
     # A follow-up source changes the reviewer into the executor: no silent approval.
     record = yaml.safe_load((root / "review.yml").read_text())
     record["reviewer_session"] = "execution"

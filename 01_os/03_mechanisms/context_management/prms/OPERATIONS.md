@@ -24,6 +24,14 @@ under this session's Human instruction. A different session must receive its own
 choice. Missing required sources and insufficient budgets cannot produce READY.
 Budgets are explicit UTF-8 byte limits; they are not claims of exact model tokens.
 L0–L4 context depth must not be confused with mechanism-effectiveness levels.
+Recovery `history_choice.depth` accepts L0 (minimum boot), L1 (current), L2
+(selected source excerpts), L3 (selected original events, the compatibility
+default), or L4 (all reachable role-record versions and audit records). Mandatory
+current-task original evidence remains full at every optional depth. L4 traverses
+the frozen Git history, deduplicates exact path/content versions and retains
+original bytes. Other roles are filtered. The default 128-commit bound can be
+explicitly raised to 1000; any remaining commit or budget omission makes the
+audit BLOCKED. A bounded audit never claims a complete history.
 
 G2 APIs are `discover_g2`, `plan_domain_context`, `choose_domain_context` and
 `assemble_domain_context`. They consume the same frozen repository/commit and
@@ -120,3 +128,23 @@ for the affected requirements. Local tests, publication records and source loadi
 cannot substitute for platform enforcement, a real model window or independent
 acceptance. New-domain scaffolding and local merge fixtures do not upgrade any
 existing domain. Core/master and domain/master remain protected publications.
+
+## Reproducible verification and examples
+
+The tracked run `01_os/_runs/run-20261029-os-prms-implementation-001/` contains
+the unchanged original 48 acceptance obligations, a per-scenario test map, and
+the managed verification plan. `acceptance.py --repo-root . --run-path <run>`
+executes the offline suite in a fresh external temporary directory, reads actual
+JUnit outcomes, requires all 48 mappings and reports each required proof scope.
+Its zero exit status means its offline checks passed; it explicitly reports
+`all_original_acceptance_passed: false` while external gates remain unverified.
+
+`examples.py isolated-state --repo-root .` creates and removes only a temporary
+isolated Git fixture, publishes CURRENT/checkpoint/assignment, rejects an old
+session and verifies a new recovery package. All event content is labeled
+synthetic. It cannot create an active role in this Core checkout.
+
+`examples.py pinned-domain-source --repo-root .` reads actual immutable NBA PR18
+sources through GitHub, verifies the thirteen candidate module identities and
+task-selected P04/P09 bodies, and emits the actual G1/G2 catalogs and read proofs.
+It performs no domain code write, game operation or REA invocation.

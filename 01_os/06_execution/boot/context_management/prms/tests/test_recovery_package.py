@@ -42,3 +42,41 @@ def test_window_package_recovers_current_task_and_detects_drift(setup):
     refreshed = create_recovery_package(gate, "engineer", source, core_plan=plan, core_choice=choice,
                                         history_choice=history, budget_bytes=1_000_000)
     assert refreshed["status"] == "PARTIAL" and "CHECKPOINT_LAGS_DURABLE_EVENTS" in refreshed["warnings"]
+
+
+def test_depth_summary_and_full_audit_preserve_sources_and_fail_closed(setup):
+    import base64
+    import json
+    store, gate, caller, _ = setup
+    apply(store, gate, caller, "old-event", "APPEND", {"event_id": "old", "task_id": "prior-task",
+          "kind": "MODEL_INFERENCE", "text": "historical evidence " * 60,
+          "source_refs": [{"repository": "fixture/source", "commit": "a" * 40, "path": "source.md"}]})
+    apply(store, gate, caller, "assignment", "ASSIGN", {"assignment_id": "task", "task_id": "PRMS",
+                                                        "human_authority_ref": "fixture Human instruction"})
+    apply(store, gate, caller, "checkpoint", "CHECKPOINT", {"task_id": "PRMS"})
+    source = GitSource(ROOT, BASE, "fixture/core")
+    plan = plan_context(source, discover_g1(source), session_id="depth", role="engineer", task_id="PRMS")
+    choice = human_choice(plan, session_id="depth", selected_paths=[], decision_source="fixture")
+    history = {"session_id": "depth", "selected_event_ids": ["old"], "depth": "L2", "decision_source": "fixture L2"}
+    package = create_recovery_package(gate, "engineer", source, core_plan=plan, core_choice=choice,
+                                      history_choice=history, budget_bytes=1_000_000)
+    assert package["selected_events"] == []
+    assert package["optional_summaries"][0]["omitted_characters"] > 0
+    assert package["optional_summaries"][0]["kind"] == "MODEL_INFERENCE"
+    history.update(depth="L4", selected_event_ids=[])
+    package = create_recovery_package(gate, "engineer", source, core_plan=plan, core_choice=choice,
+                                      history_choice=history, budget_bytes=1_000_000)
+    audit = package["role_history_audit"]
+    assert audit["status"] == "COMPLETE_WITHIN_ROLE_HISTORY"
+    currents = [json.loads(base64.b64decode(x["content"])) for x in audit["items"] if x["path"].endswith("CURRENT.json")]
+    assert {x["state_version"] for x in currents} == {1, 2, 3, 4}
+    assert sum(x["path"].startswith("publications/") for x in audit["items"]) == 4
+    verify_window_recovery(gate, source, package, core_plan=plan, core_choice=choice, history_choice=history)
+    history["max_history_commits"] = 1
+    bounded = create_recovery_package(gate, "engineer", source, core_plan=plan, core_choice=choice,
+                                      history_choice=history, budget_bytes=1_000_000)
+    assert bounded["status"] == "BLOCKED" and bounded["role_history_audit"]["unvisited_commits"]
+    history.update(depth="L0", selected_event_ids=["old"])
+    with pytest.raises(PRMSError, match="REJECTED"):
+        create_recovery_package(gate, "engineer", source, core_plan=plan, core_choice=choice,
+                                 history_choice=history, budget_bytes=1_000_000)

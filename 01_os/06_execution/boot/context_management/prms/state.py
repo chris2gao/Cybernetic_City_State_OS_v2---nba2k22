@@ -79,6 +79,11 @@ class LocalGitState:
             result[path] = self.git("cat-file", "blob", blob).stdout
         return result
 
+    def parents(self, head):
+        if not re.fullmatch(r"[0-9a-f]{40}", head):
+            raise PRMSError("REJECTED", "immutable audit commit required")
+        return self.git("show", "-s", "--format=%P", head).stdout.decode().split()
+
     def commit(self, expected_head, changes, operation_id, *, before_publish=None):
         """Build complete candidate then CAS. Failure cannot expose a partial CURRENT."""
         identifier(operation_id)
