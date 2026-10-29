@@ -53,6 +53,7 @@ class GitSource:
             if kind == "blob":
                 self.tree[path.decode("utf-8")] = {"blob": sha, "mode": mode}
         self.reads = []
+        self._cache = {}
 
     def git(self, *args):
         result = subprocess.run(["git", *args], cwd=self.root, capture_output=True)
@@ -67,7 +68,9 @@ class GitSource:
             raise PRMSError("SOURCE_MISSING", path)
         if expected_blob is not None and expected_blob != entry["blob"]:
             raise PRMSError("SUMMARY_STALE", path)
-        data = self.git("cat-file", "blob", entry["blob"])
+        if entry["blob"] not in self._cache:
+            self._cache[entry["blob"]] = self.git("cat-file", "blob", entry["blob"])
+        data = self._cache[entry["blob"]]
         git_hash = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
         if git_hash != entry["blob"]:
             raise PRMSError("SOURCE_MISSING", "blob verification failed")
@@ -78,6 +81,9 @@ class GitSource:
 
     def json(self, path):
         return json.loads(self.read(path)[0])
+
+    def at(self, commit):
+        return GitSource(self.root, commit, self.repository)
 
 
 class GitHubSource(GitSource):
@@ -100,6 +106,9 @@ class GitHubSource(GitSource):
         if proc.returncode:
             raise PRMSError("SOURCE_MISSING", "GitHub source request failed")
         return json.loads(proc.stdout)
+
+    def at(self, commit):
+        return GitHubSource(self.repository, commit)
 
     def read(self, path, expected_blob=None):
         safe_path(path)

@@ -13,6 +13,7 @@ import subprocess
 import tempfile
 
 from source import PRMSError, canonical, digest, safe_path
+from contracts import normalize_event, positive_version, require_mapping, validate_current
 
 
 def identifier(value):
@@ -130,21 +131,44 @@ class WriterGate:
     def __init__(self, store):
         self.store = store
         self._sessions = {}
+        self._issued_session_ids = set()
+        self._task_scopes = {}
+        self._operation_scopes = {}
 
     def require_enforced(self):
         # No caller-supplied flag can manufacture remote permission evidence.
         raise PRMSError("FENCING_NOT_ENFORCEABLE", "local Git permits same-principal direct writes")
 
-    def open_isolated_session(self, session_id, allowed_roles):
+    def open_isolated_session(self, session_id, allowed_roles, *, allowed_tasks=None, allowed_operations=None):
         """Test host ingress only. Production adapters must authenticate externally."""
+        if not isinstance(self.store, LocalGitState):
+            raise PRMSError("AUTHORITY_UNVERIFIED", "isolated test sessions cannot authorize a remote state backend")
+        protocol = json.loads(self.store.snapshot().get("protocol.json", b"{}"))
+        if protocol.get("scope") != "ISOLATED_TEST_ONLY":
+            raise PRMSError("AUTHORITY_UNVERIFIED", "isolated session issuer requires an explicit test repository")
         identifier(session_id)
+        if session_id in self._issued_session_ids:
+            raise PRMSError("REJECTED", "session identity already bound")
         roles = frozenset(identifier(r) for r in allowed_roles)
         capability = object()
         self._sessions[capability] = (session_id, roles)
+        self._issued_session_ids.add(session_id)
+        self._task_scopes[capability] = None if allowed_tasks is None else frozenset(allowed_tasks)
+        self._operation_scopes[capability] = None if allowed_operations is None else frozenset(allowed_operations)
         return capability
 
+    def revoke_isolated_session(self, capability):
+        if capability not in self._sessions:
+            raise PRMSError("AUTHORITY_UNVERIFIED", "unknown session capability")
+        del self._sessions[capability]
+        del self._task_scopes[capability]
+        del self._operation_scopes[capability]
+
     def _identity(self, capability, role_id):
-        value = self._sessions.get(capability)
+        try:
+            value = self._sessions.get(capability)
+        except TypeError:
+            value = None
         if value is None or role_id not in value[1]:
             raise PRMSError("AUTHORITY_UNVERIFIED", "unbound caller or role")
         return value[0]
@@ -153,7 +177,16 @@ class WriterGate:
               expected_epoch, kind, payload, before_publish=None):
         identifier(role_id)
         identifier(operation_id)
+        positive_version(expected_version, "expected_version", allow_zero=True)
+        positive_version(expected_epoch, "expected_epoch", allow_zero=True)
+        require_mapping(payload, "operation payload")
         session = self._identity(capability, role_id)
+        operations = self._operation_scopes[capability]
+        if operations is not None and kind not in operations:
+            raise PRMSError("AUTHORITY_UNVERIFIED", "operation outside host-provided task authority")
+        tasks = self._task_scopes[capability]
+        if tasks is not None and kind in {"APPEND", "ASSIGN", "CHECKPOINT"} and payload.get("task_id") not in tasks:
+            raise PRMSError("AUTHORITY_UNVERIFIED", "task outside host-provided assignment scope")
         frozen_head = self.store.head()
         snapshot = self.store.snapshot(frozen_head)
         prefix = f"roles/{role_id}/"
@@ -179,6 +212,9 @@ class WriterGate:
             for key in ["definition", "domain_id", "state_repository_id"]:
                 if not payload.get(key):
                     raise PRMSError("REJECTED", "role definition and ownership required")
+            identifier(payload["domain_id"])
+            if not isinstance(payload["state_repository_id"], str):
+                raise PRMSError("REJECTED", "state repository identity must be a string")
             definition = payload["definition"]
             if not isinstance(definition, dict) or not definition.get("role_type_id") or not definition.get("version"):
                 raise PRMSError("REJECTED", "versioned RoleDefinition required")
@@ -199,15 +235,13 @@ class WriterGate:
             epoch = expected_epoch
             if kind == "APPEND":
                 event_id = identifier(payload["event_id"])
-                if payload.get("kind") not in {"HUMAN_DECISION", "OBSERVATION", "MODEL_INFERENCE",
-                        "EXECUTION_REQUEST", "EXTERNAL_RESULT", "CORRECTION", "REVIEW"}:
-                    raise PRMSError("REJECTED", "event evidence kind")
-                if not payload.get("source_refs"):
-                    raise PRMSError("SOURCE_MISSING", "event provenance required")
+                event = normalize_event(payload)
+                if event["kind"] == "CORRECTION" and prefix + f'events/{identifier(event["corrects_event_id"])}.json' not in snapshot:
+                    raise PRMSError("SOURCE_MISSING", "correction original event not found")
                 event_path = prefix + f"events/{event_id}.json"
                 if event_path in snapshot:
                     raise PRMSError("VERSION_CONFLICT", "immutable event already exists")
-                changes[event_path] = canonical(payload)
+                changes[event_path] = canonical(event)
             elif kind == "CHECKPOINT":
                 event_paths = sorted(p for p in snapshot if p.startswith(prefix + "events/"))
                 checkpoint = {"checkpoint_id": operation_id, "source_commit": frozen_head,
@@ -217,7 +251,7 @@ class WriterGate:
                 current["checkpoint"] = operation_id
             elif kind == "ASSIGN":
                 assignment_id = identifier(payload["assignment_id"])
-                if not payload.get("task_id") or not payload.get("human_authority_ref"):
+                if not isinstance(payload.get("task_id"), str) or not payload["task_id"] or not isinstance(payload.get("human_authority_ref"), str) or not payload["human_authority_ref"]:
                     raise PRMSError("AUTHORITY_UNVERIFIED", "task and Human assignment provenance required")
                 assignment_path = prefix + f"assignments/{assignment_id}.json"
                 if assignment_path in snapshot:
@@ -242,7 +276,8 @@ class WriterGate:
             else:
                 raise PRMSError("REJECTED", "unsupported operation")
         current.update(role_id=role_id, state_version=expected_version + 1, owner_epoch=epoch,
-                       operation_id=operation_id, status="PUBLISHED_CURRENT")
+                       operation_id=operation_id, status="PUBLISHED_CURRENT", schema_version="prms.current.v1")
+        validate_current(current, role_id)
         changes[prefix + "CURRENT.json"] = canonical(current)
         changes[op_path] = canonical({"operation_id": operation_id, "role_id": role_id,
                                      "request_digest": request_digest, "parent": frozen_head})
@@ -256,6 +291,10 @@ class WriterGate:
         if prefix + "CURRENT.json" not in snapshot:
             raise PRMSError("SOURCE_MISSING", "no published role")
         current = json.loads(snapshot[prefix + "CURRENT.json"])
+        validate_current(current, role_id)
+        owner = json.loads(snapshot[prefix + "owner.json"])
+        if owner.get("owner_epoch") != current["owner_epoch"]:
+            raise PRMSError("REJECTED", "owner and CURRENT epoch differ")
         checkpoint_id = current.get("checkpoint")
         checkpoint = None
         if checkpoint_id:
@@ -264,7 +303,10 @@ class WriterGate:
                 if path not in snapshot or digest(snapshot[path]) != expected:
                     raise PRMSError("SOURCE_MISSING", "checkpoint event content mismatch")
         events = [json.loads(data) for p, data in sorted(snapshot.items()) if p.startswith(prefix + "events/")]
+        newer_events = sorted(p for p in snapshot if p.startswith(prefix + "events/")
+                              and (checkpoint is None or p not in checkpoint["event_manifest"]))
         return {"role_id": role_id, "source_commit": head, "current": current,
                 "identity": json.loads(snapshot[prefix + "identity.json"]), "events": events,
                 "checkpoint": checkpoint, "unsaved_chat": "NOT_OBSERVABLE",
+                "checkpoint_uncovered_event_paths": newer_events,
                 "fencing_mode": self.store.fencing_mode, "action_authorized": False}

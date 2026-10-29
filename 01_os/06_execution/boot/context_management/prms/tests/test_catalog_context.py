@@ -55,7 +55,7 @@ def test_optional_rejection_and_mandatory_b0(src):
     loaded = {x["source"]["path"] for x in receipt["full_bodies"]}
     assert set(B0_PATHS) <= loaded and optional not in loaded
     assert receipt["excluded_optional"] == [optional]
-    assert verify_recovery(src, receipt)["action_authorized"] is False
+    assert verify_recovery(src, receipt, expected_plan=plan, expected_choice=choice)["action_authorized"] is False
 
 
 def test_budget_blocks_without_silent_truncation(src):
@@ -74,7 +74,7 @@ def test_cross_session_and_receipt_forgery_rejected(src):
     receipt = assemble_context(src, plan, choice, budget_bytes=1_000_000)
     receipt["full_bodies"][0]["text"] = "forged"
     with pytest.raises(PRMSError, match="REJECTED"):
-        verify_recovery(src, receipt)
+        verify_recovery(src, receipt, expected_plan=plan, expected_choice=choice)
 
 
 def test_missing_source_blocks_required_loading(src):
@@ -89,3 +89,27 @@ def test_missing_source_blocks_required_loading(src):
 def test_wrong_domain_rejected(src):
     with pytest.raises(PRMSError):
         discover_g2(src, "nba2k22")
+
+
+def test_receipt_cannot_remove_task_mandatory_source(src):
+    required = "01_os/03_mechanisms/model_routing/README.md"
+    plan = plan_context(src, discover_g1(src), session_id="s", role="r", task_id="t", required_paths=[required])
+    choice = human_choice(plan, session_id="s", selected_paths=[], decision_source="test Human input")
+    receipt = assemble_context(src, plan, choice, budget_bytes=1_000_000)
+    receipt["mandatory_paths"].remove(required)
+    with pytest.raises(PRMSError, match="REJECTED"):
+        verify_recovery(src, receipt, expected_plan=plan, expected_choice=choice)
+
+
+def test_receipt_cannot_replace_choice_or_directory(src):
+    plan = plan_context(src, discover_g1(src), session_id="s", role="r", task_id="t")
+    choice = human_choice(plan, session_id="s", selected_paths=[], decision_source="test Human input")
+    original = assemble_context(src, plan, choice, budget_bytes=1_000_000)
+    receipt = copy.deepcopy(original)
+    receipt["human_choice"]["decision_source"] = "substituted claim"
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        verify_recovery(src, receipt, expected_plan=plan, expected_choice=choice)
+    receipt = copy.deepcopy(original)
+    receipt["directory_cards"].pop()
+    with pytest.raises(PRMSError, match="SUMMARY_STALE"):
+        verify_recovery(src, receipt, expected_plan=plan, expected_choice=choice)

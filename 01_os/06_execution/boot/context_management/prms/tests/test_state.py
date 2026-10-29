@@ -40,7 +40,10 @@ def test_durable_events_checkpoint_and_real_git_readback(setup):
     assert store.head() == reply["authoritative_commit_sha"]
     apply(store, gate, first, "checkpoint1", "CHECKPOINT", {"open_items": ["build writer gate"]})
     restored = WriterGate(LocalGitState(store.root)).recover("engineer")
-    assert restored["events"] == [event]
+    assert len(restored["events"]) == 1
+    assert all(restored["events"][0][key] == value for key, value in event.items())
+    assert restored["events"][0]["schema_version"] == "prms.event.v1"
+    assert restored["events"][0]["observed_at"] == "UNKNOWN"
     assert restored["checkpoint"]["state"]["open_items"] == ["build writer gate"]
     assert restored["current"]["checkpoint"] == "checkpoint1"
     assert restored["fencing_mode"] == "COOPERATIVE_FENCING"
@@ -108,3 +111,53 @@ def test_same_principal_git_bypass_is_observable_and_never_called_enforced(setup
     assert json.loads(store.snapshot()["roles/engineer/CURRENT.json"])["bypass"] is True
     with pytest.raises(PRMSError, match="FENCING_NOT_ENFORCEABLE"):
         gate.require_enforced()
+
+
+def test_revoked_and_duplicate_host_sessions_are_rejected(setup):
+    store, gate, first, _ = setup
+    with pytest.raises(PRMSError, match="REJECTED"):
+        gate.open_isolated_session("first", ["engineer"])
+    gate.revoke_isolated_session(first)
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        apply(store, gate, first, "revoked-write", "CHECKPOINT", {})
+
+
+def test_source_contract_and_correction_preserve_history(setup):
+    store, gate, first, _ = setup
+    before = store.head()
+    with pytest.raises(PRMSError, match="SOURCE_MISSING"):
+        apply(store, gate, first, "invalid-event", "APPEND", {"event_id": "bad", "kind": "OBSERVATION",
+                                                              "source_refs": [{"path": "unversioned"}]})
+    assert store.head() == before
+    source = [{"repository": "fixture/source", "path": "evidence.md", "commit": "a" * 40}]
+    apply(store, gate, first, "record-original", "APPEND", {"event_id": "old", "kind": "OBSERVATION",
+            "source_refs": source, "text": "original claim"})
+    raw_before = store.snapshot()["roles/engineer/events/old.json"]
+    apply(store, gate, first, "record-correction", "APPEND", {"event_id": "correction", "kind": "CORRECTION",
+            "source_refs": source, "text": "corrected claim", "corrects_event_id": "old"})
+    assert store.snapshot()["roles/engineer/events/old.json"] == raw_before
+    assert len(gate.recover("engineer")["events"]) == 2
+
+
+def test_recording_assignment_does_not_expand_host_task_authority(setup):
+    store, gate, _, _ = setup
+    scoped = gate.open_isolated_session("task-scoped", ["engineer"], allowed_tasks=["approved-task"],
+                                        allowed_operations=["CLAIM", "ASSIGN", "CHECKPOINT"])
+    apply(store, gate, scoped, "scoped-claim", "CLAIM", {})
+    before = store.head()
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        apply(store, gate, scoped, "unapproved-task", "ASSIGN", {"assignment_id": "fake",
+                "task_id": "other-task", "human_authority_ref": "self-claimed approved"})
+    assert store.head() == before
+    apply(store, gate, scoped, "approved-assignment", "ASSIGN", {"assignment_id": "assigned",
+          "task_id": "approved-task", "human_authority_ref": "fixture Human task record"})
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        apply(store, gate, scoped, "self-grant", "UPGRADE_DEFINITION", {"version": "2", "compatibility_ref": "asserted"})
+
+
+def test_test_session_issuer_cannot_authorize_remote_backend():
+    class RemoteBackend:
+        fencing_mode = "FENCING_NOT_ENFORCEABLE"
+    gate = WriterGate(RemoteBackend())
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        gate.open_isolated_session("self-asserted", ["engineer"])

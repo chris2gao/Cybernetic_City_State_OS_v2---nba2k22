@@ -80,3 +80,38 @@ Local mutable state belongs only in temporary isolated Git repositories, never
 in the Core distribution tree. Local same-user direct Git bypass was demonstrated;
 `require_enforced()` returns `FENCING_NOT_ENFORCEABLE`. No production enforcement
 claim may be made until separately authorized platform tests prove the boundary.
+
+
+## Second implementation checkpoint
+
+- The expanded PRMS suite now has 41 passing offline tests (full log retained).
+- Added strict record contracts/JSON schemas; session revocation, host task and
+  operation scopes; refused isolated-session issuance for remote backends.
+- Recovery verification binds host-retained plan and current-session choice,
+  re-resolves catalogs/bytes and rejects missing mandatory sources.
+- Added task-series recovery, source-dependent summary invalidation, idempotent
+  full copy, and consumption of already owner-published K2 governance records.
+- Added domain body planning/assembly/verification with generic module registries
+  and domain-declared module_base, no hardcoded NBA runtime installation path.
+- Actual read-only NBA PR18 source integration loaded six requested P04/P09 docs,
+  with thirteen candidate modules, zero formal G2; full-source context verified.
+  The retained probe is interim evidence, not final managed candidate acceptance.
+- Added a separate-process state CLI and combined Core/Role window-recovery
+  package, including assignment/task consistency, stale checkpoint diagnostics,
+  history selection, source commits and budget blocking. Real GPT/Codex UI-window
+  acceptance remains NOT_RUN, and no production claim is made.
+- Added real local three-way Core-to-domain merge regression. It preserves 09 and
+  contains no live role-state distribution. Fresh Windows clones needed explicit
+  core.longpaths; the generator now carries that setting.
+- Original 28+20 scenario obligations are frozen in acceptance_contract.json.
+  They are not 48 passing tests. Next priority is per-scenario/result accounting,
+  remaining protocol fault/permission-negative tests, operator examples, RES
+  coverage and exact-candidate managed_verify run/inspect plus final handoff.
+- Original context_example.json is now explicitly a READ_MANIFEST_ONLY evidence
+  record; its full source bodies are not embedded or mislabelled a standalone
+  READY recovery package. Operational guide and implementation decisions added.
+
+Do not mark this task or goal complete. Real platform enforcement/deployment,
+model-window acceptance and final independent review remain separate gates. Keep
+completing legal implementation and verification work before asking for those
+external prerequisites. No state service or master integration is authorized.

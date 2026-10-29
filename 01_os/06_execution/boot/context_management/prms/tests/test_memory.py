@@ -9,6 +9,7 @@ from source import canonical, PRMSError
 from state import LocalGitState, WriterGate
 from memory import build_index, stale_dependencies, search_memory, expand_memory, task_visibility
 from memory import copy_all_memory, propose_experience, promotion_readiness
+from memory import source_dependency_status
 
 
 def events():
@@ -59,6 +60,11 @@ def test_copy_physical_content_and_independent_target_current(tmp_path):
     assert gate.recover("new-r")["current"]["state_version"] == 1
     assert gate.recover("new-r")["identity"]["copied_authority_valid"] is False
     assert len(gate.recover("new-r")["events"]) == 2
+    retry = copy_all_memory(store, gate, caller, "r", "new-r", source_head=frozen,
+                            operation_id="copy", target_expected_head=frozen,
+                            scope_approval_ref="test Human authorized r to new-r")
+    assert retry["status"] == "ALREADY_APPLIED"
+    assert store.head() == result["authoritative_commit_sha"]
 
 
 def test_experience_never_promotes_on_self_claimed_refs():
@@ -67,3 +73,17 @@ def test_experience_never_promotes_on_self_claimed_refs():
                                 publication_ref="claimed commit")
     assert candidate["layer"] == reply["layer"] == "K1"
     assert reply["status"] == "AUTHORITY_UNVERIFIED" and not reply["action_authorized"]
+
+
+def test_external_blob_change_invalidates_only_dependent_summary():
+    raw = events()
+    for number, path in enumerate(sorted(raw)):
+        event = json.loads(raw[path])
+        event["source_refs"] = [{"repository": "fixture/source", "path": f"{number}.md",
+                                "commit": "a" * 40, "blob": str(number) * 40}]
+        raw[path] = canonical(event)
+    index = build_index(raw, "r", "a" * 40, 1)
+    observed = {("fixture/source", "0.md"): {"commit": "b" * 40, "blob": "f" * 40},
+                ("fixture/source", "1.md"): {"commit": "b" * 40, "blob": "1" * 40}}
+    assert source_dependency_status(index, observed) == {"a": "SUMMARY_STALE", "b": "VALID"}
+    assert index["summaries"][0]["source_refs"][0]["blob"] == "0" * 40

@@ -1,6 +1,5 @@
 {
-  "schema_version": "prms.context_recovery.v1",
-  "status": "READY",
+  "schema_version": "prms.context_read_manifest.v1",
   "session_id": "implementation-20261029",
   "role": "implementation_owner",
   "task_id": "os-prms-global-persistent-role-memory-20261028-001",
@@ -1176,7 +1175,18 @@
     }
   ],
   "directory_bytes": 39929,
-  "full_bodies": [
+  "missing": [],
+  "not_loaded": [],
+  "required_not_loaded": [],
+  "excluded_optional": [],
+  "budget_bytes": 160000,
+  "used_bytes": 135459,
+  "mechanism_effective": "NOT_INFERRED_FROM_LOADING",
+  "action_authorized": false,
+  "body_storage": "Original text retained in immutable source Git blobs; this committed evidence is the read manifest only, not a standalone context recovery package.",
+  "source_context_status_at_generation": "READY",
+  "status": "READ_MANIFEST_ONLY",
+  "full_body_reads": [
     {
       "source": {
         "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
@@ -1309,14 +1319,5 @@
       },
       "depth": "FULL"
     }
-  ],
-  "missing": [],
-  "not_loaded": [],
-  "required_not_loaded": [],
-  "excluded_optional": [],
-  "budget_bytes": 160000,
-  "used_bytes": 135459,
-  "mechanism_effective": "NOT_INFERRED_FROM_LOADING",
-  "action_authorized": false,
-  "body_storage": "Original text retained in immutable source Git blobs; this committed evidence is the read manifest only, not a standalone context recovery package."
+  ]
 }
