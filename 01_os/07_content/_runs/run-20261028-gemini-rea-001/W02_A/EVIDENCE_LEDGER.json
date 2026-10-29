@@ -1,0 +1,53 @@
+{
+  "package": "W02_A",
+  "task": "GREA-01-EVIDENCE-REPAIR",
+  "target_binary": "NBA2K22.exe",
+  "binary_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "status": "STATIC_CANDIDATE",
+  "claims": [
+    {
+      "claim_id": "CLAIM_W02A_01_OWNER_TEAM_ID_VS_COACH_PTR",
+      "subject": "GAMEPLAN+0x2 data type and RVA 0x146ec50 ABI",
+      "rva": "0x146ec50",
+      "function_range": ["0x146ec50", "0x146ec7c"],
+      "raw_disassembly": "0x146ec59: movzx ecx, word ptr [rcx + 2]; call 0x140f40eb0; xor edx, edx; mov rcx, rax; call 0x1409cd2a0; mov rdx, rax; mov rcx, rbx; jmp 0x14146eaa0",
+      "status": "CONFIRMED_FROM_BYTES_WITH_TEXT_CORRECTION",
+      "verdict": "GAMEPLAN+0x2 is strictly a uint16 owner_team_index. 0x146ec50 converts it to TEAM* via 0x140f40eb0, then gets CoachData* via 0x1409cd2a0, and tail-calls 0x146eaa0. The previous GREA-01 shorthand 'mov rcx, [rcx+2]' was textually imprecise and is WITHDRAWN; no data type conflict exists.",
+      "counter_evidence": "Instruction is movzx ecx, word ptr [rcx + 2], not a 64-bit pointer load.",
+      "maturity": "STATIC_DISASSEMBLED"
+    },
+    {
+      "claim_id": "CLAIM_W02A_02_COMMIT_PENDING_FLAGS_SCOPE",
+      "subject": "RVA 0x131f110 commit scope",
+      "rva": "0x131f110",
+      "function_range": ["0x131f110", "0x131f1a2"],
+      "raw_disassembly": "0x131f11a: test byte ptr [rcx + 0x7bc4], 1; je 0x131f13d; add rcx, 0x7854; call 0x1414f7ec0; lea rcx, [rbx + 0x7854]; call 0x14146ec80; and dword ptr [rbx + 0x7bc4], ~1",
+      "status": "DOWNGRADED_SCOPE",
+      "verdict": "0x131f110 only flushes the DEFAULT gameplan at offset +0x7854 (Slot 35). It does NOT loop over or commit individual opponent gameplans (+0x4 to +0x7850). Opponent gameplans rely on IsInUse=1 set at 0x7a7aab and season-level serialization.",
+      "counter_evidence": "Hardcoded offset 0x7854 used in lea/add instructions; zero iteration over opponent slots.",
+      "maturity": "STATIC_DISASSEMBLED"
+    },
+    {
+      "claim_id": "CLAIM_W02A_03_UI_COMMIT_CHAIN_7A7AAB",
+      "subject": "RVA 0x7a7aab IsInUse bit in native UI flow",
+      "rva": "0x7a7aab",
+      "function_range": ["0x7a7840", "0x7a7e5d"],
+      "raw_disassembly": "0x7a7a81: call 0x1412f21a0; mov rbx, rax; call 0x1414f7940; call 0x14146e740; mov rcx, r14; call 0x14131f110; 0x7a7aab: mov word ptr [rbx], 1; mov dword ptr [r15 + 4], 1",
+      "status": "CONFIRMED_FROM_BYTES",
+      "verdict": "0x7a7aab is physically located within the GameplanUI screen context (0x7a7840-0x7a7e5d) and executes immediately after FindOpponentGameplan (0x12f21a0) and CommitPendingFlags (0x131f110).",
+      "counter_evidence": "None. Disassembly confirmed at aligned instruction boundary.",
+      "maturity": "STATIC_DISASSEMBLED"
+    },
+    {
+      "claim_id": "CLAIM_W02A_04_SLOT_CAPACITY_AND_STRIDE",
+      "subject": "Manager 35 slots of 880 bytes layout",
+      "rva": "0x12f6540",
+      "function_range": ["0x12f6540", "0x12f6647"],
+      "raw_disassembly": "0x12f65f0: movsxd rax, ebx; imul rcx, rax, 0x370; add rcx, 4; add rcx, rsi; inc ebx; cmp ebx, 0x23; jl 0x12f65f0",
+      "status": "CONFIRMED_FROM_BYTES",
+      "verdict": "Capacity is strictly 0x23 (35 slots), stride is strictly 0x370 (880 bytes), base offset is +4. Opponent team index is at slot +0x4 (0xfe12f0: movzx ecx, word ptr [rcx + 4]). Roster slots are 23 entries of stride 4 starting at slot +0x6 (0x146e780).",
+      "counter_evidence": "None. Fully corroborated by loop bounds and arithmetic operands.",
+      "maturity": "STATIC_DISASSEMBLED"
+    }
+  ]
+}
