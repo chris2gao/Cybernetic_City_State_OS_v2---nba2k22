@@ -1,5 +1,9 @@
 # 游戏攻略、官方资料与社区证据登记
 
+**SRC-NATIVE-OFFER-WITHDRAW-013（2026-10-28）**：[撤回调用合同](../../research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)及Run静态028..034；固定PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。支持216字节原版取消服务、原调用flag0、限定Type2/Status1分支仅清状态，以及自动选报价/批量新秀/竞争报价处理器的排除。等级`PINNED_LOCAL_PE_CAPSTONE_NOT_REA_PROVIDER / OFFLINE_SYNTHETIC_HANDLER`。不证明UI资格、当前存档、退款/响应恢复或最终签约；登记模板未命中不代表不存在API。
+
+**SRC-NATIVE-FA-OFFER-012（2026-10-28）**：[明确报价原生合同](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)，固定PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`；主证据为任务Run `static/sign_fa_offer_runtime_contract_027.json`及022..026窗口，恢复工具`recover_fa_offer_contract.py`可离线重放。支持31个阶段CRC名称、独立根指针、原生可用球员池、44字节初始化及指定FA阶段原版报价提交子集。证据级别`PINNED_LOCAL_PE_CAPSTONE_NOT_REA_PROVIDER / OFFLINE_SYNTHETIC_HANDLER`。不证明当前存档、报价子状态、实机资格、最终签约、UI或持久性，不提升历史40族实机成熟度。
+
 研究窗口应在此登记每轮**真正打开并核对过**的资料。来源应注明主题、适用版本/模式/平台、发布日期（如可得）、原始链接、支持的结论与限制。来源本身不是游戏内存认证。
 
 | Source ID | 来源 | 适用游戏/版本 | 研究用途 | 证据级别 | 状态 |
@@ -493,3 +497,21 @@
 | **SRC-0199** | [OS 2K22 PS4 Orlando Magic Dynasty设置](https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/916690-the-orlando-magic-dynasty) | 2K22 PS4本世代玩家公开82赛季/BO7、真实与Sim、Normalize设置；个人配置不代表PC默认 |
 
 [R06-C中文攻略](guides/K11_SEASON_SAVE_PERSISTENCE_R06C.md)及[38类候选机读目录](catalogs/R06C_SEASON_SAVE_PERSISTENCE_RESEARCH_V1.json)均为**研究原料，不是38项已测本机原生偏移**。本轮不进行游戏推进/存档/重启实验，不开发Agent或DEV28。
+
+## 2026-10-28 Native轮换分钟工程静态来源
+
+同日Player增量：任务Run的`static/player_playtype_native_leaf_windows_002.json`、`player_playtype_registration_leads_005.json`和`player_property_setter_descriptors_006.json`记录四个专用PlayType Setter及动态描述符安装；固定构建SHA同下。名称与值继续复用`config/state_io_native/player.json`及R04B目录。直接CALL/静态绝对指针搜索的零结果被后续正向LEA注册证据补充，不能解释为函数未被使用。模型可读参数、逐槽许可与所有未验证作用见[PlayType合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)。没有新网页SRC、游戏调用或持久化证据。
+
+本项为内部固定构建证据，不占用公开网页SRC编号，也不提升R02/R07历史验收状态。任务`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`；PC22 EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。
+
+证据位于仓库`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/`：`rotation_adjust_and_system_setter_001.json`、`rotation_leaf_field_candidates_002.json`、`rotation_virtual_field_join_002.json`、`rotation_qualified_entry_windows_003.json`、`rotation_team_refresh_business_001.json`及其dependencies/leaf windows。它们支持UI调用ABI、0..48边界、指定球员分钟原生Setter与固定球队标记路径；没有游戏附加、当前存档、UI、模拟或持久性证据。详细路径、参数、反例与限制见[原生分钟合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)。工具为本地PE/Capstone有界分析，未冒充REA Provider或实机调用日志。
+
+## 2026-10-28 Player索引Stat与徽章候选静态来源
+
+同一固定PC22构建与工程Run的`static/player_indexed_stat_setters_012.json`、`player_indexed_stat_field_contract_015.json`、`player_stat_delegate_thunk_016.json`恢复156项索引分派、54个已合格能力/耐久叶函数、99个倾向字节与Potential特殊刷新分支。字段名复用既有`config/memory_field_profile.json`、`config/state_io_native/player.json`，不修改采集/数据库。完整8892字节徽章函数、耦合helper和原始flag0 UI调用见014/017/018；019的首个误对齐前缀不是ABI证据。精确输入、权限与局限见[Stat合同](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)。工具为本地PE/Capstone，非REA Provider或游戏实测日志；没有新增网页SRC和实机/持久化证据。
+
+Badge follow-up: the same fixed PE contains an original UTF-16 name array at0x24c6970, raw Getter table0x97c700, maximum remap0x1950124 and signed modifier Getter table0x969f1c. The packaged tool independently joins99 fields and checks every Setter preservation mask; output`static/player_badge_names_fields_and_modifiers_025.json` retains primary evidence. These are internal names, not external labels guessed onto Native IDs. [Recovery contract](../../research/rea_native_control/BADGE_NATIVE_RECOVERY.md) records the NONE sentinel, linked effective modifiers and coupling/assertion gaps; no webpage SRC or live acceptance is added.
+
+徽章工程消费边界：后续`BADGE_NATIVE_CONTRACT.md`及`runtime/player_badges.js`使用上述025原始证据、014完整Setter、017有效Getter/trait-helper和018原版flag0调用。新增参数/角色合同要求完整联动前后状态，以有界当前修正快照对照原版只读Getter，并保持原版断言前提；新增证据仍为离线JS/ABI模型及源对应检查，没有新增游戏附加、UI/模拟/SaveReload证明。
+
+固定构建读取证据补充：`static/player_stat_read_getter_contract_026.json`跟踪Getter0x978360的159项分派表中153个已合格字段路径，与Setter偏移逐一对照，未发现选中路径调用或内存目标写入；保留原始one-third和25常量及签名。工具为本地PE/Capstone，非REA Provider/实际游戏捕获。新增只读数据集、冻结角色Provider和原版Getter前后值的语义边界见[读取合同](../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)。

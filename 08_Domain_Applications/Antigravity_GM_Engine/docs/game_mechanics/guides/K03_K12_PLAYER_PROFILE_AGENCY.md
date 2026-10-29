@@ -530,3 +530,25 @@ R04既没有替历史线决定谁必须夺冠，也没有按真实职业史提�
 未来原生缺口继续保持`UNKNOWN`：真正PC22本机全部页面枚举、已命名51未知Tendency raw字节的含义、人格徽章原生ID、三项Motivation原生偏移/当前值、真实Morale和伤病、Mentorship、合同执行当前实机验收，以及模拟器引擎的精确系数。不能为了R04“闭环美观”虚构这些源数据或把未核实数值暴露给某个角色。
 
 **下一轮R05（NOT_STARTED）**：研究K07/K08/K09合同、工资帽/税、薪资预算、员工、球探、选秀与球队市场竞争、休赛期报价及巨星职业议价，把R04的球员自我诉求与实际金融/合法交易约束对接。R04研究归档后不要求DEV29独立审核；由用户/其他模型另外进行审阅，**本轮不自动启动R05、DEV28、Codex或任何Agent开发**。
+
+## 30. 2026-10-28四槽PlayType的原生工程增量
+
+独立工程任务`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`恢复了四个专用Native Setter，按既有PLAYER布局修改四个有序类别槽；类别0..15名称继续沿用本资料库及PC22配置。角色须明确提供球员、所属球队、槽位和值；每项逻辑许可仅覆盖自己的槽位。Player人格没有默认修改权限，也不能借共享接口修改队友或属性。详细ABI、参数、原始证据和作用限制见[四槽合同](../../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)。
+
+新增证据为固定PC22二进制的静态字段/回调恢复与离线工程验证，尚无本轮游戏附加、真实写入、原版UI、模拟使用率或Save/Reload证据。它不重开R04、不修改历史研究验收，不证明属性、倾向、徽章、Initiator或完整球员编辑链已经完成。
+
+## 31. 2026-10-28属性/耐久与倾向的索引Native工程增量
+
+上述独立工程任务继续恢复原版156项Stat索引Setter：54个已命名能力/耐久字段使用UI25..99和原生缓存失效路径，99个倾向位置使用0..100，其中48个现有名称、51个含义仍UNKNOWN。不把外站99个标签硬配到本机未知字节。Potential虽已定位，但会触发额外未闭合刷新，暂不调用；另两个未分类属性索引也不可用。精确字段、枚举、源码及原生副作用见[属性/倾向合同](../../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)。
+
+当前角色接口只向普通GM开放经host明确授予的Intangibles例外；其它能力/耐久技术接口限明确世界编辑。普通角色可按授权使用48个已命名倾向；Player仅能指向自身UID。技术可写不产生角色自我强化许可，未知倾向只供明确世界编辑且不虚构含义。徽章已恢复四参数原生候选与UI flag0调用，但其联动/互斥及标签尚未闭合，因此保持不可调用。新增均为静态与离线证据，未证明UI/模拟/自然成长或持久化；R04历史研究不重开。
+
+Follow-up static Badge discovery recovered all99 native internal enum names and bit/max layouts, including80 maximum4 fields and19 maximum1 entries with the NONE sentinel. Effective levels also read signed linked modifiers, and personality groups enforce original coupling/assertions. These are distinct from21 historical research candidates and from verified MyLEAGUE UI options; see [Badge recovery](../../../research/rea_native_control/BADGE_NATIVE_RECOVERY.md). The candidate remains noncallable, with no new live evidence or role edit grant.
+
+## 32. 徽章原版规则的明确状态工程接口
+
+后续独立工程已接入98个非NONE字段的原版flag0 Setter。调用者须明确整个可能联动组的前后状态；原版规则不能产生该after状态或会触发断言时停止，不能用内部递归flag1绕过。当前修正链经有界快照及原版有效Getter交叉核对，全部未指定属性/徽章位和修正节点要求保持。角色入口限明确WORLD_ADMIN，普通人格没有徽章自增权；原生内部名称不等于MyLEAGUE菜单认证。详见[徽章调用合同](../../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)。这仍是静态/离线工程，不是本轮游戏调用、自然成长、UI或持久化证明。
+
+## 33. 显式Player读取与原版Getter前后值
+
+控制工程新增`player.editor_state`，按明确字段数组读54属性/耐久、99倾向、98非NONE原始/有效徽章和4个有序槽位。属性/倾向153项原版Getter路径已与既有Setter字段逐一对应，代码/浮点常量有固定构建证据；编辑回执也改为原版Getter前后值。角色消费已捕获回执时按精确读取授权投影，并保留目标/来源，不产生自增属性/徽章权。资料指南：[读取合同](../../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)。没有实际捕获或UI/模拟/存档证据，Potential/完整子对象及全局自由球员/储备解析仍有缺口。

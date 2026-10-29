@@ -1,0 +1,127 @@
+{
+  "source_kind": "PINNED_PE_ENTRY_WINDOWS_NOT_REA_PROVIDER",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "game_access": false,
+  "windows": [
+    {
+      "entry_candidate_rva": 9995968,
+      "window_bytes": 64,
+      "window_sha256": "12c8a01bda15668b79b79c91b7c9dd42a891adb919fe5d08699ebc2590ad02c8",
+      "unwind_chain": [
+        {
+          "begin": 9995968,
+          "end": 9996189,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "instructions": [
+        {
+          "rva": 9995968,
+          "mnemonic": "push",
+          "operands": "rbx"
+        },
+        {
+          "rva": 9995970,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x60"
+        },
+        {
+          "rva": 9995974,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 9995977,
+          "mnemonic": "mov",
+          "operands": "r9, rcx"
+        },
+        {
+          "rva": 9995980,
+          "mnemonic": "test",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 9995982,
+          "mnemonic": "je",
+          "operands": "RVA+0x9886f9"
+        },
+        {
+          "rva": 9995984,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [rcx + 0x314]"
+        },
+        {
+          "rva": 9995990,
+          "mnemonic": "shr",
+          "operands": "edx, 0x1c"
+        },
+        {
+          "rva": 9995993,
+          "mnemonic": "and",
+          "operands": "edx, 3"
+        },
+        {
+          "rva": 9995996,
+          "mnemonic": "je",
+          "operands": "RVA+0x9886f9"
+        },
+        {
+          "rva": 9995998,
+          "mnemonic": "sub",
+          "operands": "edx, 1"
+        },
+        {
+          "rva": 9996001,
+          "mnemonic": "je",
+          "operands": "RVA+0x9886f3"
+        },
+        {
+          "rva": 9996003,
+          "mnemonic": "sub",
+          "operands": "edx, 1"
+        },
+        {
+          "rva": 9996006,
+          "mnemonic": "je",
+          "operands": "RVA+0x9886f3"
+        },
+        {
+          "rva": 9996008,
+          "mnemonic": "cmp",
+          "operands": "edx, 1"
+        },
+        {
+          "rva": 9996011,
+          "mnemonic": "jne",
+          "operands": "RVA+0x9886f9"
+        },
+        {
+          "rva": 9996013,
+          "mnemonic": "lea",
+          "operands": "r8d, [rdx + 1]"
+        },
+        {
+          "rva": 9996017,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x9886f9"
+        },
+        {
+          "rva": 9996019,
+          "mnemonic": "mov",
+          "operands": "r8d, 1"
+        },
+        {
+          "rva": 9996025,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [rcx + 0x32c]"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Window boundaries are not function extents or an ABI proof",
+    "Bytes after a RET or tail JMP may belong to a different function",
+    "No game code was executed"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "nba2k22.auxiliary_scope.v1",
+  "packet_id": "NATIVE-INFO-AUX-001",
+  "human_requested_model_label": "Gemini Flash 3.8",
+  "model_label_verified_by_owner": false,
+  "work_mode": "SERIAL_BOUNDED_STATIC_ONLY",
+  "target_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "task_ids": ["A01_SHOT_ENUMS", "A02_SHOT_ARRAYS", "B01_PLAYER_CHART_GETTER"],
+  "claim_kinds": ["ENUM_TABLE", "ARRAY_LAYOUT", "GETTER_DATAFLOW", "NEGATIVE_SCOPE_RESULT", "UNKNOWN"],
+  "evidence_levels": ["STATIC_FACT_CANDIDATE", "HYPOTHESIS", "NEGATIVE_SCOPE_RESULT", "UNKNOWN"],
+  "provenance": ["REA_STATIC", "PINNED_PE_CAPSTONE_NOT_REA_PROVIDER", "OWNER_INPUT_REVIEW"],
+  "max_claims": 12,
+  "max_artifacts": 40,
+  "max_total_bytes": 16777216,
+  "max_artifact_bytes": 2097152,
+  "max_binary_bytes": 4096,
+  "allowed_suffixes": [".json", ".jsonl", ".md", ".txt", ".csv", ".py", ".bin"],
+  "forbidden_tool_name_fragments": ["attach", "frida", "write_memory", "write_process", "launch_target", "native_call", "decompile_all", "open_binary"],
+  "authority": "Human-transferred auxiliary static research only; no role/business/game/merge authority",
+  "review_effect": "Structural screening only; never independent acceptance or automatic integration"
+}

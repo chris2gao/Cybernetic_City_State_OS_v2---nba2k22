@@ -1,0 +1,16 @@
+{
+  "source_kind": "PINNED_PE_CALLBACK_REGISTRATION_NOT_REA_PROVIDER",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "query": "(?i)(Accept.*Offer|Reject.*Offer|Renounce|Withdraw|FreeAgency.*(State|Phase)|ContractOffer)",
+  "string_limit": 100,
+  "matching_string_count": 46,
+  "string_selection_truncated": false,
+  "registration_pattern": "xor r9d,r9d; lea r8,callback; lea rdx,declaration; mov rcx,rbx; call0x1fbaf0",
+  "game_access_performed": false,
+  "callbacks": [],
+  "limitations": [
+    "Other registration templates are not covered",
+    "Callback may depend on UI globals, VM context or original editor state",
+    "Printed declaration does not independently prove actual ABI or safe Native business commit"
+  ]
+}

@@ -1,5 +1,13 @@
 # NBA2K20–23 终极联盟游戏机制知识库
 
+> **2026-10-28 合同工程checkpoint013（静态/离线）**：[撤回指定待处理报价](../../research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)通过原版服务清除唯一预期OFFERED自由球员报价的状态。撤回、接受/拒绝、完成签约分别登记；原需求183项保留，补充撤回1项。来源`SRC-NATIVE-OFFER-WITHDRAW-013`，没有新实机/UI/Save证明。
+
+> **2026-10-28 合同原生工程checkpoint012（静态/离线）**：[FA阶段明确报价提交](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)恢复原生阶段22、可用球员池与指定合同报价子集；报价提交、接受和完成签约分别举证。来源`SRC-NATIVE-FA-OFFER-012`登记于[SOURCES](SOURCES.md)。没有新的实机/UI/Save验收；旧研究矩阵与历史不可调用判断按各自版本保留，当前工程成熟度以对应合同和机读目录为准。
+
+> **2026-10-28 Player原生工程增量（静态恢复，未实机验收）**：[四槽PlayType合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)恢复4个独立Setter，并复用既有0..15类别名称。每个逻辑动作限制自己的槽位，Player无默认编辑权限；另有独立[属性/倾向工程增量](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)：54项能力/耐久与99个倾向位置恢复原版索引Setter，角色权限按字段限制；Potential/徽章仍不可调用。完整父对象复制体保留为研究候选。
+
+> **2026-10-28 Native工程增量（静态恢复，未实机验收）**：[K04补充§22](guides/K04_COACH_AND_PLAYS.md#22-pc22原生轮换分钟调用链2026-10-28工程增量)及[完整调用合同](../../research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)记录明确球员分钟0..48的原生Setter/球队变更路径，排除可能截断输入的MyCareer分支。它不证明当前存档、UI、模拟或持久化效果，不改变历史R02/R07验收状态。
+
 > **最新R07修复断点（2026-10-21）**：研究已按[独立审核](../development_reviews/DEV29_R07_INDEPENDENT_REVIEW_20261021.md)完成A/B两项定向修正并[提交自检回执](../development_reviews/DEV29_R07_TARGETED_CATALOG_REPAIR_20261021.md)，状态`R07_TARGETED_CATALOG_REPAIR_SUBMITTED_FOR_INDEPENDENT_RECHECK`。两个R01目录ID现明示为人工指南主题别名，8个能力组的模型查询层已与执行/审批/存档真实性分开。**正在等待独立简短复验，不能自行声称DEV29研究已经正式结案。**
 
 
@@ -71,3 +79,7 @@ K01逐场比赛/赛程；K02球队和球员普通/高级统计；K03球员和名
 ## 新增球员系统研究与涌现方向
 
 玩家确定：所有游戏机制知识必须让**GM/球员/教练/媒体作为独立角色**拥有真实可观察状态、合法可选行为、协商权、信息限制与比赛/历史反馈，而非强制产生最优决策。R03仍研究训练/恢复一般机制；**R04独立研究NBA2K20–23的全部球员身份、属性、潜力、倾向、徽章、人格徽章、耐久/伤病、合同偏好（Play for Win/Financial Security/Loyalty）、球员职业自主权及字段双语义**；原经营R04顺延R05，其余后移。详情：[R04专项任务书](../development_tasks/DEV29_R04_PLAYER_FULL_PROFILE_AND_AGENCY_RESEARCH_SPEC_V1.md)。原生Ability/Potential/Badge仅正常读取观察，自主Agent同意与**真实玩家的存档写入批准**分开；人格记忆优先外挂SQLite，不擅占仍有效的原生字段。**当前R01/R02已结案，R03/R04/R05均已获用户批准研究结案；R05保持`R05_RESEARCH_CLOSED_WITH_PC22_NATIVE_CAPABILITY_GAPS`。R06-A已发布，下一轮R06-B尚未启动**。今后研究窗口只负责各R轮研究交付，独立完整性审核由其他模型负责。
+
+2026-10-28徽章执行工程后续：[明确联动前后状态的原版规则接口](../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)已接入98个非哨兵内部字段，保留有效等级修正、原版互斥/表达规则及断言检查；只限明确世界编辑。新的静态/离线能力不提升UI/模拟/存档或R04历史研究验收。
+
+Player当前值工程后续：[显式字段读取与角色快照](../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)使用原版Getter取得选定属性/倾向、原始/有效徽章和有序PlayTypes。它补齐编辑前值来源，仍是未实机验收的原生控制研发读取接口，不替换正式数据采集/数据库/历史链，也不重开R04研究。

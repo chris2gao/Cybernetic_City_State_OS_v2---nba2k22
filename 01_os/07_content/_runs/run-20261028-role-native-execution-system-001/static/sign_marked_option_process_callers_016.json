@@ -1,0 +1,175 @@
+{
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "target_rva": 19660480,
+  "source_kind": "STATIC_PINNED_PE_CAPSTONE_NOT_REA_PROVIDER",
+  "game_access_performed": false,
+  "target_execution_performed": false,
+  "caller_limit": 24,
+  "confirmed_candidates_examined": 1,
+  "truncated": false,
+  "direct_call_or_tailjump_refs": [
+    {
+      "callsite_rva": 19467763,
+      "primary_rva": 19467680,
+      "unwind_chain": [
+        {
+          "begin": 19467710,
+          "end": 19467802,
+          "unwind_rva": 50788872,
+          "flags": 4
+        },
+        {
+          "begin": 19467690,
+          "end": 19467710,
+          "unwind_rva": 50788852,
+          "flags": 4
+        },
+        {
+          "begin": 19467680,
+          "end": 19467690,
+          "unwind_rva": 50007036,
+          "flags": 0
+        }
+      ],
+      "instruction_boundary_confirmed": true,
+      "window": [
+        {
+          "rva": 19467710,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x68], rsi"
+        },
+        {
+          "rva": 19467715,
+          "mnemonic": "mov",
+          "operands": "ecx, edi"
+        },
+        {
+          "rva": 19467717,
+          "mnemonic": "call",
+          "operands": "RVA+0xedef10"
+        },
+        {
+          "rva": 19467722,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 19467725,
+          "mnemonic": "lea",
+          "operands": "rdx, [rsp + 0x20]"
+        },
+        {
+          "rva": 19467730,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 19467733,
+          "mnemonic": "mov",
+          "operands": "rcx, rax"
+        },
+        {
+          "rva": 19467736,
+          "mnemonic": "mov",
+          "operands": "rsi, rax"
+        },
+        {
+          "rva": 19467739,
+          "mnemonic": "call",
+          "operands": "RVA+0x93f830"
+        },
+        {
+          "rva": 19467744,
+          "mnemonic": "lea",
+          "operands": "rcx, [rsp + 0x20]"
+        },
+        {
+          "rva": 19467749,
+          "mnemonic": "call",
+          "operands": "RVA+0x941f30"
+        },
+        {
+          "rva": 19467754,
+          "mnemonic": "test",
+          "operands": "rax, rax"
+        },
+        {
+          "rva": 19467757,
+          "mnemonic": "je",
+          "operands": "RVA+0x1290e07"
+        },
+        {
+          "rva": 19467759,
+          "mnemonic": "nop",
+          "operands": ""
+        },
+        {
+          "rva": 19467760,
+          "mnemonic": "mov",
+          "operands": "rcx, rax"
+        },
+        {
+          "rva": 19467763,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bfec0"
+        },
+        {
+          "rva": 19467768,
+          "mnemonic": "lea",
+          "operands": "rcx, [rsp + 0x20]"
+        },
+        {
+          "rva": 19467773,
+          "mnemonic": "call",
+          "operands": "RVA+0x9444d0"
+        },
+        {
+          "rva": 19467778,
+          "mnemonic": "test",
+          "operands": "rax, rax"
+        },
+        {
+          "rva": 19467781,
+          "mnemonic": "jne",
+          "operands": "RVA+0x1290df0"
+        },
+        {
+          "rva": 19467783,
+          "mnemonic": "mov",
+          "operands": "rcx, rsi"
+        },
+        {
+          "rva": 19467786,
+          "mnemonic": "call",
+          "operands": "RVA+0x9ae270"
+        },
+        {
+          "rva": 19467791,
+          "mnemonic": "inc",
+          "operands": "edi"
+        },
+        {
+          "rva": 19467793,
+          "mnemonic": "cmp",
+          "operands": "edi, ebp"
+        },
+        {
+          "rva": 19467795,
+          "mnemonic": "jl",
+          "operands": "RVA+0x1290dc3"
+        },
+        {
+          "rva": 19467797,
+          "mnemonic": "mov",
+          "operands": "rsi, qword ptr [rsp + 0x68]"
+        }
+      ],
+      "window_is_complete_caller": false
+    }
+  ],
+  "limitations": [
+    "Indirect callers are not enumerated",
+    "Unwind fragments and linear decode do not prove all control-flow paths",
+    "Argument meanings, lifecycle and live effects are not inferred from names"
+  ]
+}

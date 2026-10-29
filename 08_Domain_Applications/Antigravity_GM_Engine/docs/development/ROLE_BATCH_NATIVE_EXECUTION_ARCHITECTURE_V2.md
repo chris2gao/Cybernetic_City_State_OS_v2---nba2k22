@@ -1,5 +1,9 @@
 # NBA2K22 外挂系统 · 身份能力驱动的批量原生执行架构 V2
 
+> **工程checkpoint013**：[撤回指定待处理报价](../../research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)作为原183项未单列的发现补充，另存`supplemental_requirements.json`；不得替换原始需求ID，目录版本绑定补充内容。原183 +补充1 =当前184项。调用方提交完整预期报价字段；撤回与提交共享Player资源，不能由汇总器自动串成改价/替换。报价接受/拒绝与最终签约仍未恢复。
+
+> **工程checkpoint012**：[明确FA报价提交合同](../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)将`GM.CONTRACT.CONTRACT_OFFER`接入现有身份/批次链。宿主提供GM团队权限、阶段grant、`FA_SIGNING_OFFERS`子场景和当前存档上下文；原生处理器另核验父阶段22及可用球员身份。角色给定六个薪资槽、总年限、选项、合同类型和条款，汇总器不能更改；同Player的竞争报价交角色解决。未独立确认的返回继续占有Player资源，不因新request_id重放。该动作只提交报价，`GM.CONTRACT.FA_SIGN`仍不可调用；无实机验收或数据链改造。
+
 **架构状态**：Human 于2026-10-28明确的新目标执行链；本文件是**架构规划与接口合同**，不是宣称执行器已经批处理实现，也不改变现有数据采集/SQLite。源码变更与实机操作另按OS阶段授权。  
 **继承证据**：[REA最新窗口交接](../../research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md)、[PR16角色指南](../../research/rea_native_control/ROLE_MODEL_MECHANISM_GUIDE.md)、[PR16真实效果](../../research/rea_native_control/VALIDATION_RESULTS.md)。
 
@@ -148,3 +152,23 @@ submit_decided_actions(actor_uid, role_action_batch)
 5. 更新`PROJECT_INDEX.md`和`PROJECT_MODULE_REGISTRY_V2.json`中相关模块，链接到具体PR、Evidence与新的已知缺口。
 
 **本PR只规定架构，不实现RoleCapabilityProfile服务、汇总器或Native批处理执行。** 数据底座和已有游戏研究文档不被本轮修改，等Human审定完183项第一轮动作和能力值域再制定新Codex任务。
+
+## 8. PR #19工程接口增量：PlayType槽位（2026-10-28）
+
+上一节末尾的“本PR只规定架构”指来源PR #18。工程PR #19已实现角色服务/汇总/日志候选，并持续扩展Native能力；完整M0–M5仍在施工。当前精确工程状态以`research/rea_native_control/ROLE_EXECUTION_PROGRESS.md`及任务Run的`PROGRESS_POINTER.json`为准，不能据本节宣称实机或独立验收完成。
+
+四项`PLAYER.EDIT.PLAY_TYPE_1..4`现在通过专用Native Setter接入。角色指令参数为`team_id`、`player_id`及`slot_values`对象，例如槽位1要求`{"1":4}`。每个逻辑动作只准提交自己的一个槽位；完整Native接口可接收显式多槽对象，但不能借一项角色权限修改其它槽。合法类别0..15及含义来自既有PC22枚举。模型决定对象/槽位/值，执行器不补零、不换值、不决定顺序偏好；原生调用按槽号稳定排序。
+
+同一球员不同槽可放在一个批次，目标槽冲突必须回角色解决。Player人格需有明确动作授权并匹配自己的`player_scope`；技术可修改不产生默认权限。中断结果不重试。现有数据链未改变，界面/模拟/存档效果仍待各自真实证据。[完整调用与角色合同](../../research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)及当前`coverage_current.json`记录实际输入模型；保留PR #18初版需求作来源，不回写历史为已实测。
+
+## 9. PR #19工程接口增量：索引属性/倾向（2026-10-28）
+
+四个属性/倾向单字段或显式批量接口调用原版索引UI Setter，并保留其原生缓存/通知路径；不经过整个PLAYER父对象复制。角色卡区分原规划actor与当前政策：GM能力字段只允许明确授予的Intangibles例外，其余54项中已合格能力/耐久字段供获授权的WORLD_ADMIN；普通角色倾向字段限48个已有名称，世界编辑可显式使用99个位置且未知名称保持UNKNOWN。Player须匹配自身UID。参数全部预检、同字段冲突拒绝、交易占用整球员资源；不自动改值。原生技术能力与身份许可独立。Potential刷新、徽章耦合及其它资料仍有缺口，全部新增能力尚未实机验收。见[准确合同](../../research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)和当前工程进度。
+
+## 10. PR #19徽章原版规则工程接口（2026-10-28）
+
+`PLAYER.EDIT.BADGE_SET`使用`field_id,value`以及完整可能联动组的`expected_before,expected_after`，只允许明确WORLD_ADMIN授权。原版flag0 Setter会保留互斥和表达类规则；执行器以有界当前修正链及原版只读Getter交叉核对有效等级，拒绝断言前提和after状态不匹配。汇总资源包括可能修改及规则读取的徽章，避免跨规则冲突。98个非哨兵内部名称及上限已恢复，内部名称不等于原版UI认证。见[调用合同](../../research/rea_native_control/BADGE_NATIVE_CONTRACT.md)。新工程没有实机/独立/持久化验收，完整M0–M5仍在推进。
+
+## 11. 当前Player状态输入及角色只读投影
+
+`player.editor_state`以显式字段选择读原版Getter/原始槽位，并把已完成回执经冻结Provider交给`read_role_visible_data`。角色端按精确字段读取授权投影，保留identity和observation；读取不产生编辑权，不从Provider启动采集或替模型选择after状态。原属性/倾向写入回执现在使用Getter→Setter→Getter，不再猜测UI前值。仅同handler前后字节括号相等，不能声称原子快照、Native存档身份或独立效果确认。具体作用域与接口见[读取合同](../../research/rea_native_control/PLAYER_EDITOR_READ_CONTRACT.md)。

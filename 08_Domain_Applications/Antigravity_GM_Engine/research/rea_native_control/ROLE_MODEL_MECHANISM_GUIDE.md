@@ -1,5 +1,7 @@
 # 给外部GM、Coach、Player模型的机制与执行说明
 
+> **当前角色入口（PR #19工程候选）**：角色先通过`RoleCapabilityService`的`list_role_capabilities`、`describe_action`、`get_allowed_values`加载身份许可和准确参数，再提交逻辑需求ID的`RoleActionBatch`，由`submit_decided_actions`核对host身份、阶段和范围。下文Native action示例用于说明执行器的底层格式，不能替代角色授权。[批次合同](ROLE_BATCH_EXECUTION.md)、[四槽PlayType合同](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)与[属性/倾向合同](PLAYER_STAT_NATIVE_CONTRACT.md)记录当前接口；完整M0–M5仍未完成，也没有因工程接入而新增实机许可。
+
 适用：本仓库PC NBA2K22离线MyLEAGUE，固定EXE SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`。本目录为研发接口候选，实机范围见[验证报告](VALIDATION_RESULTS.md)与[data/native_live_validation.json](data/native_live_validation.json)。角色名称表示使用者，不是原生权限机制。
 
 外挂中的GM、教练和球员模型根据外部数据作决定，GM之间负责协商并检查交易。这里说明机制和确定参数的执行方法；执行器不生成策略、不评估球员、不配平薪资、不在失败后换资产或目标。收到确定请求后，解析当前游戏对象、编码输入、调用原生函数并独立读回。
@@ -15,6 +17,10 @@
 角色模型只交逻辑ID和值；执行者从当前进程解析指针，角色模型不传内存地址。执行前后读取是检查对象及效果，不重新判断经营决策。类型、UID归属、数组长度、EXE/ABI、可读内存和生命周期检查属于正确调用所必需的技术条件；薪资匹配、能力匹配、交易公平性与双方是否同意属于外部决策。
 
 `prepare`和`render`不访问游戏；提供显式启用的管理员REA transport后，`dispatch`才运行。函数返回与实际效果分开：`REJECTED_BY_GAME`保留原输入；`NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED`还需独立读取；缺回执为`UNKNOWN`，先查状态，不能直接重放。`REAL_NATIVE_EFFECT_VERIFIED`只说明该次原生状态发生了预期变化，不等于UI、存盘重载或生产集成通过。
+
+### 1.1 四槽PlayType接口增量
+
+**PlayType增量**：`PLAYER.EDIT.PLAY_TYPE_1..4`各自只允许对应的单槽对象，例如槽位1参数`{team_id,player_id,slot_values:{"1":4}}`。类别0..15有既有PC22名称；共享Native action可处理显式多槽，但单槽角色权限不能越到其它槽。Player还必须匹配自己的`player_scope`。四个专用Setter已有静态恢复和离线实现，UI/模拟/持久化未实测；详见[调用合同](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)。
 
 ## 2. 交易：执行外部已经同意的资产包
 
@@ -97,3 +103,15 @@ Player模型现在可以使用外部系统已有数据作决策，并提出已�
 回执保留原始请求、实际调用链与次数、原生返回、独立回读前后值、其它受检字段、错误或UNKNOWN及原始证据位置。对一次请求不自动改值、追加业务、恢复或重试；缺回执先独立读状态。外部模型根据回执决定下一条请求，本执行器不代替它们决策。
 
 本轮原始证据和例外在[当前验证报告](VALIDATION_RESULTS.md)，全部静态动作在[ACTION_SURFACE.md](ACTION_SURFACE.md)。成熟度按**具体字段/输入组合**登记，存在源码接口不代表实机通过。
+
+### 属性与倾向的角色参数增量
+
+`PLAYER.EDIT.ATTR_SET` / `.ATTR_BATCH`与`.TENDENCY_SET` / `.TENDENCY_BATCH`使用当前球队/球员UID，单字段为`field_id,value`，批量为非空`values`字典。通过`get_allowed_values`加载当前角色的具体字段含义和范围；能力/耐久UI整数25..99，倾向整数0..100，执行器不自动钳位或替模型决定数值。普通GM仅有明确授予的Intangibles例外；其余能力/耐久只向获授权的世界编辑身份开放。48个已命名倾向可按明确授权提供给GM/Coach/Player，Player还须匹配自身UID；51个未命名位置只供明确世界编辑，含义保持UNKNOWN。Potential和未分类能力不开放，徽章仍不可调用。完整参数、原生副作用与未实测范围见[合同](PLAYER_STAT_NATIVE_CONTRACT.md)。
+
+### 徽章的明确联动接口
+
+`PLAYER.EDIT.BADGE_SET`只向明确授权的WORLD_ADMIN身份开放；普通GM/Coach/Player不能自增徽章。通过`get_allowed_values`取得98个非NONE内部名称、每项上限1/4和完整联动组；输入`team_id,player_id,field_id,value,expected_before,expected_after`。两个状态对象必须完整列出可能联动的对或三元组，单独技能则只有一个字段。执行器保留原版flag0规则、检查临时有效等级及断言条件；原版规则与明确after状态不符就拒绝，不改选值或绕过规则。内部名称不等于已认证MyLEAGUE UI选项。详见[徽章合同](BADGE_NATIVE_CONTRACT.md)，目前只有静态和离线证据。
+
+### 当前Player字段的读取来源
+
+新增技术数据集`player.editor_state`使用明确的四族字段数组，不默认为读取全部。角色通过已捕获回执的`PlayerEditorSnapshotProvider`及原有`read_role_visible_data`读取`attributes.字段`、`tendencies.字段`、`badges.内部名称`、`play_types.槽位`。host须明确授予每个字段以及`identity,observation`，返回结果保留目标、观察来源和HOST_ATTESTED上下文。读取不会新增编辑许可，也不会自动附加进程或采集。Potential不返回。真实调用只由显式NativeReadFacade/授权transport启动，详见[读取合同](PLAYER_EDITOR_READ_CONTRACT.md)。

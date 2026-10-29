@@ -1,0 +1,69 @@
+{
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "source_kind": "PINNED_PE_PADDED_LEAF_CANDIDATES_NOT_REA_PROVIDER",
+  "game_access": false,
+  "candidates": [
+    {
+      "entry_candidate_rva": 18557872,
+      "literal_rva": 18557892,
+      "instructions": [
+        {
+          "rva": 18557872,
+          "mnemonic": "xor",
+          "operands": "ecx, ecx"
+        },
+        {
+          "rva": 18557874,
+          "mnemonic": "mov",
+          "operands": "eax, 0x7f"
+        },
+        {
+          "rva": 18557879,
+          "mnemonic": "test",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 18557882,
+          "mnemonic": "cmovne",
+          "operands": "ecx, r8d"
+        },
+        {
+          "rva": 18557886,
+          "mnemonic": "and",
+          "operands": "dword ptr [rdx + 0xf8], 0xfe03ffff"
+        },
+        {
+          "rva": 18557896,
+          "mnemonic": "cmp",
+          "operands": "ecx, eax"
+        },
+        {
+          "rva": 18557898,
+          "mnemonic": "cmovb",
+          "operands": "eax, ecx"
+        },
+        {
+          "rva": 18557901,
+          "mnemonic": "and",
+          "operands": "eax, 0x7f"
+        },
+        {
+          "rva": 18557904,
+          "mnemonic": "shl",
+          "operands": "eax, 0x12"
+        },
+        {
+          "rva": 18557907,
+          "mnemonic": "or",
+          "operands": "dword ptr [rdx + 0xf8], eax"
+        },
+        {
+          "rva": 18557913,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "qualification": "PADDED_LEAF_CANDIDATE_NO_UNWIND_NOT_ABI_PROOF"
+    }
+  ]
+}
