@@ -79,3 +79,33 @@ OS的默认是`long_horizon_big_task`：一个连贯、已授权目标下的需�
 - 完成后停止，不自动进入下一产品任务或执行实际游戏操作。
 
 **规划模型最终交付的是高质量可验证的任务上下文，而不是独立替另一模型完成实现或自我验收。**
+
+## 7. 公共规划岗位主动轮换（Human 工作原则：2026-10-29）
+
+**角色与工作台分离。** `OS_PUBLIC_DEVELOPMENT_PLANNER` 是跨 Core 与各领域长期复用
+的逻辑岗位实例，正式 OS 角色仍是 `decision_architecture`。通常由轮换的 GPT
+工作窗口完成需求、架构、任务合同和结果分析；Codex 是各具体工程任务的执行工作台，
+独立审核从公共基线单独 Fork，Human 作关键裁决。此安排不把模型提供商、
+OS 协作角色和 GM/Coach/Player 人格混为一谈。
+
+**任务分离而非巨型窗口。** 同一逻辑岗位可先后规划多个项目任务，但每个实际工作
+窗口按 OS 规则只承载当前明确的 `task_id`。不把长期任务列表、全部规划日志塞进一个
+永远滚动或压缩的 Codex/GPT 会话。出现重要需求/架构裁决、正式任务交接时，使用
+已经存在且获授权的 PRMS task save 或 GitHub Run 形成可读回的持久记录；
+真实状态仓未配置时标记 GitHub 恢复方式，绝不虚构成功的 `SAVE_TASK_CONTEXT`。
+
+**下一代 Planner 的接任：** 优先从干净公共基线 Fork，核对最新 Core/领域 HEAD，
+依 B0/G1/G2/T1/T2/K1/K2 按需加载，读取岗位导航引用的当前任务包、
+Human 决策来源、已验证结果、缺口和下一步。新 Fork 不能自动收到旧窗口后续更新。
+岗位概览如需 `role_instance_id`、`active_task_ids`、`latest_human_decision_refs`、
+`task_status_index`、`source_versions`、`handoff_checkpoint`，只作为
+**现有 PRMS/GitHub 档案的链接索引**，不能另建权威状态库或假定新 Role Handoff API。
+
+**最小交班验证：** 全新独立窗口应能准确恢复岗位身份、已批准 Human 决策与来源、
+任务隔离、实时 SHA 差异、未完成事项及下一步；并列出所有恢复缺口。
+验证之前仅属于约定的规划方式，不能报告为已实现的自动跨窗口恢复。
+
+本节遵从 Core `01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md`
+（随最新 Core 版本核对）；不改变本领域业务决策权、游戏写入授权、项目原型开发方式
+或独立审核要求。
+
