@@ -1,0 +1,53 @@
+{
+  "schema_version": "prms.copy_safety_audit.v1",
+  "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
+  "review_scope": "OWNER_INTERNAL_ISOLATED_COUNTEREXAMPLES_NOT_INDEPENDENT_REVIEW",
+  "operation_scope": {
+    "before_candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+    "before_outcome": "limited CHECKPOINT-only caller published a target through copy",
+    "red_log": "interim_test_logs/copy_operation_scope_expected_red.log",
+    "red_log_sha256": "95d07a26e47a560146d4565d0da82a74af49bd609d0ccfe2739d48e81c46536e",
+    "published_representation": "LF-normalized text; exact original raw log retained externally",
+    "external_raw_log_sha256": "ea9adb1237dcf02e626202eb53cc8c9e73a098573bc03ff81f72d8a246cbe9bf",
+    "after": "shared operation guard plus host-bound frozen source/target/approval copy scope; revocation enforced by local gate"
+  },
+  "copied_definition_version": {
+    "before_candidate": "cbc6e6a388f8a5ceef4f82373714e38b1411d458",
+    "before_probe": {
+      "scope": "ISOLATED_GIT_COUNTEREXAMPLE",
+      "copied_definition_version": "1",
+      "reusing_copied_version_outcome": "PUBLISHED",
+      "expected": "REJECTED",
+      "original_source_unchanged": true
+    },
+    "after_probe": {
+      "scope": "ISOLATED_GIT_COUNTEREXAMPLE",
+      "copied_definition_version": "1",
+      "reusing_copied_version_outcome": "REJECTED",
+      "expected": "REJECTED",
+      "original_source_unchanged": true
+    },
+    "after": "canonical copied definitions retained; same version rejected; new version evolves separately"
+  },
+  "source_completeness": {
+    "after": "invalid source checkpoint returns COPY_INCOMPLETE; no target CURRENT or ref advance"
+  },
+  "actual_test_outcomes": {
+    "test_memory.py::test_copy_cannot_bypass_host_operation_scope": "PASS",
+    "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable": "PASS",
+    "test_memory.py::test_copy_physical_content_and_independent_target_current": "PASS",
+    "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication": "PASS"
+  },
+  "implementation_blobs": {
+    "01_os/06_execution/boot/context_management/prms/state.py": {
+      "before": "0e6facda631714aed03bd15117391880aedea40f",
+      "after": "8d8849b0210b1e59f30f8ef339d6b94211aa11e7"
+    },
+    "01_os/06_execution/boot/context_management/prms/memory.py": {
+      "before": "9b7e362f6a0e94373452b201ae614ed860259a60",
+      "after": "cc7e13e05398cda0c52bfb89b94fc9ffe03cb3d7"
+    }
+  },
+  "production_enforcement": "FENCING_NOT_ENFORCEABLE",
+  "independent_acceptance": "NOT_RUN"
+}

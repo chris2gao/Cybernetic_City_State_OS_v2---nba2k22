@@ -33,3 +33,11 @@
 
 机制失效必须在 validator 或加载 receipt 阶段显现；不得静默退回完整历史、旧路径或
 工作树“安全边界”假设。
+
+## Persistent role memory extension
+
+`prms/README.md` defines the approved OS-PRMS candidate extension. Its foreground
+CLI is `01_os/06_execution/boot/context_management/prms/cli.py`; registration is
+`01_os/05_registry/prms_v1.yml`. Discovery, source reads, context loading and
+permissions remain separate. No mutable role state is stored in this repository.
+Local Git tests cannot establish enforced GitHub fencing or production deployment.

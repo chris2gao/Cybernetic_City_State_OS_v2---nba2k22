@@ -1,0 +1,65 @@
+task_packet:
+  task_id: os-prms-global-persistent-role-memory-20261028-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 446ca66ad48831f5fcdb1af18f37d07619e048c4
+  branch: task/os-prms-implementation-20261029
+  objective: Implement approved OS-PRMS A-RC02 and B-RC01 with catalog addendum, D0-D5, without production activation.
+  source_evidence:
+    - chris2gao/Cybernetic_City_State_OS_v2---nba2k22@3c53fd2e4ea98c7bd99b3c5961134690c4832803
+    - chris2gao/Cybernetic_City_State_OS_v2---nba2k22@094f1aa641f93dec2277707ad9dbf5bdb0341247
+  allowed_changed_paths:
+    - 01_os/03_mechanisms/context_management/**
+    - 01_os/02_boot/context_management/**
+    - 01_os/05_registry/**
+    - 01_os/06_execution/boot/context_management/**
+    - 01_os/_runs/run-20261029-os-prms-implementation-001/**
+    - CORE_MANIFEST.yml
+    - new-domain.ps1
+  verification_plan: 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json
+  required_tests: [PRMS_OFFLINE_AND_ACCOUNTING, PRMS_ISOLATED_EXAMPLE, PRMS_ACTUAL_SOURCE, CONTEXT_REGRESSION, CONTEXT_STRUCTURE, MODEL_ROUTING, SCAFFOLD_SYNTAX, PRMS_TASK_CONTINUITY]
+  prohibitions:
+    - modify_master
+    - force_push_or_rewrite_history
+    - create_real_state_repository_or_credentials
+    - activate_runtime_service_scheduler
+    - access_game_REA_process_save_or_private_role_data
+    - bulk_domain_merge
+    - change_approved_A_B_architecture
+  required_completion_pointer: 01_os/_runs/run-20261029-os-prms-implementation-001/completion_pointer.json
+  big_task: true
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 446ca66ad48831f5fcdb1af18f37d07619e048c4
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+    excluded_from_execution: [master_integration, real_state_service_deployment, domain_master_merge]
+  executor_profile:
+    provider: Codex
+    surface: Codex desktop local shell
+    model: runtime_inherited
+    reasoning_effort: runtime_inherited
+    mode: standard
+    routing_basis: Human explicitly selected Codex as sole implementation_owner; no model override or delegation.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: separate_session_required_after_delivery
+    different_model_family: true
+    different_measurement_tool: true
+  success_criteria:
+    - Human clarified closure on 2026-10-29: correct task-plan-based memory management/loading and continuity across disposable windows. Human explicitly saves A before switching to B; task execution is normally sequential.
+    - Actual model-window/platform deployment acceptance stays separate and may remain NOT_RUN; it does not block this clarified engineering closure.
+    - Runnable implementation and scoped tests for every approved requirement, with genuine gaps disclosed.
+    - Core task branch and PR, exact remote readback, independent-review handoff.
+    - No production permission claim from local Git or fixture evidence.
+  stop_conditions:
+    - Unapproved product semantic change or out-of-scope write required.
+    - Secret or protected-action boundary.
+    - Evidence cannot support the requested acceptance claim.

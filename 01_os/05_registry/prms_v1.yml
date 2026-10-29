@@ -1,0 +1,31 @@
+schema_version: citystate.registry.v1
+registry_id: prms_v1
+mechanism_version: 1
+entries:
+  - path: 01_os/03_mechanisms/context_management/prms/**
+    purpose: Approved persistent role memory contracts and compatibility boundaries
+    loader: 01_os/06_execution/boot/context_management/prms/cli.py
+    loader_class: in_repo_program
+    discovery: context management README and existing boot extension
+    evidence: 01_os/03_mechanisms/context_management/prms/README.md
+    cache_dirs: []
+    failure_surfacing: explicit PRMS CLI or candidate verification
+    deletion_rule: protected
+  - path: 01_os/06_execution/boot/context_management/prms/**
+    purpose: Catalog, task continuity, Human-relay recovery, dormant trusted ingress, isolated Git state and tests
+    loader: Human-authorized foreground invocation and pytest
+    loader_class: in_repo_program
+    discovery: context management PRMS contract
+    evidence: 01_os/03_mechanisms/context_management/prms/README.md
+    cache_dirs: []
+    failure_surfacing: explicit PRMS invocation or test run
+    deletion_rule: protected
+  - path: 01_os/05_registry/prms_v1.yml
+    purpose: PRMS canonical and executable surfaces registration
+    loader: PRMS catalog resolver
+    loader_class: in_repo_program
+    discovery: complete registry enumeration
+    evidence: 01_os/06_execution/boot/context_management/prms/catalog.py
+    cache_dirs: []
+    failure_surfacing: catalog completeness checks
+    deletion_rule: protected
