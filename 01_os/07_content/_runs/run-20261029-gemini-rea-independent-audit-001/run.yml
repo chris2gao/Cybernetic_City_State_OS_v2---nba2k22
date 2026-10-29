@@ -1,0 +1,55 @@
+task_id: NBA2K22-GEMINI-REA-INDEPENDENT-AUDIT-01
+run_id: run-20261029-gemini-rea-independent-audit-001
+task_role: independent_review_and_selected_repair
+lifecycle: authorized_not_started
+stage: independent_native_audit
+branch: task/nba2k22-gemini-native-audit-20261029
+base:
+  branch: baseline/nba2k22-native-execution-checkpoint-014-20261029
+  sha: 6151ef5d484914edcec2fbcfcf3bcce83a848907
+source:
+  gemini_branch: gemini_rea
+  gemini_wave03_sha: 6cad7c7454798dbe18e7bd800d85e2a9d1c7119c
+  gemini_historical_fork_sha: 39086984adfa554d36315382d41bc2e5d2e54c39
+  codex_original_pr: 19
+  planning_pr: 18
+  target_exe_sha256: 1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5
+affected_module_ids:
+  - P04
+  - P05
+  - P06
+  - P07
+  - P08
+  - P09
+  - P10
+  - P12
+task_packet_ref: TASK_PACKET.md
+high_risk_ref: HIGH_RISK_CONFLICTS.md
+planned_stages:
+  - stage_a_independent_claim_review_and_static_replay
+  - stage_b_gate_passed_selected_repair_and_offline_integration
+  - stage_c_evidence_and_os_index_sync
+controls:
+  no_live_game_or_save_access: true
+  no_unapproved_native_write: true
+  no_modified_gemini_branch: true
+  no_modified_codex_frozen_baseline: true
+  no_modified_pr19: true
+  no_modified_master: true
+  no_wholesale_cherry_pick_or_merge: true
+  no_unverified_registry_promotion: true
+  require_pinned_pe_evidence: true
+  require_independent_caller_semantics: true
+  require_offline_test_reproduction: true
+  do_not_confuse_gemini_21_passed_with_native_acceptance: true
+  requires_human_approval_for_live_scenarios: true
+goal_state: AUDIT_WITH_OPTIONAL_STATIC_OFFLINE_INTEGRATION
+full_original_m0_m5_goal_complete: false
+human_acceptance: PENDING
+expected_outputs:
+  - CLAIM_AUDIT_MATRIX.json
+  - EVIDENCE_REPLAY_LOG.md
+  - CONFLICT_RESOLUTION.md
+  - STAGE_A_AUDIT_GATE.md
+  - SELECTED_INTEGRATION_MANIFEST.json
+  - CODEX_FINAL_HANDOFF.md
