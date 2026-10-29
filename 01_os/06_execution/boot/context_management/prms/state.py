@@ -139,12 +139,14 @@ class WriterGate:
         self._issued_session_ids = set()
         self._task_scopes = {}
         self._operation_scopes = {}
+        self._copy_scopes = {}
 
     def require_enforced(self):
         # No caller-supplied flag can manufacture remote permission evidence.
         raise PRMSError("FENCING_NOT_ENFORCEABLE", "local Git permits same-principal direct writes")
 
-    def open_isolated_session(self, session_id, allowed_roles, *, allowed_tasks=None, allowed_operations=None):
+    def open_isolated_session(self, session_id, allowed_roles, *, allowed_tasks=None, allowed_operations=None,
+                              allowed_copy_scopes=None):
         """Test host ingress only. Production adapters must authenticate externally."""
         if not isinstance(self.store, LocalGitState):
             raise PRMSError("AUTHORITY_UNVERIFIED", "isolated test sessions cannot authorize a remote state backend")
@@ -155,11 +157,23 @@ class WriterGate:
         if session_id in self._issued_session_ids:
             raise PRMSError("REJECTED", "session identity already bound")
         roles = frozenset(identifier(r) for r in allowed_roles)
+        copies = None
+        if allowed_copy_scopes is not None:
+            copies = {}
+            for scope in allowed_copy_scopes:
+                require_mapping(scope, "host copy scope")
+                key = (identifier(scope.get("source_role")), identifier(scope.get("target_role")), scope.get("source_commit"))
+                approval = scope.get("approval_ref")
+                if (not isinstance(key[2], str) or not re.fullmatch(r"[0-9a-f]{40}", key[2])
+                        or key[1] not in roles or key in copies or not isinstance(approval, str) or not approval):
+                    raise PRMSError("REJECTED", "host copy scope requires a unique frozen source, target and approval")
+                copies[key] = approval
         capability = object()
         self._sessions[capability] = (session_id, roles)
         self._issued_session_ids.add(session_id)
         self._task_scopes[capability] = None if allowed_tasks is None else frozenset(allowed_tasks)
         self._operation_scopes[capability] = None if allowed_operations is None else frozenset(allowed_operations)
+        self._copy_scopes[capability] = copies
         return capability
 
     def revoke_isolated_session(self, capability):
@@ -168,6 +182,7 @@ class WriterGate:
         del self._sessions[capability]
         del self._task_scopes[capability]
         del self._operation_scopes[capability]
+        del self._copy_scopes[capability]
 
     def _identity(self, capability, role_id):
         try:
@@ -178,6 +193,26 @@ class WriterGate:
             raise PRMSError("AUTHORITY_UNVERIFIED", "unbound caller or role")
         return value[0]
 
+    def authorize_operation(self, capability, role_id, kind, *, task_id=None):
+        session = self._identity(capability, role_id)
+        operations = self._operation_scopes[capability]
+        if operations is not None and kind not in operations:
+            raise PRMSError("AUTHORITY_UNVERIFIED", "operation outside host-provided task authority")
+        tasks = self._task_scopes[capability]
+        if tasks is not None and kind in {"APPEND", "ASSIGN", "CHECKPOINT"} and task_id not in tasks:
+            raise PRMSError("AUTHORITY_UNVERIFIED", "task outside host-provided assignment scope")
+        return session
+
+    def authorize_copy(self, capability, source_role, target_role, source_commit, approval_ref):
+        session = self.authorize_operation(capability, target_role, "COPY_ALL_MEMORY")
+        copies = self._copy_scopes[capability]
+        if copies is None:
+            if self._task_scopes[capability] is not None:
+                raise PRMSError("AUTHORITY_UNVERIFIED", "task-scoped session requires an explicit host copy grant")
+        elif copies.get((source_role, target_role, source_commit)) != approval_ref:
+            raise PRMSError("AUTHORITY_UNVERIFIED", "copy outside host-bound source/target/approval scope")
+        return session
+
     def apply(self, capability, role_id, *, operation_id, expected_head, expected_version,
               expected_epoch, kind, payload, before_publish=None):
         identifier(role_id)
@@ -185,13 +220,7 @@ class WriterGate:
         positive_version(expected_version, "expected_version", allow_zero=True)
         positive_version(expected_epoch, "expected_epoch", allow_zero=True)
         require_mapping(payload, "operation payload")
-        session = self._identity(capability, role_id)
-        operations = self._operation_scopes[capability]
-        if operations is not None and kind not in operations:
-            raise PRMSError("AUTHORITY_UNVERIFIED", "operation outside host-provided task authority")
-        tasks = self._task_scopes[capability]
-        if tasks is not None and kind in {"APPEND", "ASSIGN", "CHECKPOINT"} and payload.get("task_id") not in tasks:
-            raise PRMSError("AUTHORITY_UNVERIFIED", "task outside host-provided assignment scope")
+        session = self.authorize_operation(capability, role_id, kind, task_id=payload.get("task_id"))
         frozen_head = self.store.head()
         snapshot = self.store.snapshot(frozen_head)
         prefix = f"roles/{role_id}/"

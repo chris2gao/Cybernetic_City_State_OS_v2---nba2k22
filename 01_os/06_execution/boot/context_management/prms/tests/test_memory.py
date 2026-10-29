@@ -100,3 +100,54 @@ def test_external_blob_change_invalidates_only_dependent_summary():
                 ("fixture/source", "1.md"): {"commit": "b" * 40, "blob": "1" * 40}}
     assert source_dependency_status(index, observed) == {"a": "SUMMARY_STALE", "b": "VALID"}
     assert index["summaries"][0]["source_refs"][0]["blob"] == "0" * 40
+
+
+def test_copy_cannot_bypass_host_operation_scope(tmp_path):
+    store = LocalGitState.initialize_isolated(tmp_path / "state.git", sandbox_parent=tmp_path)
+    gate = WriterGate(store)
+    owner = gate.open_isolated_session("owner", ["source"])
+    gate.apply(owner, "source", operation_id="register", expected_head=store.head(), expected_version=0,
+               expected_epoch=0, kind="REGISTER", payload={"definition": {"role_type_id": "engineer", "version": "1"},
+                    "domain_id": "core", "state_repository_id": "isolated"})
+    frozen = store.head()
+    limited = gate.open_isolated_session("limited", ["target"], allowed_operations=["CHECKPOINT"])
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        copy_all_memory(store, gate, limited, "source", "target", source_head=frozen,
+                        operation_id="copy", target_expected_head=frozen, scope_approval_ref="caller claimed approval")
+    assert store.head() == frozen and not any(p.startswith("roles/target/") for p in store.snapshot())
+    unrestricted = gate.open_isolated_session("copy-host", ["target"], allowed_operations=["COPY_ALL_MEMORY"])
+    for unpinned in (None, "master", True):
+        with pytest.raises(PRMSError, match="REJECTED"):
+            copy_all_memory(store, gate, unrestricted, "source", "target", source_head=unpinned,
+                            operation_id="copy", target_expected_head=frozen, scope_approval_ref="fixture")
+    assert store.head() == frozen
+
+
+def test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable(tmp_path):
+    store = LocalGitState.initialize_isolated(tmp_path / "state.git", sandbox_parent=tmp_path)
+    gate = WriterGate(store)
+    owner = gate.open_isolated_session("owner", ["source"])
+    gate.apply(owner, "source", operation_id="register", expected_head=store.head(), expected_version=0,
+               expected_epoch=0, kind="REGISTER", payload={"definition": {"role_type_id": "engineer", "version": "1"},
+                    "domain_id": "core", "state_repository_id": "isolated"})
+    frozen = store.head()
+    task_only = gate.open_isolated_session("task-only", ["target"], allowed_tasks=["task"],
+                                          allowed_operations=["COPY_ALL_MEMORY"])
+    kwargs = dict(source_head=frozen, operation_id="copy", target_expected_head=frozen,
+                  scope_approval_ref="host-authorized-copy")
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        copy_all_memory(store, gate, task_only, "source", "target", **kwargs)
+    bound = gate.open_isolated_session("bound", ["target"], allowed_tasks=["task"],
+        allowed_operations=["COPY_ALL_MEMORY"], allowed_copy_scopes=[{
+            "source_role": "source", "target_role": "target", "source_commit": frozen,
+            "approval_ref": "host-authorized-copy"}])
+    for changed in ({"source_head": "a" * 40}, {"scope_approval_ref": "self-claimed approval"}):
+        with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+            copy_all_memory(store, gate, bound, "source", "target", **{**kwargs, **changed})
+    assert store.head() == frozen
+    reply = copy_all_memory(store, gate, bound, "source", "target", **kwargs)
+    assert reply["status"] == "PUBLISHED" and gate.recover("target")["identity"]["copied_authority_valid"] is False
+    assert copy_all_memory(store, gate, bound, "source", "target", **kwargs)["status"] == "ALREADY_APPLIED"
+    gate.revoke_isolated_session(bound)
+    with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
+        copy_all_memory(store, gate, bound, "source", "target", **kwargs)

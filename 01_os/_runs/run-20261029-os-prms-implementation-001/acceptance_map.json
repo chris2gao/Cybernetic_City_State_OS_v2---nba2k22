@@ -92,7 +92,9 @@
   },
   "B-13": {
     "tests": [
-      "test_memory.py::test_copy_physical_content_and_independent_target_current"
+      "test_memory.py::test_copy_physical_content_and_independent_target_current",
+      "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
+      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable"
     ],
     "required_scope": "OFFLINE",
     "remaining_proof": "No broader platform or independent acceptance is implied."
@@ -153,7 +155,9 @@
     "tests": [
       "test_state.py::test_takeover_and_untrusted_caller_fail_closed",
       "test_state.py::test_revoked_and_duplicate_host_sessions_are_rejected",
-      "test_state.py::test_test_session_issuer_cannot_authorize_remote_backend"
+      "test_state.py::test_test_session_issuer_cannot_authorize_remote_backend",
+      "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
+      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable"
     ],
     "required_scope": "TRUSTED_HOST",
     "remaining_proof": "Production session authentication and copied-token rejection need a separately controlled ingress."
@@ -190,7 +194,8 @@
   },
   "B-26": {
     "tests": [
-      "test_memory.py::test_copy_physical_content_and_independent_target_current"
+      "test_memory.py::test_copy_physical_content_and_independent_target_current",
+      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable"
     ],
     "required_scope": "OFFLINE",
     "remaining_proof": "No broader platform or independent acceptance is implied."

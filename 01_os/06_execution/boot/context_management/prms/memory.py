@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 from pathlib import Path
 from pathlib import PurePosixPath
 import sys
@@ -183,9 +184,11 @@ def copy_all_memory(source_store, target_gate, capability, source_role, target_r
     identifier(source_role)
     identifier(target_role)
     identifier(operation_id)
+    if not isinstance(source_head, str) or not re.fullmatch(r"[0-9a-f]{40}", source_head):
+        raise PRMSError("REJECTED", "full copy requires an explicit immutable source commit")
     if not scope_approval_ref:
         raise PRMSError("AUTHORITY_UNVERIFIED", "explicit source/target copy scope required")
-    session = target_gate._identity(capability, target_role)
+    session = target_gate.authorize_copy(capability, source_role, target_role, source_head, scope_approval_ref)
     source = source_store.snapshot(source_head)
     actual_target_head = target_gate.store.head()
     target = target_gate.store.snapshot(actual_target_head)
