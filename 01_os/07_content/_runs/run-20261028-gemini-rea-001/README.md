@@ -60,3 +60,7 @@ Codex以`GREA_HANDOFF_TEMPLATE.md`标准逐项审查：固定候选SHA、来源/
 ## 2026-10-29 Human 新批准的继续工作（覆盖旧“下一任务未授权”状态）
 
 Human已批准**Gemini先在独立分支多做有界研究，由Codex最后集中复核/整理**。本Run中GREA-01原候选必须先自审修正，随后可依次进行GREA-02个人防守、GREA-03 Playbook，两者仍只研究静态证据，不自称游戏实机成功；每包至多4轮内部反证循环。**最新生效的任务文件**：`GREA_CONTINUOUS_RESEARCH_WAVE_02.md`。本Wave授权高于本文件旧的“GREA-02未授权”字样，仅限W02 A/B/C；GREA-04至09及游戏状态修改仍未授权。完成三个包后Gemini停止，统一交Codex审核；Codex PR19不从此实验分支整体合并。
+
+## 2026-10-29 Human 批准的全剩余GM/Coach Native研究（最新生效）
+
+Wave-02已经完成并保留在其固定提交与`W02_CONSOLIDATED_CODEX_HANDOFF.md`。Human进一步批准Gemini以较大研究预算**一次性继续所有第一版GM/Coach需要的未闭合Native领域**，并在内部持续补证/反证/修复；不再限制3包/12轮，也不要求每个工作包单独等待Codex。最新任务为**[`GREA_WAVE_03_FULL_RESEARCH_BACKLOG.md`](GREA_WAVE_03_FULL_RESEARCH_BACKLOG.md)**；它覆盖W03-00对Wave-02证据检查和W03-04至W03-12全部剩余研究。前面旧`GREA-02/03未授权`或`Wave-02结束必须等待Codex`文字是历史决策，**仅在本Wave已明确批准的范围内被新指令覆盖**。其他包括游戏写入、D1–D5生产数据开发、独立人格、任意WorldAdmin编辑仍未批准。Gemini完成Wave-03后统一交Codex审核，不能自己正式集成。
