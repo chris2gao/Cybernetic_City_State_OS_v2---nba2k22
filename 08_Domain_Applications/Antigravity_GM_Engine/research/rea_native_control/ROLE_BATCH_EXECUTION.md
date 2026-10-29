@@ -1,5 +1,7 @@
 # Role batches: implemented host API and current limits
 
+> **2026-10-29 正式结项：CLOSED_WITH_DEFERRED_SCOPE，full_goal_complete=false。** 当前工程已停止，以下checkpoint/WIP/下一步文字保留历史；未来另立接收任务。准确入口：[结项报告](TASK_CLOSURE_20261029.md)、[固定总账](data/NATIVE_EXECUTION_BASELINE_MANIFEST_20261029.json)、[遗留清单](data/DEFERRED_NATIVE_CAPABILITIES_20261029.json)。
+
 Checkpoint013: the fixed183 source requirements remain unchanged; a versioned supplemental catalog adds the discovered pending-offer withdrawal, for184 total and61 effective mappings. [Withdrawal contract](OFFER_WITHDRAWAL_NATIVE_CONTRACT.md) requires complete current expected fields and an explicit GM/scene grant. Submission and withdrawal share Player/offer resources; they cannot become automatic cancel-and-replace. Current registry72 actions/65 bindings/15 datasets includes unavailable candidates; full M0–M5 remains active.
 
 Status: **offline engineering candidate**, full M0-M5 work in progress. No new game observations. `role_batches.py` consumes the existing Native facade/compiler; it does not create a database, a negotiation engine, or a second approval authority.

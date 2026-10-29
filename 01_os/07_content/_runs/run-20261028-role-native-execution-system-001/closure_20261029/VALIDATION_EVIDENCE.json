@@ -1,0 +1,127 @@
+{
+  "schema_version": "nba2k22.closure_static_validation.v1",
+  "source_engineering_commit": "bc11fa7926a7eaf390b668515e03dc8507ecb656",
+  "previous_attempt": "VALIDATION_ATTEMPT_01.json; MWU command-line syntax error exit2, corrected to actual positional interface; raw outputs retained",
+  "scope": "Documentation, inventory,source/index,MWU,OS closure and changed-path consistency only",
+  "checks": [
+    {
+      "id": "FROZEN_INVENTORY_AND_DEFERRAL_CONSISTENCY",
+      "argv": [
+        "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/verify_closure.py"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_01_FROZEN_INVENTORY_AND_DEFERRAL_CONSISTENCY_stdout.txt",
+        "bytes": 298,
+        "sha256": "32b2392da00edf262eddabb9a17ceaf2288cc98e9c7f2bf399ecada23535da32"
+      },
+      "stderr": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_01_FROZEN_INVENTORY_AND_DEFERRAL_CONSISTENCY_stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "SOURCE_AND_INDEX_CHECKPOINT",
+      "argv": [
+        "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/verify_checkpoint.py"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_02_SOURCE_AND_INDEX_CHECKPOINT_stdout.txt",
+        "bytes": 139,
+        "sha256": "a083fb6d685c00e4a2f565143866a5121ea78bd9ca449a4bff9494d7832b0b45"
+      },
+      "stderr": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_02_SOURCE_AND_INDEX_CHECKPOINT_stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "OS_CLOSURE_PREFLIGHT",
+      "argv": [
+        "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "01_os/06_execution/task_orchestration/big_task/closure_preflight.py",
+        "--packet",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/task_packet.yml"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_03_OS_CLOSURE_PREFLIGHT_stdout.txt",
+        "bytes": 1645,
+        "sha256": "f1ef7455e4c9031a2838f0ca775f2e84707dc688a7649b56bc8ce41e580911a1"
+      },
+      "stderr": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_03_OS_CLOSURE_PREFLIGHT_stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "MWU_STRUCTURE",
+      "argv": [
+        "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py",
+        "artifact",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/CLOSURE_RECORD.json",
+        "--require-mwu"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_04_MWU_STRUCTURE_stdout.txt",
+        "bytes": 33,
+        "sha256": "cafe1f108fefdd5ae0252d38564e0f5cdd5b0c30ad1075fce7655a43bc2401eb"
+      },
+      "stderr": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_04_MWU_STRUCTURE_stderr.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "DIFF_WHITESPACE",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "status": "PASS",
+      "stdout": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_05_DIFF_WHITESPACE_stdout.txt",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/closure_20261029/attempt02_05_DIFF_WHITESPACE_stderr.txt",
+        "bytes": 1608,
+        "sha256": "337adc0cd63d73f5f7fd8d5e7705e274e4cde7b6ad9e19ba3e53ad3335258f9d"
+      }
+    }
+  ],
+  "status": "PASS",
+  "new_game_tests": "NOT_RUN",
+  "new_native_write_tests": "NOT_RUN",
+  "historical_124_test_suite_rerun": false,
+  "independent_review": "NOT_RUN",
+  "full_goal_complete": false
+}

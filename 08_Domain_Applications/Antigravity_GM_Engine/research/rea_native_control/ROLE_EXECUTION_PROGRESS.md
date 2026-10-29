@@ -1,4 +1,6 @@
-# Role Native execution engineering — active work
+# Role Native execution engineering — closed checkpoint014 with deferred scope
+
+> **2026-10-29 正式结项：CLOSED_WITH_DEFERRED_SCOPE，full_goal_complete=false。** 当前工程已停止，以下checkpoint/WIP/下一步文字保留历史；未来另立接收任务。准确入口：[结项报告](TASK_CLOSURE_20261029.md)、[固定总账](data/NATIVE_EXECUTION_BASELINE_MANIFEST_20261029.json)、[遗留清单](data/DEFERRED_NATIVE_CAPABILITIES_20261029.json)。
 
 Task `NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`, base Draft PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`. The complete M0-M5 task is in progress, not accepted or complete.
 

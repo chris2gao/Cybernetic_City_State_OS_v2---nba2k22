@@ -1,6 +1,6 @@
 # NBA2K22 外挂系统 · 全项目总索引（所有新任务先读）
 
-**索引版本**：v2.1 / 2026-10-28 · **状态**：项目领域级导航，继承 Draft PR #18，工程增量在 Draft PR #19；不代表已合并 master。
+**索引版本**：v2.2 / 2026-10-29 · **状态**：Native Checkpoint014当前工程范围已正式结项，CLOSED_WITH_DEFERRED_SCOPE；full_goal_complete=false。PR19保留打开Draft，未合并master。
 **项目位置**：`08_Domain_Applications/Antigravity_GM_Engine/`（下文默认此路径为 D）。  
 **适用**：GPT 规划、Codex 工程、Antigravity、GM/Coach/Player 人格开发、数据采集与分析、独立审核。
 
@@ -85,9 +85,9 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 
 ## 4. 当前任务与证据路径
 
-- 当前工程窗口（Human要求暂停）：[Draft PR #19](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/19)，独立于来源PR #18；已验证代码候选`acfc12250f01becbd13c7061cb7513cea028ac08`（124项离线检查及Managed Run/Inspect；含既有原生工程、静态信息整理、辅助提交拒绝边界与来源/索引核对），完整M0–M5仍在施工。准确进度指针：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/PROGRESS_POINTER.json`，不是全任务完成指针。
+- 当前工程窗口（已正式结项，缺口保留）：[Draft PR #19](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/19)，独立于来源PR #18；已验证代码候选`acfc12250f01becbd13c7061cb7513cea028ac08`（124项离线检查及Managed Run/Inspect；含既有原生工程、静态信息整理、辅助提交拒绝边界与来源/索引核对），完整M0–M5仍在施工。准确进度指针：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/PROGRESS_POINTER.json`，不是全任务完成指针。
 
-- **按Human要求暂停：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)、[日期训练局部Apply](research/rea_native_control/TRAINING_PATCH_CONTRACT.md)、[明确球员分钟Native链](research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留原183项需求并补充撤回报价1项；原有50映射保留为历史来源，当前61项有效映射含4项POE、2项训练局部操作、1项分钟操作、2项属性/倾向批量操作、1项明确合同报价提交及1项补充撤回操作，交易变体统一直接Process。P04/P06机制资料与P09/P10源码同步；离线协议/字节验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
+- **已结项/保留未完成范围：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`**，工程基准PR18 `094f1aa641f93dec2277707ad9dbf5bdb0341247`。新增[M0角色能力服务](research/rea_native_control/role_capabilities.py)、[M1批次/持久去重与恢复](research/rea_native_control/ROLE_BATCH_EXECUTION.md)、[日期训练局部Apply](research/rea_native_control/TRAINING_PATCH_CONTRACT.md)、[明确球员分钟Native链](research/rea_native_control/ROTATION_MINUTES_CONTRACT.md)及[准确进度/未完成项](research/rea_native_control/ROLE_EXECUTION_PROGRESS.md)。保留原183项需求并补充撤回报价1项；原有50映射保留为历史来源，当前61项有效映射含4项POE、2项训练局部操作、1项分钟操作、2项属性/倾向批量操作、1项明确合同报价提交及1项补充撤回操作，交易变体统一直接Process。P04/P06机制资料与P09/P10源码同步；离线协议/字节验证不等于新实机证据，**完整M0–M5尚未完成**。P01–P03数据链不变。运行证据：`01_os/07_content/_runs/run-20261028-role-native-execution-system-001/`。
 
 - PR #17：从 #10、#12、#14、#16整合研发成果，未进入master。
 - 当前Player增量：[四槽PlayType原生调用合同](research/rea_native_control/PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)将已有4项需求从不可调用候选提升为静态调用实现，这一增量本身未增加映射总数。逐槽权限、Player自身UID与批次资源检查已接入；后续[属性/倾向合同](research/rea_native_control/PLAYER_STAT_NATIVE_CONTRACT.md)单独恢复索引Setter及角色字段权限；Potential和完整父对象复制体仍不可调用；徽章已按独立[明确联动合同](research/rea_native_control/BADGE_NATIVE_CONTRACT.md)接入，仍未实机验收。当前机读覆盖对未绑定或不可调用的修改明确给出`role_endpoint:null`，不再误指向读取接口。
@@ -110,3 +110,13 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 - 当前撤回报价增量：[撤回指定待处理自由球员报价](research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)要求完整25字段预期、唯一当前记录及明确GM权限/场景，通过原版服务清状态，最多3次直接Native调用。只清所选记录状态，其他字节/报价/Player必须一致；未知结果不重试。原183需求不改，发现补充另存`supplemental_requirements.json`，当前合计184项；接受/拒绝及最终签约仍不可调用。自动选最高分报价、整池新秀和竞争报价处理器保留明确排除证据。
 
 - **Human要求本阶段暂停**：合同与决策信息均停止新增探索。[当前信息获取发现](research/rea_native_control/DECISION_INFORMATION_DISCOVERY_20261028.md)整理已有世界数据与新增投篮分区静态证据；[Gemini辅助包](research/rea_native_control/auxiliary/gemini_information_20261028/README.md)提供独立目录、学习资料、三个有界小包、原始输出规范及Owner筛选流程。完整M0–M5仍未完成；Draft PR19不合并，辅助结构自检不等于事实验收。固定输入/验证证据见checkpoint014及其阶段交接指针。
+
+## 2026-10-29 当前Native工程结项与固定继承入口
+
+本轮当前工程范围状态为 **CLOSED_WITH_DEFERRED_SCOPE**，OS Run保持合法终态`deferred`，完整M0–M5未完成且本任务不再继续。旧段落的“进行中/暂停/继续施工”是历史checkpoint语境，由此结项入口取代。
+
+- [正式结项报告](research/rea_native_control/TASK_CLOSURE_20261029.md)；[固定能力总账](research/rea_native_control/data/NATIVE_EXECUTION_BASELINE_MANIFEST_20261029.json)；[剩余能力清单](research/rea_native_control/data/DEFERRED_NATIVE_CAPABILITIES_20261029.json)；[未来Gemini选择性接收说明](research/rea_native_control/GEMINI_NATIVE_INTEGRATION_HANDOFF_20261029.md)。
+- 固定工程源码`bc11fa7926a7eaf390b668515e03dc8507ecb656`；最终包含结项文件的冻结ref：`baseline/nba2k22-native-execution-checkpoint-014-20261029`。冻结ref须等于最终工程HEAD，准确SHA见发布后回执/Human最终交付；不得拿源码快照SHA代替最终冻结SHA。
+- 实际72动作/65绑定布局/15部分数据集/184需求（183+1），61映射、42需求有调用逻辑。15数据集完整覆盖均false；124项Managed离线测试是既有候选证据，不是新实机或全目标验收。
+- Gemini从`39086984…`较早版本分叉，在`gemini_rea`独立研发，当前不自动继承最新Codex结项。GREA-01/Wave-02仅实验候选；未来Codex从冻结SHA新建接收分支逐项审核，不直接合并整个实验分支。
+- 结项/停止决策已由Human明确给出；本次交付最终Human阅读验收、独立审核、游戏实验和master集成分别保持适用门，不伪写通过。

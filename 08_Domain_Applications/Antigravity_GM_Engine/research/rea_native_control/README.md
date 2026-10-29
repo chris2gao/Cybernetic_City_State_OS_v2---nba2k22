@@ -1,5 +1,7 @@
 # MyLEAGUE Native Control：机制说明与Issue15功能验证
 
+> **2026-10-29 正式结项：CLOSED_WITH_DEFERRED_SCOPE，full_goal_complete=false。** 当前工程已停止，以下checkpoint/WIP/下一步文字保留历史；未来另立接收任务。准确入口：[结项报告](TASK_CLOSURE_20261029.md)、[固定总账](data/NATIVE_EXECUTION_BASELINE_MANIFEST_20261029.json)、[遗留清单](data/DEFERRED_NATIVE_CAPABILITIES_20261029.json)。
+
 > 当前工程增量：`NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01` 已在历史62动作上增加2项[日期训练局部操作](TRAINING_PATCH_CONTRACT.md)及1项[明确球员分钟的原生执行](ROTATION_MINUTES_CONTRACT.md)，并将此前不可调用的[四槽PlayType动作](PLAYER_PLAYTYPE_NATIVE_CONTRACT.md)接入专用原生Setter。另增加2项[属性/倾向显式批量操作](PLAYER_STAT_NATIVE_CONTRACT.md)，恢复原有单字段动作的索引Native Setter。[徽章原版规则接口](BADGE_NATIVE_CONTRACT.md)另接入98个非哨兵字段、明确联动前后状态及有效Getter交叉检查。[显式Player读取与角色快照](PLAYER_EDITOR_READ_CONTRACT.md)补入一个只读动作。[合同编码与球队报价读取](SIGNING_NATIVE_CONTRACT.md)另恢复25字段/27内部枚举和只读报价查询，通用完成签约仍不可调用。[原版合同读回](PLAYER_CONTRACT_READ_CONTRACT.md)另修正RAW基础年限5位并加入独立合同查询。[FA阶段明确报价提交](FA_OFFER_NATIVE_CONTRACT.md)另恢复一次原版OfferContract调用，独立于完成签约。[撤回待处理报价](OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)另接入原版状态清除服务。当前登记72动作、65绑定/布局（含明确不可调用的签约/父对象复制候选）。[角色能力与批次接口](ROLE_BATCH_EXECUTION.md)保留原183项并补充撤回1项（合计184），当前61项有效映射；原始需求和50映射来源保持不变。[发现与排除的调用链](CONTROL_CALLBACK_DISCOVERY.md)有固定静态证据。新增工程仅有离线证据，整体M0–M5尚未完成；下方Issue15内容保留对应历史范围。
 
 本目录是PC NBA2K22离线MyLEAGUE的函数发现与执行接口研发候选。**角色模型首先阅读[机制与执行说明](ROLE_MODEL_MECHANISM_GUIDE.md)**：可设置项、取值、已知影响、输入和执行方法都从该页进入。外部GM/Coach/Player模型负责分析、协商、检查和决定；本层执行确定请求，不估值、不配平、不开发经营策略。
@@ -20,7 +22,7 @@ Issue13/PR14原来只作静态发现，Issue15在Human授权的独立测试存�
 | `data/native_live_validation.json` | 本任务具体字段/输入组合的原生返回、独立回读与未验证轴 |
 | `ROLE_MODEL_MECHANISM_GUIDE.md` | 给GM、教练、球员模型的机制与参数使用手册 |
 | `data/native_bindings.json` | 具体RVA、Win64参数、对象、阶段、代码指纹及来源；不完整绑定不能执行 |
-| `data/read_catalog.json` | 12类数据集覆盖、旧Reader复用点及未绑定字段 |
+| `data/read_catalog.json` | 15类部分数据集覆盖、旧Reader复用点及未绑定字段 |
 | `ACTION_SURFACE.md` | 人工可读的逐动作覆盖清单，由上述登记生成 |
 | `DISCOVERY_NOTES.md` | 新恢复机制、关键ABI、证据与具体缺口 |
 | `NEXT_TEST_HANDOFF.md` | 下一轮最小测试清单；本轮没有运行 |
