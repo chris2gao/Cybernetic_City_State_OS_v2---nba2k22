@@ -16,6 +16,14 @@ load_order:
     purpose: 机器可读布局契约
 validator: 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
 registry: 01_os/05_registry/context_management_v1.yml
+optional_extensions:
+  prms:
+    contract: 01_os/03_mechanisms/context_management/prms/README.md
+    registry: 01_os/05_registry/prms_v1.yml
+    loader: 01_os/06_execution/boot/context_management/prms/cli.py
+    invocation: explicit_authorized_foreground_only
+    state_repository: separately_authorized_external_repository_required
+    starts_runtime: false
 receipt_required:
   - boot_manifest_version
   - mechanism_version
