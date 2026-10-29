@@ -17,6 +17,10 @@ def main():
     root = Path(args.repo_root).resolve()
     git = lambda *a: subprocess.check_output(['git', *a], cwd=root)
     head = git('rev-parse', 'HEAD').decode().strip()
+    # Recreate the rehearsed tree from the two immutable commits. A synthetic
+    # merge-tree root need not be reachable in a fresh clone's transferred pack.
+    rehearsal = subprocess.run(['git','merge-tree','--write-tree',BASE,CORE],cwd=root,capture_output=True)
+    assert rehearsal.returncode == 0 and rehearsal.stdout.decode().splitlines()[0] == PREVIEW_TREE
     for ancestor in (BASE, CORE):
         subprocess.run(['git','merge-base','--is-ancestor',ancestor,head], cwd=root, check=True)
     def entries(ref):

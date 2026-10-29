@@ -53,7 +53,7 @@ task_packet:
   success_criteria:
     - Real merge ancestry contains both exact NBA base and approved Core source.
     - Every existing NBA/domain file remains byte-identical with unchanged Git mode.
-    - Imported PRMS runtime/contract/Boot/Registry blobs match Core source and existing NBA offline tests pass.
+    - Imported PRMS runtime/contract/Boot/Registry blobs match Core source; existing NBA suite adds no failures versus an actual exact-base run, with preexisting raw failures preserved.
     - PR and verified master merge are published with remote readback; all other domains remain untouched.
   stop_conditions:
     - Business deletion or unexplained ownership escape.

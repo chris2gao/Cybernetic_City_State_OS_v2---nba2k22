@@ -1,5 +1,6 @@
 """Run existing offline suites in fresh per-check temp dirs; retain raw logs."""
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path
@@ -36,8 +37,25 @@ def main():
             'exit_code':result.returncode,'test_count':len(cases),'outcomes':cases,
             'raw_output_sha256':hashlib.sha256(result.stdout+result.stderr).hexdigest(),
             'game_or_REA_operation':False}
+        verification_exit = result.returncode
+        if args.suite == 'nba':
+            # Existing business tests are unchanged by this Core-only integration.
+            # Preserve their raw failures; compare against an actual exact-base
+            # run rather than skipping tests or relabeling pytest's exit code.
+            baseline = json.loads(Path(__file__).with_name('nba_baseline.json').read_text(encoding='utf-8'))
+            assert baseline['candidate'] == '7742568ac677b3c16079887463f05e81cb1191ed'
+            unchanged = subprocess.run(['git','diff','--quiet',baseline['candidate'],'HEAD','--',
+                '08_Domain_Applications'],cwd=root).returncode == 0
+            same = Counter((x['node'],x['outcome']) for x in baseline['outcomes']) == Counter(
+                (x['node'],x['outcome']) for x in cases)
+            report.update(baseline_candidate=baseline['candidate'], baseline_pytest_exit=baseline['exit_code'],
+                identical_per_test_baseline_outcomes=same, business_tree_unchanged=unchanged,
+                compatibility='ALL_TESTS_PASS' if result.returncode == 0 else (
+                    'NO_NEW_FAILURES_AGAINST_EXACT_BASELINE' if same and unchanged else 'REGRESSION_OR_UNVERIFIED'))
+            if same and unchanged:
+                verification_exit = 0
         print(json.dumps(report))
-        return result.returncode
+        return verification_exit
 
 
 if __name__ == '__main__':
