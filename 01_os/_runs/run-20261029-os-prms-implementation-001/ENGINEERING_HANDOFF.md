@@ -2,18 +2,20 @@
 
 状态：**PARTIAL_ENGINEERING_HANDOFF_PENDING_EXTERNAL_ACCEPTANCE**。本次交付可运行的工程候选；真实平台强制失权、真实 GPT/Codex 新窗口和独立审核尚未完成，不宣布 TASK_CLOSED、正式发布或生产可用。
 
-代码验证候选：`8690ed15f661181528da451d683390b9ab8ffa15`。基线：`446ca66ad48831f5fcdb1af18f37d07619e048c4`。工程分支：`task/os-prms-implementation-20261029`；Draft [Core PR #10](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/pull/10)。后续交接证据提交与此代码候选分开标识；复验必须 checkout 此候选，不能把交接分支最新 HEAD 自动代入旧验证回执。
+代码验证候选：`e432afd2152bf50834b619f09c64ed61ca245017`。基线：`446ca66ad48831f5fcdb1af18f37d07619e048c4`。工程分支：`task/os-prms-implementation-20261029`；Draft [Core PR #10](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/pull/10)。后续交接证据提交与此代码候选分开标识；复验必须 checkout 此候选，不能把交接分支最新 HEAD 自动代入旧验证回执。
 
 ## 实际交付与证据
 
 - D0：19 份具备固定来源指纹的主资料/补充资料已登记；规划 Run 的 A-RC01/false 陈旧指针由有效后继 Human 批准修复，NBA 规划分支远端提交为 `c58af42455c55bcb0fde668aee393b2b172f9ebe`，见 `planning_reconciliation.json`。
 - D1：G1 真实树发现与 Registry 对账，G2 领域身份和发布记录核验、空目录脚手架、按需装配与实际正文回执。真实 PR18 源读出 13 个项目候选、0 个正式 G2；P04/P09 共 6 份正文核验成功。另把已核源字节物理复制到隔离 Git 样本，只改变一份 P09 正文，确认 P09 stale、P04 仍有效；其余未复制来源保持明确缺失。真实 PR18 远端未改变。候选新增 PRMS Registry，因此基线 13 和候选 14 是不同版本快照。
 - D2：真实隔离 Git 的原子 CURRENT、RoleDefinition/Instance/Assignment、只追加事件、检查点、源引用、版本/CAS、幂等操作记录及实际读回。GitHub Git Database 协议适配器默认禁写。
-- D3：范围索引、来源摘录摘要、精确 stale、未知任务可见与合法终态闭合检查、任务系列恢复、K1 候选与已发布记录核验、实际字节全量复制及目标独立演化。
+- D3：范围索引、来源摘录摘要、精确 stale、未知任务可见与合法终态闭合检查、任务系列恢复、K1 候选与已发布记录核验、实际字节全量复制及目标独立演化。复制统一检查宿主操作范围和冻结源/目标批准绑定；复制前核验源 CURRENT、owner、Checkpoint 与活动模板。目标保留可用的正式模板路径，禁止复用旧模板版本，源缺原件时不发布目标 CURRENT。
 - D4：隔离会话能力、旧 owner 拒写、竞争 CURRENT、恢复包与 L0–L4 装配。L4 遍历冻结岗位所有可达提交并保存每个不同记录版本；上限或预算缺口返回 BLOCKED。直接 Git 绕过仍能成功，所以强制模式明确拒绝启用。
-- D5：52 项 PRMS 离线测试、44 项既有 working-set 回归及其余受控检查通过；逐场景结果、失败历史、可复验命令和独立审核入口均已保存。Owner 自验不能代替独立审核。
+- D5：55 项 PRMS 离线测试、44 项既有 working-set 回归及其余受控检查通过；逐场景结果、失败历史、可复验命令和独立审核入口均已保存。Owner 自验不能代替独立审核。
 
 `verification_receipt.json` 保留每个检查的实际结束记录和 stdout/stderr 字节摘要。原始 input 含本机运行信息，保留在任务外部日志目录；公布的是经筛选的结果。早先 24/41/50 项日志仅为历史检查点，不是最终候选证明。
+
+`copy_safety_audit.json` 记录本轮 Owner 自查发现的复制授权旁路、复制模板版本复用反例及修复后的实际结果。预期失败日志同时保留公布的 LF 文本摘要和外部原始字节摘要，二者明确区分。新增反例已纳入 B-13/B-21/B-26 的复验映射；Owner 自查不是独立审核，也不提升生产围栏等级。
 
 48 场景逐项列在 `acceptance_results.json`，原始预期保留在 `acceptance_contract.json`，映射在 `acceptance_map.json`。当前统计：`{"PASS_AT_OFFLINE_SCOPE": 30, "PASS_PINNED_REAL_SOURCE_LOADING": 2, "NOT_RUN_REQUIRED_SCOPE": 11, "PASS_LOCAL_CROSS_REPO_FIXTURE": 3, "PASS_REMOTE_PLANNING_RECONCILIATION": 1, "PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE": 1}`。这些范围标签不可相加解释成完整产品验收。
 
@@ -49,9 +51,9 @@
 在独立检出中固定上述候选；先按现有 Core Boot 和本次任务包初始化。Python 3、Git、PyYAML、jsonschema、pytest 是离线先决条件；真实源读取还需要已有合法 `gh` 读取能力。不得为复验创建凭据、仓库或后台服务。
 
 ```text
-git checkout 8690ed15f661181528da451d683390b9ab8ffa15
-python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py run --repo-root . --candidate 8690ed15f661181528da451d683390b9ab8ffa15 --plan 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json --attempt <existing-external-parent/new-attempt>
-python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py inspect --repo-root . --candidate 8690ed15f661181528da451d683390b9ab8ffa15 --plan 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json --attempt <same-attempt>
+git checkout e432afd2152bf50834b619f09c64ed61ca245017
+python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py run --repo-root . --candidate e432afd2152bf50834b619f09c64ed61ca245017 --plan 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json --attempt <existing-external-parent/new-attempt>
+python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py inspect --repo-root . --candidate e432afd2152bf50834b619f09c64ed61ca245017 --plan 01_os/_runs/run-20261029-os-prms-implementation-001/verification_plan.json --attempt <same-attempt>
 ```
 
 每次使用全新 attempt。`acceptance.py` 的零退出码表示其离线测试和逐场景核销执行成功；JSON 明示 `all_original_acceptance_passed: false`。默认审核装配不注入 Owner 叙事，但 Q22=C 的开放读取风险仍在，无法凭目录隔离保证审核者未看过本报告。

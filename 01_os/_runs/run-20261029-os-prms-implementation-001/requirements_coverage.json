@@ -5,7 +5,7 @@
       "id": "RES-001",
       "requirement": "RoleDefinition registration and compatible version upgrade",
       "implementation": "state.py:REGISTER,UPGRADE_DEFINITION",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-06"
       ],
@@ -20,7 +20,7 @@
       "id": "RES-002",
       "requirement": "Stable RoleInstance identity",
       "implementation": "state.py:REGISTER;memory.py:copy_all_memory",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-06"
       ],
@@ -35,7 +35,7 @@
       "id": "RES-003",
       "requirement": "RoleAssignment and task authority separation",
       "implementation": "state.py:ASSIGN and host task scopes",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-06",
         "B-26"
@@ -51,7 +51,7 @@
       "id": "RES-004",
       "requirement": "Single current session owner",
       "implementation": "state.py:WriterGate;github_state.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-10",
         "B-11",
@@ -72,7 +72,7 @@
       "id": "RES-005",
       "requirement": "Git durable authority",
       "implementation": "state.py:LocalGitState;github_state.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-12",
         "B-19",
@@ -93,7 +93,7 @@
       "id": "RES-006",
       "requirement": "Append-only facts and Human decisions",
       "implementation": "contracts.py;state.py:APPEND",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-07",
         "B-12",
@@ -111,7 +111,7 @@
       "id": "RES-007",
       "requirement": "Current and checkpoint consistency",
       "implementation": "state.py:CHECKPOINT,recover",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-12",
         "B-19",
@@ -131,7 +131,7 @@
       "id": "RES-008",
       "requirement": "Experience extraction and promotion candidate",
       "implementation": "memory.py:propose_experience",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-14"
       ],
@@ -144,7 +144,7 @@
       "id": "RES-009",
       "requirement": "Shared knowledge and publication governance",
       "implementation": "memory.py:reconcile_experience_publication",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-14",
         "B-17",
@@ -161,7 +161,7 @@
       "id": "RES-010",
       "requirement": "Dynamic context assembly",
       "implementation": "context.py;domain_context.py;recovery.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-05",
         "B-06",
@@ -180,7 +180,7 @@
       "id": "RES-011",
       "requirement": "Adapters and new-window recovery",
       "implementation": "cli.py;state_cli.py;recovery.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-05",
         "B-06",
@@ -200,7 +200,7 @@
       "id": "RES-012",
       "requirement": "Failure and retry semantics",
       "implementation": "state.py;github_state.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-12",
         "B-19",
@@ -218,7 +218,7 @@
       "id": "RES-013",
       "requirement": "Core upgrade and domain integration",
       "implementation": "catalog.py:compatibility;new-domain.ps1",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-14",
         "B-15",
@@ -233,7 +233,7 @@
       "id": "RES-014",
       "requirement": "End-to-end and independent acceptance",
       "implementation": "acceptance.py;acceptance_map.json;verification_plan.json",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-17"
       ],
@@ -247,8 +247,8 @@
     {
       "id": "RES-015",
       "requirement": "Full content copy and independent target",
-      "implementation": "memory.py:copy_all_memory",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "implementation": "memory.py:copy_all_memory;state.py:authorize_copy",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-13",
         "B-26"
@@ -262,7 +262,7 @@
       "id": "RES-016",
       "requirement": "Enforced takeover",
       "implementation": "state.py:require_enforced;github_state.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-10",
         "B-11",
@@ -283,7 +283,7 @@
       "id": "RES-017",
       "requirement": "G1/G2/T1/T2/K1/K2 layers",
       "implementation": "catalog.py;domain_context.py;memory.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-01",
         "B-02",
@@ -312,7 +312,7 @@
       "id": "RES-018",
       "requirement": "Source summaries and selective stale propagation",
       "implementation": "memory.py:build_index,source_dependency_status",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-08",
         "B-16",
@@ -331,7 +331,7 @@
       "id": "RES-019",
       "requirement": "Indexes and scoped retrieval",
       "implementation": "memory.py:build_index,search_memory,expand_memory",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-01",
         "B-02",
@@ -354,7 +354,7 @@
       "id": "RES-020",
       "requirement": "L0-L4 Human selection and recovery receipts",
       "implementation": "context.py;depth.py;recovery.py",
-      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
       "scenario_refs": [
         "B-04",
         "B-05",
@@ -382,6 +382,9 @@
   "all_product_requirements_accepted": false,
   "supplemental_tests": [
     "test_definition_upgrade_preserves_stable_role_and_prior_template",
-    "test_depth_summary_and_full_audit_preserve_sources_and_fail_closed"
+    "test_depth_summary_and_full_audit_preserve_sources_and_fail_closed",
+    "test_copy_cannot_bypass_host_operation_scope",
+    "test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+    "test_invalid_source_checkpoint_prevents_target_copy_publication"
   ]
 }

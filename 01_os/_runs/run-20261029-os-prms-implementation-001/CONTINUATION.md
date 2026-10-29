@@ -155,3 +155,27 @@ B-28 is now PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE, with its exact proof scope
 recorded. Eleven required real-platform/model-window/independent-review scenarios
 remain NOT_RUN. The prior 65c42a1b and 27d9a000 checkpoints remain historical;
 the current completion pointer, matrix and verification receipt supersede them.
+
+## Copy authorization and template audit update
+
+Code candidate `e432afd2152bf50834b619f09c64ed61ca245017` supersedes the earlier
+implementation checkpoints and passed all seven managed checks plus inspect:
+55 PRMS tests and 44 existing working-set tests. This was substantive engineering
+progress, not a repeat of the outstanding protected-environment status.
+
+Owner review reproduced a copy bypass: a CHECKPOINT-only host capability could
+create target CURRENT through copy. Full copy now uses the shared operation guard;
+task-restricted sessions need an exact host-bound source role/commit, target role
+and approval reference. Copy grants remain revocable. Unpinned source commits
+are rejected. A separate counterexample showed reuse of a copied template version
+was accepted; copied definitions now have canonical target paths, and both current
+and prior template version IDs cannot be silently reused. The target can upgrade
+to a new version without changing source bytes. Copy also validates source CURRENT,
+owner, checkpoint and active definition before target publication; incomplete
+source checkpoints fail COPY_INCOMPLETE without a target ref advance.
+
+The before/after evidence and expected-red test log are indexed by
+`copy_safety_audit.json`. These are Owner isolated counterexamples, not independent
+review or actual platform permission proof. Eleven original-scope scenarios remain
+NOT_RUN; no production authenticated ingress, real state repository, real model
+window or master integration has been created or authorized by this continuation.

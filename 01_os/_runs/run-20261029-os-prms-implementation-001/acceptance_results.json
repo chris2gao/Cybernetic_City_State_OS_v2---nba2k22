@@ -1,6 +1,6 @@
 {
   "schema_version": "prms.acceptance_results.v1",
-  "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+  "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
   "command": [
     "@python",
     "-B",
@@ -15,9 +15,9 @@
     "--junitxml",
     "<new-external-temp>/results.xml"
   ],
-  "unit_test_count": 52,
+  "unit_test_count": 55,
   "unit_test_outcomes": {
-    "PASS": 52
+    "PASS": 55
   },
   "scenario_count": 48,
   "scenario_status_counts": {
@@ -296,6 +296,18 @@
         {
           "node": "test_memory.py::test_copy_physical_content_and_independent_target_current",
           "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication",
+          "outcome": "PASS"
         }
       ],
       "remaining_proof": "No broader platform or independent acceptance is implied."
@@ -467,6 +479,14 @@
         {
           "node": "test_state.py::test_test_session_issuer_cannot_authorize_remote_backend",
           "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+          "outcome": "PASS"
         }
       ],
       "remaining_proof": "Production session authentication and copied-token rejection need a separately controlled ingress."
@@ -575,6 +595,14 @@
       "executed_tests": [
         {
           "node": "test_memory.py::test_copy_physical_content_and_independent_target_current",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication",
           "outcome": "PASS"
         }
       ],
