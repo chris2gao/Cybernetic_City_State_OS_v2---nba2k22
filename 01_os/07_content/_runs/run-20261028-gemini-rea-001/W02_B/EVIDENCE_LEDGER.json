@@ -1,0 +1,207 @@
+{
+  "package": "W02_B",
+  "task": "GREA-02-MATCHUP-DEFENSE",
+  "target_binary": "NBA2K22.exe",
+  "binary_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "status": "STATIC_CANDIDATE",
+  "fields": [
+    {
+      "name": "PressureOnball",
+      "word_index": 0,
+      "start_bit": 0,
+      "width": 3,
+      "mask": "0x00000007",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "GAP", "2": "MODERATE", "3": "TIGHT", "4": "SMOTHER"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x1465285 initializes word1, bit 0..2 mask 0x7"
+    },
+    {
+      "name": "PressureOffball",
+      "word_index": 0,
+      "start_bit": 3,
+      "width": 3,
+      "mask": "0x00000038",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "GAP", "2": "LEAVE", "3": "MODERATE", "4": "TIGHT", "5": "DENY_BALL"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "ForceDirection",
+      "word_index": 0,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0x000000C0",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "MIDDLE", "2": "BASELINE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "ScreenDefenseOnBall",
+      "word_index": 0,
+      "start_bit": 8,
+      "width": 3,
+      "mask": "0x00000700",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "GO_OVER", "2": "GO_UNDER", "3": "SWITCH", "4": "ICE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "ScreenDefenseHedge",
+      "word_index": 0,
+      "start_bit": 11,
+      "width": 3,
+      "mask": "0x00003800",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "NO_HEDGE", "2": "SOFT_HEDGE", "3": "HARD_HEDGE", "4": "DOUBLE", "5": "CATCH_HEDGE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "OffballScreenDefense",
+      "word_index": 0,
+      "start_bit": 14,
+      "width": 2,
+      "mask": "0x0000C000",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "GO_OVER", "2": "GO_UNDER", "3": "SWITCH"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "PostDefense",
+      "word_index": 0,
+      "start_bit": 16,
+      "width": 3,
+      "mask": "0x00070000",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "FRONT", "2": "BEHIND", "3": "THREE_QUARTERS_TOP", "4": "THREE_QUARTERS_BOTTOM"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "DoubleTeamPerimeter",
+      "word_index": 0,
+      "start_bit": 19,
+      "width": 2,
+      "mask": "0x00180000",
+      "default": 1,
+      "enum": {"0": "AUTO", "1": "MANUAL", "2": "ON_CATCH", "3": "ON_DRIVE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x1465285 default 0x280000 includes bit 19 = 1"
+    },
+    {
+      "name": "DoubleTeamPost",
+      "word_index": 0,
+      "start_bit": 21,
+      "width": 3,
+      "mask": "0x00E00000",
+      "default": 1,
+      "enum": {"0": "AUTO", "1": "MANUAL", "2": "DIG", "3": "ON_CATCH", "4": "ON_DRIBBLE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x1465285 default 0x280000 includes bit 21 = 1"
+    },
+    {
+      "name": "ScreenDefenseOnBall5",
+      "word_index": 0,
+      "start_bit": 24,
+      "width": 3,
+      "mask": "0x07000000",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "GO_OVER", "2": "GO_UNDER", "3": "SWITCH", "4": "ICE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "ScreenDefenseHedge5",
+      "word_index": 0,
+      "start_bit": 27,
+      "width": 3,
+      "mask": "0x38000000",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "NO_HEDGE", "2": "SOFT_HEDGE", "3": "HARD_HEDGE", "4": "DOUBLE", "5": "CATCH_HEDGE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "SwitchRule",
+      "word_index": 0,
+      "start_bit": 30,
+      "width": 2,
+      "mask": "0xC0000000",
+      "default": 0,
+      "enum": {"0": "SWITCH_AUTO", "1": "SWITCH_ALL", "2": "SWITCH_BIGS", "3": "SWITCH_GUARDS"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "coach_tactics_profile.json defensive_fields"
+    },
+    {
+      "name": "OnballHelp",
+      "word_index": 1,
+      "start_bit": 0,
+      "width": 2,
+      "mask": "0x00000003",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "HELP", "2": "NO_HELP"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x146527e mask 0xFFFFF800 leaves low 11 bits"
+    },
+    {
+      "name": "ScreenHelp",
+      "word_index": 1,
+      "start_bit": 2,
+      "width": 2,
+      "mask": "0x0000000C",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "HELP", "2": "NO_HELP"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x146527e mask 0xFFFFF800 leaves low 11 bits"
+    },
+    {
+      "name": "ExtendPressure",
+      "word_index": 1,
+      "start_bit": 4,
+      "width": 2,
+      "mask": "0x00000030",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "YES", "2": "NO"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x146527e mask 0xFFFFF800 leaves low 11 bits"
+    },
+    {
+      "name": "TagOnRoll",
+      "word_index": 1,
+      "start_bit": 6,
+      "width": 2,
+      "mask": "0x000000C0",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "YES", "2": "NO"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x146527e mask 0xFFFFF800 leaves low 11 bits"
+    },
+    {
+      "name": "StayAttached",
+      "word_index": 1,
+      "start_bit": 8,
+      "width": 2,
+      "mask": "0x00000300",
+      "default": 0,
+      "enum": {"0": "AUTO", "1": "YES", "2": "NO"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x146527e mask 0xFFFFF800 leaves low 11 bits"
+    },
+    {
+      "name": "PreRotate",
+      "word_index": 1,
+      "start_bit": 10,
+      "width": 1,
+      "mask": "0x00000400",
+      "default": 0,
+      "enum": {"0": "FALSE", "1": "TRUE"},
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "rva_evidence": "0x146527e mask 0xFFFFF800 leaves low 11 bits (native boolean packed flag)"
+    }
+  ]
+}
