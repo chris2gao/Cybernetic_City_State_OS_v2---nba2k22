@@ -7,16 +7,17 @@ exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
 base_ref: master
 branch: planning/os-prms-a0-confirmed-01b-20261028
 lifecycle: research_only
-stage: 01b_requirement_result_modeling_in_progress
+stage: engineering_handoff_approved
 human_confirmed_A0:
   version: OS-PRMS-A0-v1-RC01
   confirmed: true
   source: 01_任务输入/01_Human正式确认与任务边界_v1.md
   q_decisions: 'Q1-11=B; Q12=A; Q13=A; Q14=A; Q15=B; Q16=B; Q17=B; Q18=A; Q19=B'
 requirement_A:
-  version: OS-PRMS-A-v1-RC01-CANDIDATE
-  confirmed: false
-  source: 03_需求建模/24_OS-PRMS_完整需求结果模型A_v1-RC01_待Human确认.md
+  version: OS-PRMS-A-v1-RC02
+  confirmed: true
+  source: 03_需求建模/29_OS-PRMS_完整需求结果模型A_v1-RC02_整合封版.md
+  approval_ref: 01_任务输入/16_完整需求结果A_v1_RC02_Human确认与版本绑定记录.md
 source_evidence:
   - 01_os/01_workflow/01_需求建模/方法论_v0.4.md
   - 01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml
@@ -254,3 +255,12 @@ core_to_domain_global_mechanism_design:
   complete_A_confirmed: false
   stage02_authorized: false
   runtime_or_core_upgrade_authorized: false
+
+implementation_handoff_D0:
+  design_B_version: B-v1-RC01
+  design_B_Human_confirmed: true
+  approval_ref: 01_任务输入/17_Human批准设计B及G1G2细化版本绑定_v1.md
+  historical_source_commit: 3c53fd2e4ea98c7bd99b3c5961134690c4832803
+  Core_implementation_branch: task/os-prms-implementation-20261029
+  runtime_implemented: false
+  master_integrated: false
