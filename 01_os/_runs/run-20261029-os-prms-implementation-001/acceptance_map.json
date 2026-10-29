@@ -94,7 +94,8 @@
     "tests": [
       "test_memory.py::test_copy_physical_content_and_independent_target_current",
       "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
-      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable"
+      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+      "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication"
     ],
     "required_scope": "OFFLINE",
     "remaining_proof": "No broader platform or independent acceptance is implied."
@@ -195,7 +196,8 @@
   "B-26": {
     "tests": [
       "test_memory.py::test_copy_physical_content_and_independent_target_current",
-      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable"
+      "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+      "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication"
     ],
     "required_scope": "OFFLINE",
     "remaining_proof": "No broader platform or independent acceptance is implied."

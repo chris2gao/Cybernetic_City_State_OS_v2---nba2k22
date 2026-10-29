@@ -297,7 +297,8 @@ class WriterGate:
                 version = identifier(payload["version"])
                 definition_path = prefix + f"definitions/{version}.json"
                 identity = json.loads(snapshot[prefix + "identity.json"])
-                if (definition_path in snapshot or not isinstance(payload.get("compatibility_ref"), str)
+                if (definition_path in snapshot or version == identity["definition"]["version"]
+                        or not isinstance(payload.get("compatibility_ref"), str)
                         or not payload["compatibility_ref"] or
                         payload.get("role_type_id") != identity["definition"]["role_type_id"]):
                     raise PRMSError("REJECTED", "new version and compatibility evidence required")

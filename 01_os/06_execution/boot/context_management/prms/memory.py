@@ -11,7 +11,7 @@ import sys
 import yaml
 
 from source import PRMSError, canonical, digest
-from state import identifier
+from state import identifier, WriterGate
 
 
 def build_index(snapshot, role_id, source_commit, generation):
@@ -190,6 +190,14 @@ def copy_all_memory(source_store, target_gate, capability, source_role, target_r
         raise PRMSError("AUTHORITY_UNVERIFIED", "explicit source/target copy scope required")
     session = target_gate.authorize_copy(capability, source_role, target_role, source_head, scope_approval_ref)
     source = source_store.snapshot(source_head)
+    try:
+        restored_source = WriterGate(source_store).recover(source_role, source_head)
+        source_definition = restored_source["identity"]["definition"]
+        definition_path = f'roles/{source_role}/definitions/{identifier(source_definition["version"])}.json'
+        if definition_path not in source or json.loads(source[definition_path]) != source_definition:
+            raise PRMSError("COPY_INCOMPLETE", "active source RoleDefinition is missing or inconsistent")
+    except (PRMSError, KeyError, ValueError, TypeError) as exc:
+        raise PRMSError("COPY_INCOMPLETE", "source CURRENT/owner/checkpoint/definition cannot be recovered") from exc
     actual_target_head = target_gate.store.head()
     target = target_gate.store.snapshot(actual_target_head)
     operation_path = f"publications/{operation_id}.json"
@@ -218,8 +226,8 @@ def copy_all_memory(source_store, target_gate, capability, source_role, target_r
         copied = tp + "copies/" + operation_id + "/" + relative
         changes[copied] = raw
         manifest.append({"source_path": path, "target_path": copied, "sha256": digest(raw), "bytes": len(raw)})
-        # Events remain usable without promoting copied approvals to new permissions.
-        if relative.startswith("events/"):
+        # Immutable events/templates stay usable; operational authority is not copied.
+        if relative.startswith(("events/", "definitions/")):
             changes[tp + relative] = raw
     identity = json.loads(source[sp + "identity.json"])
     identity.update(role_id=target_role, copied_from={"role_id": source_role, "commit": source_head},

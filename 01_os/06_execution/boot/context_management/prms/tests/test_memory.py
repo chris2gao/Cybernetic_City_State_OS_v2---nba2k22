@@ -78,6 +78,19 @@ def test_copy_physical_content_and_independent_target_current(tmp_path):
     evolved = store.snapshot()
     assert {p: raw for p, raw in evolved.items() if p.startswith("roles/r/")} == original_source
     assert gate.recover("new-r")["checkpoint"]["state"]["open_items"] == ["target-only work"]
+    target = gate.recover("new-r")["current"]
+    assert evolved["roles/new-r/definitions/1.json"] == store.snapshot(frozen)["roles/r/definitions/1.json"]
+    before_upgrade = store.head()
+    with pytest.raises(PRMSError, match="REJECTED"):
+        gate.apply(caller, "new-r", operation_id="reused-template", expected_head=before_upgrade,
+                   expected_version=target["state_version"], expected_epoch=target["owner_epoch"],
+                   kind="UPGRADE_DEFINITION", payload={"role_type_id": "engineer", "version": "1", "compatibility_ref": "fixture"})
+    assert store.head() == before_upgrade
+    gate.apply(caller, "new-r", operation_id="new-template", expected_head=before_upgrade,
+               expected_version=target["state_version"], expected_epoch=target["owner_epoch"],
+               kind="UPGRADE_DEFINITION", payload={"role_type_id": "engineer", "version": "2", "compatibility_ref": "fixture"})
+    assert gate.recover("new-r")["identity"]["definition"]["version"] == "2"
+    assert store.snapshot()["roles/new-r/definitions/1.json"] == store.snapshot(frozen)["roles/r/definitions/1.json"]
 
 
 def test_experience_never_promotes_on_self_claimed_refs():
@@ -151,3 +164,25 @@ def test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable(tmp_pa
     gate.revoke_isolated_session(bound)
     with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
         copy_all_memory(store, gate, bound, "source", "target", **kwargs)
+
+
+def test_invalid_source_checkpoint_prevents_target_copy_publication(tmp_path):
+    store = LocalGitState.initialize_isolated(tmp_path / "state.git", sandbox_parent=tmp_path)
+    gate = WriterGate(store)
+    caller = gate.open_isolated_session("owner", ["source", "target"])
+    gate.apply(caller, "source", operation_id="register", expected_head=store.head(), expected_version=0,
+               expected_epoch=0, kind="REGISTER", payload={"definition": {"role_type_id": "engineer", "version": "1"},
+                    "domain_id": "core", "state_repository_id": "isolated"})
+    gate.apply(caller, "source", operation_id="cp", expected_head=store.head(), expected_version=1,
+               expected_epoch=1, kind="CHECKPOINT", payload={})
+    snapshot = store.snapshot()
+    checkpoint_path = "roles/source/checkpoints/cp.json"
+    invalid = json.loads(snapshot[checkpoint_path])
+    invalid["event_manifest"]["roles/source/events/missing.json"] = "f" * 64
+    # Direct local corruption is possible in cooperative mode; recovery must expose it.
+    store.commit(store.head(), {checkpoint_path: canonical(invalid)}, "fixture-corruption")
+    frozen = store.head()
+    with pytest.raises(PRMSError, match="COPY_INCOMPLETE"):
+        copy_all_memory(store, gate, caller, "source", "target", source_head=frozen,
+                        operation_id="copy", target_expected_head=frozen, scope_approval_ref="fixture")
+    assert store.head() == frozen and not any(p.startswith("roles/target/") for p in store.snapshot())

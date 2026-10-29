@@ -100,6 +100,12 @@ the target snapshot and verifies the manifest. The target has a new identity and
 CURRENT. Operational owner, assignment and CURRENT authority do not transfer.
 Original records remain in Git history. Duplicate operation IDs reconcile instead
 of repeating a copy; conflicting requests fail closed.
+Before target publication, the frozen source CURRENT, owner, checkpoint manifest
+and active RoleDefinition must be recoverable and consistent. Missing originals
+produce COPY_INCOMPLETE without creating target CURRENT. Copied versioned
+definitions also appear at the target's canonical definition paths; the target
+cannot reuse an existing template version and can upgrade independently while
+retaining its prior template bytes and the original source snapshot.
 
 ## Derived memory and governance
 
