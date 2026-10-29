@@ -1,0 +1,37 @@
+task_id: NBA2K22_GEMINI_REA_BOUNDED_EXPLORATION_01
+date: '2026-10-28'
+status: EXPERIMENT_BRANCH_CREATED_FIRST_TASK_READY
+branch: gemini_rea
+source:
+  codex_pr: 19
+  codex_branch: task/role-native-execution-system-20261028
+  codex_head_at_branch_creation: 39086984adfa554d36315382d41bc2e5d2e54c39
+  planning_pr: 18
+  planning_head: 094f1aa641f93dec2277707ad9dbf5bdb0341247
+  master_modified: false
+goal: >
+  Give Gemini a disposable, isolated, bounded REA research branch to recover
+  one original native gameplay operation at a time with reproducible offline
+  evidence, for later independent Codex verification and selective integration.
+roles:
+  owner: Codex_for_official_engineering
+  exploratory_researcher: Gemini
+  architecture_and_task_planning: GPT
+  approval: Human
+controls:
+  no_game_access_or_write: true
+  no_local_workspace_contention: true
+  no_master_merge: true
+  no_official_codex_pr19_edit: true
+  no_production_registry_promotion: true
+  no_unsafe_memory_direct_business_patch: true
+  no_replay_of_old_live_tests: true
+  require_offline_reproduction: true
+  require_codex_independent_review: true
+  commit_only_isolated_experimental_code_and_run_evidence: true
+current_task: GREA-01
+current_task_document: GREA_01_OPPONENT_GAMEPLAN.md
+roadmap_document: README.md
+review_template: GREA_HANDOFF_TEMPLATE.md
+next_task_requires_new_explicit_instruction: true
+overall_completion_status: NOT_STARTED
