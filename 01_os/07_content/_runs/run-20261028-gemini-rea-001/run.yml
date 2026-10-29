@@ -35,14 +35,15 @@ controls:
   commit_only_isolated_experimental_code_and_run_evidence: true
 current_task: GREA_WAVE_02_A_B_C
 current_task_status: GREA_01_CANDIDATE_REQUIRES_EVIDENCE_REPAIR
-current_task_document: GREA_01_OPPONENT_GAMEPLAN.md
+current_task_document: GREA_CONTINUOUS_RESEARCH_WAVE_02.md
 roadmap_document: README.md
 review_template: GREA_HANDOFF_TEMPLATE.md
-next_task_requires_new_explicit_instruction: false
+new_wave_requires_new_explicit_instruction: true
 overall_completion_status: WAVE_02_A_B_C_AUTHORIZED_NOT_IMPLEMENTED
 allowlist:
   - 01_os/07_content/_runs/run-20261028-gemini-rea-001/**
   - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/GREA_01/**
+  - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/W02_*/**
 required_outputs:
   - README.md
   - GREA_01_OPPONENT_GAMEPLAN.md
@@ -71,3 +72,8 @@ wave_02_after_finish: STOP_FOR_CODEX_BATCH_TRIAGE
 wave_02_all_live_game_actions_authorized: false
 wave_02_further_tasks_authorized: false
 source_codex_pr19_latest_seen: bc11fa7926a7eaf390b668515e03dc8507ecb656
+wave_02_outputs:
+  - W02_A/HANDOFF.md
+  - W02_B/HANDOFF.md
+  - W02_C/HANDOFF.md
+  - W02_CONSOLIDATED_CODEX_HANDOFF.md
