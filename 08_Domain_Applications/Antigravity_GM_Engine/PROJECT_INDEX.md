@@ -108,3 +108,5 @@ NBA2K22 PC离线MyLEAGUE是真实比赛、赛季变化、自然成长与原生�
 - 当前报价提交增量：[原生FA_SIGNING阶段的明确合同报价](research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)接入`GM.CONTRACT.CONTRACT_OFFER`。仅明确GM权限、宿主报价子场景及原生阶段22下，按指定Player/Team和NORMAL/HARDSHIP、CUSTOM六薪资/年限/选项调用原版OfferContract一次，最多7次直接Native调用；不替角色报价、不宣称完成签约。原生可用球员池及合同/报价/根上下文复核已接入离线处理器。全任务仍进行中，新的实机/独立审核/Save证据未运行。
 
 - 当前撤回报价增量：[撤回指定待处理自由球员报价](research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)要求完整25字段预期、唯一当前记录及明确GM权限/场景，通过原版服务清状态，最多3次直接Native调用。只清所选记录状态，其他字节/报价/Player必须一致；未知结果不重试。原183需求不改，发现补充另存`supplemental_requirements.json`，当前合计184项；接受/拒绝及最终签约仍不可调用。自动选最高分报价、整池新秀和竞争报价处理器保留明确排除证据。
+
+- **Human要求本阶段暂停**：合同与决策信息均停止新增探索。[当前信息获取发现](research/rea_native_control/DECISION_INFORMATION_DISCOVERY_20261028.md)整理已有世界数据与新增投篮分区静态证据；[Gemini辅助包](research/rea_native_control/auxiliary/gemini_information_20261028/README.md)提供独立目录、学习资料、三个有界小包、原始输出规范及Owner筛选流程。完整M0–M5仍未完成；Draft PR19不合并，辅助结构自检不等于事实验收。固定输入/验证证据见checkpoint014及其阶段交接指针。

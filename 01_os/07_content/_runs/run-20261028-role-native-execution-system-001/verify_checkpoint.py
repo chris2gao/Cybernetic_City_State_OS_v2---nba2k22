@@ -202,4 +202,31 @@ supplement = json.loads((d / 'research/rea_native_control/data/supplemental_requ
 assert supplement['source_baseline_requirement_count'] == 183 and len(supplement['operations']) == 1
 for mid in ('P03','P04','P05','P07','P08','P09','P10','P12'):
     assert 'research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md' in next(row for row in modules if row['id'] == mid)['docs']
-print('PASS: sources/index,183 original+1 discovered dispositions,15 datasets, exact offer submission/withdrawal subsets and final-signing boundaries; full M0-M5 completion NOT asserted')
+delta = json.loads((run / 'CHECKPOINT_014_SOURCE_DELTA.json').read_text(encoding='utf8'))
+assert not delta['game_access'] and not delta['new_native_capability'] and not delta['full_goal_complete']
+assert delta['human_requested_stop'] and not delta['auxiliary_started'] and len(delta['static_sources']) == 7
+for source in delta['static_sources']:
+    raw = (root / source['path']).read_bytes().replace(b'\r\n', b'\n')
+    assert hashlib.sha256(raw).hexdigest() == source['normalized_lf_sha256']
+aux = d / 'research/rea_native_control/auxiliary/gemini_information_20261028'
+scope = json.loads((aux / 'SCOPE.json').read_text(encoding='utf8'))
+assert scope['task_ids'] == ['A01_SHOT_ENUMS','A02_SHOT_ARRAYS','B01_PLAYER_CHART_GETTER']
+assert scope['work_mode'] == 'SERIAL_BOUNDED_STATIC_ONLY' and scope['target_sha256'] == delta['target_sha256']
+for name in ('AGENTS.md','REA_STATIC_LEARNING_GUIDE_ZH.md','GEMINI_PROMPT_ZH.md','README.md'):
+    assert (aux / name).is_file()
+for mid in ('P03','P04','P05','P06','P09','P10','P12'):
+    module = next(row for row in modules if row['id'] == mid)
+    assert 'research/rea_native_control/DECISION_INFORMATION_DISCOVERY_20261028.md' in module['docs']
+manifest_path = run / 'AUXILIARY_INPUT_MANIFEST_014.json'
+if manifest_path.exists():
+    manifest = json.loads(manifest_path.read_text(encoding='utf8'))
+    assert manifest['packet_id'] == scope['packet_id'] and manifest['target_sha256'] == scope['target_sha256']
+    assert len(manifest['files']) >= 30 and not manifest['game_access']
+    for source in manifest['files']:
+        if source['source']['kind'] != 'git_blob': continue
+        ref = source['source']
+        raw = subprocess.run(['git','show',ref['commit']+':'+ref['path']],cwd=root,capture_output=True,check=True).stdout
+        assert len(raw) == source['bytes'] and hashlib.sha256(raw).hexdigest() == source['sha256']
+        blob = subprocess.run(['git','rev-parse',ref['commit']+':'+ref['path']],cwd=root,capture_output=True,text=True,check=True).stdout.strip()
+        assert blob == ref['blob']
+print('PASS: sources/index,183+1 dispositions,15 datasets, exact offers and bounded static auxiliary handoff; full M0-M5 completion NOT asserted')
