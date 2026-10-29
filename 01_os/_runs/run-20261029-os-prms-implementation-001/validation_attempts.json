@@ -1,0 +1,34 @@
+{
+  "attempts": [
+    {
+      "candidate": "185b176c97d2fea17436cbe3d46e047f1905dcb6",
+      "status": "INPUT_REJECTED",
+      "error": "candidate_outside_packet_allowlist",
+      "tests_executed": false,
+      "repair": "Use canonical /** subtree patterns; no scope expansion."
+    },
+    {
+      "candidate": "563cf3baecc27e6e5e713da3f67204972dd315fb",
+      "status": "FAILED",
+      "passed_checks": [
+        "PRMS_OFFLINE_AND_ACCOUNTING",
+        "PRMS_ISOLATED_EXAMPLE",
+        "PRMS_ACTUAL_SOURCE"
+      ],
+      "failed_check": "CONTEXT_REGRESSION",
+      "failure": "44 assertions executed; pytest exit cleanup PermissionError at legacy global pytest-current link.",
+      "not_run": [
+        "CONTEXT_STRUCTURE",
+        "MODEL_ROUTING",
+        "SCAFFOLD_SYNTAX"
+      ],
+      "raw_logs": "external prms-test-logs/managed-563cf3ba-01",
+      "repair": "Use a fresh per-invocation external --basetemp; no shared directory cleanup."
+    },
+    {
+      "candidate": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "status": "SUCCESS",
+      "evidence": "verification_receipt.json"
+    }
+  ]
+}

@@ -115,3 +115,27 @@ Do not mark this task or goal complete. Real platform enforcement/deployment,
 model-window acceptance and final independent review remain separate gates. Keep
 completing legal implementation and verification work before asking for those
 external prerequisites. No state service or master integration is authorized.
+
+## D5 handoff update
+
+The earlier next-work list above is historical. Code candidate
+`65c42a1ba0a7b58d3e572ad739f58aa59b274300` now passed all seven managed checks and
+inspect: 52 PRMS tests, 44 existing working-set tests, actual pinned GitHub source
+loading, isolated CURRENT/checkpoint/takeover/recovery, Core context structure,
+model-routing static verification and scaffold syntax. Full L0-L4 selection and
+bounded full-history audit, remote protocol fault tests, stable template-upgrade
+tests and copy-target independent evolution are included.
+
+`ENGINEERING_HANDOFF.md` and `completion_pointer.json` are the current handoff
+entry. The 48 original scenarios and 20 RES rows have actual evidence accounting;
+12 required external-scope scenarios remain NOT_RUN. Source implementation is
+frozen at the exact code candidate; the later handoff commit changes run evidence
+only. External raw attempts remain in the task-local prms-test-logs directory.
+The failed global-pytest cleanup attempt remains failed in validation_attempts;
+new checks use unique temporary roots. Do not restart or claim all 48 passed.
+
+Next gates are Human authorization of an actual independent state/host trust
+boundary, real platform permission and fault tests, real GPT/Codex recovery
+windows, and a separate independent review. No autonomous repository creation,
+production ingress activation, new model session or master integration is part
+of this handoff. The full goal remains incomplete pending those gates.

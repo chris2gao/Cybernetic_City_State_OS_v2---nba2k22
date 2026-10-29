@@ -1,0 +1,304 @@
+{
+  "schema_version": "prms.isolated_example.v1",
+  "scope": "SYNTHETIC_ISOLATED_REAL_GIT",
+  "candidate": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+  "catalog_counts": {
+    "MECHANISM": 7,
+    "WORKFLOW": 7,
+    "BOOT": 7,
+    "REGISTRY": 14,
+    "OPTIONAL_TOOL": 3
+  },
+  "role_current": {
+    "identity": {
+      "definition": {
+        "role_type_id": "implementation_owner",
+        "version": "1"
+      },
+      "domain_id": "core",
+      "role_id": "implementation-role",
+      "state_repository_id": "isolated-example"
+    },
+    "current": {
+      "assignment_id": "PRMS",
+      "checkpoint": "checkpoint",
+      "operation_id": "claim",
+      "owner_epoch": 2,
+      "role_id": "implementation-role",
+      "schema_version": "prms.current.v1",
+      "state_version": 5,
+      "status": "PUBLISHED_CURRENT"
+    },
+    "assignment": {
+      "assignment_id": "PRMS",
+      "authority_effect": "RECORDED_REFERENCE_NOT_EXECUTION_GRANT",
+      "human_authority_ref": "SYNTHETIC fixture assignment; no production authority",
+      "role_id": "implementation-role",
+      "task_id": "PRMS"
+    },
+    "checkpoint": {
+      "checkpoint_id": "checkpoint",
+      "event_manifest": {
+        "roles/implementation-role/events/Q52.json": "de995e59b434cf48ea53d9692a1c71aad8322eb4584f8e06328c41e011196cf9"
+      },
+      "source_commit": "de04ca383508521e311b569b883c859bc1b946f4",
+      "state": {
+        "open_items": [
+          "independent review"
+        ],
+        "task_id": "PRMS"
+      }
+    }
+  },
+  "state_commit": "e52c6ee4197df7e115c048e2b93e400a14e011ba",
+  "writer_gate": {
+    "old_session_result": "STALE_OWNER",
+    "enforced_mode_result": "FENCING_NOT_ENFORCEABLE",
+    "fencing_mode": "COOPERATIVE_FENCING"
+  },
+  "recovery": {
+    "schema_version": "prms.window_recovery.v1",
+    "session_id": "isolated-example",
+    "role_id": "implementation-role",
+    "task_id": "PRMS",
+    "state_commit": "e52c6ee4197df7e115c048e2b93e400a14e011ba",
+    "core_source_commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+    "required_event_ids": [
+      "Q52"
+    ],
+    "selected_events": [
+      {
+        "event": {
+          "event_id": "Q52",
+          "kind": "HUMAN_DECISION",
+          "observed_at": "UNKNOWN",
+          "recorded_at": "2026-10-29T14:40:13.256749+00:00",
+          "schema_version": "prms.event.v1",
+          "source_refs": [
+            {
+              "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+              "path": "01_os/03_mechanisms/context_management/prms/README.md",
+              "repository": "chris2gao/Cybernetic_City_State_OS_v2---core"
+            }
+          ],
+          "source_verification": "REFERENCED_NOT_INDEPENDENTLY_VERIFIED",
+          "task_id": "PRMS",
+          "text": "SYNTHETIC TEST FIXTURE: Q52=B"
+        },
+        "state_commit": "e52c6ee4197df7e115c048e2b93e400a14e011ba",
+        "path": "roles/implementation-role/events/Q52.json",
+        "sha256": "de995e59b434cf48ea53d9692a1c71aad8322eb4584f8e06328c41e011196cf9"
+      }
+    ],
+    "context_depth": {
+      "requested": "L3",
+      "meaning": "selected_original_evidence",
+      "mandatory_task_evidence_always_full": true
+    },
+    "optional_summaries": [],
+    "role_history_audit": null,
+    "history_choice": {
+      "session_id": "isolated-example",
+      "depth": "L3",
+      "selected_event_ids": [],
+      "decision_source": "Current Human authorized isolated recovery demonstration"
+    },
+    "missing_history_ids": [],
+    "excluded_events": [],
+    "unselected_history_count": 0,
+    "warnings": [],
+    "used_bytes": 184875,
+    "budget_bytes": 2000000,
+    "status": "READY",
+    "fencing_mode": "COOPERATIVE_FENCING",
+    "unsaved_chat": "NOT_OBSERVABLE",
+    "action_authorized": false,
+    "owner_takeover_performed": false
+  },
+  "actual_read_manifest": [
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "AGENTS.md",
+      "blob": "20dfa417fd603765373fa108dd2976d8a3fcf20c",
+      "sha256": "f32768c02639123da525d35c357a9574e5e4ffe2a986a8b56054a94739f74faa",
+      "bytes": 13530
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "AGENT_WORKING_DISCIPLINE.md",
+      "blob": "c3aed4cd5ba35db4a2c52c251629dc062e5c9b04",
+      "sha256": "9e7f764b872532cdd30841d1c501d049ada4d588214b59e9bf374ce1649bce9d",
+      "bytes": 25745
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/README.md",
+      "blob": "419a8595bd9280a5d36fc64f769760a8e19d5f4f",
+      "sha256": "431a65f103c62c6019f00726fd64dfe7faf246c132bc4519d22a7970e3174448",
+      "bytes": 4734
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/开发入口与单窗口任务规范_v1.md",
+      "blob": "b3dd651e1562c035b2cac09de559c51f533c6db5",
+      "sha256": "7c4948ae643871fe44edc200e81b85fcd27b9eae64e260398d08da9ea2411656",
+      "bytes": 33322
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/02_boot/context_management/启动清单_v1.yml",
+      "blob": "7169973f0e2a16a0fa5936711a90bf9ddcbc6813",
+      "sha256": "9a05a7e4646dc91adead7a43d5ec25fe4883c1ea8e9f448d49b3f3b68dcaca41",
+      "bytes": 1365
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/05_registry/repository_publisher_authority_v1.yml",
+      "blob": "02bc94edb23d66f85b22d5dc4e1ef7ef719359e9",
+      "sha256": "63a4087396703e0badbf3a3bba2011105e1bf3e6f5b8e42d8a76a1ab6af00aa7",
+      "bytes": 4635
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/_dev/开发产物与文件隔离规范_v1.md",
+      "blob": "501c8a42d6ecfdc6c09bed420031717c4bed1474",
+      "sha256": "6f1ecb1d2f001b076e9b57724a62721adf260d69b24018e402a5b1305d849a57",
+      "bytes": 1668
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/_dev/决定_谁执行_v0.2.md",
+      "blob": "26b4bfffafe9807212a2c96eb1985d5fbd1d8bdb",
+      "sha256": "a6e751787e637734f7b6139f31a0b0d95523b46e082e572178ed5951c79a9460",
+      "bytes": 1349
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/README.md",
+      "blob": "0e349581b66306dc1337b13fa2f36270c6d22f2f",
+      "sha256": "2fc93d457f4a4f89d791f21c1761f07f90a5a7a91c5ae5c1e43d17bdcebc57f0",
+      "bytes": 2451
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md",
+      "blob": "9d519fc7ceca533ecc8f764fc6aec98569c86ec3",
+      "sha256": "fe593f6f5bdc59017aff5437a85165c7f26aaa0680dfa137966e69fb853dab36",
+      "bytes": 2472
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml",
+      "blob": "2d15754920e515bf868fbc0bb6c37cba16a9e265",
+      "sha256": "4f470e71ec2120686d3f57f460b39295a37dfcc4abed2c7fd1a0be5678993179",
+      "bytes": 2761
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/prms/loading_rules_v1.yml",
+      "blob": "6885d8712c2f54bd6e0990b61d6a8f836071d550",
+      "sha256": "281cedc26478cf5b13ea378b30cc1c547a23666cb5405b2a3949be7f0b3bd952",
+      "bytes": 1020
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/prms/README.md",
+      "blob": "90048c18b3ca0f495f4ea79345058bc45bdf8d0c",
+      "sha256": "1d2afb09974bd06c74e1c07bc520e631ee8a83af7b636fc071af553ed4c2230c",
+      "bytes": 1427
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/prms/record_schemas_v1.json",
+      "blob": "ccbb5615295f46e5a3c6022c72d7e592444c6dd3",
+      "sha256": "1e4a81c1d3346fb6dc1a457d4bb82c2399d4b58372bac0e697f441e63c591314",
+      "bytes": 2019
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/context_management/prms/OPERATIONS.md",
+      "blob": "db459cda558c5c7d0abbcc3fe119f4ead3822788",
+      "sha256": "b0c15db12d76d5bc711fac81147e66e9a93c6dc329c7fbb0d2960497acc6148d",
+      "bytes": 9444
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml",
+      "blob": "47fb8bdc7a015c28c7dfd5af5f00180b5785017d",
+      "sha256": "4aacfeb8fc32320ecff4ee79ed4f213247903b16c7fccaa862f6ac568a886d74",
+      "bytes": 843
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/minimum_work_unit_output/README.md",
+      "blob": "e42042ff4770adacb2fe39f7d53f24dcc43f3a83",
+      "sha256": "9782ed3244843361f4c4895f440ab7933fc8320576ebf3a8a33bb23fe9ba0de8",
+      "bytes": 4140
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml",
+      "blob": "bd6f1da8b7a687c7d1778d7bd384648369d1d4ab",
+      "sha256": "79df7efb2569c6ebe68a9790c0f73a078a8a50a9458d8144ac9cf30dce13e679",
+      "bytes": 9685
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml",
+      "blob": "57ae9a013c035ed23a2b45ee560a83e50150070e",
+      "sha256": "253e5882cad6c0f83e09cea3105f33ebe7a2264fbe521d75371e0092765aca28",
+      "bytes": 2265
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/01_workflow/实现/七阶段最小运行契约_v1.yml",
+      "blob": "f5757acbfddf38735137a13f2c0676f0905be5c6",
+      "sha256": "20bbd0a745bcbcce622b77b3d7822e01d0277d51d291e34970f65d9b8377473d",
+      "bytes": 8322
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml",
+      "blob": "2f4e89d06f36cfa9a53ffec6f14230e3ffbcd865",
+      "sha256": "c1992f12c1bb370247012e7fa3e39cb779951a5b4330a54ca76581bb0fbc8a89",
+      "bytes": 1168
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+      "commit": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "path": "01_os/01_workflow/06_执行/README.md",
+      "blob": "bd32f8b23d33725e554730d3082dc19e232b0b7d",
+      "sha256": "651e2417c333057cda67a066aa3404192b4e794044214540170a95bb74b37947",
+      "bytes": 2301
+    }
+  ],
+  "verification": {
+    "status": "VERIFIED_FOR_CONTEXT_RECOVERY",
+    "context_status": "READY",
+    "model_understanding": "NOT_OBSERVABLE",
+    "action_authorized": false
+  },
+  "actual_model_window": "NOT_RUN",
+  "action_authorized": false
+}
