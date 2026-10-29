@@ -38,4 +38,4 @@ Thirteenth checkpoint recovers exact pending-offer withdrawal using the original
 
 ## Human-requested stage stop / checkpoint014
 
-Contract and decision-information exploration are stopped. Known data paths/static findings and a Human-forwarded Gemini auxiliary package are retained in DECISION_INFORMATION_DISCOVERY_20261028.md and auxiliary/gemini_information_20261028/. No auxiliary model is started. The full M0–M5 gaps remain open; pending final Managed verification and frozen input manifest are recorded in CHECKPOINT_014.md.
+Contract and decision-information exploration are stopped. Known data paths/static findings and a Human-forwarded Gemini auxiliary package are retained in DECISION_INFORMATION_DISCOVERY_20261028.md and auxiliary/gemini_information_20261028/. No auxiliary model is started. The full M0–M5 gaps remain open; Managed Run/Inspect passed124 offline tests and source/index checks for `acfc12250f01becbd13c7061cb7513cea028ac08`. Actual receipts,32-file frozen input manifest and STAGE_HANDOFF_POINTER_014.json are retained in the Run. No auxiliary finding has been received or accepted.
