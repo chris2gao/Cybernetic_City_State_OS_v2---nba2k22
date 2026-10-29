@@ -400,3 +400,42 @@ are, and all four are by-products of process rather than of retrieval:
 
 A record of what was adopted, without the record of what was refused, is worth a
 fraction of the same effort.
+
+## 9. Promote evidence-backed execution feedback, not every local defect
+
+*Paid for 2026-10-23, NBA2K22 R00-01:* narrow probe dispatches, a
+claimed out-of-scope live observation and JSON-only verification led to
+repeated corrections without proportional new native-data capability.
+These represent different failures: task design, authorization and proof.
+
+- **LOCAL_FIX:** one-off arithmetic, naming or receipt defect that can be
+  corrected inside the task; do not create global rules for it.
+- **CORE_CANDIDATE:** a generalizable repeated failure, measurable systematic
+  waste or one high-impact safety/identity/authority incident, supported by
+  fixed primary evidence and a falsifiable counterexample.
+- **HOLD_FINDING:** evidence or causality is insufficient. Name the gap;
+  a model report is not proof of every memory call.
+- **REJECT_DUPLICATE:** existing discipline already handles the issue or
+  the proposed gate costs more than it prevents.
+
+For exploration, separate the **authorized exploration envelope** (build/save,
+objects, regions, access mode, sensitivity and export rules) from the **research
+method** (hypothesis order, depth, bounded comparisons). Inside that envelope,
+adapt methods without per-field permission. Outside the envelope, stop before
+access and propose a new scope; discovery does not retroactively authorize it.
+A read-only handle is not permission to read every readable byte.
+A failed subprobe budget is not the lifetime limit of a research programme.
+
+Judge progress by traceable **consumer capability** (identified native facts,
+decoder evidence, versioned acquisition and usable Player/GM/Coach data), not
+count of passing JSON tests or reduction of UNKNOWN. Live read, fixture,
+save binding and UI semantics require separate evidence.
+
+Record one bounded feedback case per distinct mechanism: fixed source SHA,
+observed-versus-claimed, counterexample, impact, local containment, cost of
+new rule versus no-change, positive/negative acceptance tests and decision.
+Domain windows never edit core-owned files. A separate core task branch may
+propose a change; independent review and Human-controlled master integration
+remain distinct. No background monitor, automatic merge, mandatory new
+approval ritual or automatic feedback task creation follows from this rule.
+Return to the domain objective after disposition; reopen only on new evidence.

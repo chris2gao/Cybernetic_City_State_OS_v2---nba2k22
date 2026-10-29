@@ -1,0 +1,403 @@
+{
+  "schema_version": "prms.requirement_coverage.v1",
+  "requirements": [
+    {
+      "id": "RES-001",
+      "requirement": "RoleDefinition registration and compatible version upgrade",
+      "implementation": "state.py:REGISTER,UPGRADE_DEFINITION",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-06"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-06"
+      ]
+    },
+    {
+      "id": "RES-002",
+      "requirement": "Stable RoleInstance identity",
+      "implementation": "state.py:REGISTER;memory.py:copy_all_memory",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-06"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-06"
+      ]
+    },
+    {
+      "id": "RES-003",
+      "requirement": "RoleAssignment and task authority separation",
+      "implementation": "state.py:ASSIGN,SAVE_TASK_CONTEXT;ingress.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-06",
+        "B-26"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-06"
+      ]
+    },
+    {
+      "id": "RES-004",
+      "requirement": "Single current session owner",
+      "implementation": "state.py;ingress.py;github_state.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-10",
+        "B-11",
+        "B-21",
+        "B-25"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Dormant callable ingress implemented and fake-transport tested. Real host identity/provider integration and platform enforcement remain unverified, not current task closure gates.",
+      "pending_required_scope_scenarios": [
+        "B-10",
+        "B-11",
+        "B-21",
+        "B-25"
+      ]
+    },
+    {
+      "id": "RES-005",
+      "requirement": "Git durable authority",
+      "implementation": "state.py:LocalGitState;github_state.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-12",
+        "B-19",
+        "B-20",
+        "B-22",
+        "B-25"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Actual GitHub state-ref permission/CAS exercise not authorized or run.",
+      "pending_required_scope_scenarios": [
+        "B-12",
+        "B-22",
+        "B-25"
+      ]
+    },
+    {
+      "id": "RES-006",
+      "requirement": "Append-only facts and Human decisions",
+      "implementation": "contracts.py;state.py:APPEND",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-07",
+        "B-12",
+        "B-23"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-12",
+        "B-23"
+      ]
+    },
+    {
+      "id": "RES-007",
+      "requirement": "Current and checkpoint consistency",
+      "implementation": "state.py:CHECKPOINT,recover",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-12",
+        "B-19",
+        "B-22",
+        "B-23"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-12",
+        "B-22",
+        "B-23"
+      ]
+    },
+    {
+      "id": "RES-008",
+      "requirement": "Experience extraction and promotion candidate",
+      "implementation": "memory.py:propose_experience",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-14"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "VERIFIED_AT_DECLARED_ENGINEERING_SCOPE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": []
+    },
+    {
+      "id": "RES-009",
+      "requirement": "Shared knowledge and publication governance",
+      "implementation": "memory.py:reconcile_experience_publication",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-14",
+        "B-17",
+        "B-18"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-17"
+      ]
+    },
+    {
+      "id": "RES-010",
+      "requirement": "Dynamic context assembly",
+      "implementation": "context.py;domain_context.py;task_context.py:resume_task",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-05",
+        "B-06",
+        "B-09",
+        "B-16"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Real GPT/Codex comprehension comparison pending.",
+      "pending_required_scope_scenarios": [
+        "B-06",
+        "B-16"
+      ]
+    },
+    {
+      "id": "RES-011",
+      "requirement": "Adapters and new-window recovery",
+      "implementation": "task_cli.py;handoff.py;handoff_cli.py;recovery.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-05",
+        "B-06",
+        "B-16",
+        "B-27"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Task save/resume and Human-relay receiver implemented and fresh-process tested. Actual model window/understanding remains NOT_RUN.",
+      "pending_required_scope_scenarios": [
+        "B-06",
+        "B-16",
+        "B-27"
+      ]
+    },
+    {
+      "id": "RES-012",
+      "requirement": "Failure and retry semantics",
+      "implementation": "state.py;github_state.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-12",
+        "B-19",
+        "B-23"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Injected remote protocol faults pass; actual GitHub network interruption pending.",
+      "pending_required_scope_scenarios": [
+        "B-12",
+        "B-23"
+      ]
+    },
+    {
+      "id": "RES-013",
+      "requirement": "Core upgrade and domain integration",
+      "implementation": "catalog.py:compatibility;new-domain.ps1",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-14",
+        "B-15",
+        "B-24"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Only isolated local three-way merge; Core/master and domain/master integration not authorized.",
+      "pending_required_scope_scenarios": []
+    },
+    {
+      "id": "RES-014",
+      "requirement": "End-to-end and independent acceptance",
+      "implementation": "acceptance.py;acceptance_map.json;verification_plan.json",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-17"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Separate independent reviewer and real platform/window scenarios pending.",
+      "pending_required_scope_scenarios": [
+        "B-17"
+      ]
+    },
+    {
+      "id": "RES-015",
+      "requirement": "Full content copy and independent target",
+      "implementation": "memory.py:copy_all_memory;task_context.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-13",
+        "B-26"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "VERIFIED_AT_DECLARED_ENGINEERING_SCOPE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": []
+    },
+    {
+      "id": "RES-016",
+      "requirement": "Enforced takeover",
+      "implementation": "ingress.py;state.py:require_enforced;github_state.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-10",
+        "B-11",
+        "B-21",
+        "B-25"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "Dormant callable ingress implemented and fake-transport tested. Real host identity/provider integration and platform enforcement remain unverified, not current task closure gates.",
+      "pending_required_scope_scenarios": [
+        "B-10",
+        "B-11",
+        "B-21",
+        "B-25"
+      ]
+    },
+    {
+      "id": "RES-017",
+      "requirement": "G1/G2/T1/T2/K1/K2 layers",
+      "implementation": "catalog.py;domain_context.py;memory.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-01",
+        "B-02",
+        "B-03",
+        "B-06",
+        "B-07",
+        "B-15",
+        "B-20",
+        "B-24",
+        "CAT-01",
+        "CAT-02",
+        "CAT-04",
+        "CAT-06",
+        "CAT-09",
+        "CAT-13",
+        "CAT-14"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-06"
+      ]
+    },
+    {
+      "id": "RES-018",
+      "requirement": "Source summaries and selective stale propagation",
+      "implementation": "memory.py:build_index,source_dependency_status",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-08",
+        "B-16",
+        "B-28",
+        "CAT-12",
+        "CAT-16"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-16"
+      ]
+    },
+    {
+      "id": "RES-019",
+      "requirement": "Indexes and scoped retrieval",
+      "implementation": "memory.py:build_index,search_memory,expand_memory",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-01",
+        "B-02",
+        "B-03",
+        "B-08",
+        "B-09",
+        "B-28",
+        "CAT-07",
+        "CAT-08",
+        "CAT-10",
+        "CAT-11",
+        "CAT-15"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "VERIFIED_AT_DECLARED_ENGINEERING_SCOPE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": []
+    },
+    {
+      "id": "RES-020",
+      "requirement": "L0-L4 Human selection and recovery receipts",
+      "implementation": "context.py;depth.py;recovery.py;task_context.py",
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "scenario_refs": [
+        "B-04",
+        "B-05",
+        "B-06",
+        "B-16",
+        "B-18",
+        "B-27",
+        "CAT-03",
+        "CAT-05",
+        "CAT-17",
+        "CAT-18",
+        "CAT-19",
+        "CAT-20"
+      ],
+      "implementation_evidence": "RUNNABLE_WITH_OFFLINE_TEST_EVIDENCE",
+      "acceptance": "PARTIAL_EXTERNAL_GATE",
+      "remaining": "No production activation or independent acceptance implied; consult scenario proof scopes.",
+      "pending_required_scope_scenarios": [
+        "B-06",
+        "B-16",
+        "B-27"
+      ]
+    }
+  ],
+  "all_product_requirements_accepted": false,
+  "supplemental_tests": [
+    "test_definition_upgrade_preserves_stable_role_and_prior_template",
+    "test_depth_summary_and_full_audit_preserve_sources_and_fail_closed",
+    "test_copy_cannot_bypass_host_operation_scope",
+    "test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+    "test_invalid_source_checkpoint_prevents_target_copy_publication",
+    "test_task_continuity.py::test_task_a_survives_switch_to_b_and_fresh_process_workbench",
+    "test_task_continuity.py::test_task_a_survives_switch_to_b_and_fresh_process_workbench",
+    "test_task_continuity.py::test_latest_durable_task_event_is_loaded_even_after_checkpoint_and_switch",
+    "test_task_continuity.py::test_task_plan_revision_budget_and_missing_original_fail_explicitly",
+    "test_task_continuity.py::test_full_copy_retains_usable_task_context_without_transferring_assignments",
+    "test_handoff.py::test_deterministic_human_relay_exports_exact_bytes_and_verifies_ack",
+    "test_handoff.py::test_cli_file_export_receive_and_ack_are_real_foreground_calls",
+    "test_handoff.py::test_recomputed_bundle_hash_cannot_replace_actual_sources_or_host_choices",
+    "test_handoff.py::test_missing_history_is_disclosed_and_blocked_context_cannot_be_exported",
+    "test_handoff.py::test_wrong_session_stale_state_and_receiver_budget_are_rejected"
+  ],
+  "current_task_closure": "TASK_CLOSED_CONTEXT_CONTINUITY_SCOPE",
+  "current_task_acceptance_ref": "context_continuity_acceptance.json",
+  "scope_note": "Original 20-requirement product acceptance remains separate; Human explicitly closed current task on correct context continuity."
+}

@@ -1,0 +1,48 @@
+{
+  "candidate": "0b3f7ca7490412320a9e2a5cbd33e6dd9cd19ea5",
+  "status": "FAILURE_RETAINED_NOT_RELABELED",
+  "managed_attempt": {
+    "schema_version": "citystate.verification_attempt.v1",
+    "candidate": "0b3f7ca7490412320a9e2a5cbd33e6dd9cd19ea5",
+    "plan_sha256": "6feef020b324a84739b0600a8733c2402b03d8377677ac907b37a4b1cd2ee17a",
+    "checks": [
+      {
+        "id": "SOURCE_AND_DOMAIN_PRESERVATION",
+        "status": "success"
+      },
+      {
+        "id": "NBA_EXISTING_OFFLINE",
+        "status": "failure"
+      },
+      {
+        "id": "PRMS_OFFLINE",
+        "status": "not_run"
+      },
+      {
+        "id": "CONTEXT_REGRESSION",
+        "status": "not_run"
+      },
+      {
+        "id": "CONTEXT_STRUCTURE",
+        "status": "not_run"
+      },
+      {
+        "id": "TASK_CONTINUITY",
+        "status": "not_run"
+      }
+    ],
+    "status": "failure",
+    "authority_effect": "none"
+  },
+  "actual_nba_pytest_exit": 1,
+  "baseline_candidate": "7742568ac677b3c16079887463f05e81cb1191ed",
+  "same_per_test_outcome_multiset": true,
+  "outcome_counts": {
+    "PASS": 295,
+    "FAIL": 10
+  },
+  "raw_summary": [
+    "7 failed, 295 passed, 3 errors, 446 subtests passed in 257.24s (0:04:17)"
+  ],
+  "new_verification_method": "Run the complete suite again on the new integration candidate; compare all outcomes with this actual exact-base result and require an unchanged business Git tree. Retain the nonzero pytest exit and failures explicitly."
+}

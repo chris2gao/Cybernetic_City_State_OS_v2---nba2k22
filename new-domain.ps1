@@ -69,14 +69,27 @@ gh repo create $repoFull --private --description "City-State domain: $Name (buil
 if ($LASTEXITCODE -ne 0) { Fail "gh repo create failed" }
 
 Write-Host "[2/4] cloning core"
-git clone --quiet $CoreRepo $folder
+git -c core.longpaths=true clone --quiet $CoreRepo $folder
 if ($LASTEXITCODE -ne 0) { Fail "clone failed" }
 
 Push-Location $folder
 try {
+    git config --local core.longpaths true
+    if ($LASTEXITCODE -ne 0) { Fail "long-path checkout configuration failed" }
     Write-Host "[3/4] wiring remotes (origin = this domain, core = upstream)"
     git remote rename origin core
     git remote add origin $originUrl
+
+    # This explicit domain-creation invocation initializes only domain-owned
+    # catalogs. It does not publish mechanisms or deploy a PRMS state service.
+    $inheritedCore = (git rev-parse HEAD).Trim()
+    $scaffoldReceipt = Join-Path ([System.IO.Path]::GetTempPath()) ("prms-domain-" + [guid]::NewGuid().ToString() + ".json")
+    python 01_os/06_execution/boot/context_management/prms/cli.py scaffold-domain --repo-root . --commit $inheritedCore --repository $repoFull --domain-id $Name --output $scaffoldReceipt
+    if ($LASTEXITCODE -ne 0) { Fail "domain catalog initialization failed" }
+    git add -- 08_Domain_Applications/domain.yml 09_Domain_Global_Mechanisms/README.md 09_Domain_Global_Mechanisms/domain_mechanisms.yml 09_Domain_Global_Mechanisms/knowledge_catalog.yml
+    if ($LASTEXITCODE -ne 0) { Fail "domain catalog staging failed" }
+    git commit --quiet -m "Initialize domain-owned mechanism catalogs"
+    if ($LASTEXITCODE -ne 0) { Fail "domain catalog commit failed" }
 
     Write-Host "[4/4] publishing and verifying"
     git push --quiet -u origin master
