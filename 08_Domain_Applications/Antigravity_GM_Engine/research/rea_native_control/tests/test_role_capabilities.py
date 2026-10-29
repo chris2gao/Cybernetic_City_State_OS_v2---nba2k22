@@ -15,9 +15,11 @@ class RoleConsumers(unittest.TestCase):
                                              'season', 'REGULAR_SEASON', 'snapshot')
 
     def test_all_requirements_remain_discoverable_without_invented_bindings(self):
-        self.assertEqual(len(self.service.requirements), 183)
+        self.assertEqual(len(self.service.source_requirement_ids), 183)
+        self.assertEqual(len(self.service.supplemental_requirement_ids), 1)
+        self.assertEqual(len(self.service.requirements), 184)
         self.assertEqual(self.service.source_mapping_count, 50)
-        self.assertEqual(len(self.service.mapping), 60)
+        self.assertEqual(len(self.service.mapping), 61)
         trade = self.service.describe_action('GM.TRADE.EXECUTE_AGREED', self.profile)
         self.assertTrue(trade['call_logic_available'])
         self.assertFalse(trade['identity_permission'])

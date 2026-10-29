@@ -24,7 +24,9 @@ sys.path.insert(0, str(d / 'research/rea_native_control/tools'))
 from export_role_coverage import coverage
 current = json.loads((run / 'coverage_current.json').read_text(encoding='utf-8'))
 assert current == coverage(), 'Per-requirement checkpoint is stale'
-assert len({r['capability_id'] for r in current['requirements']}) == 183
+assert len({r['capability_id'] for r in current['requirements']}) == 184
+assert current['source_requirement_count'] == 183 and current['supplemental_requirement_count'] == 1
+assert current['total_requirement_count'] == 184
 assert current['game_access_performed'] is False
 candidate = json.loads((d / 'research/rea_native_control/data/native_bindings.json').read_text(encoding='utf-8'))
 binding = next(b for b in candidate['bindings'] if b['binding_id'] == 'sign.acquire_or_reset_candidate')
@@ -177,7 +179,27 @@ assert not next(row for row in current['requirements'] if row['capability_id'] =
 assert next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.offer_contract')['unknowns']
 qualified = next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.offer_fa_phase')
 assert qualified['rva'] == 0x12bd4c0 and not qualified['unknowns']
-assert current['effective_mapping_count'] == 60 and len(signing['actions']) == 71 and len(candidate['bindings']) == 63
+assert current['effective_mapping_count'] == 61 and len(signing['actions']) == 72 and len(candidate['bindings']) == 65
 for mid in ('P03','P04','P05','P07','P08','P09','P10','P12'):
     assert 'research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md' in next(row for row in modules if row['id'] == mid)['docs']
-print('PASS: sources/index,183 dispositions,15 read datasets, Player/contract Getters, exact FA-period offer subset and final-signing boundaries; full M0-M5 completion NOT asserted')
+delta = json.loads((run / 'CHECKPOINT_013_SOURCE_DELTA.json').read_text(encoding='utf8'))
+assert not delta['game_access']
+for source in delta['static_sources']:
+    assert hashlib.sha256((root / source['path']).read_bytes().replace(b'\r\n', b'\n')).hexdigest() == source['normalized_lf_sha256']
+withdraw = json.loads((root / delta['canonical_runtime_source']).read_text(encoding='utf8'))
+assert not withdraw['game_access'] and withdraw['native_abi']['rva'] == 0x12b4040
+assert withdraw['effect']['status_mask'] == 0x3c0000
+context = next(row for row in candidate['bindings'] if row['binding_id'] == 'sign.withdraw_context')['input_layout']
+assert context['schema'] == schema and context['roots'] == withdraw['roots']
+assert context['code_signatures'] == withdraw['code_signatures']
+row = next(row for row in current['requirements'] if row['capability_id'] == 'GM.CONTRACT.OFFER_WITHDRAW')
+assert row['requirement_origin'] == 'NATIVE_DISCOVERY_SUPPLEMENT' and row['call_logic_available']
+assert row['roles'] == ['GM'] and row['new_live_validation'] == 'NOT_RUN'
+assert row['native_action_id'] == 'CONTRACT_WITHDRAW_PENDING_OFFER'
+assert sum(row['requirement_origin'] == 'PR18_SOURCE' for row in current['requirements']) == 183
+assert not next(row for row in current['requirements'] if row['capability_id'] == 'GM.CONTRACT.OFFER_ACCEPT_OR_REJECT')['call_logic_available']
+supplement = json.loads((d / 'research/rea_native_control/data/supplemental_requirements.json').read_text(encoding='utf8'))
+assert supplement['source_baseline_requirement_count'] == 183 and len(supplement['operations']) == 1
+for mid in ('P03','P04','P05','P07','P08','P09','P10','P12'):
+    assert 'research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md' in next(row for row in modules if row['id'] == mid)['docs']
+print('PASS: sources/index,183 original+1 discovered dispositions,15 datasets, exact offer submission/withdrawal subsets and final-signing boundaries; full M0-M5 completion NOT asserted')

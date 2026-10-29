@@ -14528,6 +14528,433 @@
           "meaning": "Exact pool0 used by the original FA caller; require supplied Player pointer membership, never choose an alternative"
         }
       }
+    },
+    {
+      "binding_id": "sign.cancel_pending_offer",
+      "rva": 19611712,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "selected_offer",
+          "type": "pointer"
+        },
+        {
+          "name": "original_zero_flag",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Unique exact current unarchived OFFERED1 FREE_AGENT2 game-owned record; supplied complete25 registered expected fields",
+        "Resolved exact Player/Team, host FA_SIGNING_OFFERS and Native period22"
+      ],
+      "lifecycle": [
+        "Fixed int0 from original caller; original helper clears status bits only in this Type2 branch",
+        "Return1 plus exact status-only clear is same-handler evidence, not independent completion/UI/persistence or refund"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pending_offer_withdrawal_contract_034.json",
+        "OFFER_WITHDRAWAL_NATIVE_CONTRACT.md"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19611712,
+            "bytes": 216,
+            "fnv32": 1851657030
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "sign.withdraw_context",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Pinned period/pool roots and registered44-byte schema; current host context"
+      ],
+      "lifecycle": [
+        "Only exact pending offer status clear; whole pool/Player/Team brackets; no retry"
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pending_offer_withdrawal_contract_034.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "schema": {
+          "source_kind": "PINNED_NATIVE_SIGNING_SCHEMA_NOT_GAME_CAPTURE",
+          "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+          "bytes": 44,
+          "fields": [
+            {
+              "name": "PlayerId",
+              "offset": 0,
+              "width": 16,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 2073149053,
+              "source_type_crc": 2761744770
+            },
+            {
+              "name": "TeamId",
+              "offset": 2,
+              "width": 16,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3758000743,
+              "source_type_crc": 2761744770
+            },
+            {
+              "name": "Wage",
+              "offset": 4,
+              "width": 32,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 703537575,
+              "source_type_crc": 2445756185
+            },
+            {
+              "name": "ForcedWage",
+              "offset": 8,
+              "width": 32,
+              "shift": 0,
+              "signed": false,
+              "count": 6,
+              "source_name_crc": 2617188526,
+              "source_type_crc": 2445756185
+            },
+            {
+              "name": "PissedOffLevel",
+              "offset": 32,
+              "width": 8,
+              "shift": 0,
+              "signed": true,
+              "count": 1,
+              "source_name_crc": 654068565,
+              "source_type_crc": 340908721
+            },
+            {
+              "name": "NegotiationLevel",
+              "offset": 32,
+              "width": 4,
+              "shift": 8,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3514796275,
+              "source_type_crc": 2445756185
+            },
+            {
+              "name": "NoTradeClause",
+              "offset": 32,
+              "width": 1,
+              "shift": 12,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3545361590,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "RecentOffer",
+              "offset": 32,
+              "width": 1,
+              "shift": 13,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3832622795,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "IsCounterOffer",
+              "offset": 32,
+              "width": 1,
+              "shift": 14,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 2687598061,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "IsExistingOffer",
+              "offset": 32,
+              "width": 1,
+              "shift": 15,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3421619403,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "ForcedOffer",
+              "offset": 32,
+              "width": 1,
+              "shift": 16,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 2440626335,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "HasMadeVerbalDeal",
+              "offset": 32,
+              "width": 1,
+              "shift": 17,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 1879085098,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "Status",
+              "offset": 32,
+              "width": 4,
+              "shift": 18,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 2091671594,
+              "source_type_crc": 876366683,
+              "enum": "Status"
+            },
+            {
+              "name": "Type",
+              "offset": 32,
+              "width": 3,
+              "shift": 22,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 753727511,
+              "source_type_crc": 868271745,
+              "enum": "Type"
+            },
+            {
+              "name": "Distribution",
+              "offset": 32,
+              "width": 3,
+              "shift": 25,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3162107001,
+              "source_type_crc": 3402235345,
+              "enum": "Distribution"
+            },
+            {
+              "name": "OptionType",
+              "offset": 32,
+              "width": 2,
+              "shift": 28,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 2560897658,
+              "source_type_crc": 2954732842,
+              "enum": "OptionType"
+            },
+            {
+              "name": "ContractType",
+              "offset": 32,
+              "width": 2,
+              "shift": 30,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3511397063,
+              "source_type_crc": 25426434,
+              "enum": "ContractType"
+            },
+            {
+              "name": "IntSalary",
+              "offset": 36,
+              "width": 8,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 1795422375,
+              "source_type_crc": 999499730
+            },
+            {
+              "name": "IntTerm",
+              "offset": 37,
+              "width": 8,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 1445613662,
+              "source_type_crc": 999499730
+            },
+            {
+              "name": "IntWinner",
+              "offset": 38,
+              "width": 8,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 4091945944,
+              "source_type_crc": 999499730
+            },
+            {
+              "name": "IntRole",
+              "offset": 39,
+              "width": 8,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 2756459961,
+              "source_type_crc": 999499730
+            },
+            {
+              "name": "IntCity",
+              "offset": 40,
+              "width": 8,
+              "shift": 0,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3732846055,
+              "source_type_crc": 2445756185
+            },
+            {
+              "name": "Years",
+              "offset": 40,
+              "width": 3,
+              "shift": 8,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 1657390963,
+              "source_type_crc": 2445756185
+            },
+            {
+              "name": "IsArchived",
+              "offset": 40,
+              "width": 1,
+              "shift": 11,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 3052302285,
+              "source_type_crc": 4054322895
+            },
+            {
+              "name": "IsUserInitiated",
+              "offset": 40,
+              "width": 1,
+              "shift": 12,
+              "signed": false,
+              "count": 1,
+              "source_name_crc": 1187151763,
+              "source_type_crc": 4054322895
+            }
+          ],
+          "enums": {
+            "Status": {
+              "0": "EMPTY",
+              "1": "OFFERED",
+              "2": "RFA_QUALIFIED",
+              "3": "WAITING",
+              "4": "REJECTED_WAIT",
+              "5": "REJECTED",
+              "6": "ACCEPTED",
+              "7": "TEAM_DECLINED",
+              "8": "SIGNED",
+              "9": "BANNED"
+            },
+            "Type": {
+              "0": "DRAFT_PICK",
+              "1": "EXTENSION",
+              "2": "FREE_AGENT",
+              "3": "QUALIFYING_OFFER"
+            },
+            "Distribution": {
+              "0": "CUSTOM",
+              "1": "ASCEND_BIRD",
+              "2": "ASCEND",
+              "3": "FLAT",
+              "4": "DESCEND"
+            },
+            "OptionType": {
+              "0": "NO_OPTION",
+              "1": "TEAM_OPTION",
+              "2": "PLAYER_OPTION",
+              "3": "TEAM_OPTION_2"
+            },
+            "ContractType": {
+              "0": "NORMAL",
+              "1": "TEN_DAY",
+              "2": "HARDSHIP",
+              "3": "TWO_WAY"
+            }
+          },
+          "forced_wage_extent_proof": {
+            "offset": 8,
+            "next_field_offset": 32,
+            "element_size": 4,
+            "elements": 6,
+            "static_array_reference_rva": 54138888,
+            "static_array_info_hex": "06000000000000000000000000000000"
+          },
+          "pool": {
+            "root_rva": 103986296,
+            "offset": 1517480,
+            "count": 1000,
+            "stride": 44
+          },
+          "evidence": [
+            "evidence/static/types-signing-02.json",
+            "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_native_enums_007.json",
+            "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pool_lookup_and_allocate_003.json"
+          ],
+          "maturity": {
+            "encoding_only": true,
+            "fresh_offer_lifecycle_qualified": false,
+            "dispatch_implemented": false,
+            "ui_currency_and_term_legality": "UNVERIFIED_NATIVE_ENCODING_BOUNDS_ONLY",
+            "accepted_is_not_signed": true,
+            "signed_status_is_not_independent_membership_proof": true
+          }
+        },
+        "roots": {
+          "period": {
+            "global_rva": 103986288,
+            "source_instruction": {
+              "rva": 15593488,
+              "mnemonic": "mov",
+              "operands": "rax, qword ptr [rip + 0x544c459]"
+            }
+          },
+          "pool": {
+            "global_rva": 103986296,
+            "source_instruction": {
+              "rva": 19621158,
+              "mnemonic": "mov",
+              "operands": "rdx, qword ptr [rip + 0x5074f4b]"
+            }
+          }
+        },
+        "code_signatures": [
+          {
+            "rva": 19611712,
+            "bytes": 216,
+            "fnv32": 1851657030
+          },
+          {
+            "rva": 15593488,
+            "bytes": 11,
+            "fnv32": 3103863299
+          },
+          {
+            "rva": 19621152,
+            "bytes": 295,
+            "fnv32": 334932372
+          },
+          {
+            "rva": 19637664,
+            "bytes": 223,
+            "fnv32": 3635159975
+          }
+        ]
+      }
     }
   ]
 }

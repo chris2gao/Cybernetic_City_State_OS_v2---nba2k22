@@ -118,3 +118,40 @@ def encode_fresh_fa_offer(template,player_id,team_id,contract,*,schema=None):
     preserved=int.from_bytes(template[40:44],'little')&0xffffe000
     raw[40:44]=(int.from_bytes(raw[40:44],'little')|preserved).to_bytes(4,'little')
     return bytes(raw)
+
+
+def validate_pending_offer(parameters,schema=None):
+    """Require every registered observed field, never a partial or guessed cancellation target."""
+    schema=schema or load_schema()
+    if not isinstance(parameters,dict) or set(parameters)!={'player_id','team_id','expected_offer'}:
+        raise ValueError('Exact Team/Player and full expected offer required')
+    for name in ('player_id','team_id'):
+        if type(parameters[name]) is not int or not 0<=parameters[name]<65535:
+            raise ValueError('Explicit Native UID required')
+    expected=parameters['expected_offer']
+    if not isinstance(expected,dict) or set(expected)!={field['name'] for field in schema['fields']}:
+        raise ValueError('Every registered offer field must be supplied from the selected observation')
+    for field in schema['fields']:
+        value=expected[field['name']]
+        values=[value] if field['count']==1 else value
+        if not isinstance(values,list) or len(values)!=field['count']:
+            raise ValueError('Exact registered field extent required')
+        low=-(2**(field['width']-1)) if field['signed'] else 0
+        high=2**(field['width']-int(field['signed']))-1
+        if any(type(item) is not int or not low<=item<=high for item in values):
+            raise ValueError('Expected offer field outside registered representation')
+    if (expected['PlayerId'],expected['TeamId'],expected['Type'],expected['Status'],expected['IsArchived']) != (
+            parameters['player_id'],parameters['team_id'],2,1,0):
+        raise ValueError('Only the exact unarchived OFFERED FREE_AGENT record can be withdrawn')
+    return expected
+
+
+def pending_offer_parameter_schema(schema=None):
+    schema=schema or load_schema();properties={}
+    for field in schema['fields']:
+        value={'type':'integer','minimum':-(2**(field['width']-1)) if field['signed'] else 0,
+               'maximum':2**(field['width']-int(field['signed']))-1}
+        properties[field['name']]=value if field['count']==1 else {
+            'type':'array','minItems':field['count'],'maxItems':field['count'],'items':value}
+    return {'type':'object','properties':properties,'required':list(properties),'additionalProperties':False,
+            'description':'Complete registered fields from the explicitly selected current team-offer observation; Status1 Type2 archive0 and exact UIDs required'}

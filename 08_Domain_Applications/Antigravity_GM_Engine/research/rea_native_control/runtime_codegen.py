@@ -22,6 +22,7 @@ def render_program(plan:NativeActionPlan,registry):
  handlers['read.signing_offers']='read_signing_offers.js'
  handlers['read.player_contract']='read_player_contract.js'
  handlers['sign.fa_offer']='sign_fa_offer.js'
+ handlers['sign.withdraw_offer']='sign_withdraw_offer.js'
  if handler not in handlers:raise ValueError('No recovered runtime implementation for '+str(handler))
  bindings={step.binding_id:registry.binding(step.binding_id).to_dict() for step in plan.steps if step.binding_id}
  parameters=dict(plan.request);limit=1
@@ -83,6 +84,10 @@ def render_program(plan:NativeActionPlan,registry):
   from signing_fields import load_schema,validate_fa_offer_contract
   validate_fa_offer_contract(parameters['contract'],load_schema(registry.root))
   limit=7
+ if handler=='sign.withdraw_offer':
+  from signing_fields import load_schema,validate_pending_offer
+  validate_pending_offer(parameters,load_schema(registry.root))
+  limit=3
  if handler=='training.intensity':limit=2
  if handler=='training.patch':limit=2
  if handler=='rotation.minutes':

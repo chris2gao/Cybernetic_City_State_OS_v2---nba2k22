@@ -44,6 +44,7 @@ class NativeControlFacade:
   return self.dispatch(NativeActionRequest('COACH_APPLY_OFFENSE_POE',data,request_id))
  def sign(self,team_id,player_id,contract,*,request_id=''):return self.dispatch(NativeActionRequest('SIGN_FREE_AGENT',{'team_id':team_id,'player_id':player_id,'contract':contract},request_id))
  def submit_contract_offer(self,team_id,player_id,contract,*,request_id=''):return self.dispatch(NativeActionRequest('CONTRACT_SUBMIT_FREE_AGENT_OFFER',{'team_id':team_id,'player_id':player_id,'contract':contract},request_id))
+ def withdraw_contract_offer(self,team_id,player_id,expected_offer,*,request_id=''):return self.dispatch(NativeActionRequest('CONTRACT_WITHDRAW_PENDING_OFFER',{'team_id':team_id,'player_id':player_id,'expected_offer':expected_offer},request_id))
  def draft(self,team_id,pick_id,player_id,*,request_id=''):return self.dispatch(NativeActionRequest('DRAFT_SELECT_PROSPECT',{'team_id':team_id,'pick_id':pick_id,'player_id':player_id},request_id))
  def scout(self,team_id,player_ids,*,goal_index=None,request_id=''):
   action='SCOUT_ASSIGN_TARGETS' if goal_index is None else 'SCOUT_SET_EXISTING_GOAL_TARGETS';data={'team_id':team_id,'player_ids':player_ids}

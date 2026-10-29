@@ -1,5 +1,7 @@
 # K07 / K08 / K09 — NBA2K22终极联盟经营机制：薪资、合同、市场、财务、员工与选秀
 
+> **PC22工程checkpoint013**：[撤回指定报价](../../../research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md)是独立动作，使用完整当前预期字段指定唯一OFFERED自由球员记录，原版服务使其成为EMPTY。它不等于TEAM_DECLINED、接受或完成签约，也不证明配额退款/响应回滚。自动扫描选最高分报价及批量新秀处理器保留不可用。来源[SRC-NATIVE-OFFER-WITHDRAW-013](../SOURCES.md)，仅静态/离线工程证据。
+
 > **PC22工程checkpoint012补充**：[明确FA合同报价](../../../research/rea_native_control/FA_OFFER_NATIVE_CONTRACT.md)仅在宿主确认报价子场景且原生阶段为22 FA_SIGNING时，提交角色已决定的NORMAL/HARDSHIP、CUSTOM六薪资/总年限/选项/条款。原生验证仍可拒绝；OFFERED1不等于ACCEPTED6或SIGNED8。该静态/离线子集没有完成签约、当前存档或Save证明，也不实现自动报价策略。来源[SRC-NATIVE-FA-OFFER-012](../SOURCES.md)。
 
 > **DEV29 V3 / R05-A首轮正式研究（2026-10-21）**。范围为K07工资帽/合同与球队资金、K08市场签约/交易相关约束的首批机制。**R05-B研究球员及选秀权交易与市场规则，R05-C研究员工/球探/选秀、R05-D整合经营原料与版本缺口；R05未在本轮整体结案。**

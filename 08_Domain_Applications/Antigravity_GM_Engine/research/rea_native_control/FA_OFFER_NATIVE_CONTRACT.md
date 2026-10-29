@@ -1,5 +1,7 @@
 # Exact free-agent offer submission — checkpoint012
 
+> Checkpoint013 adds a separate [exact pending-offer withdrawal](OFFER_WITHDRAWAL_NATIVE_CONTRACT.md) discovered outside the source183-item draft. It does not make this submission handler a replacement/acceptance/final-signing action. Source183 requirements remain unchanged and are counted separately from the supplement.
+
 This is static/offline implementation against PC22 executable SHA256 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`. New live calls, game effects, UI, save persistence and independent acceptance are **NOT_RUN**. The complete M0–M5 objective remains active. Source is pinned local PE/Capstone, explicitly **NOT_REA_PROVIDER**.
 
 ## Business boundary and role inputs

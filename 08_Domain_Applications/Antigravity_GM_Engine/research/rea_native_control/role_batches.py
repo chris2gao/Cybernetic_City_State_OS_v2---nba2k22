@@ -313,6 +313,13 @@ class ExecutionAggregator:
             return
         if 'team_id' not in p or p['team_id'] not in profile.team_scope:
             raise PermissionError('TARGET_TEAM_OUTSIDE_ROLE_SCOPE')
+        if handler == 'sign.withdraw_offer':
+            if intent.action_id != 'GM.CONTRACT.OFFER_WITHDRAW' or profile.role_type != 'GM':
+                raise PermissionError('OFFER_WITHDRAW_ROLE_SCOPE_ESCAPE')
+            if profile.phase != 'FA_SIGNING_OFFERS':
+                raise PermissionError('HOST_FA_SIGNING_OFFERS_SCENE_ATTESTATION_REQUIRED')
+            from signing_fields import validate_pending_offer
+            validate_pending_offer(p,self.service.signing_schema)
         if handler == 'sign.fa_offer':
             if intent.action_id != 'GM.CONTRACT.CONTRACT_OFFER' or profile.role_type != 'GM':
                 raise PermissionError('CONTRACT_OFFER_ROLE_SCOPE_ESCAPE')
@@ -361,7 +368,7 @@ class ExecutionAggregator:
             return tuple(sorted(['player/' + str(x) for x in p['players_a'] + p['players_b']] +
                                 ['pick/' + str(x) for x in p['picks_a'] + p['picks_b']]))
         team = 'team/' + str(p['team_id'])
-        if handler == 'sign.fa_offer':
+        if handler in {'sign.fa_offer','sign.withdraw_offer'}:
             return ('player/' + str(p['player_id']), team + '/offer/' + str(p['player_id']))
         if handler in {'coach.settings', 'coach.poe'}:
             return tuple(team + '/coach/' + f for f in COACH_FIELDS[requirement])

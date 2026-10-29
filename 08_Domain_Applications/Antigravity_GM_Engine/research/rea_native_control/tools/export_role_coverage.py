@@ -29,6 +29,7 @@ def coverage():
             'native_action_id': native_id,
             'call_sequence': action['call_sequence'] if action else [],
             'source_maturity': desc['source_maturity'], 'native_maturity': desc['native_maturity'],
+            'requirement_origin': desc['requirement_origin'],
             'call_logic_available': desc['call_logic_available'],
             'role_endpoint': ('submit_decided_actions' if kind == 'EXTERNAL_REQUEST' else
                               'read_role_visible_data' if action and action['kind'] == 'READ' else
@@ -53,7 +54,9 @@ def coverage():
     return {'task_id': 'NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01',
             'status': 'IN_PROGRESS_NOT_M0_M5_COMPLETION',
             'catalog_version': service.version,
-            'source_requirement_count': len(service.requirements),
+            'source_requirement_count': len(service.source_requirement_ids),
+            'supplemental_requirement_count': len(service.supplemental_requirement_ids),
+            'total_requirement_count': len(service.requirements),
             'historical_mapping_count': service.source_mapping_count,
             'effective_mapping_count': len(service.mapping),
             'game_access_performed': False, 'requirements': rows,

@@ -1,0 +1,25 @@
+{
+  "schema_version": "nba2k22.native_requirement_supplement.v1",
+  "source_baseline_requirement_count": 183,
+  "purpose": "Append discovered omitted business operations without editing or replacing the fixed PR18 inventory",
+  "operations": [
+    {
+      "id": "GM.CONTRACT.OFFER_WITHDRAW",
+      "label": "撤回指定待处理自由球员报价",
+      "actor": [
+        "GM"
+      ],
+      "input": [
+        "team_id",
+        "player_id",
+        "expected_offer_all_registered_fields"
+      ],
+      "phase": "Host FA_SIGNING_OFFERS and Native FA_SIGNING22",
+      "effect": "Original service removes exactly one expected pending record from the active offer pool; no acceptance/signing or refund claim",
+      "baseline_status": "NATIVE_DISCOVERY_SUPPLEMENT",
+      "native_action_id": "CONTRACT_WITHDRAW_PENDING_OFFER",
+      "reason_added": "The source183 contains offer creation/accept-reject/renegotiation but no separate pending-offer withdrawal",
+      "source_contract": "OFFER_WITHDRAWAL_NATIVE_CONTRACT.md"
+    }
+  ]
+}

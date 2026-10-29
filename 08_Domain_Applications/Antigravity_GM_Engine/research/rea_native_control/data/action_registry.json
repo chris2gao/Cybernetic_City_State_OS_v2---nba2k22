@@ -4323,6 +4323,235 @@
         "known_effects": "Original validation/negotiation may reject, create pending/rejected records, change quota and response state",
         "unsupported": "No Native generator/acquire-reset/direct pool writes, direct Process, phase advance, offer replacement or automatic retry"
       }
+    },
+    {
+      "action_id": "CONTRACT_WITHDRAW_PENDING_OFFER",
+      "domain": "D02",
+      "title": "撤回指定待处理自由球员报价",
+      "decision_roles": [
+        "GM"
+      ],
+      "role_policy": {
+        "roles": [
+          "GM"
+        ]
+      },
+      "kind": "MUTATE",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "sign.withdraw_offer",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "expected_offer": {
+          "type": "object",
+          "properties": {
+            "PlayerId": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "TeamId": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "Wage": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "ForcedWage": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            },
+            "PissedOffLevel": {
+              "type": "integer",
+              "minimum": -128,
+              "maximum": 127
+            },
+            "NegotiationLevel": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 15
+            },
+            "NoTradeClause": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "RecentOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "IsCounterOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "IsExistingOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "ForcedOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "HasMadeVerbalDeal": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "Status": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 15
+            },
+            "Type": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            "Distribution": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            "OptionType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "ContractType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "IntSalary": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntTerm": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntWinner": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntRole": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntCity": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "Years": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            "IsArchived": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "IsUserInitiated": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "PlayerId",
+            "TeamId",
+            "Wage",
+            "ForcedWage",
+            "PissedOffLevel",
+            "NegotiationLevel",
+            "NoTradeClause",
+            "RecentOffer",
+            "IsCounterOffer",
+            "IsExistingOffer",
+            "ForcedOffer",
+            "HasMadeVerbalDeal",
+            "Status",
+            "Type",
+            "Distribution",
+            "OptionType",
+            "ContractType",
+            "IntSalary",
+            "IntTerm",
+            "IntWinner",
+            "IntRole",
+            "IntCity",
+            "Years",
+            "IsArchived",
+            "IsUserInitiated"
+          ],
+          "additionalProperties": false,
+          "description": "Complete registered fields from the explicitly selected current team-offer observation; Status1 Type2 archive0 and exact UIDs required"
+        }
+      },
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live/UI/save or independent acceptance",
+        "Only unarchived OFFERED FREE_AGENT status clear, distinct from rejection/acceptance/final signing",
+        "Current save/world and FA offer subscene remain trusted host attestations",
+        "No quota/refund/response rollback is certified; same-handler brackets are not atomicity proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "QUALIFY_CURRENT_PERIOD_AND_POOL",
+          "binding_id": "sign.withdraw_context"
+        },
+        {
+          "operation": "RESOLVE_AND_RECHECK_EXACT_PLAYER",
+          "binding_id": "player.by_id"
+        },
+        {
+          "operation": "WITHDRAW_EXACT_PENDING_OFFER_ONCE",
+          "binding_id": "sign.cancel_pending_offer",
+          "arguments": {
+            "original_zero_flag": 0
+          }
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pending_offer_withdrawal_contract_034.json",
+        "OFFER_WITHDRAWAL_NATIVE_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Remove one caller-selected pending FREE_AGENT offer from the active pool via original status clear",
+        "identity": "Exact Team/Player and all25 expected registered fields, unique active lookup identity",
+        "caller_values": "No target/price/term selection or rewrite; all other selected bytes and pool rows must remain equal",
+        "completion_boundary": "Same-handler native return/status only; independent observer required; no acceptance/signing/refund claim",
+        "native_scene_requirement": "Native FA_SIGNING22 plus trusted host FA_SIGNING_OFFERS",
+        "unsupported": "Other statuses/types, competitor clearing, automatic rollback/retry, direct backend business writes"
+      }
     }
   ],
   "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"

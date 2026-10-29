@@ -59,8 +59,18 @@ class RoleCapabilityService:
         self.requirements = {r['id']: r for r in inventory['operations']}
         if len(self.requirements) != len(inventory['operations']):
             raise ValueError('Duplicate requirement identity')
+        self.source_requirement_ids = frozenset(self.requirements)
+        supplemental = json.loads((self.registry.root / 'data/supplemental_requirements.json').read_text(encoding='utf8'))
+        if supplemental['source_baseline_requirement_count'] != len(self.source_requirement_ids):
+            raise ValueError('Supplement source requirement baseline mismatch')
+        for req in supplemental['operations']:
+            if req['id'] in self.requirements:
+                raise ValueError('Supplemental requirement cannot replace an existing identity')
+            self.requirements[req['id']] = req
+        self.supplemental_requirement_ids = frozenset(self.requirements) - self.source_requirement_ids
         self.mapping = {r['capability_id']: r['rea_action_id'] for r in crosswalk['known_mappings']}
         self.source_mapping_count = len(self.mapping)
+        self.mapping.update({req['id']: req['native_action_id'] for req in supplemental['operations']})
         # Preserve PR18 crosswalk as historical evidence; current Human architecture
         # requires ALL agreed package variants to use Process without FullCheck.
         for key in ('GM.TRADE.PICK_ONLY', 'GM.TRADE.MIXED', 'GM.TRADE.MULTI_PLAYER'):
@@ -83,7 +93,7 @@ class RoleCapabilityService:
         self.signing_schema = load_schema(self.registry.root)
         self.player_contract_fields = json.loads((self.registry.root / 'data/player_contract_fields.json').read_text(encoding='utf8'))
         self.version = hashlib.sha256(json.dumps({
-            'requirements': inventory, 'mapping': crosswalk,
+            'requirements': inventory, 'supplemental_requirements': supplemental, 'mapping': crosswalk,
             'actions': self.registry.catalog, 'coach': self.coach_fields, 'play_type_names': self.play_type_names,
             'player_stat_fields': self.player_stat_fields,
             'badge_fields': self.badge_fields,
@@ -117,6 +127,7 @@ class RoleCapabilityService:
             'source_role_candidates': deepcopy(req['actor']),
             'phase_requirement': req['phase'], 'known_effect': req['effect'],
             'source_maturity': req['baseline_status'],
+            'requirement_origin': 'PR18_SOURCE' if action_id in self.source_requirement_ids else 'NATIVE_DISCOVERY_SUPPLEMENT',
             'is_external_request': req['baseline_status'] == 'EXTERNAL',
             'world_editor_only': req['baseline_status'] == 'WORLD_EDIT' or bool(
                 native and native.get('kind') == 'MUTATE' and self.allowed_roles(action_id) == ['WORLD_ADMIN']),
@@ -217,6 +228,12 @@ class RoleCapabilityService:
     def get_allowed_values(self, action_id, profile):
         desc = self.describe_action(action_id, profile)
         fields = {}
+        if desc['executor_action_id'] == 'CONTRACT_WITHDRAW_PENDING_OFFER':
+            fields['expected_offer'] = {'status':'EXACT_OBSERVED_ALL_REGISTERED_FIELDS',
+                'source_dataset':'signing.team_offers', 'source_field':'offers[].fields',
+                'enums':deepcopy(self.signing_schema['enums']),
+                'required_identity':{'Status':'OFFERED','Type':'FREE_AGENT','IsArchived':0},
+                'policy':'Copy the complete selected current offer observation. No implicit fields, alternative selection, rejection/acceptance or final signing.'}
         if desc['executor_action_id'] in {'SIGN_FREE_AGENT','CONTRACT_SUBMIT_FREE_AGENT_OFFER'}:
             fields['contract'] = {'status':'RECOVERED_NATIVE_ENCODING_ONLY',
                 'enums':deepcopy(self.signing_schema['enums']),
