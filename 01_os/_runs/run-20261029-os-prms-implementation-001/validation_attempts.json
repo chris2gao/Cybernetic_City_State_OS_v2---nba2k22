@@ -1,0 +1,58 @@
+{
+  "attempts": [
+    {
+      "candidate": "185b176c97d2fea17436cbe3d46e047f1905dcb6",
+      "status": "INPUT_REJECTED",
+      "error": "candidate_outside_packet_allowlist",
+      "tests_executed": false,
+      "repair": "Use canonical /** subtree patterns; no scope expansion."
+    },
+    {
+      "candidate": "563cf3baecc27e6e5e713da3f67204972dd315fb",
+      "status": "FAILED",
+      "passed_checks": [
+        "PRMS_OFFLINE_AND_ACCOUNTING",
+        "PRMS_ISOLATED_EXAMPLE",
+        "PRMS_ACTUAL_SOURCE"
+      ],
+      "failed_check": "CONTEXT_REGRESSION",
+      "failure": "44 assertions executed; pytest exit cleanup PermissionError at legacy global pytest-current link.",
+      "not_run": [
+        "CONTEXT_STRUCTURE",
+        "MODEL_ROUTING",
+        "SCAFFOLD_SYNTAX"
+      ],
+      "raw_logs": "external prms-test-logs/managed-563cf3ba-01",
+      "repair": "Use a fresh per-invocation external --basetemp; no shared directory cleanup."
+    },
+    {
+      "candidate": "65c42a1ba0a7b58d3e572ad739f58aa59b274300",
+      "status": "HISTORICAL_SUCCESS",
+      "raw_logs": "external prms-test-logs/managed-65c42a1b-01",
+      "superseded_reason": "Added precise domain-catalog source inventories and pinned-source differential proof for B-28."
+    },
+    {
+      "candidate": "8690ed15f661181528da451d683390b9ab8ffa15",
+      "status": "HISTORICAL_SUCCESS",
+      "raw_logs": "external prms-test-logs/managed-8690ed15-01",
+      "superseded_reason": "Copy interface did not enforce host operation scope; added a failing counterexample and repair."
+    },
+    {
+      "candidate": "cbc6e6a388f8a5ceef4f82373714e38b1411d458",
+      "status": "HISTORICAL_SUCCESS",
+      "raw_logs": "external prms-test-logs/managed-cbc6e6a3-01",
+      "superseded_reason": "Added canonical copied template versions and source checkpoint completeness checks."
+    },
+    {
+      "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
+      "status": "HISTORICAL_SUCCESS",
+      "raw_logs": "external prms-test-logs/managed-e432afd2-01",
+      "superseded_reason": "Independent review identified missing ingress/receiver integration; Human clarified task-continuity closure. Added durable per-task save/resume and receiver."
+    },
+    {
+      "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+      "status": "SUCCESS",
+      "evidence": "verification_receipt.json"
+    }
+  ]
+}

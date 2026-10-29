@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:citystate:prms:records:v1",
+  "$defs": {
+    "source_ref": {
+      "type": "object", "required": ["repository", "commit", "path"],
+      "properties": {
+        "repository": {"type": "string", "minLength": 1},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {"type": "string", "minLength": 1},
+        "blob": {"type": "string", "pattern": "^[0-9a-f]{40}$"}
+      }
+    },
+    "event": {
+      "type": "object",
+      "required": ["schema_version", "event_id", "kind", "source_refs", "recorded_at", "observed_at", "source_verification"],
+      "properties": {
+        "schema_version": {"const": "prms.event.v1"},
+        "event_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,99}$"},
+        "kind": {"enum": ["HUMAN_DECISION", "OBSERVATION", "MODEL_INFERENCE", "EXECUTION_REQUEST", "EXTERNAL_RESULT", "CORRECTION", "REVIEW"]},
+        "source_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/source_ref"}},
+        "recorded_at": {"type": "string", "format": "date-time"},
+        "observed_at": {"type": "string", "minLength": 1},
+        "source_verification": {"const": "REFERENCED_NOT_INDEPENDENTLY_VERIFIED"},
+        "corrects_event_id": {"type": "string", "minLength": 1}
+      },
+      "allOf": [{"if": {"properties": {"kind": {"const": "CORRECTION"}}}, "then": {"required": ["corrects_event_id"]}}]
+    },
+    "current": {
+      "type": "object", "required": ["schema_version", "role_id", "state_version", "owner_epoch", "operation_id", "status"],
+      "properties": {
+        "schema_version": {"const": "prms.current.v1"},
+        "role_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,99}$"},
+        "state_version": {"type": "integer", "minimum": 1},
+        "owner_epoch": {"type": "integer", "minimum": 1},
+        "operation_id": {"type": "string", "minLength": 1},
+        "status": {"const": "PUBLISHED_CURRENT"}
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version":"citystate.verification_plan.v1",
+  "task_packet":"01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/task_packet.yml",
+  "checks":[
+    {"id":"SOURCE_AND_DOMAIN_PRESERVATION","argv":["@python","-B","01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/verify_merge.py","--repo-root","."],"timeout_seconds":60,"expected_exit_code":0},
+    {"id":"NBA_EXISTING_OFFLINE","argv":["@python","-B","01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/run_offline.py","nba","--repo-root","."],"timeout_seconds":300,"expected_exit_code":0},
+    {"id":"PRMS_OFFLINE","argv":["@python","-B","01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/run_offline.py","prms","--repo-root","."],"timeout_seconds":600,"expected_exit_code":0},
+    {"id":"CONTEXT_REGRESSION","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/regression.py"],"timeout_seconds":180,"expected_exit_code":0},
+    {"id":"CONTEXT_STRUCTURE","argv":["@python","-B","01_os/03_mechanisms/context_management/实现/verify_context_structure.py"],"timeout_seconds":60,"expected_exit_code":0},
+    {"id":"TASK_CONTINUITY","argv":["@python","-B","01_os/06_execution/boot/context_management/prms/continuity_example.py","--repo-root","."],"timeout_seconds":180,"expected_exit_code":0}
+  ]
+}

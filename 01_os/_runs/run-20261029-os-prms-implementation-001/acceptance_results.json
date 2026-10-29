@@ -1,0 +1,1082 @@
+{
+  "schema_version": "prms.acceptance_results.v1",
+  "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+  "command": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/boot/context_management/prms/tests",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "<new-external-temp>/pytest",
+    "--junitxml",
+    "<new-external-temp>/results.xml"
+  ],
+  "unit_test_count": 77,
+  "unit_test_outcomes": {
+    "PASS": 77
+  },
+  "scenario_count": 48,
+  "scenario_status_counts": {
+    "PASS_AT_OFFLINE_SCOPE": 30,
+    "PASS_PINNED_REAL_SOURCE_LOADING": 2,
+    "NOT_RUN_REQUIRED_SCOPE": 11,
+    "PASS_LOCAL_CROSS_REPO_FIXTURE": 3,
+    "PASS_REMOTE_PLANNING_RECONCILIATION": 1,
+    "PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE": 1
+  },
+  "all_original_acceptance_passed": false,
+  "scope_warning": "Each row passes only at its stated proof scope. Required real platform, model-window and independent review evidence remains NOT_RUN.",
+  "results": [
+    {
+      "id": "B-01",
+      "name": "G1 full within-scope discovery",
+      "covers": [
+        "RES-017",
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_catalog_frozen_baseline_counts_and_proofs",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_catalog_negatives.py::test_unregistered_mechanism_and_nonreadme_source_are_explicit",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-02",
+      "name": "NBA draft PR18 domain classification",
+      "covers": [
+        "RES-017",
+        "RES-019"
+      ],
+      "status": "PASS_PINNED_REAL_SOURCE_LOADING",
+      "required_scope": "PINNED_REAL_SOURCE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Exact PR18 P00-P12 and P04/P09 readback; source_integration.py provides separate actual-source evidence.",
+      "additional_evidence": "g1_g2_actual_catalog_and_loading_example.json"
+    },
+    {
+      "id": "B-03",
+      "name": "Empty Maths domain",
+      "covers": [
+        "RES-017",
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_series_and_domain_context.py::test_domain_source_context_never_substitutes_nba_for_empty_maths",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-04",
+      "name": "Human rejects optional G2",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_domain.py::test_formal_g2_uses_frozen_domain_body_and_matching_publication_evidence",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_domain_source_context_never_substitutes_nba_for_empty_maths",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-05",
+      "name": "Mandatory B0 independent of optional memory",
+      "covers": [
+        "RES-010",
+        "RES-011",
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_optional_rejection_and_mandatory_b0",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_catalog_context.py::test_budget_blocks_without_silent_truncation",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-06",
+      "name": "Multi-window T1 series recovery",
+      "covers": [
+        "RES-001",
+        "RES-002",
+        "RES-003",
+        "RES-010",
+        "RES-011",
+        "RES-017",
+        "RES-020"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "REAL_MODEL_WINDOW",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_recovery_package.py::test_window_package_recovers_current_task_and_detects_drift",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_state_cli.py::test_separate_process_preserves_role_and_exact_human_decision",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_task_continuity.py::test_task_a_survives_switch_to_b_and_fresh_process_workbench",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Actual new GPT/Codex session, assignment, decisions and open items compared against frozen ground truth."
+    },
+    {
+      "id": "B-07",
+      "name": "Terminal vs unknown tasks",
+      "covers": [
+        "RES-006",
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_series_and_domain_context.py::test_series_unknown_visible_terminal_requires_real_closure_and_series_decision",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-08",
+      "name": "Incremental stale propagation",
+      "covers": [
+        "RES-018",
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_external_blob_change_invalidates_only_dependent_summary",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_precise_stale_and_no_hit_scope",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-09",
+      "name": "Filtered no-hit query",
+      "covers": [
+        "RES-010",
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_precise_stale_and_no_hit_scope",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-10",
+      "name": "Concurrent owner epoch update",
+      "covers": [
+        "RES-004",
+        "RES-016"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "GITHUB_PLATFORM",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_state.py::test_takeover_and_untrusted_caller_fail_closed",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_state.py::test_real_git_two_competing_children_only_one_current",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Authorized isolated remote state ref and actual concurrent owner updates/readback."
+    },
+    {
+      "id": "B-11",
+      "name": "Stale direct writer bypass attempt",
+      "covers": [
+        "RES-004",
+        "RES-016"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "GITHUB_PLATFORM",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_state.py::test_same_principal_git_bypass_is_observable_and_never_called_enforced",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Local bypass succeeds; enforced mode refuses FENCING_NOT_ENFORCEABLE. Actual GitHub bypass denial unverified."
+    },
+    {
+      "id": "B-12",
+      "name": "Interrupted staged commit",
+      "covers": [
+        "RES-005",
+        "RES-006",
+        "RES-007",
+        "RES-012"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "GITHUB_PLATFORM",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_state.py::test_interrupted_candidate_does_not_change_current",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_github_protocol.py::test_prepare_failure_never_touches_ref",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Actual remote staged upload failure and previous CURRENT readback."
+    },
+    {
+      "id": "B-13",
+      "name": "Full memory content copy",
+      "covers": [
+        "RES-015"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_copy_physical_content_and_independent_target_current",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_task_continuity.py::test_full_copy_retains_usable_task_context_without_transferring_assignments",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-14",
+      "name": "Unapproved experience promotion",
+      "covers": [
+        "RES-008",
+        "RES-009",
+        "RES-013"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_experience_never_promotes_on_self_claimed_refs",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_promotion.py::test_only_published_owner_ref_can_supply_k2_records",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-15",
+      "name": "Core to domain upgrade",
+      "covers": [
+        "RES-013",
+        "RES-017"
+      ],
+      "status": "PASS_LOCAL_CROSS_REPO_FIXTURE",
+      "required_scope": "LOCAL_CROSS_REPO_ONLY",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_core_domain_merge.py::test_core_candidate_merge_preserves_domain_owned_09_and_no_role_state",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_catalog_context.py::test_core_inheritance_difference_and_toctou_commit_drift",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Actual local three-way inheritance tested; no existing domain master upgrade authorized.",
+      "additional_evidence": "actual local Git merge test; real domain upgrade NOT_RUN"
+    },
+    {
+      "id": "B-16",
+      "name": "GPT and Codex context recovery comparison",
+      "covers": [
+        "RES-010",
+        "RES-011",
+        "RES-018",
+        "RES-020"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "REAL_MODEL_WINDOW",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_recovery_package.py::test_window_package_recovers_current_task_and_detects_drift",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_handoff.py::test_cli_file_export_receive_and_ack_are_real_foreground_calls",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "New GPT and Codex windows and independent comprehension comparison are not substituted by processes."
+    },
+    {
+      "id": "B-17",
+      "name": "Reviewer context segregation",
+      "covers": [
+        "RES-009",
+        "RES-014"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "INDEPENDENT_REVIEW",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_reviewer_default_does_not_load_executor_narrative_or_rea_body",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Default loader excludes narrative; filesystem/open-read isolation is not enforced. Separate reviewer session required."
+    },
+    {
+      "id": "B-18",
+      "name": "Unverified REA reference",
+      "covers": [
+        "RES-009",
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_reviewer_default_does_not_load_executor_narrative_or_rea_body",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-19",
+      "name": "Human approval recorded while run pointer stale",
+      "covers": [
+        "RES-005",
+        "RES-007",
+        "RES-012"
+      ],
+      "status": "PASS_REMOTE_PLANNING_RECONCILIATION",
+      "required_scope": "REMOTE_PLANNING_WRITE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_state.py::test_durable_events_checkpoint_and_real_git_readback",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Dedicated planning_reconciliation.json records actual repaired remote commit c58af42455c55bcb0fde668aee393b2b172f9ebe; not executed by this unit runner.",
+      "additional_evidence": "planning_reconciliation.json"
+    },
+    {
+      "id": "B-20",
+      "name": "Core mutable memory is not distributed",
+      "covers": [
+        "RES-005",
+        "RES-017"
+      ],
+      "status": "PASS_LOCAL_CROSS_REPO_FIXTURE",
+      "required_scope": "LOCAL_CROSS_REPO_ONLY",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_core_domain_merge.py::test_core_candidate_merge_preserves_domain_owned_09_and_no_role_state",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Source tree/fixture contains no active state; no real domain merge performed.",
+      "additional_evidence": "actual local Git merge test; real domain upgrade NOT_RUN"
+    },
+    {
+      "id": "B-21",
+      "name": "Session claimed by self-declared model",
+      "covers": [
+        "RES-004",
+        "RES-016"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "TRUSTED_HOST",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_state.py::test_takeover_and_untrusted_caller_fail_closed",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_state.py::test_revoked_and_duplicate_host_sessions_are_rejected",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_state.py::test_test_session_issuer_cannot_authorize_remote_backend",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_copy_cannot_bypass_host_operation_scope",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_ingress.py::test_ingress_dormant_missing_host_and_forged_or_copied_identity",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_ingress.py::test_host_scopes_expiry_and_binding_change_cannot_publish",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_ingress.py::test_revoke_between_prepare_and_publish_prevents_remote_ref_update",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Production session authentication and copied-token rejection need a separately controlled ingress."
+    },
+    {
+      "id": "B-22",
+      "name": "Two competing fast-forward children",
+      "covers": [
+        "RES-005",
+        "RES-007"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "GITHUB_PLATFORM",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_state.py::test_real_git_two_competing_children_only_one_current",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_ingress.py::test_competing_ingress_child_cannot_overwrite_winning_owner",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Local Git CAS is actual; GitHub two-child race remains NOT_RUN."
+    },
+    {
+      "id": "B-23",
+      "name": "Timeout after possible ref update",
+      "covers": [
+        "RES-006",
+        "RES-007",
+        "RES-012"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "GITHUB_PLATFORM",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_github_protocol.py::test_unknown_publish_result_uses_readback_and_never_replays[timeout_after-PUBLISHED_READBACK_AFTER_UNKNOWN]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_github_protocol.py::test_unknown_publish_result_uses_readback_and_never_replays[timeout_before-PUBLISH_NOT_CONFIRMED]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_github_protocol.py::test_unknown_publish_result_uses_readback_and_never_replays[same_bytes_other_writer-PUBLISH_NOT_CONFIRMED]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_state.py::test_same_operation_retry_and_changed_payload_conflict",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Injected transport timeouts tested; no actual GitHub interruption/readback experiment."
+    },
+    {
+      "id": "B-24",
+      "name": "Dedicated role state not in Core merge tree",
+      "covers": [
+        "RES-013",
+        "RES-017"
+      ],
+      "status": "PASS_LOCAL_CROSS_REPO_FIXTURE",
+      "required_scope": "LOCAL_CROSS_REPO_ONLY",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_core_domain_merge.py::test_core_candidate_merge_preserves_domain_owned_09_and_no_role_state",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_github_protocol.py::test_default_dormant_adapter_performs_no_write",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Tracked source/fixture excludes active state; real private state repository is not provisioned.",
+      "additional_evidence": "actual local Git merge test; real domain upgrade NOT_RUN"
+    },
+    {
+      "id": "B-25",
+      "name": "Read-only model credential direct-write bypass",
+      "covers": [
+        "RES-004",
+        "RES-005",
+        "RES-016"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "GITHUB_PLATFORM",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_github_protocol.py::test_default_dormant_adapter_performs_no_write",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Read-only/stale credentials must be denied actual REST and Git ref mutations; no credentials created or inspected."
+    },
+    {
+      "id": "B-26",
+      "name": "Copy full source bytes not only references",
+      "covers": [
+        "RES-003",
+        "RES-015"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_copy_physical_content_and_independent_target_current",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_task_scoped_copy_requires_exact_host_grant_and_remains_revocable",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_invalid_source_checkpoint_prevents_target_copy_publication",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_no_host_mode_has_a_permissive_copy_default[None-None]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_no_host_mode_has_a_permissive_copy_default[None-copies1]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_no_host_mode_has_a_permissive_copy_default[tasks2-None]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_memory.py::test_no_host_mode_has_a_permissive_copy_default[tasks3-copies3]",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_ingress.py::test_every_copy_requires_exact_four_part_host_grant",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "B-27",
+      "name": "New window missing durable event",
+      "covers": [
+        "RES-011",
+        "RES-020"
+      ],
+      "status": "NOT_RUN_REQUIRED_SCOPE",
+      "required_scope": "REAL_MODEL_WINDOW",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_recovery_package.py::test_window_package_recovers_current_task_and_detects_drift",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_task_continuity.py::test_latest_durable_task_event_is_loaded_even_after_checkpoint_and_switch",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_handoff.py::test_missing_history_is_disclosed_and_blocked_context_cannot_be_exported",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Package flags missing durable history/checkpoint lag; real new model window is not tested."
+    },
+    {
+      "id": "B-28",
+      "name": "Draft PR18 source changes after catalog freeze",
+      "covers": [
+        "RES-018",
+        "RES-019"
+      ],
+      "status": "PASS_PINNED_SOURCE_DIFFERENTIAL_FIXTURE",
+      "required_scope": "PINNED_SOURCE_DIFFERENTIAL_FIXTURE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_external_blob_change_invalidates_only_dependent_summary",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "The actual-source example copies verified PR18 bytes into an isolated Git fixture and changes one P09 body. Actual PR18 remote remains untouched.",
+      "additional_evidence": "g1_g2_actual_catalog_and_loading_example.json:pinned_source_differential"
+    },
+    {
+      "id": "CAT-01",
+      "name": "7 G1 mechanism definitions discovered with exact sources",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_catalog_frozen_baseline_counts_and_proofs",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-02",
+      "name": "Seven workflow stages are discoverable",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_catalog_frozen_baseline_counts_and_proofs",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-03",
+      "name": "Seven boot manifests discovered",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_catalog_frozen_baseline_counts_and_proofs",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-04",
+      "name": "All Core registry YAMLs discovered",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_catalog_frozen_baseline_counts_and_proofs",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-05",
+      "name": "Default directory vs full body",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_optional_rejection_and_mandatory_b0",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-06",
+      "name": "Core master vs installed domain Core version",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_core_inheritance_difference_and_toctou_commit_drift",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-07",
+      "name": "Wrong domain G2 source rejected",
+      "covers": [
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_domain.py::test_new_domain_empty_catalog_identity_and_no_core_copy",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_domain_source_context_never_substitutes_nba_for_empty_maths",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-08",
+      "name": "Uninitialized G2 catalog is visible gap",
+      "covers": [
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_domain.py::test_missing_catalog_remains_uninitialized",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-09",
+      "name": "NBA P00-P12 all accounted",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_PINNED_REAL_SOURCE_LOADING",
+      "required_scope": "PINNED_REAL_SOURCE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "Actual thirteen-module frozen inventory is separately verified by source_integration.py.",
+      "additional_evidence": "g1_g2_actual_catalog_and_loading_example.json"
+    },
+    {
+      "id": "CAT-10",
+      "name": "Core mechanism vs domain P00 separation",
+      "covers": [
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-11",
+      "name": "08 source and 09 formal reference check",
+      "covers": [
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_domain.py::test_formal_g2_uses_frozen_domain_body_and_matching_publication_evidence",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-12",
+      "name": "Changed source invalidates summary only where dependent",
+      "covers": [
+        "RES-018"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_external_blob_change_invalidates_only_dependent_summary",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-13",
+      "name": "Unregistered new mechanism is reported",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_negatives.py::test_unregistered_mechanism_and_nonreadme_source_are_explicit",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-14",
+      "name": "Registered missing source fails closed",
+      "covers": [
+        "RES-017"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_negatives.py::test_unregistered_mechanism_and_nonreadme_source_are_explicit",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_catalog_context.py::test_missing_source_blocks_required_loading",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-15",
+      "name": "Filtered scope reports counts",
+      "covers": [
+        "RES-019"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_memory.py::test_precise_stale_and_no_hit_scope",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_series_unknown_visible_terminal_requires_real_closure_and_series_decision",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-16",
+      "name": "Unknown lifecycle task remains discoverable",
+      "covers": [
+        "RES-018"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_series_and_domain_context.py::test_series_unknown_visible_terminal_requires_real_closure_and_series_decision",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-17",
+      "name": "Insufficient context budget preserves B0",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_budget_blocks_without_silent_truncation",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-18",
+      "name": "Human optional choice bound to current session",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_cross_session_and_receipt_forgery_rejected",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_domain_source_context_never_substitutes_nba_for_empty_maths",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-19",
+      "name": "TOCTOU source commit drift",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_core_inheritance_difference_and_toctou_commit_drift",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    },
+    {
+      "id": "CAT-20",
+      "name": "Receipt distinguishes directory summary from full loading",
+      "covers": [
+        "RES-020"
+      ],
+      "status": "PASS_AT_OFFLINE_SCOPE",
+      "required_scope": "OFFLINE",
+      "offline_analogue": "PASS",
+      "executed_tests": [
+        {
+          "node": "test_catalog_context.py::test_catalog_frozen_baseline_counts_and_proofs",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_catalog_context.py::test_optional_rejection_and_mandatory_b0",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate",
+          "outcome": "PASS"
+        },
+        {
+          "node": "test_catalog_context.py::test_receipt_cannot_replace_choice_or_directory",
+          "outcome": "PASS"
+        }
+      ],
+      "remaining_proof": "No broader platform or independent acceptance is implied."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/_runs/run-20261023-os-evidence-feedback-loop-01/task_packet.yml",
+  "checks": [
+    {
+      "id": "FEEDBACK_CASES",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/_runs/run-20261023-os-evidence-feedback-loop-01/verify_feedback.py",
+        "FEEDBACK_CASES"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SOURCE_LINKS_AND_SCOPE",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/_runs/run-20261023-os-evidence-feedback-loop-01/verify_feedback.py",
+        "SOURCE_LINKS_AND_SCOPE"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "GUARDRAIL_NON_REGRESSION",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/_runs/run-20261023-os-evidence-feedback-loop-01/verify_feedback.py",
+        "GUARDRAIL_NON_REGRESSION"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    }
+  ]
+}
