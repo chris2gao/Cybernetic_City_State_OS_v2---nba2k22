@@ -33,13 +33,13 @@ controls:
   require_offline_reproduction: true
   require_codex_independent_review: true
   commit_only_isolated_experimental_code_and_run_evidence: true
-current_task: GREA-01
-current_task_status: GREA_01_CANDIDATE_READY_FOR_CODEX_REVIEW
+current_task: GREA_WAVE_02_A_B_C
+current_task_status: GREA_01_CANDIDATE_REQUIRES_EVIDENCE_REPAIR
 current_task_document: GREA_01_OPPONENT_GAMEPLAN.md
 roadmap_document: README.md
 review_template: GREA_HANDOFF_TEMPLATE.md
-next_task_requires_new_explicit_instruction: true
-overall_completion_status: GREA_01_COMPLETED_AWAITING_CODEX_REVIEW
+next_task_requires_new_explicit_instruction: false
+overall_completion_status: WAVE_02_A_B_C_AUTHORIZED_NOT_IMPLEMENTED
 allowlist:
   - 01_os/07_content/_runs/run-20261028-gemini-rea-001/**
   - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/GREA_01/**
@@ -58,3 +58,16 @@ verification:
   passed_count: 12
   failed_count: 0
   exit_code: 0
+
+latest_human_instruction: GEMINI_CONTINUES_BOUNDED_WAVE_THEN_CODEX_BATCH_REVIEW
+current_wave: GREA_CONTINUOUS_RESEARCH_WAVE_02.md
+wave_02_authorized_packages:
+  - W02_A_GREA01_EVIDENCE_REPAIR
+  - W02_B_GREA02_PERSONAL_DEFENSE
+  - W02_C_GREA03_PLAYBOOK
+wave_02_each_task_max_iterations: 4
+wave_02_total_max_iterations: 12
+wave_02_after_finish: STOP_FOR_CODEX_BATCH_TRIAGE
+wave_02_all_live_game_actions_authorized: false
+wave_02_further_tasks_authorized: false
+source_codex_pr19_latest_seen: bc11fa7926a7eaf390b668515e03dc8507ecb656
