@@ -56,3 +56,7 @@ Codex以`GREA_HANDOFF_TEMPLATE.md`标准逐项审查：固定候选SHA、来源/
 ## 当前任务
 
 只执行 `GREA_01_OPPONENT_GAMEPLAN.md`。Human下一步批准第二任务前停止；这不是放弃后续领域，只是减少上下文与风险。
+
+## 2026-10-29 Human 新批准的继续工作（覆盖旧“下一任务未授权”状态）
+
+Human已批准**Gemini先在独立分支多做有界研究，由Codex最后集中复核/整理**。本Run中GREA-01原候选必须先自审修正，随后可依次进行GREA-02个人防守、GREA-03 Playbook，两者仍只研究静态证据，不自称游戏实机成功；每包至多4轮内部反证循环。**最新生效的任务文件**：`GREA_CONTINUOUS_RESEARCH_WAVE_02.md`。本Wave授权高于本文件旧的“GREA-02未授权”字样，仅限W02 A/B/C；GREA-04至09及游戏状态修改仍未授权。完成三个包后Gemini停止，统一交Codex审核；Codex PR19不从此实验分支整体合并。
