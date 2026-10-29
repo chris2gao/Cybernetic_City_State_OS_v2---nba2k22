@@ -9,7 +9,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from source import GitSource, PRMSError
-from catalog import discover_g1, discover_g2
+from catalog import discover_g1, discover_g2, compare_domain_catalog
 from context import plan_context, human_choice, assemble_context
 from domain_context import plan_domain_context, choose_domain_context, assemble_domain_context, verify_domain_context
 from memory import task_series_current
@@ -106,3 +106,16 @@ def test_selected_module_bodies_and_directory_references_are_separate(tmp_path):
     receipt = assemble_domain_context(source, cr, dp, choice, budget_bytes=1_000_000)
     assert receipt["status"] == "PARTIAL"
     assert receipt["missing"][0]["status"] == "DIRECTORY_REQUIRES_EXPLICIT_EXPANSION"
+    # A real second Git snapshot changes one module body, not every module card.
+    frozen = discover_g2(source, "nba2k22")
+    (engine / "research/README.md").write_text("# Synthetic changed P09 source\n")
+    changed = commit(tmp_path)
+    differential = compare_domain_catalog(source, frozen, changed)
+    statuses = {e["module_id"]: e["status"] for e in differential["module_entries"]}
+    assert statuses["P04"] == "VALID" and statuses["P09"] == "SUMMARY_STALE"
+    assert differential["added_modules"] == [] and differential["body_loaded"] is False
+    assert not differential["action_authorized"]
+    forged = copy.deepcopy(frozen)
+    forged["candidates"][0]["module"]["docs"] = []
+    with pytest.raises(PRMSError, match="SUMMARY_STALE"):
+        compare_domain_catalog(source, forged, changed)

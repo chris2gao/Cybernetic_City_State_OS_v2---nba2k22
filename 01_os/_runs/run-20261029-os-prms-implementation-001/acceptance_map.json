@@ -204,10 +204,11 @@
   },
   "B-28": {
     "tests": [
-      "test_memory.py::test_external_blob_change_invalidates_only_dependent_summary"
+      "test_memory.py::test_external_blob_change_invalidates_only_dependent_summary",
+      "test_series_and_domain_context.py::test_selected_module_bodies_and_directory_references_are_separate"
     ],
-    "required_scope": "PINNED_REAL_SOURCE_MUTATION",
-    "remaining_proof": "Synthetic dependency change tested. No PR18 source mutation authorized or made."
+    "required_scope": "PINNED_SOURCE_DIFFERENTIAL_FIXTURE",
+    "remaining_proof": "The actual-source example copies verified PR18 bytes into an isolated Git fixture and changes one P09 body. Actual PR18 remote remains untouched."
   },
   "CAT-01": {
     "tests": [

@@ -38,6 +38,12 @@ G2 APIs are `discover_g2`, `plan_domain_context`, `choose_domain_context` and
 domain binding. Formal G2 records and 08 module candidates have distinct status.
 An absent 09 catalog remains UNINITIALIZED even when task-selected 08 sources are
 successfully read. P00 references Core governance; no domain body replaces it.
+Candidate cards retain per-document blob inventories and directory-tree
+fingerprints without reading those bodies. `compare_domain_catalog` revalidates
+the frozen catalog and compares a newly frozen source, marking only changed
+module records or body dependencies stale. It reports missing originals, added
+modules and filtered references separately. A changed repository commit alone
+does not invalidate unrelated, byte-identical module sources.
 
 Retain the expected plan and current-session choice on the host. Call
 `verify_recovery(source, receipt, expected_plan=plan, expected_choice=choice)` to

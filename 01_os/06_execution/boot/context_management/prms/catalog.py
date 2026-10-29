@@ -186,11 +186,75 @@ def discover_g2(source, domain_id):
         base = safe_path(modules.get("module_base", "").rstrip("/"))
         if not base.startswith("08_Domain_Applications/"):
             raise PRMSError("REJECTED", "module base must remain domain-owned")
+        module_ids = set()
         for item in modules.get("modules", []):
+            module_id = item.get("id", item.get("module_id"))
+            if not isinstance(module_id, str) or not module_id or module_id in module_ids:
+                raise PRMSError("REJECTED", "module identity missing or duplicated within registry")
+            module_ids.add(module_id)
+            dependencies, filtered = [], []
+            for ref in item.get("docs", []):
+                if not isinstance(ref, str) or ".." in ref.split("/"):
+                    filtered.append({"ref": ref, "reason": "OUTSIDE_DOMAIN_BUSINESS_ROOT"})
+                    continue
+                path = safe_path(base + "/" + ref.rstrip("/"))
+                if ref.endswith("/"):
+                    members = {p: meta["blob"] for p, meta in source.tree.items() if p.startswith(path + "/")}
+                    dependencies.append({"path": path + "/", "kind": "DIRECTORY_TREE_REFERENCE",
+                                         "fingerprint": digest(canonical(members)), "members": len(members)})
+                else:
+                    dependencies.append({"path": path, "kind": "FILE_TREE_REFERENCE",
+                                         "blob": source.tree.get(path, {}).get("blob")})
             result["candidates"].append({"kind": "MODULE_INDEX", "module": item,
                                           "module_base": base, "registry_source": module_proof,
+                                          "body_source_inventory": dependencies, "filtered_source_refs": filtered,
                                           "publication_status": "CANDIDATE_NOT_FORMAL_G2"})
     return result
+
+
+def compare_domain_catalog(frozen_source, catalog, observed_source):
+    """Compare actual frozen module/body dependencies, never stale every module by ref name.
+
+    Invented or legacy cards without these inventories are not silently trusted.
+    A new commit alone does not invalidate byte-identical content. No body is
+    injected and no publication or authorization state is promoted by comparison.
+    """
+    if (catalog["repository"] != frozen_source.repository or catalog["source_commit"] != frozen_source.commit
+            or observed_source.repository != frozen_source.repository):
+        raise PRMSError("REJECTED", "catalog comparison repository/commit mismatch")
+    if catalog != discover_g2(frozen_source, catalog["domain_id"]):
+        raise PRMSError("SUMMARY_STALE", "comparison requires the actual frozen catalog")
+    latest = discover_g2(observed_source, catalog["domain_id"])
+    def candidates(doc):
+        return {(c["registry_source"]["path"], c["module"].get("id", c["module"].get("module_id"))): c
+                for c in doc["candidates"]}
+    old, new = candidates(catalog), candidates(latest)
+    entries = []
+    for key, card in sorted(old.items()):
+        current = new.get(key)
+        changed = current is None or any(card[field] != current[field] for field in
+            ("module", "module_base", "body_source_inventory", "filtered_source_refs"))
+        missing = [ref["path"] for ref in card["body_source_inventory"]
+                   if ref["kind"] == "FILE_TREE_REFERENCE" and ref["blob"] is None]
+        entries.append({"module_id": key[1], "registry_path": key[0],
+                        "status": "SUMMARY_STALE" if changed else "SOURCE_MISSING" if missing else "VALID",
+                        "missing_frozen_sources": missing, "original_source_commit": frozen_source.commit,
+                        "observed_source_commit": observed_source.commit})
+    def formal_fingerprint(entry):
+        definition = {k: v for k, v in entry.items() if k not in ("source", "evidence_reads")}
+        return digest(canonical({"definition": definition, "body_blob": entry["source"]["blob"],
+            "evidence": [(p["path"], p["blob"]) for p in entry["evidence_reads"]]}))
+    formal_new = {c["id"]: c for c in latest["entries"]}
+    formal = [{"id": c["id"], "status": "VALID" if c["id"] in formal_new and
+               formal_fingerprint(c) == formal_fingerprint(formal_new[c["id"]]) else "SUMMARY_STALE"}
+              for c in catalog["entries"]]
+    return {"schema_version": "prms.domain_catalog_diff.v1", "domain_id": catalog["domain_id"],
+            "repository": frozen_source.repository, "frozen_commit": frozen_source.commit,
+            "observed_commit": observed_source.commit, "module_entries": entries, "formal_entries": formal,
+            "added_formal_entries": sorted(formal_new.keys() - {c["id"] for c in catalog["entries"]}),
+            "added_modules": [{"registry_path": p, "module_id": identifier} for p, identifier in sorted(new.keys() - old.keys())],
+            "filtered_source_ref_count": sum(len(c["filtered_source_refs"]) for c in catalog["candidates"]),
+            "action_authorized": False, "body_loaded": False}
 
 
 def compatibility(core, installed):
