@@ -56,3 +56,15 @@
 此文档自身属于`task/nba2k22-project-memory-baseline-01`候选。该分支基于仍未集成master的源刷新候选`8bdae170...`，因此**应先处理源刷新，再按OS独立审核与Human决定是否集成本知识任务**。规划分支的三份路线图/任务模板被原样移入本候选，以减少重复与碎片化；仍须核验当前master及OS签入路径。
 
 本索引本身无法证明当前本地SQLite/live游戏数据。当前任务未获得DCR授权，独立OS本地managed verify不在这里假装已经执行。
+
+## 6. 公共规划岗位轮换入口（2026-10-29）
+
+Human 已确认 `OS_PUBLIC_DEVELOPMENT_PLANNER` 为持续的逻辑岗位实例，
+实际 OS 角色仍是 `decision_architecture`，其 GPT 工作窗口可主动换代；
+Codex 负责有界工程，Human 与独立审核维持各自职责。领域具体操作方式见
+[规划模型入口第 7 节](NBA2K22_PLANNING_MODEL_ENTRY_V1.md)；跨项目连续性与
+实际 PRMS 保存/恢复边界，以最新 Core
+`01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md` 为准。
+此条只提供按需加载发现路径：不增加 G2、Role Handoff API、自动存储能力或
+第二套审批/任务状态。当前任务记录的 GitHub 分支与精确 SHA 必须重新查询。
+
