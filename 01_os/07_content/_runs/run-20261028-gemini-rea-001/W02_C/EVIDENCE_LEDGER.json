@@ -1,0 +1,73 @@
+{
+  "package": "W02_C",
+  "task": "GREA-03-PLAYBOOK-68-SLOTS",
+  "target_binary": "NBA2K22.exe",
+  "binary_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "status": "STATIC_CANDIDATE",
+  "playbook_structure": {
+    "total_size_bytes": 360,
+    "size_hex": "0x168",
+    "header_size_bytes": 88,
+    "header_hex": "0x58",
+    "slots_start_offset": "0x58",
+    "total_slots": 68,
+    "slot_element_type": "uint32 (CRC32)",
+    "empty_sentinel": "0x00000000"
+  },
+  "partitions": [
+    {
+      "name": "REGULAR",
+      "slot_start": 0,
+      "slot_end": 30,
+      "capacity": 30,
+      "byte_offset_start": "0x58",
+      "byte_offset_end": "0xD0",
+      "evidence_status": "CONFIRMED_FROM_EVIDENCE"
+    },
+    {
+      "name": "BENCH",
+      "slot_start": 30,
+      "slot_end": 50,
+      "capacity": 20,
+      "byte_offset_start": "0xD0",
+      "byte_offset_end": "0x120",
+      "evidence_status": "CONFIRMED_FROM_EVIDENCE"
+    },
+    {
+      "name": "ENDGAME",
+      "slot_start": 50,
+      "slot_end": 60,
+      "capacity": 10,
+      "byte_offset_start": "0x120",
+      "byte_offset_end": "0x148",
+      "evidence_status": "CONFIRMED_FROM_EVIDENCE"
+    },
+    {
+      "name": "FAVORITE",
+      "slot_start": 60,
+      "slot_end": 68,
+      "capacity": 8,
+      "byte_offset_start": "0x148",
+      "byte_offset_end": "0x168",
+      "evidence_status": "CONFIRMED_FROM_EVIDENCE"
+    }
+  ],
+  "native_functions": [
+    {
+      "rva": "0x7aa584",
+      "symbol_name": "Playbook_SlotCountCheck",
+      "disassembly": "cmp eax, 0x44; jne ...",
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "notes": "Validates playbook slot count against 68 (0x44)"
+    },
+    {
+      "rva": "0xf3f580",
+      "symbol_name": "Playbook_QueryContext",
+      "disassembly": "call 0x1411d5de0; call 0x14141c0e0; call 0x14136cd50; call 0x140f3f4a0",
+      "evidence_status": "CONFIRMED_FROM_BYTES",
+      "notes": "Queries playbook context by index"
+    }
+  ],
+  "commit_status": "STILL_PARTIAL",
+  "commit_notes": "Playbook memory structure, partitions, and slot indexing are 100% confirmed. In-game standalone flush mechanism without UI exit remains partial."
+}
