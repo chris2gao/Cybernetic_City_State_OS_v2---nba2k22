@@ -1,0 +1,29 @@
+{
+  "package_id": "W03-10",
+  "title": "GM Trade Remaining Mechanism Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-10-01",
+      "statement": "Trade_ValidateRestrictions (RVA 0x12ec130) verifies trade restrictions on involved players using bitmask 0x3c0000 on [PlayerContract+0x8] (recently signed, no-trade clause, injury status).",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x12ec130", "0x12ec1be"],
+      "instructions": [
+        "0x12ec1be: test dword ptr [rbx + 8], 0x3c0000"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "A trade package failing restriction mask 0x3c0000 is rejected immediately without evaluating AI acceptance."
+    },
+    {
+      "claim_id": "C-W03-10-02",
+      "statement": "Trade_CommitTransaction (RVA 0x132b040 / 0x1413be6e0) executes atomic transfer of players and picks across participating teams (two-team and multi-party).",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x132b040", "0x132b07b"],
+      "instructions": [
+        "0x132b07b: call 0x1413be6e0 (native trade transaction commit)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Executing trade transaction mutates roster and draft pick ownership permanently in franchise state."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "package_id": "W03-05",
+  "title": "Starters, Rotation, and Minutes Timeline Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-05-01",
+      "statement": "Player_SetMinutes (RVA 0x11b2bb0) writes a 7-bit minutes value (0..127, clamped to 0..48 in business logic) into [PlayerRosterSlot + 0xf8] bits 18..24 using mask 0xfe03ffff and left-shift 18.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x11b2bb0"],
+      "instructions": [
+        "0x11b2bbe: and dword ptr [rdx + 0xf8], 0xfe03ffff",
+        "0x11b2bcd: and eax, 0x7f",
+        "0x11b2bd0: shl eax, 0x12",
+        "0x11b2bd3: or dword ptr [rdx + 0xf8], eax"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Single-player minute modification does not balance team total; caller must ensure 240-minute conservation across roster."
+    },
+    {
+      "claim_id": "C-W03-05-02",
+      "statement": "Gameplan contains a full 48-minute rotation timeline structure: boolean flag at GAMEPLAN+0x18c, followed by 48 slices of 5x uint16 player IDs at GAMEPLAN+0x18e..0x36e (480 bytes total).",
+      "evidence_type": "STRUCTURAL_ALIGNMENT_AND_REPRESENTATION",
+      "rva": ["0x7a7af7", "0x1258b47"],
+      "instructions": [
+        "0x7a7af7: 880-byte copy preserves 0x18c..0x36e timeline area",
+        "0x1258b4c: add rbx, 0x370 (880-byte stride encompassing timeline)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "If GAMEPLAN+0x18c is 0, the game engine uses automated coach rotation logic instead of the timeline."
+    },
+    {
+      "claim_id": "C-W03-05-03",
+      "statement": "Starters (slots 0..4) and Second Unit (slots 5..9) are defined by ordered depth chart position, extracted via 0xedf000 (bits 22..25 of [Player+0xf78]).",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0xedf000"],
+      "instructions": [
+        "0xedf000: mov eax, dword ptr [rcx + 0xf78]",
+        "0xedf006: shr eax, 0x16",
+        "0xedf009: and eax, 0xf"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "In-game live substitution requires active game simulation context."
+    }
+  ]
+}

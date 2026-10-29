@@ -1,0 +1,45 @@
+{
+  "package_id": "W03-11",
+  "title": "Player PlayTypes, Tendencies, and Attributes Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-11-01",
+      "statement": "Player 4 PlayTypes are packed as 4 consecutive 4-bit nibbles in [Player + 0x168] bits 0..15, modified by micro-setters 0xf1e370, 0xf1e390, 0xf1e3b0, and 0xf1e3d0.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0xf1e370", "0xf1e390", "0xf1e3b0", "0xf1e3d0"],
+      "instructions": [
+        "0xf1e370: and dword ptr [rcx+0x168], 0xfffffff0; and edx, 0xf; or dword ptr [rcx+0x168], edx",
+        "0xf1e390: and dword ptr [rcx+0x168], 0xffffff0f; and edx, 0xf; shl edx, 4; or dword ptr [rcx+0x168], edx",
+        "0xf1e3b0: and dword ptr [rcx+0x168], 0xfffff0ff; and edx, 0xf; shl edx, 8; or dword ptr [rcx+0x168], edx",
+        "0xf1e3d0: and dword ptr [rcx+0x168], 0xffff0fff; and edx, 0xf; shl edx, 0xc; or dword ptr [rcx+0x168], edx"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Values above 12 (0xc) map to non-standard or unused tactical packages."
+    },
+    {
+      "claim_id": "C-W03-11-02",
+      "statement": "Player_SetStatUI (RVA 0x990a10) handles 155 attributes and tendencies via a jump table bounded by cmp ebp, 0x9b.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x990a10", "0x990a2a", "0x990a3d"],
+      "instructions": [
+        "0x990a2a: cmp ebp, 0x9b",
+        "0x990a3d: mov r9d, dword ptr [rcx + rbp*4 + 0x991f08]; jmp r9"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Indices above 0x9b trigger immediate branch to return/error."
+    },
+    {
+      "claim_id": "C-W03-11-03",
+      "statement": "Player_SetBadge (RVA 0x992d40) accepts badge ID (edx) and level 0..4 (r8b), where 0 removes the badge.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x992d40", "0x992d5d"],
+      "instructions": [
+        "0x992d5d: call 0x14097c0c0",
+        "0x992d62: cmp al, bpl"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "A badge level above 4 is clamped to Hall of Fame."
+    }
+  ]
+}

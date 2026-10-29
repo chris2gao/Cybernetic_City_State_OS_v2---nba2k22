@@ -1,0 +1,45 @@
+{
+  "package_id": "W03-07",
+  "title": "GM Contract Full Chain and Transaction Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-07-01",
+      "statement": "Contract_ProcessOffer (RVA 0x12bc4a0) consumes a 48-byte ContractOfferContext: player ID at +0x0 (resolved via 0x140f3f580), team ID at +0x2 (resolved via 0x140f40eb0), annual salaries at +0x8..0x1c, and contract/option flags at +0x20.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x12bc4a0", "0x12bc4eb", "0x12bc505", "0x12bc510"],
+      "instructions": [
+        "0x12bc4eb: movzx ecx, ax; call 0x140f3f580 (resolve Player*)",
+        "0x12bc505: movzx ecx, ax; call 0x140f40eb0 (resolve Team*)",
+        "0x12bc510: mov r8d, dword ptr [rsi + 0x20] (contract flags)",
+        "0x12bc514: bt r8d, 0xc (test option bit 12)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "A submitted offer enters PENDING state (0x100000); it does NOT immediately mean SIGNED. Player AI must accept before execution completes."
+    },
+    {
+      "claim_id": "C-W03-07-02",
+      "statement": "Contract_CancelOffer (RVA 0x12b3840) cancels a pending contract offer by clearing bit 21 and marking status with 0x1c0000 (WITHDRAWN).",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x12b3840", "0x12b3855", "0x12b385c"],
+      "instructions": [
+        "0x12b3855: and dword ptr [rsi + 0x20], 0xffdfffff",
+        "0x12b385c: or dword ptr [rsi + 0x20], 0x1c0000"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Once an offer is accepted by the player, it cannot be withdrawn via 0x12b3840."
+    },
+    {
+      "claim_id": "C-W03-07-03",
+      "statement": "Contract_ProcessOptions (RVA 0x12bf5a0) executes during Offseason Phase 0x16 (22 decimal) to decide Team Options and Player Options.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x12bf5a0", "0x12bf5cc", "0x12bf5e6"],
+      "instructions": [
+        "0x12bf5cc: call 0x140edf010 (get season phase)",
+        "0x12bf5e6: cmp eax, 0x16 (Phase 22: Options Phase)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Team options cannot be unilaterally executed during regular season gameplay."
+    }
+  ]
+}

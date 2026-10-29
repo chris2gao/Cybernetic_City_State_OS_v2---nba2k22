@@ -1,0 +1,48 @@
+{
+  "package_id": "W03-00",
+  "title": "Wave-02 Evidence Credibility Audit and Native Commit Pipeline Discovery",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-00-01",
+      "statement": "18 Personal Defense Fields: 32-bit Word 1 default 0x00280000 and 11-bit Word 2 mask 0x7FF are hard binary facts, but individual subfield bit-allocation is a deduced layout from UI ordering, not verified by micro-setters.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x1465285", "0x146527e", "0x14652c0"],
+      "instructions": [
+        "0x1465285: mov dword ptr [rax+4], 0x280000",
+        "0x146527e: and dword ptr [rax+8], 0xfffff800",
+        "0x14652c0: mov rax, [rdx]; mov [rcx], rax; mov edx, [rdx+8]; mov [rcx+8], edx"
+      ],
+      "verification_status": "AUDITED_AND_QUALIFIED",
+      "falsification_note": "No individual 2-bit or 3-bit micro-setter exists; 12 bytes are copied via 2 instructions, so it is not a hardware atomic store."
+    },
+    {
+      "claim_id": "C-W03-00-02",
+      "statement": "Playbook 68 Slots: 360-byte PLAYBOOKDATA and 68-slot limit are hard binary facts (0x7aa584: cmp eax, 0x44; 0x149ae80 reads assigned play count at [PlaybookManager+0x7fc]), while the 30/20/10/8 division is gameplay UI organization.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x7aa584", "0x149ae80", "0x141017910"],
+      "instructions": [
+        "0x7aa57f: call 0x14149ae80",
+        "0x7aa584: cmp eax, 0x44",
+        "0x149ae84: call 0x141017910",
+        "0x149ae97: mov eax, dword ptr [rax+0x7fc]"
+      ],
+      "verification_status": "PROVEN_HARD_LIMIT",
+      "falsification_note": "The loop does not contain four separate partition checks; 68 is the global capacity threshold."
+    },
+    {
+      "claim_id": "C-W03-00-03",
+      "statement": "Gameplan Native Commit Pipeline: UI commit at 0x7a7aab sets [rbx]=1 (customized flag), sets [r15+4]=1 (dirty flag), packs 880-byte gameplan into stack buffer, and calls 0x1414af790 which dispatches task 0xf7ba8674 via 0x1414c1060.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x7a7aab", "0x7a7ab0", "0x7a7b80", "0x14af790", "0x14af7fe"],
+      "instructions": [
+        "0x7a7aab: mov word ptr [rbx], 1",
+        "0x7a7ab0: mov dword ptr [r15+4], 1",
+        "0x7a7b80: call 0x1414af790",
+        "0x14af7fe: call 0x1414c1060 (ecx = 0xf7ba8674)"
+      ],
+      "verification_status": "PROVEN_COMMIT_PIPELINE",
+      "falsification_note": "In-memory changes take effect immediately on Gameplan struct; 0x14af790 is required only to synchronize running live simulation workers."
+    }
+  ]
+}

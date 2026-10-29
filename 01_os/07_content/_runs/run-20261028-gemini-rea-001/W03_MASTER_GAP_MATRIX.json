@@ -1,0 +1,3163 @@
+{
+  "schema_version": "W03_MASTER_GAP_MATRIX_V1",
+  "date": "2026-10-29",
+  "codex_baseline_sha": "6151ef5d484914edcec2fbcfcf3bcce83a848907",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "total_requirements": 184,
+  "items": [
+    {
+      "requirement_id": "COACH.PLAYBOOK.OPPONENT_PLAN_FIND",
+      "group_id": "COACH_OPPONENT_GAMEPLAN",
+      "meaning": "读取/创建指定对手的Gameplan",
+      "existing_action_id": "COACH_ENSURE_OPPONENT_GAMEPLAN",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W02_A",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1244230, 0x12f21a0, 0x7a7aab",
+      "candidate_symbol": "EnsureOpponentGameplan, FindOpponentGameplan, GameplanUI_Commit",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_CANDIDATE_CODEC_AND_DOWNGRADED_COMMIT_SCOPE"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.OPPONENT_PLAN_EDIT",
+      "group_id": "COACH_OPPONENT_GAMEPLAN",
+      "meaning": "编辑指定对手完整Gameplan",
+      "existing_action_id": "COACH_SET_GAMEPLAN",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W02_A",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1244230, 0x12f21a0, 0x7a7aab",
+      "candidate_symbol": "EnsureOpponentGameplan, FindOpponentGameplan, GameplanUI_Commit",
+      "remaining_gaps": [
+        "Creating an opponent plan and applying a projection does not restore full persistent Gameplan commit",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_CANDIDATE_CODEC_AND_DOWNGRADED_COMMIT_SCOPE"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.PRESS_ON",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "持球压力",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.PRESS_OFF",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "无球压力",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.FORCE_DIRECTION",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "逼迫进攻方向",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.ONBALL_SCREEN",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "防有球掩护策略",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.HEDGE",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "掩护人防守策略",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.OFFBALL_SCREEN",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "无球掩护防守",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.POST_DEFENSE",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "背身防守策略",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.DOUBLE_PERIMETER",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "外线包夹",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.DOUBLE_POST",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "低位包夹",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.SCREEN_ONBALL5",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "Center后缀有球策略",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.HEDGE5",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "Center后缀延阻策略",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.SWITCH_RULE",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "换防规则",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.ONBALL_HELP",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "持球协防",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.SCREEN_HELP",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "掩护协防",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.EXTEND_PRESSURE",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "延伸防守压力",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.TAG_ON_ROLL",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "顺下补位",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.STAY_ATTACHED",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "保持盯防",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.DEFENSE.PRE_ROTATE",
+      "group_id": "PERSONAL_DEFENSE_18",
+      "meaning": "提前轮转",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_B",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x1465285, 0x146527e, 0x14652c0",
+      "candidate_symbol": "Matchup_Init, Matchup_Mask, GAMEPLAN_InsertOrUpdateMatchup",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_DEFENSE_18_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.PLAYBOOK_SELECT",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "球队战术手册替换",
+      "existing_action_id": "COACH_REPLACE_PLAYBOOK",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored",
+        "No runtime handler"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_SLOT_READ",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "读取4分区共68个战术槽",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_ADD",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "在指定分区/槽位添加战术",
+      "existing_action_id": "COACH_ADD_REPLACE_PLAY",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored",
+        "No runtime handler"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_REPLACE",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "替换指定已存在的战术",
+      "existing_action_id": "COACH_ADD_REPLACE_PLAY",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored",
+        "No runtime handler"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_REMOVE",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "删除指定战术槽",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_SWAP",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "调换两条战术顺序",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_REGULAR",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "指定常规区战术内容",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_BENCH",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "指定替补区战术内容",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_ENDGAME",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "指定末段区战术内容",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.BOOK_FAVORITE",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "指定偏好区战术内容",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.PLAY_POOL_LIST",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "获取当前可选战术池与12类分类",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "READ_RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.PLAY_PREVIEW",
+      "group_id": "PLAYBOOK_68_SLOTS",
+      "meaning": "读取指定战术预览/说明",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W02_C",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x7aa584, 0xf3f580",
+      "candidate_symbol": "Playbook_SlotCountCheck, Playbook_QueryContext",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "SELECTIVE_PORT_PLAYBOOK_68_CODEC"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.POE_O1",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "进攻重点POEOffense",
+      "existing_action_id": "COACH_APPLY_OFFENSE_POE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.POE_O2",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "进攻节奏倾向POEOffense2",
+      "existing_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.POE_O3",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "进攻篮板与退防POEOffense3",
+      "existing_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.POE_D1",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "防守重点POEDefense",
+      "existing_action_id": "COACH_APPLY_DEFENSE_POE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PRIOR_LIVE_SUCCESS",
+      "source_maturity": "LIVE_EXACT",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.POE_D2",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "防守对抗取向POEDefense2",
+      "existing_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.POE_D3",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "防守篮板与转换POEDefense3",
+      "existing_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.RUN_PLAY",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置RunPlayTendency",
+      "existing_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "LIVE_EXACT",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.ZONE_USAGE",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置ZoneUsage",
+      "existing_action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.BENCH_DEPTH",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置BenchDepth",
+      "existing_action_id": "COACH_SET_ROTATION_POLICY",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.BENCH_USE",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置BenchUtilization",
+      "existing_action_id": "COACH_SET_ROTATION_POLICY",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.PREFERRED_SYSTEM",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "教练偏好体系",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.ACTIVE_SYSTEM",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "球队当前体系",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.HELP_DEFENSE",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "协防倾向",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.TEMPO",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "球队比赛节奏参数",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.ACE_MODE",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设定ACE智能战术开关/模式",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.STRATEGY.COACH_AUTOMATION",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "教练自动战术/轮换控制",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.FREELANCE_1",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置第一Freelance槽",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.FREELANCE_2",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置第二Freelance槽",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.FREELANCE_3",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置第三Freelance槽",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.PLAYBOOK.FREELANCE_4",
+      "group_id": "FREELANCE_AND_COACH_SETTINGS",
+      "meaning": "设置第四Freelance槽",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_04",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x146eaa0, 0x131f110, 0x140f3f580",
+      "candidate_symbol": "CoachData_ApplyGameplan, Team_ApplyCoachSettings, Play_ResolveById",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_COACH_SETTINGS_CODEC_AND_POES"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.ROTATION_ORDER",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "安排轮换先后顺序",
+      "existing_action_id": "TEAM_SET_MINUTES_ROTATION",
+      "kind": "MUTATE",
+      "codex_native_maturity": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.PLAYER_MINUTES",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "设置某球员分钟数",
+      "existing_action_id": "COACH_ROTATION_SET_PLAYER_MINUTES",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "No live test, independently observed effect, UI refresh, game simulation or Save/Reload evidence",
+        "Only active delegate profiles with recovered generic setter, allow predicate and team-change thunk are accepted",
+        "Existing TEAM resolver exposes15 roster slots; additional roster representations are not covered",
+        "A set of exact minutes can have a non240 sum; executor neither validates a basketball strategy nor silently balances it"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.STARTING_FIVE",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "设置五个首发",
+      "existing_action_id": "TEAM_SET_STARTERS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.SECOND_UNIT",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "指定替补阵容",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.PLAYER_ROLE",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "指定球员上场角色",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.SITUATIONAL_LINEUPS",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "配置情景五人组",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.INJURY_SUBSTITUTION",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "伤病或缺阵触发轮换替代",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.MATCHUP_ASSIGN",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "指定对手球员/防守者关系",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.LIVE_SUBSTITUTION",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "比赛暂停时指定换人",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "COACH.ROTATION.LIVE_CALL_PLAY",
+      "group_id": "STARTERS_AND_ROTATION",
+      "meaning": "比赛中指定某条已装载战术",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_05",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x11b2bb0, 0xedf000, 0x7a7af7",
+      "candidate_symbol": "Player_SetMinutes, Player_GetRosterSlot, Rotation_TimelineArea",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_ROTATION_TIMELINE_CODEC_AND_240MIN_CONSERVATION"
+    },
+    {
+      "requirement_id": "TRAIN.TEAM_SCHEDULE",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "指定球队日期训练完整配置",
+      "existing_action_id": "TRAIN_TEAM_SET_SCHEDULE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.TEAM_INTENSITY",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "仅修改该日训练强度",
+      "existing_action_id": "TRAIN_TEAM_SET_INTENSITY",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.TEAM_FOCUS",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "设置球队训练重点比例",
+      "existing_action_id": "TRAIN_TEAM_PATCH_FOCUS_RAW",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Raw values only; UI units, per-slot labels and scene effects remain unverified",
+        "No new live game test or Save/Reload evidence"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.TEAM_PROFILE",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "设置训练类型/子项目",
+      "existing_action_id": "TRAIN_TEAM_PATCH_PROFILE_RAW",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Raw values only; UI units, per-slot labels and scene effects remain unverified",
+        "No new live game test or Save/Reload evidence"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.HOME_AWAY_INTENSITY",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "设置主客场训练强度",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.AUTOMATION",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "训练自动化开关",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.B2B_REST",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "背靠背前后休息",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.PLAYER_FOCUS",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "指定球员训练重点/类型",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.PLAYER_INTENSITY",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "指定球员训练强度或覆盖",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.PLAYER_RECOVERY",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "为指定球员配置康复重点",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.TEAM_RECOVERY",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "配置球队康复策略",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.MENTOR_ASSIGN",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "安排球员导师关系",
+      "existing_action_id": "TRAIN_PLAYER_MENTOR_ASSIGNMENT",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Manager/list/UID mapping and complete arguments unresolved",
+        "Mentee identity/list slot arguments and target mentor placement need recovery",
+        "Current-team/global manager dependencies and pointer-array schema not closed",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.MENTOR_REMOVE",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "取消导师关系",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "TRAIN.HEALTH_INFO",
+      "group_id": "TRAINING_AND_DEVELOPMENT",
+      "meaning": "查询体力/疲劳/伤病进度",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "READ_RESEARCH",
+      "assigned_wave": "W03_06",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x13256a0, 0x124f0f0, 0x125ed70",
+      "candidate_symbol": "Team_SetTrainingSchedule, Mentor_AppendPair, Mentor_RemovePair",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRAINING_MENTORSHIP_CODEC_AND_10PAIR_LIMIT"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.FA_SIGN",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "签约指定自由球员",
+      "existing_action_id": "SIGN_FREE_AGENT",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Explicit terms/enums encode privately, but fresh-offer lifecycle and safe origin/mode/context remain unqualified",
+        "Offer return1 and ACCEPTED status do not prove completed signing; independent roster/contract/readback and deferred completion remain unresolved",
+        "Fresh proposal initialization/default enum values and flag meanings are not fully closed",
+        "Offer accepted/pending is not identical to completed signing",
+        "Commit preconditions, exact return and offer-status flow require caller closure; do not bypass OfferContract",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.EXTEND",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "指定球员续约",
+      "existing_action_id": "RE_SIGN_PLAYER",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Extension signing type and eligible phase/counterparty status unresolved",
+        "Fresh proposal initialization/default enum values and flag meanings are not fully closed",
+        "Offer accepted/pending is not identical to completed signing",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.RE_SIGN",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "原队重新签约",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.CONTRACT_OFFER",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "发出指定合同报价",
+      "existing_action_id": "CONTRACT_SUBMIT_FREE_AGENT_OFFER",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "No new live call, UI, persistence or independent acceptance",
+        "Native period22 is checked; FA offer substate/current save/world are host attestations, not Native identity detection",
+        "Only fresh available-player NORMAL/HARDSHIP CUSTOM offers; extensions, other periods/types/distributions and replacing existing offers remain unqualified",
+        "OfferContract can update negotiation/player-response/quota state; return/status is not final signing",
+        "Same-handler terms/record/contract-subset brackets are not atomicity or independent completion proof"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.OFFER_ACCEPT_OR_REJECT",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "对已发报价接受/拒绝",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.TEAM_OPTION",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "执行球队选项",
+      "existing_action_id": "CONTRACT_OPTION_ACTION",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Need native option-marking setter before ProcessMarkedOptions; do not edit option memory directly",
+        "This processes marked options; exact mark-setting entry and full ABI remain unresolved",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.PLAYER_OPTION",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "执行球员选项",
+      "existing_action_id": "CONTRACT_OPTION_ACTION",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Need native option-marking setter before ProcessMarkedOptions; do not edit option memory directly",
+        "This processes marked options; exact mark-setting entry and full ABI remain unresolved",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.QUALIFYING_OFFER",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "向指定RFA提供资质报价",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.MATCH_RFA",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "匹配指定报价",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.RENOUNCE_RIGHTS",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "放弃指定自由球员权利",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.CAP_HOLD_RELEASE",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "解除指定工资帽保留额",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.HARDSHIP_SIGN",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "按明确条款执行困难合同",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.TWO_WAY_SIGN",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "双向合同签约",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.ROOKIE_SIGN",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "新秀合同签约",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.CONTRACT_EDIT",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "管理员编辑合同存值",
+      "existing_action_id": null,
+      "kind": "WORLD_EDIT",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "WORLD_EDIT",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.CONTRACT_RENEGOTIATE",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "修改/替换待处理报价参数",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.CONTRACT.OFFER_WITHDRAW",
+      "group_id": "GM_CONTRACT_COMPLETION",
+      "meaning": "撤回指定待处理自由球员报价",
+      "existing_action_id": "CONTRACT_WITHDRAW_PENDING_OFFER",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "NATIVE_DISCOVERY_SUPPLEMENT",
+      "assigned_wave": "W03_07",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12bc4a0, 0x12b3840, 0x12bf5a0",
+      "candidate_symbol": "Contract_ProcessOffer, Contract_CancelOffer, Contract_ProcessOptions",
+      "remaining_gaps": [
+        "No new live/UI/save or independent acceptance",
+        "Only unarchived OFFERED FREE_AGENT status clear, distinct from rejection/acceptance/final signing",
+        "Current save/world and FA offer subscene remain trusted host attestations",
+        "No quota/refund/response rollback is certified; same-handler brackets are not atomicity proof"
+      ],
+      "codex_review_action": "REVIEW_CONTRACT_OFFER_CODEC_AND_PENDING_STATE_MACHINE"
+    },
+    {
+      "requirement_id": "GM.ROSTER.LIST_MOVE",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "指定球员进入/离开球队有效名单",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.STARTER_SET",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "指定首发五人",
+      "existing_action_id": "TEAM_SET_STARTERS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.BENCH_ASSIGN",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "指定替补及候补",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.POSITION_ASSIGN",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "指定球员位置或副位置",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.ROLE_ASSIGN",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "指定球队角色/定位",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.ROSTER_SLOT_SWAP",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "名单槽位调换",
+      "existing_action_id": "TEAM_SET_ROSTER_ASSIGNMENT",
+      "kind": "MUTATE",
+      "codex_native_maturity": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.G_LEAGUE_ASSIGN",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "下放G League",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.G_LEAGUE_RECALL",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "召回G League球员",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.INACTIVE_SET",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "设置激活/非激活状态",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.WAIVE",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "裁员/放弃指定球员",
+      "existing_action_id": "RELEASE_WAIVE_PLAYER",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Eight-argument waiver service found; flags and public wrapper not closed; no guessed bypass",
+        "Business modes/reason/validation flag semantics and correct public wrapper must be recovered; do not default a validation bypass",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.TEAM_ASSIGN_CONTRACT",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "基于已同意合同指定归属",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.ROSTER.ROSTER_LEGALITY_READ",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "读取名单占用与限制",
+      "existing_action_id": "READ_TEAM_ROSTER_BASIC",
+      "kind": "READ",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "READ_SUBSET",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.STAFF_POOL_READ",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "查看可聘员工池",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "READ_RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.HIRE",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "雇用指定员工",
+      "existing_action_id": "TEAM_MANAGE_STAFF",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Staff offer struct recovered; hire/fire lifecycle and full ABI incomplete",
+        "Staff signing object44 bytes recovered; full ABI and proposal lifecycle unresolved",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.FIRE",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "解雇指定员工",
+      "existing_action_id": "TEAM_MANAGE_STAFF",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Staff offer struct recovered; hire/fire lifecycle and full ABI incomplete",
+        "Staff signing object44 bytes recovered; full ABI and proposal lifecycle unresolved",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.EXTEND",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "续聘指定员工",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.REASSIGN",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "调整员工岗位",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.REPLACE_HEAD_COACH",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "更换球队主教练",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.STAFF_BUDGET_SET",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "设置员工预算（如可用）",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.STAFF.STAFF_ATTRIBUTE_SET",
+      "group_id": "STAFF_AND_ROSTER",
+      "meaning": "管理员调整职员能力字段",
+      "existing_action_id": "STAFF_SET_ATTRIBUTE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "REFERENCE_ONLY",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_08",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12d0340, 0x1327590, 0xedf000",
+      "candidate_symbol": "Team_ReleasePlayerInternal, Staff_ValidateRoleAndDispatch, Player_GetRosterSlot",
+      "remaining_gaps": [
+        "Staff/Coach raw layouts exist but no qualified arbitrary staff-attribute native mutator is recovered",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_STAFF_ROSTER_CODEC_AND_ROLE_DISPATCH_8_TO_20"
+    },
+    {
+      "requirement_id": "GM.SCOUT.PROSPECT_LIST",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询本届选秀候选人",
+      "existing_action_id": "SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS",
+      "kind": "READ",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "READ_SUBSET",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.PROSPECT_PROFILE",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询候选球员公开资料",
+      "existing_action_id": "SCOUT_READ_PROSPECT_INFO",
+      "kind": "READ",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "READ_SUBSET",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Visible ability estimate/presentation getters unresolved; only public identity and raw public-ranking arrays available"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.GOAL_REPLACE",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "替换已有球探目标槽",
+      "existing_action_id": "SCOUT_SET_EXISTING_GOAL_TARGETS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "LIVE_EXACT",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.GOAL_APPEND",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "新增球探任务",
+      "existing_action_id": "SCOUT_ASSIGN_TARGETS",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC_REJECTION_OBSERVED",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.SCOUT_EXECUTE",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "执行指定已配置球探行程",
+      "existing_action_id": "SCOUT_EXECUTE_CURRENT_TRIP",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.SCOUT_PROGRESS",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询考察进度",
+      "existing_action_id": "SCOUT_READ_PROGRESS_RAW",
+      "kind": "READ",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "READ_SUBSET",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.SCOUT_REPORT",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询已获得球探报告",
+      "existing_action_id": "SCOUT_READ_PROGRESS_REPORT",
+      "kind": "READ",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Game report text and revealed-rating/disclosure presentation not mapped; raw team scouting progress only"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.SCOUT_PRIORITY",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "指定球探任务优先级",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.SCOUT_AUTOMATION",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "指定球探自动/手动",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.SCOUT_STAFF_ASSIGN",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "指派指定球探人员",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.WORKOUT_ASSIGN",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "安排新秀试训",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.MEDICAL_REPORT",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "读取候选体测/体检",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.BIG_BOARD_VIEW",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询选秀大名单/自定义次序",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.SCOUT.BIG_BOARD_SET",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "按给定顺位更新球队选秀名单",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.CURRENT_PICK_READ",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询当前大会选秀权",
+      "existing_action_id": "READ_CURRENT_DRAFT_PICK",
+      "kind": "READ",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.DRAFT_SPECIFIED",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "使用当前指定选秀权选择指定候选",
+      "existing_action_id": "DRAFT_SELECT_PROSPECT",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.PICK_OWNER_READ",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询选秀权当前所有者",
+      "existing_action_id": "DRAFT_STAGE_REQUIRED_CONTEXT",
+      "kind": "READ",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "READ_SUBSET",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Current UI scene still requires next-task scene qualification; this only reads current native draft record"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.PICK_RIGHTS_TRANSFER",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "执行明确的选秀权交易权属",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.LOTTERY_READ",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "查询选秀顺位及抽签结果",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.DRAFT_RESULT_READ",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "获取已完成的选秀结果",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.DRAFT_CLASS_SET",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "选择使用指定Draft Class",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.DRAFT_CLASS_IMPORT",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "导入指定选秀班",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.DRAFT_CLASS_EDIT",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "管理员调整候选球员档案",
+      "existing_action_id": null,
+      "kind": "WORLD_EDIT",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "WORLD_EDIT",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.DRAFT.DRAFT_RIGHTS_STASH",
+      "group_id": "DRAFT_SCOUT_AND_PICK_RIGHTS",
+      "meaning": "指定海外球员签权/留队安排",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_09",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x92a6a0, 0xec9610, 0x1261d40",
+      "candidate_symbol": "Draft_GetCurrentSelection, Draft_SelectProspect, Scout_ExecuteTrip",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_DRAFT_SCOUT_CODEC_AND_PICK_PROTECTIONS"
+    },
+    {
+      "requirement_id": "GM.TRADE.EXECUTE_AGREED",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "直接执行已同意交易包",
+      "existing_action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "LIVE_EXACT",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.MULTI_PLAYER",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "多球员资产包交易",
+      "existing_action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.PICK_ONLY",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "选秀权交换",
+      "existing_action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.MIXED",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "球员加选秀权混合交换",
+      "existing_action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "STATIC",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.THREE_TEAM",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "三方交易指定资产流",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.TRADE_BLOCK_ADD",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "球员/签权列入交易货架",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.TRADE_BLOCK_REMOVE",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "移出交易货架",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.PICK_ASSIGNMENT",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "指定选秀权权属操作",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.FINDER_READ",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "读取游戏的Trade Finder候选",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "GM.TRADE.TRADE_HISTORY_READ",
+      "group_id": "GM_TRADE_REMAINING",
+      "meaning": "查看实际成交记录",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "READ_RESEARCH",
+      "assigned_wave": "W03_10",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0x12ec130, 0x132b040, 0x1413be6e0",
+      "candidate_symbol": "Trade_ValidateRestrictions, Trade_CommitWrapper, Trade_CommitTransaction",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_TRADE_PACKAGE_CODEC_AND_SALARY_MATCHING_RULES"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.ATTR_SET",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置单项能力",
+      "existing_action_id": "PLAYER_SET_ATTRIBUTE",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.ATTR_BATCH",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "批量设置已给能力键",
+      "existing_action_id": "PLAYER_PATCH_ATTRIBUTES",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.TENDENCY_SET",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置单项倾向",
+      "existing_action_id": "PLAYER_SET_TENDENCY",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.TENDENCY_BATCH",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "批量设置倾向",
+      "existing_action_id": "PLAYER_PATCH_TENDENCIES",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.BADGE_SET",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置球员徽章等级",
+      "existing_action_id": "PLAYER_SET_BADGE",
+      "kind": "WORLD_EDIT",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new real-game invocation, independent observer, UI, simulation or Save/Reload evidence",
+        "Host must attest the current league editor scene and exact save/process context; a generic delegate footprint alone is not scene authorization",
+        "Internal technical flag availability and UI labels per mode remain unverified; technical editor selection is explicit",
+        "Modifier provenance/lifetime is not asserted; current bounded snapshots and Native read-only Getter comparisons qualify only this operation",
+        "Any asynchronous change, failed assertion preflight, mismatch or interruption defers or leaves UNKNOWN without retry or rollback"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.BADGE_REMOVE",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "删除指定徽章",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.PLAY_TYPE_1",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置球员战术类型1槽",
+      "existing_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live invocation, independently observed effect, UI, CPU selection or Save/Reload evidence",
+        "Direct-call scan found no slot1 caller; actual startup LEA references install these dedicated setters in property descriptors",
+        "No parent/child editor copy or refresh is used; scene-specific cache behavior and later AI overrides remain unverified",
+        "Existing TEAM resolver covers15 roster slots; technical mutability never grants a persona permission"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.PLAY_TYPE_2",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置球员战术类型2槽",
+      "existing_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live invocation, independently observed effect, UI, CPU selection or Save/Reload evidence",
+        "Direct-call scan found no slot1 caller; actual startup LEA references install these dedicated setters in property descriptors",
+        "No parent/child editor copy or refresh is used; scene-specific cache behavior and later AI overrides remain unverified",
+        "Existing TEAM resolver covers15 roster slots; technical mutability never grants a persona permission"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.PLAY_TYPE_3",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置球员战术类型3槽",
+      "existing_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live invocation, independently observed effect, UI, CPU selection or Save/Reload evidence",
+        "Direct-call scan found no slot1 caller; actual startup LEA references install these dedicated setters in property descriptors",
+        "No parent/child editor copy or refresh is used; scene-specific cache behavior and later AI overrides remain unverified",
+        "Existing TEAM resolver covers15 roster slots; technical mutability never grants a persona permission"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.PLAY_TYPE_4",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置球员战术类型4槽",
+      "existing_action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "kind": "MUTATE",
+      "codex_native_maturity": "CALL_LOGIC_RECOVERED",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "No new live invocation, independently observed effect, UI, CPU selection or Save/Reload evidence",
+        "Direct-call scan found no slot1 caller; actual startup LEA references install these dedicated setters in property descriptors",
+        "No parent/child editor copy or refresh is used; scene-specific cache behavior and later AI overrides remain unverified",
+        "Existing TEAM resolver covers15 roster slots; technical mutability never grants a persona permission"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.PLAY_INITIATOR",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "设置战术发起者标志",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PROJECT_NATIVE",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.PLAYER_VITALS",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "编辑位置号码身高体重等资料",
+      "existing_action_id": "PLAYER_SET_EDITABLE_INFO",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation",
+        "Complete31509-byte parent body is recovered, but a safe field-specific input/ownership and normalization contract is not yet implemented",
+        "Parent copy transfers pointers and has conditional identity/context callbacks; mandatory refresh and child effects remain unqualified for a standalone attribute/tendency/badge operation",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.DURABILITY_SET",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "指定身体耐久字段",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.INJURY_STATUS",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "指定伤病状态字段",
+      "existing_action_id": "PLAYER_SET_EDITABLE_INFO",
+      "kind": "MUTATE",
+      "codex_native_maturity": "PARTIAL_BINDING",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation",
+        "Complete31509-byte parent body is recovered, but a safe field-specific input/ownership and normalization contract is not yet implemented",
+        "Parent copy transfers pointers and has conditional identity/context callbacks; mandatory refresh and child effects remain unqualified for a standalone attribute/tendency/badge operation",
+        "No runtime handler"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.POTENTIAL_SET",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "指定潜力字段",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "PARTIAL",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.EDIT.DNA_IMPORT",
+      "group_id": "PLAYER_EDIT_REMAINING",
+      "meaning": "将指定DNA配置应用到球员",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "W03_11",
+      "gemini_research_status": "STATIC_CANDIDATE",
+      "candidate_rva": "0xf1e370, 0xf1e390, 0xf1e3b0, 0xf1e3d0, 0x990a10, 0x992d40",
+      "candidate_symbol": "Player_SetPlayType1_4, Player_SetStatUI, Player_SetBadge",
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "REVIEW_PLAYER_PLAYTYPES_CODEC_AND_STAT_JUMP_TABLE"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.TRADE_REQUEST",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "球员提出转队诉求",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.CONTRACT_RESPONSE",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "球员接受/拒绝外挂报价",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.ROLE_REQUEST",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "提出首发/角色或分钟诉求",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.TRAINING_REQUEST",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "提出个人训练重点",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.MENTOR_REQUEST",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "申请指定导师",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.PLAYSTYLE_REQUEST",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "提出四槽类型或打法偏好",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.EXTENSION_PREFERENCE",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "球员合同/续约偏好",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.MORALE_FEEDBACK",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "球员反映士气/球队角色",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "PLAYER.AGENCY.INJURY_REPORT",
+      "group_id": "EXTERNAL_PLAYER_REQUESTS",
+      "meaning": "球员请求休息/康复",
+      "existing_action_id": null,
+      "kind": "EXTERNAL_REQUEST",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "EXTERNAL",
+      "assigned_wave": "OUT_OF_SCOPE_PLAYER_PERSONALITY",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.SETUP_OPTIONS",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "选择联盟结构、队数、季长等",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.GAMEPLAY_SLIDERS",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "设置USER/CPU Gameplay滑块",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.SIMULATION_SLIDERS",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "设置日历模拟参数",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.NORMALIZE",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "设置标准化分钟/统计开关",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.TEAM_AUTOMATION",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "设置球队自动管理开关",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.CPU_CONTROL",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "设置球队人类/AI控制位",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.ADVANCE_DATE",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "推进指定联盟日期/阶段",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.SIMULATE_GAME",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "模拟指定比赛",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.SIMCAST_MODE",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "选择SimCast/QuickSim/3D运行方式",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.OFFSEASON_STEP",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "执行指定休赛期阶段",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.LEAGUE_RULE_CHANGE",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "设定联盟规则变更",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    },
+    {
+      "requirement_id": "WORLD.DRAFT_CLASS_WORLD",
+      "group_id": "WORLD_CONTROL_DEFERRED",
+      "meaning": "选择赛季的选秀班来源",
+      "existing_action_id": null,
+      "kind": "REQUIREMENT_UNBOUND",
+      "codex_native_maturity": "NOT_BOUND",
+      "source_maturity": "RESEARCH",
+      "assigned_wave": "OUT_OF_SCOPE_WORLD_ADMIN",
+      "gemini_research_status": "EXCLUDED_BY_HUMAN_SCOPE",
+      "candidate_rva": null,
+      "candidate_symbol": null,
+      "remaining_gaps": [
+        "Native function, ABI, context and readback not bound for this requirement"
+      ],
+      "codex_review_action": "RETAIN_LONG_TERM_BACKLOG"
+    }
+  ]
+}

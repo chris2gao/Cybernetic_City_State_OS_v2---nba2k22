@@ -1,0 +1,45 @@
+{
+  "package_id": "W03-09",
+  "title": "GM Draft, Picks, and Scouting Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-09-01",
+      "statement": "Draft_GetCurrentSelection (RVA 0x92a6a0) locates draft pick via 0x14092a170 and verifies round/pick/ownership packed in [DraftPick + 0x1c].",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x92a6a0", "0x92a6c5", "0x92a6cf", "0x92a6de"],
+      "instructions": [
+        "0x92a6c5: call 0x14092a170",
+        "0x92a6cf: mov edx, dword ptr [rax + 0x1c]",
+        "0x92a6de: shr edx, 8; movzx ecx, dl"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Pick protection clauses alter effective ownership if lottery draw lands within protected threshold."
+    },
+    {
+      "claim_id": "C-W03-09-02",
+      "statement": "Draft_SelectProspect (RVA 0xec9610) accepts prospect pointer (rcx) and pick context (rdx), assigning rookie rights to the current pick owner.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0xec9610", "0xec9630", "0xec9645"],
+      "instructions": [
+        "0xec9630: jne 0x140ec964d",
+        "0xec9645: call 0x140eca640 (fetches active draft pick if rdx is null)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "A prospect already drafted cannot be selected a second time."
+    },
+    {
+      "claim_id": "C-W03-09-03",
+      "statement": "Scout_ExecuteTrip (RVA 0x1261d40) checks remaining trip budget in bits 15..18 of [ScoutContext + 0x1068] and triggers progress generation.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x1261d40", "0x1261d4a", "0x1261d58"],
+      "instructions": [
+        "0x1261d4a: mov eax, dword ptr [rcx + 0x1068]",
+        "0x1261d52: shr eax, 0xf",
+        "0x1261d58: test al, 0xf"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Scouting progression reveals prospect attributes progressively over time; full unlock requires multiple trips."
+    }
+  ]
+}

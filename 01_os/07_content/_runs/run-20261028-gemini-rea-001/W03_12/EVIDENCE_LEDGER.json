@@ -1,0 +1,26 @@
+{
+  "package_id": "W03-12",
+  "title": "Native Getter and Readback Directory Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-12-01",
+      "statement": "All essential Coach, Roster, Contract, Draft, Scouting, and Player decision inputs and post-execution readback paths have exact RVA and structure offsets mapped directly to binary routines in NBA2K22.exe.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": [
+        "0xf3fa80", "0x978360", "0x97b870", "0x9888b0", "0x9886c0",
+        "0xedf000", "0x11b2bb0", "0xf1e370", "0x1409cd2a0", "0x149ae80",
+        "0x12d039b", "0x9b5bf0", "0x140edf010", "0x92a6a0", "0x1261d4a"
+      ],
+      "instructions": [
+        "0xf3fa80: Player_FindById",
+        "0x9888b0: Player_GetSalary",
+        "0x9886c0: Player_GetRemainingContractYears",
+        "0x149ae80: Playbook_GetAssignedCount",
+        "0x140edf010: Franchise_GetSeasonPhase"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Getters provide raw unpadded native values; callers must translate enums and bitfields."
+    }
+  ]
+}

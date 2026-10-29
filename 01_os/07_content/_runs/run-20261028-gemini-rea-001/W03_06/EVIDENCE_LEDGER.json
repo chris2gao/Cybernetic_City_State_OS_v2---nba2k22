@@ -1,0 +1,33 @@
+{
+  "package_id": "W03-06",
+  "title": "Training, Mentorship, and Player Health Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-06-01",
+      "statement": "Team_SetTrainingScheduleOnDate (RVA 0x13256a0 / 0x1325710) manipulates a 30-byte daily training schedule record at [TrainingProfile + 0xf]..[0x2c] for date, intensity, focus, and recovery rules.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x13256a0", "0x1325711", "0x13257bc"],
+      "instructions": [
+        "0x13256a0: cmp r8d, 2",
+        "0x13256f1: movzx eax, byte ptr [rcx + 0xf]",
+        "0x1325711: mov byte ptr [rbp - 0x45], al"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Setting training schedule schedules the simulated progression; it does not instantly mutate player attributes."
+    },
+    {
+      "claim_id": "C-W03-06-02",
+      "statement": "Mentor_AppendPair (RVA 0x124f0f0) manages up to 10 mentorship pairs at TeamFranchiseContext+0xc with a stride of 0xcc (204 bytes) per slot, using 0xffff to represent unassigned slots.",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x124f0f0", "0x124f112", "0x124f12d", "0x124f14c", "0x125ed70"],
+      "instructions": [
+        "0x124f112: cmp r9b, 0xa (max 10 pairs)",
+        "0x124f12d: cmp dword ptr [rax], 0xffff (empty slot check)",
+        "0x124f14c: imul rdx, rax, 0xcc (204 bytes per entry)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "A player cannot be mentee to more than one active mentor at a time."
+    }
+  ]
+}

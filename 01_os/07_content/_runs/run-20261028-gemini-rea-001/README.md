@@ -64,3 +64,13 @@ Human已批准**Gemini先在独立分支多做有界研究，由Codex最后集�
 ## 2026-10-29 Human 批准的全剩余GM/Coach Native研究（最新生效）
 
 Wave-02已经完成并保留在其固定提交与`W02_CONSOLIDATED_CODEX_HANDOFF.md`。Human进一步批准Gemini以较大研究预算**一次性继续所有第一版GM/Coach需要的未闭合Native领域**，并在内部持续补证/反证/修复；不再限制3包/12轮，也不要求每个工作包单独等待Codex。最新任务为**[`GREA_WAVE_03_FULL_RESEARCH_BACKLOG.md`](GREA_WAVE_03_FULL_RESEARCH_BACKLOG.md)**；它覆盖W03-00对Wave-02证据检查和W03-04至W03-12全部剩余研究。前面旧`GREA-02/03未授权`或`Wave-02结束必须等待Codex`文字是历史决策，**仅在本Wave已明确批准的范围内被新指令覆盖**。其他包括游戏写入、D1–D5生产数据开发、独立人格、任意WorldAdmin编辑仍未批准。Gemini完成Wave-03后统一交Codex审核，不能自己正式集成。
+
+## 2026-10-29 Wave-03 全域研发闭环完成
+
+Gemini 已按照 Wave-03 任务书要求，完成了对 W03-00 及 W03-04 至 W03-12 全部研究包的持续逆向取证、反证实验与隔离候选开发：
+- 建立了包含 184 项需求状态映射的 `W03_MASTER_GAP_MATRIX.json`；
+- 完成了各研究包的 5 类交付物（`HANDOFF.md`, `EVIDENCE_LEDGER.json`, `REPRODUCTION.md`, `ITERATIONS.jsonl`, `CODEX_REVIEW.md`）；
+- 实现了 8 个独立候选编解码器与 Getter 目录；
+- 在独立测试目录 `pytest_gemini/` 中通过了全部 21 项单元测试；
+- 交付了最终集中交接文档 `W03_CONSOLIDATED_CODEX_HANDOFF.md`；
+- 所有研究均遵守只读 PE 分析规范，严格保持 `NO_LIVE_GAME_ACCESS`，等待 Codex 集中审核与选择性集成。

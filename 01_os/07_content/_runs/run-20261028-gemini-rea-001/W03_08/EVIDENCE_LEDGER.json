@@ -1,0 +1,32 @@
+{
+  "package_id": "W03-08",
+  "title": "GM Staff and Roster Management Evidence Ledger",
+  "target_exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "claims": [
+    {
+      "claim_id": "C-W03-08-01",
+      "statement": "Team_ReleasePlayerInternal (RVA 0x12d0340) updates roster count at [TeamFranchise + 0xee8], shifts remaining players, and sets the released player's team to free agency (0xffff).",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x12d0340", "0x12d039b", "0x12d036a"],
+      "instructions": [
+        "0x12d036a: mov rcx, rbx; call 0x1412d14f0",
+        "0x12d039b: mov eax, dword ptr [rbx + 0xee8]"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "Waiving a player who has guaranteed salary still incurs dead money against team payroll unless cleared via stretch provision."
+    },
+    {
+      "claim_id": "C-W03-08-02",
+      "statement": "Staff_ValidateRoleAndDispatch (RVA 0x1327590) restricts assignable staff roles to roles 8 through 20 (add ecx, -8; cmp ecx, 0xc; ja invalid).",
+      "evidence_type": "BINARY_DISASSEMBLY",
+      "rva": ["0x1327590", "0x1327593", "0x13275b4"],
+      "instructions": [
+        "0x1327590: add ecx, -8",
+        "0x1327593: cmp ecx, 0xc",
+        "0x1327596: ja 0x1413275b4 (returns 0 for invalid roles)"
+      ],
+      "verification_status": "PROVEN_IN_PE",
+      "falsification_note": "A staff role cannot be arbitrary integer; must fall within 8..20 range."
+    }
+  ]
+}
