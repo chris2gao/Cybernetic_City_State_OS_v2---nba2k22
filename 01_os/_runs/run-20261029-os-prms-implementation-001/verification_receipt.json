@@ -1,11 +1,11 @@
 {
   "schema_version": "prms.verification_delivery.v1",
-  "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
+  "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
   "status": "success",
   "managed_inspect": {
     "schema_version": "citystate.verification_attempt.v1",
-    "candidate": "e432afd2152bf50834b619f09c64ed61ca245017",
-    "plan_sha256": "48582caaefbb664fae628869e1d0843202e25b579f682b51283a1beb9d004e5b",
+    "candidate": "26daab91962354e5bc37391e523771e239ada4ed",
+    "plan_sha256": "494850bf4c9ccd9c00431b2c231223f163c5a1bbcc2ca991691199e6ebfa8f57",
     "checks": [
       {
         "id": "PRMS_OFFLINE_AND_ACCOUNTING",
@@ -34,13 +34,17 @@
       {
         "id": "SCAFFOLD_SYNTAX",
         "status": "success"
+      },
+      {
+        "id": "PRMS_TASK_CONTINUITY",
+        "status": "success"
       }
     ],
     "status": "success",
     "authority_effect": "none"
   },
   "plan": "verification_plan.json",
-  "plan_sha256": "48582caaefbb664fae628869e1d0843202e25b579f682b51283a1beb9d004e5b",
+  "plan_sha256": "494850bf4c9ccd9c00431b2c231223f163c5a1bbcc2ca991691199e6ebfa8f57",
   "checks": [
     {
       "id": "PRMS_OFFLINE_AND_ACCOUNTING",
@@ -48,8 +52,8 @@
       "logs": {
         "stdout": {
           "file": "001.stdout.bin",
-          "sha256": "0dec0f1c81b5412166f8664eb4b919b86e0b7bd8d313491342da8e5994631dd6",
-          "bytes": 33020
+          "sha256": "0448141786188329d9ff23661a12028d373de82151ea9eb3dd3774094cd7efb3",
+          "bytes": 35208
         },
         "stderr": {
           "file": "001.stderr.bin",
@@ -63,9 +67,9 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793286981094886700,
-        "elapsed_seconds": 90.12583029999996,
-        "stdout_sha256": "0dec0f1c81b5412166f8664eb4b919b86e0b7bd8d313491342da8e5994631dd6",
+        "finished_ns": 1793290641011896800,
+        "elapsed_seconds": 235.61279400000058,
+        "stdout_sha256": "0448141786188329d9ff23661a12028d373de82151ea9eb3dd3774094cd7efb3",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     },
@@ -75,7 +79,7 @@
       "logs": {
         "stdout": {
           "file": "002.stdout.bin",
-          "sha256": "336ada02f4b14bf4e5033921be4ff1e4c6049ccd0f679aa02bc71fcdb95eff56",
+          "sha256": "a23160174cb81f5e98bf0ae8ea2cf340090439fdcf62252e30eef32e7bea7a7a",
           "bytes": 12491
         },
         "stderr": {
@@ -90,9 +94,9 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793286991231710300,
-        "elapsed_seconds": 9.912854199999856,
-        "stdout_sha256": "336ada02f4b14bf4e5033921be4ff1e4c6049ccd0f679aa02bc71fcdb95eff56",
+        "finished_ns": 1793290650826356500,
+        "elapsed_seconds": 9.60848949999945,
+        "stdout_sha256": "a23160174cb81f5e98bf0ae8ea2cf340090439fdcf62252e30eef32e7bea7a7a",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     },
@@ -102,7 +106,7 @@
       "logs": {
         "stdout": {
           "file": "003.stdout.bin",
-          "sha256": "9d5e0436e50c527f5d9ede90cd31e8c3441790bcfcd303bd0c9f9d3e47525265",
+          "sha256": "8ee65ea9cb21bba8bfc71e2a40dd1cc7f0fe83cb49e9782ab0e7492b32583171",
           "bytes": 152451
         },
         "stderr": {
@@ -117,9 +121,9 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793287036333963800,
-        "elapsed_seconds": 44.885166200000185,
-        "stdout_sha256": "9d5e0436e50c527f5d9ede90cd31e8c3441790bcfcd303bd0c9f9d3e47525265",
+        "finished_ns": 1793290689052207000,
+        "elapsed_seconds": 38.03350899999987,
+        "stdout_sha256": "8ee65ea9cb21bba8bfc71e2a40dd1cc7f0fe83cb49e9782ab0e7492b32583171",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     },
@@ -129,7 +133,7 @@
       "logs": {
         "stdout": {
           "file": "004.stdout.bin",
-          "sha256": "3b897c37e68c80fb5f86daae05902a14c1a51bf7a7b619b20fd8da34a4d72da8",
+          "sha256": "e30121235e9fb240594331d1c8a81435974eb7b9eb1cdfbf4ef5dc230cc933f4",
           "bytes": 101
         },
         "stderr": {
@@ -144,9 +148,9 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793287042401373600,
-        "elapsed_seconds": 5.858472800000072,
-        "stdout_sha256": "3b897c37e68c80fb5f86daae05902a14c1a51bf7a7b619b20fd8da34a4d72da8",
+        "finished_ns": 1793290695346488200,
+        "elapsed_seconds": 6.086801800000103,
+        "stdout_sha256": "e30121235e9fb240594331d1c8a81435974eb7b9eb1cdfbf4ef5dc230cc933f4",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     },
@@ -171,8 +175,8 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793287042875935600,
-        "elapsed_seconds": 0.2695871000000807,
+        "finished_ns": 1793290695844680800,
+        "elapsed_seconds": 0.28725500000018656,
         "stdout_sha256": "15255f6fadd96439f7c71b0ac8ec8f402f5d8569f4b0644797a55d164264e779",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
@@ -198,8 +202,8 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793287043437902600,
-        "elapsed_seconds": 0.35621169999967606,
+        "finished_ns": 1793290696416475100,
+        "elapsed_seconds": 0.35887020000063785,
         "stdout_sha256": "5a9f5aeaadb5243c8c86e4893ca885a1bf4448995190d29fe18d0753e81360e5",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
@@ -210,7 +214,7 @@
       "logs": {
         "stdout": {
           "file": "007.stdout.bin",
-          "sha256": "079ae186642aded45b979103cb36a89dd6a27921e0a16507338328fa4d821414",
+          "sha256": "d797cef4f58175e6fbd100f56a3fd16f2017c62022476e76b516279aba2d25b1",
           "bytes": 105
         },
         "stderr": {
@@ -225,9 +229,36 @@
         "exit_code": 0,
         "error": null,
         "termination": "not_needed",
-        "finished_ns": 1793287044018544300,
-        "elapsed_seconds": 0.37724859999980254,
-        "stdout_sha256": "079ae186642aded45b979103cb36a89dd6a27921e0a16507338328fa4d821414",
+        "finished_ns": 1793290696999270700,
+        "elapsed_seconds": 0.3716982999994798,
+        "stdout_sha256": "d797cef4f58175e6fbd100f56a3fd16f2017c62022476e76b516279aba2d25b1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "id": "PRMS_TASK_CONTINUITY",
+      "status": "success",
+      "logs": {
+        "stdout": {
+          "file": "008.stdout.bin",
+          "sha256": "603f7f7c1bce4d00b105e5d1c33e0e5330fa28cc9544a3c65cc2c11f945dc701",
+          "bytes": 9716
+        },
+        "stderr": {
+          "file": "008.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      },
+      "record": {
+        "id": "PRMS_TASK_CONTINUITY",
+        "status": "success",
+        "exit_code": 0,
+        "error": null,
+        "termination": "not_needed",
+        "finished_ns": 1793290723922656300,
+        "elapsed_seconds": 26.718244500000765,
+        "stdout_sha256": "603f7f7c1bce4d00b105e5d1c33e0e5330fa28cc9544a3c65cc2c11f945dc701",
         "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       }
     }
@@ -236,16 +267,18 @@
     "001.stdout.bin": "utf-8",
     "002.stdout.bin": "cp936",
     "003.stdout.bin": "cp936",
+    "008.stdout.bin": "utf-8",
     "001.finished.json": "utf-8",
     "002.finished.json": "utf-8",
     "003.finished.json": "utf-8",
     "004.finished.json": "utf-8",
     "005.finished.json": "utf-8",
     "006.finished.json": "utf-8",
-    "007.finished.json": "utf-8"
+    "007.finished.json": "utf-8",
+    "008.finished.json": "utf-8"
   },
-  "raw_evidence_location": "task-local external prms-test-logs/managed-e432afd2-01",
+  "raw_evidence_location": "task-local external prms-test-logs/managed-26daab91-01",
   "runtime_private_input_omitted": true,
-  "independent_review": "NOT_RUN",
+  "independent_review": "INITIAL_READ_ONLY_REVIEW_RECEIVED_REPAIR_NOT_REREVIEWED",
   "authority_effect": "none"
 }

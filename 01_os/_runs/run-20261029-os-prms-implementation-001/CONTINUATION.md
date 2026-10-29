@@ -179,3 +179,27 @@ The before/after evidence and expected-red test log are indexed by
 review or actual platform permission proof. Eleven original-scope scenarios remain
 NOT_RUN; no production authenticated ingress, real state repository, real model
 window or master integration has been created or authorized by this continuation.
+
+## Context continuity closure after independent review and Human clarification
+
+Code candidate `26daab91962354e5bc37391e523771e239ada4ed` passed all eight
+managed checks and consumer inspect: 77 PRMS tests and 44 existing working-set
+tests. The initial read-only independent review and subsequent direct Human
+instructions are recorded in INDEPENDENT_REVIEW_R1_R2.md.
+
+The dormant trusted ingress and strict four-part copy grants address R1. R2 now
+includes deterministic Human-relay export/receive/ack plus durable per-task
+save/resume. Human explicitly saves before switching A -> B; two fresh processes
+restore A's plan, facts, progress and next steps without its old session or chat,
+without importing B's business content, and without changing active state. Current
+task facts newer than checkpoints remain visible with lag warnings. Missing,
+stale and budget-limited material is explicit. Full copy preserves usable task
+contexts but does not transfer operational assignments.
+
+Human confirmed that correct task-plan-based memory management/loading is this
+task's end condition; windows are disposable workbenches and normal work is
+sequential. Closure is TASK_CLOSED_CONTEXT_CONTINUITY_SCOPE, backed by
+context_continuity_acceptance.json and task_continuity_example.json. Original
+48-scenario accounting still has eleven external-scope NOT_RUN and full product
+acceptance remains false. Production is not accepted or deployed; no master was
+merged. The initial review is not independent acceptance of these repairs.
