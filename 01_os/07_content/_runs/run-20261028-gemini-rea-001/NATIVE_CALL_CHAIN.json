@@ -1,0 +1,187 @@
+{
+  "task_id": "NBA2K22-GREA-01-OPPONENT-GAMEPLAN-DISCOVERY",
+  "run_id": "run-20261028-gemini-rea-001",
+  "target_binary": "NBA2K22.exe",
+  "binary_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "structures": {
+    "FRANCHISE_GAMEPLAN_MANAGER": {
+      "size_bytes": 81520,
+      "size_hex": "0x13E70",
+      "fields": [
+        {"offset": "0x0", "name": "team_record_index", "type": "uint16"},
+        {"offset": "0x2", "name": "team_id", "type": "uint16"},
+        {"offset": "0x4", "name": "opponent_slots", "type": "GAMEPLAN[35]", "element_size": 880},
+        {"offset": "0x7854", "name": "default_gameplan", "type": "GAMEPLAN", "size": 880},
+        {"offset": "0x7BC4", "name": "dirty_flags", "type": "uint32", "bit0": "gameplan_dirty", "bit1": "coach_sync_dirty"}
+      ]
+    },
+    "GAMEPLAN": {
+      "size_bytes": 880,
+      "size_hex": "0x370",
+      "fields": [
+        {"offset": "0x0", "name": "IsInUse", "type": "uint16", "description": "0=default/unused, 1=active opponent custom"},
+        {"offset": "0x2", "name": "owner_team_id", "type": "uint16"},
+        {"offset": "0x4", "name": "opponent_team_id", "type": "uint16", "sentinel": "0xFFFF for default"},
+        {"offset": "0x6", "name": "roster_slots", "type": "ROSTER_SLOT[23]", "element_size": 4},
+        {"offset": "0x62", "name": "alignment_padding", "type": "uint16"},
+        {"offset": "0x64", "name": "matchups", "type": "MATCHUP_ENTRY[23]", "element_size": 12},
+        {"offset": "0x178", "name": "refs", "type": "uint32[3]"},
+        {"offset": "0x17E", "name": "poe_settings", "type": "uint8[6]"},
+        {"offset": "0x184", "name": "tactical_tendencies", "type": "uint8[8]"},
+        {"offset": "0x18C", "name": "has_rotation_timeline", "type": "uint8"},
+        {"offset": "0x18E", "name": "rotation_timeline", "type": "TIMELINE_SLOT[48]", "element_size": 10}
+      ]
+    },
+    "MATCHUP_ENTRY": {
+      "size_bytes": 12,
+      "size_hex": "0xC",
+      "fields": [
+        {"offset": "0x0", "name": "opponent_player_uid", "type": "uint16", "sentinel": "0xFFFF for unassigned"},
+        {"offset": "0x2", "name": "assigned_defender_uid", "type": "uint16", "sentinel": "0xFFFF for auto"},
+        {
+          "offset": "0x4",
+          "name": "defensive_settings_word1",
+          "type": "uint32",
+          "subfields": {
+            "PressureOnball": {"bits": "0..2", "mask": "0x00000007", "enum": {"0": "AUTO", "1": "GAP", "2": "MODERATE", "3": "TIGHT", "4": "SMOTHER"}},
+            "PressureOffball": {"bits": "3..5", "mask": "0x00000038", "enum": {"0": "AUTO", "1": "MODERATE", "2": "TIGHT", "3": "DENY"}},
+            "ForceDirection": {"bits": "6..7", "mask": "0x000000C0", "enum": {"0": "AUTO", "1": "NO_PREF", "2": "BASELINE", "3": "MIDDLE"}},
+            "ScreenDefenseOnBall": {"bits": "8..10", "mask": "0x00000700", "enum": {"0": "AUTO", "1": "GO_OVER", "2": "GO_UNDER", "3": "SWITCH"}},
+            "ScreenDefenseHedge": {"bits": "11..13", "mask": "0x00003800", "enum": {"0": "AUTO", "1": "NO_HEDGE", "2": "SOFT", "3": "HARD", "4": "CATCH"}},
+            "OffballScreenDefense": {"bits": "14..15", "mask": "0x0000C000"},
+            "PostDefense": {"bits": "16..18", "mask": "0x00070000"},
+            "DoubleTeamPerimeter": {"bits": "19..20", "mask": "0x00180000"},
+            "DoubleTeamPost": {"bits": "21..23", "mask": "0x00E00000"},
+            "ScreenDefenseOnBall5": {"bits": "24..26", "mask": "0x07000000"},
+            "ScreenDefenseHedge5": {"bits": "27..29", "mask": "0x38000000"},
+            "SwitchRule": {"bits": "30..31", "mask": "0xC0000000"}
+          }
+        },
+        {
+          "offset": "0x8",
+          "name": "defensive_settings_word2",
+          "type": "uint32",
+          "subfields": {
+            "OnballHelp": {"bits": "0..1", "mask": "0x00000003"},
+            "ScreenHelp": {"bits": "2..3", "mask": "0x0000000C"},
+            "ExtendPressure": {"bits": "4..5", "mask": "0x00000030"},
+            "TagOnRoll": {"bits": "6..7", "mask": "0x000000C0"},
+            "StayAttached": {"bits": "8..9", "mask": "0x00000300"},
+            "PreRotate": {"bits": "10..10", "mask": "0x00000400"}
+          }
+        }
+      ]
+    }
+  },
+  "functions": [
+    {
+      "step": 1,
+      "rva": "0xfda730",
+      "symbol_name": "GetTeamGameplanManager",
+      "signature": "FRANCHISE_GAMEPLAN_MANAGER* (TEAM* pTeam, int flag)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pTeam", "register": "rcx", "type": "TEAM*"},
+        {"name": "flag", "register": "edx", "type": "int"}
+      ],
+      "returns": "FRANCHISE_GAMEPLAN_MANAGER* (rax)",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "calls 0xedefe0; mov rax, [0x3c23170]; imul rdx, rax, 0x13e70; lea rax, [rax+rdx+0x19cfd0]; ret"
+    },
+    {
+      "step": 2,
+      "rva": "0x1244230",
+      "symbol_name": "FRANCHISE_GAMEPLAN_MANAGER::EnsureOpponentGameplan",
+      "signature": "GAMEPLAN* (FRANCHISE_GAMEPLAN_MANAGER* pManager, TEAM* pOpponentTeam)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pManager", "register": "rcx", "type": "FRANCHISE_GAMEPLAN_MANAGER*"},
+        {"name": "pOpponentTeam", "register": "rdx", "type": "TEAM*"}
+      ],
+      "returns": "GAMEPLAN* (rax)",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "Loops 35 slots of 0x370. Compares [rcx+4+i*0x370]. On new slot, calls 0x146c260."
+    },
+    {
+      "step": 2.1,
+      "rva": "0x12f21a0",
+      "symbol_name": "FRANCHISE_GAMEPLAN_MANAGER::FindOpponentGameplan",
+      "signature": "GAMEPLAN* (FRANCHISE_GAMEPLAN_MANAGER* pManager, TEAM* pOpponentTeam)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pManager", "register": "rcx", "type": "FRANCHISE_GAMEPLAN_MANAGER*"},
+        {"name": "pOpponentTeam", "register": "rdx", "type": "TEAM*"}
+      ],
+      "returns": "GAMEPLAN* (rax, NULL if not found)",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "Lookup only without allocation."
+    },
+    {
+      "step": 3,
+      "rva": "0x146c260",
+      "symbol_name": "GAMEPLAN::Init",
+      "signature": "void (GAMEPLAN* pGameplan)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pGameplan", "register": "rcx", "type": "GAMEPLAN*"}
+      ],
+      "returns": "void",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "Fills 0x370 bytes with template values, sets auto UIDs to 0xFFFF."
+    },
+    {
+      "step": 4,
+      "rva": "0x14651c0",
+      "symbol_name": "GAMEPLAN::InsertOrFindOpponentMatchup",
+      "signature": "MATCHUP_ENTRY* (GAMEPLAN* pGameplan, PLAYER* pOpponentPlayer, PLAYER* pAssignedDefender)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pGameplan", "register": "rcx", "type": "GAMEPLAN*"},
+        {"name": "pOpponentPlayer", "register": "rdx", "type": "PLAYER*"},
+        {"name": "pAssignedDefender", "register": "r8", "type": "PLAYER*"}
+      ],
+      "returns": "MATCHUP_ENTRY* (rax at pGameplan + 0x64 + i*12)",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "Scans 23 entries stride 12 starting at [rcx+0x64]."
+    },
+    {
+      "step": 5,
+      "rva": "0x146ec50",
+      "symbol_name": "GAMEPLAN::ApplyToCoach",
+      "signature": "void (GAMEPLAN* pGameplan)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pGameplan", "register": "rcx", "type": "GAMEPLAN*"}
+      ],
+      "returns": "void",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "mov rcx, [rcx+2]; call 0x146eaa0; ret"
+    },
+    {
+      "step": 6,
+      "rva": "0x7a7aab",
+      "symbol_name": "GameplanUI_SetActiveBit",
+      "signature": "inline instruction",
+      "calling_convention": "instruction",
+      "parameters": [
+        {"name": "pGameplan", "register": "rbx", "type": "GAMEPLAN*"}
+      ],
+      "returns": "void",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "mov word ptr [rbx], 1"
+    },
+    {
+      "step": 7,
+      "rva": "0x131f110",
+      "symbol_name": "FRANCHISE_GAMEPLAN_MANAGER::CommitPendingFlags",
+      "signature": "void (FRANCHISE_GAMEPLAN_MANAGER* pManager)",
+      "calling_convention": "__fastcall",
+      "parameters": [
+        {"name": "pManager", "register": "rcx", "type": "FRANCHISE_GAMEPLAN_MANAGER*"}
+      ],
+      "returns": "void",
+      "maturity": "STATIC_DISASSEMBLED",
+      "disassembly_evidence": "test dword ptr [rcx+0x7bc4], 1; jz loc_exit; ... and dword ptr [rcx+0x7bc4], ~3; ret"
+    }
+  ]
+}
