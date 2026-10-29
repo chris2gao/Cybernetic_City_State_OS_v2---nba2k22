@@ -1,6 +1,6 @@
 task_id: NBA2K22_GEMINI_REA_BOUNDED_EXPLORATION_01
 run_id: run-20261028-gemini-rea-001
-lifecycle: candidate_ready_for_independent_review
+lifecycle: research_authorized
 closure_record: W02_CONSOLIDATED_CODEX_HANDOFF.md
 stage: 03_结果建模
 date: '2026-10-28'
@@ -33,13 +33,13 @@ controls:
   require_offline_reproduction: true
   require_codex_independent_review: true
   commit_only_isolated_experimental_code_and_run_evidence: true
-current_task: GREA_WAVE_02_A_B_C
-current_task_status: WAVE_02_A_B_C_COMPLETED_READY_FOR_CODEX_REVIEW
-current_task_document: GREA_CONTINUOUS_RESEARCH_WAVE_02.md
+current_task: GREA_WAVE_03_FULL_GM_COACH_RESEARCH
+current_task_status: WAVE_03_AUTHORIZED_RESEARCH_READY
+current_task_document: GREA_WAVE_03_FULL_RESEARCH_BACKLOG.md
 roadmap_document: README.md
 review_template: GREA_HANDOFF_TEMPLATE.md
 new_wave_requires_new_explicit_instruction: true
-overall_completion_status: WAVE_02_A_B_C_COMPLETED_AWAITING_CODEX_REVIEW
+overall_completion_status: WAVE_03_AUTHORIZED_NOT_YET_ACCEPTED
 allowlist:
   - 01_os/07_content/_runs/run-20261028-gemini-rea-001/**
   - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/GREA_01/**
@@ -85,3 +85,32 @@ wave_02_outputs:
   - W02_B/HANDOFF.md
   - W02_C/HANDOFF.md
   - W02_CONSOLIDATED_CODEX_HANDOFF.md
+
+# Human-approved follow-up beyond the closed Wave-02 (do not rewrite its evidence)
+latest_human_instruction_20261029: GEMINI_CONTINUOUS_FULL_GM_COACH_RESEARCH_THEN_CODEX_BATCH_REVIEW
+current_wave_03: GREA_WAVE_03_FULL_RESEARCH_BACKLOG.md
+wave_03_source_gemini_head: a72ad80eff5769085d12997bf55bdf4059590705
+wave_03_official_codex_baseline: 6151ef5d484914edcec2fbcfcf3bcce83a848907
+wave_03_authorized_packages:
+  - W03_00_WAVE02_EVIDENCE_QA
+  - W03_04_COACH_GLOBAL_FREELANCE
+  - W03_05_COACH_ROTATION
+  - W03_06_COACH_TRAINING
+  - W03_07_GM_CONTRACTS
+  - W03_08_GM_STAFF_ROSTER
+  - W03_09_GM_DRAFT_SCOUT_PICKS
+  - W03_10_GM_TRADE_REMAINING
+  - W03_11_COACH_RELEVANT_PLAYER_EDIT
+  - W03_12_DECISION_RELEVANT_NATIVE_GETTERS
+wave_03_research_loop: CONTINUOUS_EVIDENCE_DRIVEN
+wave_03_research_budget_guidance: ABOUT_120_MINUTES_NOT_A_GUARANTEED_RUNTIME_OR_MINIMUM
+wave_03_stop: AFTER_ALL_PACKAGES_HAVE_HONEST_RESULT_AND_CODEX_HANDOFF_OR_HARD_TOOL_LIMIT
+wave_03_live_game_access_authorized: false
+wave_03_production_registry_changes_authorized: false
+wave_03_allowed_paths:
+  - 01_os/07_content/_runs/run-20261028-gemini-rea-001/W03_*/**
+  - 01_os/07_content/_runs/run-20261028-gemini-rea-001/W03_MASTER_GAP_MATRIX.json
+  - 01_os/07_content/_runs/run-20261028-gemini-rea-001/W03_MASTER_RESEARCH_LOG.jsonl
+  - 01_os/07_content/_runs/run-20261028-gemini-rea-001/W03_CONSOLIDATED_CODEX_HANDOFF.md
+  - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/experimental/gemini_rea/W03_*/**
+future_wave_requires_new_explicit_instruction: true
