@@ -161,3 +161,19 @@ def test_test_session_issuer_cannot_authorize_remote_backend():
     gate = WriterGate(RemoteBackend())
     with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):
         gate.open_isolated_session("self-asserted", ["engineer"])
+
+
+def test_definition_upgrade_preserves_stable_role_and_prior_template(setup):
+    store, gate, caller, _ = setup
+    frozen = store.head()
+    original = store.snapshot(frozen)["roles/engineer/definitions/1.json"]
+    for payload in ({"version": "2", "compatibility_ref": "fixture"},
+                    {"version": "2", "role_type_id": "other-role", "compatibility_ref": "fixture"}):
+        with pytest.raises(PRMSError, match="REJECTED"):
+            apply(store, gate, caller, "invalid-upgrade", "UPGRADE_DEFINITION", payload)
+        assert store.head() == frozen
+    apply(store, gate, caller, "upgrade", "UPGRADE_DEFINITION",
+          {"version": "2", "role_type_id": "engineer", "compatibility_ref": "fixture compatible template"})
+    restored = gate.recover("engineer")
+    assert restored["role_id"] == "engineer" and restored["identity"]["definition"]["version"] == "2"
+    assert store.snapshot()["roles/engineer/definitions/1.json"] == original

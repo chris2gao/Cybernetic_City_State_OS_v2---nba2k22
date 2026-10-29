@@ -267,10 +267,12 @@ class WriterGate:
             elif kind == "UPGRADE_DEFINITION":
                 version = identifier(payload["version"])
                 definition_path = prefix + f"definitions/{version}.json"
-                if definition_path in snapshot or not payload.get("compatibility_ref"):
+                identity = json.loads(snapshot[prefix + "identity.json"])
+                if (definition_path in snapshot or not isinstance(payload.get("compatibility_ref"), str)
+                        or not payload["compatibility_ref"] or
+                        payload.get("role_type_id") != identity["definition"]["role_type_id"]):
                     raise PRMSError("REJECTED", "new version and compatibility evidence required")
                 changes[definition_path] = canonical(payload)
-                identity = json.loads(snapshot[prefix + "identity.json"])
                 identity["definition"] = payload
                 changes[prefix + "identity.json"] = canonical(identity)
             elif kind == "REFRESH_INDEX":
