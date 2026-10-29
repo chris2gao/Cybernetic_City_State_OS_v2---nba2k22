@@ -18,9 +18,10 @@ required_tests:
   - source_and_status_honesty
   - transport_cas_and_readback
   - independent_review_pending
-lifecycle: candidate_pending_validation
-status: "Documentation candidate only. No PRMS platform activation, master release, independent acceptance or automatic role handoff asserted."
+lifecycle: candidate_ready_for_independent_review
+status: "Documentation candidate committed and remote diff verified; pending independent review and protected master integration."
 outputs:
   - "01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md"
   - "01_os/_runs/run-20261029-os-planner-role-continuity-001/task_packet.yml"
   - "01_os/_runs/run-20261029-os-planner-role-continuity-001/verification_plan.json"
+closure_record: 08_结论/completion_pointer.md
