@@ -51,3 +51,17 @@ python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify
 Use a fresh attempt. Source integrity is verified against actual Git objects;
 no game, REA, real state service, credential provisioning or other-domain action
 is needed or authorized by this integration.
+
+## Verified master integration and closeout
+
+Status: **TASK_CLOSED_NBA_CORE_PRMS_SYNC**. Actual code integration PR:
+https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/20; observed NBA master code-integration commit:
+`c166382a3e09ce65c20024377f441ba022b7ec2a`. Actual fetched remote tree equals reviewed head
+`b49b67cc7bca26a86b26086c142399ff634e9e25`, preserves the NBA base and Core source ancestors,
+and leaves other domains untouched. See master_integration_receipt.json.
+
+This follow-up closeout changes only this task's domain-owned evidence. Current
+formal NBA/master and both publication receipts are recorded on Core Issue #11;
+the code-integration hash above describes the observed event, not a prediction
+of the later evidence-only closeout merge hash. Baseline NBA failures remain
+explicit and are not repaired or relabeled by this integration.
