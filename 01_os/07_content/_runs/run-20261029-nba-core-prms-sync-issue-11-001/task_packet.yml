@@ -4,58 +4,75 @@ task_packet:
   risk_tier: T1_standard
   exact_base_sha: 7742568ac677b3c16079887463f05e81cb1191ed
   branch: task/os-prms-core-sync-issue-11-20261029
-  objective: Safely inherit Core/master e075cdf288a765b7bfd2f4891c8f384404da16e1 through a real Git merge, verify NBA preservation/compatibility, and merge NBA/master under the current direct Human instruction for Core Issue 11.
+  objective: Safely inherit Core/master e075cdf288a765b7bfd2f4891c8f384404da16e1 through
+    a real Git merge, verify NBA preservation/compatibility, and merge NBA/master
+    under the current direct Human instruction for Core Issue 11.
   source_evidence:
-    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/11
-    - Core PR 10 merged; current Core/master independently read as e075cdf288a765b7bfd2f4891c8f384404da16e1
+  - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/11
+  - Core PR 10 merged; current Core/master independently read as e075cdf288a765b7bfd2f4891c8f384404da16e1
   allowed_changed_paths:
-    - 01_os/02_boot/context_management/**
-    - 01_os/03_mechanisms/context_management/**
-    - 01_os/05_registry/prms_v1.yml
-    - 01_os/06_execution/boot/context_management/prms/**
-    - 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/**
-    - 01_os/_runs/run-20261029-os-prms-implementation-001/**
-    - 01_os/开发入口与单窗口任务规范_v1.md
-    - AGENT_WORKING_DISCIPLINE.md
-    - CORE_MANIFEST.yml
-    - new-domain.ps1
-    - 01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/**
+  - 01_os/02_boot/context_management/**
+  - 01_os/03_mechanisms/context_management/**
+  - 01_os/05_registry/prms_v1.yml
+  - 01_os/06_execution/boot/context_management/prms/**
+  - 01_os/_runs/run-20261023-os-evidence-feedback-loop-01/**
+  - 01_os/_runs/run-20261029-os-prms-implementation-001/**
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  - AGENT_WORKING_DISCIPLINE.md
+  - CORE_MANIFEST.yml
+  - new-domain.ps1
+  - 01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/**
   verification_plan: 01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/verification_plan.json
-  required_tests: [SOURCE_AND_DOMAIN_PRESERVATION, NBA_EXISTING_OFFLINE, PRMS_OFFLINE, CONTEXT_REGRESSION, CONTEXT_STRUCTURE, TASK_CONTINUITY]
+  required_tests:
+  - SOURCE_AND_DOMAIN_PRESERVATION
+  - NBA_EXISTING_OFFLINE
+  - PRMS_OFFLINE
+  - CONTEXT_REGRESSION
+  - CONTEXT_STRUCTURE
+  - TASK_CONTINUITY
   required_completion_pointer: 01_os/07_content/_runs/run-20261029-nba-core-prms-sync-issue-11-001/completion_pointer.json
   prohibitions:
-    - modify_existing_NBA_business_research_or_domain_evidence
-    - synchronize_any_other_domain
-    - create_or_publish_domain_G2_mechanisms
-    - operate_game_REA_process_save_or_live_capture
-    - access_or_create_secrets_credentials_or_state_service
-    - force_push_or_rewrite_history
+  - modify_existing_NBA_business_research_or_domain_evidence
+  - synchronize_any_other_domain
+  - create_or_publish_domain_G2_mechanisms
+  - operate_game_REA_process_save_or_live_capture
+  - access_or_create_secrets_credentials_or_state_service
+  - force_push_or_rewrite_history
   publisher:
     principal_binding: local_authenticated
     publication_transport: local_git
     source_branch_publication: task_scope_default
     master_integration_confirmation: direct_current_Human_instruction_execute_Issue_11_and_complete_merge_update
-    expected_remote_master_head: 7742568ac677b3c16079887463f05e81cb1191ed
+    expected_remote_master_head: c166382a3e09ce65c20024377f441ba022b7ec2a
   big_task: true
   big_task_confirmation_closure:
     enabled: true
-    known_confirmation_required_actions: [merge_NBA_master_after_compatibility_verification]
-    preconfirmed_actions: [merge_NBA_master_after_compatibility_verification]
+    known_confirmation_required_actions:
+    - merge_NBA_master_after_compatibility_verification
+    preconfirmed_actions:
+    - merge_NBA_master_after_compatibility_verification
     uncovered_actions: []
-    excluded_from_execution: [other_domain_updates, game_or_REA_operations, production_state_deployment]
+    excluded_from_execution:
+    - other_domain_updates
+    - game_or_REA_operations
+    - production_state_deployment
   executor_profile:
     provider: Codex
     surface: local_shell
     model: runtime_inherited
     mode: standard
-    routing_basis: Current Human selected Codex for Issue 11 integration; no parallel model work.
+    routing_basis: Current Human selected Codex for Issue 11 integration; no parallel
+      model work.
     authority: routing_only
   success_criteria:
-    - Real merge ancestry contains both exact NBA base and approved Core source.
-    - Every existing NBA/domain file remains byte-identical with unchanged Git mode.
-    - Imported PRMS runtime/contract/Boot/Registry blobs match Core source; existing NBA suite adds no failures versus an actual exact-base run, with preexisting raw failures preserved.
-    - PR and verified master merge are published with remote readback; all other domains remain untouched.
+  - Real merge ancestry contains both exact NBA base and approved Core source.
+  - Every existing NBA/domain file remains byte-identical with unchanged Git mode.
+  - Imported PRMS runtime/contract/Boot/Registry blobs match Core source; existing
+    NBA suite adds no failures versus an actual exact-base run, with preexisting raw
+    failures preserved.
+  - PR and verified master merge are published with remote readback; all other domains
+    remain untouched.
   stop_conditions:
-    - Business deletion or unexplained ownership escape.
-    - Actual merge conflict needs a new semantic decision.
-    - Remote base moves before publication and must be reconciled.
+  - Business deletion or unexplained ownership escape.
+  - Actual merge conflict needs a new semantic decision.
+  - Remote base moves before publication and must be reconciled.
