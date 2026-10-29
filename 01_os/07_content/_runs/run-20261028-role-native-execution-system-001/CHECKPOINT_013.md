@@ -13,6 +13,6 @@ Task `NBA2K22-ROLE-NATIVE-EXECUTION-SYSTEM-01`, fixed PR18 baseline `094f1aa641f
 
 Canonical static source034 and replay tool agree as JSON. Sources028..033 and hashes are retained in `CHECKPOINT_013_SOURCE_DELTA.json`. Evidence is pinned local PE/Capstone, **NOT_REA_PROVIDER**. [Withdrawal contract](../../../../08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/OFFER_WITHDRAWAL_NATIVE_CONTRACT.md) records parameters, native logic, side-effect limits and remaining gaps.
 
-Current72 actions,65 binding/layout records,61 effective mappings,15 technical datasets. Counts are not acceptance. The full fixed-candidate Managed Run/Inspect is pending execution and receipt retention.
+Current72 actions,65 binding/layout records,61 effective mappings,15 technical datasets. Counts are not acceptance. Managed Run and Inspect passed109 offline tests and source/index checks for exact code candidate `a818240c6b0ad3e4bbaa0cfbf209dac005e31762`. Actual runner receipts and byte-preserving outputs are retained in MANAGED_CHECKPOINT_013_EVIDENCE.json; later documentation/receipt updates are not another whole-candidate Managed run.
 
 Remaining: exact response/confirmation/final signing, contract options/extensions, staff/other GM operations, remaining Coach/Player capabilities, real current-scene/save and independent observer integration, approved live scenarios and M5 final review. No new game attachment/call, UI, save persistence, independent review, master change, merge or PR18 edit.
