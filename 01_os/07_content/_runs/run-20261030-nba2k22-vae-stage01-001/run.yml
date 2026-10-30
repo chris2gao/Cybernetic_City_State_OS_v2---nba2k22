@@ -22,6 +22,9 @@ outputs:
   - 01_需求建模/A0_需求共识候选_v1.yml
   - 01_需求建模/首轮工作计划.md
   - 01_任务输入/verification_plan.json
+  - 01_任务输入/PLANNER_RESULT_INTAKE_AND_CONTEXT_V1.md
+  - 01_任务输入/PLANNER_RESULT_INTAKE_AND_CONTEXT_V2.md
+  - 01_任务输入/PLANNER_CONTEXT_CHECKPOINT_V1.json
 verification:
   - GitHub exact base and branch-head check
   - file existence and allowed-paths comparison
@@ -32,3 +35,12 @@ notes:
   - VAE独立于D1-D5推进，技术经验可互相参考，D系列完成不是VAE前置门
   - 当前MC存档仅用于MyLEAGUE底层机制真实验证，不研究MC专属功能
   - PRMS未执行SAVE_TASK_CONTEXT；本Run是GitHub可恢复记录，不冒充PRMS回执
+
+planner_context:
+  authoritative_scope: task_run_only
+  current_intake_policy: 01_任务输入/PLANNER_RESULT_INTAKE_AND_CONTEXT_V2.md
+  current_recovery_checkpoint: 01_任务输入/PLANNER_CONTEXT_CHECKPOINT_V1.json
+  earlier_intake_policy: 01_任务输入/PLANNER_RESULT_INTAKE_AND_CONTEXT_V1.md
+  prms_save_receipt: NOT_RUN
+  formal_communication_v2_receipt: NOT_RUN
+  last_human_directive: separate_planning_from_execution_and_preserve_result_only_context
