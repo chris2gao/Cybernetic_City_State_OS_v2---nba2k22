@@ -207,6 +207,11 @@ current task scope.
 - Ordinary task/source branch publication is part of in-scope execution and does not
   require a second Human authorization. Push after successful validation when the
   task calls for a shared completion pointer or remote handoff.
+- **Mandatory Remote Push on Delivery (每次交付成果后自动推送远端)**: Whenever a research,
+  code, or documentation task completes and is committed locally (`git commit`), always
+  automatically push the working branch to GitHub (`git push -u origin <branch-name>`).
+  Remote auditing models (such as Codex and external reviewers) inspect the online
+  repository only and cannot see local workstation files.
 - Keep `master` and feature/work branches distinct. Merge/publish to `master` only
   when that exact integration is already covered by the current Human instruction or
   a big-task preconfirmation; otherwise ask directly immediately before the action.
