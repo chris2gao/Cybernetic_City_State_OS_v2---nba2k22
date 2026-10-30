@@ -1,0 +1,39 @@
+{
+  "schema_version": "nba2k22.vae.stage01.verification_plan.v1",
+  "task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+  "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "tests": [
+    {
+      "id": "VAE-S01-T1-source-ref-exists",
+      "method": "固定SHA和来源路径由GitHub API读回",
+      "pass_condition": "当前master/base存在，引用的域内资料路径可访问"
+    },
+    {
+      "id": "VAE-S01-T2-eight-slots-present",
+      "method": "检查A0八槽位与成功判据可观察标记",
+      "pass_condition": "八槽位齐全，假设含不成立后果，高风险歧义有阻塞范围"
+    },
+    {
+      "id": "VAE-S01-T3-human-confirmation-false",
+      "method": "检查A0版本和Human确认状态",
+      "pass_condition": "未获得精确版本批准时confirmed=false，stage01_complete=false"
+    },
+    {
+      "id": "VAE-S01-T4-d-series-independent",
+      "method": "检查范围与术语",
+      "pass_condition": "不以D1-D5完成为VAE门槛，也不将VAE当D系列子任务"
+    },
+    {
+      "id": "VAE-S01-T5-no-game-write",
+      "method": "审查所有本次改动路径",
+      "pass_condition": "全部是OS领域run规划记录，无Native/运行游戏/SQLite/生产配置改动"
+    },
+    {
+      "id": "VAE-S01-T6-published-branch-readback",
+      "method": "GitHub branch HEAD、commit diff、文件内容回读",
+      "pass_condition": "与期望HEAD/CAS发布一致，变更均在allowed_changed_paths"
+    }
+  ],
+  "status": "planned",
+  "actual_results": "NOT_RUN"
+}
