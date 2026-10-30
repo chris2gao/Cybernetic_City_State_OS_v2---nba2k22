@@ -1,0 +1,59 @@
+task_packet:
+  task_id: NBA2K22-VAE-GPT-STAGE01-20261030-001
+  parent_task_id: NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+  branch: task/nba2k22-vae-gpt-stage01-requirements-20261030
+  objective: 在新的GPT开发窗口完成VAE原版AI竞技补强的Stage01正式需求建模候选与可验收需求结果，并将证据/未解事项交还规划窗口和Human。
+  requested_receiver:
+    source: NBA2K22_COMMON_BASELINE
+    model: GPT-6
+    role: execution
+    workspace: Human新Fork的GPT开发窗口
+    isolation: 独立任务上下文；不得依赖本规划聊天历史或旧Fork自动同步
+  direct_required_refs:
+    - 296668026310faed42a7427c09664668e9d21ef0:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_需求建模/A0_需求共识候选_v1.yml
+    - 296668026310faed42a7427c09664668e9d21ef0:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/task_packet.yml
+    - 296668026310faed42a7427c09664668e9d21ef0:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_需求建模/首轮工作计划.md
+    - 6151ef5d484914edcec2fbcfcf3bcce83a848907:08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+    - 45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md
+    - 45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/
+  verification_plan: 01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_任务输入/verification_plan.json
+  required_tests:
+    - TASK_BOOTSTRAP
+    - A0_EIGHT_REQUIRED_SLOTS
+    - HUMAN_APPROVAL_BOUND_TO_VERSION
+    - VAE_NOT_SUBORDINATE_TO_D_SERIES
+    - SOURCES_AND_UNKNOWN_SEPARATION
+    - NO_UNAUTHORIZED_GAME_WRITE
+    - RUN_AND_EXACT_GIT_READBACK
+  prohibitions: [modify_master_without_Human_confirmation, force_push, rebase, squash, modify_game_save, modify_Native_Registry, modify_Core, claim_approval_without_Human, claim_PRMS_save_without_receipt, claim_Communication_v2_sent_without_validated_pointer]
+  required_completion_pointer: 08_结论/内包含exact_commit、文件路径、阶段成熟度、Human确认来源或待决、未闭合缺口和下一接受者
+  big_task: false
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+    expected_remote_head: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+  big_task_confirmation_closure:
+    enabled: false
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: independent_review_window
+    different_model_family: false
+    different_measurement_tool: true
+  minimum_work_unit_output:
+    work_performed_or_requested: 独立GPT开发窗口接收VAE Stage01工作，复核并完善需求候选及可观察验收口径，输出可供Human正式版本确认的需求产物
+    implementation_or_review_method: 按现行Core Stage01八槽位和项目01a/01b结果建模模板开发；用精确SHA核对已有需求、机制资料、REA成熟度、模式与权限边界
+    supportability_rationale: Human已明确四领域、可证伪的迭代验证、MC作为终极联盟底层验证载体、VAE与D独立、规划与执行窗口隔离；现有GitHub A0只是候选未获版本绑定确认
+    feasibility_rationale: 所需Stage01源码和业务资料已有可读GitHub对象；无需真实游戏写入或新数据库即可形成可审阅需求候选，需Human确认后方可结束阶段
+    task_constraints_and_boundaries: 只限此Run的Stage01需求开发与证据整理，不扩到VAE实际REA片段研发或D系列施工
+    stop_or_return_conditions: 正式A0/结果需求需要Human确认；证据冲突、重大语义歧义或新受保护行为返回规划窗口及Human
