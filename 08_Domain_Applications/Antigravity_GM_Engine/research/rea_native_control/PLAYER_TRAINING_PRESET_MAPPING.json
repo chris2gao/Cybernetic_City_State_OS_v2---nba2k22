@@ -1,0 +1,407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "nba2k22.player_training_preset_mapping.v1",
+  "document_title": "PC22 MyLEAGUE 离线个人训练预设模板与底层结构映射专项",
+  "metadata": {
+    "author_role": "Gemini Auxiliary Research Assistant (Read-Only)",
+    "intended_consumer": "Codex (Engineering Lead / Native Controller Owner)",
+    "baseline_git_commit": "6151ef5d484914edcec2fbcfcf3bcce83a848907",
+    "gemini_research_ref": "6cad7c7454798dbe18e7bd800d85e2a9d1c7119c",
+    "target_executable": "NBA2K22.exe",
+    "target_executable_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "mode": "PC22 Current-Gen Steam Offline MyLEAGUE",
+    "date": "2026-10-30"
+  },
+  "technical_architecture": {
+    "system_anchors": {
+      "slot_training": "0x0632B480",
+      "slot_franchise": "0x0632B478",
+      "roster_getter_rva": "0x011D5DE0",
+      "base_address": "0x140000000"
+    },
+    "player_training_array": {
+      "array_offset_from_slot_training": "0xC60",
+      "stride_bytes": 796,
+      "stride_hex": "0x31C",
+      "max_players_supported": 786,
+      "key_offsets": {
+        "player_id": "0x00 (uint32)",
+        "points": "0x04 (float32 array / allocation)",
+        "percentage_per_focus": "0xF0 (12 bytes, 3x float32)",
+        "profile_per_focus": "0xFC (3 bytes)",
+        "points_per_subfocus": "0xFF (38 bytes)",
+        "overall_history": "0x125",
+        "attribute_value_history": "0x12D",
+        "progressive_fatigue_history": "0x2F5",
+        "intensity_history": "0x2FA",
+        "flags_dword": "0x318 (uint32 bitfield)"
+      }
+    },
+    "flags_bitfield_layout": {
+      "offset": "0x318",
+      "size_bytes": 4,
+      "bits": [
+        {
+          "field_name": "intensity_history_point_count",
+          "start_bit": 0,
+          "width": 5,
+          "mask_hex": "0x0000001F",
+          "description": "训练强度历史采样点计数"
+        },
+        {
+          "field_name": "progressive_fatigue_history_point_count",
+          "start_bit": 5,
+          "width": 3,
+          "mask_hex": "0x000000E0",
+          "description": "渐进性疲劳历史采样点计数"
+        },
+        {
+          "field_name": "position",
+          "start_bit": 8,
+          "width": 3,
+          "mask_hex": "0x00000700",
+          "description": "球员训练位置模板身份 (0..5: PG, SG, SF, PF, C, None)"
+        },
+        {
+          "field_name": "player_type",
+          "start_bit": 11,
+          "width": 5,
+          "mask_hex": "0x0000F800",
+          "description": "球员个人训练预设模板/原型枚举 (0..8)"
+        },
+        {
+          "field_name": "intensity",
+          "start_bit": 16,
+          "width": 3,
+          "mask_hex": "0x00070000",
+          "description": "球员个人训练强度枚举 (0..5: Rest..Very High)"
+        },
+        {
+          "field_name": "injury_recovery",
+          "start_bit": 19,
+          "width": 1,
+          "mask_hex": "0x00080000",
+          "description": "伤病恢复模式标记 (0: 正常训练, 1: 恢复模式)"
+        },
+        {
+          "field_name": "is_intensity_overriden",
+          "start_bit": 20,
+          "width": 1,
+          "mask_hex": "0x00100000",
+          "description": "个人强度覆盖团队标记 (0: 跟随团队自动, 1: 个人覆盖)"
+        }
+      ]
+    }
+  },
+  "positions_registered": {
+    "total_count": 6,
+    "definitions": [
+      {
+        "raw_value": 0,
+        "code": "POINT_GUARD",
+        "abbr": "PG",
+        "name_zh": "控球后卫",
+        "training_slot_role": "外线主要运控发起者"
+      },
+      {
+        "raw_value": 1,
+        "code": "SHOOTING_GUARD",
+        "abbr": "SG",
+        "name_zh": "得分后卫",
+        "training_slot_role": "外线终结与侧翼得分手"
+      },
+      {
+        "raw_value": 2,
+        "code": "SMALL_FORWARD",
+        "abbr": "SF",
+        "name_zh": "小前锋",
+        "training_slot_role": "全能锋线与侧翼攻防"
+      },
+      {
+        "raw_value": 3,
+        "code": "POWER_FORWARD",
+        "abbr": "PF",
+        "name_zh": "大前锋",
+        "training_slot_role": "内线机动与空间/护框锋线"
+      },
+      {
+        "raw_value": 4,
+        "code": "CENTER",
+        "abbr": "C",
+        "name_zh": "中锋",
+        "training_slot_role": "传统护框与内线终结支柱"
+      },
+      {
+        "raw_value": 5,
+        "code": "NONE",
+        "abbr": "NONE",
+        "name_zh": "无指定位置",
+        "training_slot_role": "未指定训练位置槽位"
+      }
+    ]
+  },
+  "generic_player_types": {
+    "total_count": 9,
+    "source": "config/state_io_native/training.json & guides/K06_TRAINING_HEALTH_GROWTH.md §2",
+    "definitions": [
+      {
+        "raw_value": 0,
+        "code": "ALL_AROUND",
+        "name_en": "All-Around",
+        "name_zh": "全能型",
+        "basketball_direction": "不刻意只追逐单一技能，寻找各项能力与属性的全面均衡成长",
+        "subfocus_tendency_desc": "均衡分配各项投射、传控、防守与运动体能点数"
+      },
+      {
+        "raw_value": 1,
+        "code": "TWO_WAY",
+        "name_en": "Two-Way",
+        "name_zh": "攻防兼备型",
+        "basketball_direction": "侧重攻防两端的均衡职能 (典型如3D侧翼或全能防守核心)",
+        "subfocus_tendency_desc": "侧重投射与外线/内线单兵防守技能"
+      },
+      {
+        "raw_value": 2,
+        "code": "OFFENSIVE",
+        "name_en": "Offensive",
+        "name_zh": "进攻型",
+        "basketball_direction": "侧重自主得分、终结、突破与武器库扩展",
+        "subfocus_tendency_desc": "集中资源于中远投、造犯规、篮下上篮与控运"
+      },
+      {
+        "raw_value": 3,
+        "code": "DEFENSIVE",
+        "name_en": "Defensive",
+        "name_zh": "防守型",
+        "basketball_direction": "侧重外线施压、横移干扰、抢断与内线协防护框",
+        "subfocus_tendency_desc": "集中资源于单防、协防、封盖、抢断与防守站位"
+      },
+      {
+        "raw_value": 4,
+        "code": "ATHLETIC",
+        "name_en": "Athletic",
+        "name_zh": "运动型",
+        "basketball_direction": "侧重速度、弹跳、爆发力、体能与转换快攻身体工具",
+        "subfocus_tendency_desc": "提升敏捷度、垂直弹跳、体能储备与直线冲刺"
+      },
+      {
+        "raw_value": 5,
+        "code": "REBOUNDING",
+        "name_en": "Rebounding",
+        "name_zh": "篮板型",
+        "basketball_direction": "侧重冲抢进攻与防守篮板、卡位对抗与二次进攻准备",
+        "subfocus_tendency_desc": "集中提升卡位属性、拼抢意识与防守篮板保护"
+      },
+      {
+        "raw_value": 6,
+        "code": "PLAYMAKING",
+        "name_en": "Playmaking",
+        "name_zh": "组织型",
+        "basketball_direction": "侧重控运节奏、传球视野、阵地策应与挡拆发起",
+        "subfocus_tendency_desc": "提升传球准确性、传球视野、持球稳固度与进攻组织"
+      },
+      {
+        "raw_value": 7,
+        "code": "OUTSIDE",
+        "name_en": "Outside",
+        "name_zh": "外线型",
+        "basketball_direction": "侧重外线三分投射、中距离急停跳投与进攻空间拉开",
+        "subfocus_tendency_desc": "重点发展三分受干扰/空位投篮与射程延伸"
+      },
+      {
+        "raw_value": 8,
+        "code": "INSIDE",
+        "name_en": "Inside",
+        "name_zh": "内线型",
+        "basketball_direction": "侧重低位背身单打、近框勾手、扣篮与禁区对抗",
+        "subfocus_tendency_desc": "重点提升背身移动、近距离投篮与内线身体强硬度"
+      }
+    ]
+  },
+  "training_intensity_system": {
+    "is_independent_from_preset_template": true,
+    "structural_distinction": "训练强度 (Intensity) 控制训练量与身体损耗/疲劳累积；训练预设模板 (Player Type) 控制属性分配权重与成长方向。两者在底层位段完全独立：模板位于 bits 11..15，强度位于 bits 16..18。",
+    "intensities_registered": [
+      {
+        "raw_value": 0,
+        "code": "REST",
+        "name_en": "Rest",
+        "name_zh": "休息",
+        "workload_impact": "零训练负荷，加速疲劳消除与身体恢复"
+      },
+      {
+        "raw_value": 1,
+        "code": "VERY_LOW",
+        "name_en": "Very Low",
+        "name_zh": "极低",
+        "workload_impact": "最低训练量，极低伤病风险，技能维持"
+      },
+      {
+        "raw_value": 2,
+        "code": "LOW",
+        "name_en": "Low",
+        "name_zh": "低",
+        "workload_impact": "轻度训练量，低疲劳累积"
+      },
+      {
+        "raw_value": 3,
+        "code": "MEDIUM",
+        "name_en": "Medium",
+        "name_zh": "中等",
+        "workload_impact": "标准默认训练量，平衡成长速度与身体疲劳"
+      },
+      {
+        "raw_value": 4,
+        "code": "HIGH",
+        "name_en": "High",
+        "name_zh": "高",
+        "workload_impact": "高强度集训，加快成长，伴随较高伤病风险与疲劳"
+      },
+      {
+        "raw_value": 5,
+        "code": "VERY_HIGH",
+        "name_en": "Very High",
+        "name_zh": "极高",
+        "workload_impact": "极限训练负荷，极高身体损耗与显著伤病隐患"
+      }
+    ],
+    "override_behavior": "当 is_intensity_overriden (bit 20) 为 1 时，球员使用自身指定的 intensity (bits 16..18)；当为 0 时，理论上跟随球队全局 home/away 强度或引擎自动调度。"
+  },
+  "position_specific_template_mapping_audit": {
+    "core_guideline": "严禁在缺乏真实 UI 菜单截图或可信原生证据的前提下推断每个位置一定拥有相同模板清单。",
+    "audit_findings": {
+      "pg_point_guard": {
+        "position_code": "PG",
+        "raw_position_value": 0,
+        "vanilla_ui_preset_menu_status": "EXACT_MAPPING_UNKNOWN",
+        "ui_menu_items_certified": null,
+        "heuristic_supported_prototypes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "notes": "传统后卫通常包含 Playmaking, Outside, Two-Way 等；在 PC22 离线菜单中是否包含 Inside 或 Rebounding 待实机屏幕证实。"
+      },
+      "sg_shooting_guard": {
+        "position_code": "SG",
+        "raw_position_value": 1,
+        "vanilla_ui_preset_menu_status": "EXACT_MAPPING_UNKNOWN",
+        "ui_menu_items_certified": null,
+        "heuristic_supported_prototypes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "notes": "得分后卫预设是否与 PG 完全一致仍需实机核对。"
+      },
+      "sf_small_forward": {
+        "position_code": "SF",
+        "raw_position_value": 2,
+        "vanilla_ui_preset_menu_status": "EXACT_MAPPING_UNKNOWN",
+        "ui_menu_items_certified": null,
+        "heuristic_supported_prototypes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "notes": "小前锋作为全能锋线，理论上能承载最多原型，但在 PC22 离线菜单中的确切字符串待读。"
+      },
+      "pf_power_forward": {
+        "position_code": "PF",
+        "raw_position_value": 3,
+        "vanilla_ui_preset_menu_status": "EXACT_MAPPING_UNKNOWN",
+        "ui_menu_items_certified": null,
+        "heuristic_supported_prototypes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8
+        ],
+        "notes": "大前锋在现代与传统打法下有 Stretch Big 与 Post Scorer 等区分，UI 是否显示原型名或特定模板名待证实。"
+      },
+      "c_center": {
+        "position_code": "C",
+        "raw_position_value": 4,
+        "vanilla_ui_preset_menu_status": "EXACT_MAPPING_UNKNOWN",
+        "ui_menu_items_certified": null,
+        "heuristic_supported_prototypes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          8
+        ],
+        "notes": "中锋通常重点包含 Inside, Rebounding, Defensive；UI 是否屏蔽 Playmaking 或 Outside 待实测。"
+      }
+    }
+  },
+  "reader_setter_evidence_status": {
+    "reader": {
+      "status": "STATIC_LAYOUT_VERIFIED",
+      "reader_path": "[[slot_training (0x0632B480)] + 0xC60 + player_index * 796] + 0x318",
+      "readback_capability": "可只读解析目标球员的 position (bits 8..10), player_type (bits 11..15), intensity (bits 16..18), is_intensity_overriden (bit 20)",
+      "live_verification_status": "已在静态结构体逆向与基线配置中确证"
+    },
+    "setter": {
+      "status": "NOT_BOUND",
+      "native_function_symbol": null,
+      "native_rva": null,
+      "direct_memory_patch_viability": "理论上可修改 0x318 的 32 位整数，但缺乏原生游戏 UI 脏标记触发、事件通知及存档合法性保障，严禁在生产中盲目直写",
+      "role_batch_action_status": "TRAIN.PLAYER_FOCUS 与 TRAIN.PLAYER_INTENSITY 在 baseline checkpoint 014 中明确登记为 NOT_BOUND / DEFERRED_NOT_AUTHORIZATION"
+    },
+    "team_training_separation": {
+      "team_training_actions": [
+        "TRAIN_TEAM_SET_SCHEDULE",
+        "TRAIN_TEAM_SET_INTENSITY",
+        "TRAIN_TEAM_PATCH_FOCUS_RAW",
+        "TRAIN_TEAM_PATCH_PROFILE_RAW"
+      ],
+      "boundary_statement": "上述已实现的球队训练动作仅调用 training.set_team_on_date (RVA 0x1325f10) 操作 56/64 字节团队单日计划，绝对不改变 player_training 的个人 0x318 预设模板与个人强度。"
+    }
+  },
+  "unresolved_unknowns_and_next_steps": {
+    "unknown_items": [
+      {
+        "id": "UNK-TR-01",
+        "item": "PC22 真实离线 MyLEAGUE 个人训练界面中，PG/SG/SF/PF/C 各位置实际下拉菜单的完整文本列表与数量",
+        "resolution_requirement": "由玩家或测试员在 PC22 离线 MyLEAGUE 中打开具体球员的个人训练界面，逐位置记录可选模板名称"
+      },
+      {
+        "id": "UNK-TR-02",
+        "item": "UI 中选定的模板名称如何一一对应到底层 0..8 的 player_type 或其他分配权重",
+        "resolution_requirement": "在游戏 UI 中切换模板并保存，只读比对内存 0x318 位段及 points_per_subfocus 变化"
+      },
+      {
+        "id": "UNK-TR-03",
+        "item": "是否存在官方原生的 PlayerTraining_SetTemplate 导出函数及其调用约定 (ABI)",
+        "resolution_requirement": "逆向定位当玩家在 UI 中点击应用个人训练时调用的底层原生函数"
+      },
+      {
+        "id": "UNK-TR-04",
+        "item": "自然赛季推进中，不同的 player_type 对具体属性成长的数学权重与衰减影响",
+        "resolution_requirement": "交给 2K 原生引擎黑盒计算，外挂系统不做自作聪明的经验公式模拟"
+      }
+    ],
+    "guidance_for_codex": "在 UNK-TR-01 与 UNK-TR-02 未完成前，Codex 严禁将 TRAIN.PLAYER_FOCUS 升级为可写执行动作；只读 Reader 可以选择性接入以获取当前球员预设。"
+  }
+}
