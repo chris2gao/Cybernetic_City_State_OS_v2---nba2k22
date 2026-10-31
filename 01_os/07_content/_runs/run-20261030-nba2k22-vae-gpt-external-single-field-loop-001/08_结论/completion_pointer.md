@@ -1,42 +1,49 @@
-# VAE GPT External Single-Field Loop · Checkpoint 50/204
+# VAE GPT External Single-Field Loop · Sweep1 70/204 Checkpoint
 
-Task: `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`
-Role: `execution`. Actual model: GPT-6 by conversation declaration, not host-signed model attestation.
-Branch: `task/nba2k22-vae-gpt-external-single-field-loop-20261030`.
-Dispatch: `d01dd0dba00ad2c03a84320f8e93cea027d37bea`.
-**Research/Run commit before this pointer**: `d92210ab583e2fe2d5453ff1408d30dcfaa5800f`. Read this pointer's actual resulting commit from GitHub HEAD.
-Shared queue: `6436515330f77c0cc5cc675b521590adeb69c5d4`, blob `af5567e14e03cd9f7761e396a978311e347d7c17`.
-Core master at recovery: `934425cf43d4fe3307b0112142aec1ba434a5734`; NBA master: `45cc45cae0550ddcda192a2179ea48509b27f6ee`.
+- task: `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`
+- role: `execution`; assigned GPT-6; actual identity conversation-declared, not platform-signed
+- branch: `task/nba2k22-vae-gpt-external-single-field-loop-20261030`
+- previous checkpoint `0b88457daba455d10dec177d1a2e21e2e11cd9da` at 50/204
+- latest Run update before pointer: `86519d065430a878caa9b208c64a08245e09c4d5`
+- seed queue commit: `6436515330f77c0cc5cc675b521590adeb69c5d4`; blob `af5567e14e03cd9f7761e396a978311e347d7c17`
+- exact NBA master baseline: `45cc45cae0550ddcda192a2179ea48509b27f6ee`; Core master at recovery: `934425cf43d4fe3307b0112142aec1ba434a5734`
 
-## Actual progress
-- Sweep 1: **50/204** attempted. **154** seed records remain.
-- Latest finished: `TENDENCY_NATIVE_050` / candidate raw `0x489`.
-- Next single field: **`TENDENCY_NATIVE_051`**, raw `0x48A` (no validated semantic name).
-- Cumulative no-direct-field-identity source: **18**, counted from append-only iteration ledger.
-- This invocation studied **036–050** individually: 10 named tendency candidates, 5 unidentified raw slots (`043`, `047–050`).
-- Current native/UI mapping, 3D game consumer, numeric response curves: all UNKNOWN/NOT_RUN, not conferred by any web claim.
+## Real progress and next item
 
-## Research theme and limits
-- 036 Contested Jumper Mid: choosing a contested shot vs successful shooting.
-- 037–039 Stepback Three/Mid and Spin Jumper: move selection, shot type, action opportunities and animation eligibility; multiple tendency interactions suggested by contemporary 2K22 community reports, not confirmed engine thresholds.
-- 040–042 Transition Pull Up Three, Drive Pull Up Three/Mid: distinguish transition, on-ball drive, alternative finishes and Coach Playbook; same-release edits/observations without isolated native tests.
-- 044–046 Drive, Spot Up Drive, Off Screen Drive: same-version archived 2K22 export has separately named values; no PC22 offset readback. Earlier 2018 community theory remains cross-version hypothesis only.
-- 043 and 047–050: exact-offset internet searches yielded no reliable native identity mapping; no guessing from adjacent UI export columns.
+- **70/204** first-sweep field records attempted. **134 remain**. Still `SWEEP1_IN_PROGRESS`, not complete.
+- 20 new field records 051..070, each exactly one source question and Gemini read-only REA question.
+- Cumulative `NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE` **32**, of which 14 newly researched raw slots: `0x48A–0x496` (051–063) and `0x49D` (070).
+- **Next field: `TENDENCY_NATIVE_071`, raw `0x49E`**. Source of truth: live `06_执行/current_checkpoint.json` at HEAD, not this pointer if the branch changes.
 
-Each dossier contains the single research question, source URLs, authors/dates/platform limits, claim strength, conflicting explanations, likely confounders, observable outcomes, and **one** concrete read-only Gemini REA identity check. No automated Gemini action or game writes occurred.
+## This session's six named player tendency questions
 
-## Durable artifacts within this Run
-- `06_执行/field_records/TENDENCY_NATIVE_036.json` … `TENDENCY_NATIVE_050.json`
-- `06_执行/iteration_ledger.jsonl`: 50 ordered append-only rows, cursor 0→50
-- `06_执行/current_checkpoint.json`: source of truth for latest cursor; always re-read on resume
-- `07_测试执行/sweep01_field0036_static_verification.json` … `sweep01_field0050_static_verification.json`
-- `07_测试执行/sweep01_fields0036_0050_readback.json`: GitHub static readback; not game verification
-- `run.yml`: synchronized 50/204 state.
+- 064 `ATTACK_STRONG_ON_DRIVE` @0x497: contact-seeking finish vs starting a drive vs shot make; 2021 multi-field observations and older cross-version theory.
+- 065 `DISH_TO_OPEN_MAN_TENDENCY` @0x498: open-teammate pass opportunities vs assists and pass skill; 2021 ATD editor and contradictory play-discipline anecdote.
+- 066 `TOUCHES_TENDENCY` @0x499: 2021 community sources conflict on play-call targeting vs freelance-ball-reception effects; Playbook/PlayTypes/offensive focus and PG role are confounders.
+- 067 `POST_UP_TENDENCY` @0x49A: eligible post-up initiation vs post move selection and coach playbook calls.
+- 068 `ROLL_VS_POP_TENDENCY` @0x49B: screen roll/pop choices; endpoint direction and alleged 2K23 play availability gating do not transfer to PC22.
+- 069 `TRANSITION_SPOT_UP` @0x49C: transition spot-up vs cutting, separate from spot-up shot or drive frequency, value orientation unknown.
 
-## Minimum Work Unit and handoff
-Method: fixed GitHub SHA/blob recovery, actual external search, one question per field, source grading and falsifiers, exact GitHub writes/readback and contiguous cursor verification. 15 field files and static receipts are available. No direct PC22 engine consumer or threshold has been proven; all 18 unknown-mapping entries remain explicit.
+None of the six candidate Native offsets is independently UID/UI verified; no causal response, numeric optimum or internal formula was established.
 
-Constraints: no Core/master/other Run writes, no REA/game/save operations, no verified PRMS SAVE_TASK_CONTEXT, no formal Communication v2, no autonomous background loop. Joint independent audit pending both research streams' frozen release.
-Next owner: same GPT-6 execution research task on active resume; start **`TENDENCY_NATIVE_051`** at current GitHub HEAD, not based on older pointers.
+## Immutable evidence and run files
 
-Status: **`SWEEP1_CURSOR_50_CHECKPOINTED_LOOP_OPEN`**.
+- `06_执行/field_records/TENDENCY_NATIVE_051.json` through `TENDENCY_NATIVE_070.json`
+- `06_执行/iteration_ledger.jsonl`: append-only 70 ordered records, cursor 0..70
+- `06_执行/current_checkpoint.json`: current state
+- `07_测试执行/sweep01_field0051_static_verification.json` through `sweep01_field0070_static_verification.json`: 20 scoped static records
+- `07_测试执行/sweep01_fields0051_0070_readback.json`: batch static source/ledger/path verification
+- `run.yml`: synchronized status, cursor, model identity and review limitations
+
+## Verification and boundaries
+
+Verified GitHub commit `23269db6d57196c6b42ac1952d4bdf03062c5663`: 70 contiguous cursor entries, total 32 no-direct-source flags, all 20 per-field static files, all changed paths inside authorized Run, exact expected NBA master merge base. Later report and Run commit add only in-scope artifacts. After pointer publication read back newest HEAD again.
+
+- PC22 engine/runtime, native getters, Gemini REA, SaveReload, 3D/Calendar causal tests: **NOT_RUN**.
+- No actual communication to Gemini; Human will relay precise field_ID questions at scheduled checkpoints.
+- Independent audit, PRMS SAVE_TASK_CONTEXT and formal Communication v2: **NOT_RUN/PENDING**. No background runner/scheduler.
+- No Core, master, other task or game/save modification.
+
+Minimum work: resumed from 50, actually searched 14 exact offset queries and contemporaneous 2K22 gameplay/editor forum sources for 064–069; wrote individual research with source strength, conflicts, controlled metrics, and independent read-only REA questions; committed each field and verified cumulative continuity. Any source absence remains a gap, not a negative runtime proof.
+
+**Status: `SWEEP1_CURSOR_70_CHECKPOINTED_LOOP_OPEN`.**
