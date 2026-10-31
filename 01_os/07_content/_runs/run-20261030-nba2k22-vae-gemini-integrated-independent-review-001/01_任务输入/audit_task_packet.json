@@ -1,0 +1,34 @@
+{
+  "schema_version": "nba2k22.vae.gemini.integrated.independent_audit.v1",
+  "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-INDEPENDENT-REVIEW-20261030-001",
+  "parent_task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+  "role": "independent_review",
+  "domain": "nba2k22",
+  "risk_tier": "T2_semantic",
+  "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "branch": "task/nba2k22-vae-gemini-integrated-independent-review-20261030",
+  "subject_candidate_commit": "c2d9caae388bac3ae5e586c69ee0bd2116ba473b",
+  "subject_dispatch_commit": "49659925312275d101232c3bc522f162436d28d5",
+  "stage01_Human_confirmation_commit": "a98aa2db6e442bbc3aecfa552665ea13d482683e",
+  "previous_independent_stage01_audit": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5",
+  "allowed_changed_paths": [
+    "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-independent-review-001/"
+  ],
+  "objective": "复核Gemini集中开发候选的证据分级、R01-R09合同、F02-F07、E1-E4离线原型、安全边界和21项测试的可证范围，形成集中审核结论。",
+  "original_assigned_review_context": "new_isolated_GPT_independent_review_fork",
+  "Human_override_in_current_conversation": "2026-10-30: 审核不用隔离，你可以继续审核。",
+  "actual_session": "existing GPT-6 Stage01 reviewer conversation, a different execution context from Gemini but not a fresh Fork",
+  "actual_platform_window_id": "UNKNOWN_NOT_EXPOSED",
+  "model_assignment": "GPT-6 as Human-assigned",
+  "model_actual_claim": "GPT-6 from ChatGPT runtime model identity, not externally attested",
+  "review_independence": "reviewer did not author Gemini code; reuses previous Stage01 reviewer window by Human override; platform session isolation not certified",
+  "prms": "NOT_RUN_GITHUB_RUN_RECOVERY",
+  "game_access": "NONE",
+  "no_master_or_developer_branch_writes": true,
+  "verification_method": [
+    "Github fixed SHA file and compare",
+    "Original source-level invariant assessment",
+    "Independent Python source-equivalent minimal counterexample probes, not original code suite",
+    "Developer pytest 21/21 report only, not independent full pytest replay"
+  ]
+}
