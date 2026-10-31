@@ -1,0 +1,244 @@
+# YAML 1.2-compatible JSON; Stage01 candidate ONLY
+{
+  "schema_version": "nba2k22.vae.stage01.A_candidate.v1",
+  "artifact_version": 1,
+  "artifact_kind": "requirement_consensus_candidate",
+  "run_id": "run-20261030-nba2k22-vae-gpt-development-001",
+  "task_id": "NBA2K22-VAE-GPT-STAGE01-20261030-001",
+  "status": "CANDIDATE_PENDING_HUMAN_VERSION_CONFIRMATION",
+  "source_refs": [
+    "NBA planner @57106954627f0d8d540d83e8ea9773faee51cac4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_需求建模/A0_需求共识候选_v1.yml (blob c9d57e61a361c8a3cffcb6731479914883f2f368)",
+    "NBA execution dispatch @079ccec5a28e7a61f000b462037f1c67ae8cef11:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_任务输入/task_packet.yml",
+    "Core Stage01 schema @934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md"
+  ],
+  "目标": "在NBA2K22 PC的MyLEAGUE底层机制下，以分域、有证据、可撤回的配置及AI输入校准提高原版引擎竞技合理性；先允许一个真实可观察的局部试验，保留未改善、失败及证据不足的结果。",
+  "成功判据": [
+    {
+      "id": "SC01",
+      "描述": "能生成含存档、game build、模式、场景、USER/CPU侧、原值、来源、时间及UNKNOWN的当前只读Profile",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC02",
+      "描述": "能针对一项可归属的游戏异常提出有依据的假设、竞争解释和NO_CHANGE选项",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC03",
+      "描述": "任何未来调整之前冻结原值、目标值、权限、主指标、副作用、观察窗口、技术路径及恢复方案",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC04",
+      "描述": "有授权且有实际安全接口时能完成局部执行及独立技术读回；否则正确BLOCKED",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC05",
+      "描述": "至少一次有界调整能产生同引擎路径3D或Calendar的自然游戏观察，改善/未改善/证据不足均可",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC06",
+      "描述": "试验、失败、撤回、竞争性证据与经验修订追加保存，历史事实不静默覆盖",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC07",
+      "描述": "E1–E4各具有输入、输出、观察指标、权限和UNKNOWN路径；无需30队全量先完成",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    },
+    {
+      "id": "SC08",
+      "描述": "VAE能选择性反馈D1–D5的实证字段/接口/采集缺口，但不等待D系列整体完成",
+      "可观察": true,
+      "验证": "由对应trial、profile、source-ref、observation及权限/失败回执进行独立核验"
+    }
+  ],
+  "边界": [
+    "目标游戏为PC22离线MyLEAGUE底层；当前MC存档仅作未来受控验证载体，不开发MC专属玩法、权益或剧情",
+    "E1世界/3D/日历环境、E2球队Coach/轮换/训练、E3人员经营/交易签约选秀、E4球员能力/徽章/倾向/热区均覆盖",
+    "不替代原版比赛和自然成长引擎，不决定比赛结果，不追求统一球队风格或一次求最优参数",
+    "不把旧建议值、静态默认值、研究地址、Fixture或特定REA成功当作活跃全局配置及通用写入资格",
+    "不新建平行OS、REA、数据库、PRMS或通信机制，不接管D1–D5和其他工程",
+    "普通GM不自动取得Ability/Potential/Badge编辑权；世界维护校准另需权限与实证",
+    "本次仅Stage01需求/证据候选；不写游戏、存档或Native Setter，Stage03的B须待Stage02真实证据"
+  ],
+  "约束": [
+    "执行窗口与规划/审核窗口隔离；后续Codex唯一工程Owner、Gemini有界顺序研究、Human保留版本和写入授权",
+    "先保留游戏问题/原始来源，再冻结假设、主/副指标及观察窗口，再授权改动和独立读回、自然比赛、修订",
+    "UNKNOWN不是零；必须区分mode、save、game build、USER/CPU、场上Controller与经营权、3D/Calendar、Normalize开关",
+    "改动前验证原值及身份、模式、权限和可恢复性；技术成功不证明竞技效果，观察相关不自动证明因果",
+    "比赛观察保留Game ID、日期、采集批次、保存时点和冲突，不覆盖已发生的游戏历史",
+    "VAE与D1–D5分别立项；仅双向复用经来源核验的Reader/REA/采集/决策经验",
+    "本任务只在授权Run写文件；Human未确认精确A版本前不得宣布Stage01已完成或运行Stage06"
+  ],
+  "术语": [
+    {
+      "词": "VAE",
+      "含义": "原版AI竞技环境长期补强独立机制",
+      "别名": [
+        "Vanilla AI Enhancement",
+        "原版AI竞技补强"
+      ]
+    },
+    {
+      "词": "MyLEAGUE底层",
+      "含义": "终极联盟基础设置、球员、球队、经营及比赛机制；MC只作逐项验证环境",
+      "别名": [
+        "终极联盟底层"
+      ]
+    },
+    {
+      "词": "Profile Snapshot",
+      "含义": "精确存档、build、时间、模式和来源约束下的当前只读配置；非静态建议值",
+      "别名": [
+        "当前配置基线"
+      ]
+    },
+    {
+      "词": "Adjustment Trial",
+      "含义": "预注册原值、候选调整、证据、指标、权限、窗口、恢复策略的有界试验合同",
+      "别名": [
+        "调整试验"
+      ]
+    },
+    {
+      "词": "Technical Readback",
+      "含义": "未来操作的Getter/原生UI/保存重载分层技术效果确认，不是竞技改善",
+      "别名": [
+        "技术读回"
+      ]
+    },
+    {
+      "词": "Competitive Observation",
+      "含义": "同3D或Calendar路径的真实比赛事实、统计及Human观察",
+      "别名": [
+        "竞技效果观察"
+      ]
+    },
+    {
+      "词": "NO_CHANGE",
+      "含义": "有依据的不调整决策，合法的Trial结果",
+      "别名": [
+        "不调整"
+      ]
+    },
+    {
+      "词": "UNKNOWN",
+      "含义": "当前没有验证的字段、来源、模式或效果，不得假装已知",
+      "别名": [
+        "待验证"
+      ]
+    }
+  ],
+  "关联领域": [
+    {
+      "领域": "E1",
+      "为什么相关": "全局GamePlay、HoF、ACE、Normalize、USER/CPU和Calendar SIM参数消费机制"
+    },
+    {
+      "领域": "E2",
+      "为什么相关": "Coach、POE、Playbook、轮换、训练和球员Tendency配合"
+    },
+    {
+      "领域": "E3",
+      "为什么相关": "球队经营、交易、签约、选秀和身份/市场阶段"
+    },
+    {
+      "领域": "E4",
+      "为什么相关": "球员能力、徽章、动作、热区、倾向及世界维护权限"
+    },
+    {
+      "领域": "OS",
+      "为什么相关": "Workflow、Stage01版本确认、MWU、PRMS和可追溯证据"
+    },
+    {
+      "领域": "D1-D5",
+      "为什么相关": "仅可选复用已证字段、Reader、采集、信息服务及执行能力"
+    }
+  ],
+  "假设": [
+    {
+      "假设": "当前MC存档允许部分MyLEAGUE底层设置被只读验证",
+      "如果不成立会怎样": "对应字段标MODE_UNVERIFIED，转向独立可恢复MyLEAGUE测试档，不涉及MC独有功能"
+    },
+    {
+      "假设": "既有Reader/UI可为首个试验提供一个安全配置原值",
+      "如果不成立会怎样": "若没有，首版只交诊断与Reader缺口，另派Codex最小只读任务，不热写"
+    },
+    {
+      "假设": "自然游戏能生成可归属的至少一个场上/日历指标",
+      "如果不成立会怎样": "如不足则INCONCLUSIVE，修订指标/延长窗口，不伪造因果"
+    },
+    {
+      "假设": "已有REA或经授权UI能在后续受控试验提供一个可恢复变动",
+      "如果不成立会怎样": "如不成立则TECH_PATH_BLOCKED，本需求候选不冒充执行成功"
+    }
+  ],
+  "未解歧义": [
+    {
+      "id": "U01",
+      "歧义": "现行MC存档、游戏build、PE和活跃Profile实际值未读回",
+      "为何未解": "本任务只读仓库，未接游戏",
+      "影响": "高",
+      "阻塞范围": [
+        "实际配置试验",
+        "游戏写入"
+      ]
+    },
+    {
+      "id": "U02",
+      "歧义": "USER/CPU侧别、双Normalize、3D与Calendar对同一配置的消费关系未知",
+      "为何未解": "现有研究仅社区/静态与局部实证",
+      "影响": "高",
+      "阻塞范围": [
+        "相关参数调整",
+        "效果因果判定"
+      ]
+    },
+    {
+      "id": "U03",
+      "歧义": "静态offset、类型、范围和默认值与当前游戏的一致性未知",
+      "为何未解": "未做Getter/UI/SaveReload三向实测",
+      "影响": "高",
+      "阻塞范围": [
+        "Native Setter适用性",
+        "当前Profile确认"
+      ]
+    },
+    {
+      "id": "U04",
+      "歧义": "具体首试验对象和值尚未选择",
+      "为何未解": "尚无当前Profile/同场景异常归因",
+      "影响": "中",
+      "阻塞范围": [
+        "首次受控Adjustment Trial"
+      ]
+    },
+    {
+      "id": "U05",
+      "歧义": "E3/E4相关具体场景是否可授权执行与存盘持久未知",
+      "为何未解": "特定REA已证操作无法推广",
+      "影响": "中",
+      "阻塞范围": [
+        "相关操作实施"
+      ]
+    }
+  ],
+  "Human_confirmation": {
+    "confirmed": false,
+    "artifact_version": 1,
+    "confirmation_ref": null,
+    "source": "规划A0-v1及此修订均未获Human对精确版本正式确认"
+  },
+  "stage01_complete": false,
+  "workflow_note": "非正式01_requirement.yml；不伪造status complete、deliberation receipt或Stage03 result package。"
+}
