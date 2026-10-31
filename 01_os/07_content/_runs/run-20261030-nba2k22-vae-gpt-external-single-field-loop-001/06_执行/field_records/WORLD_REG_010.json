@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_010",
+  "iteration_id": "SWEEP01_FIELD0109",
+  "research_date": "2026-10-31",
+  "primary_question": "Does Trade Override permit explicit human/native override of a rejected proposal while retaining native proposal submission, as distinct from enabling CPU-CPU Trades or bypassing all trade legalities?",
+  "registry_candidate": {
+    "key": "settings.trade_rules.trade_override",
+    "offset": "0x168",
+    "kind": "STATIC_REGISTRY_CANDIDATE",
+    "UI_mapping": "UNKNOWN",
+    "storage_type": "UNKNOWN",
+    "runtime_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-22 NBA2K22 era",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE, PC exact variant unknown",
+      "grade": "SAME_RELEASE_SETTING_LABEL",
+      "claim": "CPU-CPU Trades and Trade Override separately listed under Trades"
+    },
+    {
+      "url": "https://www.trueachievements.com/a338876/maxed-out-achievement",
+      "author": "TrueAchievements Xbox One NBA2K22 MyGM guide",
+      "date": "2021 NBA2K22 era",
+      "version": "NBA2K22",
+      "platform": "Xbox One MyGM, not PC MyLEAGUE",
+      "grade": "SAME_VERSION_OTHER_MODE_USER_PROCEDURE",
+      "claim": "Turning Trade Override on and Financial Trade Rules off allowed user-prompted overriding of proposals in that mode"
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/k87sh9",
+      "author": "r/NBA2k December 2020",
+      "date": "2020-12-07",
+      "version": "PRE-2K22",
+      "platform": "MyLeague version unspecified",
+      "grade": "CROSS_VERSION_ONLY",
+      "claim": "Trade override and CPU-CPU approval are distinct commissioner controls; not authoritative for PC22"
+    }
+  ],
+  "claims": [
+    "Same-release trade settings list a separate Trade Override control",
+    "No directly verified PC22 native offset 0x168 or enum",
+    "Original engine setting only constrains original engine operations; external GM rules require their own documented policy"
+  ],
+  "contradictions": [
+    "MyGM Xbox and current-gen PC MyLEAGUE may differ in submission and override UI",
+    "Native trade automation and Human-authorized external GM transfers are separate decision paths",
+    "Source game setting can gate background activity without proving any given trade's success"
+  ],
+  "related_fields": [
+    "Trade Logic, Trade Approval, Financial Trade Rules",
+    "native propose/check/commit and rule validation",
+    "human-controlled vs CPU automation"
+  ],
+  "observable_metrics": [
+    "native proposal review state versus human override authorization",
+    "transaction outcome and eligibility validation result separately",
+    "no assertion external GM submit bypasses source game rules"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_010",
+    "question": "Can a read-only current PC22 MyLEAGUE settings snapshot map candidate +0x168 to the exact visible Trade Override option, with immediate/delayed readback and no trade operations?",
+    "positive": "CONFIG_FIELD_IDENTITY_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_TRADE_SETTING_NATIVE_MAPPING_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "external_GM_rule": "NOT_SELECTED_BY_THIS_RESEARCH"
+}
