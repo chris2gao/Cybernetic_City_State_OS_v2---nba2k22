@@ -1,0 +1,47 @@
+run_id: run-20261031-nba2k22-vae-rea-live-sweep-independent-review-001
+task_id: NBA2K22-VAE-REA-LIVE-SWEEP-INDEPENDENT-REVIEW-20261031-001
+role: independent_review
+domain: nba2k22
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+review_branch: task/nba2k22-vae-rea-live-sweep-independent-review-20261031
+fixed_subject_branch: task/nba2k22-vae-rea-single-field-loop-20261030
+fixed_subject_commit: f1e02101ead9e48c0dd3591e8c76501e407acfab
+fixed_subject_parent: bccbb80677d20c3c09d2f9b5ea06797f501dfafc
+base_master_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+review_status: REWORK_REQUIRED
+evidence_graded_scope: RAW_MEMORY_CAPTURE_CANDIDATE_ONLY
+human_candidate_acceptance: NOT_GIVEN
+review_finding_count: 12
+P0: 5
+P1: 5
+P2: 2
+source_changed_files: 207
+source_field_records: 204
+source_field_record_families:
+  tendency: 99
+  coach: 19
+  world: 86
+source_test_files_changed: 0
+coach_known_ranges_checked: 13
+coach_out_of_range: 10
+original_dev_8_pytest_replay: NOT_RUN
+independent_source_equivalent_probes: SIX_PASSED
+source_evidence: 07_测试执行/independent_evidence_matrix.json
+report: 08_结论/independent_review_report.md
+reviewer:
+  assigned_model: GPT-6
+  actual_model: GPT-6_CURRENT_CHAT_IDENTITY
+  external_platform_model_attestation: UNKNOWN
+  session_id: UNKNOWN
+  fresh_isolated_Fork: false
+  Human_nonisolated_review_override: true
+  different_from_Gemini_developer: true
+runtime:
+  game_process_attach_by_reviewer: NOT_RUN
+  REA_tool_by_reviewer: NOT_RUN
+  memory_or_save_mutation_by_reviewer: NOT_RUN
+  developer_attach_authority_receipt: NOT_VERIFIED
+prms_save_task_context: NOT_RUN
+formal_communication_v2: NOT_PUBLISHED
+next_owner: Gemini_REA_execution_same_task
+stage_boundary: no_master_integration_no_live_effect_claim
