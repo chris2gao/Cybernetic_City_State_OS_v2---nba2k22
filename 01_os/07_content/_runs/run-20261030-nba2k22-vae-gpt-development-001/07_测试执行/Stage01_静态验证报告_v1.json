@@ -1,0 +1,68 @@
+{
+  "schema_version": "nba2k22.vae.stage01.static_verification.v1",
+  "task_id": "NBA2K22-VAE-GPT-STAGE01-20261030-001",
+  "tested_sources": {
+    "core_master": "934425cf43d4fe3307b0112142aec1ba434a5734",
+    "nba_master": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "dispatch": "079ccec5a28e7a61f000b462037f1c67ae8cef11",
+    "A_artifact_commit": "c07916ab389ea8396105114424949b31e0beb4b8"
+  },
+  "checks": [
+    {
+      "id": "TASK_BOOTSTRAP",
+      "status": "PASS",
+      "evidence": "Fresh refs, task contract and planner Run read"
+    },
+    {
+      "id": "A0_EIGHT_REQUIRED_SLOTS",
+      "status": "PASS",
+      "evidence": "A0 object contains 8 semantic slots, 8 observable criteria, scoped unknowns and explicit fallback"
+    },
+    {
+      "id": "HUMAN_APPROVAL_BOUND_TO_VERSION",
+      "status": "PASS",
+      "evidence": "Human confirmed false, stage01_complete false; no invented approval"
+    },
+    {
+      "id": "VAE_NOT_SUBORDINATE_TO_D_SERIES",
+      "status": "PASS",
+      "evidence": "D1–D5 outputs optional and independently pursued"
+    },
+    {
+      "id": "SOURCES_AND_UNKNOWN_SEPARATION",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "Fixed source matrix: Human decision, static study, Native scoped effects and future gameplay distinct"
+    },
+    {
+      "id": "NO_UNAUTHORIZED_GAME_WRITE",
+      "status": "PASS",
+      "evidence": "Only task-specific GitHub Run text/JSON/YAML planned; no game process/Native/setter or save access"
+    },
+    {
+      "id": "RUN_AND_EXACT_GIT_READBACK",
+      "status": "PENDING",
+      "evidence": "Requires post-publication exact commit and path compare"
+    },
+    {
+      "id": "WORKFLOW_STAGE01_COMPLETION_GATE",
+      "status": "NOT_RUN",
+      "evidence": "No Human version confirmation or canonical runner receipt"
+    },
+    {
+      "id": "GAME_EFFECT_VALIDATION",
+      "status": "NOT_RUN",
+      "evidence": "No runtime connection, natural gameplay experiment or independent audit"
+    }
+  ],
+  "environment": "GitHub connector read/write; deterministic JS structural checks; no local game process",
+  "result": "STATIC_CANDIDATE_READY_FOR_EXACT_GIT_READBACK_NOT_STAGE01_COMPLETE",
+  "human_confirmation": "PENDING",
+  "independent_review": "NOT_RUN",
+  "prms": "NOT_RUN",
+  "formal_communication": "NOT_SENT",
+  "limitations": [
+    "Static source claims not equivalent to live interface",
+    "No Core Stage01 runner pass",
+    "No SaveReload or competitive evidence"
+  ]
+}

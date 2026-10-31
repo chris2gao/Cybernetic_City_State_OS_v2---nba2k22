@@ -1,0 +1,255 @@
+{
+  "schema_version": "nba2k22.vae.stage01.vertical_slice_candidate.v1",
+  "task_id": "NBA2K22-VAE-GPT-STAGE01-20261030-001",
+  "status": "CANDIDATE_NOT_IMPLEMENTED",
+  "human_confirmation": false,
+  "objects": [
+    {
+      "id": "R01",
+      "name": "ProfileSnapshot",
+      "required_fields": [
+        "save_id",
+        "game_build",
+        "game_mode",
+        "scene",
+        "side",
+        "field_id",
+        "raw_value",
+        "display_value",
+        "unit",
+        "source_ref",
+        "captured_at",
+        "freshness"
+      ],
+      "initial_status": "UNKNOWN"
+    },
+    {
+      "id": "R02",
+      "name": "IssueDiagnosis",
+      "required_fields": [
+        "issue_id",
+        "game_ref",
+        "observed_symptom",
+        "basketball_source_ref",
+        "plausible_causes",
+        "confounders",
+        "no_change_decision"
+      ],
+      "initial_status": "EVIDENCE_GAP"
+    },
+    {
+      "id": "R03",
+      "name": "TrialPreflight",
+      "required_fields": [
+        "trial_id",
+        "target_identity",
+        "before_ref",
+        "expected_before",
+        "proposed_after",
+        "metric_primary",
+        "metrics_side_effect",
+        "observation_window",
+        "restore_plan",
+        "technical_path",
+        "authorization_ref"
+      ],
+      "initial_status": "PLANNED"
+    },
+    {
+      "id": "R04",
+      "name": "ExecutionReceipt",
+      "required_fields": [
+        "trial_id",
+        "action_id",
+        "auth_ref",
+        "actual_scene",
+        "technical_request_ref",
+        "technical_response",
+        "executed_at"
+      ],
+      "initial_status": "NOT_RUN"
+    },
+    {
+      "id": "R05",
+      "name": "TechnicalReadback",
+      "required_fields": [
+        "trial_id",
+        "getter_before_ref",
+        "getter_after_ref",
+        "ui_ref",
+        "save_reload_ref",
+        "conflicts",
+        "verification_level"
+      ],
+      "initial_status": "UNVERIFIED"
+    },
+    {
+      "id": "R06",
+      "name": "CompetitiveObservation",
+      "required_fields": [
+        "trial_id",
+        "engine_path",
+        "game_id",
+        "save_id",
+        "game_date",
+        "batch_id",
+        "metrics",
+        "human_note",
+        "confounders",
+        "source_refs"
+      ],
+      "initial_status": "INSUFFICIENT"
+    },
+    {
+      "id": "R07",
+      "name": "EffectEvaluation",
+      "required_fields": [
+        "trial_id",
+        "preregistered_metric_ref",
+        "outcome",
+        "side_effects",
+        "confidence",
+        "competing_explanations"
+      ],
+      "initial_status": "INCONCLUSIVE"
+    },
+    {
+      "id": "R08",
+      "name": "KnowledgeRevision",
+      "required_fields": [
+        "trial_id",
+        "prior_claim_ref",
+        "new_claim",
+        "counterexamples",
+        "source_refs",
+        "revision_time"
+      ],
+      "initial_status": "APPENDED"
+    },
+    {
+      "id": "R09",
+      "name": "DSeriesFeedback",
+      "required_fields": [
+        "trial_id",
+        "evidence_tier",
+        "d1_information",
+        "d2_reader",
+        "d3_capture",
+        "d4_service",
+        "d5_execution",
+        "owner"
+      ],
+      "initial_status": "OPTIONAL"
+    }
+  ],
+  "domains": [
+    {
+      "id": "E1",
+      "inputs": [
+        "gameplay_snapshot",
+        "scene",
+        "USER_CPU",
+        "normalize",
+        "game_ref"
+      ],
+      "output": "environment_trial_or_NO_CHANGE",
+      "observation": "3D versus Calendar separated",
+      "unknown": "engine_consumption"
+    },
+    {
+      "id": "E2",
+      "inputs": [
+        "coach_state",
+        "playbook",
+        "rotation",
+        "training",
+        "team_identity"
+      ],
+      "output": "coach_trial_or_NO_CHANGE",
+      "observation": "team minutes and behavior",
+      "unknown": "full native interfaces"
+    },
+    {
+      "id": "E3",
+      "inputs": [
+        "roster",
+        "contracts",
+        "market_scene",
+        "draft",
+        "trade"
+      ],
+      "output": "management_diagnosis_and_authorized_action",
+      "observation": "team roster economics and progression",
+      "unknown": "mode rule coverage"
+    },
+    {
+      "id": "E4",
+      "inputs": [
+        "player_state",
+        "badge",
+        "tendency",
+        "animation",
+        "hotzone",
+        "world_admin_permission"
+      ],
+      "output": "world_calibration_candidate",
+      "observation": "player moves and game outcomes",
+      "unknown": "full effect and permissions"
+    }
+  ],
+  "trial_invariants": [
+    "snapshot is observed, not static default",
+    "UNKNOWN never replaced by zero",
+    "write authorization is separate from technical capability",
+    "independent readback separate from gameplay benefits",
+    "separate 3D and Calendar Sim paths",
+    "save identity, side and normalization bind every comparison",
+    "negative result and revert evidence append-only",
+    "VAE has no hard D1-D5 completion dependency"
+  ],
+  "accepted_outcomes": [
+    "NO_CHANGE",
+    "MODE_UNVERIFIED",
+    "TECH_PATH_BLOCKED",
+    "AUTHORIZATION_PENDING",
+    "REJECTED_BY_GAME",
+    "TECHNICAL_READBACK_ONLY",
+    "INCONCLUSIVE",
+    "IMPROVED",
+    "NOT_IMPROVED",
+    "REGRESSED",
+    "REVERT_PENDING"
+  ],
+  "first_vertical_slice_gates": [
+    {
+      "gate": "GATE_01",
+      "requirement": "current live profile from independent read source",
+      "on_failure": "UNKNOWN / no edit"
+    },
+    {
+      "gate": "GATE_02",
+      "requirement": "observed issue + alternatives + predeclared metrics",
+      "on_failure": "NO_CHANGE"
+    },
+    {
+      "gate": "GATE_03",
+      "requirement": "scope, authority, technical path and restore strategy",
+      "on_failure": "AUTHORIZATION_PENDING / TECH_PATH_BLOCKED"
+    },
+    {
+      "gate": "GATE_04",
+      "requirement": "actual game operation and layered technical readback",
+      "on_failure": "do not infer success"
+    },
+    {
+      "gate": "GATE_05",
+      "requirement": "natural game observation on comparable engine path",
+      "on_failure": "INCONCLUSIVE"
+    },
+    {
+      "gate": "GATE_06",
+      "requirement": "append-only evaluation, counterexamples, optional D feedback",
+      "on_failure": "document gap"
+    }
+  ]
+}

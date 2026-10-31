@@ -2,31 +2,35 @@ run_id: run-20261030-nba2k22-vae-gpt-development-001
 task_id: NBA2K22-VAE-GPT-STAGE01-20261030-001
 parent_program_task_id: NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
-lifecycle: candidate_pending_validation
-current_stage: workflow_stage_01_requirement_modeling
-objective: 由继承NBA2K22公共基线的独立GPT开发窗口，完成VAE正式Stage01需求建模候选与前置证据映射
-exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
 branch: task/nba2k22-vae-gpt-stage01-requirements-20261030
+exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+dispatch_commit: 079ccec5a28e7a61f000b462037f1c67ae8cef11
+lifecycle: candidate_ready_for_independent_review_pending_Human
+current_stage: workflow_stage_01_requirement_modeling
+stage01_complete: false
+human_version_confirmation: PENDING
+core_master_checked: 934425cf43d4fe3307b0112142aec1ba434a5734
+nba_master_checked: 45cc45cae0550ddcda192a2179ea48509b27f6ee
 ownership:
-  planner: VAE规划窗口；仅发布任务、审查项目方向、接收结果
-  current_executor: 新建GPT开发窗口；继承NBA2K22公共上下文基线
-  future_engineering_owner: Codex（独立工程任务另行派发）
-  human: 需求版本确认与受保护行为审批
-source_refs:
-  planning_run_commit: 296668026310faed42a7427c09664668e9d21ef0
-  core_master_checked_at_dispatch: 934425cf43d4fe3307b0112142aec1ba434a5734
-expected_outputs:
-  - 01_任务输入/task_packet.yml
-  - 01_任务输入/DEVELOPMENT_DISPATCH.md
-  - 01_需求建模/（接收方依据实际Workflow产出的需求候选与证据）
-  - 08_结论/（完成指针或阻塞回执）
-boundaries:
-  - 只进行Stage01需求开发及必要的只读证据核对
-  - 不启动Gemini/Codex或在当前规划窗口代替开发
-  - 不改变运行中的游戏、真实MC存档、Native绑定或master
-  - 未绑定Human确认不得声称Stage01已完成或进入Stage02实际施工
-handoff:
-  mode: Human_relay_GitHub_task_packet
-  formal_communication_system_v2_message: NOT_YET_PUBLISHED
-  PRMS_SAVE_TASK_CONTEXT: NOT_RUN
-  note: 此工作分支和task_packet是按Human最新指示发布的OS耐久开发任务入口；未冒充已验证的正式Communication v2 pointer
+  executor: GPT-6/execution
+  planner: VAE decision_architecture
+  engineering_future: Codex
+  independent_review_future: separate_window
+  human: semantic_version_and_protected_action
+outputs:
+  - 01_需求建模/A_需求建模_v1.yml
+  - 01_需求建模/01b_结果对象及原型验收候选_v1.md
+  - 01_需求建模/VAE_VERTICAL_SLICE_CONTRACT_V1.json
+  - 01_需求建模/Stage02_取证与缺口矩阵_v1.md
+  - 07_测试执行/Stage01_静态验证报告_v1.json
+  - 08_结论/completion_pointer.md
+verification_scope: static_requirements_and_github_exact_readback
+canonical_stage01_runner: NOT_RUN_NO_HUMAN_CONFIRMATION
+stage02_evidence_package: NOT_STARTED
+stage03_result_package: NOT_STARTED
+prms_save_task_context: NOT_RUN
+formal_communication_v2: NOT_SENT
+game_or_save_write: NOT_RUN
+gameplay_effect_test: NOT_RUN
+independent_review: PENDING
+next: Human确认本候选精确版本并由规划窗口派独立审核；Stage02安排只读取证而非本Run执行游戏写入
