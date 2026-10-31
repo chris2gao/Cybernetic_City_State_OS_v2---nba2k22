@@ -1,0 +1,63 @@
+{
+  "field_id": "TENDENCY_NATIVE_045",
+  "iteration_id": "SWEEP01_FIELD0045",
+  "question": "Does Spot Up Drive affect CPU choosing to drive rather than shoot/pass after spot-up catch?",
+  "offset": "0x484",
+  "key": "tendency.SPOT_UP_DRIVE_TENDENCY",
+  "declared_range": [
+    0,
+    100
+  ],
+  "UI_mapping": "UNKNOWN",
+  "engine_effect": "UNKNOWN",
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/don-buse",
+      "author": "2kAuction",
+      "date": "Sep 2021 snapshot",
+      "version": "NBA2K22",
+      "platform": "web export",
+      "claim": "Drive/Spot Up Drive/Off Screen Drive recorded separately"
+    },
+    {
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "Crucial Baskets",
+      "date": "2021-10-18",
+      "version": "NBA2K22",
+      "platform": "CPU vs CPU, platform UNKNOWN",
+      "claim": "Spot-up shot-versus-drive preferences discussed without isolation"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/864657-drive-balance",
+      "author": "Operation Sports contributors",
+      "date": "2018-10-14",
+      "version": "PRE-2K22",
+      "platform": "UNKNOWN",
+      "claim": "Drive/Coach theory, must not transfer exact values"
+    }
+  ],
+  "claims": [
+    "Named 2K22 Spot Up Drive field in historical archive",
+    "Native+0x484/3D consumer unknown"
+  ],
+  "related": [
+    "Spot Up Shot Three",
+    "Spot Up Shot Mid",
+    "Drive",
+    "Coach/Playbook",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "drives per eligible spot-up catch",
+    "spot-up shots and passes under comparable defense",
+    "attempts and success separated"
+  ],
+  "REA_question": {
+    "id": "REA_SPOTUP_DRIVE_045",
+    "question": "Do two UID-verified PC22 players' read-only PLAYER+0x484 match their visible Spot Up Drive tendency?",
+    "write": false
+  },
+  "result": "NAMED_2K22_LABEL_NATIVE_EFFECT_UNKNOWN",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN"
+}
