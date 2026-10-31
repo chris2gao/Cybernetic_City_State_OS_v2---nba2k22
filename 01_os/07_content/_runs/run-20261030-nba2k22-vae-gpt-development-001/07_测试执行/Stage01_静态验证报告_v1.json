@@ -40,8 +40,8 @@
     },
     {
       "id": "RUN_AND_EXACT_GIT_READBACK",
-      "status": "PENDING",
-      "evidence": "Requires post-publication exact commit and path compare"
+      "status": "PASS",
+      "evidence": "GitHub commit 8108b7703bd2e5385a91f97ea227db8d86b42e74 read back six outputs by blob SHA; exact branch ref matches; compare from base confirms 9/9 changed files within Run allowlist; task branch ahead of base and master unchanged"
     },
     {
       "id": "WORKFLOW_STAGE01_COMPLETION_GATE",
@@ -64,5 +64,32 @@
     "Static source claims not equivalent to live interface",
     "No Core Stage01 runner pass",
     "No SaveReload or competitive evidence"
-  ]
+  ],
+  "post_publication_readback": {
+    "artifact_commit": "8108b7703bd2e5385a91f97ea227db8d86b42e74",
+    "branch_head_at_test": "8108b7703bd2e5385a91f97ea227db8d86b42e74",
+    "readback_blobs": {
+      "A_需求建模_v1.yml": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+      "01b_结果对象及原型验收候选_v1.md": "ad71ab8d5036b3130356a90931f3de3b66767fa9",
+      "VAE_VERTICAL_SLICE_CONTRACT_V1.json": "b20bae15735e8ae324747dafb7d7c2cec6af7aab",
+      "Stage02_取证与缺口矩阵_v1.md": "5c27895e03a0bb8b08db847675123241c9ecf3b1",
+      "Stage01_静态验证报告_v1.json_before_readback_update": "33f0e87335b60c4eade1fe2d46dc2319729277e8",
+      "run.yml": "56b39444836e24af4bae3a984944b2dedca31f42"
+    },
+    "files_changed_from_master": 9,
+    "files_outside_allowlist": 0,
+    "assertions": {
+      "eight_slots": true,
+      "criteria_observable": true,
+      "assumptions_have_fallback": true,
+      "ambiguities_scoped": true,
+      "human_pending": true,
+      "slice_objects_9": true,
+      "domains_4": true,
+      "stage03_claim_excluded": true,
+      "D_not_prerequisite": true,
+      "no_game_or_core_write": true
+    },
+    "note": "Post-pointer commit must be separately checked; this report verifies the immutable artifact commit."
+  }
 }
