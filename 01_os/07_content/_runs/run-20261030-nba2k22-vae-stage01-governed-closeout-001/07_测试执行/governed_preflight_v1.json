@@ -1,0 +1,109 @@
+{
+  "schema_version": "nba2k22.vae.stage01.governed_preflight.v1",
+  "task_id": "NBA2K22-VAE-STAGE01-GOVERNED-CLOSEOUT-20261030-001",
+  "run_status": "HUMAN_A_APPROVED__GOVERNED_STAGE01_BLOCKED",
+  "core_master": "934425cf43d4fe3307b0112142aec1ba434a5734",
+  "nba_master": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "task_dispatch": "d700c27bcbc790df8bf8675c356f7b2d46137f64",
+  "source_blobs": {
+    "approved_A": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+    "Human_record": "dc67986fc544913573a05b54216e36cb9272c482",
+    "independent_review": "7c6fbf4fe33fb3316be84c7f10b51ca38f7d90ab",
+    "stage01_min_schema": "3c8e708f6f49f5541556f60640463392b0337829"
+  },
+  "checks": [
+    {
+      "id": "CLOSE01_APPROVAL_REF_EXACT",
+      "status": "PASS",
+      "evidence": "Human original wording in committed a98aa2db... confirmation binds 5abf3cb... and blob 612ed21... version1"
+    },
+    {
+      "id": "CLOSE02_A_BLOB_IMMUTABLE",
+      "status": "PASS_REPOSITORY_SCOPE",
+      "evidence": "GitHub original A blob matches; no modification requested or committed"
+    },
+    {
+      "id": "CLOSE03_HUMAN_CONFIRMATION_RECORD",
+      "status": "PASS",
+      "evidence": "New machine-readable Human binding links original durable Human decision, not a synthetic new approval"
+    },
+    {
+      "id": "CLOSE04_STAGE01_SCHEMA_SEMANTICS",
+      "status": "PASS_PAYLOAD_ONLY",
+      "evidence": "eight original semantic slots, eight observable criteria and minimum Core payload fields mapped; canonical runner artifact not established"
+    },
+    {
+      "id": "CLOSE05_GOVERNED_RUNNER_ACTUAL_RECEIPT_OR_EXPLICIT_GATE",
+      "status": "BLOCKED_WITH_REPRODUCIBLE_SOURCE_GATE",
+      "evidence": "No manifest.yml/all seven artifacts or accepted model/receipt; full Python runner NOT_RUN; earliest source-derived gate is missing manifest (projected 30, not actual exit code)"
+    },
+    {
+      "id": "CLOSE06_RESIDUALS_UNCHANGED",
+      "status": "PASS",
+      "evidence": "F02-F07 remain open, independent review verdict unchanged"
+    },
+    {
+      "id": "CLOSE07_EXACT_GIT_READBACK",
+      "status": "PENDING",
+      "evidence": "Final branch head/file scopes will be read after publication"
+    },
+    {
+      "id": "CLOSE08_NO_OUTSIDE_WRITES",
+      "status": "PENDING_GIT_READBACK",
+      "evidence": "Only the authorized new Run is written by GitHub; no game runtime access"
+    }
+  ],
+  "runner": {
+    "command": "python 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py validate 01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001 --repo-root . --candidate <40-char-commit>",
+    "invocation": "NOT_RUN",
+    "actual_exit_code": null,
+    "stdout": null,
+    "stderr": null,
+    "runtime_limitation": "Core/NBA checked-out executable repository and host-side managed runner are not available to this connector-only chat; local git network resolution failed. Nothing is reported as a Python invocation.",
+    "source_derived_expected_first_gate": {
+      "path": "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+      "commit": "934425cf43d4fe3307b0112142aec1ba434a5734",
+      "lines": "327-339",
+      "condition": "run_root/manifest.yml absent at dispatch",
+      "expected_return_code": 30,
+      "expected_findings": [
+        "manifest"
+      ],
+      "is_real_run_output": false
+    },
+    "further_conditions": [
+      "manifest requires citystate.workflow.run_manifest.v1, seven stage IDs in exact canonical order",
+      "stage artifact must carry stage_control, schema_version, run_id, stage_id, artifact_kind, artifact_version, status complete, input_refs, deliberation_receipt and payload",
+      "human source confirmation must match Stage01 artifact_version, but is insufficient alone",
+      "stage-specific current model, plan and completion acceptance and receipt require actual stage mechanism validation",
+      "cross-stage evidence, test freeze, execution and independent Stage07 verification must not be fabricated"
+    ],
+    "receipt": {
+      "Stage01_deliberation_receipt": "NOT_PRODUCED",
+      "plan_acceptance": "NOT_PRODUCED",
+      "completion_acceptance": "NOT_PRODUCED",
+      "publication_gate_result": "NOT_RUN",
+      "valid_only_after_validator_pass": true
+    }
+  },
+  "source_refs": [
+    "Core@934425cf43d4fe3307b0112142aec1ba434a5734:01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py#L245-L275,L327-L388",
+    "Core@934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/01_需求建模/实现/最小运行schema_v1.yml",
+    "Core@934425cf43d4fe3307b0112142aec1ba434a5734:01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py#L653-L745",
+    "Core@934425cf43d4fe3307b0112142aec1ba434a5734:01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml"
+  ],
+  "residuals": [
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F06",
+    "F07"
+  ],
+  "human_A_approval": "CONFIRMED",
+  "stage01_complete": false,
+  "stage02_started": false,
+  "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
+  "formal_Communication_v2": "NOT_PUBLISHED",
+  "next_owner": "VAE decision_architecture to decide legitimate mechanism-level route; Core OS owner only if separate standalone Stage01 acceptance is required"
+}
