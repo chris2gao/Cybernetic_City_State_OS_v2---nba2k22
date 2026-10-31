@@ -1,0 +1,69 @@
+{
+  "field_id": "WORLD_REG_006",
+  "iteration_id": "SWEEP01_FIELD0105",
+  "research_date": "2026-10-31",
+  "question": "Does this flag govern injury generation during 3D played games, Calendar Sim and historical save progression uniformly, or do separate per-mode injury toggles exist?",
+  "registry_candidate": {
+    "key": "settings.game_settings.injuries_enabled",
+    "offset": "0xF0",
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "PC22_UI_mapping": "UNKNOWN",
+    "underlying_storage": "UNKNOWN",
+    "value_domain": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8",
+      "date": "2022 NBA2K22 era",
+      "platform": "PC not verified",
+      "claim": "MyLEAGUE Injuries On and gameplay Injuries On appear in two settings sections",
+      "grade": "SAME_GAME_TWO_LAYERS"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/916673-nba-2k22-impressions-thread/page100?postcount=214",
+      "author": "rudyjuly2 and forum respondents",
+      "date": "2021 NBA2K22 era",
+      "platform": "MyNBA, PC applicability UNKNOWN",
+      "claim": "Users uncertain whether injury frequency sliders apply to game vs simulated injuries; individual observations confounded by patches",
+      "grade": "CONTEMPORARY_CONTRADICTORY_REPORT"
+    },
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "platform": "MyNBA/MyLEAGUE",
+      "claim": "CPU/User injury frequency and effect sliders separate from global Injuries flag",
+      "grade": "SECONDARY_CONFIG_REFERENCE"
+    }
+  ],
+  "claims": [
+    "Same-version menu has named Injuries Enabled option",
+    "Project offset is not independently confirmed by external evidence",
+    "No single-source causal effect or PC22 game-vs-simulation consumer established"
+  ],
+  "disagreements": [
+    "CPU/User injury frequency and injury effects",
+    "progressive fatigue, player durability, injury carry-over",
+    "league feature toggle vs gameplay toggle",
+    "2021 PS5/XSX MyNBA menu may not match current-gen PC MyLEAGUE",
+    "Historical facts must never be overwritten by a setting check"
+  ],
+  "observable_metrics": [
+    "visible setting On/Off and persisted read-only value",
+    "new injury incidents by 3D gameplay versus Calendar Sim per eligible player-games",
+    "past injuries remain immutable and not retroactively removed"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_006",
+    "question": "Can candidate settings+0xF0 be matched in one current-build PC22 MyLEAGUE save read-only to its exact visible Injuries Enabled UI setting and confirmed by immediate/delayed readback without changing the save?",
+    "positive": "SCOPED_SETTING_IDENTITY_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_GAME_SETTING_UI_SUPPORTED_RAW_CONSUMER_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
