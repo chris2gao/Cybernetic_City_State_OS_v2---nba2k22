@@ -1,0 +1,68 @@
+{
+  "field_id": "TENDENCY_NATIVE_069",
+  "iteration_id": "SWEEP01_FIELD0069",
+  "question": "Does Transition Spot Up represent the off-ball CPU choice to remain behind the arc versus cut to the rim during transition, and what is its verified scale direction?",
+  "candidate": {
+    "key": "tendency.TRANSITION_SPOT_UP",
+    "offset": "0x49C",
+    "project_range": [
+      0,
+      100
+    ],
+    "native_UI_mapping": "UNKNOWN",
+    "value_orientation": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA2K22",
+      "platform": "multi-platform target, PC gameplay not tested here",
+      "claim": "Spot Up vs Cut edited to keep shooters outside and bigs cutting during transition"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916550-nba-x%E2%80%99s-o%E2%80%99s/page6",
+      "author": "vannwolfhawk",
+      "date": "2021-09-30",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "claim": "Reports editing fast-break cut versus spot-up and multiple coach/tendency fields together"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/898689-nba-2k21-attention-to-detail-project-ps4-ps5-xb1-xb-serie-s-x-and-switch/page72",
+      "author": "CelticLG",
+      "date": "2021-11-23",
+      "version": "NBA2K21, not 22",
+      "platform": "console",
+      "claim": "Notes spot-vs-cut values may be inverted for player roles in older game; not 2K22 threshold"
+    }
+  ],
+  "claims": [
+    "Transition spot-up-versus-cut is independently calibrated in same-release roster edits",
+    "Exact 0x49C mapping, direction and effect require native and game testing"
+  ],
+  "conflicts": [
+    "Transition Spot Up is not Spot Up Drive nor Spot Up Shot Three",
+    "Role, Coach tempo, transition possession opportunity and teammate actions confound",
+    "No sourced exact value orientation or control threshold for PC22"
+  ],
+  "related": [
+    "Coach Run Plays and transition defense",
+    "Off-ball cutting, Spot Up Three and Transition Pull Up Three",
+    "Player position, shooting skill, sprint speed and training"
+  ],
+  "metrics": [
+    "CPU stationary spot-up versus rim cut per eligible transition off-ball run",
+    "transitions entered and defense alignment",
+    "made 3P shots separate from off-ball decisions"
+  ],
+  "REA_question": {
+    "id": "REA_TRANS_SPOT_069",
+    "question": "Do two PC22 UID-verified players' read-only PLAYER+0x49C values match exact Transition Spot Up UI values in same save/build/time?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_TRANSITION_ROLE_HYPOTHESIS_ORIENTATION_UNKNOWN",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN"
+}
