@@ -21,7 +21,10 @@
     "independent_review_final_head": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5",
     "independent_review_evidence_commit": "6a29d2e71e0e5f403ddf94090ee3468f593a7117",
     "reviewed_A_candidate_commit": "5abf3cb154654872a3d05278b96658f190ed9241",
-    "reviewed_A_candidate_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b"
+    "reviewed_A_candidate_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+    "human_A_approved_candidate_sha": "5abf3cb154654872a3d05278b96658f190ed9241",
+    "human_A_approved_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+    "human_A_approval_record_path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml"
   },
   "human_decision_refs": [
     {
@@ -43,6 +46,11 @@
     {
       "source": "2026-10-30 Human VAE conversation",
       "decision": "Keep planner context healthy; only results and evidence pointers; define executor/reviewer, persistent records; update context doc"
+    },
+    {
+      "source": "2026-10-30 Human direct instruction in VAE planner conversation, durable approval document under current planner Run",
+      "decision": "APPROVED Stage01 A-v1 at 5abf3cb154654872a3d05278b96658f190ed9241 blob 612ed21f8f3e441366296ee2ac6170bb5974584b; accepts independent review limitations; F02–F07 must be fixed and verified later",
+      "decision_id": "HUMAN_VAE_STAGE01_A_V1_CONFIRMED_20261030"
     }
   ],
   "task_status_index": [
@@ -50,10 +58,14 @@
       "task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
       "owner": "VAE planning",
       "run": "run-20261030-nba2k22-vae-stage01-001",
-      "lifecycle": "candidate_awaits_Human_version_confirmation_after_independent_review",
+      "lifecycle": "human_A_v1_approved_governed_completion_pending",
       "artifacts": "A0_v1 candidate; Human exact-version confirmation pending",
       "review": "PARTIALLY_SUPPORTED",
-      "human_confirmation": "PENDING"
+      "human_confirmation": "PENDING",
+      "A_confirmed_sha": "5abf3cb154654872a3d05278b96658f190ed9241",
+      "A_confirmed_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+      "Human_confirmation": "CONFIRMED",
+      "stage01_complete": false
     },
     {
       "task_id": "NBA2K22-VAE-GPT-STAGE01-20261030-001",
@@ -115,14 +127,14 @@
       "claim": "Independent review of the fixed Stage01 A candidate returned PARTIALLY_SUPPORTED and recommended Human exact-version review with limits (not Stage01 completion)",
       "ref": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/08_结论/completion_pointer.md",
       "scope": "independent static document, Git evidence and semantic review; no game/REA/Stage01 runner test"
+    },
+    {
+      "claim": "Human has directly approved exact Stage01 A-v1 semantics, accepting F02–F07 as residual contract/review items",
+      "ref": "01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml (this planner Run, published HEAD)",
+      "scope": "version-bound product semantic confirmation only; not governed workflow completion"
     }
   ],
   "open_items": [
-    {
-      "item": "A0_v1 Human exact version confirmation not recorded",
-      "impact": "Stage01 formal completion",
-      "owner": "Human when presented for confirmation"
-    },
     {
       "item": "No live MyLEAGUE underlying game readback or current profile verified",
       "impact": "field-specific experiments require evidence and relevant approval",
@@ -132,13 +144,6 @@
       "item": "PRMS and formal Communication v2 receipts absent",
       "impact": "do not claim automated state save or formal action delivery",
       "owner": "future properly equipped window if invoked"
-    },
-    {
-      "item": "F01 Human exact A version confirmation",
-      "severity": "MEDIUM",
-      "owner": "Human",
-      "closure": "confirm or amend 5abf3cb154654872a3d05278b96658f190ed9241 A blob 612ed21f8f3e441366296ee2ac6170bb5974584b",
-      "blocks": "formal Stage01 close"
     },
     {
       "item": "F02 R06 comparator/context fields missing",
@@ -167,20 +172,27 @@
       "owner": "future authorized GPT execution window",
       "closure": "Human version-bound confirmation plus actual governed Stage01 completion receipt",
       "blocks": "Stage01 formally complete"
+    },
+    {
+      "item": "Stage01 Human A-v1 semantic confirmation is recorded, governed runner completion pending",
+      "severity": "GATE",
+      "owner": "separately dispatched GPT execution task",
+      "closure": "validated canonical Stage01 artifact + actual governed runner receipt, or explicit unsupported/block verdict",
+      "blocks": "formal Stage01 complete"
     }
   ],
   "next_steps": [
-    "Present fixed A candidate commit 5abf3cb154654872a3d05278b96658f190ed9241 blob 612ed21f8f3e441366296ee2ac6170bb5974584b for Human semantic version confirmation with review limitations F01-F07",
-    "If Human confirms, dispatch bounded GPT executor to bind Human approval, finalize governed Stage01 runner/receipt; do not simulate receipt",
-    "Dispatch bounded contract correction for F02/F03/F07 before live trials; close F04/F05 at Stage03/04; review scope of corrections separately",
-    "Only after formal Stage01 stage gate plan Stage02 read-only evidence gathering; future game/save writes require distinct approvals",
-    "Maintain future model identity records; no retroactive changes; retain precise review pointer and UNKNOWN proof limitations"
+    "Exact Human Stage01 A-v1 approval has been recorded; do not ask again or retroactively alter candidate A blob.",
+    "Dispatch a new GPT execution window for governed Stage01 closure with exact approval and review refs, bounded paths and honest runner receipts.",
+    "Only after verified Stage01 actual completion plan Stage02 bounded read-only evidence collection; no runtime/game/save permission implied.",
+    "Separately schedule F02/F03/F07 machine contract corrections and F04/F05 test/provenance; preserve F06 as a proof limitation.",
+    "Preserve human model provenance, execution owner and independent reviewer, with actual model identity UNKNOWN if platform not attested."
   ],
   "persistent_context_policy": "Store only Human decisions, task index, verified facts, open items and next steps; keep raw logs and developer thought process in execution Runs",
   "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
   "COMMUNICATION_FORMAL_V2_PUBLICATION": "NOT_RUN",
   "independent_review": "DELIVERED_PARTIALLY_SUPPORTED",
-  "task_execution_status": "DEVELOPER_CANDIDATE_AND_INDEPENDENT_REVIEW_RECEIVED;_HUMAN_A_VERSION_PENDING",
+  "task_execution_status": "HUMAN_STAGE01_A_V1_CONFIRMED;_GOVERNED_STAGE01_COMPLETION_PENDING;_REVIEW_LIMITATIONS_OPEN",
   "last_material_update": "2026-10-30",
   "context_policy_update": "Forward only; do not retroactively relabel historical tasks. Declare assigned model separately from actual model and independent reviewer, with truthful evidence source."
 }

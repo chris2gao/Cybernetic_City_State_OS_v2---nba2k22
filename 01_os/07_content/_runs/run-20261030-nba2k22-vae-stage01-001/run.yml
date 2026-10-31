@@ -49,13 +49,21 @@ planner_context:
   latest_reviewer_task: NBA2K22-VAE-STAGE01-INDEPENDENT-REVIEW-20261030-001
   reviewer_dispatch_ref: ccdfc57afe5693f8a36cf31ec6b1d4508a7e65eb
   developer_completion_ref: 3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3
-  human_approval: PENDING
+  human_approval: CONFIRMED_A_V1_VERSION_BOUND
 
 review_intake:
   reviewer_final_pointer: 4640f6e05f2b84e31661c7b2039dfc5d202b30a5
   reviewer_verdict: PARTIALLY_SUPPORTED
   reviewed_candidate: 5abf3cb154654872a3d05278b96658f190ed9241
   candidate_A_blob: 612ed21f8f3e441366296ee2ac6170bb5974584b
-  human_version_confirmation: PENDING
+  human_version_confirmation: CONFIRMED_A_V1_VERSION_BOUND
   stage01_complete: false
   stage02_started: false
+
+human_A_confirmation:
+  confirmation_id: HUMAN_VAE_STAGE01_A_V1_CONFIRMED_20261030
+  record_path: 01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml
+  candidate_commit: 5abf3cb154654872a3d05278b96658f190ed9241
+  candidate_blob: 612ed21f8f3e441366296ee2ac6170bb5974584b
+  scope: product_semantics_only_with_F02_F07_residuals
+  actual_governed_runner_complete: false
