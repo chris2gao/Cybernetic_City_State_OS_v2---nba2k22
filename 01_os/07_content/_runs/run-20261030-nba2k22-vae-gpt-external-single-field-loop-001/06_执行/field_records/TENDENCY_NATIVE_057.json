@@ -1,0 +1,57 @@
+{
+  "field_id": "TENDENCY_NATIVE_057",
+  "iteration_id": "SWEEP01_FIELD0057",
+  "research_date": "2026-10-31",
+  "primary_question": "Does raw 0x490 correspond to any independently verified PC22 player tendency UI label?",
+  "identity": {
+    "offset": "0x490",
+    "project_native_key": "tendency.RAW_0x490",
+    "project_range": [
+      0,
+      100
+    ],
+    "ui_label": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x490\" tendency",
+    "result": "NO_DIRECT_SOURCE",
+    "date": "2026-10-31",
+    "status": "NEGATIVE_EXACT_QUERY_NOT_PROOF_OF_ABSENCE"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction archive",
+      "date": "September 2021 roster; page date UNKNOWN",
+      "platform": "web export",
+      "game": "NBA2K22",
+      "claim": "Named tendencies displayed, no binary address"
+    }
+  ],
+  "claims": [
+    "No source establishes exact byte identity for 0x490",
+    "Do not infer adjacent field identity by ordering"
+  ],
+  "conflicts": [
+    "No UID readback, no consumer or 3D effect"
+  ],
+  "related": [
+    "Coach and training link UNKNOWN pending identity"
+  ],
+  "observable": [
+    "UID-verified raw byte and exact UI value in same save/build/time",
+    "adjacent bytes as false-positive controls"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_057",
+    "question": "Can read-only PLAYER+0x490 in two verified player UIDs match a single native UI tendency without column-position assumptions?",
+    "success": "SCOPED_MAPPING",
+    "mismatch": "UNKNOWN",
+    "inaccessible": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "runtime": "NOT_RUN"
+}
