@@ -1,0 +1,135 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_003",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0003",
+  "research_date": "2026-10-30",
+  "question": "Does Standing Dunk Tendency influence CPU choice to attempt a standing dunk when already beneath the basket, independently of Standing Dunk ability?",
+  "identity": {
+    "candidate_native_key": "tendency.STANDING_DUNK_TENDENCY",
+    "offset_hex": "0x45A",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "range_grade": "PROJECT_NOT_LIVE",
+    "current_pc22_value": "UNKNOWN",
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "source_ordinal": 3
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "game": "NBA 2K22",
+      "platform": "all platforms intended; PC specific proof UNKNOWN",
+      "locator": "OP #1, WHAT'S EDITED item 1.6",
+      "grade": "SAME_VERSION_ROSTER_METHOD",
+      "statement": "Standing, driving and flashy dunk tendencies edited as distinct roster items",
+      "limit": "Multiple simultaneous edits, no controlled CPU test"
+    },
+    {
+      "id": "S2",
+      "url": "https://nba2kw.com/nba-2k22-attributes-explained-finishing-shooting-playmaking-defense-reb-physicals",
+      "author": "NBA2KW editorial / precise byline UNKNOWN",
+      "date": "2021 (exact publication UNKNOWN)",
+      "game": "NBA 2K22",
+      "platform": "MyPLAYER article, PC match UNKNOWN",
+      "locator": "Finishing attributes, Standing Dunk",
+      "grade": "SAME_VERSION_OTHER_FIELD",
+      "statement": "Standing Dunk rating described as capacity to finish standing under the basket",
+      "limit": "Ability not tendency, no selection effect"
+    },
+    {
+      "id": "S3",
+      "url": "https://hoopsgamers.com/nba-2k22-gameplay-director-reveals-gameplay-details-shooting-dribbling-animations",
+      "author": "Hoops Gamers reporting NBA2K22 gameplay director answers",
+      "date": "2021 (exact date UNKNOWN)",
+      "game": "NBA 2K22",
+      "platform": "new-gen and old-gen differences explicit; PC22 unspecified",
+      "locator": "Finishing / Dunking Q&A in indexed result",
+      "grade": "SECONDARY_DEV_QUOTE_NOT_FIELD_SPEC",
+      "statement": "Distinguishes standing contact dunks and new-gen skill-dunk operation; no Standing Dunk Tendency algorithm",
+      "limit": "Cannot transfer controls or activation thresholds to PC22"
+    },
+    {
+      "id": "S4",
+      "url": "https://www.youtube.com/watch?v=gXH36QBRLYI",
+      "author": "LakerFan",
+      "date": "2021-12-27",
+      "game": "NBA 2K22",
+      "platform": "Next Gen",
+      "locator": "YouTube video description",
+      "grade": "NEW_GEN_MYPLAYER_OTHER_FIELD",
+      "statement": "Video demonstrates standing dunk rating/build package, not MyLEAGUE CPU standing dunk tendency",
+      "limit": "Does not prove tendency effect, the video's 45 is not PC22 Tendency threshold"
+    }
+  ],
+  "claims": [
+    {
+      "id": "SD01",
+      "source_ids": [
+        "S1"
+      ],
+      "status": "SAME_VERSION_EDITING_CATEGORY",
+      "claim": "2K22 roster editors distinguish standing from driving dunk tendency"
+    },
+    {
+      "id": "SD02",
+      "source_ids": [
+        "S2",
+        "S4"
+      ],
+      "status": "ABILITY_VS_TENDENCY_DISTINCT",
+      "claim": "Rating, packages and animation eligibility must not be conflated with tendency to choose standing dunk"
+    },
+    {
+      "id": "SD03",
+      "source_ids": [
+        "S3"
+      ],
+      "status": "PLATFORM_CONFOUNDER",
+      "claim": "Next-gen controller/animation changes cannot be generalized to PC22 current-gen CPU engine"
+    }
+  ],
+  "conflicts": [
+    "S1 demonstrates editing intent but cannot establish actual 3D behavior",
+    "S2 and S4 discuss skill and packages, not propensity; numerical thresholds cannot transfer"
+  ],
+  "related": [
+    "Standing Dunk rating and contact/animation packages: eligibility confounder",
+    "Shot Under Basket, Shot Close, layup and putback tendencies: alternative finishing choices",
+    "Coach Playbook, feed-post and offensive rebounds: near-rim opportunity confounders",
+    "Badge/strength/contest: finishing success/confounders",
+    "Training: no field-specific direct cause source"
+  ],
+  "observables": [
+    "standing dunk attempts per eligible CPU catch under basket",
+    "standing vs driving dunk vs layup/push shot at fixed eligible position",
+    "standing dunk animation/package and rating separately",
+    "failure/success and defensive contest separately",
+    "source game ID and mode, 3D vs Calendar separate"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_STANDING_DUNK_003",
+    "question": "For two identified NBA2K22 PC players with different visible Standing Dunk tendency values, do independent read-only PLAYER+0x45A bytes match the exact player UI field in the same save/build/time?",
+    "matched": "SCOPED_UI_MAPPING_ONLY",
+    "mismatched": "UNKNOWN",
+    "not_accessible": "BLOCKED",
+    "write_authorized": false,
+    "executed": false
+  },
+  "outcome": "RESEARCHED_SAME_VERSION_ROSTER_PRACTICE_NATIVE_EFFECT_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_effect_test": "NOT_RUN",
+  "next_improvement": "After mapping evidence, test conditional CPU standing-dunk selection with near-rim opportunities, controlling eligibility and animation packages"
+}
