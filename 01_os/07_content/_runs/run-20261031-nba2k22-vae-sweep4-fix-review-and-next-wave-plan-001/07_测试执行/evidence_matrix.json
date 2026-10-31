@@ -1,0 +1,134 @@
+{
+  "schema_version": "nba2k22.vae.sweep4fix.audit.v1",
+  "subject_sha": "f953f622c833a40a714a6ff6055af170b2070a7e",
+  "verdict_for_claimed_12_fully_closed": "REWORK_REQUIRED",
+  "research_lifecycle": "CONTINUE_LONG_HORIZON_LOOP",
+  "recognizable_improvements": [
+    "shot_touches_symmetric_hypothesis_retracted",
+    "native_heuristic_bridge_flagged_experimental",
+    "tracer_pytest_tmp_path_added",
+    "tracer_auto_attach_disabled_by_default",
+    "204_consumer_effect_grades_downgraded",
+    "checkpoint_sweep4_synced"
+  ],
+  "findings": [
+    {
+      "id": "S4FIX-P0-01",
+      "severity": "P0",
+      "closure": "OPEN",
+      "name": "Tempo机器码和标注地址相差0x15；实机核验调用错偏移",
+      "evidence": "ROLE/COACH raw template temp begins at 0x14120ba72: mov eax,70 located 0x14120ba83; cmovg at 0x14120ba98; mov eax,10 at 0x14120ba9b; cmovl at 0x14120baa3. Tracer verify_live_bytes reads base+0x120ba98 and demands prefix b8 46, but saved raw at that offset is 0f 4f c8.",
+      "scope": "Internal byte-to-RVA mapping contradicted; does NOT independently determine what game EXE truly has.",
+      "gate": "Use a byte-true decoder (Capstone/Zydis/objdump) with exact RVA and full byte hash. Negative test intentionally offsets start by ±1/0x15 and must fail. verify_live_bytes read actual start and compare full region, with observed PE SHA and receipt."
+    },
+    {
+      "id": "S4FIX-P0-02",
+      "severity": "P0",
+      "closure": "OPEN",
+      "name": "Snapshot CALL跳转目标与所列Getter RVA不一致",
+      "evidence": "At stated 0x14174510e E8 0D 07 23 00 resolves to 0x141975820, not 0x140975820. Role final e8 85 f1 74 ff at 0x1412269a1 resolves to 0x140975b2b, not reported 0x140975b30.",
+      "scope": "Rel32 math deterministic; could be transcription, RVA, byte source error; verify against actual PE before judging native effect.",
+      "gate": "Store actual RVA, raw_call5bytes, computed target and symbol identity for every selected callsite, validate that expected callee starts match independently."
+    },
+    {
+      "id": "S4FIX-P0-03",
+      "severity": "P0",
+      "closure": "OPEN",
+      "name": "Tempo修正量与原始Tempo滑块混为一谈，Native桥接计算不匹配",
+      "evidence": "If xmm0 is raw slider 80, committed code computes int80-50=30; *60=1800; signed reciprocal high32>>4 gives36; +10=>46 then clamps correction to10..70. Experimental bridge instead directly clips raw80 to70. At slider50, native-looking bytes produce modifier10, bridge50. Constant 0x51eb851f/high32/sar4 approximates division by 50, not /100 as annotations claim. Full upstream xmm0 identity not yet verified.",
+      "scope": "Does not establish actual game-level possession formula; establishes wrong correspondence between source fragment and bridge if assumed input identity.",
+      "gate": "Separate observed raw slider, transformed internal modifier and actual effective output; exact fixed-point semantics incl negative sign/rounding; replay 0,10,40,50,60,70,80,100 with independent oracle."
+    },
+    {
+      "id": "S4FIX-P0-04",
+      "severity": "P0",
+      "closure": "OPEN",
+      "name": "204份历史记录统一填充的原始时间是编造的占位时间且旧位模式遗失",
+      "evidence": "f1e02101 WORLD_REG_002 live_evidence.read_timestamp=2026-10-31T03:31:03.580403+00:00/raw1056964608; f953f622 raw_legacy_capture.legacy_timestamp=2026-10-31T03:00:00Z/legacy_value=0.5. TENDENCY_NATIVE_001 original03:31:03.535469+00:00 but new legacy03:00:00Z. COACH_DEFAULT_001 legacy_value=5/current new capture, whereas original f1e02101 value97 from WRONG TEAM source.",
+      "scope": "Can recover original from Git; current legacy field mislabeled as actual history. New live Sweep3 observations are independent and should not be overwritten by earlier invalid historical labels.",
+      "gate": "Reconstruct immutable distinct capture batches from exact Git blob provenance; preserve actual timestamps, raw bit patterns and wrong-source status, never substitute a shared approximate time. Derived decoding in separate object. Idempotency re-run unchanged."
+    },
+    {
+      "id": "S4FIX-P1-05",
+      "severity": "P1",
+      "closure": "PARTIAL",
+      "name": "Role-based分支分析不完整且role table身份仍假设",
+      "evidence": "First cmp [rsp+0x20],3 JNE 0x1412269cf branches outside included raw bytes. Only nested check [rsp+0x24] reaches clamp block; current bridge assumes ALL role_tier!=3 clamp. [rsi+rcx*4+0x2b59798] not independently proven to be role ceiling UI weights.",
+      "gate": "Trace branch 0x...9cf and all joins, identify both role fields and rsi owner/table type; tests for all role categories including role_first!=3 path, negative proof."
+    },
+    {
+      "id": "S4FIX-P1-06",
+      "severity": "P1",
+      "closure": "PARTIAL",
+      "name": "测试fixture LiveEngineAnalyzer仍默认附加进程",
+      "evidence": "live_analyzer.py def __init__(...,auto_attach:bool=True) calls _init_memory; test_live_analyzer.py fixture returns LiveEngineAnalyzer(repo_root=repo_root) without auto_attach=False. Tracer fixture is isolated but other 7 tests may still attach if game available.",
+      "gate": "Both classes default auto_attach=False, or use explicit allow_attach capability; all pytest fixture inject no_attach FakeMemory; test without game or admin environment and assert no OS API invoked."
+    },
+    {
+      "id": "S4FIX-P1-07",
+      "severity": "P1",
+      "closure": "PARTIAL",
+      "name": "verify_live_bytes只能部分核验固定模板，无法证明真实EXE build和完整CFG",
+      "evidence": "verify_live_bytes tests 20 bytes at one hard-coded location and checks first5 bytes only. No submitted actual read receipt PE image hash, no role governor or snapshot byte checks, no persisted independent machine capture. Old raw bytes in Python constants do not establish actual original bytes by themselves.",
+      "gate": "Read exact verified executable/image bytes with process+build identity from authorized source; prove all code spans and disasm alignment, retain byte SHAs and independent disassembler output."
+    },
+    {
+      "id": "S4FIX-P1-08",
+      "severity": "P1",
+      "closure": "PARTIAL",
+      "name": "Bulk enrichment direct write remains default",
+      "evidence": "enrich_all_field_records_with_consumer_traces(target_dir=None) uses official records_dir by default and open(...,'w') 204 times. Test now uses tmp_path, but public API still allows silent official Run overwrites and no append-only evidence publication.",
+      "gate": "Make analyze pure return or explicit publish mode to new derived record directory, atomic write with batch id and unchanged raw source hash; no raw event overwrite."
+    },
+    {
+      "id": "S4FIX-P2-09",
+      "severity": "P2",
+      "closure": "PARTIAL",
+      "name": "实验桥接虽降级仍宣称未证Native行为与建议",
+      "evidence": "MODEL_TIER=EXPERIMENTAL_HEURISTIC and IS_NATIVE_LAW=False good; but calculate_role_ceiling_governor docstrings/recommendations still say 'in-engine AI governor clamps', and Coach note says 'Native assembly clamps tempo modifier', while native path identity incomplete.",
+      "gate": "Change output recommendation to hypothesis label, never production routing; add consumer-side policy gate and data source/uncertainty display."
+    },
+    {
+      "id": "S4FIX-P2-10",
+      "severity": "P2",
+      "closure": "CLOSED_STAGE_ONLY",
+      "name": "一轮全量完成不等于204机制验证，长期Loop合同应继续",
+      "evidence": "task_packet and SINGLE_FIELD_LOOP_CONTRACT_V1 require one field+question per iteration, UNKNOWN/BLOCKED on failed proof, improvement sweeps without fixed overall cap. checkpoint currently204 evidence_added,unknown0 is only inventory/read coverage, mechanism effect remains unmeasured; should not force all-effect proof in this patch.",
+      "gate": "Maintain per-field grade+unmeasured_effects and next hypothesis; allow successful bounded research wave exit with known unknowns and resume."
+    }
+  ],
+  "counts": {
+    "P0": 4,
+    "P1": 4,
+    "P2": 2
+  },
+  "raw_byte_offline_probes": {
+    "tempo_start": "0x14120ba72",
+    "actual_mov_eax70": "0x14120ba83",
+    "actual_cmovg": "0x14120ba98",
+    "actual_mov_eax10": "0x14120ba9b",
+    "actual_cmovl": "0x14120baa3",
+    "snapshot_relative_call_actual_target": "0x141975820",
+    "snapshot_claimed_target": "0x140975820",
+    "last_role_call_actual_target": "0x140975b2b",
+    "role_claimed_last_call": "0x140975b30",
+    "hypothetical_xmm0_80_internal_clamped_modifier": 46,
+    "bridge_raw80_return": 70
+  },
+  "original_raw_comparison": {
+    "t1_original_timestamp": "2026-10-31T03:31:03.535469+00:00",
+    "w2_original_timestamp": "2026-10-31T03:31:03.580403+00:00",
+    "w2_original_uint32_bits": 1056964608,
+    "current_legacy_placeholder_time": "2026-10-31T03:00:00Z",
+    "w2_current_legacy_value": 0.5
+  },
+  "source_diff": {
+    "files_changed": 213,
+    "records_modified": 204,
+    "all_paths_within_execution_allowlist": true
+  },
+  "original_pytest_25": "DEVELOPER_REPORTED_NOT_INDEPENDENTLY_RERUN",
+  "independent_probe": "PASS four categories of static-byte arithmetic/provenance contradictions; NO PE or real game attached",
+  "human_acceptance": "NOT_GIVEN",
+  "next_approach": "Bouned safety fix wave then single-field directed research, unknowns allowed"
+}
