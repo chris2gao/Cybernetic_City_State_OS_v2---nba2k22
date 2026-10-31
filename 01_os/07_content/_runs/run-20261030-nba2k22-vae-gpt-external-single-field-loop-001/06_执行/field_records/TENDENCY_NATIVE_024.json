@@ -1,0 +1,82 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_024",
+  "iteration_id": "SWEEP01_FIELD0024",
+  "sweep": 1,
+  "ordinal": 24,
+  "question": "Is unnamed player tendency offset 0x46F identifiable as a PC22 UI setting?",
+  "identity": {
+    "offset_hex": "0x46F",
+    "registry_status": "UNKNOWN_RAW_BYTE",
+    "declared_range": [
+      0,
+      100
+    ],
+    "name": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "game_effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x46F\" tendency offset",
+    "date": "2026-10-30",
+    "result": "NO_RELEVANT_DIRECT_NBA2K22_ADDRESS_MATCH",
+    "direct_source_count": 0,
+    "search_limit": "Negative search is not proof of no consumer"
+  },
+  "context_sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction archive",
+      "date": "2021-09 roster; page publication UNKNOWN",
+      "game": "NBA2K22",
+      "platform": "Web export, PC mapping UNKNOWN",
+      "relevance": "Names midrange shot-zone labels; no matching byte"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917713-res2-2k22-all-star-current-gen-sliders/page2",
+      "author": "res2",
+      "date": "2021-11-02",
+      "game": "NBA2K22 Current Gen",
+      "platform": "PC unverified",
+      "relevance": "Names UI editor fields without byte offsets"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "NO_DIRECT_SOURCE",
+      "claim": "No relevant exact offset mapping found for 0x46F",
+      "source_ids": []
+    },
+    {
+      "tier": "INDIRECT_ONLY",
+      "claim": "Public UI field ordering must never be mapped positionally to consecutive bytes",
+      "source_ids": [
+        "2kAuction",
+        "res2"
+      ]
+    }
+  ],
+  "conflicts": [
+    "Native identity unconfirmed; neighboring fields are not causal evidence"
+  ],
+  "links": [
+    "Coach/Skills/Tendencies/Training UNKNOWN until field identification"
+  ],
+  "metrics": [
+    "read-only UID-bound byte and exact UI label",
+    "two distinct players with different UI values",
+    "no modifying save"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_024",
+    "question": "Can 0x46F be matched to one named PC22 player tendency using independent UID-matched read-only UI observations rather than field order?",
+    "positive": "IDENTITY_SCOPED_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED"
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "rea": "NOT_RUN",
+  "next_improvement": "Wait for native getter/disassembly or Gemini evidence, skip same failed web search"
+}
