@@ -1,0 +1,67 @@
+{
+  "field_id": "TENDENCY_NATIVE_067",
+  "iteration_id": "SWEEP01_FIELD0067",
+  "question": "Does Post Up tendency affect CPU initiating a post-up when its set play, lineup, spacing and defender make a post touch available?",
+  "candidate": {
+    "key": "tendency.POST_UP_TENDENCY",
+    "offset": "0x49A",
+    "raw_range_project": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "game": "NBA 2K22",
+      "platform": "multi-platform target, PC gameplay unverified",
+      "claim": "Post Up and post moves calibrated using player usage frequency"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/919423-nba-2k22-coy-roster-cpu-vs-cpu-nba-2k-manager",
+      "author": "Sheitan and CoY roster team",
+      "date": "2022 NBA2K22 roster era",
+      "game": "NBA 2K22",
+      "platform": "CPU-v-CPU roster, PC release unknown",
+      "claim": "Post-up playbook combinations revised with AI tendencies; no single-field isolation"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/841295-tendency-edits-that-are-game-changers-for-realism/page77",
+      "author": "youALREADYknow",
+      "date": "2020-09-10",
+      "game": "NBA 2K20 earlier version",
+      "platform": "UNKNOWN",
+      "claim": "Post Up play type and Face Up/Post Shot tendency interact in 2K20; NOT transferable"
+    }
+  ],
+  "claims": [
+    "Post Up named in contemporary editor work; direct native 0x49A effect unknown",
+    "Receiving ball in post, initiating post move and post-shot success are distinct events"
+  ],
+  "conflicts": [
+    "Coach Playbook and available post action may dominate opportunity",
+    "Historical 2K20 Post Up advice not authoritative for PC22"
+  ],
+  "related": [
+    "Post Up High/Low play types, Coach Playbook and Run Plays",
+    "Post Faceup, Post Backdown, Hook/Fade tendencies",
+    "Strength, position/defender mismatch and training"
+  ],
+  "metrics": [
+    "CPU initiated post-ups per eligible low/high post catch",
+    "post entry passes per called play",
+    "post finishes and makes tracked separately"
+  ],
+  "REA_question": {
+    "id": "REA_POST_UP_067",
+    "question": "Do two UID-verified PC22 players' read-only PLAYER+0x49A values match exact Post Up UI tendency in same save/build/time?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_POSTUP_CONTEXT_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
