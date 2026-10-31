@@ -1,0 +1,146 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "iteration_id": "SWEEP01_FIELD0015",
+  "field_id": "TENDENCY_NATIVE_015",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "question": "Does player SHOT_CLOSE_TENDENCY affect CPU choice to shoot in the close-but-not-under-basket area, independently of global Take Close Shots and shot-success sliders?",
+  "identity": {
+    "native_candidate": "tendency.SHOT_CLOSE_TENDENCY",
+    "project_offset": "0x466",
+    "declared_range": [
+      0,
+      100
+    ],
+    "runtime_value": "UNKNOWN",
+    "ui_mapping": "UNKNOWN",
+    "consumer_3D": "UNKNOWN",
+    "consumer_Calendar": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 15
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA2K22",
+      "platform": "multi-platform roster project; PC test UNKNOWN",
+      "locator": "OP WHAT'S EDITED [1.2]",
+      "grade": "CONTEMPORARY_EDITOR_REPORT",
+      "claim": "Adjusts Shot Under Basket, Close, Mid and 3PT tendencies separately based on real distribution",
+      "limits": "Combined edits; not an isolated causal measurement"
+    },
+    {
+      "id": "S2",
+      "url": "https://2kauction.com/mynba/2k22/players/larry-johnson",
+      "author": "2kAuction historical roster archive",
+      "date": "2021-09-10 roster snapshot, page publication UNKNOWN",
+      "version": "NBA2K22 v90 historical player",
+      "platform": "web-derived export, game platform UNKNOWN",
+      "locator": "Tendencies / Shot Close 50; Other tendencies / shot under basket t 38",
+      "grade": "ARCHIVED_FIELDS_DISTINCT",
+      "claim": "Contains separate Shot Close and Shot Under Basket columns in same player export",
+      "limits": "Cannot map current PC22 PLAYER+0x466 to export column"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.youtube.com/watch?v=9mOaA5jofEA",
+      "author": "Shady Mike Gaming",
+      "date": "2021-10-17",
+      "version": "NBA2K22",
+      "platform": "creator discusses PC and consoles",
+      "locator": "Video description Tendencies: Take Close Shots 5 (global); Close Shot Success separately 48/50",
+      "grade": "COMMUNITY_SLIDER_SET_GLOBAL_NOT_PLAYER",
+      "claim": "Separates global close-shot attempt frequency and close-shot success controls",
+      "limits": "Not player SHOT_CLOSE_TENDENCY; 5 is not a native player recommendation"
+    },
+    {
+      "id": "S4",
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "DiamondLobby, individual byline UNKNOWN",
+      "date": "2021-era, exact date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "USER/CPU general sliders, PC test UNKNOWN",
+      "locator": "Take Close Shots global slider",
+      "grade": "DIFFERENT_LAYER_GLOBAL_SLIDER",
+      "claim": "Lists distinct USER/CPU Take Close Shots controls",
+      "limits": "Not player native 0x466 consumer"
+    },
+    {
+      "id": "S5",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/841295-tendency-edits-that-are-game-changers-for-realism/page84",
+      "author": "JoFri and replying poster",
+      "date": "2021-09-19",
+      "version": "2K22 question answered using 2K19 experience",
+      "platform": "UNKNOWN",
+      "locator": "posts #1251–1252",
+      "grade": "CROSS_VERSION_DISAGREEMENT",
+      "claim": "Questions whether zone Shot tendencies govern Sim but not 3D; respondent explicitly cannot speak for 22",
+      "limits": "No tested PC22 consumption path"
+    }
+  ],
+  "claims": [
+    {
+      "id": "CL01",
+      "source_ids": [
+        "S1",
+        "S2"
+      ],
+      "tier": "SAME_VERSION_NAMED_FIELD",
+      "claim": "Shot Close is an independently named player tendency, not yet matched to candidate byte"
+    },
+    {
+      "id": "CL02",
+      "source_ids": [
+        "S3",
+        "S4"
+      ],
+      "tier": "GLOBAL_SETTING_SEPARATE",
+      "claim": "Take Close Shots global sliders are different from player tendency and success controls"
+    },
+    {
+      "id": "CL03",
+      "source_ids": [
+        "S5"
+      ],
+      "tier": "MODE_UNRESOLVED",
+      "claim": "3D-versus-Calendar use of Shot Close player tendency remains disputed"
+    }
+  ],
+  "conflicts": [
+    "Close zone spatial definition and shot under basket boundary UNKNOWN",
+    "3D action versus Calendar use UNKNOWN; 2K19 cannot prove 2K22",
+    "S3 global value 5 is not optimum native threshold"
+  ],
+  "relationships": [
+    "SHOT_UNDER_BASKET_TENDENCY as neighboring zone",
+    "Shot Close attribute as success ability",
+    "Coach POE/post plays and shot selection availability",
+    "Global USER/CPU Take Close Shots slider is different setting",
+    "Training direct causal link UNKNOWN"
+  ],
+  "metrics": [
+    "CPU close-zone FGA conditional on eligible touch and measured distance",
+    "point-blank and mid-range attempts separately",
+    "FGA versus FG% separate",
+    "3D and Calendar never pooled without mode evidence"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_SHOT_CLOSE_015",
+    "question": "For two confirmed player UIDs in the same current PC NBA2K22 save/build/time, does read-only PLAYER+0x466 match each player's Shot Close tendency UI field, separately from global Take Close Shots?",
+    "match": "SCOPED_UI_MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "DISTINCT_PLAYER_ZONE_FIELD_RESEARCHED_CONSUMPTION_UNKNOWN",
+  "game_effect": "NOT_RUN",
+  "native_test": "NOT_RUN",
+  "next_improvement": "After mapping, measure conditional FGA in close-zone and compare 3D/Calendar effects without reusing global slider results"
+}
