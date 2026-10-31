@@ -1,0 +1,62 @@
+{
+  "field_id": "TENDENCY_NATIVE_064",
+  "iteration_id": "SWEEP01_FIELD0064",
+  "research_date": "2026-10-31",
+  "question": "Does Attack Strong On Drive affect a CPU player's contact-seeking finish choice once it has already initiated a drive?",
+  "candidate": {
+    "key": "tendency.ATTACK_STRONG_ON_DRIVE",
+    "offset": "0x497",
+    "range_project": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916550-nba-x%E2%80%99s-o%E2%80%99s/page6",
+      "author": "Sheitan",
+      "date": "2021-09-30",
+      "game": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "evidence": "Multiple simultaneous floater, pull-up mid and attack strong edits; uncontrolled"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/841295-tendency-edits-that-are-game-changers-for-realism/page77",
+      "author": "Tynole14/daveberg",
+      "date": "2020-09-15",
+      "game": "PRE-2K22",
+      "platform": "UNKNOWN",
+      "evidence": "Older-game interpretation of Attack Strong and ISO; cannot transfer numeric thresholds"
+    }
+  ],
+  "claims": [
+    "Contact finish preference may differ from drive initiation and scoring success",
+    "No direct evidence proves 0x497 mapping or PC22 decision weight"
+  ],
+  "conflicts": [
+    "2021 tests adjust multiple fields",
+    "2020 values are version-specific anecdote"
+  ],
+  "relationships": [
+    "Drive, Floater, Layup/Dunk and Dish to Open Man",
+    "Coach POE/Run Plays/defender coverage",
+    "Strength/badges/fatigue confound outcome",
+    "Training direct effect UNKNOWN"
+  ],
+  "metrics": [
+    "contact-seeking finishes per eligible CPU drive",
+    "alternative layup/floater/pass outcomes",
+    "make percent separate from attempt selection"
+  ],
+  "REA_question": {
+    "id": "REA_ATTACK_STRONG_064",
+    "question": "For two UID-verified PC22 players, do read-only PLAYER+0x497 values match exact Attack Strong On Drive UI values in same build/save/time?",
+    "write": false
+  },
+  "result": "SAME_VERSION_CONTEXT_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
