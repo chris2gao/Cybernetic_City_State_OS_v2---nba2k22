@@ -24,7 +24,9 @@
     "reviewed_A_candidate_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
     "human_A_approved_candidate_sha": "5abf3cb154654872a3d05278b96658f190ed9241",
     "human_A_approved_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
-    "human_A_approval_record_path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml"
+    "human_A_approval_record_path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml",
+    "governed_closeout_dispatch_sha": "d700c27bcbc790df8bf8675c356f7b2d46137f64",
+    "governed_closeout_branch": "task/nba2k22-vae-stage01-governed-closeout-20261030"
   },
   "human_decision_refs": [
     {
@@ -100,6 +102,16 @@
       "recommendation": "RECOMMENDED_FOR_HUMAN_VERSION_CONFIRMATION_REVIEW_WITH_LIMITATIONS",
       "final_head": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5",
       "human_confirmation": "PENDING"
+    },
+    {
+      "task_id": "NBA2K22-VAE-STAGE01-GOVERNED-CLOSEOUT-20261030-001",
+      "owner": "new isolated GPT-6 execution window, Human relay pending",
+      "run": "run-20261030-nba2k22-vae-stage01-governed-closeout-001",
+      "lifecycle": "dispatched_not_yet_executed",
+      "dispatch_sha": "d700c27bcbc790df8bf8675c356f7b2d46137f64",
+      "Human_A_reference": "a98aa2db6e442bbc3aecfa552665ea13d482683e",
+      "actual_model": "PENDING",
+      "completion_pointer": "NOT_RECEIVED"
     }
   ],
   "verified_facts": [
@@ -132,6 +144,11 @@
       "claim": "Human has directly approved exact Stage01 A-v1 semantics, accepting F02–F07 as residual contract/review items",
       "ref": "01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml (this planner Run, published HEAD)",
       "scope": "version-bound product semantic confirmation only; not governed workflow completion"
+    },
+    {
+      "claim": "A new isolated GPT task packet for canonical Stage01 closeout has been published on a task branch",
+      "ref": "d700c27bcbc790df8bf8675c356f7b2d46137f64:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001/01_任务输入/task_packet.json",
+      "scope": "published task packet only; not a runner receipt or completion"
     }
   ],
   "open_items": [
@@ -182,17 +199,17 @@
     }
   ],
   "next_steps": [
-    "Exact Human Stage01 A-v1 approval has been recorded; do not ask again or retroactively alter candidate A blob.",
-    "Dispatch a new GPT execution window for governed Stage01 closure with exact approval and review refs, bounded paths and honest runner receipts.",
-    "Only after verified Stage01 actual completion plan Stage02 bounded read-only evidence collection; no runtime/game/save permission implied.",
-    "Separately schedule F02/F03/F07 machine contract corrections and F04/F05 test/provenance; preserve F06 as a proof limitation.",
-    "Preserve human model provenance, execution owner and independent reviewer, with actual model identity UNKNOWN if platform not attested."
+    "Human relays Stage01 closeout GPT task d700c27bcbc790df8bf8675c356f7b2d46137f64 to a new GPT execution window forked from NBA_COMMON_BASELINE_READY; approved A does not need reapproval.",
+    "Receive closeout completion pointer, verify actual Core runner result and Human decision binding; if blocked, resolve real prerequisites without invented receipts.",
+    "After real governed Stage01 completion plan Stage02 read-only evidence task with no game mutation, and schedule F02/F03/F07 contract corrections before comparisons.",
+    "F04/F05 future Stage03/04 provenance & oracles; F06 proof limitations remain UNKNOWN.",
+    "Keep executor and reviewer model attribution in future records, preserving exact GitHub sources."
   ],
   "persistent_context_policy": "Store only Human decisions, task index, verified facts, open items and next steps; keep raw logs and developer thought process in execution Runs",
   "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
   "COMMUNICATION_FORMAL_V2_PUBLICATION": "NOT_RUN",
   "independent_review": "DELIVERED_PARTIALLY_SUPPORTED",
-  "task_execution_status": "HUMAN_STAGE01_A_V1_CONFIRMED;_GOVERNED_STAGE01_COMPLETION_PENDING;_REVIEW_LIMITATIONS_OPEN",
+  "task_execution_status": "HUMAN_A_CONFIRMED;_CLOSEOUT_GPT_DISPATCHED;_GOVERNED_STAGE01_PENDING",
   "last_material_update": "2026-10-30",
   "context_policy_update": "Forward only; do not retroactively relabel historical tasks. Declare assigned model separately from actual model and independent reviewer, with truthful evidence source."
 }
