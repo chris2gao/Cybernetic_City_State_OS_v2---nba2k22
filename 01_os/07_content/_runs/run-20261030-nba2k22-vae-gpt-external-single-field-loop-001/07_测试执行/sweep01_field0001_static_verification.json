@@ -40,8 +40,8 @@
     },
     {
       "id": "GPT08_CHECKPOINT_READBACK",
-      "status": "PENDING_FINAL_COMMIT",
-      "evidence": "Dossier, ledger and checkpoint GitHub blob readback performed; require final HEAD and all changed paths"
+      "status": "PASS",
+      "evidence": "GitHub HEAD f8c766f587928ae0ab82b8c5e18fa07ded9aa0d9 verified: 10 changed paths all inside authorized Run; dossier, ledger, checkpoint, verification and run blobs read back; cursor is 1 of 204. Final pointer may produce one later commit."
     }
   ],
   "source_validation": "WEB_SEARCH_PERFORMED_WITH_PRIMARY_POST_LOCATORS",
@@ -49,7 +49,11 @@
   "readback": {
     "dossier_blob": "a0cdd566084ec2b4179188b379edd1668374370f",
     "ledger_blob": "4db9cd51e75a3fd672506c069caaef3c0d4dab86",
-    "checkpoint_blob": "5efefedb411085668542bcf1dc7d306bb3825f43"
+    "checkpoint_blob": "5efefedb411085668542bcf1dc7d306bb3825f43",
+    "verification_blob_before_status_update": "8e61625f0a95177a0fb7f94c1bcb5dc119559dce",
+    "git_commit_checked": "f8c766f587928ae0ab82b8c5e18fa07ded9aa0d9",
+    "all_paths_within_Run": true,
+    "readback_mode": "GITHUB_BLOB_EXACT"
   },
   "real_game_verification": "NOT_RUN",
   "REA_native_validation": "NOT_RUN",
