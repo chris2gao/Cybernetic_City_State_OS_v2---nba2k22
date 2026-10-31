@@ -1,0 +1,77 @@
+{
+  "field_id": "TENDENCY_NATIVE_066",
+  "iteration_id": "SWEEP01_FIELD0066",
+  "date": "2026-10-31",
+  "question": "Does Touches tendency affect freelance receptions, set-play targets, or both?",
+  "candidate": {
+    "key": "tendency.TOUCHES_TENDENCY",
+    "offset": "0x499",
+    "range_project": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings",
+      "author": "tcnumba10 and jimbo3772",
+      "date": "2021-09-18",
+      "game": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "claim": "First tester observed improved distribution with Touch=50, another says Touch primarily applies in freelance, not set play calls"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page10",
+      "author": "Tynole14",
+      "date": "2021-10-07",
+      "game": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "claim": "Touch=50 failed to resolve two-player play calling"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page7?t=992582",
+      "author": "tcnumba10",
+      "date": "2021-09-27",
+      "game": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "claim": "Giannis still dominated touches after extreme setting changes until playbook changed"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "game": "NBA 2K22",
+      "platform": "PS5, PC unknown",
+      "claim": "Describes Touches as plays run for player; conflicts with freelance interpretation"
+    }
+  ],
+  "claims": [
+    "Contemporaneous Touches accounts conflict on whether set plays or freelance are affected",
+    "No known verified native 0x499 consumer or effect coefficient"
+  ],
+  "conflicts": [
+    "Coach Playbook, Run Plays, role and ratings confound",
+    "50 and 99 are community choices, not proven optimal values"
+  ],
+  "related": [
+    "Coach Playbook/PlayTypes/POE",
+    "Freelance Shot and Play Discipline",
+    "Player role and minutes",
+    "Training field relationship UNKNOWN"
+  ],
+  "metrics": [
+    "freelance catches per eligible possession",
+    "called plays targeting player per set play",
+    "ball touches and shot attempts separately"
+  ],
+  "REA_question": {
+    "id": "REA_TOUCHES_066",
+    "question": "Do two UID-verified PC22 players' read-only PLAYER+0x499 values equal exact Touches UI values in same build/save/time?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_CONTRADICTORY_TOUCHES_HYPOTHESES",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN"
+}
