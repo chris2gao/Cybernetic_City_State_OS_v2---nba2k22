@@ -1,0 +1,86 @@
+{
+  "field_id": "WORLD_REG_014",
+  "iteration_id": "SWEEP01_FIELD0113",
+  "research_date": "2026-10-31",
+  "question": "Does Recently Traded Restrictions limit re-trading recently acquired players and salary aggregation, and what is the game-specific distinction from Recently Signed Restrictions?",
+  "registry_candidate": {
+    "key": "settings.trade_rules.recently_traded_rule",
+    "offset": "0x158",
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "PC22_UI_mapping": "UNKNOWN",
+    "native_effect": "UNKNOWN",
+    "value_domain": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-22 release era",
+      "game": "NBA2K22",
+      "platform": "MyNBA/MyLEAGUE, PC mapping unverified",
+      "grade": "SAME_RELEASE_UI_OPTIONS",
+      "claim": "Recently Signed Restrictions and Recently Traded Restrictions listed separately"
+    },
+    {
+      "url": "https://www.trueachievements.com/a338876/maxed-out-achievement",
+      "author": "TrueAchievements Xbox One guide",
+      "date": "2021-22 NBA 2K22",
+      "game": "NBA2K22",
+      "platform": "Xbox One MyGM, not PC MyLEAGUE",
+      "grade": "SAME_GAME_OTHER_MODE",
+      "claim": "Disabling Recently Signed Restrictions used alongside financial rule and override changes, not isolated"
+    },
+    {
+      "url": "https://devtrackers.gg/nba2k/p/8ff62bb9-nba-2k21-next-gen-mynba-courtside-report",
+      "author": "2K21 MyNBA original developer report repost",
+      "date": "2020-10",
+      "game": "NBA2K21",
+      "platform": "next-gen and older than PC22",
+      "grade": "CROSS_VERSION_ONLY",
+      "claim": "Describes 30/60/90-day signing rules and trade finances as configurable; not proof of PC22 exact windows"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/884603-official-nba-2k21-mygm-myleague-mlo-wish-list/page3?postcount=21",
+      "author": "Operation Sports CBA rule discussion",
+      "date": "NBA2K21 forum era",
+      "game": "PRE-2K22",
+      "platform": "UNKNOWN",
+      "grade": "CROSS_VERSION_UNVERIFIED_EXCEPTION",
+      "claim": "Discusses re-trading without salary aggregation vs combined packages, no PC22-native proof"
+    }
+  ],
+  "claims": [
+    "Distinct NBA2K22 UI rule exists; candidate offset not independently verified",
+    "External GM CBA simplification cannot be inferred from original-engine rule toggle"
+  ],
+  "contradictions": [
+    "Older 2K descriptions suggest non-aggregation exception but PC22 exact engine rule UNKNOWN",
+    "Solo re-trade versus package re-trade and salary-matching are separate cases",
+    "Old game reports and standalone Xbox MyGM guide cannot establish PC22 offline MyLEAGUE callsite",
+    "Any user-chosen setting must be Human-confirmed and read back; no setting operation here"
+  ],
+  "related": [
+    "Trade Deadline",
+    "Financial Trade Rules",
+    "Trade Override",
+    "Signing/transfer history",
+    "External GM trade execution rules separated from original MyLEAGUE"
+  ],
+  "observables": [
+    "read-only UI setting state and transfer history timestamps",
+    "Native validator rejection reason for single asset versus package in separately authorized test",
+    "no altering existing completed transactions"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_014",
+    "question": "Does current-save read-only trade-rule candidate +0x158 match the exact Recently Traded Restrictions UI setting on PC22 with immediate/delayed readback? Do not submit trades or change settings.",
+    "positive": "SCOPED_CONFIG_IDENTITY_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_RULE_LABEL_WAITING_PERIOD_NOT_VERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "external_GM": "NO_POLICY_CHANGE"
+}
