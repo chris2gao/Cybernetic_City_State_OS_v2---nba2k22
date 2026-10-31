@@ -1,0 +1,55 @@
+{
+  "field_id": "TENDENCY_NATIVE_082",
+  "iteration_id": "SWEEP01_FIELD0082",
+  "question": "Can Native player byte 0x4A9 be matched to exact PC22 UI tendency?",
+  "identity": {
+    "offset": "0x4A9",
+    "project_key": "tendency.RAW_0x4a9",
+    "range_project": [
+      0,
+      100
+    ],
+    "name": "UNKNOWN",
+    "engine_consumer": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x4A9\" \"tendency\"",
+    "date": "2026-10-31",
+    "relevant_results": 0,
+    "grade": "NO_DIRECT_SOURCE"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "2021 snapshot; page publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web",
+      "limit": "Category names without byte offsets"
+    }
+  ],
+  "claims": [
+    "No direct source establishes 0x4A9 label or runtime behavior"
+  ],
+  "uncertainties": [
+    "Contiguous address must not be assigned exported column by position",
+    "Search absence is not proof of unused byte",
+    "3D versus Calendar engine effects unknown"
+  ],
+  "relationships": "All Coach, Player and training relations UNKNOWN",
+  "observable": [
+    "UID-specific read-only raw values from two players",
+    "independent UI label and values with build/save/time",
+    "neighbor comparison to avoid coincidence"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_82",
+    "question": "Does read-only PLAYER+0x4A9 equal one independently identified UI field in two PC22 players with different UIDs?",
+    "write": false,
+    "positive": "MAPPING_ONLY",
+    "negative": "UNKNOWN"
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
