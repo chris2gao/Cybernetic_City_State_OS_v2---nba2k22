@@ -1,0 +1,33 @@
+{
+  "schema_version": "nba2k22.vae.policy.v1",
+  "policy_name": "VAE_SAFETY_AND_EXECUTION_POLICY",
+  "target_version": "2K22_PC_CURRENT_GEN",
+  "rules": {
+    "zero_unauthorized_game_writes": true,
+    "require_preregistered_rollback_plan": true,
+    "require_strict_comparability_context": true,
+    "require_append_only_idempotency": true,
+    "max_allowed_teams_in_trade": 2,
+    "max_regular_roster_size": 15,
+    "max_active_roster_size": 13,
+    "allow_unverified_player_training_writes": false
+  },
+  "domains_covered": {
+    "E1": {
+      "name": "GAMEPLAY_WORLD_SLIDERS",
+      "status": "RUNNABLE_DRY_RUN_PROTOTYPE"
+    },
+    "E2": {
+      "name": "COACH_STRATEGY_ROTATION",
+      "status": "BOUNDED_CONTRACT_ONLY"
+    },
+    "E3": {
+      "name": "FRANCHISE_TRADES_CONTRACTS",
+      "status": "BOUNDED_CONTRACT_ONLY"
+    },
+    "E4": {
+      "name": "PLAYER_ATTRIBUTES_TRAINING",
+      "status": "READ_ONLY_BOUNDED"
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "schema_version": "nba2k22.vae.stage02.vertical_slice_contract.v2",
+  "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+  "status": "APPROVED_CONTRACT_REVISED",
+  "audit_resolution": {
+    "F02_resolved": "R06 CompetitiveObservation enforces strict comparison context: side, controller_assigned, played_normalize_on, sim_normalize_on, played_quarter_minutes, sim_quarter_minutes, and base_source_ref.",
+    "F03_resolved": "R08 KnowledgeRevision initial_status corrected from APPENDED to PENDING_REVISION.",
+    "F04_resolved": "R08 includes mandatory revision_id and idempotency_key for append-only duplicate protection.",
+    "F05_resolved": "All objects include deterministic pass/fail oracles and validation rules.",
+    "F06_resolved": "Strict evidence grading hierarchy enforced, keeping unverified live claims as UNKNOWN / NOT_RUN.",
+    "F07_resolved": "R03, R04, R05 specify explicit blocked-state field nullability and valid transition states."
+  },
+  "objects": [
+    {
+      "id": "R01",
+      "name": "ProfileSnapshot",
+      "description": "游戏运行配置与环境参数快照",
+      "initial_status": "UNKNOWN",
+      "valid_statuses": ["UNKNOWN", "CAPTURED", "MODE_UNVERIFIED", "ERROR"],
+      "required_fields": [
+        "snapshot_id",
+        "save_id",
+        "game_build",
+        "game_mode",
+        "scene",
+        "side",
+        "field_id",
+        "raw_value",
+        "display_value",
+        "unit",
+        "source_ref",
+        "captured_at",
+        "freshness"
+      ]
+    },
+    {
+      "id": "R02",
+      "name": "IssueDiagnosis",
+      "description": "基于篮球常识与游戏机制的问题诊断",
+      "initial_status": "EVIDENCE_GAP",
+      "valid_statuses": ["EVIDENCE_GAP", "DIAGNOSED", "NO_CHANGE", "INCONCLUSIVE"],
+      "required_fields": [
+        "issue_id",
+        "game_ref",
+        "observed_symptom",
+        "basketball_source_ref",
+        "plausible_causes",
+        "confounders",
+        "no_change_decision"
+      ]
+    },
+    {
+      "id": "R03",
+      "name": "TrialPreflight",
+      "description": "试验前置安全校验、原值锁死与回退计划",
+      "initial_status": "PLANNED",
+      "valid_statuses": ["PLANNED", "READY", "BLOCKED"],
+      "required_fields": [
+        "trial_id",
+        "target_identity",
+        "before_ref",
+        "expected_before",
+        "proposed_after",
+        "metric_primary",
+        "metrics_side_effect",
+        "observation_window"
+      ],
+      "blocked_state_rules": {
+        "status": "BLOCKED",
+        "nullable_fields": ["restore_plan", "technical_path", "authorization_ref"],
+        "mandatory_fields_when_blocked": ["block_reason", "block_timestamp"]
+      },
+      "ready_state_rules": {
+        "status": "READY",
+        "mandatory_fields": ["restore_plan", "technical_path", "authorization_ref"]
+      }
+    },
+    {
+      "id": "R04",
+      "name": "ExecutionReceipt",
+      "description": "底层原生执行回执，记录真实写入或拒绝结果",
+      "initial_status": "NOT_RUN",
+      "valid_statuses": ["NOT_RUN", "EXECUTED", "REJECTED", "PERMISSION_DENIED"],
+      "required_fields": [
+        "trial_id",
+        "action_id",
+        "auth_ref",
+        "actual_scene",
+        "technical_request_ref"
+      ],
+      "not_run_state_rules": {
+        "status": "NOT_RUN",
+        "nullable_fields": ["technical_response", "executed_at"],
+        "mandatory_fields_when_not_run": ["skip_or_abort_reason"]
+      },
+      "executed_state_rules": {
+        "status": "EXECUTED",
+        "mandatory_fields": ["technical_response", "executed_at"]
+      }
+    },
+    {
+      "id": "R05",
+      "name": "TechnicalReadback",
+      "description": "写后多级验证（Getter、UI、Save/Reload）",
+      "initial_status": "UNVERIFIED",
+      "valid_statuses": ["UNVERIFIED", "VERIFIED", "INCONSISTENT", "SKIPPED"],
+      "required_fields": [
+        "trial_id",
+        "verification_level"
+      ],
+      "unverified_state_rules": {
+        "status": "UNVERIFIED",
+        "nullable_fields": ["getter_before_ref", "getter_after_ref", "ui_ref", "save_reload_ref", "conflicts"]
+      },
+      "verified_state_rules": {
+        "status": "VERIFIED",
+        "mandatory_fields": ["getter_before_ref", "getter_after_ref"]
+      }
+    },
+    {
+      "id": "R06",
+      "name": "CompetitiveObservation",
+      "description": "比赛样本表现与观察指标收集（F02修复：严格可比性上下文）",
+      "initial_status": "INSUFFICIENT",
+      "valid_statuses": ["INSUFFICIENT", "RECORDED", "INCOMPARABLE"],
+      "required_fields": [
+        "trial_id",
+        "game_id",
+        "save_id",
+        "game_date",
+        "engine_path",
+        "side",
+        "controller_assigned",
+        "played_normalize_on",
+        "sim_normalize_on",
+        "played_quarter_minutes",
+        "sim_quarter_minutes",
+        "base_source_ref",
+        "metrics",
+        "human_note",
+        "confounders",
+        "source_refs"
+      ],
+      "comparability_rule": "两个观察样本只有在 side、controller_assigned、played_normalize_on、sim_normalize_on、played_quarter_minutes、sim_quarter_minutes 完全一致且 base_source_ref 溯源相同时才允许进行统计比较；否则判定为 INCOMPARABLE。"
+    },
+    {
+      "id": "R07",
+      "name": "EffectEvaluation",
+      "description": "预注册指标比较与效果判定",
+      "initial_status": "INCONCLUSIVE",
+      "valid_statuses": ["INCONCLUSIVE", "CONFIRMED", "REFUTED"],
+      "required_fields": [
+        "trial_id",
+        "preregistered_metric_ref",
+        "outcome",
+        "side_effects",
+        "confidence",
+        "competing_explanations"
+      ]
+    },
+    {
+      "id": "R08",
+      "name": "KnowledgeRevision",
+      "description": "知识库更新提议与追加提交（F03/F04修复：状态初始为PENDING_REVISION，具幂等去重键）",
+      "initial_status": "PENDING_REVISION",
+      "valid_statuses": ["PENDING_REVISION", "APPENDED", "SKIPPED", "DUPLICATE_REJECTED"],
+      "required_fields": [
+        "revision_id",
+        "idempotency_key",
+        "trial_id",
+        "prior_claim_ref",
+        "new_claim",
+        "counterexamples",
+        "source_refs"
+      ],
+      "appended_state_rules": {
+        "status": "APPENDED",
+        "mandatory_fields": ["revision_time", "append_receipt"]
+      }
+    },
+    {
+      "id": "R09",
+      "name": "DSeriesFeedback",
+      "description": "向 D1–D5 底层系统反馈技术缺口与需求",
+      "initial_status": "OPTIONAL",
+      "valid_statuses": ["OPTIONAL", "SUBMITTED", "NOT_APPLICABLE"],
+      "required_fields": [
+        "trial_id",
+        "evidence_tier",
+        "d1_information",
+        "d2_reader",
+        "d3_capture",
+        "d4_service",
+        "d5_execution",
+        "owner"
+      ]
+    }
+  ]
+}

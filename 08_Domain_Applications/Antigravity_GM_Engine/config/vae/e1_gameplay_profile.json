@@ -1,0 +1,30 @@
+{
+  "schema_version": "nba2k22.vae.e1_profile.v1",
+  "trial_target": "slider.three_point_success",
+  "domain": "E1",
+  "description": "E1 World / Gameplay slider trial template for shooting percentage normalization",
+  "slider_specs": {
+    "field_id": "three_point_success",
+    "range": [0, 100],
+    "default_value": 50,
+    "proposed_value": 45,
+    "unit": "integer_points"
+  },
+  "metrics": {
+    "primary": "team_3pt_pct",
+    "target_benchmark": 0.354,
+    "side_effects": [
+      "team_fg_pct",
+      "fast_break_points",
+      "pace"
+    ]
+  },
+  "observation_context": {
+    "side": "USER",
+    "controller_assigned": true,
+    "played_normalize_on": false,
+    "sim_normalize_on": false,
+    "played_quarter_minutes": 12,
+    "sim_quarter_minutes": 12
+  }
+}
