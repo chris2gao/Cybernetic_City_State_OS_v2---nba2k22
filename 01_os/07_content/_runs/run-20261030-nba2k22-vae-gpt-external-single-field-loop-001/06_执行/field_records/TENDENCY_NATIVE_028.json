@@ -1,0 +1,113 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_028",
+  "iteration_id": "SWEEP01_FIELD0028",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "ordinal": 28,
+  "primary_question": "Does Spot Up Shot Three affect CPU 3PA specifically after an eligible spot-up reception, not Transition Spot Up or a 3PT ability score?",
+  "identity": {
+    "candidate_native_key": "tendency.SPOT_UP_SHOT_THREE",
+    "offset_hex": "0x473",
+    "declared_raw_range": [
+      0,
+      100
+    ],
+    "live_PC22_native_UI": "UNKNOWN",
+    "actual_3D_effect": "UNKNOWN",
+    "actual_Calendar_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "id": "ATD",
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX published; PC WIP then",
+      "tier": "SAME_VERSION_ROSTER_EDITOR",
+      "claim": "ATD edits overall 3PT and shot-type tendencies together; no isolated field response"
+    },
+    {
+      "id": "SHEITAN",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "version": "NBA2K22",
+      "platform": "PS5 stated, CPU-v-CPU experience",
+      "tier": "SAME_VERSION_OTHER_PLATFORM_OPINION",
+      "claim": "Specific spot-up 3 and off-screen 3 may affect player shot decisions; not formula proof"
+    },
+    {
+      "id": "ARCHIVE",
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction historical export, individual editor UNKNOWN",
+      "date": "September 2021 roster snapshot, page publishing UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export; original game platform UNKNOWN",
+      "tier": "HISTORICAL_LABEL_ONLY",
+      "claim": "Separate overall Shot Three and situational three-point tendencies appear in roster data; no native memory mapping"
+    }
+  ],
+  "claim_map": [
+    {
+      "id": "SAME_VERSION_NAME",
+      "source_ids": [
+        "ATD",
+        "ARCHIVE"
+      ],
+      "tier": "REPORTED_FIELDS_NOT_ENGINE",
+      "claim": "A corresponding shot tendency category is reported; offset matching not proven"
+    },
+    {
+      "id": "PLAYER_OPINION",
+      "source_ids": [
+        "SHEITAN"
+      ],
+      "tier": "HYPOTHESIS_NOT_PC22_PROOF",
+      "claim": "Possible shot-choice role suggested by PS5 editor, consumer unverified"
+    }
+  ],
+  "conflicts": [
+    "Specific 3PT shot category versus global 3PT slider and player's 3PT success rating must remain separate",
+    "PS5 anecdote, web archive and PC22 current-generation engine are not identical provenance",
+    "Coach Run Plays/Book/PlayTypes and open shot opportunities are uncontrolled"
+  ],
+  "candidate_links": [
+    {
+      "name": "3PT rating, badges, fatigue and defender contest",
+      "status": "SHOT_SUCCESS_CONFOUNDERS"
+    },
+    {
+      "name": "Coach Playbook, POE, ACE and Touches",
+      "status": "POSSIBLE_OPPORTUNITY_MEDIATORS"
+    },
+    {
+      "name": "spot-up shoot versus drive/pass after receiving the ball",
+      "status": "POSSIBLE_CHOICE_ALTERNATIVES"
+    },
+    {
+      "name": "Training",
+      "status": "NO_DIRECT_FIELD_CAUSAL_SOURCE"
+    }
+  ],
+  "observables": [
+    "spot-up 3PA per eligible CPU catch with defense separation",
+    "other available shoot/pass/drive outcomes",
+    "3D versus Calendar and game save/build/UID separately",
+    "attempts and makes never equated"
+  ],
+  "rea_question": {
+    "id": "REA_SPOTUP_THREE_028",
+    "question": "For two UID-verified PC22 players, does read-only PLAYER+0x473 match the exact displayed SPOT_UP_SHOT_THREE tendency in the same save/build/time?",
+    "match": "SCOPED_NATIVE_UI_MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "missing": "BLOCKED",
+    "game_write": false
+  },
+  "outcome": "SAME_VERSION_CATEGORY_EVIDENCE_NATIVE_EFFECT_UNKNOWN",
+  "rea_native": "NOT_RUN",
+  "game": "NOT_RUN",
+  "next_improvement": "After identity proof isolate eligible CPU decisions and compare 3D/Calendar; do not prescribe effect thresholds"
+}
