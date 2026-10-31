@@ -1,0 +1,49 @@
+{
+  "field_id": "TENDENCY_NATIVE_070",
+  "iteration_id": "SWEEP01_FIELD0070",
+  "date": "2026-10-31",
+  "question": "Can raw PLAYER+0x49D be independently mapped to an exact PC22 player tendency UI field?",
+  "candidate": {
+    "key": "tendency.RAW_0x49d",
+    "offset": "0x49D",
+    "project_range": [
+      0,
+      100
+    ],
+    "identity": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x49D\" tendency native offset",
+    "result": "NO_DIRECT_SOURCE",
+    "date": "2026-10-31"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction archived player roster",
+      "date": "2021 snapshot, page date UNKNOWN",
+      "platform": "web export",
+      "claim": "Names tendency categories without raw byte addresses"
+    }
+  ],
+  "claim": "No source proves byte identity or effect; adjacent Transition Spot Up is not mapping evidence",
+  "conflicts": [
+    "No UID/UI native observation; field-order guessing prohibited"
+  ],
+  "relationships": "UNKNOWN pending identity",
+  "metrics": [
+    "read-only PLAYER+0x49D for two confirmed UIDs",
+    "independent UI labels and values in same save/build/time",
+    "cross-check neighbor bytes for coincidence"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_070",
+    "question": "Can two UID-confirmed read-only PLAYER+0x49D values match one independently observed PC22 tendency UI field?",
+    "write": false,
+    "if_missing": "BLOCKED"
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
