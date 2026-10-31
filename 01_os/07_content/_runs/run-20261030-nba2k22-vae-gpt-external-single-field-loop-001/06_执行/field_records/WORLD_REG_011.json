@@ -1,0 +1,73 @@
+{
+  "field_id": "WORLD_REG_011",
+  "iteration_id": "SWEEP01_FIELD0110",
+  "research_date": "2026-10-31",
+  "question": "Does native Trade Deadline enable temporal eligibility checks for trades during the season, distinct from switching off Trade Logic or simply hiding the proposal interface?",
+  "candidate": {
+    "key": "settings.trade_rules.trade_deadline",
+    "offset": "0x16C",
+    "source": "STATIC_REGISTRY_CANDIDATE",
+    "UI_binding": "UNKNOWN",
+    "field_width": "UNKNOWN",
+    "runtime_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021–2022",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE/MyNBA, PC mapping UNKNOWN",
+      "grade": "SAME_RELEASE_TRADE_MENU_LIST",
+      "claim": "Trade Deadline, Financial Trade Rules and Trade Override independently exposed"
+    },
+    {
+      "url": "https://www.trueachievements.com/a338876/maxed-out-achievement",
+      "author": "TrueAchievements Xbox One MyGM guide",
+      "date": "2021–2022 NBA2K22 era",
+      "game": "NBA2K22",
+      "platform": "Xbox One MyGM, not PC MyLEAGUE",
+      "grade": "SAME_VERSION_OTHER_MODE",
+      "claim": "Community workflow disabled Financial Trade Rules while enabling Trade Override to produce otherwise difficult trades"
+    },
+    {
+      "url": "https://devtrackers.gg/nba2k/p/8ff62bb9-nba-2k21-next-gen-mynba-courtside-report",
+      "author": "2K21 MyNBA development report repost",
+      "date": "2020-10",
+      "game": "NBA2K21, not 22",
+      "platform": "next-gen, PC unknown",
+      "grade": "CROSS_VERSION_CBA_CONTEXT_ONLY",
+      "claim": "Developers describe financial salary matching as a configurable trade rule; 2K22 same implementation unverified"
+    }
+  ],
+  "claims": [
+    "NBA2K22 game exposes a distinct Trade Deadline trade setting",
+    "No source confirms candidate raw mapping or exact original-engine validator path",
+    "External GM rules are a separate simulation contract, not determined by this research"
+  ],
+  "conflicts": [
+    "NBA2K21 CBA description and 2K22 Xbox MyGM are not PC MyLEAGUE build verification",
+    "Deadline gate may depend on calendar season and transaction type",
+    "Trade Override can bypass certain native conditions, but not proven to bypass all guards"
+  ],
+  "related": [
+    "Trade Logic, Trade Override, season calendar and external GM engine"
+  ],
+  "metrics": [
+    "season-date eligibility of original engine trade proposals",
+    "proposal UI availability and native validation outcome separate",
+    "date boundary and offseason rules"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_011",
+    "question": "For one actual PC22 MyLEAGUE settings snapshot, does read-only trade-rules candidate +0x16C match the exact visible Trade Deadline UI state in immediate and delayed readback, without initiating a trade?",
+    "positive": "CONFIG_MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_RULE_SETTING_CBA_SCOPE_UNVERIFIED",
+  "native_runtime": "NOT_RUN",
+  "game": "NOT_RUN",
+  "external_GM": "UNTOUCHED"
+}
