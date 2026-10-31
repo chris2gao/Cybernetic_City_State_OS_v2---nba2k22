@@ -1,0 +1,57 @@
+{
+  "schema": "nba2k22.vae.single_field_external.v1",
+  "field_id": "TENDENCY_NATIVE_061",
+  "iteration_id": "SWEEP01_FIELD0061",
+  "research_date": "2026-10-31",
+  "question": "Can 0x494 be directly tied to an exact PC NBA2K22 per-player tendency UI label?",
+  "native": {
+    "offset": "0x494",
+    "project_key": "tendency.RAW_0x494",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "ui": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x494\" tendency offset",
+    "result": "NO_DIRECT_SOURCE",
+    "date": "2026-10-31",
+    "caveat": "Negative external source search does not imply inert byte"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "2021 snapshot, page date UNKNOWN",
+      "platform": "web export",
+      "version": "2K22",
+      "relevance": "Named tendencies only; no memory offsets"
+    }
+  ],
+  "claims": [
+    "No verified mapping or game effect for byte 0x494"
+  ],
+  "contradictions": [
+    "Native slot sequence does not equal UI column ordering",
+    "No test separates skill, Coach and game influence"
+  ],
+  "related_mechanisms": "UNKNOWN until native identity",
+  "measures": [
+    "two independent player UID raw values, same build/save",
+    "exact UI label/readback and adjacent byte check"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_061",
+    "question": "Is read-only PLAYER+0x494 identical to one independently observed UI tendency value across two UID-verified PC22 players?",
+    "match": "SCOPED_IDENTITY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN"
+}
