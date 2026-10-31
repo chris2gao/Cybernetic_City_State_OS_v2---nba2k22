@@ -1,0 +1,125 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_005",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0005",
+  "research_date": "2026-10-30",
+  "question": "Does FLASHY_DUNK_TENDENCY alter which CPU dunk animation style is chosen, conditional on a dunk opportunity, rather than the chance of attempting any dunk?",
+  "identity": {
+    "project_native_key": "tendency.FLASHY_DUNK_TENDENCY",
+    "offset_hex": "0x45C",
+    "project_range": [
+      0,
+      100
+    ],
+    "PC22_runtime_mapping": "UNKNOWN",
+    "UI_mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "source_ordinal": 5
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "multi-platform target, PC execution UNKNOWN",
+      "locator": "OP WHAT'S EDITED 1.6",
+      "grade": "SAME_VERSION_ROSTER_INTENT",
+      "finding": "Separately reworks flashy vs driving vs standing dunk tendencies",
+      "limits": "Does not prove CPU animation consumer"
+    },
+    {
+      "id": "S2",
+      "url": "https://progameguides.com/nba-2k/nba-2k22-courtside-report-all-gameplay-changes-to-dribbling-and-dunking/",
+      "author": "Bishop Lister",
+      "date": "2021 (exact publishing date UNKNOWN)",
+      "version": "NBA 2K22",
+      "platform": "next-gen aggressive dunk mechanics, PC current-gen not same",
+      "locator": "Courtside report / aggressive dunk",
+      "grade": "SAME_VERSION_DIFFERENT_PLATFORM_CONTROLS",
+      "finding": "Next-gen aggressive skill-dunk mechanism differs; should not equate its control with player Flashy Dunk tendency",
+      "limits": "Does not document AI/PC native field"
+    },
+    {
+      "id": "S3",
+      "url": "https://hoopsgamers.com/nba-2k22-gameplay-director-reveals-gameplay-details-shooting-dribbling-animations",
+      "author": "Hoops Gamers paraphrasing game director Mike Wang",
+      "date": "2021 (precise unknown)",
+      "version": "NBA 2K22",
+      "platform": "explicit next-gen skill-dunk distinction",
+      "locator": "Finishing / Dunking",
+      "grade": "SECONDARY_DEVELOPER_COMMENTS",
+      "finding": "Skill dunk/new gen vs normal contact choices discussed",
+      "limits": "No CPU Flashy Dunk Tendency formula or Current Gen PC consumer"
+    },
+    {
+      "id": "S4",
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting ATD creators",
+      "date": "2021-12-16",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX release and PC work-in-progress stated",
+      "locator": "What's Edited 1.6",
+      "grade": "DUPLICATE_ORIGIN_ROSTER_REPORT",
+      "finding": "Reports ATD adjustment of flashy dunk tendencies",
+      "limits": "Same underlying ATD source as S1; not independent corroboration"
+    }
+  ],
+  "claims": [
+    {
+      "id": "FD01",
+      "source_ids": [
+        "S1",
+        "S4"
+      ],
+      "tier": "ROSTER_EDITING_SOURCE_SHARED_ORIGIN",
+      "claim": "2K22 community editors distinguish flashy dunk tendency as editable roster concept"
+    },
+    {
+      "id": "FD02",
+      "source_ids": [
+        "S2",
+        "S3"
+      ],
+      "tier": "DIFFERENT_PLATFORM_MECHANIC",
+      "claim": "Next-gen aggressive-dunk stick/meter feature must not be assumed as PC22 current-gen CPU Flashy field consumer"
+    }
+  ],
+  "conflicts": [
+    "No independent isolated PC22 outcome study; ATD article and thread share origin",
+    "Controller input/animation package ≠ CPU Flashy Dunk selection tendency",
+    "No reliable optimal number, probability or internal function available"
+  ],
+  "relationships": [
+    "Driving Dunk choice versus Flashy style conditioned on a dunk attempt",
+    "Player dunk animations/ratings/eligibility and contact defender as major confounders",
+    "Coaching and playbook create opportunities but direct Flashy mapping UNKNOWN",
+    "Training direct effect source UNKNOWN"
+  ],
+  "measurables": [
+    "flashy-style dunk animations divided by comparable eligible CPU dunk attempts",
+    "total dunk attempts separately to distinguish selection vs opportunity",
+    "available animations, dunk type, contest, player identity and build",
+    "separate PC22 3D and Calendar paths; Calendar may lack animation evidence"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_FLASHY_DUNK_005",
+    "question": "Does read-only PLAYER+0x45C for two identity-verified PC22 players agree with their displayed Flashy Dunk tendency UI value under the same game build/save/time?",
+    "if_match": "MAPPING_SCOPED_ONLY",
+    "if_mismatch": "MAPPING_UNKNOWN",
+    "if_no_UI": "BLOCKED",
+    "game_write": false,
+    "executed": false
+  },
+  "result": "SAME_VERSION_EDITING_EVIDENCE_NO_PC22_CONSUMER",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "Obtain UI/Native read-only match, then distinguish style-selection from attempt-frequency in eligible 3D possessions"
+}
