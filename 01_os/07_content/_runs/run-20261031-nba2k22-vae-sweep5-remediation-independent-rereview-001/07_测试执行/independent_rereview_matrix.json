@@ -1,0 +1,219 @@
+{
+  "schema": "nba2k22.vae.sweep5.rereview.evidence_matrix.v1",
+  "subject_sha": "6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe",
+  "prior_review_sha": "a15079c425bb2f228afa333dee70df5cde12039c",
+  "verdict": "REWORK_REQUIRED_WITH_SUBSTANTIAL_PROGRESS",
+  "findings": [
+    {
+      "id": "S5R-P0-01",
+      "severity": "P0",
+      "origin": "INT-P0-04",
+      "title": "所谓PE法证收据由Python硬编码字节生成，缺与NBA2K22.exe的可独立核验提取链接",
+      "source": "src/vae_rea_research/consumer_tracer.py::generate_forensic_receipt 285-377; artifact NATIVE_DISASSEMBLY_FORENSIC_RECEIPT_V1.json",
+      "proof": "TARGET_PE_SHA256/file_size/section metadata are class constants; sha256 computed on self.ROLE_GOVERNOR_RAW_BYTES, etc; no file/open PE or read_bytes from target in generate_forensic_receipt. verify_live_bytes exists but not called by receipt generation and compares only 5 Tempo bytes + 16 role-table bytes. Developer local log indicates PE was inspected and Capstone used, so authenticity is plausible but not independently established by committed artifact.",
+      "remedy": "Produce a separate evidence-backed PE extraction step with exact actual executable read, independently measured PE SHA, section RVA->file offset mapping, byte ranges, process/build, raw output and origin; receipt should distinguish template hashes from observed binary hashes and fail closed when observed bytes absent.",
+      "status": "OPEN_EVIDENCE"
+    },
+    {
+      "id": "S5R-P0-02",
+      "severity": "P0",
+      "origin": "INT-P1-05",
+      "title": "136-byte角色法证片段不足以验证提交宣称的完整三分支与五项能力衰减",
+      "source": "NATIVE_DISASSEMBLY_FORENSIC_RECEIPT_V1.json tactical_role_governor: start0x1226942 len136; role_governor.py",
+      "proof": "0x1226942 + 136 (0x88) = 0x12269ca exclusive. Branch C starts at 0x12269cf; claimed 5-rating scaling at0x1226a18..0x1226a8b. These opcodes are outside retained 136 bytes. Hence table bytes alone and Python model cannot validate Branch C and multiplier consumer flow.",
+      "remedy": "Preserve complete disjoint basic blocks/CFG for all branches with raw bytes, branch targets, table owner and types; until then Branch C + rating scaling remain STATIC_DISASSEMBLY_HYPOTHESIS, not proven.",
+      "status": "OPEN_EVIDENCE"
+    },
+    {
+      "id": "S5R-P0-03",
+      "severity": "P0",
+      "origin": "INT-P1-11",
+      "title": "历史原始时间及Raw位模式未恢复，现有204文件依旧包含虚构共同legacy_timestamp",
+      "source": "06_执行/field_records/TENDENCY_NATIVE_001.json, TENDENCY_NATIVE_066.json, WORLD_REG_002.json; old Git f1e02101",
+      "proof": "Current field records still legacy_timestamp=2026-10-31T03:00:00Z. Original f1e02101 TENDENCY_NATIVE_001 read_timestamp=2026-10-31T03:31:03.535469+00:00; WORLD_REG_002 read_timestamp=03:31:03.580403+00:00 and live_value uint32=1056964608, while current raw_legacy_capture.legacy_value=0.5. Commit b3e39f86→6f8dfe23 has 20 files, zero field_records changes; revised enricher avoids future overrides but does not restore already corrupted historical records.",
+      "remedy": "Rebuild immutable raw capture archive from actual old Git blobs, with full original bytes, timestamp, address, original erroneous-source flag, and separate decoded derived view; do not alter old snapshots or invent shared timestamps; test idempotence.",
+      "status": "OPEN_DATA_INTEGRITY"
+    },
+    {
+      "id": "S5R-P1-04",
+      "severity": "P1",
+      "origin": "INT-P1-08",
+      "title": "遥测语义合同与报告宣称的Save/Mode/User-CPU/双Normalize/N>=10/证伪条款不符",
+      "source": "02_证据/TELEMETRY_VALIDATION_CONTRACTS_V1.json",
+      "proof": "All 3 contracts contain metric, A/B description, confounders, fallback; actual JSON has no Save/Season/Game Build, User/CPU, window IDs, timestamp, normalize_played_minutes, N>=10 or falsification criteria. No metric actual observable availability documentation for fatigue beyond DERIVED_FROM_TELEMETRY. Report says all included, but artifact doesn't.",
+      "remedy": "Add semantic information needs/required-vs-optional feasibility, observational time point, identity/context, both normalize definitions, per-mode analysis, sample validity and negative/falsification conditions; no mandated log/SQL/API/DB physical format.",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "S5R-P1-05",
+      "severity": "P1",
+      "origin": "INT-P1-07",
+      "title": "第8个CALL数学公式正确但不在提交的Snapshot 28字节范围内",
+      "source": "NATIVE_DISASSEMBLY_FORENSIC_RECEIPT_V1.json roster_snapshot_pipeline/rel32_mathematical_proofs",
+      "proof": "Snapshot start=0x174510e length=28=0x1c; exclusive end=0x174512a, exactly the third CALL site0x174512a. First seven corresponding CALL encodings lie within respective retained snippets. All 8 rel32 computations are arithmetically correct, but only 7 have included matching source bytes.",
+      "remedy": "Extend true PE byte capture across third CALL instruction, independently verify all 8 from observed bytes, separate target arithmetic verification from source authenticity.",
+      "status": "PARTIAL"
+    },
+    {
+      "id": "S5R-P1-06",
+      "severity": "P1",
+      "origin": "INT-P0-01",
+      "title": "机制图校验官方库存Key，却未调和后续live_field_records的重命名native_key",
+      "source": "mechanism_graph.py validate_graph_invariants and field_records/TENDENCY_NATIVE_001.json, TENDENCY_NATIVE_066.json",
+      "proof": "Graph and official task inventory use tendency.SHOT_TENDENCY and tendency.TOUCHES_TENDENCY, which match; derived field_records use tendency.ShotTendency and tendency.TouchTendency. Field IDs now correct, but two naming systems need explicit source-qualified alias/evolution rule to prevent consumers treating different namespaces as identical canonical strings.",
+      "remedy": "Retain immutable original inventory key and separate verified/derived native alias, match on field_id with source/version/provenance. Add test joining graph with current fields and alias mapping, not inventory alone.",
+      "status": "FOLLOW_UP"
+    },
+    {
+      "id": "S5R-P1-07",
+      "severity": "P1",
+      "origin": "INT-P1-11",
+      "title": "Consumer enrichment默认仍可覆盖204正式field_records",
+      "source": "consumer_tracer.py enrich_all_field_records_with_consumer_traces(target_dir=None)",
+      "proof": "If target_dir omitted, dest_dir=self.records_dir and function writes records via open(...,'w'). Tests use tmp_path and are safer, but direct API call still mutates canonical research evidence and can obscure original metadata.",
+      "remedy": "Make default pure/derived output and require explicit audit batch publish with raw provenance and atomic idempotent updates; never mutate immutable raw capture.",
+      "status": "FOLLOW_UP"
+    },
+    {
+      "id": "S5R-P2-08",
+      "severity": "P2",
+      "origin": "publication",
+      "title": "Gemini两份报告提交完整SHA与真实Git SHA不一致",
+      "source": "Uploaded reports and remote GitHub branch HEAD",
+      "proof": "Reported 6f8dfe23a8e97f0450e1eeff99f1fae39d5fc65c is not found; actual HEAD and commit 6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe with expected parent b3e39f86. Short prefix resolves but full hash is not an immutable reference.",
+      "remedy": "Regenerate report with git rev-parse HEAD/remote refs; reconcile report artifact version and exact SHA.",
+      "status": "OPEN_POINTER"
+    },
+    {
+      "id": "S5R-P2-09",
+      "severity": "P2",
+      "origin": "INT-P2-12",
+      "title": "45测试定义已确认，45/45执行报告仍只有开发者收据且Native身份不能由静态单测晋级",
+      "source": "tests/vae_rea_research seven modules, completion_pointer",
+      "proof": "At fixed SHA: 8+7+7+5+5+6+7=45 test functions. Developer screenshot-style pasted log says 45 passed in2.61s. Audit did not independently run original pytest or original NBA2K22.exe. Tests include static oracle, source constants and negative graph cases, not proof that actual PE matches the templates.",
+      "remedy": "Store exact pytest collection and stdout/environment/hash; independent offline replay when available, and binary evidence source validation separately. Do not classify all verified solely on self-test.",
+      "status": "LIMITATION"
+    }
+  ],
+  "counts": {
+    "P0": 3,
+    "P1": 4,
+    "P2": 2
+  },
+  "prior_13_closure": [
+    {
+      "finding_id": "INT-P0-01",
+      "closure_status": "CLOSED_FIELD_IDS",
+      "note": "3 miskeyed graph setting nodes corrected; official inventory ID/key joins now pass. Two evolved alias namespaces remain to reconcile."
+    },
+    {
+      "finding_id": "INT-P0-02",
+      "closure_status": "CLOSED_SOURCE_EQUIVALENT_ARITHMETIC",
+      "note": "x86 signed 32-bit IMUL and SAR now used; returns 80->46,100->70. Actual XMM0 identity and real PE not independently verified."
+    },
+    {
+      "finding_id": "INT-P0-03",
+      "closure_status": "CLOSED_DISCLOSURE",
+      "note": "Heuristic and static disassembly tracks separated; mismatch flag exposed. Production policy gate still a downstream concern."
+    },
+    {
+      "finding_id": "INT-P0-04",
+      "closure_status": "OPEN_EVIDENCE",
+      "note": "Full true PE provenance cannot be inferred from static receipt; raw role capture excludes Branch C."
+    },
+    {
+      "finding_id": "INT-P1-05",
+      "closure_status": "PARTIAL",
+      "note": "Role index domain and banker rounding improved, but branch C raw bytes and consumers missing from receipt."
+    },
+    {
+      "finding_id": "INT-P1-06",
+      "closure_status": "CLOSED_STRUCTURE",
+      "note": "Graph now 16 nodes, 13 edges, DAG, structural and inventory invariants with negative tests; live field alias resolution not addressed."
+    },
+    {
+      "finding_id": "INT-P1-07",
+      "closure_status": "PARTIAL",
+      "note": "Eight rel32 target calculations correct, but eighth call not present in 28-byte snapshot evidence."
+    },
+    {
+      "finding_id": "INT-P1-08",
+      "closure_status": "PARTIAL",
+      "note": "3 semantic contracts with metrics/protocol/fallback, missing many specifically claimed context and validation gates."
+    },
+    {
+      "finding_id": "INT-P1-09",
+      "closure_status": "CLOSED_CODE",
+      "note": "LiveAnalyzer and tracer default auto_attach=False; fixtures explicitly offline."
+    },
+    {
+      "finding_id": "INT-P1-10",
+      "closure_status": "CLOSED_LABELING",
+      "note": "Graph edges static/pending rather than overpromoted Native causal proofs."
+    },
+    {
+      "finding_id": "INT-P1-11",
+      "closure_status": "OPEN_PAST_CAPTURE",
+      "note": "No future placeholder writes is good; 204 existing legacy timestamps/float raw bits not restored."
+    },
+    {
+      "finding_id": "INT-P2-12",
+      "closure_status": "SOURCE_COUNT_CONFIRMED_RUNTIME_NOT_REPLAYED",
+      "note": "45 test definitions in 7 modules; execution self-reported only."
+    },
+    {
+      "finding_id": "INT-P2-13",
+      "closure_status": "CLOSED_NO_PHYSICAL_SCHEMA",
+      "note": "No physical logs/tables/API required by VAE semantic contracts."
+    }
+  ],
+  "source_equivalent_checks": {
+    "commit_parent": "b3e39f867364b4610fc57f5cc798c7ab33232eeb",
+    "changed_files": 20,
+    "field_records_changed": 0,
+    "inventory_graph_join": "PASS_5_SETTING_IDS",
+    "live_field_key_namespace": "TENDENCY_001,_066_DIFFERENT_FROM_IMMUTABLE_INVENTORY",
+    "graph_nodes": 16,
+    "graph_edges": 13,
+    "graph_edges_are_dag": true,
+    "graph_weak_game_effect_edges": 3,
+    "raw_code_lengths": {
+      "role": 136,
+      "coach": 77,
+      "poe": 65,
+      "snapshot": 28
+    },
+    "role_raw_span_exclusive": "0x12269ca",
+    "role_branch_C_start": "0x12269cf",
+    "role_rating_transform_start": "0x1226a18",
+    "snapshot_raw_span_exclusive": "0x174512a",
+    "last_rel32_call_start": "0x174512a",
+    "rel32_targets_math_correct": 8,
+    "rel32_source_bytes_present_in_receipt": 7,
+    "source_equivalent_tempo": {
+      "input_50": 10,
+      "input_60": 22,
+      "input_70": 34,
+      "input_80": 46,
+      "input_100": 70
+    },
+    "telemetry_contracts": 3,
+    "telemetry_missing": [
+      "save/build/season ID",
+      "3D vs calendar mode",
+      "USER/CPU",
+      "effective observation windows",
+      "normalize_played_minutes",
+      "N>=10 sample/quality rule",
+      "falsification criteria"
+    ],
+    "historical_legacy_timestamp_still": "2026-10-31T03:00:00Z",
+    "reported_developer_tests": 45,
+    "source_test_functions_counted": 45,
+    "independent_full_pytest": "NOT_RUN",
+    "original_PE_independent": "NOT_AVAILABLE",
+    "template_sha256_attestation": "STATIC_PYTHON_CONSTANTS"
+  },
+  "approval": "Human acceptance NOT issued; continuing same reviewer by prior explicit approval",
+  "next_owner": "Gemini remediation of narrowly scoped residual problems, continue single field improvement loop"
+}
