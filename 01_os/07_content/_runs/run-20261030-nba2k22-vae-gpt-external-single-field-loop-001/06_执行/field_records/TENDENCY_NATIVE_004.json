@@ -1,0 +1,132 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_004",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0004",
+  "research_date": "2026-10-30",
+  "one_primary_question": "Does Driving Dunk Tendency affect CPU choice to attempt a moving dunk when an otherwise eligible driving finish exists?",
+  "identity": {
+    "key": "tendency.DRIVING_DUNK_TENDENCY",
+    "project_offset_hex": "0x45B",
+    "project_range": [
+      0,
+      100
+    ],
+    "native_mapping": "UNVERIFIED_RUNTIME",
+    "ui_mapping": "UNKNOWN",
+    "actual_effect": "UNKNOWN"
+  },
+  "queue": {
+    "ref_commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 4
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "UNKNOWN_BYLINE",
+      "date": "2021-10-18 URL-derived",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "Statistical Observations / Too Inside Basketball",
+      "grade": "SAME_VERSION_UNCONTROLLED_OBSERVATION",
+      "finding": "Author reports roster driving dunk values often >=65 for dunk-capable players and 6.1 dunks per game in altered-slider CPU-v-CPU tournament",
+      "limits": "Multiple tendency, badge, hot-zone and slider confounders; 65 is not a causal threshold or optimum"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "multi-platform roster target; PC field proof UNKNOWN",
+      "locator": "first post TENDENCIES 1.6",
+      "grade": "SAME_VERSION_ROSTER_PROCESS",
+      "finding": "Standing, driving and flashy dunk tendencies are separately edited",
+      "limits": "No single variable effect estimate"
+    },
+    {
+      "id": "S3",
+      "url": "https://nba2kw.com/nba-2k22-attributes-explained-finishing-shooting-playmaking-defense-reb-physicals",
+      "author": "NBA2KW editorial, byline UNKNOWN",
+      "date": "2021 precise date UNKNOWN",
+      "version": "NBA 2K22",
+      "platform": "MyPLAYER context; PC MyLEAGUE equivalence UNKNOWN",
+      "locator": "FINISHING / Driving Dunk",
+      "grade": "ATTRIBUTE_NOT_TENDENCY",
+      "finding": "Driving Dunk rating describes successful completions including regular/contact/alley-oop/putback while moving",
+      "limits": "Not proof for driving dunk tendency consumer"
+    },
+    {
+      "id": "S4",
+      "url": "https://www.2kspecialist.net/2021/10/nba-2k22-patch-107-notes-details.html?m=1",
+      "author": "2K Specialist reproducing 2K patch notes",
+      "date": "2021-10 (exact date UNKNOWN)",
+      "version": "NBA 2K22 patch 1.07",
+      "platform": "multiple platforms; PC specific patch scope UNKNOWN",
+      "locator": "GAMEPLAY notes on dunk frequency and skill dunk",
+      "grade": "PATCH_REPORT_NOT_TENDENCY_MAPPING",
+      "finding": "Patch notes report increased dunk frequency in some conditions without skill dunk",
+      "limits": "Build and animation logic may shift observed dunks independently from player tendency"
+    }
+  ],
+  "claims": [
+    {
+      "id": "DD01",
+      "source_ids": [
+        "S1"
+      ],
+      "tier": "OBSERVATIONAL_CORRELATION",
+      "claim": "High roster driving-dunk tendency and frequent CPU dunks co-occur, but field impact unisolated"
+    },
+    {
+      "id": "DD02",
+      "source_ids": [
+        "S2",
+        "S3"
+      ],
+      "tier": "SEMANTIC_SEPARATION",
+      "claim": "Driving dunk tendency differs from driving dunk attribute/animation success, exact engine composition unknown"
+    },
+    {
+      "id": "DD03",
+      "source_ids": [
+        "S4"
+      ],
+      "tier": "PATCH_CONFOUNDER",
+      "claim": "Version/build and dunk animation logic can confound cross-test observations"
+    }
+  ],
+  "contradictions": [
+    "Same-version observational attribution to Driving Dunk is not verified experimentally; player rating/badges/sliders confounded",
+    "No official PC22 native 0x45B consumer or fixed numerical causal threshold"
+  ],
+  "relationships": [
+    "Driving Layup / Close Shot as competing finish modes",
+    "Drive opportunity and Coach Playbook/ACE as contexts",
+    "Driving Dunk rating, packages, badges, fatigue and defender contest as eligibility/confounders",
+    "Calendar simulation versus rendered 3D cannot be equated",
+    "Training direct impact not sourced"
+  ],
+  "metrics": [
+    "driving dunk attempts among eligible CPU drives",
+    "dunk/layup/pass alternatives and drive initiation rate",
+    "contact or ordinary dunk animations and required packages",
+    "attempt frequency versus completion rate",
+    "save/build/scene/opponent/3D-vs-calendar separation"
+  ],
+  "one_REA_question": {
+    "id": "REA_DRIVING_DUNK_004",
+    "question": "For two UID-verified players in current PC NBA2K22, does read-only PLAYER+0x45B match their independently observed in-game Driving Dunk Tendency UI values in the same save/build/time?",
+    "match": "SCOPED_NATIVE_UI_MAPPING_ONLY",
+    "mismatch": "IDENTITY_OR_SCALING_UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write_requested": false
+  },
+  "result": "SOURCED_CONTEXT_NATIVE_EFFECT_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_effect": "NOT_RUN",
+  "next_improvement": "After native/UI mapping, isolate eligible drive opportunities and effect in PC22 rendered game with matching build"
+}
