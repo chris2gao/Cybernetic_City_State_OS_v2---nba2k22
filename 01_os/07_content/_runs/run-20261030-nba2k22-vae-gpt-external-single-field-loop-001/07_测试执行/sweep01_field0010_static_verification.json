@@ -1,0 +1,54 @@
+{
+  "schema_version": "nba2k22.vae.gpt_external_single_field_verify.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "iteration_id": "SWEEP01_FIELD0010",
+  "field_id": "TENDENCY_NATIVE_010",
+  "source_blob": "e57cfea32276215478f15212026955a44803d32d",
+  "source_commit": "24f232575ff8c728670885ac364b8c2d30897e71",
+  "checks": [
+    {
+      "id": "GPT01_FIELD_CURSOR",
+      "status": "PASS",
+      "evidence": "Cursor sequence and ledger ordinal bound to frozen shared queue"
+    },
+    {
+      "id": "GPT02_SINGLE_FIELD",
+      "status": "PASS",
+      "evidence": "Exactly one field, one principal question and one REA question"
+    },
+    {
+      "id": "GPT03_SOURCE_VERSION_DATE",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "Source URLs, authors, dates, versions, platform limits retained; unknown data explicit"
+    },
+    {
+      "id": "GPT04_CLAIM_SOURCE_TRACE",
+      "status": "PASS",
+      "evidence": "Claim source refs and descriptions checked against dossier"
+    },
+    {
+      "id": "GPT05_CONFLICTS",
+      "status": "PASS",
+      "evidence": "Disagreement and/or lack of direct causal evidence preserved"
+    },
+    {
+      "id": "GPT06_NUMERIC_HYPOTHESIS_NOT_FACT",
+      "status": "PASS",
+      "evidence": "No proven optimal threshold or exact effect from an untested field"
+    },
+    {
+      "id": "GPT07_REA_TEST_ORACLE",
+      "status": "PASS",
+      "evidence": "REA_HOPSTEP_010"
+    },
+    {
+      "id": "GPT08_CHECKPOINT_READBACK",
+      "status": "PASS_SCOPED",
+      "evidence": "GitHub source blob e57cfea32276215478f15212026955a44803d32d in commit 24f232575ff8c728670885ac364b8c2d30897e71"
+    }
+  ],
+  "runtime": "NOT_RUN",
+  "Gemini_REA": "NOT_RUN",
+  "independent_audit": "PENDING",
+  "source_platform_completeness": "UNKNOWN_IF_UNDISCLOSED"
+}
