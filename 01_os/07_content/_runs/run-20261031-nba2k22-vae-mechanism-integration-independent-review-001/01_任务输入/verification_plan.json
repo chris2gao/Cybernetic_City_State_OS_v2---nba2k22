@@ -1,58 +1,87 @@
 {
   "schema_version": "nba2k22.vae.mechanism_integrated_review.verify.v1",
   "task_id": "NBA2K22-VAE-MECHANISM-INTEGRATION-INDEPENDENT-REVIEW-20261031-001",
-  "status": "NOT_RUN",
+  "status": "COMPLETED_WITH_FINDINGS",
   "checks": [
     {
       "id": "RV01_FIXED_HEAD_AND_SOURCE",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "PASS",
+      "evidence": [
+        "Dispatch 3c378d05 and exact candidate b3e39f86 verified; source compared to field records"
+      ]
     },
     {
       "id": "RV02_CANONICAL_FIELD_ID_INTEGRITY",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "FAIL",
+      "evidence": [
+        "Three existing but misidentified graph setting nodes (Tempo, Touches, POEDefense)"
+      ]
     },
     {
       "id": "RV03_INTEGER_PACING_ARITHMETIC",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "FAIL",
+      "evidence": [
+        "x86-equivalent for tempo=80 gives46 vs code28; tempo100 gives70 vs code40"
+      ]
     },
     {
       "id": "RV04_NATIVE_OPCODE_PROVENANCE_AND_CFG",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "FAIL",
+      "evidence": [
+        "Source templates and prior RVA/relative-call discrepancies; no independently attested real PE byte spans"
+      ]
     },
     {
       "id": "RV05_ROLE_GOVERNOR_BRANCH_CORRECTNESS",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        "Three branch code paths self-consistent in fixture; native role table/rounding/CFG evidence insufficient"
+      ]
     },
     {
       "id": "RV06_GRAPH_EDGE_GRADES_AND_DAG",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        "16 nodes 12 edges structurally DAG and telemetry links match; wrong IDs and overgraded edges"
+      ]
     },
     {
       "id": "RV07_TLM_IS_REQUIREMENT_NOT_STORAGE_SCHEMA",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        "3 future hypotheses acceptable; semantic identity, mode, USER/CPU, Normalize, before-after and missingness absent; physical schema intentionally not specified"
+      ]
     },
     {
       "id": "RV08_TEST_ISOLATION_AND_40_EXECUTOR_SELFTEST",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        "40 test functions counted; independent pytest NOT_RUN; LiveEngineAnalyzer fixture may auto-attach"
+      ]
     },
     {
       "id": "RV09_NO_GAMEPLAY_CAUSAL_OVERCLAIMS",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "FAIL",
+      "evidence": [
+        "Native claims and heuristic/native output contradiction despite effect PENDING"
+      ]
     },
     {
       "id": "RV10_REPRODUCIBLE_FINDINGS_CONSOLIDATED_REWORK",
-      "status": "NOT_RUN",
-      "evidence": []
+      "status": "PASS",
+      "evidence": [
+        "Independent evidence matrix and consolidated report grounded at exact fixed SHA"
+      ]
     }
   ],
-  "actual_results": "NOT_RUN"
+  "actual_results": "REWORK_REQUIRED; 4 P0, 7 P1, 2 P2; source-equivalent calculations and static graph joins; full pytest and original PE not run",
+  "fixed_candidate_sha": "b3e39f867364b4610fc57f5cc798c7ab33232eeb",
+  "report_ref": "08_结论/consolidated_independent_review_and_remediation.md",
+  "matrix_ref": "07_测试执行/independent_evidence_matrix.json",
+  "execution_limits": {
+    "developer_40_test_functions": "COUNTED_FROM_SOURCE",
+    "developer_40_pass_result": "NOT_INDEPENDENTLY_RERUN",
+    "original_nba_pe": "NOT_AVAILABLE",
+    "game_interaction": "NOT_RUN"
+  }
 }
