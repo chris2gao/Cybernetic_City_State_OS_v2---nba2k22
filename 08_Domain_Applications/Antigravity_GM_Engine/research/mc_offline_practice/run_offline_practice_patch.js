@@ -2,7 +2,7 @@
  * NBA 2K22 MyCAREER Offline Team Practice Patch Runner
  * 
  * Attaches to NBA2K22.exe using Frida and loads the offline practice facility unlocker,
- * 3-star badge progression enabler, and crash prevention interceptors.
+ * 3-star badge progression enabler, network 96% bypass, and crash prevention interceptors.
  */
 
 const fs = require('fs');
@@ -78,8 +78,20 @@ async function main() {
     script.message.connect((message, data) => {
         if (message.type === 'send') {
             const payload = message.payload;
-            if (payload.event === 'PracticeTypePatched') {
+            if (payload.event === 'NetworkJob_Bypassed') {
+                log(`>>> [INTERCEPT: NETWORK] 96% Freeze Bypass Triggered! Job status -> ${payload.status_0x30_after}, Global status -> ${payload.global_0x146351848_after}. Network send skipped!`);
+            } else if (payload.event === 'CreateAndSendRequest_Intercepted') {
+                log(`>>> [INTERCEPT: NETWORK] CreateAndSendRequest intercepted on job ${payload.pJob} (s30=${payload.status_0x30_before}, global=${payload.global_0x146351848_before})`);
+            } else if (payload.event === 'Status_3_Reverted_To_2') {
+                log(`>>> [INTERCEPT: NETWORK] Guard reset pending network status (3 -> 2).`);
+            } else if (payload.event === 'Activity_StateDispatch') {
+                log(`>>> [INTERCEPT: SCENE] Team Practice Facility State -> ${payload.state}`);
+            } else if (payload.event === 'PracticeTypePatched') {
                 log(`>>> [INTERCEPT: ENTRY] Team Practice type patched from UNKNOWN (${payload.from}) -> ACTIVE (${payload.to}). Assertion crash prevented!`);
+            } else if (payload.event === 'CreatePlayers_Enter') {
+                log(`>>> [INTERCEPT: ENTRY] CreatePlayers entered (PracticeType=${payload.practiceType_before}). Instantiating court players...`);
+            } else if (payload.event === 'CreatePlayers_Leave') {
+                log(`>>> [INTERCEPT: ENTRY] CreatePlayers completed cleanly.`);
             } else if (payload.event === 'DrillRewardPatched') {
                 log(`>>> [INTERCEPT: REWARD] Drill type ${payload.drillType} completed! Stars upgraded: ${payload.originalStars} -> ${payload.forcedStars} (Max 3-Star Badge XP + MyPOINTS awarded).`);
             } else if (payload.event === 'HandleLivePracticeEnded_Enter') {
@@ -88,7 +100,7 @@ async function main() {
                 log(`>>> [INTERCEPT: EXIT] HandleLivePracticeEnded complete (Status: ${payload.status}). Save state clean and safe!`);
             } else if (payload.status === 'Armed') {
                 log(`[SUCCESS] Patch is ARMED! Active Guards: ${payload.guards.join(', ')}`);
-                log('[READY] You can now freely enter Team Practice in MyCAREER without crashing or corrupting saves.');
+                log('[READY] You can now click "进入球队训练" on the MC calendar.');
             } else {
                 log(`[PAYLOAD] ${JSON.stringify(payload)}`);
             }

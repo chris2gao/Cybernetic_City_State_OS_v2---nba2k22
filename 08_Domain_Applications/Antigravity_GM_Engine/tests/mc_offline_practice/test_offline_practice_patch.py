@@ -70,7 +70,6 @@ def test_tracking_flag_displacement(exe_bytes):
     """Verify the tracking flag address relative calculation."""
     # At RVA 0x11dfe33: cmp dword ptr [rip + 0x51722ea], 0
     off_cmp = rva_to_file_offset(0x11dfe33)
-    # 83 3d ea 22 17 05 00
     assert exe_bytes[off_cmp:off_cmp + 2] == b"\x83\x3d"
     disp = struct.unpack_from("<i", exe_bytes, off_cmp + 2)[0]
     assert disp == 0x51722ea
@@ -78,11 +77,39 @@ def test_tracking_flag_displacement(exe_bytes):
     target_va = 0x140000000 + 0x11dfe33 + 7 + disp
     assert target_va == 0x146352124
 
+def test_network_job_create_and_send_request(exe_bytes):
+    """Verify CreateAndSendRequest entry point (0x1239230) and success check (0x504521a8)."""
+    off_entry = rva_to_file_offset(0x1239230)
+    # push rbp (40 55), push rbx (53), mov rbp, rsp (48 8b ec)
+    assert exe_bytes[off_entry:off_entry + 5] == b"\x40\x55\x53\x48\x8b"
+
+    # Verify session check cmp eax, 0x504521a8 at RVA 0x123927f
+    off_cmp = rva_to_file_offset(0x123927f)
+    assert exe_bytes[off_cmp:off_cmp + 5] == b"\x3d\xa8\x21\x45\x50"
+
+def test_network_global_status_displacement(exe_bytes):
+    """Verify global network status target address 0x146351848."""
+    # At RVA 0x1239290: mov dword ptr [rip + disp], 3
+    off_mov = rva_to_file_offset(0x1239290)
+    assert exe_bytes[off_mov:off_mov + 2] == b"\xc7\x05"
+    disp = struct.unpack_from("<i", exe_bytes, off_mov + 2)[0]
+    next_rip = 0x140000000 + 0x1239290 + 10
+    target_va = next_rip + disp
+    assert target_va == 0x146351848
+
+def test_job_completion_callback_success_code(exe_bytes):
+    """Verify JobCompletionCallback (RVA 0x11f7e70) and status code check."""
+    off_cmp = rva_to_file_offset(0x11f7f46)
+    # cmp edx, 0x504521a8 (81 fa a8 21 45 50)
+    assert exe_bytes[off_cmp:off_cmp + 6] == b"\x81\xfa\xa8\x21\x45\x50"
+
 def test_js_patch_file_exists():
-    """Verify Frida patch file is deployed and non-empty."""
+    """Verify Frida patch file is deployed and contains all guards."""
     patch_path = Path(__file__).parent.parent.parent / "research/mc_offline_practice/patch_offline_team_practice.js"
     assert patch_path.exists(), f"Frida patch file does not exist at {patch_path}"
     content = patch_path.read_text(encoding="utf-8")
+    assert "pCreateAndSend" in content
+    assert "pStatusGlobal" in content
     assert "pCreatePlayers" in content
     assert "pHandleDrillResults" in content
     assert "pPracticeEnded" in content
