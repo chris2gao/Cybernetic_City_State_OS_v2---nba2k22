@@ -1,0 +1,207 @@
+{
+  "schema_version": "nba2k22.vae.stage01.independent_review.v1",
+  "task_id": "NBA2K22-VAE-STAGE01-INDEPENDENT-REVIEW-20261030-001",
+  "reviewer_role": "independent_review",
+  "date": "2026-10-30",
+  "provenance": {
+    "recovery_source": "GitHub_Run",
+    "prms_save_task_context": "NOT_RUN",
+    "core_master_at_audit": "934425cf43d4fe3307b0112142aec1ba434a5734",
+    "nba_master_at_audit": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "review_dispatch_commit": "ccdfc57afe5693f8a36cf31ec6b1d4508a7e65eb",
+    "subject_candidate_commit": "5abf3cb154654872a3d05278b96658f190ed9241",
+    "subject_pointer_commit": "3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3",
+    "subject_readback_commit": "8108b7703bd2e5385a91f97ea227db8d86b42e74",
+    "source_type": "GitHub connector primary file and commit reads; JS structural recheck"
+  },
+  "model_record": {
+    "assigned_provider": "OpenAI",
+    "assigned_product": "ChatGPT",
+    "assigned_model": "GPT-6",
+    "assigned_model_source": "review task_packet.json",
+    "actual_model": "GPT-6",
+    "actual_model_source": "conversation runtime model identification; NOT platform attested",
+    "runtime_identity_verification": "UNKNOWN",
+    "assigned_surface": "new_fork_NBA_COMMON_BASELINE_READY",
+    "fork_source_evidence": "Human statement and task packet only",
+    "reviewer_window_instance_id": "UNKNOWN_NOT_EXPOSED",
+    "reviewer_distinct_from_developer": "ISOLATED_IN_CONVERSATION_CONTEXT_BY_ASSIGNMENT_NOT_PLATFORM_VERIFIED",
+    "same_model_family_as_developer": true
+  },
+  "static_readback": {
+    "A_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+    "result_md_blob": "ad71ab8d5036b3130356a90931f3de3b66767fa9",
+    "R01_R09_blob": "b20bae15735e8ae324747dafb7d7c2cec6af7aab",
+    "stage02_matrix_blob": "5c27895e03a0bb8b08db847675123241c9ecf3b1",
+    "pre_readback_report_blob": "33f0e87335b60c4eade1fe2d46dc2319729277e8",
+    "final_test_report_blob": "3cfa3a9b8b9fd9c015f0a649355c857bbc8bce8a",
+    "run_blob": "56b39444836e24af4bae3a984944b2dedca31f42",
+    "intermediate_readback_file_count": 9,
+    "intermediate_allowlist_violations": 0,
+    "developer_final_with_pointer_file_count": 10,
+    "developer_final_allowlist_violations": 0
+  },
+  "checks": [
+    {
+      "id": "IR01_SOURCE_AND_SHA",
+      "result": "PASS_WITH_LIMITATIONS",
+      "method": "Read GitHub refs, fixed commits, Core/NBA diff, original task packet, predecessor A0 and original evidence",
+      "evidence": [
+        "Core master 934425cf43d4fe3307b0112142aec1ba434a5734",
+        "NBA master 45cc45cae0550ddcda192a2179ea48509b27f6ee",
+        "review dispatch ccdfc57afe5693f8a36cf31ec6b1d4508a7e65eb",
+        "dev candidate 5abf3cb154654872a3d05278b96658f190ed9241"
+      ],
+      "limitation": "Human 2026-10-30 original conversation transcript not independently available; source is mediated through signed-in task packet and A0"
+    },
+    {
+      "id": "IR02_EIGHT_SLOTS",
+      "result": "PASS",
+      "method": "Independently parsed A YAML-1.2-compatible JSON and matched core schema eight keys and cross-field requirements",
+      "evidence": [
+        "8/8 semantic keys present",
+        "SC01-SC08 all 可观察=true",
+        "4/4 assumptions have fallback",
+        "5 ambiguities carry severity and scope"
+      ],
+      "limitation": "SC01-SC08 all use one generic 验证 phrase; future tests must specify per-criterion oracle"
+    },
+    {
+      "id": "IR03_HUMAN_BOUNDARY",
+      "result": "PASS_WITH_LIMITATIONS",
+      "method": "Compared A, 01b, A0, dispatch, VAE/D and permissions, verified Human confirmation remains false",
+      "evidence": [
+        "A Human_confirmation.confirmed=false",
+        "stage01_complete=false",
+        "MC as verification carrier not MC-only features",
+        "E1-E4 distinct and D1-D5 nonblocking",
+        "NO_CHANGE and INCONCLUSIVE accepted"
+      ],
+      "limitation": "Human semantic version confirmation is pending; reviewer cannot replace original Human confirmation"
+    },
+    {
+      "id": "IR04_R01_R09",
+      "result": "PARTIALLY_SUPPORTED",
+      "method": "Independently parsed machine object list, checked fields, outputs, failure states against textual 01b contract",
+      "evidence": [
+        "R01 through R09 each present exactly once",
+        "six preregistration/effect gates provided",
+        "R04 retains NOT_RUN",
+        "R05 separates Getter/UI/SaveReload"
+      ],
+      "limitation": "R06 machine required fields omit direct side, controller, two Normalize flags, quarter lengths and baseline_ref; R08 initial_status APPENDED before any actual revision; nullability and transition policy not specified"
+    },
+    {
+      "id": "IR05_GAP_EVIDENCE_TIERS",
+      "result": "PASS_WITH_LIMITATIONS",
+      "method": "Read original PC22 mechanism study and actual settings/court JSON and REA VALIDATION_RESULTS.md",
+      "evidence": [
+        "settings max_contract_rating min70 default40 inconsistent",
+        "settings only normalize_stats and sim_quarter_length shown, not two Normalize mappings",
+        "court.json proposed sliders distinct from live profile",
+        "REA specific Coach/Goal/trade effects plus rejected Goal append; no SaveReload",
+        "Stage02 G01-G08 queue present"
+      ],
+      "limitation": "PC22 community reports and cited REA summary are not new live runtime experiments; source scope remains research/limited historical evidence"
+    },
+    {
+      "id": "IR06_TEST_REPRODUCIBILITY",
+      "result": "PASS_SCOPED_STATIC",
+      "method": "Compared immutable commit graph c07916->8108->5abf3->3b0ef; fetched and matched six intermediate blob SHAs; independently compared base and changes",
+      "evidence": [
+        "8108 file count 9 all within dev Run",
+        "report updated at 5abf",
+        "completion pointer committed at 3b0ef",
+        "reported earlier six blob hashes match GitHub"
+      ],
+      "limitation": "Only static GitHub structure/readback reproduced; Core runner, game effects, local test environment not run"
+    },
+    {
+      "id": "IR07_SCOPE_NO_GAME_EDIT",
+      "result": "PASS_REPOSITORY_SCOPE_ONLY",
+      "method": "Compare changed files from NBA base to dev final completion commit",
+      "evidence": [
+        "all 10 files in development Run, no Core, game/save or master file differences in Git diff",
+        "run flags game_or_save_write NOT_RUN"
+      ],
+      "limitation": "Cannot independently attest absence of external process/game/save modifications from a Git diff"
+    },
+    {
+      "id": "IR08_INDEPENDENT_RESULT",
+      "result": "PARTIALLY_SUPPORTED",
+      "method": "Reviewer formed its own verdict from primary files; preserved concerns and required follow-up evidence",
+      "evidence": [
+        "A candidate fit for Human version confirmation review with known limitations",
+        "R contracts not production-ready",
+        "Stage01 core completion gate not satisfied"
+      ],
+      "limitation": "This artifact is reviewer verdict, not Human acceptance or Stage02 permission"
+    }
+  ],
+  "issues": [
+    {
+      "id": "F01",
+      "severity": "MEDIUM",
+      "category": "HUMAN_PROVENANCE",
+      "finding": "The direct Human VAE 2026-10-30 statements are only represented by planner and dispatch references; no independently accessible original transcript or exact final approval",
+      "disposition": "Human must independently compare A against their intent and bind confirmation to exact A blob/SHA; do not claim reviewer verified direct original words",
+      "owner": "Human / VAE planner"
+    },
+    {
+      "id": "F02",
+      "severity": "MEDIUM",
+      "category": "R06_COMPARABILITY",
+      "finding": "R06 mandatory machine fields do not explicitly bind USER/CPU, controller, Normalize Played-to-Sim Minutes and Stats, played/sim quarter lengths or baseline/comparator",
+      "disposition": "Revise R06 schema or normative referenced Profile/Context contract with required source-linked values and UNKNOWN handling before live comparisons",
+      "owner": "VAE decision_architecture / future Codex implementer"
+    },
+    {
+      "id": "F03",
+      "severity": "MEDIUM",
+      "category": "R08_PREMATURE_STATE",
+      "finding": "R08 initial_status is APPENDED although no KnowledgeRevision instance or execution exists",
+      "disposition": "Use NOT_RUN/PENDING_REVISION as initial lifecycle and only APPENDED after durable write readback",
+      "owner": "VAE decision_architecture"
+    },
+    {
+      "id": "F04",
+      "severity": "LOW",
+      "category": "R08_PROVENANCE",
+      "finding": "No explicit revision_id/append event identity or monotonic event reference in minimal machine contract",
+      "disposition": "Specify idempotent revision ID, previous event reference and correction/withdraw semantics at Stage03 or before implementation",
+      "owner": "VAE decision_architecture"
+    },
+    {
+      "id": "F05",
+      "severity": "LOW",
+      "category": "SUCCESS_ORACLES",
+      "finding": "All eight success criteria share generic verification wording",
+      "disposition": "Stage04 test matrix shall map SC01-SC08 to tailored evidence/expected result; not a Core eight-slot structural defect",
+      "owner": "VAE Stage04 planning"
+    },
+    {
+      "id": "F06",
+      "severity": "LIMITATION",
+      "category": "NEGATIVE_SCOPE",
+      "finding": "GitHub diff cannot exclude uncommitted external game changes or platform model identification",
+      "disposition": "Keep NOT_RUN/UNKNOWN and avoid cross-system certification",
+      "owner": "Independent reviewer / Human"
+    },
+    {
+      "id": "F07",
+      "severity": "LOW",
+      "category": "STATE_CONTRACT",
+      "finding": "R03/R04/R05 mandatory fields with legitimate NOT_RUN/blocked states lack explicit nullability and state transition semantics",
+      "disposition": "Define nullable-before-execution fields and allowed transition invariants before implementation",
+      "owner": "VAE decision_architecture"
+    }
+  ],
+  "verdict": {
+    "assessment": "PARTIALLY_SUPPORTED",
+    "A_Human_review_recommendation": "RECOMMENDED_WITH_EXPLICIT_LIMITATIONS",
+    "Stage01_complete": false,
+    "Human_version_confirmation": "PENDING",
+    "Stage02_authorized": false,
+    "game_runtime_verified": false
+  }
+}
