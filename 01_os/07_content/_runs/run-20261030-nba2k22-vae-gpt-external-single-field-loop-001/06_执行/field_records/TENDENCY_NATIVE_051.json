@@ -1,0 +1,85 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_051",
+  "iteration_id": "SWEEP01_FIELD0051",
+  "sweep": 1,
+  "source_ordinal": 51,
+  "research_date": "2026-10-31",
+  "primary_question": "Does candidate byte PLAYER+0x48A have an independently corroborated named tendency UI mapping on PC NBA 2K22?",
+  "identity": {
+    "project_key": "tendency.RAW_0x48a",
+    "offset_hex": "0x48A",
+    "declared_raw_range": [
+      0,
+      100
+    ],
+    "source_status": "UNKNOWN_RAW_BYTE",
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "rendered_game_effect": "UNKNOWN",
+    "calendar_effect": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17"
+  },
+  "search_attempts": [
+    {
+      "search": "\"NBA2K22\" \"0x48A\" tendency player offset",
+      "date": "2026-10-31",
+      "result": "NO_RELEVANT_DIRECT_SOURCE",
+      "limitations": "Public search result absence is not proof of unused byte or absence of in-game field"
+    }
+  ],
+  "external_sources": [],
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction historical export",
+      "date": "2021 roster snapshot; page date UNKNOWN",
+      "game": "NBA2K22",
+      "platform": "web export, original PC provenance UNKNOWN",
+      "relevance": "Names player tendencies but contains no memory offsets"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "NO_DIRECT_SOURCE",
+      "direct_source_ids": [],
+      "claim": "No located evidence maps 0x48A to a specific PC22 UI or runtime consumer"
+    }
+  ],
+  "conflicts": [
+    "Cannot infer Native identity from contiguous offsets or display column order",
+    "No confirmed Native Getter/UI label, 3D or Calendar engine call, numerical effect"
+  ],
+  "related_mechanisms": [
+    {
+      "name": "Coach/Playbook and adjacent player tendencies",
+      "evidence": "UNKNOWN; candidate byte lacks semantic identity"
+    },
+    {
+      "name": "Abilities/Training",
+      "evidence": "UNKNOWN"
+    }
+  ],
+  "measurables": [
+    "Read-only byte at Player UID verified address",
+    "Two distinct players' exact independent UI labels and values on same build/save",
+    "Adjacent bytes checked against accidental matches"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_051",
+    "question": "Can two UID-verified PC22 read-only PLAYER+0x48A values be matched to exactly one independently observed tendency UI label, without list-order inference?",
+    "positive": "SCOPED_IDENTITY_ONLY",
+    "negative": "UNKNOWN_RAW_BYTE",
+    "unavailable": "BLOCKED",
+    "write_authorized": false,
+    "executed": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game_test": "NOT_RUN",
+  "REA_test": "NOT_RUN",
+  "next_improvement": "Require new native getter, verified UI correspondence, or disassembly before retesting unchanged web search"
+}
