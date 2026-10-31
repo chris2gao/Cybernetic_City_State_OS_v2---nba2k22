@@ -1,0 +1,87 @@
+{
+  "task_packet": {
+    "task_id": "NBA2K22-VAE-STAGE01-INDEPENDENT-REVIEW-20261030-001",
+    "parent_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+    "review_subject_task_id": "NBA2K22-VAE-GPT-STAGE01-20261030-001",
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "risk_tier": "T2_semantic",
+    "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "branch": "task/nba2k22-vae-stage01-independent-review-20261030",
+    "objective": "独立核查VAE Stage01 A候选、九对象合同、Stage02取证矩阵及开发者静态验证，判断是否可推荐Human绑定版本确认；保留待修缺口。",
+    "source_evidence": [
+      "3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/08_结论/completion_pointer.md",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/A_需求建模_v1.yml",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/01b_结果对象及原型验收候选_v1.md",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/VAE_VERTICAL_SLICE_CONTRACT_V1.json",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/Stage02_取证与缺口矩阵_v1.md",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/07_测试执行/Stage01_静态验证报告_v1.json",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/run.yml",
+      "57106954627f0d8d540d83e8ea9773faee51cac4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_需求建模/A0_需求共识候选_v1.yml",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md"
+    ],
+    "allowed_changed_paths": [
+      "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/"
+    ],
+    "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/01_任务输入/verification_plan.json",
+    "required_tests": [
+      "IR01_SOURCE_AND_SHA",
+      "IR02_EIGHT_SLOTS",
+      "IR03_HUMAN_BOUNDARY",
+      "IR04_R01_R09",
+      "IR05_GAP_EVIDENCE_TIERS",
+      "IR06_TEST_REPRODUCIBILITY",
+      "IR07_SCOPE_NO_GAME_EDIT",
+      "IR08_INDEPENDENT_RESULT"
+    ],
+    "model_record": {
+      "assigned_provider": "OpenAI",
+      "assigned_product": "ChatGPT",
+      "assigned_model": "GPT-6",
+      "assigned_role": "independent_review",
+      "assigned_surface": "new_fork_NBA_COMMON_BASELINE_READY",
+      "actual_model": "UNKNOWN_PENDING_RECEIVER_REPORT",
+      "actual_model_evidence_source": "PENDING",
+      "instance_id": "PENDING",
+      "developer_declared_model": "GPT-6",
+      "developer_identity_verification": "DECLARED_ONLY"
+    },
+    "independence": {
+      "fresh_fork": true,
+      "forbid_developer_private_context": true,
+      "reviewer_must_not_be_executor": true
+    },
+    "prohibitions": [
+      "modify_master",
+      "modify_game_or_save",
+      "modify_developer_branch",
+      "claim_Human_approval",
+      "force_push",
+      "rebase",
+      "squash"
+    ],
+    "required_completion_pointer": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/08_结论/completion_pointer.md",
+    "big_task": false,
+    "publisher": {
+      "principal_binding": "connector_authenticated",
+      "publication_transport": "github_api_connector",
+      "source_branch_publication": "task_scope_default",
+      "master_integration_confirmation": "not_requested",
+      "expected_remote_master_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "expected_remote_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee"
+    },
+    "big_task_confirmation_closure": {
+      "enabled": false,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "minimum_work_unit_output": {
+      "work_performed_or_requested": "独立审查VAE Stage01候选并向规划窗口交付精确证据结论",
+      "implementation_or_review_method": "使用公共基线新Fork，从固定GitHub提交复核A和原始测试，不继承开发者判断",
+      "supportability_rationale": "固定GitHub完成指针与原始候选可独立复查；开发者自测不是审查证据",
+      "feasibility_rationale": "纯仓库只读审核，不需游戏权限，review Run单独写入",
+      "task_constraints_and_boundaries": "只改本审核Run；不能确认Human决定，不能开始Stage02游戏操作",
+      "stop_or_return_conditions": "原始证据不可获得、关键歧义或需要受保护动作时阻塞并带精确指针返回"
+    }
+  }
+}
