@@ -1,0 +1,40 @@
+{
+  "field_id": "WORLD_REG_082",
+  "family": "world_settings",
+  "source_ordinal": 82,
+  "iteration": 181,
+  "sweep": 1,
+  "stated_question": "Verify slot RVA, offset, storage type, profile range, and runtime verification status for world setting world.gameplay_and_calendar.quarter_length",
+  "observable_target": "Confirm static R06A registry candidate parameters (RVA 0x0632B4B0, offset 0x14) and record lack of live readback verification",
+  "candidate_native_key": "world.gameplay_and_calendar.quarter_length",
+  "display_name": "world.gameplay_and_calendar.quarter_length",
+  "source_status": "STATIC_REGISTRY_CANDIDATE",
+  "offset_hex": "0x14",
+  "stride_hex": null,
+  "byte_width": 4,
+  "declared_raw_range": [
+    null,
+    null
+  ],
+  "native_identity_grade": "REA_LOCATED",
+  "ui_mapping_status": "UNVERIFIED_MENU_SYNC",
+  "ui_export_label": null,
+  "consumer_path_status": "UNVERIFIED_LIVE_3D_OR_SIM_ENGINE",
+  "game_effect_status": "UNQUANTIFIED_FROM_PROFILE_NOT_VERIFIED",
+  "research_status": "EVIDENCE_ADDED",
+  "primary_sources": [
+    "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/settings.json"
+  ],
+  "blocker_reason": null,
+  "unmeasured_effects": [
+    "options_menu_roundtrip_persistence",
+    "simulation_engine_adherence",
+    "live_gameplay_rule_enforcement"
+  ],
+  "next_improvement_direction": "Hook memory address at slot RVA 0x0632B4B0 + offset 0x14 to verify live game readback",
+  "timestamp_iso": "2026-10-31T03:17:46.967941+00:00",
+  "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+}

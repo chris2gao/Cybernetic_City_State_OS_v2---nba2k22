@@ -1,0 +1,40 @@
+{
+  "field_id": "TENDENCY_NATIVE_025",
+  "family": "player_tendency",
+  "source_ordinal": 25,
+  "iteration": 25,
+  "sweep": 1,
+  "stated_question": "Verify whether raw tendency slot at offset 0x470 has confirmed semantic name or consumer in current project registries",
+  "observable_target": "Record unverified status for unknown raw byte slot TENDENCY_NATIVE_025",
+  "candidate_native_key": "tendency.RAW_0x470",
+  "display_name": "UNKNOWN_RAW_BYTE_025",
+  "source_status": "UNKNOWN_RAW_BYTE",
+  "offset_hex": "0x470",
+  "stride_hex": "0xDF0",
+  "byte_width": 1,
+  "declared_raw_range": [
+    0,
+    100
+  ],
+  "native_identity_grade": "UNVERIFIED",
+  "ui_mapping_status": "UNKNOWN_UNMAPPED",
+  "ui_export_label": null,
+  "consumer_path_status": "UNKNOWN_UNVERIFIED_ASSEMBLY",
+  "game_effect_status": "UNKNOWN",
+  "research_status": "UNKNOWN",
+  "primary_sources": [
+    "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/07_PLAYER_TENDENCY_GUIDE.md"
+  ],
+  "blocker_reason": null,
+  "unmeasured_effects": [
+    "3d_live_court_shot_frequency",
+    "calendar_simulation_fga_distribution",
+    "ace_tactical_override_threshold"
+  ],
+  "next_improvement_direction": "Hook memory read at offset 0x470 in live match to identify consumer calling context",
+  "timestamp_iso": "2026-10-31T03:17:41.717357+00:00",
+  "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+}

@@ -1,0 +1,41 @@
+{
+  "field_id": "TENDENCY_NATIVE_046",
+  "family": "player_tendency",
+  "source_ordinal": 46,
+  "iteration": 46,
+  "sweep": 1,
+  "stated_question": "Verify native offset, byte width, value range, UI mapping status and consumer path for OFF_SCREEN_DRIVE_TENDENCY in PC22 MyLEAGUE",
+  "observable_target": "Confirm offset 0x485 in player struct with stride 0xDF0, uint8 range [0, 100], and unverified UI/consumer status",
+  "candidate_native_key": "tendency.OFF_SCREEN_DRIVE_TENDENCY",
+  "display_name": "OFF_SCREEN_DRIVE_TENDENCY",
+  "source_status": "NAMED_NATIVE",
+  "offset_hex": "0x485",
+  "stride_hex": "0xDF0",
+  "byte_width": 1,
+  "declared_raw_range": [
+    0,
+    100
+  ],
+  "native_identity_grade": "REA_LOCATED",
+  "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
+  "ui_export_label": null,
+  "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
+  "game_effect_status": "UNQUANTIFIED_SEPARATE_SIM_VS_3D_STUDY",
+  "research_status": "EVIDENCE_ADDED",
+  "primary_sources": [
+    "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/player.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/07_PLAYER_TENDENCY_GUIDE.md"
+  ],
+  "blocker_reason": null,
+  "unmeasured_effects": [
+    "3d_live_court_shot_frequency",
+    "calendar_simulation_fga_distribution",
+    "ace_tactical_override_threshold"
+  ],
+  "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
+  "timestamp_iso": "2026-10-31T03:17:42.406645+00:00",
+  "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+}
