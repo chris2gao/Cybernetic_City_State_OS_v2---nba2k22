@@ -1,0 +1,219 @@
+{
+  "schema_version": "nba2k22.vae.rea.live_sweep.audit.v1",
+  "task_id": "NBA2K22-VAE-REA-LIVE-SWEEP-INDEPENDENT-REVIEW-20261031-001",
+  "candidate_commit": "f1e02101ead9e48c0dd3591e8c76501e407acfab",
+  "verdict": "REWORK_REQUIRED",
+  "supported_scope": "204 FIELD_RECORD FILES AND SOURCE-REPORTED LIVE RAW MEMORY SAMPLES (UNVERIFIED SEMANTIC IDENTITY)",
+  "unsupported_scope": "204 NATIVE FIELD IDs VERIFIED OR 204 ENGINE MECHANISMS EFFECT-PROVEN",
+  "source_counts": {
+    "records_total": 204,
+    "tendency": 99,
+    "coach": 19,
+    "world": 86,
+    "dossier_lines": 2265,
+    "source_modified_files": 207,
+    "new_source_files": 2,
+    "code_new": 1,
+    "dev_tests_changed": 0
+  },
+  "sample_check": {
+    "coach_total_read": 19,
+    "coach_unambiguous_ranges_checked": 13,
+    "coach_invalid": 10,
+    "world_game_speed_uint32": 1056964608,
+    "world_game_speed_float32": 0.5,
+    "world_normalize_stats_uint32": 21234136,
+    "world_financial_ambitions_uint32": 271058973,
+    "world_alias": "WORLD_REG_002, WORLD_REG_085, WORLD_REG_086 at same +0x00",
+    "ledger_iterations": 204,
+    "ledger_last_timestamp_utc": "2026-10-31T03:17:47Z",
+    "live_record_first_timestamp_utc": "2026-10-31T03:31:03Z",
+    "checkpoint_review_readiness": "NOT_READY"
+  },
+  "original_dev_pytest": "8 passed stated by developer, not independently rerun",
+  "independent_probes": "6/6 source-equivalent data/control-flow checks executed in audit container, not importing original code",
+  "live_game_actions_by_reviewer": "NONE",
+  "Human_override": "continue reviewer without new isolated Fork",
+  "findings": [
+    {
+      "id": "REA-AUD-P0-01",
+      "sev": "P0",
+      "status": "CONFIRMED_INVALID_FIELD_IDENTITY",
+      "title": "Coach数据基址错误，19项中至少10项可证明越界",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/scanner.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_001.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_019.json"
+      ],
+      "evidence": "live_analyzer.py从LeagueScanner.find_active_teams()取teams[0].address+GAMEPLAN偏移，并未解析COACHDATA或Coach指针；COACH_DEFAULT_001 POEOffense=97（0..6），003 POEOffense3=100（0或10..12），005 POEDefense2=101（0或16..18），007 PreferredSystem=223、008 ActiveSystem=230（0..7），017 FreelanceType2=97、019 FreelanceType4=95（0..33）。13个具明确合法域的字段中10个越界。",
+      "repro": "Independent Python probes on all 19 recorded Coach values, 13 known ranges, 10 invalid; compare CoachLocator native type resolution and current memory record.",
+      "effect": "Cannot certify 19 Coach as native live settings, or teach downstream Agent using these values.",
+      "closure": "Use CoachLocator actual Coach owner pointer+verified COACHDATA type and enum, correct data widths; per-field name+enum/range+UI readback; raise on invalid, independent 19 negative tests."
+    },
+    {
+      "id": "REA-AUD-P0-02",
+      "sev": "P0",
+      "status": "CONFIRMED_DECODING_AND_ALIAS_ERRORS",
+      "title": "世界设置无类型解码/物理别名未解",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_002.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_008.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_020.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_085.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_086.json"
+      ],
+      "evidence": "world_settings所有字段均 read_uint32；game_speed raw1056964608按IEEE754 float32才是0.5，normalize_stats read 21234136 > [0,1]，player_non_financial_ambitions read271058973 > [0,100]；game_difficulty_preset 与 game_speed 均+0x00，相同物理地址和值。",
+      "repro": "Independent Python struct.unpack for 1056964608=0.5 and explicit bound checks, alias address comparison.",
+      "effect": "86个World seed readouts不能全部标类型/身份正确，重复物理字段也不能当独立认证。",
+      "closure": "按字段typed getter和原生type descriptor读原始字节，验证域和语义、保存/模式；同地址合法别名明确映射，否则UNKNOWN；重扫并独立UI核对。"
+    },
+    {
+      "id": "REA-AUD-P0-03",
+      "sev": "P0",
+      "status": "CONFIRMED_ERROR_TO_ZERO_PROVENANCE_BUG",
+      "title": "读取失败返回0，且静态Coach兜底可晋级LIVE_RECEIPT",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/memory.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py"
+      ],
+      "evidence": "GameMemory.read_uint8/read_uint32包装在read_*_safe失败返回None时回退0；live_analyzer读这些非安全接口，execute_live_sweep用live_val is not None且addr非NO_PROCESS/UNKNOWN_OFFSET晋级LIVE_RECEIPT。Coach读team0失败则返回(1,'STATIC_GP_LAYOUT',...)也会被晋级。",
+      "repro": "Six source-equivalent probes include static fallback accepted, zero-on-failure accepted.",
+      "effect": "存在读取失败/静态常量被记成实机成功证据的确定性路径。",
+      "closure": "使用require_uint8/require_uint32/read_bytes exact并输出失败receipt，异常保留UNKNOWN/READ_ERROR；STATIC_GP_LAYOUT不得晋级任何LIVE级。"
+    },
+    {
+      "id": "REA-AUD-P0-04",
+      "sev": "P0",
+      "status": "CONFIRMED_EVIDENCE_PROMOTION_UNJUSTIFIED",
+      "title": "内存可读地址不等于字段原生身份已确认",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_016.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_001.json"
+      ],
+      "evidence": "LIVE_RECEIPT仅按读数/地址非空自动填写，无PE SHA、Game mode/Save、字段类型、Getter消费指令、界面身份、返回代码或字节级独立receipt；未知倾向RAW_0x467也标LIVE_RECEIPT且research_status EVIDENCE_ADDED；Coach越界也标LIVE_RECEIPT。",
+      "repro": "Audit direct code promotion predicate and filed JSON contradictions.",
+      "effect": "Evidence grade conflates raw memory sampling with proven field semantic/consumer identity.",
+      "closure": "Separate RAW_MEMORY_OBSERVATION, NATIVE_IDENTITY_VERIFIED, UI_VERIFIED, ENGINE_EFFECT_VERIFIED and require actual proof record linkage for each."
+    },
+    {
+      "id": "REA-AUD-P0-05",
+      "sev": "P0",
+      "status": "CONFIRMED_UNSUPPORTED_CAUSAL_CLAIMS",
+      "title": "204项机制影响/阈值是预填模板，并非实机逆向",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/LIVE_MECHANISM_REVERSE_ENGINEERING_DOSSIER.md"
+      ],
+      "evidence": "analyze_field_mechanism从20余个硬编码TENDENCY_KNOWLEDGE_MAP+family generic fallback返回预设impact/associations/thresholds；read_live_field只读字节，不做单因素数值干预、竞争路径指令跟踪、3D/Calendar统计或受控效果比较。档案逐Coach 19次重复Pace>70，逐World86次重复Dual Normalize，51个未知槽都称经实机反汇编确认保留位段（本扫描没有反汇编）。",
+      "repro": "Source review and dossier text frequency counts: 204 headers, Pace>70 repeated19, Dual Normalize repeated86, '经实机反汇编确认' repeated51.",
+      "effect": "不能从这些字节推导SHOT总闸、Touches/ACE、疲劳8–15%等确定性引擎行为。",
+      "closure": "把模板改成HYPOTHESIS/SOURCE_RESEARCH，不得标mechanism_verified；需要实际消费路径/控制实验+对照+失败实例后再晋级。"
+    },
+    {
+      "id": "REA-AUD-P1-06",
+      "sev": "P1",
+      "status": "CONTRACT_DEVIATION",
+      "title": "本轮实机扫描违反逐字段独立迭代取证流程",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/01_任务输入/SINGLE_FIELD_LOOP_CONTRACT_V1.json"
+      ],
+      "evidence": "execute_live_sweep以for idx in range(queue_mgr.total_count)在一个调用内读204条并改204个JSON，没有调用execute_single_field、没有每项预注册问题/失败反例及局部测试；原ledger204条是先前静态研究迭代而非本轮新LIVE研究迭代。",
+      "repro": "Compare ledger final timestamp 03:17:47Z vs live record 03:31:03–03:31:09Z and source single for loop.",
+      "effect": "不能将旧204次静态研究账本替代204次实机逐项机制实验。",
+      "closure": "本次记为批量RAW_CAPTURE独立批次、不要宣称遵守逐项实验；每个需升级的字段按原合同分别记录实验和来源。"
+    },
+    {
+      "id": "REA-AUD-P1-07",
+      "sev": "P1",
+      "status": "CONFIRMED_CHECKPOINT_DIVERGENCE",
+      "title": "记录、账本、checkpoint与完成指针成熟度矛盾",
+      "source": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/current_checkpoint.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/iteration_ledger.jsonl",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_016.json"
+      ],
+      "evidence": "checkpoint evidence_added=153 UNKNOWN=51，review_readiness=NOT_READY，last_completed_commit=4e5bafd；live evidence新字段如RAW_0x467被标LIVE_RECEIPT/EVIDENCE_ADDED，completion_pointer又写all204 live grounded并ready。",
+      "repro": "SHA compare checkpoint, 204 existing ledger entries and raw field record.",
+      "effect": "正式状态不能反映实机扫描质量，无法据此启动后续自动Loop。",
+      "closure": "添加独立live_capture_batch及各字段raw status；只以通过检查后的grade统计更新checkpoint/ledger，合并结果不覆盖旧史。"
+    },
+    {
+      "id": "REA-AUD-P1-08",
+      "sev": "P1",
+      "status": "UNSUPPORTED_INTERPRETATION",
+      "title": "51未知槽位被错称保留/废弃历史字段",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/LIVE_MECHANISM_REVERSE_ENGINEERING_DOSSIER.md",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_016.json"
+      ],
+      "evidence": "RAW_0x467等未知字节值可读，但既没有UI身份或消费者，analysis函数直接生成'经实机反汇编确认属于2K底层保留位段'和'历史名单模板留存'；此次并未进行相应指令反汇编。",
+      "repro": "RAW_0x467=2 record and generic fallback code.",
+      "effect": "错误把UNKNOWN功能解释为确认的保留字段，可误导后续映射。",
+      "closure": "仅允许UNKNOWN_RAW_BYTE_WITH_ADDRESS且不能判其无用/保留/弃用，等待真实RVA/consumer trace。"
+    },
+    {
+      "id": "REA-AUD-P1-09",
+      "sev": "P1",
+      "status": "IDENTITY_AND_AUTHORITY_UNVERIFIED",
+      "title": "实机证据缺稳定游戏构建与会话授权链",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/01_任务输入/task_packet.json"
+      ],
+      "evidence": "存储PID5488、base和临时地址/UTC时间，但缺进程创建时间、PE哈希读回、Save/season/mode、ReadProcessMemory失败码与独立REA工具receipt；脚本自身会GameMemory(read_only=True)自动attach且无绑定OS行为授权回执。用户转述REA会话曾运行，但仓库没有可独立核对的授权记录。",
+      "repro": "Inspect GameMemory.attach() and live_analyzer _init_memory()/record schema.",
+      "effect": "不能独立确认是哪份存档/版本的字段读数或是否具有此次附加操作授权；不据此断言发生越权写入。",
+      "closure": "Human确定只读attach权限与范围、存储批准凭证；采集session id/process creation time+PE hash+save/mode+raw receipt及只读关闭记录。"
+    },
+    {
+      "id": "REA-AUD-P1-10",
+      "sev": "P1",
+      "status": "UNVERIFIED_DUPLICATES",
+      "title": "种子覆盖不等于204独立物理字段",
+      "source": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_002.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_085.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_086.json"
+      ],
+      "evidence": "WORLD_REG_002 game_speed 与WORLD_REG_085 difficulty_preset/086 game_speed均映射+0x00的0x7ff4e68fe038；shared seed queue原定义明确physical identity overlaps UNKNOWN。",
+      "repro": "Record comparison shows triple alias by address.",
+      "effect": "204个文件仅为种子条目覆盖，独立正确字段数量未被证实。",
+      "closure": "建立field_id→physical identity equivalence/collision table并标已确认别名/错误别名，重新计物理字段。"
+    },
+    {
+      "id": "REA-AUD-P2-11",
+      "sev": "P2",
+      "status": "TEST_SCOPE_LIMIT",
+      "title": "开发者8/8测试没有验证新LiveEngineAnalyzer",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py"
+      ],
+      "evidence": "全部8个测试仅用SingleFieldInvestigator和tmp_path离线fixture；f1e021相对parent207文件中没有变更tests/；无world float typed decode、Coach合法枚举、static fallback晋级、read failure或真实原始readback测试。",
+      "repro": "Read exact old pytest module and GitHub changed file list (207, 204 records+1 dossier+1 pointer+1 analyzer).",
+      "effect": "8个PASS不是本次204项LIVE采集的独立验证。",
+      "closure": "新增typed-read/identity/negative tests，再由独立可执行环境用固定SHA重跑；开发者8 PASS保留历史记录但不冒充本次验收。"
+    },
+    {
+      "id": "REA-AUD-P2-12",
+      "sev": "P2",
+      "status": "PARTIALLY_SUPPORTED_PROGRESS",
+      "title": "实际交付可保留为原始采样研究素材",
+      "source": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/LIVE_MECHANISM_REVERSE_ENGINEERING_DOSSIER.md",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_001.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_001.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_004.json"
+      ],
+      "evidence": "204记录及原始地址/值/时间字段确实在GitHub；部分原始数值如SHOT_TENDENCY96、quarter_length12、shot_clock24、foul_out6合理，live script显式GameMemory(read_only=True)，Git diff只改allowlist。",
+      "repro": "Source record readback, GitHub compare and script inspection.",
+      "effect": "可保留作 RAW_CAPTURE_CANDIDATE，不应全部废弃；但不能升级字段映射已证或机制效果。",
+      "closure": "保留不可变原始字节与来源并对质量分层，优先修复高风险字段。"
+    }
+  ],
+  "next": "Return same Gemini REA task for forensic RAW capture truth downgrade and typed/native identity fix; request Human for bounded live read-only evidence authority if not already authorized; do not perform a new live operation from audit."
+}
