@@ -1,0 +1,91 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_019",
+  "iteration_id": "SWEEP01_FIELD0019",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "question": "Does Shot Mid Range tendency change CPU midrange shot choice in PC22 3D and Calendar contexts?",
+  "native": {
+    "key": "tendency.SHOT_MID_RANGE_TENDENCY",
+    "offset": "0x46A",
+    "project_range": [
+      0,
+      100
+    ],
+    "mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX, PC status UNKNOWN",
+      "claim": "ATD roster editors separately adjusted Shot Mid tendency"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page9",
+      "author": "Luke Skywalker and tcnumba10",
+      "date": "2021-10-07",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "claim": "Conflicting multi-slider midrange gameplay reports, no isolated native field"
+    },
+    {
+      "id": "S3",
+      "url": "https://2kauction.com/mynba/2k22/players/larry-johnson",
+      "author": "2kAuction",
+      "date": "2021-09-10 roster",
+      "version": "NBA2K22",
+      "platform": "web archive",
+      "claim": "Shot Mid, Spot Up Mid and Off Screen Mid are separately exported"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "source_ids": [
+        "S1",
+        "S3"
+      ],
+      "tier": "SAME_RELEASE_LABELS",
+      "statement": "Player midrange tendency has distinct labels but no proved 0x46A mapping"
+    },
+    {
+      "id": "C2",
+      "source_ids": [
+        "S2"
+      ],
+      "tier": "CONFLICTED_GLOBAL_SLIDER",
+      "statement": "Global midrange sliders are not a player field experiment"
+    }
+  ],
+  "conflicts": [
+    "3D versus Sim consumer unknown",
+    "Coach playbook and player skills confound shot attempts"
+  ],
+  "related": [
+    "Coach Run Plays, Touches, PlayTypes",
+    "Spot Up Mid, Off Screen Mid",
+    "Midrange skill and training direct relation UNKNOWN"
+  ],
+  "metrics": [
+    "midrange FGA per eligible possession",
+    "shot type, player UID, 3D versus Calendar",
+    "FG percentage separate"
+  ],
+  "REA_question": {
+    "id": "REA_MID_019",
+    "question": "Does UID-matched read-only PLAYER+0x46A equal the in-game Shot Mid tendency for two players in the same PC22 save/build/time?",
+    "if_match": "SCOPED_MAPPING",
+    "if_mismatch": "UNKNOWN",
+    "write": false
+  },
+  "result": "SAME_RELEASE_FIELD_DISTINCTION_EFFECT_UNVERIFIED",
+  "rea": "NOT_RUN",
+  "game": "NOT_RUN"
+}
