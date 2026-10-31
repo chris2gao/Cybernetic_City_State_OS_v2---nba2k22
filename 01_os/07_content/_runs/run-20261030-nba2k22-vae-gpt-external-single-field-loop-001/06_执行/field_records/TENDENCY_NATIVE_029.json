@@ -1,0 +1,62 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "field_id": "TENDENCY_NATIVE_029",
+  "iteration_id": "SWEEP01_FIELD0029",
+  "primary_question": "Does Off Screen Shot Three affect CPU 3-point attempt selection after an off-ball screen, not shot accuracy?",
+  "native_candidate": "tendency.OFF_SCREEN_SHOT_THREE",
+  "offset_hex": "0x474",
+  "raw_range_project": [
+    0,
+    100
+  ],
+  "current_PC22_mapping": "UNKNOWN",
+  "engine_effect": "UNKNOWN",
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "game": "NBA2K22",
+      "platform": "PS5, PC UNKNOWN",
+      "grade": "COMMUNITY_HYPOTHESIS",
+      "claim": "Off-screen 3 named as possible situational shot tendency, no isolated test"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte",
+      "date": "2021-12-16",
+      "game": "NBA2K22",
+      "platform": "PS5/XSX, PC WIP",
+      "grade": "ROSTER_EDITOR",
+      "claim": "Many game fields edited together, no one-variable proof"
+    }
+  ],
+  "conflicts": [
+    "Called plays differ from actual shot attempts",
+    "Cross-platform results do not establish PC22 consumer"
+  ],
+  "relationships": [
+    "Coach playbook and screen opportunities",
+    "Off Screen Mid and Shot Three tendencies",
+    "Three-point shooting skill and contest as success variables",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "Off-screen 3PA per eligible catch",
+    "Midrange alternatives",
+    "Play calls separate from shots"
+  ],
+  "REA_question": {
+    "id": "REA_OFFSCREEN_THREE_029",
+    "question": "For two UID-verified current PC22 players, do read-only PLAYER+0x474 values match exact visible Off Screen Shot Three tendency at same save/build/time?",
+    "outcomes": [
+      "MAPPING_SCOPED",
+      "UNKNOWN",
+      "BLOCKED"
+    ],
+    "write": false
+  },
+  "result": "SAME_VERSION_CATEGORY_EVIDENCE_NATIVE_EFFECT_UNKNOWN",
+  "runtime": "NOT_RUN",
+  "next_improvement": "Native-to-UI verification then controlled 3D study"
+}
