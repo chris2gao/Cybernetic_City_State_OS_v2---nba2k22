@@ -1,0 +1,72 @@
+{
+  "field_id": "TENDENCY_NATIVE_068",
+  "iteration_id": "SWEEP01_FIELD0068",
+  "question": "When used as a screener, does Roll vs Pop tendency govern choosing a rim roll versus perimeter pop, and what is the verified value orientation on PC22?",
+  "candidate": {
+    "key": "tendency.ROLL_VS_POP_TENDENCY",
+    "offset": "0x49B",
+    "project_range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "direction": "UNKNOWN",
+    "native_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "game": "NBA 2K22",
+      "platform": "multi-platform editor, PC gameplay UNKNOWN",
+      "claim": "Roll vs Pop calibrated using historical pick-and-roll/pop frequencies, not isolation"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/841295-tendency-edits-that-are-game-changers-for-realism/page77",
+      "author": "Tynole14 and rjohns23",
+      "date": "2020-09-15",
+      "game": "NBA 2K20 / pre-2K22",
+      "platform": "UNKNOWN",
+      "claim": "Older forum says 0 roll, 100 pop; respondent questions direction, cannot validate PC22 orientation"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/926171-nba-2k23-official-triangle-system-thread-next-gen",
+      "author": "Operation Sports 2K23 contributor",
+      "date": "2022 / NBA2K23 era",
+      "game": "NBA 2K23",
+      "platform": "next-gen console, not PC22",
+      "claim": "Claims Roll vs Pop extreme may affect P&R play availability and recommends 1..98; no 2K22 proof"
+    }
+  ],
+  "claims": [
+    "Roll versus pop is distinct named P&R screener decision",
+    "Numeric orientation 0 vs 100 and interaction with assigned plays remain UNVERIFIED for PC22"
+  ],
+  "conflicts": [
+    "Older community commenters disagree on which endpoint selects pop",
+    "2K23 play availability gate may not apply to 2K22",
+    "Coach P&R play availability, shooter skill and spacing confound observed roll/pop frequency"
+  ],
+  "related": [
+    "Coach Playbook, PlayTypes, P&R ball handler",
+    "Inside versus outside shot tendencies",
+    "Screens, spacing and defense coverage",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "roll-vs-pop choices conditional on eligible CPU screens",
+    "P&R plays called versus completed, screen opportunities",
+    "catch outcomes and makes separately",
+    "need endpoint behavior before calibrating"
+  ],
+  "REA_question": {
+    "id": "REA_ROLL_POP_068",
+    "question": "For two UID-verified PC22 players, does read-only PLAYER+0x49B match exact Roll Vs Pop UI values in the same save/build/time?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_ROLLPOP_LABEL_ENDPOINT_UNRESOLVED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "next_improvement": "Test value orientation and play availability only after native mapping and authorized controlled game research"
+}
