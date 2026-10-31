@@ -1,0 +1,69 @@
+{
+  "field_id": "WORLD_REG_005",
+  "iteration_id": "SWEEP01_FIELD0104",
+  "research_date": "2026-10-31",
+  "question": "Does candidate +0xA0 correspond to the number of individual fouls that causes in-game player disqualification, and does Calendar Sim honor the same rule?",
+  "registry_candidate": {
+    "key": "settings.game_settings.foul_out",
+    "offset": "0xA0",
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "PC22_UI_mapping": "UNKNOWN",
+    "underlying_storage": "UNKNOWN",
+    "value_domain": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8",
+      "date": "2022 NBA2K22 era",
+      "platform": "NBA2K22 slider thread, PC build UNKNOWN",
+      "claim": "Foul Out = 6 listed as distinct gameplay setting",
+      "grade": "SAME_GAME_UI_LIST"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "platform": "PS5/XSX, PC unknown",
+      "claim": "Gameplay Foul Out = 6 independent of foul slider percentages",
+      "grade": "SAME_RELEASE_OPTIONS"
+    },
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "platform": "MyLEAGUE/MyNBA, exact PC variant UNKNOWN",
+      "claim": "Gameplay foul settings and league simulation sliders separately configurable",
+      "grade": "SECONDARY_SEPARATION"
+    }
+  ],
+  "claims": [
+    "Same-version menu has named Foul Out option",
+    "Project offset is not independently confirmed by external evidence",
+    "No single-source causal effect or PC22 game-vs-simulation consumer established"
+  ],
+  "disagreements": [
+    "Team foul bonus and player personal fouls",
+    "Foul tendency vs whistle frequency",
+    "AI subbing when near disqualification",
+    "2021 PS5/XSX MyNBA menu may not match current-gen PC MyLEAGUE",
+    "Historical facts must never be overwritten by a setting check"
+  ],
+  "observable_metrics": [
+    "UI Foul Out choice and raw value decode",
+    "player exits at configured individual personal foul count",
+    "separate team penalty/quarter rules, sim result and foul-out count"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_005",
+    "question": "Can candidate settings+0xA0 be matched in one current-build PC22 MyLEAGUE save read-only to its exact visible Foul Out UI setting and confirmed by immediate/delayed readback without changing the save?",
+    "positive": "SCOPED_SETTING_IDENTITY_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_GAME_SETTING_UI_SUPPORTED_RAW_CONSUMER_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
