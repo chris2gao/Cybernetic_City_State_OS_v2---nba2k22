@@ -1,0 +1,185 @@
+{
+  "schema_version": "nba2k22.vae.rea.sweep4.independent_review.matrix.v1",
+  "task_id": "NBA2K22-VAE-REA-SWEEP4-INDEPENDENT-REVIEW-20261031-001",
+  "verdict": "REWORK_REQUIRED",
+  "candidate_sha": "419ba3e09ba02935582431f8756a24c9277af9dc",
+  "parent_sha": "1be03d10ea5df8089ed4a59419d17eff7b893d8c",
+  "findings": [
+    {
+      "id": "S4-P0-01",
+      "severity": "P0",
+      "title": "Consumer tracer给出硬编码汇编字符串而非可验证执行追踪",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_consumer_tracer.py"
+      ],
+      "fact": "trace_shot_tendency_callers/trace_coach_gameplan_consumers/trace_roster_snapshot_pipeline 均返回代码内定义的assembly数组、RVA、预写formula_interpretation，未见read_bytes+disassembler/原始code hash和调用边追踪。测试只检查文字及常量。手工反汇编线索可以保留，但不能从这个工具本身宣称live callgraph已自动验证。",
+      "closure": "保存精确build/PE和目标函数raw byte片段、反汇编工具及命令/原始回执、完整基本块/寄存器与调用图；单个字段消费者独立核对，不允许仅复制静态模板晋级。"
+    },
+    {
+      "id": "S4-P0-02",
+      "severity": "P0",
+      "title": "±5 双向Shot-Touches Governor公式与展示指令条件矛盾",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/decision_bridge.py"
+      ],
+      "fact": "当前片段 sub edx,5; cmp edx,r8d; cmovl ecx,eax 对应条件touches-5 < shot时搬运eax；例如shot=96,touches=95（差1）也使cmovl条件真，而bridge称PERFECT_EQUILIBRIUM且不动作。没有ecx/eax的先前赋值、上下限双向路径或目标端值证明，不能推出clamp(abs(Shot-Touches),5)和effective=Touches+5。",
+      "closure": "提供含前置eax/ecx定义与所有分支的真实原始指令和SSA/符号执行或控制例；分别验证差值-6/-5/0/5/6和溢出边界；在此之前强制改UNVERIFIED_HYPOTHESIS。"
+    },
+    {
+      "id": "S4-P0-03",
+      "severity": "P0",
+      "title": "Coach 70上限和节奏效应缺EAX来源，算法无法成立",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/decision_bridge.py"
+      ],
+      "fact": "cmp ecx,0x46; cmovg ecx,eax仅证明条件为ecx>70则用eax替换，展示片段没有eax=70的原始证据；mov eax,0xa是在cmovg之后，只能帮助判读后续低于10的路径。当前还无法确定ecx是Coach Tempo滑块，亦无后续possession输出链。",
+      "closure": "补足eax/ecx的定义及PE字节来源，证明变量确为CoachTempo且不同raw值的引擎输出；否则[10,70]只作为候选，撤回零额外回合结论。"
+    },
+    {
+      "id": "S4-P0-04",
+      "severity": "P0",
+      "title": "GM决策桥接将无验证系数当真实概率/回合数并给操作建议",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/decision_bridge.py"
+      ],
+      "fact": "BASE_POSSESSIONS_PER_48=88、estimated=88+0.28*tempo、xmm6=0.65+(tempo/70)*0.45、P_shot=eff/100*xmm6*slider_weight和synergy=100-8*avg_friction均为硬编码未有来源推导；注释称tempo50 multiplier1.0、tempo70 1.28，但代码实际为0.9714286、1.1。会输出NATIVE_SUPPRESSED和调整Touches建议。",
+      "closure": "将NativeTacticalDecisionBridge置EXPERIMENTAL_ONLY/禁止角色生产建议；每个系数标SOURCE/HYPOTHESIS并以验证曲线/采样回归及置信度证实后才升级；修正注释与函数数学自洽。"
+    },
+    {
+      "id": "S4-P0-05",
+      "severity": "P0",
+      "title": "新增pytest直接覆盖204份正式field_records，重新引入证据污染",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py"
+      ],
+      "fact": "test_consumer_trace_enrichment_coverage(tracer)使用真实repo_root fixture，直接调用enrich_all_field_records_with_consumer_traces()；该函数逐条用open(...,'w')改写所有204 JSON并升级game_effect_status，没有tmp_path重定向。test_live_analyzer修复了以前的临时隔离，但新tracer测试又绕过。",
+      "closure": "改用temp directory+fixture copy/mock并验证正式Run hash无变化，禁止pytest真实进程attach；将批量升级另设有收据的发布动作，测试中不得写正式历史。"
+    },
+    {
+      "id": "S4-P1-06",
+      "severity": "P1",
+      "title": "204个消费状态从共同少量片段批量认证",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_016.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_001.json"
+      ],
+      "fact": "enrich全99倾向设CONFIRMED_NATIVE_CONSUMER_CALLGRAPH，除SHOT/TOUCHES外给其它97相同0x19b52d4 multiplier；19 Coach全部给相同Tempo上限；86 World只按slot引用记CONTROLLER_SLOT_BOUNDS_VERIFIED。单一Callsite不能证明每个不同字段均存在对应3D或coach消费。",
+      "closure": "字段级caller/callee/owner/读数格式/PE byte receipt及独立grounding表；区别99 getter存在、每字段进入snapshot、进入3D/Sim模型、实际效果四个不同命题。"
+    },
+    {
+      "id": "S4-P1-07",
+      "severity": "P1",
+      "title": "记录game_effect_status宣称验证却同时标empirical_causality_verified=false",
+      "sources": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_001.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_014.json",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py"
+      ],
+      "fact": "T001 game_effect_status=NATIVE_ASSEMBLY_MATHEMATICAL_MODEL_VERIFIED、Coach14=NATIVE_COACHDATA_AND_PACING_BOUNDS_VERIFIED，但mechanism_analysis.empirical_causality_verified=false；下游很可能把game_effect_status当真。",
+      "closure": "类型化证据等级分离DISASSEMBLY_CANDIDATE/CONSUMER_TRACE_PARTIAL/FORMULA_PROVEN/BEHAVIOR_EFFECT_MEASURED；禁止互相矛盾的status值。"
+    },
+    {
+      "id": "S4-P1-08",
+      "severity": "P1",
+      "title": "旧历史证据未恢复且新trace覆盖字段文件",
+      "sources": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_001.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_008.json",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py"
+      ],
+      "fact": "raw_legacy_capture.legacy_timestamp在Sweep4 SHA仍为空，且此前恢复自ee515e0b的位模式与真实时间未见独立不可变归档；新consumer_tracer继续直接覆写原字段JSON。",
+      "closure": "锁定原始f1e02101及真实Sweep3 source SHA，immutable raw capture archive + derived consumer analyses append，重复执行幂等；证明历史位模式和UTC保持。"
+    },
+    {
+      "id": "S4-P1-09",
+      "severity": "P1",
+      "title": "最新完成指针写Sweep4，但checkpoint仍为SWEEP_3_COMPLETED",
+      "sources": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/current_checkpoint.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/08_结论/completion_pointer.md"
+      ],
+      "fact": "419ba3e0中current_checkpoint未改，实读run_state=SWEEP_3_COMPLETED、sweep=3；completion_pointer称SWEEP_4_COMPLETED_WITH_CONSUMER_GRAPH_AND_DECISION_BRIDGE、204/204 confirmed。最新ledger末尾仍为Sweep3 iter612（总1438条包含既有重复事务）。",
+      "closure": "精确区分sweep3原始live read和sweep4静态消费者分析run；checkpoint对应实际证据与SHA，不自动宣称已完成；字段级研究事件有审计append记录。"
+    },
+    {
+      "id": "S4-P1-10",
+      "severity": "P1",
+      "title": "测试启动器可自动连接游戏进程，缺纯离线禁止附加门",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_live_analyzer.py"
+      ],
+      "fact": "NativeConsumerTracer.__init__默认_init_memory尝试GameMemory(read_only=True)进程挂接；test fixture创建正式tracer时即调用；LiveEngineAnalyzer pytest fixture也自动_init_memory。虽未发现写调用，测试不应默认执行实机附加。",
+      "closure": "注入memory_provider=Fake/no_attach默认、真实只读attach需显式授权；空进程/误PID/停止期负例。"
+    },
+    {
+      "id": "S4-P2-11",
+      "severity": "P2",
+      "title": "新增10项测试主要验证自身常量与数学返回，不是Native原生证明",
+      "sources": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_decision_bridge.py"
+      ],
+      "fact": "4 tracer测试只检查literal RVAs和assembly文本，另一个修改真实JSON；6 bridge测试同一代码逻辑自证明，无原始PE byte/Frida trace/实际统计对照；25/25开发报告仅表示离线项目函数分支通过。",
+      "closure": "增加独立外部证据fixtures、负例和对照及src test隔离；提供可复验原始测试日志，审核者独立重跑。"
+    },
+    {
+      "id": "S4-P2-12",
+      "severity": "P2",
+      "title": "存在有价值的Native研究线索，不能按全部伪造或全错处理",
+      "sources": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_016.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_001.json"
+      ],
+      "fact": "Sweep3提交已留下99倾向Getter/Callsite候选、19 Coach COACHDATA位段读数、86分控制器读数及PID8076的时间/地址，部分在合法范围内；此次新增的汇编地址/条件比较可能帮助后续定位，但代码仓库内未附原始字节收据供审核。",
+      "closure": "作为STATIC_DISASSEMBLY_LEADS和LIVE_READ_CANDIDATES保留，待可回溯原生样本和逐机制验证才提高级别。"
+    }
+  ],
+  "counts": {
+    "P0": 5,
+    "P1": 5,
+    "P2": 2
+  },
+  "fixed_source_checks": {
+    "commit_verified": true,
+    "files_changed": 212,
+    "field_records_modified": 204,
+    "checkpoint_current_state": "SWEEP_3_COMPLETED",
+    "reported_sweep4_state": "SWEEP_4_COMPLETED",
+    "existing_ledger_lines": 1438,
+    "ledger_final_iteration": 612,
+    "trace_new_code": "PREDEFINED_ASSEMBLY_TEXT_NO_BIN_BYTES_EVIDENCE",
+    "claimed_tests": 25,
+    "original_pytest_independent": "NOT_RUN",
+    "reviewer_live_game": "NOT_RUN"
+  },
+  "independent_arithmetic": {
+    "multiplier_at_10": 0.7142857142857143,
+    "multiplier_at_50": 0.9714285714285715,
+    "multiplier_at_70": 1.1,
+    "comment_claim_at_50": 1,
+    "comment_claim_at_70": 1.28,
+    "cmp_examples": [
+      {
+        "shot": 96,
+        "touches": 95,
+        "cmovl_if_touch_minus5_lt_shot": true,
+        "bridge_says_in_equilibrium": true
+      },
+      {
+        "shot": 89,
+        "touches": 95,
+        "cmovl_if_touch_minus5_lt_shot": false,
+        "bridge_says_out_of_equilibrium": true
+      }
+    ]
+  },
+  "human_acceptance": "NOT_RECOMMENDED",
+  "next_owner": "Gemini task same dev branch"
+}
