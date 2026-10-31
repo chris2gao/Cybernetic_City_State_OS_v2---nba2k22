@@ -1,0 +1,110 @@
+{
+  "task_packet": {
+    "task_id": "NBA2K22-VAE-STAGE01-GOVERNED-CLOSEOUT-20261030-001",
+    "parent_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+    "scope_type": "bounded_workflow_stage_closure",
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "risk_tier": "T2_semantic",
+    "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "branch": "task/nba2k22-vae-stage01-governed-closeout-20261030",
+    "objective": "基于Human已确认的精确VAE Stage01 A-v1、独立审核及现行Core Workflow，在独立GPT执行窗口形成真实可验证的Stage01人类确认凭证、正式阶段产物和runner/验证回执；如无法满足必须准确报告BLOCKED/NOT_RUN，不伪造完成。",
+    "Human_confirmed_subject": {
+      "candidate_commit": "5abf3cb154654872a3d05278b96658f190ed9241",
+      "candidate_blob_sha": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+      "candidate_path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/A_需求建模_v1.yml",
+      "confirmation_commit": "a98aa2db6e442bbc3aecfa552665ea13d482683e",
+      "confirmation_path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml",
+      "review_pointer_commit": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5",
+      "review_status": "PARTIALLY_SUPPORTED",
+      "scope": "A semantic version confirmed; review findings F02-F07 remain open"
+    },
+    "source_evidence": [
+      "a98aa2db6e442bbc3aecfa552665ea13d482683e:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/A_需求建模_v1.yml",
+      "4640f6e05f2b84e31661c7b2039dfc5d202b30a5:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/08_结论/completion_pointer.md",
+      "4640f6e05f2b84e31661c7b2039dfc5d202b30a5:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/08_结论/independent_review_report.md",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/01_需求建模/README.md",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/01_需求建模/实现/最小运行schema_v1.yml",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/01_需求建模/实现/需求建模schema_v1.md",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/实现/七阶段最小运行契约_v1.yml"
+    ],
+    "allowed_changed_paths": [
+      "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001/"
+    ],
+    "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001/01_任务输入/verification_plan.json",
+    "required_tests": [
+      "CLOSE01_APPROVAL_REF_EXACT",
+      "CLOSE02_A_BLOB_IMMUTABLE",
+      "CLOSE03_HUMAN_CONFIRMATION_RECORD",
+      "CLOSE04_STAGE01_SCHEMA_SEMANTICS",
+      "CLOSE05_GOVERNED_RUNNER_ACTUAL_RECEIPT_OR_EXPLICIT_GATE",
+      "CLOSE06_RESIDUALS_UNCHANGED",
+      "CLOSE07_EXACT_GIT_READBACK",
+      "CLOSE08_NO_OUTSIDE_WRITES"
+    ],
+    "executor_profile": {
+      "provider": "OpenAI",
+      "product": "ChatGPT",
+      "model": "GPT-6",
+      "collaboration_role": "execution",
+      "surface": "Human_fork_NBA_COMMON_BASELINE_READY",
+      "reasoning_profile": "high_if_available",
+      "session_mode": "standard",
+      "identity_source": "Human task assignment; actual platform model-id may be unavailable"
+    },
+    "review_profile": {
+      "reviewer_role": "independent_review_if_material_new_issues",
+      "reviewer_independent_from_executor": true,
+      "existing_A_review_commit": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5"
+    },
+    "model_provenance": {
+      "assigned_provider": "OpenAI",
+      "assigned_product": "ChatGPT",
+      "assigned_model": "GPT-6",
+      "actual_provider": "PENDING",
+      "actual_model": "PENDING",
+      "actual_model_source": "PENDING",
+      "new_model_record_policy": "future_task_only"
+    },
+    "prohibitions": [
+      "alter_confirmed_A_contents_or_sha",
+      "claim_Stage01_complete_without_actual_governed_receipt",
+      "claim_Human_approval_for_F02_F07_machine_contracts",
+      "modify_game_or_save",
+      "write_Native",
+      "modify_Core",
+      "modify_source_development_or_review_run",
+      "modify_master",
+      "force_push",
+      "rebase",
+      "squash",
+      "invent_PRMS_receipt",
+      "invent_formal_Communication_v2_receipt",
+      "start_Stage02_runtime"
+    ],
+    "required_completion_pointer": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001/08_结论/completion_pointer.md with actual Stage01 gate status, tested receipts, exact Git SHA, residuals and next owner",
+    "big_task": false,
+    "publisher": {
+      "principal_binding": "connector_authenticated",
+      "publication_transport": "github_api_connector",
+      "source_branch_publication": "task_scope_default",
+      "master_integration_confirmation": "not_requested",
+      "expected_remote_master_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "expected_remote_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee"
+    },
+    "big_task_confirmation_closure": {
+      "enabled": false,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "minimum_work_unit_output": {
+      "work_performed_or_requested": "执行独立有界Stage01正式收尾，将已批准的固定A版本和Human确认绑定为真实OS Stage01阶段凭证。",
+      "implementation_or_review_method": "公共基线Fork + 当前Core规范/runner实际核查 + 当前GitHub固定来源校验，正确选择现行Stage01承载路径，执行可用真实验证并保存原始结果；无法完成即阻塞说明。",
+      "supportability_rationale": "Human精确批准文档和原始A blob均在固定GitHub commit，独立审核已部分支持且明确指出非正式runner完成。",
+      "feasibility_rationale": "本任务只涉及OS Run阶段凭证和可复核工具，不接触游戏；如果现行runner必须依赖额外治理证据或完整七阶段，不可绕过门禁。",
+      "task_constraints_and_boundaries": "只写新收尾Run；不改已获Human确认的A或旧提交；F02–F07暂不修正，不触碰真实游戏。",
+      "stop_or_return_conditions": "当真正的Core runner需要超出权限、缺少必要审批或前置凭证时停止并返送精确缺口，不重问已明确的Human A版本批准。"
+    }
+  }
+}

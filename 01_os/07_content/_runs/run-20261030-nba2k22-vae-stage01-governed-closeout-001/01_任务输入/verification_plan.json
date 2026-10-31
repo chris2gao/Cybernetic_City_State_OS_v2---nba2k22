@@ -1,0 +1,40 @@
+{
+  "schema_version": "nba2k22.vae.stage01.governed_closeout.verify.v1",
+  "task_id": "NBA2K22-VAE-STAGE01-GOVERNED-CLOSEOUT-20261030-001",
+  "status": "NOT_RUN",
+  "checks": [
+    {
+      "id": "CLOSE01_APPROVAL_REF_EXACT",
+      "expected": "Human approval source contains exact candidate commit and blob, scoped explicitly to A"
+    },
+    {
+      "id": "CLOSE02_A_BLOB_IMMUTABLE",
+      "expected": "Original A bytes/blobs unchanged and canonical source verified"
+    },
+    {
+      "id": "CLOSE03_HUMAN_CONFIRMATION_RECORD",
+      "expected": "Machine-readable durable Human confirmation binds version and records audit limitations"
+    },
+    {
+      "id": "CLOSE04_STAGE01_SCHEMA_SEMANTICS",
+      "expected": "Core required A slots and minimum stage wrapper match current contract"
+    },
+    {
+      "id": "CLOSE05_GOVERNED_RUNNER_ACTUAL_RECEIPT_OR_EXPLICIT_GATE",
+      "expected": "Real runner reported status and primary receipt evidence, or precise reproducible block"
+    },
+    {
+      "id": "CLOSE06_RESIDUALS_UNCHANGED",
+      "expected": "F02-F07 remain pending; no false upgrade to production-ready"
+    },
+    {
+      "id": "CLOSE07_EXACT_GIT_READBACK",
+      "expected": "HEAD, changed paths, artifact bytes and receipts verified against GitHub"
+    },
+    {
+      "id": "CLOSE08_NO_OUTSIDE_WRITES",
+      "expected": "Only new task Run changed; no game/save/Native/master/Core"
+    }
+  ],
+  "actual_results": "NOT_RUN"
+}
