@@ -1,0 +1,153 @@
+{
+  "schema": "nba2k22.vae.v2.independent_audit.v1",
+  "task_id": "NBA2K22-VAE-V2-PROTOTYPE-INDEPENDENT-REVIEW-20261030-001",
+  "subject_commit": "5d7fdcc9ed277f0db79fa0e986483dfe6d00f06a",
+  "verdict": "REWORK_REQUIRED",
+  "human_accept_recommendation": "NO_FOR_FULL_V2_PROTOTYPE",
+  "repository_scope": {
+    "base": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "head": "5d7fdcc9ed277f0db79fa0e986483dfe6d00f06a",
+    "file_count": 42,
+    "all_under_allowlist": true,
+    "development_branch_unchanged": true
+  },
+  "test_scope": {
+    "developer_report": "54 passed in 0.19s from pasted dev log",
+    "independent_pytest": "NOT_RUN",
+    "independent_experiments": "five source-equivalent minimal control-flow probes executed, not original package",
+    "no_live_game": true,
+    "github_commit_status_checks": 0
+  },
+  "findings": [
+    {
+      "id": "V2-01",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "Human三层原型第一层未实现真实Native执行",
+      "source": "src/vae/native_actions.py",
+      "evidence": "12个ActionSpecification与execute_dryrun()，真实结果均为BLOCKED_AWAITING_GAME_AUTH，未调用Native/UI，不存在每类Action→Readback实测。",
+      "close": "逐项标真实GAP/BLOCKED并向Human请求有界授权；不得将12规格写成12 Native执行能力。"
+    },
+    {
+      "id": "V2-02",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "角色身份与对象ACL未绑定",
+      "source": "src/vae/role_data_service.py",
+      "evidence": "query_role_view信任query.requester_role；只按category授权，无actor_uid或object所属校验；PLAYER可请求其他object_id；WORLD_ADMIN仅靠调用方枚举进入all。",
+      "close": "可信Actor/Save/Team/Player身份由宿主绑定；负向跨球员、跨球队、伪WORLD_ADMIN用例。"
+    },
+    {
+      "id": "V2-03",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "R08写盘失败仍返回成功并标APPENDED",
+      "source": "src/vae/revision.py",
+      "evidence": "commit_append先将key与对象放入内存，设APPENDED及receipt；文件写异常仍return True，且可不配置ledger_path；未使用fsync/原子append或并发互斥。",
+      "close": "写失败必须失败状态，持久成功只在durable确认后；重启/注入写失败/并发重复测试。"
+    },
+    {
+      "id": "V2-04",
+      "severity": "P0",
+      "status": "OPEN",
+      "title": "R05只靠任意字符串将Getter/UI/SaveReload标VERIFIED",
+      "source": "src/vae/readback_adapter.py",
+      "evidence": "EXECUTED receipt +两个不同非空Getter ref和任意save_reload_ref即L3 VERIFIED；不验证实际数据、保存身份与跨重启证据。",
+      "close": "验证式证据对象，要求真实原生Getter及持久化独立读回，假字符串负向测试。"
+    },
+    {
+      "id": "V2-05",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "GM税额确定性Oracle错误",
+      "source": "src/vae/native_actions.py",
+      "evidence": "GM-01输出luxury_tax_projected=max(0,payroll-tax)，只是超税额不是阶梯奢侈税金额；超税1M时给1M，而2021-22非重复超税第一档基本税约1.5M；真实游戏另需实证。",
+      "close": "以Human确认的PC22规则与现实参考区分；独立计算阶梯税及赛季版本、边界测试。"
+    },
+    {
+      "id": "V2-06",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "模型映射存在互相冲突的规则与未证先验",
+      "source": "src/vae/native_actions.py",
+      "evidence": "GM-03仅支持max_future_draft_years=5，V3提出7年，预设125%+100k并非全梯度；COACH-02要求240分钟而游戏可能换时长；签约/角色字段静态规范不是已证Native。",
+      "close": "每条规则标League year/game settings/出处成熟度，待Human定例外。"
+    },
+    {
+      "id": "V2-07",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "角色查询输出硬编码却声称可用",
+      "source": "src/vae/role_data_service.py",
+      "evidence": "GM返回CHI预算固定值，PLAYER overall=84/potential=89，Coach策略固定且部分种类返回VALID_ROLE_DATA_AVAILABLE；数据并非真实Reader/D2/D3 Capture来源，freshness=LIVE_SIMULATION_STAGING。",
+      "close": "仅OFFLINE_FIXTURE，不可供真实角色决策；接通可信采集及freshness/source/permission后再升级。"
+    },
+    {
+      "id": "V2-08",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "方法论图谱只有5项Seed且因果分级未证",
+      "source": "src/vae/mechanism_registry.py",
+      "evidence": "5字段5边；EDGE-02/05 edge_type=DIRECT_CAUSE却verified_in_game=false；update_edge_verification由传入Enum标竞技观察，不检查原始证据。",
+      "close": "机制清单字段级覆盖、source-grade分离，效果等级由可核验receipt更新。"
+    },
+    {
+      "id": "V2-09",
+      "severity": "P1",
+      "status": "PARTIAL",
+      "title": "旧P0部分修复但READY权限仍易伪造",
+      "source": "src/vae/preflight.py;src/vae/contracts.py",
+      "evidence": "STATIC_SPEC已被拒为READY，显式DRYRUN/MOCK字符串会被拒；但仅字符串包含检测，授权真实性/动作范围/到期/身份无宿主校验；CAPTURED对象可任意构造。",
+      "close": "绑定签名/可信授权与原始LIVE采样证据；不可只依赖字符串黑名单。"
+    },
+    {
+      "id": "V2-10",
+      "severity": "P1",
+      "status": "PARTIAL",
+      "title": "R06静态比较字段补齐但来源与真伪未验证",
+      "source": "src/vae/contracts.py;src/vae/pipeline.py",
+      "evidence": "以前跨Save/engine路径漏比问题据源码已经添加检查；pipeline示例Observation不再RECORDED，但真实样本绑定及策略仍需要完整实测。",
+      "close": "构造跨Save/engine/trial/build反例，并实机验证前保持NOT_OBSERVED。"
+    },
+    {
+      "id": "V2-11",
+      "severity": "P2",
+      "status": "LIMITATION",
+      "title": "54项pytest只具备开发者回执",
+      "source": "tests/vae/*;01_任务输入/verification_plan.json",
+      "evidence": "GitHub候选无commit status checks；本审核读取部分原始测试及源码、执行5项等价最小反例，但没有完整仓库checkout重跑54项；不得写独立54通过。",
+      "close": "在只读干净checkout重跑并保存可复验日志和实际exitcode。"
+    },
+    {
+      "id": "V2-12",
+      "severity": "P1",
+      "status": "OPEN",
+      "title": "Human V2三个支柱并未都达到交付门",
+      "source": "HUMAN_PROTOTYPE_TARGET_AND_LOOP_AMENDMENT_V2.md;PROTOTYPE_CAPABILITY_EVIDENCE_MATRIX_V2.json",
+      "evidence": "原始Human明确离线脚手架不能代替真实原生操作、全覆盖机制方法和真实采集角色分发；当前三者分别为12静态规格/5 seed/硬编码fixture。",
+      "close": "报告PARTIAL/BLOCKED并提供每类所需Native能力与Reader授权包，不能宣布COMPLETE。"
+    }
+  ],
+  "Human_v2_acceptance_axes": {
+    "Native_execution": "BLOCKED_NO_LIVE_ACTION_RECEIPTS",
+    "mechanism_methods": "PARTIAL_5_SEEDS_ONLY",
+    "real_capture_role_views": "BLOCKED_HARDCODED_FIXTURES"
+  },
+  "F02_F07": {
+    "F02": "SCHEMA_PARTIAL",
+    "F03": "OFFLINE_STATE_FIXED",
+    "F04": "DURABILITY_NOT_CLOSED",
+    "F05": "DEVELOPER_TESTS_EXIST_NOT_INDEPENDENTLY_RERUN",
+    "F06": "STATIC_VS_LIVE_PARTIAL_FIXED_ROLE_PAYLOADS_STILL_FAKE",
+    "F07": "STATE_CHECKS_PARTIAL_UNAUTHENTICATED"
+  },
+  "next_owner": "Gemini in same dev task, VAE planner and Human for scoped permission",
+  "model_attribution": {
+    "assigned": "GPT-6",
+    "actual": "GPT-6_CONVERSATION_PROVIDED",
+    "platform_attestation": "UNKNOWN",
+    "instance_id": "UNKNOWN",
+    "same_reviewer_window_as_prior": true,
+    "human_override": true
+  }
+}
