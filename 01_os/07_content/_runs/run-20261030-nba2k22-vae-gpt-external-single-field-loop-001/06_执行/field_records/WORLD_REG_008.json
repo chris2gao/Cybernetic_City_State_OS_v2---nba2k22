@@ -1,0 +1,87 @@
+{
+  "field_id": "WORLD_REG_008",
+  "iteration_id": "SWEEP01_FIELD0107",
+  "research_date": "2026-10-31",
+  "family": "world_settings_simulation",
+  "primary_question": "Does the project 'normalize_stats' flag correspond specifically to MyLEAGUE Normalize Played to Sim Stats, as distinct from Normalize Played to Sim Minutes or sim-stage per-possession normalization?",
+  "candidate": {
+    "key": "settings.simulation.normalize_stats",
+    "project_offset": "0x600",
+    "project_declared_status": "STATIC_REGISTRY_CANDIDATE",
+    "UI_binding": "UNKNOWN",
+    "byte_width": "UNKNOWN",
+    "value_domain": "UNKNOWN",
+    "real_runtime_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8",
+      "date": "NBA2K22 season-era",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE, PC exact build UNKNOWN",
+      "grade": "SAME_VERSION_MENU_LABEL",
+      "claim": "Lists Simulated Quarter Length, Normalize Played to Sim Minutes and Normalize Played to Sim Stats distinctly"
+    },
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "game": "NBA2K22",
+      "platform": "MyNBA/MyLEAGUE, PC exact menus UNKNOWN",
+      "grade": "SECONDARY_SAME_RELEASE",
+      "claim": "Individually exposes Quarter Length, Simulated Quarter Length and two normalization flags"
+    },
+    {
+      "url": "https://steamcommunity.com/app/1644960/discussions/0/4588603157853225691/",
+      "author": "klomenDJ/iPikachuBooteyLFCoOp",
+      "date": "2021-12-20/21",
+      "game": "NBA2K22",
+      "platform": "Steam PC, MyCareer not MyLEAGUE",
+      "grade": "SAME_PLATFORM_DIFFERENT_MODE",
+      "claim": "Players reported MyCareer simulated game quarter length differs from played length; cannot transfer mode semantics"
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/t2dr5r",
+      "author": "r/NBA2k community",
+      "date": "2022-02-27",
+      "game": "NBA2K22 next-gen",
+      "platform": "Xbox next gen; PC unknown",
+      "grade": "UNCONTROLLED_COMMUNITY_NORMALIZATION_REPORT",
+      "claim": "Discusses inflated or anomalous scores with played-to-sim minutes/stats normalization, confounded by game mode"
+    }
+  ],
+  "claims": [
+    "Same-version franchise UI contains separate simulation quarter and normalization controls",
+    "Project registry offset 0x600 does not have independently validated PC22 memory correspondence"
+  ],
+  "conflicts": [
+    "MyCareer Steam reports not equivalent to PC MyLEAGUE behavior",
+    "Recorded normalized boxscore versus raw on-court boxscore require explicit provenance",
+    "Changes to settings do not retroactively alter sealed season facts"
+  ],
+  "related": [
+    "Played Quarter Length",
+    "Simulated Quarter Length",
+    "Normalize Played to Sim Minutes",
+    "Normalize Played to Sim Stats",
+    "3D CPUvCPU versus Calendar Sim"
+  ],
+  "observables": [
+    "UI exact option name and current read-only setting state",
+    "raw played-game boxscore versus recorded season stats",
+    "minutes normalization held fixed separately",
+    "Calendar Sim and imported historical stats must not be rewritten"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_008",
+    "question": "For one current PC22 offline MyLEAGUE save/build, is settings candidate 0x600 equal to the exact visibly named settings.simulation.normalize_stats UI value on immediate and delayed read-only observation, and does it persist across a fresh read without writes?",
+    "if_match": "SCOPED_IDENTITY_ONLY",
+    "not_match": "UNKNOWN",
+    "no_access": "BLOCKED",
+    "write": false
+  },
+  "result": "NORMALIZE_STATS_REGISTRY_SEMANTICS_AMBIGUOUS",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
