@@ -1,0 +1,141 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_008",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0008",
+  "research_date": "2026-10-30",
+  "one_question": "Does CRASH_TENDENCY control contact-related fall/crash animations in CPU-rendered PC22, rather than offensive rebounding board-crash frequency?",
+  "identity": {
+    "candidate": "tendency.CRASH_TENDENCY",
+    "project_offset": "0x45F",
+    "project_range": [
+      0,
+      100
+    ],
+    "current_PC22_value": "UNKNOWN",
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "semantic_identity": "DISPUTED"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 8
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "multi-platform roster intent, PC exact build UNKNOWN",
+      "locator": "OP TENDENCIES item 1.9",
+      "grade": "SAME_VERSION_ROSTER_METHOD",
+      "claim": "New Crash tendency formula based on player height and weight",
+      "limits": "No source field consumer or explicit exact meaning/experimental response"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/920896-crash-layups-and-hands",
+      "author": "tarantism",
+      "date": "2022-02-11",
+      "version": "NBA 2K22 same release period",
+      "platform": "Xbox One stated",
+      "locator": "post #1 lines 67-85",
+      "grade": "SAME_VERSION_FIRST_PERSON_NEGATIVE",
+      "claim": "Author says maxing Crash tendency still rarely produced identifiable Crash animations",
+      "limits": "Subjective observation without controlled video/session log; not PC"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.reddit.com/r/NBA2k/comments/1wecrow/so_frustrating_that_foul_sliders_do_absolutely/",
+      "author": "Amioran and another commenter, conversation nested",
+      "date": "2026-09-12",
+      "version": "UNSPECIFIED modern NBA 2K, NOT proven 2K22",
+      "platform": "MyLEAGUE; platform UNKNOWN",
+      "locator": "comments, search excerpt and visible discussion; nested reply may be collapsed",
+      "grade": "CROSS_VERSION_CONFLICTED_ANECTODAL",
+      "claim": "One player attributes Crash to falling on contact and another disputes this as offensive boards behavior; unverified tests claimed",
+      "limits": "2026 game version ambiguous and no reproducible PC22 test; cannot import exact 0/99 claims"
+    },
+    {
+      "id": "S4",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/903204-official-nba-2k22-mynba-wish-list/page3",
+      "author": "forum contributor (specific author UNKNOWN without full post inspection)",
+      "date": "2021 pre-release discussion, exact date UNKNOWN",
+      "version": "NBA2K22 wishlist / earlier 2K context",
+      "platform": "UNKNOWN",
+      "locator": "comment proposing celebration and crash-type tendencies",
+      "grade": "COMMUNITY_SEMANTIC_CLUE_ONLY",
+      "claim": "Player mentions Crash alongside post-contact/no-call reactions",
+      "limits": "Wishlist, not implementation specification"
+    }
+  ],
+  "claims": [
+    {
+      "id": "CR01",
+      "source_ids": [
+        "S1"
+      ],
+      "tier": "SAME_VERSION_EDITING_EXISTENCE",
+      "claim": "Crash category edited according to player physical traits"
+    },
+    {
+      "id": "CR02",
+      "source_ids": [
+        "S2"
+      ],
+      "tier": "SAME_VERSION_NONREPLICATED_NEGATIVE",
+      "claim": "High Crash settings did not clearly produce predictable crash animations for one XB1 observer"
+    },
+    {
+      "id": "CR03",
+      "source_ids": [
+        "S3",
+        "S4"
+      ],
+      "tier": "SEMANTIC_HYPOTHESIS_CONFLICT",
+      "claim": "Contact fall/crash reaction is plausible but rebounding interpretation remains unexcluded"
+    }
+  ],
+  "conflict_table": [
+    {
+      "a": "contact-fall animation",
+      "b": "offensive board crashing",
+      "resolution": "UNRESOLVED native consumer; must not assume either"
+    },
+    {
+      "a": "2022 XB1 minimal visible animation after max",
+      "b": "2026 anecdotal direct effect at extremes",
+      "resolution": "Different release/mode/platform, neither controlled PC22 evidence"
+    }
+  ],
+  "related": [
+    "Strength, contact slider, body mass and finishing: contact/fall opportunity",
+    "Rebound effort and Crash Boards coaching setting: possible name collision, do not conflate",
+    "Draw Foul / Hard Foul: potential outcome confounder",
+    "Animation pack, scene state, frame rate may affect visual observations",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "fall/stumble events per eligible contact collision in rendered 3D",
+    "offensive rebound chase events per available miss separately",
+    "free throw attempts and refereeing separately",
+    "game build, mode, player UID, collision type, contact level",
+    "simulated box versus 3D not assumed comparable"
+  ],
+  "REA_question": {
+    "id": "REA_CRASH_008",
+    "question": "For two UID-matched players, does read-only PLAYER+0x45F correspond to a visible per-player Crash Tendency UI field in current PC22, and what is its exact displayed label?",
+    "matched": "SCOPED_MAPPING_SUPPORT_ONLY",
+    "not_matched": "UNKNOWN",
+    "missing": "BLOCKED",
+    "no_write": true
+  },
+  "result": "SEMANTIC_CONFLICTS_DOCUMENTED_PC22_NATIVE_CONSUMER_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "Only after identity proof, discriminate contact-fall and rebound-chase with separate event-level observations"
+}
