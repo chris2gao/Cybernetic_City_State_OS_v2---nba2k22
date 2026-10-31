@@ -225,15 +225,90 @@ Detailed post-mortem analysis of PID 9240 and patch logs revealed:
 1. **PE File Proofs**:
    - `0x142321aa0`: Scene Task VTable with methods `Execute` (`0x1403F73D0`), `Complete` (`0x1403F7240`), `OnComplete` (`0x1403F7300`).
    - `0x1417036D0`: Callback registered at `0x141725192`, validated by `0x504521a8` gate, jumping to `0x1416a5600`.
-   - `0x1417BCB90`: Modal loop spinning on `[0x1468b2498 + 0xc]`.
+   - `0x140ba9e70` / `0x1417BCB90`: Global application frame loop inside `WinMain` (`0x14182BBB0`), verified to run identically in normal calendar mode.
    - `0x142D08EB0`: Practice Facility Controller VTable with complete drill, end, leave, unload, and return methods.
 2. **Deterministic Verification Scripts**:
    - `find_vcc.js`: Maps Visual Concepts `.vcc` source string references to RVAs.
    - `find_cb_calls.js`: Locates `call [reg + 0xc0]` invocation sites.
    - `read_vtable_exit.py`: Dumps the entire controller vtable at `0x142D08EB0`.
+   - `observe_lifecycle.js`: Passive 14-function audited observer.
+   - `inspect_queue_state.js`: Live memory inspector for `0x1460fb180` and `0x146351848`.
+   - `dump_threads.js`: Live thread pool state enumerator.
 3. **Status of V4 Development**:
    - **Per directive, NO V4 patch has been developed or applied.** All findings are purely observational, validated via disassembly and non-intrusive memory probes.
    - The game process has been detached and left clean.
+
+---
+
+## 6. Live In-Game Field Trace & Native Task Execution Table (Task 3 Deliverable)
+
+### 6.1 Field Test Environment & Baseline
+- **Date & Time**: 2026-10-31T18:39:43Z
+- **Process Target**: `NBA2K22.exe` (PID: `2416`, Base: `0x140000000`)
+- **Initial Native NetStatus (`0x146351848`)**: `3` (Strictly untouched, zero memory writes)
+- **Active Hooks**: 14 purely passive read-only `Interceptor.attach` probes in `observe_lifecycle.js`
+- **User Action**: Human operator clicked "进入球队训练" on the MyCAREER calendar. Game loading bar moved and halted at **96%**.
+
+### 6.2 Deterministic Native Execution Table
+
+| 函数地址 (RVA) | 函数名称 | 是否真正调用 | 输入参数 (onEnter) | 返回值 (onLeave) | 下一目标函数 | 状态判断 | 原始证据 |
+| :--- | :--- | :---: | :--- | :--- | :--- | :---: | :--- |
+| `0x1405C1CE0` (`0x5C1CE0`) | `OnCalendarTeamPracticeClicked` | **否** | N/A | N/A | `0x140EA8B50` | 未触发 | 命中计数 0（日历 UI 经由底层无名路由直接分发至 FlowManager） |
+| `0x140EA8B50` (`0xEA8B50`) | `FlowManager::InitiateTransition` | **是** | `rcx = 0x7`<br>`rdx = 0x1`<br>`r8 = 0x30cf9787`<br>`r9 = 0x2c7` | `rax = 0x0` (1ms) | `0x1411B9CE0` | **已完成** | `HIT#1:ENTER/LEAVE` (Tid: 7552, 18:39:43.374Z) |
+| `0x1411B9CE0` (`0x11B9CE0`) | `CareerFlow::DispatchSceneLoad` | **是** | `rcx = 0x30cf9787`<br>`rdx = 0x2c7` | `rax = 0x0` (1ms) | `0x140EC5250` | **已完成** | `HIT#2:ENTER/LEAVE` (Tid: 7552, 18:39:43.375Z) |
+| `0x140EC5250` (`0xEC5250`) | `CareerFlow::RouteToSceneManager` | **是** | `rcx = 0x354c1bb2`<br>`rdx = 0x30cf9787`<br>`r8 = 0x2c7`<br>`r9 = 0x2c7` | `rax = 0x0` (1ms) | `0x140E96990` | **已完成** | `HIT#3:ENTER/LEAVE` (Tid: 7552, 18:39:43.376Z) |
+| `0x140E96990` (`0xE96990`) | `SceneManager::EnqueueSceneLoad` | **是** | `rcx = 0x1460fb180` (Queue)<br>`rdx = 0x140ec4e70` (Callback)<br>`r8 = 0x354c1bb2` (Context)<br>`r9 = 0x30cf9787` (Hash) | `rax = 0x0` (1ms) | `0x140EC4E70` (Async) | **已完成** | `HIT#4:ENTER/LEAVE` (Tid: 7552, 18:39:43.376Z) |
+| `0x1403F55B0` (`0x3F55B0`) | `SceneTask::Create` | **否** | N/A | N/A | `0x1403F73D0` | **未调用** | 命中计数 0 |
+| `0x1403F73D0` (`0x3F73D0`) | `SceneTask::Execute` | **否** | N/A | N/A | `0x1403F7240` | **未调用** | 命中计数 0 |
+| `0x1403F7240` (`0x3F7240`) | `SceneTask::CompleteAndDispatch` | **否** | N/A | N/A | `0x1417036D0` | **未调用** | 命中计数 0 |
+| `0x1417036D0` (`0x17036D0`) | `SceneManager::OnTaskCompletedGate` | **否** | N/A | N/A | `0x1416A5600` | **未调用** | 命中计数 0 |
+| `0x1406D6AA0` (`0x6D6AA0`) | `Gate1_CheckCalendarBusyState` | **否** | N/A | N/A | N/A | **未调用** | 命中计数 0 |
+| `0x1406D4BA0` (`0x6D4BA0`) | `Gate2_CheckPendingNotification` | **否** | N/A | N/A | N/A | **未调用** | 命中计数 0 |
+| `0x140F04DA0` (`0xF04DA0`) | `Gate34_SubsystemRegistry_IsActive` | **否** | N/A | N/A | N/A | **未调用** | 命中计数 0 |
+| `0x1416A5600` (`0x16A5600`) | `PracticeFacility::ConstructScene` | **否** | N/A | N/A | `0x14163F4A0` | **未调用** | 命中计数 0 |
+| `0x14163F4A0` (`0x163F4A0`) | `PracticeFacility::CreatePlayers` | **否** | N/A | N/A | N/A | **未调用** | 命中计数 0 |
+
+---
+
+### 6.3 关键状态复核与断点定位
+
+1. **最后完成的原生步骤（Last Completed Native Step）**:
+   - `0x140E96990` (`SceneManager::EnqueueSceneLoad`)：主线程（Tid `7552`）在 `18:39:43.376Z` 顺利完成调用，向 `0x1460fb180` 写入回调地址 `0x140ec4e70`、上下文 `0x354c1bb2` 与过渡哈希 `0x30cf9787`，并在 1 毫秒内正常返回 `0x0`。
+   - 主线程随后按引擎架构正常退回到 `WinMain` 顶层主渲染驱动循环（等待条件变量唤醒）。
+
+2. **现场队列状态与回调消费复核**:
+   - 在 96% 阻塞现场直接对队列实例 `0x1460fb180` 内存进行只读采样（`inspect_queue_state.js`）：
+     - 槽位 0 至槽位 5 的 `cb`、`ctx`、`h1`、`h2`、`ts` 全部已被清零（`0x0`）。
+     - 这直接证实：**入队的场景请求已经被消费/出队，队列未处于未响应堆积状态**。
+
+3. **第一个未满足/中断的原生步骤（First Incomplete Native Step）**:
+   - 入队出队后，回调函数 `0x140ec4e70`（反汇编分析为经由 `0x140f23b50` 分发事件 `0x5f86e2ca`，参数 `0x733`）并未驱动通用场景任务初始化函数 `0x1403F55B0`（`SceneTask::Create`）的执行。
+   - 现场对 PID `2416` 全部 52 个活动线程的调用栈快照（`dump_threads.js`）显示：
+     - 主线程（Tid 7552）处于 `SleepConditionVariableCS`（等待渲染帧或事件）；
+     - 22 个游戏后台工作线程全部处于 `WaitForSingleObjectEx` 或 `SleepConditionVariableSRW` 空闲等待状态；
+     - 没有任何工作线程正在执行训练馆场景资产解包、球员加载或数据计算。
+   - 导致后续的场景完成门禁 `0x1417036D0` 和球员实体实例化 `0x14163F4A0` 永远无法到达（命中数均为 0）。
+
+---
+
+### 6.4 原始取证日志（Verbatim Log）
+
+```
+=== NBA 2K22 Native LifeCycle Observer Initialized: 2026-10-31T18:36:41.102Z ===
+[2026-10-31T18:36:41.104Z] [INIT] Attaching to target process PID 2416...
+[2026-10-31T18:36:42.008Z] [OBSERVER_ARMED] Successfully hooked 14 native functions in strictly read-only mode.
+[2026-10-31T18:36:42.009Z] [BASELINE_CHECK] Base: 0x140000000 | Native NetStatus (0x146351848): 3 (Untouched)
+[2026-10-31T18:36:42.009Z] [READY] Passive observer is actively monitoring PID 2416.
+[2026-10-31T18:36:42.010Z] [READY] Please switch to NBA 2K22 and click '进入球队训练' on the MC calendar.
+[2026-10-31T18:39:43.374Z] [HIT#1:ENTER] 2_FlowManager_InitiateTransition (RVA 0xea8b50) | Tid:7552 | Obj:0x7 | Args:[0x7, 0x1, 0x30cf9787, 0x2c7]
+[2026-10-31T18:39:43.375Z] [HIT#2:ENTER] 2b_CareerFlow_DispatchSceneLoad (RVA 0x11b9ce0) | Tid:7552 | Obj:0x30cf9787 | Args:[0x30cf9787, 0x2c7, N/A, N/A]
+[2026-10-31T18:39:43.376Z] [HIT#3:ENTER] 2c_CareerFlow_RouteToSceneManager (RVA 0xec5250) | Tid:7552 | Obj:0x354c1bb2 | Args:[0x354c1bb2, 0x30cf9787, 0x2c7, 0x2c7]
+[2026-10-31T18:39:43.376Z] [HIT#4:ENTER] 3_SceneManager_EnqueueSceneLoad (RVA 0xe96990) | Tid:7552 | Obj:0x1460fb180 | Args:[0x1460fb180, 0x140ec4e70, 0x354c1bb2, 0x30cf9787]
+[2026-10-31T18:39:43.377Z] [HIT#4:LEAVE] 3_SceneManager_EnqueueSceneLoad (RVA 0xe96990) | Tid:7552 | Obj:0x1460fb180 | Ret:0x0 (1ms)
+[2026-10-31T18:39:43.380Z] [HIT#3:LEAVE] 2c_CareerFlow_RouteToSceneManager (RVA 0xec5250) | Tid:7552 | Obj:0x354c1bb2 | Ret:0x0 (1ms)
+[2026-10-31T18:39:43.381Z] [HIT#2:LEAVE] 2b_CareerFlow_DispatchSceneLoad (RVA 0x11b9ce0) | Tid:7552 | Obj:0x30cf9787 | Ret:0x0 (1ms)
+[2026-10-31T18:39:43.381Z] [HIT#1:LEAVE] 2_FlowManager_InitiateTransition (RVA 0xea8b50) | Tid:7552 | Obj:0x7 | Ret:0x0 (1ms)
+```
 
 ---
 

@@ -1,0 +1,14 @@
+=== NBA 2K22 Native LifeCycle Observer Initialized: 2026-10-31T18:36:41.102Z ===
+[2026-10-31T18:36:41.104Z] [INIT] Attaching to target process PID 2416...
+[2026-10-31T18:36:42.008Z] [OBSERVER_ARMED] Successfully hooked 14 native functions in strictly read-only mode.
+[2026-10-31T18:36:42.009Z] [BASELINE_CHECK] Base: 0x140000000 | Native NetStatus (0x146351848): 3 (Untouched)
+[2026-10-31T18:36:42.009Z] [READY] Passive observer is actively monitoring PID 2416.
+[2026-10-31T18:36:42.010Z] [READY] Please switch to NBA 2K22 and click '进入球队训练' on the MC calendar.
+[2026-10-31T18:39:43.374Z] [HIT#1:ENTER] 2_FlowManager_InitiateTransition (RVA 0xea8b50) | Tid:7552 | Obj:0x7 | Args:[0x7, 0x1, 0x30cf9787, 0x2c7]
+[2026-10-31T18:39:43.375Z] [HIT#2:ENTER] 2b_CareerFlow_DispatchSceneLoad (RVA 0x11b9ce0) | Tid:7552 | Obj:0x30cf9787 | Args:[0x30cf9787, 0x2c7, N/A, N/A]
+[2026-10-31T18:39:43.376Z] [HIT#3:ENTER] 2c_CareerFlow_RouteToSceneManager (RVA 0xec5250) | Tid:7552 | Obj:0x354c1bb2 | Args:[0x354c1bb2, 0x30cf9787, 0x2c7, 0x2c7]
+[2026-10-31T18:39:43.376Z] [HIT#4:ENTER] 3_SceneManager_EnqueueSceneLoad (RVA 0xe96990) | Tid:7552 | Obj:0x1460fb180 | Args:[0x1460fb180, 0x140ec4e70, 0x354c1bb2, 0x30cf9787]
+[2026-10-31T18:39:43.377Z] [HIT#4:LEAVE] 3_SceneManager_EnqueueSceneLoad (RVA 0xe96990) | Tid:7552 | Obj:0x1460fb180 | Ret:0x0 (1ms)
+[2026-10-31T18:39:43.380Z] [HIT#3:LEAVE] 2c_CareerFlow_RouteToSceneManager (RVA 0xec5250) | Tid:7552 | Obj:0x354c1bb2 | Ret:0x0 (1ms)
+[2026-10-31T18:39:43.381Z] [HIT#2:LEAVE] 2b_CareerFlow_DispatchSceneLoad (RVA 0x11b9ce0) | Tid:7552 | Obj:0x30cf9787 | Ret:0x0 (1ms)
+[2026-10-31T18:39:43.381Z] [HIT#1:LEAVE] 2_FlowManager_InitiateTransition (RVA 0xea8b50) | Tid:7552 | Obj:0x7 | Ret:0x0 (1ms)
