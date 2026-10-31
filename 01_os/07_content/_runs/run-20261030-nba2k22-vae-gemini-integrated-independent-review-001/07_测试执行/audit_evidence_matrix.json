@@ -1,0 +1,191 @@
+{
+  "schema_version": "nba2k22.vae.gemini.concentrated_review.evidence.v1",
+  "review_task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-INDEPENDENT-REVIEW-20261030-001",
+  "candidate_sha": "c2d9caae388bac3ae5e586c69ee0bd2116ba473b",
+  "review_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "reviewer": {
+    "assigned_model": "GPT-6",
+    "actual_model": "GPT-6 (conversation identity; not attested)",
+    "session": "existing prior Stage01 independent-review window",
+    "Human_override": "审核不用隔离，你可以继续审核。",
+    "platform_window_id": "UNKNOWN",
+    "different_from_Gemini_executor": true,
+    "new_Fork": false,
+    "prms": "NOT_RUN"
+  },
+  "methods": {
+    "read": "GitHub connector read fixed refs, commits, developer code/tests and source documents",
+    "static_scope": "GitHub compare shows 31 changed files, all 4 allowed path prefixes",
+    "developer_claims": "21/21 pytest, 13/13 LOOP PASS; NOT independently rerun",
+    "independent_executable_probes": "Four source-equivalent minimal Python control-flow counterexamples executed in auditor's isolated container; not importing full candidate package or reproducing original pytest",
+    "game_runtime": "NOT_RUN",
+    "protected_actions": "NONE"
+  },
+  "human_stage01_A": {
+    "approved": true,
+    "approval_commit": "a98aa2db6e442bbc3aecfa552665ea13d482683e",
+    "approval_scope": "A-v1 semantic only; neither governed runner nor game auth"
+  },
+  "verdict": "REWORK_REQUIRED",
+  "blocker": "P0 profile provenance/preflight/observation/comparability; not safe as real-game competitive measurement prototype",
+  "f02_f07": {
+    "F02": "OPEN",
+    "F03": "PARTIALLY_CLOSED_OFFLINE",
+    "F04": "OPEN",
+    "F05": "PARTIALLY_SUPPORTED",
+    "F06": "OPEN",
+    "F07": "PARTIALLY_CLOSED_OFFLINE"
+  },
+  "G01_G08": {
+    "G01": "STATIC_ONLY_LIVE_UNKNOWN",
+    "G02": "STATIC_MISMATCH",
+    "G03": "RESEARCH_ONLY",
+    "G04": "HISTORICAL_SCOPED_REA_NOT_THIS_RUNTIME",
+    "G05": "HISTORICAL_SCOPED_REA_NOT_ALL_FRANCHISE",
+    "G06": "STATIC_PLAYER_TRAINING_ONLY",
+    "G07": "SYNTHETIC_DATA_NOT_COMPETITIVE_OBSERVATION",
+    "G08": "RESTORE_PLAN_TEMPLATE_NOT_VALIDATED_BACKUP"
+  },
+  "scope_ok": true,
+  "findings": [
+    {
+      "id": "P0-01",
+      "severity": "P0",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "STATIC_PROFILE_PROMOTED_TO_CAPTURED",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/reader_adapter.py",
+      "function": "VAEReaderAdapter.read_settings_field",
+      "evidence": "Returns SnapshotStatus.CAPTURED for settings.json default, court.json hof_default, and hardcoded standard_sliders without runtime reader. save_id='OFFLINE_DEFAULT', captured_at='STATIC_SOURCE'. test_reader_safety.py positively asserts this false semantic.",
+      "impact": "R01 source truth contract broken; static defaults can masquerade as observed current game state.",
+      "close": "Separate STATIC_SPEC/RESEARCH from LIVE_READBACK; forbid CAPTURED for non-game source; counterexample tests."
+    },
+    {
+      "id": "P0-02",
+      "severity": "P0",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "PREFLIGHT_CAN_READY_WITH_STATIC_DEFAULT_AND_ARBITRARY_AUTH_REF",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/preflight.py",
+      "function": "VAEPreflightEngine.prepare_preflight",
+      "evidence": "Only raw_value None, restore_plan contains rollback_value and nonempty authorization_ref checked. Does not enforce snapshot.status/live provenance, save+scene identity, genuine auth scope, technical_path validation or restore capability. pipeline gives AUTH_OFFLINE_DEV_DRYRUN and raw fallback 50.",
+      "impact": "Invalid trial may be READY though simulator remains NOT_RUN; unsafe if later bound to real executor.",
+      "close": "READY must require live verified source, exact save/build/scene/side, binding of authorization to action and verified restore strategy; blocked-source tests."
+    },
+    {
+      "id": "P0-03",
+      "severity": "P0",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "SYNTHETIC_GAME_METRICS_LABELED_RECORDED",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/pipeline.py",
+      "function": "VAEE1Pipeline.run_e1_slice",
+      "evidence": "Hardcoded GAME_E1_SAMPLE_01/2021-11-15 and metrics 0.42/0.48/101.2, with status=ObservationStatus.RECORDED and human_note Initial offline baseline observation; no live collector. R04 NOT_RUN, R05 UNVERIFIED.",
+      "impact": "Synthetic fixture could be interpreted as real competitive observation and contaminate history/assessment.",
+      "close": "Mark OFFLINE_FIXTURE and INSUFFICIENT/NOT_OBSERVED, never RECORDED without independently verified game ID+batch+source."
+    },
+    {
+      "id": "P0-04",
+      "severity": "P0",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "R06_MISSING_SAVE_AND_ENGINE_PATH_COMPARABILITY",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/contracts.py",
+      "function": "CompetitiveObservation.is_comparable_with",
+      "evidence": "Comparability only checks side/controller/two normalize flags/quarter lengths/base_source_ref, omits save_id, engine_path, trial identity, game build and game source; source-equivalent probe cross-save/cross-path returns comparable.",
+      "impact": "Different games or engine pathways may be compared despite explicit Stage01 requirements.",
+      "close": "Bind save/world, engine_path, active build, game identity and provenance; return INCOMPARABLE/UNKNOWN; negative tests."
+    },
+    {
+      "id": "P1-05",
+      "severity": "P1",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "R08_LEDGER_NOT_DURABLE_AND_IDEMPOTENCY_RESET",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/revision.py",
+      "function": "VAEKnowledgeRevisionManager",
+      "evidence": "self.committed_keys=set() and self.ledger=[] initialized in __init__, commit_append modifies these in process only; receipt string 'Committed successfully' not persisted to Git/database; second manager allows same key.",
+      "impact": "F04 durable append and cross-session dedupe not closed; history can be lost/replayed.",
+      "close": "Use existing append-only data persistence with exact receipt and restart test; no parallel new DB."
+    },
+    {
+      "id": "P1-06",
+      "severity": "P1",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "R05_UNTRUSTED_STRING_REFERENCES_AS_VERIFICATION",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/readback_adapter.py",
+      "function": "VAEReadbackAdapter.perform_readback",
+      "evidence": "When receipt.status EXECUTED and any two differing nonempty Getter ref strings are passed, returns VERIFIED and escalates to L3 if save_reload_ref truthy; not actually validates values, hash or durable reload.",
+      "impact": "An untrusted or fabricated ref can trigger UI/SAVE_RELOAD-like success states.",
+      "close": "Require authenticated/readback evidence objects, value checks and actual reload receipt to assert levels."
+    },
+    {
+      "id": "P1-07",
+      "severity": "P1",
+      "status": "CONFIRMED_SOURCE_LOGIC",
+      "subject": "R07_UNEVIDENCED_EFFECT_THRESHOLD",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/evaluator.py",
+      "function": "VAEEvaluationEngine.evaluate",
+      "evidence": "sample_size>=5 and delta below -0.02 or above +0.02 yields CONFIRMED/REFUTED, arbitrary confidence. No significance/CI/power/baseline control; source Human excludes excessive repetitive match experiments.",
+      "impact": "May falsely convert weak observational association into confirmed causation.",
+      "close": "Use improvement/no improvement/regressed/inconclusive with justified thresholds, confounder tracking, avoid causal CONFIRMED absent controls."
+    },
+    {
+      "id": "P1-08",
+      "severity": "P1",
+      "status": "CONFIRMED_DOCUMENT_SOURCE_MISMATCH",
+      "subject": "G02_SETTINGS_SOURCE_CORRECTION_UNSUPPORTED",
+      "source": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/02_证据/G01_G08_EVIDENCE_DOSSIER.md",
+      "function": "G02",
+      "evidence": "Dossier says settings.json has corrected max_contract_rating default vs min; the file was not modified in candidate and master settings.json still contains min=70/default=40.",
+      "impact": "Source-grading claim inaccurate and may mask structural discrepancy.",
+      "close": "Correct dossier, retain UNKNOWN and open source defect; validate source byte provenance."
+    },
+    {
+      "id": "P1-09",
+      "severity": "P1",
+      "status": "CONFIRMED_SCOPE_GAP",
+      "subject": "F02_F04_F06_NOT_CLOSED",
+      "source": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/VAE_VERTICAL_SLICE_CONTRACT_V2.json",
+      "function": "audit_resolution",
+      "evidence": "V2 contract claims F02/F04/F06 resolved, but P0-01/P0-03/P0-04/P1-05 persist. PENDING_REVISION correct, however APPENDED lacks durable commit.",
+      "impact": "Overstates status of old findings and review maturity.",
+      "close": "Set candidate issue status to OPEN/PARTIAL with evidence; only independently close after tests."
+    },
+    {
+      "id": "P2-10",
+      "severity": "P2",
+      "status": "CONFIRMED_TEST_SCOPE_LIMIT",
+      "subject": "21_PYTEST_PASS_NOT_13_INDEPENDENT_GATES",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/tests/vae/test_verification_plan.py",
+      "function": "test_loop02,03,11,12,13",
+      "evidence": "Scope test checks git status porcelain only (misses committed diff); G01–G08 test checks only presence of strings; checkpoint checks path exists; no-game-write checks simulator flag; final test checks schema and resolution claim strings; developer provides 21/21 transcript but no independent original repo execution in this audit.",
+      "impact": "Unit-test green does not prove evidence provenance, current branch committed diff or game permissions.",
+      "close": "Add git range compare, evidence content assertions, actual source-based fixture tests, durable history tests; preserve original command and receipts."
+    },
+    {
+      "id": "P2-11",
+      "severity": "P2",
+      "status": "CONFIRMED_SCOPE_LIMIT",
+      "subject": "E2_E4_ONLY_GUARDS",
+      "source": "08_Domain_Applications/Antigravity_GM_Engine/src/vae/e2_e4_extensions.py",
+      "function": "VAEE2E4ScopeGuard",
+      "evidence": "Only single-player minutes range, hardcoded roster count, two-team trade cardinality, reject training setter. No Coach/GM/Player business workflows or native capability proof.",
+      "impact": "E2-E4 should be graded bounded guards, not operational vertical slices.",
+      "close": "Maintain honest label; defer implementation to authorized task."
+    },
+    {
+      "id": "P2-12",
+      "severity": "P2",
+      "status": "CONFIRMED_CLAIM_MATURITY_LIMIT",
+      "subject": "G03_AND_G05_EVIDENCE_EXTRAPOLATION",
+      "source": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/02_证据/G01_G08_EVIDENCE_DOSSIER.md",
+      "function": "G03/G05",
+      "evidence": "Normalize field names and runtime mappings unproved yet source uses fixed false/12 values; 2-team transaction evidence does not logically prove 3-team native impossibility; PE/game fingerprint merely inherited fixed literal not verified live.",
+      "impact": "Research/static claims should remain unknown for engine-wide support.",
+      "close": "Separate unsupported by current adapter from impossible in engine; require native/current save evidence."
+    }
+  ],
+  "original_pytest_replay": {
+    "result": "NOT_RUN",
+    "reason": "No executable GitHub checkout available in isolated reviewer runtime; GitHub file connector supports source reading but not exporting full repo to sandbox. Python source-equivalent counterexamples run; cannot equate with 21 original tests."
+  },
+  "next_owner": "Gemini execution in same authorized development task for concentrated fix loop; VAE planner/Human for semantic adjudication or runtime permission",
+  "Human_accept_candidate": false,
+  "authorized_changes": "Review Run only"
+}
