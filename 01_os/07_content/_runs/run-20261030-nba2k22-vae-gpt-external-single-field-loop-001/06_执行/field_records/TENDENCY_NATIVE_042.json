@@ -1,0 +1,63 @@
+{
+  "field_id": "TENDENCY_NATIVE_042",
+  "iteration_id": "SWEEP01_FIELD0042",
+  "date": "2026-10-31",
+  "question": "Does Drive Pull Up Mid change CPU choice between mid pull-up and layup/floater after a drive?",
+  "native": {
+    "key": "tendency.DRIVE_PULL_UP_MID_RANGE",
+    "offset": "0x481",
+    "raw_range_project": [
+      0,
+      100
+    ],
+    "consumer": "UNKNOWN",
+    "UI_mapping": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/deshawn-stevenson",
+      "author": "2kAuction",
+      "date": "September 2021 roster; page date UNKNOWN",
+      "platform": "historical 2K22 web export",
+      "claim": "Drive Pull-Up Mid separately named, value 5 in archived player, no native address"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "platform": "PS5, PC UNKNOWN",
+      "claim": "Drive pull-up mid listed in situational choices, not measured formula"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916550-nba-x%E2%80%99s-o%E2%80%99s/page6",
+      "author": "Sheitan",
+      "date": "2021-09-30",
+      "platform": "community, specific test platform UNKNOWN",
+      "claim": "Floater and pull-up mid tuned with other fields; uncontrolled"
+    }
+  ],
+  "claim_status": "2K22 LABEL SUPPORTED, native effects not",
+  "conflicts": [
+    "UI archive does not map to PLAYER+0x481",
+    "Joint settings not single-variable proof"
+  ],
+  "relationships": [
+    "Drive tendency",
+    "Floater and Stepback Mid",
+    "Playbook/Coach, badges and skill",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "conditional drive mid pullup FGA",
+    "floater/layup/pass alternative",
+    "shot makes separately"
+  ],
+  "REA_question": {
+    "id": "REA_DRIVE_PULLUP_MID_042",
+    "question": "Do two UID-matched current PC22 read-only PLAYER+0x481 values match displayed Drive Pull Up Mid UI values at same save/build/time?",
+    "write": false
+  },
+  "result": "ARCHIVED_LABEL_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
