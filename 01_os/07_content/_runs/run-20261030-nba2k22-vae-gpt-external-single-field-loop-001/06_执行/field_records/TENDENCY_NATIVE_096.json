@@ -1,0 +1,88 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "field_id": "TENDENCY_NATIVE_096",
+  "iteration_id": "SWEEP01_FIELD0096",
+  "research_date": "2026-10-31",
+  "primary_question": "Does the player-level contest-shot tendency affect CPU selection of a hand-up/jump contest for eligible shooter engagements, separately from defensive effectiveness?",
+  "candidate": {
+    "key": "tendency.CONTEST_SHOT_TENDENCY",
+    "project_offset": "0x4B7",
+    "project_range": [
+      0,
+      100
+    ],
+    "PC22_native_to_UI": "UNKNOWN",
+    "rendered_consumer": "UNKNOWN",
+    "calendar_consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG/ATD roster creators",
+      "date": "2021-09, edited later",
+      "game": "NBA 2K22",
+      "platform": "roster project cross-platform, PC behavior not confirmed",
+      "claim": "Player contest, block and foul tendencies rescaled along with other attributes",
+      "grade": "CONTEMPORARY_MULTIFIELD_EDIT"
+    },
+    {
+      "url": "https://newsroom.2k.com/news/nbar-2k22-unveils-new-gameplay-innovations",
+      "author": "2K Newsroom / Visual Concepts",
+      "date": "2021-08-31",
+      "game": "NBA 2K22",
+      "platform": "cross-generation gameplay announcement; PC callsite unverified",
+      "claim": "Shot contest and blocking systems rebuilt",
+      "grade": "OFFICIAL_SYSTEM_LEVEL_NOT_PER_FIELD"
+    },
+    {
+      "url": "https://progameguides.com/nba-2k/how-to-block-shots-in-nba-2k22-blocking-tips-and-tricks/",
+      "author": "Pro Game Guides",
+      "date": "2022-01-21",
+      "game": "NBA 2K22",
+      "platform": "console gameplay controls",
+      "claim": "Active contest and jumping block have different action and foul-risk profiles",
+      "grade": "USER_ACTION_ANALOGY_NOT_CPU_PROOF"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "SAME_VERSION_PLAYER_EDITOR",
+      "source": 0,
+      "claim": "Named related defensive tendency edited, no isolated experiment or native offset binding"
+    },
+    {
+      "tier": "OFFICIAL_DEFENSE_CONTEXT_ONLY",
+      "source": 1,
+      "claim": "System-level defense changed in 2K22; individual tendency weight unknown"
+    }
+  ],
+  "contradictions": [
+    "Individual player-level tendency is not CPU/User global gameplay tendency slider",
+    "Attempt frequency, successful blocks or defensive FG% and fouls are distinct outcomes",
+    "PC22 old/current gen behavior may differ from PS5 sources"
+  ],
+  "related": [
+    "2K22 rebuilt contests, defensive positioning, contest shot global slider, defense rating and badges",
+    "Coach defense strategy and opponent offensive opportunities",
+    "Training direct relationship UNKNOWN"
+  ],
+  "metrics": [
+    "active contests / eligible closeout or shot-defense opportunities",
+    "successful blocks or missed shots separately",
+    "foul attempts and resulting fouls separately",
+    "same save/build/UID; rendered vs Calendar scoped"
+  ],
+  "REA_question": {
+    "id": "REA_CONTEST_SHOT_TENDENCY_96",
+    "question": "For two UID-verified PC22 players, does read-only PLAYER+0x4B7 match exactly their in-game CONTEST_SHOT_TENDENCY tendency UI in the same save/build/time?",
+    "success": "SCOPED_IDENTITY_ONLY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_VERSION_EDITOR_OFFICIAL_DEFENSE_CONTEXT_NATIVE_UNKNOWN",
+  "numeric_threshold": "UNKNOWN",
+  "game_test": "NOT_RUN",
+  "REA_test": "NOT_RUN"
+}
