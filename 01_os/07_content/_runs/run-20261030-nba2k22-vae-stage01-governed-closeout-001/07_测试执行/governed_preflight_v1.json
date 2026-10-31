@@ -44,13 +44,13 @@
     },
     {
       "id": "CLOSE07_EXACT_GIT_READBACK",
-      "status": "PENDING",
-      "evidence": "Final branch head/file scopes will be read after publication"
+      "status": "PASS",
+      "evidence": "GitHub @1789cc1e18d9e70dc874400fb3410474ca12524a: 5 read-back blobs exact, 8 changed paths all inside authorized new Run, branch ahead of fixed master base; pointer publication will require additional final readback."
     },
     {
       "id": "CLOSE08_NO_OUTSIDE_WRITES",
-      "status": "PENDING_GIT_READBACK",
-      "evidence": "Only the authorized new Run is written by GitHub; no game runtime access"
+      "status": "PASS_REPOSITORY_SCOPE_ONLY",
+      "evidence": "Git compare from NBA master 45cc45ca... to 1789cc... shows only new closeout Run, no changes to Core, source A, review, game/Native paths or master; Git alone does not establish runtime absence."
     }
   ],
   "runner": {
@@ -105,5 +105,20 @@
   "stage02_started": false,
   "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
   "formal_Communication_v2": "NOT_PUBLISHED",
-  "next_owner": "VAE decision_architecture to decide legitimate mechanism-level route; Core OS owner only if separate standalone Stage01 acceptance is required"
+  "next_owner": "VAE decision_architecture to decide legitimate mechanism-level route; Core OS owner only if separate standalone Stage01 acceptance is required",
+  "git_readback": {
+    "checked_commit": "1789cc1e18d9e70dc874400fb3410474ca12524a",
+    "changed_file_count": 8,
+    "all_paths_authorized": true,
+    "master_unchanged": true,
+    "readback_blobs": {
+      "01_需求建模/HUMAN_A_V1_CONFIRMATION_BINDING.json": "63ffbe3631510143d055e003203d487f8baf3352",
+      "01_需求建模/STAGE01_PAYLOAD_BINDING_CANDIDATE.json": "0faafef98ae2afb6c5170572315041acde567409",
+      "07_测试执行/governed_preflight_v1.json_before_update": "b1c88ca44c159f44988fc441308f72c180204cb8",
+      "08_结论/execution_model_record_v1.json": "e0c426bc09a3d40a2b8bf1a0d6b5470c225dffb7",
+      "run.yml": "e2892d2a2bccd8e717842383121eba57146d17d1"
+    },
+    "verification_level": "GITHUB_REPOSITORY_SCOPE_ONLY",
+    "stage01_runner": "NOT_RUN"
+  }
 }
