@@ -1,0 +1,71 @@
+{
+  "field_id": "TENDENCY_NATIVE_043",
+  "iteration_id": "SWEEP01_FIELD0043",
+  "date": "2026-10-31",
+  "question": "Can raw tendency byte PLAYER+0x482 be independently matched to a named PC22 player UI setting?",
+  "candidate": {
+    "key": "tendency.RAW_0x482",
+    "offset": "0x482",
+    "project_range": [
+      0,
+      100
+    ],
+    "native_name": "UNKNOWN",
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search": [
+    {
+      "query": "\"NBA2K22\" \"0x482\" \"tendency\"",
+      "result": "NO_RELEVANT_DIRECT_MATCH"
+    },
+    {
+      "query": "\"2K22\" \"0x482\" player tendencies offset",
+      "result": "NO_RELEVANT_DIRECT_MATCH"
+    }
+  ],
+  "context_sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/deshawn-stevenson",
+      "author": "2kAuction historical data",
+      "date": "September 2021 roster; page publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export, game build UNKNOWN",
+      "relevance": "Displays names but no binary offsets"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "version": "NBA2K22",
+      "platform": "PS5",
+      "relevance": "Player tendencies explained at conceptual level, no offset map"
+    }
+  ],
+  "claims": [
+    "No verified direct match of 0x482 to a named PC22 field",
+    "Adjacent bytes and UI export ordering must not determine identity"
+  ],
+  "conflicts": [
+    "No UID-matched Native/UI data; absence of search result is not proof of unused byte"
+  ],
+  "related": "Coach, player skills, training, game effect all UNKNOWN until identity",
+  "observable": [
+    "UID-bound raw 0x482 read-only",
+    "exact UI field/value plus save/build/time",
+    "check neighboring byte coincidences"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_043",
+    "question": "For two verified PC22 player UIDs, can read-only PLAYER+0x482 be matched to exactly one UI tendency without relying on export position?",
+    "positive": "MAPPING_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "next_improvement": "Await independent raw-to-UI or disassembly evidence; do not repeat identical negative search"
+}
