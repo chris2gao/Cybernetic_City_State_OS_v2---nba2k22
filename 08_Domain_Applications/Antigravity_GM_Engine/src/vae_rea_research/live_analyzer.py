@@ -301,7 +301,7 @@ class LiveEngineAnalyzer:
         }
     }
 
-    def __init__(self, repo_root: Optional[str] = None, auto_attach: bool = True) -> None:
+    def __init__(self, repo_root: Optional[str] = None, auto_attach: bool = False) -> None:
         if repo_root is None:
             cur = os.path.abspath(__file__)
             repo_root = os.path.abspath(os.path.join(cur, "..", "..", "..", "..", ".."))

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import ctypes
+import decimal
 import math
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
@@ -8,18 +10,19 @@ from typing import Any, Dict, List, Optional, Tuple
 @dataclass
 class NativeCoachPacingResult:
     """
-    Result of evaluating the native NBA2K22 Coach Dynamic Pacing Engine.
-    Strictly distinguishes proven assembly arithmetic from hypothesized gameplay effects.
+    Result of evaluating the static disassembly model of the NBA2K22 Coach Dynamic Pacing Engine.
+    Strictly distinguishes proven register assembly arithmetic from hypothesized gameplay effects.
     """
     raw_tempo: float
     integer_tempo: int
     tempo_offset_from_50: int
-    unbounded_pace_delta: float
+    unclamped_register_ecx: int
     bounded_modifier: int  # strictly in [10, 70]
     base_possession_target: int
-    net_possession_target: int
-    possession_score_5x_2x: int
-    epistemological_tier: str = "PROVEN_NATIVE_ASSEMBLY"
+    hypothesized_net_target: int  # base_possession_target - bounded_modifier (simulation hypothesis)
+    possession_score_5x_2x: int   # 5 * net_target + 2 * secondary_factor
+    intermediate_registers: Dict[str, int]
+    epistemological_tier: str = "STATIC_DISASSEMBLY_LEAD"
     gameplay_validation_status: str = "PENDING_GAMEPLAY_VALIDATION"
 
 
@@ -31,22 +34,22 @@ class NativeCoachPacingEngine:
     Target: NBA2K22.exe
     Call Site RVA: 0x120ba72..0x120bb1e
     Raw Bytes:
-        f3 0f 2d c0              cvtss2si eax, xmm0        ; Tempo to int
+        f3 0f 2d c0              cvtss2si eax, xmm0        ; Tempo to int (SSE2 round to nearest even)
         83 e8 32                 sub      eax, 0x32        ; eax = Tempo - 50
         6b c8 3c                 imul     ecx, eax, 0x3c   ; ecx = (Tempo - 50) * 60
-        b8 1f 85 eb 51           mov      eax, 0x51eb851f  ; reciprocal 0.6 fixed-point
-        f7 e9                    imul     ecx
+        b8 1f 85 eb 51           mov      eax, 0x51eb851f  ; magic reciprocal (1374389535)
+        f7 e9                    imul     ecx              ; signed multiply EDX:EAX = EAX * ECX
         b8 46 00 00 00           mov      eax, 0x46        ; 70
-        c1 fa 04                 sar      edx, 4           ; edx = (Tempo - 50) * 0.6
+        c1 fa 04                 sar      edx, 4           ; edx = edx >> 4 (arithmetic shift)
         8b ca                    mov      ecx, edx
-        c1 e9 1f                 shr      ecx, 0x1f
-        83 c1 0a                 add      ecx, 0xa         ; + 10
-        03 ca                    add      ecx, edx
-        83 f9 46                 cmp      ecx, 0x46        ; cmp 70
-        0f 4f c8                 cmovg    ecx, eax         ; clamp <= 70
+        c1 e9 1f                 shr      ecx, 0x1f        ; ecx = sign bit
+        83 c1 0a                 add      ecx, 0xa         ; ecx = sign bit + 10
+        03 ca                    add      ecx, edx         ; ecx = edx + sign bit + 10
+        83 f9 46                 cmp      ecx, 0x46        ; cmp ecx, 70
+        0f 4f c8                 cmovg    ecx, eax         ; if ecx > 70: ecx = 70
         b8 0a 00 00 00           mov      eax, 0xa         ; 10
-        83 f9 0a                 cmp      ecx, 0xa         ; cmp 10
-        0f 4c c8                 cmovl    ecx, eax         ; clamp >= 10
+        83 f9 0a                 cmp      ecx, 0xa         ; cmp ecx, 10
+        0f 4c c8                 cmovl    ecx, eax         ; if ecx < 10: ecx = 10
         8b c7                    mov      eax, edi
         2b c1                    sub      eax, ecx         ; net_target = edi - ecx
 
@@ -60,30 +63,69 @@ class NativeCoachPacingEngine:
     DEFAULT_BASE_POSSESSIONS = 100
 
     @classmethod
+    def emulate_x86_pacing_instructions(cls, tempo: float) -> Dict[str, Any]:
+        """
+        Executes exact 32-bit x86 register arithmetic emulation matching the native instructions.
+        Returns full dictionary of intermediate register values.
+        """
+        # 1. cvtss2si eax, xmm0 (round half to even)
+        try:
+            d = decimal.Decimal(str(float(tempo))).quantize(decimal.Decimal('1'), rounding=decimal.ROUND_HALF_EVEN)
+            int_tempo = int(d)
+        except Exception:
+            int_tempo = int(round(float(tempo)))
+        eax = ctypes.c_int32(int_tempo).value
+
+        # 2. sub eax, 0x32
+        offset = ctypes.c_int32(eax - 0x32).value
+
+        # 3. imul ecx, eax, 0x3c
+        ecx_60 = ctypes.c_int32(offset * 0x3C).value
+
+        # 4. mov eax, 0x51eb851f; imul ecx
+        magic = 0x51EB851F  # signed 32-bit integer: 1374389535
+        prod_64 = magic * ecx_60
+        edx_high = ctypes.c_int32(prod_64 >> 32).value
+        eax_low = ctypes.c_uint32(prod_64 & 0xFFFFFFFF).value
+
+        # 5. sar edx, 4
+        sar_edx = ctypes.c_int32(edx_high >> 4).value
+
+        # 6. mov ecx, edx; shr ecx, 0x1f
+        sign_bit = (ctypes.c_uint32(sar_edx).value >> 31)
+
+        # 7. add ecx, 0xa; add ecx, edx
+        unclamped_ecx = ctypes.c_int32(sign_bit + 10 + sar_edx).value
+
+        # 8. cmp ecx, 70; cmovg ecx, eax (eax=70)
+        clamped_ecx = unclamped_ecx
+        if clamped_ecx > cls.TEMPO_MAX_BOUND:
+            clamped_ecx = cls.TEMPO_MAX_BOUND
+
+        # 9. cmp ecx, 10; cmovl ecx, eax (eax=10)
+        if clamped_ecx < cls.TEMPO_MIN_BOUND:
+            clamped_ecx = cls.TEMPO_MIN_BOUND
+
+        return {
+            "int_tempo": int_tempo,
+            "offset": offset,
+            "ecx_60": ecx_60,
+            "prod_64": prod_64,
+            "edx_high": edx_high,
+            "sar_edx": sar_edx,
+            "sign_bit": sign_bit,
+            "unclamped_ecx": unclamped_ecx,
+            "bounded_modifier": clamped_ecx,
+        }
+
+    @classmethod
     def calculate_tempo_modifier(cls, tempo: float) -> Tuple[int, int, int]:
         """
         Executes exact integer assembly arithmetic for RVA 0x120ba72..0x120bab8.
         Returns: (integer_tempo, offset_from_50, bounded_modifier)
         """
-        # cvtss2si eax, xmm0 (round half to even or standard float round)
-        int_tempo = int(round(float(tempo)))
-        # sub eax, 0x32
-        offset = int_tempo - 50
-        # imul ecx, eax, 0x3c -> ecx = offset * 60
-        ecx_60 = offset * 60
-        # imul with 0x51eb851f and sar 4 simulates multiplication by 0.6
-        # In exact native assembly: edx = math.floor(ecx_60 * 0.6 / 60) = int(offset * 0.6)
-        edx = int(math.floor((ecx_60 * 0x51EB851F) / (2**36))) if ecx_60 >= 0 else int(math.ceil((ecx_60 * 0x51EB851F) / (2**36)))
-        # shr ecx, 0x1f; add ecx, 0xa; add ecx, edx -> edx + 10
-        unclamped = int(round(offset * 0.6)) + 10
-
-        # Clamping logic:
-        # cmp ecx, 70; cmovg ecx, 70
-        clamped = min(cls.TEMPO_MAX_BOUND, unclamped)
-        # cmp ecx, 10; cmovl ecx, 10
-        clamped = max(cls.TEMPO_MIN_BOUND, clamped)
-
-        return int_tempo, offset, clamped
+        regs = cls.emulate_x86_pacing_instructions(tempo)
+        return regs["int_tempo"], regs["offset"], regs["bounded_modifier"]
 
     @classmethod
     def evaluate(
@@ -96,9 +138,14 @@ class NativeCoachPacingEngine:
         Calculates the complete native pacing chain including possession net target
         and the 5x + 2x possession candidate score.
         """
-        int_tempo, offset, bounded_mod = cls.calculate_tempo_modifier(tempo)
+        regs = cls.emulate_x86_pacing_instructions(tempo)
+        int_tempo = regs["int_tempo"]
+        offset = regs["offset"]
+        unclamped_ecx = regs["unclamped_ecx"]
+        bounded_mod = regs["bounded_modifier"]
 
         # 0x120babb: mov eax, edi; sub eax, ecx
+        # NOTE: edi is hypothesized as the possession pacing baseline in the simulation struct.
         net_target = base_possession_target - bounded_mod
 
         # 0x120bafe..0x120bb07:
@@ -110,49 +157,62 @@ class NativeCoachPacingEngine:
             raw_tempo=float(tempo),
             integer_tempo=int_tempo,
             tempo_offset_from_50=offset,
-            unbounded_pace_delta=offset * 0.6 + 10.0,
+            unclamped_register_ecx=unclamped_ecx,
             bounded_modifier=bounded_mod,
             base_possession_target=base_possession_target,
-            net_possession_target=net_target,
+            hypothesized_net_target=net_target,
             possession_score_5x_2x=possession_score,
-            epistemological_tier="PROVEN_NATIVE_ASSEMBLY",
+            intermediate_registers=regs,
+            epistemological_tier="STATIC_DISASSEMBLY_LEAD",
             gameplay_validation_status="PENDING_GAMEPLAY_VALIDATION",
         )
 
     @classmethod
     def create_telemetry_validation_spec(cls) -> Dict[str, Any]:
         """
-        Defines the future telemetry logging and comparison contract for Coach Tempo.
+        Defines the future telemetry logging and comparison semantic requirement for Coach Tempo.
+        Does NOT mandate database schemas, file formats, or transport protocols.
         """
         return {
-            "mechanism_id": "COACH_DYNAMIC_PACING_ENGINE",
-            "epistemological_status": "ASSEMBLY_PROVEN_GAMEPLAY_PENDING",
-            "native_assembly_sites": ["0x120ba72..0x120bb1e", "0x120b9ae"],
-            "monitored_telemetry_metrics": [
-                "gameplay.coach_tempo_slider",
-                "gameplay.actual_team_possessions_per_48",
-                "gameplay.average_shot_clock_at_release",
-                "gameplay.fastbreak_attempt_rate",
-                "gameplay.fourth_quarter_fatigue_penalty",
-            ],
-            "validation_hypotheses": [
+            "hypothesis_id": "VAL_CONTRACT_TEMPO_SATURATION",
+            "target_mechanism": "COACH_DYNAMIC_PACING_ENGINE",
+            "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
+            "disassembly_call_sites": ["0x120ba72..0x120bb1e", "0x120b9ae"],
+            "required_metrics": [
                 {
-                    "hypothesis_id": "H_TEMPO_SATURATION_UPPER",
-                    "description": "Increasing Coach Tempo beyond saturation (where modifier reaches 70) produces no additional pace acceleration.",
-                    "comparison_condition": "Compare actual team possessions at Tempo=90 vs Tempo=100.",
-                    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+                    "metric_name": "coach_tempo_slider",
+                    "semantic_role": "independent_variable",
+                    "observation_type": "DIRECT_SETTING_READ",
                 },
                 {
-                    "hypothesis_id": "H_TEMPO_FLOOR_LOWER",
-                    "description": "Decreasing Coach Tempo below floor (where modifier reaches 10) produces no additional pace deceleration.",
-                    "comparison_condition": "Compare actual team possessions at Tempo=0 vs Tempo=20.",
-                    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+                    "metric_name": "team_possessions_per_48",
+                    "semantic_role": "primary_outcome",
+                    "observation_type": "DERIVED_FROM_BOXSCORE_PACE",
                 },
                 {
-                    "hypothesis_id": "H_TEMPO_FATIGUE_INTERACTION",
-                    "description": "High Tempo (>70) accelerates player fatigue accumulation in sim/live games.",
-                    "comparison_condition": "Compare stamina drain rate in high pace games vs normal pace games.",
-                    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+                    "metric_name": "normalize_stats_rule",
+                    "semantic_role": "confounder_control",
+                    "observation_type": "DIRECT_SETTING_READ",
+                },
+                {
+                    "metric_name": "sim_quarter_length",
+                    "semantic_role": "confounder_control",
+                    "observation_type": "DIRECT_SETTING_READ",
                 },
             ],
+            "comparison_conditions": [
+                {
+                    "condition_name": "TEMPO_MAX_SATURATION_CHECK",
+                    "group_a": "Tempo in [90, 100] (where native modifier saturates at 70)",
+                    "group_b": "Tempo in [75, 85]",
+                    "expected_trend": "Possessions curve flattens as modifier reaches assembly upper ceiling 70.",
+                },
+                {
+                    "condition_name": "TEMPO_MIN_FLOOR_CHECK",
+                    "group_a": "Tempo in [0, 40] (where native modifier is clamped to minimum floor 10)",
+                    "group_b": "Tempo = 50 (baseline modifier 10)",
+                    "expected_trend": "Possessions curve does not decelerate below floor value 10.",
+                },
+            ],
+            "fallback_if_unrecorded": "FLAG_AS_UNKNOWN",
         }

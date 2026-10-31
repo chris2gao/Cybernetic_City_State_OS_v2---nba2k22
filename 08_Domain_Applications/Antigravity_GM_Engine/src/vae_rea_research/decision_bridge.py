@@ -18,13 +18,15 @@ class ExperimentalTacticalDecisionBridge:
     derived from reverse engineering research leads. They are NOT certified native game laws
     and must NOT be used as rigid deterministic production rules without empirical validation.
 
-    Reverse Engineering Grounding:
+    Reverse Engineering Grounding & Epistemological Demarcation:
     1. Role Ceiling Governor (RVA 0x1226942..0x1226a8b):
-       Native assembly verifies that players with core role tier (rcx=3) bypass ceilings,
-       whereas secondary players (rcx!=3) are clamped to (role_ceiling - 5) if raw tendency exceeds it.
-       In addition, the native engine loads table ceilings from RVA 0x2b59798.
+       Static disassembly reveals 3 branches:
+       - Branch A: Dual Tier 3 (Core) bypasses ceilings.
+       - Branch B: Tier 3 Primary with Secondary != 3 clamped to (ceiling - 5).
+       - Branch C: Tier < 3 clamped to table floor and ratings scaled by table multiplier.
     2. Coach Tempo Bounds (RVA 0x120ba72..0x120babb):
-       Native assembly proves that tempo modifiers are clamped strictly to [10, 70].
+       Static disassembly proves that internal tempo modifiers are clamped strictly to [10, 70]
+       via fixed-point formula: clamp(10, 70, (Tempo - 50) * 1.2 + 10).
     """
 
     MODEL_TIER = "EXPERIMENTAL_HEURISTIC"
@@ -53,86 +55,98 @@ class ExperimentalTacticalDecisionBridge:
         touches: float,
         role_tier: int = 3,
         role_ceiling: float = 85.0,
+        secondary_tier: Optional[int] = None,
     ) -> Dict[str, Any]:
         """
-        Evaluates the Role-Based Tactical Shot Ceiling Governor (RVA 0x1226942..0x1226a8b).
-
-        Native Assembly Behavior:
-        - Checks role at [rsp + 0x20] / [rsp + 0x24] against 3 (Primary Core option).
-        - If role == 3: Raw shot tendency is stored unconstrained into [rdi + 0x2dd].
-        - If role != 3: Role ceiling is loaded from [rsi + rcx*4 + 0x2b59798],
-          discounted by 5 (sub edx, 5), and if (ceiling - 5) < shot_tendency,
-          effective shot tendency is clamped to (ceiling - 5).
+        Evaluates the Role-Based Tactical Shot Ceiling Governor.
+        Explicitly separates experimental heuristic results from static disassembly leads.
         """
+        if secondary_tier is None:
+            secondary_tier = role_tier
+
+        # 1. Experimental Heuristic Track (user-supplied role_ceiling)
         is_franchise_core = (role_tier == 3)
         effective_ceiling = max(0.0, float(role_ceiling) - 5.0)
 
         if is_franchise_core:
-            effective_shot = float(shot_tendency)
+            heuristic_effective_shot = float(shot_tendency)
             is_suppressed = False
             friction_score = 0.0
             clamp_status = "FRANCHISE_CORE_UNCONSTRAINED"
             recommendation = "Franchise core option (tier 3); shot tendency bypasses role ceiling."
         else:
             if shot_tendency > effective_ceiling:
-                effective_shot = effective_ceiling
+                heuristic_effective_shot = effective_ceiling
                 is_suppressed = True
                 friction_score = shot_tendency - effective_ceiling
                 clamp_status = "ROLE_CEILING_SUPPRESSED"
                 recommendation = (
                     f"Non-core role player (tier {role_tier}) shot tendency ({shot_tendency:.1f}) "
                     f"exceeds discounted role ceiling ({effective_ceiling:.1f}). "
-                    f"In-engine AI governor clamps effective shot attempts."
+                    f"Experimental heuristic clamps effective shot attempts."
                 )
             else:
-                effective_shot = float(shot_tendency)
+                heuristic_effective_shot = float(shot_tendency)
                 is_suppressed = False
                 friction_score = 0.0
                 clamp_status = "WITHIN_ROLE_CEILING"
                 recommendation = "Shot tendency is within secondary role ceiling."
 
-        # Also compute exact native table result for reference
+        # 2. Static Disassembly Lead Track (native table 0x2b59798)
         native_eval = NativeTacticalRoleGovernor.evaluate(
             role_tier=role_tier,
-            secondary_tier=role_tier,
+            secondary_tier=secondary_tier,
             raw_shot_tendency=int(round(shot_tendency)),
             raw_touches=int(round(touches)),
+            strict=False,
         )
+
+        native_effective_shot = float(native_eval.effective_shot_tendency)
+        has_cross_model_divergence = (round(heuristic_effective_shot, 1) != round(native_effective_shot, 1))
 
         return {
             "model_status": "EXPERIMENTAL_HEURISTIC",
             "is_native_law": False,
             "role_tier": role_tier,
+            "secondary_tier": secondary_tier,
             "raw_shot_tendency": shot_tendency,
             "touches": touches,
+            # Heuristic output
             "effective_role_ceiling": effective_ceiling,
-            "effective_shot_tendency": round(effective_shot, 1),
+            "effective_shot_tendency": round(heuristic_effective_shot, 1),
             "is_suppressed": is_suppressed,
             "friction_score": round(friction_score, 2),
             "clamp_status": clamp_status,
             "recommendation": recommendation,
-            "native_ground_truth": {
+            # Static disassembly reference track
+            "static_disassembly_reference": {
                 "branch": native_eval.governor_branch,
-                "table_ceiling": native_eval.applied_ceiling_or_floor,
+                "table_val": native_eval.applied_ceiling_or_floor,
                 "table_multiplier": native_eval.applied_multiplier,
+                "native_effective_shot": native_effective_shot,
+                "native_effective_touches": float(native_eval.effective_touches),
             },
+            # Cross-track divergence disclosure (INT-P0-03)
+            "has_cross_model_divergence": has_cross_model_divergence,
+            "divergence_note": (
+                f"Heuristic effective shot ({heuristic_effective_shot:.1f}) differs from native table "
+                f"disassembly lead ({native_effective_shot:.1f}). Disassembly lead applies table floor/ceiling "
+                f"from RVA 0x2b59798, while heuristic evaluates supplied ceiling ({role_ceiling:.1f})."
+                if has_cross_model_divergence else "Heuristic and static disassembly leads align."
+            ),
         }
 
     def calculate_effective_coach_tempo(self, raw_tempo: float) -> Dict[str, Any]:
         """
-        Evaluates Coach Pacing Engine Bounds (RVA 0x120ba72..0x120babb).
-
-        Native Assembly Behavior:
-        - eax = Tempo - 50; ecx = eax * 60; edx = ecx / 100; ecx = edx + 10;
-        - cmp ecx, 70; cmovg ecx, 70; cmp ecx, 10; cmovl ecx, 10.
-        - Clamping bounds [10, 70] are proven by native constants 0x46 and 0x0a.
+        Evaluates Coach Pacing Engine Bounds.
+        Explicitly separates slider clamping from the internal x86 fixed-point assembly modifier.
         """
         raw_val = float(raw_tempo)
         effective_tempo = min(self.COACH_TEMPO_MAX_BOUND, max(self.COACH_TEMPO_MIN_BOUND, raw_val))
         is_saturated = raw_val > self.COACH_TEMPO_MAX_BOUND
         is_choked = raw_val < self.COACH_TEMPO_MIN_BOUND
 
-        # Native integer pacing calculation
+        # Static disassembly fixed-point calculation
         pacing_res = NativeCoachPacingEngine.evaluate(tempo=raw_val)
 
         # Heuristic pace estimation for macro simulation
@@ -144,17 +158,22 @@ class ExperimentalTacticalDecisionBridge:
             "is_native_law": False,
             "raw_tempo_slider": raw_val,
             "effective_tempo": effective_tempo,
-            "native_bounded_modifier": pacing_res.bounded_modifier,
-            "native_net_possession_target": pacing_res.net_possession_target,
             "is_saturated": is_saturated,
             "is_choked": is_choked,
             "estimated_pace_possessions": round(estimated_pace, 2),
             "pace_multiplier_scale": round(pace_multiplier, 4),
             "saturation_loss": round(raw_val - effective_tempo, 1) if is_saturated else 0.0,
+            # Static disassembly reference track
+            "static_disassembly_lead": {
+                "bounded_modifier": pacing_res.bounded_modifier,
+                "unclamped_ecx": pacing_res.unclamped_register_ecx,
+                "hypothesized_net_target": pacing_res.hypothesized_net_target,
+                "formula": "clamp(10, 70, (Tempo - 50) * 1.2 + 10)",
+            },
             "note": (
-                "Native assembly clamps tempo modifier strictly to [10, 70]. "
-                "Values above 70 are saturated by native instructions."
-                if is_saturated else "Within native linear bounds [10, 70]."
+                "Heuristic slider model clamps effective slider to [10, 70]. "
+                "Native assembly fixed-point engine computes modifier = clamp(10, 70, (Tempo - 50)*1.2 + 10), "
+                f"yielding internal modifier {pacing_res.bounded_modifier} for tempo {raw_val:.1f}."
             ),
         }
 
@@ -196,6 +215,7 @@ class ExperimentalTacticalDecisionBridge:
                 "is_suppressed": gov["is_suppressed"],
                 "friction_score": gov["friction_score"],
                 "clamp_status": gov["clamp_status"],
+                "has_cross_model_divergence": gov["has_cross_model_divergence"],
                 "recommendation": gov["recommendation"],
             })
 

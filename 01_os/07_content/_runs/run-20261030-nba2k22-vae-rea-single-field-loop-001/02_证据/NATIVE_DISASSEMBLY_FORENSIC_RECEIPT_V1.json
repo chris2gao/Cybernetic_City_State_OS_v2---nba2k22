@@ -1,0 +1,171 @@
+{
+  "schema_version": "nba2k22.native_disassembly_forensic_receipt.v1",
+  "receipt_id": "FORENSIC_RECEIPT_NBA2K22_PE_001",
+  "target_pe_metadata": {
+    "file_name": "NBA2K22.exe",
+    "sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "file_size_bytes": 83688840,
+    "image_base": "0x140000000",
+    "text_section": {
+      "rva": "0x1000",
+      "vsize": "0x21f271f",
+      "raw_offset": "0x600"
+    },
+    "rdata_section": {
+      "rva": "0x21f4000",
+      "vsize": "0xf5fbfa",
+      "raw_offset": "0x21f2e00"
+    }
+  },
+  "routines": {
+    "tactical_role_governor": {
+      "rva_start": "0x1226942",
+      "va_start": "0x141226942",
+      "byte_length": 136,
+      "sha256": "1d45c6a33294a79ea0a3e8f0c20d008e13522534356d935ce17ab3208b44161b",
+      "raw_bytes_hex": "48 8d 4c 24 30 e8 d4 ee 74 ff 48 63 4c 24 20 44 8b c0 83 f9 03 75 76 48 63 4c 24 24 83 f9 03 75 1e 48 8d 4c 24 30 44 88 87 dd 02 00 00 e8 bc f1 74 ff 8b d0 88 97 de 02 00 00 e9 35 01 00 00 8b 94 8e 98 97 b5 02 48 8b d9 83 ea 05 41 0f b6 c8 41 3b d0 0f b6 c2 0f 4c c8 88 8f dd 02 00 00 48 8d 4c 24 30 e8 85 f1 74 ff 44 8b 84 9e 98 97 b5 02 41 83 e8 05 0f b6 d0 44 3b c0 41 0f b6 c8 0f 4c d1 88 97 de 02 00 00",
+      "static_table_reference": {
+        "table_ceilings_rva": "0x2b59798",
+        "table_ceilings_values": [
+          92,
+          83,
+          74,
+          0
+        ],
+        "table_ceilings_raw_bytes": "5c 00 00 00 53 00 00 00 4a 00 00 00 00 00 00 00",
+        "table_multipliers_rva": "0x2b597a8",
+        "table_multipliers_values": [
+          0.94,
+          0.96,
+          0.98,
+          1.0
+        ],
+        "table_multipliers_raw_bytes": "d7 a3 70 3f 8f c2 75 3f 48 e1 7a 3f 00 00 80 3f"
+      }
+    },
+    "coach_pacing_engine": {
+      "rva_start": "0x120ba72",
+      "va_start": "0x14120ba72",
+      "byte_length": 77,
+      "sha256": "92f872deee92370300d3ce6d6d8dae624550b1a8ec31c6172b7354571a83570d",
+      "raw_bytes_hex": "f3 0f 2d c0 f3 0f 5c ce 41 0f 28 c4 83 e8 32 f3 45 0f 5c c8 6b c8 3c b8 1f 85 eb 51 f3 0f 5e c1 f7 e9 41 0f 28 ca b8 46 00 00 00 c1 fa 04 8b ca c1 e9 1f 83 c1 0a 03 ca 83 f9 46 0f 4f c8 b8 0a 00 00 00 83 f9 0a 0f 4c c8 8b c7 2b c1",
+      "bounds_proof": {
+        "upper_bound_load_va": "0x14120ba98",
+        "upper_bound_bytes": "b8 46 00 00 00",
+        "upper_bound_decimal": 70,
+        "upper_clamp_va": "0x14120baad",
+        "upper_clamp_bytes": "0f 4f c8",
+        "lower_bound_load_va": "0x14120bab0",
+        "lower_bound_bytes": "b8 0a 00 00 00",
+        "lower_bound_decimal": 10,
+        "lower_clamp_va": "0x14120bab8",
+        "lower_clamp_bytes": "0f 4c c8"
+      }
+    },
+    "poe_strategy_dispatcher": {
+      "rva_start": "0x120b9ca",
+      "va_start": "0x14120b9ca",
+      "byte_length": 65,
+      "sha256": "43042bda8ee448e7db08ca7d62f8a9362625e349751a987252e00b64dd50ebda",
+      "raw_bytes_hex": "41 8d 51 57 45 8d 41 17 45 0f 5b c9 e8 15 70 d5 ff 45 33 c9 4c 89 74 24 20 48 8b cb 45 0f 28 c1 41 0f 28 f1 41 8d 51 58 f3 45 0f 59 c5 45 8d 41 18 f3 41 0f 59 f6 f3 0f 2c f8 e8 e7 6f d5 ff 8b cf",
+      "strategy_slots": {
+        "offense": "0x57",
+        "defense": "0x58"
+      }
+    },
+    "roster_snapshot_pipeline": {
+      "rva_start": "0x174510e",
+      "va_start": "0x14174510e",
+      "byte_length": 28,
+      "sha256": "529711f971c34903d3aabf3a2768b7fef5dfec6ce78682cacddf68f72681ff55",
+      "raw_bytes_hex": "e8 0d 07 23 ff 48 8b cb 89 85 e0 00 00 00 e8 ff f8 22 ff 48 8b cb 89 85 e4 00 00 00"
+    }
+  },
+  "rel32_mathematical_proofs": [
+    {
+      "call_site_va": "0x141226947",
+      "instruction_bytes_hex": "e8 d4 ee 74 ff",
+      "next_ip_va": "0x14122694c",
+      "rel32_int": -9113900,
+      "rel32_hex": "-0x8b112c",
+      "computed_target_va": "0x140975820",
+      "expected_target_va": "0x140975820",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x14122696f",
+      "instruction_bytes_hex": "e8 bc f1 74 ff",
+      "next_ip_va": "0x141226974",
+      "rel32_int": -9113156,
+      "rel32_hex": "-0x8b0e44",
+      "computed_target_va": "0x140975b30",
+      "expected_target_va": "0x140975b30",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x1412269a6",
+      "instruction_bytes_hex": "e8 85 f1 74 ff",
+      "next_ip_va": "0x1412269ab",
+      "rel32_int": -9113211,
+      "rel32_hex": "-0x8b0e7b",
+      "computed_target_va": "0x140975b30",
+      "expected_target_va": "0x140975b30",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x14120b9d6",
+      "instruction_bytes_hex": "e8 15 70 d5 ff",
+      "next_ip_va": "0x14120b9db",
+      "rel32_int": -2789355,
+      "rel32_hex": "-0x2a8feb",
+      "computed_target_va": "0x140f629f0",
+      "expected_target_va": "0x140f629f0",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x14120ba04",
+      "instruction_bytes_hex": "e8 e7 6f d5 ff",
+      "next_ip_va": "0x14120ba09",
+      "rel32_int": -2789401,
+      "rel32_hex": "-0x2a9019",
+      "computed_target_va": "0x140f629f0",
+      "expected_target_va": "0x140f629f0",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x14174510e",
+      "instruction_bytes_hex": "e8 0d 07 23 ff",
+      "next_ip_va": "0x141745113",
+      "rel32_int": -14481651,
+      "rel32_hex": "-0xdcf8f3",
+      "computed_target_va": "0x140975820",
+      "expected_target_va": "0x140975820",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x14174511c",
+      "instruction_bytes_hex": "e8 ff f8 22 ff",
+      "next_ip_va": "0x141745121",
+      "rel32_int": -14485249,
+      "rel32_hex": "-0xdd0701",
+      "computed_target_va": "0x140974a20",
+      "expected_target_va": "0x140974a20",
+      "is_verified": true
+    },
+    {
+      "call_site_va": "0x14174512a",
+      "instruction_bytes_hex": "e8 e1 08 23 ff",
+      "next_ip_va": "0x14174512f",
+      "rel32_int": -14481183,
+      "rel32_hex": "-0xdcf71f",
+      "computed_target_va": "0x140975a10",
+      "expected_target_va": "0x140975a10",
+      "is_verified": true
+    }
+  ],
+  "epistemological_demarcation": {
+    "static_assembly_grade": "STATIC_DISASSEMBLY_LEAD",
+    "gameplay_causality_status": "PENDING_GAMEPLAY_VALIDATION",
+    "demarcation_note": "Machine code bytes and mathematical control-flow bounds are forensically proven. Longitudinal gameplay outcomes (box score FGA, pace possessions, fatigue) remain experimental hypotheses pending live telemetry observation contracts."
+  }
+}

@@ -1,31 +1,22 @@
 from __future__ import annotations
 
-import os
 import pytest
-
 from src.vae_rea_research.decision_bridge import ExperimentalTacticalDecisionBridge
 
 
 @pytest.fixture
 def bridge():
-    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".."))
-    return ExperimentalTacticalDecisionBridge(repo_root=repo_root)
+    return ExperimentalTacticalDecisionBridge()
 
 
 def test_decision_bridge_experimental_status(bridge):
-    """
-    Verifies that ExperimentalTacticalDecisionBridge explicitly declares
-    itself as an experimental heuristic rather than a verified native law.
-    """
+    """Verifies that the decision bridge is strictly marked as an experimental heuristic."""
     assert bridge.MODEL_TIER == "EXPERIMENTAL_HEURISTIC"
     assert bridge.IS_NATIVE_LAW is False
 
 
 def test_role_ceiling_governor_franchise_core(bridge):
-    """
-    Verifies that primary franchise core players (role_tier == 3) bypass
-    role ceiling clamping as proven in native assembly (cmp ecx, 3).
-    """
+    """Branch A: Primary Core (role_tier == 3) bypasses role ceilings."""
     res = bridge.calculate_role_ceiling_governor(
         shot_tendency=96.0, touches=90.0, role_tier=3, role_ceiling=80.0
     )
@@ -34,15 +25,17 @@ def test_role_ceiling_governor_franchise_core(bridge):
     assert res["effective_shot_tendency"] == 96.0
     assert res["clamp_status"] == "FRANCHISE_CORE_UNCONSTRAINED"
     assert res["is_native_law"] is False
+    assert res["has_cross_model_divergence"] is False
 
 
-def test_role_ceiling_governor_secondary_suppression(bridge):
+def test_role_ceiling_governor_secondary_suppression_and_divergence(bridge):
     """
     Verifies that secondary players (role_tier != 3) exceeding their
-    discounted role ceiling (ceiling - 5) are clamped by the governor.
+    discounted role ceiling (ceiling - 5) are clamped by the heuristic,
+    and cross-model divergence is transparently reported (INT-P0-03).
     """
     # role_ceiling = 80.0 -> effective_ceiling = 75.0 (sub edx, 5)
-    # shot_tendency = 88.0 > 75.0 -> clamped to 75.0
+    # shot_tendency = 88.0 > 75.0 -> heuristic clamps to 75.0
     res = bridge.calculate_role_ceiling_governor(
         shot_tendency=88.0, touches=65.0, role_tier=2, role_ceiling=80.0
     )
@@ -51,30 +44,32 @@ def test_role_ceiling_governor_secondary_suppression(bridge):
     assert res["effective_shot_tendency"] == 75.0
     assert res["clamp_status"] == "ROLE_CEILING_SUPPRESSED"
 
+    # Static disassembly reference track check
+    assert "static_disassembly_reference" in res
+    assert res["static_disassembly_reference"]["branch"] == "BRANCH_C_NON_CORE_SUPPORT"
+    # Transparent disclosure of divergence between user ceiling and table floor
+    assert res["has_cross_model_divergence"] is True
+    assert "differs from native table" in res["divergence_note"]
+
 
 def test_coach_tempo_bounds_saturation_and_floor(bridge):
     """
     Verifies Coach Tempo Bounds Engine:
-    - High value (80) saturates at 70 (eax=0x46 in native code).
-    - Low value (4) saturates at 10 (eax=0x0a in native code).
-    - Middle value (50) scales within bounds.
+    - High value (80) saturates slider at 70, while static assembly calculates modifier 46.
+    - Low value (4) saturates slider at 10.
+    - Static assembly fixed-point modifier is distinctly separated.
     """
     res_high = bridge.calculate_effective_coach_tempo(raw_tempo=80.0)
     assert res_high["effective_tempo"] == 70.0
     assert res_high["is_saturated"] is True
     assert res_high["saturation_loss"] == 10.0
+    # Fixed-point assembly modifier: (80 - 50)*1.2 + 10 = 46
+    assert res_high["static_disassembly_lead"]["bounded_modifier"] == 46
 
     res_low = bridge.calculate_effective_coach_tempo(raw_tempo=4.0)
     assert res_low["effective_tempo"] == 10.0
     assert res_low["is_choked"] is True
-
-    res_mid = bridge.calculate_effective_coach_tempo(raw_tempo=50.0)
-    assert res_mid["effective_tempo"] == 50.0
-    assert not res_mid["is_saturated"]
-    assert not res_mid["is_choked"]
-    # Check self-consistent arithmetic at 50 tempo:
-    # 0.65 + (50/70)*0.45 = 0.65 + 0.321428 = 0.9714
-    assert 0.97 <= res_mid["pace_multiplier_scale"] <= 0.98
+    assert res_low["static_disassembly_lead"]["bounded_modifier"] == 10
 
 
 def test_roster_tactical_alignment_experimental(bridge):

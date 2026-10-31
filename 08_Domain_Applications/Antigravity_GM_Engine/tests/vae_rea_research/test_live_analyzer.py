@@ -20,7 +20,8 @@ def repo_root():
 
 @pytest.fixture
 def analyzer(repo_root):
-    return LiveEngineAnalyzer(repo_root=repo_root)
+    # Strictly isolated test fixture with auto_attach=False to prevent accidental process mutation
+    return LiveEngineAnalyzer(repo_root=repo_root, auto_attach=False)
 
 
 def test_coach_out_of_bounds_rejection(analyzer):

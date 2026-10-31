@@ -97,17 +97,22 @@
       "tempo_pacing_engine": {
         "rva": "0x120ba72",
         "role": "Dynamic Tempo Linear Transform with [10, 70] Clamping",
-        "raw_bytes_hex": "f3 0f 2d c0 83 e8 32 6b c8 3c b8 1f 85 eb 51 f7 e9 b8 46 00 00 00 c1 fa 04 8b ca c1 e9 1f 83 c1 0a 03 ca 83 f9 46 0f 4f c8 b8 0a 00 00 00 83 f9 0a 0f 4c c8 8b c7 2b c1",
+        "raw_bytes_hex": "f3 0f 2d c0 f3 0f 5c ce 41 0f 28 c4 83 e8 32 f3 45 0f 5c c8 6b c8 3c b8 1f 85 eb 51 f3 0f 5e c1 f7 e9 41 0f 28 ca b8 46 00 00 00 c1 fa 04 8b ca c1 e9 1f 83 c1 0a 03 ca 83 f9 46 0f 4f c8 b8 0a 00 00 00 83 f9 0a 0f 4c c8 8b c7 2b c1",
         "disassembly": [
           "0x14120ba72: f3 0f 2d c0              cvtss2si eax, xmm0        ; convert float Tempo to int",
+          "0x14120ba76: f3 0f 5c ce              subss    xmm1, xmm6       ; interleaved SSE math",
+          "0x14120ba7a: 41 0f 28 c4              movaps   xmm0, xmm12",
           "0x14120ba7e: 83 e8 32                 sub      eax, 0x32        ; eax = Tempo - 50 (0x32)",
+          "0x14120ba81: f3 45 0f 5c c8           subss    xmm9, xmm8",
           "0x14120ba86: 6b c8 3c                 imul     ecx, eax, 0x3c   ; ecx = (Tempo - 50) * 60 (0x3c)",
-          "0x14120ba89: b8 1f 85 eb 51           mov      eax, 0x51eb851f  ; reciprocal for division by 100",
+          "0x14120ba89: b8 1f 85 eb 51           mov      eax, 0x51eb851f  ; reciprocal for division by 50",
+          "0x14120ba8e: f3 0f 5e c1              divss    xmm0, xmm1",
           "0x14120ba92: f7 e9                    imul     ecx              ; fixed-point multiply",
+          "0x14120ba94: 41 0f 28 ca              movaps   xmm1, xmm10",
           "0x14120ba98: b8 46 00 00 00           mov      eax, 0x46        ; load 70 (0x46) into eax!",
-          "0x14120ba9d: c1 fa 04                 sar      edx, 4           ; edx = (Tempo - 50) * 0.6",
+          "0x14120ba9d: c1 fa 04                 sar      edx, 4           ; edx = ((Tempo - 50) * 60) / 50",
           "0x14120baa0: 8b ca                    mov      ecx, edx",
-          "0x14120baa2: c1 e9 1f                 shr      ecx, 0x1f",
+          "0x14120baa2: c1 e9 1f                 shr      ecx, 0x1f        ; sign bit correction",
           "0x14120baa5: 83 c1 0a                 add      ecx, 0xa         ; + 10",
           "0x14120baa8: 03 ca                    add      ecx, edx",
           "0x14120baaa: 83 f9 46                 cmp      ecx, 0x46        ; compare ecx with 70",
@@ -118,7 +123,7 @@
           "0x14120babb: 8b c7                    mov      eax, edi",
           "0x14120babd: 2b c1                    sub      eax, ecx         ; apply bounded pace delta"
         ],
-        "verified_control_flow": "Converts input Tempo from xmm0 to integer, centers at 50, scales by 0.6, adds 10, and clamps the modifier strictly between 10 (eax=0xa) and 70 (eax=0x46). This proves the native engine enforces a [10, 70] bounds saturation.",
+        "verified_control_flow": "Converts input Tempo from xmm0 to integer, centers at 50, scales by 1.2 (60/50), adds 10, and clamps the modifier strictly between 10 (eax=0xa at 0x14120bab0) and 70 (eax=0x46 at 0x14120ba98). This proves the native engine enforces [10, 70] bounds saturation.",
         "epistemological_grade": "STATIC_DISASSEMBLY_LEAD",
         "clamping_bounds": [
           10,
@@ -128,28 +133,17 @@
       "poe_strategy_dispatcher": {
         "rva": "0x120b9ca",
         "role": "Point of Emphasis (POE) Strategy Caller",
+        "raw_bytes_hex": "41 8d 51 57 45 8d 41 17 45 0f 5b c9 e8 15 70 d5 ff 45 33 c9 4c 89 74 24 20 48 8b cb 45 0f 28 c1 41 0f 28 f1 41 8d 51 58 f3 45 0f 59 c5 45 8d 41 18 f3 41 0f 59 f6 f3 0f 2c f8 e8 e7 6f d5 ff 8b cf",
         "disassembly": [
           "0x14120b9ca: 41 8d 51 57              lea      edx, [r9 + 0x57] ; slot 0x57 (POEOffense)",
           "0x14120b9ce: 45 8d 41 17              lea      r8d, [r9 + 0x17]",
-          "0x14120b9d6: e8 15 70 d5 ff           call     0x140f629f0      ; query offensive strategy factor",
+          "0x14120b9d2: 45 0f 5b c9              cvtdq2ps xmm9, xmm9",
+          "0x14120b9d6: e8 15 70 d5 ff           call     0x140f629f0      ; query offensive strategy factor [rel32=-0x2a8feb]",
           "0x14120b9ee: 41 8d 51 58              lea      edx, [r9 + 0x58] ; slot 0x58 (POEDefense)",
           "0x14120b9f7: 45 8d 41 18              lea      r8d, [r9 + 0x18]",
-          "0x14120ba04: e8 e7 6f d5 ff           call     0x140f629f0      ; query defensive strategy factor"
+          "0x14120ba04: e8 e7 6f d5 ff           call     0x140f629f0      ; query defensive strategy factor [rel32=-0x2a9019]"
         ],
         "verified_control_flow": "Dispatches POE Offense (descriptor 0x57) and POE Defense (descriptor 0x58) into tactical curve scaling registers xmm13 and xmm14.",
-        "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
-      },
-      "lineup_possession_evaluator": {
-        "rva": "0x120bafe",
-        "role": "5x + 2x Lineup Candidate Possession Optimization Loop",
-        "disassembly": [
-          "0x14120bafe: 8d 14 80                 lea      edx, [rax + rax*4] ; 5 * rax",
-          "0x14120bb07: 8d 04 4a                 lea      eax, [rdx + rcx*2] ; 5 * rax + 2 * rcx",
-          "0x14120bb0a: 41 3b c7                 cmp      eax, r15d",
-          "0x14120bb0d: 48 0f 4e f5              cmovle   rsi, rbp",
-          "0x14120bb1a: 41 0f 4e c7              cmovle   eax, r15d        ; track optimal lineup candidate"
-        ],
-        "verified_control_flow": "Evaluates lineup candidate possession scores using 5x + 2x weighting, iterating through all lineup rotation candidates until r12d matches r13d.",
         "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
       }
     },

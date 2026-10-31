@@ -1,13 +1,14 @@
 {
   "schema_version": "nba2k22.mechanism_relationship_graph.v1",
   "total_nodes": 16,
-  "total_edges": 12,
+  "total_edges": 13,
   "nodes": {
-    "COACH_DEFAULT_005": {
-      "node_id": "COACH_DEFAULT_005",
+    "COACH_DEFAULT_014": {
+      "node_id": "COACH_DEFAULT_014",
       "node_type": "SETTING_FIELD",
       "category": "COACH",
       "description": "Coach Gameplan: Tempo (Pace slider [0..100])",
+      "canonical_key": "Tempo",
       "rva_or_offset": "0x7ff4e7421160+0x13c",
       "epistemological_grade": "LIVE_RECEIPT"
     },
@@ -16,14 +17,16 @@
       "node_type": "SETTING_FIELD",
       "category": "COACH",
       "description": "Coach Gameplan: POEOffense (Point of Emphasis Offense [0..6])",
+      "canonical_key": "POEOffense",
       "rva_or_offset": "0x7ff4e742129c",
       "epistemological_grade": "LIVE_RECEIPT"
     },
-    "COACH_DEFAULT_002": {
-      "node_id": "COACH_DEFAULT_002",
+    "COACH_DEFAULT_004": {
+      "node_id": "COACH_DEFAULT_004",
       "node_type": "SETTING_FIELD",
       "category": "COACH",
       "description": "Coach Gameplan: POEDefense (Point of Emphasis Defense [0..6])",
+      "canonical_key": "POEDefense",
       "rva_or_offset": "0x7ff4e742129e",
       "epistemological_grade": "LIVE_RECEIPT"
     },
@@ -32,14 +35,16 @@
       "node_type": "SETTING_FIELD",
       "category": "PLAYER_TENDENCY",
       "description": "Player Tendency: ShotTendency (Getter RVA 0x975820, [0..100])",
+      "canonical_key": "tendency.SHOT_TENDENCY",
       "rva_or_offset": "0x975820",
       "epistemological_grade": "LIVE_RECEIPT"
     },
-    "TENDENCY_NATIVE_002": {
-      "node_id": "TENDENCY_NATIVE_002",
+    "TENDENCY_NATIVE_066": {
+      "node_id": "TENDENCY_NATIVE_066",
       "node_type": "SETTING_FIELD",
       "category": "PLAYER_TENDENCY",
       "description": "Player Tendency: Touches (Getter RVA 0x975b30, [0..100])",
+      "canonical_key": "tendency.TOUCHES_TENDENCY",
       "rva_or_offset": "0x975b30",
       "epistemological_grade": "LIVE_RECEIPT"
     },
@@ -48,30 +53,34 @@
       "node_type": "SETTING_FIELD",
       "category": "PLAYER_TENDENCY",
       "description": "Player Tactical Role Assignment: Primary Tier [rsp+0x20], Secondary [rsp+0x24] in [0..3]",
+      "canonical_key": "player.role_tier",
       "rva_or_offset": "[rsp+0x20]",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "TRANSFORMER_ROLE_GOVERNOR": {
       "node_id": "TRANSFORMER_ROLE_GOVERNOR",
       "node_type": "NATIVE_TRANSFORMER",
       "category": "SIMULATION_ENGINE",
       "description": "Tactical Role Hierarchy & Clamping Governor (RVA 0x1226942..0x1226a8b, Table 0x2b59798)",
+      "canonical_key": null,
       "rva_or_offset": "0x1226942",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "TRANSFORMER_COACH_PACING": {
       "node_id": "TRANSFORMER_COACH_PACING",
       "node_type": "NATIVE_TRANSFORMER",
       "category": "SIMULATION_ENGINE",
       "description": "Coach Dynamic Pacing Engine: Linear transform with [10, 70] bounds clamping (RVA 0x120ba72)",
+      "canonical_key": null,
       "rva_or_offset": "0x120ba72",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "TRANSFORMER_POE_STRATEGY": {
       "node_id": "TRANSFORMER_POE_STRATEGY",
       "node_type": "NATIVE_TRANSFORMER",
       "category": "SIMULATION_ENGINE",
       "description": "POE Strategy Dispatcher: Play selection frequency modulator (RVA 0x140f629f0)",
+      "canonical_key": null,
       "rva_or_offset": "0x140f629f0",
       "epistemological_grade": "STATIC_CALL_RELATION"
     },
@@ -80,38 +89,43 @@
       "node_type": "NATIVE_TRANSFORMER",
       "category": "SIMULATION_ENGINE",
       "description": "Simulation Roster Snapshot Pipeline: Copies all 99 tendencies with stride 0x27c (RVA 0x1744bd0)",
+      "canonical_key": null,
       "rva_or_offset": "0x1744bd0",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "STATE_EFFECTIVE_SHOT_TENDENCY": {
       "node_id": "STATE_EFFECTIVE_SHOT_TENDENCY",
       "node_type": "INTERNAL_STATE",
       "category": "SIMULATION_ENGINE",
       "description": "Clamped/Scaled Player Shot Tendency written to AI Controller struct [rdi+0x2dd]",
+      "canonical_key": null,
       "rva_or_offset": "[rdi+0x2dd]",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "STATE_EFFECTIVE_TOUCHES": {
       "node_id": "STATE_EFFECTIVE_TOUCHES",
       "node_type": "INTERNAL_STATE",
       "category": "SIMULATION_ENGINE",
       "description": "Clamped/Scaled Player Touches written to AI Controller struct [rdi+0x2de]",
+      "canonical_key": null,
       "rva_or_offset": "[rdi+0x2de]",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "STATE_NET_POSSESSION_PACE": {
       "node_id": "STATE_NET_POSSESSION_PACE",
       "node_type": "INTERNAL_STATE",
       "category": "SIMULATION_ENGINE",
       "description": "Target possession seconds / pace delta written after (base_target - ecx) at RVA 0x120babd",
+      "canonical_key": null,
       "rva_or_offset": "0x120babd",
-      "epistemological_grade": "PROVEN_NATIVE_ASSEMBLY"
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD"
     },
     "OUTCOME_PLAYER_ACTUAL_FGA": {
       "node_id": "OUTCOME_PLAYER_ACTUAL_FGA",
       "node_type": "OBSERVABLE_OUTCOME",
       "category": "SIMULATION_ENGINE",
       "description": "In-game / Simulated Box Score: Field Goal Attempts (FGA) per 36 minutes",
+      "canonical_key": null,
       "rva_or_offset": null,
       "epistemological_grade": "PENDING_GAMEPLAY_VALIDATION"
     },
@@ -120,6 +134,7 @@
       "node_type": "OBSERVABLE_OUTCOME",
       "category": "SIMULATION_ENGINE",
       "description": "In-game / Simulated Box Score: Total Possessions per 48 minutes",
+      "canonical_key": null,
       "rva_or_offset": null,
       "epistemological_grade": "PENDING_GAMEPLAY_VALIDATION"
     },
@@ -128,6 +143,7 @@
       "node_type": "OBSERVABLE_OUTCOME",
       "category": "SIMULATION_ENGINE",
       "description": "In-game / Simulated Box Score: 4th Quarter Stamina Drain and Performance Penalty",
+      "canonical_key": null,
       "rva_or_offset": null,
       "epistemological_grade": "PENDING_GAMEPLAY_VALIDATION"
     }
@@ -137,16 +153,16 @@
       "source_id": "TENDENCY_NATIVE_001",
       "target_id": "TRANSFORMER_ROLE_GOVERNOR",
       "relation_type": "INPUT_TO",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
       "math_formula": "eax = get_shot_tendency()",
       "telemetry_validation_id": null,
       "description": "Passes raw shot tendency to governor in r8d"
     },
     {
-      "source_id": "TENDENCY_NATIVE_002",
+      "source_id": "TENDENCY_NATIVE_066",
       "target_id": "TRANSFORMER_ROLE_GOVERNOR",
       "relation_type": "INPUT_TO",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
       "math_formula": "eax = get_touches()",
       "telemetry_validation_id": null,
       "description": "Passes raw touches to governor in eax/dl"
@@ -155,7 +171,7 @@
       "source_id": "PLAYER_TACTICAL_ROLE_TIER",
       "target_id": "TRANSFORMER_ROLE_GOVERNOR",
       "relation_type": "REGULATES",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
       "math_formula": "rcx = [rsp+0x20], rbx = [rsp+0x24]",
       "telemetry_validation_id": null,
       "description": "Selects Branch A (3,3), Branch B (3,!=3), or Branch C (!=3)"
@@ -164,7 +180,7 @@
       "source_id": "TRANSFORMER_ROLE_GOVERNOR",
       "target_id": "STATE_EFFECTIVE_SHOT_TENDENCY",
       "relation_type": "TRANSFORMS_TO",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
       "math_formula": "Tier3: raw; Tier2: min(raw, ceil-5); Tier0/1: max(raw, floor)",
       "telemetry_validation_id": null,
       "description": "Stores clamped shot tendency into [rdi+0x2dd]"
@@ -173,19 +189,19 @@
       "source_id": "TRANSFORMER_ROLE_GOVERNOR",
       "target_id": "STATE_EFFECTIVE_TOUCHES",
       "relation_type": "TRANSFORMS_TO",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
       "math_formula": "Tier3: raw; Tier2: min(raw, ceil-5); Tier0/1: max(raw, floor)",
       "telemetry_validation_id": null,
       "description": "Stores clamped touches into [rdi+0x2de]"
     },
     {
-      "source_id": "COACH_DEFAULT_005",
+      "source_id": "COACH_DEFAULT_014",
       "target_id": "TRANSFORMER_COACH_PACING",
       "relation_type": "INPUT_TO",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
-      "math_formula": "ecx = clamp(10, 70, (Tempo - 50) * 0.6 + 10)",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
+      "math_formula": "ecx = clamp(10, 70, (Tempo - 50) * 1.2 + 10)",
       "telemetry_validation_id": null,
-      "description": "Pacing slider converted to bounded pace modifier"
+      "description": "Tempo slider converted to bounded pace modifier via fixed-point IMUL"
     },
     {
       "source_id": "COACH_DEFAULT_001",
@@ -194,7 +210,16 @@
       "epistemological_status": "STATIC_CALL_RELATION",
       "math_formula": "call 0x140f629f0 with slot 0x57",
       "telemetry_validation_id": null,
-      "description": "Offensive POE strategy lookup modifies offensive pacing weight"
+      "description": "Offensive POE strategy lookup modulates offensive pacing weight"
+    },
+    {
+      "source_id": "COACH_DEFAULT_004",
+      "target_id": "TRANSFORMER_POE_STRATEGY",
+      "relation_type": "INPUT_TO",
+      "epistemological_status": "STATIC_CALL_RELATION",
+      "math_formula": "call 0x140f629f0 with slot 0x58",
+      "telemetry_validation_id": null,
+      "description": "Defensive POE strategy lookup modulates defensive pacing weight"
     },
     {
       "source_id": "TRANSFORMER_POE_STRATEGY",
@@ -209,10 +234,10 @@
       "source_id": "TRANSFORMER_COACH_PACING",
       "target_id": "STATE_NET_POSSESSION_PACE",
       "relation_type": "TRANSFORMS_TO",
-      "epistemological_status": "PROVEN_NATIVE_ASSEMBLY",
-      "math_formula": "net_target = base_possession_target - ecx",
+      "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
+      "math_formula": "hypothesized_net_target = base_possession_target - ecx",
       "telemetry_validation_id": null,
-      "description": "Stores net possession pace delta"
+      "description": "Computes hypothesized net possession pace delta"
     },
     {
       "source_id": "STATE_EFFECTIVE_SHOT_TENDENCY",
@@ -221,7 +246,7 @@
       "epistemological_status": "PENDING_GAMEPLAY_VALIDATION",
       "math_formula": null,
       "telemetry_validation_id": "VAL_CONTRACT_FGA_SUPPRESSION",
-      "description": "Clamped shot tendency directly regulates simulated / live game FGA volume"
+      "description": "Hypothesized in-engine factor modulating simulated and live game FGA volume"
     },
     {
       "source_id": "STATE_NET_POSSESSION_PACE",
@@ -230,7 +255,7 @@
       "epistemological_status": "PENDING_GAMEPLAY_VALIDATION",
       "math_formula": null,
       "telemetry_validation_id": "VAL_CONTRACT_TEMPO_SATURATION",
-      "description": "Net possession target determines total game possessions"
+      "description": "Hypothesized simulation factor modulating total team game possessions"
     },
     {
       "source_id": "STATE_NET_POSSESSION_PACE",
@@ -239,33 +264,104 @@
       "epistemological_status": "PENDING_GAMEPLAY_VALIDATION",
       "math_formula": null,
       "telemetry_validation_id": "VAL_CONTRACT_TEMPO_FATIGUE",
-      "description": "Higher tempo accelerates late-game stamina degradation"
+      "description": "Hypothesized factor modulating late-game stamina degradation rate"
     }
   ],
   "validation_contracts": [
     {
       "contract_id": "VAL_CONTRACT_FGA_SUPPRESSION",
-      "source_mechanism": "STATE_EFFECTIVE_SHOT_TENDENCY",
-      "target_observable": "OUTCOME_PLAYER_ACTUAL_FGA",
-      "relation_type": "OUTPUTS_TO",
-      "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
-      "description": "Clamped shot tendency directly regulates simulated / live game FGA volume"
+      "hypothesis_name": "Secondary Core Role Ceiling Clamping",
+      "target_mechanism": "TACTICAL_ROLE_HIERARCHY_GOVERNOR",
+      "required_metrics": [
+        {
+          "metric_name": "player_role_tier",
+          "role": "independent_variable",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "actual_fga_per_36",
+          "role": "primary_outcome",
+          "feasibility": "DERIVED_FROM_BOXSCORE"
+        },
+        {
+          "metric_name": "normalize_stats_rule",
+          "role": "confounder_control",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "sim_quarter_length",
+          "role": "confounder_control",
+          "feasibility": "DIRECT_READ"
+        }
+      ],
+      "comparison_protocol": "A/B paired match comparison: RoleTier=2 vs RoleTier=3 players with identical raw ShotTendency > 85.",
+      "expected_trend": "RoleTier=2 players exhibit statistically significant FGA suppression conforming to (ceiling - 5).",
+      "confounders": [
+        "normalize_stats",
+        "sim_quarter_length",
+        "game_difficulty"
+      ],
+      "fallback_if_unrecorded": "FLAG_AS_UNKNOWN"
     },
     {
       "contract_id": "VAL_CONTRACT_TEMPO_SATURATION",
-      "source_mechanism": "STATE_NET_POSSESSION_PACE",
-      "target_observable": "OUTCOME_TEAM_PACE_POSSESSIONS",
-      "relation_type": "OUTPUTS_TO",
-      "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
-      "description": "Net possession target determines total game possessions"
+      "hypothesis_name": "Coach Tempo Bounds [10, 70] Pace Saturation",
+      "target_mechanism": "COACH_DYNAMIC_PACING_ENGINE",
+      "required_metrics": [
+        {
+          "metric_name": "coach_tempo_slider",
+          "role": "independent_variable",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "team_possessions_per_48",
+          "role": "primary_outcome",
+          "feasibility": "DERIVED_FROM_BOXSCORE"
+        },
+        {
+          "metric_name": "normalize_stats_rule",
+          "role": "confounder_control",
+          "feasibility": "DIRECT_READ"
+        }
+      ],
+      "comparison_protocol": "A/B match series: Tempo=100 vs Tempo=80 vs Tempo=50.",
+      "expected_trend": "Possessions curve reaches upper saturation plateau as native modifier reaches 70.",
+      "confounders": [
+        "normalize_stats",
+        "sim_quarter_length",
+        "bench_depth"
+      ],
+      "fallback_if_unrecorded": "FLAG_AS_UNKNOWN"
     },
     {
       "contract_id": "VAL_CONTRACT_TEMPO_FATIGUE",
-      "source_mechanism": "STATE_NET_POSSESSION_PACE",
-      "target_observable": "OUTCOME_PLAYER_FATIGUE_RATE",
-      "relation_type": "OUTPUTS_TO",
-      "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
-      "description": "Higher tempo accelerates late-game stamina degradation"
+      "hypothesis_name": "High Tempo Accelerated Stamina Depletion",
+      "target_mechanism": "COACH_DYNAMIC_PACING_ENGINE",
+      "required_metrics": [
+        {
+          "metric_name": "coach_tempo_slider",
+          "role": "independent_variable",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "fourth_quarter_stamina_avg",
+          "role": "primary_outcome",
+          "feasibility": "DERIVED_FROM_TELEMETRY"
+        },
+        {
+          "metric_name": "fourth_quarter_fg_pct_drop",
+          "role": "secondary_outcome",
+          "feasibility": "DERIVED_FROM_BOXSCORE"
+        }
+      ],
+      "comparison_protocol": "A/B match series: High tempo (Tempo > 75) vs Normal tempo (Tempo = 50).",
+      "expected_trend": "High tempo teams experience greater stamina degradation and fourth-quarter efficiency drops.",
+      "confounders": [
+        "player_stamina_rating",
+        "bench_utilization",
+        "quarter_length"
+      ],
+      "fallback_if_unrecorded": "FLAG_AS_UNKNOWN"
     }
   ]
 }

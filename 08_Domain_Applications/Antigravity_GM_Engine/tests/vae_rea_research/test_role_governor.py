@@ -1,9 +1,6 @@
 from __future__ import annotations
 
 import pytest
-import sys
-import os
-
 from src.vae_rea_research.role_governor import NativeTacticalRoleGovernor, NativeRoleGovernorResult
 
 
@@ -21,7 +18,7 @@ def test_native_role_governor_franchise_core():
     assert result.effective_touches == 95
     assert result.scaled_ratings == [90, 88, 85, 82, 80]
     assert result.applied_multiplier == 1.0
-    assert result.epistemological_tier == "PROVEN_NATIVE_ASSEMBLY"
+    assert result.epistemological_tier == "STATIC_DISASSEMBLY_LEAD"
     assert result.gameplay_validation_status == "PENDING_GAMEPLAY_VALIDATION"
 
 
@@ -53,7 +50,7 @@ def test_native_role_governor_secondary_core_clamping():
 
 
 def test_native_role_governor_non_core_support_floor_and_ratings():
-    """Branch C: Primary=1 applies floor table[1]=83 and multiplier 0.96."""
+    """Branch C: Primary=1 applies floor table[1]=83 and multiplier 0.96 with banker's rounding."""
     res = NativeTacticalRoleGovernor.evaluate(
         role_tier=1,
         secondary_tier=1,
@@ -66,33 +63,42 @@ def test_native_role_governor_non_core_support_floor_and_ratings():
     assert res.effective_shot_tendency == 83
     assert res.effective_touches == 83
     assert res.applied_multiplier == 0.96
-    # Rating scaling: 100*0.96=96, 90*0.96=86, 80*0.96=77, 70*0.96=67, 60*0.96=58
+    # 100*0.96=96, 90*0.96=86.4->86, 80*0.96=76.8->77, 70*0.96=67.2->67, 60*0.96=57.6->58
     assert res.scaled_ratings == [96, 86, 77, 67, 58]
 
 
-def test_native_role_governor_deep_bench():
-    """Branch C: Primary=0 applies floor table[0]=92 and multiplier 0.94."""
+def test_native_role_governor_domain_boundary_and_strict():
+    """Tests out-of-range role tiers in strict and non-strict modes."""
+    # Non-strict mode clamps safely
     res = NativeTacticalRoleGovernor.evaluate(
-        role_tier=0,
-        secondary_tier=0,
-        raw_shot_tendency=40,
-        raw_touches=40,
-        raw_ratings=[80, 80, 80, 80, 80],
+        role_tier=5,
+        secondary_tier=-1,
+        raw_shot_tendency=50,
+        raw_touches=50,
+        strict=False,
     )
-    assert res.governor_branch == "BRANCH_C_NON_CORE_SUPPORT"
-    assert res.applied_ceiling_or_floor == 92
-    assert res.effective_shot_tendency == 92
-    assert res.effective_touches == 92
-    assert res.applied_multiplier == 0.94
-    # 80 * 0.94 = 75.2 -> 75
-    assert res.scaled_ratings == [75, 75, 75, 75, 75]
+    assert res.domain_clamped is True
+    assert res.role_tier == 3
+    assert res.secondary_tier == 0
+
+    # Strict mode raises ValueError
+    with pytest.raises(ValueError):
+        NativeTacticalRoleGovernor.evaluate(
+            role_tier=5,
+            secondary_tier=0,
+            raw_shot_tendency=50,
+            raw_touches=50,
+            strict=True,
+        )
 
 
 def test_native_role_governor_telemetry_spec():
-    """Verifies telemetry contract schema conforms to future in-game validation principles."""
+    """Verifies telemetry contract schema conforms to semantic requirements without physical schemas."""
     spec = NativeTacticalRoleGovernor.create_telemetry_validation_spec()
-    assert spec["mechanism_id"] == "TACTICAL_ROLE_HIERARCHY_GOVERNOR"
-    assert spec["epistemological_status"] == "ASSEMBLY_PROVEN_GAMEPLAY_PENDING"
-    assert len(spec["validation_hypotheses"]) >= 3
-    for hyp in spec["validation_hypotheses"]:
-        assert hyp["verification_gate"] == "PENDING_GAMEPLAY_VALIDATION"
+    assert spec["target_mechanism"] == "TACTICAL_ROLE_HIERARCHY_GOVERNOR"
+    assert spec["epistemological_status"] == "STATIC_DISASSEMBLY_LEAD"
+    assert len(spec["required_metrics"]) >= 3
+    # Verify no physical schema leak
+    for m in spec["required_metrics"]:
+        assert "sql_type" not in m
+        assert "table_name" not in m

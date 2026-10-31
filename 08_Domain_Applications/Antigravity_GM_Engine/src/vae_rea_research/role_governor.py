@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import decimal
 import math
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
@@ -8,8 +9,8 @@ from typing import Any, Dict, List, Optional, Tuple
 @dataclass
 class NativeRoleGovernorResult:
     """
-    Result of evaluating the native NBA2K22 Tactical Role Hierarchy & Tendency Governor.
-    Distinguishes strictly between proven native assembly arithmetic and hypothesized gameplay effects.
+    Result of evaluating the static disassembly model of the NBA2K22 Tactical Role Hierarchy & Governor.
+    Strictly distinguishes proven register assembly arithmetic from hypothesized gameplay effects.
     """
     role_tier: int
     secondary_tier: int
@@ -22,7 +23,8 @@ class NativeRoleGovernorResult:
     governor_branch: str  # "BRANCH_A_FRANCHISE_CORE", "BRANCH_B_SECONDARY_CORE", "BRANCH_C_NON_CORE_SUPPORT"
     applied_ceiling_or_floor: int
     applied_multiplier: float
-    epistemological_tier: str = "PROVEN_NATIVE_ASSEMBLY"
+    domain_clamped: bool = False
+    epistemological_tier: str = "STATIC_DISASSEMBLY_LEAD"
     gameplay_validation_status: str = "PENDING_GAMEPLAY_VALIDATION"
 
 
@@ -39,9 +41,9 @@ class NativeTacticalRoleGovernor:
     - Primary Role Tier loaded from [rsp + 0x20]
     - Secondary Role Tier loaded from [rsp + 0x24]
     - Ground Truth Table at RVA 0x2b59798:
-        Tier 0 (Deep Bench): Ceiling = 92, Multiplier = 0.9400
-        Tier 1 (Rotation Support): Ceiling = 83, Multiplier = 0.9600
-        Tier 2 (Secondary Core): Ceiling = 74, Multiplier = 0.9800
+        Tier 0 (Deep Bench): Floor/Ceiling = 92, Multiplier = 0.9400
+        Tier 1 (Rotation Support): Floor/Ceiling = 83, Multiplier = 0.9600
+        Tier 2 (Secondary Core): Floor/Ceiling = 74, Multiplier = 0.9800
         Tier 3 (Franchise Core): Ceiling = 0 (Unconstrained), Multiplier = 1.0000
 
     Branch A (Dual Tier 3, RVA 0x1226963):
@@ -58,14 +60,15 @@ class NativeTacticalRoleGovernor:
 
     Branch C (Non-Core Support / Bench, RVA 0x12269cf):
         [rsp + 0x20] != 3.
-        Lower Bound Clamping (Floor):
-            effective_shot = max(raw_shot, table[rcx]) via cmovg (0x12269e8)
-            effective_touches = max(raw_touches, table[rcx]) via cmovg (0x1226a0d)
+        Activity Floor Clamping (0x12269dd..0x12269e8):
+            cmp ecx, r8d; cmovg edx, eax -> effective_shot = max(raw_shot, table[rcx])
+            cmp edx, eax; cmovg r8d, ecx -> effective_touches = max(raw_touches, table[rcx])
         Attribute Scaling (RVA 0x1226a18..0x1226a8b):
-            5 offensive ratings [rdi + 0x2d1..0x2d5] are multiplied by table_mult[rbx] (0.94..0.98).
+            5 offensive ratings [rdi + 0x2d1..0x2d5] are multiplied by table_mult[rbx] (0.94..0.98)
+            converted via cvtss2si using banker's rounding (round half to even).
     """
 
-    # Ground truth values read from live process at RVA 0x2b59798 and 0x2b597a8
+    # Values extracted from live process at RVA 0x2b59798 and 0x2b597a8
     NATIVE_ROLE_TABLE_CEILINGS: Tuple[int, int, int, int] = (92, 83, 74, 0)
     NATIVE_ROLE_TABLE_MULTIPLIERS: Tuple[float, float, float, float] = (0.94, 0.96, 0.98, 1.00)
 
@@ -84,14 +87,21 @@ class NativeTacticalRoleGovernor:
         raw_shot_tendency: int,
         raw_touches: int,
         raw_ratings: Optional[List[int]] = None,
+        strict: bool = False,
     ) -> NativeRoleGovernorResult:
         """
-        Executes the exact native assembly logic of RVA 0x1226942..0x1226a8b.
+        Executes the exact assembly logic of RVA 0x1226942..0x1226a8b.
         """
         if raw_ratings is None:
             raw_ratings = [75, 75, 75, 75, 75]
 
-        # Clamp input role index to valid table range [0, 3]
+        # Domain check for role_tier
+        domain_clamped = False
+        if role_tier < 0 or role_tier > 3 or secondary_tier < 0 or secondary_tier > 3:
+            if strict:
+                raise ValueError(f"Role tiers must be in [0, 3], got primary={role_tier}, secondary={secondary_tier}")
+            domain_clamped = True
+
         safe_primary = max(0, min(3, int(role_tier)))
         safe_secondary = max(0, min(3, int(secondary_tier)))
 
@@ -112,7 +122,8 @@ class NativeTacticalRoleGovernor:
                 governor_branch="BRANCH_A_FRANCHISE_CORE",
                 applied_ceiling_or_floor=0,
                 applied_multiplier=1.00,
-                epistemological_tier="PROVEN_NATIVE_ASSEMBLY",
+                domain_clamped=domain_clamped,
+                epistemological_tier="STATIC_DISASSEMBLY_LEAD",
                 gameplay_validation_status="PENDING_GAMEPLAY_VALIDATION",
             )
 
@@ -137,7 +148,8 @@ class NativeTacticalRoleGovernor:
                 governor_branch="BRANCH_B_SECONDARY_CORE",
                 applied_ceiling_or_floor=discounted_ceiling,
                 applied_multiplier=1.00,
-                epistemological_tier="PROVEN_NATIVE_ASSEMBLY",
+                domain_clamped=domain_clamped,
+                epistemological_tier="STATIC_DISASSEMBLY_LEAD",
                 gameplay_validation_status="PENDING_GAMEPLAY_VALIDATION",
             )
 
@@ -150,10 +162,11 @@ class NativeTacticalRoleGovernor:
         # 0x12269fd: cmp table, raw_touches; cmovg r8d, ecx -> max(raw, table)
         effective_touches = max(touches, table_val)
 
-        # 0x1226a18..0x1226a8b: 5 offensive rating channels scaled by multiplier
+        # 0x1226a18..0x1226a8b: 5 offensive rating channels scaled by multiplier via cvtss2si (banker's rounding)
         scaled_ratings = []
         for r in raw_ratings[:5]:
-            scaled = int(round(float(r) * multiplier))
+            prod = decimal.Decimal(str(float(r))) * decimal.Decimal(str(multiplier))
+            scaled = int(prod.quantize(decimal.Decimal('1'), rounding=decimal.ROUND_HALF_EVEN))
             scaled_ratings.append(max(0, min(99, scaled)))
 
         return NativeRoleGovernorResult(
@@ -168,45 +181,57 @@ class NativeTacticalRoleGovernor:
             governor_branch="BRANCH_C_NON_CORE_SUPPORT",
             applied_ceiling_or_floor=table_val,
             applied_multiplier=multiplier,
-            epistemological_tier="PROVEN_NATIVE_ASSEMBLY",
+            domain_clamped=domain_clamped,
+            epistemological_tier="STATIC_DISASSEMBLY_LEAD",
             gameplay_validation_status="PENDING_GAMEPLAY_VALIDATION",
         )
 
     @classmethod
     def create_telemetry_validation_spec(cls) -> Dict[str, Any]:
         """
-        Defines the future telemetry logging and telemetry comparison contract
-        for validating the real-world competitive effects of the Tactical Role Governor.
+        Defines the future telemetry logging semantic requirements for Tactical Role Governor.
+        Does NOT prescribe physical database tables, SQL types, or log file formats.
         """
         return {
-            "mechanism_id": "TACTICAL_ROLE_HIERARCHY_GOVERNOR",
-            "epistemological_status": "ASSEMBLY_PROVEN_GAMEPLAY_PENDING",
-            "native_assembly_sites": ["0x1226942..0x1226a8b", "0x2b59798", "0x2b597a8"],
-            "monitored_telemetry_metrics": [
-                "gameplay.player_role_tier",
-                "gameplay.actual_fga_per_36",
-                "gameplay.actual_usage_pct",
-                "gameplay.shot_selection_distribution",
-                "gameplay.offensive_efficiency_per_possession",
-            ],
-            "validation_hypotheses": [
+            "hypothesis_id": "VAL_CONTRACT_FGA_SUPPRESSION",
+            "target_mechanism": "TACTICAL_ROLE_HIERARCHY_GOVERNOR",
+            "epistemological_status": "STATIC_DISASSEMBLY_LEAD",
+            "disassembly_call_sites": ["0x1226942..0x1226a8b", "0x2b59798", "0x2b597a8"],
+            "required_metrics": [
                 {
-                    "hypothesis_id": "H_ROLE_CEILING_SUPPRESSION",
-                    "description": "Secondary core players with ShotTendency > (Ceiling - 5) exhibit clamped FGA in live/sim games.",
-                    "comparison_condition": "Player FGA in Tier 2 vs Tier 3 with identical raw ShotTendency 99.",
-                    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+                    "metric_name": "player_role_tier",
+                    "semantic_role": "independent_variable",
+                    "observation_type": "DIRECT_ROSTER_READ",
                 },
                 {
-                    "hypothesis_id": "H_ROLE_FLOOR_ACTIVITY",
-                    "description": "Bench support players with ShotTendency < Table Floor maintain minimum shot attempts.",
-                    "comparison_condition": "Player FGA in Tier 0 vs Tier 1 with raw ShotTendency 10.",
-                    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+                    "metric_name": "actual_fga_per_36",
+                    "semantic_role": "primary_outcome",
+                    "observation_type": "DERIVED_FROM_BOXSCORE",
                 },
                 {
-                    "hypothesis_id": "H_RATING_ATTENUATION",
-                    "description": "Supporting role players shoot lower eFG% due to 0.94x-0.98x attribute multiplier scaling.",
-                    "comparison_condition": "True shooting % across role tiers with normalized badges.",
-                    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+                    "metric_name": "actual_usage_pct",
+                    "semantic_role": "secondary_outcome",
+                    "observation_type": "DERIVED_FROM_PLAY_BY_PLAY",
+                },
+                {
+                    "metric_name": "normalize_stats_rule",
+                    "semantic_role": "confounder_control",
+                    "observation_type": "DIRECT_SETTING_READ",
                 },
             ],
+            "comparison_conditions": [
+                {
+                    "condition_name": "SECONDARY_CORE_CEILING_SUPPRESSION",
+                    "group_a": "Players with RoleTier=2 and raw ShotTendency > 85",
+                    "group_b": "Players with RoleTier=3 and raw ShotTendency > 85",
+                    "expected_trend": "Group A exhibits suppressed FGA/36 relative to unconstrained Group B.",
+                },
+                {
+                    "condition_name": "BENCH_FLOOR_ACTIVITY_CHECK",
+                    "group_a": "Players with RoleTier=0 and raw ShotTendency < 30",
+                    "group_b": "Players with RoleTier=1 and raw ShotTendency < 30",
+                    "expected_trend": "Group A and B maintain baseline shot attempts conforming to role floor activity.",
+                },
+            ],
+            "fallback_if_unrecorded": "FLAG_AS_UNKNOWN",
         }

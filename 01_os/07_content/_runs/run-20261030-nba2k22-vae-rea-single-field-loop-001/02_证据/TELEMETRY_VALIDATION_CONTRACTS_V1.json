@@ -1,26 +1,99 @@
-[
-  {
-    "contract_id": "VAL_CONTRACT_FGA_SUPPRESSION",
-    "source_mechanism": "STATE_EFFECTIVE_SHOT_TENDENCY",
-    "target_observable": "OUTCOME_PLAYER_ACTUAL_FGA",
-    "relation_type": "OUTPUTS_TO",
-    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
-    "description": "Clamped shot tendency directly regulates simulated / live game FGA volume"
-  },
-  {
-    "contract_id": "VAL_CONTRACT_TEMPO_SATURATION",
-    "source_mechanism": "STATE_NET_POSSESSION_PACE",
-    "target_observable": "OUTCOME_TEAM_PACE_POSSESSIONS",
-    "relation_type": "OUTPUTS_TO",
-    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
-    "description": "Net possession target determines total game possessions"
-  },
-  {
-    "contract_id": "VAL_CONTRACT_TEMPO_FATIGUE",
-    "source_mechanism": "STATE_NET_POSSESSION_PACE",
-    "target_observable": "OUTCOME_PLAYER_FATIGUE_RATE",
-    "relation_type": "OUTPUTS_TO",
-    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
-    "description": "Higher tempo accelerates late-game stamina degradation"
-  }
-]
+{
+  "contracts": [
+    {
+      "contract_id": "VAL_CONTRACT_FGA_SUPPRESSION",
+      "hypothesis_name": "Secondary Core Role Ceiling Clamping",
+      "target_mechanism": "TACTICAL_ROLE_HIERARCHY_GOVERNOR",
+      "required_metrics": [
+        {
+          "metric_name": "player_role_tier",
+          "role": "independent_variable",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "actual_fga_per_36",
+          "role": "primary_outcome",
+          "feasibility": "DERIVED_FROM_BOXSCORE"
+        },
+        {
+          "metric_name": "normalize_stats_rule",
+          "role": "confounder_control",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "sim_quarter_length",
+          "role": "confounder_control",
+          "feasibility": "DIRECT_READ"
+        }
+      ],
+      "comparison_protocol": "A/B paired match comparison: RoleTier=2 vs RoleTier=3 players with identical raw ShotTendency > 85.",
+      "expected_trend": "RoleTier=2 players exhibit statistically significant FGA suppression conforming to (ceiling - 5).",
+      "confounders": [
+        "normalize_stats",
+        "sim_quarter_length",
+        "game_difficulty"
+      ],
+      "fallback_if_unrecorded": "FLAG_AS_UNKNOWN"
+    },
+    {
+      "contract_id": "VAL_CONTRACT_TEMPO_SATURATION",
+      "hypothesis_name": "Coach Tempo Bounds [10, 70] Pace Saturation",
+      "target_mechanism": "COACH_DYNAMIC_PACING_ENGINE",
+      "required_metrics": [
+        {
+          "metric_name": "coach_tempo_slider",
+          "role": "independent_variable",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "team_possessions_per_48",
+          "role": "primary_outcome",
+          "feasibility": "DERIVED_FROM_BOXSCORE"
+        },
+        {
+          "metric_name": "normalize_stats_rule",
+          "role": "confounder_control",
+          "feasibility": "DIRECT_READ"
+        }
+      ],
+      "comparison_protocol": "A/B match series: Tempo=100 vs Tempo=80 vs Tempo=50.",
+      "expected_trend": "Possessions curve reaches upper saturation plateau as native modifier reaches 70.",
+      "confounders": [
+        "normalize_stats",
+        "sim_quarter_length",
+        "bench_depth"
+      ],
+      "fallback_if_unrecorded": "FLAG_AS_UNKNOWN"
+    },
+    {
+      "contract_id": "VAL_CONTRACT_TEMPO_FATIGUE",
+      "hypothesis_name": "High Tempo Accelerated Stamina Depletion",
+      "target_mechanism": "COACH_DYNAMIC_PACING_ENGINE",
+      "required_metrics": [
+        {
+          "metric_name": "coach_tempo_slider",
+          "role": "independent_variable",
+          "feasibility": "DIRECT_READ"
+        },
+        {
+          "metric_name": "fourth_quarter_stamina_avg",
+          "role": "primary_outcome",
+          "feasibility": "DERIVED_FROM_TELEMETRY"
+        },
+        {
+          "metric_name": "fourth_quarter_fg_pct_drop",
+          "role": "secondary_outcome",
+          "feasibility": "DERIVED_FROM_BOXSCORE"
+        }
+      ],
+      "comparison_protocol": "A/B match series: High tempo (Tempo > 75) vs Normal tempo (Tempo = 50).",
+      "expected_trend": "High tempo teams experience greater stamina degradation and fourth-quarter efficiency drops.",
+      "confounders": [
+        "player_stamina_rating",
+        "bench_utilization",
+        "quarter_length"
+      ],
+      "fallback_if_unrecorded": "FLAG_AS_UNKNOWN"
+    }
+  ]
+}
