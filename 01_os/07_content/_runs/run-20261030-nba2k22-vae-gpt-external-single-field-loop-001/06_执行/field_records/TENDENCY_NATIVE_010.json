@@ -1,0 +1,131 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_010",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0010",
+  "research_date": "2026-10-30",
+  "question": "Does HOP_STEP_LAYUP_TENDENCY influence CPU selection of hop-step layup gathers, independently of controller input and animation momentum rules?",
+  "identity": {
+    "key": "tendency.HOP_STEP_LAYUP_TENDENCY",
+    "project_offset": "0x461",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "live_mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 10
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "all platforms intended, precise PC unknown",
+      "locator": "OP tendency edit list, 1.4",
+      "grade": "SAME_VERSION_ROSTER_EDIT",
+      "claim": "Hop-step layup move tendency edited using real-world move frequency",
+      "limits": "No 3D single-field isolation"
+    },
+    {
+      "id": "S2",
+      "url": "https://nba2kw.com/nba-2k22-next-gen-current-gen-patch-12-season-7-preparations-more-5-16-22",
+      "author": "NBA2KW Staff reporting 2K patch",
+      "date": "2022-05-16",
+      "version": "NBA 2K22 Patch #12",
+      "platform": "specified New-Gen section, PC CURRENT_GEN not proven",
+      "locator": "New-Gen GAMEPLAY hop step gather transition",
+      "grade": "SAME_VERSION_DIFFERENT_PLATFORM_PATCH",
+      "claim": "Patch corrected quick-stop-to-hop-step momentum transition on new-gen",
+      "limits": "Not direct per-player tendency, current-gen may differ"
+    },
+    {
+      "id": "S3",
+      "url": "https://hoopsgamers.com/nba-2k22-controls-shooting-dribbling-dunking-defense-rebound-offense-guide-xbox-1-x-ps5-ps4",
+      "author": "Hoops Gamers editorial, precise byline UNKNOWN",
+      "date": "2021 release-era (precise UNKNOWN)",
+      "version": "NBA 2K22",
+      "platform": "Xbox/PlayStation controls, PC mapping UNKNOWN",
+      "locator": "Shooting & Finishing Controls",
+      "grade": "HUMAN_CONTROL_CONTEXT",
+      "claim": "Human-controlled layup/gather inputs depend on movement and timing",
+      "limits": "No autonomous CPU hop-step frequency proof"
+    },
+    {
+      "id": "S4",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-09-17, later edits 2021-11-25",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "OP tendency scaling theory",
+      "grade": "COMMUNITY_GENERAL_NOT_FIELD",
+      "claim": "Proposes frequency calibration philosophy",
+      "limits": "Not an internal probability formula or hop-step test"
+    }
+  ],
+  "claims": [
+    {
+      "id": "HP01",
+      "source_ids": [
+        "S1"
+      ],
+      "tier": "SAME_VERSION_ROSTER_INTENT",
+      "claim": "A separate hop-step layup field is used by an editor"
+    },
+    {
+      "id": "HP02",
+      "source_ids": [
+        "S2",
+        "S3"
+      ],
+      "tier": "ACTION_ANIMATION_CONFOUNDERS",
+      "claim": "Controller input and a new-gen patch can change gather animation without proving PC22 CPU field consumption"
+    },
+    {
+      "id": "HP03",
+      "source_ids": [
+        "S4"
+      ],
+      "tier": "UNPROVEN_NUMERICAL_MAPPING",
+      "claim": "Suggested tendency percentiles cannot be assumed exact game probabilities"
+    }
+  ],
+  "conflicts": [
+    "Same-version editing list supports existence, not a measured effect",
+    "New-gen momentum patch cannot stand for old-gen PC22",
+    "NO_DIRECT_CAUSAL_SOURCE for current PC22 native field"
+  ],
+  "related": [
+    "Driving Layup, Spin and Euro gather alternatives",
+    "Momentum, stamina, defense contact, animation package",
+    "Coach drive opportunity versus move selection",
+    "Training: direct causal link UNKNOWN"
+  ],
+  "metrics": [
+    "hop-step gathers per eligible CPU drive",
+    "spin/euro/normal layup alternatives",
+    "gather-to-shot conversion separately",
+    "3D scene and game ID, player identity, build and source",
+    "Calendar simulation no visible animation assumed"
+  ],
+  "REA_question": {
+    "id": "REA_HOPSTEP_010",
+    "question": "Does read-only candidate PLAYER+0x461 equal each of two UID-verified players' in-game Hop Step Layup tendency UI values in same current PC22 save/build/time?",
+    "expected_match": "MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "not_available": "BLOCKED",
+    "no_game_write": true
+  },
+  "result": "NO_DIRECT_PC22_FIELD_EFFECT_SOURCE",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "After native/UI identity check, record isolated CPU hop-step animation choice on eligible drives"
+}
