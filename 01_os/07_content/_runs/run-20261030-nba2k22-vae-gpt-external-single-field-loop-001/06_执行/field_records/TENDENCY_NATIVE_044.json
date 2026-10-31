@@ -1,0 +1,78 @@
+{
+  "field_id": "TENDENCY_NATIVE_044",
+  "iteration_id": "SWEEP01_FIELD0044",
+  "research_date": "2026-10-31",
+  "question": "Does Drive Tendency influence CPU initiating an on-ball attack rather than choosing a finish after a drive has begun?",
+  "candidate": {
+    "key": "tendency.DRIVE_TENDENCY",
+    "offset": "0x483",
+    "project_range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/916673-nba-2k22-impressions-thread/page77",
+      "author": "AceDawg5",
+      "date": "2021-09-19",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "claim": "Reports reducing Drive and increasing Midrange changed CPU game play, two variables confounded",
+      "grade": "SAME_RELEASE_MULTIVARIABLE"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX, PC WIP",
+      "claim": "Drive tendencies adjusted as separate family, no single variable study",
+      "grade": "SAME_RELEASE_EDITOR"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/864657-drive-balance",
+      "author": "Operation Sports forum editors",
+      "date": "2018-10-14",
+      "version": "PRE-2K22",
+      "platform": "UNKNOWN",
+      "claim": "Discuss Drive/Spot Up Drive/Off Screen Drive and Coach; version transfer prohibited",
+      "grade": "CROSS_VERSION_HYPOTHESIS"
+    }
+  ],
+  "claims": [
+    "Initiation of drive may be distinct from inside finishing and strength",
+    "No PC22 source proves exact probability, threshold or 0x483 consumption"
+  ],
+  "conflicts": [
+    "2021 test simultaneously changes Drive and Midrange",
+    "2018 behavior not authoritative for 2K22"
+  ],
+  "relationships": [
+    "Spot Up Drive",
+    "Off Screen Drive",
+    "Coach POE/Run Plays",
+    "Drive Layup/Shot Mid and abilities",
+    "Training specific field link UNKNOWN"
+  ],
+  "metrics": [
+    "CPU drive initiations per eligible frontcourt ball reception",
+    "touch time and alternate shot/pass",
+    "finishing events separately",
+    "3D and Calendar separately"
+  ],
+  "REA_question": {
+    "id": "REA_DRIVE_044",
+    "question": "Do two PC22 player UID-verified read-only PLAYER+0x483 values match displayed Drive Tendency in same save/build/time?",
+    "match": "SCOPED_UI_MAPPING",
+    "no_match": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_DRIVE_COVARIATES_UNISOLATED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
