@@ -1,0 +1,254 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "iteration_id": "SWEEP01_FIELD0001",
+  "research_date": "2026-10-30",
+  "field_id": "TENDENCY_NATIVE_001",
+  "sweep": 1,
+  "ordinal": 1,
+  "primary_question": "Does this candidate Shot tendency affect CPU selection of a shot in rendered 3D, rather than directly altering shot make rate?",
+  "identity": {
+    "native_candidate": "tendency.SHOT_TENDENCY",
+    "source_offset": "0x458",
+    "width_bytes": 1,
+    "declared_range": [
+      0,
+      100
+    ],
+    "range_status": "PROJECT_DECLARED_NOT_RUNTIME_VERIFIED",
+    "ui_label": "UNKNOWN (Shot/Freelance Shot mapping UNVERIFIED)",
+    "current_pc22_value": "UNKNOWN",
+    "engine_consumer": "UNKNOWN",
+    "PC22_3D_effect": "UNKNOWN",
+    "PC22_calendar_sim_effect": "UNKNOWN",
+    "source": "R04B_NATIVE_SLOT_NOT_PC22_EFFECT"
+  },
+  "queue_source": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json"
+  },
+  "project_sources": [
+    {
+      "commit": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "blob": "2ed1cfed4eb274921b80e9d601a0dff714e01068",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+      "type": "FIELD_REGISTRY_CANDIDATE"
+    },
+    {
+      "commit": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "blob": "598d00cb359d09753bc478a599198e978a0347c7",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K03_K12_PLAYER_PROFILE_AGENCY.md",
+      "type": "RESEARCH_SUMMARY"
+    },
+    {
+      "commit": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "blob": "2a1d2eb91b0fbf2fab8d4f090b71972038c42d10",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "type": "COACH_MECHANISM_RESEARCH"
+    }
+  ],
+  "external_sources": [
+    {
+      "id": "OS_SHOT_POSITIVE",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page10",
+      "author": "tcnumba10",
+      "date": "2021-10-10",
+      "location": "post #146, Oct 10 updated 09:09",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "grade": "FIRST_PERSON_UNCONTROLLED",
+      "claim": "Reports reduced top scorer Shot tendency and teammates became involved more often",
+      "limits": "Touches and context may have changed; 80 is player example, NOT validated optimum"
+    },
+    {
+      "id": "OS_SHOT_NEGATIVE",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page10",
+      "author": "Tynole14",
+      "date": "2021-10-10",
+      "location": "posts #147 and #150",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "grade": "FIRST_PERSON_COUNTEREXAMPLE",
+      "claim": "Reports Fultz and Suggs still received called plays with Shot at zero",
+      "limits": "Play target not the same as shot choice; no independent profile proof"
+    },
+    {
+      "id": "OS_SIM_CLAIM",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan, replying to Evtnj",
+      "date": "2021-11-25",
+      "location": "post #11",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "grade": "COMMUNITY_INTERPRETATION",
+      "claim": "Claims Freelance Shot applies to simulated games, not 3D in-game",
+      "limits": "Not engine documentation and Native UI identity unverified"
+    },
+    {
+      "id": "OS_PLAYBOOK",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings",
+      "author": "jimbo3772",
+      "date": "2021-09-18",
+      "location": "post #5",
+      "version": "NBA2K22 discussion referencing earlier testing",
+      "platform": "UNKNOWN (PSN handle given)",
+      "grade": "MIXED_VERSION_COMMUNITY",
+      "claim": "Says Shot/Touches interact with Coach Run Plays, Playbook, types, focus and Play Discipline",
+      "limits": "No isolated PC22 effect/causal formula"
+    },
+    {
+      "id": "ATD_ROSTER",
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte; documents CelticLG roster",
+      "date": "2021-12-16",
+      "location": "article What’s Edited",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX release; PC work-in-progress at article date",
+      "grade": "COMMUNITY_ROSTER_DESIGN",
+      "claim": "Shot, Touch and distance-specific tendencies adjusted separately",
+      "limits": "Not single-field test or PC-equivalent evidence"
+    },
+    {
+      "id": "OFFICIAL_CONTEXT",
+      "url": "https://blog.playstation.com/2021/08/31/nba-2k22-gameplay-deep-dive/",
+      "author": "Erick Boenisch (Visual Concepts)",
+      "date": "2021-08-31",
+      "location": "Shooting section",
+      "version": "NBA2K22",
+      "platform": "PS4/PS5, PC mapping unverified",
+      "grade": "OFFICIAL_GENERAL_MECHANICS",
+      "claim": "Describes shooter skill, contest and fatigue as shot success factors",
+      "limits": "Does not name SHOT_TENDENCY or document how it is consumed"
+    }
+  ],
+  "claim_map": [
+    {
+      "id": "CL01",
+      "statement": "0x458 is a named local candidate for Shot tendency, range declared 0–100",
+      "source_refs": [
+        "R04B"
+      ],
+      "tier": "PROJECT_CANDIDATE_ONLY"
+    },
+    {
+      "id": "CL02",
+      "statement": "Shot may influence rendered CPU offensive distribution",
+      "source_refs": [
+        "OS_SHOT_POSITIVE",
+        "OS_SHOT_NEGATIVE",
+        "OS_SIM_CLAIM"
+      ],
+      "tier": "COMMUNITY_CONFLICTED"
+    },
+    {
+      "id": "CL03",
+      "statement": "Called plays and eventual shot decisions need not share a consumer",
+      "source_refs": [
+        "OS_SHOT_NEGATIVE",
+        "OS_PLAYBOOK"
+      ],
+      "tier": "TESTABLE_INFERENCE_NOT_PROVEN"
+    },
+    {
+      "id": "CL04",
+      "statement": "Do not conflate choice to attempt a shot with make probability",
+      "source_refs": [
+        "OFFICIAL_CONTEXT",
+        "ATD_ROSTER"
+      ],
+      "tier": "SEMANTIC_DISTINCTION_NOT_FIELD_FORMULA"
+    },
+    {
+      "id": "CL05",
+      "statement": "Touches, Coach Run Plays, Book/PlayTypes, specific shot tendencies may moderate a Shot effect",
+      "source_refs": [
+        "OS_PLAYBOOK",
+        "ATD_ROSTER"
+      ],
+      "tier": "UNVALIDATED_CAUSAL_HYPOTHESIS"
+    }
+  ],
+  "conflicts": [
+    {
+      "topic": "Rendered 3D Shot relevance",
+      "sources_for": [
+        "OS_SHOT_POSITIVE"
+      ],
+      "sources_against": [
+        "OS_SHOT_NEGATIVE",
+        "OS_SIM_CLAIM"
+      ],
+      "resolution": "UNKNOWN; differences in playcalling versus attempt metric and uncontrolled rosters"
+    },
+    {
+      "topic": "Shot best numerical cap",
+      "reported_example": "80 by OS_SHOT_POSITIVE",
+      "resolution": "NOT A VERIFIED THRESHOLD; no formula/optimal cap"
+    },
+    {
+      "topic": "UI Freelance Shot ↔ native 0x458",
+      "resolution": "UNKNOWN; no PC22 cross-source native readback"
+    }
+  ],
+  "related_mechanisms": [
+    {
+      "name": "Touches",
+      "role": "possible opportunity/usage moderator",
+      "evidence": "OS_PLAYBOOK",
+      "status": "HYPOTHESIS"
+    },
+    {
+      "name": "Coach Run Plays, POE, Playbook, ordered PlayTypes",
+      "role": "possible called-play selection confounder",
+      "evidence": "OS_PLAYBOOK and K04",
+      "status": "HYPOTHESIS"
+    },
+    {
+      "name": "Spot Up / Off Screen / Stepback shot tendencies",
+      "role": "potential shot-action discriminator",
+      "evidence": "OS_SIM_CLAIM and ATD_ROSTER",
+      "status": "HYPOTHESIS"
+    },
+    {
+      "name": "Ability, contested shots, stamina/fatigue",
+      "role": "shot make quality confounder",
+      "evidence": "OFFICIAL_CONTEXT",
+      "status": "GENERAL_MECHANIC_NOT_SHOT_FIELD"
+    },
+    {
+      "name": "Training",
+      "role": "no direct causality source found",
+      "evidence": "NO_DIRECT_SOURCE",
+      "status": "UNKNOWN"
+    }
+  ],
+  "observable_metrics": [
+    "FGA per player per on-court possession under same game mode",
+    "team FGA share and shot-type choice",
+    "called play targets as a DIFFERENT observation",
+    "shot opportunity/defensive contest and team playbook/Coach settings",
+    "FG% separately, not a direct Shot tendency formula",
+    "3D and Calendar separate; normalize/game build/save/time recorded"
+  ],
+  "one_gemini_rea_question": {
+    "question_id": "REA_SHOT_001",
+    "question": "For two UID-verified players in the current PC NBA2K22 build, does a read-only value at the candidate PLAYER+0x458 match the separately observed UI Shot/Freelance Shot value for that same player in the same save and observation window?",
+    "prerequisites": [
+      "game_build/PE hash, save ID, exact player UID, current UI label and raw value",
+      "prefer two players with different UI values to avoid coincidence",
+      "match getter timestamp against UI readback"
+    ],
+    "if_equal": "SCOPED_NATIVE_TO_UI_MAPPING_SUPPORTED, not proven engine use",
+    "if_unequal": "MAPPING_OR_SCALING_UNRESOLVED",
+    "if_unavailable": "BLOCKED_UNVERIFIED",
+    "mode": "READ_ONLY_HANDOFF_FOR_GEMINI_NOT_EXECUTED",
+    "requires_Human_relay": true
+  },
+  "evidence_advance": "Contemporary conflict source-specific tracing and falsifiable mapping oracle improved. No new engine fact proven.",
+  "failed_or_missing": "No official detailed Shot field definition; forum platform mostly unknown; no current PC22 mapping/consumer, no controlled gameplay or SIM effect evidence.",
+  "next_improvement": "After read-only identity proof, request independent same-build engine consumer evidence; separately test rendered versus Calendar, controlling playcalling and Touches.",
+  "result": "RESEARCHED_WITH_CONFLICTS_NATIVE_EFFECT_UNKNOWN",
+  "REA_test": "NOT_RUN",
+  "independent_review": "NOT_RUN"
+}
