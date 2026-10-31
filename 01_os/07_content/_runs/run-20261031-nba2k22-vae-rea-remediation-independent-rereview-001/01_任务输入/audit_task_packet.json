@@ -1,0 +1,28 @@
+{
+  "schema_version": "nba2k22.vae.rea.remediation.independent_rereview.v1",
+  "task_id": "NBA2K22-VAE-REA-REMEDIATION-INDEPENDENT-REREVIEW-20261031-001",
+  "role": "independent_review",
+  "subject_task": "NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001",
+  "subject_fixed_sha": "ee515e0b63461ace474878dde67864f3df524cf1",
+  "subject_parent_sha": "f1e02101ead9e48c0dd3591e8c76501e407acfab",
+  "prior_audit_sha": "66f84d4dee100858710425c6ea5ab63ec0c9c519",
+  "base_master_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "branch": "task/nba2k22-vae-rea-remediation-independent-rereview-20261031",
+  "allowlist": [
+    "01_os/07_content/_runs/run-20261031-nba2k22-vae-rea-remediation-independent-rereview-001/"
+  ],
+  "review_scope": "Audit 12 prior findings and new remediation evidence fidelity, test isolation and source code without game access",
+  "actual_reviewer": "GPT-6 current ChatGPT conversation; no platform-independent model attestation",
+  "window_instance_id": "UNKNOWN",
+  "new_isolated_fork": false,
+  "Human_override": "prior explicit Human: 审核不用隔离，你可以继续审核。",
+  "independent_from_Gemini_developer": true,
+  "review_method": [
+    "GitHub fixed commit/tree/parent comparison",
+    "Source inspection of LiveEngineAnalyzer, coach_locator, coach_codec, tests and all new metadata",
+    "Read fixed-old and fixed-new field records, ledger and checkpoint",
+    "Execute one temporary-filesystem independent source-equivalent double-remediation reproduction",
+    "No live game, REA process attach, original 14 pytest rerun or protected write"
+  ],
+  "PRMS_Save": "NOT_RUN"
+}
