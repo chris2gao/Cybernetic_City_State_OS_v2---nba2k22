@@ -1,0 +1,57 @@
+{
+  "field_id": "TENDENCY_NATIVE_078",
+  "iteration_id": "SWEEP01_FIELD0078",
+  "date": "2026-10-31",
+  "question": "Does raw 0x4A5 correspond to a specific PC22 player tendency UI field?",
+  "candidate": {
+    "key": "tendency.RAW_0x4a5",
+    "offset": "0x4A5",
+    "range_project": [
+      0,
+      100
+    ],
+    "UI": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "game_effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x4A5\" \"tendency\" memory",
+    "direct_source_count": 0,
+    "grade": "NO_DIRECT_SOURCE",
+    "date": "2026-10-31"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction archive",
+      "date": "2021 roster, page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export, PC build UNKNOWN",
+      "limit": "Named tendency fields do not identify this byte"
+    }
+  ],
+  "claims": [
+    "No verified exact address mapping of 0x4A5",
+    "Adjacent Play Discipline does not establish semantic identity"
+  ],
+  "conflicts": [
+    "No UID read-only Native/UI evidence, no engine consumer",
+    "Negative search is not absence of runtime use"
+  ],
+  "relations": "All Coach/Player/Training interactions UNKNOWN pending identity",
+  "metrics": [
+    "raw byte read-only for two UID-verified players",
+    "exact UI labels/values at same save/build/time",
+    "adjacent-byte coincidence exclusion"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_78",
+    "question": "Can two UID-verified PC22 players' read-only PLAYER+0x4A5 match one exact independently observed tendency UI field?",
+    "write": false,
+    "if_match": "MAPPING_ONLY",
+    "if_not": "UNKNOWN"
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
