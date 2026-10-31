@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "LIVE_RECEIPT",
+  "native_identity_grade": "RAW_MEMORY_CAPTURE_CANDIDATE",
   "ui_mapping_status": "UNVERIFIED_MENU_SYNC",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_LIVE_3D_OR_SIM_ENGINE",
@@ -39,14 +39,22 @@
   "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
   "live_evidence": {
     "process_name": "NBA2K22.exe",
+    "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e68fe270",
     "live_value": 3,
-    "read_notes": "Read from dereferenced SLOT_SETTINGS pointer 0x0632B4B0",
-    "read_timestamp": "2026-10-31T03:31:03.593844+00:00"
+    "access_mode": "PROCESS_VM_READ_ONLY",
+    "validation_status": "UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS",
+    "bounds_validation_passed": true,
+    "read_notes": "Observation 3 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.",
+    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
   },
   "mechanism_analysis": {
+    "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
+    "empirical_causality_verified": false,
+    "controlled_experiment_conducted": false,
+    "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
     "impact_analysis": "控制全局比赛与模拟规则中 settings.injuries_and_morale.morale_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。",
     "associations": [
       "双 Normalize 机制：48 分钟标准比赛时间与统计换算前提",
@@ -54,11 +62,22 @@
       "比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）"
     ],
     "confounders": [
-      "游戏模式切换 (MyLEAGUE vs 快速比赛)",
-      "玩家个人外挂滑块覆写"
+      "比赛分差",
+      "体能损耗",
+      "战术叫号拦截",
+      "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "合法值域区间：[0, 100]",
     "live_value": 3,
-    "live_address": "0x7ff4e68fe270"
+    "live_address": "0x7ff4e68fe270",
+    "bounds_validation_passed": true
+  },
+  "raw_legacy_capture": {
+    "legacy_value": 3,
+    "legacy_address": "0x7ff4e68fe270",
+    "legacy_notes": "Observation 3 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.",
+    "legacy_timestamp": "",
+    "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
+    "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   }
 }

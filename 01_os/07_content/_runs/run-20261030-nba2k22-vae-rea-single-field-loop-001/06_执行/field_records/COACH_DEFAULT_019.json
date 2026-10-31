@@ -13,12 +13,12 @@
   "stride_hex": null,
   "byte_width": 1,
   "declared_raw_range": null,
-  "native_identity_grade": "LIVE_RECEIPT",
+  "native_identity_grade": "RAW_MEMORY_CAPTURE_CANDIDATE",
   "ui_mapping_status": "UNVERIFIED_IN_GAME_COACH_MENU",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_ADAPTIVE_COACHING_ENGINE",
   "game_effect_status": "UNQUANTIFIED_COACH_SIM_VS_3D_STUDY",
-  "research_status": "EVIDENCE_ADDED",
+  "research_status": "UNKNOWN",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
     "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md"
@@ -35,14 +35,22 @@
   "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
   "live_evidence": {
     "process_name": "NBA2K22.exe",
+    "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e430af7e",
     "live_value": 95,
-    "read_notes": "Read from team 0 structure layout (gp offset 0x18e)",
-    "read_timestamp": "2026-10-31T03:31:09.563599+00:00"
+    "access_mode": "PROCESS_VM_READ_ONLY",
+    "validation_status": "INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS",
+    "bounds_validation_passed": false,
+    "read_notes": "Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 95 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.",
+    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
   },
   "mechanism_analysis": {
+    "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
+    "empirical_causality_verified": false,
+    "controlled_experiment_conducted": false,
+    "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
     "impact_analysis": "控制教练战术体系中 FreelanceType4 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。",
     "associations": [
       "自适应教练引擎 (ACE) 动态超控博弈",
@@ -51,12 +59,22 @@
       "Playbook 战术优先级调用树"
     ],
     "confounders": [
-      "实时比赛分差",
-      "犯规困扰紧急换人",
-      "节末压哨压时间战术"
+      "比赛分差",
+      "体能损耗",
+      "战术叫号拦截",
+      "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "离散战术枚举或百分比权重 [0, 100]。",
     "live_value": 95,
-    "live_address": "0x7ff4e430af7e"
+    "live_address": "0x7ff4e430af7e",
+    "bounds_validation_passed": false
+  },
+  "raw_legacy_capture": {
+    "legacy_value": 95,
+    "legacy_address": "0x7ff4e430af7e",
+    "legacy_notes": "Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 95 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.",
+    "legacy_timestamp": "",
+    "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
+    "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   }
 }

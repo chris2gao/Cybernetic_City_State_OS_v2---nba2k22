@@ -21,6 +21,7 @@ class NativeIdentityGrade(str, enum.Enum):
     REA_LOCATED = "REA_LOCATED"
     ASSEMBLY_CONSUMED = "ASSEMBLY_CONSUMED"
     LIVE_RECEIPT = "LIVE_RECEIPT"
+    RAW_MEMORY_CAPTURE_CANDIDATE = "RAW_MEMORY_CAPTURE_CANDIDATE"
 
 
 @dataclass(frozen=True)

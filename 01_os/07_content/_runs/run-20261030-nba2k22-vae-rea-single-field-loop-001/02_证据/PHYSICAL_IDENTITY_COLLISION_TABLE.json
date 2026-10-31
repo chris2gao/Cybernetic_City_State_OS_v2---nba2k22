@@ -1,0 +1,1268 @@
+{
+  "schema_version": "nba2k22.vae.rea.physical_collision_table.v1",
+  "total_world_seeds": 86,
+  "unique_physical_locations": 50,
+  "collision_groups_count": 36,
+  "collision_groups": [
+    {
+      "slot": "SLOT_SETTINGS",
+      "offset": "0x14",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_001",
+      "alias_field_ids": [
+        "WORLD_REG_082"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_001",
+          "id": "settings.game_settings.quarter_length",
+          "slot": "SLOT_SETTINGS",
+          "slot_rva": "0x0632B4B0",
+          "offset": "0x14",
+          "storage_type": "uint32",
+          "profile_range": [
+            1,
+            12
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_082",
+          "id": "world.gameplay_and_calendar.quarter_length",
+          "slot": "SLOT_SETTINGS",
+          "slot_rva": "0x0632B4B0",
+          "offset": "0x14",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_SETTINGS",
+      "offset": "0x00",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_002",
+      "alias_field_ids": [
+        "WORLD_REG_086"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_002",
+          "id": "settings.game_settings.game_speed",
+          "slot": "SLOT_SETTINGS",
+          "slot_rva": "0x0632B4B0",
+          "offset": "0x00",
+          "storage_type": "float",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_086",
+          "id": "world.gameplay_and_calendar.game_speed",
+          "slot": "SLOT_SETTINGS",
+          "slot_rva": "0x0632B4B0",
+          "offset": "0x00",
+          "storage_type": "float",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_SETTINGS",
+      "offset": "0xF0",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_006",
+      "alias_field_ids": [
+        "WORLD_REG_081"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_006",
+          "id": "settings.game_settings.injuries_enabled",
+          "slot": "SLOT_SETTINGS",
+          "slot_rva": "0x0632B4B0",
+          "offset": "0xF0",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_081",
+          "id": "world.injuries_and_morale.injuries_enabled",
+          "slot": "SLOT_SETTINGS",
+          "slot_rva": "0x0632B4B0",
+          "offset": "0xF0",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0xB4",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_007",
+      "alias_field_ids": [
+        "WORLD_REG_083"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_007",
+          "id": "settings.simulation.sim_quarter_length",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0xB4",
+          "storage_type": "uint32",
+          "profile_range": [
+            1,
+            12
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_083",
+          "id": "world.gameplay_and_calendar.sim_quarter_length",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0xB4",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x600",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_008",
+      "alias_field_ids": [
+        "WORLD_REG_084"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_008",
+          "id": "settings.simulation.normalize_stats",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x600",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_084",
+          "id": "world.gameplay_and_calendar.normalize_stats",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x600",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x170",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_009",
+      "alias_field_ids": [
+        "WORLD_REG_050"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_009",
+          "id": "settings.trade_rules.cpu_cpu_trades",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x170",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_050",
+          "id": "world.trade_and_draft_rules.cpu_cpu_trades",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x170",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x168",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_010",
+      "alias_field_ids": [
+        "WORLD_REG_053"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_010",
+          "id": "settings.trade_rules.trade_override",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x168",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_053",
+          "id": "world.trade_and_draft_rules.trade_override",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x168",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x16C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_011",
+      "alias_field_ids": [
+        "WORLD_REG_054"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_011",
+          "id": "settings.trade_rules.trade_deadline",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x16C",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_054",
+          "id": "world.trade_and_draft_rules.trade_deadline",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x16C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x160",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_012",
+      "alias_field_ids": [
+        "WORLD_REG_055"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_012",
+          "id": "settings.trade_rules.financial_trade_rules",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x160",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_055",
+          "id": "world.trade_and_draft_rules.financial_trade_rules",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x160",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x154",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_013",
+      "alias_field_ids": [
+        "WORLD_REG_056"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_013",
+          "id": "settings.trade_rules.recently_signed_rule",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x154",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_056",
+          "id": "world.trade_and_draft_rules.recently_signed_rule",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x154",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x158",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_014",
+      "alias_field_ids": [
+        "WORLD_REG_057"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_014",
+          "id": "settings.trade_rules.recently_traded_rule",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x158",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            1
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_057",
+          "id": "world.trade_and_draft_rules.recently_traded_rule",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x158",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x174",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_015",
+      "alias_field_ids": [
+        "WORLD_REG_058"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_015",
+          "id": "settings.trade_rules.trade_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x174",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_058",
+          "id": "world.trade_and_draft_rules.trade_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x174",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x178",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_016",
+      "alias_field_ids": [
+        "WORLD_REG_051"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_016",
+          "id": "settings.trade_rules.cpu_trade_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x178",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_051",
+          "id": "world.trade_and_draft_rules.cpu_trade_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x178",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x210",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_019",
+      "alias_field_ids": [
+        "WORLD_REG_060"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_019",
+          "id": "settings.contracts.contract_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x210",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_060",
+          "id": "world.contracts_and_finances.contract_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x210",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x214",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_020",
+      "alias_field_ids": [
+        "WORLD_REG_061"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_020",
+          "id": "settings.contracts.player_non_financial_ambitions",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x214",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_061",
+          "id": "world.contracts_and_finances.player_non_financial_ambitions",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x214",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x218",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_021",
+      "alias_field_ids": [
+        "WORLD_REG_062"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_021",
+          "id": "settings.contracts.min_contract_rating",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x218",
+          "storage_type": "uint32",
+          "profile_range": [
+            50,
+            99
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_062",
+          "id": "world.contracts_and_finances.min_contract_rating",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x218",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x21C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_022",
+      "alias_field_ids": [
+        "WORLD_REG_063"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_022",
+          "id": "settings.contracts.max_contract_rating",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x21C",
+          "storage_type": "uint32",
+          "profile_range": [
+            70,
+            99
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_063",
+          "id": "world.contracts_and_finances.max_contract_rating",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x21C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x220",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_023",
+      "alias_field_ids": [
+        "WORLD_REG_064"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_023",
+          "id": "settings.contracts.player_potential_factor",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x220",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_064",
+          "id": "world.contracts_and_finances.player_potential_factor",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x220",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x224",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_024",
+      "alias_field_ids": [
+        "WORLD_REG_065"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_024",
+          "id": "settings.contracts.player_durability_factor",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x224",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_065",
+          "id": "world.contracts_and_finances.player_durability_factor",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x224",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x22C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_025",
+      "alias_field_ids": [
+        "WORLD_REG_066"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_025",
+          "id": "settings.contracts.player_fame_factor",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x22C",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_066",
+          "id": "world.contracts_and_finances.player_fame_factor",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x22C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x234",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_026",
+      "alias_field_ids": [
+        "WORLD_REG_059"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_026",
+          "id": "settings.contracts.cpu_interest_in_resigning",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x234",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_059",
+          "id": "world.contracts_and_finances.cpu_interest_in_resigning",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x234",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x24C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_027",
+      "alias_field_ids": [
+        "WORLD_REG_070"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_027",
+          "id": "settings.injuries_and_morale.user_injury_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x24C",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_070",
+          "id": "world.injuries_and_morale.user_injury_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x24C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x250",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_028",
+      "alias_field_ids": [
+        "WORLD_REG_071"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_028",
+          "id": "settings.injuries_and_morale.cpu_injury_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x250",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_071",
+          "id": "world.injuries_and_morale.cpu_injury_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x250",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x254",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_029",
+      "alias_field_ids": [
+        "WORLD_REG_072"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_029",
+          "id": "settings.injuries_and_morale.user_injury_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x254",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_072",
+          "id": "world.injuries_and_morale.user_injury_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x254",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x258",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_030",
+      "alias_field_ids": [
+        "WORLD_REG_073"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_030",
+          "id": "settings.injuries_and_morale.cpu_injury_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x258",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_073",
+          "id": "world.injuries_and_morale.cpu_injury_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x258",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x25C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_031",
+      "alias_field_ids": [
+        "WORLD_REG_074"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_031",
+          "id": "settings.injuries_and_morale.injury_severity",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x25C",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_074",
+          "id": "world.injuries_and_morale.injury_severity",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x25C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x260",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_032",
+      "alias_field_ids": [
+        "WORLD_REG_075"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_032",
+          "id": "settings.injuries_and_morale.injury_duration",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x260",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_075",
+          "id": "world.injuries_and_morale.injury_duration",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x260",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x264",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_033",
+      "alias_field_ids": [
+        "WORLD_REG_076"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_033",
+          "id": "settings.injuries_and_morale.career_ending_injury_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x264",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_076",
+          "id": "world.injuries_and_morale.career_ending_injury_frequency",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x264",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x238",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_034",
+      "alias_field_ids": [
+        "WORLD_REG_077"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_034",
+          "id": "settings.injuries_and_morale.morale_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x238",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_077",
+          "id": "world.injuries_and_morale.morale_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x238",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x23C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_035",
+      "alias_field_ids": [
+        "WORLD_REG_078"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_035",
+          "id": "settings.injuries_and_morale.morale_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x23C",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_078",
+          "id": "world.injuries_and_morale.morale_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x23C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x240",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_036",
+      "alias_field_ids": [
+        "WORLD_REG_079"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_036",
+          "id": "settings.injuries_and_morale.chemistry_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x240",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_079",
+          "id": "world.injuries_and_morale.chemistry_difficulty",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x240",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x244",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_037",
+      "alias_field_ids": [
+        "WORLD_REG_080"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_037",
+          "id": "settings.injuries_and_morale.chemistry_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x244",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_080",
+          "id": "world.injuries_and_morale.chemistry_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x244",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x268",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_038",
+      "alias_field_ids": [
+        "WORLD_REG_069"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_038",
+          "id": "settings.progression.training_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x268",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_069",
+          "id": "world.progression_and_regression.training_effects",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x268",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x26C",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_039",
+      "alias_field_ids": [
+        "WORLD_REG_067"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_039",
+          "id": "settings.progression.offseason_progression_rate",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x26C",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_067",
+          "id": "world.progression_and_regression.offseason_progression_rate",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x26C",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_TRADE",
+      "offset": "0x274",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_040",
+      "alias_field_ids": [
+        "WORLD_REG_068"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_040",
+          "id": "settings.progression.regression_rate",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x274",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            100
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_068",
+          "id": "world.progression_and_regression.regression_rate",
+          "slot": "SLOT_TRADE",
+          "slot_rva": "0x0632B498",
+          "offset": "0x274",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "slot": "SLOT_SLIDERS",
+      "offset": "0x00",
+      "entries_count": 2,
+      "primary_field_id": "WORLD_REG_041",
+      "alias_field_ids": [
+        "WORLD_REG_085"
+      ],
+      "entries": [
+        {
+          "field_id": "WORLD_REG_041",
+          "id": "settings.gameplay_sliders.game_difficulty_preset",
+          "slot": "SLOT_SLIDERS",
+          "slot_rva": "0x0632B4A0",
+          "offset": "0x00",
+          "storage_type": "uint32",
+          "profile_range": [
+            0,
+            4
+          ]
+        },
+        {
+          "field_id": "WORLD_REG_085",
+          "id": "world.gameplay_and_calendar.game_difficulty_preset",
+          "slot": "SLOT_SLIDERS",
+          "slot_rva": "0x0632B4A0",
+          "offset": "0x00",
+          "storage_type": "uint32",
+          "profile_range": [
+            null,
+            null
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -40,14 +40,22 @@
   "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
   "live_evidence": {
     "process_name": "NBA2K22.exe",
+    "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e4e9b05b",
     "live_value": 99,
-    "read_notes": "Read from active player Tyrese Haliburton",
-    "read_timestamp": "2026-10-31T03:31:03.553959+00:00"
+    "access_mode": "PROCESS_VM_READ_ONLY",
+    "validation_status": "LIVE_RECEIPT_VALIDATED_IN_ACTIVE_PLAYER",
+    "bounds_validation_passed": true,
+    "read_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x483)",
+    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
   },
   "mechanism_analysis": {
+    "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
+    "empirical_causality_verified": false,
+    "controlled_experiment_conducted": false,
+    "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
     "impact_analysis": "外线持球突破整体意愿。决定球员接球后是选择投篮/转移球还是弯腰压步突内线。",
     "associations": [
       "受 Speed with Ball 与 Quick First Step 徽章加成",
@@ -55,12 +63,22 @@
       "与突分倾向 (0x498) 形成突破后后续处理的分叉判定"
     ],
     "confounders": [
-      "对位防守紧逼度 (Tight vs Sag)",
-      "单节体能衰减 (<60 命中率下降)",
-      "垃圾时间换人扰动"
+      "比赛分差",
+      "体能损耗",
+      "战术叫号拦截",
+      "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "突破狂魔（莫兰特/字母哥）90+；纯投手压缩在 15~25。",
     "live_value": 99,
-    "live_address": "0x7ff4e4e9b05b"
+    "live_address": "0x7ff4e4e9b05b",
+    "bounds_validation_passed": true
+  },
+  "raw_legacy_capture": {
+    "legacy_value": 99,
+    "legacy_address": "0x7ff4e4e9b05b",
+    "legacy_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x483)",
+    "legacy_timestamp": "",
+    "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
+    "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   }
 }

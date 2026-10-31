@@ -7,7 +7,7 @@
   "stated_question": "Verify whether raw tendency slot at offset 0x4A2 has confirmed semantic name or consumer in current project registries",
   "observable_target": "Record unverified status for unknown raw byte slot TENDENCY_NATIVE_075",
   "candidate_native_key": "tendency.RAW_0x4a2",
-  "display_name": "UNKNOWN_RAW_BYTE_075",
+  "display_name": "RAW_BYTE_0x4A2",
   "source_status": "UNKNOWN_RAW_BYTE",
   "offset_hex": "0x4A2",
   "stride_hex": "0xDF0",
@@ -16,12 +16,12 @@
     0,
     100
   ],
-  "native_identity_grade": "LIVE_RECEIPT",
-  "ui_mapping_status": "UNKNOWN_UNMAPPED",
+  "native_identity_grade": "RAW_MEMORY_CAPTURE_CANDIDATE",
+  "ui_mapping_status": "UNKNOWN_RAW_BYTE_WITH_ADDRESS",
   "ui_export_label": null,
   "consumer_path_status": "UNKNOWN_UNVERIFIED_ASSEMBLY",
   "game_effect_status": "UNKNOWN",
-  "research_status": "EVIDENCE_ADDED",
+  "research_status": "UNKNOWN",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
     "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
@@ -39,27 +39,44 @@
   "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
   "live_evidence": {
     "process_name": "NBA2K22.exe",
+    "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e4e9b07a",
     "live_value": 0,
-    "read_notes": "Read from active player Tyrese Haliburton",
-    "read_timestamp": "2026-10-31T03:31:03.566973+00:00"
+    "access_mode": "PROCESS_VM_READ_ONLY",
+    "validation_status": "UNKNOWN_RAW_BYTE_WITH_ADDRESS",
+    "bounds_validation_passed": false,
+    "read_notes": "Unmapped raw byte offset in player continuous block; no disassembly consumer traced.",
+    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
   },
   "mechanism_analysis": {
-    "impact_analysis": "未映射原生内存槽位（位于 0x458..0x4BA 连续倾向内存块内）。经实机反汇编确认属于 2K 底层保留位段，未绑定公开 UI 名单标签。",
+    "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
+    "empirical_causality_verified": false,
+    "controlled_experiment_conducted": false,
+    "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
+    "impact_analysis": "未映射原生内存槽位（位于 0x458..0x4BA 连续倾向内存块内）。反汇编尚未定位到具体读取或消费函数，属于未解析原始字节，不推定为保留或历史模板。",
     "associations": [
-      "球员结构体步长 0xDF0",
-      "引擎字节流内存对齐约束",
-      "历史名单模板留存"
+      "球员结构体连续字节流",
+      "内存对齐与未标注功能槽位"
     ],
     "confounders": [
       "比赛分差",
       "体能损耗",
-      "战术叫号拦截"
+      "战术叫号拦截",
+      "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
-    "thresholds": "UNKNOWN_RAW_SLOT",
+    "thresholds": "UNKNOWN_RAW_BYTE_WITH_ADDRESS",
     "live_value": 0,
-    "live_address": "0x7ff4e4e9b07a"
+    "live_address": "0x7ff4e4e9b07a",
+    "bounds_validation_passed": false
+  },
+  "raw_legacy_capture": {
+    "legacy_value": 0,
+    "legacy_address": "0x7ff4e4e9b07a",
+    "legacy_notes": "Unmapped raw byte offset in player continuous block; no disassembly consumer traced.",
+    "legacy_timestamp": "",
+    "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
+    "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   }
 }

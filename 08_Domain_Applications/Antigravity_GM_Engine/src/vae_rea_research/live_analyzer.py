@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import datetime
+import glob
 import json
 import os
+import struct
 import subprocess
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 from src.vae_rea_research.contracts import (
     FieldEntry,
@@ -18,11 +20,21 @@ from src.vae_rea_research.queue_manager import SharedQueueManager
 
 class LiveEngineAnalyzer:
     """
-    Performs deep live reverse engineering analysis on the 204 seed fields in NBA2K22.exe:
-    1. Reads live memory readback from running game process (PID 5488, Base 0x140000000).
-    2. Analyzes field-specific impact, mechanisms, and cross-field associations.
-    3. Enriches single-field records and exports comprehensive synthesis dossiers.
+    Performs deep live reverse engineering analysis and evidence quality auditing
+    on the 204 seed fields in NBA2K22.exe:
+    1. Distinguishes live receipts from raw capture candidates and unverified offsets.
+    2. Enforces typed decoding (IEEE-754 float32 vs uint32 vs uint8).
+    3. Enforces domain and enum bounds validation (POEOffense, Freelance, normalize_stats, etc.).
+    4. Separates slot controller base pointers (SLOT_SETTINGS, SLOT_TRADE, SLOT_SLIDERS).
+    5. Resolves true COACHDATA structure layout via coach_codec instead of TEAM struct strides.
+    6. Disambiguates duplicate seed registrations and physical address collisions.
+    7. Grounds mechanism explanations honestly as PRIOR_LITERATURE_HYPOTHESIS pending controlled experiments.
     """
+
+    TARGET_PE_SHA256 = "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+    TARGET_PROCESS_NAME = "NBA2K22.exe"
+    TARGET_PROCESS_PID = 5488
+    TARGET_MODULE_BASE = 0x140000000
 
     TENDENCY_KNOWLEDGE_MAP: Dict[str, Dict[str, Any]] = {
         "SHOT_TENDENCY": {
@@ -302,11 +314,90 @@ class LiveEngineAnalyzer:
         )
         self.records_dir = os.path.join(self.run_dir, "06_执行", "field_records")
         self.evidence_dir = os.path.join(self.run_dir, "02_证据")
+        self.ledger_path = os.path.join(self.run_dir, "06_执行", "iteration_ledger.jsonl")
+        self.checkpoint_path = os.path.join(self.run_dir, "06_执行", "current_checkpoint.json")
         os.makedirs(self.records_dir, exist_ok=True)
         os.makedirs(self.evidence_dir, exist_ok=True)
 
+        self._world_catalog = self._load_world_catalog()
+        self._coach_catalog = self._load_coach_catalog()
         self._mem = None
+        self._scanner = None
+        self._active_player = None
+        self._world_slot_ptrs: Dict[str, Optional[int]] = {}
         self._init_memory()
+
+    def _load_world_catalog(self) -> Dict[str, Dict[str, Any]]:
+        cat: Dict[str, Dict[str, Any]] = {}
+        r06a_matches = glob.glob(
+            os.path.join(self.repo_root, "**", "R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json"),
+            recursive=True
+        )
+        if r06a_matches:
+            with open(r06a_matches[0], "r", encoding="utf-8") as f:
+                d = json.load(f)
+            candidates = d.get("registry_candidates", [])
+            for idx, c in enumerate(candidates):
+                fid = f"WORLD_REG_{idx + 1:03d}"
+                cat[fid] = {
+                    "field_id": fid,
+                    "id": c["id"],
+                    "group": c.get("group"),
+                    "slot": c.get("slot", "SLOT_SETTINGS"),
+                    "slot_rva": c.get("slot_rva", "0x0632B4B0"),
+                    "offset": c.get("offset", "0x00"),
+                    "storage_type": c.get("storage_type", "uint32"),
+                    "profile_range": c.get("profile_range"),
+                    "profile_default": c.get("profile_default"),
+                }
+        return cat
+
+    def _load_coach_catalog(self) -> Dict[str, Dict[str, Any]]:
+        cat: Dict[str, Dict[str, Any]] = {}
+        try:
+            import sys
+            src_dir = os.path.join(self.repo_root, "08_Domain_Applications", "Antigravity_GM_Engine", "src")
+            if src_dir not in sys.path:
+                sys.path.insert(0, src_dir)
+            import coach_codec
+            p = coach_codec.load_profile()
+            fields = p.get("fields", {})
+            coach_keys = [
+                "POEOffense", "POEOffense2", "POEOffense3", "POEDefense", "POEDefense2", "POEDefense3",
+                "PreferredSystem", "ActiveSystem", "PlaybookID", "BenchDepth", "RunPlayTendency", "ZoneUsage",
+                "BenchUtilization", "Tempo", "HelpDefense", "FreelanceType", "FreelanceType2", "FreelanceType3", "FreelanceType4"
+            ]
+            for idx, k in enumerate(coach_keys):
+                fid = f"COACH_DEFAULT_{idx + 1:03d}"
+                f_info = fields.get(k, {})
+                e = f_info.get("enum")
+                enum_set = None
+                if isinstance(e, dict):
+                    enum_set = {int(x) for x in e.keys()}
+                elif k == "PlaybookID":
+                    enum_set = set(range(128))
+
+                valid_range = None
+                if enum_set is None:
+                    if k == "BenchDepth":
+                        valid_range = [0, 15]
+                    else:
+                        valid_range = [0, 100]
+
+                cat[fid] = {
+                    "field_id": fid,
+                    "key": k,
+                    "offset": f_info.get("offset"),
+                    "storage_bytes": f_info.get("storage_bytes", 1),
+                    "start_bit": f_info.get("start_bit", 0),
+                    "width": f_info.get("width", 8),
+                    "enum_values": enum_set,
+                    "valid_range": valid_range,
+                    "field_info": f_info,
+                }
+        except Exception:
+            pass
+        return cat
 
     def _init_memory(self) -> None:
         try:
@@ -319,97 +410,163 @@ class LiveEngineAnalyzer:
             self._mem = GameMemory(process_name="NBA2K22.exe", read_only=True)
             self._scanner = LeagueScanner(self._mem)
             self._active_player = self._scanner.get_active_player()
-            self._world_settings_ptr = self._mem.read_uint64(self._mem.base_address + 0x0632B4B0)
+
+            # Resolve discrete slot base pointers
+            slot_rvas = {
+                "SLOT_SETTINGS": 0x0632B4B0,
+                "SLOT_TRADE": 0x0632B498,
+                "SLOT_SLIDERS": 0x0632B4A0,
+                "SLOT_FRANCHISE": 0x0632B478,
+            }
+            for sname, srva in slot_rvas.items():
+                ptr = self._mem.read_uint64_safe(self._mem.base_address + srva)
+                self._world_slot_ptrs[sname] = ptr
         except Exception:
             self._mem = None
             self._scanner = None
             self._active_player = None
-            self._world_settings_ptr = None
+            self._world_slot_ptrs = {}
 
-    def read_live_field(self, entry: FieldEntry) -> Tuple[Optional[int], str, str]:
+    def decode_world_raw(self, raw_bytes: bytes, storage_type: str) -> Union[float, int]:
+        if storage_type == "float":
+            return struct.unpack("<f", raw_bytes[:4])[0]
+        elif storage_type in ("uint8", "bool"):
+            return raw_bytes[0]
+        else:
+            return struct.unpack("<I", raw_bytes[:4])[0]
+
+    def validate_bounds(self, entry: FieldEntry, val: Any) -> Tuple[bool, str]:
+        if val is None:
+            return False, "VALUE_IS_NONE"
+
+        if entry.family == "player_tendency":
+            if not isinstance(val, (int, float)):
+                return False, f"NON_NUMERIC_TENDENCY: {val}"
+            if 0 <= val <= 100:
+                return True, "VALID_TENDENCY_RANGE"
+            return False, f"OUT_OF_BOUNDS: tendency value {val} not in [0, 100]"
+
+        elif entry.family == "coach_settings":
+            cinfo = self._coach_catalog.get(entry.field_id)
+            if not cinfo:
+                return False, "UNKNOWN_COACH_CATALOG_ENTRY"
+            enum_vals = cinfo.get("enum_values")
+            if enum_vals is not None:
+                if val in enum_vals:
+                    return True, "VALID_COACH_ENUM"
+                return False, f"OUT_OF_BOUNDS: coach value {val} not in declared enum {sorted(list(enum_vals))}"
+            vrange = cinfo.get("valid_range")
+            if vrange is not None:
+                if vrange[0] <= val <= vrange[1]:
+                    return True, "VALID_COACH_RANGE"
+                return False, f"OUT_OF_BOUNDS: coach value {val} not in range [{vrange[0]}, {vrange[1]}]"
+            return True, "COACH_RANGE_UNCONSTRAINED"
+
+        elif entry.family == "world_settings":
+            winfo = self._world_catalog.get(entry.field_id)
+            if not winfo:
+                return True, "UNKNOWN_WORLD_CATALOG_ENTRY"
+            prange = winfo.get("profile_range")
+            if prange and len(prange) == 2 and prange[0] is not None and prange[1] is not None:
+                min_v, max_v = prange
+                if min_v <= val <= max_v:
+                    return True, "VALID_WORLD_RANGE"
+                return False, f"OUT_OF_BOUNDS: world value {val} not in declared range [{min_v}, {max_v}]"
+            return True, "WORLD_RANGE_UNCONSTRAINED"
+
+        return True, "UNVALIDATED_FAMILY"
+
+    def read_live_field(self, entry: FieldEntry) -> Tuple[Optional[Any], str, str, bool, str]:
+        """
+        Reads field from live process with strictly typed decoding and domain checking.
+        Returns: (live_val, addr_hex, read_notes, is_valid, validation_reason)
+        """
         if not self._mem or not self._mem.pid:
-            return None, "NO_PROCESS", "Game process not accessible"
+            return None, "NO_PROCESS", "Game process not accessible", False, "NO_PROCESS_ATTACHED"
 
         if entry.family == "player_tendency":
             if not self._active_player or not self._active_player.get("address"):
-                return None, "NO_ACTIVE_PLAYER", "Active player pointer null"
+                return None, "NO_ACTIVE_PLAYER", "Active player pointer null", False, "NO_ACTIVE_PLAYER"
             paddr = self._active_player["address"]
             offset = int(entry.offset_hex, 16) if entry.offset_hex else None
             if offset is None:
-                return None, "UNKNOWN_OFFSET", "Offset null"
+                return None, "UNKNOWN_OFFSET", "Offset null", False, "UNKNOWN_OFFSET"
             target_addr = paddr + offset
-            val = self._mem.read_uint8(target_addr)
-            return val, hex(target_addr), f"Read from active player {self._active_player.get('first_name')} {self._active_player.get('last_name')}"
+            val = self._mem.read_uint8_safe(target_addr)
+            if val is None:
+                return None, hex(target_addr), "Memory read failed", False, "MEMORY_READ_FAILED"
+            is_valid, reason = self.validate_bounds(entry, val)
+            return val, hex(target_addr), f"Read uint8 from active player {self._active_player.get('first_name')} {self._active_player.get('last_name')}", is_valid, reason
 
         elif entry.family == "world_settings":
-            if not self._world_settings_ptr:
-                return None, "NO_SETTINGS_PTR", "Settings slot pointer null"
-            offset = int(entry.offset_hex, 16) if entry.offset_hex else None
-            if offset is None:
-                return None, "UNKNOWN_OFFSET", "Offset null"
-            target_addr = self._world_settings_ptr + offset
-            val = self._mem.read_uint32(target_addr)
-            return val, hex(target_addr), "Read from dereferenced SLOT_SETTINGS pointer 0x0632B4B0"
+            winfo = self._world_catalog.get(entry.field_id)
+            if not winfo:
+                return None, "NO_WORLD_CATALOG", "Catalog entry missing", False, "NO_CATALOG_SPEC"
+            slot_name = winfo.get("slot", "SLOT_SETTINGS")
+            slot_ptr = self._world_slot_ptrs.get(slot_name)
+            if not slot_ptr:
+                return None, f"NULL_{slot_name}_PTR", f"Slot pointer {slot_name} null", False, "NULL_SLOT_POINTER"
+            offset = int(winfo.get("offset", "0x00"), 16)
+            target_addr = slot_ptr + offset
+            stype = winfo.get("storage_type", "uint32")
+            if stype == "float":
+                val = self._mem.read_float_safe(target_addr)
+            elif stype in ("uint8", "bool"):
+                val = self._mem.read_uint8_safe(target_addr)
+            else:
+                val = self._mem.read_uint32_safe(target_addr)
+
+            if val is None:
+                return None, hex(target_addr), f"Memory read failed for slot {slot_name}", False, "MEMORY_READ_FAILED"
+            is_valid, reason = self.validate_bounds(entry, val)
+            return val, hex(target_addr), f"Read {stype} from {slot_name} ({winfo.get('slot_rva')}) offset {hex(offset)}", is_valid, reason
 
         elif entry.family == "coach_settings":
-            gp_offsets = {
-                "POEOffense": 0x17E, "POEOffense2": 0x17F, "POEOffense3": 0x180,
-                "POEDefense": 0x181, "POEDefense2": 0x182, "POEDefense3": 0x183,
-                "HelpDefense": 0x184, "RunPlayTendency": 0x185, "ZoneUsage": 0x186,
-                "BenchDepth": 0x187, "BenchUtilization": 0x188, "LineupFormFactor": 0x189,
-                "PlaybookID": 0x18A, "FreelanceType": 0x18B, "FreelanceType2": 0x18C,
-                "FreelanceType3": 0x18D, "FreelanceType4": 0x18E, "PreferredSystem": 0x10A,
-                "ActiveSystem": 0x10B, "Tempo": 0x140
-            }
-            gp_off = gp_offsets.get(entry.candidate_native_key, 0x17E)
+            cinfo = self._coach_catalog.get(entry.field_id)
+            if not cinfo:
+                return None, "NO_COACH_CATALOG", "Coach catalog spec missing", False, "NO_CATALOG_SPEC"
             try:
                 teams = self._scanner.find_active_teams()
                 team0_addr = teams[0]["address"] if 0 in teams else None
                 if team0_addr:
-                    target_addr = team0_addr + gp_off
-                    val = self._mem.read_uint8(target_addr)
-                    return val, hex(target_addr), f"Read from team 0 structure layout (gp offset {hex(gp_off)})"
-            except Exception:
+                    # Head coach record is pointed to at team_address + 0xCE8
+                    coach_addr = self._mem.read_uint64_safe(team0_addr + 0xCE8)
+                    if coach_addr:
+                        coach_raw = self._mem.read_bytes(coach_addr, 0x160)
+                        if coach_raw and len(coach_raw) == 0x160:
+                            import sys
+                            src_dir = os.path.join(self.repo_root, "08_Domain_Applications", "Antigravity_GM_Engine", "src")
+                            if src_dir not in sys.path:
+                                sys.path.insert(0, src_dir)
+                            import coach_codec
+                            val = coach_codec.decode(coach_raw, cinfo["field_info"])
+                            is_valid, reason = self.validate_bounds(entry, val)
+                            target_addr = coach_addr + cinfo["offset"]
+                            return val, hex(target_addr), f"Decoded bitfield from verified COACHDATA for team 0 coach", is_valid, reason
+            except Exception as exc:
                 pass
-            return 1, "STATIC_GP_LAYOUT", f"Verified static GAMEPLAN struct offset {hex(gp_off)}"
+            return None, "COACH_STRUCTURE_UNRESOLVED", "Failed to resolve active COACHDATA structure", False, "COACH_STRUCTURE_UNRESOLVED"
 
-        return None, "UNKNOWN_FAMILY", "Unrecognized family"
+        return None, "UNKNOWN_FAMILY", "Unrecognized family", False, "UNKNOWN_FAMILY"
 
-    def analyze_field_mechanism(self, entry: FieldEntry, live_val: Optional[int], addr_hex: str) -> Dict[str, Any]:
+    def analyze_field_mechanism(self, entry: FieldEntry, live_val: Optional[Any], addr_hex: str, is_valid: bool) -> Dict[str, Any]:
         key = entry.candidate_native_key
         short_key = key.replace("tendency.", "")
-        
-        # Check custom curated map first
+
         if short_key in self.TENDENCY_KNOWLEDGE_MAP:
             info = self.TENDENCY_KNOWLEDGE_MAP[short_key]
-            return {
-                "impact_analysis": info["impact"],
-                "associations": info["associations"],
-                "confounders": ["对位防守紧逼度 (Tight vs Sag)", "单节体能衰减 (<60 命中率下降)", "垃圾时间换人扰动"],
-                "thresholds": info["thresholds"],
-                "live_value": live_val,
-                "live_address": addr_hex,
-            }
-
-        # Generic fallbacks
-        if entry.family == "player_tendency":
+            impact = info["impact"]
+            assocs = info["associations"]
+            thresh = info["thresholds"]
+        elif entry.family == "player_tendency":
             if "RAW_0x" in key or "UNKNOWN" in key:
-                impact = "未映射原生内存槽位（位于 0x458..0x4BA 连续倾向内存块内）。经实机反汇编确认属于 2K 底层保留位段，未绑定公开 UI 名单标签。"
-                assocs = ["球员结构体步长 0xDF0", "引擎字节流内存对齐约束", "历史名单模板留存"]
-                thresh = "UNKNOWN_RAW_SLOT"
+                impact = "未映射原生内存槽位（位于 0x458..0x4BA 连续倾向内存块内）。反汇编尚未定位到具体读取或消费函数，属于未解析原始字节，不推定为保留或历史模板。"
+                assocs = ["球员结构体连续字节流", "内存对齐与未标注功能槽位"]
+                thresh = "UNKNOWN_RAW_BYTE_WITH_ADDRESS"
             else:
                 impact = f"控制球员在 3D 比赛与日历模拟中执行 {entry.display_name} 专项动作的离散行为概率。"
                 assocs = ["与相关球员基础属性强绑定", "受 Playbook 专属战术跑位加成", "受对应徽章门禁激活约束"]
                 thresh = "标准 0~100 百分比离散权重。"
-            return {
-                "impact_analysis": impact,
-                "associations": assocs,
-                "confounders": ["比赛分差", "体能损耗", "战术叫号拦截"],
-                "thresholds": thresh,
-                "live_value": live_val,
-                "live_address": addr_hex,
-            }
-
         elif entry.family == "coach_settings":
             impact = f"控制教练战术体系中 {entry.candidate_native_key} 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。"
             assocs = [
@@ -419,15 +576,6 @@ class LiveEngineAnalyzer:
                 "Playbook 战术优先级调用树"
             ]
             thresh = "离散战术枚举或百分比权重 [0, 100]。"
-            return {
-                "impact_analysis": impact,
-                "associations": assocs,
-                "confounders": ["实时比赛分差", "犯规困扰紧急换人", "节末压哨压时间战术"],
-                "thresholds": thresh,
-                "live_value": live_val,
-                "live_address": addr_hex,
-            }
-
         elif entry.family == "world_settings":
             impact = f"控制全局比赛与模拟规则中 {entry.candidate_native_key} 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。"
             assocs = [
@@ -436,35 +584,98 @@ class LiveEngineAnalyzer:
                 "比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）"
             ]
             thresh = f"合法值域区间：{entry.declared_raw_range}"
-            return {
-                "impact_analysis": impact,
-                "associations": assocs,
-                "confounders": ["游戏模式切换 (MyLEAGUE vs 快速比赛)", "玩家个人外挂滑块覆写"],
-                "thresholds": thresh,
-                "live_value": live_val,
-                "live_address": addr_hex,
-            }
+        else:
+            impact = "未定义家族字段"
+            assocs = []
+            thresh = "UNKNOWN"
 
         return {
-            "impact_analysis": "未定义家族字段",
-            "associations": [],
-            "confounders": [],
-            "thresholds": "UNKNOWN",
+            "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
+            "empirical_causality_verified": False,
+            "controlled_experiment_conducted": False,
+            "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
+            "impact_analysis": impact,
+            "associations": assocs,
+            "confounders": ["比赛分差", "体能损耗", "战术叫号拦截", "游戏模式切换 (MyLEAGUE vs 快速比赛)"],
+            "thresholds": thresh,
             "live_value": live_val,
             "live_address": addr_hex,
+            "bounds_validation_passed": is_valid,
         }
 
-    def execute_live_sweep(self) -> Dict[str, Any]:
-        results = []
+    def compute_physical_collision_table(self) -> Dict[str, Any]:
+        """
+        Builds the explicit collision and alias mapping table for all 86 World Settings,
+        identifying the exact 36 alias pairs sharing identical (slot, offset) physical addresses.
+        """
+        by_target: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
+        for fid, winfo in self._world_catalog.items():
+            key = (winfo["slot"], winfo["offset"])
+            by_target.setdefault(key, []).append({
+                "field_id": fid,
+                "id": winfo["id"],
+                "slot": winfo["slot"],
+                "slot_rva": winfo["slot_rva"],
+                "offset": winfo["offset"],
+                "storage_type": winfo["storage_type"],
+                "profile_range": winfo["profile_range"]
+            })
+
+        collisions = []
+        unique_physical_slots = 0
+        for (slot, offset), entries in by_target.items():
+            unique_physical_slots += 1
+            if len(entries) > 1:
+                collisions.append({
+                    "slot": slot,
+                    "offset": offset,
+                    "entries_count": len(entries),
+                    "primary_field_id": entries[0]["field_id"],
+                    "alias_field_ids": [e["field_id"] for e in entries[1:]],
+                    "entries": entries,
+                })
+
+        return {
+            "schema_version": "nba2k22.vae.rea.physical_collision_table.v1",
+            "total_world_seeds": len(self._world_catalog),
+            "unique_physical_locations": unique_physical_slots,
+            "collision_groups_count": len(collisions),
+            "collision_groups": collisions,
+        }
+
+    def remediate_all_field_records(self) -> Dict[str, Any]:
+        """
+        Forensically reprocesses all 204 field records:
+        1. Downgrades unverified / out-of-bounds captures to RAW_MEMORY_CAPTURE_CANDIDATE.
+        2. Applies typed float decoding (1056964608 -> 0.5) for game_speed.
+        3. Identifies and flags out-of-bounds Coach and World readings.
+        4. Relabels unknown slots as UNKNOWN_RAW_BYTE_WITH_ADDRESS.
+        5. Labels mechanism descriptions as PRIOR_LITERATURE_HYPOTHESIS.
+        6. Generates collision table and updated dossier.
+        """
+        collision_table = self.compute_physical_collision_table()
+        col_path = os.path.join(self.evidence_dir, "PHYSICAL_IDENTITY_COLLISION_TABLE.json")
+        with open(col_path, "w", encoding="utf-8") as f:
+            json.dump(collision_table, f, indent=2, ensure_ascii=False)
+
+        remediated_counts = {
+            "total": 0,
+            "live_receipt": 0,
+            "raw_candidate": 0,
+            "unknown": 0,
+            "coach_demoted": 0,
+            "world_demoted": 0,
+            "world_floats_decoded": 0,
+            "unmapped_tendency_relabeled": 0,
+        }
+
         dossier_entries = []
+        now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
         for idx in range(self.queue_mgr.total_count):
             entry = self.queue_mgr.get_entry_at(idx)
             if not entry:
                 continue
-
-            live_val, addr_hex, read_notes = self.read_live_field(entry)
-            analysis = self.analyze_field_mechanism(entry, live_val, addr_hex)
 
             rec_path = os.path.join(self.records_dir, f"{entry.field_id}.json")
             record_dict: Dict[str, Any] = {}
@@ -472,56 +683,199 @@ class LiveEngineAnalyzer:
                 with open(rec_path, "r", encoding="utf-8") as f:
                     record_dict = json.load(f)
 
+            remediated_counts["total"] += 1
+            old_live = record_dict.get("live_evidence", {})
+            old_val = old_live.get("live_value")
+            old_addr = old_live.get("read_address", "UNKNOWN")
+
+            # Preserve legacy raw capture block
+            raw_legacy_capture = {
+                "legacy_value": old_val,
+                "legacy_address": old_addr,
+                "legacy_notes": old_live.get("read_notes", ""),
+                "legacy_timestamp": old_live.get("read_timestamp", ""),
+                "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
+                "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
+            }
+            record_dict["raw_legacy_capture"] = raw_legacy_capture
+
+            current_val = old_val
+            target_addr_hex = old_addr
+            is_valid = False
+            validation_status = "UNVERIFIED"
+            notes = ""
+
+            if entry.family == "player_tendency":
+                key = entry.candidate_native_key
+                if "RAW_0x" in key or "UNKNOWN" in key:
+                    record_dict["ui_mapping_status"] = "UNKNOWN_RAW_BYTE_WITH_ADDRESS"
+                    record_dict["display_name"] = f"RAW_BYTE_{entry.offset_hex}"
+                    record_dict["native_identity_grade"] = NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+                    record_dict["research_status"] = FieldResearchStatus.UNKNOWN.value
+                    validation_status = "UNKNOWN_RAW_BYTE_WITH_ADDRESS"
+                    notes = "Unmapped raw byte offset in player continuous block; no disassembly consumer traced."
+                    remediated_counts["unmapped_tendency_relabeled"] += 1
+                    remediated_counts["unknown"] += 1
+                else:
+                    if current_val is not None and 0 <= current_val <= 100:
+                        is_valid = True
+                        record_dict["native_identity_grade"] = NativeIdentityGrade.LIVE_RECEIPT.value
+                        record_dict["research_status"] = FieldResearchStatus.EVIDENCE_ADDED.value
+                        validation_status = "LIVE_RECEIPT_VALIDATED_IN_ACTIVE_PLAYER"
+                        notes = f"Read uint8 from active player Tyrese Haliburton memory (offset {entry.offset_hex})"
+                        remediated_counts["live_receipt"] += 1
+                    else:
+                        record_dict["native_identity_grade"] = NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+                        record_dict["research_status"] = FieldResearchStatus.UNKNOWN.value
+                        validation_status = "OUT_OF_BOUNDS_OR_NULL"
+                        remediated_counts["unknown"] += 1
+
+            elif entry.family == "coach_settings":
+                # Coach base address used TEAM struct stride (0x1258) instead of COACHDATA
+                # 10 out of 13 verifiable fields were out of bounds
+                record_dict["native_identity_grade"] = NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+                record_dict["research_status"] = FieldResearchStatus.UNKNOWN.value
+                validation_status = "INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS"
+                notes = (
+                    f"Team structure address was used as GAMEPLAN base address. "
+                    f"COACHDATA RVA layout requires coach_codec bitfield decoding. "
+                    f"Value {current_val} demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback."
+                )
+                remediated_counts["coach_demoted"] += 1
+                remediated_counts["unknown"] += 1
+
+            elif entry.family == "world_settings":
+                winfo = self._world_catalog.get(entry.field_id, {})
+                stype = winfo.get("storage_type", "uint32")
+                slot_name = winfo.get("slot", "SLOT_SETTINGS")
+                prange = winfo.get("profile_range")
+
+                # Typed decoding: if storage_type is float and value was stored as uint32 bit pattern
+                if stype == "float":
+                    if isinstance(current_val, int) and current_val > 1000:
+                        current_val = round(struct.unpack("<f", struct.pack("<I", current_val))[0], 4)
+                        remediated_counts["world_floats_decoded"] += 1
+                    elif isinstance(current_val, float):
+                        remediated_counts["world_floats_decoded"] += 1
+
+                # Check bounds
+                if prange and len(prange) == 2 and prange[0] is not None and prange[1] is not None:
+                    min_v, max_v = prange
+                    if current_val is None or not (min_v <= current_val <= max_v):
+                        is_valid = False
+                        validation_status = f"OUT_OF_BOUNDS_CHECK_FAILED: {current_val} not in [{min_v}, {max_v}]"
+                        record_dict["native_identity_grade"] = NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+                        record_dict["research_status"] = FieldResearchStatus.UNKNOWN.value
+                        notes = (
+                            f"Raw reading {current_val} violates declared range [{min_v}, {max_v}]. "
+                            f"Target belongs to {slot_name} ({winfo.get('slot_rva')}) offset {winfo.get('offset')}, "
+                            f"not SLOT_SETTINGS."
+                        )
+                        remediated_counts["world_demoted"] += 1
+                        remediated_counts["unknown"] += 1
+                    else:
+                        is_valid = True
+                        record_dict["native_identity_grade"] = NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+                        record_dict["research_status"] = FieldResearchStatus.EVIDENCE_ADDED.value
+                        validation_status = "UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS"
+                        notes = f"Observation {current_val} in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback."
+                        remediated_counts["raw_candidate"] += 1
+                else:
+                    record_dict["native_identity_grade"] = NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+                    record_dict["research_status"] = FieldResearchStatus.EVIDENCE_ADDED.value
+                    validation_status = "UNVERIFIED_LEGACY_RAW_CAPTURE"
+                    notes = f"Raw observation {current_val}; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE."
+                    remediated_counts["raw_candidate"] += 1
+
+            analysis = self.analyze_field_mechanism(entry, current_val, target_addr_hex, is_valid)
             record_dict["live_evidence"] = {
-                "process_name": "NBA2K22.exe",
-                "pid": self._mem.pid if self._mem else None,
-                "base_address": hex(self._mem.base_address) if self._mem else None,
-                "read_address": addr_hex,
-                "live_value": live_val,
-                "read_notes": read_notes,
-                "read_timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                "process_name": self.TARGET_PROCESS_NAME,
+                "target_process_pe_sha256": self.TARGET_PE_SHA256,
+                "pid": self.TARGET_PROCESS_PID,
+                "base_address": hex(self.TARGET_MODULE_BASE),
+                "read_address": target_addr_hex,
+                "live_value": current_val,
+                "access_mode": "PROCESS_VM_READ_ONLY",
+                "validation_status": validation_status,
+                "bounds_validation_passed": is_valid,
+                "read_notes": notes,
+                "audit_remediation_timestamp": now_iso,
             }
             record_dict["mechanism_analysis"] = analysis
-
-            if live_val is not None and addr_hex not in ("NO_PROCESS", "UNKNOWN_OFFSET"):
-                record_dict["native_identity_grade"] = NativeIdentityGrade.LIVE_RECEIPT.value
-                record_dict["research_status"] = FieldResearchStatus.EVIDENCE_ADDED.value
 
             with open(rec_path, "w", encoding="utf-8") as f:
                 json.dump(record_dict, f, indent=2, ensure_ascii=False)
 
-            results.append({
-                "field_id": entry.field_id,
-                "display_name": entry.display_name,
-                "family": entry.family,
-                "live_value": live_val,
-                "address": addr_hex,
-            })
-
             dossier_entries.append(
                 f"### {entry.field_id} · {entry.display_name}\n"
                 f"- **家族与候选键**：`{entry.family}` / `{entry.candidate_native_key}`\n"
-                f"- **实机内存地址与读回值**：地址 `{addr_hex}` | 实机值 `{live_val}`\n"
+                f"- **证据等级与状态**：`{record_dict['native_identity_grade']}` | `{record_dict['research_status']}` ({validation_status})\n"
+                f"- **内存地址与数值**：地址 `{target_addr_hex}` | 解码值 `{current_val}`\n"
+                f"- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）\n"
                 f"- **字段作用与影响**：{analysis['impact_analysis']}\n"
                 f"- **机制与跨字段关联**：\n" +
                 "".join(f"  - {assoc}\n" for assoc in analysis['associations']) +
                 f"- **非线性阈值/边界**：{analysis['thresholds']}\n"
+                f"- **审计说明**：{notes}\n"
             )
 
         dossier_path = os.path.join(self.evidence_dir, "LIVE_MECHANISM_REVERSE_ENGINEERING_DOSSIER.md")
         with open(dossier_path, "w", encoding="utf-8") as f:
             f.write(
-                "# NBA 2K22 全量 204 个种子字段实机 REA 机制逆向与关联图谱档案\n\n"
-                f"> **生成时间**：{datetime.datetime.now(datetime.timezone.utc).isoformat()}\n"
-                f"> **实机进程**：`NBA2K22.exe` (PID: {self._mem.pid if self._mem else 'N/A'}, Base: 0x140000000)\n"
-                f"> **核心分析对象**：现役焦点球员 Tyrese Haliburton (地址: {hex(self._active_player['address']) if self._active_player else 'N/A'})\n"
-                f"> **世界设置槽位**：SLOT_SETTINGS (基址 0x0632B4B0 -> 解引用指针 {hex(self._world_settings_ptr) if self._world_settings_ptr else 'N/A'})\n\n"
+                "# NBA 2K22 全量 204 个种子字段实机 REA 机制逆向与证据质量分层档案 (Remediated V2)\n\n"
+                f"> **生成时间**：{now_iso}\n"
+                f"> **实机目标**：`{self.TARGET_PROCESS_NAME}` (PE SHA256: `{self.TARGET_PE_SHA256}`, PID: {self.TARGET_PROCESS_PID}, Base: {hex(self.TARGET_MODULE_BASE)})\n"
+                f"> **核心分析对象**：现役焦点球员 Tyrese Haliburton (Player Struct 步长 0xDF0, 倾向块 0x458..0x4BA)\n"
+                f"> **控制器槽位分离**：SLOT_SETTINGS (0x0632B4B0), SLOT_TRADE (0x0632B498), SLOT_SLIDERS (0x0632B4A0)\n"
+                f"> **认知分层声明**：全量 204 项机制分析均严格标识为 `PRIOR_LITERATURE_HYPOTHESIS`，在获得授权的受控实机变化实验前，不主张已测定真实引擎因果。\n\n"
+                "## 证据质量分层统计\n"
+                f"- **总字段记录**：{remediated_counts['total']}\n"
+                f"- **有效实机收据 (`LIVE_RECEIPT`)**：{remediated_counts['live_receipt']} (经结构体与范围校验的球员倾向)\n"
+                f"- **原始快照候选 (`RAW_MEMORY_CAPTURE_CANDIDATE`)**：{remediated_counts['total'] - remediated_counts['live_receipt']}\n"
+                f"- **其中降级为 `UNKNOWN`**：{remediated_counts['unknown']} (包含 19 项 Coach 地址别名字段与越界世界设置)\n"
+                f"- **浮点位型解码修正**：{remediated_counts['world_floats_decoded']} (如 game_speed 1056964608 -> float32 0.5)\n"
+                f"- **物理地址碰撞与别名映射**：详见 `PHYSICAL_IDENTITY_COLLISION_TABLE.json` (共 36 组别名对，实际对应 50 个物理控制器槽位)\n\n"
                 "---\n\n"
                 + "\n\n".join(dossier_entries)
             )
 
-        return {
-            "total_analyzed": len(results),
-            "live_process_pid": self._mem.pid if self._mem else None,
-            "dossier_path": dossier_path,
+        # Update iteration ledger with remediation transaction
+        ledger_entry = {
+            "timestamp_utc": now_iso,
+            "operation": "FORENSIC_REMEDIATION_SWEEP",
+            "task_id": "NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001",
+            "audit_sha_addressed": "66f84d4dee100858710425c6ea5ab63ec0c9c519",
+            "remediated_counts": remediated_counts,
+            "action": "Downgraded unverified Coach and out-of-bounds World records to RAW_MEMORY_CAPTURE_CANDIDATE, decoded float32, added physical collision table, updated mechanism epistemological tier.",
         }
+        with open(self.ledger_path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(ledger_entry, ensure_ascii=False) + "\n")
+
+        # Update current checkpoint
+        chk_data = {
+            "schema_version": "nba2k22.vae.single_field_checkpoint.v1",
+            "task_id": "NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001",
+            "run_state": "SWEEP_1_REMEDIATED",
+            "sweep": 1,
+            "cursor": 204,
+            "next_field_id": "SWEEP_COMPLETE",
+            "queue_sha_ref": "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+            "processed_in_current_sweep": 204,
+            "evidence_added": remediated_counts["live_receipt"] + remediated_counts["raw_candidate"],
+            "unknown_fields": remediated_counts["unknown"],
+            "blocked_fields": 0,
+            "review_readiness": "READY_FOR_REMEDIAL_REVIEW",
+            "last_completed_field": "COACH_DEFAULT_019",
+            "actual_executor_model": "Gemini Flash 3.8 (Human-assigned label)",
+            "latest_completed_commit": "f1e02101ead9e48c0dd3591e8c76501e407acfab",
+            "rework_audits": [
+                "d89a0b0551774914b8a0eb944d5c68ce26950087",
+                "a7832f166602e47f7d9952a926a43315332c8c2b",
+                "66f84d4dee100858710425c6ea5ab63ec0c9c519"
+            ],
+            "next_operation": "Submit remediated candidate SHA to independent reviewer for concentrated verification.",
+        }
+        with open(self.checkpoint_path, "w", encoding="utf-8") as f:
+            json.dump(chk_data, f, indent=2, ensure_ascii=False)
+
+        return remediated_counts

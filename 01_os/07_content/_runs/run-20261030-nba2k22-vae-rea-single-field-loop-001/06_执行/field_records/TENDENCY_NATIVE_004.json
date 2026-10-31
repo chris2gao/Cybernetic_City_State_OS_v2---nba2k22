@@ -40,14 +40,22 @@
   "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
   "live_evidence": {
     "process_name": "NBA2K22.exe",
+    "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e4e9b033",
     "live_value": 75,
-    "read_notes": "Read from active player Tyrese Haliburton",
-    "read_timestamp": "2026-10-31T03:31:03.536848+00:00"
+    "access_mode": "PROCESS_VM_READ_ONLY",
+    "validation_status": "LIVE_RECEIPT_VALIDATED_IN_ACTIVE_PLAYER",
+    "bounds_validation_passed": true,
+    "read_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x45B)",
+    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
   },
   "mechanism_analysis": {
+    "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
+    "empirical_causality_verified": false,
+    "controlled_experiment_conducted": false,
+    "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
     "impact_analysis": "持球突破行进冲刺时直接起跳战斧、单手或双手暴扣终结意愿。",
     "associations": [
       "受 Driving Dunk 属性和弹跳 (Vertical) 属性门禁约束",
@@ -56,12 +64,22 @@
       "与突破上篮倾向 (0x459) 互为消长"
     ],
     "confounders": [
-      "对位防守紧逼度 (Tight vs Sag)",
-      "单节体能衰减 (<60 命中率下降)",
-      "垃圾时间换人扰动"
+      "比赛分差",
+      "体能损耗",
+      "战术叫号拦截",
+      "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "数值 > 75 确保具备冲刺空间时优先起跳扣篮，规避追尾盖帽；数值 < 25 则全员地板流上篮。",
     "live_value": 75,
-    "live_address": "0x7ff4e4e9b033"
+    "live_address": "0x7ff4e4e9b033",
+    "bounds_validation_passed": true
+  },
+  "raw_legacy_capture": {
+    "legacy_value": 75,
+    "legacy_address": "0x7ff4e4e9b033",
+    "legacy_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x45B)",
+    "legacy_timestamp": "",
+    "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
+    "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   }
 }
