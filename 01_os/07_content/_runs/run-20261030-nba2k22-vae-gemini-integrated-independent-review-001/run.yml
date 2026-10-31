@@ -1,0 +1,49 @@
+run_id: run-20261030-nba2k22-vae-gemini-integrated-independent-review-001
+task_id: NBA2K22-VAE-GEMINI-INTEGRATED-INDEPENDENT-REVIEW-20261030-001
+parent_task_id: NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001
+role: independent_review
+domain: nba2k22
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+branch: task/nba2k22-vae-gemini-integrated-independent-review-20261030
+exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+audit_subject_candidate_commit: c2d9caae388bac3ae5e586c69ee0bd2116ba473b
+audit_subject_dispatch_commit: 49659925312275d101232c3bc522f162436d28d5
+stage01_Human_A_confirmation: a98aa2db6e442bbc3aecfa552665ea13d482683e
+review_status: REWORK_REQUIRED
+lifecycle: candidate_pending_validation
+Human_candidate_acceptance: NOT_GIVEN
+Stage02_game_permission: NOT_GRANTED
+prms_save_task_context: NOT_RUN
+formal_communication_v2: NOT_PUBLISHED
+original_21_pytest_independent_reexecution: NOT_RUN
+source_equivalent_python_probes: FOUR_EXECUTED
+source_compare_changed_files: 31
+source_compare_outside_allowlist: 0
+findings:
+  P0: 4
+  P1: 5
+  P2: 3
+F02_F07:
+  F02: OPEN
+  F03: PARTIALLY_CLOSED_OFFLINE
+  F04: OPEN
+  F05: PARTIALLY_SUPPORTED
+  F06: OPEN
+  F07: PARTIALLY_CLOSED_OFFLINE
+model_record:
+  assigned_model: GPT-6
+  assigned_provider: OpenAI
+  actual_model: GPT-6
+  actual_model_source: CONVERSATION_RUNTIME_NOT_PLATFORM_ATTESTED
+  platform_model_attestation: UNKNOWN
+  window_instance_id: UNKNOWN_NOT_EXPOSED
+  current_window: PREVIOUS_STAGE01_REVIEWER_WINDOW_REUSED_BY_EXPLICIT_HUMAN_OVERRIDE
+  developer_separation: DIFFERENT_FROM_GEMINI_DEVELOPER
+  newly_isolated_fork: false
+review_input_packet: 01_任务输入/audit_task_packet.json
+review_evidence_matrix: 07_测试执行/audit_evidence_matrix.json
+review_probe_script: 07_测试执行/source_equivalent_counterexample_probes.py
+review_report: 08_结论/independent_review_report.md
+next_owner: Gemini_execution_integrated_fix_loop
+integration_into_master: NOT_REQUESTED
+game_or_save_mutation: NOT_RUN_BY_REVIEW
