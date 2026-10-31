@@ -1,0 +1,109 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_011",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0011",
+  "research_date": "2026-10-30",
+  "question": "Does EURO_STEP_LAYUP_TENDENCY control CPU selection of a euro-step layup gather when a drive presents a finish opportunity?",
+  "identity": {
+    "candidate": "tendency.EURO_STEP_LAYUP_TENDENCY",
+    "project_offset": "0x462",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "live_PC22_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 11
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "cross-platform roster project, PC execution UNKNOWN",
+      "locator": "ATD list: eurostep, hopstep, spin layups and stepthrough",
+      "grade": "SAME_VERSION_EDITING_INTENT",
+      "claim": "ATD edits euro-step layup frequency from real use",
+      "limits": "No isolated in-game effect demonstrated"
+    },
+    {
+      "id": "S2",
+      "url": "https://hoopsgamers.com/nba-2k22-controls-shooting-dribbling-dunking-defense-rebound-offense-guide-xbox-1-x-ps5-ps4",
+      "author": "Hoops Gamers editorial, individual byline UNKNOWN",
+      "date": "2021 release-era, exact UNKNOWN",
+      "version": "NBA 2K22",
+      "platform": "PS/Xbox controls, PC/native not proven",
+      "locator": "Shooting & Finishing Controls: Euro Step",
+      "grade": "USER_INPUT_NOT_CPU_AI",
+      "claim": "Euro step is separately identified human input category",
+      "limits": "Cannot infer CPU preference or byte+UI identity"
+    },
+    {
+      "id": "S3",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-09-17 and later edits",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "post #1 frequency distribution theory",
+      "grade": "GENERAL_COMMUNITY_MODEL",
+      "claim": "Proposes frequency-minded tendency calibration for AI behavior",
+      "limits": "P25/P50/P75 are not verified engine probabilities or Eurostep response functions"
+    }
+  ],
+  "claims": [
+    {
+      "id": "EU01",
+      "sources": [
+        "S1"
+      ],
+      "status": "ROSTER_EDIT_OBSERVED_NOT_ENGINE",
+      "claim": "Euro step is treated separately from other gather tendencies by roster editors"
+    },
+    {
+      "id": "EU02",
+      "sources": [
+        "S2",
+        "S3"
+      ],
+      "status": "FIELD_CONSUMPTION_UNVERIFIED",
+      "claim": "Manual move and editorial calibration do not prove autonomous CPU triggering"
+    }
+  ],
+  "uncertainties": [
+    "No field-specific PC22 controlled evidence; NO_DIRECT_SOURCE",
+    "Animation eligibility, stamina/defense and other gather tendencies confound selection"
+  ],
+  "relations": [
+    "Driving Layup, Hop-Step, Spin Layup, Step Through competing finishing actions",
+    "Coach/Playbook initiates opportunities, not guaranteed move type",
+    "Finishing ability/badges and defense may affect animation success",
+    "Training direct effect UNKNOWN"
+  ],
+  "observables": [
+    "Euro-step attempts per eligible CPU drive",
+    "other gather actions and layup/dunk alternatives",
+    "game build and player UID plus animation accessibility",
+    "3D visible action vs Calendar separate"
+  ],
+  "REA_question": {
+    "id": "REA_EUROSTEP_011",
+    "question": "For two verified PC22 player UIDs, does read-only PLAYER+0x462 match their exact displayed Euro-Step Layup Tendency UI value in same build/save/time?",
+    "match": "SCOPED_FIELD_IDENTITY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_PC22_NATIVE_CONSUMPTION_SOURCE",
+  "game_effect": "NOT_RUN",
+  "REA_native": "NOT_RUN",
+  "next_improvement": "Obtain UID/native/UI correspondence, then test CPU euro-step conditional frequency independent of other finishing moves"
+}
