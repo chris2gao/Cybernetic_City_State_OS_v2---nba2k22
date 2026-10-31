@@ -1,0 +1,225 @@
+{
+  "schema_version": "nba2k22.vae.rea.remediation.rereview.matrix.v1",
+  "task_id": "NBA2K22-VAE-REA-REMEDIATION-INDEPENDENT-REREVIEW-20261031-001",
+  "candidate": "ee515e0b63461ace474878dde67864f3df524cf1",
+  "prior_candidate": "f1e02101ead9e48c0dd3591e8c76501e407acfab",
+  "verdict": "REWORK_REQUIRED",
+  "old_finding_closure": [
+    {
+      "id": "REA-AUD-P0-01",
+      "status": "PARTIALLY_CLOSED",
+      "rationale": "旧Coach错误值已统一降级；新函数通过team+0xCE8拿staff、coach_codec.decode，但未经过CoachLocator.calibrate/verify_native的类型/归属签名，且19项未实际重读。"
+    },
+    {
+      "id": "REA-AUD-P0-02",
+      "status": "PARTIALLY_CLOSED",
+      "rationale": "新增typed reader/槽位区分；旧World记录只有后处理，仍引用旧错误SLOT_SETTINGS地址，而非重读3个独立控制器。"
+    },
+    {
+      "id": "REA-AUD-P0-03",
+      "status": "CODE_PATH_CLOSED_UNVERIFIED_RUNTIME",
+      "rationale": "新read_live_field使用*_safe/None并拒绝静态Coach兜底；缺失败读取注入和完整活进程测试。"
+    },
+    {
+      "id": "REA-AUD-P0-04",
+      "status": "OPEN",
+      "rationale": "48个已命名倾向旧live_value仅经0..100即可重新认定LIVE_RECEIPT；未绑定独立原始Getter/原始字节/Save/PE实测。"
+    },
+    {
+      "id": "REA-AUD-P0-05",
+      "status": "PARTIALLY_CLOSED",
+      "rationale": "204个机制均加PRIOR_LITERATURE_HYPOTHESIS与empirical_causality_verified=false；影响/阈值语句继续使用确定性口吻，需避免消费者忽略tier。"
+    },
+    {
+      "id": "REA-AUD-P1-06",
+      "status": "OPEN",
+      "rationale": "新修复账本重复追加FORENSIC_REMEDIATION_SWEEP（当前总208条：204原迭代+4修复），本次并非204项新实机单字段实验。"
+    },
+    {
+      "id": "REA-AUD-P1-07",
+      "status": "PARTIALLY_CLOSED",
+      "rationale": "checkpoint 48 LIVE+63 raw-in-bounds+93 UNKNOWN=204内部计数吻合，但latest_completed_commit停留旧f1e021，无法证明新Live闭环；反复修复写入产生时点分叉。"
+    },
+    {
+      "id": "REA-AUD-P1-08",
+      "status": "CLOSED_FOR_LABELING",
+      "rationale": "51项UNKNOWN旧‘已确认保留位’表述删除并标UNKNOWN_RAW_BYTE_WITH_ADDRESS。"
+    },
+    {
+      "id": "REA-AUD-P1-09",
+      "status": "OPEN",
+      "rationale": "target_process_pe_sha256在类中硬编码常量并直接写入所有204个记录；没有本次采集时hash/存档/进程创建时间的可核验收据。"
+    },
+    {
+      "id": "REA-AUD-P1-10",
+      "status": "PARTIALLY_CLOSED",
+      "rationale": "已建86个世界种子按(slot,offset)的50组静态槽位/36组碰撞表，但真实物理指针未重读且身份/别名是否有效仍待证。"
+    },
+    {
+      "id": "REA-AUD-P2-11",
+      "status": "PARTIALLY_CLOSED",
+      "rationale": "新增6个测试，开发者称14/14；重大问题是测试直接对项目正式Run做全量修复，污染账本和证据；测试也未验证真实模拟内存错误路径。"
+    },
+    {
+      "id": "REA-AUD-P2-12",
+      "status": "OPEN",
+      "rationale": "原始证据虽可由历史Git SHA恢复，当前修复版raw_legacy_capture重复覆盖旧值/时间，不能视为已留存不可变原始观测。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "REMED-P0-01",
+      "level": "P0",
+      "title": "测试直接改写生产研究证据",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_live_analyzer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py"
+      ],
+      "proof": "test_remediation_epistemology_and_downgrade() 使用真实repo_root的analyzer fixture；调用remediate_all_field_records()，直接以w覆盖204份field_records、dossier、collision与checkpoint，并以a模式追加ledger。不是tmp_path。",
+      "impact": "每次回归测试改变受审核对象本身，测试结果及Git工作树不稳定，违背测试与证据隔离。",
+      "exit_gate": "给remediation注入temp_run_dir并使用复制fixture；只允许显式CLI/manual with audit log改真实Run；CI只读检查git clean和204记录散列不变。"
+    },
+    {
+      "id": "REMED-P0-02",
+      "level": "P0",
+      "title": "重复修复破坏当前档案中的原始采集事实",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_002.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_001.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+      ],
+      "proof": "首次raw_legacy_capture由old_live/live_value构造，但随后live_evidence被覆盖且删除read_timestamp。下一次又从覆盖后的live_evidence构造raw_legacy_capture：WORLD_REG_002旧f1e0 raw=1056964608，当前ee515e legacy_value=0.5、legacy_timestamp=''；TENDENCY_NATIVE_001旧read_timestamp非空，当前legacy_timestamp=''。ledger已有4个FORENSIC_REMEDIATION_SWEEP。",
+      "impact": "当前版本无法只靠field JSON恢复原始位模式/捕获时间和备注；历史仓库提交仍可恢复，故是当前工件证据完整性失效而非全仓不可恢复丢失。",
+      "exit_gate": "从固定f1e021源SHA重建不可变原始采集独立归档，保留原timestamp/raw bits/addr/source hash，修复只追加derived view；两次运行产物字节相同，账本仅在新真实工作事务追加。"
+    },
+    {
+      "id": "REMED-P0-03",
+      "level": "P0",
+      "title": "48项LIVE_RECEIPT按旧数值域自动晋级",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_001.json"
+      ],
+      "proof": "remediate_all_field_records() 对非RAW名称只检查old_val!=None和0<=old_val<=100，直接设置LIVE_RECEIPT，并把固定TARGET_PE_SHA256常量写入，不验证采样字节宽度/原始读取回执/同一Save身份/Getter绑定或当前进程。",
+      "impact": "原始疑似实机采样可能有价值，但尚不足以证实48项字段原生语义身份；source-grade继续过高。",
+      "exit_gate": "区分RAW_OBSERVED_FROM_PREVIOUS_CAPTURE与NATIVE_IDENTITY_VERIFIED；真实LIVE_RECEIPT需逐项验证样本签名与目标进程信息，或按协议明确LIVE仅指RAW read且不给字段证明标签。"
+    },
+    {
+      "id": "REMED-P1-04",
+      "level": "P1",
+      "title": "63项World旧错误控制器读数在范围内仍EVIDENCE_ADDED",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/WORLD_REG_085.json"
+      ],
+      "proof": "旧数据全从SLOT_SETTINGS基址读取；后处理改用正确catalog中的SLOT_TRADE/SLOT_SLIDERS说明但未调用read_live_field重读，因此in-range值仍research_status=EVIDENCE_ADDED。WORLD_REG_085属于SLOT_SLIDERS且legacy/read_address仍SLOT_SETTINGS+0x00。",
+      "impact": "源身份已知错误的历史数值会被当成该世界设置的有效观测；虽然native_identity_grade是RAW_MEMORY_CAPTURE_CANDIDATE，research_status仍不严谨。",
+      "exit_gate": "对错误slot采集全部标INVALID_SOURCE_SLOT/UNKNOWN；新世界值必须从对应控制器重新获得独立读回后才赋值。"
+    },
+    {
+      "id": "REMED-P1-05",
+      "level": "P1",
+      "title": "PE SHA、PID、只读权限为固定文字，缺本次真实性收据",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py"
+      ],
+      "proof": "TARGET_PE_SHA256、TARGET_PROCESS_PID、TARGET_MODULE_BASE为类级常量；remediate记录中直接复制，无当前PE hash计算或process creation/save/build attestation；修复当时游戏不在运行。",
+      "impact": "修复注释可说明历史目标版本，但不能称本次独立验证了游戏身份或权限。",
+      "exit_gate": "immutable inherited_source_ref与observed_actual_fingerprint分开，后者仅经真实会话计算时填写，否则UNKNOWN。"
+    },
+    {
+      "id": "REMED-P1-06",
+      "level": "P1",
+      "title": "原始Coach对象解析未经完整Native证据链",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/coach_locator.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/coach_codec.py"
+      ],
+      "proof": "新read_live_field直接扫描team0+0xCE8并读coach_addr大小0x160解码；没用CoachLocator.calibrate()对30球队、COACHDATA类型CRC、owner和staff角色做独立验证；read error被except吞没。Coach现有19个值正确降级，尚无新实机确认。",
+      "impact": "Coach原错误源已隔离但不能称19原生Coach已重新定位验证。",
+      "exit_gate": "复用已有CoachLocator.calibrate/resolve_coaches，按team/owner/role/enum/Save读取并保存真正原始收据；无游戏时维持UNKNOWN。"
+    },
+    {
+      "id": "REMED-P1-07",
+      "level": "P1",
+      "title": "测试覆盖缺陷且运行有隐藏Runtime附加",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_live_analyzer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py"
+      ],
+      "proof": "test analyzer fixture调用LiveEngineAnalyzer.__init__->_init_memory()->GameMemory attach；若游戏正在运行且权限允许则无单独Human业务授权亦尝试附加；test_static_fallback...断言本机没有游戏而不是mock故障；唯一修复集成测试写入正式Run。",
+      "impact": "14个开发测试不能证明当前读取与修复安全门端到端正确；回归测试应是无真实进程/无真实Run副作用。",
+      "exit_gate": "构造FakeMemory/FakeScanner，在临时文件目录测试失败码/成功位/枚举、idempotency及禁止实际进程附加。"
+    },
+    {
+      "id": "REMED-P1-08",
+      "level": "P1",
+      "title": "冲突表是目录层别名，不是实机物理一致性证据",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/PHYSICAL_IDENTITY_COLLISION_TABLE.json"
+      ],
+      "proof": "compute_physical_collision_table()仅用静态R06A registry的(slot,offset)键合并成36组、50个位置；没有读取真实slot pointer、schema width和实际UI物理对应。",
+      "impact": "可作为STATIC_ALIAS_CANDIDATE，但不能称50个真实物理槽位已验证。",
+      "exit_gate": "为每组区分catalog alias与live confirmed alias，记录slot_ptr/width/type/raw receipt和来源，UNKNOWN不强合并。"
+    },
+    {
+      "id": "REMED-P2-09",
+      "level": "P2",
+      "title": "假说标签提升，但叙述仍含强因果断言",
+      "source": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py"
+      ],
+      "proof": "所有204添加PRIOR_LITERATURE_HYPOTHESIS且empirical_causality_verified=false，是正确纠偏；TENDENCY_KNOWLEDGE_MAP仍包含‘>85确立...’‘>70确保...’‘直接’等未经受控实验证明的肯定句。",
+      "impact": "人工读者或忽略tier的角色服务可能仍误用为确定机制。",
+      "exit_gate": "将影响/阈值字段改为候选假说、建议调节区间或未经验证来源，API下游强制按证据等级过滤。"
+    },
+    {
+      "id": "REMED-P2-10",
+      "level": "P2",
+      "title": "修正后总分类可对齐，但源流程与生命周期未真正完成",
+      "source": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/current_checkpoint.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/08_结论/completion_pointer.md",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+      ],
+      "proof": "48 LIVE+63 raw-in-bounds+93 unknown=204，内部数值可重算；checkpoint review_readiness=READY_FOR_REMEDIAL_REVIEW正确但latest_completed_commit仍f1e021（修复前）；没有逐项新的live trace。",
+      "impact": "可以作为返工候选审查，不能将状态解读为产品安全试验或机制研究完成。",
+      "exit_gate": "新实机/新字段步骤使用独立batch ID与准确SHA引用；Candidate即审查候选而非验收完成。"
+    }
+  ],
+  "source_verification": {
+    "commit_parent_verified": true,
+    "changed_files": 212,
+    "field_records_touched": 204,
+    "source_modules_modified": 2,
+    "new_test_module": 1,
+    "all_in_task_allowlist": true,
+    "commit_sha": "ee515e0b63461ace474878dde67864f3df524cf1"
+  },
+  "runtime": {
+    "original_14_pytest": "DEVELOPER_REPORTED_NOT_INDEPENDENTLY_RERUN",
+    "independent_reproduction": "ONE_TWO_PASS_SOURCE_EQUIVALENT_TEMP_FILESYSTEM_PROBE_EXECUTED",
+    "live_game_read": "NOT_RUN",
+    "game_memory_write": "NOT_RUN",
+    "repo_master_write": "NOT_RUN"
+  },
+  "fixed_values": {
+    "old_WORLD_REG_002_raw": 1056964608,
+    "new_WORLD_REG_002_live": 0.5,
+    "new_WORLD_REG_002_raw_legacy_value": 0.5,
+    "original_read_timestamp_preserved_in_new": false,
+    "ledger_original_rows": 204,
+    "ledger_current_rows": 208,
+    "extra_remediation_transactions": 4,
+    "checkpoint": {
+      "live": 48,
+      "raw_in_bounds": 63,
+      "unknown": 93
+    }
+  },
+  "Human_acceptance": false,
+  "PRMS": "NOT_RUN"
+}
