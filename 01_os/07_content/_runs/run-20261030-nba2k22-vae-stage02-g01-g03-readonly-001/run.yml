@@ -4,9 +4,9 @@ parent_program_task_id: NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001
 repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
 branch: task/nba2k22-vae-stage02-readonly-evidence-g01-g03-20261030
 exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
-lifecycle: research_only
+lifecycle: deferred
 stage: workflow_stage_02_information_collection
-status: DISPATCHED_NOT_STARTED
+status: DEFERRED_BY_HUMAN_RESOURCE_UPDATE_NOT_EXECUTED
 model_record:
   assigned_provider: OpenAI
   assigned_product: Codex
@@ -30,3 +30,13 @@ expected_outputs:
   - 02_信息收集与提炼/（有界资料包和缺口矩阵）
   - 07_测试执行/（实际静态/只读证据）
   - 08_结论/completion_pointer.md
+
+resource_reassignment:
+  directive_date: 2026-10-30
+  source: Human VAE planning conversation
+  directive: VAE currently only GPT and Gemini Flash 3.8 with local execution capabilities participate; Codex quota unavailable
+  original_dispatch_sha: ac48662f1c96e60eab04a077ed93cf0ec2694c4b
+  outcome: DEFERRED_NOT_REASSIGNED_IN_PLACE
+  execution_evidence: NONE_RECEIVED
+  superseding_task: NOT_DISPATCHED
+  audit_note_path: 08_结论/RESOURCE_AVAILABILITY_DEFERRAL_20261030.md
