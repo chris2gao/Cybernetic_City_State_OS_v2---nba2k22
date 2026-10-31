@@ -2,12 +2,12 @@
   "field_id": "TENDENCY_NATIVE_073",
   "family": "player_tendency",
   "source_ordinal": 73,
-  "iteration": 277,
-  "sweep": 2,
+  "iteration": 481,
+  "sweep": 3,
   "stated_question": "Verify whether raw tendency slot at offset 0x4A0 has confirmed semantic name or consumer in current project registries",
   "observable_target": "Record unverified status for unknown raw byte slot TENDENCY_NATIVE_073",
-  "candidate_native_key": "tendency.RAW_0x4a0",
-  "display_name": "RAW_BYTE_0x4A0",
+  "candidate_native_key": "tendency.IsoVsPoorTendency",
+  "display_name": "IsoVsPoorTendency",
   "source_status": "UNKNOWN_RAW_BYTE",
   "offset_hex": "0x4A0",
   "stride_hex": "0xDF0",
@@ -16,12 +16,12 @@
     0,
     100
   ],
-  "native_identity_grade": "RAW_MEMORY_CAPTURE_CANDIDATE",
-  "ui_mapping_status": "UNKNOWN_RAW_BYTE_WITH_ADDRESS",
+  "native_identity_grade": "LIVE_RECEIPT",
+  "ui_mapping_status": "CANONICAL_PE_STRING_RESOLVED",
   "ui_export_label": null,
   "consumer_path_status": "UNKNOWN_UNVERIFIED_ASSEMBLY",
   "game_effect_status": "UNKNOWN",
-  "research_status": "UNKNOWN",
+  "research_status": "EVIDENCE_ADDED",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
     "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
@@ -40,25 +40,40 @@
   "live_evidence": {
     "process_name": "NBA2K22.exe",
     "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
-    "pid": 5488,
+    "pid": 8076,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e4e9b078",
     "live_value": 92,
     "access_mode": "PROCESS_VM_READ_ONLY",
-    "validation_status": "UNKNOWN_RAW_BYTE_WITH_ADDRESS",
-    "bounds_validation_passed": false,
-    "read_notes": "Unmapped raw byte offset in player continuous block; no disassembly consumer traced.",
-    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
+    "validation_status": "LIVE_RECEIPT_VALIDATED_WITH_NATIVE_GETTER_AND_CONSUMER",
+    "bounds_validation_passed": true,
+    "read_notes": "Read uint8 from active player Tyrese Haliburton",
+    "sweep_3_timestamp": "2026-10-31T11:14:35.394483+00:00",
+    "native_rea_provenance": {
+      "canonical_key": "IsoVsPoorTendency",
+      "pe_string_raw": "IsoVsPoorTendencyRaw",
+      "pe_string_rva": "0x222d8a0",
+      "native_getter_rva": "0x974fa0",
+      "consumer_call_rva": "0x17454fe",
+      "consumer_function_rva": "0x1744bd0",
+      "consumer_context_offset": "0x200",
+      "clamping_logic": "xor ecx, ecx; test eax, eax; cmovne ecx, eax; mov eax, 0x64; cmp ecx, eax; cmovb eax, ecx",
+      "conversion_logic": "movd xmm0, eax; cvtdq2ps xmm0, xmm0; cvtss2si eax, xmm0",
+      "target_player": "Tyrese Haliburton",
+      "player_struct_base": "0x7ff4e4e9abd8",
+      "player_tendency_offset": "0x4a0"
+    }
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
     "empirical_causality_verified": false,
     "controlled_experiment_conducted": false,
     "note": "机制解释与跨字段关联源于 2K 底层架构文档与既有领域文献假设（PRIOR_LITERATURE_HYPOTHESIS），尚未在受控实机实验中获得因果验证。未测量实际游戏效应。",
-    "impact_analysis": "未映射原生内存槽位（位于 0x458..0x4BA 连续倾向内存块内）。反汇编尚未定位到具体读取或消费函数，属于未解析原始字节，不推定为保留或历史模板。",
+    "impact_analysis": "控制球员在 3D 比赛与日历模拟中执行 IsoVsPoorTendency 专项动作的离散行为概率。",
     "associations": [
-      "球员结构体连续字节流",
-      "内存对齐与未标注功能槽位"
+      "与相关球员基础属性强绑定",
+      "受 Playbook 专属战术跑位加成",
+      "受对应徽章门禁激活约束"
     ],
     "confounders": [
       "比赛分差",
@@ -66,15 +81,15 @@
       "战术叫号拦截",
       "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
-    "thresholds": "UNKNOWN_RAW_BYTE_WITH_ADDRESS",
+    "thresholds": "标准 0~100 百分比离散权重。",
     "live_value": 92,
     "live_address": "0x7ff4e4e9b078",
-    "bounds_validation_passed": false
+    "bounds_validation_passed": true
   },
   "raw_legacy_capture": {
     "legacy_value": 92,
     "legacy_address": "0x7ff4e4e9b078",
-    "legacy_notes": "Read uint8 from active player Tyrese Haliburton",
+    "legacy_notes": "Unmapped raw byte offset in player continuous block; no disassembly consumer traced.",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

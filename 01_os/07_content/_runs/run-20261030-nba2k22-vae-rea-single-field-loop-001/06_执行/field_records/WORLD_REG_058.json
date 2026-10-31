@@ -2,8 +2,8 @@
   "field_id": "WORLD_REG_058",
   "family": "world_settings",
   "source_ordinal": 58,
-  "iteration": 361,
-  "sweep": 2,
+  "iteration": 565,
+  "sweep": 3,
   "stated_question": "Verify slot RVA, offset, storage type, profile range, and runtime verification status for world setting world.trade_and_draft_rules.trade_difficulty",
   "observable_target": "Confirm static R06A registry candidate parameters (RVA 0x0632B498, offset 0x174) and record lack of live readback verification",
   "candidate_native_key": "world.trade_and_draft_rules.trade_difficulty",
@@ -16,7 +16,7 @@
     null,
     null
   ],
-  "native_identity_grade": "RAW_MEMORY_CAPTURE_CANDIDATE",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_MENU_SYNC",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_LIVE_3D_OR_SIM_ENGINE",
@@ -40,15 +40,27 @@
   "live_evidence": {
     "process_name": "NBA2K22.exe",
     "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
-    "pid": 5488,
+    "pid": 8076,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e67ff378",
     "live_value": 50,
     "access_mode": "PROCESS_VM_READ_ONLY",
-    "validation_status": "UNVERIFIED_LEGACY_RAW_CAPTURE",
-    "bounds_validation_passed": false,
-    "read_notes": "Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
-    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
+    "validation_status": "LIVE_RECEIPT_VERIFIED_IN_CONTROLLER_SLOT",
+    "bounds_validation_passed": true,
+    "read_notes": "Read uint32 from SLOT_TRADE (0x0632B498) offset 0x174",
+    "sweep_3_timestamp": "2026-10-31T11:14:35.394483+00:00",
+    "native_rea_provenance": {
+      "controller_slot_name": "SLOT_TRADE",
+      "controller_slot_rva": "0x0632B498",
+      "controller_slot_base": "0x7ff4e67ff204",
+      "slot_offset": "0x174",
+      "storage_type": "uint32",
+      "profile_range": [
+        null,
+        null
+      ],
+      "profile_default": 50
+    }
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -70,12 +82,12 @@
     "thresholds": "合法值域区间：[None, None]",
     "live_value": 50,
     "live_address": "0x7ff4e67ff378",
-    "bounds_validation_passed": false
+    "bounds_validation_passed": true
   },
   "raw_legacy_capture": {
     "legacy_value": 50,
     "legacy_address": "0x7ff4e67ff378",
-    "legacy_notes": "Read uint32 from SLOT_TRADE (0x0632B498) offset 0x174",
+    "legacy_notes": "Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

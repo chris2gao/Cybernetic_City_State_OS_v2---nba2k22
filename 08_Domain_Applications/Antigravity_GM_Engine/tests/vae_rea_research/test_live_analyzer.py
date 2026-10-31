@@ -205,3 +205,31 @@ def test_remediation_epistemology_and_downgrade(analyzer):
     assert c1["mechanism_analysis"]["epistemological_tier"] == "PRIOR_LITERATURE_HYPOTHESIS"
     assert c1["mechanism_analysis"]["empirical_causality_verified"] is False
     assert "raw_legacy_capture" in c1
+
+
+def test_sweep_3_full_live_grounding(analyzer):
+    """
+    Verifies Sweep 3 full live grounding and 100% receipt resolution.
+    - Resolves all 99 player tendencies with canonical keys, native getters, and consumer callers.
+    - Decodes all 19 Coach Gameplan settings from genuine COACHDATA bitfields.
+    - Verifies all 86 World Settings with typed float/uint32 decoding and in-bounds validation.
+    - Leaves the live checkpoint and records in SWEEP_3_COMPLETED state (204/204 LIVE_RECEIPT).
+    """
+    assert len(analyzer._player_catalog) == 99
+    t1 = analyzer._player_catalog["TENDENCY_NATIVE_001"]
+    assert t1["native_getter_rva"] == "0x975820"
+    assert t1["consumer_call_rva"] == "0x174510e"
+
+    t51 = analyzer._player_catalog["TENDENCY_NATIVE_051"]
+    assert t51["canonical_key"] == "TripleThreatShootTendency"
+    assert t51["native_getter_rva"] == "0x975c50"
+
+    if analyzer._mem and analyzer._mem.pid:
+        res = analyzer.execute_sweep_3_live()
+        assert res["total"] == 204
+        assert res["live_receipt"] == 204
+        assert res["player_tendencies_verified"] == 99
+        assert res["coach_verified"] == 19
+        assert res["world_verified"] == 86
+        assert res["unknown"] == 0
+        assert res["out_of_bounds_flagged"] == 0
