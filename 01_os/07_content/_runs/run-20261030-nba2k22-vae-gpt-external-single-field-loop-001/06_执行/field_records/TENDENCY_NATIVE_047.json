@@ -1,0 +1,47 @@
+{
+  "field_id": "TENDENCY_NATIVE_047",
+  "iteration_id": "SWEEP01_FIELD0047",
+  "question": "Can raw 0x486 be independently matched to an exact PC22 UI tendency?",
+  "native_candidate": {
+    "offset": "0x486",
+    "name": "UNKNOWN_RAW_BYTE",
+    "declared_range": [
+      0,
+      100
+    ],
+    "consumer": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x486\" tendency",
+    "date": "2026-10-31",
+    "result": "NO_DIRECT_SOURCE"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction historical 2K22 archive",
+      "date": "2021-09 roster, page date UNKNOWN",
+      "platform": "web export",
+      "claim": "Named UI tendencies only, no byte offsets"
+    }
+  ],
+  "claim": "No verified mapping or causal response for 0x486",
+  "conflicts": [
+    "Export order must not be used to assign Native byte",
+    "No same-player Native/UI readback"
+  ],
+  "relationships": "Coach, player, training links UNKNOWN pending identity",
+  "metrics": [
+    "UID-bound read-only candidate and exact UI value",
+    "independent two-player comparison at same build/save",
+    "neighboring byte false-match check"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_047",
+    "question": "Can two UID-verified PC22 PLAYER+0x486 values be mapped to exactly one tendency UI field without positional inference?",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "rea": "NOT_RUN"
+}
