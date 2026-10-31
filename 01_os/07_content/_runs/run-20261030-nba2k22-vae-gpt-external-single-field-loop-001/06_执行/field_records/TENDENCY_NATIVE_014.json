@@ -1,0 +1,135 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "iteration_id": "SWEEP01_FIELD0014",
+  "field_id": "TENDENCY_NATIVE_014",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "question": "Does SHOT_UNDER_BASKET_TENDENCY affect CPU choice to shoot immediately at point-blank range, separately from Shot Close tendency and the global Inside Shot slider?",
+  "identity": {
+    "candidate_native_key": "tendency.SHOT_UNDER_BASKET_TENDENCY",
+    "offset_hex": "0x465",
+    "declared_range": [
+      0,
+      100
+    ],
+    "range_grade": "PROJECT_ONLY",
+    "current_PC22_value": "UNKNOWN",
+    "ui_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 14
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA2K22",
+      "platform": "cross-platform ATD; PC actual test UNKNOWN",
+      "locator": "OP WHAT'S EDITED 1.2",
+      "claim": "Editors independently calibrate Shot Under Basket/Close/Mid/3PT distributions",
+      "grade": "SAME_VERSION_EDITOR_PRACTICE",
+      "limits": "Not a controlled PC22 effect study"
+    },
+    {
+      "id": "S2",
+      "url": "https://2kauction.com/mynba/2k22/players/larry-johnson",
+      "author": "2kAuction archived player database",
+      "date": "2021-09-10 roster version; page publication UNKNOWN",
+      "version": "NBA 2K22 v90 archived snapshot",
+      "platform": "web export, original platform UNKNOWN",
+      "locator": "Other tendencies / shot under basket t 38; Shot Close 50 in Shot group",
+      "claim": "Archived 2K22 fields preserve separate under-basket and close-shot values",
+      "grade": "ARCHIVED_UI_EXPORT",
+      "limits": "No proven offset 0x465 association or live CPU consumer"
+    },
+    {
+      "id": "S3",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/841295-tendency-edits-that-are-game-changers-for-realism/page84",
+      "author": "JoFri and replying 2K19 player",
+      "date": "2021-09-19",
+      "version": "2K22 question plus 2K19 answer",
+      "platform": "UNKNOWN",
+      "locator": "posts #1251–1252",
+      "claim": "Asks whether Shot/Inside/Close tendencies are simulation-only; response expressly says cannot speak for 22",
+      "grade": "VERSION_LIMITED_CONTRARY_HYPOTHESES",
+      "limits": "Does not establish 3D or Calendar consumer in PC22"
+    },
+    {
+      "id": "S4",
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte summarizing CelticLG ATD",
+      "date": "2021-12-16",
+      "version": "NBA 2K22",
+      "platform": "console released; PC work not verified",
+      "locator": "What’s Edited",
+      "claim": "Echoes same under-basket versus close tendencies in ATD roster",
+      "grade": "DUPLICATE_ORIGIN_S1",
+      "limits": "Not independent corroboration"
+    }
+  ],
+  "claims": [
+    {
+      "id": "UB01",
+      "sources": [
+        "S1",
+        "S4"
+      ],
+      "tier": "DUPLICATE_EDITOR_ORIGIN",
+      "claim": "Community editors treated under-basket/close as distinct"
+    },
+    {
+      "id": "UB02",
+      "sources": [
+        "S2"
+      ],
+      "tier": "ARCHIVED_FIELD_DISTINCTION",
+      "claim": "Archived 2K22 export displays separate labels and values, native offset not matched"
+    },
+    {
+      "id": "UB03",
+      "sources": [
+        "S3"
+      ],
+      "tier": "UNRESOLVED_3D_VS_SIM",
+      "claim": "Contemporary forum asks consumer question, older version experience cannot answer for PC22"
+    }
+  ],
+  "conflicts": [
+    "UI export uses 'Other tendencies / shot under basket t' rather than same group as Shot Close; no native byte identity",
+    "3D-vs-Sim relevance remains debated; no controlled same-build evidence",
+    "No trustworthy numeric threshold or formula"
+  ],
+  "relations": [
+    "Shot Close / layup / putback / standing dunk: alternative point-blank actions",
+    "Coach positioning and offensive role: opportunity context",
+    "Global Inside Shot slider versus player tendency: distinct controls",
+    "Close Shot rating and defense contact: success confounders",
+    "Training direct relationship UNKNOWN"
+  ],
+  "metrics": [
+    "under-basket attempts conditional on eligible CPU point-blank touches",
+    "compare near-rim but non-point-blank close-shot actions",
+    "alternatives: dunk, layup, pass and post reset",
+    "3D vs Calendar sample sources separated, save/build/player UID captured"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_SHOT_UNDER_014",
+    "question": "For two UID-verified players in the current PC NBA2K22 build, does independent read-only PLAYER+0x465 equal each player's displayed Shot Under Basket tendency value in the same save and observation window?",
+    "if_match": "SCOPED_IDENTITY_SUPPORT_ONLY",
+    "if_mismatch": "UNKNOWN",
+    "if_unavailable": "BLOCKED",
+    "executed": false,
+    "write_authorized": false
+  },
+  "result": "ARCHIVED_2K22_DISTINCT_LABEL_NATIVE_EFFECT_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_effect": "NOT_RUN",
+  "next_improvement": "After UID-to-UI proof, isolate point-blank shot choices, separately measure Calendar and 3D"
+}
