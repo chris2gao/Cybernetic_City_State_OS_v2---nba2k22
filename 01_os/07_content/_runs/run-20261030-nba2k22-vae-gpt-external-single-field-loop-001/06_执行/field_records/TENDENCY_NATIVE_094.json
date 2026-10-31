@@ -1,0 +1,62 @@
+{
+  "field_id": "TENDENCY_NATIVE_094",
+  "iteration_id": "SWEEP01_FIELD0094",
+  "primary_question": "Does player Take Charge alter deliberate attempts to draw an offensive charge rather than successful whistles?",
+  "native": {
+    "key": "tendency.TAKE_CHARGE_TENDENCY",
+    "offset": "0x4B5",
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "numeric_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/gary-payton",
+      "author": "2kAuction",
+      "date": "September 2021 snapshot; publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export",
+      "grade": "SAME_VERSION_NAMING",
+      "claim": "Independently named player tendency TAKE_CHARGE_TENDENCY; no native offset mapping"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX, PC WIP",
+      "grade": "SAME_VERSION_EDITOR",
+      "claim": "Defensive, charge and foul tendencies modified together"
+    },
+    {
+      "url": "https://blog.playstation.com/2021/08/31/nba-2k22-gameplay-deep-dive/",
+      "author": "Erick Boenisch, Visual Concepts",
+      "date": "2021-08-31",
+      "version": "NBA2K22",
+      "platform": "PS4/PS5 gameplay context, PC unverified",
+      "grade": "OFFICIAL_GENERAL_MECHANISM",
+      "claim": "Defense, steal and contest systems revised; no exact per-player tendency call"
+    }
+  ],
+  "claims": [
+    "Same-game UI label exists; native mapping not proved",
+    "Attempting defensive move is different from successfully preventing score or drawing foul"
+  ],
+  "conflicts": [
+    "global charging-foul sliders",
+    "defender positioning, Coach scheme, ratings, badges and game global sliders confound"
+  ],
+  "metrics": [
+    "charge-taking attempts / eligible defensive drive confrontations",
+    "attempts and successful outcome separately",
+    "game save/build/player UID and 3D vs Calendar"
+  ],
+  "REA_question": {
+    "id": "REA_TAKE_CHARGE_TENDENCY_94",
+    "question": "For two confirmed PC22 player UIDs, do read-only PLAYER+0x4B5 values equal exact TAKE_CHARGE_TENDENCY UI tendency at the same build/save/time?",
+    "write": false
+  },
+  "result": "SAME_VERSION_LABEL_GENERAL_DEFENSE_CONTEXT_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
