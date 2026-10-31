@@ -1,0 +1,111 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_020",
+  "iteration_id": "SWEEP01_FIELD0020",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "question": "Does Spot Up Shot Mid Range tendency influence CPU catch-and-shoot midrange choice versus Spot Up Drive after receiving ball in an eligible open spot?",
+  "identity": {
+    "candidate": "tendency.SPOT_UP_SHOT_MID_RANGE",
+    "project_offset": "0x46B",
+    "project_range": [
+      0,
+      100
+    ],
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan / Evtnj",
+      "date": "2021-11-25",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "grade": "SAME_RELEASE_COMMUNITY_THEORY",
+      "claim": "Specific spot-up / off-screen preferences named as potential in-game selection drivers, no native formula"
+    },
+    {
+      "id": "S2",
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "UNKNOWN byline",
+      "date": "2021-10-18",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN CPU-v-CPU",
+      "grade": "SAME_RELEASE_OBSERVATIONAL",
+      "claim": "Spot-up and driving tendency balances discussed, but values and outcomes unisolated"
+    },
+    {
+      "id": "S3",
+      "url": "https://bbs.hupu.com/61028308.html",
+      "author": "Hupu community contributor, name UNKNOWN",
+      "date": "2023-07 approximate",
+      "version": "NBA2K series broader, no PC22 verified",
+      "platform": "UNKNOWN",
+      "grade": "CROSS_VERSION_EXPLANATION",
+      "claim": "Proposes Spot Up Mid competes with Spot Up Drive for shoot-versus-drive choices; no exact verified internal formula"
+    },
+    {
+      "id": "S4",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/864516-shooters-not-spotting-up-properly-in-transition/page3",
+      "author": "JoFri and forum contributors",
+      "date": "2019-05-03",
+      "version": "pre-2K22",
+      "platform": "Xbox screenshot/gameplay",
+      "grade": "CROSS_VERSION_CONFOUNDED_EXPERIMENT",
+      "claim": "Several variables including Spot Up Mid changed; behavior observed, not isolating 2K22 field"
+    }
+  ],
+  "claims": [
+    {
+      "id": "SPMID01",
+      "source_ids": [
+        "S1",
+        "S2"
+      ],
+      "tier": "SAME_RELEASE_CONTEXT",
+      "claim": "Spot Up Mid is a situational shooting tendency, yet no controlled PC22 causal measurement"
+    },
+    {
+      "id": "SPMID02",
+      "source_ids": [
+        "S3",
+        "S4"
+      ],
+      "tier": "CROSS_VERSION_HYPOTHESIS",
+      "claim": "Shot versus drive trade-off is a test hypothesis, not a proven response formula"
+    }
+  ],
+  "contradictions": [
+    "No PC22 direct Native 0x46B consumer proof",
+    "2019 and 2023 accounts not evidence of 2K22 exact weights",
+    "Spot Up 3PT, ball handling and coach plays are confounders"
+  ],
+  "relations": [
+    "Spot Up Drive alternative",
+    "Coach Freelance and playbook opportunity",
+    "Shot Mid Range overall tendency and Mid rating",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "catch-and-shoot midrange attempts per eligible CPU spot-up catch",
+    "drive selections from same catches",
+    "shot location, defender distance and play context",
+    "3D and Calendar separated"
+  ],
+  "REA_question": {
+    "id": "REA_SPOTUP_MID_020",
+    "question": "For two UID-verified PC22 players in the same save/build/time, does read-only PLAYER+0x46B match displayed Spot Up Shot Mid Range tendency?",
+    "match": "SCOPED_MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "no_UI": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_CONTEXT_FIELD_CONSUMER_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "After identity proof, study shot-versus-drive selection conditional on a matching spot-up catch"
+}
