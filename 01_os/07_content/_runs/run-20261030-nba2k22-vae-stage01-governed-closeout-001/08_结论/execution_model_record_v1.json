@@ -1,0 +1,34 @@
+{
+  "schema_version": "nba2k22.execution.model_provenance.v1",
+  "task_id": "NBA2K22-VAE-STAGE01-GOVERNED-CLOSEOUT-20261030-001",
+  "role": "execution",
+  "assigned": {
+    "provider": "OpenAI",
+    "product": "ChatGPT",
+    "model": "GPT-6",
+    "source": "Human task activation and 01_任务输入/task_packet.json"
+  },
+  "actual_observed": {
+    "provider": "OpenAI",
+    "product": "ChatGPT",
+    "model_label": "GPT-6",
+    "source": "model identity of this conversation, not independently platform-signed",
+    "attestation_level": "CONVERSATION_DECLARED",
+    "signed_model_id": null,
+    "signed_session_id": null,
+    "session_instance_id": "UNKNOWN_NOT_EXPOSED"
+  },
+  "working_context": "Human-created Fork of NBA_COMMON_BASELINE_READY; role-specific Run is separate from VAE planner and independent reviewer",
+  "tools_used": [
+    "GitHub connector read exact commits and Git blobs",
+    "GitHub connector writes only authorized new closeout Run",
+    "JavaScript structural/source checks"
+  ],
+  "tools_not_used": [
+    "actual Python Core runner",
+    "PRMS SAVE_TASK_CONTEXT",
+    "formal Communication v2",
+    "game process, MC save, REA, Native setters"
+  ],
+  "security_note": "Do not treat this self-description as host authenticated user, model-instance or independent audit evidence."
+}
