@@ -92,7 +92,12 @@
       "V2_ROLE_SPECIFIC_DATA_PIPELINE",
       "V2_ACTUAL_NATIVE_READBACK",
       "V2_LEARNING_LOOP_OUTCOME",
-      "V2_INTEGRATED_FINAL_AUDIT_READY"
+      "V2_INTEGRATED_FINAL_AUDIT_READY",
+      "V3_PER_SETTING_COVERAGE",
+      "V3_EXTERNAL_SOURCES_AND_CONFLICTS",
+      "V3_REA_IDENTITY_AND_VALUE_MEANING",
+      "V3_INTERACTION_AND_VALUE_RESPONSE",
+      "V3_METHOD_EFFECT_EVIDENCE"
     ],
     "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/verification_plan.json",
     "loop_contract": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/INTEGRATED_LOOP_CONTRACT_V1.json",
@@ -124,7 +129,12 @@
         "V2_ROLE_SPECIFIC_DATA_PIPELINE",
         "V2_ACTUAL_NATIVE_READBACK",
         "V2_LEARNING_LOOP_OUTCOME",
-        "V2_INTEGRATED_FINAL_AUDIT_READY"
+        "V2_INTEGRATED_FINAL_AUDIT_READY",
+        "V3_PER_SETTING_COVERAGE",
+        "V3_EXTERNAL_SOURCES_AND_CONFLICTS",
+        "V3_REA_IDENTITY_AND_VALUE_MEANING",
+        "V3_INTERACTION_AND_VALUE_RESPONSE",
+        "V3_METHOD_EFFECT_EVIDENCE"
       ],
       "stop_conditions": [
         "new_load_bearing_semantic_choice",
@@ -191,6 +201,15 @@
       "protected_action_request": "If experiments need game/native/save changes collect atomic test-save actions and ask Human once per bounded group",
       "review": "one consolidated independent GPT audit after new target candidate",
       "lifecycle": "candidate_pending_validation"
+    },
+    "scope_amendment_v3": {
+      "Human_directive_date": "2026-10-30",
+      "description": "Every relevant game setting is a substantial research item: effects of numeric values, inter-setting and coaching links, REA evidence plus external source cross-check. One Gemini loop, consolidated review.",
+      "source_doc": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/HUMAN_PER_SETTING_MECHANISM_RESEARCH_V3.md",
+      "candidate_scope": "earlier dry-run is interim; full mechanism understanding is progressive and evidence-graded",
+      "development": "one task and Run; campaigns and per-field dossiers inside it",
+      "actual_game_permission": "unchanged; action-specific authority still needed",
+      "final_acceptance": "catalogue completion is not verified mechanism coverage"
     }
   }
 }

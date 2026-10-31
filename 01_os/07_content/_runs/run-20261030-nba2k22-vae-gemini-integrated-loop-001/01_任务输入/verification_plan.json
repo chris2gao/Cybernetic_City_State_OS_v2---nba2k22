@@ -1,7 +1,7 @@
 {
   "schema_version": "nba2k22.vae.integrated_loop.verify.v1",
   "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
-  "status": "EXTENDED_SCOPE_VALIDATION_PENDING",
+  "status": "V3_MECHANISM_RESEARCH_PENDING",
   "checks": [
     {
       "id": "LOOP01_BOOT_AND_IDENTITY",
@@ -141,9 +141,44 @@
       "status": "NOT_RUN",
       "evidence": [],
       "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
+    },
+    {
+      "id": "V3_PER_SETTING_COVERAGE",
+      "method": "Inventory named/unknown fields across E1-E4; every item has scoped research status and source",
+      "expected": "PROVEN for stated scope or explicit NOT_RUN/UNKNOWN; no fake game effects",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "V3_EXTERNAL_SOURCES_AND_CONFLICTS",
+      "method": "Cross-check public primary/community sources, release date and contradictory claims per item",
+      "expected": "PROVEN for stated scope or explicit NOT_RUN/UNKNOWN; no fake game effects",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "V3_REA_IDENTITY_AND_VALUE_MEANING",
+      "method": "Trace UI, Native identity and numeric value meaning with REA evidence or explicit UNKNOWN",
+      "expected": "PROVEN for stated scope or explicit NOT_RUN/UNKNOWN; no fake game effects",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "V3_INTERACTION_AND_VALUE_RESPONSE",
+      "method": "Record linked fields, controls, nonlinear effect hypotheses and observed results where authorized",
+      "expected": "PROVEN for stated scope or explicit NOT_RUN/UNKNOWN; no fake game effects",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "V3_METHOD_EFFECT_EVIDENCE",
+      "method": "Only promote a decision methodology when field-level reliable results and role data exist",
+      "expected": "PROVEN for stated scope or explicit NOT_RUN/UNKNOWN; no fake game effects",
+      "status": "NOT_RUN",
+      "evidence": []
     }
   ],
-  "actual_results": "PRIOR_V1_21_OFFLINE_TESTS_REPORTED;_V2_NATIVE_AND_DATA_ACCEPTANCE_NOT_RUN",
+  "actual_results": "V3_MECHANISM_STUDY_PENDING; PREVIOUS_OFFLINE_PASS_NOT_TRANSFERABLE",
   "previous_offline_verification": {
     "commit": "c2d9caae388bac3ae5e586c69ee0bd2116ba473b",
     "test_result": "21_PASSED_CLAIMED_BY_EXECUTOR",
