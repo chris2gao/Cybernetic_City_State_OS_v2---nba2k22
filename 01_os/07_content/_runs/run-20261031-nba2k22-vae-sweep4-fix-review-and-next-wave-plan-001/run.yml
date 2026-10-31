@@ -1,0 +1,42 @@
+run_id: run-20261031-nba2k22-vae-sweep4-fix-review-and-next-wave-plan-001
+task_id: NBA2K22-VAE-SWEEP4-REMEDIATION-REVIEW-AND-NEXT-WAVE-PLAN-20261031-001
+role: independent_review
+secondary_artifact: proposed_nonbinding_development_plan
+domain: nba2k22
+review_branch: task/nba2k22-vae-sweep4-fix-review-and-next-wave-plan-20261031
+subject_task_id: NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001
+fixed_subject_sha: f953f622c833a40a714a6ff6055af170b2070a7e
+claimed_but_wrong_full_sha: f953f6228383cf805d76d8b375b630b910eef9f2
+subject_parent_sha: 419ba3e09ba02935582431f8756a24c9277af9dc
+prior_audit_sha: ca793486b82a1087f28491ddd832f76203947e0e
+base_master_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+patch_audit_verdict: REWORK_REQUIRED
+research_task_lifecycle: CONTINUE_LONG_HORIZON_LOOP
+next_wave_plan_status: PROPOSED_FOR_PLANNER_AND_HUMAN
+number_of_findings: 10
+severity:
+  P0: 4
+  P1: 4
+  P2: 2
+positive_remediation:
+  - symmetric_ShotTouches_model_withdrawn
+  - experimental_bridge_tier_flagged
+  - tracer_pytest_uses_tmp_path
+  - tracer_defaults_no_attach
+  - corpus_effect_status_downgraded
+  - checkpoint_synced
+original_developer_tests: NOT_INDEPENDENTLY_RERUN
+independent_probe: PASS_OFFLINE_SOURCE_EQUIVALENT_4_CATEGORIES
+independent_disassembler: GNU_OBJDUMP_X86_64
+actual_nba_executable_independently_available: false
+rea_live_attach_by_reviewer: NOT_RUN
+game_memory_write_by_reviewer: NOT_RUN
+master_or_executor_changes_by_reviewer: NONE
+PRMS_SAVE: NOT_RUN
+formal_communication: NOT_PUBLISHED
+reviewer_model: GPT-6
+model_attestation: UNKNOWN
+instance_id: UNKNOWN
+new_isolated_fork: false
+prior_Human_nonisolated_exception: true
+next_research_owner: Gemini_REA_same_task
