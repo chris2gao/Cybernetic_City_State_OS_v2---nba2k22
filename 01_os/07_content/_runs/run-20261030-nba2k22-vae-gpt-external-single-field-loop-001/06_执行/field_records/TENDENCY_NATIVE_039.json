@@ -1,0 +1,91 @@
+{
+  "field_id": "TENDENCY_NATIVE_039",
+  "iteration_id": "SWEEP01_FIELD0039",
+  "date": "2026-10-31",
+  "question": "Does Spin Jumper Tendency affect autonomous CPU spin-jumper shot selection, distinct from signature animation package eligibility?",
+  "candidate": {
+    "key": "tendency.SPIN_JUMPER_TENDENCY",
+    "offset": "0x47E",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "game_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX available; PC WIP",
+      "locator": "What’s Edited [1.4]",
+      "grade": "SAME_RELEASE_EDITOR_METHOD",
+      "claim": "Spin jumpers tracked based on per-36 minute attempts, with many other roster edits"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-09-17 through Nov 2021",
+      "version": "NBA2K22",
+      "platform": "PS5 CPUvCPU, PC not verified",
+      "grade": "PLAYER_AI_TENDENCY_THEORY",
+      "claim": "CPU choices may be conditioned on action opportunities, not a standalone probability"
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/wab55i",
+      "author": "r/NBA2k community, multiple commenters",
+      "date": "2022-07-28",
+      "version": "NBA2K version UNCERTAIN despite release-era thread",
+      "platform": "MyCareer/MyLeague discussion, precise platform UNKNOWN",
+      "grade": "CONTEXT_ANIMATION_PACKAGE_ONLY",
+      "claim": "Comments dispute which signature spin jumper animations are actually equipped",
+      "limit": "Not PC22 controlled native tendency evidence"
+    }
+  ],
+  "claim_cards": [
+    {
+      "tier": "CONTEMPORARY_EDIT_EVIDENCE",
+      "source": 0,
+      "claim": "Spin jumper used as separate roster calibration category"
+    },
+    {
+      "tier": "UNVERIFIED_PACKAGE_HYPOTHESIS",
+      "source": 2,
+      "claim": "Animation equip state can confound whether a selected spin shot occurs"
+    }
+  ],
+  "conflicts": [
+    "Equipped spin jumper vs CPU propensity to select are not interchangeable",
+    "Spin jumper and spin layup different moves",
+    "3D animations cannot be inferred from Calendar box-score FGA"
+  ],
+  "related": [
+    "Spin Layup",
+    "Drive Pull Up Mid",
+    "Mid shooting ability and badges",
+    "Coach Playbook/Offense",
+    "Training direct causal link UNKNOWN"
+  ],
+  "metrics": [
+    "CPU spin jumpers per eligible moving-shot possession",
+    "whether relevant animation is equipped/usable",
+    "alternative pullup/pass/drive",
+    "makes and misses separately",
+    "game UID/build/save/3D context"
+  ],
+  "REA_question": {
+    "id": "REA_SPINJ_039",
+    "question": "For two PC22 UID-verified players, does read-only PLAYER+0x47E match exact Spin Jumper tendency UI values in same save/build/time?",
+    "positive": "SCOPED_IDENTITY_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "CONTEMPORARY_SPIN_CATEGORY_NO_NATIVE_EFFECT",
+  "rea": "NOT_RUN",
+  "game": "NOT_RUN",
+  "next_improvement": "After mapping, distinguish eligible spin animation versus tendency-selected frequency in PC22 CPU 3D"
+}
