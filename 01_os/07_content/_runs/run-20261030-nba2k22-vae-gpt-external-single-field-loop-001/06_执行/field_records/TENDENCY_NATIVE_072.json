@@ -1,0 +1,63 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "field_id": "TENDENCY_NATIVE_072",
+  "iteration_id": "SWEEP01_FIELD0072",
+  "research_date": "2026-10-31",
+  "primary_question": "Can per-player byte 0x49F be mapped to exactly one NBA 2K22 PC tendency UI field?",
+  "identity": {
+    "project_key": "tendency.RAW_0x49f",
+    "offset_hex": "0x49F",
+    "declared_range": [
+      0,
+      100
+    ],
+    "name": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "gameplay_effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA 2K22\" \"0x49F\" tendency",
+    "date": "2026-10-31",
+    "relevant_direct_results": 0,
+    "code": "NO_DIRECT_SOURCE"
+  },
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction archived player data",
+      "publication_date": "UNKNOWN; September 2021 roster",
+      "version": "NBA2K22 historical export",
+      "platform": "web; original executable UNKNOWN",
+      "grade": "CONTEXT_ONLY",
+      "claim": "Provides named UI categories but no native offsets"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "NO_DIRECT_SOURCE",
+      "statement": "No published address-to-label proof was located for 0x49F"
+    }
+  ],
+  "conflicts": [
+    "Absence in public search does not show byte unused",
+    "Neighbor PLAY_DISCIPLINE at 0x4A1 does not identify this byte"
+  ],
+  "related_mechanisms": "UNKNOWN until native identity",
+  "observable": [
+    "Two UID-verified read-only raw values",
+    "Independently captured exact UI labels/values under same save/build/time",
+    "Adjacent-byte comparison to rule out coincidence"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_72",
+    "question": "For two UID-verified PC22 players, does read-only PLAYER+0x49F match the same named tendency UI field independently of list order?",
+    "positive": "SCOPED_IDENTITY_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "Wait for new actual Native getter/UI cross-reference rather than infer from ordinal"
+}
