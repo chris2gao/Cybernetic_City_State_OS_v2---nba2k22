@@ -1,0 +1,92 @@
+{
+  "field_id": "TENDENCY_NATIVE_041",
+  "iteration_id": "SWEEP01_FIELD0041",
+  "research_date": "2026-10-31",
+  "primary_question": "Does Drive Pull Up Three tendency affect CPU choosing a pull-up 3 after initiating a drive, distinct from transition pull-up 3 and stepback 3?",
+  "candidate": {
+    "key": "tendency.DRIVE_PULL_UP_THREE",
+    "offset": "0x480",
+    "declared_range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "game_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page4",
+      "author": "vannwolfhawk",
+      "date": "2021-09-19",
+      "version": "NBA2K22",
+      "platform": "unknown",
+      "locator": "post #51",
+      "grade": "SAME_VERSION_COMMUNITY_HYPOTHESIS",
+      "claim": "Pull up 3, stepback and shooting tendencies might jointly affect a move"
+    },
+    {
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "Crucial Baskets, byline UNKNOWN",
+      "date": "2021-10-18 based on URL and article era",
+      "version": "NBA2K22",
+      "platform": "CPU-v-CPU, platform UNKNOWN",
+      "locator": "Too Inside Basketball",
+      "grade": "SAME_VERSION_ROSTER_OBSERVATION",
+      "claim": "Reports average Driving Pull-Up 3 of 13 in roster; no isolated experiment; descriptive number not threshold"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX, PC WIP",
+      "locator": "What’s Edited [1.4]",
+      "grade": "SAME_VERSION_EDITOR_PRACTICE",
+      "claim": "Pullups calibrated using per-36 shot attempt data; no isolated cause"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "version": "NBA2K22",
+      "platform": "PS5 CPUvCPU, PC UNKNOWN",
+      "grade": "COMMUNITY_EXPLANATION",
+      "claim": "Drive pull up mid and other situational shots discussed; cannot assert drive pull up three formula"
+    }
+  ],
+  "claims": [
+    "Drive pull-up action may have its own contextual tendency, but PC22 engine consumption unknown",
+    "Average reported roster value 13 is descriptive, not an effectiveness threshold"
+  ],
+  "conflicts": [
+    "Drive Pull Up Three is not Stepback Three or Transition Pull Up Three",
+    "Attacking defender, shot clock, play discipline and ball handling confound choice",
+    "3-point hit % does not measure tendency directly"
+  ],
+  "relationships": [
+    "Drive Tendency",
+    "Shot Three",
+    "Stepback Jumper Three",
+    "Transition Pull Up Three",
+    "Coach/Playbook and badge opportunities",
+    "Training direct relationship UNKNOWN"
+  ],
+  "metrics": [
+    "drive pull-up 3PA per eligible CPU dribble-to-shot opportunity",
+    "stepback/pass/drive penetration alternatives",
+    "3PT makes and quality separately",
+    "mode, save, player UID and defense context"
+  ],
+  "REA_question": {
+    "id": "REA_DRIVE_PULLUP_THREE_041",
+    "question": "For two UID-verified PC22 players, does read-only PLAYER+0x480 equal their exact Drive Pull Up Three UI tendency values in the same save/build/time?",
+    "match": "SCOPED_MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "CONTEMPORARY_CONTEXT_NO_NATIVE_RESPONSE_CURVE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
