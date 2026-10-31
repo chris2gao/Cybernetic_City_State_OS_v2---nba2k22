@@ -1,0 +1,63 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_022",
+  "iteration_id": "SWEEP01_FIELD0022",
+  "sweep": 1,
+  "ordinal": 22,
+  "question": "Is raw player tendency 0x46D an identifiable UI field in the current PC22 build?",
+  "identity": {
+    "offset": "0x46D",
+    "source_key": "tendency.RAW_0x46d",
+    "declared_range": [
+      0,
+      100
+    ],
+    "name": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "research": {
+    "searched_on": "2026-10-30",
+    "exact_query": "\"NBA 2K22\" \"0x46D\" \"tendency\" player memory",
+    "outcome": "NO_RELEVANT_RESULT",
+    "source_quality": "NO_DIRECT_SOURCE",
+    "non_game_matches": "electronics, programming and non-2K addresses are irrelevant"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction archive",
+      "date": "2021-09 roster; page publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export; PC build UNKNOWN",
+      "claim": "Named midrange-zone tendencies exist, none mapped to 0x46D"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917713-res2-2k22-all-star-current-gen-sliders/page2",
+      "author": "res2",
+      "date": "2021-11-02",
+      "version": "NBA2K22 Current Gen",
+      "platform": "PC platform UNKNOWN",
+      "claim": "Editing abbreviations exist; no offset mapping"
+    }
+  ],
+  "claim": "No verified public direct mapping for this byte; never infer from neighbors or column order",
+  "cross_mechanisms": "UNKNOWN until identity proof",
+  "observable_metrics": [
+    "two UID-confirmed read-only candidate values",
+    "same-save exact UI label and value",
+    "cross-check nearby offsets against false identity"
+  ],
+  "rea_question": {
+    "id": "REA_RAW_022",
+    "question": "Can two PC22 UID-verified read-only PLAYER+0x46D values be matched to one independently identified tendency UI field without assuming column order?",
+    "positive": "SCOPED_MAPPING",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED"
+  },
+  "status": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "next_research": "Await native readback or independent address dictionary before repeating unchanged search"
+}
