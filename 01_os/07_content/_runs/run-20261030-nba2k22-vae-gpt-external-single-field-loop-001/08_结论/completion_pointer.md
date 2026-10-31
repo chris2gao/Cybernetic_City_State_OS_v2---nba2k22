@@ -1,48 +1,56 @@
-# VAE GPT External Single-Field Loop — Sweep1 checkpoint at 20/204
+# VAE GPT External Single-Field Loop — Sweep 1 checkpoint 35/204
 
-## Identity and continuation
-
-- task_id: `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`
-- role: `execution`; GPT-6 conversation model label, no host-signed model ID
+## 岗位与版本
+- task: `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`
+- role: `execution`, assigned/actual conversation model `GPT-6` (conversation-declared, no platform-signed instance identity)
+- repository: `chris2gao/Cybernetic_City_State_OS_v2---nba2k22`
 - branch: `task/nba2k22-vae-gpt-external-single-field-loop-20261030`
-- frozen research and run commit: `3fec26540e354004006bc8dd594ad38d388147e7`
-- this pointer's own commit: inspect real branch HEAD; never infer self SHA from text
-- loop state: **SWEEP1_IN_PROGRESS, NOT WHOLE TASK COMPLETE**
-- queue source: `6436515330f77c0cc5cc675b521590adeb69c5d4`, blob `af5567e14e03cd9f7761e396a978311e347d7c17`
-- current checkpoint: `cursor=20`, attempted `20/204`, remaining `184`
-- next_field_id: **`TENDENCY_NATIVE_021`**; resume strictly from the live GitHub checkpoint, not this pointer if they diverge.
+- dispatch: `d01dd0dba00ad2c03a84320f8e93cea027d37bea`
+- **exact committed checkpoint before this pointer**: `53b314ed9a723af746a95c095263cec11038aca1`
+- **batch GitHub static readback**: `374895c6ba0c27b1c39b5a13c8818fed0772a680:07_测试执行/sweep01_fields0021_0035_readback.json`
+- Pointer's own final containing commit must be obtained from live GitHub HEAD; do not guess self SHA.
+- Core master at recovery `934425cf43d4fe3307b0112142aec1ba434a5734`; NBA master `45cc45cae0550ddcda192a2179ea48509b27f6ee`.
 
-## Output locations (relative to this Run)
+## 进度和确定性恢复
+- Status `SWEEP1_IN_PROGRESS`; no claim of 204-item completion.
+- Seed queue `6436515330f77c0cc5cc675b521590adeb69c5d4`, blob `af5567e14e03cd9f7761e396a978311e347d7c17`.
+- Current cursor **35/204**, first-sweep remaining **169**, next **`TENDENCY_NATIVE_036`**.
+- Append-only ledger 35 ordered records and unique field IDs; never infer next field from this pointer if `06_执行/current_checkpoint.json` at latest HEAD differs.
+- Cumulative `NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE`: **13** (016–018, 022–026, 030–034). Latest 021–035 batch added 10. Counter fixed from erroneous 10 by recounting ledger; original field dossiers and historic ledger untouched.
 
-- `06_执行/field_records/TENDENCY_NATIVE_001.json` through `TENDENCY_NATIVE_020.json`: one source-specific research dossier per field. None assert a verified PC22 native effect.
-- `06_执行/iteration_ledger.jsonl`: append-only 20 ordered records, cursor 0→20, one field per row.
-- `06_执行/current_checkpoint.json`: current queue position and next single field.
-- `07_测试执行/sweep01_field0001_static_verification.json` through `sweep01_field0020_static_verification.json`: per-field static evidence/cursor checks. These do not substitute for web source independent audit, game/REA runtime proof or an exact effect estimate.
-- `run.yml`: task and model state.
+## This active response: exact field range 021–035
+- 021: `OFF_SCREEN_SHOT_MID_RANGE` @0x46C. Current-gen 2K22 forum editor `res2` explicitly defines `OSSMID`; independent PC22 Native mapping and 3D effect remain UNKNOWN.
+- 022–026: five raw unidentified bytes @0x46D–0x471. Exact-offset web searches gave **NO_DIRECT_SOURCE**. Nearby archived UI columns may not be assigned by position.
+- 027: `SHOT_THREE_TENDENCY` @0x472. Overall three-point preference is a named roster field, not global 3PT slider or shooting percentage.
+- 028: `SPOT_UP_SHOT_THREE` @0x473. Distinguish eligible spot-up catch from total 3PA and Transition Spot Up setting.
+- 029: `OFF_SCREEN_SHOT_THREE` @0x474. Compare shots after off-ball screens with called-play frequency; Sheitan 2021 is PS5 community interpretation, not PC22 proof.
+- 030–034: raw unknown bytes @0x475–0x479. Exact-offset searches gave **NO_DIRECT_SOURCE**, identities remain UNKNOWN.
+- 035: `CONTESTED_JUMPER_THREE` @0x47A. Distinguish CPU decision to shoot while contested from contest impact on successful makes; official 2K22 general shooting guidance does not define this field's consumer.
 
-## Actual research and significant evidence gaps
+Each field has precisely one primary question and a separate read-only Gemini REA question; neither this task nor the assistant operates the game. There are 15 new independent dossiers and 15 source-structure verification records. External source URLs, authors, publication status, relevant game/platform, confounders and limitations are embedded in each dossier.
 
-- Field 001 `SHOT_TENDENCY`: same-version contradictory community 3D reports; hypothetical relation to Touches/Coach/Playbook. No known current PC22 consumer.
-- Fields 002–007: Driving Layup, Standing/Driving/Flashy Dunk, Alley-Oop and Putback, separating skill vs selection, receiver vs passer and global sliders.
-- Field 008 `CRASH_TENDENCY`: substantial semantic disagreement (contact falling versus rebounding/animation); high-priority future clarification.
-- Fields 009–015: move-selection and shot-zone subtypes; some named 2K22 roster/export evidence, no isolated causal formula.
-- Fields 016–018: three raw bytes `0x467, 0x468, 0x469` **remain UNKNOWN**. Adjacent named export columns never justify positional field assignment. Record `NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE`.
-- Fields 019–020: Shot Mid and Spot-Up Shot Mid; distinguish global sliders/overall shot frequency/situational catch-and-shoot from Coach, plays, and shooting accuracy.
+## Source examples and evidence tiers
+- 2021-11-02 `res2` current-gen roster editing: `https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917713-res2-2k22-all-star-current-gen-sliders/page2`
+- 2021-11-25 `Sheitan` forum community reports, PS5: `https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators`
+- 2021-12-16 `Chase Becotte` / CelticLG ATD roster: `https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/`
+- Official general shooting context (different from field definition): `https://newsroom-anz.2k.com/news/nbar-2k22-unveils-new-gameplay-innovations`
 
-Source examples (not exhaustive; each dossier has exact links and limits): 2K22 CelticLG ATD roster thread, 2021 Operation Sports player reports, historical 2kAuction 2K22 roster exports, Crucial Baskets October 2021 CPU tournament, Hoops Gamers 2K22 general gameplay and related cross-version community sources. **Dates, platform applicability, authors and unknowns are field-specific in each dossier.** Numerical examples from community articles remain descriptive, not verified response curves/optimal thresholds.
+These are not authoritative proof of a native PC22 offset, consumer, coefficient or numeric threshold. Some source links are only context, not independent confirmation.
 
-Each field has **one Gemini REA read-only question** to resolve UID-verified Native↔UI identity before behavior testing; no automated Gemini dispatch occurred. Subsequent source-evidence improvements may revisit any field after the first sweep using the project's fixed progress/stop rules.
-
-## Verification and limits
-
-- Repository commits carry 20 dossiers, 20 ordered ledger rows, cursor 20 and 20 scoped static check files.
-- Real game, Native Setter, REA, SaveReload, current PE consumption or competitive causal improvement: **NOT_RUN/UNKNOWN**.
-- No PRMS SAVE_TASK_CONTEXT or Communication v2 receipt. No background scheduler; this task proceeds only when a new active response resumes it.
-- No Core/master/Gemini writes authorized or performed. The next receiver should compare branch HEAD and changes against base `45cc45cae0550ddcda192a2179ea48509b27f6ee` and validate scope before continuing.
-- Combined independent audit is **PENDING** until a frozen GPT and Gemini research release exists; developer claims are not independent acceptance.
+## GitHub artifacts and verification
+- `06_执行/field_records/TENDENCY_NATIVE_021.json` through `TENDENCY_NATIVE_035.json`
+- `06_执行/iteration_ledger.jsonl`, `06_执行/current_checkpoint.json`
+- `07_测试执行/sweep01_field0021_static_verification.json` through `sweep01_field0035_static_verification.json`
+- `07_测试执行/sweep01_fields0021_0035_readback.json`
+- `run.yml`
+- Verified 35 contiguous field IDs, 15 new REA questions and per-field static records, no altered original queue/master/Core/Gemini task. Source-level readback PASS with limitations. Core Runner, in-game/REA Native effect, independent audit and real engine gameplay validation remain **NOT_RUN**. No PRMS SAVE_TASK_CONTEXT, formal Communication receipt or background scheduler.
 
 ## Minimum Work Unit
+- **Actual work:** Resumed existing GitHub Run at cursor20; performed single-field web/project lookups and committed 021–035 one after another. Every field has source claim tier, conflict/uncertainty, relevant mechanisms and observable indicators, one Gemini read-only mapping question; exactly 10 new raw slots retain NO_DIRECT_SOURCE.
+- **Method:** GitHub exact-head and immutable seed queue verification; 2K22 vs other versions/platforms separated; each field's ledger/checkpoint source written with branch CAS (or serial connector updates), then exact GitHub readback.
+- **Supportability:** No reliable source for binary IDs 0x46D–0x471 or 0x475–0x479, so identities are not assigned. Named field resources provide hypothesis formation only; no Native call, shot probability or performance outcome claimed.
+- **Feasibility/risk:** Continuing requires new real search per field and future separately authorized Gemini game-side evidence. Several forum sources are unconfirmed PC current-gen; game effect remains unknown. This is not an externally audited release.
+- **Exact candidate source:** `53b314ed9a723af746a95c095263cec11038aca1:06_执行/current_checkpoint.json`; proof batch `374895c6ba0c27b1c39b5a13c8818fed0772a680:07_测试执行/sweep01_fields0021_0035_readback.json`.
+- **Next responsible owner:** same GPT `execution` research stream, resume at **TENDENCY_NATIVE_036** on next active invocation. Gemini REA is a distinct task and joint independent GPT audit remains for later frozen release.
 
-Actual work: resumed user-authorized loop at cursor1, searched external NBA2K22/community/official and cross-version materials one field at a time through field20, independently marked source maturity, separate hypotheses, contradictions, metrics and bounded REA checks. Persisted each field, ledger and cursor, with scoped static verification reports. Result: first-sweep progress `20/204`, **not 204/204**, and no native effect claim. Future feasibility depends on source freshness, Gemini native evidence and Human-approved access. Next owner: same GPT `execution` role, field `TENDENCY_NATIVE_021` in next active window; Gemini research remains separate, with final review by independent GPT.
-
-Status: **`SWEEP1_CURSOR_20_CHECKPOINTED_LOOP_OPEN`**.
+**Result: `SWEEP1_CURSOR_35_CHECKPOINTED_LOOP_OPEN`.**
