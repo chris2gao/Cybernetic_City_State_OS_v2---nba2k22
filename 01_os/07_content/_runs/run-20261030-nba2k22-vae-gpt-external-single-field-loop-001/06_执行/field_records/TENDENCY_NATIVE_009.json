@@ -1,0 +1,120 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_009",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0009",
+  "research_date": "2026-10-30",
+  "one_question": "Does SPIN_LAYUP_TENDENCY affect how often an autonomous CPU attacker selects a spin-layup animation, distinct from human stick-input spin gather?",
+  "identity": {
+    "candidate": "tendency.SPIN_LAYUP_TENDENCY",
+    "offset_hex": "0x460",
+    "project_range": [
+      0,
+      100
+    ],
+    "UI_native_mapping": "UNKNOWN",
+    "current_PC22_value": "UNKNOWN",
+    "engine_consumer": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 9
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "cross-platform roster project, PC status UNKNOWN",
+      "locator": "OP, TENDENCIES 1.4",
+      "grade": "SAME_VERSION_ROSTER_PRACTICE",
+      "finding": "ATD team reports adjusting spin, euro, hop step layup move frequency based on real usage",
+      "limits": "No controlled one-field experiment or PC22 Native consumer proof"
+    },
+    {
+      "id": "S2",
+      "url": "https://segmentnext.com/nba-2k22-offense-controls/",
+      "author": "SegmentNext editorial author UNKNOWN",
+      "date": "article date UNKNOWN",
+      "version": "NBA 2K22",
+      "platform": "controller controls, PC adaptation UNKNOWN",
+      "locator": "Shooting Controls / Spin Gather",
+      "grade": "DIFFERENT_MECHANISM_HUMAN_CONTROLS",
+      "finding": "Human-controlled spin gather uses controller actions",
+      "limits": "Cannot substitute human controls for autonomous CPU tendency"
+    },
+    {
+      "id": "S3",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-09-17, edits through 2021-11-25",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "post #1 tendency-frequency theory",
+      "grade": "COMMUNITY_GENERAL_THEORY",
+      "finding": "Proposes mapping tendencies to frequency distributions and avoiding extremes",
+      "limits": "No spin-specific controlled effect and percentile labels are not game-engine probabilities"
+    }
+  ],
+  "claims": [
+    {
+      "id": "SP01",
+      "source_ids": [
+        "S1"
+      ],
+      "tier": "SAME_VERSION_EDITING_INTENT",
+      "claim": "Spin-layup is tracked as a separate movement propensity by community editors"
+    },
+    {
+      "id": "SP02",
+      "source_ids": [
+        "S2"
+      ],
+      "tier": "CONTROL_VS_CPU_DISTINCTION",
+      "claim": "Human input mechanics do not identify the CPU code path"
+    },
+    {
+      "id": "SP03",
+      "source_ids": [
+        "S3"
+      ],
+      "tier": "UNVERIFIED_GENERALIZATION",
+      "claim": "Suggested percentile calibration is a design philosophy, not an engine probability mapping"
+    }
+  ],
+  "conflicts": [
+    "No external official PC22 field function or controlled spin-specific result; NO_DIRECT_CAUSAL_SOURCE",
+    "PC22 controller move possibility does not imply CPU selects it from the candidate tendency",
+    "Later 2K versions' spin-layup behaviors cannot establish 2K22 thresholds"
+  ],
+  "relationships": [
+    "Driving Layup and Euro/Hop/Layup choices as potential competing finishes",
+    "Layup animation package and momentum as event eligibility",
+    "Coach strategy and drive initiation as opportunities",
+    "Driving Layup rating and badges as completion-confounders",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "CPU spin-layup attempts per eligible drive",
+    "other layup-gather attempts in same opportunity",
+    "human-initiated spin exclusion",
+    "made/missed and contact separate",
+    "3D only for animations; Calendar effect UNKNOWN"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_SPIN_LAYUP_009",
+    "question": "Do read-only candidate PLAYER+0x460 values of two identified PC22 players match their Spin Layup tendency UI values in the same save/build/time?",
+    "match": "SCOPED_UI_MAPPING",
+    "mismatch": "UNKNOWN",
+    "not_found": "BLOCKED",
+    "native_write": false
+  },
+  "result": "NO_DIRECT_SINGLE_FIELD_CAUSAL_SOURCE_PC22_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "Seek same-build CPU spin-layup event sample only after UID/native/UI mapping verified"
+}
