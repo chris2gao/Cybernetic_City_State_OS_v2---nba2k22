@@ -1,0 +1,67 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_032",
+  "iteration_id": "SWEEP01_FIELD0032",
+  "research_date": "2026-10-30",
+  "primary_question": "Does 0x477 have an independently evidenced PC22 player UI tendency identity?",
+  "identity": {
+    "byte": "0x477",
+    "status": "UNKNOWN_RAW_BYTE",
+    "declared_range": [
+      0,
+      100
+    ],
+    "real_game_name": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "numeric_effect": "UNKNOWN"
+  },
+  "search_attempts": [
+    {
+      "query": "\"NBA2K22\" \"0x477\" \"tendency\" player",
+      "outcome": "NO_RELEVANT_DIRECT_ADDRESS_MAPPING",
+      "date": "2026-10-30"
+    }
+  ],
+  "context_sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction",
+      "date": "September 2021 roster, page publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export, PC binary unknown",
+      "relevance": "Nearby shooting UI categories not a byte map"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "console releases; PC WIP",
+      "relevance": "Shot distribution editing; no raw 0x address"
+    }
+  ],
+  "claim": "No verified web evidence establishes the name or effect of 0x477",
+  "conflicts": [
+    "Position in an exported list cannot resolve the byte",
+    "No Native reader or 3D/Calendar effect evidence"
+  ],
+  "related": "Coach, Player, Training interaction UNKNOWN pending identity",
+  "metrics": [
+    "Two UID-verified read-only values at 0x477",
+    "Exact player UI panel and value, game build and save",
+    "Adjacent offset exclusion to avoid coincidence"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_032",
+    "question": "Can two independent UID-matched read-only observations of PLAYER+0x477 identify a single per-player PC22 UI tendency without list-order inference?",
+    "outcomes": [
+      "SCOPED_IDENTITY",
+      "UNKNOWN",
+      "BLOCKED"
+    ]
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "runtime": "NOT_RUN",
+  "next_improvement": "Do not repeat identical search absent new Native/UI evidence"
+}
