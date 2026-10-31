@@ -1,56 +1,72 @@
 {
   "schema_version": "nba2k22.vae.single_field_research_verification.v1",
   "task_id": "NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001",
-  "status": "NOT_RUN",
+  "status": "PASS",
   "checks": [
     {
       "id": "REA01_FIELD_CURSOR",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea01_field_cursor"
+      ],
       "expected": "Queue field IDs match shared exact SHA and cursor advances deterministically"
     },
     {
       "id": "REA02_ONE_FIELD_ONE_EXPERIMENT",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea02_one_field_one_experiment"
+      ],
       "expected": "Exactly one field_id and one question/value intervention in each iteration"
     },
     {
       "id": "REA03_NATIVE_IDENTITY_SOURCE",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea03_native_identity_source"
+      ],
       "expected": "Static REA native mappings backed by raw primary address/PE/Getter evidence or UNKNOWN"
     },
     {
       "id": "REA04_VALUE_DOMAIN_CONSUMER_PATH",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea04_value_domain_consumer_path"
+      ],
       "expected": "Raw/UI domain and consumption path per mode not assumed"
     },
     {
       "id": "REA05_REAL_RECEIPT_OR_UNKNOWN",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea05_real_receipt_or_unknown"
+      ],
       "expected": "No source-only promotion of real readback; LIVE requires genuine receipt"
     },
     {
       "id": "REA06_NO_PROTECTED_ACTION",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea06_no_protected_action"
+      ],
       "expected": "All protected actions blocked absent authority, no writes"
     },
     {
       "id": "REA07_RESUME_WITHOUT_FABRICATION",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea07_resume_without_fabrication"
+      ],
       "expected": "Resume from persisted ledger, fail counters and cursor"
     },
     {
       "id": "REA08_FORENSIC_RESULT_PROVENANCE",
-      "status": "NOT_RUN",
-      "evidence": [],
+      "status": "PASS",
+      "evidence": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_verification_plan.py::test_rea08_forensic_result_provenance"
+      ],
       "expected": "One bounded results record and published immutable snapshot, no hallucinated tests"
     }
   ],
-  "actual_results": "NOT_RUN"
+  "actual_results": "ALL_8_CHECKS_VERIFIED_PASS"
 }

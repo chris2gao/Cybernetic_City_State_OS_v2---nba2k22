@@ -1,0 +1,3644 @@
+{
+  "schema_version": "nba2k22.vae.field_inventory_shared_queue.v1",
+  "program_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+  "source_commit": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "origin": "planner snapshot of project R04B, R06A, K04; not certified runtime mapping",
+  "source_paths": [
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md"
+  ],
+  "inventory_policy": "Each entry is a source-level research unit, not a unique verified game setting. Different families may overlap; do not add up totals as unique physical fields. 99 export labels are not mapped one-to-one to 99 native bytes.",
+  "first_sweep_order": [
+    "player_tendency",
+    "coach_settings",
+    "world_settings"
+  ],
+  "first_sweep_covered_families": "Seed-only; further domains (GM finance, badges, training, draft, growth, etc.) appended after authoritative enumeration, not silently marked complete",
+  "counts": {
+    "native_tendency_slots": 99,
+    "named_native_tendency_slots": 48,
+    "unmapped_native_tendency_slots": 51,
+    "world_registry_candidates": 86,
+    "coach_research_concepts": 19,
+    "source_records_total": 204,
+    "unique_runtime_fields": "UNKNOWN"
+  },
+  "field_entries": [
+    {
+      "field_id": "TENDENCY_NATIVE_001",
+      "family": "player_tendency",
+      "source_ordinal": 1,
+      "candidate_native_key": "tendency.SHOT_TENDENCY",
+      "display_name": "SHOT_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x458",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_002",
+      "family": "player_tendency",
+      "source_ordinal": 2,
+      "candidate_native_key": "tendency.DRIVING_LAYUP_TENDENCY",
+      "display_name": "DRIVING_LAYUP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x459",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_003",
+      "family": "player_tendency",
+      "source_ordinal": 3,
+      "candidate_native_key": "tendency.STANDING_DUNK_TENDENCY",
+      "display_name": "STANDING_DUNK_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x45A",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_004",
+      "family": "player_tendency",
+      "source_ordinal": 4,
+      "candidate_native_key": "tendency.DRIVING_DUNK_TENDENCY",
+      "display_name": "DRIVING_DUNK_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x45B",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_005",
+      "family": "player_tendency",
+      "source_ordinal": 5,
+      "candidate_native_key": "tendency.FLASHY_DUNK_TENDENCY",
+      "display_name": "FLASHY_DUNK_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x45C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_006",
+      "family": "player_tendency",
+      "source_ordinal": 6,
+      "candidate_native_key": "tendency.ALLEY_OOP_TENDENCY",
+      "display_name": "ALLEY_OOP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x45D",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_007",
+      "family": "player_tendency",
+      "source_ordinal": 7,
+      "candidate_native_key": "tendency.PUTBACK_TENDENCY",
+      "display_name": "PUTBACK_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x45E",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_008",
+      "family": "player_tendency",
+      "source_ordinal": 8,
+      "candidate_native_key": "tendency.CRASH_TENDENCY",
+      "display_name": "CRASH_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x45F",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_009",
+      "family": "player_tendency",
+      "source_ordinal": 9,
+      "candidate_native_key": "tendency.SPIN_LAYUP_TENDENCY",
+      "display_name": "SPIN_LAYUP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x460",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_010",
+      "family": "player_tendency",
+      "source_ordinal": 10,
+      "candidate_native_key": "tendency.HOP_STEP_LAYUP_TENDENCY",
+      "display_name": "HOP_STEP_LAYUP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x461",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_011",
+      "family": "player_tendency",
+      "source_ordinal": 11,
+      "candidate_native_key": "tendency.EURO_STEP_LAYUP_TENDENCY",
+      "display_name": "EURO_STEP_LAYUP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x462",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_012",
+      "family": "player_tendency",
+      "source_ordinal": 12,
+      "candidate_native_key": "tendency.FLOATER_TENDENCY",
+      "display_name": "FLOATER_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x463",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_013",
+      "family": "player_tendency",
+      "source_ordinal": 13,
+      "candidate_native_key": "tendency.STEP_THROUGH_SHOT_TENDENCY",
+      "display_name": "STEP_THROUGH_SHOT_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x464",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_014",
+      "family": "player_tendency",
+      "source_ordinal": 14,
+      "candidate_native_key": "tendency.SHOT_UNDER_BASKET_TENDENCY",
+      "display_name": "SHOT_UNDER_BASKET_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x465",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_015",
+      "family": "player_tendency",
+      "source_ordinal": 15,
+      "candidate_native_key": "tendency.SHOT_CLOSE_TENDENCY",
+      "display_name": "SHOT_CLOSE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x466",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_016",
+      "family": "player_tendency",
+      "source_ordinal": 16,
+      "candidate_native_key": "tendency.RAW_0x467",
+      "display_name": "UNKNOWN_RAW_BYTE_016",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x467",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_017",
+      "family": "player_tendency",
+      "source_ordinal": 17,
+      "candidate_native_key": "tendency.RAW_0x468",
+      "display_name": "UNKNOWN_RAW_BYTE_017",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x468",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_018",
+      "family": "player_tendency",
+      "source_ordinal": 18,
+      "candidate_native_key": "tendency.RAW_0x469",
+      "display_name": "UNKNOWN_RAW_BYTE_018",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x469",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_019",
+      "family": "player_tendency",
+      "source_ordinal": 19,
+      "candidate_native_key": "tendency.SHOT_MID_RANGE_TENDENCY",
+      "display_name": "SHOT_MID_RANGE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x46A",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_020",
+      "family": "player_tendency",
+      "source_ordinal": 20,
+      "candidate_native_key": "tendency.SPOT_UP_SHOT_MID_RANGE",
+      "display_name": "SPOT_UP_SHOT_MID_RANGE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x46B",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_021",
+      "family": "player_tendency",
+      "source_ordinal": 21,
+      "candidate_native_key": "tendency.OFF_SCREEN_SHOT_MID_RANGE",
+      "display_name": "OFF_SCREEN_SHOT_MID_RANGE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x46C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_022",
+      "family": "player_tendency",
+      "source_ordinal": 22,
+      "candidate_native_key": "tendency.RAW_0x46d",
+      "display_name": "UNKNOWN_RAW_BYTE_022",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x46D",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_023",
+      "family": "player_tendency",
+      "source_ordinal": 23,
+      "candidate_native_key": "tendency.RAW_0x46e",
+      "display_name": "UNKNOWN_RAW_BYTE_023",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x46E",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_024",
+      "family": "player_tendency",
+      "source_ordinal": 24,
+      "candidate_native_key": "tendency.RAW_0x46f",
+      "display_name": "UNKNOWN_RAW_BYTE_024",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x46F",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_025",
+      "family": "player_tendency",
+      "source_ordinal": 25,
+      "candidate_native_key": "tendency.RAW_0x470",
+      "display_name": "UNKNOWN_RAW_BYTE_025",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x470",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_026",
+      "family": "player_tendency",
+      "source_ordinal": 26,
+      "candidate_native_key": "tendency.RAW_0x471",
+      "display_name": "UNKNOWN_RAW_BYTE_026",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x471",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_027",
+      "family": "player_tendency",
+      "source_ordinal": 27,
+      "candidate_native_key": "tendency.SHOT_THREE_TENDENCY",
+      "display_name": "SHOT_THREE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x472",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_028",
+      "family": "player_tendency",
+      "source_ordinal": 28,
+      "candidate_native_key": "tendency.SPOT_UP_SHOT_THREE",
+      "display_name": "SPOT_UP_SHOT_THREE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x473",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_029",
+      "family": "player_tendency",
+      "source_ordinal": 29,
+      "candidate_native_key": "tendency.OFF_SCREEN_SHOT_THREE",
+      "display_name": "OFF_SCREEN_SHOT_THREE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x474",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_030",
+      "family": "player_tendency",
+      "source_ordinal": 30,
+      "candidate_native_key": "tendency.RAW_0x475",
+      "display_name": "UNKNOWN_RAW_BYTE_030",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x475",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_031",
+      "family": "player_tendency",
+      "source_ordinal": 31,
+      "candidate_native_key": "tendency.RAW_0x476",
+      "display_name": "UNKNOWN_RAW_BYTE_031",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x476",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_032",
+      "family": "player_tendency",
+      "source_ordinal": 32,
+      "candidate_native_key": "tendency.RAW_0x477",
+      "display_name": "UNKNOWN_RAW_BYTE_032",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x477",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_033",
+      "family": "player_tendency",
+      "source_ordinal": 33,
+      "candidate_native_key": "tendency.RAW_0x478",
+      "display_name": "UNKNOWN_RAW_BYTE_033",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x478",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_034",
+      "family": "player_tendency",
+      "source_ordinal": 34,
+      "candidate_native_key": "tendency.RAW_0x479",
+      "display_name": "UNKNOWN_RAW_BYTE_034",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x479",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_035",
+      "family": "player_tendency",
+      "source_ordinal": 35,
+      "candidate_native_key": "tendency.CONTESTED_JUMPER_THREE",
+      "display_name": "CONTESTED_JUMPER_THREE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x47A",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_036",
+      "family": "player_tendency",
+      "source_ordinal": 36,
+      "candidate_native_key": "tendency.CONTESTED_JUMPER_MID_RANGE",
+      "display_name": "CONTESTED_JUMPER_MID_RANGE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x47B",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_037",
+      "family": "player_tendency",
+      "source_ordinal": 37,
+      "candidate_native_key": "tendency.STEPBACK_JUMPER_THREE",
+      "display_name": "STEPBACK_JUMPER_THREE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x47C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_038",
+      "family": "player_tendency",
+      "source_ordinal": 38,
+      "candidate_native_key": "tendency.STEPBACK_JUMPER_MID_RANGE",
+      "display_name": "STEPBACK_JUMPER_MID_RANGE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x47D",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_039",
+      "family": "player_tendency",
+      "source_ordinal": 39,
+      "candidate_native_key": "tendency.SPIN_JUMPER_TENDENCY",
+      "display_name": "SPIN_JUMPER_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x47E",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_040",
+      "family": "player_tendency",
+      "source_ordinal": 40,
+      "candidate_native_key": "tendency.TRANSITION_PULL_UP_THREE",
+      "display_name": "TRANSITION_PULL_UP_THREE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x47F",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_041",
+      "family": "player_tendency",
+      "source_ordinal": 41,
+      "candidate_native_key": "tendency.DRIVE_PULL_UP_THREE",
+      "display_name": "DRIVE_PULL_UP_THREE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x480",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_042",
+      "family": "player_tendency",
+      "source_ordinal": 42,
+      "candidate_native_key": "tendency.DRIVE_PULL_UP_MID_RANGE",
+      "display_name": "DRIVE_PULL_UP_MID_RANGE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x481",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_043",
+      "family": "player_tendency",
+      "source_ordinal": 43,
+      "candidate_native_key": "tendency.RAW_0x482",
+      "display_name": "UNKNOWN_RAW_BYTE_043",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x482",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_044",
+      "family": "player_tendency",
+      "source_ordinal": 44,
+      "candidate_native_key": "tendency.DRIVE_TENDENCY",
+      "display_name": "DRIVE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x483",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_045",
+      "family": "player_tendency",
+      "source_ordinal": 45,
+      "candidate_native_key": "tendency.SPOT_UP_DRIVE_TENDENCY",
+      "display_name": "SPOT_UP_DRIVE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x484",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_046",
+      "family": "player_tendency",
+      "source_ordinal": 46,
+      "candidate_native_key": "tendency.OFF_SCREEN_DRIVE_TENDENCY",
+      "display_name": "OFF_SCREEN_DRIVE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x485",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_047",
+      "family": "player_tendency",
+      "source_ordinal": 47,
+      "candidate_native_key": "tendency.RAW_0x486",
+      "display_name": "UNKNOWN_RAW_BYTE_047",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x486",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_048",
+      "family": "player_tendency",
+      "source_ordinal": 48,
+      "candidate_native_key": "tendency.RAW_0x487",
+      "display_name": "UNKNOWN_RAW_BYTE_048",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x487",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_049",
+      "family": "player_tendency",
+      "source_ordinal": 49,
+      "candidate_native_key": "tendency.RAW_0x488",
+      "display_name": "UNKNOWN_RAW_BYTE_049",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x488",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_050",
+      "family": "player_tendency",
+      "source_ordinal": 50,
+      "candidate_native_key": "tendency.RAW_0x489",
+      "display_name": "UNKNOWN_RAW_BYTE_050",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x489",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_051",
+      "family": "player_tendency",
+      "source_ordinal": 51,
+      "candidate_native_key": "tendency.RAW_0x48a",
+      "display_name": "UNKNOWN_RAW_BYTE_051",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x48A",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_052",
+      "family": "player_tendency",
+      "source_ordinal": 52,
+      "candidate_native_key": "tendency.RAW_0x48b",
+      "display_name": "UNKNOWN_RAW_BYTE_052",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x48B",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_053",
+      "family": "player_tendency",
+      "source_ordinal": 53,
+      "candidate_native_key": "tendency.RAW_0x48c",
+      "display_name": "UNKNOWN_RAW_BYTE_053",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x48C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_054",
+      "family": "player_tendency",
+      "source_ordinal": 54,
+      "candidate_native_key": "tendency.RAW_0x48d",
+      "display_name": "UNKNOWN_RAW_BYTE_054",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x48D",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_055",
+      "family": "player_tendency",
+      "source_ordinal": 55,
+      "candidate_native_key": "tendency.RAW_0x48e",
+      "display_name": "UNKNOWN_RAW_BYTE_055",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x48E",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_056",
+      "family": "player_tendency",
+      "source_ordinal": 56,
+      "candidate_native_key": "tendency.RAW_0x48f",
+      "display_name": "UNKNOWN_RAW_BYTE_056",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x48F",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_057",
+      "family": "player_tendency",
+      "source_ordinal": 57,
+      "candidate_native_key": "tendency.RAW_0x490",
+      "display_name": "UNKNOWN_RAW_BYTE_057",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x490",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_058",
+      "family": "player_tendency",
+      "source_ordinal": 58,
+      "candidate_native_key": "tendency.RAW_0x491",
+      "display_name": "UNKNOWN_RAW_BYTE_058",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x491",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_059",
+      "family": "player_tendency",
+      "source_ordinal": 59,
+      "candidate_native_key": "tendency.RAW_0x492",
+      "display_name": "UNKNOWN_RAW_BYTE_059",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x492",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_060",
+      "family": "player_tendency",
+      "source_ordinal": 60,
+      "candidate_native_key": "tendency.RAW_0x493",
+      "display_name": "UNKNOWN_RAW_BYTE_060",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x493",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_061",
+      "family": "player_tendency",
+      "source_ordinal": 61,
+      "candidate_native_key": "tendency.RAW_0x494",
+      "display_name": "UNKNOWN_RAW_BYTE_061",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x494",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_062",
+      "family": "player_tendency",
+      "source_ordinal": 62,
+      "candidate_native_key": "tendency.RAW_0x495",
+      "display_name": "UNKNOWN_RAW_BYTE_062",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x495",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_063",
+      "family": "player_tendency",
+      "source_ordinal": 63,
+      "candidate_native_key": "tendency.RAW_0x496",
+      "display_name": "UNKNOWN_RAW_BYTE_063",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x496",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_064",
+      "family": "player_tendency",
+      "source_ordinal": 64,
+      "candidate_native_key": "tendency.ATTACK_STRONG_ON_DRIVE",
+      "display_name": "ATTACK_STRONG_ON_DRIVE",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x497",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_065",
+      "family": "player_tendency",
+      "source_ordinal": 65,
+      "candidate_native_key": "tendency.DISH_TO_OPEN_MAN_TENDENCY",
+      "display_name": "DISH_TO_OPEN_MAN_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x498",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_066",
+      "family": "player_tendency",
+      "source_ordinal": 66,
+      "candidate_native_key": "tendency.TOUCHES_TENDENCY",
+      "display_name": "TOUCHES_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x499",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_067",
+      "family": "player_tendency",
+      "source_ordinal": 67,
+      "candidate_native_key": "tendency.POST_UP_TENDENCY",
+      "display_name": "POST_UP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x49A",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_068",
+      "family": "player_tendency",
+      "source_ordinal": 68,
+      "candidate_native_key": "tendency.ROLL_VS_POP_TENDENCY",
+      "display_name": "ROLL_VS_POP_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x49B",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_069",
+      "family": "player_tendency",
+      "source_ordinal": 69,
+      "candidate_native_key": "tendency.TRANSITION_SPOT_UP",
+      "display_name": "TRANSITION_SPOT_UP",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x49C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_070",
+      "family": "player_tendency",
+      "source_ordinal": 70,
+      "candidate_native_key": "tendency.RAW_0x49d",
+      "display_name": "UNKNOWN_RAW_BYTE_070",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x49D",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_071",
+      "family": "player_tendency",
+      "source_ordinal": 71,
+      "candidate_native_key": "tendency.RAW_0x49e",
+      "display_name": "UNKNOWN_RAW_BYTE_071",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x49E",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_072",
+      "family": "player_tendency",
+      "source_ordinal": 72,
+      "candidate_native_key": "tendency.RAW_0x49f",
+      "display_name": "UNKNOWN_RAW_BYTE_072",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x49F",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_073",
+      "family": "player_tendency",
+      "source_ordinal": 73,
+      "candidate_native_key": "tendency.RAW_0x4a0",
+      "display_name": "UNKNOWN_RAW_BYTE_073",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A0",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_074",
+      "family": "player_tendency",
+      "source_ordinal": 74,
+      "candidate_native_key": "tendency.PLAY_DISCIPLINE_TENDENCY",
+      "display_name": "PLAY_DISCIPLINE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4A1",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_075",
+      "family": "player_tendency",
+      "source_ordinal": 75,
+      "candidate_native_key": "tendency.RAW_0x4a2",
+      "display_name": "UNKNOWN_RAW_BYTE_075",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A2",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_076",
+      "family": "player_tendency",
+      "source_ordinal": 76,
+      "candidate_native_key": "tendency.RAW_0x4a3",
+      "display_name": "UNKNOWN_RAW_BYTE_076",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A3",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_077",
+      "family": "player_tendency",
+      "source_ordinal": 77,
+      "candidate_native_key": "tendency.RAW_0x4a4",
+      "display_name": "UNKNOWN_RAW_BYTE_077",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A4",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_078",
+      "family": "player_tendency",
+      "source_ordinal": 78,
+      "candidate_native_key": "tendency.RAW_0x4a5",
+      "display_name": "UNKNOWN_RAW_BYTE_078",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A5",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_079",
+      "family": "player_tendency",
+      "source_ordinal": 79,
+      "candidate_native_key": "tendency.RAW_0x4a6",
+      "display_name": "UNKNOWN_RAW_BYTE_079",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A6",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_080",
+      "family": "player_tendency",
+      "source_ordinal": 80,
+      "candidate_native_key": "tendency.RAW_0x4a7",
+      "display_name": "UNKNOWN_RAW_BYTE_080",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A7",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_081",
+      "family": "player_tendency",
+      "source_ordinal": 81,
+      "candidate_native_key": "tendency.RAW_0x4a8",
+      "display_name": "UNKNOWN_RAW_BYTE_081",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A8",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_082",
+      "family": "player_tendency",
+      "source_ordinal": 82,
+      "candidate_native_key": "tendency.RAW_0x4a9",
+      "display_name": "UNKNOWN_RAW_BYTE_082",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4A9",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_083",
+      "family": "player_tendency",
+      "source_ordinal": 83,
+      "candidate_native_key": "tendency.RAW_0x4aa",
+      "display_name": "UNKNOWN_RAW_BYTE_083",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4AA",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_084",
+      "family": "player_tendency",
+      "source_ordinal": 84,
+      "candidate_native_key": "tendency.RAW_0x4ab",
+      "display_name": "UNKNOWN_RAW_BYTE_084",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4AB",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_085",
+      "family": "player_tendency",
+      "source_ordinal": 85,
+      "candidate_native_key": "tendency.RAW_0x4ac",
+      "display_name": "UNKNOWN_RAW_BYTE_085",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4AC",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_086",
+      "family": "player_tendency",
+      "source_ordinal": 86,
+      "candidate_native_key": "tendency.RAW_0x4ad",
+      "display_name": "UNKNOWN_RAW_BYTE_086",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4AD",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_087",
+      "family": "player_tendency",
+      "source_ordinal": 87,
+      "candidate_native_key": "tendency.RAW_0x4ae",
+      "display_name": "UNKNOWN_RAW_BYTE_087",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4AE",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_088",
+      "family": "player_tendency",
+      "source_ordinal": 88,
+      "candidate_native_key": "tendency.RAW_0x4af",
+      "display_name": "UNKNOWN_RAW_BYTE_088",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4AF",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_089",
+      "family": "player_tendency",
+      "source_ordinal": 89,
+      "candidate_native_key": "tendency.RAW_0x4b0",
+      "display_name": "UNKNOWN_RAW_BYTE_089",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4B0",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_090",
+      "family": "player_tendency",
+      "source_ordinal": 90,
+      "candidate_native_key": "tendency.RAW_0x4b1",
+      "display_name": "UNKNOWN_RAW_BYTE_090",
+      "source_status": "UNKNOWN_RAW_BYTE",
+      "offset_hex": "0x4B1",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_091",
+      "family": "player_tendency",
+      "source_ordinal": 91,
+      "candidate_native_key": "tendency.FLASHY_PASS_TENDENCY",
+      "display_name": "FLASHY_PASS_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B2",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_092",
+      "family": "player_tendency",
+      "source_ordinal": 92,
+      "candidate_native_key": "tendency.ALLEY_OOP_PASS_TENDENCY",
+      "display_name": "ALLEY_OOP_PASS_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B3",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_093",
+      "family": "player_tendency",
+      "source_ordinal": 93,
+      "candidate_native_key": "tendency.PASS_INTERCEPTION_TENDENCY",
+      "display_name": "PASS_INTERCEPTION_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B4",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_094",
+      "family": "player_tendency",
+      "source_ordinal": 94,
+      "candidate_native_key": "tendency.TAKE_CHARGE_TENDENCY",
+      "display_name": "TAKE_CHARGE_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B5",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_095",
+      "family": "player_tendency",
+      "source_ordinal": 95,
+      "candidate_native_key": "tendency.ON_BALL_STEAL_TENDENCY",
+      "display_name": "ON_BALL_STEAL_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B6",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_096",
+      "family": "player_tendency",
+      "source_ordinal": 96,
+      "candidate_native_key": "tendency.CONTEST_SHOT_TENDENCY",
+      "display_name": "CONTEST_SHOT_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B7",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_097",
+      "family": "player_tendency",
+      "source_ordinal": 97,
+      "candidate_native_key": "tendency.BLOCK_SHOT_TENDENCY",
+      "display_name": "BLOCK_SHOT_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B8",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_098",
+      "family": "player_tendency",
+      "source_ordinal": 98,
+      "candidate_native_key": "tendency.FOUL_TENDENCY",
+      "display_name": "FOUL_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4B9",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_099",
+      "family": "player_tendency",
+      "source_ordinal": 99,
+      "candidate_native_key": "tendency.HARD_FOUL_TENDENCY",
+      "display_name": "HARD_FOUL_TENDENCY",
+      "source_status": "NAMED_NATIVE",
+      "offset_hex": "0x4BA",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R04B_native_slots",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_001",
+      "family": "world_settings",
+      "source_ordinal": 1,
+      "candidate_native_key": "settings.game_settings.quarter_length",
+      "display_name": "settings.game_settings.quarter_length",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x14",
+      "declared_raw_range": [
+        1,
+        12
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_002",
+      "family": "world_settings",
+      "source_ordinal": 2,
+      "candidate_native_key": "settings.game_settings.game_speed",
+      "display_name": "settings.game_settings.game_speed",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x00",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_003",
+      "family": "world_settings",
+      "source_ordinal": 3,
+      "candidate_native_key": "settings.game_settings.free_throw_difficulty",
+      "display_name": "settings.game_settings.free_throw_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x60",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_004",
+      "family": "world_settings",
+      "source_ordinal": 4,
+      "candidate_native_key": "settings.game_settings.shot_clock",
+      "display_name": "settings.game_settings.shot_clock",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x74",
+      "declared_raw_range": [
+        12,
+        60
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_005",
+      "family": "world_settings",
+      "source_ordinal": 5,
+      "candidate_native_key": "settings.game_settings.foul_out",
+      "display_name": "settings.game_settings.foul_out",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0xA0",
+      "declared_raw_range": [
+        2,
+        8
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_006",
+      "family": "world_settings",
+      "source_ordinal": 6,
+      "candidate_native_key": "settings.game_settings.injuries_enabled",
+      "display_name": "settings.game_settings.injuries_enabled",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0xF0",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_007",
+      "family": "world_settings",
+      "source_ordinal": 7,
+      "candidate_native_key": "settings.simulation.sim_quarter_length",
+      "display_name": "settings.simulation.sim_quarter_length",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0xB4",
+      "declared_raw_range": [
+        1,
+        12
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_008",
+      "family": "world_settings",
+      "source_ordinal": 8,
+      "candidate_native_key": "settings.simulation.normalize_stats",
+      "display_name": "settings.simulation.normalize_stats",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x600",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_009",
+      "family": "world_settings",
+      "source_ordinal": 9,
+      "candidate_native_key": "settings.trade_rules.cpu_cpu_trades",
+      "display_name": "settings.trade_rules.cpu_cpu_trades",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x170",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_010",
+      "family": "world_settings",
+      "source_ordinal": 10,
+      "candidate_native_key": "settings.trade_rules.trade_override",
+      "display_name": "settings.trade_rules.trade_override",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x168",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_011",
+      "family": "world_settings",
+      "source_ordinal": 11,
+      "candidate_native_key": "settings.trade_rules.trade_deadline",
+      "display_name": "settings.trade_rules.trade_deadline",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x16C",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_012",
+      "family": "world_settings",
+      "source_ordinal": 12,
+      "candidate_native_key": "settings.trade_rules.financial_trade_rules",
+      "display_name": "settings.trade_rules.financial_trade_rules",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x160",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_013",
+      "family": "world_settings",
+      "source_ordinal": 13,
+      "candidate_native_key": "settings.trade_rules.recently_signed_rule",
+      "display_name": "settings.trade_rules.recently_signed_rule",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x154",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_014",
+      "family": "world_settings",
+      "source_ordinal": 14,
+      "candidate_native_key": "settings.trade_rules.recently_traded_rule",
+      "display_name": "settings.trade_rules.recently_traded_rule",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x158",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_015",
+      "family": "world_settings",
+      "source_ordinal": 15,
+      "candidate_native_key": "settings.trade_rules.trade_difficulty",
+      "display_name": "settings.trade_rules.trade_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x174",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_016",
+      "family": "world_settings",
+      "source_ordinal": 16,
+      "candidate_native_key": "settings.trade_rules.cpu_trade_frequency",
+      "display_name": "settings.trade_rules.cpu_trade_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x178",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_017",
+      "family": "world_settings",
+      "source_ordinal": 17,
+      "candidate_native_key": "settings.trade_rules.blockbuster_trade_frequency",
+      "display_name": "settings.trade_rules.blockbuster_trade_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x17C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_018",
+      "family": "world_settings",
+      "source_ordinal": 18,
+      "candidate_native_key": "settings.trade_rules.untouchable_threshold",
+      "display_name": "settings.trade_rules.untouchable_threshold",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x184",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_019",
+      "family": "world_settings",
+      "source_ordinal": 19,
+      "candidate_native_key": "settings.contracts.contract_difficulty",
+      "display_name": "settings.contracts.contract_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x210",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_020",
+      "family": "world_settings",
+      "source_ordinal": 20,
+      "candidate_native_key": "settings.contracts.player_non_financial_ambitions",
+      "display_name": "settings.contracts.player_non_financial_ambitions",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x214",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_021",
+      "family": "world_settings",
+      "source_ordinal": 21,
+      "candidate_native_key": "settings.contracts.min_contract_rating",
+      "display_name": "settings.contracts.min_contract_rating",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x218",
+      "declared_raw_range": [
+        50,
+        99
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_022",
+      "family": "world_settings",
+      "source_ordinal": 22,
+      "candidate_native_key": "settings.contracts.max_contract_rating",
+      "display_name": "settings.contracts.max_contract_rating",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x21C",
+      "declared_raw_range": [
+        70,
+        99
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_023",
+      "family": "world_settings",
+      "source_ordinal": 23,
+      "candidate_native_key": "settings.contracts.player_potential_factor",
+      "display_name": "settings.contracts.player_potential_factor",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x220",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_024",
+      "family": "world_settings",
+      "source_ordinal": 24,
+      "candidate_native_key": "settings.contracts.player_durability_factor",
+      "display_name": "settings.contracts.player_durability_factor",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x224",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_025",
+      "family": "world_settings",
+      "source_ordinal": 25,
+      "candidate_native_key": "settings.contracts.player_fame_factor",
+      "display_name": "settings.contracts.player_fame_factor",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x22C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_026",
+      "family": "world_settings",
+      "source_ordinal": 26,
+      "candidate_native_key": "settings.contracts.cpu_interest_in_resigning",
+      "display_name": "settings.contracts.cpu_interest_in_resigning",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x234",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_027",
+      "family": "world_settings",
+      "source_ordinal": 27,
+      "candidate_native_key": "settings.injuries_and_morale.user_injury_frequency",
+      "display_name": "settings.injuries_and_morale.user_injury_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x24C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_028",
+      "family": "world_settings",
+      "source_ordinal": 28,
+      "candidate_native_key": "settings.injuries_and_morale.cpu_injury_frequency",
+      "display_name": "settings.injuries_and_morale.cpu_injury_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x250",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_029",
+      "family": "world_settings",
+      "source_ordinal": 29,
+      "candidate_native_key": "settings.injuries_and_morale.user_injury_effects",
+      "display_name": "settings.injuries_and_morale.user_injury_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x254",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_030",
+      "family": "world_settings",
+      "source_ordinal": 30,
+      "candidate_native_key": "settings.injuries_and_morale.cpu_injury_effects",
+      "display_name": "settings.injuries_and_morale.cpu_injury_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x258",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_031",
+      "family": "world_settings",
+      "source_ordinal": 31,
+      "candidate_native_key": "settings.injuries_and_morale.injury_severity",
+      "display_name": "settings.injuries_and_morale.injury_severity",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x25C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_032",
+      "family": "world_settings",
+      "source_ordinal": 32,
+      "candidate_native_key": "settings.injuries_and_morale.injury_duration",
+      "display_name": "settings.injuries_and_morale.injury_duration",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x260",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_033",
+      "family": "world_settings",
+      "source_ordinal": 33,
+      "candidate_native_key": "settings.injuries_and_morale.career_ending_injury_frequency",
+      "display_name": "settings.injuries_and_morale.career_ending_injury_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x264",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_034",
+      "family": "world_settings",
+      "source_ordinal": 34,
+      "candidate_native_key": "settings.injuries_and_morale.morale_difficulty",
+      "display_name": "settings.injuries_and_morale.morale_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x238",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_035",
+      "family": "world_settings",
+      "source_ordinal": 35,
+      "candidate_native_key": "settings.injuries_and_morale.morale_effects",
+      "display_name": "settings.injuries_and_morale.morale_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x23C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_036",
+      "family": "world_settings",
+      "source_ordinal": 36,
+      "candidate_native_key": "settings.injuries_and_morale.chemistry_difficulty",
+      "display_name": "settings.injuries_and_morale.chemistry_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x240",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_037",
+      "family": "world_settings",
+      "source_ordinal": 37,
+      "candidate_native_key": "settings.injuries_and_morale.chemistry_effects",
+      "display_name": "settings.injuries_and_morale.chemistry_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x244",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_038",
+      "family": "world_settings",
+      "source_ordinal": 38,
+      "candidate_native_key": "settings.progression.training_effects",
+      "display_name": "settings.progression.training_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x268",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_039",
+      "family": "world_settings",
+      "source_ordinal": 39,
+      "candidate_native_key": "settings.progression.offseason_progression_rate",
+      "display_name": "settings.progression.offseason_progression_rate",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x26C",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_040",
+      "family": "world_settings",
+      "source_ordinal": 40,
+      "candidate_native_key": "settings.progression.regression_rate",
+      "display_name": "settings.progression.regression_rate",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x274",
+      "declared_raw_range": [
+        0,
+        100
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_041",
+      "family": "world_settings",
+      "source_ordinal": 41,
+      "candidate_native_key": "settings.gameplay_sliders.game_difficulty_preset",
+      "display_name": "settings.gameplay_sliders.game_difficulty_preset",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x00",
+      "declared_raw_range": [
+        0,
+        4
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_042",
+      "family": "world_settings",
+      "source_ordinal": 42,
+      "candidate_native_key": "settings.gameplay_sliders.speed_with_ball_min_user",
+      "display_name": "settings.gameplay_sliders.speed_with_ball_min_user",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x37C",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_043",
+      "family": "world_settings",
+      "source_ordinal": 43,
+      "candidate_native_key": "settings.gameplay_sliders.speed_with_ball_min_cpu",
+      "display_name": "settings.gameplay_sliders.speed_with_ball_min_cpu",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x380",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_044",
+      "family": "world_settings",
+      "source_ordinal": 44,
+      "candidate_native_key": "settings.gameplay_sliders.speed_with_ball_max_user",
+      "display_name": "settings.gameplay_sliders.speed_with_ball_max_user",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x374",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_045",
+      "family": "world_settings",
+      "source_ordinal": 45,
+      "candidate_native_key": "settings.gameplay_sliders.speed_with_ball_max_cpu",
+      "display_name": "settings.gameplay_sliders.speed_with_ball_max_cpu",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x378",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_046",
+      "family": "world_settings",
+      "source_ordinal": 46,
+      "candidate_native_key": "settings.gameplay_sliders.acceleration_with_ball_min_user",
+      "display_name": "settings.gameplay_sliders.acceleration_with_ball_min_user",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x39C",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_047",
+      "family": "world_settings",
+      "source_ordinal": 47,
+      "candidate_native_key": "settings.gameplay_sliders.acceleration_with_ball_min_cpu",
+      "display_name": "settings.gameplay_sliders.acceleration_with_ball_min_cpu",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x3A0",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_048",
+      "family": "world_settings",
+      "source_ordinal": 48,
+      "candidate_native_key": "settings.gameplay_sliders.speed_without_ball_min_user",
+      "display_name": "settings.gameplay_sliders.speed_without_ball_min_user",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x36C",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_049",
+      "family": "world_settings",
+      "source_ordinal": 49,
+      "candidate_native_key": "settings.gameplay_sliders.speed_without_ball_min_cpu",
+      "display_name": "settings.gameplay_sliders.speed_without_ball_min_cpu",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x370",
+      "declared_raw_range": [
+        0,
+        1
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_050",
+      "family": "world_settings",
+      "source_ordinal": 50,
+      "candidate_native_key": "world.trade_and_draft_rules.cpu_cpu_trades",
+      "display_name": "world.trade_and_draft_rules.cpu_cpu_trades",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x170",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_051",
+      "family": "world_settings",
+      "source_ordinal": 51,
+      "candidate_native_key": "world.trade_and_draft_rules.cpu_trade_frequency",
+      "display_name": "world.trade_and_draft_rules.cpu_trade_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x178",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_052",
+      "family": "world_settings",
+      "source_ordinal": 52,
+      "candidate_native_key": "world.trade_and_draft_rules.ted_stepien_rule",
+      "display_name": "world.trade_and_draft_rules.ted_stepien_rule",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x180",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_053",
+      "family": "world_settings",
+      "source_ordinal": 53,
+      "candidate_native_key": "world.trade_and_draft_rules.trade_override",
+      "display_name": "world.trade_and_draft_rules.trade_override",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x168",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_054",
+      "family": "world_settings",
+      "source_ordinal": 54,
+      "candidate_native_key": "world.trade_and_draft_rules.trade_deadline",
+      "display_name": "world.trade_and_draft_rules.trade_deadline",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x16C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_055",
+      "family": "world_settings",
+      "source_ordinal": 55,
+      "candidate_native_key": "world.trade_and_draft_rules.financial_trade_rules",
+      "display_name": "world.trade_and_draft_rules.financial_trade_rules",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x160",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_056",
+      "family": "world_settings",
+      "source_ordinal": 56,
+      "candidate_native_key": "world.trade_and_draft_rules.recently_signed_rule",
+      "display_name": "world.trade_and_draft_rules.recently_signed_rule",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x154",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_057",
+      "family": "world_settings",
+      "source_ordinal": 57,
+      "candidate_native_key": "world.trade_and_draft_rules.recently_traded_rule",
+      "display_name": "world.trade_and_draft_rules.recently_traded_rule",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x158",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_058",
+      "family": "world_settings",
+      "source_ordinal": 58,
+      "candidate_native_key": "world.trade_and_draft_rules.trade_difficulty",
+      "display_name": "world.trade_and_draft_rules.trade_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x174",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_059",
+      "family": "world_settings",
+      "source_ordinal": 59,
+      "candidate_native_key": "world.contracts_and_finances.cpu_interest_in_resigning",
+      "display_name": "world.contracts_and_finances.cpu_interest_in_resigning",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x234",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_060",
+      "family": "world_settings",
+      "source_ordinal": 60,
+      "candidate_native_key": "world.contracts_and_finances.contract_difficulty",
+      "display_name": "world.contracts_and_finances.contract_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x210",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_061",
+      "family": "world_settings",
+      "source_ordinal": 61,
+      "candidate_native_key": "world.contracts_and_finances.player_non_financial_ambitions",
+      "display_name": "world.contracts_and_finances.player_non_financial_ambitions",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x214",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_062",
+      "family": "world_settings",
+      "source_ordinal": 62,
+      "candidate_native_key": "world.contracts_and_finances.min_contract_rating",
+      "display_name": "world.contracts_and_finances.min_contract_rating",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x218",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_063",
+      "family": "world_settings",
+      "source_ordinal": 63,
+      "candidate_native_key": "world.contracts_and_finances.max_contract_rating",
+      "display_name": "world.contracts_and_finances.max_contract_rating",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x21C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_064",
+      "family": "world_settings",
+      "source_ordinal": 64,
+      "candidate_native_key": "world.contracts_and_finances.player_potential_factor",
+      "display_name": "world.contracts_and_finances.player_potential_factor",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x220",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_065",
+      "family": "world_settings",
+      "source_ordinal": 65,
+      "candidate_native_key": "world.contracts_and_finances.player_durability_factor",
+      "display_name": "world.contracts_and_finances.player_durability_factor",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x224",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_066",
+      "family": "world_settings",
+      "source_ordinal": 66,
+      "candidate_native_key": "world.contracts_and_finances.player_fame_factor",
+      "display_name": "world.contracts_and_finances.player_fame_factor",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x22C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_067",
+      "family": "world_settings",
+      "source_ordinal": 67,
+      "candidate_native_key": "world.progression_and_regression.offseason_progression_rate",
+      "display_name": "world.progression_and_regression.offseason_progression_rate",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x26C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_068",
+      "family": "world_settings",
+      "source_ordinal": 68,
+      "candidate_native_key": "world.progression_and_regression.regression_rate",
+      "display_name": "world.progression_and_regression.regression_rate",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x274",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_069",
+      "family": "world_settings",
+      "source_ordinal": 69,
+      "candidate_native_key": "world.progression_and_regression.training_effects",
+      "display_name": "world.progression_and_regression.training_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x268",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_070",
+      "family": "world_settings",
+      "source_ordinal": 70,
+      "candidate_native_key": "world.injuries_and_morale.user_injury_frequency",
+      "display_name": "world.injuries_and_morale.user_injury_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x24C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_071",
+      "family": "world_settings",
+      "source_ordinal": 71,
+      "candidate_native_key": "world.injuries_and_morale.cpu_injury_frequency",
+      "display_name": "world.injuries_and_morale.cpu_injury_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x250",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_072",
+      "family": "world_settings",
+      "source_ordinal": 72,
+      "candidate_native_key": "world.injuries_and_morale.user_injury_effects",
+      "display_name": "world.injuries_and_morale.user_injury_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x254",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_073",
+      "family": "world_settings",
+      "source_ordinal": 73,
+      "candidate_native_key": "world.injuries_and_morale.cpu_injury_effects",
+      "display_name": "world.injuries_and_morale.cpu_injury_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x258",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_074",
+      "family": "world_settings",
+      "source_ordinal": 74,
+      "candidate_native_key": "world.injuries_and_morale.injury_severity",
+      "display_name": "world.injuries_and_morale.injury_severity",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x25C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_075",
+      "family": "world_settings",
+      "source_ordinal": 75,
+      "candidate_native_key": "world.injuries_and_morale.injury_duration",
+      "display_name": "world.injuries_and_morale.injury_duration",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x260",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_076",
+      "family": "world_settings",
+      "source_ordinal": 76,
+      "candidate_native_key": "world.injuries_and_morale.career_ending_injury_frequency",
+      "display_name": "world.injuries_and_morale.career_ending_injury_frequency",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x264",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_077",
+      "family": "world_settings",
+      "source_ordinal": 77,
+      "candidate_native_key": "world.injuries_and_morale.morale_difficulty",
+      "display_name": "world.injuries_and_morale.morale_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x238",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_078",
+      "family": "world_settings",
+      "source_ordinal": 78,
+      "candidate_native_key": "world.injuries_and_morale.morale_effects",
+      "display_name": "world.injuries_and_morale.morale_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x23C",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_079",
+      "family": "world_settings",
+      "source_ordinal": 79,
+      "candidate_native_key": "world.injuries_and_morale.chemistry_difficulty",
+      "display_name": "world.injuries_and_morale.chemistry_difficulty",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x240",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_080",
+      "family": "world_settings",
+      "source_ordinal": 80,
+      "candidate_native_key": "world.injuries_and_morale.chemistry_effects",
+      "display_name": "world.injuries_and_morale.chemistry_effects",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x244",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_081",
+      "family": "world_settings",
+      "source_ordinal": 81,
+      "candidate_native_key": "world.injuries_and_morale.injuries_enabled",
+      "display_name": "world.injuries_and_morale.injuries_enabled",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0xF0",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_082",
+      "family": "world_settings",
+      "source_ordinal": 82,
+      "candidate_native_key": "world.gameplay_and_calendar.quarter_length",
+      "display_name": "world.gameplay_and_calendar.quarter_length",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x14",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_083",
+      "family": "world_settings",
+      "source_ordinal": 83,
+      "candidate_native_key": "world.gameplay_and_calendar.sim_quarter_length",
+      "display_name": "world.gameplay_and_calendar.sim_quarter_length",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0xB4",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_084",
+      "family": "world_settings",
+      "source_ordinal": 84,
+      "candidate_native_key": "world.gameplay_and_calendar.normalize_stats",
+      "display_name": "world.gameplay_and_calendar.normalize_stats",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x600",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_085",
+      "family": "world_settings",
+      "source_ordinal": 85,
+      "candidate_native_key": "world.gameplay_and_calendar.game_difficulty_preset",
+      "display_name": "world.gameplay_and_calendar.game_difficulty_preset",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x00",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "WORLD_REG_086",
+      "family": "world_settings",
+      "source_ordinal": 86,
+      "candidate_native_key": "world.gameplay_and_calendar.game_speed",
+      "display_name": "world.gameplay_and_calendar.game_speed",
+      "source_status": "STATIC_REGISTRY_CANDIDATE",
+      "offset_hex": "0x00",
+      "declared_raw_range": [
+        null,
+        null
+      ],
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "R06A_registry_candidates",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_001",
+      "family": "coach_settings",
+      "source_ordinal": 1,
+      "candidate_native_key": "POEOffense",
+      "display_name": "POEOffense",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_002",
+      "family": "coach_settings",
+      "source_ordinal": 2,
+      "candidate_native_key": "POEOffense2",
+      "display_name": "POEOffense2",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_003",
+      "family": "coach_settings",
+      "source_ordinal": 3,
+      "candidate_native_key": "POEOffense3",
+      "display_name": "POEOffense3",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_004",
+      "family": "coach_settings",
+      "source_ordinal": 4,
+      "candidate_native_key": "POEDefense",
+      "display_name": "POEDefense",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_005",
+      "family": "coach_settings",
+      "source_ordinal": 5,
+      "candidate_native_key": "POEDefense2",
+      "display_name": "POEDefense2",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_006",
+      "family": "coach_settings",
+      "source_ordinal": 6,
+      "candidate_native_key": "POEDefense3",
+      "display_name": "POEDefense3",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_007",
+      "family": "coach_settings",
+      "source_ordinal": 7,
+      "candidate_native_key": "PreferredSystem",
+      "display_name": "PreferredSystem",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_008",
+      "family": "coach_settings",
+      "source_ordinal": 8,
+      "candidate_native_key": "ActiveSystem",
+      "display_name": "ActiveSystem",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_009",
+      "family": "coach_settings",
+      "source_ordinal": 9,
+      "candidate_native_key": "PlaybookID",
+      "display_name": "PlaybookID",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_010",
+      "family": "coach_settings",
+      "source_ordinal": 10,
+      "candidate_native_key": "BenchDepth",
+      "display_name": "BenchDepth",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_011",
+      "family": "coach_settings",
+      "source_ordinal": 11,
+      "candidate_native_key": "RunPlayTendency",
+      "display_name": "RunPlayTendency",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_012",
+      "family": "coach_settings",
+      "source_ordinal": 12,
+      "candidate_native_key": "ZoneUsage",
+      "display_name": "ZoneUsage",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_013",
+      "family": "coach_settings",
+      "source_ordinal": 13,
+      "candidate_native_key": "BenchUtilization",
+      "display_name": "BenchUtilization",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_014",
+      "family": "coach_settings",
+      "source_ordinal": 14,
+      "candidate_native_key": "Tempo",
+      "display_name": "Tempo",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_015",
+      "family": "coach_settings",
+      "source_ordinal": 15,
+      "candidate_native_key": "HelpDefense",
+      "display_name": "HelpDefense",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_016",
+      "family": "coach_settings",
+      "source_ordinal": 16,
+      "candidate_native_key": "FreelanceType",
+      "display_name": "FreelanceType",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_017",
+      "family": "coach_settings",
+      "source_ordinal": 17,
+      "candidate_native_key": "FreelanceType2",
+      "display_name": "FreelanceType2",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_018",
+      "family": "coach_settings",
+      "source_ordinal": 18,
+      "candidate_native_key": "FreelanceType3",
+      "display_name": "FreelanceType3",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    },
+    {
+      "field_id": "COACH_DEFAULT_019",
+      "family": "coach_settings",
+      "source_ordinal": 19,
+      "candidate_native_key": "FreelanceType4",
+      "display_name": "FreelanceType4",
+      "source_status": "K04_PROJECT_RESEARCH",
+      "offset_hex": null,
+      "declared_raw_range": null,
+      "ui_mapping": "UNKNOWN",
+      "consumer": "UNKNOWN",
+      "effect": "UNKNOWN",
+      "source_ref": "K04_COACH_AND_PLAYS",
+      "progress": "NOT_STARTED"
+    }
+  ]
+}
