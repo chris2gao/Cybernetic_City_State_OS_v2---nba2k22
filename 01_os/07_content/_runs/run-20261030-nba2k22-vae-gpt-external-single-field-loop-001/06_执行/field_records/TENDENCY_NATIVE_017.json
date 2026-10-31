@@ -1,0 +1,108 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "iteration_id": "SWEEP01_FIELD0017",
+  "field_id": "TENDENCY_NATIVE_017",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "question": "Is unknown 2K22 player tendency byte 0x468 identifiable via direct technical documentation, without equating export column order with memory order?",
+  "identity": {
+    "key": "tendency.RAW_0x468",
+    "offset_hex": "0x468",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "source_status": "UNKNOWN_RAW_BYTE",
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "current_value": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 17
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://2kauction.com/mynba/2k22/players/larry-johnson",
+      "author": "2kAuction roster snapshot archive",
+      "date": "2021-09-10 roster, page date UNKNOWN",
+      "version": "NBA2K22 v90",
+      "platform": "web data not PC executable mapping",
+      "locator": "Other tendencies shot close left/middle/right",
+      "grade": "RELATED_LABELS_NO_OFFSET",
+      "claim": "Named shot location tendencies exist in the archived 2K22 export",
+      "limit": "No address or bit mapping"
+    },
+    {
+      "id": "S2",
+      "url": "https://github.com/discobisco/DiscoEditorPub/blob/main/2k25_player_patcher_gui_patched_homepage.py",
+      "author": "discobisco",
+      "date": "repository HEAD undated in current result",
+      "version": "NBA 2K25 external editor, not NBA2K22",
+      "platform": "PC modding code 2K25",
+      "locator": "tendencies column order fallback implementation",
+      "grade": "CROSS_VERSION_ADVERSE_METHODOLOGY",
+      "claim": "Some editors fall back to column-position matching when names fail",
+      "limit": "Cannot assert this code runs on 2K22 or that positional fallback is correct; warning against matching by order"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.nbasimsleague.com/players/playerpage.php?selectedPlayer=4371",
+      "author": "NBA Sims League database",
+      "date": "UNKNOWN",
+      "version": "NBA2K franchise version UNKNOWN",
+      "platform": "web export",
+      "locator": "Shot Close Left/Middle/Right tendency rows",
+      "grade": "RELATED_CATEGORY_ONLY",
+      "claim": "Community UI records several location-level shot tendencies",
+      "limit": "No 0x468 mapping, consumer proof or PC22 build"
+    }
+  ],
+  "claims": [
+    {
+      "id": "RAW01701",
+      "source_ids": [
+        "S1",
+        "S3"
+      ],
+      "tier": "CATEGORY_ONLY",
+      "statement": "Public player exports list nearby shot-zone tendencies but no raw memory address"
+    },
+    {
+      "id": "RAW01702",
+      "source_ids": [
+        "S2"
+      ],
+      "tier": "NEGATIVE_TRANSFER",
+      "statement": "Column-order fallback is known as an editor practice elsewhere; not a valid PC22 0x468 mapping proof"
+    }
+  ],
+  "conflicts": [
+    "No trustworthy public PC22 source ties 0x468 to any named UI field",
+    "Do not equate 2K25 tooling semantics to PC22, even if tendency categories overlap"
+  ],
+  "relationships": [
+    "Nearby shot zone tendencies are a possible research context only",
+    "Coach/ACE, ability, training and game outcome relation UNKNOWN pending mapping"
+  ],
+  "observable_indicators": [
+    "UID/raw byte readback compared against one identified UI panel and value",
+    "repeat same two players in same save/build/scene",
+    "check against adjacent 0x467 and 0x469 without treating their values as labels"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_017",
+    "question": "Can independent read-only UI/value observations for two known PC22 players identify 0x468 as exactly one player tendency field, without positional inference from archived lists?",
+    "if_match": "SCOPED_IDENTITY_PROOF_ONLY",
+    "if_not": "UNKNOWN",
+    "no_UI": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game_test": "NOT_RUN",
+  "REA_test": "NOT_RUN",
+  "next_improvement": "Obtain native UI correspondence or mark permanently unmapped pending code evidence"
+}
