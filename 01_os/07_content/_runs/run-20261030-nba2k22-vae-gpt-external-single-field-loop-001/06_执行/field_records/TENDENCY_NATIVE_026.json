@@ -1,0 +1,86 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_026",
+  "iteration_id": "SWEEP01_FIELD0026",
+  "sweep": 1,
+  "ordinal": 26,
+  "research_date": "2026-10-30",
+  "single_question": "Does raw 0x471 map to exactly one documented PC22 player tendency?",
+  "identity": {
+    "project_key": "tendency.RAW_0x471",
+    "offset": "0x471",
+    "project_range": [
+      0,
+      100
+    ],
+    "candidate_label": "UNKNOWN",
+    "current_build": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search_attempts": [
+    {
+      "query": "\"NBA2K22\" \"0x471\" \"tendency\" editor",
+      "result": "NO_MATCH_TO_PC22_NATIVE_MAPPING",
+      "date": "2026-10-30",
+      "nonrelevant_results": "unrelated electronics registers or game versions; excluded"
+    }
+  ],
+  "indirect_sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction historical database",
+      "date": "2021-09 roster; page publication UNKNOWN",
+      "game": "NBA2K22",
+      "platform": "web export, native source UNKNOWN",
+      "claim": "Several midrange shooting labels exist, not keyed by byte"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917713-res2-2k22-all-star-current-gen-sliders/page2",
+      "author": "res2",
+      "date": "2021-11-02",
+      "game": "NBA2K22",
+      "platform": "Current Gen, PC unconfirmed",
+      "claim": "Roster editor acronyms documented without native offsets"
+    }
+  ],
+  "claims": [
+    {
+      "id": "NC",
+      "tier": "NO_DIRECT_SOURCE",
+      "source_ids": [],
+      "statement": "No direct documented name or effect for byte 0x471"
+    },
+    {
+      "id": "CTX",
+      "tier": "INDIRECT_CONTEXT_ONLY",
+      "source_ids": [
+        "2kAuction",
+        "res2"
+      ],
+      "statement": "Nearby shot-zone category names cannot be mapped by order to 0x471"
+    }
+  ],
+  "conflicts": [
+    "No verified raw/UI correspondence",
+    "No internal consumer or response curve"
+  ],
+  "mechanism_links": "ALL_UNKNOWN_UNTIL_FIELD_IDENTITY",
+  "observation_plan": [
+    "Read only UID-bound 0x471 for two players",
+    "Compare exact source UI label and value, avoid positional assignment",
+    "Record build/save/time and adjacent bytes"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_026",
+    "question": "Can two independent PC22 UID-matched read-only values at 0x471 be tied to one named UI tendency without list-order guessing?",
+    "match": "MAPPING_ONLY",
+    "no_match": "UNKNOWN",
+    "unavailable": "BLOCKED"
+  },
+  "outcome": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_step": "Suspend identical ineffective web-search strategy until new engine/getter/REA evidence"
+}
