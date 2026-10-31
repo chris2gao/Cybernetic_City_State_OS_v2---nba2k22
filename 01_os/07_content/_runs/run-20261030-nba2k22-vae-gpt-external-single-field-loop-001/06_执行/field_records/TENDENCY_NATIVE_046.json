@@ -1,0 +1,72 @@
+{
+  "field_id": "TENDENCY_NATIVE_046",
+  "iteration_id": "SWEEP01_FIELD0046",
+  "question": "Does Off Screen Drive affect CPU driving choice after an off-ball screen, distinct from off-screen jump shot choices?",
+  "native": {
+    "key": "tendency.OFF_SCREEN_DRIVE_TENDENCY",
+    "offset": "0x485",
+    "project_range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "Sep 2021 roster, page date UNKNOWN",
+      "game": "NBA2K22",
+      "platform": "web historical export",
+      "claim": "Off Screen Drive independent named field, native offset unverified"
+    },
+    {
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "Crucial Baskets",
+      "date": "2021-10-18 inferred",
+      "game": "NBA2K22",
+      "platform": "CPUvCPU platform UNKNOWN",
+      "claim": "Reports differing averages of off-screen shot and drive, not isolated effect"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/864657-drive-balance",
+      "author": "Operation Sports contributors",
+      "date": "2018-10-14",
+      "game": "PRE-2K22",
+      "platform": "UNKNOWN",
+      "claim": "Drive preferences and Coach playcalling linked as old-series theory only"
+    }
+  ],
+  "claims": [
+    "Off Screen Drive is distinct in 2K22 roster exports",
+    "Current PC22 0x485 mapping and engine decision path UNKNOWN"
+  ],
+  "conflicts": [
+    "Off-ball screen initiation and resulting drive choice are distinct",
+    "Off Screen Shot Mid and Three may be competing choices",
+    "2018 theory cannot prove 2022 formula"
+  ],
+  "related": [
+    "Off Screen Shot Three/Mid",
+    "Playbook and PlayTypes, Coach Run Plays",
+    "Drive rating and layup/dunk finishing",
+    "Training direct effect UNKNOWN"
+  ],
+  "metrics": [
+    "drives per eligible off-ball-screen reception",
+    "offscreen mid/three shots and pass outcomes from same catches",
+    "screen play calls, defended distance and move eligibility"
+  ],
+  "REA_question": {
+    "id": "REA_OFFSCREEN_DRIVE_046",
+    "question": "For two UID-verified PC22 players, do read-only PLAYER+0x485 values equal displayed Off Screen Drive tendency in same build/save/time?",
+    "match": "MAPPING_ONLY",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "ARCHIVED_2K22_OFFSCREEN_DRIVE_LABEL_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
