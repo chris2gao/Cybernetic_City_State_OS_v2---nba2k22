@@ -1,0 +1,78 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "field_id": "WORLD_REG_003",
+  "iteration_id": "SWEEP01_FIELD0102",
+  "research_date": "2026-10-31",
+  "primary_question": "Is Free Throw Difficulty applied to user-timed free throws, Real Player % free throws, AI-vs-AI and Calendar Sim differently?",
+  "source_registry": {
+    "key": "settings.game_settings.free_throw_difficulty",
+    "offset_candidate": "0x60",
+    "registry_type": "STATIC_REGISTRY_CANDIDATE",
+    "PC22_UI_binding": "UNKNOWN",
+    "storage_width": "UNKNOWN",
+    "raw_value_domain": "UNKNOWN",
+    "runtime_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "DiamondLobby",
+      "date": "NBA 2K22 release era",
+      "platform": "Gameplay slider report; PC direct consumer UNKNOWN",
+      "claim": "FT Difficulty listed separately from User/CPU offensive sliders as N/A for CPU",
+      "grade": "SECONDARY_SETTINGS_SCOPE"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917660-j-kits-kingsimkits-nba-2k22-12min-hof-sim-sliders-real-stats-gameplay",
+      "author": "J-Kits/KingSimKits",
+      "date": "2021-09 to 2022-02",
+      "platform": "NBA 2K22, precise PC applicability UNKNOWN",
+      "claim": "Reports issues using Real Player % and User Timing; multiple sliders changed",
+      "grade": "CONTEMPORARY_CONFOUNDED_USER"
+    },
+    {
+      "url": "https://hoopsgamers.com/nba-2k22/controller-settings-explained-recommendations-best",
+      "author": "Hoops Gamers",
+      "date": "2021-22",
+      "platform": "platform-specificity UNKNOWN",
+      "claim": "Free Throw Timing offers User Timing and Real Player %, logically a separate configuration axis",
+      "grade": "SAME_RELEASE_OPTIONS"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "SAME_VERSION_UI_SETTING",
+      "claim": "Free Throw Difficulty is exposed as a distinct named setting in same-release materials"
+    },
+    {
+      "tier": "UNMAPPED_ADDRESS",
+      "claim": "No external material certifies the project candidate offset 0x60 or value decoding"
+    }
+  ],
+  "contradictions": [
+    "Community users disagree whether FT Difficulty works in Real Player % mode; 2022-23 reports may refer to NBA2K23, not PC22.",
+    "Per-player free throw rating, user timing, global gameplay slider and game simulation outcome are distinct domains",
+    "Native value readback and save persistence remain untested"
+  ],
+  "relations": [
+    "Gameplay options versus MyLEAGUE initial settings",
+    "Player ratings, timing method, CPU engine vs simulation",
+    "Human-confirmed world-line critical settings must not be silently altered"
+  ],
+  "metrics": [
+    "FTM/FTA and timing quality separately under identical shooters",
+    "User Timing vs Real Player % mode identified",
+    "CPU vs User and Calendar Sim separated"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_003",
+    "question": "In one current-build PC22 offline MyLEAGUE save, can candidate settings offset 0x60 be mapped read-only to the exact visible Free Throw Difficulty option with its enumerated value and immediate/delayed readback, without changing any settings?",
+    "positive": "SCOPED_UI_MAPPING_ONLY",
+    "negative": "UNKNOWN_OR_DIFFERENT_FIELD",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NAMED_2K22_OPTION_USER_MODE_EFFECT_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
