@@ -16,7 +16,7 @@
     null,
     null
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_MENU_SYNC",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_LIVE_3D_OR_SIM_ENGINE",
@@ -36,5 +36,29 @@
   "next_improvement_direction": "Hook memory address at slot RVA 0x0632B498 + offset 0x600 to verify live game readback",
   "timestamp_iso": "2026-10-31T03:17:47.025723+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e68fe638",
+    "live_value": 21234136,
+    "read_notes": "Read from dereferenced SLOT_SETTINGS pointer 0x0632B4B0",
+    "read_timestamp": "2026-10-31T03:31:03.614634+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "控制全局比赛与模拟规则中 world.gameplay_and_calendar.normalize_stats 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。",
+    "associations": [
+      "双 Normalize 机制：48 分钟标准比赛时间与统计换算前提",
+      "联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）",
+      "比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）"
+    ],
+    "confounders": [
+      "游戏模式切换 (MyLEAGUE vs 快速比赛)",
+      "玩家个人外挂滑块覆写"
+    ],
+    "thresholds": "合法值域区间：[None, None]",
+    "live_value": 21234136,
+    "live_address": "0x7ff4e68fe638"
+  }
 }

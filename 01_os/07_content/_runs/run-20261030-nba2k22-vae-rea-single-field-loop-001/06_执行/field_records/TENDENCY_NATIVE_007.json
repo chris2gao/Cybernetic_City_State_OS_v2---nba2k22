@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:41.119520+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b036",
+    "live_value": 5,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.538118+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "拼抢前场篮板瞬间不落地直接在空中完成补篮或补扣的终结意愿。",
+    "associations": [
+      "受 Offensive Rebound 属性门禁与身高臂展判定约束",
+      "与 Putback Boss（补篮大王）徽章联动，提供抢板起跳瞬间弹跳与滞空补偿",
+      "与常规进攻篮板下地重置战术（0x45F）形成博弈"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 50 展现暴力空中二次进攻；数值 < 10 落地重置进攻节奏。",
+    "live_value": 5,
+    "live_address": "0x7ff4e4e9b036"
+  }
 }

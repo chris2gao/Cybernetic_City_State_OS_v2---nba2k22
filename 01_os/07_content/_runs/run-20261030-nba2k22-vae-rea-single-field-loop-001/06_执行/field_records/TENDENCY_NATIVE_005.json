@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:41.059143+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b034",
+    "live_value": 10,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.537267+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "突破扣篮时触发观赏性花式扣篮包（360度、大风车、双手折叠背扣）的意愿。",
+    "associations": [
+      "受球员士气、观赏度及客场比赛氛围调制",
+      "与 Special Delivery 与防守人贴身破坏率权衡（花式扣篮脱手失误率增加 15%~25%）",
+      "严禁过高分配给注重实用防守的主力，避免关键分被切球"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 50 频繁触发高难度扣篮动画；数值 < 10 保证动作朴实高效。",
+    "live_value": 10,
+    "live_address": "0x7ff4e4e9b034"
+  }
 }

@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,29 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:42.213450+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b057",
+    "live_value": 46,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.552224+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "攻防转换快攻推反击过程中，尚未落位直接追身干拔急停三分的倾向。",
+    "associations": [
+      "与教练战术 Pace 和 Fast Break Focus 强关联",
+      "哈利伯顿、库里、利拉德等持球大核的快攻追身三分核心参数"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "快攻神射给 80~95；传统后卫置 15~30。",
+    "live_value": 46,
+    "live_address": "0x7ff4e4e9b057"
+  }
 }

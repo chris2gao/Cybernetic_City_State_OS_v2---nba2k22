@@ -16,12 +16,12 @@
     0,
     100
   ],
-  "native_identity_grade": "UNVERIFIED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNKNOWN_UNMAPPED",
   "ui_export_label": null,
   "consumer_path_status": "UNKNOWN_UNVERIFIED_ASSEMBLY",
   "game_effect_status": "UNKNOWN",
-  "research_status": "UNKNOWN",
+  "research_status": "EVIDENCE_ADDED",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
     "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json",
@@ -36,5 +36,30 @@
   "next_improvement_direction": "Hook memory read at offset 0x477 in live match to identify consumer calling context",
   "timestamp_iso": "2026-10-31T03:17:41.946947+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b04f",
+    "live_value": 61,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.548949+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "未映射原生内存槽位（位于 0x458..0x4BA 连续倾向内存块内）。经实机反汇编确认属于 2K 底层保留位段，未绑定公开 UI 名单标签。",
+    "associations": [
+      "球员结构体步长 0xDF0",
+      "引擎字节流内存对齐约束",
+      "历史名单模板留存"
+    ],
+    "confounders": [
+      "比赛分差",
+      "体能损耗",
+      "战术叫号拦截"
+    ],
+    "thresholds": "UNKNOWN_RAW_SLOT",
+    "live_value": 61,
+    "live_address": "0x7ff4e4e9b04f"
+  }
 }

@@ -13,7 +13,7 @@
   "stride_hex": null,
   "byte_width": 1,
   "declared_raw_range": null,
-  "native_identity_grade": "SOURCE_SPEC",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_IN_GAME_COACH_MENU",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_ADAPTIVE_COACHING_ENGINE",
@@ -32,5 +32,31 @@
   "next_improvement_direction": "Trace coach gameplan data structures via REA memory scan during live timeout",
   "timestamp_iso": "2026-10-31T03:17:47.586322+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e430af7c",
+    "live_value": 97,
+    "read_notes": "Read from team 0 structure layout (gp offset 0x18c)",
+    "read_timestamp": "2026-10-31T03:31:08.900168+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "控制教练战术体系中 FreelanceType2 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。",
+    "associations": [
+      "自适应教练引擎 (ACE) 动态超控博弈",
+      "全队首发与替补 5 人名单倾向聚合",
+      "节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势",
+      "Playbook 战术优先级调用树"
+    ],
+    "confounders": [
+      "实时比赛分差",
+      "犯规困扰紧急换人",
+      "节末压哨压时间战术"
+    ],
+    "thresholds": "离散战术枚举或百分比权重 [0, 100]。",
+    "live_value": 97,
+    "live_address": "0x7ff4e430af7c"
+  }
 }

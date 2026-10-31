@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,29 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:43.376791+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b079",
+    "live_value": 90,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.566568+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "战术执行纪律性。数值越高越会耐心完整跑完教练预设的全部掩护与切入路线。",
+    "associations": [
+      "与教练 Offensive Playcalling 设置联动",
+      "高数值抑制单打独斗，提高团队配合得分占比"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "老将与战术型控卫给 85~95；乱战得分手给 30~50。",
+    "live_value": 90,
+    "live_address": "0x7ff4e4e9b079"
+  }
 }

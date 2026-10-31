@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,31 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:41.029410+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b033",
+    "live_value": 75,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.536848+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "持球突破行进冲刺时直接起跳战斧、单手或双手暴扣终结意愿。",
+    "associations": [
+      "受 Driving Dunk 属性和弹跳 (Vertical) 属性门禁约束",
+      "与 Limitless Takeoff（无限起飞）和 Posterizer（隔扣达人）徽章强绑定",
+      "对抗防守人 Rim Protector 徽章时，引擎判定进入隔扣对抗判定还是被撞停上篮",
+      "与突破上篮倾向 (0x459) 互为消长"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 75 确保具备冲刺空间时优先起跳扣篮，规避追尾盖帽；数值 < 25 则全员地板流上篮。",
+    "live_value": 75,
+    "live_address": "0x7ff4e4e9b033"
+  }
 }

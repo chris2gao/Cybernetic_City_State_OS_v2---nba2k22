@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:43.086737+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b070",
+    "live_value": 70,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.562786+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "持球突破撕扯防线后，主动跳起分球给外线或内线空位队友的无私助攻意愿。",
+    "associations": [
+      "与 Pass Accuracy (95)、Dimer（十全十美）、Bullet Passer 徽章强联动",
+      "顶级组织大师（哈利伯顿、保罗、纳什）的核心灵魂倾向",
+      "与纯得分后卫单打到底（Attack Strong On Drive 0x497）互为相反调节"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "顶级传控核心给 90~98；纯终结攻坚手维持 45~60。",
+    "live_value": 70,
+    "live_address": "0x7ff4e4e9b070"
+  }
 }

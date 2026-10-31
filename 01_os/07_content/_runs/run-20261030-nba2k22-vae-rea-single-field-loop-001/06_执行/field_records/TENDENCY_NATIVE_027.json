@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,31 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:41.780962+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b04a",
+    "live_value": 98,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.546841+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "全场三分球总出手基准意愿。现代空间篮球的第一核心战略滑块。",
+    "associations": [
+      "由球员真实 3PAr（三分出手占总出手百分比）严格换算",
+      "与 Three-Point Rating (98)、Sniper、Limitless Spot-Up 徽章强绑定",
+      "与教练战术体系（如空间五外 5-Out、七秒跑轰）形成战术共振",
+      "与中投倾向 (0x46A) 构成现代魔球化替代关系"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 85 确立高产魔球三分手（场均 8+ 次出手）；传统内线必须锁定在 0~5。",
+    "live_value": 98,
+    "live_address": "0x7ff4e4e9b04a"
+  }
 }

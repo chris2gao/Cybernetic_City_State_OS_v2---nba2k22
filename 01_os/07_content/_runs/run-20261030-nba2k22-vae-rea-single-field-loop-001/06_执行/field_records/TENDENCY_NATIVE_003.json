@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:40.999565+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b032",
+    "live_value": 40,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.536425+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "篮下低位静止持球时原地拔起双手扣篮或背扣的终结意愿（内线中锋核心项）。",
+    "associations": [
+      "严格受 Standing Dunk 原生属性与身高模型约束（后卫若属性 < 40 则静默失效）",
+      "与 Rise Up（死区扣将）和 Fast Twitch（快速出手）徽章形成乘数激发",
+      "与篮下近距离强攻 (0x465) 联动，直接压制低效的原地虚晃小跳投"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 80 确保内线大闸在深位接球瞬间触发霸王扣篮；数值 < 20 导致频繁原地假动作被封盖。",
+    "live_value": 40,
+    "live_address": "0x7ff4e4e9b032"
+  }
 }

@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:42.340670+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b05b",
+    "live_value": 99,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.553959+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "外线持球突破整体意愿。决定球员接球后是选择投篮/转移球还是弯腰压步突内线。",
+    "associations": [
+      "受 Speed with Ball 与 Quick First Step 徽章加成",
+      "官方默认全员 75+ 是造成内线拥堵的根本病灶，必须根据场均突破次数严格定级",
+      "与突分倾向 (0x498) 形成突破后后续处理的分叉判定"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "突破狂魔（莫兰特/字母哥）90+；纯投手压缩在 15~25。",
+    "live_value": 99,
+    "live_address": "0x7ff4e4e9b05b"
+  }
 }

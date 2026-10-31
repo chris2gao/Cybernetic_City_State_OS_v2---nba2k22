@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,32 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:05:45.176737+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "c723eb37e510363c5705cd7bfb18bd06fc63f32c"
+  "commit_sha": "c723eb37e510363c5705cd7bfb18bd06fc63f32c",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b030",
+    "live_value": 96,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.535469+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "全场总出手意愿基准闸门。决定持球人在半场阵地战中优先寻找个人终结还是转移球。",
+    "associations": [
+      "由真实 FGA/36 与 USG% 换算，直接锚定球员战术定位",
+      "与 Touches (0x499) 协同确立全队球权阶层，避免单场40分独霸破坏模拟拟真",
+      "与突破倾向 (0x483) 和突分倾向 (0x498) 构成进攻终结方式竞争三角",
+      "进一步细分为篮下(0x465)、中投(0x46A)、三分(0x472)热区子倾向",
+      "受教练 Pace 影响：Pace > 75 时显著加速 16 秒内提早出手概率"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 85 确立第一得分核心行为；数值 < 25 强制进入纯蓝领/组织传控逻辑。",
+    "live_value": 96,
+    "live_address": "0x7ff4e4e9b030"
+  }
 }

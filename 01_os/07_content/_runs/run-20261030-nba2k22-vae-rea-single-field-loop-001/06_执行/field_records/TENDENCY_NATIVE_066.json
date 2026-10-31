@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:43.119322+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b071",
+    "live_value": 98,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.563197+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "全队球权支配权重。直接决定阵地战谁持球过半场及战术终结优先权（Touches 争议核心）。",
+    "associations": [
+      "与教练 Playbook 中 Primary Scoring Option 战术调用权重联动",
+      "在战术破产或进入 Freelance Motion 时决定无球呼叫要球频率",
+      "与 USG% 和全队五人薪资/地位梯队严密咬合"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "第一持球大核 90~99；二当家 75~85；无球侧翼 45~60；吃饼内线 20~35。",
+    "live_value": 98,
+    "live_address": "0x7ff4e4e9b071"
+  }
 }

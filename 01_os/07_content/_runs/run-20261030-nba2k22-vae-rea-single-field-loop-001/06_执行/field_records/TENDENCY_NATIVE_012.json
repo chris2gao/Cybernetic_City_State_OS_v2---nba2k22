@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:41.292743+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b03b",
+    "live_value": 55,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.540199+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "突破至油漆区边缘（3~10尺）时急停使用单手小抛投终结意愿（后卫避封盖招牌动作）。",
+    "associations": [
+      "受 Close Shot 属性与 Tear Dropper（抛投大师）徽章强绑定",
+      "有效破解内线护框大闸的垂直起跳封盖（Rim Protector 难以干扰抛物线顶点）",
+      "特雷杨、东契奇、哈利伯顿等节奏型后卫的核心得分武器"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 80 成为禁区前首选终结武器；数值 < 20 则强行硬挤篮下造成失误。",
+    "live_value": 55,
+    "live_address": "0x7ff4e4e9b03b"
+  }
 }

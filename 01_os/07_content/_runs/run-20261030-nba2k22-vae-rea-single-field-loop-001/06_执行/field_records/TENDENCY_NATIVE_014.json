@@ -16,7 +16,7 @@
     0,
     100
   ],
-  "native_identity_grade": "REA_LOCATED",
+  "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_NO_POSITIONAL_INFERENCE",
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
@@ -37,5 +37,30 @@
   "next_improvement_direction": "Perform live memory reading hook under authorized session to trace assembly consumer RVA",
   "timestamp_iso": "2026-10-31T03:17:41.357139+00:00",
   "model_provenance": "Gemini Flash 3.8 (Human-assigned label)",
-  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6"
+  "commit_sha": "4e5bafdcc37911451acf5a4307ba8f5e57503dd6",
+  "live_evidence": {
+    "process_name": "NBA2K22.exe",
+    "pid": 5488,
+    "base_address": "0x140000000",
+    "read_address": "0x7ff4e4e9b03d",
+    "live_value": 53,
+    "read_notes": "Read from active player Tyrese Haliburton",
+    "read_timestamp": "2026-10-31T03:31:03.541022+00:00"
+  },
+  "mechanism_analysis": {
+    "impact_analysis": "篮下 0~3 尺极深位置受贴防时的就地起跳强攻终结意愿。",
+    "associations": [
+      "与 Fast Twitch 和 Grace Under Pressure 徽章联动",
+      "受防守人 Interior Defense 和 Menace 贴防压迫干扰",
+      "内线强攻中锋（恩比德、约基奇）的主要得分手段之一"
+    ],
+    "confounders": [
+      "对位防守紧逼度 (Tight vs Sag)",
+      "单节体能衰减 (<60 命中率下降)",
+      "垃圾时间换人扰动"
+    ],
+    "thresholds": "数值 > 75 确保篮下得球绝不犹豫回传；数值 < 30 容易在包夹下停球被判三秒违例。",
+    "live_value": 53,
+    "live_address": "0x7ff4e4e9b03d"
+  }
 }
