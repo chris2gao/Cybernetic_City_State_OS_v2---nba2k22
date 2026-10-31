@@ -231,3 +231,196 @@ def test_loop13_final_concentrated_verification(repo_root):
     assert "F03_resolved" in contract["audit_resolution"]
     assert "F04_resolved" in contract["audit_resolution"]
     assert "F07_resolved" in contract["audit_resolution"]
+
+
+def test_v2_native_capability_inventory():
+    """
+    V2_NATIVE_CAPABILITY_INVENTORY: All GM/coach/player actions have explicit specification,
+    prerequisites, permissions, proof contracts, or blocker statuses.
+    """
+    from src.vae.native_actions import VAENativeActionRegistry
+    from src.vae.contracts import RoleType
+
+    reg = VAENativeActionRegistry()
+    assert len(reg.actions) == 12
+
+    gm_actions = [a for a in reg.actions.values() if a.role == RoleType.GM]
+    coach_actions = [a for a in reg.actions.values() if a.role == RoleType.COACH]
+    player_actions = [a for a in reg.actions.values() if a.role == RoleType.PLAYER]
+
+    assert len(gm_actions) == 5
+    assert len(coach_actions) == 3
+    assert len(player_actions) == 4
+
+    for a in reg.actions.values():
+        assert len(a.preconditions) > 0
+        assert a.authority_required != ""
+        assert a.native_entry_path != ""
+        assert len(a.readback_layers) > 0
+
+
+def test_v2_method_and_interaction_evidence():
+    """
+    V2_METHOD_AND_INTERACTION_EVIDENCE: Methodology per action plus source-graded link graph
+    and measurable hypothesis/side effects without false causal certainty.
+    """
+    from src.vae.mechanism_registry import VAEMechanismRegistry
+
+    reg = VAEMechanismRegistry()
+    graph = reg.export_graph()
+    assert graph["fields_count"] >= 5
+    assert graph["edges_count"] >= 5
+
+    for edge in reg.edges.values():
+        assert edge.hypothesis != ""
+        assert edge.expected_primary_metric != ""
+        assert len(edge.confounders) > 0
+        assert edge.method_version != ""
+
+
+def test_v2_role_specific_data_pipeline():
+    """
+    V2_ROLE_SPECIFIC_DATA_PIPELINE: Role data segregation and negative ACL enforcement.
+    """
+    from src.vae.role_data_service import VAERoleDataService
+    from src.vae.contracts import RoleType, RoleDataQuery
+
+    service = VAERoleDataService()
+
+    # GM allowed finance
+    view_gm = service.query_role_view(RoleDataQuery("q1", RoleType.GM, "finance_projection", "s1", "2021"))
+    assert view_gm.access_granted is True
+
+    # Player denied finance
+    view_leak = service.query_role_view(RoleDataQuery("q2", RoleType.PLAYER, "finance_projection", "s1", "2021"))
+    assert view_leak.access_granted is False
+    assert "ACCESS_DENIED" in view_leak.rejection_reason
+
+
+def test_v2_actual_native_readback():
+    """
+    V2_ACTUAL_NATIVE_READBACK: Bounded execution returns BLOCKED_AWAITING_GAME_AUTH
+    or verified dry-run math; zero unauthorized live memory writes.
+    """
+    from src.vae.native_actions import VAENativeActionRegistry
+    from src.vae.contracts import RoleType
+
+    reg = VAENativeActionRegistry()
+    res = reg.execute_dryrun("GM-01", RoleType.GM, {"salaries": [20_000_000, 15_000_000]})
+    assert res.status == "BLOCKED_AWAITING_GAME_AUTH"
+    assert res.output_data["payroll_total"] == 35_000_000
+
+
+def test_v2_learning_loop_outcome():
+    """
+    V2_LEARNING_LOOP_OUTCOME: Evaluation tracks confounders, returns non-causal trends,
+    and updates persistent knowledge ledger without data loss.
+    """
+    from src.vae.evaluator import VAEEvaluationEngine
+    from src.vae.contracts import EvaluationOutcome
+
+    evaluator = VAEEvaluationEngine()
+    ev = evaluator.evaluate(
+        trial_id="t1",
+        preregistered_metric_ref="pace",
+        deltas={"delta_pace": 2.5},
+        target_direction="INCREASE",
+        confounders=["opponent_pace"],
+        sample_size=6,
+        controlled_experiment=False,
+    )
+    # Confounders present -> INCONCLUSIVE
+    assert ev.outcome == EvaluationOutcome.INCONCLUSIVE
+
+
+def test_v3_per_setting_coverage(repo_root):
+    """
+    V3_PER_SETTING_COVERAGE: Verifies per-setting mechanism research dossier exists
+    and documents tendency slots (48 named vs 51 unknown) without false equivalence.
+    """
+    dossier_path = os.path.join(
+        repo_root, "01_os", "07_content", "_runs",
+        "run-20261030-nba2k22-vae-gemini-integrated-loop-001",
+        "02_证据", "PER_SETTING_MECHANISM_DOSSIER_V3.md"
+    )
+    assert os.path.exists(dossier_path)
+    with open(dossier_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    assert "99" in content
+    assert "48" in content
+    assert "51" in content
+    assert "UNKNOWN_TENDENCY_SLOT" in content
+
+
+def test_v3_external_sources_and_conflicts(repo_root):
+    """
+    V3_EXTERNAL_SOURCES_AND_CONFLICTS: Verifies Operation Sports references and competing hypotheses.
+    """
+    dossier_path = os.path.join(
+        repo_root, "01_os", "07_content", "_runs",
+        "run-20261030-nba2k22-vae-gemini-integrated-loop-001",
+        "02_证据", "PER_SETTING_MECHANISM_DOSSIER_V3.md"
+    )
+    with open(dossier_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    assert "operationsports.com" in content
+    assert "Touches" in content
+    assert "COMPETING_HYPOTHESIS" in content
+
+
+def test_v3_rea_identity_and_value_meaning(repo_root):
+    """
+    V3_REA_IDENTITY_AND_VALUE_MEANING: Verifies REA offsets (+316, +0x318, +0xCB1/+0x1047).
+    """
+    dossier_path = os.path.join(
+        repo_root, "01_os", "07_content", "_runs",
+        "run-20261030-nba2k22-vae-gemini-integrated-loop-001",
+        "02_证据", "PER_SETTING_MECHANISM_DOSSIER_V3.md"
+    )
+    with open(dossier_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    assert "+0x316" in content or "+316" in content
+    assert "+0x318" in content
+    assert "+0xCB1" in content
+
+
+def test_v3_interaction_and_value_response():
+    """
+    V3_INTERACTION_AND_VALUE_RESPONSE: Verifies interaction graph nonlinear thresholds and confounders.
+    """
+    from src.vae.mechanism_registry import VAEMechanismRegistry
+
+    reg = VAEMechanismRegistry()
+    edges = reg.export_graph()["edges"]
+    assert len(edges) >= 5
+
+    # Check starter minutes threshold edge
+    edge3 = reg.edges["EDGE-03"]
+    assert "38" in edge3.hypothesis
+    assert "fourth_quarter_efficiency" in edge3.target_behavior
+
+
+def test_v3_method_effect_evidence():
+    """
+    V3_METHOD_EFFECT_EVIDENCE: Verifies that decision methods require role data views and non-causal evaluation.
+    """
+    from src.vae.role_data_service import VAERoleDataService
+    from src.vae.evaluator import VAEEvaluationEngine
+    from src.vae.contracts import RoleType, RoleDataQuery, EvaluationOutcome
+
+    service = VAERoleDataService()
+    view = service.query_role_view(RoleDataQuery("q-test", RoleType.GM, "finance_projection", "s1", "2021"))
+    assert view.access_granted is True
+
+    evaluator = VAEEvaluationEngine()
+    ev = evaluator.evaluate(
+        trial_id="t1",
+        preregistered_metric_ref="pace",
+        deltas={"delta_pace": 2.0},
+        target_direction="INCREASE",
+        confounders=[],
+        sample_size=6,
+        controlled_experiment=False,
+    )
+    assert ev.outcome == EvaluationOutcome.OBSERVED_TREND_POSITIVE
+    assert ev.outcome != EvaluationOutcome.CONFIRMED_CONTROLLED

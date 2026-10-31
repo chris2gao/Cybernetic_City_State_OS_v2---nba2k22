@@ -1,11 +1,13 @@
 """
-VAE Data Contracts and Business Object Validation (R01–R09)
-Implements revised Stage02 contract v2 with F02, F03, F04, F07 bug fixes.
+VAE Data Contracts and Business Object Validation (R01–R09).
+Implements revised Stage02 contract v2 with:
+- P0-01~P0-04, P1-05~P1-07, F02~F07 bug fixes
+- Human V2 Three-Pillar Requirements: Native Capabilities, Mechanism Registry, Role Data Views.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from enum import Enum
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple, Set
 import hashlib
 import json
 import uuid
@@ -22,9 +24,18 @@ class EvidenceTier(str, Enum):
     UNKNOWN = "UNKNOWN"
 
 
+class RoleType(str, Enum):
+    GM = "GM"
+    COACH = "COACH"
+    PLAYER = "PLAYER"
+    WORLD_ADMIN = "WORLD_ADMIN"
+
+
 class SnapshotStatus(str, Enum):
     UNKNOWN = "UNKNOWN"
-    CAPTURED = "CAPTURED"
+    STATIC_SPEC = "STATIC_SPEC"          # Read from offline static configs/specs (settings.json, court.json)
+    OFFLINE_FIXTURE = "OFFLINE_FIXTURE"  # Hardcoded test/dev fixture
+    CAPTURED = "CAPTURED"                # Verified readback from active live game process/save
     MODE_UNVERIFIED = "MODE_UNVERIFIED"
     ERROR = "ERROR"
 
@@ -58,14 +69,19 @@ class ReadbackStatus(str, Enum):
 
 class ObservationStatus(str, Enum):
     INSUFFICIENT = "INSUFFICIENT"
-    RECORDED = "RECORDED"
+    NOT_OBSERVED = "NOT_OBSERVED"        # Execution was NOT_RUN or no game observation performed
+    OFFLINE_FIXTURE = "OFFLINE_FIXTURE"  # Synthetic or simulated sample fixture
+    RECORDED = "RECORDED"                # Strictly reserved for verified real live game observations
     INCOMPARABLE = "INCOMPARABLE"
 
 
 class EvaluationOutcome(str, Enum):
     INCONCLUSIVE = "INCONCLUSIVE"
-    CONFIRMED = "CONFIRMED"
-    REFUTED = "REFUTED"
+    OBSERVED_TREND_POSITIVE = "OBSERVED_TREND_POSITIVE"
+    OBSERVED_TREND_NEGATIVE = "OBSERVED_TREND_NEGATIVE"
+    NO_APPARENT_CHANGE = "NO_APPARENT_CHANGE"
+    CONFIRMED_CONTROLLED = "CONFIRMED_CONTROLLED"  # Only valid under controlled experiments
+    REFUTED_CONTROLLED = "REFUTED_CONTROLLED"
 
 
 class RevisionStatus(str, Enum):
@@ -87,7 +103,7 @@ class FeedbackStatus(str, Enum):
 @dataclass
 class ProfileSnapshot:
     snapshot_id: str
-    save_id: str
+    save_id: Optional[str]
     game_build: str
     game_mode: str
     scene: str
@@ -97,7 +113,7 @@ class ProfileSnapshot:
     display_value: Any
     unit: str
     source_ref: str
-    captured_at: str
+    captured_at: Optional[str]
     freshness: str
     status: SnapshotStatus = SnapshotStatus.UNKNOWN
 
@@ -106,6 +122,12 @@ class ProfileSnapshot:
             raise ValueError("R01: snapshot_id and field_id are required")
         if self.side not in ["USER", "CPU", "NEUTRAL"]:
             raise ValueError(f"R01: invalid side {self.side}")
+        # P0-01: Static configs cannot claim CAPTURED
+        if self.status == SnapshotStatus.CAPTURED:
+            if not self.save_id or self.save_id == "OFFLINE_DEFAULT" or self.captured_at == "STATIC_SOURCE":
+                raise ValueError("R01 P0-01 VIOLATION: Static source cannot claim SnapshotStatus.CAPTURED")
+            if not self.captured_at:
+                raise ValueError("R01: captured_at is required when status is CAPTURED")
 
 
 # -------------------------------------------------------------------------
@@ -130,7 +152,7 @@ class IssueDiagnosis:
 
 
 # -------------------------------------------------------------------------
-# R03: TrialPreflight (Fixes F07: Blocked state nullability)
+# R03: TrialPreflight (Fixes F07: Blocked state nullability; Fixes P0-02: Safety gates)
 # -------------------------------------------------------------------------
 @dataclass
 class TrialPreflight:
@@ -159,6 +181,9 @@ class TrialPreflight:
                 raise ValueError("R03: technical_path is mandatory when status is READY")
             if not self.authorization_ref:
                 raise ValueError("R03: authorization_ref is mandatory when status is READY")
+            # P0-02: Dev mock authorization tokens cannot grant READY
+            if "DRYRUN" in self.authorization_ref or "MOCK" in self.authorization_ref:
+                raise ValueError(f"R03 P0-02 VIOLATION: Mock authorization {self.authorization_ref} cannot enter READY")
         elif self.status == PreflightStatus.BLOCKED:
             if not self.block_reason:
                 raise ValueError("R03: block_reason is mandatory when status is BLOCKED")
@@ -191,17 +216,23 @@ class ExecutionReceipt:
 
 
 # -------------------------------------------------------------------------
-# R05: TechnicalReadback (Fixes F07: Unverified nullability)
+# R05: TechnicalReadback (Fixes P1-06: Structured multi-layer readback)
 # -------------------------------------------------------------------------
 @dataclass
 class TechnicalReadback:
     trial_id: str
-    verification_level: str  # "L0" | "L1" | "L2" | "L3"
+    verification_level: str  # "L0" | "L1" | "L2" | "L3" | "ALL"
     getter_before_ref: Optional[str] = None
     getter_after_ref: Optional[str] = None
     ui_ref: Optional[str] = None
     save_reload_ref: Optional[str] = None
     conflicts: Optional[List[str]] = None
+    layers: Dict[str, str] = field(default_factory=lambda: {
+        "L0_memory": "UNVERIFIED",
+        "L1_process": "UNVERIFIED",
+        "L2_ui_settings": "UNVERIFIED",
+        "L3_save_reload": "UNVERIFIED"
+    })
     status: ReadbackStatus = ReadbackStatus.UNVERIFIED
 
     def validate(self) -> None:
@@ -213,7 +244,7 @@ class TechnicalReadback:
 
 
 # -------------------------------------------------------------------------
-# R06: CompetitiveObservation (Fixes F02: Strict Comparability Context)
+# R06: CompetitiveObservation (Fixes F02 & P0-04: Strict Comparability Context)
 # -------------------------------------------------------------------------
 @dataclass
 class CompetitiveObservation:
@@ -238,17 +269,33 @@ class CompetitiveObservation:
     def validate(self) -> None:
         if not self.trial_id or not self.game_id:
             raise ValueError("R06: trial_id and game_id are required")
+        if not self.save_id:
+            raise ValueError("R06: save_id is required")
+        if not self.engine_path:
+            raise ValueError("R06: engine_path is required")
         if not (1 <= self.played_quarter_minutes <= 12):
             raise ValueError("R06: played_quarter_minutes must be between 1 and 12")
         if not (1 <= self.sim_quarter_minutes <= 12):
             raise ValueError("R06: sim_quarter_minutes must be between 1 and 12")
         if not self.base_source_ref:
             raise ValueError("R06: base_source_ref is required for strict provenance")
+        # P0-03: Synthetic fixture cannot be marked RECORDED
+        if self.status == ObservationStatus.RECORDED:
+            if not self.source_refs or any("SYNTHETIC" in s or "OFFLINE" in s for s in self.source_refs):
+                raise ValueError("R06 P0-03 VIOLATION: Offline/synthetic data cannot claim ObservationStatus.RECORDED")
 
-    def is_comparable_with(self, other: "CompetitiveObservation") -> tuple[bool, str]:
+    def is_comparable_with(self, other: "CompetitiveObservation") -> Tuple[bool, str]:
         """
-        Fixes F02: Enforces side, controller, dual Normalize, quarter lengths, and base_source.
+        Fixes F02 & P0-04: Enforces save_id, engine_path, side, controller,
+        dual Normalize, quarter lengths, and base_source.
         """
+        # P0-04: Strict save_id matching
+        if self.save_id != other.save_id:
+            return False, f"save_id mismatch: {self.save_id} vs {other.save_id}"
+        # P0-04: Strict engine_path matching
+        if self.engine_path != other.engine_path:
+            return False, f"engine_path mismatch: {self.engine_path} vs {other.engine_path}"
+        # F02 Context matching
         if self.side != other.side:
             return False, f"Side mismatch: {self.side} vs {other.side}"
         if self.controller_assigned != other.controller_assigned:
@@ -267,7 +314,7 @@ class CompetitiveObservation:
 
 
 # -------------------------------------------------------------------------
-# R07: EffectEvaluation
+# R07: EffectEvaluation (Fixes P1-07: Non-causal trend evaluation)
 # -------------------------------------------------------------------------
 @dataclass
 class EffectEvaluation:
@@ -277,12 +324,18 @@ class EffectEvaluation:
     side_effects: List[str]
     confidence: float  # 0.0 .. 1.0
     competing_explanations: List[str]
+    sample_size: int = 0
+    confounders_controlled: bool = False
 
     def validate(self) -> None:
         if not self.trial_id or not self.preregistered_metric_ref:
             raise ValueError("R07: trial_id and preregistered_metric_ref are required")
         if not (0.0 <= self.confidence <= 1.0):
             raise ValueError("R07: confidence must be between 0.0 and 1.0")
+        # P1-07: Causal confirmation cannot be claimed without controlled experiment
+        if self.outcome in [EvaluationOutcome.CONFIRMED_CONTROLLED, EvaluationOutcome.REFUTED_CONTROLLED]:
+            if not self.confounders_controlled or self.sample_size < 20:
+                raise ValueError("R07 P1-07 VIOLATION: Cannot claim CONFIRMED_CONTROLLED without controlled confounders and sample_size >= 20")
 
 
 # -------------------------------------------------------------------------
@@ -326,6 +379,24 @@ class KnowledgeRevision:
             status=RevisionStatus.PENDING_REVISION,
         )
 
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> "KnowledgeRevision":
+        return cls(
+            revision_id=data["revision_id"],
+            idempotency_key=data["idempotency_key"],
+            trial_id=data["trial_id"],
+            prior_claim_ref=data["prior_claim_ref"],
+            new_claim=data["new_claim"],
+            counterexamples=data.get("counterexamples", []),
+            source_refs=data.get("source_refs", []),
+            revision_time=data.get("revision_time"),
+            append_receipt=data.get("append_receipt"),
+            status=RevisionStatus(data.get("status", RevisionStatus.PENDING_REVISION)),
+        )
+
     def validate(self) -> None:
         if not self.revision_id or not self.idempotency_key or not self.trial_id:
             raise ValueError("R08: revision_id, idempotency_key, and trial_id are required")
@@ -352,3 +423,51 @@ class DSeriesFeedback:
     def validate(self) -> None:
         if not self.trial_id or not self.owner:
             raise ValueError("R09: trial_id and owner are required")
+
+
+# -------------------------------------------------------------------------
+# V2 Pillar 2: Mechanism Interaction Edge
+# -------------------------------------------------------------------------
+@dataclass
+class MechanismInteractionEdge:
+    edge_id: str
+    source_field: str
+    target_behavior: str
+    domain: str  # "TACTICS", "ROTATION", "TRAINING", "FINANCE", "TENDENCY"
+    edge_type: str  # "DIRECT_CAUSE", "CORRELATION", "MODULATOR", "CONFLICT"
+    evidence_tier: EvidenceTier
+    hypothesis: str
+    expected_primary_metric: str
+    side_effects: List[str]
+    confounders: List[str]
+    method_version: str = "v1.0"
+    verified_in_game: bool = False
+
+
+# -------------------------------------------------------------------------
+# V2 Pillar 3: Role Data Query & Response
+# -------------------------------------------------------------------------
+@dataclass
+class RoleDataQuery:
+    query_id: str
+    requester_role: RoleType
+    target_category: str
+    save_id: str
+    season: str
+    object_id: Optional[str] = None
+    requested_fields: List[str] = field(default_factory=list)
+
+
+@dataclass
+class RoleDataView:
+    query_id: str
+    role: RoleType
+    category: str
+    save_id: str
+    season: str
+    timestamp: str
+    freshness: str
+    data: Dict[str, Any]
+    source_grade: EvidenceTier
+    access_granted: bool = True
+    rejection_reason: Optional[str] = None

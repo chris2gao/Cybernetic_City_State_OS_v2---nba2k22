@@ -1,9 +1,11 @@
 """
-VAE (Vanilla AI Enhancement) Engine Package.
+VAE (Vanilla AI Enhancement) Package.
+Exports all contracts, adapters, engines, and V2 three-pillar services.
 """
 
 from .contracts import (
     EvidenceTier,
+    RoleType,
     SnapshotStatus,
     DiagnosisStatus,
     PreflightStatus,
@@ -22,7 +24,11 @@ from .contracts import (
     EffectEvaluation,
     KnowledgeRevision,
     DSeriesFeedback,
+    MechanismInteractionEdge,
+    RoleDataQuery,
+    RoleDataView,
 )
+
 from .reader_adapter import VAEReaderAdapter
 from .diagnosis import VAEDiagnosisEngine
 from .preflight import VAEPreflightEngine
@@ -33,9 +39,13 @@ from .evaluator import VAEEvaluationEngine
 from .revision import VAEKnowledgeRevisionManager
 from .pipeline import VAEE1Pipeline
 from .e2_e4_extensions import VAEE2E4ScopeGuard
+from .native_actions import VAENativeActionRegistry, ActionSpecification, ActionResult
+from .mechanism_registry import VAEMechanismRegistry
+from .role_data_service import VAERoleDataService
 
 __all__ = [
     "EvidenceTier",
+    "RoleType",
     "SnapshotStatus",
     "DiagnosisStatus",
     "PreflightStatus",
@@ -54,6 +64,9 @@ __all__ = [
     "EffectEvaluation",
     "KnowledgeRevision",
     "DSeriesFeedback",
+    "MechanismInteractionEdge",
+    "RoleDataQuery",
+    "RoleDataView",
     "VAEReaderAdapter",
     "VAEDiagnosisEngine",
     "VAEPreflightEngine",
@@ -64,4 +77,9 @@ __all__ = [
     "VAEKnowledgeRevisionManager",
     "VAEE1Pipeline",
     "VAEE2E4ScopeGuard",
+    "VAENativeActionRegistry",
+    "ActionSpecification",
+    "ActionResult",
+    "VAEMechanismRegistry",
+    "VAERoleDataService",
 ]

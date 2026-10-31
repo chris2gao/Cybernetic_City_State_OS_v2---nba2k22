@@ -1,6 +1,8 @@
 """
 VAE Safe Read-Only Adapter.
 Interfaces with existing game configuration & state IO profiles without any game writes.
+Fixes P0-01: Disentangles static spec defaults from live observed captures.
+Never marks static config readouts as SnapshotStatus.CAPTURED.
 """
 
 import json
@@ -13,6 +15,7 @@ class VAEReaderAdapter:
     """
     Safe read-only adapter that consumes existing configuration files and profiles.
     Guaranteed zero-write policy to active game processes or saves.
+    Strictly reports STATIC_SPEC or OFFLINE_FIXTURE, never false CAPTURED.
     """
 
     def __init__(self, repo_root: str):
@@ -29,7 +32,9 @@ class VAEReaderAdapter:
 
     def read_settings_field(self, field_id: str, side: str = "USER") -> ProfileSnapshot:
         """
-        Reads a gameplay slider or setting from settings.json or court.json.
+        Reads a gameplay slider or setting from static configurations.
+        Fixes P0-01: Correctly marks static specifications as STATIC_SPEC or OFFLINE_FIXTURE,
+        never claiming SnapshotStatus.CAPTURED without a verified live game process.
         """
         # 1. Search in settings.json (fields dictionary)
         if os.path.exists(self.settings_path):
@@ -43,7 +48,7 @@ class VAEReaderAdapter:
                         default_val = target.get("default", 50)
                         return ProfileSnapshot(
                             snapshot_id=f"snap-{field_id}",
-                            save_id="OFFLINE_DEFAULT",
+                            save_id=None,  # No active save attached in static spec
                             game_build="2K22_PC_CURRENT_GEN",
                             game_mode="OFFLINE_MYLEAGUE",
                             scene="GAME_SETTINGS",
@@ -53,9 +58,9 @@ class VAEReaderAdapter:
                             display_value=default_val,
                             unit=target.get("unit", "0_100_int"),
                             source_ref=f"config/state_io_native/settings.json#{cat}.{field_id}",
-                            captured_at="STATIC_SOURCE",
+                            captured_at=None,  # Not captured from live memory
                             freshness="IMMUTABLE_SPEC",
-                            status=SnapshotStatus.CAPTURED,
+                            status=SnapshotStatus.STATIC_SPEC,
                         )
             except Exception:
                 pass
@@ -71,7 +76,7 @@ class VAEReaderAdapter:
                     raw_val = s_info.get(f"hof_default_{side.lower()}", 50.0)
                     return ProfileSnapshot(
                         snapshot_id=f"snap-{field_id}",
-                        save_id="OFFLINE_DEFAULT",
+                        save_id=None,
                         game_build="2K22_PC_CURRENT_GEN",
                         game_mode="OFFLINE_MYLEAGUE",
                         scene="COURT_SLIDERS",
@@ -81,9 +86,9 @@ class VAEReaderAdapter:
                         display_value=raw_val,
                         unit="slider_points",
                         source_ref=f"config/state_io_native/court.json#modified_sliders.{field_id}",
-                        captured_at="STATIC_SOURCE",
+                        captured_at=None,
                         freshness="IMMUTABLE_SPEC",
-                        status=SnapshotStatus.CAPTURED,
+                        status=SnapshotStatus.STATIC_SPEC,
                     )
             except Exception:
                 pass
@@ -102,59 +107,68 @@ class VAEReaderAdapter:
                 "scene": "GAMEPLAY_SHOOTING_SLIDERS",
                 "source": "NBA2K22_DEFAULT_HOF_SLIDERS",
             },
-            "user_injury_frequency": {
-                "default": 65,
-                "unit": "0_100_int",
-                "scene": "INJURIES_AND_MORALE",
-                "source": "settings.json#injuries_and_morale",
+            "defensive_awareness": {
+                "default": 50,
+                "unit": "0_100_slider",
+                "scene": "DEFENSE_SLIDERS",
+                "source": "NBA2K22_DEFAULT_HOF_SLIDERS",
+            },
+            "fatigue_rate": {
+                "default": 50,
+                "unit": "0_100_slider",
+                "scene": "FATIGUE_SLIDERS",
+                "source": "NBA2K22_DEFAULT_HOF_SLIDERS",
             },
         }
 
         if field_id in standard_sliders:
-            std = standard_sliders[field_id]
+            cfg = standard_sliders[field_id]
             return ProfileSnapshot(
                 snapshot_id=f"snap-{field_id}",
-                save_id="OFFLINE_DEFAULT",
+                save_id=None,
                 game_build="2K22_PC_CURRENT_GEN",
                 game_mode="OFFLINE_MYLEAGUE",
-                scene=std["scene"],
+                scene=cfg["scene"],
                 side=side,
                 field_id=field_id,
-                raw_value=std["default"],
-                display_value=std["default"],
-                unit=std["unit"],
-                source_ref=std["source"],
-                captured_at="STATIC_SOURCE",
-                freshness="IMMUTABLE_SPEC",
-                status=SnapshotStatus.CAPTURED,
+                raw_value=cfg["default"],
+                display_value=cfg["default"],
+                unit=cfg["unit"],
+                source_ref=f"fixture/standard_sliders#{field_id}",
+                captured_at=None,
+                freshness="FIXTURE_DEFAULT",
+                status=SnapshotStatus.OFFLINE_FIXTURE,
             )
 
-        # Field genuinely unknown
+        # 4. Unknown field fallback
         return ProfileSnapshot(
-            snapshot_id=f"snap-{field_id}-unknown",
-            save_id="UNKNOWN_SAVE",
+            snapshot_id=f"snap-unknown-{field_id}",
+            save_id=None,
             game_build="2K22_PC_CURRENT_GEN",
             game_mode="OFFLINE_MYLEAGUE",
-            scene="SETTINGS_MENU",
+            scene="UNKNOWN_SCENE",
             side=side,
             field_id=field_id,
             raw_value=None,
             display_value=None,
             unit="unknown",
-            source_ref="NOT_FOUND",
-            captured_at="OFFLINE",
-            freshness="STATIC",
+            source_ref=f"UNKNOWN_FIELD#{field_id}",
+            captured_at=None,
+            freshness="STALE_OR_MISSING",
             status=SnapshotStatus.UNKNOWN,
         )
 
+
     def get_dual_normalize_settings(self) -> Dict[str, Any]:
         """
-        Returns the dual Normalize switches state definition.
+        Reads dual normalize switches from static knowledge specifications.
+        Note (P2-12): Returns research specifications; live runtime memory mapping remains UNKNOWN.
         """
         return {
             "played_normalize_minutes_to_sim_stats": False,
             "sim_normalize_minutes_to_sim_stats": False,
             "played_quarter_length_minutes": 12,
             "sim_quarter_length_minutes": 12,
-            "provenance": "K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md §G03",
+            "status": "STATIC_RESEARCH_SPECIFICATION",
+            "runtime_memory_address": "UNKNOWN_PENDING_LIVE_READBACK",
         }

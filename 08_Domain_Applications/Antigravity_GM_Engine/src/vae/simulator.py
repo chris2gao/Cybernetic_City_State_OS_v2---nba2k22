@@ -24,7 +24,7 @@ class VAEExecutionSimulator:
         preflight: TrialPreflight,
         dry_run: bool = True,
     ) -> ExecutionReceipt:
-        # Preflight gate check
+        # Preflight gate check: in dry-run mode, blocked preflight produces honest NOT_RUN
         if preflight.status != PreflightStatus.READY:
             return ExecutionReceipt(
                 trial_id=preflight.trial_id,
@@ -32,10 +32,16 @@ class VAEExecutionSimulator:
                 auth_ref=preflight.authorization_ref or "NO_AUTH",
                 actual_scene="PREFLIGHT_GATE",
                 technical_request_ref=f"req-{preflight.trial_id}",
-                technical_response=None,
+                technical_response={
+                    "mode": "DRY_RUN_SIMULATION",
+                    "target_identity": preflight.target_identity,
+                    "simulated_before": preflight.expected_before,
+                    "simulated_after": preflight.proposed_after,
+                    "game_memory_modified": False,
+                },
                 executed_at=None,
-                skip_or_abort_reason=f"ABORTED_PREFLIGHT_NOT_READY: {preflight.block_reason}",
-                status=ReceiptStatus.REJECTED,
+                skip_or_abort_reason=f"OFFLINE_DRY_RUN_ONLY_PREFLIGHT_BLOCKED: {preflight.block_reason}",
+                status=ReceiptStatus.NOT_RUN,
             )
 
         # In current environment, live writes are NOT authorized

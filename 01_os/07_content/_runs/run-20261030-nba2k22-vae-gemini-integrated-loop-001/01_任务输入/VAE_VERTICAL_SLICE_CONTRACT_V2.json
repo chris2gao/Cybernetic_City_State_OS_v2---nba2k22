@@ -1,14 +1,26 @@
 {
   "schema_version": "nba2k22.vae.stage02.vertical_slice_contract.v2",
   "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
-  "status": "APPROVED_CONTRACT_REVISED",
+  "status": "APPROVED_CONTRACT_REVISED_V3",
   "audit_resolution": {
-    "F02_resolved": "R06 CompetitiveObservation enforces strict comparison context: side, controller_assigned, played_normalize_on, sim_normalize_on, played_quarter_minutes, sim_quarter_minutes, and base_source_ref.",
-    "F03_resolved": "R08 KnowledgeRevision initial_status corrected from APPENDED to PENDING_REVISION.",
-    "F04_resolved": "R08 includes mandatory revision_id and idempotency_key for append-only duplicate protection.",
-    "F05_resolved": "All objects include deterministic pass/fail oracles and validation rules.",
-    "F06_resolved": "Strict evidence grading hierarchy enforced, keeping unverified live claims as UNKNOWN / NOT_RUN.",
-    "F07_resolved": "R03, R04, R05 specify explicit blocked-state field nullability and valid transition states."
+    "P0_01_resolved": "Static configs in settings.json / court.json yield SnapshotStatus.STATIC_SPEC, never false CAPTURED.",
+    "P0_02_resolved": "Preflight requires live CAPTURED baseline and non-mock authorization to enter READY; static or mock yields BLOCKED.",
+    "P0_03_resolved": "Dry-run observations marked NOT_OBSERVED or OFFLINE_FIXTURE, never RECORDED.",
+    "P0_04_resolved": "R06 is_comparable_with strictly requires identical save_id and engine_path in addition to context parameters.",
+    "P1_05_resolved": "VAEKnowledgeRevisionManager supports durable JSONL file ledger; fresh instances reload keys and deduplicate.",
+    "P1_06_resolved": "TechnicalReadback explicitly structures and reports discrete L0, L1, L2, L3 verification layers.",
+    "P1_07_resolved": "VAEEvaluationEngine uses non-causal trend outcomes (OBSERVED_TREND_POSITIVE/NEGATIVE/NO_APPARENT_CHANGE); requires controls for CONFIRMED_CONTROLLED.",
+    "P1_08_resolved": "settings.json min=70 vs default=40 explicitly documented in evidence dossier as OPEN_SOURCE_DEFECT / UNKNOWN.",
+    "P1_09_resolved": "Contract and checkpoints updated with honest resolution states and test oracles.",
+    "P2_10_resolved": "Direct execution of 4 auditor counterexamples and expanded negative assertions in pytest suite.",
+    "P2_11_resolved": "E2-E4 documented and validated as bounded contract guards, not operational native execution.",
+    "P2_12_resolved": "Tooling limitations (e.g. 2-team trade adapter) separated from engine impossibility; dynamic engine support remains UNKNOWN.",
+    "F02_resolved": "R06 enforces save_id, engine_path, side, controller, dual normalize, quarter lengths, and base_source.",
+    "F03_resolved": "R08 initial status strictly PENDING_REVISION; transitions to APPENDED only upon confirmed ledger commit.",
+    "F04_resolved": "R08 includes deterministic SHA256 idempotency key and append-only deduplication.",
+    "F05_resolved": "Comprehensive deterministic oracles and negative counterexamples implemented.",
+    "F06_resolved": "Strict evidence hierarchy enforced; non-game sources marked STATIC_SPEC / OFFLINE_FIXTURE / UNKNOWN.",
+    "F07_resolved": "Explicit blocked-state (R03) and not-run (R04) nullability rules validated."
   },
   "objects": [
     {
@@ -16,7 +28,7 @@
       "name": "ProfileSnapshot",
       "description": "游戏运行配置与环境参数快照",
       "initial_status": "UNKNOWN",
-      "valid_statuses": ["UNKNOWN", "CAPTURED", "MODE_UNVERIFIED", "ERROR"],
+      "valid_statuses": ["UNKNOWN", "STATIC_SPEC", "OFFLINE_FIXTURE", "CAPTURED", "MODE_UNVERIFIED", "ERROR"],
       "required_fields": [
         "snapshot_id",
         "save_id",
@@ -72,7 +84,8 @@
       },
       "ready_state_rules": {
         "status": "READY",
-        "mandatory_fields": ["restore_plan", "technical_path", "authorization_ref"]
+        "mandatory_fields": ["restore_plan", "technical_path", "authorization_ref"],
+        "preconditions": "Requires live CAPTURED baseline snapshot and non-mock authorization"
       }
     },
     {
@@ -101,12 +114,13 @@
     {
       "id": "R05",
       "name": "TechnicalReadback",
-      "description": "写后多级验证（Getter、UI、Save/Reload）",
+      "description": "写后多级验证（L0-L3结构化分层）",
       "initial_status": "UNVERIFIED",
       "valid_statuses": ["UNVERIFIED", "VERIFIED", "INCONSISTENT", "SKIPPED"],
       "required_fields": [
         "trial_id",
-        "verification_level"
+        "verification_level",
+        "layers"
       ],
       "unverified_state_rules": {
         "status": "UNVERIFIED",
@@ -120,9 +134,9 @@
     {
       "id": "R06",
       "name": "CompetitiveObservation",
-      "description": "比赛样本表现与观察指标收集（F02修复：严格可比性上下文）",
+      "description": "比赛样本表现与观察指标收集（F02/P0-04严格可比性上下文）",
       "initial_status": "INSUFFICIENT",
-      "valid_statuses": ["INSUFFICIENT", "RECORDED", "INCOMPARABLE"],
+      "valid_statuses": ["INSUFFICIENT", "NOT_OBSERVED", "OFFLINE_FIXTURE", "RECORDED", "INCOMPARABLE"],
       "required_fields": [
         "trial_id",
         "game_id",
@@ -141,14 +155,14 @@
         "confounders",
         "source_refs"
       ],
-      "comparability_rule": "两个观察样本只有在 side、controller_assigned、played_normalize_on、sim_normalize_on、played_quarter_minutes、sim_quarter_minutes 完全一致且 base_source_ref 溯源相同时才允许进行统计比较；否则判定为 INCOMPARABLE。"
+      "comparability_rule": "两个观察样本只有在 save_id、engine_path、side、controller_assigned、played_normalize_on、sim_normalize_on、played_quarter_minutes、sim_quarter_minutes 完全一致且 base_source_ref 溯源相同时才允许进行统计比较；否则判定为 INCOMPARABLE。"
     },
     {
       "id": "R07",
       "name": "EffectEvaluation",
-      "description": "预注册指标比较与效果判定",
+      "description": "预注册指标比较与效果判定（P1-07非因果趋势分类）",
       "initial_status": "INCONCLUSIVE",
-      "valid_statuses": ["INCONCLUSIVE", "CONFIRMED", "REFUTED"],
+      "valid_statuses": ["INCONCLUSIVE", "OBSERVED_TREND_POSITIVE", "OBSERVED_TREND_NEGATIVE", "NO_APPARENT_CHANGE", "CONFIRMED_CONTROLLED", "REFUTED_CONTROLLED"],
       "required_fields": [
         "trial_id",
         "preregistered_metric_ref",
@@ -161,7 +175,7 @@
     {
       "id": "R08",
       "name": "KnowledgeRevision",
-      "description": "知识库更新提议与追加提交（F03/F04修复：状态初始为PENDING_REVISION，具幂等去重键）",
+      "description": "知识库更新提议与追加提交（持久化账本与确定性幂等键）",
       "initial_status": "PENDING_REVISION",
       "valid_statuses": ["PENDING_REVISION", "APPENDED", "SKIPPED", "DUPLICATE_REJECTED"],
       "required_fields": [
