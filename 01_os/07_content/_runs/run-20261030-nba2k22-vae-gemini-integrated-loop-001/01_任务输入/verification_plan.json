@@ -1,0 +1,73 @@
+{
+  "schema_version": "nba2k22.vae.integrated_loop.verify.v1",
+  "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+  "status": "NOT_RUN",
+  "checks": [
+    {
+      "id": "LOOP01_BOOT_AND_IDENTITY",
+      "method": "Verify boot provenance/identity",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP02_SCOPE_AND_DIRTY_TREE",
+      "method": "Diff scope and dirty worktree",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP03_SOURCE_GRADING_G01_G08",
+      "method": "Audit all G01-G08 evidence tiers",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP04_F02_R06_COMPARABILITY",
+      "method": "R06 context fixture includes side/controller/dual Normalize/quarter/base",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP05_F03_R08_PENDING_STATE",
+      "method": "R08 initial state cannot claim append",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP06_F07_BLOCKED_NULLABILITY",
+      "method": "R03/R04/R05 blocked nullability and transitions",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP07_R01_R09_OFFLINE_SLICE",
+      "method": "Execute R01-R09 dry-run and assert evidence statuses",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP08_READER_REUSE_AND_SAFE_FALLBACK",
+      "method": "Check adapters do not perform writes and fail safely on unavailable Reader",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP09_NEGATIVE_IDEMPOTENT_RETRY",
+      "method": "Test duplicate events/retries and negative paths",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP10_E1_E4_SCOPE_COVERAGE",
+      "method": "E1-E4 contract coverage assertions",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP11_NO_GAME_WRITE_OR_NEW_UNAUTHORIZED_ACCESS",
+      "method": "Inspect commands/permissions; static safety only claims for real game operations",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP12_GIT_COMMIT_AND_PROGRESS_RESUME",
+      "method": "Commit checkpoint and restart from same branch/ledger",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    },
+    {
+      "id": "LOOP13_FINAL_CONCENTRATED_VERIFICATION",
+      "method": "Once candidate ready run all relevant targeted tests and prepare independent review",
+      "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims"
+    }
+  ],
+  "actual_results": "NOT_RUN"
+}

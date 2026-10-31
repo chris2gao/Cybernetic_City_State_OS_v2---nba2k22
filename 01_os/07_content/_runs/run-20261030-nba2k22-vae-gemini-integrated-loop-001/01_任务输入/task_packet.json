@@ -1,0 +1,167 @@
+{
+  "task_packet": {
+    "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+    "parent_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "objective": "Gemini 作为VAE当前唯一具本地执行能力的主开发者，集中开展VAE Stage02证据G01-G08、R01-R09原型合同修正、E1-E4集成离线可运行纵向原型和多轮局部回归，形成一次集成候选供独立GPT集中审核；同一任务内循环，不按小缺口重复派单。",
+    "big_task": true,
+    "risk_tier": "T2_semantic",
+    "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "branch": "task/nba2k22-vae-gemini-integrated-loop-20261030",
+    "direct_required_refs": [
+      "a98aa2db6e442bbc3aecfa552665ea13d482683e:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/A_需求建模_v1.yml",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/VAE_VERTICAL_SLICE_CONTRACT_V1.json",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/Stage02_取证与缺口矩阵_v1.md",
+      "4640f6e05f2b84e31661c7b2039dfc5d202b30a5:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/08_结论/independent_review_report.md",
+      "246482ef605f367ef636de0ea556423280da57f4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001/08_结论/completion_pointer.md",
+      "e02adbff02e6e3b3e1a1b8ff8a56c723d77e7a70:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/MODEL_ROSTER_AND_STAGE02_REPLAN_20261030.md",
+      "90f42546b2e6d17bd52f28f3e9b26342888a4bcc:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage02-g01-g03-readonly-001/08_结论/RESOURCE_AVAILABILITY_DEFERRAL_20261030.md",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/docs/development/MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/R07_OBSERVABLE_ACTION_EVIDENCE_MATURITY_GUIDE.md",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/settings.json",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/court.json"
+    ],
+    "allowed_changed_paths": [
+      "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/",
+      "08_Domain_Applications/Antigravity_GM_Engine/src/vae/",
+      "08_Domain_Applications/Antigravity_GM_Engine/tests/vae/",
+      "08_Domain_Applications/Antigravity_GM_Engine/config/vae/"
+    ],
+    "allowed_mode": [
+      "repository_read_and_write_in_allowlist",
+      "local_offline_fixture_tests",
+      "read_only_files",
+      "approved_existing_read_only_observations_only"
+    ],
+    "fixed_business_decisions": {
+      "confirmed_A_commit": "5abf3cb154654872a3d05278b96658f190ed9241",
+      "confirmed_A_blob": "612ed21f8f3e441366296ee2ac6170bb5974584b",
+      "confirmation_commit": "a98aa2db6e442bbc3aecfa552665ea13d482683e",
+      "review_commit": "4640f6e05f2b84e31661c7b2039dfc5d202b30a5",
+      "review_limitations": [
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07"
+      ],
+      "governed_stage01_runner": "NOT_RUN_FULL_SEVEN_STAGE_RUNNER",
+      "stage02_authoritative_completion": "NOT_CLAIMED"
+    },
+    "execution_assignment": {
+      "assigned_provider": "Google",
+      "assigned_product": "Gemini / Antigravity",
+      "assigned_model_label": "Gemini Flash 3.8",
+      "assigned_model_label_source": "Human direct description, not platform version attestation",
+      "assigned_collaboration_role": "execution",
+      "assigned_surface": "local Windows workspace",
+      "local_repo_hint": "E:\\workspace\\Cybernetic_City_State_OS_v2 - nba2k22",
+      "actual_model": "UNKNOWN_PENDING_EXECUTION_RECEIPT",
+      "execution_instance": "UNKNOWN_PENDING_EXECUTION_RECEIPT"
+    },
+    "verification_profile": {
+      "independent_reviewer": "GPT-6 via new isolated public-baseline Fork, not developer",
+      "executor_self_acceptance": "prohibited",
+      "different_working_context": true,
+      "full_audit_after_candidate": true
+    },
+    "terminal_lifecycle_state": "candidate_ready_for_independent_review",
+    "required_tests": [
+      "LOOP01_BOOT_AND_IDENTITY",
+      "LOOP02_SCOPE_AND_DIRTY_TREE",
+      "LOOP03_SOURCE_GRADING_G01_G08",
+      "LOOP04_F02_R06_COMPARABILITY",
+      "LOOP05_F03_R08_PENDING_STATE",
+      "LOOP06_F07_BLOCKED_NULLABILITY",
+      "LOOP07_R01_R09_OFFLINE_SLICE",
+      "LOOP08_READER_REUSE_AND_SAFE_FALLBACK",
+      "LOOP09_NEGATIVE_IDEMPOTENT_RETRY",
+      "LOOP10_E1_E4_SCOPE_COVERAGE",
+      "LOOP11_NO_GAME_WRITE_OR_NEW_UNAUTHORIZED_ACCESS",
+      "LOOP12_GIT_COMMIT_AND_PROGRESS_RESUME",
+      "LOOP13_FINAL_CONCENTRATED_VERIFICATION"
+    ],
+    "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/verification_plan.json",
+    "loop_contract": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/INTEGRATED_LOOP_CONTRACT_V1.json",
+    "big_task_closure": {
+      "objective": "单主任务多轮证据和原型开发、局部验证与集中候选审核",
+      "allowed_changed_paths": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae/",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae/",
+        "08_Domain_Applications/Antigravity_GM_Engine/config/vae/"
+      ],
+      "known_protected_actions": [],
+      "evidence_gates": [
+        "LOOP01_BOOT_AND_IDENTITY",
+        "LOOP02_SCOPE_AND_DIRTY_TREE",
+        "LOOP03_SOURCE_GRADING_G01_G08",
+        "LOOP04_F02_R06_COMPARABILITY",
+        "LOOP05_F03_R08_PENDING_STATE",
+        "LOOP06_F07_BLOCKED_NULLABILITY",
+        "LOOP07_R01_R09_OFFLINE_SLICE",
+        "LOOP08_READER_REUSE_AND_SAFE_FALLBACK",
+        "LOOP09_NEGATIVE_IDEMPOTENT_RETRY",
+        "LOOP10_E1_E4_SCOPE_COVERAGE",
+        "LOOP11_NO_GAME_WRITE_OR_NEW_UNAUTHORIZED_ACCESS",
+        "LOOP12_GIT_COMMIT_AND_PROGRESS_RESUME",
+        "LOOP13_FINAL_CONCENTRATED_VERIFICATION"
+      ],
+      "stop_conditions": [
+        "new_load_bearing_semantic_choice",
+        "scope_escape_beyond_allowed_changed_paths",
+        "protected_action_not_already_covered_by_current_authority",
+        "runtime_or_scheduler_activation",
+        "human_relay_required_to_reviewer",
+        "evidence_cannot_support_claim"
+      ],
+      "final_reviewer_boundary": "new_isolated_GPT_independent_review_after_integrated_candidate",
+      "terminal_lifecycle_state": "candidate_ready_for_independent_review",
+      "completion_pointer_shape": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/08_结论/completion_pointer.md with exact SHA, integrated deliverables, genuine tests and source maturity, unresolved items, model record, reviewer target"
+    },
+    "big_task_confirmation_closure": {
+      "enabled": false,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "publisher": {
+      "principal_binding": "connector_authenticated",
+      "publication_transport": "github_api_connector",
+      "source_branch_publication": "task_scope_default",
+      "master_integration_confirmation": "not_requested",
+      "expected_remote_master_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "expected_remote_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee"
+    },
+    "prohibitions": [
+      "modify_master",
+      "modify_Core",
+      "modify_existing_Reader_REA_D_systems_outside_allowlist",
+      "modify_original_A",
+      "modify_developer_or_audit_runs",
+      "change_live_game_or_save",
+      "Native_Setter_or_injection",
+      "elevate_privileges_without_action_specific_authority",
+      "start_game_process_or_runtime_without_relevant_authority",
+      "erase_or_rewrite_git_history",
+      "publish_unverified_compatibility_or_gameplay_causality",
+      "claim_formal_runner_or_PRMS_receipt_without_real_execution",
+      "assign_Codex",
+      "self_independent_review"
+    ],
+    "required_completion_pointer": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/08_结论/completion_pointer.md",
+    "minimum_work_unit_output": {
+      "work_performed_or_requested": "Integrate evidence, VAE contracts, safe runnable dry-run prototype and repeated bounded verification in one long-horizon Gemini task, handing off one consolidated candidate.",
+      "implementation_or_review_method": "Use OS task orchestration internal continuation, record deterministic iteration ledger and bounded local source grades; extend src/vae and tests, verify negative fixtures and stage-compatible evidence, commit each material checkpoint on one branch.",
+      "supportability_rationale": "Human confirmed A-v1; independent review identified F02/F03/F07; project already has Reader/REA/game capability research, so adapters and honest UNKNOWN can be developed without falsely claiming live engine effects.",
+      "feasibility_rationale": "Gemini has local execution per Human and Git branch scope; offline/dry-run path is implementable without game mutation. Runtime observations may remain unavailable under security/permission gates and cannot be prerequisites for reporting safe partial evidence.",
+      "task_constraints_and_boundaries": "One main owner Gemini, GPT planner and separate GPT reviewer, no Codex. Existing workflow Human stage checkpoints remain, full seven-stage runner not faked. Game/save/Native changes excluded.",
+      "stop_or_return_conditions": "Stop and return only on existing OS genuine-stop boundaries, unresolvable lack of evidence or candidate ready for independent reviewer; repeated local micro-fix is internal continuation."
+    }
+  }
+}

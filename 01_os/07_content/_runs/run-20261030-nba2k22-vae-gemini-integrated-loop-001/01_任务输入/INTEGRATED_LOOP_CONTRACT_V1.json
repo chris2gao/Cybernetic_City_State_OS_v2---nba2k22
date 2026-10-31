@@ -1,0 +1,105 @@
+{
+  "schema_version": "nba2k22.vae.integrated_iterative_development.v1",
+  "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+  "purpose": "A single durable Gemini development work unit with repeated bounded Plan→Evidence→Implement→Test→Repair loops, one integrated candidate and one independent review.",
+  "mode": "foreground_iterative_task_not_background_agent",
+  "start_requires": [
+    "current_Codex_unavailable_acknowledged",
+    "exact_branch_and_allowed_paths_check",
+    "Human_approved_A_readback",
+    "relevant_OS_boot_and_game_mechanism_refs",
+    "local_repo_status_preserved"
+  ],
+  "loop_steps": [
+    {
+      "step": 1,
+      "name": "inspect_and_prioritize",
+      "action": "Read previous checkpoint, failed tests, unresolved highest-impact evidence gap and fixed baseline; select next bounded in-scope improvement"
+    },
+    {
+      "step": 2,
+      "name": "source_and_oracle",
+      "action": "Record evidence grade and expected observable pass/fail oracle before edit. UNKNOWN must remain UNKNOWN"
+    },
+    {
+      "step": 3,
+      "name": "implement",
+      "action": "Extend permitted src/vae + fixture/test + run docs; reuse existing Native/Reader read-only interface instead of creating parallel infrastructure"
+    },
+    {
+      "step": 4,
+      "name": "cheap_verify",
+      "action": "Run direct offline/unit/fixture/contract checks plus read-only access tests if genuinely permitted; capture command and exit code"
+    },
+    {
+      "step": 5,
+      "name": "repair_or_defer",
+      "action": "Fix failure introduced by same task and rerun only affected tests; record blocked facts when outside safe scope"
+    },
+    {
+      "step": 6,
+      "name": "checkpoint_and_repeat",
+      "action": "Update single task progress ledger with SHA, evidence, net improvement, accepted defects, remaining risks, next priority; commit within task branch; repeat if meaningful scoped improvement remains"
+    }
+  ],
+  "work_tracks_within_same_task": [
+    {
+      "track": "Evidence G01–G08",
+      "required": "Source coverage and gaps for live mode/profile, USER/CPU, dual normalize, game/Calendar, coach, GM, player, match observations, safe backup; no false live claims",
+      "priority": "P0 for G01–G03 and safety, then G04–G08 as evidence permits"
+    },
+    {
+      "track": "R01–R09 business contracts",
+      "required": "Fix reviewed F02/F03/F07, clarify F04 event ids/corrections, F05 test oracles; R06 comparison context and R08 NOT_RUN initial semantics",
+      "priority": "Correctness before evaluation"
+    },
+    {
+      "track": "Integrated prototype E1–E4",
+      "required": "A runnable offline/dry-run path ProfileSnapshot→Diagnosis→TrialPreflight→ExecutionReceipt(NOT_RUN)→Readback(UNVERIFIED)→Observation(INCONCLUSIVE)→Evaluation→Revision(PENDING)→DFeedback; E1 initial thin slice, E2–E4 contracts and extension tests",
+      "priority": "Actual reusable code with fixtures, not just reports"
+    },
+    {
+      "track": "Bounded local evidence",
+      "required": "Only read UI/files and pre-existing read-only tools under actual authority; avoid process attach, hook, elevation, save operations unless separately confirmed",
+      "priority": "Runtime facts only where safety preflight passes"
+    }
+  ],
+  "continuation_rule": "Continue within same task and branch when work is within allowlist and a measurable test failure/evidence gap remains solvable. Do not require Human every local fix. No fixed number of rounds; no unbounded repetition without progress.",
+  "improvement_measure": [
+    "required_tests_newly_passed",
+    "P0_gap_reduced_with_primary_evidence",
+    "failure_set_strictly_shrinks",
+    "reproducible_prototype_path_increases",
+    "UNKNOWN_replaced_only_by_justified_observation"
+  ],
+  "stopping_rules": [
+    "new_load_bearing_semantic_choice",
+    "scope_escape_beyond_allowed_changed_paths",
+    "protected_action_not_already_covered_by_current_authority",
+    "runtime_or_scheduler_activation",
+    "secret_or_privacy_boundary",
+    "destructive_git_or_history_rewrite",
+    "human_relay_required_to_an_independent_reviewer",
+    "no_new_evidence_or_test_progress_after_repeated_same_approach_and_no_new_safe_next_action",
+    "evidence_cannot_support_a_required_claim"
+  ],
+  "on_stall": "Record exact blocker, negative evidence and next owner. Remain candidate_pending_validation or deferred, never claim PASS.",
+  "when_review_ready": "Produce one complete integrated release candidate, frozen manifest, full focused regression, no P0 in-scope implementable defects, all important unknowns bounded, and one completion pointer. Do not self-accept.",
+  "human_checkpoint_policy": "Use existing workflow stage plan/completion checkpoints where applicable; no repeated micro-approvals for within-scope edits; game writes and protected actions require distinct Human decision.",
+  "review_policy": {
+    "developer": "Gemini Flash 3.8 as Human-declared label",
+    "reviewer": "new isolated GPT independent_review fork from NBA_COMMON_BASELINE_READY",
+    "review_frequency": "one concentrated audit after integrated candidate, focused follow-up only for material findings",
+    "developer_self_review": "prohibited"
+  },
+  "state_contract": {
+    "one_task_id": true,
+    "one_branch": true,
+    "progress_log": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/06_执行/iteration_ledger.jsonl",
+    "current_checkpoint": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/06_执行/current_checkpoint.json",
+    "final_pointer": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/08_结论/completion_pointer.md",
+    "terminal_lifecycle": "candidate_ready_for_independent_review",
+    "blocked_lifecycle": "deferred",
+    "historical_task_overwrite": false
+  }
+}
