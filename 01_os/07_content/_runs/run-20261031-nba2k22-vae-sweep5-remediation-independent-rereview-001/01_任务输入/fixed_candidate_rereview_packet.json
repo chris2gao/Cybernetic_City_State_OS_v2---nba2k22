@@ -1,0 +1,38 @@
+{
+  "schema": "nba2k22.vae.sweep5_remediation_independent_rereview.v1",
+  "task_id": "NBA2K22-VAE-SWEEP5-REMEDIATION-INDEPENDENT-REREVIEW-20261031-001",
+  "role": "independent_review",
+  "subject_task_id": "NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001",
+  "source_dispatch_sha": "3c378d05a42be50d7f105256d5bb978bd88eefa5",
+  "prior_review_sha": "a15079c425bb2f228afa333dee70df5cde12039c",
+  "real_candidate_sha": "6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe",
+  "developer_reported_full_sha": "6f8dfe23a8e97f0450e1eeff99f1fae39d5fc65c",
+  "candidate_parent_sha": "b3e39f867364b4610fc57f5cc798c7ab33232eeb",
+  "master_baseline_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "audit_branch": "task/nba2k22-vae-sweep5-remediation-independent-rereview-20261031",
+  "allowed_changed_paths": [
+    "01_os/07_content/_runs/run-20261031-nba2k22-vae-sweep5-remediation-independent-rereview-001/"
+  ],
+  "context": "Human explicitly authorized same GPT reviewer and submitted two Gemini reports following integrated 13-finding review",
+  "review_scope": [
+    "verify fixed remote commit not report SHA",
+    "contrast exact prior 13 findings and closure gates",
+    "independently check field IDs and graph against official inventory",
+    "verify source-equivalent x86 arithmetic and all rel32 calculations against stored bytes",
+    "assess binary provenance and extent of received full CFG",
+    "test default isolation, files provenance and 45 reported tests",
+    "verify three future-gameplay metric semantic contracts without imposing physical schema"
+  ],
+  "bounds": {
+    "developer_pytest_45": "NOT_INDEPENDENTLY_RERUN",
+    "raw_nba_exe": "NOT_AVAILABLE_TO_REVIEWER",
+    "developer_live_binary_extraction": "CLAIMED_WITH_SOURCE_LOCAL_COMMAND_LIST_NOT_THIRD_PARTY_REPLAY",
+    "game_operation": "NOT_RUN",
+    "master_and_executor_changes": "NONE",
+    "new_isolated_fork": false,
+    "same_reviewer_human_override": true,
+    "PRMS_SAVE": "NOT_RUN",
+    "formal_communication": "NOT_PUBLISHED"
+  },
+  "goal": "one focused independent re-review with narrow consolidation, retain genuine fix achievements, do not demand 204 gameplay causal claims"
+}
