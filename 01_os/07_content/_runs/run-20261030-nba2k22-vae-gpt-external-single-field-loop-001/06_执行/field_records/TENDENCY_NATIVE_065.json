@@ -1,0 +1,62 @@
+{
+  "field_id": "TENDENCY_NATIVE_065",
+  "iteration_id": "SWEEP01_FIELD0065",
+  "date": "2026-10-31",
+  "question": "Does Dish To Open Man change the CPU chance of a pass to an actually open teammate when a ball-handler has an eligible decision?",
+  "candidate": {
+    "key": "tendency.DISH_TO_OPEN_MAN_TENDENCY",
+    "offset": "0x498",
+    "project_range": [
+      0,
+      100
+    ],
+    "mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "game": "NBA2K22",
+      "platform": "multi-platform project, PC implementation UNKNOWN",
+      "claim": "Reports increasing Dish To Open Man along with other passing fields for drive-and-kicks; unisolated"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page3",
+      "author": "VictorMG and tcnumba10",
+      "date": "2021-09-19",
+      "game": "NBA2K22",
+      "platform": "UNKNOWN",
+      "claim": "One player proposes increasing Dish, another changed Touches and Play Discipline instead; no controlled comparison"
+    }
+  ],
+  "claims": [
+    "Passing-to-open-man tendency and play discipline may be distinct decisions",
+    "No PC22 live mapping to 0x498 nor verified effect formula"
+  ],
+  "conflicts": [
+    "Open pass opportunity not equivalent to completed assist",
+    "Coach/Playbook, teammate openness and pass ability confound observed pass count",
+    "Two community approaches not independently controlled"
+  ],
+  "relations": [
+    "Drive, Touches, Play Discipline, Coach settings",
+    "Pass Accuracy/vision, turnover risk and opponent defense",
+    "Training direct relationship UNKNOWN"
+  ],
+  "metrics": [
+    "passes to truly open teammates per eligible ball-handler action",
+    "passes after dribble penetration vs normal possessions",
+    "turnovers, assists and open teammate detection separated"
+  ],
+  "REA_question": {
+    "id": "REA_DISH_065",
+    "question": "Do two UID-verified PC22 players have read-only PLAYER+0x498 equal to their exact Dish To Open Man UI tendency values at same save/build/time?",
+    "write": false,
+    "positive": "MAPPING_SCOPED_ONLY"
+  },
+  "result": "SAME_RELEASE_EDITOR_PASS_HYPOTHESIS_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
