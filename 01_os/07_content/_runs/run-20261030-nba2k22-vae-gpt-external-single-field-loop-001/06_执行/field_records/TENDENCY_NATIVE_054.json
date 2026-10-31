@@ -1,0 +1,55 @@
+{
+  "field_id": "TENDENCY_NATIVE_054",
+  "iteration_id": "SWEEP01_FIELD0054",
+  "single_question": "Can the unidentified 0x48D player tendency byte be mapped to a PC22 UI field by direct evidence?",
+  "identity": {
+    "key": "tendency.RAW_0x48d",
+    "offset": "0x48D",
+    "project_range": [
+      0,
+      100
+    ],
+    "ui": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x48D\" tendency",
+    "date": "2026-10-31",
+    "direct_results": 0,
+    "grade": "NO_DIRECT_SOURCE",
+    "caution": "No results do not prove a field unused"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "2021 roster, page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web archive, PC unknown",
+      "claim": "UI tendency names exist but no byte offset"
+    }
+  ],
+  "claims": [
+    "No verified PC22 mapping for 0x48D",
+    "Nearby field order is not a valid native offset map"
+  ],
+  "conflicts": [
+    "No UID-specific UI readback or runtime consumer"
+  ],
+  "relations": "All Coach/Player/Training relationships UNKNOWN until semantic identity",
+  "measures": [
+    "two UID-verified read-only values and independently observed UI values",
+    "same game build/save/time and adjacent-byte false match control"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_054",
+    "question": "Does read-only PLAYER+0x48D match exactly one visible tendency UI field for two UID-verified PC22 players without positional inference?",
+    "positive": "MAPPING_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
