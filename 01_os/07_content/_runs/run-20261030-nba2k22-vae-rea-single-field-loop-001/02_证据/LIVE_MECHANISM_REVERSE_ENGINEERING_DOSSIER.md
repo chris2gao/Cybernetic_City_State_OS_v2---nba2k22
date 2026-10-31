@@ -1,6 +1,6 @@
 # NBA 2K22 全量 204 个种子字段实机 REA 机制逆向与证据质量分层档案 (Remediated V2)
 
-> **生成时间**：2026-10-31T10:16:04.663415+00:00
+> **生成时间**：2026-10-31T10:26:38.026068+00:00
 > **实机目标**：`NBA2K22.exe` (PE SHA256: `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`, PID: 5488, Base: 0x140000000)
 > **核心分析对象**：现役焦点球员 Tyrese Haliburton (Player Struct 步长 0xDF0, 倾向块 0x458..0x4BA)
 > **控制器槽位分离**：SLOT_SETTINGS (0x0632B4B0), SLOT_TRADE (0x0632B498), SLOT_SLIDERS (0x0632B4A0)
@@ -10,8 +10,8 @@
 - **总字段记录**：204
 - **有效实机收据 (`LIVE_RECEIPT`)**：48 (经结构体与范围校验的球员倾向)
 - **原始快照候选 (`RAW_MEMORY_CAPTURE_CANDIDATE`)**：156
-- **其中降级为 `UNKNOWN`**：93 (包含 19 项 Coach 地址别名字段与越界世界设置)
-- **浮点位型解码修正**：10 (如 game_speed 1056964608 -> float32 0.5)
+- **其中降级为 `UNKNOWN`**：71 (包含 19 项 Coach 地址别名字段与越界世界设置)
+- **浮点位型解码修正**：11 (如 game_speed 1056964608 -> float32 0.5)
 - **物理地址碰撞与别名映射**：详见 `PHYSICAL_IDENTITY_COLLISION_TABLE.json` (共 36 组别名对，实际对应 50 个物理控制器槽位)
 
 ---
@@ -205,7 +205,7 @@
 ### TENDENCY_NATIVE_014 · SHOT_UNDER_BASKET_TENDENCY
 - **家族与候选键**：`player_tendency` / `tendency.SHOT_UNDER_BASKET_TENDENCY`
 - **证据等级与状态**：`LIVE_RECEIPT` | `EVIDENCE_ADDED` (LIVE_RECEIPT_VALIDATED_IN_ACTIVE_PLAYER)
-- **内存地址与数值**：地址 `0x7ff4e4e9b03d` | 解码值 `53`
+- **内存地址与数值**：地址 `0x7ff4e4e9b03d` | 解码值 `54`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：篮下 0~3 尺极深位置受贴防时的就地起跳强攻终结意愿。
 - **机制与跨字段关联**：
@@ -1433,7 +1433,7 @@
 ### WORLD_REG_007 · settings.simulation.sim_quarter_length
 - **家族与候选键**：`world_settings` / `settings.simulation.sim_quarter_length`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe0ec` | 解码值 `1`
+- **内存地址与数值**：地址 `0x7ff4e67ff2b8` | 解码值 `12`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.simulation.sim_quarter_length 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1441,13 +1441,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[1, 12]
-- **审计说明**：Observation 1 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 12 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_008 · settings.simulation.normalize_stats
 - **家族与候选键**：`world_settings` / `settings.simulation.normalize_stats`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 21234136 not in [0, 1])
-- **内存地址与数值**：地址 `0x7ff4e68fe638` | 解码值 `21234136`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff804` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.simulation.normalize_stats 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1455,13 +1455,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Raw reading 21234136 violates declared range [0, 1]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x600, not SLOT_SETTINGS.
+- **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_009 · settings.trade_rules.cpu_cpu_trades
 - **家族与候选键**：`world_settings` / `settings.trade_rules.cpu_cpu_trades`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1a8` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff374` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.cpu_cpu_trades 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1475,23 +1475,9 @@
 ### WORLD_REG_010 · settings.trade_rules.trade_override
 - **家族与候选键**：`world_settings` / `settings.trade_rules.trade_override`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1a0` | 解码值 `1`
+- **内存地址与数值**：地址 `0x7ff4e67ff36c` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.trade_override 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 1 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
-
-
-### WORLD_REG_011 · settings.trade_rules.trade_deadline
-- **家族与候选键**：`world_settings` / `settings.trade_rules.trade_deadline`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1a4` | 解码值 `0`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.trade_deadline 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
   - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
@@ -1500,10 +1486,24 @@
 - **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
+### WORLD_REG_011 · settings.trade_rules.trade_deadline
+- **家族与候选键**：`world_settings` / `settings.trade_rules.trade_deadline`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff370` | 解码值 `1`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.trade_deadline 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 1]
+- **审计说明**：Observation 1 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
 ### WORLD_REG_012 · settings.trade_rules.financial_trade_rules
 - **家族与候选键**：`world_settings` / `settings.trade_rules.financial_trade_rules`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe198` | 解码值 `1`
+- **内存地址与数值**：地址 `0x7ff4e67ff364` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.financial_trade_rules 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1517,7 +1517,7 @@
 ### WORLD_REG_013 · settings.trade_rules.recently_signed_rule
 - **家族与候选键**：`world_settings` / `settings.trade_rules.recently_signed_rule`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe18c` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff358` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.recently_signed_rule 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1525,13 +1525,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 1 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_014 · settings.trade_rules.recently_traded_rule
 - **家族与候选键**：`world_settings` / `settings.trade_rules.recently_traded_rule`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe190` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff35c` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.recently_traded_rule 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1539,13 +1539,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 1 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_015 · settings.trade_rules.trade_difficulty
 - **家族与候选键**：`world_settings` / `settings.trade_rules.trade_difficulty`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1ac` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff378` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.trade_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1553,13 +1553,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_016 · settings.trade_rules.cpu_trade_frequency
 - **家族与候选键**：`world_settings` / `settings.trade_rules.cpu_trade_frequency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1b0` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff37c` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.cpu_trade_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1573,9 +1573,135 @@
 ### WORLD_REG_017 · settings.trade_rules.blockbuster_trade_frequency
 - **家族与候选键**：`world_settings` / `settings.trade_rules.blockbuster_trade_frequency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1b4` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff380` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.blockbuster_trade_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_018 · settings.trade_rules.untouchable_threshold
+- **家族与候选键**：`world_settings` / `settings.trade_rules.untouchable_threshold`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff388` | 解码值 `50`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.untouchable_threshold 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_019 · settings.contracts.contract_difficulty
+- **家族与候选键**：`world_settings` / `settings.contracts.contract_difficulty`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff414` | 解码值 `50`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.contract_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_020 · settings.contracts.player_non_financial_ambitions
+- **家族与候选键**：`world_settings` / `settings.contracts.player_non_financial_ambitions`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff418` | 解码值 `50`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_non_financial_ambitions 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_021 · settings.contracts.min_contract_rating
+- **家族与候选键**：`world_settings` / `settings.contracts.min_contract_rating`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff41c` | 解码值 `50`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.min_contract_rating 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[50, 99]
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_022 · settings.contracts.max_contract_rating
+- **家族与候选键**：`world_settings` / `settings.contracts.max_contract_rating`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 40 not in [70, 99])
+- **内存地址与数值**：地址 `0x7ff4e67ff420` | 解码值 `40`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.max_contract_rating 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[70, 99]
+- **审计说明**：Raw reading 40 violates declared range [70, 99]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x21C, not SLOT_SETTINGS.
+
+
+### WORLD_REG_023 · settings.contracts.player_potential_factor
+- **家族与候选键**：`world_settings` / `settings.contracts.player_potential_factor`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff424` | 解码值 `60`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_potential_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 60 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_024 · settings.contracts.player_durability_factor
+- **家族与候选键**：`world_settings` / `settings.contracts.player_durability_factor`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff428` | 解码值 `20`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_durability_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 20 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_025 · settings.contracts.player_fame_factor
+- **家族与候选键**：`world_settings` / `settings.contracts.player_fame_factor`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff430` | 解码值 `50`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_fame_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[0, 100]
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+
+
+### WORLD_REG_026 · settings.contracts.cpu_interest_in_resigning
+- **家族与候选键**：`world_settings` / `settings.contracts.cpu_interest_in_resigning`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff438` | 解码值 `0`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.cpu_interest_in_resigning 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
   - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
@@ -1584,136 +1710,10 @@
 - **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
-### WORLD_REG_018 · settings.trade_rules.untouchable_threshold
-- **家族与候选键**：`world_settings` / `settings.trade_rules.untouchable_threshold`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe1bc` | 解码值 `1`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.trade_rules.untouchable_threshold 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Observation 1 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
-
-
-### WORLD_REG_019 · settings.contracts.contract_difficulty
-- **家族与候选键**：`world_settings` / `settings.contracts.contract_difficulty`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 33822246 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe248` | 解码值 `33822246`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.contract_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 33822246 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x210, not SLOT_SETTINGS.
-
-
-### WORLD_REG_020 · settings.contracts.player_non_financial_ambitions
-- **家族与候选键**：`world_settings` / `settings.contracts.player_non_financial_ambitions`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 271058973 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe24c` | 解码值 `271058973`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_non_financial_ambitions 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 271058973 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x214, not SLOT_SETTINGS.
-
-
-### WORLD_REG_021 · settings.contracts.min_contract_rating
-- **家族与候选键**：`world_settings` / `settings.contracts.min_contract_rating`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 184816922 not in [50, 99])
-- **内存地址与数值**：地址 `0x7ff4e68fe250` | 解码值 `184816922`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.min_contract_rating 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[50, 99]
-- **审计说明**：Raw reading 184816922 violates declared range [50, 99]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x218, not SLOT_SETTINGS.
-
-
-### WORLD_REG_022 · settings.contracts.max_contract_rating
-- **家族与候选键**：`world_settings` / `settings.contracts.max_contract_rating`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 1605731 not in [70, 99])
-- **内存地址与数值**：地址 `0x7ff4e68fe254` | 解码值 `1605731`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.max_contract_rating 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[70, 99]
-- **审计说明**：Raw reading 1605731 violates declared range [70, 99]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x21C, not SLOT_SETTINGS.
-
-
-### WORLD_REG_023 · settings.contracts.player_potential_factor
-- **家族与候选键**：`world_settings` / `settings.contracts.player_potential_factor`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 571809049 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe258` | 解码值 `571809049`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_potential_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 571809049 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x220, not SLOT_SETTINGS.
-
-
-### WORLD_REG_024 · settings.contracts.player_durability_factor
-- **家族与候选键**：`world_settings` / `settings.contracts.player_durability_factor`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 522460955 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe25c` | 解码值 `522460955`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_durability_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 522460955 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x224, not SLOT_SETTINGS.
-
-
-### WORLD_REG_025 · settings.contracts.player_fame_factor
-- **家族与候选键**：`world_settings` / `settings.contracts.player_fame_factor`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 413824 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe264` | 解码值 `413824`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.player_fame_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 413824 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x22C, not SLOT_SETTINGS.
-
-
-### WORLD_REG_026 · settings.contracts.cpu_interest_in_resigning
-- **家族与候选键**：`world_settings` / `settings.contracts.cpu_interest_in_resigning`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 724864641 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe26c` | 解码值 `724864641`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 settings.contracts.cpu_interest_in_resigning 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 724864641 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x234, not SLOT_SETTINGS.
-
-
 ### WORLD_REG_027 · settings.injuries_and_morale.user_injury_frequency
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.user_injury_frequency`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 68425069 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe284` | 解码值 `68425069`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff450` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.user_injury_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1721,13 +1721,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 68425069 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x24C, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_028 · settings.injuries_and_morale.cpu_injury_frequency
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.cpu_injury_frequency`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 303959055 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe288` | 解码值 `303959055`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff454` | 解码值 `55`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.cpu_injury_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1735,13 +1735,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 303959055 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x250, not SLOT_SETTINGS.
+- **审计说明**：Observation 55 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_029 · settings.injuries_and_morale.user_injury_effects
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.user_injury_effects`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 1054163 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe28c` | 解码值 `1054163`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff458` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.user_injury_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1749,13 +1749,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 1054163 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x254, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_030 · settings.injuries_and_morale.cpu_injury_effects
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.cpu_injury_effects`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 1687655 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe290` | 解码值 `1687655`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff45c` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.cpu_injury_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1763,13 +1763,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 1687655 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x258, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_031 · settings.injuries_and_morale.injury_severity
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.injury_severity`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 588978459 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe294` | 解码值 `588978459`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff460` | 解码值 `40`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.injury_severity 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1777,13 +1777,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 588978459 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x25C, not SLOT_SETTINGS.
+- **审计说明**：Observation 40 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_032 · settings.injuries_and_morale.injury_duration
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.injury_duration`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 605887260 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe298` | 解码值 `605887260`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff464` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.injury_duration 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1791,13 +1791,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 605887260 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x260, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_033 · settings.injuries_and_morale.career_ending_injury_frequency
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.career_ending_injury_frequency`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 1245184000 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe29c` | 解码值 `1245184000`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff468` | 解码值 `5`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.career_ending_injury_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1805,13 +1805,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 1245184000 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x264, not SLOT_SETTINGS.
+- **审计说明**：Observation 5 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_034 · settings.injuries_and_morale.morale_difficulty
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.morale_difficulty`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe270` | 解码值 `3`
+- **内存地址与数值**：地址 `0x7ff4e67ff43c` | 解码值 `35`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.morale_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1819,13 +1819,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Observation 3 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 35 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_035 · settings.injuries_and_morale.morale_effects
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.morale_effects`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 1310751 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe274` | 解码值 `1310751`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff440` | 解码值 `40`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.morale_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1833,13 +1833,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 1310751 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x23C, not SLOT_SETTINGS.
+- **审计说明**：Observation 40 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_036 · settings.injuries_and_morale.chemistry_difficulty
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.chemistry_difficulty`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 21233853 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe278` | 解码值 `21233853`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff444` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.chemistry_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1847,13 +1847,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 21233853 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x240, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_037 · settings.injuries_and_morale.chemistry_effects
 - **家族与候选键**：`world_settings` / `settings.injuries_and_morale.chemistry_effects`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 218955828 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe27c` | 解码值 `218955828`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff448` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.injuries_and_morale.chemistry_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1861,13 +1861,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 218955828 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x244, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_038 · settings.progression.training_effects
 - **家族与候选键**：`world_settings` / `settings.progression.training_effects`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 413824 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe2a0` | 解码值 `413824`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff46c` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.progression.training_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1875,13 +1875,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 413824 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x268, not SLOT_SETTINGS.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_039 · settings.progression.offseason_progression_rate
 - **家族与候选键**：`world_settings` / `settings.progression.offseason_progression_rate`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 724864642 not in [0, 100])
-- **内存地址与数值**：地址 `0x7ff4e68fe2a4` | 解码值 `724864642`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff470` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.progression.offseason_progression_rate 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1889,13 +1889,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Raw reading 724864642 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x26C, not SLOT_SETTINGS.
+- **审计说明**：Observation 0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_040 · settings.progression.regression_rate
 - **家族与候选键**：`world_settings` / `settings.progression.regression_rate`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe2ac` | 解码值 `4`
+- **内存地址与数值**：地址 `0x7ff4e67ff478` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.progression.regression_rate 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1903,13 +1903,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 100]
-- **审计说明**：Observation 4 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 50 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_041 · settings.gameplay_sliders.game_difficulty_preset
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.game_difficulty_preset`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 1056964608 not in [0, 4])
-- **内存地址与数值**：地址 `0x7ff4e68fe038` | 解码值 `1056964608`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ff95c` | 解码值 `4`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.game_difficulty_preset 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1917,13 +1917,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 4]
-- **审计说明**：Raw reading 1056964608 violates declared range [0, 4]. Target belongs to SLOT_SLIDERS (0x0632B4A0) offset 0x00, not SLOT_SETTINGS.
+- **审计说明**：Observation 4 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_042 · settings.gameplay_sliders.speed_with_ball_min_user
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.speed_with_ball_min_user`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3b4` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffcd8` | 解码值 `0.4000000059604645`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.speed_with_ball_min_user 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1931,13 +1931,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.4000000059604645 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_043 · settings.gameplay_sliders.speed_with_ball_min_cpu
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.speed_with_ball_min_cpu`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3b8` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffcdc` | 解码值 `0.4000000059604645`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.speed_with_ball_min_cpu 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1945,13 +1945,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.4000000059604645 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_044 · settings.gameplay_sliders.speed_with_ball_max_user
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.speed_with_ball_max_user`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3ac` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffcd0` | 解码值 `0.699999988079071`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.speed_with_ball_max_user 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1959,13 +1959,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.699999988079071 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_045 · settings.gameplay_sliders.speed_with_ball_max_cpu
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.speed_with_ball_max_cpu`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3b0` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffcd4` | 解码值 `0.699999988079071`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.speed_with_ball_max_cpu 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1973,13 +1973,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.699999988079071 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_046 · settings.gameplay_sliders.acceleration_with_ball_min_user
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.acceleration_with_ball_min_user`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3d4` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffcf8` | 解码值 `0.4000000059604645`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.acceleration_with_ball_min_user 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -1987,13 +1987,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.4000000059604645 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_047 · settings.gameplay_sliders.acceleration_with_ball_min_cpu
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.acceleration_with_ball_min_cpu`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (OUT_OF_BOUNDS_CHECK_FAILED: 9 not in [0, 1])
-- **内存地址与数值**：地址 `0x7ff4e68fe3d8` | 解码值 `9`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
+- **内存地址与数值**：地址 `0x7ff4e67ffcfc` | 解码值 `0.4000000059604645`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.acceleration_with_ball_min_cpu 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2001,13 +2001,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Raw reading 9 violates declared range [0, 1]. Target belongs to SLOT_SLIDERS (0x0632B4A0) offset 0x3A0, not SLOT_SETTINGS.
+- **审计说明**：Observation 0.4000000059604645 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_048 · settings.gameplay_sliders.speed_without_ball_min_user
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.speed_without_ball_min_user`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3a4` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffcc8` | 解码值 `0.3499999940395355`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.speed_without_ball_min_user 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2015,13 +2015,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.3499999940395355 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_049 · settings.gameplay_sliders.speed_without_ball_min_cpu
 - **家族与候选键**：`world_settings` / `settings.gameplay_sliders.speed_without_ball_min_cpu`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS)
-- **内存地址与数值**：地址 `0x7ff4e68fe3a8` | 解码值 `0.0`
+- **内存地址与数值**：地址 `0x7ff4e67ffccc` | 解码值 `0.3499999940395355`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 settings.gameplay_sliders.speed_without_ball_min_cpu 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2029,13 +2029,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[0, 1]
-- **审计说明**：Observation 0.0 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
+- **审计说明**：Observation 0.3499999940395355 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.
 
 
 ### WORLD_REG_050 · world.trade_and_draft_rules.cpu_cpu_trades
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.cpu_cpu_trades`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe1a8` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff374` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.cpu_cpu_trades 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2049,7 +2049,7 @@
 ### WORLD_REG_051 · world.trade_and_draft_rules.cpu_trade_frequency
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.cpu_trade_frequency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe1b0` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff37c` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.cpu_trade_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2063,37 +2063,9 @@
 ### WORLD_REG_052 · world.trade_and_draft_rules.ted_stepien_rule
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.ted_stepien_rule`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe1b8` | 解码值 `1`
+- **内存地址与数值**：地址 `0x7ff4e67ff384` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.ted_stepien_rule 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
-
-
-### WORLD_REG_053 · world.trade_and_draft_rules.trade_override
-- **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.trade_override`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe1a0` | 解码值 `1`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.trade_override 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
-- **机制与跨字段关联**：
-  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
-  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
-  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
-- **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
-
-
-### WORLD_REG_054 · world.trade_and_draft_rules.trade_deadline
-- **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.trade_deadline`
-- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe1a4` | 解码值 `0`
-- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
-- **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.trade_deadline 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
   - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
@@ -2102,10 +2074,38 @@
 - **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
+### WORLD_REG_053 · world.trade_and_draft_rules.trade_override
+- **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.trade_override`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
+- **内存地址与数值**：地址 `0x7ff4e67ff36c` | 解码值 `0`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.trade_override 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[None, None]
+- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+
+
+### WORLD_REG_054 · world.trade_and_draft_rules.trade_deadline
+- **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.trade_deadline`
+- **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
+- **内存地址与数值**：地址 `0x7ff4e67ff370` | 解码值 `1`
+- **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
+- **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.trade_deadline 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
+- **机制与跨字段关联**：
+  - 双 Normalize 机制：48 分钟标准比赛时间与统计换算前提
+  - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
+  - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
+- **非线性阈值/边界**：合法值域区间：[None, None]
+- **审计说明**：Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+
+
 ### WORLD_REG_055 · world.trade_and_draft_rules.financial_trade_rules
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.financial_trade_rules`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe198` | 解码值 `1`
+- **内存地址与数值**：地址 `0x7ff4e67ff364` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.financial_trade_rules 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2119,7 +2119,7 @@
 ### WORLD_REG_056 · world.trade_and_draft_rules.recently_signed_rule
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.recently_signed_rule`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe18c` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff358` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.recently_signed_rule 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2127,13 +2127,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_057 · world.trade_and_draft_rules.recently_traded_rule
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.recently_traded_rule`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe190` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff35c` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.recently_traded_rule 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2141,13 +2141,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_058 · world.trade_and_draft_rules.trade_difficulty
 - **家族与候选键**：`world_settings` / `world.trade_and_draft_rules.trade_difficulty`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe1ac` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e67ff378` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.trade_and_draft_rules.trade_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2155,13 +2155,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_059 · world.contracts_and_finances.cpu_interest_in_resigning
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.cpu_interest_in_resigning`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe26c` | 解码值 `724864641`
+- **内存地址与数值**：地址 `0x7ff4e67ff438` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.cpu_interest_in_resigning 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2169,13 +2169,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 724864641; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_060 · world.contracts_and_finances.contract_difficulty
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.contract_difficulty`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe248` | 解码值 `33822246`
+- **内存地址与数值**：地址 `0x7ff4e67ff414` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.contract_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2183,13 +2183,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 33822246; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_061 · world.contracts_and_finances.player_non_financial_ambitions
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.player_non_financial_ambitions`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe24c` | 解码值 `271058973`
+- **内存地址与数值**：地址 `0x7ff4e67ff418` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.player_non_financial_ambitions 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2197,13 +2197,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 271058973; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_062 · world.contracts_and_finances.min_contract_rating
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.min_contract_rating`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe250` | 解码值 `184816922`
+- **内存地址与数值**：地址 `0x7ff4e67ff41c` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.min_contract_rating 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2211,13 +2211,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 184816922; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_063 · world.contracts_and_finances.max_contract_rating
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.max_contract_rating`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe254` | 解码值 `1605731`
+- **内存地址与数值**：地址 `0x7ff4e67ff420` | 解码值 `40`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.max_contract_rating 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2225,13 +2225,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1605731; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 40; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_064 · world.contracts_and_finances.player_potential_factor
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.player_potential_factor`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe258` | 解码值 `571809049`
+- **内存地址与数值**：地址 `0x7ff4e67ff424` | 解码值 `60`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.player_potential_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2239,13 +2239,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 571809049; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 60; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_065 · world.contracts_and_finances.player_durability_factor
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.player_durability_factor`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe25c` | 解码值 `522460955`
+- **内存地址与数值**：地址 `0x7ff4e67ff428` | 解码值 `20`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.player_durability_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2253,13 +2253,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 522460955; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 20; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_066 · world.contracts_and_finances.player_fame_factor
 - **家族与候选键**：`world_settings` / `world.contracts_and_finances.player_fame_factor`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe264` | 解码值 `413824`
+- **内存地址与数值**：地址 `0x7ff4e67ff430` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.contracts_and_finances.player_fame_factor 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2267,13 +2267,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 413824; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_067 · world.progression_and_regression.offseason_progression_rate
 - **家族与候选键**：`world_settings` / `world.progression_and_regression.offseason_progression_rate`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe2a4` | 解码值 `724864642`
+- **内存地址与数值**：地址 `0x7ff4e67ff470` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.progression_and_regression.offseason_progression_rate 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2281,13 +2281,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 724864642; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_068 · world.progression_and_regression.regression_rate
 - **家族与候选键**：`world_settings` / `world.progression_and_regression.regression_rate`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe2ac` | 解码值 `4`
+- **内存地址与数值**：地址 `0x7ff4e67ff478` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.progression_and_regression.regression_rate 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2295,13 +2295,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 4; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_069 · world.progression_and_regression.training_effects
 - **家族与候选键**：`world_settings` / `world.progression_and_regression.training_effects`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe2a0` | 解码值 `413824`
+- **内存地址与数值**：地址 `0x7ff4e67ff46c` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.progression_and_regression.training_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2309,13 +2309,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 413824; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_070 · world.injuries_and_morale.user_injury_frequency
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.user_injury_frequency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe284` | 解码值 `68425069`
+- **内存地址与数值**：地址 `0x7ff4e67ff450` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.user_injury_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2323,13 +2323,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 68425069; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_071 · world.injuries_and_morale.cpu_injury_frequency
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.cpu_injury_frequency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe288` | 解码值 `303959055`
+- **内存地址与数值**：地址 `0x7ff4e67ff454` | 解码值 `55`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.cpu_injury_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2337,13 +2337,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 303959055; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 55; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_072 · world.injuries_and_morale.user_injury_effects
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.user_injury_effects`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe28c` | 解码值 `1054163`
+- **内存地址与数值**：地址 `0x7ff4e67ff458` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.user_injury_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2351,13 +2351,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1054163; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_073 · world.injuries_and_morale.cpu_injury_effects
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.cpu_injury_effects`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe290` | 解码值 `1687655`
+- **内存地址与数值**：地址 `0x7ff4e67ff45c` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.cpu_injury_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2365,13 +2365,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1687655; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_074 · world.injuries_and_morale.injury_severity
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.injury_severity`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe294` | 解码值 `588978459`
+- **内存地址与数值**：地址 `0x7ff4e67ff460` | 解码值 `40`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.injury_severity 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2379,13 +2379,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 588978459; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 40; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_075 · world.injuries_and_morale.injury_duration
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.injury_duration`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe298` | 解码值 `605887260`
+- **内存地址与数值**：地址 `0x7ff4e67ff464` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.injury_duration 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2393,13 +2393,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 605887260; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_076 · world.injuries_and_morale.career_ending_injury_frequency
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.career_ending_injury_frequency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe29c` | 解码值 `1245184000`
+- **内存地址与数值**：地址 `0x7ff4e67ff468` | 解码值 `5`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.career_ending_injury_frequency 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2407,13 +2407,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1245184000; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 5; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_077 · world.injuries_and_morale.morale_difficulty
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.morale_difficulty`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe270` | 解码值 `3`
+- **内存地址与数值**：地址 `0x7ff4e67ff43c` | 解码值 `35`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.morale_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2421,13 +2421,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 3; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 35; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_078 · world.injuries_and_morale.morale_effects
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.morale_effects`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe274` | 解码值 `1310751`
+- **内存地址与数值**：地址 `0x7ff4e67ff440` | 解码值 `40`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.morale_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2435,13 +2435,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1310751; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 40; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_079 · world.injuries_and_morale.chemistry_difficulty
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.chemistry_difficulty`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe278` | 解码值 `21233853`
+- **内存地址与数值**：地址 `0x7ff4e67ff444` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.chemistry_difficulty 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2449,13 +2449,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 21233853; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_080 · world.injuries_and_morale.chemistry_effects
 - **家族与候选键**：`world_settings` / `world.injuries_and_morale.chemistry_effects`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe27c` | 解码值 `218955828`
+- **内存地址与数值**：地址 `0x7ff4e67ff448` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.injuries_and_morale.chemistry_effects 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2463,7 +2463,7 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 218955828; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_081 · world.injuries_and_morale.injuries_enabled
@@ -2497,7 +2497,7 @@
 ### WORLD_REG_083 · world.gameplay_and_calendar.sim_quarter_length
 - **家族与候选键**：`world_settings` / `world.gameplay_and_calendar.sim_quarter_length`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe0ec` | 解码值 `1`
+- **内存地址与数值**：地址 `0x7ff4e67ff2b8` | 解码值 `12`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.gameplay_and_calendar.sim_quarter_length 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2505,13 +2505,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 12; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_084 · world.gameplay_and_calendar.normalize_stats
 - **家族与候选键**：`world_settings` / `world.gameplay_and_calendar.normalize_stats`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe638` | 解码值 `21234136`
+- **内存地址与数值**：地址 `0x7ff4e67ff804` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.gameplay_and_calendar.normalize_stats 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2519,13 +2519,13 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 21234136; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 0; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_085 · world.gameplay_and_calendar.game_difficulty_preset
 - **家族与候选键**：`world_settings` / `world.gameplay_and_calendar.game_difficulty_preset`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `EVIDENCE_ADDED` (UNVERIFIED_LEGACY_RAW_CAPTURE)
-- **内存地址与数值**：地址 `0x7ff4e68fe038` | 解码值 `1056964608`
+- **内存地址与数值**：地址 `0x7ff4e67ff95c` | 解码值 `4`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制全局比赛与模拟规则中 world.gameplay_and_calendar.game_difficulty_preset 的核心运行参数。对整场比赛总回合数、体能消耗、犯规惩罚以及薪资合规产生刚性约束。
 - **机制与跨字段关联**：
@@ -2533,7 +2533,7 @@
   - 联盟薪资与财务硬规则约束（工资帽、奢侈税、土豪线硬帽）
   - 比赛节奏与攻防时限刚性规则（单节时长、24秒进攻时限、6犯离场门限）
 - **非线性阈值/边界**：合法值域区间：[None, None]
-- **审计说明**：Raw observation 1056964608; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
+- **审计说明**：Raw observation 4; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.
 
 
 ### WORLD_REG_086 · world.gameplay_and_calendar.game_speed
@@ -2553,7 +2553,7 @@
 ### COACH_DEFAULT_001 · POEOffense
 - **家族与候选键**：`coach_settings` / `POEOffense`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af6e` | 解码值 `97`
+- **内存地址与数值**：地址 `0x7ff4e742129c` | 解码值 `5`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 POEOffense 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2562,13 +2562,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 97 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 5 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_002 · POEOffense2
 - **家族与候选键**：`coach_settings` / `POEOffense2`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af6f` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e742129c` | 解码值 `8`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 POEOffense2 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2577,13 +2577,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 8 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_003 · POEOffense3
 - **家族与候选键**：`coach_settings` / `POEOffense3`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af70` | 解码值 `100`
+- **内存地址与数值**：地址 `0x7ff4e742129c` | 解码值 `11`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 POEOffense3 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2592,13 +2592,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 100 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 11 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_004 · POEDefense
 - **家族与候选键**：`coach_settings` / `POEDefense`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af71` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e742129c` | 解码值 `14`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 POEDefense 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2607,13 +2607,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 14 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_005 · POEDefense2
 - **家族与候选键**：`coach_settings` / `POEDefense2`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af72` | 解码值 `101`
+- **内存地址与数值**：地址 `0x7ff4e742129c` | 解码值 `17`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 POEDefense2 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2622,13 +2622,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 101 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 17 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_006 · POEDefense3
 - **家族与候选键**：`coach_settings` / `POEDefense3`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af73` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e742129c` | 解码值 `20`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 POEDefense3 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2637,13 +2637,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 20 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_007 · PreferredSystem
 - **家族与候选键**：`coach_settings` / `PreferredSystem`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430aefa` | 解码值 `223`
+- **内存地址与数值**：地址 `0x7ff4e7421268` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 PreferredSystem 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2652,13 +2652,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 223 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 1 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_008 · ActiveSystem
 - **家族与候选键**：`coach_settings` / `ActiveSystem`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430aefb` | 解码值 `230`
+- **内存地址与数值**：地址 `0x7ff4e7421268` | 解码值 `4`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 ActiveSystem 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2667,13 +2667,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 230 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 4 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_009 · PlaybookID
 - **家族与候选键**：`coach_settings` / `PlaybookID`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af7a` | 解码值 `105`
+- **内存地址与数值**：地址 `0x7ff4e7421268` | 解码值 `0`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 PlaybookID 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2682,13 +2682,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 105 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_010 · BenchDepth
 - **家族与候选键**：`coach_settings` / `BenchDepth`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af77` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e742123e` | 解码值 `11`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 BenchDepth 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2697,13 +2697,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 11 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_011 · RunPlayTendency
 - **家族与候选键**：`coach_settings` / `RunPlayTendency`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af75` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e7421240` | 解码值 `70`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 RunPlayTendency 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2712,13 +2712,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 70 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_012 · ZoneUsage
 - **家族与候选键**：`coach_settings` / `ZoneUsage`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af76` | 解码值 `112`
+- **内存地址与数值**：地址 `0x7ff4e7421242` | 解码值 `1`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 ZoneUsage 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2727,13 +2727,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 112 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 1 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_013 · BenchUtilization
 - **家族与候选键**：`coach_settings` / `BenchUtilization`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af78` | 解码值 `104`
+- **内存地址与数值**：地址 `0x7ff4e7421298` | 解码值 `60`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 BenchUtilization 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2742,13 +2742,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 104 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 60 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_014 · Tempo
 - **家族与候选键**：`coach_settings` / `Tempo`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af30` | 解码值 `115`
+- **内存地址与数值**：地址 `0x7ff4e74212a8` | 解码值 `80`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 Tempo 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2757,13 +2757,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 115 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 80 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_015 · HelpDefense
 - **家族与候选键**：`coach_settings` / `HelpDefense`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af74` | 解码值 `108`
+- **内存地址与数值**：地址 `0x7ff4e74212a8` | 解码值 `50`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 HelpDefense 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2772,13 +2772,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 108 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 50 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_016 · FreelanceType
 - **家族与候选键**：`coach_settings` / `FreelanceType`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af7b` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e742125c` | 解码值 `5`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 FreelanceType 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2787,13 +2787,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 5 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_017 · FreelanceType2
 - **家族与候选键**：`coach_settings` / `FreelanceType2`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af7c` | 解码值 `97`
+- **内存地址与数值**：地址 `0x7ff4e74212a8` | 解码值 `3`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 FreelanceType2 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2802,13 +2802,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 97 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 3 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_018 · FreelanceType3
 - **家族与候选键**：`coach_settings` / `FreelanceType3`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af7d` | 解码值 `0`
+- **内存地址与数值**：地址 `0x7ff4e74212bc` | 解码值 `18`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 FreelanceType3 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2817,13 +2817,13 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 0 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 18 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
 
 
 ### COACH_DEFAULT_019 · FreelanceType4
 - **家族与候选键**：`coach_settings` / `FreelanceType4`
 - **证据等级与状态**：`RAW_MEMORY_CAPTURE_CANDIDATE` | `UNKNOWN` (INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS)
-- **内存地址与数值**：地址 `0x7ff4e430af7e` | 解码值 `95`
+- **内存地址与数值**：地址 `0x7ff4e74212bc` | 解码值 `28`
 - **认知分层**：`PRIOR_LITERATURE_HYPOTHESIS`（尚未在受控实机实验中获得因果验证）
 - **字段作用与影响**：控制教练战术体系中 FreelanceType4 的全队宏观指令。在落后或战术暂停时可能被自适应教练引擎 (ACE) 动态覆写。
 - **机制与跨字段关联**：
@@ -2832,4 +2832,4 @@
   - 节奏与体能消耗交互：Pace > 70 搭配 12 分钟单节时导致末节体能劣势
   - Playbook 战术优先级调用树
 - **非线性阈值/边界**：离散战术枚举或百分比权重 [0, 100]。
-- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 95 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.
+- **审计说明**：Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 28 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.

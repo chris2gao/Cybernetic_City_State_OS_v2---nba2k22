@@ -2,8 +2,8 @@
   "field_id": "WORLD_REG_081",
   "family": "world_settings",
   "source_ordinal": 81,
-  "iteration": 180,
-  "sweep": 1,
+  "iteration": 384,
+  "sweep": 2,
   "stated_question": "Verify slot RVA, offset, storage type, profile range, and runtime verification status for world setting world.injuries_and_morale.injuries_enabled",
   "observable_target": "Confirm static R06A registry candidate parameters (RVA 0x0632B4B0, offset 0xF0) and record lack of live readback verification",
   "candidate_native_key": "world.injuries_and_morale.injuries_enabled",
@@ -48,7 +48,7 @@
     "validation_status": "UNVERIFIED_LEGACY_RAW_CAPTURE",
     "bounds_validation_passed": false,
     "read_notes": "Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -75,7 +75,7 @@
   "raw_legacy_capture": {
     "legacy_value": 1,
     "legacy_address": "0x7ff4e68fe128",
-    "legacy_notes": "Raw observation 1; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
+    "legacy_notes": "Read uint32 from SLOT_SETTINGS (0x0632B4B0) offset 0xf0",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

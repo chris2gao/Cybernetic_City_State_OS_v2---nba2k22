@@ -2,8 +2,8 @@
   "field_id": "COACH_DEFAULT_019",
   "family": "coach_settings",
   "source_ordinal": 19,
-  "iteration": 204,
-  "sweep": 1,
+  "iteration": 408,
+  "sweep": 2,
   "stated_question": "Identify native memory address, UI option and game engine consumer for coach setting FreelanceType4 in PC22 MyLEAGUE",
   "observable_target": "Record K04 conceptual specification and identify unverified memory offsets/effects for FreelanceType4",
   "candidate_native_key": "FreelanceType4",
@@ -38,13 +38,13 @@
     "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
-    "read_address": "0x7ff4e430af7e",
-    "live_value": 95,
+    "read_address": "0x7ff4e74212bc",
+    "live_value": 28,
     "access_mode": "PROCESS_VM_READ_ONLY",
     "validation_status": "INVALID_COACH_STRUCTURE_BASE_TEAM_ALIAS",
     "bounds_validation_passed": false,
-    "read_notes": "Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 95 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "read_notes": "Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 28 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.",
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -65,14 +65,14 @@
       "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "离散战术枚举或百分比权重 [0, 100]。",
-    "live_value": 95,
-    "live_address": "0x7ff4e430af7e",
+    "live_value": 28,
+    "live_address": "0x7ff4e74212bc",
     "bounds_validation_passed": false
   },
   "raw_legacy_capture": {
-    "legacy_value": 95,
-    "legacy_address": "0x7ff4e430af7e",
-    "legacy_notes": "Team structure address was used as GAMEPLAN base address. COACHDATA RVA layout requires coach_codec bitfield decoding. Value 95 demoted to RAW_MEMORY_CAPTURE_CANDIDATE pending verified COACHDATA readback.",
+    "legacy_value": 28,
+    "legacy_address": "0x7ff4e74212bc",
+    "legacy_notes": "Decoded bitfield from verified COACHDATA for team 0 coach",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

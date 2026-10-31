@@ -2,8 +2,8 @@
   "field_id": "WORLD_REG_060",
   "family": "world_settings",
   "source_ordinal": 60,
-  "iteration": 159,
-  "sweep": 1,
+  "iteration": 363,
+  "sweep": 2,
   "stated_question": "Verify slot RVA, offset, storage type, profile range, and runtime verification status for world setting world.contracts_and_finances.contract_difficulty",
   "observable_target": "Confirm static R06A registry candidate parameters (RVA 0x0632B498, offset 0x210) and record lack of live readback verification",
   "candidate_native_key": "world.contracts_and_finances.contract_difficulty",
@@ -42,13 +42,13 @@
     "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
-    "read_address": "0x7ff4e68fe248",
-    "live_value": 33822246,
+    "read_address": "0x7ff4e67ff414",
+    "live_value": 50,
     "access_mode": "PROCESS_VM_READ_ONLY",
     "validation_status": "UNVERIFIED_LEGACY_RAW_CAPTURE",
     "bounds_validation_passed": false,
-    "read_notes": "Raw observation 33822246; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "read_notes": "Raw observation 50; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -68,14 +68,14 @@
       "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "合法值域区间：[None, None]",
-    "live_value": 33822246,
-    "live_address": "0x7ff4e68fe248",
+    "live_value": 50,
+    "live_address": "0x7ff4e67ff414",
     "bounds_validation_passed": false
   },
   "raw_legacy_capture": {
-    "legacy_value": 33822246,
-    "legacy_address": "0x7ff4e68fe248",
-    "legacy_notes": "Raw observation 33822246; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
+    "legacy_value": 50,
+    "legacy_address": "0x7ff4e67ff414",
+    "legacy_notes": "Read uint32 from SLOT_TRADE (0x0632B498) offset 0x210",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

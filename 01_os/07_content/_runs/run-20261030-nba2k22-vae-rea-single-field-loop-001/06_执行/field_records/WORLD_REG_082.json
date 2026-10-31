@@ -2,8 +2,8 @@
   "field_id": "WORLD_REG_082",
   "family": "world_settings",
   "source_ordinal": 82,
-  "iteration": 181,
-  "sweep": 1,
+  "iteration": 385,
+  "sweep": 2,
   "stated_question": "Verify slot RVA, offset, storage type, profile range, and runtime verification status for world setting world.gameplay_and_calendar.quarter_length",
   "observable_target": "Confirm static R06A registry candidate parameters (RVA 0x0632B4B0, offset 0x14) and record lack of live readback verification",
   "candidate_native_key": "world.gameplay_and_calendar.quarter_length",
@@ -48,7 +48,7 @@
     "validation_status": "UNVERIFIED_LEGACY_RAW_CAPTURE",
     "bounds_validation_passed": false,
     "read_notes": "Raw observation 12; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -75,7 +75,7 @@
   "raw_legacy_capture": {
     "legacy_value": 12,
     "legacy_address": "0x7ff4e68fe04c",
-    "legacy_notes": "Raw observation 12; unconstrained range; retained as RAW_MEMORY_CAPTURE_CANDIDATE.",
+    "legacy_notes": "Read uint32 from SLOT_SETTINGS (0x0632B4B0) offset 0x14",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

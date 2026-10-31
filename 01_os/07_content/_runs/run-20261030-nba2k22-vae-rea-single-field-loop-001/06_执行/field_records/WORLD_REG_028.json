@@ -2,8 +2,8 @@
   "field_id": "WORLD_REG_028",
   "family": "world_settings",
   "source_ordinal": 28,
-  "iteration": 127,
-  "sweep": 1,
+  "iteration": 331,
+  "sweep": 2,
   "stated_question": "Verify slot RVA, offset, storage type, profile range, and runtime verification status for world setting settings.injuries_and_morale.cpu_injury_frequency",
   "observable_target": "Confirm static R06A registry candidate parameters (RVA 0x0632B498, offset 0x250) and record lack of live readback verification",
   "candidate_native_key": "settings.injuries_and_morale.cpu_injury_frequency",
@@ -21,7 +21,7 @@
   "ui_export_label": null,
   "consumer_path_status": "UNVERIFIED_LIVE_3D_OR_SIM_ENGINE",
   "game_effect_status": "UNQUANTIFIED_FROM_PROFILE_NOT_VERIFIED",
-  "research_status": "UNKNOWN",
+  "research_status": "EVIDENCE_ADDED",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
     "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json",
@@ -42,13 +42,13 @@
     "target_process_pe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
     "pid": 5488,
     "base_address": "0x140000000",
-    "read_address": "0x7ff4e68fe288",
-    "live_value": 303959055,
+    "read_address": "0x7ff4e67ff454",
+    "live_value": 55,
     "access_mode": "PROCESS_VM_READ_ONLY",
-    "validation_status": "OUT_OF_BOUNDS_CHECK_FAILED: 303959055 not in [0, 100]",
-    "bounds_validation_passed": false,
-    "read_notes": "Raw reading 303959055 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x250, not SLOT_SETTINGS.",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "validation_status": "UNVERIFIED_LEGACY_RAW_CAPTURE_IN_BOUNDS",
+    "bounds_validation_passed": true,
+    "read_notes": "Observation 55 in bounds; retained as RAW_MEMORY_CAPTURE_CANDIDATE pending slot-specific UI readback.",
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -68,14 +68,14 @@
       "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "合法值域区间：[0, 100]",
-    "live_value": 303959055,
-    "live_address": "0x7ff4e68fe288",
-    "bounds_validation_passed": false
+    "live_value": 55,
+    "live_address": "0x7ff4e67ff454",
+    "bounds_validation_passed": true
   },
   "raw_legacy_capture": {
-    "legacy_value": 303959055,
-    "legacy_address": "0x7ff4e68fe288",
-    "legacy_notes": "Raw reading 303959055 violates declared range [0, 100]. Target belongs to SLOT_TRADE (0x0632B498) offset 0x250, not SLOT_SETTINGS.",
+    "legacy_value": 55,
+    "legacy_address": "0x7ff4e67ff454",
+    "legacy_notes": "Read uint32 from SLOT_TRADE (0x0632B498) offset 0x250",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

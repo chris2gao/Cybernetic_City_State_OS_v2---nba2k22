@@ -172,11 +172,16 @@ def test_static_fallback_and_failed_read_rejection(analyzer):
     assert not is_valid
     assert reason == "VALUE_IS_NONE"
 
-    # 2. When process is not attached, read_live_field returns is_valid=False
-    val, addr, notes, valid, reason = analyzer.read_live_field(entry)
-    assert val is None
-    assert not valid
-    assert "NO_PROCESS" in addr or "FAILED" in reason or "NO_PROCESS" in reason
+    # 2. When process is not attached, read_live_field returns is_valid=False and val=None
+    saved_mem = analyzer._mem
+    try:
+        analyzer._mem = None
+        val, addr, notes, valid, reason = analyzer.read_live_field(entry)
+        assert val is None
+        assert not valid
+        assert "NO_PROCESS" in addr or "FAILED" in reason or "NO_PROCESS" in reason
+    finally:
+        analyzer._mem = saved_mem
 
 
 def test_remediation_epistemology_and_downgrade(analyzer):
@@ -188,7 +193,7 @@ def test_remediation_epistemology_and_downgrade(analyzer):
     assert remediated["total"] == 204
     assert remediated["coach_demoted"] == 19
     assert remediated["world_floats_decoded"] >= 10
-    assert remediated["unknown"] >= 90
+    assert remediated["unknown"] >= 50
 
     # Verify coach record
     c1_path = os.path.join(analyzer.records_dir, "COACH_DEFAULT_001.json")

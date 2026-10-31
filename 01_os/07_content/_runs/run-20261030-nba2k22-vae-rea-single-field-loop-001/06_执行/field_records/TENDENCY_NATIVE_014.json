@@ -2,8 +2,8 @@
   "field_id": "TENDENCY_NATIVE_014",
   "family": "player_tendency",
   "source_ordinal": 14,
-  "iteration": 14,
-  "sweep": 1,
+  "iteration": 218,
+  "sweep": 2,
   "stated_question": "Verify native offset, byte width, value range, UI mapping status and consumer path for SHOT_UNDER_BASKET_TENDENCY in PC22 MyLEAGUE",
   "observable_target": "Confirm offset 0x465 in player struct with stride 0xDF0, uint8 range [0, 100], and unverified UI/consumer status",
   "candidate_native_key": "tendency.SHOT_UNDER_BASKET_TENDENCY",
@@ -44,12 +44,12 @@
     "pid": 5488,
     "base_address": "0x140000000",
     "read_address": "0x7ff4e4e9b03d",
-    "live_value": 53,
+    "live_value": 54,
     "access_mode": "PROCESS_VM_READ_ONLY",
     "validation_status": "LIVE_RECEIPT_VALIDATED_IN_ACTIVE_PLAYER",
     "bounds_validation_passed": true,
     "read_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x465)",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -69,14 +69,14 @@
       "游戏模式切换 (MyLEAGUE vs 快速比赛)"
     ],
     "thresholds": "数值 > 75 确保篮下得球绝不犹豫回传；数值 < 30 容易在包夹下停球被判三秒违例。",
-    "live_value": 53,
+    "live_value": 54,
     "live_address": "0x7ff4e4e9b03d",
     "bounds_validation_passed": true
   },
   "raw_legacy_capture": {
-    "legacy_value": 53,
+    "legacy_value": 54,
     "legacy_address": "0x7ff4e4e9b03d",
-    "legacy_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x465)",
+    "legacy_notes": "Read uint8 from active player Tyrese Haliburton",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"

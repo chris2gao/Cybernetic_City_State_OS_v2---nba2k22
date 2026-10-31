@@ -2,8 +2,8 @@
   "field_id": "TENDENCY_NATIVE_067",
   "family": "player_tendency",
   "source_ordinal": 67,
-  "iteration": 67,
-  "sweep": 1,
+  "iteration": 271,
+  "sweep": 2,
   "stated_question": "Verify native offset, byte width, value range, UI mapping status and consumer path for POST_UP_TENDENCY in PC22 MyLEAGUE",
   "observable_target": "Confirm offset 0x49A in player struct with stride 0xDF0, uint8 range [0, 100], and unverified UI/consumer status",
   "candidate_native_key": "tendency.POST_UP_TENDENCY",
@@ -49,7 +49,7 @@
     "validation_status": "LIVE_RECEIPT_VALIDATED_IN_ACTIVE_PLAYER",
     "bounds_validation_passed": true,
     "read_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x49A)",
-    "audit_remediation_timestamp": "2026-10-31T10:16:04.663415+00:00"
+    "audit_remediation_timestamp": "2026-10-31T10:26:38.026068+00:00"
   },
   "mechanism_analysis": {
     "epistemological_tier": "PRIOR_LITERATURE_HYPOTHESIS",
@@ -75,7 +75,7 @@
   "raw_legacy_capture": {
     "legacy_value": 0,
     "legacy_address": "0x7ff4e4e9b072",
-    "legacy_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x49A)",
+    "legacy_notes": "Read uint8 from active player Tyrese Haliburton",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
