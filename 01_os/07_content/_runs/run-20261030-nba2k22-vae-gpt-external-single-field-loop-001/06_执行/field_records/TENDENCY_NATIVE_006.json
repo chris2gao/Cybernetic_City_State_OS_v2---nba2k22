@@ -1,0 +1,139 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_006",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0006",
+  "research_date": "2026-10-30",
+  "question": "Is candidate ALLEY_OOP_TENDENCY associated with CPU receiving/finishing alley-oops rather than CPU passing alley-oops in 3D?",
+  "identity": {
+    "native_candidate": "tendency.ALLEY_OOP_TENDENCY",
+    "offset_hex": "0x45D",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "current_PC22_value": "UNKNOWN",
+    "ui_label": "UNKNOWN",
+    "receiver_vs_passer": "UNKNOWN",
+    "native_consumer": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 6
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "multi-platform roster project; PC build UNKNOWN",
+      "locator": "OP TENDENCIES item 1.7",
+      "grade": "CONTEMPORARY_ROSTER_INTENT",
+      "finding": "ATD separately edits Alley-Oop pass and dunk tendencies",
+      "limits": "Does not establish candidate 0x45D corresponds to either UI entry"
+    },
+    {
+      "id": "S2",
+      "url": "https://blog.playstation.com/2021/08/31/nba-2k22-gameplay-deep-dive/",
+      "author": "Visual Concepts / NBA2K22 developer announcement (named author on page to confirm)",
+      "date": "2021-08-31",
+      "version": "NBA 2K22",
+      "platform": "PS5 timing mechanic; PC equivalent UNKNOWN",
+      "locator": "Finishing section",
+      "grade": "OFFICIAL_GAMEPLAY_CONTEXT",
+      "finding": "PS5 adds timing meter for alley-oop finish attempts",
+      "limits": "Controller action is not an AI tendency; PC22 engine pathway unverified"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.gamenguides.com/nba-2k22-how-to-alley-oop-dunk-meter",
+      "author": "William King",
+      "date": "2021-09-13",
+      "version": "NBA 2K22",
+      "platform": "PS5/Xbox control guide, exact PC unknown",
+      "locator": "How to Alley-Oop",
+      "grade": "USER_CONTROL_INSTRUCTIONS",
+      "finding": "Describes initiating pass and finishing alley as distinct human interactions",
+      "limits": "Does not measure native AI passing or finishing propensity"
+    },
+    {
+      "id": "S4",
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "UNKNOWN_BYLINE",
+      "date": "2021 release era, exact UNKNOWN",
+      "version": "NBA 2K22",
+      "platform": "USER/CPU global sliders, PC applicability UNKNOWN",
+      "locator": "Tendencies Sliders / Throw Alley-Oops",
+      "grade": "DIFFERENT_LAYER_GLOBAL_SLIDER",
+      "finding": "Has global CPU Throw Alley-Oops slider, not per-player ALLEY_OOP_TENDENCY",
+      "limits": "Never equate global slider and PLAYER+0x45D"
+    }
+  ],
+  "claims": [
+    {
+      "id": "AO01",
+      "source_ids": [
+        "S1"
+      ],
+      "tier": "SAME_VERSION_CATEGORY_DIFFERENCE",
+      "claim": "Alley-oop passer and receiver/dunker fields may be separate and require disambiguation"
+    },
+    {
+      "id": "AO02",
+      "source_ids": [
+        "S2",
+        "S3"
+      ],
+      "tier": "CONTROLLER_AND_PLATFORM_DIFFERENCE",
+      "claim": "PS5 timed finishing mechanism does not establish PC CPU receiver preference"
+    },
+    {
+      "id": "AO03",
+      "source_ids": [
+        "S4"
+      ],
+      "tier": "GLOBAL_VS_PLAYER_LAYER",
+      "claim": "Global Throw Alley-Oops setting must not be conflated with player native candidate"
+    }
+  ],
+  "conflicts": [
+    "No PC22 readback connects 0x45D to passer or finisher UI entry",
+    "Different modes and timing mechanics can alter completed lobs independent of tendency",
+    "No official numerical weight or value recommendation"
+  ],
+  "links": [
+    "Alley-Oop Pass and opponent defensive scheme: pass initiation",
+    "Driving Dunk, Standing Dunk, vertical, badges: finishing eligibility",
+    "Coach playbook/transition and cuts: lob opportunity creation",
+    "Global CPU Throw Alley-Oops is a separate slider layer",
+    "Training direct field effect UNKNOWN"
+  ],
+  "observables": [
+    "lob passes thrown by CPU player per eligible lane",
+    "lob finishes attempted by recipient conditional on eligible pass",
+    "assist/pass outcomes versus successful dunk",
+    "transition/PnR setup, defender position, badge and animation control",
+    "3D and Calendar separately"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_ALLEY_OOP_006",
+    "question": "For two UID-verified players in the same current PC22 save/build, does read-only PLAYER+0x45D match the visible Alley-Oop *finishing* tendency, the passing tendency, or neither?",
+    "expected_outcomes": [
+      "MATCH_FINISH_ONLY_SCOPED",
+      "MATCH_PASS_ONLY_SCOPED",
+      "AMBIGUOUS_OR_MISMATCH",
+      "NO_UI_BLOCKED"
+    ],
+    "mode": "READ_ONLY",
+    "game_write": false,
+    "executed": false
+  },
+  "result": "SOURCED_CATEGORY_DISAMBIGUATION_CONSUMER_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_effect": "NOT_RUN",
+  "next_improvement": "After native UI identity, isolate initiator and recipient and compare eligible lob events"
+}
