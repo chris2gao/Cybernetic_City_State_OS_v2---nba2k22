@@ -1,0 +1,108 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "iteration_id": "SWEEP01_FIELD0018",
+  "field_id": "TENDENCY_NATIVE_018",
+  "sweep": 1,
+  "research_date": "2026-10-30",
+  "question": "Can RAW_0x469 be tied to any exact PC22 per-player UI setting through source evidence, rather than by aligning contiguous memory and export lists?",
+  "identity": {
+    "key": "tendency.RAW_0x469",
+    "source_status": "UNKNOWN_RAW_BYTE",
+    "offset_hex": "0x469",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "UI_label": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "game_effect": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 18
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction historical roster archive",
+      "date": "2021-09 roster snapshot, page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web archive; PC native mapping UNKNOWN",
+      "locator": "Other tendencies shot close left/middle/right",
+      "grade": "RELATED_NAMED_EXPORT_ONLY",
+      "claim": "Dale Ellis export lists three separate close-direction values",
+      "limits": "No field address or CPU consumer"
+    },
+    {
+      "id": "S2",
+      "url": "https://www.nbasimsleague.com/players/playerpage.php?selectedPlayer=4285",
+      "author": "NBA Sims League",
+      "date": "UNKNOWN",
+      "version": "NBA2K lineage; exact game version UNKNOWN",
+      "platform": "web roster league",
+      "locator": "2K Tendencies Shot Close Left/Middle/Right",
+      "grade": "CROSS_VERSION_UNVALIDATED",
+      "claim": "Current league displays named directional close-shot labels",
+      "limits": "Cannot associate its column order with 2K22 byte 0x469"
+    },
+    {
+      "id": "S3",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA2K22",
+      "platform": "multi-platform roster project",
+      "locator": "What’s Edited zone distribution",
+      "grade": "CONTEXT_NOT_DIRECT_MAPPING",
+      "claim": "Roster team edits shot zones",
+      "limits": "Does not name 0x469 or explain bytes"
+    }
+  ],
+  "claims": [
+    {
+      "id": "RAW01801",
+      "sources": [
+        "S1",
+        "S2"
+      ],
+      "tier": "SOURCE_LABEL_WITHOUT_OFFSET",
+      "claim": "Names of spatial shot tendencies exist, but 0x469 remains unnamed"
+    },
+    {
+      "id": "RAW01802",
+      "sources": [
+        "S3"
+      ],
+      "tier": "SAME_VERSION_GENERAL",
+      "claim": "2K22 editor practice offers no native semantic mapping"
+    }
+  ],
+  "conflicts": [
+    "No direct index, address, schema or game reader for offset 0x469 in public evidence",
+    "Positional order guess is not a reliable mapping; 2K22 PC mode and UI panel unconfirmed"
+  ],
+  "relations": [
+    "Neighboring shot zone fields may motivate a targeted identity comparison only",
+    "Coach, ability, training, 3D and Calendar interactions remain UNKNOWN"
+  ],
+  "metrics": [
+    "Two independently UID-matched raw-vs-UI read-only observations",
+    "cross-check neighboring raw bytes for false coincidences",
+    "retain exact build, scene, save and field label"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_RAW_018",
+    "question": "Can a read-only PC22 UID-specific observation distinguish raw byte PLAYER+0x469 from adjacent 0x467 and 0x468 and match it to a single exact native UI tendency label?",
+    "if_match": "SCOPED_MAPPING_ONLY",
+    "if_mismatch": "UNKNOWN_RAW_ID",
+    "if_unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "REA_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "Require disassembler/getter or UI correspondence; not same-method web search without new evidence"
+}
