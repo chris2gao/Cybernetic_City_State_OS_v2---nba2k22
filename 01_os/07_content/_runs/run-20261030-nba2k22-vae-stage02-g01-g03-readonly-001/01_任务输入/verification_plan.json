@@ -1,0 +1,44 @@
+{
+  "schema_version": "nba2k22.vae.stage02.g01_g03.readonly_evidence.verify.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-G01-G03-READONLY-EVIDENCE-20261030-001",
+  "status": "NOT_RUN",
+  "checks": [
+    {
+      "id": "E01_FIXED_SOURCES",
+      "expected": "Core/NBA current refs checked and evidence locations bound to exact SHAs"
+    },
+    {
+      "id": "E02_STATIC_VS_LIVE",
+      "expected": "all claims source-graded; no current config inferred from static JSON"
+    },
+    {
+      "id": "E03_SAVE_MODE_BUILD_CONTEXT",
+      "expected": "real or UNKNOWN save/build/mode/scene/source/timestamp with gap"
+    },
+    {
+      "id": "E04_SIDE_CONTROLLER",
+      "expected": "separate USER/CPU side, controller and GM authority; consumer path exact or UNKNOWN"
+    },
+    {
+      "id": "E05_DUAL_NORMALIZE_AND_QUARTER",
+      "expected": "two Normalize flags and played/sim quarters separate, source and status each"
+    },
+    {
+      "id": "E06_3D_VS_CALENDAR_SCOPE",
+      "expected": "no false equivalence between gameplay engines"
+    },
+    {
+      "id": "E07_NO_MUTATION",
+      "expected": "no game/process/save/Native writes, no unauthorized elevated attach"
+    },
+    {
+      "id": "E08_COMPLETE_OR_PARTIAL_EVIDENCE_PACKAGE",
+      "expected": "bounded research findings with primary evidence, conflicts, UNKNOWN and closure conditions"
+    },
+    {
+      "id": "E09_BRANCH_READBACK",
+      "expected": "run files at exact Git SHA; no unauthorized path diff"
+    }
+  ],
+  "actual_results": "NOT_RUN"
+}

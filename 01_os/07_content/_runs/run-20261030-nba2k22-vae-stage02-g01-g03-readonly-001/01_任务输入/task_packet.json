@@ -1,0 +1,103 @@
+{
+  "task_packet": {
+    "task_id": "NBA2K22-VAE-STAGE02-G01-G03-READONLY-EVIDENCE-20261030-001",
+    "parent_program_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+    "stage": "workflow_stage_02_information_collection",
+    "subscope": "G01-G03_only",
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "branch": "task/nba2k22-vae-stage02-readonly-evidence-g01-g03-20261030",
+    "risk_tier": "T2_semantic",
+    "objective": "依据Human确认的VAE Stage01 A-v1，开展Stage02 G01-G03只读证据收集：当前存档/游戏build/模式/运行Profile、USER/CPU控制及消费者路径、两个Normalize及3D/Calendar参数口径；为后续首个真实比赛Trial提供事实依据和真实UNKNOWN，不开发Setter。",
+    "sources": [
+      "a98aa2db6e442bbc3aecfa552665ea13d482683e:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/HUMAN_STAGE01_A_V1_CONFIRMATION_20261030.yml",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/A_需求建模_v1.yml",
+      "5abf3cb154654872a3d05278b96658f190ed9241:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_需求建模/Stage02_取证与缺口矩阵_v1.md",
+      "4640f6e05f2b84e31661c7b2039dfc5d202b30a5:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/08_结论/independent_review_report.md",
+      "246482ef605f367ef636de0ea556423280da57f4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-governed-closeout-001/08_结论/completion_pointer.md",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/02_信息收集与提炼/README.md",
+      "934425cf43d4fe3307b0112142aec1ba434a5734:01_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/settings.json",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/court.json",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/src/coaching_reader.py",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/src/gm_core/data_reader.py",
+      "45cc45cae0550ddcda192a2179ea48509b27f6ee:08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md"
+    ],
+    "allowed_changed_paths": [
+      "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage02-g01-g03-readonly-001/"
+    ],
+    "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage02-g01-g03-readonly-001/01_任务输入/verification_plan.json",
+    "required_tests": [
+      "E01_FIXED_SOURCES",
+      "E02_STATIC_VS_LIVE",
+      "E03_SAVE_MODE_BUILD_CONTEXT",
+      "E04_SIDE_CONTROLLER",
+      "E05_DUAL_NORMALIZE_AND_QUARTER",
+      "E06_3D_VS_CALENDAR_SCOPE",
+      "E07_NO_MUTATION",
+      "E08_COMPLETE_OR_PARTIAL_EVIDENCE_PACKAGE",
+      "E09_BRANCH_READBACK"
+    ],
+    "execution_assignment": {
+      "assigned_provider": "OpenAI",
+      "assigned_product": "Codex",
+      "assigned_model": "UNKNOWN_HUMAN_SELECT_AT_TASK_RUNTIME",
+      "assigned_role": "execution",
+      "assigned_surface": "authorized_local_Windows_10_environment",
+      "assigned_model_source": "VAE_planner_dispatch",
+      "actual_model": "UNKNOWN_UNTIL_RECEIPT",
+      "actual_model_identity_source": "UNKNOWN_UNTIL_RECEIPT"
+    },
+    "model_record_requirement": "Completion records both assigned and actual provider/product/model/surface and source of actual identity; distinguish executor declaration from platform attestation. Do not backfill historical tasks.",
+    "work_boundaries": {
+      "permitted": "Read repository and existing game evidence; use already-authorized existing read-only getter/UI only if verified applicable and permitted; record unresolved read limitations.",
+      "prohibited": [
+        "start_or_modify_game_process_without_separate_Human_approval",
+        "inject_DLL_hook_or_memory_write",
+        "Native_Setter",
+        "alter_game_save",
+        "trigger_SaveReload_or_settings_change",
+        "alter_production_config",
+        "collect_secrets",
+        "make_new_Reader_framework",
+        "modify_Core_or_D_series",
+        "modify_master",
+        "force_push",
+        "rebase",
+        "squash"
+      ],
+      "if_readonly_runtime_not_available": "Evidence remains NOT_OBSERVED with reason; deliver static applicability verdict and an exact minimal authorized follow-up request; no fabricated snapshots.",
+      "runtime_risk": "NBA2K22 may run elevated while Codex does not; do not escalate privileges or bypass game protections just to collect evidence."
+    },
+    "status_notes": {
+      "Human_A": "EXACT_A_v1_CONFIRMED",
+      "stage01_core_governed_runner": "BLOCKED_NOT_RUN_FULL_SEVEN_STAGE_VALIDATOR",
+      "stage02_scope": "bounded research only; no claim of formal governed Stage02 completion",
+      "review_residuals": "F02-F07 open; F02 context requirements treated as data evidence needs"
+    },
+    "required_completion_pointer": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage02-g01-g03-readonly-001/08_结论/completion_pointer.md; exact HEAD + evidence scope + partial/complete + real runtime observation status + model identity",
+    "publisher": {
+      "principal_binding": "connector_authenticated",
+      "publication_transport": "github_api_connector",
+      "source_branch_publication": "task_scope_default",
+      "master_integration_confirmation": "not_requested",
+      "expected_remote_master_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "expected_remote_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee"
+    },
+    "big_task": false,
+    "big_task_confirmation_closure": {
+      "enabled": false,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "minimum_work_unit_output": {
+      "work_performed_or_requested": "Read-only Stage02 G01-G03 feasibility evidence, stable source pointers, real observations where authorized, and important unknowns.",
+      "implementation_or_review_method": "Independent fixed SHA/source lookup, validated Reader capability checks, optional permitted read-only UI/Getters, source grade and timestamp; evidence package.",
+      "supportability_rationale": "Human approved A-v1; Core Stage02 start gate is confirmed requirement baseline; full seven-stage runner is not standalone Stage01 completion.",
+      "feasibility_rationale": "Evidence work does not require production writes; runtime access may remain unavailable and then exact follow-up required.",
+      "task_constraints_and_boundaries": "Only this new Run changed; neither the previous missing full-runner receipt nor user approval authorizes game or save writes.",
+      "stop_or_return_conditions": "If real-game read requires starting process, elevated permissions, injection, new protected authorization, or mode/save ambiguity, stop that action and return exact block; continue safe other reads."
+    }
+  }
+}
