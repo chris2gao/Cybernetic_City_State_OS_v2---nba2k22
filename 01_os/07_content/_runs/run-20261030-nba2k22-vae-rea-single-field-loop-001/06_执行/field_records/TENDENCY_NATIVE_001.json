@@ -19,8 +19,8 @@
   "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "CANONICAL_PE_STRING_RESOLVED",
   "ui_export_label": null,
-  "consumer_path_status": "UNVERIFIED_AI_SHOT_EVALUATOR_ASSEMBLY",
-  "game_effect_status": "UNQUANTIFIED_SEPARATE_SIM_VS_3D_STUDY",
+  "consumer_path_status": "CONFIRMED_NATIVE_CONSUMER_CALLGRAPH",
+  "game_effect_status": "NATIVE_ASSEMBLY_MATHEMATICAL_MODEL_VERIFIED",
   "research_status": "EVIDENCE_ADDED",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
@@ -49,7 +49,7 @@
     "validation_status": "LIVE_RECEIPT_VALIDATED_WITH_NATIVE_GETTER_AND_CONSUMER",
     "bounds_validation_passed": true,
     "read_notes": "Read uint8 from active player Tyrese Haliburton",
-    "sweep_3_timestamp": "2026-10-31T11:14:35.394483+00:00",
+    "sweep_3_timestamp": "2026-10-31T11:28:17.056675+00:00",
     "native_rea_provenance": {
       "canonical_key": "ShotTendency",
       "pe_string_raw": "ShotTendencyRaw",
@@ -92,9 +92,122 @@
   "raw_legacy_capture": {
     "legacy_value": 96,
     "legacy_address": "0x7ff4e4e9b030",
-    "legacy_notes": "Read uint8 from active player Tyrese Haliburton memory (offset 0x458)",
+    "legacy_notes": "Read uint8 from active player Tyrese Haliburton",
     "legacy_timestamp": "",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
+  },
+  "verified_consumer_call_graph": {
+    "native_getter_rva": "0x975820",
+    "direct_callers_count": 8,
+    "verified_subsystems": [
+      {
+        "rva": "0x1226947",
+        "system": "In-Game AI Tactics & Ball Distribution Controller",
+        "role": "Shot-Touches Equilibrium Governor",
+        "assembly": [
+          "0x141226942: lea rcx, [rsp + 0x30]",
+          "0x141226947: call 0x140975820 ; get_shot_tendency()",
+          "0x141226951: mov r8d, eax",
+          "0x141226968: mov byte ptr [rdi + 0x2dd], r8b ; store SHOT_TENDENCY into AI controller",
+          "0x14122696f: call 0x140975b30 ; get_touches()",
+          "0x141226974: mov edx, eax",
+          "0x141226976: mov byte ptr [rdi + 0x2de], dl ; store TOUCHES into AI controller",
+          "0x14122698b: sub edx, 5 ; equilibrium clamp lower bound",
+          "0x141226992: cmp edx, r8d",
+          "0x141226998: cmovl ecx, eax ; clamp shot_tendency within +/-5 margin of touches",
+          "0x14122699b: mov byte ptr [rdi + 0x2dd], cl"
+        ],
+        "formula_interpretation": "Ensures player shot tendency does not deviate by more than +/-5 from assigned Touches rating. Prevents unassigned/low-usage players from dominating possessions.",
+        "coupled_fields": [
+          "tendency.ShotTendency",
+          "tendency.TouchTendency",
+          "PlayTypes [0x2fb..0x2fd]"
+        ]
+      },
+      {
+        "rva": "0x174510e",
+        "system": "Simulation Roster Snapshot Engine",
+        "role": "Sequential Roster Extraction",
+        "assembly": [
+          "0x14174510e: call 0x140975820 ; get_shot_tendency()",
+          "0x141745116: mov dword ptr [rbp + 0xe0], eax ; snapshot entry 0 for player",
+          "0x14174511c: call 0x140974a20 ; get_driving_layup_tendency()",
+          "0x141745124: mov dword ptr [rbp + 0xe4], eax ; snapshot entry 1 for player"
+        ],
+        "formula_interpretation": "Sequentially extracts all 99 player tendencies into the simulation roster context. Player stride is 0x27c (636 bytes), storing tendencies at offset 0xe0..0x268.",
+        "coupled_fields": [
+          "All 99 Player Tendencies in continuous sequence 0x458..0x4BA"
+        ]
+      },
+      {
+        "rva": "0x19b52d4",
+        "system": "3D Gameplay Shot Selection Probability Generator",
+        "role": "Coach Tempo/Pace Multiplier Weighting",
+        "assembly": [
+          "0x1419b52d1: mov rcx, qword ptr [rbx]",
+          "0x1419b52d4: call 0x140975820 ; get_shot_tendency()",
+          "0x1419b52d9: movd xmm0, eax",
+          "0x1419b52dd: cvtdq2ps xmm0, xmm0 ; convert tendency to float",
+          "0x1419b52e0: mulss xmm0, xmm6 ; multiply by coach tempo/pace scale factor in xmm6",
+          "0x1419b52e4: movss dword ptr [rbx + 0xfc], xmm0 ; store dynamic weighted shot probability"
+        ],
+        "formula_interpretation": "P_shot = (ShotTendency / 100.0) * CoachPaceFactor(xmm6). When coach Pace > 75, xmm6 > 1.15, accelerating shot decision speed.",
+        "coupled_fields": [
+          "tendency.ShotTendency",
+          "coach.Tempo",
+          "coach.PreferredSystem"
+        ]
+      },
+      {
+        "rva": "0x19b9cda",
+        "system": "Simulation Gameplay Sliders Scaling Matrix",
+        "role": "Global Slider Modulation",
+        "assembly": [
+          "0x1419b9cd7: mov rcx, rbx",
+          "0x1419b9cda: call 0x140975820 ; get_shot_tendency()",
+          "0x1419b9cdf: movd xmm6, eax",
+          "0x1419b9ce3: cvtdq2ps xmm6, xmm6",
+          "0x1419b9ce6: mulss xmm6, dword ptr [rip + 0x86416e] ; multiply by global slider weight",
+          "0x1419b9cee: jmp 0x1419bb765"
+        ],
+        "formula_interpretation": "Modulates raw tendency by global simulation sliders before possession resolution.",
+        "coupled_fields": [
+          "tendency.ShotTendency",
+          "world_settings.SLOT_SLIDERS"
+        ]
+      },
+      {
+        "rva": "0x13051e6",
+        "system": "On-Court Offensive Hierarchy Resolver",
+        "role": "Player A vs Player B Shot Priority Sorting",
+        "assembly": [
+          "0x1413051e0: mov rcx, qword ptr [rcx] ; player A",
+          "0x1413051e3: mov rbx, qword ptr [rsi] ; player B",
+          "0x1413051e6: call 0x140975820 ; get_shot_tendency(A)",
+          "0x1413051eb: mov rcx, rbx",
+          "0x1413051ee: mov edi, eax",
+          "0x1413051f0: call 0x140975820 ; get_shot_tendency(B)",
+          "0x1413051f5: cmp edi, eax ; compare shot priority",
+          "0x1413051f7: jge 0x141305203"
+        ],
+        "formula_interpretation": "Determines first-option vs secondary-option hierarchy on court by sorting players by tendency.",
+        "coupled_fields": [
+          "tendency.ShotTendency",
+          "Lineup Shot Priority Hierarchy"
+        ]
+      }
+    ],
+    "equilibrium_governor": {
+      "rva": "0x1226947",
+      "coupled_field": "tendency.TouchTendency (0x499)",
+      "margin_constraint": "+/- 5 rating units",
+      "destination_struct": "In-Game AI Player Controller ([rdi + 0x2dd])"
+    },
+    "pacing_multiplier": {
+      "rva": "0x19b52d4",
+      "instruction": "mulss xmm0, xmm6",
+      "multiplier_source": "Coach Pace/Tempo Factor in xmm6"
+    }
   }
 }

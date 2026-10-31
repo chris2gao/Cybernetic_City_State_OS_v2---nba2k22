@@ -184,36 +184,55 @@ def test_static_fallback_and_failed_read_rejection(analyzer):
         analyzer._mem = saved_mem
 
 
-def test_remediation_epistemology_and_downgrade(analyzer):
+def test_remediation_epistemology_and_downgrade(analyzer, tmp_path):
     """
     REA-AUD-P0-04 & REA-AUD-P0-05: Verifies that after remediation, records are appropriately downgraded
     and epistemological tier is set to PRIOR_LITERATURE_HYPOTHESIS.
     """
-    remediated = analyzer.remediate_all_field_records()
-    assert remediated["total"] == 204
-    assert remediated["coach_demoted"] == 19
-    assert remediated["world_floats_decoded"] >= 10
-    assert remediated["unknown"] >= 50
+    import shutil
+    orig_records = analyzer.records_dir
+    orig_ledger = analyzer.ledger_path
+    orig_evidence = analyzer.evidence_dir
 
-    # Verify coach record
-    c1_path = os.path.join(analyzer.records_dir, "COACH_DEFAULT_001.json")
-    import json
-    with open(c1_path, "r", encoding="utf-8") as f:
-        c1 = json.load(f)
-    assert c1["native_identity_grade"] == NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
-    assert c1["research_status"] == FieldResearchStatus.UNKNOWN.value
-    assert c1["mechanism_analysis"]["epistemological_tier"] == "PRIOR_LITERATURE_HYPOTHESIS"
-    assert c1["mechanism_analysis"]["empirical_causality_verified"] is False
-    assert "raw_legacy_capture" in c1
+    test_records = str(tmp_path / "records_demote")
+    test_evidence = str(tmp_path / "evidence_demote")
+    os.makedirs(test_records, exist_ok=True)
+    os.makedirs(test_evidence, exist_ok=True)
+    for f in os.listdir(orig_records):
+        shutil.copy2(os.path.join(orig_records, f), os.path.join(test_records, f))
+
+    analyzer.records_dir = test_records
+    analyzer.ledger_path = str(tmp_path / "iteration_ledger.jsonl")
+    analyzer.evidence_dir = test_evidence
+    try:
+        remediated = analyzer.remediate_all_field_records()
+        assert remediated["total"] == 204
+        assert remediated["coach_demoted"] == 19
+        assert remediated["world_floats_decoded"] >= 10
+        assert remediated["unknown"] >= 50
+
+        # Verify coach record
+        c1_path = os.path.join(analyzer.records_dir, "COACH_DEFAULT_001.json")
+        import json
+        with open(c1_path, "r", encoding="utf-8") as f:
+            c1 = json.load(f)
+        assert c1["native_identity_grade"] == NativeIdentityGrade.RAW_MEMORY_CAPTURE_CANDIDATE.value
+        assert c1["research_status"] == FieldResearchStatus.UNKNOWN.value
+        assert c1["mechanism_analysis"]["epistemological_tier"] == "PRIOR_LITERATURE_HYPOTHESIS"
+        assert c1["mechanism_analysis"]["empirical_causality_verified"] is False
+        assert "raw_legacy_capture" in c1
+    finally:
+        analyzer.records_dir = orig_records
+        analyzer.ledger_path = orig_ledger
+        analyzer.evidence_dir = orig_evidence
 
 
-def test_sweep_3_full_live_grounding(analyzer):
+def test_sweep_3_full_live_grounding(analyzer, tmp_path):
     """
     Verifies Sweep 3 full live grounding and 100% receipt resolution.
     - Resolves all 99 player tendencies with canonical keys, native getters, and consumer callers.
     - Decodes all 19 Coach Gameplan settings from genuine COACHDATA bitfields.
     - Verifies all 86 World Settings with typed float/uint32 decoding and in-bounds validation.
-    - Leaves the live checkpoint and records in SWEEP_3_COMPLETED state (204/204 LIVE_RECEIPT).
     """
     assert len(analyzer._player_catalog) == 99
     t1 = analyzer._player_catalog["TENDENCY_NATIVE_001"]
@@ -225,11 +244,31 @@ def test_sweep_3_full_live_grounding(analyzer):
     assert t51["native_getter_rva"] == "0x975c50"
 
     if analyzer._mem and analyzer._mem.pid:
-        res = analyzer.execute_sweep_3_live()
-        assert res["total"] == 204
-        assert res["live_receipt"] == 204
-        assert res["player_tendencies_verified"] == 99
-        assert res["coach_verified"] == 19
-        assert res["world_verified"] == 86
-        assert res["unknown"] == 0
-        assert res["out_of_bounds_flagged"] == 0
+        import shutil
+        orig_records = analyzer.records_dir
+        orig_ledger = analyzer.ledger_path
+        orig_evidence = analyzer.evidence_dir
+
+        test_records = str(tmp_path / "records_sweep3")
+        test_evidence = str(tmp_path / "evidence_sweep3")
+        os.makedirs(test_records, exist_ok=True)
+        os.makedirs(test_evidence, exist_ok=True)
+        for f in os.listdir(orig_records):
+            shutil.copy2(os.path.join(orig_records, f), os.path.join(test_records, f))
+
+        analyzer.records_dir = test_records
+        analyzer.ledger_path = str(tmp_path / "iteration_ledger_sweep3.jsonl")
+        analyzer.evidence_dir = test_evidence
+        try:
+            res = analyzer.execute_sweep_3_live()
+            assert res["total"] == 204
+            assert res["live_receipt"] == 204
+            assert res["player_tendencies_verified"] == 99
+            assert res["coach_verified"] == 19
+            assert res["world_verified"] == 86
+            assert res["unknown"] == 0
+            assert res["out_of_bounds_flagged"] == 0
+        finally:
+            analyzer.records_dir = orig_records
+            analyzer.ledger_path = orig_ledger
+            analyzer.evidence_dir = orig_evidence

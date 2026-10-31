@@ -1,6 +1,6 @@
 # NBA 2K22 全量 204 个种子字段实机 REA 机制逆向与完整证据档案 (Sweep 3 Full Live Grounding)
 
-> **生成时间**：2026-10-31T11:14:35.394483+00:00
+> **生成时间**：2026-10-31T11:28:17.056675+00:00
 > **实机目标**：`NBA2K22.exe` (PE SHA256: `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`, PID: 8076, Base: 0x140000000)
 > **分析对象**：现役绝对焦点球员 Tyrese Haliburton (Player Struct: 0x7ff4e4e9abd8) & Team 0 主教练 Doc Rivers (COACHDATA: 0x7ff4e7421160)
 > **控制器槽位分离**：SLOT_SETTINGS (0x7ff4e68fe038), SLOT_TRADE (0x7ff4e67ff204), SLOT_SLIDERS (0x7ff4e67ff95c)
