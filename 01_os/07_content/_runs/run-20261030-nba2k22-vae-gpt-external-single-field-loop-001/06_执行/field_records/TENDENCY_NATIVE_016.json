@@ -1,0 +1,111 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_016",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0016",
+  "research_date": "2026-10-30",
+  "question": "Is the unnamed PLAYER tendency byte candidate at 0x467 identifiable as any specific shot-zone tendency in PC22, or must its semantic label remain UNKNOWN?",
+  "identity": {
+    "candidate": "tendency.RAW_0x467",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "byte_width": 1,
+    "source_status": "UNKNOWN_RAW_BYTE",
+    "field_name": "UNKNOWN",
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "live_build": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 16
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://2kauction.com/mynba/2k22/players/larry-johnson",
+      "author": "2kAuction historical roster archive",
+      "date": "2021-09-10 roster version; site article date UNKNOWN",
+      "version": "NBA 2K22 v90",
+      "platform": "web historical export, exact executable platform UNKNOWN",
+      "locator": "Other tendencies shot close left/middle/right and shot under basket",
+      "grade": "RELATED_LABELS_ONLY",
+      "claim": "Web export records named close-zone side tendencies",
+      "limits": "Does not map 0x467 to ANY named field; position/order correlation prohibited"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA2K22",
+      "platform": "cross-platform project, PC build UNKNOWN",
+      "locator": "OP TENDENCIES shot distribution corrections",
+      "grade": "SAME_VERSION_EDITOR_REPORT_ONLY",
+      "claim": "Shot close/under basket distributions were edited",
+      "limits": "Does not name or resolve candidate byte at offset 0x467"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.nbasimsleague.com/players/playerpage.php?selectedPlayer=4544",
+      "author": "NBA Sims League database; individual editor UNKNOWN",
+      "date": "publication UNKNOWN, current site",
+      "version": "NBA2K franchise, specific version UNKNOWN",
+      "platform": "web stats archive, game build UNKNOWN",
+      "locator": "2K Tendencies lists Shot Close Left/Middle/Right",
+      "grade": "CROSS_VERSION_LABEL_CORROBORATION_ONLY",
+      "claim": "Named side-specific close-shot values exist in community database",
+      "limits": "Version and address mapping unknown; cannot identify byte"
+    }
+  ],
+  "claims": [
+    {
+      "id": "RAW01601",
+      "source_ids": [
+        "S1",
+        "S2"
+      ],
+      "status": "NEIGHBORING_CATEGORY_NOT_MAPPING",
+      "claim": "Shot-zone UI labels exist but 0x467 identity is not established"
+    },
+    {
+      "id": "RAW01602",
+      "source_ids": [
+        "S3"
+      ],
+      "status": "NO_DIRECT_SOURCE",
+      "claim": "External web result supplies no raw byte offset or PC22 code reference"
+    }
+  ],
+  "conflicts": [
+    "Tempting inference 0x467=Shot Close Left from archive ordering is UNSUPPORTED and prohibited",
+    "Neither a public URL nor project R04B identifies this raw byte",
+    "No numerical model or effect hypothesis may be promoted without identity proof"
+  ],
+  "relations": [
+    "Shot Close Left/Middle/Right are nearby UI semantics candidates, NOT confirmed address mapping",
+    "3D shot zone occupancy and Calendar consumer UNKNOWN",
+    "Coach, tendency, training interactions UNKNOWN pending identity"
+  ],
+  "metrics": [
+    "first require exact UID raw byte and independently identifiable UI field",
+    "compare two players with different candidate values",
+    "do not design gameplay manipulation before identity mapping"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_RAW_016",
+    "question": "In current PC22, does a read-only UID-bound 0x467 value consistently match any named per-player UI tendency, without inferring identity from list ordering?",
+    "match": "MAPPING_ONLY_IF_INDEPENDENT_UI_PROOF",
+    "mismatch": "UNKNOWN_RAW_BYTE",
+    "not_visible": "BLOCKED",
+    "game_write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game_test": "NOT_RUN",
+  "REA_test": "NOT_RUN",
+  "next_improvement": "Seek actual native registry reconstruction or UID-varying read-only UI comparisons, not extrapolation by neighboring fields"
+}
