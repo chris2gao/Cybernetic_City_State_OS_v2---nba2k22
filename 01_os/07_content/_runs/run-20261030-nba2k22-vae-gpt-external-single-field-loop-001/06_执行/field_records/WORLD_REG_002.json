@@ -1,0 +1,84 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "field_id": "WORLD_REG_002",
+  "iteration_id": "SWEEP01_FIELD0101",
+  "source_ordinal": 101,
+  "research_date": "2026-10-31",
+  "family": "game_world_settings",
+  "primary_question": "Does Game Speed modify the temporal pace/motion of on-court rendered actions rather than changing regulation clock or native simulation possessions?",
+  "registry_candidate": {
+    "key": "settings.game_settings.game_speed",
+    "offset": "0x00",
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "native_memory_base": "UNKNOWN",
+    "field_width": "UNKNOWN",
+    "actual_PC22_UI_mapping": "UNKNOWN",
+    "value_domain": "UNVERIFIED",
+    "runtime_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917042-2k22-myleague-settings-sliders",
+      "author": "DarthRambo",
+      "date": "2021-09-20/21",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE, source PC specificity UNKNOWN",
+      "grade": "CONTEMPORARY_SETTINGS_SAMPLE",
+      "claim": "Quarter Length and Simulated Quarter Length set independently; no actual engine consumer proof"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX, not verified PC",
+      "grade": "CONTEMPORARY_GAMEPLAY_OPTIONS",
+      "claim": "Lists Quarter Length, Game Speed 50, Foul Out and Free Throw Difficulty as distinct gameplay settings"
+    },
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-22 release era",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE, exact PC semantics UNKNOWN",
+      "grade": "SECONDARY_CONFIGURATION_EXPLANATION",
+      "claim": "Distinguishes Quarter Length, Simulated Quarter Length, normalized minutes and normalized stats"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "SAME_VERSION_SETTING_EXISTS",
+      "claim": "Same-version UI/settings references distinguish Game Speed from nearby controls"
+    },
+    {
+      "tier": "NO_NATIVE_IDENTITY_PROOF",
+      "claim": "Registry offset 0x00 remains a candidate, not proven absolute address or callable getter"
+    }
+  ],
+  "disagreements": [
+    "PC old-gen MyLEAGUE settings may differ from PS5/XSX MyNBA examples",
+    "Displayed setting, persisted-save setting and live runtime consumer may differ",
+    "Numeric recommendations are user preferences, not objective optimal values"
+  ],
+  "related_fields": [
+    "Quarter Length",
+    "hardware frame time/CPU thermal throttling",
+    "movement sliders/acceleration, Coach Pace and actual engine vs video speed"
+  ],
+  "metrics": [
+    "rendered motion/animation duration under fixed game clock",
+    "actual possession count and 3D frame pace separately",
+    "Calendar Sim results separately"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_002",
+    "question": "In the same PC22 offline MyLEAGUE save/build, does read-only settings structure candidate 0x00 match visible Game Speed UI value and persist consistently in immediate/delayed readback? No writes.",
+    "positive": "SETTING_UID_CONTEXT_MAPPING_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_NAMED_SETTING_REGISTRY_OFFSET_NOT_VERIFIED",
+  "game_test": "NOT_RUN",
+  "REA_test": "NOT_RUN"
+}
