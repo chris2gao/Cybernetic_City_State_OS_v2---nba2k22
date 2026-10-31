@@ -1,0 +1,140 @@
+{
+  "schema": "nba2k22.vae.v3.independent_audit.v1",
+  "task_id": "NBA2K22-VAE-V3-MECHANISM-INDEPENDENT-REVIEW-20261030-001",
+  "subject_commit": "fe3c451cd9d9685c9f50e310f3d0f315af483f25",
+  "subject_parent": "5d7fdcc9ed277f0db79fa0e986483dfe6d00f06a",
+  "verdict": "REWORK_REQUIRED",
+  "source_provenance": {
+    "github_commit_diff": {
+      "changed_files": 5,
+      "all_in_VAE_Run": true,
+      "code_changed": false,
+      "test_changed": false
+    },
+    "community_links": [
+      "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings",
+      "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators"
+    ],
+    "nba_cap": "https://pr.nba.com/nba-salary-cap-for-2021-22-season-set-at-112-414-million/",
+    "apron": "https://www.hoopsrumors.com/2021/08/hoops-rumors-glossary-hard-cap-2.html",
+    "badge_comparison": "https://2kfilmroom.com/cheat-sheets/2k22"
+  },
+  "test_scope": {
+    "developer_original_pytest": "54 claimed passed",
+    "independent_pytest": "NOT_RUN",
+    "v3_specific_tests_added_by_commit": 0,
+    "game_runtime": "NOT_RUN"
+  },
+  "findings": [
+    {
+      "id": "V3-01",
+      "severity": "P0",
+      "status": "NOT_CLOSED",
+      "title": "逐项全量研究未完成却宣布机制族完成",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §I–VI",
+      "evidence": "99个槽位中仅约30项有独立行，剩余18已命名槽位被占位符代替，51项UNKNOWN无单项标识或进度；教练19项、GM规则、训练、成长、徽章、世界设置仅族级段落，未形成每项证据/作用/来源/方法记录。",
+      "close": "机器可检索完整清单，逐项填来源/语义/字段值域/证据等级/未证假说/试验、即便UNKNOWN也有单独ID。"
+    },
+    {
+      "id": "V3-02",
+      "severity": "P0",
+      "status": "NOT_CLOSED",
+      "title": "高精度机制数值无实证却以确定规则表述",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §II,IV,V",
+      "evidence": "ACE连续3记三分必覆写Smother+OnCatch；Pace>70+上场>38分钟第四节FG%-8至15；Very High训练+15%成长、持续三周Wear&Tear>65并伤病+300%；双峰钟形曲线等均无对应PC22 controlled game evidence、样本与SOURCE_REF。",
+      "close": "删除确定因果/精确百分比，降级为HYPOTHESIS_NOT_VERIFIED；给每项证据或测试计划，禁止作为角色建议数值。"
+    },
+    {
+      "id": "V3-03",
+      "severity": "P1",
+      "status": "NOT_CLOSED",
+      "title": "REA_LOCATED逐槽标签未由主证据支持",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §I",
+      "evidence": "30行倾向被统一标REA_LOCATED，但引用的docs/07_PLAYER_TENDENCY_GUIDE.md是多年版本综合旧规则，未逐槽提供当前PC22 PE SHA、指令地址、Native getter动态观测。该旧guide自身为候选并倡导旧直接内存改写，与新V3谨慎边界不同。",
+      "close": "逐槽附REA原始dump/case/branch/SHA及标签映射，缺者降级 STATIC_CANDIDATE/UNKNOWN；不可把旧guide标题当实机认证。"
+    },
+    {
+      "id": "V3-04",
+      "severity": "P1",
+      "status": "NOT_CLOSED",
+      "title": "Sniper徽章70/80/88/95数值与同代资料矛盾",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §V",
+      "evidence": "文章断言3PT Bronze70 Silver80 Gold88 HOF95；2K22次世代公开badge表对应3PT 52/63/71/80，PC本世代需单独验证。因此未证游戏配置不能作为严格门槛事实。",
+      "close": "按PC22本世代实际模式取游戏内值域及来源；区分新世代公开资料，不经实机不得下定论。"
+    },
+    {
+      "id": "V3-05",
+      "severity": "P1",
+      "status": "NOT_CLOSED",
+      "title": "外部文献与模型提出的Touches假说未建立逐句溯源",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §I.3",
+      "evidence": "Operation Sports Useful Findings是用户改Touches=50后个人观察，不提供>85 ACE强制覆盖的公式；另一链接是倾向分位数研究，不能直接证明Touches仅Freelance生效。A/B两说可保留为研究假说，但非由两个网页直接确证。",
+      "close": "为每一命题保留原帖作者、日期、平台、原文片段/ID及模型假说标记。"
+    },
+    {
+      "id": "V3-06",
+      "severity": "P1",
+      "status": "NOT_CLOSED",
+      "title": "教练来源文件名错误且反向覆盖上游UNKNOWN",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §II",
+      "evidence": "文档引用K04_COACH_SETTINGS.md未存在；实际指南K04_COACH_AND_PLAYS.md明确ACE具体覆盖和UI触发未知，并未认定3记三分强制双人包夹。",
+      "close": "改用正确不可变文件路径与source SHA，保留未知/冲突。"
+    },
+    {
+      "id": "V3-07",
+      "severity": "P1",
+      "status": "PARTIAL",
+      "title": "现实2021-22 CBA数值部分正确但没有证明PC22规则一致",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §III",
+      "evidence": "NBA官方确认salary cap112.414M、tax136.606M；2021-22 apron143.002M亦有同年资料。但apron是特定操作触发的硬帽，不是所有队永续全局硬帽；引擎独立设置/年份/自定义值未读取。V2 native_actions还存max_future_draft_years=5与V3七年声明不一致。",
+      "close": "现实规则/引擎规则分开，cap/tax/apron均绑定league season & current save，修正触发式hard cap逻辑。"
+    },
+    {
+      "id": "V3-08",
+      "severity": "P1",
+      "status": "PARTIAL",
+      "title": "双Normalize到48分钟线性换算未实证",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §VI",
+      "evidence": "同版本社区报告是异常线索，Normalize Played-to-Sim Minutes与Stats需要独立UI/Getter映射；档案定性线性到12分钟仍只是可能机制。",
+      "close": "真实同一Game逐级采样场内、Box、日历、累计，禁止先赋固定公式。"
+    },
+    {
+      "id": "V3-09",
+      "severity": "P2",
+      "status": "CONFIRMED",
+      "title": "少数UNKNOWN与历史缺陷分级是合理的",
+      "source": "PER_SETTING_MECHANISM_DOSSIER_V3.md §I Touches / §VI settings",
+      "evidence": "不将社区Touches争议定为事实；保持settings max_contract_rating min70/default40为OPEN_SOURCE_DEFECT；引擎成长函数UNKNOWN。",
+      "close": "保留这三项正确边界，不要因为其他错漏删除。"
+    },
+    {
+      "id": "V3-10",
+      "severity": "P1",
+      "status": "NOT_CLOSED",
+      "title": "54测试与24PASS无法验证V3研究具体语义",
+      "source": "fe3c451c commit diff",
+      "evidence": "从5d7到fe3c仅5个Run文档变动；Python源码和tests目录0个变动，无新增逐数值来源验证；上传54全绿与前一工程阶段用例相同，不证明ACE/疲劳/徽章等内容。",
+      "close": "建立字段级源核验/来源冲突测试与逐项审计清单，测试覆盖与结果只对相应场景声明。"
+    },
+    {
+      "id": "V3-11",
+      "severity": "P1",
+      "status": "NOT_CLOSED",
+      "title": "Human要求数值响应及关联研究已列模板但缺实测与正反例",
+      "source": "HUMAN_PER_SETTING_MECHANISM_RESEARCH_V3.md",
+      "evidence": "Human明确每项含source date/platform/evidence maturity/value response/confounders/failed results。当前单份9k字叙事缺单项版本与来源、失败样本、平台适用性分级、测量记录。",
+      "close": "保存方法论字段全集、每个设置独立来源及未知值，分阶段可供长期研究，而不是一份族级说明宣告完整。"
+    }
+  ],
+  "Human_accept_recommendation": "NO_FOR_V3_PER_SETTING_COMPLETE",
+  "maturity": {
+    "tendencies": "PARTIAL_STATIC_GUIDE_REWRITE_WITH_UNKNOWN_MAPPING",
+    "coach": "LITERATURE_HYPOTHESES_ONLY",
+    "GM": "REAL_CBA_REFERENCE_NOT_PC22_ENGINE_VERIFICATION",
+    "training": "HYPOTHESIS_WITH_UNSOURCED_NUMERIC_CAUSAL_ASSERTIONS",
+    "progression_badges": "UNVERIFIED_AND_CONFLICTING_NUMERIC_REQUIREMENTS",
+    "world": "RESEARCH_ONLY",
+    "V2_inherited_technical_findings": "REFER_TO_SEPARATE_V2_AUDIT"
+  },
+  "next_owner": "Gemini execution research evidence refresh, VAE planner stage boundary"
+}
