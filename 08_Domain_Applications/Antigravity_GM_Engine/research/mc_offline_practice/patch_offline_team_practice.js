@@ -1,5 +1,5 @@
 /**
- * NBA 2K22 MyCAREER Offline Team Practice Unlocker & Loading Fix (V2 - Hardened)
+ * NBA 2K22 MyCAREER Offline Team Practice Unlocker & Loading Fix (V3 - Audited)
  * 
  * Target: NBA2K22.exe
  * Target SHA256: 1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5
@@ -9,12 +9,24 @@
 (function() {
     'use strict';
 
-    // 1. Guard against duplicate patch injection
-    if (globalThis.__NBA2K22_OFFLINE_PATCH_ACTIVE__) {
+    // =========================================================================
+    // 1. Process-Level OS Mutex Guard
+    // =========================================================================
+    var k32 = Process.getModuleByName('kernel32.dll');
+    var pCreateMutexA = k32.getExportByName('CreateMutexA');
+    var pGetLastError = k32.getExportByName('GetLastError');
+    var CreateMutexA = new NativeFunction(pCreateMutexA, 'pointer', ['pointer', 'int', 'pointer']);
+    var GetLastError = new NativeFunction(pGetLastError, 'uint32', []);
+
+    var mutexName = Memory.allocUtf8String("Local\\NBA2K22_OFFLINE_PRACTICE_PATCH_MUTEX");
+    var hMutex = CreateMutexA(ptr(0), 1, mutexName);
+    var lastErr = GetLastError();
+
+    if (lastErr === 183) { // ERROR_ALREADY_EXISTS = 183
         send({
-            level: 'ERROR',
+            level: 'FATAL',
             category: 'INJECTION_ABORTED',
-            message: 'Duplicate patch detected! An instance of patch_offline_team_practice is already resident in this process.'
+            message: 'Process-level Mutex exists (ERROR_ALREADY_EXISTS = 183). An instance of this patch is already resident in NBA2K22.exe! Aborting duplicate injection.'
         });
         return;
     }
@@ -31,7 +43,9 @@
 
     var base = mainMod.base;
 
-    // 2. Signature verification before attaching hooks
+    // =========================================================================
+    // 2. Binary Opcode Signature Verification
+    // =========================================================================
     var signatures = [
         { name: 'CreateAndSendRequest', rva: 0x1239230, expected: '40 55 53 48 8b' },
         { name: 'CreatePlayers',        rva: 0x163f4a0, expected: '40 55 53 56 57 41 54' },
@@ -64,9 +78,6 @@
         }
     }
 
-    // Mark as active once verification passes
-    globalThis.__NBA2K22_OFFLINE_PATCH_ACTIVE__ = true;
-
     var pStatusGlobal = base.add(0x6351848);
     var pTrackingFlag = base.add(0x6352124);
 
@@ -76,13 +87,16 @@
         base: base.toString(),
         global_0x146351848_init: pStatusGlobal.readS32(),
         tracking_0x146352124_init: pTrackingFlag.readS32(),
-        message: 'Binary signatures verified. Attaching targeted hooks.'
+        message: 'OS Mutex acquired and binary signatures verified. Hooks armed.'
     });
 
     // =========================================================================
-    // GUARD 0: Network Job Early Exit (RVA: 0x1239230)
+    // GUARD 0: Network Job Scoped Early-Exit (RVA: 0x1239230)
     // Target: CAREERMODE_PROGRESSION::GET_SERVER_DATA_JOB::CreateAndSendRequest
     // =========================================================================
+    // Confirmed vtable pointer for GET_SERVER_DATA_JOB = base + 0x2B505F8
+    var EXPECTED_JOB_VTABLE = base.add(0x2b505f8);
+
     var pCreateAndSend = base.add(0x1239230);
     Interceptor.attach(pCreateAndSend, {
         onEnter: function(args) {
@@ -90,20 +104,59 @@
             var s30 = pJob.add(0x30).readS32();
             var s34 = pJob.add(0x34).readS32();
             var vtable = pJob.readPointer();
+            var callerRva = this.returnAddress.sub(base);
 
+            // Step 1: Log function hit
             send({
                 level: 'INFO',
-                category: 'JOB_INTERCEPTED',
+                category: 'JOB_FUNCTION_HIT',
                 job_pointer: pJob.toString(),
                 vtable: vtable.toString(),
+                caller_rva: callerRva.toString(),
                 status_0x30_before: s30,
                 status_0x34_before: s34,
                 global_0x146351848_before: pStatusGlobal.readS32(),
-                message: 'CreateAndSendRequest intercepted for career progression job.'
+                message: 'CreateAndSendRequest function hit.'
             });
 
-            // Native mechanism: when [pJob + 0x30] != 0 at entry, instruction 0x141239241 (jne 0x141239463)
-            // takes the native early-exit branch, completely skipping network dispatch call (0x141e51ad0).
+            // Step 2: Strict identity validation
+            // Must match exact GET_SERVER_DATA_JOB vtable AND be in initial unstarted state (s30 == 0)
+            var isTargetVtable = vtable.equals(EXPECTED_JOB_VTABLE);
+            var isInitialState = (s30 === 0);
+
+            if (!isTargetVtable) {
+                send({
+                    level: 'WARN',
+                    category: 'JOB_SKIPPED_UNCONFIRMED',
+                    reason: 'VTABLE_MISMATCH',
+                    job_vtable: vtable.toString(),
+                    expected_vtable: EXPECTED_JOB_VTABLE.toString(),
+                    message: 'Job vtable does not match GET_SERVER_DATA_JOB. Recording only, not modifying.'
+                });
+                return;
+            }
+
+            if (!isInitialState) {
+                send({
+                    level: 'WARN',
+                    category: 'JOB_SKIPPED_UNCONFIRMED',
+                    reason: 'STATUS_NOT_INITIAL',
+                    current_status_0x30: s30,
+                    message: 'Job status is not 0 (uninitialized). Already running or completed. Recording only, not modifying.'
+                });
+                return;
+            }
+
+            // Step 3: Job identified and confirmed. Modify state to route through native early-exit branch
+            send({
+                level: 'INFO',
+                category: 'JOB_IDENTIFIED',
+                job_pointer: pJob.toString(),
+                vtable: vtable.toString(),
+                message: 'Job confirmed as GET_SERVER_DATA_JOB in initial state. Modifying status to bypass network dispatch.'
+            });
+
+            // Write status = 2 (COMPLETED) to job struct and global status
             pJob.add(0x30).writeS32(2);
             pStatusGlobal.writeS32(2);
 
@@ -113,15 +166,15 @@
                 job_pointer: pJob.toString(),
                 status_0x30_after: 2,
                 global_0x146351848_after: 2,
-                message: 'Pre-set job status to 2 (COMPLETED) to route into native early-exit branch.'
+                message: 'Pre-set job status to 2 (COMPLETED).'
             });
         },
         onLeave: function(retval) {
             send({
                 level: 'INFO',
-                category: 'JOB_EARLY_EXIT',
+                category: 'JOB_ORIGINAL_FUNCTION_RETURNED',
                 retval: retval.toString(),
-                message: 'CreateAndSendRequest returned cleanly via early-exit path. Network dispatch bypassed.'
+                message: 'CreateAndSendRequest original function returned.'
             });
         }
     });
@@ -138,18 +191,18 @@
 
             send({
                 level: 'INFO',
-                category: 'CREATE_PLAYERS_ENTER',
+                category: 'CREATE_PLAYERS_HIT',
                 activity_pointer: pThis.toString(),
                 practiceType_before: practiceType,
-                message: 'CreatePlayers entered. Checking practice type.'
+                message: 'CreatePlayers function hit.'
             });
 
             if (practiceType === 0) {
-                // Type 1 = Standard Team Practice (Team drills & free shooting enabled)
+                // Type 1 = Standard Team Practice
                 pThis.add(0x488).writeU32(1);
                 send({
                     level: 'INFO',
-                    category: 'PRACTICE_TYPE_PATCHED',
+                    category: 'PRACTICE_TYPE_NORMALIZED',
                     from: 0,
                     to: 1,
                     message: 'Normalized practice type from 0 (UNKNOWN) to 1 (TEAM_PRACTICE) to bypass fatal int3 assertion.'
@@ -159,9 +212,9 @@
         onLeave: function(retval) {
             send({
                 level: 'INFO',
-                category: 'CREATE_PLAYERS_LEAVE',
+                category: 'PLAYERS_INSTANTIATED',
                 retval: retval.toString(),
-                message: 'CreatePlayers completed cleanly. Player and coach entities instantiated.'
+                message: 'CreatePlayers function returned cleanly.'
             });
         }
     });
@@ -189,11 +242,11 @@
                 var stateLabel = stateNames[state] || ('UNKNOWN_STATE_' + state);
                 send({
                     level: 'INFO',
-                    category: 'SCENE_STATE_CHANGED',
+                    category: 'PRACTICE_SCENE_LOADING',
                     numeric_state: state,
                     state_name: stateLabel,
                     activity: args[0].toString(),
-                    message: 'Scene state transition observed: ' + stateLabel
+                    message: 'Practice facility scene state transition: ' + stateLabel
                 });
             }
         }
@@ -219,7 +272,7 @@
 
             send({
                 level: 'INFO',
-                category: 'DRILL_REWARD_ENTER',
+                category: 'DRILL_REWARD_PROCESSED',
                 drill_type: drillType,
                 stars_original: stars,
                 stars_patched: 3,
@@ -238,16 +291,16 @@
         onEnter: function(args) {
             send({
                 level: 'INFO',
-                category: 'PRACTICE_ENDED_ENTER',
-                message: 'Exit requested. HandleLivePracticeEnded entered. Cleaning up arena state and clearing timeline flags.'
+                category: 'PRACTICE_EXIT_TRIGGERED',
+                message: 'HandleLivePracticeEnded entered. Cleaning up arena state.'
             });
         },
         onLeave: function(retval) {
             send({
                 level: 'INFO',
-                category: 'PRACTICE_ENDED_LEAVE',
+                category: 'PRACTICE_EXIT_RETURNED',
                 retval: retval.toString(),
-                message: 'HandleLivePracticeEnded returned cleanly. Save dirty flag updated for timeline advance.'
+                message: 'HandleLivePracticeEnded returned cleanly.'
             });
         }
     });
@@ -256,12 +309,12 @@
         level: 'INFO',
         category: 'ARMED',
         guards: [
-            'Guard0_NetworkJobEarlyExit_0x1239230',
+            'Guard0_ScopedNetworkJobEarlyExit_0x1239230',
             'Guard1_PracticeTypeNormalize_0x163f4a0',
             'Guard2_SceneStateMonitor_0x1731d30',
             'Guard3_DrillFixed3Star_0x11f8680',
             'Guard4_PracticeEndedExit_0x11f8bf0'
         ],
-        message: 'All 5 guards armed cleanly without periodic timer interference.'
+        message: 'All 5 guards armed cleanly with strict identity verification and OS mutex.'
     });
 })();
