@@ -1,0 +1,41 @@
+{
+  "field_id": "TENDENCY_NATIVE_049",
+  "iteration_id": "SWEEP01_FIELD0049",
+  "question": "Can exact PC22 PLAYER+0x488 be connected to a named player tendency?",
+  "offset": "0x488",
+  "project_range": [
+    0,
+    100
+  ],
+  "native_UI": "UNKNOWN",
+  "consumer": "UNKNOWN",
+  "search": {
+    "query": "\"NBA2K22\" \"0x488\" native tendency",
+    "date": "2026-10-31",
+    "direct_matches": 0
+  },
+  "source_context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "Sep 2021 roster; page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export",
+      "claim": "UI category names, no offset map"
+    }
+  ],
+  "claim": "NO_DIRECT_SOURCE for 0x488; no effect threshold",
+  "related": "Coach/Training/Skills UNKNOWN",
+  "metrics": [
+    "two UID-matched raw readings",
+    "independently named exact UI field, save/build/time"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_049",
+    "question": "Can two read-only PLAYER+0x488 values from independently verified PC22 players identify one exact UI tendency without positional inference?",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "rea": "NOT_RUN",
+  "game": "NOT_RUN"
+}
