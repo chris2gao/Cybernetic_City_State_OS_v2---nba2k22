@@ -1,0 +1,64 @@
+{
+  "schema_version": "nba2k22.vae.single_field_long_horizon_loop.v1",
+  "task_id": "NBA2K22-VAE-REA-SINGLE-FIELD-LOOP-20261030-001",
+  "task_mode": "REA_NATIVE_MECHANISM",
+  "fixed_queue_source": "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+  "queue_scope": "204 source records seed, physical identity overlaps UNKNOWN; discover and register additional families through planner index changes",
+  "unit_of_work": "Exactly one field_id and one stated research question per iteration; for a live numeric intervention only one field altered and one target value per trial, with other covariates controlled.",
+  "state_machine": [
+    "NOT_STARTED",
+    "IN_PROGRESS",
+    "EVIDENCE_ADDED",
+    "UNKNOWN",
+    "BLOCKED_FIELD",
+    "NEEDS_REPEAT",
+    "CANDIDATE_REVIEWABLE"
+  ],
+  "state_machine_note": "These are per-field research statuses, not OS run lifecycle enums.",
+  "deterministic_field_order": "SWEEP_1 traverse all queue entries in declared field order; never silently omit any unknown offset. SWEEP_2+ choose fields by highest decision risk and weakest verified evidence, with last-attempted fairness and explicit priority rationale.",
+  "one_iteration": [
+    "Load exact GitHub queue source SHA, latest task checkpoint and last ledger entry; refuse overwriting user local changes",
+    "Select next field_id, record a single evidence question and observable outcome before any action",
+    "Inspect existing REA/Native project evidence for this field (read-only by default); if runtime operation is protected, record blocker instead of executing",
+    "Perform only explicitly permitted static/read-only proof or authorized bounded test; capture timestamp, game mode and independent native verification grade",
+    "Run item-level verification and required negative case; record independent original evidence refs, unmeasured effects as UNKNOWN",
+    "Append field record/ledger checkpoint with next_field_id, pass number and actual repository HEAD; same branch only",
+    "Advance cursor; do not remain on blocked field in SWEEP_1; loop within same task at next field"
+  ],
+  "per_field_failure_policy": {
+    "max_same_method_retry_without_new_evidence": 1,
+    "after_unproductive_attempt": "mark BLOCKED_FIELD/UNKNOWN with cause and next specific evidence; advance cursor",
+    "not_a_whole_task_stop": true
+  },
+  "improvement_loop": {
+    "sweep_1_goal": "Every seed field attempted exactly once; output a field record or truthful UNKNOWN/BLOCKED including unique ID. Completeness of inventory is not effect proof.",
+    "sweep_n_goal": "Target the weakest critical unresolved field/interaction; record which gap or confidence bound improved; one field and one evidence claim per iteration.",
+    "improvement_metric": [
+      "new primary source link accurately matches claim",
+      "native identity consumer path independently traced",
+      "contradiction narrowed",
+      "numeric trial readback for one value gained with permission",
+      "previous falsified hypothesis marked disproved",
+      "decision method honestly downgraded or strengthened"
+    ],
+    "no_improvement": "If a full post-baseline sweep has no new truthful evidence or test capability and no in-scope method remains, stop research wave as PARTIAL; never fabricate progress.",
+    "restart": "Reload current task Run/ledger and recover exact cursor; no automatic background work."
+  },
+  "stop_conditions": [
+    "new_load_bearing_semantic_choice",
+    "scope_escape_beyond_allowed_changed_paths",
+    "protected_action_not_already_covered_by_current_authority",
+    "safety_privacy_secret_or_credential_boundary",
+    "destructive_git_or_history_rewrite",
+    "runtime_or_scheduler_activation",
+    "human_relay_required_to_reach_another_independent_model",
+    "evidence_cannot_support_the_claim"
+  ],
+  "reviewed_ending": "One frozen per-stream evidence set and completion pointer with accurate PARTIAL/REVIEW_READY scope; both streams later jointly audited. Unknown values remain open.",
+  "future_handoff": {
+    "handoff": "Human/manual at checkpoint",
+    "merge_key": "field_id+game_build+mode+source_SHA",
+    "cross_stream_truth": "GPT sources cannot upgrade Gemini Native grade; Gemini static REA map cannot prove numeric effect without real experiments",
+    "write_ownership": "Never write into other stream Run or overwrite source catalog"
+  }
+}
