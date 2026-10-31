@@ -1,0 +1,45 @@
+{
+  "schema_version": "nba2k22.vae.gpt_external_single_field_loop.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "queue_ref": "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+  "unit": "One field_id and one source hypothesis per iteration, never bundle 30 other settings into same loop",
+  "first_sweep": {
+    "order": "Read 204 seed entries by declared source order, each field exactly once; no source found counts as researched-with-UNKNOWN only, never verified",
+    "cursor_start": 0
+  },
+  "next_sweeps": {
+    "order": "Prioritize high risk/conflict, missing credible source, decision impact, new Gemini REA evidence; one field per iteration",
+    "progress_metric": [
+      "new trustworthy source",
+      "resolved version/claim contradiction",
+      "precise testable question improved",
+      "incorrect threshold downgraded",
+      "relevant counterexample found"
+    ],
+    "stalled_same_strategy_retry_limit": 1,
+    "full_sweep_no_progress": "Pause as PARTIAL with exact evidence and continue only upon new sources/input, not fake progress"
+  },
+  "steps": [
+    "Recover remote HEAD, current checkpoint, source queue; ensure clean worktree/branch before writing",
+    "Pick one field_id and write one falsifiable source question",
+    "Actually search official, same-platform and community materials and compare existing game mechanism guides",
+    "Record URLs, author/date, original claim and whether game/platform/version applies; separate proven reference from hypothesis",
+    "Report contradictory information, numeric impact as UNKNOWN unless directly supported and game-verified",
+    "Provide a bounded REA observation/experiment question, expected measurable result and confounders",
+    "Write one individual dossier + one append-only iteration record with source grades and checkpoint; commit same branch; move cursor"
+  ],
+  "stop_conditions": [
+    "new_load_bearing_semantic_choice",
+    "scope_escape_beyond_allowed_changed_paths",
+    "protected_action_not_already_covered_by_current_authority",
+    "safety_privacy_secret_or_credential_boundary",
+    "destructive_git_or_history_rewrite",
+    "runtime_or_scheduler_activation",
+    "human_relay_required_to_reach_another_independent_model",
+    "evidence_cannot_support_the_claim"
+  ],
+  "per_item_unsupported": "If no relevant source or new evidence after a repeated strategy, record NO_DIRECT_SOURCE/BLOCKED_FIELD and advance rather than generating an assumed formula",
+  "cross_model_contract": "Use identical field_id with Gemini REA stream and exact SHA; GPT findings can guide REA but cannot certify native mapping or real effect. Human relays results at checkpoints, not automated.",
+  "review": "Combined independent GPT once frozen release is prepared; not per field",
+  "model_identity": "assigned GPT-6; actual recorded from executor with runtime evidence limits"
+}

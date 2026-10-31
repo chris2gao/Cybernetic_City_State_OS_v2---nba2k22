@@ -1,0 +1,107 @@
+{
+  "task_packet": {
+    "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+    "parent_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+    "domain": "nba2k22",
+    "collaboration_role": "execution",
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "branch": "task/nba2k22-vae-gpt-external-single-field-loop-20261030",
+    "big_task": true,
+    "risk_tier": "T2_semantic",
+    "objective": "长期GPT外部资料与游戏资料研究Loop，严格一次只研究一个原生数值字段/设置，逐条检索出处、数字范围、相互作用假设与验证方法，首轮全面登记后按改善目标循环；与Gemini REA的实机证据独立，集中联合审核。",
+    "shared_queue_ref": "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+    "source_evidence": [
+      "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+      "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_DUAL_RESEARCH_REPLAN_AND_AUDIT_INTAKE_20261030.md",
+      "d89a0b0551774914b8a0eb944d5c68ce26950087:01_os/07_content/_runs/run-20261030-nba2k22-vae-v2-prototype-independent-review-001/08_结论/independent_review_report.md",
+      "a7832f166602e47f7d9952a926a43315332c8c2b:01_os/07_content/_runs/run-20261030-nba2k22-vae-v3-mechanism-independent-review-001/08_结论/independent_review_report.md"
+    ],
+    "allowed_changed_paths": [
+      "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/"
+    ],
+    "required_tests": [
+      "GPT01_FIELD_CURSOR",
+      "GPT02_SINGLE_FIELD",
+      "GPT03_SOURCE_VERSION_DATE",
+      "GPT04_CLAIM_SOURCE_TRACE",
+      "GPT05_CONFLICTS",
+      "GPT06_NUMERIC_HYPOTHESIS_NOT_FACT",
+      "GPT07_REA_TEST_ORACLE",
+      "GPT08_CHECKPOINT_READBACK"
+    ],
+    "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/01_任务输入/verification_plan.json",
+    "loop_contract": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/01_任务输入/SINGLE_FIELD_LOOP_CONTRACT_V1.json",
+    "execution_assignment": {
+      "assigned_provider": "OpenAI",
+      "assigned_product": "ChatGPT",
+      "assigned_model": "GPT-6",
+      "assigned_role": "execution",
+      "assigned_surface": "new GPT research fork from NBA_COMMON_BASELINE_READY",
+      "actual_model": "UNKNOWN_PENDING_RECEIPT",
+      "identity_source": "Human/planner assignment only"
+    },
+    "prohibitions": [
+      "modify_master",
+      "modify_Core",
+      "modify_Gemini_task_or_other_runs",
+      "write_game_or_REA_native",
+      "invent_numeric_effect_thresholds",
+      "claim_source_is_current_PC22_effect",
+      "claim_independent_audit_by_developer",
+      "force_push_or_rewrite_history"
+    ],
+    "big_task_closure": {
+      "objective": "Iterative one-field sourced research across initial queue and improvement passes",
+      "allowed_changed_paths": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/"
+      ],
+      "known_protected_actions": [],
+      "evidence_gates": [
+        "GPT01_FIELD_CURSOR",
+        "GPT02_SINGLE_FIELD",
+        "GPT03_SOURCE_VERSION_DATE",
+        "GPT04_CLAIM_SOURCE_TRACE",
+        "GPT05_CONFLICTS",
+        "GPT06_NUMERIC_HYPOTHESIS_NOT_FACT",
+        "GPT07_REA_TEST_ORACLE",
+        "GPT08_CHECKPOINT_READBACK"
+      ],
+      "stop_conditions": [
+        "new_load_bearing_semantic_choice",
+        "scope_escape_beyond_allowed_changed_paths",
+        "protected_action_not_already_covered_by_current_authority",
+        "safety_privacy_secret_or_credential_boundary",
+        "destructive_git_or_history_rewrite",
+        "runtime_or_scheduler_activation",
+        "human_relay_required_to_reach_another_independent_model",
+        "evidence_cannot_support_the_claim"
+      ],
+      "final_reviewer_boundary": "fresh independent GPT at combined Gemini REA+GPT source research release",
+      "terminal_lifecycle_state": "candidate_ready_for_independent_review",
+      "completion_pointer_shape": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/08_结论/completion_pointer.md with completeness counts, sources, unsupported claims and current HEAD"
+    },
+    "big_task_confirmation_closure": {
+      "enabled": false,
+      "known_confirmation_required_actions": [],
+      "preconfirmed_actions": [],
+      "uncovered_actions": []
+    },
+    "publisher": {
+      "principal_binding": "connector_authenticated",
+      "publication_transport": "github_api_connector",
+      "source_branch_publication": "task_scope_default",
+      "master_integration_confirmation": "not_requested",
+      "expected_remote_master_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+      "expected_remote_head": "45cc45cae0550ddcda192a2179ea48509b27f6ee"
+    },
+    "minimum_work_unit_output": {
+      "work_performed_or_requested": "One-field-at-a-time source research and falsifiable native experiment questions",
+      "implementation_or_review_method": "One field ID+one question → web/project source check → claim mapping & contradiction → oracle → append evidence/commit → next ID",
+      "supportability_rationale": "Existing project R04B/R06A/K04 and V2/V3 audits expose exact source and field coverage deficiencies",
+      "feasibility_rationale": "Web and GitHub-only study does not require game access and can honestly report NO_DIRECT_SOURCE",
+      "task_constraints_and_boundaries": "One Task ID, one branch and Run; first sweep includes all source IDs even UNKNOWN; no game-write authority; independent proof tiers",
+      "stop_or_return_conditions": "Core genuine-stop applies; a blocked field is logged and skipped within current sweep, not a global stop"
+    }
+  }
+}
