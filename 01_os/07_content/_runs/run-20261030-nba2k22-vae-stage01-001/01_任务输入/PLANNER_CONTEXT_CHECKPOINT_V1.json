@@ -43,7 +43,9 @@
     "shared_field_inventory_commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
     "gemini_REA_mechanism_deepening_delivered_HEAD": "b3e39f867364b4610fc57f5cc798c7ab33232eeb",
     "gpt_external_research_current_HEAD": "9fa8fc51d408c1a34c35d65a3cd693a973824a37",
-    "mechanism_readiness_independent_review_dispatch": "3c378d05a42be50d7f105256d5bb978bd88eefa5"
+    "mechanism_readiness_independent_review_dispatch": "3c378d05a42be50d7f105256d5bb978bd88eefa5",
+    "world_data_research_candidate_head": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+    "vae_mechanism_audit_final_head": "a15079c425bb2f228afa333dee70df5cde12039c"
   },
   "human_decision_refs": [
     {
@@ -100,6 +102,11 @@
       "source": "Human 2026-10-31 VAE planning message with uploaded Gemini report",
       "decision": "Future gameplay effect checking relies on the replacement data capture system, whose static/dynamic information requirements are known but storage/log schema is not yet designed; planner should use cloud source and avoid implementing locally.",
       "scope": "future VAE telemetry integration must remain semantic/adapter-oriented until D-series format is formally fixed"
+    },
+    {
+      "source": "2026-10-31 Human direct VAE planning research request",
+      "decision": "Investigate first-phase 100-table automated world capture as temporary read-only VAE data source; keep all game writes on authorized REA; trial supports batched changes and human game advancement; Gemini arithmetic must use deterministic tools; Gemini limited small work batches.",
+      "scope": "VAE future validation mechanism planning, pending actual local read-only smoke and authorizations"
     }
   ],
   "task_status_index": [
@@ -340,6 +347,11 @@
       "claim": "GPT external source research continues independently at 115/204 first-sweep records, with next WORLD_REG_017; no native verification claimed",
       "ref": "9fa8fc51d408c1a34c35d65a3cd693a973824a37:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/08_结论/completion_pointer.md",
       "scope": "executor checkpoint only"
+    },
+    {
+      "claim": "WorldData candidate branch uses Schema v24 100 tables 1775 columns 20 capture source families; includes player tendencies, team tactics, game results and per-save append-only as-of queries",
+      "ref": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4:08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md",
+      "scope": "candidate engineering baseline, not final independent full lifecycle acceptance"
     }
   ],
   "open_items": [
@@ -433,22 +445,34 @@
       "severity": "P1_INTEGRATION_BOUNDARY",
       "owner": "VAE planner ↔ D-series future owners",
       "closure": "logical metric needs and data availability matrix, then adapters against approved D2-D4 query contracts; unavailable outcome remains UNKNOWN"
+    },
+    {
+      "item": "Read-only WorldData v24 integration with current VAE test save and exact data units must be smoke-tested; current local DB/runtime unknown",
+      "severity": "P0_INTEGRATION_PREFLIGHT",
+      "owner": "authorized Gemini / future data adapter developer",
+      "closure": "successful isolated capture+query with correctly bound save and provenance, no game writes, game read privilege explicitly verified"
+    },
+    {
+      "item": "VAE batch experiments require identifiable intervention groups, comparator and cross-setting interference classification; capture before and after alone is not per-field causality",
+      "severity": "P0_METHOD",
+      "owner": "VAE decision_architecture with Human test plan and Gemini REA",
+      "closure": "pre-registered assigned subjects and control cases, S0/S1/S2, deterministic outcome evaluation"
     }
   ],
   "next_steps": [
-    "Human relays consolidated independent audit task 3c378d05a42be50d7f105256d5bb978bd88eefa5 to new GPT independent_review fork; fixed Gemini candidate b3e39f867364b4610fc57f5cc798c7ab33232eeb; read-only cloud review, no local connection.",
-    "Gemini VAE may pause deepening changes to the frozen candidate until audit produces findings. GPT external single-field research continues from cursor115 / WORLD_REG_017, no forced merge.",
-    "After audit, one integrated Gemini engineering iteration should reconcile canonical field IDs, native arithmetic/PE provenance, evidence grades and safe decision bridge, not per-field task splits.",
-    "Build VAE logical Mechanism→MetricRequirement→CompareContext→Result→KnowledgeRevision contract with fixtures, no prescribed table/schema/log format; ensure UNKNOWN and ACL/role views.",
-    "Route metric requirements into future D1 Action→Information→Field planning; new D2/D3 capture and D4 role-specific services own actual adapters/persistence; do not duplicate D-series DB.",
-    "Only after authoritative collection data is available perform normal-play pre/post comparisons; game modes, normalization, sample limits and confounders must be carried.",
-    "Keep Stage01 Human A-v1 and Core full seven-stage runner gap distinct, Codex unavailable and no VAE game writes authorized."
+    "Receive Gemini existing consolidated VAE mechanism P0 rework result as SHA; do not preempt ongoing engineering.",
+    "Verify first-phase WorldData v24 source code 17ec1cea88c2bb6c36264792f70c94bef9a8bdb4 and fixed save/release compatibility via narrow authorized read-only local pilot, not planner local connection; no master integration.",
+    "After source preflight, design single integrated WorldData read-only adapter + VAE evaluation harness as one development package; no new capture DB and no game writes by reader.",
+    "Allow multiple orthogonal REA interventions in one Human-approved test campaign but require per-unit interference/control assignment; isolate whole-team/global changes and interactions.",
+    "Use Python/SQLite for every arithmetic comparison, with exact formulas and tests; Gemini Flash max 3–5 tasks per externally gated batch and mandatory stop/resume receipt; don't depend on prompt-only loop stop.",
+    "Human advances real game weeks/months and invokes S2 refresh; compare only new completed-game windows and correctly timed baseline/setting readbacks, preserving append-only history.",
+    "Do not assume new D-series physical schema, full game lifecycle, 100-year capacity or actual experimental outcomes verified."
   ],
   "persistent_context_policy": "Store only Human decisions, task index, verified facts, open items and next steps; keep raw logs and developer thought process in execution Runs",
   "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
   "COMMUNICATION_FORMAL_V2_PUBLICATION": "NOT_RUN",
   "independent_review": "DELIVERED_PARTIALLY_SUPPORTED",
-  "task_execution_status": "GEMINI_REA_MECHANISM_CANDIDATE_RECEIVED;_INDEPENDENT_AUDIT_DISPATCHED;_GPT_SOURCE_115_204_IN_PROGRESS;_NEW_DATA_CAPTURE_FORMAT_UNDECIDED;_INTEGRATION_PLAN_SEMANTIC_ONLY",
+  "task_execution_status": "GEMINI_REWORK_IN_PROGRESS_BY_HUMAN;_WORLD_DATA_V24_TEMP_READ_SOURCE_TECHNICALLY_PLAUSIBLE_PENDING_SMOKE;_BATCH_FEEDBACK_DESIGN_RESEARCHED;_NO_LIVE_TESTS_PERFORMED",
   "last_material_update": "2026-10-31",
   "context_policy_update": "Future tasks record model, only confirmed facts and source pointers; pending runtime proof stays UNKNOWN; do not backfill history.",
   "model_roster_current": {
