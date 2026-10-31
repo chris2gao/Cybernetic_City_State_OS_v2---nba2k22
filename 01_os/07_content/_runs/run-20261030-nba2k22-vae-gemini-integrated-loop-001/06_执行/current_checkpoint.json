@@ -1,12 +1,49 @@
 {
   "schema_version": "nba2k22.vae.integrated_loop_checkpoint.v2",
   "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
-  "status": "CANDIDATE_READY_FOR_INDEPENDENT_REVIEW",
+  "status": "DEFERRED_ENGINEERING_REWORK_AFTER_INDEPENDENT_REVIEW",
   "last_verified_commit": "3c168310faa671c8807e10b960696d92cbbac598",
   "iteration_count": 3,
   "role": "Gemini execution",
   "model_identity_source": "Human-assigned label only",
   "workstreams": {
+    "V2_12_native_actions": "REWORK_REQUIRED_NOT_NATIVE_VERIFIED",
+    "V2_role_authorization": "REWORK_REQUIRED",
+    "V2_R08_durability": "REWORK_REQUIRED",
+    "V2_R05_structured_readback": "REWORK_REQUIRED",
+    "V2_finance_and_live_data": "REWORK_REQUIRED",
+    "V3_mechanism_per_field": "REWORK_REQUIRED_NOT_EVIDENCE_COMPLETE"
+  },
+  "open_review_findings": [
+    "V2-01",
+    "V2-02",
+    "V2-03",
+    "V2-04",
+    "V2-05",
+    "V2-06",
+    "V2-07",
+    "V2-08",
+    "V2-09",
+    "V2-10",
+    "V2-11",
+    "V2-12",
+    "V3-01",
+    "V3-02",
+    "V3-03",
+    "V3-04",
+    "V3-05",
+    "V3-06",
+    "V3-07",
+    "V3-08",
+    "V3-09",
+    "V3-10",
+    "V3-11"
+  ],
+  "resolved_review_findings": [],
+  "game_runtime_permission": "NOT_GRANTED_BY_THIS_PACKET",
+  "next_in_scope_step": "Do not resume integrated V2/V3 coding while one-field REA research is active; engineer V2 P0 later on this task with approval of scheduling, not a new branch each bug.",
+  "independent_review": "READY_FOR_REVIEW",
+  "prior_executor_claimed_workstreams": {
     "G01_G08": "COMPLETED_AUDITED",
     "R01_R09": "COMPLETED_V2_ENFORCED",
     "E1_E4_prototype": "COMPLETED_WITH_GUARDS",
@@ -16,8 +53,7 @@
     "V3_per_setting_mechanism_research": "COMPLETED_PER_SETTING_DOSSIER",
     "local_runtime_evidence": "54_UNIT_TESTS_PASSED_4_COUNTEREXAMPLES_RESOLVED"
   },
-  "open_review_findings": [],
-  "resolved_review_findings": [
+  "prior_executor_claimed_resolved_findings": [
     "P0-01",
     "P0-02",
     "P0-03",
@@ -37,7 +73,11 @@
     "F06",
     "F07"
   ],
-  "game_runtime_permission": "NOT_GRANTED_BY_THIS_PACKET",
-  "next_in_scope_step": "Submit candidate commit to GitHub remote for consolidated GPT independent review",
-  "independent_review": "READY_FOR_REVIEW"
+  "review_intake": {
+    "V2_head": "d89a0b0551774914b8a0eb944d5c68ce26950087",
+    "V3_head": "a7832f166602e47f7d9952a926a43315332c8c2b",
+    "verdict": "BOTH_REWORK_REQUIRED",
+    "review_scope": "V2 engineering bugs and V3 unproven mechanism research",
+    "next_task_handling": "Original V2 engineering fix stays separate; new Gemini REA research and GPT sources are standalone; do not claim V2 corrected by research."
+  }
 }
