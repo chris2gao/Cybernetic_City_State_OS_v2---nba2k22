@@ -6,25 +6,31 @@ import os
 from typing import Any, Dict, List, Optional, Tuple
 
 
-class NativeTacticalDecisionBridge:
+class ExperimentalTacticalDecisionBridge:
     """
-    Translates reverse-engineered native assembly mechanisms from NBA2K22.exe
-    into actionable GM, Coach, and Player decision logic.
+    Experimental, non-native tactical simulation bridge.
 
-    Key Grounded Native Mechanisms:
-    1. Shot-Touches Equilibrium Governor (RVA 0x1226947):
-       Native clamping enforces shot_tendency within +/-5 of touch_tendency.
-    2. Dynamic Coach Pacing Clamping (RVA 0x120b9ae..0x120babb):
-       Tempo influence is strictly clamped by native assembly to [10, 70].
-    3. 3D Possession Multiplier Scaling (RVA 0x19b52d4):
-       Dynamic shot attempt probability is modulated by Coach PaceFactor.
-    4. Simulation Gameplay Slider Scaling (RVA 0x19b9cda).
+    STATUS: EXPERIMENTAL_HEURISTIC_MODEL_NON_NATIVE
+    NOTE: The mathematical formulas in this bridge represent experimental heuristics
+    derived from reverse engineering research leads. They are NOT certified native game laws
+    and must NOT be used as rigid deterministic production rules without empirical validation.
+
+    Reverse Engineering Grounding:
+    1. Role Ceiling Governor (RVA 0x1226942..0x12269a6):
+       Native assembly verifies that players with core role tier (rcx=3) bypass ceilings,
+       whereas secondary players (rcx!=3) are clamped to (role_ceiling - 5) if raw tendency exceeds it.
+    2. Coach Tempo Bounds (RVA 0x120ba72..0x120babb):
+       Native assembly proves that tempo modifiers are clamped strictly to [10, 70].
     """
 
-    NATIVE_EQUILIBRIUM_MARGIN = 5.0
+    MODEL_TIER = "EXPERIMENTAL_HEURISTIC"
+    IS_NATIVE_LAW = False
+
+    # Heuristic constants for macro estimation (clearly labeled as experimental)
+    HEURISTIC_BASE_POSSESSIONS = 88.0
+    HEURISTIC_TEMPO_SLOPE = 0.28
     COACH_TEMPO_MIN_BOUND = 10.0
     COACH_TEMPO_MAX_BOUND = 70.0
-    BASE_POSSESSIONS_PER_48 = 88.0
 
     def __init__(self, repo_root: Optional[str] = None) -> None:
         if repo_root is None:
@@ -37,120 +43,99 @@ class NativeTacticalDecisionBridge:
         )
         self.records_dir = os.path.join(self.run_dir, "06_执行", "field_records")
 
-    def calculate_equilibrium_governor(
-        self, shot_tendency: float, touch_tendency: float
+    def calculate_role_ceiling_governor(
+        self,
+        shot_tendency: float,
+        touches: float,
+        role_tier: int = 3,
+        role_ceiling: float = 85.0,
     ) -> Dict[str, Any]:
         """
-        Evaluates the Shot-Touches Equilibrium Governor (RVA 0x1226947).
-        Native assembly clamps:
-          sub edx, 5
-          cmp edx, r8d
-          cmovl ecx, eax
+        Evaluates the Role-Based Tactical Shot Ceiling Governor (RVA 0x1226942..0x12269a6).
+
+        Native Assembly Behavior:
+        - Checks role at [rsp + 0x20] / [rsp + 0x24] against 3 (Primary Core option).
+        - If role == 3: Raw shot tendency is stored unconstrained into [rdi + 0x2dd].
+        - If role != 3: Role ceiling is loaded from [rsi + rcx*4 + 0x2b59798],
+          discounted by 5 (sub edx, 5), and if (ceiling - 5) < shot_tendency,
+          effective shot tendency is clamped to (ceiling - 5).
         """
-        delta = shot_tendency - touch_tendency
-        abs_delta = abs(delta)
-        is_in_equilibrium = abs_delta <= self.NATIVE_EQUILIBRIUM_MARGIN
+        is_franchise_core = (role_tier == 3)
+        effective_ceiling = max(0.0, role_ceiling - 5.0)
 
-        # Friction score: 0.0 when within +/-5 margin, scaling above margin
-        friction_score = max(0.0, abs_delta - self.NATIVE_EQUILIBRIUM_MARGIN)
-
-        # Clamped effective shot tendency applied by native AI controller [rdi + 0x2dd]
-        if delta > self.NATIVE_EQUILIBRIUM_MARGIN:
-            effective_shot_tendency = touch_tendency + self.NATIVE_EQUILIBRIUM_MARGIN
-            clamp_status = "NATIVE_SUPPRESSED_HIGH_USAGE_DISPARITY"
-            recommendation = (
-                f"Player shot tendency ({shot_tendency}) exceeds touches ({touch_tendency}) "
-                f"by {delta:.1f} > 5. Native AI governor suppresses unassigned shots. "
-                f"Increase touches to at least {shot_tendency - 5:.0f} or reduce shot tendency."
-            )
-        elif delta < -self.NATIVE_EQUILIBRIUM_MARGIN:
-            effective_shot_tendency = max(0.0, touch_tendency - self.NATIVE_EQUILIBRIUM_MARGIN)
-            clamp_status = "NATIVE_PASSIVE_FLOOR_UNDERSHOOT"
-            recommendation = (
-                f"Player touches ({touch_tendency}) exceeds shot tendency ({shot_tendency}) "
-                f"by {abs_delta:.1f} > 5. Player acts as ball distributor/playmaker."
-            )
+        if is_franchise_core:
+            effective_shot = shot_tendency
+            is_suppressed = False
+            friction_score = 0.0
+            clamp_status = "FRANCHISE_CORE_UNCONSTRAINED"
+            recommendation = "Franchise core option (tier 3); shot tendency bypasses role ceiling."
         else:
-            effective_shot_tendency = shot_tendency
-            clamp_status = "PERFECT_EQUILIBRIUM"
-            recommendation = "Player is in native equilibrium; no artificial engine suppression."
+            if shot_tendency > effective_ceiling:
+                effective_shot = effective_ceiling
+                is_suppressed = True
+                friction_score = shot_tendency - effective_ceiling
+                clamp_status = "ROLE_CEILING_SUPPRESSED"
+                recommendation = (
+                    f"Non-core role player (tier {role_tier}) shot tendency ({shot_tendency:.1f}) "
+                    f"exceeds discounted role ceiling ({effective_ceiling:.1f}). "
+                    f"In-engine AI governor clamps effective shot attempts."
+                )
+            else:
+                effective_shot = shot_tendency
+                is_suppressed = False
+                friction_score = 0.0
+                clamp_status = "WITHIN_ROLE_CEILING"
+                recommendation = "Shot tendency is within secondary role ceiling."
 
         return {
-            "shot_tendency_raw": shot_tendency,
-            "touch_tendency_raw": touch_tendency,
-            "delta": delta,
-            "abs_delta": abs_delta,
-            "is_in_equilibrium": is_in_equilibrium,
+            "model_status": "EXPERIMENTAL_HEURISTIC",
+            "is_native_law": False,
+            "role_tier": role_tier,
+            "raw_shot_tendency": shot_tendency,
+            "touches": touches,
+            "effective_role_ceiling": effective_ceiling,
+            "effective_shot_tendency": round(effective_shot, 1),
+            "is_suppressed": is_suppressed,
             "friction_score": round(friction_score, 2),
-            "effective_shot_tendency": round(effective_shot_tendency, 1),
             "clamp_status": clamp_status,
             "recommendation": recommendation,
         }
 
     def calculate_effective_coach_tempo(self, raw_tempo: float) -> Dict[str, Any]:
         """
-        Evaluates Coach Dynamic Pacing Engine (RVA 0x120b9ae..0x120babb).
-        Native assembly bounds:
-          cmp ecx, 0x46 ; 70
-          cmovg ecx, eax
-          cmp ecx, 0xa  ; 10
-          cmovl ecx, eax
+        Evaluates Coach Pacing Engine Bounds (RVA 0x120ba72..0x120babb).
+
+        Native Assembly Behavior:
+        - eax = Tempo - 50; ecx = eax * 60; edx = ecx / 100; ecx = edx + 10;
+        - cmp ecx, 70; cmovg ecx, 70; cmp ecx, 10; cmovl ecx, 10.
+        - Clamping bounds [10, 70] are proven by native constants 0x46 and 0x0a.
         """
         raw_val = float(raw_tempo)
         effective_tempo = min(self.COACH_TEMPO_MAX_BOUND, max(self.COACH_TEMPO_MIN_BOUND, raw_val))
         is_saturated = raw_val > self.COACH_TEMPO_MAX_BOUND
         is_choked = raw_val < self.COACH_TEMPO_MIN_BOUND
 
-        # Linear pace estimation: Base 88 + 0.28 * tempo
-        estimated_pace = self.BASE_POSSESSIONS_PER_48 + (effective_tempo * 0.28)
+        # Heuristic pace estimation for macro simulation
+        estimated_pace = self.HEURISTIC_BASE_POSSESSIONS + (effective_tempo * self.HEURISTIC_TEMPO_SLOPE)
 
-        # Pace multiplier for 3D shot selection (RVA 0x19b52d4, xmm6)
-        # 50 tempo = 1.0 multiplier; 10 tempo = 0.72; 70 tempo = 1.28
-        pace_multiplier_xmm6 = 0.65 + (effective_tempo / 70.0) * 0.45
+        # Linear pace scale factor: 10 tempo -> 0.714; 50 tempo -> 0.971; 70 tempo -> 1.100
+        pace_multiplier = 0.65 + (effective_tempo / 70.0) * 0.45
 
         return {
+            "model_status": "EXPERIMENTAL_HEURISTIC",
+            "is_native_law": False,
             "raw_tempo_slider": raw_val,
             "effective_tempo": effective_tempo,
             "is_saturated": is_saturated,
             "is_choked": is_choked,
-            "estimated_pace_possessions": round(estimated_pace, 1),
-            "pace_multiplier_xmm6": round(pace_multiplier_xmm6, 4),
+            "estimated_pace_possessions": round(estimated_pace, 2),
+            "pace_multiplier_scale": round(pace_multiplier, 4),
             "saturation_loss": round(raw_val - effective_tempo, 1) if is_saturated else 0.0,
             "note": (
-                "Native assembly saturates any coach tempo above 70 down to 70.0. "
-                "Setting tempo > 70 yields 0 additional possession pace in simulation."
-                if is_saturated else "Pacing within active linear sensitivity range."
+                "Native assembly clamps tempo modifier strictly to [10, 70]. "
+                "Values above 70 are saturated by native instructions."
+                if is_saturated else "Within native linear bounds [10, 70]."
             ),
-        }
-
-    def calculate_shot_selection_probability(
-        self,
-        shot_tendency: float,
-        touch_tendency: float,
-        coach_tempo: float,
-        slider_weight: float = 1.0,
-    ) -> Dict[str, Any]:
-        """
-        Combines Shot-Touches Governor (0x1226947) and 3D Multiplier Scaling (0x19b52d4, 0x19b9cda).
-        P_shot = (EffectiveShotTendency / 100.0) * CoachPaceFactor * SliderWeight
-        """
-        gov = self.calculate_equilibrium_governor(shot_tendency, touch_tendency)
-        pace = self.calculate_effective_coach_tempo(coach_tempo)
-
-        eff_shot = gov["effective_shot_tendency"]
-        multiplier = pace["pace_multiplier_xmm6"]
-
-        raw_prob = (eff_shot / 100.0) * multiplier * slider_weight
-        clamped_prob = min(1.0, max(0.0, raw_prob))
-
-        return {
-            "player_raw_shot_tendency": shot_tendency,
-            "player_effective_shot_tendency": eff_shot,
-            "coach_pace_multiplier": multiplier,
-            "slider_weight": slider_weight,
-            "possession_shot_probability": round(clamped_prob, 4),
-            "equilibrium_governor": gov,
-            "dynamic_pacing": pace,
         }
 
     def evaluate_roster_tactical_alignment(
@@ -159,7 +144,7 @@ class NativeTacticalDecisionBridge:
         coach_gameplan: Dict[str, Any],
     ) -> Dict[str, Any]:
         """
-        Evaluates full team roster alignment against coach gameplan using verified native mechanics.
+        Evaluates full team roster alignment against coach gameplan using experimental heuristics.
         """
         coach_tempo = float(coach_gameplan.get("Tempo", 50))
         tempo_eval = self.calculate_effective_coach_tempo(coach_tempo)
@@ -172,32 +157,35 @@ class NativeTacticalDecisionBridge:
             name = p.get("name", "Unknown Player")
             st = float(p.get("ShotTendency", 50))
             tt = float(p.get("TouchTendency", 50))
+            role_tier = int(p.get("RoleTier", 3))
+            role_ceil = float(p.get("RoleCeiling", 85.0))
 
-            shot_prob = self.calculate_shot_selection_probability(
-                st, tt, coach_tempo, slider_weight=1.0
+            gov = self.calculate_role_ceiling_governor(
+                shot_tendency=st, touches=tt, role_tier=role_tier, role_ceiling=role_ceil
             )
-            gov = shot_prob["equilibrium_governor"]
             total_friction += gov["friction_score"]
-            if gov["is_in_equilibrium"]:
+            if not gov["is_suppressed"]:
                 aligned_players += 1
 
             player_evals.append({
                 "name": name,
-                "shot_tendency": st,
+                "role_tier": role_tier,
+                "raw_shot": st,
                 "touches": tt,
                 "effective_shot": gov["effective_shot_tendency"],
+                "is_suppressed": gov["is_suppressed"],
                 "friction_score": gov["friction_score"],
-                "shot_probability": shot_prob["possession_shot_probability"],
                 "clamp_status": gov["clamp_status"],
                 "recommendation": gov["recommendation"],
             })
 
         avg_friction = total_friction / len(roster) if roster else 0.0
         equilibrium_ratio = aligned_players / len(roster) if roster else 1.0
-
         synergy_score = max(0.0, round(100.0 - (avg_friction * 8.0), 1))
 
         return {
+            "model_status": "EXPERIMENTAL_HEURISTIC",
+            "is_native_law": False,
             "roster_size": len(roster),
             "aligned_players_count": aligned_players,
             "equilibrium_ratio": round(equilibrium_ratio, 3),
@@ -206,9 +194,9 @@ class NativeTacticalDecisionBridge:
             "coach_tempo_analysis": tempo_eval,
             "player_evaluations": player_evals,
             "executive_recommendation": (
-                "Roster usage hierarchy is well balanced under native governor."
+                "Roster usage distribution aligns well with tactical role ceilings."
                 if synergy_score >= 80.0 else
-                f"Roster has {len(roster) - aligned_players} players with usage-touch disparities. "
-                "Re-balance touches to minimize artificial native shot suppression."
+                f"Roster has {len(roster) - aligned_players} players exceeding their secondary role ceilings. "
+                "Adjust player roles or lower secondary shot tendencies to avoid native clamping."
             ),
         }

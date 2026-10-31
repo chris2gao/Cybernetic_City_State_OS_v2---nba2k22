@@ -193,6 +193,7 @@ def test_remediation_epistemology_and_downgrade(analyzer, tmp_path):
     orig_records = analyzer.records_dir
     orig_ledger = analyzer.ledger_path
     orig_evidence = analyzer.evidence_dir
+    orig_checkpoint = analyzer.checkpoint_path
 
     test_records = str(tmp_path / "records_demote")
     test_evidence = str(tmp_path / "evidence_demote")
@@ -204,6 +205,7 @@ def test_remediation_epistemology_and_downgrade(analyzer, tmp_path):
     analyzer.records_dir = test_records
     analyzer.ledger_path = str(tmp_path / "iteration_ledger.jsonl")
     analyzer.evidence_dir = test_evidence
+    analyzer.checkpoint_path = str(tmp_path / "checkpoint_demote.json")
     try:
         remediated = analyzer.remediate_all_field_records()
         assert remediated["total"] == 204
@@ -225,6 +227,7 @@ def test_remediation_epistemology_and_downgrade(analyzer, tmp_path):
         analyzer.records_dir = orig_records
         analyzer.ledger_path = orig_ledger
         analyzer.evidence_dir = orig_evidence
+        analyzer.checkpoint_path = orig_checkpoint
 
 
 def test_sweep_3_full_live_grounding(analyzer, tmp_path):
@@ -248,6 +251,7 @@ def test_sweep_3_full_live_grounding(analyzer, tmp_path):
         orig_records = analyzer.records_dir
         orig_ledger = analyzer.ledger_path
         orig_evidence = analyzer.evidence_dir
+        orig_checkpoint = analyzer.checkpoint_path
 
         test_records = str(tmp_path / "records_sweep3")
         test_evidence = str(tmp_path / "evidence_sweep3")
@@ -259,6 +263,7 @@ def test_sweep_3_full_live_grounding(analyzer, tmp_path):
         analyzer.records_dir = test_records
         analyzer.ledger_path = str(tmp_path / "iteration_ledger_sweep3.jsonl")
         analyzer.evidence_dir = test_evidence
+        analyzer.checkpoint_path = str(tmp_path / "checkpoint_sweep3.json")
         try:
             res = analyzer.execute_sweep_3_live()
             assert res["total"] == 204
@@ -272,3 +277,4 @@ def test_sweep_3_full_live_grounding(analyzer, tmp_path):
             analyzer.records_dir = orig_records
             analyzer.ledger_path = orig_ledger
             analyzer.evidence_dir = orig_evidence
+            analyzer.checkpoint_path = orig_checkpoint

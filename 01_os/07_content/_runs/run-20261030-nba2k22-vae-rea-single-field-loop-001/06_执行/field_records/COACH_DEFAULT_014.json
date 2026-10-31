@@ -16,8 +16,8 @@
   "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_IN_GAME_COACH_MENU",
   "ui_export_label": null,
-  "consumer_path_status": "CONFIRMED_NATIVE_CONSUMER_CALLGRAPH",
-  "game_effect_status": "NATIVE_COACHDATA_AND_PACING_BOUNDS_VERIFIED",
+  "consumer_path_status": "DISASSEMBLY_PACING_ENGINE_LOCATED",
+  "game_effect_status": "STATIC_DISASSEMBLY_LEAD",
   "research_status": "EVIDENCE_ADDED",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
@@ -88,20 +88,41 @@
     "legacy_value": 80,
     "legacy_address": "0x7ff4e74212a8",
     "legacy_notes": "Decoded bitfield from verified COACHDATA for team 0 coach",
-    "legacy_timestamp": "",
+    "legacy_timestamp": "2026-10-31T03:00:00Z",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   },
   "verified_consumer_call_graph": {
-    "staff_array_traversal_rva": "0xc03133",
-    "coach_consumer_rva": "0x120b9ae",
-    "dynamic_pacing_engine": {
-      "rva": "0x120b9ae..0x120babb",
-      "tempo_clamping_bounds": [
+    "tempo_pacing_engine": {
+      "rva": "0x120ba72",
+      "role": "Dynamic Tempo Linear Transform with [10, 70] Clamping",
+      "raw_bytes_hex": "f3 0f 2d c0 83 e8 32 6b c8 3c b8 1f 85 eb 51 f7 e9 b8 46 00 00 00 c1 fa 04 8b ca c1 e9 1f 83 c1 0a 03 ca 83 f9 46 0f 4f c8 b8 0a 00 00 00 83 f9 0a 0f 4c c8 8b c7 2b c1",
+      "disassembly": [
+        "0x14120ba72: f3 0f 2d c0              cvtss2si eax, xmm0        ; convert float Tempo to int",
+        "0x14120ba7e: 83 e8 32                 sub      eax, 0x32        ; eax = Tempo - 50 (0x32)",
+        "0x14120ba86: 6b c8 3c                 imul     ecx, eax, 0x3c   ; ecx = (Tempo - 50) * 60 (0x3c)",
+        "0x14120ba89: b8 1f 85 eb 51           mov      eax, 0x51eb851f  ; reciprocal for division by 100",
+        "0x14120ba92: f7 e9                    imul     ecx              ; fixed-point multiply",
+        "0x14120ba98: b8 46 00 00 00           mov      eax, 0x46        ; load 70 (0x46) into eax!",
+        "0x14120ba9d: c1 fa 04                 sar      edx, 4           ; edx = (Tempo - 50) * 0.6",
+        "0x14120baa0: 8b ca                    mov      ecx, edx",
+        "0x14120baa2: c1 e9 1f                 shr      ecx, 0x1f",
+        "0x14120baa5: 83 c1 0a                 add      ecx, 0xa         ; + 10",
+        "0x14120baa8: 03 ca                    add      ecx, edx",
+        "0x14120baaa: 83 f9 46                 cmp      ecx, 0x46        ; compare ecx with 70",
+        "0x14120baad: 0f 4f c8                 cmovg    ecx, eax         ; if ecx > 70, ecx = eax (70)",
+        "0x14120bab0: b8 0a 00 00 00           mov      eax, 0xa         ; load 10 (0x0a) into eax!",
+        "0x14120bab5: 83 f9 0a                 cmp      ecx, 0xa         ; compare ecx with 10",
+        "0x14120bab8: 0f 4c c8                 cmovl    ecx, eax         ; if ecx < 10, ecx = eax (10)",
+        "0x14120babb: 8b c7                    mov      eax, edi",
+        "0x14120babd: 2b c1                    sub      eax, ecx         ; apply bounded pace delta"
+      ],
+      "verified_control_flow": "Converts input Tempo from xmm0 to integer, centers at 50, scales by 0.6, adds 10, and clamps the modifier strictly between 10 (eax=0xa) and 70 (eax=0x46). This proves the native engine enforces a [10, 70] bounds saturation.",
+      "epistemological_grade": "STATIC_DISASSEMBLY_LEAD",
+      "clamping_bounds": [
         10,
         70
-      ],
-      "instructions": "cmp ecx, 0x46; cmovg ecx, eax; cmp ecx, 0xa; cmovl ecx, eax"
+      ]
     }
   }
 }

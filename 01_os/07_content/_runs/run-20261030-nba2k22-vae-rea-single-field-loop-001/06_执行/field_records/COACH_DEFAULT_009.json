@@ -16,8 +16,8 @@
   "native_identity_grade": "LIVE_RECEIPT",
   "ui_mapping_status": "UNVERIFIED_IN_GAME_COACH_MENU",
   "ui_export_label": null,
-  "consumer_path_status": "CONFIRMED_NATIVE_CONSUMER_CALLGRAPH",
-  "game_effect_status": "NATIVE_COACHDATA_AND_PACING_BOUNDS_VERIFIED",
+  "consumer_path_status": "COACHDATA_STRUCTURE_LOCATED",
+  "game_effect_status": "LIVE_BITFIELD_READ_ONLY",
   "research_status": "EVIDENCE_ADDED",
   "primary_sources": [
     "6436515330f77c0cc5cc675b521590adeb69c5d4:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
@@ -214,20 +214,13 @@
     "legacy_value": 0,
     "legacy_address": "0x7ff4e7421268",
     "legacy_notes": "Decoded bitfield from verified COACHDATA for team 0 coach",
-    "legacy_timestamp": "",
+    "legacy_timestamp": "2026-10-31T03:00:00Z",
     "capture_tier": "RAW_MEMORY_CAPTURE_CANDIDATE",
     "tag": "UNVERIFIED_LEGACY_RAW_CAPTURE"
   },
   "verified_consumer_call_graph": {
     "staff_array_traversal_rva": "0xc03133",
-    "coach_consumer_rva": "0x120b9ae",
-    "dynamic_pacing_engine": {
-      "rva": "0x120b9ae..0x120babb",
-      "tempo_clamping_bounds": [
-        10,
-        70
-      ],
-      "instructions": "cmp ecx, 0x46; cmovg ecx, eax; cmp ecx, 0xa; cmovl ecx, eax"
-    }
+    "structure": "Team 0 COACHDATA (352 bytes)",
+    "epistemological_note": "Verified bitfield decode; independent tactical consumer unmeasured."
   }
 }

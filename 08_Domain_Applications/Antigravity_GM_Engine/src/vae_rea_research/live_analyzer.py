@@ -301,7 +301,7 @@ class LiveEngineAnalyzer:
         }
     }
 
-    def __init__(self, repo_root: Optional[str] = None) -> None:
+    def __init__(self, repo_root: Optional[str] = None, auto_attach: bool = True) -> None:
         if repo_root is None:
             cur = os.path.abspath(__file__)
             repo_root = os.path.abspath(os.path.join(cur, "..", "..", "..", "..", ".."))
@@ -326,7 +326,8 @@ class LiveEngineAnalyzer:
         self._scanner = None
         self._active_player = None
         self._world_slot_ptrs: Dict[str, Optional[int]] = {}
-        self._init_memory()
+        if auto_attach:
+            self._init_memory()
 
     def _load_world_catalog(self) -> Dict[str, Dict[str, Any]]:
         cat: Dict[str, Dict[str, Any]] = {}
