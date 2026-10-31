@@ -1,0 +1,141 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_037",
+  "iteration_id": "SWEEP01_FIELD0037",
+  "sweep": 1,
+  "ordinal": 37,
+  "research_date": "2026-10-31",
+  "primary_question": "Does player Stepback Jumper Three propensity influence choosing a stepback-three animation conditional on a viable CPU on-ball three-point opportunity?",
+  "native_candidate": {
+    "project_key": "tendency.STEPBACK_JUMPER_THREE",
+    "offset_hex": "0x47C",
+    "declared_raw_range": [
+      0,
+      100
+    ],
+    "source_grade": "PROJECT_R04B_CANDIDATE",
+    "PC22_UI_mapping": "UNKNOWN",
+    "real_build": "UNKNOWN",
+    "rendered_consumer": "UNKNOWN",
+    "Calendar_consumer": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17"
+  },
+  "project_registry": {
+    "commit": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "blob": "2ed1cfed4eb274921b80e9d601a0dff714e01068",
+    "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
+  },
+  "external_sources": [
+    {
+      "id": "ATD",
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte summarizing CelticLG and ATD creators",
+      "date": "2021-12-16",
+      "game": "NBA 2K22",
+      "platform": "PS5/XSX roster released, PC roster work in progress at publication",
+      "locator": "What’s Edited [1.3]/[1.4]",
+      "grade": "SAME_RELEASE_COMMUNITY_EDITOR_PRACTICE",
+      "claim": "Stepback mid/three reworked, pullup/spin tracked by editors",
+      "limit": "Many changes simultaneously; no isolated PC22 native consumer evidence"
+    },
+    {
+      "id": "VANN",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page4",
+      "author": "vannwolfhawk",
+      "date": "2021-09-19",
+      "game": "NBA 2K22",
+      "platform": "community discussion, exact test platform UNKNOWN",
+      "locator": "post #51, lines 214-238",
+      "grade": "CONTEMPORARY_HYPOTHESIS_ONLY",
+      "claim": "Stepback three selection may involve three, stepback, pullup, contested, discipline and drive tendencies together",
+      "limit": "Author explicitly says guesses/values vary yearly; not PC22 verified thresholds"
+    },
+    {
+      "id": "SHEITAN",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-09-17, edited 2021-11-25",
+      "game": "NBA 2K22",
+      "platform": "PS5 indicated in discussion; original PC build UNKNOWN",
+      "locator": "post #1 and #9/#11",
+      "grade": "CONTEMPORARY_UNCONTROLLED_MECHANISM_THEORY",
+      "claim": "Stepback and situational tendencies are presented as CPU choices, extremes are discouraged",
+      "limit": "Values 0/99 and claimed behavior are user opinion, not official probability or effective threshold"
+    },
+    {
+      "id": "TOUR",
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "Crucial Baskets article, individual byline UNKNOWN",
+      "date": "2021-10-18 inferred from URL and text; page header has later 2026 site date",
+      "game": "NBA 2K22",
+      "platform": "CPU-v-CPU rendered tournament, exact PC/console platform UNKNOWN",
+      "locator": "Too Inside Basketball, lines 80–84",
+      "grade": "CONTEMPORARY_OBSERVATIONAL_AND_UNVERIFIED_THRESHOLD",
+      "claim": "Reports roster mean stepback three 31 and claims minimum 25, but no controlled field manipulation",
+      "limit": "25 must not be promoted as verified engine activation threshold"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "SAME_VERSION_SOURCE_RESEARCH",
+      "source_ids": [
+        "ATD"
+      ],
+      "text": "Editing practice confirms related NBA 2K22 shot tendency categories; does not isolate STEPBACK_JUMPER_THREE"
+    },
+    {
+      "tier": "COMMUNITY_HYPOTHESIS_NOT_CAUSAL",
+      "source_ids": [
+        "VANN",
+        "SHEITAN",
+        "TOUR"
+      ],
+      "text": "AI move selection may depend on several tendency/strategy fields; actual PC22 native behavior is not verified"
+    }
+  ],
+  "conflicts": [
+    "Roster-based tendency calibration is not independent Native memory/UI field mapping",
+    "Manual shot success, motion animation, defender contest and opportunity are distinct observables",
+    "3D versus Calendar Sim path unresolved",
+    "Tournament author's claimed 25 trigger threshold is unverified and cannot be adopted"
+  ],
+  "possible_relationships": [
+    {
+      "name": "shot three, drive pull-up three, contested three, Play Discipline and Coach Plays",
+      "evidence": "SAME_RELEASE_COMMUNITY_HYPOTHESIS_NOT_ENGINE"
+    },
+    {
+      "name": "Ability, badges, fatigue, contest",
+      "evidence": "SHOT_SUCCESS_AND_ELIGIBILITY_CONFOUNDERS"
+    },
+    {
+      "name": "Training",
+      "evidence": "NO_DIRECT_FIELD_SPECIFIC_SOURCE"
+    }
+  ],
+  "observable_metrics": [
+    "stepback 3PA / eligible on-ball perimeter possessions",
+    "eligible action count and alternatives: pass/drive/open shot",
+    "called plays and on-ball opportunity exposure separately",
+    "shot makes vs attempts separately",
+    "save/build/player UID, controlled side, 3D vs Calendar separated"
+  ],
+  "gemini_REA_question": {
+    "id": "REA_STEPBACK_THREE_037",
+    "question": "For two UID-verified PC22 players in the same save/build/observation window, does read-only PLAYER+0x47C match their exact visible STEPBACK_JUMPER_THREE UI tendency?",
+    "positive": "SUPPORTS_SCOPED_NATIVE_TO_UI_MAPPING_ONLY",
+    "negative": "IDENTITY_OR_SCALING_UNKNOWN",
+    "unavailable": "BLOCKED",
+    "authorization": "READ_ONLY_NOT_EXECUTED"
+  },
+  "classification": "SOURCED_SAME_VERSION_HYPOTHESIS_NATIVE_CONSUMER_UNKNOWN",
+  "numeric_response": "UNKNOWN; no proven threshold or probability",
+  "REA_runtime": "NOT_RUN",
+  "game_runtime": "NOT_RUN",
+  "next_single_field": "TENDENCY_NATIVE_038",
+  "later_improvement": "After field identity, preregister eligible on-court contexts and compare 3D versus Calendar using controlled teammate/coach/ability covariates"
+}
