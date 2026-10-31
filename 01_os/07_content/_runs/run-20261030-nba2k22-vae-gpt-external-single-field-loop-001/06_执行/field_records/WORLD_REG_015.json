@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_015",
+  "iteration_id": "SWEEP01_FIELD0114",
+  "research_date": "2026-10-31",
+  "primary_question": "Does candidate trade_difficulty correspond to Trade Negotiation Difficulty in Difficulty settings, trade-value sliders, or an independent negotiation gate?",
+  "candidate": {
+    "key": "settings.trade_rules.trade_difficulty",
+    "offset": "0x174",
+    "source_class": "STATIC_REGISTRY_CANDIDATE",
+    "original_UI_name": "UNKNOWN",
+    "value_domain": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "NBA 2K22 2021/22 era",
+      "game": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE, PC exact build unknown",
+      "grade": "SAME_RELEASE_SETTINGS_LIST",
+      "claim": "Trade Negotiation Difficulty 80 and Trade Frequency 37 appear as distinct configurable options"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/678046-nba-2k15-official-myleague-mygm-thread/page41",
+      "author": "NBA2K15 MyLEAGUE discussion",
+      "date": "2014",
+      "game": "NBA2K15, not 2K22",
+      "platform": "legacy game",
+      "grade": "HISTORICAL_CONCEPT_ONLY",
+      "claim": "Older source distinguishes trading frequency and negotiation difficulty; do not transfer specific formulas"
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/k87sh9",
+      "author": "r/NBA2k",
+      "date": "2020-12-07",
+      "game": "pre-2K22 franchise discussion",
+      "platform": "unknown",
+      "grade": "CROSS_VERSION_COMMUNITY",
+      "claim": "Users discussed trade slider influence and commissioner approval; not isolated PC22 proof"
+    }
+  ],
+  "claims": [
+    "Same-version franchise menus include trade frequency and negotiation-difficulty concepts",
+    "No source confirms native address 0x174 or a numeric threshold",
+    "External GM transaction scheduling must remain an independent rule"
+  ],
+  "semantic_ambiguities": [
+    "Negotiation difficulty and trade frequency are different mechanisms",
+    "No evidence a +0x174 static registry candidate binds to visible Trade Negotiation Difficulty"
+  ],
+  "observables": [
+    "read-only exact setting name and raw value",
+    "transaction acceptance threshold only in later authorized controlled experiment",
+    "isolate team needs, player trade value and other trade difficulty settings"
+  ],
+  "confounds": [
+    "Trade Override",
+    "CPU-CPU Trades",
+    "Trade Approval, cap and roster eligibility",
+    "team control vs all-CPU mode"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_015",
+    "question": "At current PC22 offline MyLEAGUE exact save/build, does read-only trade settings candidate +0x174 map to the visible Trade Difficulty (or separately named) UI value with readback, without trades or writes?",
+    "positive": "SCOPED_CONFIG_MAPPING",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "TRADE_FREQUENCY_OR_DIFFICULTY_NAMING_UNRESOLVED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "GM_rules": "NO_CHANGES"
+}
