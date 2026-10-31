@@ -1,0 +1,258 @@
+{
+  "schema_version": "nba2k22.vae.prototype_capability_matrix.v2",
+  "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+  "basis": "Human direct VAE prototype expectation, 2026-10-30, three pillars native execution/methodology/role-specific data",
+  "original_candidate_commit": "c2d9caae388bac3ae5e586c69ee0bd2116ba473b",
+  "original_candidate_scope": "OFFLINE_DRY_RUN_ONLY_UNDER_PREVIOUS_CONTRACT",
+  "evidence_levels": [
+    "STATIC_REFERENCE",
+    "OFFLINE_TEST",
+    "LIVE_GETTER",
+    "UI_READBACK",
+    "NATIVE_EXECUTION",
+    "POST_OPERATION_READBACK",
+    "SAVE_RELOAD",
+    "GAMEPLAY_OBSERVATION",
+    "ROLE_DATA_QUERY"
+  ],
+  "default_status": "NOT_VERIFIED",
+  "scope": "Full prototype acceptance inventory; not proof of capability or current permission",
+  "capabilities": [
+    {
+      "id": "GM-01",
+      "role": "GM",
+      "action": "budget_salary_cap_tax_multi_year",
+      "expected": "Read payroll, contract years/options, cap, tax, budget; deterministic scenario computation; verify against current game state.",
+      "sources": [
+        "contracts",
+        "salary",
+        "roster",
+        "league_finance"
+      ],
+      "verification": "field-level live/fixture provenance plus independent numerical oracle; no financial mutation implied"
+    },
+    {
+      "id": "GM-02",
+      "role": "GM",
+      "action": "team_roster_and_staff_management",
+      "expected": "Inspect and manage player/staff membership, roles and eligibility when supported.",
+      "sources": [
+        "team_roster",
+        "staff",
+        "contract",
+        "transactions"
+      ],
+      "verification": "preflight, native operation and identity/roster/contract readback"
+    },
+    {
+      "id": "GM-03",
+      "role": "GM",
+      "action": "trade",
+      "expected": "Native proposal, legality check, submit, roster/contract/asset post-readback; record history.",
+      "sources": [
+        "trade_assets",
+        "cap",
+        "roster",
+        "team_state"
+      ],
+      "verification": "same save, transaction ID, both sides, before/after, valid permission and persistence"
+    },
+    {
+      "id": "GM-04",
+      "role": "GM",
+      "action": "sign_renew_release",
+      "expected": "Native free-agent signing, contract renewal, waivers and lawful eligibility checks as applicable.",
+      "sources": [
+        "market",
+        "contract",
+        "budget",
+        "team_state"
+      ],
+      "verification": "native result + agreement terms/roster/budget readback"
+    },
+    {
+      "id": "GM-05",
+      "role": "GM",
+      "action": "draft_and_picks",
+      "expected": "Draft candidates/pick ownership/round/protection, selection legality, native draft execution when mode and season stage support.",
+      "sources": [
+        "draft_board",
+        "pick_ownership",
+        "prospect",
+        "league_calendar"
+      ],
+      "verification": "actual draft result, identity and pick ownership readback on authorized test save"
+    },
+    {
+      "id": "COACH-01",
+      "role": "coach",
+      "action": "coach_and_team_tactics",
+      "expected": "Adjust coach/team offense/defense, ACE, POE, playbook, freelance, matchup and other verified strategy settings.",
+      "sources": [
+        "coach_profile",
+        "team_tactics",
+        "opponent",
+        "gameplay"
+      ],
+      "verification": "field by field native before/after and tactical outcome observations; link interaction graph"
+    },
+    {
+      "id": "COACH-02",
+      "role": "coach",
+      "action": "rotation_minutes_roles",
+      "expected": "Native team rotation, role, minutes and roster-eligibility changes under coach permission.",
+      "sources": [
+        "roster",
+        "fatigue",
+        "schedule",
+        "coach"
+      ],
+      "verification": "roundtrip readback of slot/minute order and game mode"
+    },
+    {
+      "id": "COACH-03",
+      "role": "coach",
+      "action": "team_and_individual_training",
+      "expected": "Native team training priorities, intensity, individual plan and mentorship when available.",
+      "sources": [
+        "training",
+        "player_growth",
+        "health",
+        "staff"
+      ],
+      "verification": "pre/post current setting and longer-run growth/injury observation; separate immediate from delayed effects"
+    },
+    {
+      "id": "PLAYER-01",
+      "role": "player",
+      "action": "attribute_growth_mechanics",
+      "expected": "Understand native growth drivers, potential/age/training/playing time and observe development, not assume unrestricted direct ratings edits.",
+      "sources": [
+        "player_attribute",
+        "age",
+        "potential",
+        "training",
+        "career_history"
+      ],
+      "verification": "engine behavior evidence or UNKNOWN; approved world-maintenance calibration is separate authority"
+    },
+    {
+      "id": "PLAYER-02",
+      "role": "player",
+      "action": "tendency",
+      "expected": "Explain and safely adjust each native tendency within role rights and verify interaction with tactics, playtypes and game behavior.",
+      "sources": [
+        "tendencies",
+        "playtypes",
+        "shot_map",
+        "tactics"
+      ],
+      "verification": "native before/after + actual in-game action frequency or comparable metrics"
+    },
+    {
+      "id": "PLAYER-03",
+      "role": "player",
+      "action": "badges_and_progression",
+      "expected": "Identify badge identities, levels, triggers and native progression; edits only if explicitly authorized outside ordinary player rights.",
+      "sources": [
+        "badge",
+        "player_stats",
+        "training",
+        "playstyle"
+      ],
+      "verification": "real growth/level evidence; no presumed general badge setter"
+    },
+    {
+      "id": "PLAYER-04",
+      "role": "player",
+      "action": "individual_training",
+      "expected": "Native player-level training/mentor/health choices where supported and authorized.",
+      "sources": [
+        "training",
+        "coach_plan",
+        "player_profile",
+        "growth_history"
+      ],
+      "verification": "pre/post readback, delayed outcomes, competing influences"
+    }
+  ],
+  "methodology_contract": {
+    "per_action_required": [
+      "action_id",
+      "actor_role",
+      "game_save_build_mode",
+      "target_object_and_field",
+      "native_entry_and_preconditions",
+      "allowed_range_and_rights",
+      "mechanism_hypotheses",
+      "interaction_edges_and_confounders",
+      "expected_primary_and_side_effect_metrics",
+      "role_specific_input_data_refs",
+      "before_values_and_freshness",
+      "baseline_comparison_window",
+      "requested_change_or_NO_CHANGE",
+      "authority_ref",
+      "technical_readback_levels",
+      "outcome_including_INCONCLUSIVE",
+      "provenance_and_history",
+      "rollback_or_nonreversible_warning",
+      "method_version"
+    ],
+    "causal_claim_rule": "Distinguish hypothesized effect, Native/UI verified technical change and observed gameplay correlation; mechanism effect cannot be asserted without suitable controlled evidence. Negative/null results are retained.",
+    "relation_graph": "Track directed candidate influence edges from gameplay slider/coach scheme/rotation/training/tendency/badge/age/injury/market action to measurable consequences; qualify evidence and version each edge."
+  },
+  "data_collection_contract": {
+    "source_priority": "Reuse existing Reader/REA Getter, D2/D3 pipeline or other established capture; no parallel database replacement.",
+    "pipeline": [
+      "native_read_or_verified_UI",
+      "identity_validation",
+      "timestamped_source_graded_capture",
+      "incremental_append_only_history",
+      "quality_and_conflict_check",
+      "deterministic_role_analysis",
+      "permissioned_role_views",
+      "decision_trial_and_effect_feedback"
+    ],
+    "roles": {
+      "GM": [
+        "finance_projection",
+        "market_and_assets",
+        "roster_staff",
+        "transactions_and_draft",
+        "team_and_league_context"
+      ],
+      "coach": [
+        "team_and_opponent_tactics",
+        "rotation",
+        "training_and_fatigue",
+        "available_player_profiles",
+        "recent_games"
+      ],
+      "player": [
+        "own_attribute_and_growth",
+        "tendencies_and_badges",
+        "own_training",
+        "health_and_usage",
+        "permitted_history"
+      ]
+    },
+    "query_rules": [
+      "save_season_object_capture_time",
+      "freshness",
+      "permission",
+      "source",
+      "not_observed_is_not_zero",
+      "deterministic_computations_with_formula_version",
+      "no_overwrite_history",
+      "game_state_not_inferred_from_static_fixture"
+    ]
+  },
+  "acceptance_policy": {
+    "core_objective": "Native operation capability, a mechanism/methodology for every action, and role-specific data capture/decision information are all necessary; offline-only scaffold is NOT a completed user-requested prototype.",
+    "inventory_rule": "Every capability row must have PASS with reproducible real-game proof or explicit GAP/BLOCKED with owner, reason, next allowed evidence. Do not report COMPLETE when blocking requested native operations remain unverified.",
+    "minimum_demonstrations": "For each requested action category, if lawful game phase/test environment and specific Human write authorization exist, demonstrate real authorized operation and readback; where unavailable, classify BLOCKED/PARTIAL rather than substituting fixtures.",
+    "permission_rule": "Human allows Gemini to research game mechanisms using REA; this does not automatically authorize live game mutation, process attachment/elevation, unauthorized bypass, or save changes. Group needed protected actions into a single scoped Human approval request for a reversible TEST save before executing.",
+    "stage_boundary": "Human approved A-v1 exact source remains immutable. This direct Human instruction amends practical prototype expectations and implementation prioritization; does not forge full seven-stage runner acceptance.",
+    "review_gate": "One concentrated GPT independent audit after the expanded integrated candidate, not an audit per iteration. Prior dry-run candidate remains interim evidence only."
+  }
+}

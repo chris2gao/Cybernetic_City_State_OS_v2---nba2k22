@@ -3,7 +3,7 @@
     "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
     "parent_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
     "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
-    "objective": "Gemini 作为VAE当前唯一具本地执行能力的主开发者，集中开展VAE Stage02证据G01-G08、R01-R09原型合同修正、E1-E4集成离线可运行纵向原型和多轮局部回归，形成一次集成候选供独立GPT集中审核；同一任务内循环，不按小缺口重复派单。",
+    "objective": "Human增补VAE实际原型目标：一个Gemini长期Loop内交付GM/教练/球员原生操作能力、逐操作方法论与关联机制学习、既有采集系统支持的角色化决策数据服务；只把合法实机读回当实际成功，离线E1干跑是中间基础。集中开发后统一GPT独立审核。",
     "big_task": true,
     "risk_tier": "T2_semantic",
     "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
@@ -51,7 +51,9 @@
         "F07"
       ],
       "governed_stage01_runner": "NOT_RUN_FULL_SEVEN_STAGE_RUNNER",
-      "stage02_authoritative_completion": "NOT_CLAIMED"
+      "stage02_authoritative_completion": "NOT_CLAIMED",
+      "prototype_scope_upgrade_human_directive": "2026-10-30 Human 3-pillar original prototype expectation",
+      "native_write_authority": "NOT_GRANTED_BY_THIS_DIRECTIVE"
     },
     "execution_assignment": {
       "assigned_provider": "Google",
@@ -84,7 +86,13 @@
       "LOOP10_E1_E4_SCOPE_COVERAGE",
       "LOOP11_NO_GAME_WRITE_OR_NEW_UNAUTHORIZED_ACCESS",
       "LOOP12_GIT_COMMIT_AND_PROGRESS_RESUME",
-      "LOOP13_FINAL_CONCENTRATED_VERIFICATION"
+      "LOOP13_FINAL_CONCENTRATED_VERIFICATION",
+      "V2_NATIVE_CAPABILITY_INVENTORY",
+      "V2_METHOD_AND_INTERACTION_EVIDENCE",
+      "V2_ROLE_SPECIFIC_DATA_PIPELINE",
+      "V2_ACTUAL_NATIVE_READBACK",
+      "V2_LEARNING_LOOP_OUTCOME",
+      "V2_INTEGRATED_FINAL_AUDIT_READY"
     ],
     "verification_plan": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/verification_plan.json",
     "loop_contract": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/INTEGRATED_LOOP_CONTRACT_V1.json",
@@ -110,7 +118,13 @@
         "LOOP10_E1_E4_SCOPE_COVERAGE",
         "LOOP11_NO_GAME_WRITE_OR_NEW_UNAUTHORIZED_ACCESS",
         "LOOP12_GIT_COMMIT_AND_PROGRESS_RESUME",
-        "LOOP13_FINAL_CONCENTRATED_VERIFICATION"
+        "LOOP13_FINAL_CONCENTRATED_VERIFICATION",
+        "V2_NATIVE_CAPABILITY_INVENTORY",
+        "V2_METHOD_AND_INTERACTION_EVIDENCE",
+        "V2_ROLE_SPECIFIC_DATA_PIPELINE",
+        "V2_ACTUAL_NATIVE_READBACK",
+        "V2_LEARNING_LOOP_OUTCOME",
+        "V2_INTEGRATED_FINAL_AUDIT_READY"
       ],
       "stop_conditions": [
         "new_load_bearing_semantic_choice",
@@ -162,6 +176,21 @@
       "feasibility_rationale": "Gemini has local execution per Human and Git branch scope; offline/dry-run path is implementable without game mutation. Runtime observations may remain unavailable under security/permission gates and cannot be prerequisites for reporting safe partial evidence.",
       "task_constraints_and_boundaries": "One main owner Gemini, GPT planner and separate GPT reviewer, no Codex. Existing workflow Human stage checkpoints remain, full seven-stage runner not faked. Game/save/Native changes excluded.",
       "stop_or_return_conditions": "Stop and return only on existing OS genuine-stop boundaries, unresolvable lack of evidence or candidate ready for independent reviewer; repeated local micro-fix is internal continuation."
+    },
+    "prior_objective_v1": "Gemini 作为VAE当前唯一具本地执行能力的主开发者，集中开展VAE Stage02证据G01-G08、R01-R09原型合同修正、E1-E4集成离线可运行纵向原型和多轮局部回归，形成一次集成候选供独立GPT集中审核；同一任务内循环，不按小缺口重复派单。",
+    "scope_amendment_v2": {
+      "source": "2026-10-30 Human current VAE planning conversation",
+      "artifacts": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/HUMAN_PROTOTYPE_TARGET_AND_LOOP_AMENDMENT_V2.md",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/PROTOTYPE_CAPABILITY_EVIDENCE_MATRIX_V2.json"
+      ],
+      "prior_candidate_sha": "c2d9caae388bac3ae5e586c69ee0bd2116ba473b",
+      "prior_candidate_status": "INTERIM_OFFLINE_SCAFFOLD_NOT_FULL_PRODUCT_PROTOTYPE",
+      "reopen_same_task": true,
+      "permissions": "No permission beyond original task; REA exploratory intent does not authorize actual game writes or new file paths",
+      "protected_action_request": "If experiments need game/native/save changes collect atomic test-save actions and ask Human once per bounded group",
+      "review": "one consolidated independent GPT audit after new target candidate",
+      "lifecycle": "candidate_pending_validation"
     }
   }
 }

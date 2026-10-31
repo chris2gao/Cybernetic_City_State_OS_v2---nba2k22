@@ -1,7 +1,7 @@
 {
   "schema_version": "nba2k22.vae.integrated_loop.verify.v1",
   "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
-  "status": "PASS",
+  "status": "EXTENDED_SCOPE_VALIDATION_PENDING",
   "checks": [
     {
       "id": "LOOP01_BOOT_AND_IDENTITY",
@@ -93,7 +93,61 @@
       "expected": "PASS or explicitly scoped FAIL/UNKNOWN with primary evidence; no synthetic real-game claims",
       "status": "PASS",
       "actual": "21/21 pytest tests passed cleanly in 0.14s; all 13 checks in verification plan passed."
+    },
+    {
+      "id": "V2_NATIVE_CAPABILITY_INVENTORY",
+      "method": "All GM/coach/player requested actions have explicit ability status, interface, prerequisites, permissions, proof or blocker",
+      "expected": "Every matrix item has auditable status; unverified != PASS",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
+    },
+    {
+      "id": "V2_METHOD_AND_INTERACTION_EVIDENCE",
+      "method": "Methodology per action plus source-graded link graph and measurable hypothesis/side effects",
+      "expected": "No unsupported effects as fact; no missing input/output/measurement for actionable adjustments",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
+    },
+    {
+      "id": "V2_ROLE_SPECIFIC_DATA_PIPELINE",
+      "method": "Capture/read reuse, provenance, immutable history, analysis versions and GM/coach/player views tested incl negative ACL",
+      "expected": "Stable data role query and freshness behavior; real data vs fixtures distinguished",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
+    },
+    {
+      "id": "V2_ACTUAL_NATIVE_READBACK",
+      "method": "Verify permitted game-native operations with before/after and failed/blocked cases by ability family",
+      "expected": "PASS only after real authorized evidence; otherwise NOT_RUN/BLOCKED",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
+    },
+    {
+      "id": "V2_LEARNING_LOOP_OUTCOME",
+      "method": "Perform preregistered effect comparison where authorized, track confounders, INCONCLUSIVE and append-only method revisions",
+      "expected": "No causality claim without relevant game evidence; preserve failed attempts",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
+    },
+    {
+      "id": "V2_INTEGRATED_FINAL_AUDIT_READY",
+      "method": "Collect integrated candidate, repo diff, exact tests/evidence and model ID; separate reviewer after feature convergence",
+      "expected": "No auto-pass from prior 21 offline tests; one consolidated review",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "note": "Requires expanded target evidence; do not infer from prior passing offline tests"
     }
   ],
-  "actual_results": "ALL_13_CHECKS_PASSED"
+  "actual_results": "PRIOR_V1_21_OFFLINE_TESTS_REPORTED;_V2_NATIVE_AND_DATA_ACCEPTANCE_NOT_RUN",
+  "previous_offline_verification": {
+    "commit": "c2d9caae388bac3ae5e586c69ee0bd2116ba473b",
+    "test_result": "21_PASSED_CLAIMED_BY_EXECUTOR",
+    "scope": "dry_run_only; not actual native action or role-based data completeness"
+  },
+  "current_target": "V2_THREE_PILLAR_REAL_CAPABILITY"
 }
