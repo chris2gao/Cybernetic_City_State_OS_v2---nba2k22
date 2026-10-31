@@ -1,0 +1,87 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_035",
+  "iteration_id": "SWEEP01_FIELD0035",
+  "primary_question": "Does Contested Jumper Three Tendency affect CPU willingness to attempt a guarded three rather than the probability of making it?",
+  "candidate": {
+    "key": "tendency.CONTESTED_JUMPER_THREE",
+    "offset": "0x47A",
+    "project_range": [
+      0,
+      100
+    ],
+    "PC22_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte reporting CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX; PC WIP",
+      "grade": "ROSTER_EDIT_REPORTED",
+      "claim": "ATD attempts to calibrate multiple shot selection and shooting attributes; no isolated contested-three parameter test"
+    },
+    {
+      "url": "https://newsroom-anz.2k.com/news/nbar-2k22-unveils-new-gameplay-innovations",
+      "author": "2K official newsroom",
+      "date": "2021 release era",
+      "version": "NBA2K22",
+      "platform": "console and game-wide statement; PC field not specified",
+      "grade": "OFFICIAL_SHOT_SUCCESS_CONTEXT",
+      "claim": "Shot quality, coverage, ratings and fatigue influence shot make window; does not define contested-three choice tendency"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917713-res2-2k22-all-star-current-gen-sliders/page2",
+      "author": "res2",
+      "date": "2021-11-02",
+      "version": "NBA2K22 Current Gen",
+      "platform": "Current Gen; PC-specific source not confirmed",
+      "grade": "RELATED_NAMED_TENDENCY",
+      "claim": "Explicitly lists Contested Jumper Mid as separate edit; three-point analogous naming not byte identity proof"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "UNCONTROLLED_ROSTER_EDIT",
+      "text": "Contest choice can be a separate editorial field; native 0x47A consumer not proven"
+    },
+    {
+      "tier": "OFFICIAL_DIFFERENT_MECHANISM",
+      "text": "Shot contest affects shot success mechanics; does not prove contested shot tendency changes hit probability"
+    }
+  ],
+  "conflicts": [
+    "Shot attempt conditional on a close defender and shot make % are distinct outcomes",
+    "Coach Playbook, bail-out clock, player skill and defensive pressure may alter apparent attempt rates",
+    "No numeric probability mapping or exact threshold"
+  ],
+  "relations": [
+    "Shot Three/Spot Up/Off Screen Three",
+    "Shot IQ and Play Discipline as possible choice mediators",
+    "3PT rating, badges, contest, fatigue as accuracy confounders",
+    "Training direct impact UNKNOWN"
+  ],
+  "metrics": [
+    "guarded 3PA divided by comparable contested CPU opportunities",
+    "open versus guarded 3PA separately",
+    "clock state, score, defensive distance and source play",
+    "FG% separated from shot decisions",
+    "3D and Calendar not pooled"
+  ],
+  "REA_question": {
+    "id": "REA_CONTEST_THREE_035",
+    "question": "For two identity-verified PC22 players, does read-only PLAYER+0x47A match their displayed Contested Jumper Three tendency at same save/build/time?",
+    "match": "SCOPED_MAPPING",
+    "mismatch": "UNKNOWN",
+    "not_available": "BLOCKED",
+    "write": false
+  },
+  "result": "NAMED_CATEGORY_NO_NATIVE_EFFECT_VERIFICATION",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "next_improvement": "Map native UI identity then measure guarded-3 attempts in equivalent possession contexts"
+}
