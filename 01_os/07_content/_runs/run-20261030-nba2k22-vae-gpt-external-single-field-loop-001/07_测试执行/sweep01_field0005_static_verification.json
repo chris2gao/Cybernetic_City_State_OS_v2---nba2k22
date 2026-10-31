@@ -1,0 +1,53 @@
+{
+  "schema_version": "nba2k22.vae.gpt_external_single_field_verify.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_005",
+  "iteration_id": "SWEEP01_FIELD0005",
+  "verified_against": "c2cdd9e714e3b62db6e3b394d9a4e3b751ce941b",
+  "dossier_blob": "102a38800fe23bf2c68a43dc52affd72b401eb01",
+  "checks": [
+    {
+      "id": "GPT01_FIELD_CURSOR",
+      "status": "PASS",
+      "evidence": "ledger iteration 5 ends at cursor 5, shared seed ordinal 5"
+    },
+    {
+      "id": "GPT02_SINGLE_FIELD",
+      "status": "PASS",
+      "evidence": "Dossier has one field_id and one primary question"
+    },
+    {
+      "id": "GPT03_SOURCE_VERSION_DATE",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "4 URLs with published source identity, UNKNOWN where no verified author/platform/date"
+    },
+    {
+      "id": "GPT04_CLAIM_SOURCE_TRACE",
+      "status": "PASS",
+      "evidence": "Claims reference source ID and have explicit maturity"
+    },
+    {
+      "id": "GPT05_CONFLICTS",
+      "status": "PASS",
+      "evidence": "Documented absence/conflicts/mode/version limits"
+    },
+    {
+      "id": "GPT06_NUMERIC_HYPOTHESIS_NOT_FACT",
+      "status": "PASS",
+      "evidence": "No game-verified threshold; registry range provisional"
+    },
+    {
+      "id": "GPT07_REA_TEST_ORACLE",
+      "status": "PASS",
+      "evidence": "REA_FLASHY_DUNK_005"
+    },
+    {
+      "id": "GPT08_CHECKPOINT_READBACK",
+      "status": "PASS_SCOPED",
+      "evidence": "Dossier Git blob 102a38800fe23bf2c68a43dc52affd72b401eb01 and ledger row bound to committed tree c2cdd9e714e3b62db6e3b394d9a4e3b751ce941b"
+    }
+  ],
+  "real_game": "NOT_RUN",
+  "Gemini_REA": "NOT_RUN",
+  "independent_review": "NOT_RUN"
+}
