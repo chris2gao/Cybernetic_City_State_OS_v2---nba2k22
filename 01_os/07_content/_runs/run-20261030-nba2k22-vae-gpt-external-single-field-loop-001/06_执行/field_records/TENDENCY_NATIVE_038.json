@@ -1,0 +1,75 @@
+{
+  "field_id": "TENDENCY_NATIVE_038",
+  "iteration_id": "SWEEP01_FIELD0038",
+  "date": "2026-10-31",
+  "question": "Does Stepback Jumper Mid Range influence CPU stepback attempt choice within viable midrange shot opportunities?",
+  "candidate": {
+    "key": "tendency.STEPBACK_JUMPER_MID_RANGE",
+    "offset": "0x47D",
+    "project_range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte/CelticLG",
+      "date": "2021-12-16",
+      "game": "NBA2K22",
+      "platform": "PS5/XSX; PC work in progress",
+      "claim": "Stepbacks mid and three edited together; no controlled effect"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page4",
+      "author": "vannwolfhawk",
+      "date": "2021-09-19",
+      "game": "NBA2K22",
+      "platform": "UNKNOWN",
+      "claim": "Stepback shot conditions involve several variables, no proved formula"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-09-17 to 2021-11-25",
+      "game": "NBA2K22",
+      "platform": "PS5; PC UNKNOWN",
+      "claim": "Edit tendency distribution for rendered CPU choices, no tested threshold"
+    }
+  ],
+  "claims": [
+    "Stepback-mid is an editing category, not an engine-verified consumer",
+    "Per-player propensities may compete with generic pull-up and Coach calls"
+  ],
+  "contradictions": [
+    "No current PC22 native matching or threshold",
+    "Context availability and shooting success are different outcomes"
+  ],
+  "related": [
+    "Shot Mid",
+    "Drive Pull Up Mid",
+    "Coach Run Plays/Playbook",
+    "Shot IQ, badges and shot contest",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "stepback-mid attempts per eligible CPU on-ball possession",
+    "standard pull-up and pass alternatives",
+    "shot makes separately",
+    "game build/save/UID/3D versus Calendar"
+  ],
+  "REA_question": {
+    "id": "REA_STEPBACK_MID_038",
+    "question": "For two PC22 UID-matched players, does read-only PLAYER+0x47D equal each exact Stepback Jumper Mid Range UI value in the same save/build/time?",
+    "positive": "MAPPING_ONLY",
+    "negative": "UNKNOWN",
+    "not_possible": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_EDIT_CATEGORY_NATIVE_CONSUMER_UNKNOWN",
+  "game": "NOT_RUN",
+  "rea": "NOT_RUN"
+}
