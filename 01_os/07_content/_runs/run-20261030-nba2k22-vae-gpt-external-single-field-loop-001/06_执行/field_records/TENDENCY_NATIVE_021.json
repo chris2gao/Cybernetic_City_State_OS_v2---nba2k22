@@ -1,0 +1,164 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_021",
+  "iteration_id": "SWEEP01_FIELD0021",
+  "sweep": 1,
+  "queue_ordinal": 21,
+  "research_date": "2026-10-30",
+  "primary_question": "Does the Off Screen Shot Mid Range tendency affect CPU choosing a midrange catch-and-shoot after an off-ball screen, distinct from generic Shot Mid and Spot Up Mid?",
+  "identity": {
+    "candidate_native_key": "tendency.OFF_SCREEN_SHOT_MID_RANGE",
+    "offset_hex": "0x46C",
+    "declared_raw_range": [
+      0,
+      100
+    ],
+    "source_tier": "PROJECT_R04B_REGISTRY_ONLY",
+    "live_PC22_native_to_UI": "UNKNOWN",
+    "rendered_game_effect": "UNKNOWN",
+    "Calendar_effect": "UNKNOWN"
+  },
+  "source_queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob_sha": "af5567e14e03cd9f7761e396a978311e347d7c17"
+  },
+  "sources": [
+    {
+      "id": "OS_RES2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917713-res2-2k22-all-star-current-gen-sliders/page2",
+      "author": "res2",
+      "date": "2021-11-02",
+      "game": "NBA 2K22",
+      "platform": "Current Gen title, exact PC platform UNKNOWN",
+      "locator": "post #26: OSSMID abbreviates Off Screen Shooting Midrange",
+      "evidence_grade": "SAME_RELEASE_NAMING_PLAYER_REPORT",
+      "claim": "Editor explicitly lists OSSMID as an individual roster tendency and describes mass-edit subtraction",
+      "limitation": "No native address/readback or controlled rendered-game field effect; search snippet confirmed; full page open intermittently unavailable"
+    },
+    {
+      "id": "OS_SHEITAN",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "game": "NBA 2K22",
+      "platform": "PS5 stated in post #6; CPU-v-CPU target",
+      "locator": "post #9 and #11, lines 329–404",
+      "evidence_grade": "SAME_RELEASE_DIFFERENT_PLATFORM_COMMUNITY_HYPOTHESIS",
+      "claim": "Says multiple specific shot types, including off-screen jumpers, may govern rendered CPU choice; argues Freelance Shot is simulation oriented",
+      "limitation": "No tested PC current-gen OSSMID response or formula"
+    },
+    {
+      "id": "ARCHIVE_DALE",
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction historical roster export; author of dataset UNKNOWN",
+      "date": "2021-09 roster snapshot; page publication UNKNOWN",
+      "game": "NBA 2K22",
+      "platform": "Web export, original platform UNKNOWN",
+      "locator": "Tendencies section; Off Screen Mid distinct from Shot Mid and Spot Up Mid",
+      "evidence_grade": "HISTORICAL_LABEL_REPRESENTATION",
+      "claim": "Same-version archive distinguishes off-screen and spot-up/overall midrange labels",
+      "limitation": "Export not independent Native byte mapping, nor field execution proof"
+    },
+    {
+      "id": "REDDIT_2026",
+      "url": "https://www.reddit.com/r/MyTeam/comments/1qouadc/why_when_i_ask_for_a_screener_to_fade_does_the/",
+      "author": "Reddit r/MyTeam participants (individual commenters not uniquely credited here)",
+      "date": "2026-01-27",
+      "game": "NBA 2K version UNSPECIFIED",
+      "platform": "MyTEAM, platform UNKNOWN",
+      "locator": "Jan 27 discussion of screen fades going to midrange",
+      "evidence_grade": "CROSS_VERSION_ANECTODAL_CONTRADICTION",
+      "claim": "Users dispute whether Off Screen Mid versus Off Screen Three or screener positioning drives fade location",
+      "limitation": "Not NBA 2K22; cannot transfer to PC22 native field or infer fixed effect"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C21A",
+      "source_ids": [
+        "OS_RES2"
+      ],
+      "tier": "CONTEMPORARY_NAMING_ONLY",
+      "statement": "In current-gen 2K22 community roster editing OSSMID names an Off Screen Shooting Midrange tendency"
+    },
+    {
+      "id": "C21B",
+      "source_ids": [
+        "OS_SHEITAN"
+      ],
+      "tier": "COMMUNITY_HYPOTHESIS_DIFFERENT_PLATFORM",
+      "statement": "A specific off-screen shooting preference may participate in rendered-game action choice, but no exact PC22 consumer proved"
+    },
+    {
+      "id": "C21C",
+      "source_ids": [
+        "ARCHIVE_DALE"
+      ],
+      "tier": "HISTORICAL_EXPORT_ONLY",
+      "statement": "Off-screen mid and other mid-zone preferences are treated separately in historical player data"
+    },
+    {
+      "id": "C21D",
+      "source_ids": [
+        "REDDIT_2026"
+      ],
+      "tier": "UNSUITABLE_FOR_2K22_PROOF",
+      "statement": "Later MyTEAM comments about screening/fading are contradictory and not transferable to 2K22"
+    }
+  ],
+  "conflicts": [
+    "User-roster naming is not evidence that PLAYER+0x46C reads the named UI field",
+    "An off-screen midrange decision may be mediated by Coach Run Plays, off-ball screen availability, shot type and defender positioning",
+    "PS5 CPU-versus-CPU or later MyTEAM anecdote cannot prove current-gen PC22 engine weight"
+  ],
+  "possible_relationships": [
+    {
+      "setting": "Coach Run Plays / Playbook / PlayTypes / off-ball screen action",
+      "role": "creates eligible off-screen opportunity",
+      "tier": "HYPOTHESIS"
+    },
+    {
+      "setting": "SHOT_MID_RANGE_TENDENCY, SPOT_UP_SHOT_MID_RANGE",
+      "role": "potentially competing/moderating shot selection",
+      "tier": "HYPOTHESIS"
+    },
+    {
+      "setting": "OFF_SCREEN_SHOT_THREE and shooting zones",
+      "role": "different shot-location alternatives",
+      "tier": "HYPOTHESIS"
+    },
+    {
+      "setting": "Midrange shooting ability, fatigue, badges, contestedness",
+      "role": "success/eligibility confounders, not equated with tendency",
+      "tier": "HYPOTHESIS"
+    },
+    {
+      "setting": "Training",
+      "role": "direct field response unsupported",
+      "tier": "UNKNOWN"
+    }
+  ],
+  "observables": [
+    "off-screen midrange attempts per eligible screen-assisted CPU reception",
+    "off-screen 3PA and non-shot actions from equivalent catches",
+    "screen actions called/completed separately from shots",
+    "player UID and 3D vs Calendar mode; minutes, defender distance, ball location"
+  ],
+  "gemini_REA_question": {
+    "id": "REA_OFFSCREEN_MID_021",
+    "question": "For two distinct verified PC22 Player UIDs, does read-only PLAYER+0x46C equal their independently displayed Off Screen Shot Mid Range tendency in the same save/build/time?",
+    "positive": "SCOPED_NATIVE_UI_MAPPING_ONLY",
+    "negative": "UNKNOWN_MAPPING",
+    "unavailable": "BLOCKED",
+    "runtime_executed": false,
+    "write_permission": false
+  },
+  "numeric_effect_threshold": "UNKNOWN_NOT_CLAIMED",
+  "current_PC22_runtime_effect": "UNKNOWN",
+  "game_test": "NOT_RUN",
+  "REA_native": "NOT_RUN",
+  "independent_audit": "NOT_RUN",
+  "iteration_gain": "Same-release current-gen source identifies OSSMID acronym; isolates needed shot opportunity metric and distinguishes 2026 cross-version claim.",
+  "next_improvement": "After native-to-UI identity, record off-screen catch context in CPU 3D and compare off-screen mid/three selection; separate from Calendar."
+}
