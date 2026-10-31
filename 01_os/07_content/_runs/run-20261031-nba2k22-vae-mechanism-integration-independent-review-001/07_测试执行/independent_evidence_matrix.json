@@ -1,0 +1,311 @@
+{
+  "schema_version": "nba2k22.vae.mechanism_integrated_independent_review.evidence_matrix.v1",
+  "task_id": "NBA2K22-VAE-MECHANISM-INTEGRATION-INDEPENDENT-REVIEW-20261031-001",
+  "dispatch_sha": "3c378d05a42be50d7f105256d5bb978bd88eefa5",
+  "fixed_candidate_sha": "b3e39f867364b4610fc57f5cc798c7ab33232eeb",
+  "verdict": "REWORK_REQUIRED",
+  "findings": [
+    {
+      "id": "INT-P0-01",
+      "severity": "P0",
+      "gate": "RV02_CANONICAL_FIELD_ID_INTEGRITY",
+      "title": "Graph setting IDs refer to other real fields; wrong semantic edges marked PROVEN_NATIVE_ASSEMBLY",
+      "locations": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/MECHANISM_RELATIONSHIP_GRAPH_V1.json",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/mechanism_graph.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_005.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_014.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_002.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_066.json"
+      ],
+      "observed": "Graph COACH_DEFAULT_005 calls Tempo but actual POEDefense2 (Tempo is 014); graph TENDENCY_NATIVE_002 calls Touches but actual DrivingLayupTendency (Touches is 066); graph COACH_DEFAULT_002 calls POEDefense but actual POEOffense2 (POEDefense is 004). All three are existing keys, hence node existence and DAG tests miss semantic corruption.",
+      "impact": "A GM/coach queries a completely different game's setting but sees a verified impact path. It can also make wrong telemetry comparisons.",
+      "exit": "For every SETTING_FIELD join exactly to fixed per-field record on field_id plus expected canonical_key, with category/storage validation; correct 3 nodes, associated edge/source labels, and negative test inject wrong-but-existing IDs; stop export if mismatched."
+    },
+    {
+      "id": "INT-P0-02",
+      "severity": "P0",
+      "gate": "RV03_INTEGER_PACING_ARITHMETIC",
+      "title": "NativeCoachPacingEngine calculates edx but discards it; returned modifier contradicts provided x86 fixed-point instructions",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/coach_pacing.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_coach_pacing.py"
+      ],
+      "observed": "Code calculates edx via magic multiply then uses int(round(offset * 0.6))+10 for unclamped. Native-looking signed high32 IMUL 0x51eb851f; SAR edx,4; add sign +10 computes approximately truncated ((tempo-50)*60)/50+10 (1.2 multiplier) for ordinary 0..100. Source-equivalent examples tempo 60: native22 vs code16; 70: 34 vs22; 80:46 vs28; 100:70 vs40. Negative behavior, float SSE2 cvtss2si, 32-bit overflows also not modeled.",
+      "impact": "Wrong claimed exact Native modifier, net_possession target, and 5x+2x composition become systematically wrong; tests encode same mistaken 0.6 formula.",
+      "exit": "Implement separate deterministic signed-32 instruction emulator as test oracle (or independently decoded binary engine), compare selected 0/10/40/50/51/52/60/70/80/100 plus negatives/round halves and overflow; identify origin of XMM0/EDI/RCX. Native labels only after source bytes authenticated."
+    },
+    {
+      "id": "INT-P0-03",
+      "severity": "P0",
+      "gate": "RV09_NO_GAMEPLAY_CAUSAL_OVERCLAIMS",
+      "title": "Experimental decision bridge returns heuristic result in conflict with its own 'native_ground_truth'",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/decision_bridge.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/role_governor.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_decision_bridge.py"
+      ],
+      "observed": "For role_tier=2, shot_tendency=88 and supplied role_ceiling=80, bridge reports effective_shot_tendency=75, is_suppressed=true; internally native_eval(role_tier=2, secondary_tier=2) enters Branch C, table floor74, produces effective_shot_tendency=88. The code returns native_ground_truth branch/tier but hides conflicting effective value. For tempo80, bridge calls 70 'effective_tempo' and 'saturation' while its NativeCoachPacingEngine returns 28 as bounded_modifier, conflating slider vs internal state.",
+      "impact": "Mixed probabilistic/heuristic outputs could be misinterpreted as facts and direct improper GM or coach adjustments.",
+      "exit": "Keep independent heuristic and source-derived tracks; never name a value native_ground_truth until verified; surface mismatch and mode, require explicit experimental-only consumers; add cross-track contradiction tests and policy gate."
+    },
+    {
+      "id": "INT-P0-04",
+      "severity": "P0",
+      "gate": "RV04_NATIVE_OPCODE_PROVENANCE_AND_CFG",
+      "title": "PROVEN_NATIVE_ASSEMBLY and native table 'ground truth' unsupported by independently checkable full PE provenance",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/role_governor.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/coach_pacing.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/MECHANISM_RELATIONSHIP_GRAPH_V1.json"
+      ],
+      "observed": "Role table tuple (92,83,74,0), float multipliers and full branches are constants; repo uses in-source byte strings/disassembly strings, no independently linked PE/code hash + actual span snapshot/complete CFG in fixed candidate. consumer_tracer.verify_live_bytes only checks first5 bytes at base+0x120ba98. Existing submitted Tempo byte span starting 0x120ba72 positions b8 46 at 0x120ba83 and cmovg at 0x120ba98, thus verifier checks wrong offset against template.",
+      "impact": "Source fixtures and labels cannot establish the actual runtime native law; 7 graph edges and transformer nodes overclaim verification.",
+      "exit": "Keep static leads; collect source-authentic raw bytes and table bytes under verified game-build identity (if permitted), independently decode all instructions/branches/rel32 and link table address/width/owner. Grade evidence per-edge; do not claim gameplay effect."
+    },
+    {
+      "id": "INT-P1-05",
+      "severity": "P1",
+      "gate": "RV05_ROLE_GOVERNOR_BRANCH_CORRECTNESS",
+      "title": "Role tier domain, non-core floor and rating float-rounding assumptions unproved",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/role_governor.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_role_governor.py"
+      ],
+      "observed": "Branch C as modeled raises deep-bench shot/touches to at least92, more than some core paths; may be real internal logic but object/role-table identity, int vs byte width, rb[x] index and offscreen path remains unverified. int(round(float(r)*multiplier)) clamps99 while actual SSE conversion/uint8 storage and zero/range handling unproved; 5 rating channels assumed. Test against its own tuples only.",
+      "impact": "Incorrect ratings and shot frequency interpretation if delivered as game truth.",
+      "exit": "Negative and boundary cases on role0..3, secondary0..3, raw0/100, floats 0.5/99.5 and invalid indices, direct table byte evidence, full CFG with all paths and type widths; UNKNOWN allowed."
+    },
+    {
+      "id": "INT-P1-06",
+      "severity": "P1",
+      "gate": "RV06_GRAPH_EDGE_GRADES_AND_DAG",
+      "title": "Graph DAG valid in snapshot, but no canonical-ID or edge-evidence invariant on graph construction",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/mechanism_graph.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_mechanism_graph.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/MECHANISM_RELATIONSHIP_GRAPH_V1.json"
+      ],
+      "observed": "Actual graph has 16 nodes,12 edges, DAG acyclic and all three telemetry contracts align structurally. test_graph_initialization expects wrong COACH_DEFAULT_005. add_node/add_edge accept arbitrary keys without validating canonical records/edge permission/evidence. DFS maintains visited but does not guard recursive calls, future cycle could recurse indefinitely.",
+      "impact": "Correct topology masquerades as semantically valid identity relation; new edges could silently upgrade evidence.",
+      "exit": "Run graph referential integrity across canonical inventory/field records, reject mismatched existing IDs, unknown edge targets, cycles, and unsupported epistemological promotion. Test wrong-but-existing IDs and cyclic fixture."
+    },
+    {
+      "id": "INT-P1-07",
+      "severity": "P1",
+      "gate": "RV04_NATIVE_OPCODE_PROVENANCE_AND_CFG",
+      "title": "RVA / rel32 discrepancies from prior fixed-byte candidate remain unresolved",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/consumer_tracer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/coach_pacing.py"
+      ],
+      "observed": "Given saved tempo hex with base0x14120ba72, mov eax,70 occurs0x14120ba83, but handwritten text calls it0x14120ba98. Snapshot E8 0D 07 23 00 at0x14174510e decodes destination0x141975820, not0x140975820 as marked. This is a contradiction within developer-supplied evidence, not independent proof of actual game binary bytes.",
+      "impact": "Native getter/callgraph and instruction address ground truth risk being anchored to wrong basic blocks.",
+      "exit": "Use automated real byte disassembly with RVA map and full rel32 branch targets, compare to exact PE and provenance; any mismatch must remain OPEN."
+    },
+    {
+      "id": "INT-P1-08",
+      "severity": "P1",
+      "gate": "RV07_TLM_IS_REQUIREMENT_NOT_STORAGE_SCHEMA",
+      "title": "Three telemetry contracts are plausible hypotheses but omit minimum semantic identification and comparison factors",
+      "locations": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/TELEMETRY_VALIDATION_CONTRACTS_V1.json",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/coach_pacing.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/role_governor.py"
+      ],
+      "observed": "Contracts contain only contract_id/source_mechanism/target_observable/relation/verification_gate/description; no requirement for save/build/season/mode, user-vs-CPU, entity ID, pre/post settings, clock/event, repeated match exposure, sample validity, available/estimated fields, two Normalize definitions, minutes/pace denominator, interventions/confounders, comparison gates. Text says 'directly regulates'/'determines' while status pending.",
+      "impact": "Future collector may capture superficially matching data insufficient to test causality or compare live vs simulated modes.",
+      "exit": "Define semantic minimum information needs, metric definitions, observational windows, paired or stratified comparisons, unavailable metric handling and falsification gates for all three. Explicitly DO NOT freeze JSON logs, SQL tables, DB schema, data transport or field physical names; D-series decides later."
+    },
+    {
+      "id": "INT-P1-09",
+      "severity": "P1",
+      "gate": "RV08_TEST_ISOLATION_AND_40_EXECUTOR_SELFTEST",
+      "title": "40 tests exist but are self-referential; default LiveAnalyzer fixture may attach NBA2K22",
+      "locations": [
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_live_analyzer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/live_analyzer.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_mechanism_graph.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_coach_pacing.py"
+      ],
+      "observed": "Seven test modules contain 8+7+5+5+5+5+5=40 test functions. Not independently executed. Mechanism graph tests assert wrong COACH_DEFAULT_005 as Tempo, pacing tests require wrong result100->40. LiveEngineAnalyzer.__init__(auto_attach=True), test fixture constructs without override; test_sweep_3_full_live_grounding could execute complete game reads if process present. Other mutations use tmp_path but attach isolation not complete.",
+      "impact": "Selftest pass proves code follows assumptions, not native behavior; OS read-only game attach should not be an implicit pytest side effect.",
+      "exit": "Separate offline FakeMemory/no_attach fixtures across whole suite, assert zero process attach, compare git working tree before/after, independent oracle properties & negative tests; retain raw test receipt and allow independent rerun."
+    },
+    {
+      "id": "INT-P1-10",
+      "severity": "P1",
+      "gate": "RV09_NO_GAMEPLAY_CAUSAL_OVERCLAIMS",
+      "title": "Evidence grade/causal wording and fixed stage coverage conflate levels",
+      "locations": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/MECHANISM_RELATIONSHIP_GRAPH_V1.json",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/coach_pacing.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/src/vae_rea_research/role_governor.py",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/current_checkpoint.json"
+      ],
+      "observed": "`PROVEN_NATIVE_ASSEMBLY` on new nodes and 7 edges, `epistemological_tier` of calculators marks native, while gamer effect not tested. 204/204 and unknown_fields=0 reflect seed read attempts/records, not mechanism consumer or gameplay effect coverage; checkpoint NEXT=SWEEP_COMPLETE even though longitudinal improvement loop has open hypotheses.",
+      "impact": "Downstream consumer may treat inventory completion as mechanism certainty.",
+      "exit": "Separate identity/byte+CFG/consumer/behavior levels, block promotion by source, retain pending hypotheses and next research backlog; do not require all204 empirical effects within current review."
+    },
+    {
+      "id": "INT-P1-11",
+      "severity": "P1",
+      "gate": "RV04_NATIVE_OPCODE_PROVENANCE_AND_CFG",
+      "title": "Historical raw capture provenance remains semantically corrupted by prior placeholder time/decoded bits",
+      "locations": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/COACH_DEFAULT_014.json",
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_066.json"
+      ],
+      "observed": "Legacy timestamps still uniformly 2026-10-31T03:00:00Z, rather than each original UTC read instant from f1e02101; WORLD_REG_002 raw legacy bit pattern 1056964608 had been decoded to0.5 in current artifact. Historical Git source is recoverable, but the current record is not an immutable exact original capture.",
+      "impact": "Invalid before/after provenance for future feedback model and cross-sweep comparisons.",
+      "exit": "Immutable provenance refs to original Git blob + actual timestamp/raw bits, separate corrected derivations and invalid-source reads; never synthesize historical observation time."
+    },
+    {
+      "id": "INT-P2-12",
+      "severity": "P2",
+      "gate": "RV08_TEST_ISOLATION_AND_40_EXECUTOR_SELFTEST",
+      "title": "40/40 developer result is source-reported, not independent run",
+      "locations": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/08_结论/completion_pointer.md",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_coach_pacing.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/tests/vae_rea_research/test_mechanism_graph.py"
+      ],
+      "observed": "40 test functions enumerated across seven files, but GitHub source itself offers no proof of fresh pytest execution/independent machine or original EXE. At least two tests explicitly assert wrong source assumptions. Audit did not re-run full suite.",
+      "impact": "Test count should not serve as Native authenticity evidence.",
+      "exit": "Log python version, exact commit, pytest collection and output, isolation, deps and tests; independent offline rerun and oracle tests at fixed candidate, with honest NOT_RUN before rerun."
+    },
+    {
+      "id": "INT-P2-13",
+      "severity": "P2",
+      "gate": "RV07_TLM_IS_REQUIREMENT_NOT_STORAGE_SCHEMA",
+      "title": "Metric feasibility and Normalize semantics must stay future-facing",
+      "locations": [
+        "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/TELEMETRY_VALIDATION_CONTRACTS_V1.json"
+      ],
+      "observed": "Actual FGA per36, per48 possessions, quarter fatigue penalty may be unavailable/reconstructed/mixed-mode. None proves game effect until tests; collector infrastructure and physical schema intentionally undecided.",
+      "impact": "Premature physical schema could tightly couple VAE to a future collector and force invalid missing-data guesses.",
+      "exit": "Specify semantic required/optional, observed/derived/unknown flags and three test hypotheses without database/log format, SQL field types or mandatory UI read windows."
+    }
+  ],
+  "counts": {
+    "P0": 4,
+    "P1": 7,
+    "P2": 2
+  },
+  "checks": [
+    {
+      "id": "RV01_FIXED_HEAD_AND_SOURCE",
+      "status": "PASS",
+      "evidence": "Dispatch 3c378d... and fixed Gemini b3e39... verified; branch starts dispatch SHA"
+    },
+    {
+      "id": "RV02_CANONICAL_FIELD_ID_INTEGRITY",
+      "status": "FAIL",
+      "evidence": "3 existing node keys mapped to wrong field meanings"
+    },
+    {
+      "id": "RV03_INTEGER_PACING_ARITHMETIC",
+      "status": "FAIL",
+      "evidence": "native-source-equivalent values differ at tempo60/70/80/100"
+    },
+    {
+      "id": "RV04_NATIVE_OPCODE_PROVENANCE_AND_CFG",
+      "status": "FAIL",
+      "evidence": "hardcoded bytes and internally inconsistent RVA, no authenticated live PE"
+    },
+    {
+      "id": "RV05_ROLE_GOVERNOR_BRANCH_CORRECTNESS",
+      "status": "PARTIAL",
+      "evidence": "branches modeled but table/type/floor/rounding lack independent native proof"
+    },
+    {
+      "id": "RV06_GRAPH_EDGE_GRADES_AND_DAG",
+      "status": "PARTIAL",
+      "evidence": "16/12 DAG and contract joins pass, semantics and grades fail"
+    },
+    {
+      "id": "RV07_TLM_IS_REQUIREMENT_NOT_STORAGE_SCHEMA",
+      "status": "PARTIAL",
+      "evidence": "3 semantic directions valid, minimum identifiers and controls missing; physical schema deliberately not required"
+    },
+    {
+      "id": "RV08_TEST_ISOLATION_AND_40_EXECUTOR_SELFTEST",
+      "status": "PARTIAL",
+      "evidence": "40 test functions counted, not independently run, LiveAnalyzer default attach risk"
+    },
+    {
+      "id": "RV09_NO_GAMEPLAY_CAUSAL_OVERCLAIMS",
+      "status": "FAIL",
+      "evidence": "overgraded native claims and contradictory bridge outputs"
+    },
+    {
+      "id": "RV10_REPRODUCIBLE_FINDINGS_CONSOLIDATED_REWORK",
+      "status": "PASS",
+      "evidence": "This audit evidence matrix and report present reproducible failures"
+    }
+  ],
+  "independent_verifications": {
+    "graph": {
+      "nodes": 16,
+      "edges": 12,
+      "contracts": 3,
+      "is_DAG": true,
+      "all_edges_reference_existing_nodes": true,
+      "all_telemetry_edges_match_contract": true,
+      "miskeyed_existing_setting_nodes": 3
+    },
+    "field_records": {
+      "COACH_DEFAULT_005": "POEDefense2",
+      "COACH_DEFAULT_014": "Tempo",
+      "COACH_DEFAULT_002": "POEOffense2",
+      "COACH_DEFAULT_004": "POEDefense",
+      "TENDENCY_NATIVE_002": "DrivingLayupTendency",
+      "TENDENCY_NATIVE_066": "TouchTendency"
+    },
+    "source_equivalent_pacing": [
+      {
+        "raw": 50,
+        "submitted_python": 10,
+        "modeled_x86": 10
+      },
+      {
+        "raw": 60,
+        "submitted_python": 16,
+        "modeled_x86": 22
+      },
+      {
+        "raw": 70,
+        "submitted_python": 22,
+        "modeled_x86": 34
+      },
+      {
+        "raw": 80,
+        "submitted_python": 28,
+        "modeled_x86": 46
+      },
+      {
+        "raw": 100,
+        "submitted_python": 40,
+        "modeled_x86": 70
+      }
+    ],
+    "decision_bridge_conflict": {
+      "role": 2,
+      "raw_shot": 88,
+      "manual_role_ceiling": 80,
+      "bridge_effective": 75,
+      "internal_evaluator_branch": "BRANCH_C_NON_CORE_SUPPORT",
+      "internal_evaluator_effective": 88
+    },
+    "developer_test_functions": 40,
+    "developer_40_pass_report": "NOT_INDEPENDENTLY_RERUN",
+    "original_pe_available": false,
+    "game_live_read": false,
+    "protected_write": false
+  },
+  "remediation_profile": "ONE_CONSOLIDATED_CORRECTION_PACKAGE",
+  "future_feedback_requirement": "SEMANTIC_ONLY_PHYSICAL_FORMAT_UNDECIDED",
+  "human_acceptance": "NOT_APPLIED",
+  "PRMS": "NOT_RUN"
+}
