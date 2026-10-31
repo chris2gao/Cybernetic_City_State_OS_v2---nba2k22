@@ -1,0 +1,126 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_002",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0002",
+  "research_date": "2026-10-30",
+  "question": "Does Driving Layup tendency influence CPU layup selection after a drive begins, rather than layup success?",
+  "native_candidate": {
+    "key": "tendency.DRIVING_LAYUP_TENDENCY",
+    "offset": "0x459",
+    "declared_raw_range": [
+      0,
+      100
+    ],
+    "runtime_validated": false,
+    "ui_mapping": "UNKNOWN",
+    "game_consumer": "UNKNOWN",
+    "mode_specific_effect": "UNKNOWN"
+  },
+  "queue_ref": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+  "queue_blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://crucialbaskets.com/2021/10/18/preseason-sim-tournament-keeping-it-real/",
+      "author": "UNKNOWN",
+      "date": "2021-10-18 (URL-derived)",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "evidence": "CPU-v-CPU thirty-team tournament reports average Driving Layup Tendency 52 and excessive interior attacks; no isolated field intervention",
+      "grade": "CONTEMPORARY_OBSERVATION",
+      "limitations": "Other sliders modified; direct webpage fetch intermittent, indexed full article available; no causal threshold"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "Multi-platform roster project; exact PC build UNKNOWN",
+      "evidence": "Project differentiates drive and dunk tendency edits",
+      "grade": "CONTEMPORARY_ROSTER_PRACTICE",
+      "limitations": "No controlled native readback"
+    },
+    {
+      "id": "S3",
+      "url": "https://nba2kw.com/nba-2k22-attributes-explained-finishing-shooting-playmaking-defense-reb-physicals",
+      "author": "NBA2KW editorial, individual byline UNKNOWN",
+      "date": "2021 (exact publication UNKNOWN)",
+      "version": "NBA 2K22",
+      "platform": "MyPLAYER context; PC relation UNKNOWN",
+      "evidence": "Driving Layup ATTRIBUTe describes making moving layups, not choosing to attempt them",
+      "grade": "SAME_VERSION_DIFFERENT_FIELD",
+      "limitations": "Attribute and tendency must not be equated"
+    },
+    {
+      "id": "S4",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/841295-tendency-edits-that-are-game-changers-for-realism/page26?postcount=964",
+      "author": "King Gro23",
+      "date": "2017-11-25",
+      "version": "Pre-2K22 series",
+      "platform": "UNKNOWN",
+      "evidence": "Interprets layup choice as competing with dunk, pullup and close shot; posts #376/#380",
+      "grade": "CROSS_VERSION_HYPOTHESIS",
+      "limitations": "No verified PC22 effect or internal decision tree"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C1",
+      "sources": [
+        "S1"
+      ],
+      "status": "CORRELATIONAL_NOT_CAUSAL",
+      "claim": "Observed average tendency and interior-heavy play coexist in one 2K22 tournament"
+    },
+    {
+      "id": "C2",
+      "sources": [
+        "S2",
+        "S3"
+      ],
+      "status": "INTERPRETATION",
+      "claim": "Finishing skill and finishing choice are separate research objects"
+    },
+    {
+      "id": "C3",
+      "sources": [
+        "S4"
+      ],
+      "status": "UNVERIFIED_TRANSFER",
+      "claim": "Layup-versus-dunk and close shot may compete after a drive"
+    }
+  ],
+  "conflicts": [
+    "No PC22 isolated intervention supports S4 deterministic prioritization",
+    "S1 average 52 is a descriptive value, not recommended threshold"
+  ],
+  "related": [
+    "Driving Dunk and Shot Close as possible competing action categories",
+    "Coach Playbook/POE as opportunity confounders",
+    "Layup attribute, fatigue, contest, badges as success confounders",
+    "Training direct link UNKNOWN"
+  ],
+  "observable_metrics": [
+    "layup attempts per eligible CPU drive",
+    "alternatives: dunk, pass, pullup and close shot",
+    "drive initiation frequency separately",
+    "shot success separately",
+    "3D and Calendar contexts separately"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_LAYUP_002",
+    "question": "Do read-only candidate PLAYER+0x459 bytes for two identified PC22 players agree with each player's native in-game UI Driving Layup tendency value under the same save/build/time?",
+    "expected_match": "SCOPED_NATIVE_UI_MAPPING_SUPPORT_ONLY",
+    "expected_mismatch": "MAPPING_UNKNOWN",
+    "unavailable": "BLOCKED",
+    "game_write_authorized": false,
+    "executed": false
+  },
+  "result": "SOURCED_CONTEXT_NATIVE_EFFECT_UNKNOWN",
+  "game_test": "NOT_RUN",
+  "independent_audit": "NOT_RUN",
+  "next_improvement": "After UID mapping, isolate 3D drive opportunities and finish choice while keeping other tendencies and coach strategy fixed"
+}
