@@ -12,7 +12,12 @@
     "planner_branch": "task/nba2k22-vae-stage01-20261030",
     "gpt_execution_branch": "task/nba2k22-vae-gpt-stage01-requirements-20261030",
     "gpt_dispatched_head": "079ccec5a28e7a61f000b462037f1c67ae8cef11",
-    "planner_rule_file": "01_任务输入/PLANNER_RESULT_INTAKE_AND_CONTEXT_V2.md"
+    "planner_rule_file": "01_任务输入/PLANNER_RESULT_INTAKE_AND_CONTEXT_V2.md",
+    "planner_policy_last_update_source": "CURRENT_RUN_COMMIT",
+    "gpt_completed_head": "3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3",
+    "gpt_candidate_commit": "5abf3cb154654872a3d05278b96658f190ed9241",
+    "independent_review_dispatch_commit": "ccdfc57afe5693f8a36cf31ec6b1d4508a7e65eb",
+    "independent_review_branch": "task/nba2k22-vae-stage01-independent-review-20261030"
   },
   "human_decision_refs": [
     {
@@ -48,9 +53,11 @@
       "task_id": "NBA2K22-VAE-GPT-STAGE01-20261030-001",
       "owner": "independent GPT execution window (Human relayed)",
       "run": "run-20261030-nba2k22-vae-gpt-development-001",
-      "lifecycle": "candidate_pending_validation",
+      "lifecycle": "candidate_delivered_review_pending_human",
       "dispatch_sha": "079ccec5a28e7a61f000b462037f1c67ae8cef11",
-      "receipt": "not_yet_received"
+      "receipt": "GitHub_readback_confirmed",
+      "completion_pointer_sha": "3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3",
+      "candidate_sha": "5abf3cb154654872a3d05278b96658f190ed9241"
     },
     {
       "task_id": "VAE Gemini auxiliary",
@@ -65,10 +72,12 @@
       "trigger": "validated implementable task contract"
     },
     {
-      "task_id": "VAE independent review",
-      "owner": "not_assigned",
-      "lifecycle": "not_dispatched",
-      "trigger": "auditable GPT/Codex candidate"
+      "task_id": "NBA2K22-VAE-STAGE01-INDEPENDENT-REVIEW-20261030-001",
+      "owner": "new isolated GPT-6 independent_review window (to be Human-relayed)",
+      "lifecycle": "dispatched_not_yet_executed",
+      "dispatch_sha": "ccdfc57afe5693f8a36cf31ec6b1d4508a7e65eb",
+      "branch": "task/nba2k22-vae-stage01-independent-review-20261030",
+      "actual_model": "UNKNOWN_PENDING_REVIEWER_REPORT"
     }
   ],
   "verified_facts": [
@@ -81,6 +90,16 @@
       "claim": "GPT Stage01 task packet and instruction exist on published GitHub branch",
       "ref": "079ccec5a28e7a61f000b462037f1c67ae8cef11:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/01_任务输入/task_packet.yml",
       "scope": "published dispatch document, not execution completion"
+    },
+    {
+      "claim": "GPT Stage01 developer completion pointer exists at the exact branch HEAD; candidate artifact diff confined to one Run",
+      "ref": "3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3:01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-development-001/08_结论/completion_pointer.md",
+      "scope": "source readback and candidate readiness; not independent acceptance"
+    },
+    {
+      "claim": "An isolated reviewer task packet was published, with model identity attribution fields and fixed source SHA",
+      "ref": "ccdfc57afe5693f8a36cf31ec6b1d4508a7e65eb:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-independent-review-001/01_任务输入/task_packet.json",
+      "scope": "task dispatch only; Human relay and independent execution not yet confirmed"
     }
   ],
   "open_items": [
@@ -88,11 +107,6 @@
       "item": "A0_v1 Human exact version confirmation not recorded",
       "impact": "Stage01 formal completion",
       "owner": "Human when presented for confirmation"
-    },
-    {
-      "item": "GPT execution completion pointer not received",
-      "impact": "no review or next-stage task yet",
-      "owner": "GPT execution window to report through Human"
     },
     {
       "item": "No live MyLEAGUE underlying game readback or current profile verified",
@@ -103,18 +117,26 @@
       "item": "PRMS and formal Communication v2 receipts absent",
       "impact": "do not claim automated state save or formal action delivery",
       "owner": "future properly equipped window if invoked"
+    },
+    {
+      "item": "Independent review requested, reviewer window not yet started/returned",
+      "impact": "No independent Stage01 judgement or Human-bound A approval",
+      "owner": "Human relay to fresh independent GPT audit window"
     }
   ],
   "next_steps": [
-    "Await GPT-Stage01 completion pointer; do not monitor, redo or interrupt its implementation",
-    "Verify task scope and precise GitHub SHA, read completion pointer and minimum primary evidence",
-    "Route material conclusions to isolated independent reviewer and stage semantics to Human",
-    "Only then update planning status and dispatch bounded next implementation or Gemini evidence task",
-    "At next window rotation load this checkpoint plus current GitHub state and update stale references"
+    "Human relays the published isolated-review task to a fresh GPT window forked from NBA_COMMON_BASELINE_READY",
+    "Receive independent review completion pointer, verify branch HEAD and critical primary evidence",
+    "If audit returns defects route correction to an isolated bounded executor; if sufficiently supported present exact A blob/commit to Human for version-bound decision",
+    "Only after audit and Human decision update Stage01 status and plan bounded Stage02 evidence work",
+    "Future task packets and completion pointers must record assigned provider/product/model/role and actual executor model + identity source; unknown stays UNKNOWN",
+    "At window rotation load current Run checkpoint and fresh GitHub branch HEAD; do not inherit executor private reasoning"
   ],
   "persistent_context_policy": "Store only Human decisions, task index, verified facts, open items and next steps; keep raw logs and developer thought process in execution Runs",
   "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
   "COMMUNICATION_FORMAL_V2_PUBLICATION": "NOT_RUN",
-  "independent_review": "NOT_RUN",
-  "task_execution_status": "HUMAN_REPORTS_DISPATCHED;_NO_COMPLETION_RECEIVED"
+  "independent_review": "DISPATCHED_NOT_RUN",
+  "task_execution_status": "GPT_CANDIDATE_DELIVERED;_INDEPENDENT_REVIEW_DISPATCHED;_STAGE01_HUMAN_CONFIRMATION_PENDING",
+  "last_material_update": "2026-10-30",
+  "context_policy_update": "Forward only; do not retroactively relabel historical tasks. Declare assigned model separately from actual model and independent reviewer, with truthful evidence source."
 }
