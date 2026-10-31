@@ -312,4 +312,46 @@ Detailed post-mortem analysis of PID 9240 and patch logs revealed:
 
 ---
 
+## 7. Scene Request Queue Contract, Callback Closure & Definitive Root Cause (Task 20261031-002)
+
+### 7.1 Queue Contract: Real Identities in PE Binary
+Rigorous disassembly and Visual Concepts `.vcc` source string extraction reveal the true identities of the analyzed pipeline:
+
+1. **`0x140E96990` (`GOOEYMENU_INTERFACE::AddDeferredAction`)**:
+   - **Source**: `e:/vcsports/common/code/gooey/gooeymenu_interface.vcc`
+   - **Functionality**: Enqueues deferred UI menu actions into `0x1460FB180`.
+   - **Return Value**: `void`. Caller `0x140ec5250` executes `call 0x140e96990; add rsp, 0x70; ret;` without checking `rax`. The logged `Ret: 0x0` is residual scratch state, not a status code.
+2. **`0x1460FB180` (`GOOEYMENU_INTERFACE::s_deferredActions`)**:
+   - Fixed 6-slot linear action table.
+   - Slot layout: `[+8 + i*8]` Callback, `[+0x38 + i*8]` Context, `[+0x68 + i*4]` Target Menu Hash, `[+0x80 + i*4]` Param, `[+0x98 + i*4]` Timestamp.
+3. **`0x140E9EC70` (`GOOEYMENU_INTERFACE::CallDeferredActions`)**:
+   - **Consumer**: Called during the main thread UI frame pump.
+   - Atomically reads each slot callback to a register, clears the table slot in `0x1460FB180` to `0x0`, and invokes `call rdi` (line `0x140e9ee72`).
+4. **`0x140EC4E70` (`GOOEYMENU_INTERFACE::DeferredPopTo`)**:
+   - **Callback**: Passes target menu `0x354c1bb2` into `0x140f23b50`.
+5. **`0x140F23B50` (`GooeyMenuEventDispatcher::Notify`)**:
+   - Dispatches Event `0x5F86E2CA` (`MENU_POP`) with type `0x733` (`DEFERRED_POP_TO_MENU`).
+   - Pops the calendar GUI component (`0x354c1bb2`) from the display stack, transitioning the screen to the 96% background.
+
+### 7.2 Decision Result (Unique Verdict)
+
+**Verdict: D. 回调和事件成功，但后续具体场景初始化被阻止。**
+
+- **Queue Production & Consumption (Verified)**:
+  - `0x140E96990` enqueued `0x140EC4E70` at `18:39:43.376Z`.
+  - `0x140E9EC70` consumed and zeroed all 6 slots in `0x1460FB180`.
+- **Callback & Event Dispatch (Verified)**:
+  - `0x140EC4E70` executed and delivered `0x5F86E2CA` to dismiss calendar UI.
+- **Scene Initialization Blocked (Root Cause)**:
+  - Flow state was set to `7` (`PRACTICE`) at `[CareerFlowManager + 0x5d74]` via `0x140EA8B50`.
+  - The actual 3D court task was never scheduled to the 22 idle worker threads.
+  - The main thread remains in `WinMain` frame loop waiting for scene readiness signals that are never dispatched.
+
+### 7.3 Native Boundary Breakpoint Summary
+- **Last Proven Completed Function**: `0x140E9EC70` (`GOOEYMENU_INTERFACE::CallDeferredActions` via `0x140EC4E70`).
+- **First Incomplete State Transition**: `CareerFlowManager` transition from UI Dismissal (`FlowState = 7`) to 3D Practice Facility Worker Job Enqueue.
+- **Missing Data / Signal**: Scene asset package job for court geometry and player data was never posted to the engine worker thread pool.
+
+---
+
 **Submitted for GPT Public Planning Review**: All call relations, offsets, arguments, and return contracts above are 100% verified against executable bytes and live process memory.
