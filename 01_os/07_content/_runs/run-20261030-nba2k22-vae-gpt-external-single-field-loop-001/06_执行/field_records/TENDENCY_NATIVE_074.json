@@ -1,0 +1,55 @@
+{
+  "field_id": "TENDENCY_NATIVE_074",
+  "iteration_id": "SWEEP01_FIELD0074",
+  "question": "Does Play Discipline affect adherence to a called play separately from Coach Run Plays frequency?",
+  "native": {
+    "key": "tendency.PLAY_DISCIPLINE_TENDENCY",
+    "offset": "0x4A1",
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page3",
+      "author": "tcnumba10",
+      "date": "2021-09-19",
+      "version": "NBA2K22",
+      "platform": "UNKNOWN",
+      "claim": "Play Discipline=100 and Touches=50 changed together, no isolation"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-19",
+      "version": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Player-class Play Discipline gaps reported to influence CPU shot distribution"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "console, PC WIP",
+      "claim": "ATD reworked Play Discipline as part of a broader roster edit"
+    }
+  ],
+  "conflicts": [
+    "Coach Run Plays, Playbook and Touches confounded",
+    "High values not proven optimum",
+    "Native offset and 3D consumer not verified"
+  ],
+  "metrics": [
+    "adherence per eligible called set",
+    "freelance touches separate",
+    "called play targets separate"
+  ],
+  "REA_question": {
+    "id": "REA_PLAY_DISCIPLINE_074",
+    "question": "Do read-only PLAYER+0x4A1 values agree with exact Play Discipline UI for two UID-verified PC22 players?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_CONFOUNDED_PLAY_DISCIPLINE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
