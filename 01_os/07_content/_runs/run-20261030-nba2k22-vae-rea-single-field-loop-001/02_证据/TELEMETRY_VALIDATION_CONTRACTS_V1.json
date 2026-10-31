@@ -1,0 +1,26 @@
+[
+  {
+    "contract_id": "VAL_CONTRACT_FGA_SUPPRESSION",
+    "source_mechanism": "STATE_EFFECTIVE_SHOT_TENDENCY",
+    "target_observable": "OUTCOME_PLAYER_ACTUAL_FGA",
+    "relation_type": "OUTPUTS_TO",
+    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+    "description": "Clamped shot tendency directly regulates simulated / live game FGA volume"
+  },
+  {
+    "contract_id": "VAL_CONTRACT_TEMPO_SATURATION",
+    "source_mechanism": "STATE_NET_POSSESSION_PACE",
+    "target_observable": "OUTCOME_TEAM_PACE_POSSESSIONS",
+    "relation_type": "OUTPUTS_TO",
+    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+    "description": "Net possession target determines total game possessions"
+  },
+  {
+    "contract_id": "VAL_CONTRACT_TEMPO_FATIGUE",
+    "source_mechanism": "STATE_NET_POSSESSION_PACE",
+    "target_observable": "OUTCOME_PLAYER_FATIGUE_RATE",
+    "relation_type": "OUTPUTS_TO",
+    "verification_gate": "PENDING_GAMEPLAY_VALIDATION",
+    "description": "Higher tempo accelerates late-game stamina degradation"
+  }
+]

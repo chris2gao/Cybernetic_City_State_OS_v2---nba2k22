@@ -5,6 +5,9 @@ import math
 import os
 from typing import Any, Dict, List, Optional, Tuple
 
+from src.vae_rea_research.role_governor import NativeTacticalRoleGovernor
+from src.vae_rea_research.coach_pacing import NativeCoachPacingEngine
+
 
 class ExperimentalTacticalDecisionBridge:
     """
@@ -16,9 +19,10 @@ class ExperimentalTacticalDecisionBridge:
     and must NOT be used as rigid deterministic production rules without empirical validation.
 
     Reverse Engineering Grounding:
-    1. Role Ceiling Governor (RVA 0x1226942..0x12269a6):
+    1. Role Ceiling Governor (RVA 0x1226942..0x1226a8b):
        Native assembly verifies that players with core role tier (rcx=3) bypass ceilings,
        whereas secondary players (rcx!=3) are clamped to (role_ceiling - 5) if raw tendency exceeds it.
+       In addition, the native engine loads table ceilings from RVA 0x2b59798.
     2. Coach Tempo Bounds (RVA 0x120ba72..0x120babb):
        Native assembly proves that tempo modifiers are clamped strictly to [10, 70].
     """
@@ -51,7 +55,7 @@ class ExperimentalTacticalDecisionBridge:
         role_ceiling: float = 85.0,
     ) -> Dict[str, Any]:
         """
-        Evaluates the Role-Based Tactical Shot Ceiling Governor (RVA 0x1226942..0x12269a6).
+        Evaluates the Role-Based Tactical Shot Ceiling Governor (RVA 0x1226942..0x1226a8b).
 
         Native Assembly Behavior:
         - Checks role at [rsp + 0x20] / [rsp + 0x24] against 3 (Primary Core option).
@@ -61,10 +65,10 @@ class ExperimentalTacticalDecisionBridge:
           effective shot tendency is clamped to (ceiling - 5).
         """
         is_franchise_core = (role_tier == 3)
-        effective_ceiling = max(0.0, role_ceiling - 5.0)
+        effective_ceiling = max(0.0, float(role_ceiling) - 5.0)
 
         if is_franchise_core:
-            effective_shot = shot_tendency
+            effective_shot = float(shot_tendency)
             is_suppressed = False
             friction_score = 0.0
             clamp_status = "FRANCHISE_CORE_UNCONSTRAINED"
@@ -81,11 +85,19 @@ class ExperimentalTacticalDecisionBridge:
                     f"In-engine AI governor clamps effective shot attempts."
                 )
             else:
-                effective_shot = shot_tendency
+                effective_shot = float(shot_tendency)
                 is_suppressed = False
                 friction_score = 0.0
                 clamp_status = "WITHIN_ROLE_CEILING"
                 recommendation = "Shot tendency is within secondary role ceiling."
+
+        # Also compute exact native table result for reference
+        native_eval = NativeTacticalRoleGovernor.evaluate(
+            role_tier=role_tier,
+            secondary_tier=role_tier,
+            raw_shot_tendency=int(round(shot_tendency)),
+            raw_touches=int(round(touches)),
+        )
 
         return {
             "model_status": "EXPERIMENTAL_HEURISTIC",
@@ -99,6 +111,11 @@ class ExperimentalTacticalDecisionBridge:
             "friction_score": round(friction_score, 2),
             "clamp_status": clamp_status,
             "recommendation": recommendation,
+            "native_ground_truth": {
+                "branch": native_eval.governor_branch,
+                "table_ceiling": native_eval.applied_ceiling_or_floor,
+                "table_multiplier": native_eval.applied_multiplier,
+            },
         }
 
     def calculate_effective_coach_tempo(self, raw_tempo: float) -> Dict[str, Any]:
@@ -115,10 +132,11 @@ class ExperimentalTacticalDecisionBridge:
         is_saturated = raw_val > self.COACH_TEMPO_MAX_BOUND
         is_choked = raw_val < self.COACH_TEMPO_MIN_BOUND
 
+        # Native integer pacing calculation
+        pacing_res = NativeCoachPacingEngine.evaluate(tempo=raw_val)
+
         # Heuristic pace estimation for macro simulation
         estimated_pace = self.HEURISTIC_BASE_POSSESSIONS + (effective_tempo * self.HEURISTIC_TEMPO_SLOPE)
-
-        # Linear pace scale factor: 10 tempo -> 0.714; 50 tempo -> 0.971; 70 tempo -> 1.100
         pace_multiplier = 0.65 + (effective_tempo / 70.0) * 0.45
 
         return {
@@ -126,6 +144,8 @@ class ExperimentalTacticalDecisionBridge:
             "is_native_law": False,
             "raw_tempo_slider": raw_val,
             "effective_tempo": effective_tempo,
+            "native_bounded_modifier": pacing_res.bounded_modifier,
+            "native_net_possession_target": pacing_res.net_possession_target,
             "is_saturated": is_saturated,
             "is_choked": is_choked,
             "estimated_pace_possessions": round(estimated_pace, 2),
@@ -179,24 +199,19 @@ class ExperimentalTacticalDecisionBridge:
                 "recommendation": gov["recommendation"],
             })
 
-        avg_friction = total_friction / len(roster) if roster else 0.0
-        equilibrium_ratio = aligned_players / len(roster) if roster else 1.0
-        synergy_score = max(0.0, round(100.0 - (avg_friction * 8.0), 1))
+        total_players = len(roster)
+        synergy_index = round(max(0.0, 100.0 - (total_friction * 2.5)), 1) if total_players > 0 else 100.0
 
         return {
             "model_status": "EXPERIMENTAL_HEURISTIC",
             "is_native_law": False,
-            "roster_size": len(roster),
-            "aligned_players_count": aligned_players,
-            "equilibrium_ratio": round(equilibrium_ratio, 3),
-            "team_average_friction": round(avg_friction, 2),
-            "team_tactical_synergy_score": synergy_score,
             "coach_tempo_analysis": tempo_eval,
+            "coach_tempo_eval": tempo_eval,
+            "roster_size": total_players,
+            "aligned_players_count": aligned_players,
+            "aligned_players": aligned_players,
+            "total_friction_score": round(total_friction, 2),
+            "team_tactical_synergy_score": synergy_index,
+            "heuristic_synergy_index": synergy_index,
             "player_evaluations": player_evals,
-            "executive_recommendation": (
-                "Roster usage distribution aligns well with tactical role ceilings."
-                if synergy_score >= 80.0 else
-                f"Roster has {len(roster) - aligned_players} players exceeding their secondary role ceilings. "
-                "Adjust player roles or lower secondary shot tendencies to avoid native clamping."
-            ),
         }
