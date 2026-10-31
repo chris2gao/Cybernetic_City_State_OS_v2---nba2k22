@@ -1,0 +1,78 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "field_id": "WORLD_REG_004",
+  "iteration_id": "SWEEP01_FIELD0103",
+  "research_date": "2026-10-31",
+  "primary_question": "Does the project setting candidate at +0x74 map to On Court Shot Clock display option (off/last 10/full 24), actual 24-second game-rule enforcement, or another field?",
+  "source_registry": {
+    "key": "settings.game_settings.shot_clock",
+    "offset_candidate": "0x74",
+    "registry_type": "STATIC_REGISTRY_CANDIDATE",
+    "PC22_UI_binding": "UNKNOWN",
+    "storage_width": "UNKNOWN",
+    "raw_value_domain": "UNKNOWN",
+    "runtime_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/921033-nba-2k22-next-gen-settings-sliders-hall-of-fame",
+      "author": "H2UKNOW",
+      "date": "2022-02-20",
+      "platform": "PS5 next-gen, PC behavior unconfirmed",
+      "claim": "Lists On Court Shot Clock: Full 24 Seconds as a gameplay setting",
+      "grade": "SAME_VERSION_UI_LABEL"
+    },
+    {
+      "url": "https://official.nba.com/rule-no-7-24-second-clock",
+      "author": "NBA official playing rules",
+      "date": "rules evergreen, game release mapping UNKNOWN",
+      "platform": "real NBA, NOT game",
+      "claim": "24-second shot clock, resets including 14; does not prove setting identity",
+      "grade": "SPORT_RULE_CONTEXT_ONLY"
+    },
+    {
+      "url": "https://hoopsgamers.com/nba-2k23-general-settings-explained-recommendations",
+      "author": "Hoops Gamers",
+      "date": "2022-12",
+      "platform": "NBA2K23 cross-version, not PC22",
+      "claim": "On Court Shot Clock option is Off/Last 10/Full 24, likely display only; not directly transferable",
+      "grade": "CROSS_VERSION_HUD_DESCRIPTION"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "SAME_VERSION_UI_SETTING",
+      "claim": "Shot Clock is exposed as a distinct named setting in same-release materials"
+    },
+    {
+      "tier": "UNMAPPED_ADDRESS",
+      "claim": "No external material certifies the project candidate offset 0x74 or value decoding"
+    }
+  ],
+  "contradictions": [
+    "Nomenclature collision: 2K22 same-release menu calls this On Court Shot Clock; NBA rule shot clock is separate. Do not select one semantics without native/UI readback.",
+    "Per-player free throw rating, user timing, global gameplay slider and game simulation outcome are distinct domains",
+    "Native value readback and save persistence remain untested"
+  ],
+  "relations": [
+    "Gameplay options versus MyLEAGUE initial settings",
+    "Player ratings, timing method, CPU engine vs simulation",
+    "Human-confirmed world-line critical settings must not be silently altered"
+  ],
+  "metrics": [
+    "read-only exact menu label and value versus candidate raw",
+    "HUD visibility independently of 24-second violation enforcement",
+    "Clock reset and 24/14 game rules only as downstream distinct facts"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_004",
+    "question": "In one current-build PC22 offline MyLEAGUE save, can candidate settings offset 0x74 be mapped read-only to the exact visible Shot Clock option with its enumerated value and immediate/delayed readback, without changing any settings?",
+    "positive": "SCOPED_UI_MAPPING_ONLY",
+    "negative": "UNKNOWN_OR_DIFFERENT_FIELD",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "SEMANTIC_COLLISION_ON_COURT_DISPLAY_VS_RULE_UNRESOLVED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
