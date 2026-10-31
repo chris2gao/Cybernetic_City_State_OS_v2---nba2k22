@@ -1,0 +1,74 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_030",
+  "iteration_id": "SWEEP01_FIELD0030",
+  "question": "Is 0x475 a named 2K22 player tendency?",
+  "identity": {
+    "offset": "0x475",
+    "status": "UNKNOWN_RAW_BYTE",
+    "native_consumer": "UNKNOWN",
+    "game_effect": "UNKNOWN",
+    "project_declared_range": [
+      0,
+      100
+    ]
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x475\" \"tendency\" player",
+    "performed": "2026-10-30",
+    "direct_results": 0,
+    "assessment": "NO_DIRECT_SOURCE",
+    "caveat": "Search absence does not establish no field"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction archive",
+      "date": "2021-09 roster, page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export, PC build UNKNOWN",
+      "claim": "Shooting labels but no offset address"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "version": "NBA2K22",
+      "platform": "PS5, not PC field mapping",
+      "claim": "Shot types discussed without binary offsets"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "NO_DIRECT_SOURCE",
+      "text": "No verified mapping of 0x475 to current PC22 UI or engine consumer"
+    },
+    {
+      "tier": "INDIRECT",
+      "text": "Do not map adjacent archive columns by order"
+    }
+  ],
+  "conflicts": [
+    "Identical-looking shot-zone labels are not raw address proof"
+  ],
+  "relationships": "All Coach, Player, Training and game relations UNKNOWN until identity proven",
+  "measures": [
+    "UID-matched read-only raw value",
+    "exact UI value same player/build/save",
+    "compare adjacent bytes against accidental matches"
+  ],
+  "rea_question": {
+    "id": "REA_RAW_030",
+    "text": "Can two UID-verified PC22 read-only PLAYER+0x475 values be matched to a single actual UI tendency without positional guessing?",
+    "outcomes": [
+      "MATCH_SCOPED",
+      "UNKNOWN",
+      "BLOCKED"
+    ]
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "next_research": "Wait for actual UI/native or disassembly evidence; do not repeat identical fruitless query"
+}
