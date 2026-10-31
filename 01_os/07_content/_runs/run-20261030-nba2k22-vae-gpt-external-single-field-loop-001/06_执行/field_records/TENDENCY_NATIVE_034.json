@@ -1,0 +1,66 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_034",
+  "iteration_id": "SWEEP01_FIELD0034",
+  "single_question": "Can RAW 0x479 be matched with an independent current PC22 player UI field?",
+  "candidate": {
+    "offset": "0x479",
+    "project_range": [
+      0,
+      100
+    ],
+    "name": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x479\" \"tendency\" player",
+    "performed": "2026-10-30",
+    "result": "NO_DIRECT_SOURCE"
+  },
+  "source_context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/dale-ellis",
+      "author": "2kAuction archive",
+      "date": "2021 roster, page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web",
+      "applicability": "Nearby named tendency fields; no memory mapping"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/917138-nba-2k22-tendencies-a-better-realism-for-roster-creators",
+      "author": "Sheitan",
+      "date": "2021-11-25",
+      "version": "NBA2K22",
+      "platform": "PS5, not native PC",
+      "applicability": "Describes behavior categories, no binary offset"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "NO_DIRECT_SOURCE",
+      "statement": "No public matching byte-to-label proof for 0x479"
+    }
+  ],
+  "conflicts": [
+    "Export column order not Native memory layout",
+    "No evidence of engine consumer"
+  ],
+  "relationships": "All Coach/Training/Skill interactions UNKNOWN",
+  "observable": [
+    "UID-bound 0x479 read-only for two players",
+    "matching UI label/time/build and nearby byte comparisons"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_034",
+    "question": "Can two independently identified PC22 players' read-only PLAYER+0x479 values match one exact UI tendency, without guess-by-order?",
+    "positive": "MAPPING_SCOPED",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED"
+  },
+  "status": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN",
+  "next_improvement": "Await Native reader/REA field identity proof"
+}
