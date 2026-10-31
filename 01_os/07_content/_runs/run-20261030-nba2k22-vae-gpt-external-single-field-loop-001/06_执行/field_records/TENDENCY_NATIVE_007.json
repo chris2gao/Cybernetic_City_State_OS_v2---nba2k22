@@ -1,0 +1,133 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_007",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0007",
+  "research_date": "2026-10-30",
+  "question": "Does player PUTBACK_TENDENCY affect choice of immediate putback after an offensive rebound rather than rebounding probability or the global Attempt Putbacks slider?",
+  "identity": {
+    "candidate_native_key": "tendency.PUTBACK_TENDENCY",
+    "offset_hex": "0x45E",
+    "raw_range_project": [
+      0,
+      100
+    ],
+    "ui_mapping": "UNKNOWN",
+    "CPU_consumer": "UNKNOWN",
+    "current_game_value": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 7
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "UNKNOWN_BYLINE",
+      "date": "2021 release-era (precise date UNKNOWN)",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "Tendencies Sliders / Attempt Putbacks",
+      "grade": "SAME_VERSION_GLOBAL_SETTING",
+      "finding": "Describes USER and CPU global Attempt Putbacks sliders",
+      "limitation": "Global slider not individual player native field; its suggested 50 is not a player setting threshold"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page9",
+      "author": "Luke Skywalker",
+      "date": "2021-10-07",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "post #134",
+      "grade": "SAME_VERSION_UNCONTROLLED_MULTI_SLIDER",
+      "finding": "Reports reduced global Attempt Putbacks and several other adjustments while seeing more diverse CPU attack",
+      "limitation": "Not single-variable proof and not player PUTBACK_TENDENCY"
+    },
+    {
+      "id": "S3",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page9",
+      "author": "tcnumba10",
+      "date": "2021-10-07",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "post #135",
+      "grade": "SAME_VERSION_COUNTERPOINT",
+      "finding": "Argues roster tendency edits can matter more than changing global sliders",
+      "limitation": "Does not isolate PUTBACK_TENDENCY; different gameplay goal"
+    },
+    {
+      "id": "S4",
+      "url": "https://hoopsjunkie.io/stats/2021-22/players/play-contexts?team=IND",
+      "author": "Hoops Junkie data aggregation",
+      "date": "2021-22 season retrospective; page publication UNKNOWN",
+      "version": "Real NBA play-by-play, not game",
+      "platform": "NBA statistics",
+      "locator": "Putbacks definition",
+      "grade": "REAL_BASKETBALL_COMPARISON_NOT_GAME",
+      "finding": "Defines putback play around an offensive rebound and provides real-world contextual metric",
+      "limitation": "Cannot transfer real NBA percentages to PC22 player tendency scale"
+    }
+  ],
+  "claims": [
+    {
+      "id": "PB01",
+      "source_ids": [
+        "S1",
+        "S2"
+      ],
+      "tier": "SAME_VERSION_OTHER_LAYER",
+      "claim": "Global Attempt Putbacks is visible and player PUTBACK_TENDENCY cannot be assumed equivalent"
+    },
+    {
+      "id": "PB02",
+      "source_ids": [
+        "S2",
+        "S3"
+      ],
+      "tier": "CONFLICTING_COMMUNITY_CONTEXT",
+      "claim": "Global versus player tendencies may produce different perceived gameplay effects, unisolated"
+    },
+    {
+      "id": "PB03",
+      "source_ids": [
+        "S4"
+      ],
+      "tier": "MEASUREMENT_DESIGN_ONLY",
+      "claim": "Use rebound-conditioned putback attempts rather than raw total shots as a future metric"
+    }
+  ],
+  "conflicts": [
+    "No sourced PC22 native field/UI identity or single-field causal evidence",
+    "Global CPU slider and player tendency are distinct layers; 2021 posts alter multiple knobs"
+  ],
+  "links": [
+    "Offensive Rebounding ability and positioning: opportunity to obtain rebound",
+    "Standing Dunk and layup choices: possible post-rebound finishing options",
+    "Global Attempt Putbacks slider: team-level/gameplay setting",
+    "Coach crash boards, defensive pressure: availability confounders",
+    "Training direct effect UNKNOWN"
+  ],
+  "metrics": [
+    "putback attempts conditional on individual offensive rebounds",
+    "tip-ins, putback dunks, immediate pass and reset actions separately",
+    "offensive rebounds earned independently",
+    "3D vs Calendar separately",
+    "build/save/game ID and shot context"
+  ],
+  "Gemini_REA_question": {
+    "id": "REA_PUTBACK_007",
+    "question": "For two identified PC22 players, does read-only candidate PLAYER+0x45E agree with their individually displayed Putback Tendency, independently of the global CPU Attempt Putbacks slider?",
+    "if_matches": "SCOPED_PLAYER_FIELD_MAPPING",
+    "if_not": "UNKNOWN",
+    "if_unavailable": "BLOCKED",
+    "write": false
+  },
+  "outcome": "GLOBAL_VS_PLAYER_LAYER_IDENTIFIED_NATIVE_EFFECT_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "Confirm per-player UI mapping then test conditional immediate finishes after offensive rebounds on same engine path"
+}
