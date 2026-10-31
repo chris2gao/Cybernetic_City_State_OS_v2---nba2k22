@@ -1,0 +1,49 @@
+{
+  "field_id": "TENDENCY_NATIVE_079",
+  "iteration_id": "SWEEP01_FIELD0079",
+  "question": "Is 0x4A6 an independently identified PC22 player tendency?",
+  "project": {
+    "offset": "0x4A6",
+    "key": "tendency.RAW_0x4a6",
+    "range": [
+      0,
+      100
+    ],
+    "label": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "exact_search": {
+    "query": "\"NBA2K22\" \"0x4A6\" \"tendency\" memory",
+    "date": "2026-10-31",
+    "direct_sources": 0
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "2021 roster, page date UNKNOWN",
+      "platform": "web export",
+      "limit": "No offset mapping"
+    }
+  ],
+  "claims": [
+    "No verified PC22 native UI correspondence",
+    "Search absence does not prove no game consumer"
+  ],
+  "conflicts": [
+    "Neighbor byte or UI order cannot identify this slot"
+  ],
+  "mechanisms": "UNKNOWN until Native identity verified",
+  "observables": [
+    "read-only raw value for two independently UID verified players",
+    "exact UI value and label in same build/save/time"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_79",
+    "question": "Can read-only PLAYER+0x4A6 match one exact tendency UI for two PC22 player UIDs without positional guessing?",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
