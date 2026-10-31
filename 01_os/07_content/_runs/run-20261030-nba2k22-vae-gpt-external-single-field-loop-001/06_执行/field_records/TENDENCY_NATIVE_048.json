@@ -1,0 +1,44 @@
+{
+  "field_id": "TENDENCY_NATIVE_048",
+  "iteration_id": "SWEEP01_FIELD0048",
+  "question": "Can raw 0x487 be assigned to a named 2K22 player UI tendency by direct source proof?",
+  "offset": "0x487",
+  "project_range": [
+    0,
+    100
+  ],
+  "identity": "UNKNOWN",
+  "consumer": "UNKNOWN",
+  "search": {
+    "query": "\"NBA 2K22\" \"0x487\" player tendency",
+    "result": "NO_DIRECT_SOURCE",
+    "date": "2026-10-31"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction",
+      "date": "Sep 2021 roster; page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export",
+      "claim": "Named tendencies but no Native offsets"
+    }
+  ],
+  "claim": "No current PC22 0x487 identity or effect evidence",
+  "conflicts": [
+    "Sequential UI column ordering cannot map memory byte"
+  ],
+  "relationships": "UNKNOWN until field identity",
+  "metrics": [
+    "read-only raw 0x487 for two verified players",
+    "exact UI values same build/save/time"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_048",
+    "question": "Can two UID-confirmed PC22 read-only PLAYER+0x487 values match exactly one independently identified UI tendency?",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN"
+}
