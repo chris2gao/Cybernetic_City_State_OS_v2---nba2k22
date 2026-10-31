@@ -1,0 +1,61 @@
+{
+  "schema_version": "nba2k22.vae.gpt_external_batch_readback.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "batch": "SWEEP01_021_035",
+  "verified_commit": "fc173e16550e0f1e4a3bc310a7a123c06806ce3a",
+  "checked_date": "2026-10-30",
+  "checks": [
+    {
+      "id": "EXACT_FIELD_ID_SEQUENCE",
+      "status": "PASS",
+      "evidence": "35 ledger rows consecutively from 0 to 35, no gaps; 021..035 dossier field IDs and REA questions read back"
+    },
+    {
+      "id": "PER_FIELD_REPORTS_PRESENT",
+      "status": "PASS",
+      "evidence": "All 15 per-field static verification JSON files exist in the committed Run"
+    },
+    {
+      "id": "SOURCE_PROVENANCE",
+      "status": "PASS_WITH_LIMITATIONS",
+      "evidence": "Sources include same-version community/roster evidence and clearly marked cross-version/context-only data; no direct PC22 native consumer proof"
+    },
+    {
+      "id": "NUMERIC_AND_CAUSAL_CLAIMS",
+      "status": "PASS_SCOPED",
+      "evidence": "No verified probability/threshold/engine formula asserted; RAW bytes retained unidentified"
+    },
+    {
+      "id": "CURSOR_AND_COUNTS",
+      "status": "PASS",
+      "evidence": "cursor=35, next TENDENCY_NATIVE_036, 10 newly marked NO_DIRECT_SOURCE raw slots"
+    },
+    {
+      "id": "ALLOWLIST_MASTER",
+      "status": "PASS",
+      "evidence": "Git compare master 45cc45ca... to checked commit shows 79 changed files, all within this Run; merge-base exact master SHA"
+    },
+    {
+      "id": "GAME_REA_INDEPENDENT_AUDIT",
+      "status": "NOT_RUN",
+      "evidence": "Only web and repository research conducted"
+    }
+  ],
+  "source_record_counts": {
+    "batch_new_fields": 15,
+    "total_seed_records": 204,
+    "attempted_total": 35,
+    "remaining": 169,
+    "new_raw_no_direct_source": 10,
+    "new_named_semantics_studied": 5,
+    "native_mapping_verified": 0,
+    "player_behavior_3D_verified": 0
+  },
+  "notes": [
+    "Field reports written at each iteration can retain PENDING readback status; this later batch is the committed readback check and does not imply game/REA verification.",
+    "Community source URLs and version/platform are preserved per dossier, not treated as official engine documentation.",
+    "Neither a new Human approval nor Core runner/PRMS/Communication receipt was generated."
+  ],
+  "actual_model": "GPT-6_CONVERSATION_DECLARED_NOT_PLATFORM_SIGNED",
+  "next_field_id": "TENDENCY_NATIVE_036"
+}
