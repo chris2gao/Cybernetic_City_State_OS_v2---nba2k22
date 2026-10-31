@@ -1,0 +1,66 @@
+{
+  "field_id": "TENDENCY_NATIVE_050",
+  "iteration_id": "SWEEP01_FIELD0050",
+  "research_date": "2026-10-31",
+  "question": "Can unidentified player tendency byte 0x489 be mapped to a named current PC22 setting without a positional guess?",
+  "native": {
+    "key": "tendency.RAW_0x489",
+    "offset": "0x489",
+    "project_declared_range": [
+      0,
+      100
+    ],
+    "UI_identity": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA 2K22\" \"0x489\" memory tendency",
+    "performed": "2026-10-31",
+    "direct_source_count": 0,
+    "result": "NO_DIRECT_SOURCE"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction historical export",
+      "date": "2021-09 roster; page publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export",
+      "claim": "Named tendency fields but no Native byte addresses"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA2K22",
+      "platform": "multi-platform roster project, PC not verified",
+      "claim": "Edits shot and drive tendencies but no binary mapping"
+    }
+  ],
+  "claims": [
+    "No verified address-to-UI identity for 0x489",
+    "Adjacent bytes must not be named by exporter column order"
+  ],
+  "conflicts": [
+    "Missing PC22 UID-bound observation and engine consumption path"
+  ],
+  "related": "All Coach/Player/Training/Simulation relationships UNKNOWN until identity proof",
+  "metrics": [
+    "same-save two-player read-only candidate values",
+    "independently identified exact UI values",
+    "check adjacent bytes as false-match controls"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_050",
+    "question": "Can two UID-verified PC22 players' read-only PLAYER+0x489 values be matched with one exact in-game tendency label without positional inference?",
+    "positive": "SCOPED_MAPPING_ONLY",
+    "negative": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game_test": "NOT_RUN",
+  "REA_test": "NOT_RUN",
+  "next_improvement": "Wait for fresh native disassembly/UI evidence before repeating failed offset search"
+}
