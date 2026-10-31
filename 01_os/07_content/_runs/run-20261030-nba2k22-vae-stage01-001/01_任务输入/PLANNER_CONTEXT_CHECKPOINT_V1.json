@@ -29,7 +29,9 @@
     "governed_closeout_branch": "task/nba2k22-vae-stage01-governed-closeout-20261030",
     "governed_closeout_result_head": "246482ef605f367ef636de0ea556423280da57f4",
     "next_stage02_codex_task_dispatch": "ac48662f1c96e60eab04a077ed93cf0ec2694c4b",
-    "codex_stage02_deferred_commit": "90f42546b2e6d17bd52f28f3e9b26342888a4bcc"
+    "codex_stage02_deferred_commit": "90f42546b2e6d17bd52f28f3e9b26342888a4bcc",
+    "gemini_integrated_loop_dispatch": "49659925312275d101232c3bc522f162436d28d5",
+    "gemini_integrated_branch": "task/nba2k22-vae-gemini-integrated-loop-20261030"
   },
   "human_decision_refs": [
     {
@@ -61,6 +63,11 @@
       "source": "Human direct VAE planning message, 2026-10-30",
       "decision": "VAE active participants are GPT and Gemini Flash 3.8 (Gemini has local execution); Codex quota unavailable and cannot currently participate",
       "scope": "VAE current model routing, not historical backfill"
+    },
+    {
+      "source": "Human VAE planner current message, 2026-10-30",
+      "decision": "Gemini VAE work should use a loop for continuous scoped improvement; consolidate development and independent review rather than micro-tasks",
+      "scope": "future VAE Gemini development orchestration; no implied game/save permissions"
     }
   ],
   "task_status_index": [
@@ -86,13 +93,6 @@
       "receipt": "GitHub_readback_confirmed",
       "completion_pointer_sha": "3b0ef0b2185780d304ca8b1aa6d4a69f0bd4e6f3",
       "candidate_sha": "5abf3cb154654872a3d05278b96658f190ed9241"
-    },
-    {
-      "task_id": "VAE Gemini auxiliary",
-      "owner": "Gemini Flash 3.8 (Human-declared product/model label; local execution supported)",
-      "lifecycle": "available_not_assigned",
-      "trigger": "bounded evidence/action task after planner scope review and rights check",
-      "actual_model": "UNKNOWN_UNTIL_EXECUTION"
     },
     {
       "task_id": "VAE Codex engineering",
@@ -137,6 +137,19 @@
       "stage02_governed_completion": false,
       "deferral_sha": "90f42546b2e6d17bd52f28f3e9b26342888a4bcc",
       "status": "NO_EXECUTION_RECEIVED; NOT_TO_BE_RELAYED"
+    },
+    {
+      "task_id": "NBA2K22-VAE-GEMINI-INTEGRATED-LOOP-20261030-001",
+      "owner": "Gemini Flash 3.8, Human model label",
+      "role": "execution",
+      "lifecycle": "candidate_pending_validation",
+      "delivery": "published_GitHub_task_packet_Human_relay_pending",
+      "dispatch_sha": "49659925312275d101232c3bc522f162436d28d5",
+      "branch": "task/nba2k22-vae-gemini-integrated-loop-20261030",
+      "work": "G01-G08+R01-R09+F02-F07+E1-E4 offline vertical slice, iterative same task",
+      "independent_review": "single consolidated GPT review after candidate",
+      "actual_model": "UNKNOWN_BEFORE_EXECUTION",
+      "protected_game_actions": "NOT_GRANTED"
     }
   ],
   "verified_facts": [
@@ -194,6 +207,11 @@
       "claim": "Codex Stage02 G01-G03 dispatch had no reported execution and is now marked deferred by Human resource update",
       "ref": "90f42546b2e6d17bd52f28f3e9b26342888a4bcc:01_os/07_content/_runs/run-20261030-nba2k22-vae-stage02-g01-g03-readonly-001/08_结论/RESOURCE_AVAILABILITY_DEFERRAL_20261030.md",
       "scope": "run metadata and reported resource status; cannot independently attest user account quotas"
+    },
+    {
+      "claim": "One consolidated long-horizon Gemini VAE development task published with loop contract, explicit model identity and review boundary",
+      "ref": "49659925312275d101232c3bc522f162436d28d5:01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/01_任务输入/task_packet.json",
+      "scope": "task publication only, no local game development or tests run"
     }
   ],
   "open_items": [
@@ -243,27 +261,25 @@
       "blocks": "canonical OS lifecycle schema compliance"
     },
     {
-      "item": "Stage02 G01-G03 execution owner not yet reallocated",
-      "severity": "PLANNING",
-      "owner": "VAE decision_architecture",
-      "closure": "review priority and separate roles: GPT source/contract modeling; Gemini local bounded evidence; publish separate task packet with permissions",
-      "blocks": "previous Codex dispatch, not Human-approved A"
+      "item": "Integrated Gemini development execution and consolidated independent review pending",
+      "severity": "ACTIVE_WORK",
+      "owner": "Gemini executor; GPT isolated auditor after frozen candidate",
+      "closure": "GitHub exact candidate with integrated tests, R01–R09 contract fixes, source grade, unknowns; then one independent audit",
+      "blocks": "production or game capability claims until actual evidence"
     }
   ],
   "next_steps": [
-    "Keep Human-confirmed VAE Stage01 A-v1 unchanged; full seven-stage runner remains NOT_RUN, do not invent completion.",
-    "Do not relay or execute superseded Codex G01-G03 task; Codex remains unavailable until Human says otherwise.",
-    "Plan bounded Stage02 work with current available participants: GPT independent execution for document/schemas/analysis; Gemini Flash 3.8 for local evidence and mechanical execution within explicit read-only permissions.",
-    "Before Gemini dispatch review G01-G03 priorities, existing game/REA Reader maturity, exact allowed actions, local scope, shared workspace ownership and desired independent reviewer.",
-    "Future Gemini task requires new ID, run and actual-model identity source; no mere renaming of original Codex packet.",
-    "Schedule F02/F03/F07 contract corrections before comparable effect trials, F04/F05 later, F06 remains an evidence limitation.",
-    "Retain result-only planning memory and GitHub precise pointers; PRMS is not claimed saved."
+    "Human relays single Gemini integrated-loop task 49659925312275d101232c3bc522f162436d28d5 to Gemini Flash 3.8 with local executor; this is not a background automation or automatic cross-model relay.",
+    "Gemini iterates within same task/branch, prioritizing G01-G08, R01-R09, F02/F03/F07 and safe offline E1-E4 prototype; report precise readback, no per-micro-task approval.",
+    "Only stop on genuine OS boundaries, game/runtime protected action, semantic change, evidence shortfall or consolidated candidate ready; keep Human stage plan/completion checkpoints as designed.",
+    "When Gemini submits one integrated candidate pointer, arrange a fresh GPT independent review across the whole candidate; fix review blockers in bounded continuation without restarting entire project.",
+    "Preserve exact Human-approved A, Core seven-stage runner limitation and Codex deferred status; do not claim real game/save effects."
   ],
   "persistent_context_policy": "Store only Human decisions, task index, verified facts, open items and next steps; keep raw logs and developer thought process in execution Runs",
   "PRMS_SAVE_TASK_CONTEXT": "NOT_RUN",
   "COMMUNICATION_FORMAL_V2_PUBLICATION": "NOT_RUN",
   "independent_review": "DELIVERED_PARTIALLY_SUPPORTED",
-  "task_execution_status": "A_V1_APPROVED;_GOVERNED_STAGE01_RUNNER_NOT_RUN;_CODEX_STAGE02_DEFERRED_UNEXECUTED;_GPT_GEMINI_AVAILABLE;_GEMINI_TASK_NOT_YET_DISPATCHED",
+  "task_execution_status": "HUMAN_A_V1_CONFIRMED;_CODEX_DEFERRED;_GEMINI_LONG_HORIZON_LOOP_DISPATCH_PUBLISHED;_ONE_CONSOLIDATED_REVIEW_PENDING_CANDIDATE",
   "last_material_update": "2026-10-30",
   "context_policy_update": "Future tasks record model, only confirmed facts and source pointers; pending runtime proof stays UNKNOWN; do not backfill history.",
   "model_roster_current": {
@@ -280,8 +296,9 @@
     },
     "Gemini_Flash_3_8": {
       "role": [
-        "local_readonly_source_and_runtime_evidence_if_authorized",
-        "bounded_mechanical_implementation_and_test"
+        "integrated_VAE_engineering_owner_for_this_task",
+        "bounded_local_readonly_evidence",
+        "iterative_offline_prototype_development"
       ],
       "access": "local execution reported by Human; permissions per task not automatically granted",
       "availability": "available",
