@@ -1,0 +1,54 @@
+{
+  "field_id": "TENDENCY_NATIVE_089",
+  "iteration_id": "SWEEP01_FIELD0089",
+  "research_date": "2026-10-31",
+  "primary_question": "Does byte 0x4B0 correspond to an identifiable NBA 2K22 PC player tendency?",
+  "native_candidate": {
+    "offset": "0x4B0",
+    "key": "tendency.RAW_0x4b0",
+    "declared_range": [
+      0,
+      100
+    ],
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "search": {
+    "query": "\"NBA2K22\" \"0x4B0\" \"tendency\"",
+    "date": "2026-10-31",
+    "direct_sources": 0,
+    "status": "NO_DIRECT_SOURCE",
+    "limit": "Negative search does not prove no engine use"
+  },
+  "context": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/detlef-schrempf",
+      "author": "2kAuction historical database",
+      "date": "2021 roster, web publication UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web export; PC source UNKNOWN",
+      "relevance": "Named player values exist; no byte mapping"
+    }
+  ],
+  "claim": "No direct reliable Native offset-to-label correspondence for 0x4B0",
+  "conflicts": [
+    "Do not infer identity from contiguous bytes or archived UI list order",
+    "No live Native getter, UI readback or game effect"
+  ],
+  "potential_links": "Coach, attributes, training and game mode effects UNKNOWN until identity",
+  "metrics": [
+    "UID-verified read-only byte for two players",
+    "exact UI label/value in same save/build/time",
+    "neighboring offset false match"
+  ],
+  "REA_question": {
+    "id": "REA_RAW_89",
+    "question": "Do read-only PLAYER+0x4B0 values for two UID-verified PC22 players match one independently named tendency UI field without list-order inference?",
+    "write": false
+  },
+  "result": "NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "next_improvement": "Require new real native/UI evidence before repeating unchanged external search"
+}
