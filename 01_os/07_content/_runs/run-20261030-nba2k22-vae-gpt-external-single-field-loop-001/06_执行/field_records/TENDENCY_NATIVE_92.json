@@ -1,0 +1,58 @@
+{
+  "field_id": "TENDENCY_NATIVE_92",
+  "iteration_id": "SWEEP01_FIELD0092",
+  "question": "Does Alley-Oop Pass alter lob-pass attempt choice with an eligible teammate?",
+  "native": {
+    "key": "tendency.ALLEY_OOP_PASS_TENDENCY",
+    "offset": "0x4B3",
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/gary-payton",
+      "author": "2kAuction",
+      "date": "2021 roster; page date UNKNOWN",
+      "version": "NBA2K22",
+      "platform": "web archive",
+      "claim": "Named player tendency distinct from others; not native mapping"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "console roster; PC WIP",
+      "claim": "Passing and defensive fields edited together"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917100-nba-2k22-the-eccentric-edition-realistic-ng-slider-set/page10",
+      "author": "Eccentric Edition contributor",
+      "date": "2021 game era",
+      "version": "NBA2K22",
+      "platform": "next gen",
+      "claim": "Global gameplay sliders differ from per-player tendency"
+    }
+  ],
+  "claims": [
+    "Same-game label confirmed, native byte not confirmed",
+    "Attempts and successful outcomes are different"
+  ],
+  "conflicts": [
+    "Alley-Oop receiver finish tendency, global Throw Alley-Oops and pass accuracy",
+    "Coach/teammate/defender opportunities and game version not isolated"
+  ],
+  "metrics": [
+    "lob-pass attempts per eligible cutter catch window",
+    "alternative actions and outcomes separately",
+    "same save/build/UID, 3D vs Calendar separated"
+  ],
+  "REA_question": {
+    "id": "REA_ALLEY_OOP_PASS_TENDENCY_92",
+    "question": "Do two UID-matched PC22 read-only PLAYER+0x4B3 observations match exact ALLEY_OOP_PASS_TENDENCY UI value at the same save/build/time?",
+    "write": false
+  },
+  "result": "SAME_VERSION_NAMED_CATEGORY_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
