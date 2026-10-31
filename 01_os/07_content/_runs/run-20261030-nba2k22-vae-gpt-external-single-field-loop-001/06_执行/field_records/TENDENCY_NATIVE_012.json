@@ -1,0 +1,132 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_dossier.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "field_id": "TENDENCY_NATIVE_012",
+  "sweep": 1,
+  "iteration_id": "SWEEP01_FIELD0012",
+  "research_date": "2026-10-30",
+  "question": "Does FLOATER_TENDENCY influence CPU choosing a runner/floater on an eligible drive, separately from the floater make probability?",
+  "identity": {
+    "candidate": "tendency.FLOATER_TENDENCY",
+    "project_offset": "0x463",
+    "project_raw_range": [
+      0,
+      100
+    ],
+    "native_ui_mapping": "UNKNOWN",
+    "current_value": "UNKNOWN",
+    "effects": "UNKNOWN"
+  },
+  "queue": {
+    "commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "ordinal": 12
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021-09-10",
+      "version": "NBA 2K22",
+      "platform": "multi-platform project, current PC build UNKNOWN",
+      "locator": "OP tendency edit entry 1.4",
+      "tier": "SAME_VERSION_ROSTER_INTENT",
+      "claim": "Floaters tracked by attempt rate for roster calibration",
+      "limits": "No single field experiment"
+    },
+    {
+      "id": "S2",
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings/page9",
+      "author": "Luke Skywalker",
+      "date": "2021-10-07",
+      "version": "NBA 2K22",
+      "platform": "UNKNOWN",
+      "locator": "post #134",
+      "tier": "SAME_VERSION_MULTIVARIABLE_GAMEPLAY",
+      "claim": "After modifying global sliders and ball handling, reports more CPU floaters",
+      "limits": "No individual floater tendency manipulated; cannot attribute effect"
+    },
+    {
+      "id": "S3",
+      "url": "https://www.reddit.com/r/NBA2k/comments/nmnnhx",
+      "author": "r/NBA2k participants",
+      "date": "2021-05-28",
+      "version": "Pre-2K22 likely NBA 2K21; exact release not stated in excerpt",
+      "platform": "UNKNOWN",
+      "locator": "thread about high CPU floater make rate",
+      "tier": "PREVIOUS_RELEASE_ANECTODAL",
+      "claim": "Players argue CPU floater makes can be frequent",
+      "limits": "Published before NBA2K22; make percentage is not attempts, and statements conflict"
+    },
+    {
+      "id": "S4",
+      "url": "https://hoopsgamers.com/nba-2k22-controls-shooting-dribbling-dunking-defense-rebound-offense-guide-xbox-1-x-ps5-ps4",
+      "author": "Hoops Gamers editorial, exact byline UNKNOWN",
+      "date": "2021 release-era, exact UNKNOWN",
+      "version": "NBA 2K22",
+      "platform": "PS/Xbox controls, PC not proven",
+      "locator": "Runner/Floater input",
+      "tier": "HUMAN_CONTROL_NOT_AI",
+      "claim": "User can trigger runner/floater as an input category",
+      "limits": "Not evidence of autonomous CPU tendency consumer"
+    }
+  ],
+  "claims": [
+    {
+      "id": "FL01",
+      "sources": [
+        "S1"
+      ],
+      "status": "SAME_VERSION_EDIT_CATEGORY",
+      "claim": "Rosters separately track floater attempt frequency"
+    },
+    {
+      "id": "FL02",
+      "sources": [
+        "S2"
+      ],
+      "status": "GAMEPLAY_MULTI_KNOB",
+      "claim": "Observed floaters under changed global sliders do not identify per-player causality"
+    },
+    {
+      "id": "FL03",
+      "sources": [
+        "S3",
+        "S4"
+      ],
+      "status": "VERSION_AND_OUTCOME_CONFOUND",
+      "claim": "A floater's success, user input and CPU selection are distinct outcomes"
+    }
+  ],
+  "conflicts": [
+    "S2 perceived effect has multiple adjusted inputs",
+    "S3 predates 2K22 and includes competing anecdotal interpretations",
+    "NO_DIRECT_PC22_NATIVE_SINGLE_FIELD_SOURCE"
+  ],
+  "related": [
+    "Driving Layup, Shot Close, Layup Move and pull-up alternatives",
+    "Ball handle, defense position, layup package and fatigue",
+    "Coach pace/POE and drive initiation",
+    "Finishing attribute and badges separate from choice",
+    "Training direct link UNKNOWN"
+  ],
+  "metrics": [
+    "CPU floater selections per eligible lane entry",
+    "normal layup/pull-up/dunk/pass alternative distribution",
+    "floater makes vs attempts separated",
+    "game mode, controlling side, save/build and defensive context"
+  ],
+  "REA_question": {
+    "id": "REA_FLOATER_012",
+    "question": "Do read-only candidate PLAYER+0x463 values map to Floater tendency UI for two UID-verified PC22 players at same build/save/time?",
+    "match": "MAPPING_SCOPED_ONLY",
+    "mismatch": "UNKNOWN",
+    "no_UI": "BLOCKED",
+    "not_authorized": "GAME_WRITE"
+  },
+  "result": "FLOATER_SOURCE_TRIANGULATED_EFFECT_UNKNOWN",
+  "native_test": "NOT_RUN",
+  "game_test": "NOT_RUN",
+  "next_improvement": "After Native↔UI identity proof, isolate CPU floater choice on equivalent drive opportunities"
+}
