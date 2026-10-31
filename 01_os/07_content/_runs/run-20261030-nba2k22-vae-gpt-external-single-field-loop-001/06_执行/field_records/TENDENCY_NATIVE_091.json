@@ -1,0 +1,49 @@
+{
+  "field_id": "TENDENCY_NATIVE_091",
+  "iteration_id": "SWEEP01_FIELD0091",
+  "primary_question": "Does Flashy Pass preference change CPU selection of a flashy pass versus ordinary pass when both are viable?",
+  "native": {
+    "key": "tendency.FLASHY_PASS_TENDENCY",
+    "offset": "0x4B2",
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://2kauction.com/mynba/2k22/players/gary-payton",
+      "author": "2kAuction archive",
+      "date": "2021 roster snapshot",
+      "version": "NBA2K22",
+      "platform": "web; original executable UNKNOWN",
+      "claim": "Flashy Pass independently named and valued 70; offset not proven"
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-attention-to-detail-roster-from-celticlg-and-crew/",
+      "author": "Chase Becotte/CelticLG",
+      "date": "2021-12-16",
+      "version": "NBA2K22",
+      "platform": "console, PC WIP",
+      "claim": "Passing and related tendencies calibrated in an uncontrolled roster edit"
+    }
+  ],
+  "claims": [
+    "Named player tendency is not a global CPU passing slider",
+    "Passing selection differs from completion or turnover rates"
+  ],
+  "conflicts": [
+    "Team tempo, ball handler role and passing accuracy confound",
+    "No PLAYER+0x4B2 UID-to-UI evidence"
+  ],
+  "metrics": [
+    "flashy pass attempts per eligible pass choice",
+    "ordinary passes, assist/turnover outcomes separately"
+  ],
+  "REA_question": {
+    "id": "REA_FLASHY_PASS_091",
+    "question": "Do read-only PLAYER+0x4B2 values equal independently displayed Flashy Pass UI tendency for two PC22 UIDs in same save/build/time?",
+    "write": false
+  },
+  "result": "SAME_VERSION_LABEL_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
