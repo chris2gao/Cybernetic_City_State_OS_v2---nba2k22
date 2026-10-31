@@ -1,0 +1,88 @@
+{
+  "field_id": "TENDENCY_NATIVE_098",
+  "iteration_id": "SWEEP01_FIELD0098",
+  "research_date": "2026-10-31",
+  "primary_question": "Does per-player Foul tendency affect CPU decisions to initiate risky defensive contact in eligible contexts, or only the observed foul rate under the simulation?",
+  "identity": {
+    "candidate_key": "tendency.FOUL_TENDENCY",
+    "project_offset": "0x4B9",
+    "project_range": [
+      0,
+      100
+    ],
+    "PC22_UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "numeric_effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/916767-nba-2k22-attention-to-detail-roster-ps4-ps5-xb1-xbsx-pc-switch",
+      "author": "CelticLG",
+      "date": "2021 NBA2K22 roster era",
+      "platform": "multi-platform plan; PC behavior UNKNOWN",
+      "claim": "Foul, charge and hard foul player tendencies edited together, not isolated",
+      "grade": "SAME_GAME_MULTIFIELD"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917042-2k22-myleague-settings-sliders",
+      "author": "DarthRambo",
+      "date": "2021-09-20/21",
+      "platform": "MyLEAGUE platform UNKNOWN",
+      "claim": "Simultaneously adjusted Fouls, Block Shot, Take Charge and Hard Foul including extreme suggested values",
+      "grade": "SAME_GAME_CONFOUNDED_USER"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/891692-nba-2k20-simulation-basketball-wiki?p=24010018",
+      "author": "NBA 2K20 simulation community",
+      "date": "2020-05-01 vicinity",
+      "platform": "PRE-2K22",
+      "claim": "Block Shot may produce more fouls than Foul or Hard Foul under certain older slider sets; not evidence for PC22",
+      "grade": "CROSS_VERSION_COMPARISON_ONLY"
+    }
+  ],
+  "claims": [
+    {
+      "tier": "SAME_VERSION_RESEARCH_EDITOR",
+      "claim": "Individual player foul-related tendency is separately edited, but adjustment lacks causal identification",
+      "sources": [
+        0,
+        1
+      ]
+    },
+    {
+      "tier": "CROSS_VERSION_WARNING",
+      "claim": "Fouls can also result from blocks or contests; prior title formula not transferable",
+      "sources": [
+        2
+      ]
+    }
+  ],
+  "contradictions": [
+    "Player-level Foul preference is not global Foul Frequency slider",
+    "An actual whistle is confounded by official game rules, offensive action and animation",
+    "Hard Foul cannot be equated with total fouls or flagrant fouls without direct evidence",
+    "Community recommendations to set 100 are neither proven thresholds nor optima"
+  ],
+  "related": [
+    "global foul-calling sliders, Reach-in, Shooting Foul, Coach strategy, contact and badges",
+    "Team/Coach defense strategy, opponent drives and refereeing",
+    "Training direct linkage UNKNOWN"
+  ],
+  "observable": [
+    "intentional or risky contacts per eligible defensive opportunity",
+    "foul calls and attempts per possession separately",
+    "shot blocking or contest attempts as covariates",
+    "3D vs Calendar paths separated, save/build/UID fixed"
+  ],
+  "REA_question": {
+    "id": "REA_FOUL_TENDENCY_98",
+    "question": "Do two UID-verified PC22 players have read-only PLAYER+0x4B9 equal to their FOUL_TENDENCY UI tendency in the same save/build/time?",
+    "match": "SCOPED_MAPPING_ONLY",
+    "mismatch": "UNKNOWN",
+    "unavailable": "BLOCKED",
+    "write": false
+  },
+  "result": "CONFOUNDED_2K22_FOUL_EDIT_NO_NATIVE_CAUSAL_PROOF",
+  "REA": "NOT_RUN",
+  "game": "NOT_RUN"
+}
