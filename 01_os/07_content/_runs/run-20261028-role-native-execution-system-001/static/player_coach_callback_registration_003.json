@@ -1,0 +1,171 @@
+{
+  "source_kind": "PINNED_PE_CALLBACK_REGISTRATION_NOT_REA_PROVIDER",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "query": "^(void|bool|int|uint|float|[A-Z_]+@?) .*(PlayType|Playtype|Freelance|System|Attribute|Tendency|Badge|PlayerEditor|PlayerTraining|Mentor).*\\(.*\\)$",
+  "string_limit": 160,
+  "matching_string_count": 4,
+  "string_selection_truncated": false,
+  "registration_pattern": "xor r9d,r9d; lea r8,callback; lea rdx,declaration; mov rcx,rbx; call0x1fbaf0",
+  "game_access_performed": false,
+  "callbacks": [
+    {
+      "declaration": "int  MyGM_Staff_GetNumBadges()",
+      "declaration_rva": 43342096,
+      "registration_rva": 12430379,
+      "callback_rva": 8309568,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12430369,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12430372,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3ee0eb]"
+        },
+        {
+          "rva": 12430379,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7acde]"
+        },
+        {
+          "rva": 12430386,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12430389,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyPlayerAttributesBar_InitModule()",
+      "declaration_rva": 43402344,
+      "registration_rva": 12465075,
+      "callback_rva": 7196384,
+      "callback_unwind_chain": [
+        {
+          "begin": 7196384,
+          "end": 7196424,
+          "unwind_rva": 49969004,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12465065,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12465068,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x5064d3]"
+        },
+        {
+          "rva": 12465075,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d810ae]"
+        },
+        {
+          "rva": 12465082,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12465085,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyPlayerAttributesBar_DeinitModule()",
+      "declaration_rva": 43402528,
+      "registration_rva": 12465182,
+      "callback_rva": 7196368,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12465172,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12465175,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x50654e]"
+        },
+        {
+          "rva": 12465182,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d810fb]"
+        },
+        {
+          "rva": 12465189,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12465192,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyPlayerAttributesBar_UpdateBar()",
+      "declaration_rva": 43402720,
+      "registration_rva": 12465289,
+      "callback_rva": 7196432,
+      "callback_unwind_chain": [
+        {
+          "begin": 7196432,
+          "end": 7196908,
+          "unwind_rva": 50215548,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12465279,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12465282,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x506579]"
+        },
+        {
+          "rva": 12465289,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d81150]"
+        },
+        {
+          "rva": 12465296,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12465299,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    }
+  ],
+  "limitations": [
+    "Other registration templates are not covered",
+    "Callback may depend on UI globals, VM context or original editor state",
+    "Printed declaration does not independently prove actual ABI or safe Native business commit"
+  ]
+}

@@ -1,0 +1,2758 @@
+{
+  "source_kind": "STATIC_PC22_PE_FILE_NO_TARGET_EXECUTION",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "queries": {
+    "D02": "^(?:Franchise_(?:Sign|Contract|PlayerContract|Option|Waive|Release)_|FRANCHISE_SIGNING::|FRANCHISE_COACH::Sign)",
+    "D03": "^(?:(?:PLAYER|PLAYERDATA|COACHDATA|STAFF)::(?:Set|Apply|Adjust|Modify)|.*PLAYER_EDITOR::(?:Save|Apply)|(?:PlayerEditor|PlayerAttribute|PlayerTendency|PlayerBadge|PlayerPlayType)_).*",
+    "D04": "^(?:(?:FRANCHISE_GAMEPLAN_MANAGER|FRANCHISE_PLAYBOOK|GAMEPLAN_MANAGER|PLAYBOOK)::|Franchise_(?:Gameplan|Playbook)_).*",
+    "D05": "^(?:Franchise_(?:Team|Roster|Lineup|Staff)_(?:Set|Apply|Assign|Remove|Add|Swap)|(?:TEAMDATA|ROSTER|ROTATION)::(?:Set|Apply|Assign|Remove|Add|Swap)).*",
+    "D07": "^(?:FRANCHISE_TRAINING::(?:Set|Get|Apply)|FRANCHISE_MENTOR::MANAGER::|Franchise_Training_).*",
+    "D09": "^(?:FRANCHISE_SCOUT::|Franchise_Scout_).*",
+    "D01": "^Franchise_Trade_Add.*"
+  },
+  "strings": {
+    "D02": [
+      {
+        "rva": 36921232,
+        "literal": "FRANCHISE_COACH::SIGNING::STATUS",
+        "domain": "D02"
+      },
+      {
+        "rva": 36921456,
+        "literal": "FRANCHISE_COACH::SIGNING",
+        "domain": "D02"
+      },
+      {
+        "rva": 43633592,
+        "literal": "FRANCHISE_SIGN_TWOWAY",
+        "domain": "D02"
+      },
+      {
+        "rva": 43633680,
+        "literal": "FRANCHISE_SIGN_FROM_GLEAGUE",
+        "domain": "D02"
+      },
+      {
+        "rva": 45848288,
+        "literal": "FRANCHISE_SIGN_TUNING",
+        "domain": "D02"
+      },
+      {
+        "rva": 46000448,
+        "literal": "FRANCHISE_COACH::Sign",
+        "domain": "D02"
+      },
+      {
+        "rva": 46035176,
+        "literal": "Franchise_Sign_GetByTeamPositionAndIndex",
+        "domain": "D02"
+      },
+      {
+        "rva": 46035344,
+        "literal": "Franchise_Sign_CreateCounterOffer",
+        "domain": "D02"
+      },
+      {
+        "rva": 46035664,
+        "literal": "Franchise_Sign_OfferContract",
+        "domain": "D02"
+      },
+      {
+        "rva": 46035824,
+        "literal": "Franchise_Sign_ProcessDelayedSigning",
+        "domain": "D02"
+      },
+      {
+        "rva": 46036144,
+        "literal": "Franchise_Sign_AI_ConfirmContract",
+        "domain": "D02"
+      },
+      {
+        "rva": 46036432,
+        "literal": "Franchise_Sign_GetPlayerEstimatedSalary",
+        "domain": "D02"
+      },
+      {
+        "rva": 46036648,
+        "literal": "Franchise_Sign_GetDraftContractValueForPlayer",
+        "domain": "D02"
+      },
+      {
+        "rva": 46037104,
+        "literal": "Franchise_Sign_GetQualifyingOfferValueForPickPosition",
+        "domain": "D02"
+      },
+      {
+        "rva": 46037160,
+        "literal": "Franchise_Sign_GetQualifyingOfferValueForPlayer",
+        "domain": "D02"
+      },
+      {
+        "rva": 46037240,
+        "literal": "Franchise_Sign_GetFreeAgencyLength",
+        "domain": "D02"
+      },
+      {
+        "rva": 46037440,
+        "literal": "Franchise_Sign_GetMoratoriumDaysRemaining",
+        "domain": "D02"
+      },
+      {
+        "rva": 46037560,
+        "literal": "Franchise_Sign_FA_ProcessConfirmations",
+        "domain": "D02"
+      },
+      {
+        "rva": 46037944,
+        "literal": "Franchise_Sign_HandleNextFreeAgencyStage",
+        "domain": "D02"
+      },
+      {
+        "rva": 46038088,
+        "literal": "Franchise_Sign_ProcessMarkedOptionsForPlayer",
+        "domain": "D02"
+      },
+      {
+        "rva": 46038368,
+        "literal": "Franchise_Sign_GetMaxContractLength",
+        "domain": "D02"
+      },
+      {
+        "rva": 46038656,
+        "literal": "Franchise_Sign_AssignOptions",
+        "domain": "D02"
+      },
+      {
+        "rva": 46038864,
+        "literal": "Franchise_Sign_GenerateContract",
+        "domain": "D02"
+      },
+      {
+        "rva": 46039104,
+        "literal": "Franchise_Sign_CreateSlottedDraftContract",
+        "domain": "D02"
+      },
+      {
+        "rva": 46040152,
+        "literal": "Franchise_Sign_CanTeamSignAllInFreeAgency",
+        "domain": "D02"
+      },
+      {
+        "rva": 46040336,
+        "literal": "Franchise_Sign_GetDefaultSigningType",
+        "domain": "D02"
+      },
+      {
+        "rva": 46040672,
+        "literal": "Franchise_Sign_ClearCapHoldsForSigning",
+        "domain": "D02"
+      },
+      {
+        "rva": 46041024,
+        "literal": "Franchise_Sign_Process",
+        "domain": "D02"
+      },
+      {
+        "rva": 46042040,
+        "literal": "Franchise_Sign_RejectOtherSignings",
+        "domain": "D02"
+      },
+      {
+        "rva": 46042320,
+        "literal": "Franchise_Sign_ProcessDraftSignings",
+        "domain": "D02"
+      },
+      {
+        "rva": 46042504,
+        "literal": "Franchise_Sign_CompileFreeAgentPlayerList",
+        "domain": "D02"
+      },
+      {
+        "rva": 46042784,
+        "literal": "Franchise_Sign_ConsiderFreeAgents",
+        "domain": "D02"
+      },
+      {
+        "rva": 46042928,
+        "literal": "Franchise_Sign_GetNumberOfSigningsByTeamTypeAndStatus",
+        "domain": "D02"
+      },
+      {
+        "rva": 46043144,
+        "literal": "Franchise_Sign_LocalizeFreeAgencyTitle",
+        "domain": "D02"
+      }
+    ],
+    "D03": [
+      {
+        "rva": 38920776,
+        "literal": "COACHDATA::SetCurrentTeam",
+        "domain": "D03"
+      },
+      {
+        "rva": 44582184,
+        "literal": "PLAYERDATA::SetCurrentTeam",
+        "domain": "D03"
+      },
+      {
+        "rva": 44582504,
+        "literal": "PLAYERDATA::SetContractTeam",
+        "domain": "D03"
+      },
+      {
+        "rva": 46296640,
+        "literal": "CREATED_PLAYER_EDITOR::Save",
+        "domain": "D03"
+      },
+      {
+        "rva": 46313320,
+        "literal": "PLAYERCREATE_MYPLAYER_EDITOR::Save",
+        "domain": "D03"
+      }
+    ],
+    "D04": [
+      {
+        "rva": 36926304,
+        "literal": "FRANCHISE_GAMEPLAN_MANAGER",
+        "domain": "D04"
+      },
+      {
+        "rva": 46007456,
+        "literal": "FRANCHISE_GAMEPLAN_MANAGER::GetOpponentGameplanIndex",
+        "domain": "D04"
+      },
+      {
+        "rva": 46007600,
+        "literal": "FRANCHISE_GAMEPLAN_MANAGER::AddGameplan",
+        "domain": "D04"
+      }
+    ],
+    "D05": [
+      {
+        "rva": 38930752,
+        "literal": "TEAMDATA::SetCoach",
+        "domain": "D05"
+      },
+      {
+        "rva": 46052592,
+        "literal": "Franchise_Team_SetChemistry",
+        "domain": "D05"
+      }
+    ],
+    "D07": [
+      {
+        "rva": 46012928,
+        "literal": "FRANCHISE_MENTOR::MANAGER::LinkMentor",
+        "domain": "D07"
+      },
+      {
+        "rva": 46013080,
+        "literal": "FRANCHISE_MENTOR::MANAGER::AppendMenteeInfo",
+        "domain": "D07"
+      },
+      {
+        "rva": 46013232,
+        "literal": "FRANCHISE_MENTOR::MANAGER::DeleteMenteeInfo",
+        "domain": "D07"
+      },
+      {
+        "rva": 46013328,
+        "literal": "FRANCHISE_MENTOR::MANAGER::SetMentorsInCurrentTeam",
+        "domain": "D07"
+      },
+      {
+        "rva": 46062992,
+        "literal": "FRANCHISE_TRAINING::SetTrainingForTeamOnDate",
+        "domain": "D07"
+      },
+      {
+        "rva": 46063312,
+        "literal": "FRANCHISE_TRAINING::GetSubfocusDataByIndex",
+        "domain": "D07"
+      },
+      {
+        "rva": 46063488,
+        "literal": "FRANCHISE_TRAINING::GetSubfocusTotalIndex",
+        "domain": "D07"
+      },
+      {
+        "rva": 46064248,
+        "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+        "domain": "D07"
+      },
+      {
+        "rva": 46064496,
+        "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointAverageForTeam",
+        "domain": "D07"
+      },
+      {
+        "rva": 46064592,
+        "literal": "FRANCHISE_TRAINING::GetIntensityHistoryAverage_AsFloat",
+        "domain": "D07"
+      },
+      {
+        "rva": 46064688,
+        "literal": "FRANCHISE_TRAINING::GetIntensityHistoryPointsAvailable",
+        "domain": "D07"
+      }
+    ],
+    "D09": [
+      {
+        "rva": 36909296,
+        "literal": "FRANCHISE_SCOUT::DRAFT_PROSPECT::TEAM_DATA",
+        "domain": "D09"
+      },
+      {
+        "rva": 36909632,
+        "literal": "FRANCHISE_SCOUT::PROSPECT_STORY",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910064,
+        "literal": "FRANCHISE_SCOUT::DRAFT_PROSPECT",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910336,
+        "literal": "FRANCHISE_SCOUT::DRAFT_CLASS",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910432,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::PROSPECT_DATA",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910576,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::FOCUS_TYPE",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910736,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::PRIORITY",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910816,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::PROSPECT_DATA",
+        "domain": "D09"
+      },
+      {
+        "rva": 36910912,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL",
+        "domain": "D09"
+      },
+      {
+        "rva": 36911104,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP",
+        "domain": "D09"
+      },
+      {
+        "rva": 46031928,
+        "literal": "FRANCHISE_SCOUT::IsPlayerProspect",
+        "domain": "D09"
+      },
+      {
+        "rva": 46032240,
+        "literal": "FRANCHISE_SCOUT::UpdateScouting",
+        "domain": "D09"
+      },
+      {
+        "rva": 46032440,
+        "literal": "FRANCHISE_SCOUT::GetNumberOfScoutingTripsLeftInSchedule",
+        "domain": "D09"
+      },
+      {
+        "rva": 46032664,
+        "literal": "FRANCHISE_SCOUT::DoScoutingTripForTeam",
+        "domain": "D09"
+      },
+      {
+        "rva": 46032824,
+        "literal": "FRANCHISE_SCOUT::AutomateScoutingGoals",
+        "domain": "D09"
+      },
+      {
+        "rva": 46032984,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::RemoveGoal",
+        "domain": "D09"
+      },
+      {
+        "rva": 46033152,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::DoScout",
+        "domain": "D09"
+      },
+      {
+        "rva": 46033272,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::SetFocusToProjectedPick",
+        "domain": "D09"
+      },
+      {
+        "rva": 46033416,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::SetFocusToSpecificProspects",
+        "domain": "D09"
+      },
+      {
+        "rva": 46033600,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::GetGoalProspectByIndex",
+        "domain": "D09"
+      },
+      {
+        "rva": 46033800,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::DeterminePlayersForPick",
+        "domain": "D09"
+      },
+      {
+        "rva": 46034688,
+        "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::SetFocusToSortedSearch",
+        "domain": "D09"
+      },
+      {
+        "rva": 46034880,
+        "literal": "FRANCHISE_SCOUT::GetStrengthStringByIndex",
+        "domain": "D09"
+      },
+      {
+        "rva": 46034976,
+        "literal": "FRANCHISE_SCOUT::GetWeaknessStringByIndex",
+        "domain": "D09"
+      },
+      {
+        "rva": 46421920,
+        "literal": "FRANCHISE_SCOUT::GetProspectDataByIndex(i)->GetPlayerData()->GetUniqueId() != FRANCHISE_SCOUT::GetProspectDataByIndex(j)->GetPlayerData()->GetUniqueId()",
+        "domain": "D09"
+      }
+    ],
+    "D01": [
+      {
+        "rva": 46057872,
+        "literal": "Franchise_Trade_AddElement",
+        "domain": "D01"
+      },
+      {
+        "rva": 46057976,
+        "literal": "Franchise_Trade_AddPlayerElement",
+        "domain": "D01"
+      },
+      {
+        "rva": 46058088,
+        "literal": "Franchise_Trade_AddPickElement",
+        "domain": "D01"
+      },
+      {
+        "rva": 46058120,
+        "literal": "Franchise_Trade_AddExceptionElement",
+        "domain": "D01"
+      }
+    ]
+  },
+  "references": [
+    {
+      "rva": 36921232,
+      "literal": "FRANCHISE_COACH::SIGNING::STATUS",
+      "domain": "D02",
+      "instruction_rva": 937232,
+      "unwind_chain": [],
+      "primary_rva": null
+    },
+    {
+      "rva": 36921456,
+      "literal": "FRANCHISE_COACH::SIGNING",
+      "domain": "D02",
+      "instruction_rva": 937284,
+      "unwind_chain": [
+        {
+          "begin": 937280,
+          "end": 937331,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 937280
+    },
+    {
+      "rva": 36926304,
+      "literal": "FRANCHISE_GAMEPLAN_MANAGER",
+      "domain": "D04",
+      "instruction_rva": 938260,
+      "unwind_chain": [
+        {
+          "begin": 938256,
+          "end": 938307,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 938256
+    },
+    {
+      "rva": 36910336,
+      "literal": "FRANCHISE_SCOUT::DRAFT_CLASS",
+      "domain": "D09",
+      "instruction_rva": 940324,
+      "unwind_chain": [
+        {
+          "begin": 940320,
+          "end": 940371,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940320
+    },
+    {
+      "rva": 36909296,
+      "literal": "FRANCHISE_SCOUT::DRAFT_PROSPECT::TEAM_DATA",
+      "domain": "D09",
+      "instruction_rva": 940388,
+      "unwind_chain": [
+        {
+          "begin": 940384,
+          "end": 940435,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940384
+    },
+    {
+      "rva": 36910064,
+      "literal": "FRANCHISE_SCOUT::DRAFT_PROSPECT",
+      "domain": "D09",
+      "instruction_rva": 940452,
+      "unwind_chain": [
+        {
+          "begin": 940448,
+          "end": 940499,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940448
+    },
+    {
+      "rva": 36909632,
+      "literal": "FRANCHISE_SCOUT::PROSPECT_STORY",
+      "domain": "D09",
+      "instruction_rva": 940512,
+      "unwind_chain": [],
+      "primary_rva": null
+    },
+    {
+      "rva": 36910576,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::FOCUS_TYPE",
+      "domain": "D09",
+      "instruction_rva": 940560,
+      "unwind_chain": [],
+      "primary_rva": null
+    },
+    {
+      "rva": 36910736,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::PRIORITY",
+      "domain": "D09",
+      "instruction_rva": 940608,
+      "unwind_chain": [],
+      "primary_rva": null
+    },
+    {
+      "rva": 36910816,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::PROSPECT_DATA",
+      "domain": "D09",
+      "instruction_rva": 940660,
+      "unwind_chain": [
+        {
+          "begin": 940656,
+          "end": 940707,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940656
+    },
+    {
+      "rva": 36910912,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL",
+      "domain": "D09",
+      "instruction_rva": 940724,
+      "unwind_chain": [
+        {
+          "begin": 940720,
+          "end": 940771,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940720
+    },
+    {
+      "rva": 36910432,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::PROSPECT_DATA",
+      "domain": "D09",
+      "instruction_rva": 940788,
+      "unwind_chain": [
+        {
+          "begin": 940784,
+          "end": 940835,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940784
+    },
+    {
+      "rva": 36911104,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP",
+      "domain": "D09",
+      "instruction_rva": 940852,
+      "unwind_chain": [
+        {
+          "begin": 940848,
+          "end": 940899,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 940848
+    },
+    {
+      "rva": 45848288,
+      "literal": "FRANCHISE_SIGN_TUNING",
+      "domain": "D02",
+      "instruction_rva": 1697972,
+      "unwind_chain": [
+        {
+          "begin": 1697968,
+          "end": 1698019,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 1697968
+    },
+    {
+      "rva": 38920776,
+      "literal": "COACHDATA::SetCurrentTeam",
+      "domain": "D03",
+      "instruction_rva": 9369714,
+      "unwind_chain": [
+        {
+          "begin": 9369515,
+          "end": 9369845,
+          "unwind_rva": 50338668,
+          "flags": 4
+        },
+        {
+          "begin": 9369472,
+          "end": 9369515,
+          "unwind_rva": 50223576,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 9369472
+    },
+    {
+      "rva": 38930752,
+      "literal": "TEAMDATA::SetCoach",
+      "domain": "D05",
+      "instruction_rva": 10190928,
+      "unwind_chain": [
+        {
+          "begin": 10190667,
+          "end": 10191113,
+          "unwind_rva": 50351068,
+          "flags": 4
+        },
+        {
+          "begin": 10190608,
+          "end": 10190667,
+          "unwind_rva": 50351048,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 10190608
+    },
+    {
+      "rva": 38920776,
+      "literal": "COACHDATA::SetCurrentTeam",
+      "domain": "D03",
+      "instruction_rva": 10192146,
+      "unwind_chain": [
+        {
+          "begin": 10191947,
+          "end": 10192277,
+          "unwind_rva": 50351396,
+          "flags": 4
+        },
+        {
+          "begin": 10191904,
+          "end": 10191947,
+          "unwind_rva": 50351380,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 10191904
+    },
+    {
+      "rva": 38930752,
+      "literal": "TEAMDATA::SetCoach",
+      "domain": "D05",
+      "instruction_rva": 10295251,
+      "unwind_chain": [
+        {
+          "begin": 10294986,
+          "end": 10295436,
+          "unwind_rva": 50347052,
+          "flags": 4
+        },
+        {
+          "begin": 10294928,
+          "end": 10294986,
+          "unwind_rva": 50347032,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 10294928
+    },
+    {
+      "rva": 44582504,
+      "literal": "PLAYERDATA::SetContractTeam",
+      "domain": "D03",
+      "instruction_rva": 16039227,
+      "unwind_chain": [
+        {
+          "begin": 16039083,
+          "end": 16039381,
+          "unwind_rva": 50625628,
+          "flags": 4
+        },
+        {
+          "begin": 16038977,
+          "end": 16039083,
+          "unwind_rva": 50625608,
+          "flags": 4
+        },
+        {
+          "begin": 16038928,
+          "end": 16038977,
+          "unwind_rva": 50625520,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 16038928
+    },
+    {
+      "rva": 44582184,
+      "literal": "PLAYERDATA::SetCurrentTeam",
+      "domain": "D03",
+      "instruction_rva": 16041189,
+      "unwind_chain": [
+        {
+          "begin": 16041045,
+          "end": 16041343,
+          "unwind_rva": 50625556,
+          "flags": 4
+        },
+        {
+          "begin": 16040939,
+          "end": 16041045,
+          "unwind_rva": 50625536,
+          "flags": 4
+        },
+        {
+          "begin": 16040896,
+          "end": 16040939,
+          "unwind_rva": 50625520,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 16040896
+    },
+    {
+      "rva": 46007600,
+      "literal": "FRANCHISE_GAMEPLAN_MANAGER::AddGameplan",
+      "domain": "D04",
+      "instruction_rva": 19153595,
+      "unwind_chain": [
+        {
+          "begin": 19153505,
+          "end": 19153686,
+          "unwind_rva": 50818472,
+          "flags": 4
+        },
+        {
+          "begin": 19153456,
+          "end": 19153505,
+          "unwind_rva": 50087772,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19153456
+    },
+    {
+      "rva": 46013080,
+      "literal": "FRANCHISE_MENTOR::MANAGER::AppendMenteeInfo",
+      "domain": "D07",
+      "instruction_rva": 19198359,
+      "unwind_chain": [
+        {
+          "begin": 19198192,
+          "end": 19198512,
+          "unwind_rva": 49986360,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19198192
+    },
+    {
+      "rva": 46032824,
+      "literal": "FRANCHISE_SCOUT::AutomateScoutingGoals",
+      "domain": "D09",
+      "instruction_rva": 19201994,
+      "unwind_chain": [
+        {
+          "begin": 19201821,
+          "end": 19202215,
+          "unwind_rva": 50797708,
+          "flags": 4
+        },
+        {
+          "begin": 19201489,
+          "end": 19201821,
+          "unwind_rva": 50797672,
+          "flags": 4
+        },
+        {
+          "begin": 19201456,
+          "end": 19201489,
+          "unwind_rva": 50797660,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19201456
+    },
+    {
+      "rva": 46013232,
+      "literal": "FRANCHISE_MENTOR::MANAGER::DeleteMenteeInfo",
+      "domain": "D07",
+      "instruction_rva": 19262939,
+      "unwind_chain": [
+        {
+          "begin": 19262832,
+          "end": 19263017,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19262832
+    },
+    {
+      "rva": 46033800,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::DeterminePlayersForPick",
+      "domain": "D09",
+      "instruction_rva": 19267745,
+      "unwind_chain": [
+        {
+          "begin": 19267279,
+          "end": 19269206,
+          "unwind_rva": 50820304,
+          "flags": 4
+        },
+        {
+          "begin": 19267232,
+          "end": 19267279,
+          "unwind_rva": 50820288,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19267232
+    },
+    {
+      "rva": 46033800,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::DeterminePlayersForPick",
+      "domain": "D09",
+      "instruction_rva": 19267941,
+      "unwind_chain": [
+        {
+          "begin": 19267279,
+          "end": 19269206,
+          "unwind_rva": 50820304,
+          "flags": 4
+        },
+        {
+          "begin": 19267232,
+          "end": 19267279,
+          "unwind_rva": 50820288,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19267232
+    },
+    {
+      "rva": 46033800,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::DeterminePlayersForPick",
+      "domain": "D09",
+      "instruction_rva": 19268589,
+      "unwind_chain": [
+        {
+          "begin": 19267279,
+          "end": 19269206,
+          "unwind_rva": 50820304,
+          "flags": 4
+        },
+        {
+          "begin": 19267232,
+          "end": 19267279,
+          "unwind_rva": 50820288,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19267232
+    },
+    {
+      "rva": 46033800,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::DeterminePlayersForPick",
+      "domain": "D09",
+      "instruction_rva": 19268904,
+      "unwind_chain": [
+        {
+          "begin": 19267279,
+          "end": 19269206,
+          "unwind_rva": 50820304,
+          "flags": 4
+        },
+        {
+          "begin": 19267232,
+          "end": 19267279,
+          "unwind_rva": 50820288,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19267232
+    },
+    {
+      "rva": 46033800,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::DeterminePlayersForPick",
+      "domain": "D09",
+      "instruction_rva": 19269254,
+      "unwind_chain": [
+        {
+          "begin": 19269206,
+          "end": 19269339,
+          "unwind_rva": 50820352,
+          "flags": 4
+        },
+        {
+          "begin": 19267232,
+          "end": 19267279,
+          "unwind_rva": 50820288,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19267232
+    },
+    {
+      "rva": 46033152,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::DoScout",
+      "domain": "D09",
+      "instruction_rva": 19273718,
+      "unwind_chain": [
+        {
+          "begin": 19273552,
+          "end": 19274623,
+          "unwind_rva": 50820404,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19273552
+    },
+    {
+      "rva": 46032664,
+      "literal": "FRANCHISE_SCOUT::DoScoutingTripForTeam",
+      "domain": "D09",
+      "instruction_rva": 19275144,
+      "unwind_chain": [
+        {
+          "begin": 19275072,
+          "end": 19275307,
+          "unwind_rva": 49970440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19275072
+    },
+    {
+      "rva": 46035176,
+      "literal": "Franchise_Sign_GetByTeamPositionAndIndex",
+      "domain": "D02",
+      "instruction_rva": 19355683,
+      "unwind_chain": [
+        {
+          "begin": 19354717,
+          "end": 19356315,
+          "unwind_rva": 50825088,
+          "flags": 4
+        },
+        {
+          "begin": 19354696,
+          "end": 19354717,
+          "unwind_rva": 50825064,
+          "flags": 4
+        },
+        {
+          "begin": 19354400,
+          "end": 19354696,
+          "unwind_rva": 50825048,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19354400
+    },
+    {
+      "rva": 46036144,
+      "literal": "Franchise_Sign_AI_ConfirmContract",
+      "domain": "D02",
+      "instruction_rva": 19590925,
+      "unwind_chain": [
+        {
+          "begin": 19590432,
+          "end": 19591259,
+          "unwind_rva": 50798376,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19590432
+    },
+    {
+      "rva": 46036144,
+      "literal": "Franchise_Sign_AI_ConfirmContract",
+      "domain": "D02",
+      "instruction_rva": 19591177,
+      "unwind_chain": [
+        {
+          "begin": 19590432,
+          "end": 19591259,
+          "unwind_rva": 50798376,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19590432
+    },
+    {
+      "rva": 46038656,
+      "literal": "Franchise_Sign_AssignOptions",
+      "domain": "D02",
+      "instruction_rva": 19592367,
+      "unwind_chain": [
+        {
+          "begin": 19592319,
+          "end": 19592615,
+          "unwind_rva": 50799976,
+          "flags": 4
+        },
+        {
+          "begin": 19592256,
+          "end": 19592319,
+          "unwind_rva": 50390540,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19592256
+    },
+    {
+      "rva": 46038656,
+      "literal": "Franchise_Sign_AssignOptions",
+      "domain": "D02",
+      "instruction_rva": 19592518,
+      "unwind_chain": [
+        {
+          "begin": 19592319,
+          "end": 19592615,
+          "unwind_rva": 50799976,
+          "flags": 4
+        },
+        {
+          "begin": 19592256,
+          "end": 19592319,
+          "unwind_rva": 50390540,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19592256
+    },
+    {
+      "rva": 46038656,
+      "literal": "Franchise_Sign_AssignOptions",
+      "domain": "D02",
+      "instruction_rva": 19592653,
+      "unwind_chain": [
+        {
+          "begin": 19592615,
+          "end": 19592738,
+          "unwind_rva": 50799996,
+          "flags": 4
+        },
+        {
+          "begin": 19592256,
+          "end": 19592319,
+          "unwind_rva": 50390540,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19592256
+    },
+    {
+      "rva": 46040152,
+      "literal": "Franchise_Sign_CanTeamSignAllInFreeAgency",
+      "domain": "D02",
+      "instruction_rva": 19599273,
+      "unwind_chain": [
+        {
+          "begin": 19598551,
+          "end": 19599727,
+          "unwind_rva": 50800464,
+          "flags": 4
+        },
+        {
+          "begin": 19598496,
+          "end": 19598551,
+          "unwind_rva": 50800448,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19598496
+    },
+    {
+      "rva": 46040672,
+      "literal": "Franchise_Sign_ClearCapHoldsForSigning",
+      "domain": "D02",
+      "instruction_rva": 19602621,
+      "unwind_chain": [
+        {
+          "begin": 19602459,
+          "end": 19602927,
+          "unwind_rva": 50800608,
+          "flags": 4
+        },
+        {
+          "begin": 19602080,
+          "end": 19602459,
+          "unwind_rva": 50800580,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19602080
+    },
+    {
+      "rva": 46040672,
+      "literal": "Franchise_Sign_ClearCapHoldsForSigning",
+      "domain": "D02",
+      "instruction_rva": 19602748,
+      "unwind_chain": [
+        {
+          "begin": 19602459,
+          "end": 19602927,
+          "unwind_rva": 50800608,
+          "flags": 4
+        },
+        {
+          "begin": 19602080,
+          "end": 19602459,
+          "unwind_rva": 50800580,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19602080
+    },
+    {
+      "rva": 46040672,
+      "literal": "Franchise_Sign_ClearCapHoldsForSigning",
+      "domain": "D02",
+      "instruction_rva": 19603039,
+      "unwind_chain": [
+        {
+          "begin": 19602927,
+          "end": 19603143,
+          "unwind_rva": 50800628,
+          "flags": 4
+        },
+        {
+          "begin": 19602080,
+          "end": 19602459,
+          "unwind_rva": 50800580,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19602080
+    },
+    {
+      "rva": 46042504,
+      "literal": "Franchise_Sign_CompileFreeAgentPlayerList",
+      "domain": "D02",
+      "instruction_rva": 19603758,
+      "unwind_chain": [
+        {
+          "begin": 19603663,
+          "end": 19604059,
+          "unwind_rva": 50801260,
+          "flags": 4
+        },
+        {
+          "begin": 19603605,
+          "end": 19603663,
+          "unwind_rva": 50801236,
+          "flags": 4
+        },
+        {
+          "begin": 19603456,
+          "end": 19603605,
+          "unwind_rva": 50801224,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19603456
+    },
+    {
+      "rva": 46042784,
+      "literal": "Franchise_Sign_ConsiderFreeAgents",
+      "domain": "D02",
+      "instruction_rva": 19604224,
+      "unwind_chain": [
+        {
+          "begin": 19604128,
+          "end": 19604459,
+          "unwind_rva": 50801524,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19604128
+    },
+    {
+      "rva": 46035344,
+      "literal": "Franchise_Sign_CreateCounterOffer",
+      "domain": "D02",
+      "instruction_rva": 19608516,
+      "unwind_chain": [
+        {
+          "begin": 19608471,
+          "end": 19608651,
+          "unwind_rva": 50798148,
+          "flags": 4
+        },
+        {
+          "begin": 19607913,
+          "end": 19608191,
+          "unwind_rva": 50798100,
+          "flags": 4
+        },
+        {
+          "begin": 19607408,
+          "end": 19607448,
+          "unwind_rva": 50798044,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19607408
+    },
+    {
+      "rva": 46035344,
+      "literal": "Franchise_Sign_CreateCounterOffer",
+      "domain": "D02",
+      "instruction_rva": 19609021,
+      "unwind_chain": [
+        {
+          "begin": 19608958,
+          "end": 19609354,
+          "unwind_rva": 50798148,
+          "flags": 4
+        },
+        {
+          "begin": 19607913,
+          "end": 19608191,
+          "unwind_rva": 50798100,
+          "flags": 4
+        },
+        {
+          "begin": 19607408,
+          "end": 19607448,
+          "unwind_rva": 50798044,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19607408
+    },
+    {
+      "rva": 46035344,
+      "literal": "Franchise_Sign_CreateCounterOffer",
+      "domain": "D02",
+      "instruction_rva": 19609238,
+      "unwind_chain": [
+        {
+          "begin": 19608958,
+          "end": 19609354,
+          "unwind_rva": 50798148,
+          "flags": 4
+        },
+        {
+          "begin": 19607913,
+          "end": 19608191,
+          "unwind_rva": 50798100,
+          "flags": 4
+        },
+        {
+          "begin": 19607408,
+          "end": 19607448,
+          "unwind_rva": 50798044,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19607408
+    },
+    {
+      "rva": 46039104,
+      "literal": "Franchise_Sign_CreateSlottedDraftContract",
+      "domain": "D02",
+      "instruction_rva": 19609929,
+      "unwind_chain": [
+        {
+          "begin": 19609776,
+          "end": 19610046,
+          "unwind_rva": 50800184,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19609776
+    },
+    {
+      "rva": 46042928,
+      "literal": "Franchise_Sign_GetNumberOfSigningsByTeamTypeAndStatus",
+      "domain": "D02",
+      "instruction_rva": 19610314,
+      "unwind_chain": [
+        {
+          "begin": 19610131,
+          "end": 19610485,
+          "unwind_rva": 50800228,
+          "flags": 4
+        },
+        {
+          "begin": 19610046,
+          "end": 19610131,
+          "unwind_rva": 50800208,
+          "flags": 4
+        },
+        {
+          "begin": 19609776,
+          "end": 19610046,
+          "unwind_rva": 50800184,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19609776
+    },
+    {
+      "rva": 46039104,
+      "literal": "Franchise_Sign_CreateSlottedDraftContract",
+      "domain": "D02",
+      "instruction_rva": 19610559,
+      "unwind_chain": [
+        {
+          "begin": 19610485,
+          "end": 19610922,
+          "unwind_rva": 50800248,
+          "flags": 4
+        },
+        {
+          "begin": 19610046,
+          "end": 19610131,
+          "unwind_rva": 50800208,
+          "flags": 4
+        },
+        {
+          "begin": 19609776,
+          "end": 19610046,
+          "unwind_rva": 50800184,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19609776
+    },
+    {
+      "rva": 46037560,
+      "literal": "Franchise_Sign_FA_ProcessConfirmations",
+      "domain": "D02",
+      "instruction_rva": 19617049,
+      "unwind_chain": [
+        {
+          "begin": 19616928,
+          "end": 19617180,
+          "unwind_rva": 50799312,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19616928
+    },
+    {
+      "rva": 46037560,
+      "literal": "Franchise_Sign_FA_ProcessConfirmations",
+      "domain": "D02",
+      "instruction_rva": 19617462,
+      "unwind_chain": [
+        {
+          "begin": 19617180,
+          "end": 19619578,
+          "unwind_rva": 50799336,
+          "flags": 4
+        },
+        {
+          "begin": 19616928,
+          "end": 19617180,
+          "unwind_rva": 50799312,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19616928
+    },
+    {
+      "rva": 46037560,
+      "literal": "Franchise_Sign_FA_ProcessConfirmations",
+      "domain": "D02",
+      "instruction_rva": 19617795,
+      "unwind_chain": [
+        {
+          "begin": 19617180,
+          "end": 19619578,
+          "unwind_rva": 50799336,
+          "flags": 4
+        },
+        {
+          "begin": 19616928,
+          "end": 19617180,
+          "unwind_rva": 50799312,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19616928
+    },
+    {
+      "rva": 46037560,
+      "literal": "Franchise_Sign_FA_ProcessConfirmations",
+      "domain": "D02",
+      "instruction_rva": 19619305,
+      "unwind_chain": [
+        {
+          "begin": 19617180,
+          "end": 19619578,
+          "unwind_rva": 50799336,
+          "flags": 4
+        },
+        {
+          "begin": 19616928,
+          "end": 19617180,
+          "unwind_rva": 50799312,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19616928
+    },
+    {
+      "rva": 46038864,
+      "literal": "Franchise_Sign_GenerateContract",
+      "domain": "D02",
+      "instruction_rva": 19625215,
+      "unwind_chain": [
+        {
+          "begin": 19624592,
+          "end": 19625291,
+          "unwind_rva": 50800088,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19624592
+    },
+    {
+      "rva": 46035176,
+      "literal": "Franchise_Sign_GetByTeamPositionAndIndex",
+      "domain": "D02",
+      "instruction_rva": 19626517,
+      "unwind_chain": [
+        {
+          "begin": 19626384,
+          "end": 19626734,
+          "unwind_rva": 49975244,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19626384
+    },
+    {
+      "rva": 46040336,
+      "literal": "Franchise_Sign_GetDefaultSigningType",
+      "domain": "D02",
+      "instruction_rva": 19627443,
+      "unwind_chain": [
+        {
+          "begin": 19627360,
+          "end": 19627584,
+          "unwind_rva": 49986360,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19627360
+    },
+    {
+      "rva": 46036648,
+      "literal": "Franchise_Sign_GetDraftContractValueForPlayer",
+      "domain": "D02",
+      "instruction_rva": 19627673,
+      "unwind_chain": [
+        {
+          "begin": 19627584,
+          "end": 19628359,
+          "unwind_rva": 49975244,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19627584
+    },
+    {
+      "rva": 46036648,
+      "literal": "Franchise_Sign_GetDraftContractValueForPlayer",
+      "domain": "D02",
+      "instruction_rva": 19627804,
+      "unwind_chain": [
+        {
+          "begin": 19627584,
+          "end": 19628359,
+          "unwind_rva": 49975244,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19627584
+    },
+    {
+      "rva": 46036648,
+      "literal": "Franchise_Sign_GetDraftContractValueForPlayer",
+      "domain": "D02",
+      "instruction_rva": 19627927,
+      "unwind_chain": [
+        {
+          "begin": 19627584,
+          "end": 19628359,
+          "unwind_rva": 49975244,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19627584
+    },
+    {
+      "rva": 46037240,
+      "literal": "Franchise_Sign_GetFreeAgencyLength",
+      "domain": "D02",
+      "instruction_rva": 19628537,
+      "unwind_chain": [
+        {
+          "begin": 19628448,
+          "end": 19628642,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19628448
+    },
+    {
+      "rva": 46038368,
+      "literal": "Franchise_Sign_GetMaxContractLength",
+      "domain": "D02",
+      "instruction_rva": 19629447,
+      "unwind_chain": [
+        {
+          "begin": 19629358,
+          "end": 19629541,
+          "unwind_rva": 50799760,
+          "flags": 4
+        },
+        {
+          "begin": 19629328,
+          "end": 19629358,
+          "unwind_rva": 50799740,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19629328
+    },
+    {
+      "rva": 46038368,
+      "literal": "Franchise_Sign_GetMaxContractLength",
+      "domain": "D02",
+      "instruction_rva": 19629686,
+      "unwind_chain": [
+        {
+          "begin": 19629597,
+          "end": 19629789,
+          "unwind_rva": 50799816,
+          "flags": 4
+        },
+        {
+          "begin": 19629328,
+          "end": 19629358,
+          "unwind_rva": 50799740,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19629328
+    },
+    {
+      "rva": 46037440,
+      "literal": "Franchise_Sign_GetMoratoriumDaysRemaining",
+      "domain": "D02",
+      "instruction_rva": 19635519,
+      "unwind_chain": [
+        {
+          "begin": 19635408,
+          "end": 19635645,
+          "unwind_rva": 49970440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19635408
+    },
+    {
+      "rva": 46042928,
+      "literal": "Franchise_Sign_GetNumberOfSigningsByTeamTypeAndStatus",
+      "domain": "D02",
+      "instruction_rva": 19636989,
+      "unwind_chain": [
+        {
+          "begin": 19636752,
+          "end": 19637192,
+          "unwind_rva": 50802228,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19636752
+    },
+    {
+      "rva": 46036432,
+      "literal": "Franchise_Sign_GetPlayerEstimatedSalary",
+      "domain": "D02",
+      "instruction_rva": 19637436,
+      "unwind_chain": [
+        {
+          "begin": 19637232,
+          "end": 19637663,
+          "unwind_rva": 50798500,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19637232
+    },
+    {
+      "rva": 46037104,
+      "literal": "Franchise_Sign_GetQualifyingOfferValueForPickPosition",
+      "domain": "D02",
+      "instruction_rva": 19638425,
+      "unwind_chain": [
+        {
+          "begin": 19638352,
+          "end": 19638578,
+          "unwind_rva": 49970440,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19638352
+    },
+    {
+      "rva": 46037160,
+      "literal": "Franchise_Sign_GetQualifyingOfferValueForPlayer",
+      "domain": "D02",
+      "instruction_rva": 19638918,
+      "unwind_chain": [
+        {
+          "begin": 19638826,
+          "end": 19639020,
+          "unwind_rva": 50798576,
+          "flags": 4
+        },
+        {
+          "begin": 19638799,
+          "end": 19638826,
+          "unwind_rva": 50798556,
+          "flags": 4
+        },
+        {
+          "begin": 19638592,
+          "end": 19638724,
+          "unwind_rva": 50798520,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19638592
+    },
+    {
+      "rva": 46037160,
+      "literal": "Franchise_Sign_GetQualifyingOfferValueForPlayer",
+      "domain": "D02",
+      "instruction_rva": 19639051,
+      "unwind_chain": [
+        {
+          "begin": 19639020,
+          "end": 19639176,
+          "unwind_rva": 50798608,
+          "flags": 4
+        },
+        {
+          "begin": 19638799,
+          "end": 19638826,
+          "unwind_rva": 50798556,
+          "flags": 4
+        },
+        {
+          "begin": 19638592,
+          "end": 19638724,
+          "unwind_rva": 50798520,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19638592
+    },
+    {
+      "rva": 46037944,
+      "literal": "Franchise_Sign_HandleNextFreeAgencyStage",
+      "domain": "D02",
+      "instruction_rva": 19645288,
+      "unwind_chain": [
+        {
+          "begin": 19644800,
+          "end": 19645336,
+          "unwind_rva": 49971036,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19644800
+    },
+    {
+      "rva": 46043144,
+      "literal": "Franchise_Sign_LocalizeFreeAgencyTitle",
+      "domain": "D02",
+      "instruction_rva": 19649066,
+      "unwind_chain": [
+        {
+          "begin": 19648832,
+          "end": 19649449,
+          "unwind_rva": 50090096,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19648832
+    },
+    {
+      "rva": 46035664,
+      "literal": "Franchise_Sign_OfferContract",
+      "domain": "D02",
+      "instruction_rva": 19650078,
+      "unwind_chain": [
+        {
+          "begin": 19649728,
+          "end": 19650451,
+          "unwind_rva": 50798236,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19649728
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19652419,
+      "unwind_chain": [
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19652563,
+      "unwind_chain": [
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19652694,
+      "unwind_chain": [
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19655095,
+      "unwind_chain": [
+        {
+          "begin": 19654188,
+          "end": 19657044,
+          "unwind_rva": 50800712,
+          "flags": 4
+        },
+        {
+          "begin": 19653003,
+          "end": 19654188,
+          "unwind_rva": 50800692,
+          "flags": 4
+        },
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19655313,
+      "unwind_chain": [
+        {
+          "begin": 19654188,
+          "end": 19657044,
+          "unwind_rva": 50800712,
+          "flags": 4
+        },
+        {
+          "begin": 19653003,
+          "end": 19654188,
+          "unwind_rva": 50800692,
+          "flags": 4
+        },
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19655465,
+      "unwind_chain": [
+        {
+          "begin": 19654188,
+          "end": 19657044,
+          "unwind_rva": 50800712,
+          "flags": 4
+        },
+        {
+          "begin": 19653003,
+          "end": 19654188,
+          "unwind_rva": 50800692,
+          "flags": 4
+        },
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19655620,
+      "unwind_chain": [
+        {
+          "begin": 19654188,
+          "end": 19657044,
+          "unwind_rva": 50800712,
+          "flags": 4
+        },
+        {
+          "begin": 19653003,
+          "end": 19654188,
+          "unwind_rva": 50800692,
+          "flags": 4
+        },
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19656377,
+      "unwind_chain": [
+        {
+          "begin": 19654188,
+          "end": 19657044,
+          "unwind_rva": 50800712,
+          "flags": 4
+        },
+        {
+          "begin": 19653003,
+          "end": 19654188,
+          "unwind_rva": 50800692,
+          "flags": 4
+        },
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46041024,
+      "literal": "Franchise_Sign_Process",
+      "domain": "D02",
+      "instruction_rva": 19656811,
+      "unwind_chain": [
+        {
+          "begin": 19654188,
+          "end": 19657044,
+          "unwind_rva": 50800712,
+          "flags": 4
+        },
+        {
+          "begin": 19653003,
+          "end": 19654188,
+          "unwind_rva": 50800692,
+          "flags": 4
+        },
+        {
+          "begin": 19652208,
+          "end": 19653003,
+          "unwind_rva": 50800664,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19652208
+    },
+    {
+      "rva": 46035824,
+      "literal": "Franchise_Sign_ProcessDelayedSigning",
+      "domain": "D02",
+      "instruction_rva": 19658249,
+      "unwind_chain": [
+        {
+          "begin": 19658144,
+          "end": 19659004,
+          "unwind_rva": 50798308,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19658144
+    },
+    {
+      "rva": 46035824,
+      "literal": "Franchise_Sign_ProcessDelayedSigning",
+      "domain": "D02",
+      "instruction_rva": 19658453,
+      "unwind_chain": [
+        {
+          "begin": 19658144,
+          "end": 19659004,
+          "unwind_rva": 50798308,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19658144
+    },
+    {
+      "rva": 46042320,
+      "literal": "Franchise_Sign_ProcessDraftSignings",
+      "domain": "D02",
+      "instruction_rva": 19659390,
+      "unwind_chain": [
+        {
+          "begin": 19659036,
+          "end": 19659632,
+          "unwind_rva": 50800976,
+          "flags": 4
+        },
+        {
+          "begin": 19659008,
+          "end": 19659036,
+          "unwind_rva": 50800960,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19659008
+    },
+    {
+      "rva": 46038088,
+      "literal": "Franchise_Sign_ProcessMarkedOptionsForPlayer",
+      "domain": "D02",
+      "instruction_rva": 19660821,
+      "unwind_chain": [
+        {
+          "begin": 19660480,
+          "end": 19660926,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19660480
+    },
+    {
+      "rva": 46042040,
+      "literal": "Franchise_Sign_RejectOtherSignings",
+      "domain": "D02",
+      "instruction_rva": 19661723,
+      "unwind_chain": [
+        {
+          "begin": 19661376,
+          "end": 19662202,
+          "unwind_rva": 50800852,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19661376
+    },
+    {
+      "rva": 46052592,
+      "literal": "Franchise_Team_SetChemistry",
+      "domain": "D05",
+      "instruction_rva": 19692789,
+      "unwind_chain": [
+        {
+          "begin": 19692609,
+          "end": 19693003,
+          "unwind_rva": 50807512,
+          "flags": 4
+        },
+        {
+          "begin": 19692500,
+          "end": 19692609,
+          "unwind_rva": 50807492,
+          "flags": 4
+        },
+        {
+          "begin": 19692448,
+          "end": 19692500,
+          "unwind_rva": 50807472,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19692448
+    },
+    {
+      "rva": 46042928,
+      "literal": "Franchise_Sign_GetNumberOfSigningsByTeamTypeAndStatus",
+      "domain": "D02",
+      "instruction_rva": 19727662,
+      "unwind_chain": [
+        {
+          "begin": 19727360,
+          "end": 19727987,
+          "unwind_rva": 50176176,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19727360
+    },
+    {
+      "rva": 46052592,
+      "literal": "Franchise_Team_SetChemistry",
+      "domain": "D05",
+      "instruction_rva": 19734828,
+      "unwind_chain": [
+        {
+          "begin": 19734624,
+          "end": 19735013,
+          "unwind_rva": 50807628,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19734624
+    },
+    {
+      "rva": 46057872,
+      "literal": "Franchise_Trade_AddElement",
+      "domain": "D01",
+      "instruction_rva": 19785072,
+      "unwind_chain": [
+        {
+          "begin": 19784851,
+          "end": 19785202,
+          "unwind_rva": 50811940,
+          "flags": 4
+        },
+        {
+          "begin": 19784752,
+          "end": 19784851,
+          "unwind_rva": 50811924,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19784752
+    },
+    {
+      "rva": 46058120,
+      "literal": "Franchise_Trade_AddExceptionElement",
+      "domain": "D01",
+      "instruction_rva": 19785432,
+      "unwind_chain": [
+        {
+          "begin": 19785360,
+          "end": 19785669,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19785360
+    },
+    {
+      "rva": 46058088,
+      "literal": "Franchise_Trade_AddPickElement",
+      "domain": "D01",
+      "instruction_rva": 19785892,
+      "unwind_chain": [
+        {
+          "begin": 19785808,
+          "end": 19786018,
+          "unwind_rva": 50812036,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19785808
+    },
+    {
+      "rva": 46057976,
+      "literal": "Franchise_Trade_AddPlayerElement",
+      "domain": "D01",
+      "instruction_rva": 19786874,
+      "unwind_chain": [
+        {
+          "begin": 19786784,
+          "end": 19786996,
+          "unwind_rva": 50060696,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19786784
+    },
+    {
+      "rva": 46058120,
+      "literal": "Franchise_Trade_AddExceptionElement",
+      "domain": "D01",
+      "instruction_rva": 19787782,
+      "unwind_chain": [
+        {
+          "begin": 19787280,
+          "end": 19788008,
+          "unwind_rva": 49994676,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19787280
+    },
+    {
+      "rva": 46064496,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointAverageForTeam",
+      "domain": "D07",
+      "instruction_rva": 19858306,
+      "unwind_chain": [
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064496,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointAverageForTeam",
+      "domain": "D07",
+      "instruction_rva": 19858434,
+      "unwind_chain": [
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D07",
+      "instruction_rva": 19858631,
+      "unwind_chain": [
+        {
+          "begin": 19858538,
+          "end": 19859018,
+          "unwind_rva": 50816088,
+          "flags": 4
+        },
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D07",
+      "instruction_rva": 19858762,
+      "unwind_chain": [
+        {
+          "begin": 19858538,
+          "end": 19859018,
+          "unwind_rva": 50816088,
+          "flags": 4
+        },
+        {
+          "begin": 19858176,
+          "end": 19858538,
+          "unwind_rva": 50816056,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19858176
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D07",
+      "instruction_rva": 19859187,
+      "unwind_chain": [
+        {
+          "begin": 19859072,
+          "end": 19859484,
+          "unwind_rva": 50816032,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19859072
+    },
+    {
+      "rva": 46064248,
+      "literal": "FRANCHISE_TRAINING::GetAttributeHistoryPointForPlayer",
+      "domain": "D07",
+      "instruction_rva": 19859315,
+      "unwind_chain": [
+        {
+          "begin": 19859072,
+          "end": 19859484,
+          "unwind_rva": 50816032,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19859072
+    },
+    {
+      "rva": 46033600,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::GetGoalProspectByIndex",
+      "domain": "D09",
+      "instruction_rva": 19867662,
+      "unwind_chain": [
+        {
+          "begin": 19867536,
+          "end": 19867782,
+          "unwind_rva": 50395252,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19867536
+    },
+    {
+      "rva": 46064592,
+      "literal": "FRANCHISE_TRAINING::GetIntensityHistoryAverage_AsFloat",
+      "domain": "D07",
+      "instruction_rva": 19868233,
+      "unwind_chain": [
+        {
+          "begin": 19868016,
+          "end": 19868451,
+          "unwind_rva": 49994456,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19868016
+    },
+    {
+      "rva": 46064688,
+      "literal": "FRANCHISE_TRAINING::GetIntensityHistoryPointsAvailable",
+      "domain": "D07",
+      "instruction_rva": 19868612,
+      "unwind_chain": [
+        {
+          "begin": 19868496,
+          "end": 19869002,
+          "unwind_rva": 50209716,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19868496
+    },
+    {
+      "rva": 46064592,
+      "literal": "FRANCHISE_TRAINING::GetIntensityHistoryAverage_AsFloat",
+      "domain": "D07",
+      "instruction_rva": 19868772,
+      "unwind_chain": [
+        {
+          "begin": 19868496,
+          "end": 19869002,
+          "unwind_rva": 50209716,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19868496
+    },
+    {
+      "rva": 46032440,
+      "literal": "FRANCHISE_SCOUT::GetNumberOfScoutingTripsLeftInSchedule",
+      "domain": "D09",
+      "instruction_rva": 19881779,
+      "unwind_chain": [
+        {
+          "begin": 19881696,
+          "end": 19881874,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19881696
+    },
+    {
+      "rva": 46007456,
+      "literal": "FRANCHISE_GAMEPLAN_MANAGER::GetOpponentGameplanIndex",
+      "domain": "D04",
+      "instruction_rva": 19883412,
+      "unwind_chain": [
+        {
+          "begin": 19883328,
+          "end": 19883591,
+          "unwind_rva": 49986360,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19883328
+    },
+    {
+      "rva": 46034880,
+      "literal": "FRANCHISE_SCOUT::GetStrengthStringByIndex",
+      "domain": "D09",
+      "instruction_rva": 19898373,
+      "unwind_chain": [
+        {
+          "begin": 19897856,
+          "end": 19898636,
+          "unwind_rva": 50826836,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19897856
+    },
+    {
+      "rva": 46063312,
+      "literal": "FRANCHISE_TRAINING::GetSubfocusDataByIndex",
+      "domain": "D07",
+      "instruction_rva": 19899298,
+      "unwind_chain": [
+        {
+          "begin": 19899104,
+          "end": 19899439,
+          "unwind_rva": 50089616,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19899104
+    },
+    {
+      "rva": 46063488,
+      "literal": "FRANCHISE_TRAINING::GetSubfocusTotalIndex",
+      "domain": "D07",
+      "instruction_rva": 19899834,
+      "unwind_chain": [
+        {
+          "begin": 19899632,
+          "end": 19900001,
+          "unwind_rva": 49993444,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19899632
+    },
+    {
+      "rva": 46034976,
+      "literal": "FRANCHISE_SCOUT::GetWeaknessStringByIndex",
+      "domain": "D09",
+      "instruction_rva": 19907639,
+      "unwind_chain": [
+        {
+          "begin": 19907088,
+          "end": 19907943,
+          "unwind_rva": 50826836,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19907088
+    },
+    {
+      "rva": 46032984,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::RemoveGoal",
+      "domain": "D09",
+      "instruction_rva": 19917995,
+      "unwind_chain": [
+        {
+          "begin": 19917729,
+          "end": 19918173,
+          "unwind_rva": 50797496,
+          "flags": 4
+        },
+        {
+          "begin": 19917679,
+          "end": 19917729,
+          "unwind_rva": 50797468,
+          "flags": 4
+        },
+        {
+          "begin": 19917675,
+          "end": 19917679,
+          "unwind_rva": 50797448,
+          "flags": 4
+        },
+        {
+          "begin": 19917648,
+          "end": 19917675,
+          "unwind_rva": 50086672,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19917648
+    },
+    {
+      "rva": 46031928,
+      "literal": "FRANCHISE_SCOUT::IsPlayerProspect",
+      "domain": "D09",
+      "instruction_rva": 19959671,
+      "unwind_chain": [
+        {
+          "begin": 19959552,
+          "end": 19959888,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19959552
+    },
+    {
+      "rva": 46031928,
+      "literal": "FRANCHISE_SCOUT::IsPlayerProspect",
+      "domain": "D09",
+      "instruction_rva": 19959805,
+      "unwind_chain": [
+        {
+          "begin": 19959552,
+          "end": 19959888,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19959552
+    },
+    {
+      "rva": 46012928,
+      "literal": "FRANCHISE_MENTOR::MANAGER::LinkMentor",
+      "domain": "D07",
+      "instruction_rva": 19966251,
+      "unwind_chain": [
+        {
+          "begin": 19965988,
+          "end": 19966354,
+          "unwind_rva": 50819036,
+          "flags": 4
+        },
+        {
+          "begin": 19965728,
+          "end": 19965804,
+          "unwind_rva": 50818984,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 19965728
+    },
+    {
+      "rva": 46032984,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_TRIP::RemoveGoal",
+      "domain": "D09",
+      "instruction_rva": 20042794,
+      "unwind_chain": [
+        {
+          "begin": 20042688,
+          "end": 20042874,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20042688
+    },
+    {
+      "rva": 46033272,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::SetFocusToProjectedPick",
+      "domain": "D09",
+      "instruction_rva": 20064811,
+      "unwind_chain": [
+        {
+          "begin": 20064720,
+          "end": 20064907,
+          "unwind_rva": 50820008,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20064720
+    },
+    {
+      "rva": 46034688,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::SetFocusToSortedSearch",
+      "domain": "D09",
+      "instruction_rva": 20065318,
+      "unwind_chain": [
+        {
+          "begin": 20065168,
+          "end": 20065419,
+          "unwind_rva": 50820244,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20065168
+    },
+    {
+      "rva": 46033416,
+      "literal": "FRANCHISE_SCOUT::SCOUTING_GOAL::SetFocusToSpecificProspects",
+      "domain": "D09",
+      "instruction_rva": 20066220,
+      "unwind_chain": [
+        {
+          "begin": 20066096,
+          "end": 20066478,
+          "unwind_rva": 50190292,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20066096
+    },
+    {
+      "rva": 46013328,
+      "literal": "FRANCHISE_MENTOR::MANAGER::SetMentorsInCurrentTeam",
+      "domain": "D07",
+      "instruction_rva": 20068180,
+      "unwind_chain": [
+        {
+          "begin": 20067334,
+          "end": 20068330,
+          "unwind_rva": 50819532,
+          "flags": 4
+        },
+        {
+          "begin": 20067185,
+          "end": 20067334,
+          "unwind_rva": 50819512,
+          "flags": 4
+        },
+        {
+          "begin": 20067148,
+          "end": 20067185,
+          "unwind_rva": 50819492,
+          "flags": 4
+        },
+        {
+          "begin": 20067114,
+          "end": 20067148,
+          "unwind_rva": 50819472,
+          "flags": 4
+        },
+        {
+          "begin": 20067024,
+          "end": 20067114,
+          "unwind_rva": 50819456,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20067024
+    },
+    {
+      "rva": 46062992,
+      "literal": "FRANCHISE_TRAINING::SetTrainingForTeamOnDate",
+      "domain": "D07",
+      "instruction_rva": 20078478,
+      "unwind_chain": [
+        {
+          "begin": 20078352,
+          "end": 20078974,
+          "unwind_rva": 50833120,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20078352
+    },
+    {
+      "rva": 46000448,
+      "literal": "FRANCHISE_COACH::Sign",
+      "domain": "D02",
+      "instruction_rva": 20086487,
+      "unwind_chain": [
+        {
+          "begin": 20086240,
+          "end": 20087300,
+          "unwind_rva": 50824712,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20086240
+    },
+    {
+      "rva": 46000448,
+      "literal": "FRANCHISE_COACH::Sign",
+      "domain": "D02",
+      "instruction_rva": 20086875,
+      "unwind_chain": [
+        {
+          "begin": 20086240,
+          "end": 20087300,
+          "unwind_rva": 50824712,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20086240
+    },
+    {
+      "rva": 46032240,
+      "literal": "FRANCHISE_SCOUT::UpdateScouting",
+      "domain": "D09",
+      "instruction_rva": 20104694,
+      "unwind_chain": [
+        {
+          "begin": 20104644,
+          "end": 20104900,
+          "unwind_rva": 50797432,
+          "flags": 4
+        },
+        {
+          "begin": 20104288,
+          "end": 20104299,
+          "unwind_rva": 50730876,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 20104288
+    },
+    {
+      "rva": 46296640,
+      "literal": "CREATED_PLAYER_EDITOR::Save",
+      "domain": "D03",
+      "instruction_rva": 21100416,
+      "unwind_chain": [
+        {
+          "begin": 21100256,
+          "end": 21100655,
+          "unwind_rva": 49986360,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 21100256
+    },
+    {
+      "rva": 46313320,
+      "literal": "PLAYERCREATE_MYPLAYER_EDITOR::Save",
+      "domain": "D03",
+      "instruction_rva": 21101486,
+      "unwind_chain": [
+        {
+          "begin": 21101056,
+          "end": 21101663,
+          "unwind_rva": 49993980,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 21101056
+    },
+    {
+      "rva": 46421920,
+      "literal": "FRANCHISE_SCOUT::GetProspectDataByIndex(i)->GetPlayerData()->GetUniqueId() != FRANCHISE_SCOUT::GetProspectDataByIndex(j)->GetPlayerData()->GetUniqueId()",
+      "domain": "D09",
+      "instruction_rva": 21746542,
+      "unwind_chain": [
+        {
+          "begin": 21746363,
+          "end": 21746642,
+          "unwind_rva": 50903984,
+          "flags": 4
+        },
+        {
+          "begin": 21746225,
+          "end": 21746363,
+          "unwind_rva": 50903948,
+          "flags": 4
+        },
+        {
+          "begin": 21746192,
+          "end": 21746225,
+          "unwind_rva": 50114252,
+          "flags": 0
+        }
+      ],
+      "primary_rva": 21746192
+    }
+  ],
+  "bounds": {
+    "per_domain_strings": 120,
+    "references": 1400
+  },
+  "limitations": [
+    "ASCII name and RIP-relative reference are leads, not ABI or executed effect proof",
+    "unwind fragments require chain recovery",
+    "string caps may omit other operations"
+  ],
+  "elapsed_ms": 1154
+}
