@@ -1,0 +1,67 @@
+{
+  "field_id": "COACH_DEFAULT_009",
+  "iteration_id": "SWEEP01_FIELD0194",
+  "date": "2026-11-01",
+  "primary_question": "Does PlaybookID point to the team's active Playbook asset rather than a player's four PlayTypes, 68 slots or offline common CRC library?",
+  "candidate": {
+    "key": "PlaybookID",
+    "offset": "NOT_IN_FROZEN_QUEUE",
+    "raw_range": null,
+    "source": "K04_COACH_AND_PLAYS",
+    "project_native_evidence": "EXISTING_K04_PRIOR_RESEARCH_NOT_RERUN",
+    "exact_current_PC22_save": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "DEV29 K04 project researchers",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC research + historical analogues",
+      "platform": "PC22 target; prior project evidence not rerun",
+      "grade": "PROJECT_SOURCE_INDEX",
+      "claim": "K04 distinguishes team PlaybookID, 68 book slots, player PlayTypes and shared CRC pool; not equivalent."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings",
+      "author": "jimbo3772 / Operation Sports",
+      "date": "2021-09-18",
+      "version": "NBA2K22",
+      "platform": "2K22 gameplay community, platform not certified PC",
+      "grade": "SAME_RELEASE_GAMEPLAY_USER",
+      "claim": "2K22 community warns a mismatched book/PlayTypes results in players not receiving expected plays."
+    },
+    {
+      "url": "https://www.utplay.com/news/2469--nba-2k22-best-defensive--offensive-settings-next--current-gen",
+      "author": "UTPlay NBA2K22 coaching guide",
+      "date": "2022 approximate, exact publication unknown",
+      "version": "NBA2K22",
+      "platform": "Next/current gen guidance, not PC raw",
+      "grade": "SAME_RELEASE_COACH_TIPS",
+      "claim": "2K22 coaching guide uses Bucks playbook to obtain an example 5-out action, not source identity of any in-save book."
+    }
+  ],
+  "claims": [
+    "K04 contains field-specific PlaybookID meaning and project source mapping, not a newly verified native claim in this iteration.",
+    "External references support only a subset of coach system/menu concepts, not a measured CPU outcome for PlaybookID."
+  ],
+  "conflicts": [
+    "Same team coach system and playbook association can change separately; reading a CRC name doesn't validate play category or on-court call counts.",
+    "PS5/XSX MyNBA special systems may not exist on PC22 current-generation."
+  ],
+  "metrics": [
+    "PC22 exact same coach and franchise context",
+    "two separate unmodified source-game UI and native readbacks",
+    "distinct actual game simulation, ACE and rotation side effects"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_009",
+    "question": "Can stable PC22 PlaybookID native getter and team gameplan playbook UI point to same book in two read-only snapshots, checking team identity and loaded CRC list without edits?",
+    "write": false,
+    "expected": "readback correlation or UNKNOWN"
+  },
+  "result": "COACH_SOURCE_RESEARCH_PREVIOUS_PROJECT_EVIDENCE_UNCHANGED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "new_native_proof": false,
+  "numeric_effect": "UNKNOWN"
+}

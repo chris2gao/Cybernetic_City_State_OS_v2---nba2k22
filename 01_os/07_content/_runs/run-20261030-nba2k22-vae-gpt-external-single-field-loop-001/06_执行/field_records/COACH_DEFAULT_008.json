@@ -1,0 +1,67 @@
+{
+  "field_id": "COACH_DEFAULT_008",
+  "iteration_id": "SWEEP01_FIELD0193",
+  "date": "2026-11-01",
+  "primary_question": "Is ActiveSystem the current team system separately from PreferredSystem and player proficiency?",
+  "candidate": {
+    "key": "ActiveSystem",
+    "offset": "NOT_IN_FROZEN_QUEUE",
+    "raw_range": null,
+    "source": "K04_COACH_AND_PLAYS",
+    "project_native_evidence": "EXISTING_K04_PRIOR_RESEARCH_NOT_RERUN",
+    "exact_current_PC22_save": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "DEV29 K04 project researchers",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC research + historical analogues",
+      "platform": "PC22 target; prior project evidence not rerun",
+      "grade": "PROJECT_SOURCE_INDEX",
+      "claim": "K04 lists 0 Balanced/1 Grit and Grind/2 Pace and Space/3 Perimeter/4 Post/5 Triangle/6 Seven Seconds/7 Defense for both fields."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/921185-nba2k-22-newbie-questions",
+      "author": "Operation Sports NBA2K22 MyLeague contributors",
+      "date": "2022 (exact day not recovered)",
+      "version": "NBA2K22",
+      "platform": "MyLeague/coach system, exact platform unverified",
+      "grade": "SAME_RELEASE_PLAYSTYLE_DISCUSSION",
+      "claim": "2K22 franchise discussion distinguishes coach fit and actual roster-appropriate system selection."
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k22-mynba-details-revealed-mystaff-staff-carousel-prep-hub-attributes-badges-more/",
+      "author": "Operation Sports quoting 2K developers",
+      "date": "2021-09 approximate, exact date unverified",
+      "version": "NBA2K22",
+      "platform": "PS5/XSX next-gen MyNBA feature, not PC old-gen",
+      "grade": "OFFICIAL_INFO_DIFFERENT_PLATFORM",
+      "claim": "2K22 next-gen staff description mentions coach proficiency, not PC22 ActiveSystem raw UI."
+    }
+  ],
+  "claims": [
+    "K04 contains field-specific ActiveSystem meaning and project source mapping, not a newly verified native claim in this iteration.",
+    "External references support only a subset of coach system/menu concepts, not a measured CPU outcome for ActiveSystem."
+  ],
+  "conflicts": [
+    "Native enum registered does not prove current selected tactic is actually executed in 3D or Calendar Sim.",
+    "PS5/XSX MyNBA special systems may not exist on PC22 current-generation."
+  ],
+  "metrics": [
+    "PC22 exact same coach and franchise context",
+    "two separate unmodified source-game UI and native readbacks",
+    "distinct actual game simulation, ACE and rotation side effects"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_008",
+    "question": "Can PC22 current ActiveSystem UI and original getter read be compared twice against PreferredSystem, without changing system or lineup?",
+    "write": false,
+    "expected": "readback correlation or UNKNOWN"
+  },
+  "result": "COACH_SOURCE_RESEARCH_PREVIOUS_PROJECT_EVIDENCE_UNCHANGED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "new_native_proof": false,
+  "numeric_effect": "UNKNOWN"
+}

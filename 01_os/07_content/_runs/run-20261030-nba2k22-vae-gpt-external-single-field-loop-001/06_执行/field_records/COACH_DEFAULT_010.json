@@ -1,0 +1,67 @@
+{
+  "field_id": "COACH_DEFAULT_010",
+  "iteration_id": "SWEEP01_FIELD0195",
+  "date": "2026-11-01",
+  "primary_question": "Is BenchDepth a rotation-depth integer rather than minutes per bench player, or automatic injury-lineup counter?",
+  "candidate": {
+    "key": "BenchDepth",
+    "offset": "NOT_IN_FROZEN_QUEUE",
+    "raw_range": null,
+    "source": "K04_COACH_AND_PLAYS",
+    "project_native_evidence": "EXISTING_K04_PRIOR_RESEARCH_NOT_RERUN",
+    "exact_current_PC22_save": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "DEV29 K04 project researchers",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC research + historical analogues",
+      "platform": "PC22 target; prior project evidence not rerun",
+      "grade": "PROJECT_SOURCE_INDEX",
+      "claim": "K04 says BenchDepth is rotation player count; game AI can override precise minute allocations."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/926624-bench-depth",
+      "author": "Mysterious, NYJin2011tm and AIRJ23 / Operation Sports",
+      "date": "2022-09-15",
+      "version": "2K22 video cited, thread likely 2K23 season",
+      "platform": "Cross-version context, exact PC22 Coach display not verified",
+      "grade": "VERSION_BOUNDARY_USER_DISCUSSION",
+      "claim": "2022 OS conversation includes a reference to a 2K22 coaching video showing bench-depth settings, but no PC22 raw mapping."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/921185-nba2k-22-newbie-questions",
+      "author": "Operation Sports NBA2K22 MyLeague contributors",
+      "date": "2022 (exact day not recovered)",
+      "version": "NBA2K22",
+      "platform": "MyLeague/coach system, exact platform unverified",
+      "grade": "SAME_RELEASE_PLAYSTYLE_DISCUSSION",
+      "claim": "2K22 forum gameplan guidance discusses coaching options but not algorithm for minute allocation."
+    }
+  ],
+  "claims": [
+    "K04 contains field-specific BenchDepth meaning and project source mapping, not a newly verified native claim in this iteration.",
+    "External references support only a subset of coach system/menu concepts, not a measured CPU outcome for BenchDepth."
+  ],
+  "conflicts": [
+    "BenchDepth versus BenchUtilization and actual active roster count differ; coach AI substitutions can override model minutes.",
+    "PS5/XSX MyNBA special systems may not exist on PC22 current-generation."
+  ],
+  "metrics": [
+    "PC22 exact same coach and franchise context",
+    "two separate unmodified source-game UI and native readbacks",
+    "distinct actual game simulation, ACE and rotation side effects"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_010",
+    "question": "Can two read-only PC22 Coach BenchDepth menu snapshots match registered native value, then check rotation count without editing minutes or simulating?",
+    "write": false,
+    "expected": "readback correlation or UNKNOWN"
+  },
+  "result": "COACH_SOURCE_RESEARCH_PREVIOUS_PROJECT_EVIDENCE_UNCHANGED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "new_native_proof": false,
+  "numeric_effect": "UNKNOWN"
+}
