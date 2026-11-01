@@ -271,9 +271,11 @@ def world_payload(binding,found,manifest,blobs,artifacts,observed_at,token):
         other_side='away' if side=='home' else 'home'
         n=full[side+'_team_id'];team=tid(n)
         for q in range(1,5):facts['game_period_scores'].append({'game_id':gid,'team_id':team,'period_index':q,'period_points':full['linescore'][side]['q'+str(q)]})
-        team_players=full[side+'_players']
+        team_players=[p for p in full[side+'_players'] if p.get('in_use', 1)]
+        active_mins=sum(p.get('minutes', 0) for p in team_players)
+        minutes_raw=active_mins if active_mins > 0 else (240 + full.get('overtime_count', 0) * 25)
         team_totals={'points':full[side+'_score'],'plus_minus':full[side+'_score']-full[other_side+'_score'],
-                     'minutes_raw':240+full.get('overtime_count',0)*25,
+                     'minutes_raw':minutes_raw,
                      'fg_made':sum(p['fgm'] for p in team_players),'fg_attempted':sum(p['fga'] for p in team_players),
                      'three_made':sum(p['tpm'] for p in team_players),'three_attempted':sum(p['tpa'] for p in team_players),
                      'ft_made':sum(p['ftm'] for p in team_players),'ft_attempted':sum(p['fta'] for p in team_players),

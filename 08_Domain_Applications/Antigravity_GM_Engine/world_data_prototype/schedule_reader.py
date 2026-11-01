@@ -156,9 +156,11 @@ def schedule_facts(found,season,selected_native_ids):
         for side in ('home','away'):
             other_side='away' if side=='home' else 'home'
             native_team=g[side+'_team_id'];team=tid(native_team)
-            team_players=g[side+'_players']
+            team_players=[p for p in g[side+'_players'] if p.get('in_use', 1)]
+            active_mins=sum(p.get('minutes', 0) for p in team_players)
+            minutes_raw=active_mins if active_mins > 0 else (240 + g.get('overtime_count', 0) * 25)
             team_totals={'points':g[side+'_score'],'plus_minus':g[side+'_score']-g[other_side+'_score'],
-                         'minutes_raw':240+g.get('overtime_count',0)*25,
+                         'minutes_raw':minutes_raw,
                          'fg_made':sum(p['fgm'] for p in team_players),'fg_attempted':sum(p['fga'] for p in team_players),
                          'three_made':sum(p['tpm'] for p in team_players),'three_attempted':sum(p['tpa'] for p in team_players),
                          'ft_made':sum(p['ftm'] for p in team_players),'ft_attempted':sum(p['fta'] for p in team_players),

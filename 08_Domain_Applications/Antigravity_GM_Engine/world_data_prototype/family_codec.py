@@ -101,35 +101,79 @@ def decode_schedule_date(date_int: int):
     return f"{year:04d}-{month:02d}-{day:02d}"
 
 
-def extract_player_advanced_metrics(raw: bytes):
-    """Extract native engine-calculated PER rankings and GameScore history from 1264-byte PLAYERDATA."""
-    if len(raw) != 1264:
-        raise ValueError('PLAYER record must be exactly 1264 bytes')
-    per_rankings = {
-        'league_per_rank': struct.unpack_from('<H', raw, 544)[0],
-        'league_position_per_rank': struct.unpack_from('<H', raw, 546)[0],
-        'conference_per_rank': struct.unpack_from('<H', raw, 548)[0],
-        'conference_position_per_rank': struct.unpack_from('<H', raw, 550)[0],
-    }
-    recent_game_scores = []
-    for i in range(5):
-        val = struct.unpack_from('<f', raw, 580 + i * 4)[0]
-        date_raw = struct.unpack_from('<I', raw, 600 + i * 4)[0]
-        mins = raw[780 + i]
-        date_iso = decode_schedule_date(date_raw) if date_raw != 0 else None
-        recent_game_scores.append({
-            'history_slot': i,
-            'game_score': round(val, 2) if math.isfinite(val) else None,
-            'game_date': date_iso,
-            'date_raw': date_raw,
-            'minutes': mins,
-            'dnp': bool(val == 0.0 and date_raw == 0 and mins == 0),
-        })
-    shot_chart_index = (struct.unpack_from('<I', raw, 768)[0] >> 20) & 0x3FF
+ADVANCED_METRICS_RANGES = ((544, 552), (580, 620), (768, 772), (780, 785))
+RESTRICTED_PLAYER_RANGES = ((785, 786), (880, 882), (930, 931), (1089, 1090))
+assert not any(a < hi and lo < b for a, b in ADVANCED_METRICS_RANGES for lo, hi in RESTRICTED_PLAYER_RANGES), (
+    "ADVANCED_METRICS_RANGES must never intersect RESTRICTED_PLAYER_RANGES"
+)
+
+
+def extract_player_advanced_metrics(raw):
+    """Extract native engine-calculated PER rankings and GameScore history.
+
+    Operates strictly on safe, bounded public offsets:
+    ADVANCED_METRICS_RANGES = ((544, 552), (580, 620), (768, 772), (780, 785))
+    Never touches RESTRICTED_PLAYER_RANGES ((785, 786), (880, 882), (930, 931), (1089, 1090)).
+    Accepts either full 1264-byte PLAYERDATA or a dict with safe slices.
+    """
+    if isinstance(raw, dict):
+        per_bytes = raw['per_rankings']
+        scores_bytes = raw['game_scores']
+        dates_bytes = raw['game_dates']
+        shot_bytes = raw['shot_chart']
+        mins_bytes = raw['minutes']
+        per_rankings = {
+            'league_per_rank': struct.unpack_from('<H', per_bytes, 0)[0],
+            'league_position_per_rank': struct.unpack_from('<H', per_bytes, 2)[0],
+            'conference_per_rank': struct.unpack_from('<H', per_bytes, 4)[0],
+            'conference_position_per_rank': struct.unpack_from('<H', per_bytes, 6)[0],
+        }
+        recent_game_scores = []
+        for i in range(5):
+            val = struct.unpack_from('<f', scores_bytes, i * 4)[0]
+            date_raw = struct.unpack_from('<I', dates_bytes, i * 4)[0]
+            mins = mins_bytes[i]
+            date_iso = decode_schedule_date(date_raw) if date_raw != 0 else None
+            recent_game_scores.append({
+                'history_slot': i,
+                'game_score': round(val, 2) if math.isfinite(val) else None,
+                'game_date': date_iso,
+                'date_raw': date_raw,
+                'minutes': mins,
+                'dnp': bool(val == 0.0 and date_raw == 0 and mins == 0),
+            })
+        shot_chart_index = (struct.unpack_from('<I', shot_bytes, 0)[0] >> 20) & 0x3FF
+    elif isinstance(raw, (bytes, bytearray)):
+        if len(raw) != 1264:
+            raise ValueError('PLAYER record must be exactly 1264 bytes')
+        per_rankings = {
+            'league_per_rank': struct.unpack_from('<H', raw, 544)[0],
+            'league_position_per_rank': struct.unpack_from('<H', raw, 546)[0],
+            'conference_per_rank': struct.unpack_from('<H', raw, 548)[0],
+            'conference_position_per_rank': struct.unpack_from('<H', raw, 550)[0],
+        }
+        recent_game_scores = []
+        for i in range(5):
+            val = struct.unpack_from('<f', raw, 580 + i * 4)[0]
+            date_raw = struct.unpack_from('<I', raw, 600 + i * 4)[0]
+            mins = raw[780 + i]
+            date_iso = decode_schedule_date(date_raw) if date_raw != 0 else None
+            recent_game_scores.append({
+                'history_slot': i,
+                'game_score': round(val, 2) if math.isfinite(val) else None,
+                'game_date': date_iso,
+                'date_raw': date_raw,
+                'minutes': mins,
+                'dnp': bool(val == 0.0 and date_raw == 0 and mins == 0),
+            })
+        shot_chart_index = (struct.unpack_from('<I', raw, 768)[0] >> 20) & 0x3FF
+    else:
+        raise TypeError('raw must be bytes, bytearray, or bounded dict')
+
     return {
         'per_rankings': per_rankings,
         'recent_game_scores': recent_game_scores,
         'shot_chart_index': shot_chart_index,
-        'provenance': 'NATIVE_PLAYERDATA_PRECALCULATED_ENGINE_STORAGE; PE_CRC32_VERIFIED',
+        'provenance': 'NATIVE_PLAYERDATA_PRECALCULATED_ENGINE_STORAGE; BOUNDED_SAFE_RANGES_VERIFIED; PE_CRC32_VERIFIED',
     }
 
