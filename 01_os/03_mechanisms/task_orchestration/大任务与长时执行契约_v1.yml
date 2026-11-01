@@ -74,7 +74,12 @@ not_a_stop_condition:
 # remained pending, and Human later limited the accepted delivery scope.
 # This is a DEFAULT PROCESS PATTERN, not permission to loop indefinitely.
 evidence_driven_iteration:
-  applies_to: coherent_tasks_with_incrementally_testable_objectives
+  scope: development_phase_only
+  meaning: >-
+    This is an internal engineering/research development cadence, not a new
+    seven-stage Workflow state, stage transition, approval, reviewer or
+    completion mechanism. Existing workflow checkpoints and gates retain authority.
+  applies_to: coherent_development_tasks_with_incrementally_testable_objectives
   default_mode: iterative_development
   exempt_when:
     - one_step_mechanical_task_fully_satisfied_and_verified
