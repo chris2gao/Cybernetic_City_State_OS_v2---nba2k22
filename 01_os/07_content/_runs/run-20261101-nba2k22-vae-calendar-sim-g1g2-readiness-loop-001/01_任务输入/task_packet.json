@@ -1,0 +1,120 @@
+{
+  "schema_version": "nba2k22.vae.calendar_sim_g1g2_readiness.v1",
+  "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
+  "domain": "nba2k22",
+  "os_role": "execution",
+  "model_owner": "Gemini (actual model variant recorded on start)",
+  "engineering_support": "Codex optional, no parallel writes",
+  "repo": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "branch": "task/nba2k22-vae-calendar-sim-g1g2-readiness-loop-20261101",
+  "source_parent_sha": "75e17813af64f0046a0393071a2115c44835092d",
+  "source_parent_task": "NBA2K22-VAE-NATIVE-METRIC-HARDENING-S0-20261101-001",
+  "stage": "development_only_S0_to_S1_readiness",
+  "risk_tier": "T2_semantic; game process access or setting writes require separate Human authorization",
+  "objective": "Prepare actual Calendar Sim G1 automatic post-simulation capture trigger and validated SQL readback, plus G2 setting-to-observation before/after evidence contract, without touching game settings, original saves or starting watchers.",
+  "human_decisions": [
+    "Calendar Sim is the only first-phase effects evaluation standard; 3D matches are segregated observations, not pooled for causal inference.",
+    "Two readiness gates must both be satisfied before Human advances calendar for formal VAE verification: G1 new-game automated capture persisted and SQL queryable, G2 settings and behavior comparison contracts with S0 and REA readback readiness.",
+    "Historical games can support baseline and design but cannot demonstrate causal effect of future setting changes.",
+    "Before actual setting changes, Human authorization is needed, each change must have REA readback; this task does not perform changes.",
+    "Develop iteratively via evidence-driven loop; independent review deferred to series unless load-bearing adoption or protected integration."
+  ],
+  "fixed_sources": [
+    {
+      "type": "PARENT_IMPLEMENTATION",
+      "sha": "75e17813af64f0046a0393071a2115c44835092d",
+      "run": "run-20261101-nba2k22-vae-native-metric-hardening-s0-001",
+      "note": "307 unittest PASS reported by Gemini, not independent live G1 verification. G1 READY claims are provisional."
+    },
+    {
+      "type": "APPROVED_MECHANISM_METRIC",
+      "sha": "c812042e087f4c7000d27ac42d3839741039c188",
+      "run": "run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001",
+      "note": "Original 38 metric ID contract and 3 pilots."
+    },
+    {
+      "type": "INDEPENDENT_REVIEW",
+      "sha": "8ed0baff7fd7cf6439c0a49e158dea5b1838d1e3",
+      "verdict": "PASS_REQUIREMENT_BASELINE_WITH_RESEARCH_GAPS"
+    },
+    {
+      "type": "WORLDDATA_V24_CANDIDATE",
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "files": [
+        "world_data_prototype/refresh.py",
+        "world_data_prototype/cli.py",
+        "world_data_prototype/BASELINE_HANDOFF.md"
+      ],
+      "known": "refresh-world auto is a command-time process reattach/source selection behavior, not an automatic post-calendar trigger"
+    }
+  ],
+  "scope": [
+    "G1 create a minimal opt-in orchestrator or one-shot/event-debounced trigger integrated with existing refresh-world; must detect actual newly finalized Calendar Sim games and game date/stage, never equate date advance to final game alone; no duplicate output on unchanged game state.",
+    "G1 verify read-only Native-process binding and source game identity; ensure DB save_id/season/game/team/player/mode/source-unit provenance, latest capture, idempotent retries, freshness, content completeness, SQL typed query and invariants.",
+    "G1 provide opt-in entrypoint and dry-run/replay tests; never install/start resident service/scheduler or poll actual game without Human permission. Any test needing live process must be separately authorized.",
+    "G2 build settings-to-game-observation contract: exact stable setting IDs, original values, proposed changes, post-REA readback placeholders, baseline source units, treatment vs comparison Calendar Sim game blocks, opponent/team/roster/injury/normalize/quarter-length/calendar-period controls, confidence and counterexamples.",
+    "G2 add query-level evidence manifest and validation-only export joining setting snapshots, selected game boxes and metric sources. No auto-tuning production rules.",
+    "G2 first Pilot recommend smallest feasible group with truly available data (e.g. Shot/Coach setting to FGA/shot distribution); never call EXPERIMENTAL_POSSESSION_LOAD_INDEX real Touches, nor assume Coach ID for Run Plays without registry proof.",
+    "Retain existing 38 IDs, append-only history and existing WorldData 20 Reader architecture; no parallel database or hidden Potential reads.",
+    "Mark readiness separately at code/static/mock, live native, committed DB/SQL, automatic trigger, experiment protocol, and future setting mutation; G1 READY only with actual confirmed runtime acquisition of new game after progress or equivalent authoritative approved read-only real in-place test.",
+    "Use real evidence for pilot coverage and game-mode distinction: CALENDAR_SIM only; mark 3D separate."
+  ],
+  "allow_write_paths": [
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/"
+  ],
+  "prohibited": [
+    "Never write NBA2K22 memory, settings, original game save, protected snapshots or advance the calendar.",
+    "No default resident watcher or auto-start; require explicit opt-in before any process polling.",
+    "No request for RDC during ordinary repo or SQL tests; Gemini publishes GitHub evidence; reviewer uses RDC only for a critical, bounded, authorized game-process script.",
+    "No production auto-tuning model, no REA Setter invocation, no change to Core/NBA master, force push, rebases or old Run/history mutation.",
+    "No mixed Calendar Sim and 3D experiment baselines, no silent derived-native metric substitution.",
+    "No claims that old fixture/unit tests prove live auto trigger."
+  ],
+  "work_packages": [
+    {
+      "code": "A0",
+      "goal": "Recheck Gemini HEAD, 38-ID coverage and current capture CLI; establish critical G1/G2 code-vs-real evidence ledger."
+    },
+    {
+      "code": "A1",
+      "goal": "Implement nonresident opt-in detection/triggers for newly finalized calendar games and one-shot integrated WorldData refresh; no actual game execution."
+    },
+    {
+      "code": "A2",
+      "goal": "Validate staging SQLite deduplication, source identity, monotonic observed_at, freshness, changed-game-only capture, same-game SQL queries, incomplete fail-closed states."
+    },
+    {
+      "code": "A3",
+      "goal": "Implement G2 S0/after-setting experiment evidence contract and queryable before-after join; no actual parameter changes."
+    },
+    {
+      "code": "A4",
+      "goal": "Execute mock/replay/negative/regression tests and deliver exact gate readiness with honest live-NOT_RUN if no authorized current process capture."
+    }
+  ],
+  "acceptance": [
+    "Fresh finalized game changes trigger on-demand or opt-in event only once; unchanged snapshot does not generate a fresh game; retry does not double-count.",
+    "Actual new native game data only declared verified after committed save-bound source unit and SQL query match; fixture-only tests cannot be live G1 READY.",
+    "Requires pre/post setting snapshots and readable REA settings interface, experiment ID, exact canonical field IDs, 3D vs Calendar Sim mode; no causal claim without new simulated games.",
+    "Tests demonstrate duplicate unit handling, DNP/NULL, game completion status, stale PID/save context, scheduled refresh interruption, source inconsistency and game progress mid-capture.",
+    "Autonomous runtime activity not deployed; future Human permission required for live observer activation and real REA change.",
+    "Per pilot G1/G2 separate statuses; both actual READY only after all required evidence, not same label for S0 design readiness."
+  ],
+  "deliverables": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/02_证据/g1g2_requirement_to_evidence_matrix.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/auto_capture_orchestrator_design_and_entrypoint.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/experiment_settings_metrics_contract.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/calendar_sim_pilot_gates.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/loop_iteration_log.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/07_测试执行/g1g2_replay_negative_verification.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/08_结论/completion_pointer.md",
+    "Actual code/tests under existing world_data_prototype/"
+  ],
+  "review_schedule": {
+    "review_mode": "deferred_to_series",
+    "series_id": "NBA2K22-VAE-SETTING-GAME-DATA-FEEDBACK",
+    "must_review_before": "controlled_live_setting_mutation_or_production_auto_tuning_or_master_integration"
+  },
+  "stop": "When bounded programmatic readiness is implemented/tested; live test requiring gameplay/observer authorization explicitly marked NOT_RUN and handed to Human, without blocking other safe work."
+}
