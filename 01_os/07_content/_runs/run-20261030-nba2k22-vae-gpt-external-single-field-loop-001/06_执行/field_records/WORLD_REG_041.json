@@ -1,0 +1,68 @@
+{
+  "field_id": "WORLD_REG_041",
+  "iteration_id": "SWEEP01_FIELD0140",
+  "date": "2026-11-01",
+  "question": "Does 0..4 project game difficulty preset encode base 2K22 Rookie-Pro-AllStar-Superstar-HOF difficulty when Custom sliders are applied, and is preset independent of Simulation Difficulty?",
+  "candidate": {
+    "key": "settings.gameplay_sliders.game_difficulty_preset",
+    "offset": "0x00",
+    "project_range": [
+      0,
+      4
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=yMGZbgeqqSM",
+      "author": "Shady Mike Gaming",
+      "date": "2021-10-31",
+      "game": "NBA2K22",
+      "platform": "PC camera named and PC movement comments",
+      "claim": "CPU/User movement sliders explicitly listed; author says ball-speed controls seemed not to work on PC",
+      "grade": "SAME_VERSION_PC_QUALITATIVE"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "DiamondLobby",
+      "date": "2021 NBA2K22 release era",
+      "game": "NBA2K22",
+      "platform": "secondary slider guide",
+      "claim": "Movement min and max are separately listed for User/CPU, with suggested 40/73 values",
+      "grade": "SAME_VERSION_SLIDER_LIST"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917142-mvpstax-s-2k22-next-gen-sim-sliders",
+      "author": "mvpstax",
+      "date": "2021-09",
+      "game": "NBA2K22",
+      "platform": "next-gen, not PC22",
+      "claim": "Game difficulty/movement custom sliders with different numbers",
+      "grade": "CROSS_PLATFORM_COMMUNITY"
+    }
+  ],
+  "claims": [
+    "Same-game movement and difficulty options exist but do not prove 0x00 candidate memory binding",
+    "Project candidate raw domain differs from game UI 0–100 scale; raw storage decoding unproven"
+  ],
+  "conflicts": [
+    "2021 PC player reported sliders ineffective, another community guide recommends changes; uncontrolled and conflicting",
+    "Custom difficulty may not be a 0..4 preset state",
+    "Game Speed, ratings, animation and FPS can confound motion"
+  ],
+  "metrics": [
+    "difficulty UI label, effective User/CPU slider bank and custom flags",
+    "keep 3D game clock vs FPS separate",
+    "user and CPU team control plus movement eligibility"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_041",
+    "question": "Read-only PC22 same-save/build: does candidate 0x00 map exactly to game_difficulty_preset visible UI value and storage encoding, separately from adjacent User/CPU and Min/Max? No writes.",
+    "write": false
+  },
+  "result": "SAME_VERSION_UI_PC_CONFLICT_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
