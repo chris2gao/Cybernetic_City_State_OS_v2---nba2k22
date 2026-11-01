@@ -1,0 +1,54 @@
+{
+  "field_id": "WORLD_REG_040",
+  "iteration_id": "SWEEP01_FIELD0139",
+  "date": "2026-11-01",
+  "question": "Does the candidate Regression Rate influence permanent aging decline, independent of training, growth, injury penalties or morale effects?",
+  "candidate": {
+    "key": "settings.progression.regression_rate",
+    "offset": "0x274",
+    "range": [
+      0,
+      100
+    ],
+    "ui_identity": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://fixsportsvideogames.wordpress.com/2021/10/27/a-guide-to-nba-2k22s-mynba-on-ps5/",
+      "author": "2K22 PS5 MyNBA guide",
+      "date": "2021-10-27",
+      "version": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Progression and attributes progression are separate franchise controls"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/863174-barnsey-s-myleague-player-progression-regression-sliders-2k19/page11?t=939672",
+      "author": "Barnsey, Operations Sports",
+      "date": "2K19 era",
+      "version": "NBA2K19 not PC22",
+      "platform": "UNKNOWN",
+      "claim": "Historic Player Regression Rate menu named separately from Training Effects"
+    }
+  ],
+  "claims": [
+    "Same-game regression concept but no proof of 0x274 address mapping",
+    "Cross-version numeric regression setting not transferable"
+  ],
+  "conflicts": [
+    "Injury temporary OVR change, age-related regression and growth potential are distinct",
+    "Calendar versus physical 3D game outcomes not inferred from aging setting"
+  ],
+  "observables": [
+    "permanent season-to-season attribute declines by age and player UID",
+    "control for injury/morale and role"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_040",
+    "question": "Does read-only PC22 world registry candidate +0x274 match exact Regression Rate visible UI option with immediate/delayed same-save readback?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_PROGRESSION_CONTEXT_OFFSET_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
