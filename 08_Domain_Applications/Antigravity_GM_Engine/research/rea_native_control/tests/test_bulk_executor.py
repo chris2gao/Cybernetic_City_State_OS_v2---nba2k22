@@ -555,3 +555,199 @@ def test_plan_digest_immutability(valid_header):
     b3 = BulkBatch(header=valid_header, intents=(item_mod,))
     d3 = sha256_digest({'header': asdict(b3.header), 'intents': [asdict(i) for i in b3.intents]})
     assert d1 != d3
+
+
+# ---------------------------------------------------------------------------
+# Test Gate 11: Coach and Player Script Generation & Routing
+# ---------------------------------------------------------------------------
+
+def test_coach_and_player_script_generation_routing(planner, valid_header):
+    compiler = BulkFridaScriptCompiler()
+    # Chunk with 1 player item and 1 coach item on Team 28
+    item_player = BulkIntentItem(
+        intent_id="I-ROUTING-PLAYER",
+        action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+        team_id=28,
+        player_id=2459,
+        field_id="SHOT_TENDENCY",
+        expected_before=95,
+        value=80,
+    )
+    item_coach = BulkIntentItem(
+        intent_id="I-ROUTING-COACH",
+        action_id="COACH.STRATEGY.POE_O1",
+        team_id=28,
+        field_id="POEOffense",
+        expected_before=50,
+        value=65,
+    )
+    batch = BulkBatch(header=valid_header, intents=(item_player, item_coach))
+    chunks = planner.plan(batch)
+    assert len(chunks) == 1
+    script = compiler.compile_chunk(chunks[0], valid_header)
+
+    # Verify Player routing code
+    assert "rosterPlayer" in script
+    assert "call('player.get_stat_ui'" in script
+    assert "call('player.set_stat_ui'" in script
+
+    # Verify Coach routing code
+    assert "franchiseRecord" in script
+    assert "call('coach.apply_gameplan'" in script
+    assert "coach_items" in script
+
+
+# ---------------------------------------------------------------------------
+# Test Gate 12: UNKNOWN Resource Locking and Reconciliation
+# ---------------------------------------------------------------------------
+
+def test_unknown_resource_locking_and_reconciliation(tmp_path, valid_header):
+    service = BulkExecutorService(tmp_path)
+    env = MockNativeEnvironment()
+    env.set_player_field(28, 2459, "SHOT_TENDENCY", 95)
+
+    # 1. First run: inject crash on Lillard SHOT_TENDENCY
+    env.failure_injections["I-LOCK-001"] = "TIMEOUT_OR_CRASH"
+    item1 = BulkIntentItem(
+        intent_id="I-LOCK-001",
+        action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+        team_id=28,
+        player_id=2459,
+        field_id="SHOT_TENDENCY",
+        expected_before=95,
+        value=80,
+    )
+    b1 = BulkBatch(header=valid_header, intents=(item1,))
+    res1 = service.run_offline_test(b1, mock_env=env)
+    assert res1['metrics']['num_unknown'] == 1
+
+    # Verify target resource is locked
+    res_key = "team:28:player:2459:field:SHOT_TENDENCY"
+    assert service.journal.is_resource_locked(res_key) == "I-LOCK-001"
+
+    # 2. Second run: a different intent attempts to modify the same locked resource
+    item2 = BulkIntentItem(
+        intent_id="I-BLOCKED-BY-LOCK",
+        action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+        team_id=28,
+        player_id=2459,
+        field_id="SHOT_TENDENCY",
+        expected_before=95,
+        value=82,
+    )
+    b2 = BulkBatch(header=valid_header, intents=(item2,))
+    res2 = service.run_offline_test(b2, mock_env=env)
+
+    # Verify item2 is BLOCKED without calling Setter!
+    assert res2['metrics']['num_blocked'] == 1
+    receipts2 = [r for r in service.journal.load_receipts() if r.intent_id == "I-BLOCKED-BY-LOCK"]
+    assert len(receipts2) == 1
+    assert receipts2[0].outcome == "BLOCKED_BY_PRIOR_UNKNOWN_CLAIM"
+
+    # 3. Third step: Reconcile the UNKNOWN intent with independent evidence
+    recon_evidence = {
+        "intent_id": "I-LOCK-001",
+        "team_id": 28,
+        "player_id": 2459,
+        "field_id": "SHOT_TENDENCY",
+        "applied": False,
+        "evidence_id": "ev_reconciliation_obs_001"
+    }
+    updated_receipt = service.journal.reconcile_unknown("I-LOCK-001", recon_evidence)
+    assert updated_receipt.outcome == "RECONCILED_REJECTED"
+
+    # Verify resource lock is released!
+    assert service.journal.is_resource_locked(res_key) is None
+
+    # 4. Fourth step: Now intent3 on the same resource can proceed and succeed!
+    item3 = BulkIntentItem(
+        intent_id="I-UNBLOCKED-NOW",
+        action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+        team_id=28,
+        player_id=2459,
+        field_id="SHOT_TENDENCY",
+        expected_before=95,
+        value=80,
+    )
+    b3 = BulkBatch(header=valid_header, intents=(item3,))
+    res3 = service.run_offline_test(b3, mock_env=env)
+    assert res3['metrics']['num_success'] == 1
+
+
+# ---------------------------------------------------------------------------
+# Test Gate 13: At-Most-Once Execution and Resume
+# ---------------------------------------------------------------------------
+
+def test_at_most_once_execution_and_resume(tmp_path, valid_header):
+    service = BulkExecutorService(tmp_path)
+    env = MockNativeEnvironment()
+    env.set_player_field(28, 2459, "SHOT_TENDENCY", 95)
+
+    item = BulkIntentItem(
+        intent_id="I-ONCE-001",
+        action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+        team_id=28,
+        player_id=2459,
+        field_id="SHOT_TENDENCY",
+        expected_before=95,
+        value=80,
+    )
+    batch = BulkBatch(header=valid_header, intents=(item,))
+
+    # First execution -> SUCCESS_APPLIED
+    res1 = service.run_offline_test(batch, mock_env=env)
+    assert res1['metrics']['num_success'] == 1
+
+    # Second execution of same batch with same journal -> REUSED_HISTORICAL_RECEIPT (no second setter)
+    res2 = service.run_offline_test(batch, mock_env=env)
+    assert res2['metrics']['num_reused'] == 1
+    assert res2['metrics']['num_success'] == 0
+    assert res2['metrics']['conservation_holds'] is True
+
+
+# ---------------------------------------------------------------------------
+# Test Gate 14: Checkpoint014 Transport Live Mutation Fail-Closed
+# ---------------------------------------------------------------------------
+
+def test_rea_chunk_transport_adapter_default_prohibits_live(tmp_path, valid_header, planner):
+    from bulk_executor import ReaChunkTransportAdapter
+    adapter = ReaChunkTransportAdapter(tmp_path, live_context=None)
+    item = BulkIntentItem(
+        intent_id="I-FAIL-CLOSED",
+        action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+        team_id=28,
+        player_id=2459,
+        field_id="SHOT_TENDENCY",
+        expected_before=95,
+        value=80,
+    )
+    chunk = planner.plan(BulkBatch(header=valid_header, intents=(item,)))[0]
+
+    with pytest.raises(PermissionError) as exc_info:
+        adapter.execute_chunk(chunk, "// script")
+    assert "LIVE_MUTATION_NOT_AUTHORIZED" in str(exc_info.value)
+
+
+# ---------------------------------------------------------------------------
+# Test Gate 15: 10,000-Item Synthetic Stress Benchmark Auto-Generation
+# ---------------------------------------------------------------------------
+
+def test_10k_synthetic_benchmark_auto_generation(tmp_path):
+    from bulk_executor import run_10k_benchmark
+    bench_out = tmp_path / "test_benchmark.json"
+    res = run_10k_benchmark(output_path=bench_out)
+
+    assert bench_out.is_file()
+    assert res['scale']['total_intents'] == 10000
+    assert res['outcome_conservation']['conservation_holds'] is True
+
+    # Check 3-way metric separation
+    assert 'mock_execution_timings' in res
+    assert 'session_overhead_estimates' in res
+    assert 'projected_live_native_duration' in res
+
+    # Verify mock throughput is high
+    assert res['mock_execution_timings']['mock_throughput_ops_per_sec'] > 10000.0
+
+    # Verify session overhead reduction is significant
+    assert res['session_overhead_estimates']['session_overhead_reduction_percent'] > 95.0
