@@ -1,0 +1,62 @@
+{
+  "schema_version": "nba2k22.vae.stage02.mechanism_metric_verify.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "status": "NOT_RUN_DISPATCH",
+  "checks": [
+    {
+      "id": "M01_204_ID_UNIQUE_AND_ORDER",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M02_GPT_GEMINI_CONFLICT_AUDIT",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M03_NATIVE_EVIDENCE_NOT_PROMOTED",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M04_METRIC_NATIVE_FIRST",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M05_STAT_GRAIN_AND_ENGINE_MODE",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M06_SOURCE_COVERAGE_AND_GAP_HONESTY",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M07_EXPERIMENT_COMPARABILITY_AND_FALSIFIABILITY",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M08_NO_COLLECTOR_GAME_WRITE_OR_NEW_DDL",
+      "status": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "id": "M09_REMOTE_GIT_SCOPE_READBACK",
+      "status": "NOT_RUN",
+      "evidence": []
+    }
+  ],
+  "source_rules": [
+    "field_id 204 exactly once; refer to queue blob not text heuristics",
+    "each causal edge has grade+exact SHA+source path; no default NATIVE_VERIFIED",
+    "each desired metric has source selection and native priority; Human observation not Native Reader authentication",
+    "3D_CPU_CPU and CALENDAR_SIM distinct; include two Normalize settings, snapshot identity, dates, minutes and stage",
+    "no new derived metric if game native computed metric exists at same definition/grain",
+    "not-run and unknown are allowed honest outcomes"
+  ],
+  "independent_game_test": "NOT_RUN",
+  "native_reader_game_discovery": "DEFERRED_NEXT_DATA_TASK"
+}
