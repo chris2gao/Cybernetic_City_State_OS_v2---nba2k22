@@ -1,0 +1,66 @@
+{
+  "field_id": "WORLD_REG_055",
+  "iteration_id": "SWEEP01_FIELD0154",
+  "question": "Does the alternate financial trade rule candidate denote native matching rules, separate from external GM offer approval and salary cap?",
+  "candidate": {
+    "key": "world.trade_and_draft_rules.financial_trade_rules",
+    "offset": "0x160",
+    "range": [
+      null,
+      null
+    ],
+    "consumer": "UNKNOWN",
+    "native_UI": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE/MyNBA, PC exact build unknown",
+      "claim": "Lists trade override, deadline and financial trade rules separately",
+      "grade": "SAME_RELEASE_MENU"
+    },
+    {
+      "url": "https://www.trueachievements.com/a338876/maxed-out-achievement",
+      "author": "TrueAchievements Xbox One guide",
+      "date": "2021-22",
+      "version": "NBA2K22",
+      "platform": "Xbox One MyGM, not PC22 MyLEAGUE",
+      "claim": "Player-enabled override with financial rules disabled; not all native transaction checks known",
+      "grade": "SAME_RELEASE_OTHER_MODE"
+    },
+    {
+      "url": "https://fixsportsvideogames.wordpress.com/2021/10/27/a-guide-to-nba-2k22s-mynba-on-ps5/",
+      "author": "NBA2K22 MyNBA PS5 guide",
+      "date": "2021-10-27",
+      "version": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Describes CBA trade finance and other rules, not PC binary offsets",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM"
+    }
+  ],
+  "claims": [
+    "Queue item duplicates candidate offset and semantic label previously documented in WORLD_REG_012",
+    "Alias of a candidate is not proof of one actual runtime field"
+  ],
+  "conflicts": [
+    "Original native rules vs external GM action are distinct contracts",
+    "UI toggle may not reveal validator internal call or return codes",
+    "Platform and mode different from target PC offline MyLEAGUE"
+  ],
+  "metrics": [
+    "native salary match eligibility versus roster/cap conditions",
+    "same-save UI and raw readbacks and previous candidate WORLD_REG_012",
+    "no transaction execution in this research"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_055",
+    "question": "Does PC22 read-only world settings+0x160 match UI financial_trade_rules and match or differ from WORLD_REG_012 at same build/save/time? No trade operation.",
+    "write": false
+  },
+  "result": "DUPLICATED_CANDIDATE_TRADE_RULE_NATIVE_IDENTITY_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
