@@ -1,11 +1,10 @@
-# NBA2K22 VAE external single-field research — Sweep 1 checkpoint 170/204
+# NBA2K22 VAE External Single-Field Loop — Sweep 1 checkpoint 175/204
 
-Task `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001` — GPT-6 conversation declared, not host attested.
+Role execution, model GPT-6 conversation-declared not platform attested. Task NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001. Source branch task/nba2k22-vae-gpt-external-single-field-loop-20261030.
 
-- HEAD at beginning of this batch `8dbbcd1d30c13f7ff918936f8f4aa02512fcb3e5` on `task/nba2k22-vae-gpt-external-single-field-loop-20261030`; source queue SHA 6436515330f77c0cc5cc675b521590adeb69c5d4, blob `af5567e14e03cd9f7761e396a978311e347d7c17`.
-- **170/204** unique seed records, **34 remaining**. Last WORLD_REG_071 SWEEP01_FIELD0170; next WORLD_REG_072 SWEEP01_FIELD0171.
-- Batch 166–170: 067 Offseason Progression, 068 Regression, 069 Training Effects, 070 User Injury Frequency, 071 CPU Injury Frequency. 5 dossiers, 5 static receipts, 15 source observations, 5 no-write REA questions.
-- Actual PC22 native offset/UI linking, data range, 3D versus Calendar consumer, growth and injury coefficients unproven; source documents include 2K22 next-gen community, legacy producer context, conflicting MyNBA observations. No causal value or optimization claims.
-- Exact NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE result counter remains 51; native unknown extends beyond that result flag.
-- No game, Gemini REA, PRMS save, independent audit, master integration, background runner. All NOT_RUN.
-- Restore via remote HEAD + checkpoint + ledger + immutable queue. Earlier pointers accessible via Git history.
+- Previous HEAD `1ef62663b30def6d66a4dba6517d2fa930d31eab`. Seed SHA 6436515330f77c0cc5cc675b521590adeb69c5d4 / blob af5567e14e03cd9f7761e396a978311e347d7c17.
+- **175/204** recorded, **29 remaining**. Last WORLD_REG_076 (SWEEP01_FIELD0175), next WORLD_REG_077 (SWEEP01_FIELD0176).
+- This batch 072–076: User/CPU Injury Effects, Injury Severity, Duration, Career-Ending Injury Frequency. Five independent external research questions, dossiers, static receipts and bounded no-write REA observations.
+- 2K22 source UI settings distinguish injury frequency and effects; older/next-generation material used only for terminology where direct PC22 evidence missing. No PC22 physical addresses, category mapping, live 3D vs Sim effects, default slider or event probability certified.
+- Exact 51 rows have NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE result (other native-unknown rows are NOT included by this count).
+- Game, Gemini REA, independent audit, PRMS, master and scheduling: NOT_RUN. Continue from GitHub HEAD and queue, preserve append-only ledger history.

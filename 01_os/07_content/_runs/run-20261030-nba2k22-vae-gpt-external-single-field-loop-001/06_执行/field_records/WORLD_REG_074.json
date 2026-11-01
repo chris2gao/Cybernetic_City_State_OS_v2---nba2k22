@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_074",
+  "iteration_id": "SWEEP01_FIELD0173",
+  "date": "2026-11-01",
+  "primary_question": "Is +0x25C a PC22 slider controlling the seriousness/type of injuries and not recovery duration or chance?",
+  "candidate": {
+    "key": "world.injuries_and_morale.injury_severity",
+    "offset": "0x25C",
+    "raw_range": [
+      null,
+      null
+    ],
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "registry_source": "R06A",
+    "duplicate_settings_candidate": "WORLD_REG_031",
+    "physical_alias_verified": false,
+    "game_native_type_and_range": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/qkwvzt",
+      "author": "r/NBA2k commenters",
+      "date": "2021-11-02 to 2021-12-30 discussion",
+      "version": "NBA2K22 user context",
+      "platform": "MyCAREER versus MyLEAGUE slider scope disputed",
+      "claim": "2021-12-30 NBA2K22 discussion mentions adjusting seriousness/duration/frequency in other modes; author cannot use them in MyCAREER.",
+      "grade": "SAME_RELEASE_VERSION_AND_PLATFORM_LIMITED"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/900202-schnaidt1s-2k21-myleague-and-gameplay-sliders/page14",
+      "author": "schnaidt1 / Operation Sports",
+      "date": "2020-21 period, exact cited post date not verified",
+      "version": "NBA2K21",
+      "platform": "Xbox One legacy franchise",
+      "claim": "2K21 predecessor lists Injury severity 15 as one of multiple injury sliders, not PC22 value.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    },
+    {
+      "url": "https://hoopsgamers.com/nba-2k23-mynba-eras-settings-explained",
+      "author": "Hoops Gamers editorial",
+      "date": "2022/23 article (exact date not verified)",
+      "version": "NBA2K23",
+      "platform": "next-generation MyNBA Eras, not PC22",
+      "claim": "2K23 successor catalog lists separate injury severity and duration, cross-version only.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    }
+  ],
+  "claims": [
+    "2021 NBA2K22 community mentions several injury settings without proving exact severity slider or PC22 build; earlier 2K21 guide lists Injury Severity.",
+    "Same source slot and offset as WORLD_REG_031, but no real PC22 memory address or alias has been proven."
+  ],
+  "conflicts": [
+    "Severity, time missed and type of injury need separate measurable variables; no exact PC22 scale identified.",
+    "Mode- and platform-limited evidence does not prove PC22 native consumer or numerical effect."
+  ],
+  "metrics": [
+    "exact PC22 offline MyLEAGUE UI label, value, mode",
+    "two independent same-save module-qualified candidate reads",
+    "no time advance, injury manipulation, transactions or game writes"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_74",
+    "question": "Can PC22 league setup show 'Injury Severity' and can two read-only raw source reads relate it to +0x25C without generating injury events?",
+    "write": false,
+    "confounders": [
+      "Severity, time missed and type of injury need separate measurable variables; no exact PC22 scale identified."
+    ]
+  },
+  "result": "INJURY_SOURCE_VERSION_LIMITED_DUPLICATE_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN"
+}

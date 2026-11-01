@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_075",
+  "iteration_id": "SWEEP01_FIELD0174",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x260 correspond to PC22 Injury Duration (recovery time), distinct from injury probability or medical severity?",
+  "candidate": {
+    "key": "world.injuries_and_morale.injury_duration",
+    "offset": "0x260",
+    "raw_range": [
+      null,
+      null
+    ],
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "registry_source": "R06A",
+    "duplicate_settings_candidate": "WORLD_REG_032",
+    "physical_alias_verified": false,
+    "game_native_type_and_range": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/qkwvzt",
+      "author": "r/NBA2k commenters",
+      "date": "2021-11-02 to 2021-12-30 discussion",
+      "version": "NBA2K22 user context",
+      "platform": "MyCAREER versus MyLEAGUE slider scope disputed",
+      "claim": "2K22 commenter distinguishes how long injuries affect players from severity and frequency, without verified menu shot.",
+      "grade": "SAME_RELEASE_VERSION_AND_PLATFORM_LIMITED"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/900202-schnaidt1s-2k21-myleague-and-gameplay-sliders/page14",
+      "author": "schnaidt1 / Operation Sports",
+      "date": "2020-21 period, exact cited post date not verified",
+      "version": "NBA2K21",
+      "platform": "Xbox One legacy franchise",
+      "claim": "2K21 MyLEAGUE guide lists Injury Duration 15, a prior-version user setting.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    },
+    {
+      "url": "https://hoopsgamers.com/nba-2k23-mynba-eras-settings-explained",
+      "author": "Hoops Gamers editorial",
+      "date": "2022/23 article (exact date not verified)",
+      "version": "NBA2K23",
+      "platform": "next-generation MyNBA Eras, not PC22",
+      "claim": "Later 2K23 MyNBA settings retain duration terminology, cannot validate PC22 binary.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    }
+  ],
+  "claims": [
+    "2K22 community offers qualitative reference to how long injuries affect players, legacy guides name the Injury Duration control; no exact PC22 menu/state or native offset confirmed.",
+    "Same source slot and offset as WORLD_REG_032, but no real PC22 memory address or alias has been proven."
+  ],
+  "conflicts": [
+    "Injury duration days, missed games, calendar game days, and severity are different possible measures.",
+    "Mode- and platform-limited evidence does not prove PC22 native consumer or numerical effect."
+  ],
+  "metrics": [
+    "exact PC22 offline MyLEAGUE UI label, value, mode",
+    "two independent same-save module-qualified candidate reads",
+    "no time advance, injury manipulation, transactions or game writes"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_75",
+    "question": "Can PC22 read-only Injury Duration menu value and source +0x260 be observed twice without game time advancing?",
+    "write": false,
+    "confounders": [
+      "Injury duration days, missed games, calendar game days, and severity are different possible measures."
+    ]
+  },
+  "result": "INJURY_SOURCE_VERSION_LIMITED_DUPLICATE_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN"
+}

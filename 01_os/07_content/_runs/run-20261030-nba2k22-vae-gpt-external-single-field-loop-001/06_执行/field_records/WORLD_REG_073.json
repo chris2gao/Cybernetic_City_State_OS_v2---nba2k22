@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_073",
+  "iteration_id": "SWEEP01_FIELD0172",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x258 map to CPU Injury Effects rather than CPU Injury Frequency, player body part durability, or an injury record?",
+  "candidate": {
+    "key": "world.injuries_and_morale.cpu_injury_effects",
+    "offset": "0x258",
+    "raw_range": [
+      null,
+      null
+    ],
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "registry_source": "R06A",
+    "duplicate_settings_candidate": "WORLD_REG_030",
+    "physical_alias_verified": false,
+    "game_native_type_and_range": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-12-30 (updated 2026-02-20)",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE/MyNBA general; PC exact menu not attested",
+      "claim": "2K22 menu list includes CPU Injury Effects and CPU Injury Frequency as different settings.",
+      "grade": "SAME_RELEASE_VERSION_AND_PLATFORM_LIMITED"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/916673-nba-2k22-impressions-thread/page100?postcount=214",
+      "author": "AIRJ23 / Gotmadskillzson",
+      "date": "2021-11-03 in cited posts",
+      "version": "NBA2K22",
+      "platform": "MyNBA, hardware unconfirmed, injury timing contested",
+      "claim": "2K22 MyNBA player discussion challenges whether injury sliders operate in 3D games.",
+      "grade": "SAME_RELEASE_VERSION_AND_PLATFORM_LIMITED"
+    },
+    {
+      "url": "https://hoopsgamers.com/nba-2k23-mynba-eras-settings-explained",
+      "author": "Hoops Gamers editorial",
+      "date": "2022/23 article (exact date not verified)",
+      "version": "NBA2K23",
+      "platform": "next-generation MyNBA Eras, not PC22",
+      "claim": "2K23 list suggests CPU injury effects govern affected player attributes; cross-version interpretation only.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    }
+  ],
+  "claims": [
+    "NBA2K22 menu label is corroborated but raw effect and CPU consumer are UNKNOWN.",
+    "Same source slot and offset as WORLD_REG_030, but no real PC22 memory address or alias has been proven."
+  ],
+  "conflicts": [
+    "CPU-controlled basketball player, team designation and injury severity aren't equivalent concepts.",
+    "Mode- and platform-limited evidence does not prove PC22 native consumer or numerical effect."
+  ],
+  "metrics": [
+    "exact PC22 offline MyLEAGUE UI label, value, mode",
+    "two independent same-save module-qualified candidate reads",
+    "no time advance, injury manipulation, transactions or game writes"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_73",
+    "question": "Can PC22 read-only CPU Injury Effects slider and candidate +0x258 be compared twice while retaining independent +0x254 User-side evidence?",
+    "write": false,
+    "confounders": [
+      "CPU-controlled basketball player, team designation and injury severity aren't equivalent concepts."
+    ]
+  },
+  "result": "INJURY_SOURCE_VERSION_LIMITED_DUPLICATE_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN"
+}

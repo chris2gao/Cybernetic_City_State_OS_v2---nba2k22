@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_076",
+  "iteration_id": "SWEEP01_FIELD0175",
+  "date": "2026-11-01",
+  "primary_question": "Is candidate +0x264 a PC22 Career-Ending Injury Frequency control distinct from ordinary frequency and severity?",
+  "candidate": {
+    "key": "world.injuries_and_morale.career_ending_injury_frequency",
+    "offset": "0x264",
+    "raw_range": [
+      null,
+      null
+    ],
+    "ui_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "registry_source": "R06A",
+    "duplicate_settings_candidate": "WORLD_REG_033",
+    "physical_alias_verified": false,
+    "game_native_type_and_range": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/900202-schnaidt1s-2k21-myleague-and-gameplay-sliders/page14",
+      "author": "schnaidt1 / Operation Sports",
+      "date": "2020-21 period, exact cited post date not verified",
+      "version": "NBA2K21",
+      "platform": "Xbox One legacy franchise",
+      "claim": "NBA2K21 MyLEAGUE list includes Career-Ending Injury Frequency 5, example not default.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    },
+    {
+      "url": "https://hoopsgamers.com/nba-2k23-mynba-eras-settings-explained",
+      "author": "Hoops Gamers editorial",
+      "date": "2022/23 article (exact date not verified)",
+      "version": "NBA2K23",
+      "platform": "next-generation MyNBA Eras, not PC22",
+      "claim": "NBA2K23 later UI settings explicitly name Career-Ending Injury Frequency.",
+      "grade": "CROSS_VERSION_CONTEXT"
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/qkwvzt",
+      "author": "r/NBA2k commenters",
+      "date": "2021-11-02 to 2021-12-30 discussion",
+      "version": "NBA2K22 user context",
+      "platform": "MyCAREER versus MyLEAGUE slider scope disputed",
+      "claim": "2021 NBA2K22 discussion shows multiple injuries but not a controlled career-ending slider experiment.",
+      "grade": "SAME_RELEASE_VERSION_AND_PLATFORM_LIMITED"
+    }
+  ],
+  "claims": [
+    "Older and successor NBA2K guides document career-ending injury slider; no PC22 offline exact UI/raw mapping or rare-event effect measurement located.",
+    "Same source slot and offset as WORLD_REG_033, but no real PC22 memory address or alias has been proven."
+  ],
+  "conflicts": [
+    "A rate based on a tiny number of careers cannot yield a valid observed probability; event source and simulation path matter.",
+    "Mode- and platform-limited evidence does not prove PC22 native consumer or numerical effect."
+  ],
+  "metrics": [
+    "exact PC22 offline MyLEAGUE UI label, value, mode",
+    "two independent same-save module-qualified candidate reads",
+    "no time advance, injury manipulation, transactions or game writes"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_76",
+    "question": "Can read-only PC22 league Setup or Injury menu expose Career-Ending Injury Frequency and correlate two source candidate +0x264 reads without seasons played?",
+    "write": false,
+    "confounders": [
+      "A rate based on a tiny number of careers cannot yield a valid observed probability; event source and simulation path matter."
+    ]
+  },
+  "result": "INJURY_SOURCE_VERSION_LIMITED_DUPLICATE_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN"
+}
