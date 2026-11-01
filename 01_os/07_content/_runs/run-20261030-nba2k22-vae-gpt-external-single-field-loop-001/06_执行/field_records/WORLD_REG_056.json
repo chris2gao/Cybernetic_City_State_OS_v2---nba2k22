@@ -1,0 +1,62 @@
+{
+  "field_id": "WORLD_REG_056",
+  "iteration_id": "SWEEP01_FIELD0155",
+  "date": "2026-11-01",
+  "primary_question": "Does alternate world.trade_and_draft_rules.recently_signed_rule candidate at 0x154 denote same UI recently-signed restrictions as WORLD_REG_013, or a different runtime guard?",
+  "candidate": {
+    "key": "world.trade_and_draft_rules.recently_signed_rule",
+    "offset": "0x154",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "version": "NBA2K22",
+      "platform": "franchise generic",
+      "claim": "Recently Signed Restrictions is a separately named trade UI option"
+    },
+    {
+      "url": "https://www.trueachievements.com/a338876/maxed-out-achievement",
+      "author": "TrueAchievements Xbox One MyGM guide",
+      "date": "2021-22",
+      "version": "NBA2K22",
+      "platform": "Xbox One MyGM, not PC22",
+      "claim": "Disabling restriction allowed other trades alongside financial and override changes; no isolated PC proof"
+    },
+    {
+      "url": "https://devtrackers.gg/nba2k/p/8ff62bb9-nba-2k21-next-gen-mynba-courtside-report",
+      "author": "2K21 developer report mirror",
+      "date": "2020-10",
+      "version": "NBA2K21",
+      "platform": "other version",
+      "claim": "30/60/90 day rules historical inspiration; actual PC22 window not confirmed"
+    }
+  ],
+  "claims": [
+    "Same candidate key/offset as WORLD_REG_013 is a source-queue cross-reference, not a proven physical alias",
+    "No exact PC22 wait-period transaction validator call or native memory decoding proof"
+  ],
+  "conflicts": [
+    "Player signing, trade salary aggregation, recently traded players and team roles differ",
+    "MyGM other platform and earlier 2K21 cannot prove 2K22 PC same rules"
+  ],
+  "metrics": [
+    "exact option UI read-only, signing date and contract source",
+    "future validator rejection only by separate authorized action stream"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_056",
+    "question": "For two independent same-save/build read-only reads, does PC22 candidate 0x154 map to Recently Signed Restrictions UI and reconcile with WORLD_REG_013 without using field-order assumptions or trade submissions?",
+    "write": false
+  },
+  "result": "DUPLICATED_CANDIDATE_SIGNED_RESTRICTION_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
