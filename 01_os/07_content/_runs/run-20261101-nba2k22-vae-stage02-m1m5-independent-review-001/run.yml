@@ -1,0 +1,44 @@
+run_id: run-20261101-nba2k22-vae-stage02-m1m5-independent-review-001
+task_id: NBA2K22-VAE-STAGE02-M1M5-INDEPENDENT-REVIEW-20261101-001
+domain: nba2k22
+role: independent_review
+reviewer_model: GPT-6
+reviewer_method: fixed_SHA_source_reconciliation
+new_isolated_fork: false
+human_same_reviewer_preapproval: true
+branch: task/nba2k22-vae-stage02-m1m5-independent-review-20261101
+master_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+core_boot_sha: 934425cf43d4fe3307b0112142aec1ba434a5734
+subject_task_id: NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001
+subject_sha: cf95f2451bbe5722b6d946434078c515564252a9
+subject_parent: bb38b34d0ef676e9f7f5d87b60dfa439b57593ce
+source_queue_sha: 6436515330f77c0cc5cc675b521590adeb69c5d4
+worlddata_fixed_source_sha: 17ec1cea88c2bb6c36264792f70c94bef9a8bdb4
+review_verdict: REWORK_REQUIRED_TARGETED_EVIDENCE_GATES
+findings:
+  P0: 2
+  P1: 2
+  P2: 2
+M01: PASS
+M02: PARTIAL
+M03: PASS_STRUCTURE
+M04: FAIL_NATIVE_SOURCE_FIDELITY
+M05: PASS_DESIGN
+M06: FAIL_READER_COVERAGE
+M07: PASS_DESIGN
+M08: PASS_SOURCE_SCOPE
+M09: PASS_EXTERNAL_REMOTE_READBACK_RECEIPT_STALE
+stage02_M1M5_structural_assets: RETAIN_AND_REPAIR_SELECTIVELY
+reviewer_real_game_access: NOT_RUN
+worlddata_sqlite_binary_access: NOT_RUN
+native_pe_access: NOT_RUN
+new_collector_or_ddl: NONE
+source_execution_branch_modified: false
+master_modified: false
+formal_PRMS_SAVE: NOT_RUN
+formal_Communication: NOT_PUBLISHED
+human_version_acceptance: NOT_GRANTED
+approval_for_game_writes: NOT_GRANTED
+review_report: 08_结论/stage02_m1m5_independent_review.md
+evidence_matrix: 07_测试执行/independent_evidence_matrix.json
+completion_pointer: 08_结论/completion_pointer.md
