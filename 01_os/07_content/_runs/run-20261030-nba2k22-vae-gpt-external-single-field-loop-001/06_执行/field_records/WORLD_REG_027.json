@@ -1,0 +1,66 @@
+{
+  "field_id": "WORLD_REG_027",
+  "iteration_id": "SWEEP01_FIELD0126",
+  "question": "Does user injury frequency apply by team-controlled flag or by played versus simulated games, especially control-all-teams MyLEAGUE?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.user_injury_frequency",
+    "offset": "0x24C",
+    "project_range": [
+      0,
+      100
+    ],
+    "native_UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021/22",
+      "game": "NBA2K22",
+      "platform": "MyNBA/MyLEAGUE PC mapping unverified",
+      "claim": "User/CPU injury frequency are two independently named same-release settings",
+      "grade": "SAME_RELEASE_UI"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/921266-myleague-why-are-there-no-injuries",
+      "author": "Hockeytown954 and vetmin",
+      "date": "2022-03-06",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE unspecified platform",
+      "claim": "Played-game injury scarcity contrasted with CPU simulated injuries, community experience, not controlled",
+      "grade": "SAME_RELEASE_OBSERVATION"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/881888-another-year-without-in-game-injuries/page3",
+      "author": "Smirkin Dirk",
+      "date": "2019-10",
+      "game": "PRE-2K22",
+      "platform": "unknown",
+      "claim": "Control-all-team user slider reportedly applies to simmed user-controlled teams, not proven PC22",
+      "grade": "CROSS_VERSION_HYPOTHESIS"
+    }
+  ],
+  "claims": [
+    "Same-game setting label confirmed, but PC22 native address and source mode selection unknown",
+    "Played-game injuries may be extremely rare in 2K22; do not infer slider efficacy from a handful of matches"
+  ],
+  "conflicts": [
+    "User vs CPU refers perhaps franchise team control, not human player avatar",
+    "3D played vs calendar-sim exposures not directly comparable",
+    "Injury incidence distinct from severity, length and injury effects"
+  ],
+  "metrics": [
+    "new injury events per player-game by controlled team, rendered vs Calendar Sim",
+    "injury type and exposure time, durability stratification",
+    "historical injury facts append-only; no recalc"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_027",
+    "question": "Can read-only PC22 MyLEAGUE settings candidate 0x24C match exact user_injury_frequency UI state, separate from other injury sliders and verified immediate/delayed same-save readback?",
+    "write": false
+  },
+  "result": "SAME_GAME_INJURY_FREQ_UI_NATIVE_CONSUMER_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
