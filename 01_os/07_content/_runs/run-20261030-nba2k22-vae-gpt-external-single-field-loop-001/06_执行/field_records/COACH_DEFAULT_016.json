@@ -1,0 +1,68 @@
+{
+  "field_id": "COACH_DEFAULT_016",
+  "iteration_id": "SWEEP01_FIELD0201",
+  "date": "2026-11-01",
+  "primary_question": "Does primary FreelanceType preserve the first chosen franchise offensive Freelance slot, separately from default active freelance and PlaybookID?",
+  "candidate": {
+    "key": "FreelanceType",
+    "source": "K04_COACH_AND_PLAYS",
+    "slot_ordinal": 1,
+    "offset": "NOT_IN_FROZEN_QUEUE",
+    "registered_native_enum": "PROJECT_K04_34_CANDIDATES_0_TO_33",
+    "current_PC22_real_value": "UNKNOWN",
+    "source_project_validation": "PREVIOUS_K04_NOT_REVERIFIED"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "DEV29 K04 project researchers",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC research, other 2K versions compared",
+      "platform": "PC22 target; prior project native evidence referenced not newly tested",
+      "grade": "PROJECT_K04_FOUR_ORDERED_FREELANCE_SLOTS",
+      "claim": "K04 documents 4 ordered FreelanceType/Type2/Type3/Type4 slots and 34 project native enum candidates raw 0..33."
+    },
+    {
+      "url": "https://www.utplay.com/news/2469--nba-2k22-best-defensive--offensive-settings-next--current-gen",
+      "author": "UTPlay editorial",
+      "date": "2022-era (exact date unknown)",
+      "version": "NBA2K22",
+      "platform": "Current and next gen offensive settings guide; PC raw not confirmed",
+      "grade": "SAME_RELEASE_FREELANCE1_EXAMPLE",
+      "claim": "2K22 coaching guide explicitly shows Freelance 1: Bucks 2018 as one manual recommendation, not native default."
+    },
+    {
+      "url": "https://www.reddit.com/r/MyTeam/comments/q36nsh",
+      "author": "r/MyTeam NBA2K22 Xbox Series user",
+      "date": "2021-10-07",
+      "version": "NBA2K22",
+      "platform": "Xbox Series X|S MyTeam; not PC MyLEAGUE",
+      "grade": "SAME_RELEASE_DIFFERENT_MODE",
+      "claim": "2K22 Xbox Series MyTeam user must explicitly activate a selected freelance after assigning it; slot not proof of active set."
+    }
+  ],
+  "claims": [
+    "The ordered coach Freelance slot 1 is registered as a distinct candidate; this study does not prove automatic in-game activation.",
+    "External materials on Freelance settings and AI-vs-user activation do not identify physical PC22 Coach raw address or actual execution order."
+  ],
+  "conflicts": [
+    "Coach saved slot 1 may not equal initial on-court active freelance after ACE/timeout; raw names/enum require source evidence.",
+    "The 4 coach Freelance slots, 4 Player PlayTypes, Playbook and Series are distinct concepts."
+  ],
+  "metrics": [
+    "exact coach identity and ordered source UI slot",
+    "two game build-qualified Native getter readbacks without write",
+    "compare pregame, in-game ACE, timeout, observed active Freelance separately in future authorized testing"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_016",
+    "question": "Can the first PC22 coach gameplan Freelance slot and earlier project Native FreelanceType getter be read independently twice, while recording ACE and currently active on-court state separately?",
+    "write": false,
+    "expected": "two independent current-gen UI/native read-only correlations, unknown preserved"
+  },
+  "result": "FOUR_ORDERED_FREELANCE_SLOTS_RESEARCHED_NATIVE_EFFECT_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "new_native_validation": "NOT_RUN",
+  "actual_slot_usage_probability": "UNKNOWN"
+}

@@ -1,0 +1,68 @@
+{
+  "field_id": "COACH_DEFAULT_019",
+  "iteration_id": "SWEEP01_FIELD0204",
+  "date": "2026-11-01",
+  "primary_question": "Does FreelanceType4 encode fourth ordered Freelance option and persist in a PC22 league gameplan independently of active in-game Freelance?",
+  "candidate": {
+    "key": "FreelanceType4",
+    "source": "K04_COACH_AND_PLAYS",
+    "slot_ordinal": 4,
+    "offset": "NOT_IN_FROZEN_QUEUE",
+    "registered_native_enum": "PROJECT_K04_34_CANDIDATES_0_TO_33",
+    "current_PC22_real_value": "UNKNOWN",
+    "source_project_validation": "PREVIOUS_K04_NOT_REVERIFIED"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "DEV29 K04 project researchers",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC research, other 2K versions compared",
+      "platform": "PC22 target; prior project native evidence referenced not newly tested",
+      "grade": "PROJECT_K04_FOUR_ORDERED_FREELANCE_SLOTS",
+      "claim": "K04 has 34 known project enum candidates and four separate ordered settings including FreelanceType4; persisted 3D activation not verified."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/882097-4-freelances",
+      "author": "gaamst and mb625 / Operation Sports",
+      "date": "2019-09-11",
+      "version": "NBA2K20",
+      "platform": "legacy MyLEAGUE, not PC22",
+      "grade": "CROSS_VERSION_FOUR_SLOTS",
+      "claim": "Earlier 2K20 forum users differ on whether ACE cycles four favorites; cannot import their disagreement as PC22 result."
+    },
+    {
+      "url": "https://www.reddit.com/r/MyTeam/comments/q36nsh",
+      "author": "r/MyTeam NBA2K22 Xbox Series user",
+      "date": "2021-10-07",
+      "version": "NBA2K22",
+      "platform": "Xbox Series X|S MyTeam; not PC MyLEAGUE",
+      "grade": "SAME_RELEASE_DIFFERENT_MODE",
+      "claim": "NBA2K22 Xbox Series user explains that setting a freelance and activating it in-game are different steps, but MyTeam not PC MyLEAGUE."
+    }
+  ],
+  "claims": [
+    "The ordered coach Freelance slot 4 is registered as a distinct candidate; this study does not prove automatic in-game activation.",
+    "External materials on Freelance settings and AI-vs-user activation do not identify physical PC22 Coach raw address or actual execution order."
+  ],
+  "conflicts": [
+    "Fourth slot might be a shortcut, pregame preference, or engine AI input; no measured PC22 usage, probability or restore behavior.",
+    "The 4 coach Freelance slots, 4 Player PlayTypes, Playbook and Series are distinct concepts."
+  ],
+  "metrics": [
+    "exact coach identity and ordered source UI slot",
+    "two game build-qualified Native getter readbacks without write",
+    "compare pregame, in-game ACE, timeout, observed active Freelance separately in future authorized testing"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_019",
+    "question": "Can PC22 read-only fourth Freelance menu and native FreelanceType4 getter correlate across two observations, comparing pregame versus on-court active value without changing any option?",
+    "write": false,
+    "expected": "two independent current-gen UI/native read-only correlations, unknown preserved"
+  },
+  "result": "FOUR_ORDERED_FREELANCE_SLOTS_RESEARCHED_NATIVE_EFFECT_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "new_native_validation": "NOT_RUN",
+  "actual_slot_usage_probability": "UNKNOWN"
+}
