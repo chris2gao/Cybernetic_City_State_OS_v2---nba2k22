@@ -1,0 +1,48 @@
+{
+  "schema_version": "nba2k22.vae.stage02.m1m5.independent_review.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-M1M5-INDEPENDENT-REVIEW-20261101-001",
+  "role": "independent_review",
+  "model": "GPT-6_CURRENT_CHAT_HUMAN_AUTHORIZED_SAME_MODEL",
+  "independence": "separate_review_branch; not claiming new isolated Fork",
+  "subject_task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "subject_head_sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+  "subject_before_human_amendment": "bb38b34d0ef676e9f7f5d87b60dfa439b57593ce",
+  "subject_dispatch_sha": "f27846c86e92345e279ad01816593d909595f472",
+  "baseline_master_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "gpt_sweep1_sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+  "gemini_rea_sha": "6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe",
+  "gemini_independent_review_sha": "08ace12bcf92faaef20634c4701b7d6a03876a34",
+  "worlddata_v24_candidate_sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+  "canonical_queue_sha": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+  "canonical_queue_blob_sha": "af5567e14e03cd9f7761e396a978311e347d7c17",
+  "audit_branch": "task/nba2k22-vae-stage02-m1m5-independent-review-20261101",
+  "allowed_changed_paths": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-m1m5-independent-review-001/"
+  ],
+  "review_objectives": [
+    "M01 exact identity/order",
+    "M02 GPT/Gemini evidence-grade and field-level conflict traceability",
+    "M03 no Native or gameplay causal promotion",
+    "M04 Native-First precise source and no derived mislabel",
+    "M05 metric grain and engine split",
+    "M06 WorldData v24 per-column maturity and gaps",
+    "M07 experiment bounded falsifiability",
+    "M08 no game, collector, schema or production mutation",
+    "M09 exact source SHA, branch head and allowed scope",
+    "Human continuous-learning amendment without new permissions"
+  ],
+  "review_limits": {
+    "live_NBA2K22_process": "NOT_RUN",
+    "gameplay": "NOT_RUN",
+    "original_PE_binary": "NOT_REAUTHENTICATED",
+    "full_WorldData_SQLite": "NOT_MOUNTED_OR_REPLAYED",
+    "fixed_WorldData_field_maturity": "SOURCE_REVIEWED_AT_EXACT_SHA",
+    "git_api_ref_compare": "INDEPENDENTLY_RERUN",
+    "source_objects": "INDEPENDENTLY_LOADED_AND_EVALUATED",
+    "Core_OS_docs": "READ_AT_FIXED_CORE_SHA",
+    "source_branch_modified": false,
+    "master_modified": false,
+    "PRMS_SAVE": "NOT_RUN"
+  },
+  "report_required": "One focused independent verdict+remediation with no new collector format"
+}
