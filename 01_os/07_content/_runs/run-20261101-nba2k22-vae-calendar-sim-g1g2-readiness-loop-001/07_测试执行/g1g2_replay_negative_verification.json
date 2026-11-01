@@ -11,25 +11,25 @@
       "id": "G01",
       "test": "New final-game detection vs mere calendar date increment and same-state repeat.",
       "status": "PASSED",
-      "evidence": "Verified by test_inspect_progress_detects_new_final_game_when_db_empty and test_inspect_progress_skips_on_same_state_repeat. The orchestrator inspects schedule headers (manifest['entries']) and accurately distinguishes NEW_FINAL_GAME_DETECTED from SAME_STATE_REPEAT (and DATE_ADVANCED_NO_NEW_GAME) by checking latest_memory_game_id against latest_db_game_id."
+      "evidence": "Verified by test_inspect_progress_detects_new_final_game_when_db_empty, test_inspect_progress_skips_on_same_state_repeat, and test_trigger_world_capture_mode_incremental_skip. The orchestrator inspects schedule headers (manifest['entries']) and accurately distinguishes NEW_FINAL_GAME_DETECTED from SAME_STATE_REPEAT (and DATE_ADVANCED_NO_NEW_GAME). Under INCREMENTAL mode, same state returns SKIPPED; under FULL mode, all 20 families refresh regardless of new games."
     },
     {
       "id": "G02",
       "test": "One explicit Human command invokes existing refresh-world auto (all registered families under 16 ordinary + 4 annual cadence), validates committed unit receipts, then generates fixed VAE data products; no independent capture pipeline.",
       "status": "PASSED",
-      "evidence": "CalendarSimOrchestrator.trigger_capture_if_new_game invokes existing refresh_world with families=None (defaulting to all 20 registered SOURCES in order with data_updated=True). Upon verification of unit receipts, it executes export_vae_standard_datasets. Reuses the existing single-save WorldData v24 architecture without creating any parallel pipeline."
+      "evidence": "CalendarSimOrchestrator.trigger_world_capture implements FULL, INCREMENTAL, and EXPORT_ONLY modes without creating any parallel capture pipeline. FULL mode refreshes all 20 registered SOURCES in order with data_updated=True regardless of new game status. Validates unit receipts, strictly verifies game SQL integrity, and exports VAE standard datasets."
     },
     {
       "id": "G03",
       "test": "Captured game/team/player keys match SQL query units, provenance, Calendar Sim mode and chronology.",
       "status": "PASSED",
-      "evidence": "Verified by test_sql_readback_integrity_verification and test_export_vae_standard_datasets_deterministic_pipeline. Ingested game state confirms was_simulated=1 (bit 18 of flags), game_period_scores sum to team points, and team_game_boxes and player_game_boxes join with capture_units to preserve timestamp and provenance."
+      "evidence": "Verified by test_sql_readback_integrity_verification, test_sql_verification_fails_closed_on_missing_team_box, and test_sql_verification_fails_closed_on_score_mismatch. Ingested game state confirms was_simulated=1 and is_final=1, period scores strictly conserve with team box points, both home and away team boxes exist, player boxes exist, and CTEs partition by game_id and observed_at."
     },
     {
       "id": "G04",
       "test": "Fail closed when running incomplete game, stale PID, process restart, uncertain save or mismatched checksum.",
       "status": "PASSED",
-      "evidence": "Verified by test_inspect_progress_fails_closed_on_game_in_progress. Detects status=1 (active game) and returns INCOMPLETE_GAME_IN_PROGRESS, rejecting capture with REJECTED_GAME_IN_PROGRESS. Inspect process liveness verifies creation_filetime and pe_timestamp to reject stale PIDs or process restarts."
+      "evidence": "Verified by test_inspect_progress_fails_closed_on_game_in_progress. Detects status=1 (active game) and returns INCOMPLETE_GAME_IN_PROGRESS, rejecting capture with REJECTED_GAME_IN_PROGRESS. Incomplete game cannot be bypassed by force. Process liveness verifies creation_filetime and pe_timestamp to reject stale PIDs or restarts."
     },
     {
       "id": "G05",
@@ -59,7 +59,7 @@
       "id": "G09",
       "test": "Unit, fake Native reader, SQL staging and regression tests execute with real exit codes.",
       "status": "PASSED",
-      "evidence": "test_calendar_sim_orchestrator.py ran 8 focused tests with exit code 0 (Ran 8 tests in 3.052s, OK). Full repository test suite in 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests executed completely with exit code 0 (Ran 313 tests in 149.701s, OK)."
+      "evidence": "test_calendar_sim_orchestrator.py ran 14 focused tests with exit code 0 (Ran 14 tests in 5.348s, OK). Full repository test suite in 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests executed completely with exit code 0 (Ran 321 tests in 152.123s, OK)."
     },
     {
       "id": "G10",
@@ -83,7 +83,7 @@
       "id": "G13",
       "test": "Versioned fixed query/export profiles produce three standard data products and verified manifest, reproducible offline without any model call; no restricted owner/raw fields.",
       "status": "PASSED",
-      "evidence": "export_vae_standard_datasets outputs calendar_sim_completed_game_player_team_metrics.json, vae_setting_context_snapshot.json, vae_experiment_evidence_input.json, and manifest.json with deterministic SHA256 hashes, counts, and schema versions. Verified by test_export_vae_standard_datasets_deterministic_pipeline and test_cli_vae_export_datasets; executes 100% locally with 0 model calls."
+      "evidence": "export_vae_standard_datasets outputs calendar_sim_completed_game_player_team_metrics.json, vae_setting_context_snapshot.json, vae_experiment_evidence_input.json, and manifest.json with deterministic SHA256 hashes, counts, and schema versions. Verified by test_export_vae_standard_datasets_deterministic_pipeline, test_canonical_ids_in_vae_experiment_input, and test_cli_vae_export_datasets. Uses CTE window deduplication and dynamically detects game_mode and fixture vs live evidence grades."
     },
     {
       "id": "G14",

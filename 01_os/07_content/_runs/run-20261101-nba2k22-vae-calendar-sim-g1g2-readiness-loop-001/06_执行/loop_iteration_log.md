@@ -18,7 +18,8 @@
 | **A2: 自动采集协调器与固定 VAE 导出开发** | `calendar_sim_orchestrator.py`<br>`cli.py`<br>`06_执行/auto_capture_orchestrator_design_and_entrypoint.md` | 实现非驻留、人工显式一键触发的 `CalendarSimOrchestrator`；支持进程保活核验、新终场比赛识别、同一状态跳过、进行中比赛拒绝闭门保护，以及采集后 SQL 入库即时核验；集成 20 族全量采集与三类 VAE 标准化数据包提取层。 | 架构设计文档与 entrypoint 规格完整，扩展 CLI `calendar-sim-trigger`、`vae-export-datasets`、`calendar-sim-inspect`。 | `COMPLETED` |
 | **A3: G2 实验设置与指标对照合同** | `06_执行/experiment_settings_metrics_contract.json`<br>`06_执行/calendar_sim_pilot_gates.json` | 为 Pilot 1 (投篮/触球)、Pilot 2 (节奏/快攻)、Pilot 3 (协防/防守评级) 制定严谨的 S0 基线 vs S1 干预对照合同、同种子对照组、REA 读回模式及证伪准则。 | 三组 Pilot 的 6 维门控状态显式定义；诚实标记未执行比赛的项为 `LIVE_VALIDATION_PENDING`。 | `COMPLETED` |
 | **A4: 循环测试验证与缺陷修复** | `tests/test_calendar_sim_orchestrator.py`<br>`tests/` 全套回归 | 针对协调器与导出流水线编写 8 项单元测试。修复 `collect_schedule` 字段路径、状态位二进制编码、以及属性/Box 字段名（`overall_raw`、`possessions_raw`、`minutes_raw`）。运行全套回归。 | 专项测试 8/8 通过；全套回归套件运行完成，313/313 通过，0 失败 0 错误。 | `COMPLETED` |
-| **A5: 交付物整理与检查点固定** | `07_测试执行/g1g2_replay_negative_verification.json`<br>`08_结论/completion_pointer.md`<br>`run.yml` | 汇总 G01–G11 复现与负向测试报告，更新运行状态至 `completed`，生成完成指针，提交并推送到远端 GitHub。 | 全部 11 项 G 系列门禁核验通过，分支成功推送。 | `COMPLETED` |
+| **A5: 交付物整理与检查点固定** | `07_测试执行/g1g2_replay_negative_verification.json`<br>`08_结论/completion_pointer.md`<br>`run.yml` | 汇总 G01–G14 复现与负向测试报告，更新运行状态至 `completed`，生成完成指针，提交并推送到远端 GitHub。 | 全部 14 项 G 系列门禁核验通过，分支成功推送。 | `COMPLETED` |
+| **A6: R1–R7 定向整改闭环与全量回归** | `calendar_sim_orchestrator.py`<br>`cli.py`<br>`test_calendar_sim_orchestrator.py`<br>`one_click_capture_targeted_remediation_20261101.md` | 全量闭环 Human 派发之定向整改清单（R1 触发模式分离 FULL/INCREMENTAL/EXPORT_ONLY；R2 严格 SQL 闭门核验；R3 CTE 多采集数据去重；R4 Stage02 M1/M3 精确 Canonical ID；R5 证据级感知 Manifest 状态与动态模式识别；R6 逐实体最新单元 CTE 快照；R7 新增 6 项负例单测）。 | 专项单测从 8 增至 14 项全部 PASS；全库 321 项回归套件全部通过 (Ran 321 tests in 152.123s, 0 failed, 0 error)。 | `COMPLETED` |
 
 ---
 
@@ -44,6 +45,44 @@
 - **现象**: 单元测试在注入测试用例时抛出 `PermissionError: unknown/unapproved columns for player_attribute_snapshots: overall_rating_raw` 与 `team_game_boxes: pace,possessions`。
 - **根因**: WorldData v24 STRICT Schema 中列名为 `overall_raw`、`possessions_raw`、`minutes_raw`、`points` 等。
 - **修复**: 修正测试注入与 SQL 提取字段，严格与 100 张 STRICT 表结构定义保持 100% 一致。
+
+### 4. R1 采集触发语义分离 (FULL vs INCREMENTAL) 与进行中比赛闭门防护
+- **现象**: 旧实现将新完赛比赛作为全部采集的前置条件，当无新比赛完赛时直接跳过，导致倾向、能力、战术、伤病等变化无法被捕获；同时 `force=True` 会绕过 `INCOMPLETE_GAME_IN_PROGRESS`。
+- **修复**: 在 `trigger_world_capture` 中明确分离模式：
+  - `mode='FULL'`: 无论是否有新比赛完赛，均执行全部 20 族 Reader 的完整刷新，满足“采集全量数据”指令。
+  - `mode='INCREMENTAL'`: 若已完赛最新状态与 DB 一致则安全跳过，有新比赛或状态则更新入库，满足“采集新增的全量数据”指令。
+  - 严格限制 `INCOMPLETE_GAME_IN_PROGRESS`：不论何种模式，若检测到正在进行的比赛（`status == 1`），均严格 Fail-Closed 拒绝采集，禁止使用 `force` 绕过一致性保护。
+
+### 5. R2 严格 SQL 入库一致性核验与 Fail-Closed 保护
+- **现象**: 旧 `verify_game_sql_integrity` 仅核对赛程行和单条状态观察，缺少主客双方球队 Box、球员 Box 以及单节比分与终场比分守恒核对，导致即使数据缺失仍可能错误发布 READY 清单。
+- **修复**: 强化核验逻辑，必须同时满足：
+  - `is_final == 1` 且 `was_simulated == 1`；
+  - 主队与客队 Team Game Box 两行齐全；
+  - 至少存在一条 Player Game Box 记录；
+  - 各节得分总和（含加时）与 Team Game Box 最终得分完全守恒（`abs(sum_period - team_points) == 0`）。
+  - 若任一项不满足，严格置 `verified_in_db = False`，并在触发流程中抛出 `VerificationFailed` 异常，坚决压制 READY 清单。
+
+### 6. R3 & R6 规范数据集与设置快照的 CTE 确定性去重
+- **现象**: 简单通过 `SELECT ... FROM table WHERE game_id = ?` 读取单场或按 `WHERE unit_id IN (SELECT MAX(unit_id) ... GROUP BY ...)` 提取快照，在多次采集同一场比赛或同单元共享多实体时，导致行数重复或版本混配。
+- **修复**: 在 `export_vae_standard_datasets` 中全面引入窗口函数 CTE：
+  - 单场比赛观察及 Box: 使用 `ROW_NUMBER() OVER (PARTITION BY game_id ORDER BY cu.observed_at DESC, s.unit_id DESC) = 1` 确定性只取最新有效单元。
+  - 战术、教练偏好、设置、倾向与属性快照: 使用 `ROW_NUMBER() OVER (PARTITION BY entity_id ORDER BY cu.observed_at DESC, unit_id DESC) = 1`，按实体逐一获取最新原子单元，杜绝重复行与跨单元污染。
+
+### 7. R4 实验干预字段精确对齐 Canonical ID
+- **现象**: 原实验合同与 VAE 导出中存在临时命名字段（如 `TENDENCY_SHOT_066`、`COACH_DEFENSE_HELP`）。
+- **修复**: 严格对齐 Stage02 M1/M3 字段 Registry 权威主键：
+  - 球员出手倾向: `TENDENCY_NATIVE_001`
+  - 球员触球倾向: `TENDENCY_NATIVE_066`
+  - 教练战术执行: `COACH_DEFAULT_001`
+  - 教练进攻节奏: `COACH_DEFAULT_014`
+  - 教练协防等级: `COACH_DEFAULT_015`
+  - 对照组规则严格限定为日历模拟同分部非干预对照 (`CONCURRENT_DIVISION_UNMODIFIED_ROSTER`)，杜绝将不可用的 `same seed` 作为前提。
+
+### 8. R5 证据级感知 Manifest 状态与动态游戏模式检测
+- **现象**: 导出的 Manifest 硬编码 `READY` 与 `game_mode=MyLEAGUE`，在只有测试 Fixture 的情况下过度宣称。
+- **修复**:
+  - 动态从 `game_mode_observations` 或绑定的存档配置中读取 `mode_label` / `mode_raw`，支持 MyLEAGUE、MyCAREER 等不同模式。
+  - 严格依据参与本次导出的 `source_grade` / `evidence_grade` 进行状态降级：若全部属于 `RESEARCH_FIXTURE` 或离线回放，Manifest 诚实标记为 `FIXTURE_REPLAY_SUCCESS` / `LIVE_VALIDATION_PENDING`，严禁在无实机游戏数据下虚报 `LIVE_READY`。
 
 ---
 

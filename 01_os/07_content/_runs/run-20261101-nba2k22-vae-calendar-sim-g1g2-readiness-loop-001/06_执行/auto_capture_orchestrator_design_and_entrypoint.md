@@ -12,21 +12,28 @@
 
 ---
 
-## 二、架构与状态机流水线
+## 二、架构与状态机流水线 (Modes: FULL / INCREMENTAL / EXPORT_ONLY)
 
 ```mermaid
 flowchart TD
-    A["人工调用入口 (CLI / Python)"] --> B["前置检查: 进程存活与 PE 时间戳"]
-    B -- "异常/终止" --> C["Fail-Closed: 拒绝 REJECTED_STALE_PROCESS"]
-    B -- "正常" --> D["读取内存赛程 Header 与比赛状态"]
-    D --> E{"内存比赛状态判断"}
-    E -- "存在 status == 1 (进行中)" --> F["Fail-Closed: 拒绝 REJECTED_GAME_IN_PROGRESS"]
-    E -- "最新完赛与 DB 最新一致" --> G["跳过采集: SAME_STATE_REPEAT"]
-    E -- "发现最新未入库完赛 (status == 2)" --> H["触发已有 20 族 refresh-world auto"]
-    H --> I["单存档 SQLite 事务入库与原子单元提交"]
-    I --> J["SQL 比赛比分与单节守恒回读核验"]
-    J --> K["执行固定 VAE 3 类数据集提取与 Manifest 生成"]
-    K --> L["输出 SUCCESS_INGESTED 完整凭据与标准化产物"]
+    A["人工调用入口 (CLI / Python)"] --> B["选择模式: FULL / INCREMENTAL / EXPORT_ONLY"]
+    B --> C["前置检查: 目标进程存活与 PE 时间戳"]
+    C -- "异常/终止" --> D["Fail-Closed: 拒绝 REJECTED_STALE_PROCESS"]
+    C -- "正常" --> E["读取内存赛程 Header 与比赛状态"]
+    E --> F{"是否存在 status == 1 (进行中)?"}
+    F -- "是 (进行中比赛)" --> G["严格 Fail-Closed: 拒绝 REJECTED_GAME_IN_PROGRESS (禁止 force 绕过)"]
+    F -- "否" --> H{"判断执行模式"}
+    H -- "FULL (全量模式)" --> I["执行 20 族全量刷新 (不以新完赛为前提)"]
+    H -- "INCREMENTAL (增量模式)" --> J{"赛程与各源状态是否有新增/变更?"}
+    J -- "无任何变化" --> K["安全跳过: SAME_STATE_REPEAT"]
+    J -- "有新状态/新完赛" --> I
+    H -- "EXPORT_ONLY" --> N["跳过采集，直接基于单档 SQLite 进行 VAE 导出"]
+    I --> L["单档 SQLite 事务持久化与原子单元回执"]
+    L --> M{"SQL 数据完整性严格核验 (Fail-Closed)"}
+    M -- "校验失败 (缺队/缺人/节分不守恒/未完赛)" --> O["抛出 VerificationFailed 异常，压制 READY 清单"]
+    M -- "核验通过" --> N
+    N --> P["执行固定 VAE 3 类数据集提取与动态证据级 Manifest 生成"]
+    P --> Q["输出完整的标准数据产品与状态回执"]
 ```
 
 ---
@@ -50,20 +57,23 @@ flowchart TD
 位于 `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py`：
 
 ```python
-from calendar_sim_orchestrator import CalendarSimOrchestrator, trigger_calendar_sim_capture, export_vae_datasets
+from calendar_sim_orchestrator import CalendarSimOrchestrator, trigger_world_capture, trigger_calendar_sim_capture, export_vae_datasets
 
 # 实例化编排器
 orchestrator = CalendarSimOrchestrator(save_directory, loaded_filename)
 
-# 1. 状态侦测（不触发采集写入）
+# 1. 状态侦测（只读检查进程与内存赛程）
 inspection = orchestrator.inspect_calendar_progress(reader_or_pid='auto')
 
-# 2. 一键全量采集（自动执行 20 族 Reader、SQL 核验与 VAE 提取）
-receipt = orchestrator.trigger_capture_if_new_game(
+# 2. 一键采集（支持 FULL / INCREMENTAL / EXPORT_ONLY）
+# FULL: 执行 20 族全量刷新，不受无新比赛限制，完整更新名单、战术、倾向、伤病等
+# INCREMENTAL: 增量刷新，若同一状态无变化则跳过；有新完赛则执行完整核验
+receipt = orchestrator.trigger_world_capture(
+    mode='FULL',            # 'FULL' | 'INCREMENTAL' | 'EXPORT_ONLY'
     reader_or_pid='auto',
     output_directory=None,  # 自动生成临时输出目录
-    families=None,          # 默认为 None，按 20 族注册顺序全量执行
-    force=False             # 若 True 则强制重刷
+    families=None,          # 默认为 None，按 20 族注册顺序执行
+    resume_report=None      # 断点恢复报告
 )
 
 # 3. 独立执行 VAE 数据集提取（从现有单档 SQLite 导出）
@@ -74,13 +84,16 @@ export_summary = orchestrator.export_vae_standard_datasets(output_directory)
 位于 `cli.py`：
 
 ```bash
-# 1. 一键触发全量采集与 VAE 数据导出（Human 正常推日历后单次执行）
-python cli.py calendar-sim-trigger <save_directory> <loaded_filename> [--pid auto] [--output-directory DIR]
+# 1. 一键全量采集（FULL 模式，不依赖新完赛比赛即可刷新全族数据）
+python cli.py calendar-sim-trigger <save_directory> <loaded_filename> --mode FULL [--pid auto] [--output-directory DIR]
 
-# 2. 从已有数据库独立导出三类 VAE 标准化数据集与 Manifest
+# 2. 一键增量采集（INCREMENTAL 模式，遇相同状态跳过，有新赛果则入库并核验）
+python cli.py calendar-sim-trigger <save_directory> <loaded_filename> --mode INCREMENTAL [--pid auto] [--output-directory DIR]
+
+# 3. 从已有数据库独立导出三类 VAE 标准化数据集与 Manifest
 python cli.py vae-export-datasets <save_directory> <loaded_filename> <output_directory>
 
-# 3. 快速核验内存比赛与 DB 同步状态（只读检查，不写库）
+# 4. 快速核验内存比赛与 DB 同步状态（只读检查，不写库）
 python cli.py calendar-sim-inspect <save_directory> <loaded_filename> [--pid auto]
 ```
 
