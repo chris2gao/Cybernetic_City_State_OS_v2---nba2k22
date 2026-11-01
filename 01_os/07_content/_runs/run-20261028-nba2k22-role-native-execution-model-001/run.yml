@@ -1,0 +1,97 @@
+task_id: NBA2K22_ROLE_NATIVE_EXECUTION_CAPABILITY_MODELING_01
+date: '2026-10-28'
+task_phase: REQUIREMENT_CONSENSUS_SOURCE_COLLECTION_AND_INITIAL_ATOMIC_INVENTORY
+status: FIRST_PASS_A_V1_PUBLISHED_AWAITING_HUMAN_REVIEW
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+branch: planning/nba2k22-myleague-role-native-execution-surface-20261028
+base_integration_pr: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/17
+base_integration_commit: 84195f471354400a75877f16c3c3de8a3af6b5b2
+base_master_status: NOT_MERGED_BY_THIS_RUN
+planning_goal: >
+  Inventory what every GM, Coach and Player model must be able to read/request/
+  execute in a full MyLEAGUE season, independently of the decision-making layer.
+  Resolve the source-driven capability surface before commissioning Codex.
+human_framing:
+  franchise_myleague_mynba_gameplay_reference: UNIFIED_MECHANICS_REQUIREMENTS
+  suppress_platform_difference_as_default_function_blocker: true
+  historical_sources_are_not_edited_or_rewritten: true
+  exact_pc22_native_binary_binding_still_requires_pc22_evidence: true
+  external_personas_make_decisions: true
+  native_control_executes_exact_input: true
+  no_executor_salary_matchmaking_or_game_strategy_optimization: true
+  30_team_full_persona_world_requires_single_world_phase_controller: true
+  native_execution_without_direct_memory_business_patch_preferred: true
+resources:
+  source_index: 01_资料归集/既有终极联盟资料来源与复用索引_v1.md
+  machine_atomic_actions: 02_角色执行能力建模/三角色及世界控制_原子操作目录_v1.json
+  human_atomic_actions: 02_角色执行能力建模/GM教练球员_可执行能力盘点_A_v1.md
+  native_crosswalk: 02_角色执行能力建模/既有REA_62动作与需求原子动作交叉表_v1.json
+  reader_crosswalk: 02_角色执行能力建模/40组可读取数据范围与已有12类Reader对照_v1.json
+  parameter_domains: 02_角色执行能力建模/关键输入值域与调用合同_原生已知vs待补_v1.md
+  rea_os_promotion: 03_方案边界/REA提升为OS通用工具的经验继承与分层_v1.md
+counts:
+  source_r07_groups: 40
+  source_r07_heterogeneous_trace_index_rows: 694
+  source_r05d_business_candidate_rows: 63
+  atomic_role_and_world_action_or_request_candidates: 183
+  functional_groups_in_new_model: 14
+  current_rea_registry_actions: 62
+  explicit_rea_action_requirement_matches: 50
+  requirements_without_explicit_rea_action_mapping: 133
+  existing_read_dataset_families: 12
+  existing_full_read_datasets: 0
+source_independence:
+  old_game_research: EXISTING_GUIDES_AND_MECHANISM_CATALOGS
+  native_execution_evidence: PR16_LIVE_VALIDATION
+  no_new_game_evidence_claimed: true
+work_permissions:
+  planning_branch_document_writes: PERFORMED
+  native_live_test: NONE
+  native_binary_reverse_engineering: NONE
+  game_ui_operation: NONE
+  model_strategy_implementation: NONE
+  new_Codex_issue: NOT_PUBLISHED
+  master_merge: NONE
+  os_generic_tool_registration: NOT_EXECUTED
+pending_human_decisions:
+  - PLAYER_ATTRIBUTE_AND_STAFF_ATTRIBUTE_EDIT_RIGHTS_VS_WORLD_ADMIN
+  - SINGLE_WORLD_TIME_PHASE_CONTROLLER_VS_INDIVIDUAL_ROLE_ACTIONS
+  - ROLE_VISIBILITY_AND_HIDDEN_SCOUTING_OR_POTENTIAL_DATA
+  - WHETHER_183_SEEDS_NEED_ADDITION_OR_DELETION_BY_DOMAIN
+  - FINAL_ACTION_VALUE_DOMAIN_VERIFICATION_BEFORE_CODEX
+rea_experience_document: USER_REPORTED_BUT_EXACT_FILE_PATH_NOT_CONFIRMED_IN_FIXED_INTEGRATION_TREE
+next: HUMAN_REVIEW_THEN_RESULT_MODEL_AND_CAPABILITY_BY_CAPABILITY_CODEX_IMPLEMENTATION_TASK
+
+human_update_20261028:
+  project_index_required_before_all_nba2k22_tasks: true
+  task_completion_must_sync_module_registry: true
+  keep_existing_data_pipeline_unchanged_for_execution_redesign: true
+  role_models_load_identity_capabilities_first: true
+  each_role_model_may_submit_batch_of_exact_decided_actions: true
+  coordinator_only_aggregates_frozen_intents_not_decisions: true
+  native_rea_facade_executes_exact_commands_and_reads_game_effects: true
+  no_direct_memory_business_patch_as_default_executor: true
+  requested_rea_handoff_source_commit: b7e0f51e8e00be4c3233af2c73c26c73b4958e80
+  copied_rea_handoff_blob: 4cc0b2c487315cc26bd6f25419e0afea63f94ddc
+new_resources:
+  project_index: 08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+  module_registry: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_MODULE_REGISTRY_V2.json
+  index_sync_contract: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_INDEX_SYNC_CONTRACT_V1.md
+  role_batch_native_architecture: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md
+  original_rea_handoff: 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md
+  separate_world_data_engineering_base: task/nba2k22-world-data-full-implementation-20261024@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4
+  separate_world_data_review_fixes: task/nba2k22-world-data-review-fixes-20261026@a3927fb150a213201e404cca043ced4f57409bd1
+index_bootstrap:
+  domain_agents_preface: UPDATED_IN_PR18
+  domain_readme_entry: UPDATED_IN_PR18
+  planning_model_entry: UPDATED_IN_PR18
+  no_core_owned_files_modified: true
+  no_auto_sync_ci_or_hook_installed: true
+  per_task_source_loading_and_sync_is_currently_a_documented_workflow: true
+current_work_status:
+  phase: REQUIREMENTS_REVIEW_WITH_MODULE_INDEX
+  codex_new_engineering_task_dispatched: false
+  os_global_rea_tool_installed_by_this_task: false
+  native_game_actions_executed_this_task: false
+  world_database_implementation_changed_this_task: false
+  master_modified_this_task: false
