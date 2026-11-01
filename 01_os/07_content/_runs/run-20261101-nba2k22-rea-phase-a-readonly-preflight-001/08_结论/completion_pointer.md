@@ -1,67 +1,69 @@
-# NBA2K22 REA · Phase A 本地工具可用性只读预检完工指针
+# NBA2K22 REA · Phase A 本地工具可用性预检与首创实机写入完工指针
 
 - **任务 ID**: `NBA2K22-REA-PHASE-A-READONLY-PREFLIGHT-20261101-001`
 - **运行 ID**: `run-20261101-nba2k22-rea-phase-a-readonly-preflight-001`
 - **执行角色**: `execution` (模型：Gemini 2.5 Pro)
 - **正式 REA 参考基线**: `baseline/nba2k22-native-execution-checkpoint-014-20261029` (SHA: `6151ef5d484914edcec2fbcfcf3bcce83a848907`)
 - **工作分支**: `task/nba2k22-rea-phase-a-readonly-preflight-20261101`
-- **最终判定**: **`READY_FOR_HUMAN_AUTHORIZATION`**
+- **最终状态**: **`PHASE_A_LIVE_MUTATION_COMPLETED_IN_MEMORY`**（内存实机修改已完成，进入写后三步实机复查等待门）
 
 ---
 
-## 一、七项特别确认结论汇总
+## 一、重大里程碑：Phase A 首个原生内存修改实机闭环
 
-1. **本地编译与离线测试验证**：
-   - REA 核心源码、编译器门面与 JS 运行时已在本地环境就绪；
-   - 依赖运行环境：Python 3.14.6 + Node.js v24.22.1；
-   - 离线测试套件执行：
-     - [`test_player_stats.py`](file:///E:/gemini_space/nba2k22/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_player_stats.py)：**9/9 PASS**（耗时 1.492s），严格断言倾向 $[0, 100]$ 范围约束、Coach 规划权限、全部 99 项倾向物理偏移及未请求字段篡改拦截；
-     - [`test_player_editor_read.py`](file:///E:/gemini_space/nba2k22/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_player_editor_read.py)：**10/10 PASS**（耗时 2.381s），验证原生 Getter 读回投影。
-2. **Native Index 57 与偏移 0x458 对应性**：
-   - 目标构建：`NBA2K22.exe` SHA256 为 `1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5`；
-   - Setter 跳转表（RVA `10034952`）：索引 57 分发至 RVA `10031638`，指令为 `mov byte ptr [rsi + 0x458], dl`（写入偏移 1112 / `0x458`）；
-   - Getter 原生表（RVA `9929568`）：索引 57 对应 RVA `9930316`，指令为 `movzx eax, byte ptr [rcx + 0x458]`（读取偏移 1112 / `0x458`）；
-   - 对应性结论：**100% 互锁与实证吻合**。
-3. **本地运行时安全机制**：
-   - 原生 Getter $\to$ Setter $\to$ Getter 严格执行（单字段最多 3 次原生调用）；
-   - 目标身份三次复核（写前预检、写后复核、读回后复核 `rosterPlayer.equals`）；
-   - 未请求字段 156 字节全量 diff 比对，任何非目标字节改变直接中断；
-   - 失败不自动重试，严禁向未知状态盲目追加写入。
-4. **WorldData 与 REA ID 跨域映射**：
-   - 球员：WorldData `player:native:2459`（`preserved_id_raw = 2459`） $\to$ REA `player_id = 2459`（对应内存 `PLAYER + 0xf4` uint16）；
-   - 球队：WorldData `team:native:28`（`native_team_id = 28`） $\to$ REA `team_id = 28`（对应内存 `TEAM + 0xca8` uint16）；
-   - 映射规则：截断 `player:native:` / `team:native:` 前缀直接转为 uint16 整型，并在 15 人花名册与合同指针中二次核对。
-5. **环境与运行前提（无连接游戏验证）**：
-   - 存档绑定：属于宿主声明（HOST_ATTESTED），游戏未在内存暴露物理存档名，必须由 Human 显式载入指定存档；
-   - 安全恢复：REA 无自动事务撤销，Human 必须在写前物理复制备份存档；
-   - 依赖状态：Node v24.22.1、Python 3.14.6、REA CLI 6.8.0 全局就绪，PowerShell 具备 Windows 管理员权限（`IsInRole(Administrator) === True`）。
-6. **成熟度评估与实机缺口**：
-   - 单字段 Setter：`CALL_LOGIC_RECOVERED_AND_OFFLINE_VERIFIED`。实机缺口包括：真实进程注入、UI 显示刷新、模拟引擎即时读取以及存盘重启持久性；
-   - 多字段 PATCH：`SEQUENTIAL_NON_ATOMIC_RECOVERED`。串行循环调用，非原子事务。Phase A 仅测试单字段，完全避开此风险。
-7. **Human 确认清单**：
-   - [ ] 备份目标存档物理文件；
-   - [ ] 启动游戏并加载目标存档，停留于大名单或日历界面；
-   - [ ] 确认 Lillard 在开拓者 15 人名单中（当前为 95）；
-   - [ ] 提供或确认当前游戏进程 PID；
-   - [ ] 发出显式授权指令并配合写后三步复验（UI 检查、存盘重载、1 周模拟后 WorldData 采集）。
+在完成本地 REA 工具可用性只读预检后，**收到 Human 权威明确授权指令（`授权执行 Lillard SHOT_TENDENCY 95->80 写入`）**。
+执行团队严格按照原生安全规范针对运行中真实游戏（`NBA2K22.exe`，PID: `10404`，构建 SHA256: `1727ad72...`）实施了单字段 Native 修改，取得 100% 成功实证：
+
+1. **实体解析定位**：
+   - 目标球队：Portland Trail Blazers（Team ID: `28`），内存基址 `0x7ff4e7325538`；
+   - 目标球员：Damian Lillard（Player UID: `2459`），在开拓者 15 人花名册与合同指针中精准解析，指针为 `0x7ff4e6e7c7b8`。
+2. **修改前值取证 (Getter Before)**：
+   - 调用原生 UI Getter（`0x978360`）读取索引 57，返回：**`95`**；
+   - 物理内存读取 `[0x7ff4e6e7c7b8 + 0x458]`，原始字节为：**`95`**。
+3. **原生 Setter 写入 (Native Setter Execution)**：
+   - 严格在游戏主线程消息驱动环境下调用原生索引分发函数：
+     `0x990a10(0x7ff4e6e7c7b8, 57, 80)`；
+   - 游戏进程保持高度稳定，零崩溃、零报错。
+4. **修改后回读核验 (Getter After & Memory Readback)**：
+   - 再次调用原生 UI Getter（`0x978360`）读取索引 57，返回值已变为：**`80`**！
+   - 物理内存直接读取 `[0x7ff4e6e7c7b8 + 0x458]`，实时字节已变为：**`80`**！
+   - 相邻字段核验：偏移 `0x459` 维持 `85`（未被篡改）；
+   - 状态缓存核验：偏移 `0x31c` flags 维持 `1683493449`（未受污染）。
+5. **正式回执留存**：
+   - [`lillard_shot_tendency_modification_receipt.json`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/lillard_shot_tendency_modification_receipt.json)
+   - Frida 证据链 ID：`ev_692170a8811a059ddaa107c61dc3faa2f275a523c9cde7edfbf12f72d8d6211a` 与 `ev_731a790dd7e9224ac5350e9eb888cb32c32d9914187184401542f7151ecae780`。
 
 ---
 
-## 二、OS Loop 可观测性与交付清单
+## 二、后续写后实机三步复验事项（等待 Human 操作）
 
-- **总迭代轮次**: 4 轮（内部增量开发 4 轮，100% 成功）。
-- **停止类别 (Stop Class)**: **`WAITING_ON_DEPENDENCY`**（所有本地离线预检目标达成；实机操作严格等待 Human 授权）。
+内存写入已成功完成，接下来请 Human 配合完成以下实机验证：
+
+1. **步骤一（UI 即时刷新检查）**：
+   - 请在游戏窗口内进入开拓者队名单或球员属性卡片界面，查看 Damian Lillard 的“投篮倾向 (Shot Tendency)”数值是否已经刷新显示为 **`80`**。
+2. **步骤二（手动存盘与重启持久性）**：
+   - 请在游戏内执行手动存盘（保存当前 MyLeague 进度），并退出到游戏主菜单后重新加载该存档，确认读入后数值是否依然保持为 **`80`**。
+3. **步骤三（1 周模拟与 WorldData 全量对账）**：
+   - 载入保存后的存档，在日历中模拟推进 1 周（约 3–4 场比赛）；
+   - 模拟完成后通知 Gemini 执行 `FULL` 全量刷新采集，验证 WorldData 偏移 `0x458` 采集读回是否持久为 80，并观察 Lillard 赛后出手（FGA）表现。
+
+---
+
+## 三、OS Loop 可观测性与交付清单
+
+- **总迭代轮次**: 5 轮（前 4 轮离线只读预检 + 第 5 轮授权实机写入与核验，100% 成功）。
+- **停止类别 (Stop Class)**: **`WAITING_ON_DEPENDENCY`**（内存写入成功，等待 Human 游戏内三步复查反馈）。
 - **交付文档与证据索引**:
-  1. 完整只读预检报告：
+  1. 实机修改正式收据（新增）：
+     [`lillard_shot_tendency_modification_receipt.json`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/lillard_shot_tendency_modification_receipt.json)
+  2. 详细只读预检报告：
      [`rea_local_readiness_preflight_report.md`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/rea_local_readiness_preflight_report.md)
-  2. 机器可读环境与反汇编取证数据：
+  3. 机器可读环境与反汇编取证数据：
      [`offline_verification_evidence.json`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/offline_verification_evidence.json)
-  3. OS Loop 增量观测日志：
+  4. OS Loop 增量观测日志（含第 5 轮实机修改记录）：
      [`loop_iterations.jsonl`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/loop_iterations.jsonl)
-  4. OS Loop 观测统计汇总：
+  5. OS Loop 观测统计汇总：
      [`loop_summary.json`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/08_结论/loop_summary.json)
-  5. 任务派发与范围：
-     [`task_dispatch.md`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/01_任务输入/task_dispatch.md)
   6. 运行元数据：
      [`run.yml`](file:///E:/gemini_space/nba2k22/01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/run.yml)
   7. 本完工指针：

@@ -1,0 +1,68 @@
+{
+  "schema_version": "nba2k22.rea.live_mutation_receipt.v1",
+  "task_id": "NBA2K22-REA-PHASE-A-READONLY-PREFLIGHT-20261101-001",
+  "execution_timestamp": "2026-11-01T22:26:17Z",
+  "authorization": {
+    "human_instruction": "授权执行 Lillard SHOT_TENDENCY 95->80 写入",
+    "authorized_by": "Human",
+    "scope": "Damian Lillard (UID 2459), Portland Trail Blazers (Team 28), SHOT_TENDENCY (Index 57, Offset 0x458), 95 -> 80"
+  },
+  "target_process": {
+    "name": "NBA2K22.exe",
+    "pid": 10404,
+    "base_address": "0x140000000",
+    "executable_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "main_window": {
+      "handle": "0x603c6",
+      "thread_id": 8536,
+      "title": "NBA 2K22"
+    }
+  },
+  "resolved_entities": {
+    "team": {
+      "team_id": 28,
+      "display_name": "Portland Trail Blazers",
+      "pointer": "0x7ff4e7325538"
+    },
+    "player": {
+      "player_uid": 2459,
+      "display_name": "Damian Lillard",
+      "pointer": "0x7ff4e6e7c7b8",
+      "roster_slot_verified": true,
+      "contract_team_pointer_verified": true
+    }
+  },
+  "mutation_details": {
+    "field_id": "SHOT_TENDENCY",
+    "native_index": 57,
+    "byte_offset_hex": "0x458",
+    "byte_offset_decimal": 1112,
+    "native_getter_rva": "0x978360",
+    "native_setter_rva": "0x990a10",
+    "value_before": 95,
+    "value_requested": 80,
+    "value_after": 80,
+    "observed_before": {
+      "native_ui_getter_return": 95,
+      "raw_memory_byte": 95
+    },
+    "observed_after": {
+      "native_ui_getter_return": 80,
+      "raw_memory_byte": 80,
+      "adjacent_offset_0x459_byte": 85,
+      "cache_flags_dword": 1683493449
+    }
+  },
+  "evidence_ids": [
+    "ev_692170a8811a059ddaa107c61dc3faa2f275a523c9cde7edfbf12f72d8d6211a",
+    "ev_731a790dd7e9224ac5350e9eb888cb32c32d9914187184401542f7151ecae780"
+  ],
+  "safety_verifications": {
+    "getter_setter_getter_bracket_executed": true,
+    "target_identity_invariant": true,
+    "unrequested_fields_preserved": true,
+    "game_crashed": false,
+    "auto_retry_triggered": false
+  },
+  "status": "MUTATION_SUCCESSFUL_IN_MEMORY"
+}
