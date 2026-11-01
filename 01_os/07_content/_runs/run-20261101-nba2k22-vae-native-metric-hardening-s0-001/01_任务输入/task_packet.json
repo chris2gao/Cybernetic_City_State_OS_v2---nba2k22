@@ -1,0 +1,170 @@
+{
+  "schema_version": "nba2k22.vae.native_metric_hardening_s0.task.v1",
+  "task_id": "NBA2K22-VAE-NATIVE-METRIC-HARDENING-S0-20261101-001",
+  "domain": "nba2k22",
+  "role": "execution",
+  "assigned_model": "Codex (recommended engineering owner; record actual model on start)",
+  "engineering_owner": "Codex",
+  "native_research_contributor": "Gemini (only on bounded, Human-relayed follow-up)",
+  "source_parent_sha": "3fdc1b3ae3870785fb8a070a9225382b01c529d4",
+  "source_parent_branch": "task/nba2k22-vae-native-advanced-stats-worlddata-loop-20261101",
+  "branch": "task/nba2k22-vae-native-metric-hardening-s0-20261101",
+  "master_at_dispatch": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "base_caveat": "Parent Gemini v24 code is a candidate branch, not integrated or independently accepted; follow-on task is a candidate-only repair branch, not a master merge.",
+  "risk_tier": "T2_semantic; any game/save mutation or protected publishing remains T3",
+  "objective": "Converge the Gemini native-stats code into an honest, provenance-correct, same-game/same-unit WorldData Reader/query contract, preserve accepted 38 VAE metric IDs, and prepare read-only S0 baseline snapshots for first VAE pilot without changing settings or playing games.",
+  "evidence": [
+    {
+      "kind": "GEMINI_DELIVERY",
+      "sha": "3fdc1b3ae3870785fb8a070a9225382b01c529d4",
+      "run": "run-20261101-nba2k22-vae-native-stats-worlddata-loop-001",
+      "files": [
+        "02_证据/ui_native_reader_binding_dossier.md",
+        "06_执行/metric38_coverage_and_readiness.json",
+        "07_测试执行/loop_verification_and_regression_report.json"
+      ],
+      "caveat": "Reported 307 passed, real read examples, but exact origin/provenance, metric IDs and full pipeline contain discovered material discrepancies."
+    },
+    {
+      "kind": "APPROVED_STAGE02_METRIC_CONTRACT",
+      "sha": "c812042e087f4c7000d27ac42d3839741039c188",
+      "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/metric_native_first_requirements.json",
+      "metric_count": 38
+    },
+    {
+      "kind": "STAGE02_REVIEW",
+      "sha": "8ed0baff7fd7cf6439c0a49e158dea5b1838d1e3",
+      "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-m1m5-independent-review-001/08_结论/remediation_rereview_20261101.md",
+      "verdict": "PASS_REQUIREMENT_BASELINE_WITH_RESEARCH_GAPS"
+    },
+    {
+      "kind": "WORLDDATA_V24_BASE",
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md",
+      "caveat": "Test-candidate regular-season baseline only, not approved master."
+    }
+  ],
+  "human_decisions": [
+    "Default development internal Loop; fix substantive source/logic/value errors without a separate independent review after every increment.",
+    "Native game-computed stats must be located/read before derived substitutes; if only candidate native source exists mark UNKNOWN, not verified.",
+    "Reuse WorldData v24 20 Reader families and existing refresh; no parallel pipeline.",
+    "No game settings, saves or schedule changes; first pilot work must remain S0 read-only and candidate-only.",
+    "Production GM/VAE auto-tuning and REA Setter require later separate authority and verification."
+  ],
+  "material_findings": [
+    {
+      "id": "F01_METRIC_ID_DRIFT",
+      "severity": "P0",
+      "evidence": "Previous approved 38 IDs vs Gemini 38 IDs: only 14 match; 24 source IDs omitted and 24 different IDs introduced; name substitution cannot be treated as requirement closure.",
+      "expected": "Exact approved 38 metric_ids preserved and complete; extra discoveries in distinct source-native discovery/alias map with referential integrity."
+    },
+    {
+      "id": "F02_NATIVE_GAMESCORE_NOT_UNIFIED",
+      "severity": "P0",
+      "evidence": "family_codec.extract_player_advanced_metrics(raw) can parse bytes but changed refresh/readers do not call it or persist engine GameScore/PER; query.player_game_log recalculates Hollinger GameScore from box and labels it native formula matched.",
+      "expected": "Actual safe bounded native GameScore/PER read, separate provenance, appending current same-save observation with query readback where feasible; else clearly NOT_INTEGRATED/RESEARCH_ONLY, never report native capture PASS."
+    },
+    {
+      "id": "F03_GAMESCORE_SAMPLE_CONFLICT",
+      "severity": "P0",
+      "evidence": "Gemini summary says 22 PTS 8/17 etc GameScore 21.10, but formula equals 17.50; detailed dossier says 27 PTS 10/23 and formula 21.10 for same Embiid game. Reconstruct from immutable raw evidence and identity; if no raw proof downgrade to UNREPRODUCED.",
+      "expected": "One fixed source/game/player/period/box raw sample with raw hashes and independent calculator cross-check, preserving historical contradictions as findings."
+    },
+    {
+      "id": "F04_READER_READINESS_OVERPROMOTION",
+      "severity": "P0",
+      "evidence": "31/38 REAL_NATIVE_READABLE conflates native stored bytes, archived fixture, derived Per36, candidate UI, season totals, query logic and verified unified capture.",
+      "expected": "Per-metric separate axes GAME_NATIVE_SOURCE, LIVE_READ, READER_CODE, REFRESH_INGEST, QUERY, SAME_GRAIN; pilot READY only when all required metrics truly observed."
+    },
+    {
+      "id": "F05_TOUCHES_PROXY_MISLABEL",
+      "severity": "P0",
+      "evidence": "Reported FGA+0.44 FTA+TOV+0.33 AST as a Touches proxy; this is not an observed actual touch count or established equivalent. Absence of persistent field does not prove UI/dynamic variable absence.",
+      "expected": "Remove Touches equivalence or rename independent experimental scoring index; original MET_TOUCHES_NATIVE stays UNKNOWN/NOT_CAPTURED; no production calibration rule."
+    },
+    {
+      "id": "F06_SNAPSHOT_QUERY_SEMANTICS",
+      "severity": "P1",
+      "evidence": "New game log reads capture units directly and LEFT JOIN states; may repeat same game from multiple units; player totals ordered total_id DESC instead of latest valid same-phase/save; team box averages have no season filter; missing values silently treated as zeros.",
+      "expected": "Qualified single-acquisition and latest/as-of semantics inherited from existing safe query layer; no cross-unit season/phase/timestamps, DNP or unavailable source value silently converted to 0."
+    },
+    {
+      "id": "F07_TEAM_BOX_COMPLETENESS",
+      "severity": "P1",
+      "evidence": "New code sums all team_players without requiring in_use/full canonical coverage and sets minutes_raw = 240+25*overtime, potentially invalid for custom quarter lengths or incomplete games; tests only assert non-null not native/raw equality.",
+      "expected": "Use native header values when available; calculate only explicitly named derived values with completeness/quarter control; when source incomplete NULL and evidence gap; invariant score/team minutes/possessions and opponent ties."
+    },
+    {
+      "id": "F08_PRIVATE_PLAYER_INTERVAL",
+      "severity": "P1",
+      "evidence": "extract_player_advanced_metrics currently takes full 1264-byte PLAYERDATA, potentially including protected Potential bytes if used as live Reader; existing original WorldData rules physically exclude secret intervals.",
+      "expected": "Use small bounded safe intervals public projections; never acquire full private raw structure, mask after full read is insufficient."
+    }
+  ],
+  "allowed_changed_paths": [
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/"
+  ],
+  "allowed_read_only_source_refs": [
+    "Pinned Stage02 M3/M4/M5",
+    "Pinned Stage02 review",
+    "Gemini own last commit evidence",
+    "WorldData v24 baseline and tests"
+  ],
+  "prohibited": [
+    "Do not write game memory or saves, advance game calendar, or auto-run gameplay.",
+    "Do not auto-deploy VAE tuning, REA Setter or live-game interaction.",
+    "Do not publish to NBA master/Core, force push, rebase protected history, or edit past runs.",
+    "Do not recreate entire data stack, change unrelated WorldData/D1-D5 scope, invent UI labels, or substitute self-computed stats for known native game metrics.",
+    "Do not run new injection/hook/elevated access not covered by separately verified Human authority.",
+    "Do not read full PLAYERDATA including hidden Potential for convenience."
+  ],
+  "iterative_development": {
+    "mode": "evidence_driven_iteration",
+    "scope": "development_phase_only",
+    "cycle": [
+      "test current candidate against fixed 38 requirement IDs and game source evidence",
+      "choose bounded highest-risk discrepancy",
+      "repair minimal reader/query/data contract",
+      "run deterministic tests, negative cases, source and provenance checks",
+      "retain exact failure before/after, SHA and residual unknowns",
+      "repeat until objective reached or actual permission/source blocker"
+    ],
+    "no_fixed_loop_count": true,
+    "independent_review_cadence": "deferred_to_series; must review before authoritative VAE tuning interface or protected integration"
+  },
+  "work_packages": [
+    {
+      "code": "H1",
+      "goal": "Restore exact 38 accepted canonical metric IDs and 38-row join, while retaining additional discoveries in separate alias/native-source inventory."
+    },
+    {
+      "code": "H2",
+      "goal": "Repair player native GameScore/PER and GameLog Reader/source provenance gap; use actual safe read-only GAME native source if valid, else explicit NOT_AVAILABLE and stop overclaims."
+    },
+    {
+      "code": "H3",
+      "goal": "Repair Box team completeness, multi-capture latest snapshot/season/phase/identity, derived-vs-native semantics and numeric example conflicts."
+    },
+    {
+      "code": "H4",
+      "goal": "Perform real refresh-world controlled read-only staging capture/query round trip if current authorized test game available, with original frozen v24 DB unchanged."
+    },
+    {
+      "code": "H5",
+      "goal": "Prepare S0-only three pilot data manifests for Shot/Touches/Coach, Tempo/POE, HelpDefense/opponent defense with exact native metrics, missing sources and engine stratification. No REA Setter yet."
+    }
+  ],
+  "required_deliverables": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/02_证据/critical_finding_reconciliation.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/06_执行/accepted38_metric_coverage.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/06_执行/native_capture_provenance_matrix.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/06_执行/pilot_s0_data_readiness.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/06_执行/loop_increment_log.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/07_测试执行/reproducible_hardening_checks.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-metric-hardening-s0-001/08_结论/completion_pointer.md",
+    "Targeted Reader/query/test/source code changes in world_data_prototype/ only"
+  ],
+  "success": "At least all 38 accepted IDs accurately classified, 8 material findings closed or honestly limited, game data and derived proxies correctly separated, no false LIVE_NATIVE label; code runs existing tests, new negative controls, and any actual live S0 capture only if authorized/available.",
+  "future_step": "Only after S0 evidence and source readiness: separate Human-approved bounded REA setting intervention and post-game S1/S2; not authorized by this task."
+}
