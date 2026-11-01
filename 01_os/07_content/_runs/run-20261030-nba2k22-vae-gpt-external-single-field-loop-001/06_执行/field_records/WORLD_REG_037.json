@@ -1,0 +1,72 @@
+{
+  "schema_version": "nba2k22.vae.single_field_research.v1",
+  "field_id": "WORLD_REG_037",
+  "iteration_id": "SWEEP01_FIELD0136",
+  "date": "2026-11-01",
+  "question": "Does Chemistry Effects scale attribute/OVR modifiers conditional on an existing team chemistry level, separately from Chemistry Difficulty changing that level?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.chemistry_effects",
+    "offset": "0x244",
+    "raw_range_project": [
+      0,
+      100
+    ],
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "UI_identity": "UNKNOWN",
+    "storage_type": "UNKNOWN",
+    "engine_consumer": "UNKNOWN",
+    "effect_coefficient": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.fly.dev/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021 NBA2K22 release era",
+      "version": "NBA2K22",
+      "platform": "franchise menus, PC direct readback unavailable",
+      "claim": "Same-game setting category and nearby distinction; not memory address",
+      "grade": "SAME_RELEASE_CONTEXT"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918956-2k22-ps5-mynba-detroit-pistons",
+      "author": "2021/22 PS5 MyNBA dynasty creator",
+      "date": "2021/22",
+      "version": "NBA2K22",
+      "platform": "community authored, PC22 direct test unavailable",
+      "claim": "Source illustrates contextual mechanism, not this candidate's original PC22 callsite",
+      "grade": "SAME_GAME_DIFFERENT_PLATFORM"
+    }
+  ],
+  "claims": [
+    {
+      "grade": "CONTEXT_ONLY",
+      "claim": "Relevant 2K22 named system or menu context, not an isolated Native field effect"
+    }
+  ],
+  "conflicts": [
+    "The 2K23 menu description offers explicit effect semantics but is cross-version; 2K22 same-version sliders alone do not prove a formula.",
+    "Played 3D, Calendar Sim and persistent season history must not be treated as equivalent",
+    "Do not derive causal effect from simultaneous edits"
+  ],
+  "relations": [
+    "Coach training plans and player ratings are distinct from world settings",
+    "Salaries/transactions remain outside this field",
+    "Historical game state changes must be appended, not overwritten"
+  ],
+  "metrics": [
+    "player temporary ratings at matched team-chemistry states, distinct from win/loss changes",
+    "same build, save, league rules, player UID and event timestamps",
+    "before/after raw game readback only; no new cumulative statistics engine"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_037",
+    "question": "For one exact PC22 offline MyLEAGUE save and build, does read-only settings candidate 0x244 match the visible settings.injuries_and_morale.chemistry_effects value and remain consistent across immediate/delayed reads? Distinguish adjacent fields; perform no write.",
+    "if_matched": "MAPPING_ONLY",
+    "if_mismatch": "UNKNOWN",
+    "if_blocked": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_SYSTEM_CONTEXT_NO_NATIVE_MAPPING_OR_EFFECT",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
