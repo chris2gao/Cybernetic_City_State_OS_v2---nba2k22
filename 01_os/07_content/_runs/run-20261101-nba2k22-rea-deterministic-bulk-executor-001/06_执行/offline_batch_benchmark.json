@@ -1,0 +1,62 @@
+{
+  "schema_version": "nba2k22.rea.bulk_executor.benchmark.v1",
+  "benchmark_timestamp": "2026-11-01T23:06:09Z",
+  "test_machine": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 9, GenuineIntel",
+    "python_version": "3.14.6",
+    "node_version": "v24.22.1",
+    "rea_cli_version": "6.8.0",
+    "target_game_build": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "scale": {
+    "total_intents": 10000,
+    "teams_covered": 30,
+    "players_covered": 450,
+    "chunks_planned": 201,
+    "max_chunk_size": 50
+  },
+  "infrastructure_comparison": {
+    "unchunked_legacy_model": {
+      "frida_sessions_required": 10000,
+      "estimated_attach_detach_overhead_seconds": 40000.0,
+      "overhead_hours": 11.1
+    },
+    "bounded_chunked_model": {
+      "frida_sessions_required": 201,
+      "estimated_attach_detach_overhead_seconds": 804.0,
+      "overhead_minutes": 13.4,
+      "overhead_reduction_percent": 97.99
+    }
+  },
+  "timings_ms": {
+    "batch_generation_and_parse_time_ms": 60.4,
+    "planning_and_validation_time_ms": 33.78,
+    "sample_frida_script_compile_time_ms": 0.33,
+    "compiled_script_bytes": 18934,
+    "total_mock_execution_time_ms": 144.49,
+    "mock_throughput_ops_per_sec": 69210.9
+  },
+  "latency_percentiles": {
+    "chunk_level_ms": {
+      "p50": 0.7093,
+      "p95": 0.8331,
+      "p99": 0.9489
+    },
+    "item_level_ms": {
+      "p50": 0.0142,
+      "p95": 0.0167,
+      "p99": 0.019
+    }
+  },
+  "outcome_conservation": {
+    "num_planned": 10000,
+    "num_success": 9825,
+    "num_noop": 150,
+    "num_blocked": 2,
+    "num_unknown": 1,
+    "num_not_executed": 22,
+    "total_accounted": 10000,
+    "conservation_holds": true
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "batch_id": "BATCH-20261101-BLAZERS-SMALL-002",
+  "save_instance_id": "save_20261101_user_active",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "expected_process_name": "NBA2K22.exe",
+  "authorization_ref": "AUTH-HUMAN-20261101-GRADED-TEST-002",
+  "source_snapshot_ref": "snap_worlddata_20261101_full_001",
+  "dry_run": false,
+  "intents": [
+    {
+      "intent_id": "INT-BLAZERS-001",
+      "action_id": "COACH.STRATEGY.PLAYER_TENDENCY",
+      "team_id": 28,
+      "player_id": 2459,
+      "field_id": "SHOT_TENDENCY",
+      "expected_before": 80,
+      "value": 85,
+      "source_justification": "Graded small test: Lillard shot tendency adjustment"
+    },
+    {
+      "intent_id": "INT-BLAZERS-002",
+      "action_id": "COACH.STRATEGY.PLAYER_TENDENCY",
+      "team_id": 28,
+      "player_id": 2459,
+      "field_id": "DRIVING_LAYUP_TENDENCY",
+      "expected_before": 70,
+      "value": 75,
+      "source_justification": "Graded small test: Lillard layup tendency adjustment"
+    },
+    {
+      "intent_id": "INT-BLAZERS-003",
+      "action_id": "COACH.STRATEGY.PLAYER_ATTRIBUTE",
+      "team_id": 28,
+      "player_id": 2459,
+      "field_id": "driving_layup",
+      "expected_before": 88,
+      "value": 88,
+      "source_justification": "Graded small test: Lillard layup rating no-op verification"
+    },
+    {
+      "intent_id": "INT-BLAZERS-004",
+      "action_id": "COACH.STRATEGY.PLAYER_TENDENCY",
+      "team_id": 28,
+      "player_id": 2460,
+      "field_id": "SHOT_TENDENCY",
+      "expected_before": 75,
+      "value": 70,
+      "source_justification": "Graded small test: Secondary scorer tendency"
+    },
+    {
+      "intent_id": "INT-BLAZERS-005",
+      "action_id": "COACH.STRATEGY.POE_O1",
+      "team_id": 28,
+      "field_id": "POEOffense",
+      "expected_before": 50,
+      "value": 65,
+      "source_justification": "Graded small test: Coach offensive POE calibration"
+    }
+  ]
+}
