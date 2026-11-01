@@ -41,3 +41,15 @@ GitHub API publication: expected branch HEAD 7340552eef77fa130bf62c3229c261b45d7
 - 新真实比赛证据可能支持、反驳、或无法判定。每次保留原始值、来源、存档、模式、时点及先前假说；相关不自动升格因果，旧事实不能被覆盖。
 
 本次是同一任务原 Run 文件内的追加式版本修订，不代表前次独立审核已进行、游戏已操作、任何 Setter 被授权，或未来自动采集已上线。最终修订提交以远端最新分支 HEAD 为准。
+
+## 2026-11-01 独立审核后定向整改补充
+
+独立审核 `553ee3af68dba5cd42e52969e739ab0748989faa` 裁定2 P0、2 P1、2 P2，执行原窗口按其S02-P0-01至S02-P2-06交付有证据等级限定的整改，正式详情在 `02_证据/INDEPENDENT_REVIEW_REMEDIATION_MATRIX.md`。
+
+- 修订 M3/M4 全部16项旧Reader过高标签；7项空值列、2项Join未验、1项公式派生PTS、4项球员fixture Box、1项时期fixture、1项属性混合来源；余22项原分类保留。
+- M2原15个可观察指标Bundle全部有真实指标ID与粒度；三条图路径固定；12个孤立节点列出研究边界。
+- M1 原GPT 24/3/15异常与51项NO_DIRECT结果固定源级逐字段索引可查询。
+- 旧M09已明确为发布前门与此前实际发布SHA两类收据；本次最终新SHA在提交之后通过远端独立查询确认。
+- Human长期闭环与3个未执行试验不变；无新Native/当前游戏证明、实机试验、采集器或物理SQL。
+
+**本次执行修订状态：`EXECUTION_REWORK_DELIVERED_PENDING_INDEPENDENT_REREVIEW`，需独立复审重新裁定。**

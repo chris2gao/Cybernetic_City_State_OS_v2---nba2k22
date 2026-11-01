@@ -42,3 +42,7 @@ FIELD_ID_OR_REGISTRY、UI_SEMANTIC、NATIVE_IDENTITY、NATIVE_CONSUMER、GAME_OU
 - 具体机制证据分轴见 `field_evidence_matrix.json`，反馈状态见 `mechanism_metric_links.json`，Native First 见 `metric_native_first_requirements.json`，原生读写缺口见 `data_source_gap_matrix.json`，三个后续试验门见 `pilot_experiment_contracts.json`。
 
 **Stage02 M1–M5 原交付文件、204 / 68 / 50 / 38 / 3 范围以及未运行边界不变。**
+
+## 独立审核后的字段级异常与来源可用性修订
+
+以上原对账保留为历史；现行详细来源成熟度在 `06_执行/data_source_gap_matrix.json`，GPT历史字段级异常在 `06_执行/gpt_source_anomaly_index.json`。2026-11-01独立审核 `553ee3af68dba5cd42e52969e739ab0748989faa` 的2P0/2P1/2P2定向整改及静态回执见 `02_证据/INDEPENDENT_REVIEW_REMEDIATION_MATRIX.md`。旧“已确认Reader=16”说法已废止。

@@ -6,7 +6,7 @@ exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
 role: execution
 assigned_model: GPT-6
 actual_model: GPT-6_CONVERSATION_DECLARED_NOT_HOST_ATTESTED
-lifecycle: execution_delivered_ready_for_independent_review
+lifecycle: execution_rework_delivered_pending_independent_rereview
 objective: "Integrate GPT/Gemini VAE mechanism evidence and metric requirements; native game-computed stats first; no collector or game operation."
 source_queue_sha: 6436515330f77c0cc5cc675b521590adeb69c5d4
 source_queue_blob: af5567e14e03cd9f7761e396a978311e347d7c17
@@ -19,7 +19,7 @@ allowed_changed_paths:
 task_packet: 01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/01_任务输入/task_packet.json
 dispatch: 01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/01_任务输入/execution_dispatch.md
 verification_plan: 01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/01_任务输入/verification_plan.json
-status: "EXECUTION_DELIVERED_READY_FOR_INDEPENDENT_REVIEW_WITH_EVIDENCE_GAPS"
+status: "EXECUTION_REWORK_DELIVERED_PENDING_INDEPENDENT_REREVIEW"
 independent_review: NOT_RUN
 game_runtime: NOT_RUN
 collector_development: NOT_RUN
@@ -42,3 +42,12 @@ reanative_write_permission: NOT_GRANTED_BY_THIS_SUPPLEMENT
 new_unified_collector: NOT_STARTED_BY_THIS_TASK
 historical_evidence_policy: APPEND_ONLY
 amendment_previous_completion_head: bb38b34d0ef676e9f7f5d87b60dfa439b57593ce
+
+independent_review_sha: 553ee3af68dba5cd42e52969e739ab0748989faa
+independent_review_verdict_before_rework: REWORK_REQUIRED_TARGETED_EVIDENCE_GATES
+remediation_verification_receipt: 07_测试执行/targeted_remediation_verification.json
+remediation_matrix: 02_证据/INDEPENDENT_REVIEW_REMEDIATION_MATRIX.md
+source_maturity_archived_blob: 693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7
+post_publication_origin_sha_verified: cf95f2451bbe5722b6d946434078c515564252a9
+remediation_static_precloseout_sha: 0b078012087707f4cbf527d7536af456b3ae7f04
+re_review: PENDING_NOT_AUTOMATICALLY_PASSED

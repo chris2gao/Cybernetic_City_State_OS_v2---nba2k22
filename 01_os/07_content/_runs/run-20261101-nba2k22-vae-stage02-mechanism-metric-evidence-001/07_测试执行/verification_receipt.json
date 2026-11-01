@@ -3,7 +3,7 @@
   "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
   "model": "GPT-6_CONVERSATION_DECLARED_NOT_HOST_ATTESTED",
   "date": "2026-11-01",
-  "verified_source_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+  "verified_source_head": "0b078012087707f4cbf527d7536af456b3ae7f04",
   "dispatch_sha": "f27846c86e92345e279ad01816593d909595f472",
   "toolchain": "GitHub REST connected API + deterministic ECMAScript list/equality/ref checks, no current game access",
   "checks": [
@@ -41,11 +41,12 @@
     },
     {
       "id": "M04_METRIC_NATIVE_FIRST",
-      "status": "PASS",
+      "status": "PASS_STATIC_REMEDIATED_SOURCE_PROVENANCE_ONLY",
       "details": {
-        "metric_count": 38,
-        "gaps": 38,
-        "derived_enabled": 0
+        "native_first": true,
+        "derived_fallback_added": 0,
+        "source_check": "See 07_测试执行/targeted_remediation_verification.json",
+        "prior_pass_superseded": true
       }
     },
     {
@@ -61,15 +62,21 @@
     },
     {
       "id": "M06_SOURCE_COVERAGE_AND_GAP_HONESTY",
-      "status": "PASS",
+      "status": "PASS_STATIC_REMEDIATED_WITH_38_SPLIT_SOURCE_STATES",
       "details": {
-        "gap_status_counts": {
-          "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE": 16,
+        "source_status_counts": {
+          "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY": 4,
+          "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED": 7,
+          "EXISTING_DERIVED_OLD_SAVE_VALUE": 1,
+          "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED": 2,
           "SOURCE_CODE_OR_SCHEMA_ONLY": 4,
+          "MATERIALIZED_PERIOD_RESEARCH_FIXTURE_ONLY": 1,
           "HUMAN_REPORTED_GAME_UI_CANDIDATE": 9,
-          "NATIVE_DISCOVERY_REQUIRED": 9
+          "NATIVE_DISCOVERY_REQUIRED": 9,
+          "MIXED_ATTRIBUTE_FIELD_LEVEL_EVIDENCE_REQUIRED": 1
         },
-        "worlddata": "OLD_SAVE_ONLY_NOT_CURRENT_MC"
+        "current_mc": "NOT_RUN",
+        "prior_pass_superseded": true
       }
     },
     {
@@ -91,12 +98,14 @@
     },
     {
       "id": "M09_REMOTE_GIT_SCOPE_READBACK",
-      "status": "PASS",
+      "status": "PRE_PUBLICATION_PASS_POSTPUB_HISTORICAL_HEAD_VERIFIED",
       "details": {
-        "pre_final_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
-        "commits": 6,
-        "changed_paths": 6,
-        "final_commit_readback": "PENDING_POST_PUBLICATION"
+        "old_prepublish_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+        "previous_published_sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+        "old_published_commits": 8,
+        "old_published_paths": 9,
+        "remediation_source_head": "0b078012087707f4cbf527d7536af456b3ae7f04",
+        "remediation_final_head": "PENDING_POST_COMMIT_REMOTE_READBACK"
       }
     }
   ],
@@ -148,7 +157,7 @@
     "DB_schema": "UNCHANGED",
     "master": "UNCHANGED"
   },
-  "provisional_git_gate": "Source-head compare passed; final commit must be read back from remote and compared.",
+  "provisional_git_gate": "This is verified remediation source HEAD only; commit containing this receipt cannot self-reference. Final branch HEAD is verified separately after publishing.",
   "human_supplement_20261101": {
     "source": {
       "source_kind": "HUMAN_EXPLICIT_APPROVAL_SUPPLEMENT",
@@ -198,5 +207,312 @@
     "auto_capture": "FUTURE_ONLY",
     "independent_review": "NOT_RUN",
     "recorded_via": "GitHub API commit, append-only historical versions; postcommit remote readback still required"
+  },
+  "prior_checks_before_independent_rereview": {
+    "original_verified_source_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+    "original_checks": [
+      {
+        "id": "M01_204_ID_UNIQUE_AND_ORDER",
+        "status": "PASS",
+        "details": {
+          "count": 204,
+          "unique": 204,
+          "family_counts": {
+            "player_tendency": 99,
+            "world_settings": 86,
+            "coach_settings": 19
+          },
+          "queue_sha": "af5567e14e03cd9f7761e396a978311e347d7c17"
+        }
+      },
+      {
+        "id": "M02_GPT_GEMINI_CONFLICT_AUDIT",
+        "status": "PASS",
+        "details": {
+          "review": "REWORK_REQUIRED_WITH_SUBSTANTIAL_PROGRESS",
+          "open_findings": "P0=3 P1=4 P2=2",
+          "key_alias": "TENDENCY_NATIVE_066 legacy-vs-Gemini"
+        }
+      },
+      {
+        "id": "M03_NATIVE_EVIDENCE_NOT_PROMOTED",
+        "status": "PASS",
+        "details": {
+          "native_claims_in_independent_tier": 0,
+          "graph_edges": 50,
+          "game_operation": "NOT_RUN"
+        }
+      },
+      {
+        "id": "M04_METRIC_NATIVE_FIRST",
+        "status": "PASS",
+        "details": {
+          "metric_count": 38,
+          "gaps": 38,
+          "derived_enabled": 0
+        }
+      },
+      {
+        "id": "M05_STAT_GRAIN_AND_ENGINE_MODE",
+        "status": "PASS",
+        "details": {
+          "mode_strata": [
+            "3D_CPU_CPU",
+            "CALENDAR_SIM"
+          ],
+          "normalize_flags": 2
+        }
+      },
+      {
+        "id": "M06_SOURCE_COVERAGE_AND_GAP_HONESTY",
+        "status": "PASS",
+        "details": {
+          "gap_status_counts": {
+            "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE": 16,
+            "SOURCE_CODE_OR_SCHEMA_ONLY": 4,
+            "HUMAN_REPORTED_GAME_UI_CANDIDATE": 9,
+            "NATIVE_DISCOVERY_REQUIRED": 9
+          },
+          "worlddata": "OLD_SAVE_ONLY_NOT_CURRENT_MC"
+        }
+      },
+      {
+        "id": "M07_EXPERIMENT_COMPARABILITY_AND_FALSIFIABILITY",
+        "status": "PASS",
+        "details": {
+          "pilot_count": 3,
+          "game": "NOT_RUN"
+        }
+      },
+      {
+        "id": "M08_NO_COLLECTOR_GAME_WRITE_OR_NEW_DDL",
+        "status": "PASS",
+        "details": {
+          "changed_paths": 6,
+          "scope": "ONLY_RUN",
+          "game": "NOT_RUN"
+        }
+      },
+      {
+        "id": "M09_REMOTE_GIT_SCOPE_READBACK",
+        "status": "PASS",
+        "details": {
+          "pre_final_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+          "commits": 6,
+          "changed_paths": 6,
+          "final_commit_readback": "PENDING_POST_PUBLICATION"
+        }
+      }
+    ],
+    "scope": "Historically performed before cf95 release. Original assertion M04/M06 superseded by fixed v24 field maturity evidence, not retained as native proof."
+  },
+  "verification_stage": "TARGETED_EXECUTION_REMEDIATION_STATIC_VERIFIED_PENDING_INDEPENDENT_REREVIEW",
+  "review_origin": {
+    "independent_review_commit": "553ee3af68dba5cd42e52969e739ab0748989faa",
+    "verdict": "REWORK_REQUIRED_TARGETED_EVIDENCE_GATES",
+    "findings": [
+      "S02-P0-01",
+      "S02-P0-02",
+      "S02-P1-03",
+      "S02-P1-04",
+      "S02-P2-05",
+      "S02-P2-06"
+    ]
+  },
+  "postpublication_original_head": {
+    "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+    "dispatch_sha": "f27846c86e92345e279ad01816593d909595f472",
+    "compared_commits": 8,
+    "changed_paths": 9,
+    "all_within_run": true,
+    "verified_at_rework": "2026-11-01"
+  },
+  "targeted_remediation": {
+    "source_head": "0b078012087707f4cbf527d7536af456b3ae7f04",
+    "source_maturity_blob": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+    "checks": [
+      {
+        "id": "M01_204_CANONICAL_IDENTITY",
+        "status": "PASS",
+        "details": {
+          "fields": 204
+        }
+      },
+      {
+        "id": "M02_GRAPH_15_BUNDLE_TO_38_REFERENCES",
+        "status": "PASS",
+        "details": {
+          "mapped_bundles": 15,
+          "graph_edges": 50
+        }
+      },
+      {
+        "id": "M02_12_ISOLATES_DECLARED_NO_FAKE_EDGES",
+        "status": "PASS",
+        "details": {
+          "isolated_nodes": [
+            "COACH_DEFAULT_007",
+            "COACH_DEFAULT_008",
+            "COACH_DEFAULT_012",
+            "WORLD_REG_085",
+            "WORLD_REG_086",
+            "CTX_ROSTER",
+            "CTX_SAVE",
+            "CTX_PREGAME",
+            "CONS_ACE",
+            "CONS_GAME_STATS",
+            "MET_ORATING",
+            "MET_ACTION"
+          ]
+        }
+      },
+      {
+        "id": "M02_THREE_END_TO_END_TRACES",
+        "status": "PASS",
+        "details": {
+          "traces": [
+            {
+              "id": "SHOT_TO_FGA",
+              "edges": [
+                "E001",
+                "E004",
+                "E017"
+              ],
+              "target": "PLAYER_FGA"
+            },
+            {
+              "id": "TEMPO_TO_PACE",
+              "edges": [
+                "E024",
+                "E026",
+                "E027"
+              ],
+              "target": "TEAM_PACE_NATIVE"
+            },
+            {
+              "id": "HELP_TO_OPPONENT_THREE_PA",
+              "edges": [
+                "E034",
+                "E036"
+              ],
+              "target": "OPPONENT_THREE_PA"
+            }
+          ]
+        }
+      },
+      {
+        "id": "M02_GPT_SOURCE_ANOMALY_FIELD_INDEX",
+        "status": "PASS",
+        "details": {
+          "metadata": 24,
+          "ledger": 3,
+          "conflict_key": 15,
+          "direct_unknown": 51,
+          "index_fields": 23
+        }
+      },
+      {
+        "id": "M04_M06_SEVEN_NULL_TEAM_BOX_COLS",
+        "status": "PASS",
+        "details": {
+          "fields": [
+            "TEAM_FGA",
+            "TEAM_THREE_PA",
+            "TEAM_THREE_PM",
+            "TEAM_TOV",
+            "TEAM_STL",
+            "TEAM_OREB",
+            "TEAM_DREB"
+          ],
+          "source_archive": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4"
+        }
+      },
+      {
+        "id": "M04_M06_OPPONENT_JOIN_UNPROVEN",
+        "status": "PASS",
+        "details": {
+          "ids": [
+            "OPPONENT_FGA",
+            "OPPONENT_THREE_PA"
+          ]
+        }
+      },
+      {
+        "id": "M04_M06_PLAYER_PTS_DERIVED_IDENTITY",
+        "status": "PASS",
+        "details": {
+          "old_count": 26400,
+          "source": "DERIVED_WITH_FORMULA: 2*fg_made+three_made+ft_made; AG01D fixture replay"
+        }
+      },
+      {
+        "id": "M06_38_SOURCE_STATES_NOT_ONE_NATIVE_GRADE",
+        "status": "PASS",
+        "details": {
+          "statuses": {
+            "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY": 4,
+            "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED": 7,
+            "EXISTING_DERIVED_OLD_SAVE_VALUE": 1,
+            "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED": 2,
+            "SOURCE_CODE_OR_SCHEMA_ONLY": 4,
+            "MATERIALIZED_PERIOD_RESEARCH_FIXTURE_ONLY": 1,
+            "HUMAN_REPORTED_GAME_UI_CANDIDATE": 9,
+            "NATIVE_DISCOVERY_REQUIRED": 9,
+            "MIXED_ATTRIBUTE_FIELD_LEVEL_EVIDENCE_REQUIRED": 1
+          }
+        }
+      },
+      {
+        "id": "M04_NATIVE_FIRST_AND_PROVENANCE_SEPARATE",
+        "status": "PASS",
+        "details": {
+          "corrected_legacy_claims": 16,
+          "formula_newly_developed": false
+        }
+      },
+      {
+        "id": "M05_CONTEXT_GRANULARITY",
+        "status": "PASS",
+        "details": {
+          "gameplay": "NOT_RUN"
+        }
+      },
+      {
+        "id": "M07_PILOTS_SAFETY_PRESERVED",
+        "status": "PASS",
+        "details": {
+          "pilot_ids": [
+            "PILOT_01_SHOT_TOUCHES_POE",
+            "PILOT_02_COACH_PACE_ROTATION",
+            "PILOT_03_HELP_DEFENSE"
+          ]
+        }
+      },
+      {
+        "id": "M08_AUTHORISATION_SCOPE_UNCHANGED",
+        "status": "PASS",
+        "details": {
+          "historical_commits": 8,
+          "prior_paths": 9,
+          "new_commits_before_closeout": 3,
+          "remediation_paths": 5
+        }
+      },
+      {
+        "id": "M09_OLD_POSTPUB_RECEIPT_DISAMBIGUATED",
+        "status": "PASS",
+        "details": {
+          "subject_postpublished_head": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "previous_precloseout_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+          "postpublished_commits": 8,
+          "postpublished_changed_paths": 9,
+          "scope": "Current new final SHA must be verified after closeout"
+        }
+      }
+    ],
+    "passed": 14,
+    "failed": 0,
+    "current_publication_final_head": "PENDING_POST_COMMIT_REMOTE_READBACK",
+    "scope": "Direct structured proof from fixed archived source and current GitHub artifacts; not game, current sqlite or native PE validation"
   }
 }
