@@ -1,0 +1,68 @@
+{
+  "field_id": "WORLD_REG_022",
+  "iteration_id": "SWEEP01_FIELD0121",
+  "research_date": "2026-11-01",
+  "primary_question": "Does Max Rating act as upper salary-expectation curve anchor rather than a maximum player overall or maximum contract permitted by CBA?",
+  "candidate": {
+    "key": "settings.contracts.max_contract_rating",
+    "offset": "0x21C",
+    "kind": "STATIC_REGISTRY_CANDIDATE",
+    "declared_range": [
+      70,
+      99
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918979-save-private-green-mynba-2k22-ps5",
+      "author": "coachmac75",
+      "date": "2022-01-15",
+      "version": "NBA2K22",
+      "platform": "PS5 MyNBA not PC MyLEAGUE",
+      "grade": "CONTEMPORARY_EXPLICIT_CONTRACT_SETTINGS",
+      "claim": "Contracts: Min rating 68, Max rating 84, Salary curve 75, Pot 75, durability 25, fame 20"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918956-2k22-ps5-mynba-detroit-pistons",
+      "author": "2k22 MyNBA Pistons dynasty author",
+      "date": "2021-22 season era",
+      "version": "NBA2K22",
+      "platform": "PS5",
+      "grade": "SAME_GAME_CORROBORATING_LIST",
+      "claim": "Lists contract Min rating 68, Max rating 84 as distinct from cap and salary curve"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "DiamondLobby",
+      "date": "2022-04 era",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE guide, exact PC UI unverified",
+      "grade": "SAME_RELEASE_CONCEPT",
+      "claim": "Salary expectations can be adjusted through player-value factors"
+    }
+  ],
+  "claims": [
+    "Same-version contract menu explicitly names Min/Max Rating independently of salary curve",
+    "Project range [70,99] not a verified live PC22 slider range",
+    "Precise scale, response shape and UI-to-offset not shown"
+  ],
+  "conflicts": [
+    "Salary rating thresholds and true player OVR, CBA min/max salary are distinct",
+    "Both anchor fields may interact with Potential/Fame/Durability, not isolated in sources"
+  ],
+  "metrics": [
+    "salary-demand curve near high OVR boundary, capped maximum contract tracked separately",
+    "max salary league cap/CBA held separate"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_022",
+    "question": "Does current PC22 MyLEAGUE read-only candidate 0x21C exactly match visible settings.contracts.max_contract_rating with readback and contrast to other salary/cap options, without modifying offers or settings?",
+    "write": false
+  },
+  "result": "SAME_GAME_CONTRACT_LABEL_NO_NATIVE_SEMANTIC_FORMULA",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
