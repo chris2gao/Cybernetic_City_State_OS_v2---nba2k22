@@ -1,0 +1,55 @@
+{
+  "field_id": "WORLD_REG_028",
+  "iteration_id": "SWEEP01_FIELD0127",
+  "question": "Does CPU injury frequency apply to CPU team injury events in rendered and Calendar games separately from User control?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.cpu_injury_frequency",
+    "offset": "0x250",
+    "range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "game": "NBA2K22",
+      "platform": "franchise PC mapping unknown",
+      "claim": "Independently lists CPU/User frequency and effects"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/921266-myleague-why-are-there-no-injuries",
+      "author": "Hockeytown954",
+      "date": "2022-03-06",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE, exact platform unknown",
+      "claim": "Reports played-game vs calendar injury occurrence disparity; not isolated"
+    }
+  ],
+  "claims": [
+    "Injury occurrence, effects and duration are distinct settings, no formula known",
+    "PC22 native +0x250 and user-vs-CPU control semantics unverified"
+  ],
+  "conflicts": [
+    "Player durability and active injury can affect observation",
+    "CPU team control, played vs simulated engine may differ",
+    "Historical injuries must not be overwritten"
+  ],
+  "metrics": [
+    "new injury events per eligible CPU player-game",
+    "3D vs Calendar and exposure separated",
+    "same build/save and team control"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_028",
+    "question": "Does read-only PC22 settings candidate 0x250 match exact cpu_injury_frequency UI value independently of other injury settings?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_INJURY_LABEL_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
