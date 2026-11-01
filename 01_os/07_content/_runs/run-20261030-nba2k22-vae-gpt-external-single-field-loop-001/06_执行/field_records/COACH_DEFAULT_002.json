@@ -1,0 +1,67 @@
+{
+  "field_id": "COACH_DEFAULT_002",
+  "iteration_id": "SWEEP01_FIELD0187",
+  "date": "2026-11-01",
+  "primary_question": "Does POEOffense2 represent secondary 'Patient / Neutral Tempo / Shoot at Will' rather than Tempo raw or Sim Pace?",
+  "candidate": {
+    "key": "POEOffense2",
+    "source_status": "K04_PROJECT_RESEARCH",
+    "offset": "UNKNOWN_NOT_IN_FROZEN_QUEUE",
+    "ui_mapping": "PARTIAL_PROJECT_RESEARCH",
+    "engine_consumer": "UNKNOWN",
+    "original_pc22_native_research_in_K04": "PREVIOUS_PROJECT_EVIDENCE_NOT_RERUN_IN_THIS_TASK"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "DEV29 R02 research, Cybernetic City-State OS",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC research, including NBA2K20-23 analogue",
+      "platform": "PC22 target; prior project Native portions distinguished from external research",
+      "grade": "PROJECT_K04_EVIDENCE_INDEX",
+      "claim": "K04 enumerates POEOffense2 0 None, 7 Patient, 8 Neutral Tempo, 9 Shoot at Will, separate from Tempo native raw."
+    },
+    {
+      "url": "https://www.utplay.com/news/2469--nba-2k22-best-defensive--offensive-settings-next--current-gen",
+      "author": "UTPlay editorial",
+      "date": "2022 era (exact date not verified)",
+      "version": "NBA2K22",
+      "platform": "Current/next-gen user-facing settings, not PC raw",
+      "grade": "SAME_RELEASE_COACH_SETTINGS_GUIDE",
+      "claim": "2K22 coach guide discusses adaptive coaching gameplans as independent from frequency sliders; exact POEOffense2 text not proven externally."
+    },
+    {
+      "url": "https://newsroom.2k.com/news/nbar-2k22-unveils-new-gameplay-innovations",
+      "author": "2K Newsroom",
+      "date": "2021-08/09 (date not independently confirmed)",
+      "version": "NBA2K22",
+      "platform": "Official 2K22 general gameplay; not PC coach raw field",
+      "grade": "OFFICIAL_RELEASE_GAMEPLAY_CONTEXT",
+      "claim": "Official gameplay changes do not provide a CPU decision formula for shot clock usage."
+    }
+  ],
+  "claims": [
+    "K04 project documents distinct default coach field POEOffense2; this task performs external source comparison, not a new Native verification.",
+    "No same-release external source identifies exact raw bytes or effect formula for POEOffense2."
+  ],
+  "conflicts": [
+    "Words Tempo and fast offense appear in several layers, but neither a numeric possession threshold nor raw consumer can be inferred.",
+    "External game tips and 2K22 official mechanics do not prove CPU Coach defaults or persisted action priority."
+  ],
+  "metrics": [
+    "same team, coach and exact PC22 build in each read-only observation",
+    "unmodified gameplan UI versus source Native read with old evidence SHA",
+    "separate UI/pre-game from in-game ACE and physical gameplay test"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_002",
+    "question": "Can original PC22 Coach gameplan read-only secondary offensive emphasis show Patient/Neutral/Shoot at Will and correlate with the native POEOffense2 read without changing gameplay?",
+    "write": false,
+    "expected": "two qualified PC22 UI and Native read-only observations; no new write"
+  },
+  "result": "PROJECT_COACH_RESEARCH_WITH_EXTERNAL_GENERAL_CONTEXT_EFFECT_UNKNOWN",
+  "native_evidence": "EXISTING_PROJECT_PRIOR_CLAIMS_NOT_REVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "numeric_effect": "UNKNOWN"
+}
