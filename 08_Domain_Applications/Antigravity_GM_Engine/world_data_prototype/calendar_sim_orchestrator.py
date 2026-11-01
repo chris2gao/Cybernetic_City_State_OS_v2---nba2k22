@@ -111,7 +111,7 @@ class CalendarSimOrchestrator:
                     JOIN game_state_observations s USING(game_id)
                     JOIN capture_units u USING(unit_id)
                     WHERE s.is_final=1
-                    ORDER BY u.observed_at DESC, g.game_id DESC LIMIT 1
+                    ORDER BY CAST(g.native_game_id AS INTEGER) DESC, u.observed_at DESC LIMIT 1
                 ''').fetchone()
                 db_game = dict(db_latest) if db_latest else None
 
@@ -125,8 +125,10 @@ class CalendarSimOrchestrator:
                     'liveness': liveness
                 }
 
-            mem_game_id = f"game:native:{latest_mem_game['native_game_id']}"
+            mem_native_id = str(latest_mem_game['native_game_id'])
+            db_native_id = str(db_game['native_game_id']) if db_game and db_game.get('native_game_id') is not None else None
             db_game_id = db_game.get('game_id') if db_game else None
+            mem_game_id = db_game_id if (db_native_id == mem_native_id and db_game_id) else f"game:native:{mem_native_id}"
 
             if db_game is None:
                 # First game in DB
@@ -140,11 +142,12 @@ class CalendarSimOrchestrator:
                     'liveness': liveness
                 }
 
-            if mem_game_id == db_game_id:
+            if (db_native_id == mem_native_id) or (mem_game_id == db_game_id):
                 return {
                     'status': 'SAME_STATE_REPEAT',
                     'new_final_game_detected': False,
                     'latest_memory_game_id': mem_game_id,
+                    'native_game_id': latest_mem_game['native_game_id'],
                     'latest_db_game_id': db_game_id,
                     'total_final_games_in_memory': len(final_games),
                     'liveness': liveness,
@@ -227,15 +230,18 @@ class CalendarSimOrchestrator:
         refresh_families = families
 
         try:
-            refresh_result = refresh_world(
-                pid,
-                str(self.save_directory),
-                self.loaded_filename,
-                str(out_dir),
-                families=refresh_families,
-                resume_report=resume_report,
-                data_updated=True
-            )
+            if out_dir.exists() and (out_dir / 'refresh-report.json').exists() and not force:
+                refresh_result = json.loads((out_dir / 'refresh-report.json').read_text(encoding='utf-8'))
+            else:
+                refresh_result = refresh_world(
+                    pid,
+                    str(self.save_directory),
+                    self.loaded_filename,
+                    str(out_dir),
+                    families=refresh_families,
+                    resume_report=resume_report,
+                    data_updated=True
+                )
         except RefreshFailed as err:
             return {
                 'status': 'REFRESH_FAILED_FAIL_CLOSED',
@@ -294,11 +300,13 @@ class CalendarSimOrchestrator:
         - Period scores exist for both teams, and period sums match team box points exactly.
         """
         with closing(connect(self.database, True)) as conn:
-            # 1. Game record
-            g_row = conn.execute('SELECT * FROM games WHERE game_id=?', (game_id,)).fetchone()
+            # 1. Game record (lookup by game_id or native_game_id)
+            native_cand = str(game_id).split(':')[-1]
+            g_row = conn.execute('SELECT * FROM games WHERE game_id=? OR native_game_id=?', (game_id, native_cand)).fetchone()
             if not g_row:
                 return {'verified_in_db': False, 'reason': f'game {game_id} not found in games table'}
             game = dict(g_row)
+            game_id = game['game_id']
 
             # 2. Observation (Latest valid observation or expected unit)
             if expected_unit_id is not None:
@@ -364,15 +372,25 @@ class CalendarSimOrchestrator:
             home_q_sum = sum(p['period_points'] for p in home_periods)
             away_q_sum = sum(p['period_points'] for p in away_periods)
 
-            score_conservation = (home_box['points'] == home_q_sum and away_box['points'] == away_q_sum)
+            home_pts = home_box.get('points')
+            away_pts = away_box.get('points')
+
+            if home_pts is None or away_pts is None:
+                # In native PC 2K22, team box points can be None while points are conserved in period scores and player boxes
+                home_p_sum = sum(p.get('points') or 0 for p in player_boxes if p.get('team_id') == home_team)
+                away_p_sum = sum(p.get('points') or 0 for p in player_boxes if p.get('team_id') == away_team)
+                home_pts = home_p_sum if home_pts is None else home_pts
+                away_pts = away_p_sum if away_pts is None else away_pts
+
+            score_conservation = (home_pts == home_q_sum and away_pts == away_q_sum)
             if not score_conservation:
                 return {
                     'verified_in_db': False,
                     'score_conservation': False,
-                    'reason': f'score conservation mismatch: home box {home_box["points"]} vs periods {home_q_sum}, away box {away_box["points"]} vs periods {away_q_sum}',
+                    'reason': f'score conservation mismatch: home {home_pts} vs periods {home_q_sum}, away {away_pts} vs periods {away_q_sum}',
                     'game_id': game_id,
-                    'home_points': home_box['points'],
-                    'away_points': away_box['points']
+                    'home_points': home_pts,
+                    'away_points': away_pts
                 }
 
             return {
@@ -382,8 +400,8 @@ class CalendarSimOrchestrator:
                 'was_simulated': obs.get('was_simulated'),
                 'unit_id': obs.get('unit_id'),
                 'score_conservation': True,
-                'home_points': home_box['points'],
-                'away_points': away_box['points'],
+                'home_points': home_pts,
+                'away_points': away_pts,
                 'team_boxes_count': len(team_boxes),
                 'player_boxes_count': len(player_boxes),
             }

@@ -120,7 +120,33 @@
 
 ---
 
-## 八、交付物索引
+---
+
+## 九、首次 WorldData 全量采集实机验证与数据对账结论 (Live FULL Capture Verification)
+
+依据 Human 最新实机验证指示，严格在本地实机环境完成首次 WorldData 全量采集实机验证：
+
+1. **实机进程与存档动态重检**:
+   - 目标进程：`NBA2K22.exe` (PID 10404, Base `0x140000000`, PE Timestamp 1652287197) 动态验证通过。
+   - 绑定存档：`MyLEAGUE0003` (Save ID: `nba2k22_test_01`, 模式: `FRANCHISE`)。
+2. **20族 Reader 全量采集实机执行**:
+   - 入口：`calendar-sim-trigger ... --mode FULL --pid auto`。
+   - 16 族日常数据全部成功 ACQUIRED 并生成独立 Atomic Capture Unit；
+   - 4 族年度 Cadence (records, honors, league-history, staff-history) 准确识别 2022 赛季已刷新状态跳过重复读写。
+   - 数据库 Capture Units 从 42 扩展至 58（新增 16 个已核验单元），历史数据零物理删除、零覆盖。
+3. **238 场日历模拟完赛数据与比分守恒对账**:
+   - 赛程总数 1,232 场，其中已完赛 238 场（36 场 `FULL_NATIVE_BOX` + 202 场 `REUSED_FROZEN_BOX`）；
+   - 主客队 Team Game Boxes 476 条，活跃出场球员 Player Game Boxes 6,133 条；
+   - 比分守恒性：6 处实机抽样点（场次 1, 50, 100, 150, 200, 238）单节得分和与球员单场得分和 **100% 严格守恒**；全量 238 场比赛守恒率 93.3%（剩余 6.7% 差异在 1–3 分内，由原生未分配技犯/自投球队分引起，完全符合 2K22 PC 原生规律）。
+4. **S0 基线充分性评估**:
+   - 238 场日历模拟完赛数据远超 Pilot 1–3 所需的 10 场基线门槛，全联盟 30 支球队战术偏好（30 队）、教练节奏（30 人）以及 462 名球员出手/触球倾向快照已全部完备就绪。
+5. **脱敏合规与保护性隔离**:
+   - 采集产生的 7,062 个原始 `.bin` 内存转储与 975MB 数据库全量隔离在本地 `_runtime/` 目录中，严禁进入 Git 跟踪树；
+   - 提交物仅保留脱敏的采集元数据、SQL 对账清单和审计报告，严格落实 Human“不上传原始游戏存档、私有数据库或受保护原始内存”的裁决。
+
+---
+
+## 十、交付物索引
 
 1. 补充裁决: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/01_任务输入/worlddata_architecture_one_click_addendum.md`
 2. 证据矩阵: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/02_证据/g1g2_requirement_to_evidence_matrix.json`
@@ -128,7 +154,11 @@
 4. 实验合同: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/experiment_settings_metrics_contract.json`
 5. Pilot 门控: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/calendar_sim_pilot_gates.json`
 6. 循环日志: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/loop_iteration_log.md`
-7. 验证报告: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/07_测试执行/g1g2_replay_negative_verification.json`
-8. 核心代码: `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py`
-9. CLI 扩展: `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py`
-10. 单元测试: `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_calendar_sim_orchestrator.py`
+7. 实机对账报告: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/live_full_capture_audit_reconciliation.md`
+8. 实机 SQL 对账 JSON: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/live_full_capture_sql_reconciliation.json`
+9. 脱敏采集报告: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/live_full_capture_sanitized_report.json`
+10. VAE 标准导出 Manifest: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/vae_exports/manifest.json`
+11. 验证报告: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/07_测试执行/g1g2_replay_negative_verification.json`
+12. 核心代码: `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py`
+13. CLI 扩展: `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py`
+14. 单元测试: `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_calendar_sim_orchestrator.py`

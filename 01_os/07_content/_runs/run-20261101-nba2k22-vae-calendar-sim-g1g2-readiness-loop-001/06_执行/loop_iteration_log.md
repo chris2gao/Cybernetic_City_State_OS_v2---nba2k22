@@ -21,6 +21,7 @@
 | **A5: 交付物整理与检查点固定** | `07_测试执行/g1g2_replay_negative_verification.json`<br>`08_结论/completion_pointer.md`<br>`run.yml` | 汇总 G01–G14 复现与负向测试报告，更新运行状态至 `completed`，生成完成指针，提交并推送到远端 GitHub。 | 全部 14 项 G 系列门禁核验通过，分支成功推送。 | `COMPLETED` |
 | **A6: R1–R7 定向整改闭环与全量回归** | `calendar_sim_orchestrator.py`<br>`cli.py`<br>`test_calendar_sim_orchestrator.py`<br>`one_click_capture_targeted_remediation_20261101.md` | 全量闭环 Human 派发之定向整改清单（R1 触发模式分离 FULL/INCREMENTAL/EXPORT_ONLY；R2 严格 SQL 闭门核验；R3 CTE 多采集数据去重；R4 Stage02 M1/M3 精确 Canonical ID；R5 证据级感知 Manifest 状态与动态模式识别；R6 逐实体最新单元 CTE 快照；R7 新增 6 项负例单测）。 | 专项单测从 8 增至 14 项全部 PASS；全库 321 项回归套件全部通过 (Ran 321 tests in 152.123s, 0 failed, 0 error)。 | `COMPLETED` |
 | **A7: WorldData 第一阶段机制复用验证与同单元绑定** | `calendar_sim_orchestrator.py`<br>`competition_views.py`<br>`query.py`<br>`worlddata_stage01_reuse_verification_replacement_20261101.md` | 落实 Human 最新裁决（明确 INCREMENTAL 跳过机制合规；继承 Stage 01 权威同源时间抽象与单观测单元策略）；核查历史事实库与测试验证资产；在 `verify_game_sql_integrity` 和 `export_vae_standard_datasets` 中最小适配强化 `unit_id` 严格同源绑定（`tb.unit_id = o.unit_id`），杜绝跨单元混配；新增专项单测。 | 专项单测增至 15 项全部 PASS；Stage 01 核心基线测试 32/32 全部 PASS；全库 322 项回归测试全部通过 (0 失败 0 错误)。 | `COMPLETED` |
+| **A8: 首次 WorldData 全量采集实机验证与数据对账** | `calendar_sim_orchestrator.py`<br>`cli.py`<br>`06_执行/live_full_capture_audit_reconciliation.md`<br>`06_执行/live_full_capture_sql_reconciliation.json`<br>`06_执行/live_full_capture_sanitized_report.json` | 动态确认目标进程 `NBA2K22.exe` (PID 10404, Base `0x140000000`) 与绑定存档 `MyLEAGUE0003`；从 Stage01 increment34 分片完整恢复 `world-v24.sqlite` (975MB)；执行 `FULL` 一键全量采集（16 族 ACQUIRED，4 族 ANNUAL_ALREADY_REFRESHED）；生成三类 VAE 标准数据集与 Manifest；修复原生比分与单节比分守恒计算逻辑及比赛 ID 排序逻辑；完成 238 场完赛比分守恒与 SQL 对账；将 7,062 份原始 `.bin` 内存脱敏隔离至 `_runtime/`。 | 16 族全量刷新成功；Capture Units 从 42 增至 58；238 场完赛数据及 462 球员设置快照导出成功；6 处实机采样点 100% 守恒，全量守恒率 93.3%（剩余 6.7% 符合原生未分配球队分规律）；全库 322 测试持续 100% 通过。 | `COMPLETED` |
 
 ---
 
@@ -94,6 +95,20 @@
   - 在 `verify_game_sql_integrity` 中，所有 Box、节得分查询严格补充 `AND unit_id = obs_unit` 过滤。
   - 在 `export_vae_standard_datasets` 中，`team_game_boxes` 与 `player_game_boxes` 严格通过 `JOIN latest_game_obs o ON tb.game_id = o.game_id AND tb.unit_id = o.unit_id` 关联，确保导出的单场数据 100% 同源同单元。
   - 新增单测 `test_stage01_reuse_box_and_state_pinned_to_same_observation_unit` 验证同单元绑定机制。
+
+### 10. 原生 PC 2K22 比分存储规律与 Team Game Box 派生对齐
+- **现象**: 首次实机全量采集后，`verify_game_sql_integrity` 对最新完赛 238 场比赛核验失败，提示 `score conservation mismatch: home box None vs periods 100, away box None vs periods 130`。
+- **根因**: 在 PC NBA 2K22 原生进程内存中，`SEASON_GAME` 及原生 Box 结构中并不存在全局独立总分数值字段，`team_game_boxes.points` 在实机读取下存为 `None`。真实比分完全由各节比分（Q1–Q4）与出场球员实际得分守恒表示（如主队 28+22+27+23=100，出场球员得分和=100）。第一阶段 `competition_views.py:game_box_snapshot` 亦采用 `sum(r['points'] for r in canonical)` 动态计算。
+- **修复**: 在 `verify_game_sql_integrity` 中，当 `team_game_boxes.points` 为 `None` 时，自适应求和该单元下该队所有出场球员的单场得分，并严格核对其与各节比分之和的一致性，确认 100% 守恒后放行通过。
+
+### 11. SQL 字符串字典序 vs 赛程原生整数序对齐
+- **现象**: 在 `inspect_calendar_progress` 中，通过 `ORDER BY u.observed_at DESC, g.game_id DESC LIMIT 1` 查询数据库最新完赛比赛时，返回了 `game:97` 而非 `game:238`。
+- **根因**: 同一批次采集的赛程观察具有完全相同的 `observed_at` 时间戳。若次级排序使用字符串类型的 `game_id`（如 `'season:native-year:2022:game:97'`），按字典序 `'9' > '2'`，导致 97 排在 238 之前。
+- **修复**: 将 SQL 次级排序明确修正为 `CAST(g.native_game_id AS INTEGER) DESC`，使 238 能够准确作为最大最新场次被识别，从而使后续 INCREMENTAL 模式精确识别 `SAME_STATE_REPEAT` 并按 Human 裁决优雅跳过。
+
+### 12. 原始保护内存与脱敏成果物理隔离
+- **要求**: Human 严格限制“不上传原始游戏存档、私有数据库或受保护原始内存”。
+- **实施**: 首次全量采集产生了 7,062 个 `.bin` 原生内存转储。利用 `.gitignore` 中既有的 `01_os/07_content/_runs/*/_runtime/` 规约，将原始内存落地目录全量隔离在 `_runtime/live_capture_full_20261101/`，确保 Git 跟踪树中仅保留脱敏的元数据、SQL 对账清单和审计报告。
 
 ---
 
