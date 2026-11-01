@@ -1,0 +1,58 @@
+{
+  "field_id": "WORLD_REG_049",
+  "iteration_id": "SWEEP01_FIELD0148",
+  "primary_question": "Does CPU minimum-rating off-ball speed endpoint affect rotation/cutting motion distinct from speed with ball?",
+  "candidate": {
+    "key": "settings.gameplay_sliders.speed_without_ball_min_cpu",
+    "offset": "0x370",
+    "project_raw_range": [
+      0,
+      1
+    ],
+    "UI_range": "not proven equivalent",
+    "UI_binding": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "DiamondLobby",
+      "date": "2021 release-era",
+      "version": "NBA2K22",
+      "platform": "not PC-verified",
+      "claim": "Separate User and CPU movement sliders, Min/Max and ball/no-ball values",
+      "grade": "SAME_VERSION_UI"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=yMGZbgeqqSM",
+      "author": "Shady Mike Gaming",
+      "date": "2021-10-31",
+      "version": "NBA2K22",
+      "platform": "explicit PC movement comments",
+      "claim": "Some ball-speed settings seemed ineffective on PC; other no-ball speed values customized, not single-variable",
+      "grade": "SAME_VERSION_PC_ANECTODE"
+    }
+  ],
+  "claims": [
+    "Movement setting name available in same game, no raw address readback",
+    "Raw 0–1 range may encode normalized float; byte width and scale UNKNOWN"
+  ],
+  "conflicts": [
+    "Speed with ball vs without ball cannot be combined",
+    "CPU/User ownership and in-game input are different",
+    "Movement animations, badges, ratings, FPS and game speed confound"
+  ],
+  "metrics": [
+    "defender cutting/rotation distance per in-game second at fixed Speed rating",
+    "Min and Max endpoints independent control",
+    "separate 3D engine motion from Calendar Sim, no presumption of effect"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_049",
+    "question": "Does read-only PC22 current build world setting+0x370 map to exact speed_without_ball_min_cpu UI number and decoded storage width, separated from adjacent controls? No changes.",
+    "write": false
+  },
+  "result": "SAME_VERSION_MOVEMENT_UI_OFFSET_AND_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
