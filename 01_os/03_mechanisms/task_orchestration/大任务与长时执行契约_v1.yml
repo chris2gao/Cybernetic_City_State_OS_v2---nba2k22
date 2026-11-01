@@ -68,6 +68,94 @@ not_a_stop_condition:
     that ends in a pushed completion pointer look protected.
   publisher_authority_ref: 01_os/05_registry/repository_publisher_authority_v1.yml
 
+# WorldData/Codex 37-increment experience (2026-10-24..26): the same parent
+# task iterated implement -> verify -> inspect gaps -> improve; ordinary development
+# increments did NOT invoke a fresh independent reviewer each time. Final proof
+# remained pending, and Human later limited the accepted delivery scope.
+# This is a DEFAULT PROCESS PATTERN, not permission to loop indefinitely.
+evidence_driven_iteration:
+  applies_to: coherent_tasks_with_incrementally_testable_objectives
+  default_mode: iterative_development
+  exempt_when:
+    - one_step_mechanical_task_fully_satisfied_and_verified
+    - no_remaining_authorized_value_adding_increment
+    - genuine_stop_condition_is_true
+  cycle:
+    - name: diagnose_and_select_increment
+      require: >-
+        Compare actual candidate with task objective, tests, primary evidence
+        and known gaps; select one bounded, high-value next increment.
+    - name: implement_or_research
+      require: >-
+        Make a real, in-scope change or source investigation. Do not substitute
+        explanatory prose for an executable deliverable when implementation
+        is the objective.
+    - name: execute_focused_verification
+      require: >-
+        Run suitable unit/smoke/negative/boundary/source checks and preserve
+        exit codes, inputs, raw output and versions. An observed failure is
+        evidence for the next iteration, not a Human micro-approval request.
+    - name: compare_and_classify
+      require: >-
+        Reconcile expected vs observed, preserve any failed attempts and
+        unchanged unknowns, decide whether a regression occurred, and
+        identify a falsifiable next hypothesis if one exists.
+    - name: fix_and_continue_or_close
+      require: >-
+        Correct candidate-caused failures and run again inside task scope;
+        or archive an explicit blocked/unverifiable gap, update checkpoint,
+        and continue to the next independently feasible increment.
+  allowed_iteration_outcomes:
+    - improvement_verified_in_scope
+    - hypothesis_refuted_and_revised
+    - verified_no_regression_but_goal_incomplete
+    - scoped_gap_with_evidence_and_next_trigger
+    - objective_met_ready_for_series_review
+    - genuine_stop_reached
+  progress_measure:
+    use: executed_evidence_and_objective_coverage
+    must_not_use_as_completion_proof:
+      - number_of_rounds
+      - number_of_commits
+      - tests_passing_without_scope_relevance
+      - model_self_assertion
+      - generated_numeric_optimum_without_objective_and_error_bounds
+  convergence:
+    continue_when: >-
+      A permitted next increment exists and objective coverage can materially
+      improve or a discovered defect can be deterministically corrected.
+    close_when: >-
+      The Human-approved bounded objective and its tests are met, all residual
+      gaps are explicitly classified, and completion evidence can be published;
+      or Human has explicitly narrowed/stopped scope with honest incompleteness.
+    pause_when: >-
+      Any genuine_stop condition applies, a necessary external experiment or
+      Human-supplied game state is unavailable, or further iteration lacks
+      new evidence and has become repeated speculation.
+    fixed_round_count_required: false
+    infinite_iteration_or_background_autonomy: prohibited
+  minimum_increment_checkpoint:
+    - exact_candidate_sha_and_branch
+    - subgoal_and_changed_paths
+    - source_or_actual_input_evidence
+    - tests_and_counterexamples_with_exit_codes
+    - before_after_result_and_regression_status
+    - remaining_gaps_and_candidate_evidence_grade
+    - next_increment_or_stop_reason
+  review_schedule_ref: 01_os/开发入口与单窗口任务规范_v1.md#9
+  independent_review_each_increment: false
+  independent_review_for_final_acceptance: true
+  immediate_review_for_load_bearing_or_protected_boundary: true
+  changes_permission_or_workflow_completion_gate: false
+  permitted_profile_variation:
+    research: hypothesis_source_search_negative_evidence_next_question
+    engineering: code_fixture_native_readonly_eligible_tests_delta_repair
+    game_mechanism: game_state_snapshot_hypothesis_authorized_action_readback_postgame_feedback
+  human_interaction:
+    no_micro_approvals_for_in_scope_deterministic_rework: true
+    new_load_bearing_choice_or_uncovered_protected_action: genuine_stop
+    cross_model_relay_remains_human_triggered: true
+
 # 大任务在派单时就要闭合的东西。缺任何一项，任务不该被当作大任务发出去。
 closure_preflight:
   required_fields:
