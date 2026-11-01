@@ -1,0 +1,85 @@
+{
+  "field_id": "WORLD_REG_061",
+  "iteration_id": "SWEEP01_FIELD0160",
+  "date": "2026-11-01",
+  "primary_question": "Is +0x214 the PC22 Player Non-Financial Ambitions salary-expectation control rather than direct player personality or money demands?",
+  "candidate": {
+    "key": "world.contracts_and_finances.player_non_financial_ambitions",
+    "offset": "0x214",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "static_source": "R06A_registry_candidates",
+    "slot_candidate": "SLOT_TRADE",
+    "duplicate_candidate_reference": "WORLD_REG_020",
+    "physical_alias_confirmed": false,
+    "source_settings_profile_only": {
+      "storage_type": "uint32",
+      "range": [
+        0,
+        100
+      ],
+      "default_value": 50,
+      "verified_in_PC22": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "Nemanja Ostojic / DiamondLobby",
+      "date": "last updated 2022-04-30",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE guide; platform not certified PC",
+      "grade": "SAME_RELEASE_GUIDE",
+      "claim": "2K22 MyLEAGUE guide explicitly adjusts player non-financial ambitions within Salary Expectations; no PC raw mapping."
+    },
+    {
+      "url": "https://tollbit.forbes.com/sites/brianmazique/2018/08/02/nba-2k19-myleague-mygm-create-a-player-blog-and-interview-with-senior-producer-erick-boenisch/",
+      "author": "Brian Mazique quoting producer Erick Boenisch",
+      "date": "2018-08-02",
+      "version": "NBA 2K19",
+      "platform": "historical, not PC22",
+      "grade": "PRIOR_VERSION_PRODUCER",
+      "claim": "2018 NBA2K19 producer explains historical player-role and team-success versus pay emphasis; NOT a 2K22 mechanism proof."
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k21-sliders-from-schnaidt1-plus-myleague-setup/",
+      "author": "Operation Sports / schnaidt1",
+      "date": "2020 (exact article publication not independently confirmed)",
+      "version": "NBA 2K21",
+      "platform": "Xbox One slider example, not PC22",
+      "grade": "CROSS_VERSION_EXAMPLE",
+      "claim": "NBA2K21 Xbox One source lists numeric setting 70, cross-version user selection only."
+    }
+  ],
+  "claims": [
+    "Same-release guide corroborates menu context, older producer text only informs hypothesis about fit versus pay.",
+    "The registry's settings.* and world.* candidate for this field share a source offset; this does not prove a physical runtime alias."
+  ],
+  "conflicts": [
+    "No causal weights for 2K22, and role/team success/salary correlate; external GM and Player personas are separate.",
+    "2K22 next-gen and older-title evidence cannot certify PC22 current-gen value, build, consumer or effect."
+  ],
+  "metrics": [
+    "exact PC22 current-gen UI option and mode",
+    "two same-save read-only observations with module/slot and raw candidate",
+    "record other relevant rule settings; no game change"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_61",
+    "question": "Can PC22 Salary Expectations menu and two raw read-only checks identify +0x214 and relation to WORLD_REG_020 without a negotiation or salary edit?",
+    "write": false,
+    "expected": "read-only UI/current raw correlation or remain UNKNOWN",
+    "confounders": [
+      "No causal weights for 2K22, and role/team success/salary correlate; external GM and Player personas are separate."
+    ]
+  },
+  "result": "PLAYER_NONFINANCIAL_AMBITIONS_MENU_SUPPORTED_DUPLICATE_NATIVE_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

@@ -1,0 +1,85 @@
+{
+  "field_id": "WORLD_REG_059",
+  "iteration_id": "SWEEP01_FIELD0158",
+  "date": "2026-11-01",
+  "primary_question": "Is candidate +0x234 the 2K22 CPU Re-Signing Aggressiveness option rather than player willingness or contract cost?",
+  "candidate": {
+    "key": "world.contracts_and_finances.cpu_interest_in_resigning",
+    "offset": "0x234",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "static_source": "R06A_registry_candidates",
+    "slot_candidate": "SLOT_TRADE",
+    "duplicate_candidate_reference": "WORLD_REG_026",
+    "physical_alias_confirmed": false,
+    "source_settings_profile_only": {
+      "storage_type": "uint32",
+      "range": [
+        0,
+        100
+      ],
+      "default_value": 50,
+      "verified_in_PC22": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-12-30; webpage updated 2026-02-20",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE article, PC mode not separately attested",
+      "grade": "SAME_RELEASE_MENU_LIST",
+      "claim": "NBA2K22 guide lists CPU Re-Signing Aggressiveness with editorial 30."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword / Operation Sports",
+      "date": "2021-10-25",
+      "version": "NBA 2K22",
+      "platform": "PS5/Xbox Series, not PC current-gen",
+      "grade": "SAME_RELEASE_DIFFERENT_PLATFORM",
+      "claim": "NBA2K22 next-gen user reports value 50 instead."
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "Nemanja Ostojic / DiamondLobby",
+      "date": "last updated 2022-04-30",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE guide; platform not certified PC",
+      "grade": "SAME_RELEASE_GUIDE",
+      "claim": "Same-release MyLEAGUE author discusses salary expectations and free agency; not a direct experiment on CPU aggression."
+    }
+  ],
+  "claims": [
+    "Re-signing setting label appears in 2K22 guides, but engine consumer could differ from player signing willingness.",
+    "The registry's settings.* and world.* candidate for this field share a source offset; this does not prove a physical runtime alias."
+  ],
+  "conflicts": [
+    "AI extension attempt, player consent, cap feasibility and contract expectations are distinct confounders; 30 vs 50 proves no effect curve.",
+    "2K22 next-gen and older-title evidence cannot certify PC22 current-gen value, build, consumer or effect."
+  ],
+  "metrics": [
+    "exact PC22 current-gen UI option and mode",
+    "two same-save read-only observations with module/slot and raw candidate",
+    "record other relevant rule settings; no game change"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_59",
+    "question": "Can two independent PC22 settings/raw read-only observations match CPU Re-Signing Aggressiveness to SLOT_TRADE+0x234 and distinguish WORLD_REG_026 without advancing a day?",
+    "write": false,
+    "expected": "read-only UI/current raw correlation or remain UNKNOWN",
+    "confounders": [
+      "AI extension attempt, player consent, cap feasibility and contract expectations are distinct confounders; 30 vs 50 proves no effect curve."
+    ]
+  },
+  "result": "CPU_RESIGNING_MENU_NAME_SUPPORTED_DUPLICATE_NATIVE_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

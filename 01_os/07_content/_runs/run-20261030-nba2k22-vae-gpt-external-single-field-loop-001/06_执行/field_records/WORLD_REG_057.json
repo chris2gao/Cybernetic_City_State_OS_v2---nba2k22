@@ -1,0 +1,85 @@
+{
+  "field_id": "WORLD_REG_057",
+  "iteration_id": "SWEEP01_FIELD0156",
+  "date": "2026-11-01",
+  "primary_question": "Is +0x158 a PC22 Recently Traded Restrictions UI setting, rather than the recently signed rule or salary aggregation logic?",
+  "candidate": {
+    "key": "world.trade_and_draft_rules.recently_traded_rule",
+    "offset": "0x158",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "static_source": "R06A_registry_candidates",
+    "slot_candidate": "SLOT_TRADE",
+    "duplicate_candidate_reference": "WORLD_REG_014",
+    "physical_alias_confirmed": false,
+    "source_settings_profile_only": {
+      "storage_type": "uint32",
+      "range": [
+        0,
+        1
+      ],
+      "default_value": 1,
+      "verified_in_PC22": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-12-30; webpage updated 2026-02-20",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE article, PC mode not separately attested",
+      "grade": "SAME_RELEASE_MENU_LIST",
+      "claim": "2K22 trade settings list Recently Traded Restrictions On independently of Recently Signed Restrictions; this is an editorial choice, not default."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/864496-official-mygm-myleague-mlo-2k20-wish-list/page3",
+      "author": "Operation Sports forum writers quoting earlier Erick Boenisch statement",
+      "date": "2018-10 discussion",
+      "version": "earlier NBA 2K franchise generations",
+      "platform": "not NBA2K22 PC",
+      "grade": "LEGACY_DISPUTED_RULE",
+      "claim": "Historical retrade aggregation rule description was disputed by players as implemented in prior games; cannot determine PC22 waiting time."
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/vrtew2/cannot_make_trades_in_myleague/",
+      "author": "spnathan1 / r/NBA2k",
+      "date": "2022-07-05",
+      "version": "2022 franchise report; game version not stated unambiguously",
+      "platform": "PC MyLEAGUE user report",
+      "grade": "PC_REPORTED_COMMIT_CONFOUNDER",
+      "claim": "PC user reported a trade that failed to commit; potential confounder, not evidence of this restriction."
+    }
+  ],
+  "claims": [
+    "2K22 named toggle corroborated; no native byte, exact 60-day clock or validator flow established.",
+    "The registry's settings.* and world.* candidate for this field share a source offset; this does not prove a physical runtime alias."
+  ],
+  "conflicts": [
+    "The real CBA aggregation exception and historical implementation complaints must not be imported as a PC22 formula; PC commit failure is a separate cause.",
+    "2K22 next-gen and older-title evidence cannot certify PC22 current-gen value, build, consumer or effect."
+  ],
+  "metrics": [
+    "exact PC22 current-gen UI option and mode",
+    "two same-save read-only observations with module/slot and raw candidate",
+    "record other relevant rule settings; no game change"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_57",
+    "question": "In two stable read-only PC22 visits, does exact Recently Traded Restrictions UI state correlate with SLOT_TRADE+0x158 and WORLD_REG_014 candidate without submitting a trade?",
+    "write": false,
+    "expected": "read-only UI/current raw correlation or remain UNKNOWN",
+    "confounders": [
+      "The real CBA aggregation exception and historical implementation complaints must not be imported as a PC22 formula; PC commit failure is a separate cause."
+    ]
+  },
+  "result": "TRADE_RESTRICTION_MENU_NAME_SUPPORTED_DUPLICATE_NATIVE_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
