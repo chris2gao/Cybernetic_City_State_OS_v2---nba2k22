@@ -1,0 +1,55 @@
+{
+  "field_id": "WORLD_REG_024",
+  "iteration_id": "SWEEP01_FIELD0123",
+  "question": "Does durability valuation factor affect contract salary expectation, not injury generation?",
+  "candidate": {
+    "key": "settings.contracts.player_durability_factor",
+    "offset": "0x224",
+    "range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918979-save-private-green-mynba-2k22-ps5",
+      "author": "coachmac75",
+      "date": "2022-01-15",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Lists contract Pot, Durability, Fame factors individually"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "DiamondLobby",
+      "date": "2022 release era",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE, exact PC unknown",
+      "claim": "Potential factor mentioned in salary expectations, uncontrolled"
+    }
+  ],
+  "claims": [
+    "Same-release named contract factor, no verified 0x224 native mapping",
+    "No isolated factor coefficient, numeric optimum or accepted offer proof"
+  ],
+  "conflicts": [
+    "Salary expectations not equivalent to trade asset valuation",
+    "PS5 MyNBA not necessarily PC22 MyLEAGUE",
+    "Potential and durability as player attributes must not be conflated with slider factors"
+  ],
+  "metrics": [
+    "contract expected salary at equal OVR but distinct durability",
+    "offer duration and CAP state held separately",
+    "UID-based same-build UI readback"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_024",
+    "question": "Does read-only settings candidate 0x224 uniquely equal contract player_durability_factor UI for current PC22 save/build, without modifying contract or roster?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_NAMED_FACTOR_NATIVE_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
