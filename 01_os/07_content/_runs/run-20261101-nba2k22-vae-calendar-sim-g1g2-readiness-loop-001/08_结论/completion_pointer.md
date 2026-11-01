@@ -82,7 +82,7 @@
 详见 `07_测试执行/g1g2_replay_negative_verification.json`，所有 14 项核验全部通过：
 - **G01–G05**: 完赛检测、单次调用 20 族全量采集、SQL 数据键值/日期守恒、Fail-closed 闭门拒绝、无驻留守护进程全部验证通过。
 - **G06–G08**: 严格限定同日历模拟条件对比、保留 DNP/NULL 真实语义、38 项规范指标 ID 100% 保持无漂移。
-- **G09–G11**: 专项单元测试 14/14 通过；全套回归测试全部 321 项执行通过 (Ran 321 tests in 152.123s, 0 failed, 0 error)；门控评级无虚假声称；分支与提交规范合规。
+- **G09–G11**: 专项单元测试 15/15 通过；Stage 01 核心基线测试 32/32 通过；全套回归测试全部 322 项执行通过；门控评级无虚假声称；分支与提交规范合规。
 - **G12–G14**: 单档单库 SQLite 绑定与 100 STRICT 表兼容；版本化固定 SQL 离线生成 3 类标准 VAE 数据产品与 Manifest（零模型开销）；独立来源原子性与异常中断恢复支持。
 
 ---
@@ -103,7 +103,24 @@
 
 ---
 
-## 六、交付物索引
+## 七、WorldData 第一阶段机制复用验证与同单元绑定确认 (Stage 01 Reuse Verification)
+
+依据 Human 最新裁决（`worlddata_stage01_reuse_verification_replacement_20261101.md`），执行了针对第一阶段既有机制的实证核验与最小适配：
+
+1. **裁决一落地（INCREMENTAL 跳过机制确认）**：
+   - 当无新增已完赛比赛时，`mode='INCREMENTAL'` 直接跳过刷新（返回 `SAME_STATE_REPEAT`）已获 Human 正式认可，属于合法设计。
+   - 保持三模式分离：`FULL`（执行第一阶段已有的全量采集）、`INCREMENTAL`（受控增量采集与赛果核验）、`EXPORT_ONLY`（离线生成 VAE 标准化数据包）。
+2. **裁决二落地（复用 Stage 01 权威数据一致性机制）**：
+   - **时间与同源抽象**：深入研究第一阶段 `competition_views.py:game_box_snapshot`、`query.py:game_box`、`query.py:schedule`、`observation_scope.py`。证实第一阶段以原子采集单元（`unit_id`）为事实单元，单场比赛必须满足同单元一致性，不同来源可保留各自采集新鲜度。
+   - **历史库状态实证**：核查 `01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/_runtime/world-saves/nba2k22_test_01/world-v24.sqlite`，由于 `_runtime` 为测试未跟踪目录，本地记录为 `HISTORICAL_LOCAL_DB_NOT_AVAILABLE`；但基于已发布的 increment34 分片快照（SHA256: `f76b943e4c...`）、increment12–17 实体数据库（30 个原子单元）及 32 项核心单测，完全验证了单单元隔离与跨单元防污染机制。
+   - **最小接口适配**：
+     - 在 `verify_game_sql_integrity` 中，所有 Box 与节分查询严格补充 `AND unit_id = obs_unit` 约束；
+     - 在 `export_vae_standard_datasets` 中，`team_game_boxes` 与 `player_game_boxes` 严格通过 `JOIN latest_game_obs o ON tb.game_id = o.game_id AND tb.unit_id = o.unit_id` 关联，确保导出数据 100% 同单元；
+     - 新增单测 `test_stage01_reuse_box_and_state_pinned_to_same_observation_unit`，测试用例全部通过。
+
+---
+
+## 八、交付物索引
 
 1. 补充裁决: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/01_任务输入/worlddata_architecture_one_click_addendum.md`
 2. 证据矩阵: `01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/02_证据/g1g2_requirement_to_evidence_matrix.json`

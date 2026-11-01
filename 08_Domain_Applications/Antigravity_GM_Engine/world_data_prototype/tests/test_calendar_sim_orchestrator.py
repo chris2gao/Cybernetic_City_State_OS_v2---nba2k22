@@ -505,6 +505,63 @@ class CalendarSimOrchestratorTests(unittest.TestCase):
         self.assertFalse(res['triggered'])
         self.assertTrue((export_out / 'vae_exports' / 'manifest.json').exists())
 
+    def test_stage01_reuse_box_and_state_pinned_to_same_observation_unit(self):
+        """Verify that VAE export and SQL integrity pin box and state to the exact same observation unit."""
+        gid = 's1:game:pin_test'
+        home_tid = 'team:native:1'
+        away_tid = 'team:native:2'
+        pid = 'player:native:77'
+
+        facts_full = {
+            'teams': [
+                {'team_id': home_tid, 'native_team_id': '1', 'display_name': 'Team 1'},
+                {'team_id': away_tid, 'native_team_id': '2', 'display_name': 'Team 2'}
+            ],
+            'players': [{'player_id': pid, 'native_player_id': '77', 'display_name': 'Player 77'}],
+            'games': [{'game_id': gid, 'home_team_id': home_tid, 'away_team_id': away_tid, 'game_date': '2021-11-04', 'season_id': 's1'}],
+            'game_state_observations': [{'game_id': gid, 'status_code': 'FINAL', 'is_final': 1, 'was_simulated': 1, 'score_provenance': 'TEST'}],
+            'game_period_scores': [
+                {'game_id': gid, 'team_id': home_tid, 'period_index': 1, 'period_points': 50},
+                {'game_id': gid, 'team_id': away_tid, 'period_index': 1, 'period_points': 45}
+            ],
+            'team_game_boxes': [
+                {'game_id': gid, 'team_id': home_tid, 'points': 50},
+                {'game_id': gid, 'team_id': away_tid, 'points': 45}
+            ],
+            'player_game_boxes': [
+                {'game_id': gid, 'player_id': pid, 'team_id': home_tid, 'points': 25}
+            ]
+        }
+        payload_full = {
+            'save_id': self.save_id, 'run_id': 'u_pin_full', 'unit_id': 'u_pin_full', 'source_key': 'TEST',
+            'observed_at': '2026-11-01T10:00:00Z', 'evidence_grade': 'RESEARCH_FIXTURE', 'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'}, 'facts': facts_full,
+            'artifacts': [{'sha256': 'c'*64, 'payload_kind': 'T', 'payload_ref': 'r', 'byte_count': 1, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload_full)
+
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        ver = orch.verify_game_sql_integrity(gid)
+        self.assertTrue(ver['verified_in_db'])
+        self.assertEqual(ver['unit_id'], 'u_pin_full')
+
+        export_out = self.tmp_path / 'vae_pin_exports'
+        orch.export_vae_standard_datasets(export_out)
+        d1 = json.loads((export_out / 'calendar_sim_completed_game_player_team_metrics.json').read_text(encoding='utf-8'))
+
+        game_entry = next(g for g in d1['games'] if g['game_id'] == gid)
+        self.assertEqual(game_entry['obs_unit_id'], 'u_pin_full')
+
+        boxes = [tb for tb in d1['team_boxes'] if tb['game_id'] == gid]
+        self.assertEqual(len(boxes), 2)
+        for b in boxes:
+            self.assertEqual(b['unit_id'], 'u_pin_full')
+
+        pboxes = [pb for pb in d1['player_boxes'] if pb['game_id'] == gid]
+        self.assertEqual(len(pboxes), 1)
+        self.assertEqual(pboxes[0]['unit_id'], 'u_pin_full')
+
 
 if __name__ == '__main__':
     unittest.main()

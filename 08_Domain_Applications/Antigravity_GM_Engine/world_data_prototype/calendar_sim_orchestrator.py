@@ -300,28 +300,42 @@ class CalendarSimOrchestrator:
                 return {'verified_in_db': False, 'reason': f'game {game_id} not found in games table'}
             game = dict(g_row)
 
-            # 2. Observation
-            obs_row = conn.execute('SELECT * FROM game_state_observations WHERE game_id=?', (game_id,)).fetchone()
+            # 2. Observation (Latest valid observation or expected unit)
+            if expected_unit_id is not None:
+                obs_row = conn.execute('''
+                    SELECT s.*, cu.observed_at
+                    FROM game_state_observations s
+                    JOIN capture_units cu USING(unit_id)
+                    WHERE s.game_id=? AND s.unit_id=?
+                ''', (game_id, expected_unit_id)).fetchone()
+            else:
+                obs_row = conn.execute('''
+                    SELECT s.*, cu.observed_at
+                    FROM game_state_observations s
+                    JOIN capture_units cu USING(unit_id)
+                    WHERE s.game_id=?
+                    ORDER BY cu.observed_at DESC, s.unit_id DESC LIMIT 1
+                ''', (game_id,)).fetchone()
+
             if not obs_row:
                 return {'verified_in_db': False, 'reason': f'game {game_id} missing game_state_observations'}
             obs = dict(obs_row)
+            obs_unit = obs['unit_id']
 
             if obs.get('is_final') != 1:
                 return {'verified_in_db': False, 'reason': f'game {game_id} is not final (is_final={obs.get("is_final")})'}
             if obs.get('was_simulated') != 1:
                 return {'verified_in_db': False, 'reason': f'game {game_id} was not simulated (was_simulated={obs.get("was_simulated")})'}
-            if expected_unit_id is not None and obs.get('unit_id') != expected_unit_id:
-                return {'verified_in_db': False, 'reason': f'game observation unit {obs.get("unit_id")} does not match expected {expected_unit_id}'}
 
-            # 3. Period scores
+            # 3. Period scores (pinned strictly to the observation unit_id)
             period_rows = conn.execute(
-                'SELECT * FROM game_period_scores WHERE game_id=? ORDER BY team_id, period_index',
-                (game_id,)
+                'SELECT * FROM game_period_scores WHERE game_id=? AND unit_id=? ORDER BY team_id, period_index',
+                (game_id, obs_unit)
             ).fetchall()
             periods = [dict(r) for r in period_rows]
 
-            # 4. Team boxes
-            t_rows = conn.execute('SELECT * FROM team_game_boxes WHERE game_id=?', (game_id,)).fetchall()
+            # 4. Team boxes (pinned strictly to the observation unit_id)
+            t_rows = conn.execute('SELECT * FROM team_game_boxes WHERE game_id=? AND unit_id=?', (game_id, obs_unit)).fetchall()
             team_boxes = [dict(r) for r in t_rows]
 
             home_team = game['home_team_id']
@@ -335,8 +349,8 @@ class CalendarSimOrchestrator:
             if away_box is None:
                 return {'verified_in_db': False, 'reason': f'missing away team box for {away_team}'}
 
-            # 5. Player boxes
-            p_rows = conn.execute('SELECT * FROM player_game_boxes WHERE game_id=?', (game_id,)).fetchall()
+            # 5. Player boxes (pinned strictly to the observation unit_id)
+            p_rows = conn.execute('SELECT * FROM player_game_boxes WHERE game_id=? AND unit_id=?', (game_id, obs_unit)).fetchall()
             player_boxes = [dict(r) for r in p_rows]
             if len(player_boxes) == 0:
                 return {'verified_in_db': False, 'reason': f'no player boxes found for game {game_id}'}
@@ -433,34 +447,42 @@ class CalendarSimOrchestrator:
             if game_ids:
                 placeholders = ','.join('?' for _ in game_ids)
                 t_rows = conn.execute(f'''
-                    WITH latest_team_boxes AS (
-                        SELECT tb.*, cu.observed_at as capture_observed_at,
+                    WITH latest_game_obs AS (
+                        SELECT s.game_id, s.unit_id,
                                ROW_NUMBER() OVER (
-                                   PARTITION BY tb.game_id, tb.team_id
-                                   ORDER BY cu.observed_at DESC, tb.unit_id DESC
+                                   PARTITION BY s.game_id
+                                   ORDER BY cu.observed_at DESC, s.unit_id DESC
                                ) as rn
-                        FROM team_game_boxes tb
-                        JOIN capture_units cu ON tb.unit_id = cu.unit_id
+                        FROM game_state_observations s
+                        JOIN capture_units cu ON s.unit_id = cu.unit_id
+                        WHERE s.is_final = 1 AND s.was_simulated = 1
                     )
-                    SELECT * FROM latest_team_boxes
-                    WHERE rn = 1 AND game_id IN ({placeholders})
-                    ORDER BY game_id, team_id
+                    SELECT tb.*, cu.observed_at as capture_observed_at
+                    FROM team_game_boxes tb
+                    JOIN latest_game_obs o ON tb.game_id = o.game_id AND tb.unit_id = o.unit_id
+                    JOIN capture_units cu ON tb.unit_id = cu.unit_id
+                    WHERE o.rn = 1 AND tb.game_id IN ({placeholders})
+                    ORDER BY tb.game_id, tb.team_id
                 ''', game_ids).fetchall()
                 team_boxes = [dict(r) for r in t_rows]
 
                 p_rows = conn.execute(f'''
-                    WITH latest_player_boxes AS (
-                        SELECT pb.*, cu.observed_at as capture_observed_at,
+                    WITH latest_game_obs AS (
+                        SELECT s.game_id, s.unit_id,
                                ROW_NUMBER() OVER (
-                                   PARTITION BY pb.game_id, pb.player_id
-                                   ORDER BY cu.observed_at DESC, pb.unit_id DESC
+                                   PARTITION BY s.game_id
+                                   ORDER BY cu.observed_at DESC, s.unit_id DESC
                                ) as rn
-                        FROM player_game_boxes pb
-                        JOIN capture_units cu ON pb.unit_id = cu.unit_id
+                        FROM game_state_observations s
+                        JOIN capture_units cu ON s.unit_id = cu.unit_id
+                        WHERE s.is_final = 1 AND s.was_simulated = 1
                     )
-                    SELECT * FROM latest_player_boxes
-                    WHERE rn = 1 AND game_id IN ({placeholders})
-                    ORDER BY game_id, player_id
+                    SELECT pb.*, cu.observed_at as capture_observed_at
+                    FROM player_game_boxes pb
+                    JOIN latest_game_obs o ON pb.game_id = o.game_id AND pb.unit_id = o.unit_id
+                    JOIN capture_units cu ON pb.unit_id = cu.unit_id
+                    WHERE o.rn = 1 AND pb.game_id IN ({placeholders})
+                    ORDER BY pb.game_id, pb.player_id
                 ''', game_ids).fetchall()
                 player_boxes = [dict(r) for r in p_rows]
 

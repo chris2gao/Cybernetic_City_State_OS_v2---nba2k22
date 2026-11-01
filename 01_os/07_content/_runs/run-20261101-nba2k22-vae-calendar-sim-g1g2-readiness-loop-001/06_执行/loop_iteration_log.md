@@ -20,6 +20,7 @@
 | **A4: 循环测试验证与缺陷修复** | `tests/test_calendar_sim_orchestrator.py`<br>`tests/` 全套回归 | 针对协调器与导出流水线编写 8 项单元测试。修复 `collect_schedule` 字段路径、状态位二进制编码、以及属性/Box 字段名（`overall_raw`、`possessions_raw`、`minutes_raw`）。运行全套回归。 | 专项测试 8/8 通过；全套回归套件运行完成，313/313 通过，0 失败 0 错误。 | `COMPLETED` |
 | **A5: 交付物整理与检查点固定** | `07_测试执行/g1g2_replay_negative_verification.json`<br>`08_结论/completion_pointer.md`<br>`run.yml` | 汇总 G01–G14 复现与负向测试报告，更新运行状态至 `completed`，生成完成指针，提交并推送到远端 GitHub。 | 全部 14 项 G 系列门禁核验通过，分支成功推送。 | `COMPLETED` |
 | **A6: R1–R7 定向整改闭环与全量回归** | `calendar_sim_orchestrator.py`<br>`cli.py`<br>`test_calendar_sim_orchestrator.py`<br>`one_click_capture_targeted_remediation_20261101.md` | 全量闭环 Human 派发之定向整改清单（R1 触发模式分离 FULL/INCREMENTAL/EXPORT_ONLY；R2 严格 SQL 闭门核验；R3 CTE 多采集数据去重；R4 Stage02 M1/M3 精确 Canonical ID；R5 证据级感知 Manifest 状态与动态模式识别；R6 逐实体最新单元 CTE 快照；R7 新增 6 项负例单测）。 | 专项单测从 8 增至 14 项全部 PASS；全库 321 项回归套件全部通过 (Ran 321 tests in 152.123s, 0 failed, 0 error)。 | `COMPLETED` |
+| **A7: WorldData 第一阶段机制复用验证与同单元绑定** | `calendar_sim_orchestrator.py`<br>`competition_views.py`<br>`query.py`<br>`worlddata_stage01_reuse_verification_replacement_20261101.md` | 落实 Human 最新裁决（明确 INCREMENTAL 跳过机制合规；继承 Stage 01 权威同源时间抽象与单观测单元策略）；核查历史事实库与测试验证资产；在 `verify_game_sql_integrity` 和 `export_vae_standard_datasets` 中最小适配强化 `unit_id` 严格同源绑定（`tb.unit_id = o.unit_id`），杜绝跨单元混配；新增专项单测。 | 专项单测增至 15 项全部 PASS；Stage 01 核心基线测试 32/32 全部 PASS；全库 322 项回归测试全部通过 (0 失败 0 错误)。 | `COMPLETED` |
 
 ---
 
@@ -83,6 +84,16 @@
 - **修复**:
   - 动态从 `game_mode_observations` 或绑定的存档配置中读取 `mode_label` / `mode_raw`，支持 MyLEAGUE、MyCAREER 等不同模式。
   - 严格依据参与本次导出的 `source_grade` / `evidence_grade` 进行状态降级：若全部属于 `RESEARCH_FIXTURE` 或离线回放，Manifest 诚实标记为 `FIXTURE_REPLAY_SUCCESS` / `LIVE_VALIDATION_PENDING`，严禁在无实机游戏数据下虚报 `LIVE_READY`。
+
+### 9. 第一阶段 WorldData 架构复用与同单元精确绑定
+- **现象**: 独立在不同表中执行 `ROW_NUMBER() OVER (PARTITION BY ...)` 可能会在极端部分单元或多次覆盖场景下分别选出不同采集单元的碎片。
+- **依据与核查**:
+  - 依据第一阶段 `competition_views.py:game_box_snapshot` 与 `query.py:schedule` 机制：单场比赛的 Box、节得分与状态观察必须严格限定在单一相同 `unit_id`（`tb.unit_id = o.unit_id AND pb.unit_id = o.unit_id`），后来的 Header 刷新不刷新旧 Box 观察时间。
+  - 历史事实库核查：`01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/_runtime/world-saves/nba2k22_test_01/world-v24.sqlite` 为非版本库暂存路径，本地报告标记 `HISTORICAL_LOCAL_DB_NOT_AVAILABLE`；但 increment34/increment37 已发布分片快照（SHA256: `f76b943e4c...`）、increment12–17 实体数据库（30 个原子 capture units）以及 32 项核心单测完整验证了同单元隔离性。
+- **最小修复**:
+  - 在 `verify_game_sql_integrity` 中，所有 Box、节得分查询严格补充 `AND unit_id = obs_unit` 过滤。
+  - 在 `export_vae_standard_datasets` 中，`team_game_boxes` 与 `player_game_boxes` 严格通过 `JOIN latest_game_obs o ON tb.game_id = o.game_id AND tb.unit_id = o.unit_id` 关联，确保导出的单场数据 100% 同源同单元。
+  - 新增单测 `test_stage01_reuse_box_and_state_pinned_to_same_observation_unit` 验证同单元绑定机制。
 
 ---
 
