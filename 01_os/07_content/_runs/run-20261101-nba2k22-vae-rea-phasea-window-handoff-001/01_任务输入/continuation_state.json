@@ -1,0 +1,67 @@
+{
+  "schema_version": "nba2k22.window_continuity.prms_handoff.v1",
+  "handoff_date": "2026-11-01",
+  "record_kind": "HUMAN_REQUESTED_IN_PROGRESS_CONTEXT_BACKUP",
+  "planning_role": "OS_PUBLIC_DEVELOPMENT_PLANNER",
+  "os_role": "decision_architecture",
+  "write_authorization": false,
+  "branch": "task/nba2k22-vae-rea-phasea-window-handoff-20261101",
+  "file_of_record": "01_os/07_content/_runs/run-20261101-nba2k22-vae-rea-phasea-window-handoff-001/08_结论/CONTEXT_HANDOFF_AND_RECOVERY_20261101.md",
+  "latest_known_sha": {
+    "vae_s0": "08405457517b2242562e855c9fdfe59c1c1a9a6e",
+    "vae_g2_s0": "d7e6b0a03a9a166bcf243a26d8353095f6cd9228",
+    "vae_g1": "63f86a26e8cee99f40eedc1312f045b5f60d0c37",
+    "rea_native_checkpoint014": "6151ef5d484914edcec2fbcfcf3bcce83a848907",
+    "core_loop_pilot": "f3ae6b83897c04f6ee7758a9b32fc8ea2d06cea5",
+    "nba_master_at_backup": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "core_master_at_backup": "934425cf43d4fe3307b0112142aec1ba434a5734"
+  },
+  "current_milestone": "VAE Phase A native REA tendency modification live smoke preparation",
+  "completed": {
+    "g1_live_read_existing_data": true,
+    "g2_s0_historical_baseline": true,
+    "s0_static_analysis_and_numeric_reconciliation": true,
+    "rea_stat_setter_offline_candidate_recovered": true,
+    "core_loop_observability_pilot_approved": true
+  },
+  "not_executed": {
+    "rea_local_tool_readonly_preflight": "PROMPT_PREPARED_DISPATCH_AND_EXECUTION_UNKNOWN",
+    "lillard_shot_tendency_95_to_80_live_setter": "NOT_EXECUTED",
+    "human_live_write_authorization": "NOT_GRANTED",
+    "post_write_one_week_calendar_sim": "NOT_EXECUTED",
+    "post_write_full_capture": "NOT_EXECUTED",
+    "shot_tendency_persistence_readback": "NOT_VERIFIED",
+    "effect_on_fga_causal": "NOT_VERIFIED",
+    "multi_player_batch_setter_safety": "NOT_VERIFIED"
+  },
+  "experiment": {
+    "save_id": "nba2k22_test_01",
+    "loaded_filename": "MyLEAGUE0003",
+    "source_db": "local world-v24.sqlite",
+    "player_worlddata_id": "player:native:2459",
+    "team_worlddata_id": "team:native:28",
+    "rea_numeric_identity_verified": false,
+    "requested_action_id": "PLAYER_SET_TENDENCY",
+    "field_id": "SHOT_TENDENCY",
+    "native_index": 57,
+    "player_data_offset": "0x458",
+    "before_value": 95,
+    "proposed_value": 80,
+    "proposed_not_authorized": true,
+    "native_game_build_sha256_expected": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "historical_calendar_games": 238,
+    "historical_lillard_games": 16,
+    "historical_not_manually_modified": true
+  },
+  "human_workflows": {
+    "ordinary_capture": "Human explicitly tells Gemini to capture; FULL does not need a newly completed match; model waits for Human completion notice.",
+    "write_safety_smoke": "After explicit authorized write, Human simulates one week, tells Gemini to FULL capture, then notifies planner; planner validates immediate and subsequent readbacks and any game override.",
+    "mechanism_effect": "After Phase A success, Human simulates requested N days and explicitly triggers Gemini capture; analyze post-intervention games and controls.",
+    "nonnegotiable": "No agent self-advances game, self-triggers human capture, polls in background or assumes a Human action completed."
+  },
+  "data_policy": "Local-only large SQLite, WAL, SHM, raw memory and compressed DB backup; GitHub code/schemas/sanitized light evidence; no retroactive history rewrite.",
+  "loop_policy": "Bounded evidence-yielding internal iterations; distinguish pre-delivery rounds from post-delivery remediation (max 2); keep Canonical Core workflow/Human gates.",
+  "immediate_successor_action": "Ask whether Gemini already received/finished the REA Phase A local tool READ-ONLY preflight; if report exists inspect it, otherwise prepare/dispatch preflight only. Do not authorize setter or game operation.",
+  "stop_if": "No Human authorization, mismatched save, unknown REA IDs, missing native binding/build, or unknown preflight state.",
+  "evidence_rank": "Human first-hand current gameplay facts > raw verified receipts > code/tests > developer textual summaries > hypotheses"
+}
