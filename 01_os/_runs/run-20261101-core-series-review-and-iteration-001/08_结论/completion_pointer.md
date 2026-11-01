@@ -29,3 +29,9 @@ This **Core-global canonical policy** is itself load-bearing and requires **imme
 next_owner: `Human / independent_review at Core master integration boundary`
 
 No master merge or protected action has been performed.
+
+## 2026-11-01 Human scope clarification (candidate branch addendum)
+
+Human explicitly clarified that `evidence_driven_iteration` is **development-phase only**: research/engineering iterations within an authorized development task. It is not an additional stage, state machine, or substitute for the existing seven-stage Workflow or its Human/independent verification gates. The VAE gameplay feedback loop is a separate application/runtime concept, not automatically activated or authorized by this Core policy.
+
+This clarification was incorporated into `大任务与长时执行契约_v1.yml` (`scope: development_phase_only`) and the OS entry section 8.1. This is a subsequent branch update; the earlier static check receipt does **not** verify these subsequent bytes. Source-diff and full tests must be refreshed at Core integration.
