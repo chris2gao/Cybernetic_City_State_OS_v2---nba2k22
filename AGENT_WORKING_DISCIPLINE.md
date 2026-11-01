@@ -375,6 +375,8 @@ passes disagree — that disagreement is the signal worth having.
 
 ### The flow
 
+Review **timing** is separate from reviewer independence. Routine candidate work may undergo a single independent review at a coherent series milestone rather than immediately after each task, but independent acceptance must precede load-bearing downstream adoption, protected integration, or final acceptance. The canonical scheduling rule is `01_os/开发入口与单窗口任务规范_v1.md` section 9; do not duplicate its predicates here.
+
 Research produces material → review judges it → the repository keeps it.
 
 Nothing is finished at the point a model says it is finished. A deep research
