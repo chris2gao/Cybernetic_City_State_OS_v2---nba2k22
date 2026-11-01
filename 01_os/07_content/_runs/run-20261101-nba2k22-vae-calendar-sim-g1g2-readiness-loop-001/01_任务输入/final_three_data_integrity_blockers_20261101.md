@@ -1,3 +1,11 @@
+# 已作废／SUPERSEDED — 禁止执行本文件 B1–B3
+
+**Human 后续裁决覆盖本文件**：INCREMENTAL 无新完赛比赛时可以跳过；第一阶段 WorldData 的同源查询、历史和冻结 Box 规则应先检查、优先复用，不应按本文件 B1–B3 强制新建或重构逻辑。
+
+**唯一替代执行说明**：[`worlddata_stage01_reuse_verification_replacement_20261101.md`](worlddata_stage01_reuse_verification_replacement_20261101.md)。原内容仅作为历史检查记录保留，不具备当前任务指令效力。
+
+---
+
 # G1 一键全量采集 · 最后三项关键逻辑整改（规划总线源码检查）
 
 **关联任务**：`NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001`
