@@ -62,8 +62,19 @@ def recorded_game_capture(capture_directory,save_id):
                       'reason':'Raw date decoded by historical candidate codec; target calendar/UI month semantics unverified',
                       'impact':'Canonical game_date remains NULL, raw date retained in hashed source'}]}
     for side,team,native_team in (('home',home,full['home_team_id']),('away',away,full['away_team_id'])):
+        other_side='away' if side=='home' else 'home'
         for q in range(1,5):facts['game_period_scores'].append({'game_id':gid,'team_id':team,'period_index':q,'period_points':full['linescore'][side]['q'+str(q)]})
-        raw_box={'game_id':gid,'team_id':team}
+        team_players=full[side+'_players']
+        raw_box={'game_id':gid,'team_id':team,
+            'points':full[side+'_score'],'plus_minus':full[side+'_score']-full[other_side+'_score'],
+            'minutes_raw':240+full.get('overtime_count',0)*25,
+            'fg_made':sum(p['fgm'] for p in team_players),'fg_attempted':sum(p['fga'] for p in team_players),
+            'three_made':sum(p['tpm'] for p in team_players),'three_attempted':sum(p['tpa'] for p in team_players),
+            'ft_made':sum(p['ftm'] for p in team_players),'ft_attempted':sum(p['fta'] for p in team_players),
+            'offensive_rebounds':sum(p['oreb'] for p in team_players),'defensive_rebounds':sum(p['dreb'] for p in team_players),
+            'assists':sum(p['ast'] for p in team_players),'steals':sum(p['stl'] for p in team_players),
+            'blocks':sum(p['blk'] for p in team_players),'turnovers':sum(p['tov'] for p in team_players),
+            'fouls':sum(p['fouls'] for p in team_players)}
         for old,new in (('fastbreak','fastbreak_points'),('paint','paint_points'),('2nd_chance','second_chance_points'),('pts_off_to','points_off_turnovers'),('lead','largest_lead'),('possessions','possessions_raw')):
             raw_box[new]=int(full['boxscore_meta'][side+'_'+old])
         facts['team_game_boxes'].append(raw_box)

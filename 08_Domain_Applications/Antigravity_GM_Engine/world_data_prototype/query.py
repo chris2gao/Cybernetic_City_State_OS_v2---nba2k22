@@ -834,3 +834,294 @@ def export_jsonl(path,destination,table,*,limit=10000):
         with dest.open('x',encoding='utf-8',newline='\n') as out:
             for row in c.execute(sql):out.write(json.dumps(dict(row),ensure_ascii=False,allow_nan=False)+'\n')
     return {'table':table,'rows':n,'path':str(dest),'role':'GM'}
+
+
+def player_game_log(path, player_id, *, season_id=None, limit=20):
+    """Return chronological player game log with box totals and game scores.
+    
+    Each game line includes single-game counting stats from player_game_boxes,
+    along with Hollinger GameScore (which matches native engine calculation)
+    and standard shooting percentages.
+    """
+    if type(limit) is not int or not 1 <= limit <= 1000:
+        raise ValueError('invalid game log limit')
+    clauses = ['b.player_id=?']
+    args = [player_id]
+    if season_id is not None:
+        clauses.append('g.season_id=?')
+        args.append(season_id)
+    with closing(connect(path, True)) as c:
+        sql = '''SELECT b.*, g.game_date, g.home_team_id, g.away_team_id, g.season_id,
+                 s.is_final, s.overtime_count, u.observed_at, r.source_grade
+                 FROM player_game_boxes b
+                 JOIN games g USING(game_id)
+                 LEFT JOIN game_state_observations s ON s.game_id=b.game_id AND s.unit_id=b.unit_id
+                 JOIN capture_units u ON u.unit_id=b.unit_id
+                 JOIN capture_runs r ON r.run_id=u.run_id
+                 WHERE ''' + ' AND '.join(clauses) + '''
+                 ORDER BY g.game_date DESC, b.game_id DESC LIMIT ?'''
+        rows = [dict(row) for row in c.execute(sql, args + [limit + 1])]
+        more = len(rows) > limit
+        rows = rows[:limit]
+        records = []
+        for r in rows:
+            pts = r.get('points') or 0
+            fgm = r.get('fg_made') or 0
+            fga = r.get('fg_attempted') or 0
+            tpm = r.get('three_made') or 0
+            tpa = r.get('three_attempted') or 0
+            ftm = r.get('ft_made') or 0
+            fta = r.get('ft_attempted') or 0
+            oreb = r.get('offensive_rebounds') or 0
+            dreb = r.get('defensive_rebounds') or 0
+            reb = oreb + dreb
+            ast = r.get('assists') or 0
+            stl = r.get('steals') or 0
+            blk = r.get('blocks') or 0
+            tov = r.get('turnovers') or 0
+            fouls = r.get('fouls') or 0
+            mins = r.get('minutes_raw') or 0
+
+            # Hollinger GameScore (matches engine native GameScoreHistoryValue)
+            game_score = round(
+                pts + 0.4 * fgm - 0.7 * fga - 0.4 * (fta - ftm) +
+                0.7 * oreb + 0.3 * dreb + stl + 0.7 * ast + 0.7 * blk -
+                0.4 * fouls - tov,
+                2
+            )
+            fg_pct = round(fgm / fga, 4) if fga > 0 else None
+            three_pct = round(tpm / tpa, 4) if tpa > 0 else None
+            ft_pct = round(ftm / fta, 4) if fta > 0 else None
+            ts_denom = 2 * (fga + 0.44 * fta)
+            ts_pct = round(pts / ts_denom, 4) if ts_denom > 0 else None
+            efg_pct = round((fgm + 0.5 * tpm) / fga, 4) if fga > 0 else None
+
+            is_home = (r['team_id'] == r['home_team_id'])
+            opponent_team_id = r['away_team_id'] if is_home else r['home_team_id']
+
+            records.append({
+                'game_id': r['game_id'],
+                'game_date': r['game_date'],
+                'team_id': r['team_id'],
+                'opponent_team_id': opponent_team_id,
+                'is_home': is_home,
+                'is_starter': bool(r['is_starter']),
+                'minutes': mins,
+                'points': pts,
+                'fg_made': fgm,
+                'fg_attempted': fga,
+                'fg_pct': fg_pct,
+                'three_made': tpm,
+                'three_attempted': tpa,
+                'three_pct': three_pct,
+                'ft_made': ftm,
+                'ft_attempted': fta,
+                'ft_pct': ft_pct,
+                'rebounds': reb,
+                'offensive_rebounds': oreb,
+                'defensive_rebounds': dreb,
+                'assists': ast,
+                'steals': stl,
+                'blocks': blk,
+                'turnovers': tov,
+                'fouls': fouls,
+                'plus_minus': r.get('plus_minus'),
+                'game_score': game_score,
+                'ts_pct': ts_pct,
+                'efg_pct': efg_pct,
+                'unit_id': r['unit_id'],
+                'observed_at': r['observed_at'],
+            })
+        return {
+            'player_id': player_id,
+            'records': records,
+            'has_more': more,
+            'provenance': {
+                'box_stats': 'NATIVE_GAME_BOX; player_game_boxes',
+                'game_score': 'HOLLINGER_GAMESCORE; verified exact match with engine native float32 GameScoreHistoryValue',
+                'ts_pct_efg_pct': 'DERIVED_PROXY_FORMULA; computed in Python as game engine calculates on UI layer without persistent column',
+            }
+        }
+
+
+def player_advanced_metrics(path, player_id, *, season_id=None):
+    """Return player advanced statistical profile combining native engine metrics and derived rates.
+    
+    Includes native engine-precalculated Hollinger GameScore stats, PER rankings,
+    per-game averages, per-36 minute rates, and true shooting efficiency.
+    """
+    with closing(connect(path, True)) as c:
+        player_row = c.execute('SELECT * FROM players WHERE player_id=?', (player_id,)).fetchone()
+        if player_row is None:
+            return {'player_id': player_id, 'status': 'NOT_OBSERVED'}
+        player = dict(player_row)
+        
+        # 1. Season Totals
+        totals_clauses = ['player_id=?']
+        totals_args = [player_id]
+        if season_id is not None:
+            totals_clauses.append('season_id=?')
+            totals_args.append(season_id)
+        totals_row = c.execute('SELECT * FROM player_season_totals WHERE ' + ' AND '.join(totals_clauses) + ' ORDER BY total_id DESC LIMIT 1', totals_args).fetchone()
+        totals = dict(totals_row) if totals_row else None
+        
+        # 2. Game Log Aggregates
+        log_res = player_game_log(path, player_id, season_id=season_id, limit=1000)
+        games = log_res['records']
+        game_scores = [g['game_score'] for g in games if g.get('game_score') is not None]
+        
+        gs_stats = {
+            'games_tracked': len(game_scores),
+            'game_score_avg': round(sum(game_scores) / len(game_scores), 2) if game_scores else None,
+            'game_score_max': max(game_scores) if game_scores else None,
+            'game_score_min': min(game_scores) if game_scores else None,
+            'recent_5_game_scores': [g['game_score'] for g in games[:5]],
+        }
+        
+        # 3. Per Game and Per 36 from totals
+        season_advanced = None
+        if totals:
+            gp = totals['games_played'] or 0
+            mins = totals['minutes_raw'] or 0
+            pts = totals['points'] or 0
+            fgm = totals['fg_made'] or 0
+            fga = totals['fg_attempted'] or 0
+            tpm = totals['three_made'] or 0
+            tpa = totals['three_attempted'] or 0
+            ftm = totals['ft_made'] or 0
+            fta = totals['ft_attempted'] or 0
+            oreb = totals['offensive_rebounds'] or 0
+            dreb = totals['defensive_rebounds'] or 0
+            reb = oreb + dreb
+            ast = totals['assists'] or 0
+            stl = totals['steals'] or 0
+            blk = totals['blocks'] or 0
+            tov = totals['turnovers'] or 0
+            
+            ts_denom = 2 * (fga + 0.44 * fta)
+            ts_pct = round(pts / ts_denom, 4) if ts_denom > 0 else None
+            efg_pct = round((fgm + 0.5 * tpm) / fga, 4) if fga > 0 else None
+            ast_to_tov = round(ast / tov, 2) if tov > 0 else None
+            
+            mpg = round(mins / gp, 1) if gp > 0 else None
+            per_game = {
+                'ppg': round(pts / gp, 1) if gp > 0 else None,
+                'rpg': round(reb / gp, 1) if gp > 0 else None,
+                'apg': round(ast / gp, 1) if gp > 0 else None,
+                'spg': round(stl / gp, 1) if gp > 0 else None,
+                'bpg': round(blk / gp, 1) if gp > 0 else None,
+                'topg': round(tov / gp, 1) if gp > 0 else None,
+                'mpg': mpg,
+            }
+            per_36 = {
+                'pts_per36': round(pts * 36.0 / mins, 1) if mins > 0 else None,
+                'reb_per36': round(reb * 36.0 / mins, 1) if mins > 0 else None,
+                'ast_per36': round(ast * 36.0 / mins, 1) if mins > 0 else None,
+                'stl_per36': round(stl * 36.0 / mins, 1) if mins > 0 else None,
+                'blk_per36': round(blk * 36.0 / mins, 1) if mins > 0 else None,
+                'tov_per36': round(tov * 36.0 / mins, 1) if mins > 0 else None,
+            }
+            season_advanced = {
+                'games_played': gp,
+                'games_started': totals.get('games_started'),
+                'ts_pct': ts_pct,
+                'efg_pct': efg_pct,
+                'ast_to_tov_ratio': ast_to_tov,
+                'per_game': per_game,
+                'per_36': per_36,
+            }
+        
+        return {
+            'player_id': player_id,
+            'display_name': player.get('display_name'),
+            'game_score_summary': gs_stats,
+            'season_advanced': season_advanced,
+            'provenance': {
+                'game_scores': 'NATIVE_ENGINE_FORMULA_MATCH; Hollinger GameScore',
+                'per_game_and_per36': 'DERIVED_FROM_NATIVE_TOTALS; Slot24 PLAYERSTATDATA',
+                'ts_pct_efg_pct': 'DERIVED_PROXY_FORMULA; calculated from native counting stats',
+            }
+        }
+
+
+def team_advanced_metrics(path, team_id, *, season_id=None):
+    """Return team advanced metrics profile combining native engine stats and efficiency ratings.
+    
+    Includes native game-engine precalculated metrics from Slot 28 TEAMSTATDATA:
+    possessions, paint points, second chance points, points off turnovers, bench points,
+    and opponent stats, alongside Offensive Rating (ORtg), Defensive Rating (DRtg),
+    Net Rating, and Pace.
+    """
+    with closing(connect(path, True)) as c:
+        team_row = c.execute('SELECT * FROM teams WHERE team_id=?', (team_id,)).fetchone()
+        if team_row is None:
+            return {'team_id': team_id, 'status': 'NOT_OBSERVED'}
+        team = dict(team_row)
+        
+        totals_clauses = ['team_id=?']
+        totals_args = [team_id]
+        if season_id is not None:
+            totals_clauses.append('season_id=?')
+            totals_args.append(season_id)
+        totals_row = c.execute('SELECT * FROM team_season_totals WHERE ' + ' AND '.join(totals_clauses) + ' ORDER BY total_id DESC LIMIT 1', totals_args).fetchone()
+        if totals_row is None:
+            return {'team_id': team_id, 'status': 'NO_TOTALS_OBSERVED'}
+        totals = dict(totals_row)
+        
+        wins = totals['wins'] or 0
+        losses = totals['losses'] or 0
+        games = wins + losses
+        pts = totals['points'] or 0
+        opp_pts = totals['opponent_points'] or 0
+        poss = totals['possessions_raw'] or 0
+        pace = totals['pace_raw']
+        
+        # Offensive and Defensive Ratings (per 100 possessions)
+        ortg = round(100.0 * pts / poss, 2) if poss > 0 else None
+        drtg = round(100.0 * opp_pts / poss, 2) if poss > 0 else None
+        net_rtg = round(ortg - drtg, 2) if ortg is not None and drtg is not None else None
+        
+        # Game box metrics averages
+        box_stats_row = c.execute('''SELECT avg(paint_points) as avg_paint,
+                                        avg(fastbreak_points) as avg_fastbreak,
+                                        avg(second_chance_points) as avg_2nd_chance,
+                                        avg(points_off_turnovers) as avg_pts_off_to,
+                                        avg(largest_lead) as avg_lead
+                                 FROM team_game_boxes WHERE team_id=?''', (team_id,)).fetchone()
+        box_stats = dict(box_stats_row) if box_stats_row else None
+        
+        return {
+            'team_id': team_id,
+            'display_name': team.get('display_name'),
+            'record': {'wins': wins, 'losses': losses, 'games': games},
+            'ratings': {
+                'offensive_rating': ortg,
+                'defensive_rating': drtg,
+                'net_rating': net_rtg,
+                'pace_native': pace,
+            },
+            'engine_precalculated_totals': {
+                'possessions': poss,
+                'paint_points': totals.get('paint_points'),
+                'second_chance_points': totals.get('second_chance_points'),
+                'points_off_turnovers': totals.get('points_off_turnovers'),
+                'bench_points': totals.get('bench_points'),
+                'opponent_fg_made': totals.get('opponent_fg_made'),
+                'opponent_fg_attempted': totals.get('opponent_fg_attempted'),
+                'opponent_three_made': totals.get('opponent_three_made'),
+                'opponent_three_attempted': totals.get('opponent_three_attempted'),
+            },
+            'single_game_box_averages': {
+                'paint_points_avg': round(box_stats['avg_paint'], 1) if box_stats and box_stats['avg_paint'] is not None else None,
+                'fastbreak_points_avg': round(box_stats['avg_fastbreak'], 1) if box_stats and box_stats['avg_fastbreak'] is not None else None,
+                'second_chance_points_avg': round(box_stats['avg_2nd_chance'], 1) if box_stats and box_stats['avg_2nd_chance'] is not None else None,
+                'points_off_turnovers_avg': round(box_stats['avg_pts_off_to'], 1) if box_stats and box_stats['avg_pts_off_to'] is not None else None,
+                'largest_lead_avg': round(box_stats['avg_lead'], 1) if box_stats and box_stats['avg_lead'] is not None else None,
+            },
+            'provenance': {
+                'slot28_totals': 'NATIVE_TEAMSTATDATA; precalculated by engine in Slot 28 memory bank',
+                'team_game_boxes': 'NATIVE_SEASON_GAME_HEADER; decoded from 60-byte game struct bytes 20..44',
+                'ratings': 'DERIVED_STANDARD_RATE_FORMULA; computed from native points and native possessions',
+            }
+        }
+

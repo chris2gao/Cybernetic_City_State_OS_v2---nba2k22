@@ -268,9 +268,20 @@ def world_payload(binding,found,manifest,blobs,artifacts,observed_at,token):
         'score_provenance':'NATIVE_PERIOD_AND_DERIVED_BOX_CONSERVATION; TOTAL_FIELD_NOT_OBSERVED'}]
     facts['game_period_scores']=[];facts['team_game_boxes']=[];facts['player_game_boxes']=[];facts['native_box_observations']=[]
     for side in ('home','away'):
+        other_side='away' if side=='home' else 'home'
         n=full[side+'_team_id'];team=tid(n)
         for q in range(1,5):facts['game_period_scores'].append({'game_id':gid,'team_id':team,'period_index':q,'period_points':full['linescore'][side]['q'+str(q)]})
-        facts['team_game_boxes'].append({'game_id':gid,'team_id':team,**{new:int(full['boxscore_meta'][side+'_'+old]) for old,new in
+        team_players=full[side+'_players']
+        team_totals={'points':full[side+'_score'],'plus_minus':full[side+'_score']-full[other_side+'_score'],
+                     'minutes_raw':240+full.get('overtime_count',0)*25,
+                     'fg_made':sum(p['fgm'] for p in team_players),'fg_attempted':sum(p['fga'] for p in team_players),
+                     'three_made':sum(p['tpm'] for p in team_players),'three_attempted':sum(p['tpa'] for p in team_players),
+                     'ft_made':sum(p['ftm'] for p in team_players),'ft_attempted':sum(p['fta'] for p in team_players),
+                     'offensive_rebounds':sum(p['oreb'] for p in team_players),'defensive_rebounds':sum(p['dreb'] for p in team_players),
+                     'assists':sum(p['ast'] for p in team_players),'steals':sum(p['stl'] for p in team_players),
+                     'blocks':sum(p['blk'] for p in team_players),'turnovers':sum(p['tov'] for p in team_players),
+                     'fouls':sum(p['fouls'] for p in team_players)}
+        facts['team_game_boxes'].append({'game_id':gid,'team_id':team,**team_totals,**{new:int(full['boxscore_meta'][side+'_'+old]) for old,new in
             (('fastbreak','fastbreak_points'),('paint','paint_points'),('2nd_chance','second_chance_points'),('pts_off_to','points_off_turnovers'),('lead','largest_lead'),('possessions','possessions_raw'))}})
         for i,p in enumerate(full[side+'_players']):
             stats={new:p[old] for old,new in STAT_MAP.items()}

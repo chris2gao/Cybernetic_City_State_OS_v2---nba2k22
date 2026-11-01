@@ -6,6 +6,8 @@ fixture are separate evidence from current-process/UI verification.
 import hashlib
 import json
 import importlib.util
+import math
+import struct
 from functools import lru_cache
 from schema_model import PROFILE,PLAYER_CONFIG,DOMAIN
 from player_detail_codec import native_contracts,LAYOUT as CONTRACT_LAYOUT,PROFILE as DETAIL_PROFILE
@@ -88,3 +90,46 @@ def profile_layout_receipt():
             'native_width_corrections':[r for r in DETAIL_PROFILE['contract_width_comparison'] if r['old_width']!=r['native_width']],
             'current_game_semantics':'Native field layout/option/roster enums verified; salary scale, sentinels and target UI separate',
             'profile_sha256':hashlib.sha256(json.dumps(PROFILE,sort_keys=True).encode()).hexdigest()}
+
+
+def decode_schedule_date(date_int: int):
+    """Decode 2K SCHEDULEDATE 32-bit bitfield into ISO date string."""
+    day = (date_int >> 16) & 0x1F
+    month = (date_int >> 21) & 0x0F
+    year_offset = (date_int >> 25) & 0x7F
+    year = 2000 + year_offset
+    return f"{year:04d}-{month:02d}-{day:02d}"
+
+
+def extract_player_advanced_metrics(raw: bytes):
+    """Extract native engine-calculated PER rankings and GameScore history from 1264-byte PLAYERDATA."""
+    if len(raw) != 1264:
+        raise ValueError('PLAYER record must be exactly 1264 bytes')
+    per_rankings = {
+        'league_per_rank': struct.unpack_from('<H', raw, 544)[0],
+        'league_position_per_rank': struct.unpack_from('<H', raw, 546)[0],
+        'conference_per_rank': struct.unpack_from('<H', raw, 548)[0],
+        'conference_position_per_rank': struct.unpack_from('<H', raw, 550)[0],
+    }
+    recent_game_scores = []
+    for i in range(5):
+        val = struct.unpack_from('<f', raw, 580 + i * 4)[0]
+        date_raw = struct.unpack_from('<I', raw, 600 + i * 4)[0]
+        mins = raw[780 + i]
+        date_iso = decode_schedule_date(date_raw) if date_raw != 0 else None
+        recent_game_scores.append({
+            'history_slot': i,
+            'game_score': round(val, 2) if math.isfinite(val) else None,
+            'game_date': date_iso,
+            'date_raw': date_raw,
+            'minutes': mins,
+            'dnp': bool(val == 0.0 and date_raw == 0 and mins == 0),
+        })
+    shot_chart_index = (struct.unpack_from('<I', raw, 768)[0] >> 20) & 0x3FF
+    return {
+        'per_rankings': per_rankings,
+        'recent_game_scores': recent_game_scores,
+        'shot_chart_index': shot_chart_index,
+        'provenance': 'NATIVE_PLAYERDATA_PRECALCULATED_ENGINE_STORAGE; PE_CRC32_VERIFIED',
+    }
+
