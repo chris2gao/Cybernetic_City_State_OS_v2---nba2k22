@@ -73,7 +73,7 @@ def main():
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
     from refresh import SOURCES
     refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=pid_argument);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES));refresh.add_argument('--resume-report');refresh.add_argument('--data-updated',action='store_true')
-    cal_trig=sub.add_parser('calendar-sim-trigger');cal_trig.add_argument('save_directory');cal_trig.add_argument('loaded_filename');cal_trig.add_argument('--pid',type=pid_argument,default='auto');cal_trig.add_argument('--output-directory');cal_trig.add_argument('--force',action='store_true')
+    cal_trig=sub.add_parser('calendar-sim-trigger');cal_trig.add_argument('save_directory');cal_trig.add_argument('loaded_filename');cal_trig.add_argument('--mode',choices=['FULL','INCREMENTAL','EXPORT_ONLY'],default='INCREMENTAL');cal_trig.add_argument('--pid',type=pid_argument,default='auto');cal_trig.add_argument('--output-directory');cal_trig.add_argument('--resume-report');cal_trig.add_argument('--force',action='store_true')
     cal_insp=sub.add_parser('calendar-sim-inspect');cal_insp.add_argument('save_directory');cal_insp.add_argument('loaded_filename');cal_insp.add_argument('--pid',type=pid_argument,default='auto')
     vae_exp=sub.add_parser('vae-export-datasets');vae_exp.add_argument('save_directory');vae_exp.add_argument('loaded_filename');vae_exp.add_argument('output_directory')
     session=sub.add_parser('reconnect-game');session.add_argument('save_directory');session.add_argument('loaded_filename');session.add_argument('new_output_directory');session.add_argument('--pid',type=pid_argument,default=None)
@@ -219,7 +219,7 @@ def dispatch(args):
     if args.action=='calendar-sim-trigger':
         from calendar_sim_orchestrator import CalendarSimOrchestrator
         orchestrator=CalendarSimOrchestrator(args.save_directory,args.loaded_filename)
-        res=orchestrator.trigger_capture_if_new_game(reader_or_pid=args.pid,output_directory=args.output_directory,force=args.force)
+        res=orchestrator.trigger_world_capture(reader_or_pid=args.pid,output_directory=args.output_directory,mode=args.mode,resume_report=args.resume_report,force=args.force)
         print(json.dumps(res,ensure_ascii=False,indent=2));return
     if args.action=='calendar-sim-inspect':
         from calendar_sim_orchestrator import CalendarSimOrchestrator

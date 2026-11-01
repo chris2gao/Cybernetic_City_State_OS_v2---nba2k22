@@ -271,7 +271,7 @@ class CalendarSimOrchestratorTests(unittest.TestCase):
         export_out = self.tmp_path / 'vae_exports'
         res = orch.export_vae_standard_datasets(export_out)
 
-        self.assertEqual(res['status'], 'DATASETS_EXPORTED_SUCCESS')
+        self.assertEqual(res['status'], 'FIXTURE_REPLAY_SUCCESS')
         self.assertEqual(res['games_count'], 1)
 
         # Check all 3 dataset files and manifest exist
@@ -304,6 +304,7 @@ class CalendarSimOrchestratorTests(unittest.TestCase):
         self.assertEqual(manifest['metric_dictionary_version'], 'Stage02.M3.Canonical38')
         self.assertEqual(manifest['readiness_levels']['STANDARD_DATASET_EXPORTED'], 'VERIFIED')
         self.assertEqual(manifest['readiness_levels']['POST_CALENDAR_NEW_GAME_VERIFIED'], 'PENDING_HUMAN_GAMEPLAY')
+        self.assertEqual(manifest['readiness_levels']['CURRENT_NATIVE_READ'], 'LIVE_VALIDATION_PENDING')
 
     def test_cli_vae_export_datasets(self):
         from cli import dispatch
@@ -323,8 +324,186 @@ class CalendarSimOrchestratorTests(unittest.TestCase):
             dispatch(parser)
         out = buf.getvalue()
         res = json.loads(out)
-        self.assertEqual(res['status'], 'DATASETS_EXPORTED_SUCCESS')
+        self.assertEqual(res['status'], 'EMPTY_DATABASE_INITIALIZED')
         self.assertTrue((export_out / 'manifest.json').exists())
+
+    def test_sql_verification_fails_closed_on_missing_team_box(self):
+        gid = 'game:native:missing_box'
+        home_tid = 'team:native:1'
+        away_tid = 'team:native:2'
+        facts = {
+            'teams': [
+                {'team_id': home_tid, 'native_team_id': '1', 'display_name': 'Team 1'},
+                {'team_id': away_tid, 'native_team_id': '2', 'display_name': 'Team 2'}
+            ],
+            'players': [{'player_id': 'p1', 'native_player_id': '1', 'display_name': 'P1'}],
+            'games': [{'game_id': gid, 'home_team_id': home_tid, 'away_team_id': away_tid, 'game_date': '2021-11-02', 'season_id': 's1'}],
+            'game_state_observations': [{'game_id': gid, 'status_code': 'FINAL', 'is_final': 1, 'was_simulated': 1, 'score_provenance': 'TEST'}],
+            'game_period_scores': [{'game_id': gid, 'team_id': home_tid, 'period_index': 1, 'period_points': 25}],
+            'team_game_boxes': [{'game_id': gid, 'team_id': home_tid, 'points': 25}],  # Missing away_box!
+            'player_game_boxes': [{'game_id': gid, 'player_id': 'p1', 'team_id': home_tid, 'points': 25}]
+        }
+        payload = {
+            'save_id': self.save_id, 'run_id': 'u_missing_box', 'unit_id': 'u_missing_box', 'source_key': 'TEST',
+            'observed_at': '2026-11-01T10:00:00Z', 'evidence_grade': 'RESEARCH_FIXTURE', 'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'}, 'facts': facts,
+            'artifacts': [{'sha256': 'c'*64, 'payload_kind': 'T', 'payload_ref': 'r', 'byte_count': 1, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload)
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        ver = orch.verify_game_sql_integrity(gid)
+        self.assertFalse(ver['verified_in_db'])
+        self.assertIn('missing away team box', ver['reason'])
+
+    def test_sql_verification_fails_closed_on_score_mismatch(self):
+        gid = 'game:native:mismatch'
+        home_tid = 'team:native:1'
+        away_tid = 'team:native:2'
+        facts = {
+            'teams': [
+                {'team_id': home_tid, 'native_team_id': '1', 'display_name': 'Team 1'},
+                {'team_id': away_tid, 'native_team_id': '2', 'display_name': 'Team 2'}
+            ],
+            'players': [{'player_id': 'p1', 'native_player_id': '1', 'display_name': 'P1'}],
+            'games': [{'game_id': gid, 'home_team_id': home_tid, 'away_team_id': away_tid, 'game_date': '2021-11-02', 'season_id': 's1'}],
+            'game_state_observations': [{'game_id': gid, 'status_code': 'FINAL', 'is_final': 1, 'was_simulated': 1, 'score_provenance': 'TEST'}],
+            'game_period_scores': [
+                {'game_id': gid, 'team_id': home_tid, 'period_index': 1, 'period_points': 25},
+                {'game_id': gid, 'team_id': away_tid, 'period_index': 1, 'period_points': 20}
+            ],
+            'team_game_boxes': [
+                {'game_id': gid, 'team_id': home_tid, 'points': 25},
+                {'game_id': gid, 'team_id': away_tid, 'points': 30}  # Period score was 20, box says 30! Mismatch!
+            ],
+            'player_game_boxes': [{'game_id': gid, 'player_id': 'p1', 'team_id': home_tid, 'points': 25}]
+        }
+        payload = {
+            'save_id': self.save_id, 'run_id': 'u_mismatch', 'unit_id': 'u_mismatch', 'source_key': 'TEST',
+            'observed_at': '2026-11-01T10:00:00Z', 'evidence_grade': 'RESEARCH_FIXTURE', 'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'}, 'facts': facts,
+            'artifacts': [{'sha256': 'd'*64, 'payload_kind': 'T', 'payload_ref': 'r', 'byte_count': 1, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload)
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        ver = orch.verify_game_sql_integrity(gid)
+        self.assertFalse(ver['verified_in_db'])
+        self.assertFalse(ver.get('score_conservation', True))
+        self.assertIn('score conservation mismatch', ver['reason'])
+
+    def test_vae_export_deduplication_across_multiple_capture_units(self):
+        gid = 'game:native:dedup'
+        home_tid = 'team:native:1'
+        away_tid = 'team:native:2'
+        facts1 = {
+            'teams': [
+                {'team_id': home_tid, 'native_team_id': '1', 'display_name': 'Team 1'},
+                {'team_id': away_tid, 'native_team_id': '2', 'display_name': 'Team 2'}
+            ],
+            'games': [{'game_id': gid, 'home_team_id': home_tid, 'away_team_id': away_tid, 'game_date': '2021-11-03', 'season_id': 's1'}],
+            'game_state_observations': [{'game_id': gid, 'status_code': 'FINAL', 'is_final': 1, 'was_simulated': 1, 'score_provenance': 'TEST'}],
+            'team_game_boxes': [
+                {'game_id': gid, 'team_id': home_tid, 'points': 100},
+                {'game_id': gid, 'team_id': away_tid, 'points': 90}
+            ]
+        }
+        payload1 = {
+            'save_id': self.save_id, 'run_id': 'u_dedup_1', 'unit_id': 'u_dedup_1', 'source_key': 'TEST',
+            'observed_at': '2026-11-01T10:00:00Z', 'evidence_grade': 'RESEARCH_FIXTURE', 'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'}, 'facts': facts1,
+            'artifacts': [{'sha256': 'e'*64, 'payload_kind': 'T', 'payload_ref': 'r', 'byte_count': 1, 'source_version': '1', 'restricted': 1}]
+        }
+        # Second capture unit re-recording identical game
+        facts2 = {
+            'game_state_observations': [{'game_id': gid, 'status_code': 'FINAL', 'is_final': 1, 'was_simulated': 1, 'score_provenance': 'TEST'}],
+            'team_game_boxes': [
+                {'game_id': gid, 'team_id': home_tid, 'points': 100},
+                {'game_id': gid, 'team_id': away_tid, 'points': 90}
+            ]
+        }
+        payload2 = {
+            'save_id': self.save_id, 'run_id': 'u_dedup_2', 'unit_id': 'u_dedup_2', 'source_key': 'TEST',
+            'observed_at': '2026-11-01T11:00:00Z', 'evidence_grade': 'RESEARCH_FIXTURE', 'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'}, 'facts': facts2,
+            'artifacts': [{'sha256': 'f'*64, 'payload_kind': 'T', 'payload_ref': 'r', 'byte_count': 1, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload1)
+            ingest_capture(conn, payload2)
+
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        export_out = self.tmp_path / 'vae_dedup_exports'
+        res = orch.export_vae_standard_datasets(export_out)
+
+        d1 = json.loads((export_out / 'calendar_sim_completed_game_player_team_metrics.json').read_text(encoding='utf-8'))
+        # Must be exactly 1 game, not duplicated to 2!
+        matching_games = [g for g in d1['games'] if g['game_id'] == gid]
+        self.assertEqual(len(matching_games), 1)
+        matching_boxes = [tb for tb in d1['team_boxes'] if tb['game_id'] == gid]
+        self.assertEqual(len(matching_boxes), 2)  # Home + Away, not 4!
+
+    def test_canonical_ids_in_vae_experiment_input(self):
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        export_out = self.tmp_path / 'vae_canon_exports'
+        orch.export_vae_standard_datasets(export_out)
+        d3 = json.loads((export_out / 'vae_experiment_evidence_input.json').read_text(encoding='utf-8'))
+
+        p1 = d3['pilots'][0]
+        self.assertEqual(p1['s1_intervention_candidate']['canonical_id'], 'TENDENCY_NATIVE_001')
+        self.assertEqual(p1['s1_intervention_candidate']['associated_metric_field'], 'TENDENCY_NATIVE_066')
+        self.assertEqual(p1['s1_intervention_candidate']['coach_play_setting'], 'COACH_DEFAULT_001')
+        self.assertNotIn('same seed', p1['matched_control_team'].lower())
+
+        p2 = d3['pilots'][1]
+        self.assertEqual(p2['s1_intervention_candidate']['canonical_id'], 'COACH_DEFAULT_014')
+
+        p3 = d3['pilots'][2]
+        self.assertEqual(p3['s1_intervention_candidate']['canonical_id'], 'COACH_DEFAULT_015')
+
+    def test_trigger_world_capture_mode_incremental_skip(self):
+        reader = ScheduleMemory()
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        progress_1 = orch.inspect_calendar_progress(reader)
+        target_gid = progress_1['latest_memory_game_id']
+
+        # Ingest game into DB
+        facts = {
+            'teams': [
+                {'team_id': 'team:native:1', 'native_team_id': '1', 'display_name': 'Team 1'},
+                {'team_id': 'team:native:2', 'native_team_id': '2', 'display_name': 'Team 2'}
+            ],
+            'games': [
+                {'game_id': target_gid, 'home_team_id': 'team:native:1', 'away_team_id': 'team:native:2',
+                 'game_date': '2021-10-24', 'season_id': 's1'}
+            ],
+            'game_state_observations': [
+                {'game_id': target_gid, 'status_code': 'FINAL', 'is_final': 1,
+                 'overtime_count': 0, 'attendance': 18000, 'was_simulated': 1, 'score_provenance': 'TEST'}
+            ]
+        }
+        payload = {
+            'save_id': self.save_id, 'run_id': 'unit_run_skip', 'unit_id': 'unit_run_skip',
+            'source_key': 'BOUND_TEST', 'observed_at': '2026-10-24T10:00:00Z',
+            'evidence_grade': 'RESEARCH_FIXTURE', 'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'}, 'facts': facts,
+            'artifacts': [{'sha256': '1' * 64, 'payload_kind': 'TEST', 'payload_ref': 'test.bin', 'byte_count': 10, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload)
+
+        res = orch.trigger_world_capture(reader, mode='INCREMENTAL')
+        self.assertEqual(res['status'], 'SAME_STATE_REPEAT')
+        self.assertFalse(res['triggered'])
+
+    def test_trigger_world_capture_mode_export_only(self):
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        export_out = self.tmp_path / 'export_only_test'
+        res = orch.trigger_world_capture(mode='EXPORT_ONLY', output_directory=export_out)
+        self.assertEqual(res['status'], 'SUCCESS_EXPORT_ONLY')
+        self.assertEqual(res['mode'], 'EXPORT_ONLY')
+        self.assertFalse(res['triggered'])
+        self.assertTrue((export_out / 'vae_exports' / 'manifest.json').exists())
 
 
 if __name__ == '__main__':

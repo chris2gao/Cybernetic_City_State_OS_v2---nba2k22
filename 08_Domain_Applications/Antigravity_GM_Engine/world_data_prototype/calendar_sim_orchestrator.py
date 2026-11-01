@@ -165,36 +165,65 @@ class CalendarSimOrchestrator:
             if should_close and hasattr(reader, 'close'):
                 reader.close()
 
-    def trigger_capture_if_new_game(self, reader_or_pid='auto', output_directory=None, *, families=None, force=False):
-        """Opt-in trigger: conditionally refreshes WorldData only when a fresh finalized game is observed."""
-        progress = self.inspect_calendar_progress(reader_or_pid)
-        
-        if progress.get('status') == 'INCOMPLETE_GAME_IN_PROGRESS' and not force:
-            return {
-                'status': 'REJECTED_GAME_IN_PROGRESS',
-                'triggered': False,
-                'reason': 'Cannot capture during active/incomplete game simulation; fails closed.',
-                'progress': progress
-            }
+    def trigger_world_capture(self, reader_or_pid='auto', output_directory=None, *, mode='INCREMENTAL', families=None, resume_report=None, force=False):
+        """Unified one-shot capture entrypoint for Human commands.
 
-        if not progress.get('new_final_game_detected') and not force:
-            return {
-                'status': progress.get('status', 'SKIPPED_NO_NEW_GAME'),
-                'triggered': False,
-                'reason': progress.get('reason', 'No new finalized game detected since last capture.'),
-                'progress': progress
-            }
+        Modes:
+        - 'FULL' (Human command: "采集全量数据"):
+            Runs full 20-family collection on current bound save (16 ordinary + 4 annual cadence),
+            regardless of whether a new final game is completed, to capture updated tendencies, ratings,
+            coaches, rosters, settings, injuries, transactions, etc.
+        - 'INCREMENTAL' (Human command: "采集新增的全量数据"):
+            Runs controlled incremental refresh on same save with --data-updated, annual skip,
+            and resume support. Fails closed if active game simulation is currently underway.
+            If state is identical and no changes observed, skips redundant work with SAME_STATE_REPEAT.
+        - 'EXPORT_ONLY':
+            Directly extracts the 3 standardized VAE datasets and manifest from the SQLite database.
+        """
+        mode = mode.upper()
+        if mode not in ('FULL', 'INCREMENTAL', 'EXPORT_ONLY'):
+            raise ValueError(f"unsupported capture mode: {mode}; choose FULL, INCREMENTAL, or EXPORT_ONLY")
 
-        # New game detected or force override: trigger targeted refresh
-        pid = progress['liveness']['pid']
         token = uuid.uuid4().hex[:10]
         if output_directory is None:
-            out_dir = self.save_directory / f"auto_capture_{token}"
+            out_dir = self.save_directory / f"vae_capture_{token}"
         else:
             out_dir = Path(output_directory).resolve()
-        
-        # Full 20 registered families in SOURCES (16 ordinary + 4 annual cadence per Human addendum)
-        # When families is None, refresh_world defaults to all SOURCES in registered order
+
+        if mode == 'EXPORT_ONLY':
+            export_summary = self.export_vae_standard_datasets(out_dir / "vae_exports")
+            return {
+                'status': 'SUCCESS_EXPORT_ONLY',
+                'mode': 'EXPORT_ONLY',
+                'triggered': False,
+                'output_directory': str(out_dir),
+                'vae_exports': export_summary
+            }
+
+        liveness = self.inspect_process_liveness(reader_or_pid)
+        progress = self.inspect_calendar_progress(reader_or_pid)
+
+        # In INCREMENTAL mode: fail closed on active in-progress game (CANNOT be bypassed by force)
+        if mode == 'INCREMENTAL':
+            if progress.get('status') == 'INCOMPLETE_GAME_IN_PROGRESS':
+                return {
+                    'status': 'REJECTED_GAME_IN_PROGRESS',
+                    'mode': mode,
+                    'triggered': False,
+                    'reason': 'Cannot capture during active/incomplete game simulation; fails closed.',
+                    'progress': progress
+                }
+
+            if not progress.get('new_final_game_detected') and not force:
+                return {
+                    'status': progress.get('status', 'SKIPPED_NO_NEW_GAME'),
+                    'mode': mode,
+                    'triggered': False,
+                    'reason': progress.get('reason', 'No new finalized game detected since last capture; state unchanged.'),
+                    'progress': progress
+                }
+
+        pid = progress['liveness']['pid']
         refresh_families = families
 
         try:
@@ -204,25 +233,42 @@ class CalendarSimOrchestrator:
                 self.loaded_filename,
                 str(out_dir),
                 families=refresh_families,
+                resume_report=resume_report,
                 data_updated=True
             )
         except RefreshFailed as err:
             return {
                 'status': 'REFRESH_FAILED_FAIL_CLOSED',
+                'mode': mode,
                 'triggered': True,
                 'error_report': err.report,
                 'output_directory': str(out_dir)
             }
 
-        # 4. Perform immediate SQL readback validation on newly captured game
+        # If a completed game was observed, perform strict SQL readback verification
         target_game_id = progress.get('latest_memory_game_id')
-        sql_ver = self.verify_game_sql_integrity(target_game_id)
+        sql_ver = None
+        if target_game_id:
+            sql_ver = self.verify_game_sql_integrity(target_game_id)
+            if not sql_ver.get('verified_in_db'):
+                return {
+                    'status': 'SQL_VERIFICATION_FAILED_FAIL_CLOSED',
+                    'mode': mode,
+                    'triggered': True,
+                    'game_id': target_game_id,
+                    'native_game_id': progress.get('native_game_id'),
+                    'sql_verification': sql_ver,
+                    'output_directory': str(out_dir),
+                    'refresh_batch_id': refresh_result.get('batch_id'),
+                    'vae_exports': None
+                }
 
-        # 5. Automatically export the three standardized VAE datasets with manifest
+        # Export VAE standard datasets
         export_summary = self.export_vae_standard_datasets(out_dir / "vae_exports")
 
         return {
-            'status': 'SUCCESS_INGESTED',
+            'status': 'SUCCESS_FULL_CAPTURE' if mode == 'FULL' else 'SUCCESS_INGESTED',
+            'mode': mode,
             'triggered': True,
             'game_id': target_game_id,
             'native_game_id': progress.get('native_game_id'),
@@ -232,8 +278,21 @@ class CalendarSimOrchestrator:
             'vae_exports': export_summary
         }
 
-    def verify_game_sql_integrity(self, game_id):
-        """Perform deterministic SQL readback validation on a specific game in the SQLite database."""
+    def trigger_capture_if_new_game(self, reader_or_pid='auto', output_directory=None, *, families=None, force=False):
+        """Opt-in trigger alias forwarding to trigger_world_capture(mode='INCREMENTAL')."""
+        return self.trigger_world_capture(reader_or_pid, output_directory, mode='INCREMENTAL', families=families, force=force)
+
+    def verify_game_sql_integrity(self, game_id, *, expected_unit_id=None):
+        """Perform deterministic SQL readback validation on a specific game in the SQLite database.
+
+        Requires:
+        - Game row exists in games table.
+        - Game state observation exists, is_final=1, and was_simulated=1.
+        - If expected_unit_id is provided, observation unit_id matches.
+        - Both home and away team boxes exist in team_game_boxes.
+        - At least one player box exists in player_game_boxes.
+        - Period scores exist for both teams, and period sums match team box points exactly.
+        """
         with closing(connect(self.database, True)) as conn:
             # 1. Game record
             g_row = conn.execute('SELECT * FROM games WHERE game_id=?', (game_id,)).fetchone()
@@ -247,6 +306,13 @@ class CalendarSimOrchestrator:
                 return {'verified_in_db': False, 'reason': f'game {game_id} missing game_state_observations'}
             obs = dict(obs_row)
 
+            if obs.get('is_final') != 1:
+                return {'verified_in_db': False, 'reason': f'game {game_id} is not final (is_final={obs.get("is_final")})'}
+            if obs.get('was_simulated') != 1:
+                return {'verified_in_db': False, 'reason': f'game {game_id} was not simulated (was_simulated={obs.get("was_simulated")})'}
+            if expected_unit_id is not None and obs.get('unit_id') != expected_unit_id:
+                return {'verified_in_db': False, 'reason': f'game observation unit {obs.get("unit_id")} does not match expected {expected_unit_id}'}
+
             # 3. Period scores
             period_rows = conn.execute(
                 'SELECT * FROM game_period_scores WHERE game_id=? ORDER BY team_id, period_index',
@@ -258,34 +324,52 @@ class CalendarSimOrchestrator:
             t_rows = conn.execute('SELECT * FROM team_game_boxes WHERE game_id=?', (game_id,)).fetchall()
             team_boxes = [dict(r) for r in t_rows]
 
-            # 5. Player boxes
-            p_rows = conn.execute('SELECT * FROM player_game_boxes WHERE game_id=?', (game_id,)).fetchall()
-            player_boxes = [dict(r) for r in p_rows]
-
-            # Conservation checks
-            score_conservation = True
             home_team = game['home_team_id']
             away_team = game['away_team_id']
-
-            home_q_sum = sum(p['period_points'] for p in periods if p['team_id'] == home_team)
-            away_q_sum = sum(p['period_points'] for p in periods if p['team_id'] == away_team)
 
             home_box = next((tb for tb in team_boxes if tb['team_id'] == home_team), None)
             away_box = next((tb for tb in team_boxes if tb['team_id'] == away_team), None)
 
-            if home_box and home_box['points'] != home_q_sum:
-                score_conservation = False
-            if away_box and away_box['points'] != away_q_sum:
-                score_conservation = False
+            if home_box is None:
+                return {'verified_in_db': False, 'reason': f'missing home team box for {home_team}'}
+            if away_box is None:
+                return {'verified_in_db': False, 'reason': f'missing away team box for {away_team}'}
+
+            # 5. Player boxes
+            p_rows = conn.execute('SELECT * FROM player_game_boxes WHERE game_id=?', (game_id,)).fetchall()
+            player_boxes = [dict(r) for r in p_rows]
+            if len(player_boxes) == 0:
+                return {'verified_in_db': False, 'reason': f'no player boxes found for game {game_id}'}
+
+            # Conservation checks
+            home_periods = [p for p in periods if p['team_id'] == home_team]
+            away_periods = [p for p in periods if p['team_id'] == away_team]
+            if not home_periods or not away_periods:
+                return {'verified_in_db': False, 'reason': 'missing game period scores for home or away team'}
+
+            home_q_sum = sum(p['period_points'] for p in home_periods)
+            away_q_sum = sum(p['period_points'] for p in away_periods)
+
+            score_conservation = (home_box['points'] == home_q_sum and away_box['points'] == away_q_sum)
+            if not score_conservation:
+                return {
+                    'verified_in_db': False,
+                    'score_conservation': False,
+                    'reason': f'score conservation mismatch: home box {home_box["points"]} vs periods {home_q_sum}, away box {away_box["points"]} vs periods {away_q_sum}',
+                    'game_id': game_id,
+                    'home_points': home_box['points'],
+                    'away_points': away_box['points']
+                }
 
             return {
                 'verified_in_db': True,
                 'game_id': game_id,
                 'is_final': obs.get('is_final'),
                 'was_simulated': obs.get('was_simulated'),
-                'score_conservation': score_conservation,
-                'home_points': home_box.get('points') if home_box else home_q_sum,
-                'away_points': away_box.get('points') if away_box else away_q_sum,
+                'unit_id': obs.get('unit_id'),
+                'score_conservation': True,
+                'home_points': home_box['points'],
+                'away_points': away_box['points'],
                 'team_boxes_count': len(team_boxes),
                 'player_boxes_count': len(player_boxes),
             }
@@ -295,24 +379,50 @@ class CalendarSimOrchestrator:
 
         Outputs:
         1. calendar_sim_completed_game_player_team_metrics.json: Per-game observations, team and player boxes.
+           Uses CTEs to deduplicate across multiple capture units, selecting the latest valid unit per game.
         2. vae_setting_context_snapshot.json: Read-only tendencies, tactics, coach prefs, attributes.
+           Uses CTEs to select latest unit per entity.
         3. vae_experiment_evidence_input.json: S0 baseline vs S1 candidate intervention comparison manifest.
+           Uses exact canonical IDs from Stage02 M1/M3 registry.
         4. manifest.json: Hashes, counts, unit bounds, readiness levels, and gate status.
+           Evaluates evidence grade and suppresses LIVE_READY claims when running on fixtures.
         """
         out_dir = Path(output_directory).resolve()
         out_dir.mkdir(parents=True, exist_ok=True)
 
         with closing(connect(self.database, True)) as conn:
-            # 1. Dataset 1: calendar_sim_completed_game_player_team_metrics
+            # 0. Dynamic game mode detection (never hardcode MyLEAGUE)
+            mode_row = conn.execute('''
+                SELECT mode_raw, mode_label, league_label FROM game_mode_observations ORDER BY unit_id DESC LIMIT 1
+            ''').fetchone()
+            if mode_row and mode_row['mode_label']:
+                game_mode = mode_row['mode_label']
+            elif mode_row and mode_row['mode_raw'] is not None:
+                game_mode = f"MODE_{mode_row['mode_raw']}"
+            else:
+                game_mode = self.binding.get('identity_basis', 'UNKNOWN_MODE')
+
+            # 1. Dataset 1: calendar_sim_completed_game_player_team_metrics (Deduplicated via CTE)
             game_rows = conn.execute('''
+                WITH latest_game_obs AS (
+                    SELECT s.observation_id, s.game_id, s.unit_id, s.status_code, s.home_points, s.away_points,
+                           s.overtime_count, s.attendance, s.was_simulated, s.score_provenance, s.is_final,
+                           cu.observed_at as capture_observed_at, cr.source_grade as evidence_grade,
+                           ROW_NUMBER() OVER (
+                               PARTITION BY s.game_id
+                               ORDER BY cu.observed_at DESC, s.unit_id DESC
+                           ) as rn
+                    FROM game_state_observations s
+                    JOIN capture_units cu ON s.unit_id = cu.unit_id
+                    JOIN capture_runs cr ON cu.run_id = cr.run_id
+                    WHERE s.is_final = 1 AND s.was_simulated = 1
+                )
                 SELECT g.game_id, g.native_game_id, g.season_id, g.home_team_id, g.away_team_id, g.game_date,
-                       s.status_code, s.is_final, s.home_points, s.away_points, s.overtime_count, s.attendance,
-                       s.was_simulated, s.score_provenance, s.unit_id as obs_unit_id,
-                       cu.observed_at as capture_observed_at
+                       o.status_code, o.is_final, o.home_points, o.away_points, o.overtime_count, o.attendance,
+                       o.was_simulated, o.score_provenance, o.unit_id as obs_unit_id, o.capture_observed_at,
+                       o.evidence_grade
                 FROM games g
-                JOIN game_state_observations s USING(game_id)
-                JOIN capture_units cu ON s.unit_id = cu.unit_id
-                WHERE s.is_final = 1 AND s.was_simulated = 1
+                JOIN latest_game_obs o ON g.game_id = o.game_id AND o.rn = 1
                 ORDER BY g.game_date, g.game_id
             ''').fetchall()
             games = [dict(r) for r in game_rows]
@@ -323,26 +433,41 @@ class CalendarSimOrchestrator:
             if game_ids:
                 placeholders = ','.join('?' for _ in game_ids)
                 t_rows = conn.execute(f'''
-                    SELECT tb.*, cu.observed_at as capture_observed_at
-                    FROM team_game_boxes tb
-                    JOIN capture_units cu ON tb.unit_id = cu.unit_id
-                    WHERE tb.game_id IN ({placeholders})
-                    ORDER BY tb.game_id, tb.team_id
+                    WITH latest_team_boxes AS (
+                        SELECT tb.*, cu.observed_at as capture_observed_at,
+                               ROW_NUMBER() OVER (
+                                   PARTITION BY tb.game_id, tb.team_id
+                                   ORDER BY cu.observed_at DESC, tb.unit_id DESC
+                               ) as rn
+                        FROM team_game_boxes tb
+                        JOIN capture_units cu ON tb.unit_id = cu.unit_id
+                    )
+                    SELECT * FROM latest_team_boxes
+                    WHERE rn = 1 AND game_id IN ({placeholders})
+                    ORDER BY game_id, team_id
                 ''', game_ids).fetchall()
                 team_boxes = [dict(r) for r in t_rows]
 
                 p_rows = conn.execute(f'''
-                    SELECT pb.*, cu.observed_at as capture_observed_at
-                    FROM player_game_boxes pb
-                    JOIN capture_units cu ON pb.unit_id = cu.unit_id
-                    WHERE pb.game_id IN ({placeholders})
-                    ORDER BY pb.game_id, pb.player_id
+                    WITH latest_player_boxes AS (
+                        SELECT pb.*, cu.observed_at as capture_observed_at,
+                               ROW_NUMBER() OVER (
+                                   PARTITION BY pb.game_id, pb.player_id
+                                   ORDER BY cu.observed_at DESC, pb.unit_id DESC
+                               ) as rn
+                        FROM player_game_boxes pb
+                        JOIN capture_units cu ON pb.unit_id = cu.unit_id
+                    )
+                    SELECT * FROM latest_player_boxes
+                    WHERE rn = 1 AND game_id IN ({placeholders})
+                    ORDER BY game_id, player_id
                 ''', game_ids).fetchall()
                 player_boxes = [dict(r) for r in p_rows]
 
             dataset_1 = {
                 'schema': 'calendar_sim_completed_game_player_team_metrics.v1',
                 'save_id': self.save_id,
+                'game_mode': game_mode,
                 'simulation_mode': 'CALENDAR_SIM_ONLY',
                 'games_count': len(games),
                 'games': games,
@@ -353,69 +478,86 @@ class CalendarSimOrchestrator:
                 'metric_dictionary_version': 'Stage02.M3.Canonical38',
                 'integrity_checks': {
                     'final_and_simulated_only': True,
-                    'zero_3d_games_mixed': True
+                    'zero_3d_games_mixed': True,
+                    'deduplicated_latest_unit_only': True
                 }
             }
 
-            # 2. Dataset 2: vae_setting_context_snapshot
+            # 2. Dataset 2: vae_setting_context_snapshot (Deterministic per-entity latest snapshot)
             tactics_rows = conn.execute('''
-                SELECT t.*, cu.observed_at as capture_observed_at
-                FROM team_tactic_settings t
-                JOIN capture_units cu ON t.unit_id = cu.unit_id
-                WHERE t.unit_id IN (
-                    SELECT MAX(unit_id) FROM team_tactic_settings GROUP BY team_id
+                WITH ranked_tactics AS (
+                    SELECT t.*, cu.observed_at as capture_observed_at,
+                           ROW_NUMBER() OVER (
+                               PARTITION BY t.team_id
+                               ORDER BY cu.observed_at DESC, t.unit_id DESC
+                           ) as rn
+                    FROM team_tactic_settings t
+                    JOIN capture_units cu ON t.unit_id = cu.unit_id
                 )
-                ORDER BY t.team_id
+                SELECT * FROM ranked_tactics WHERE rn = 1 ORDER BY team_id
             ''').fetchall()
             tactics = [dict(r) for r in tactics_rows]
 
             coach_pref_rows = conn.execute('''
-                SELECT cp.*, cu.observed_at as capture_observed_at
-                FROM coach_preferences cp
-                JOIN capture_units cu ON cp.unit_id = cu.unit_id
-                WHERE cp.unit_id IN (
-                    SELECT MAX(unit_id) FROM coach_preferences GROUP BY staff_id
+                WITH ranked_prefs AS (
+                    SELECT cp.*, cu.observed_at as capture_observed_at,
+                           ROW_NUMBER() OVER (
+                               PARTITION BY cp.staff_id
+                               ORDER BY cu.observed_at DESC, cp.unit_id DESC
+                           ) as rn
+                    FROM coach_preferences cp
+                    JOIN capture_units cu ON cp.unit_id = cu.unit_id
                 )
-                ORDER BY cp.staff_id
+                SELECT * FROM ranked_prefs WHERE rn = 1 ORDER BY staff_id
             ''').fetchall()
             coach_prefs = [dict(r) for r in coach_pref_rows]
 
             setting_obs_rows = conn.execute('''
-                SELECT gso.*, cu.observed_at as capture_observed_at
-                FROM game_setting_observations gso
-                JOIN capture_units cu ON gso.unit_id = cu.unit_id
-                WHERE gso.unit_id IN (
-                    SELECT MAX(unit_id) FROM game_setting_observations GROUP BY field_id
+                WITH ranked_settings AS (
+                    SELECT gso.*, cu.observed_at as capture_observed_at,
+                           ROW_NUMBER() OVER (
+                               PARTITION BY gso.field_id
+                               ORDER BY cu.observed_at DESC, gso.unit_id DESC
+                           ) as rn
+                    FROM game_setting_observations gso
+                    JOIN capture_units cu ON gso.unit_id = cu.unit_id
                 )
-                ORDER BY gso.field_id
+                SELECT * FROM ranked_settings WHERE rn = 1 ORDER BY field_id
             ''').fetchall()
             game_settings = [dict(r) for r in setting_obs_rows]
 
             tendency_rows = conn.execute('''
-                SELECT pts.*, cu.observed_at as capture_observed_at
-                FROM player_tendency_snapshots pts
-                JOIN capture_units cu ON pts.unit_id = cu.unit_id
-                WHERE pts.unit_id IN (
-                    SELECT MAX(unit_id) FROM player_tendency_snapshots GROUP BY player_id
+                WITH ranked_tendencies AS (
+                    SELECT pts.*, cu.observed_at as capture_observed_at,
+                           ROW_NUMBER() OVER (
+                               PARTITION BY pts.player_id
+                               ORDER BY cu.observed_at DESC, pts.unit_id DESC
+                           ) as rn
+                    FROM player_tendency_snapshots pts
+                    JOIN capture_units cu ON pts.unit_id = cu.unit_id
                 )
-                ORDER BY pts.player_id
+                SELECT * FROM ranked_tendencies WHERE rn = 1 ORDER BY player_id
             ''').fetchall()
             tendencies = [dict(r) for r in tendency_rows]
 
             attribute_rows = conn.execute('''
-                SELECT pas.*, cu.observed_at as capture_observed_at
-                FROM player_attribute_snapshots pas
-                JOIN capture_units cu ON pas.unit_id = cu.unit_id
-                WHERE pas.unit_id IN (
-                    SELECT MAX(unit_id) FROM player_attribute_snapshots GROUP BY player_id
+                WITH ranked_attributes AS (
+                    SELECT pas.*, cu.observed_at as capture_observed_at,
+                           ROW_NUMBER() OVER (
+                               PARTITION BY pas.player_id
+                               ORDER BY cu.observed_at DESC, pas.unit_id DESC
+                           ) as rn
+                    FROM player_attribute_snapshots pas
+                    JOIN capture_units cu ON pas.unit_id = cu.unit_id
                 )
-                ORDER BY pas.player_id
+                SELECT * FROM ranked_attributes WHERE rn = 1 ORDER BY player_id
             ''').fetchall()
             attributes = [dict(r) for r in attribute_rows]
 
             dataset_2 = {
                 'schema': 'vae_setting_context_snapshot.v1',
                 'save_id': self.save_id,
+                'game_mode': game_mode,
                 'source_maturity': 'READ_ONLY_CAPTURED_OBSERVATIONS',
                 'unknown_semantics': 'EXPLICIT_UNKNOWN_NEVER_ZEROED',
                 'team_tactics_count': len(tactics),
@@ -430,11 +572,11 @@ class CalendarSimOrchestrator:
                 'player_attributes': attributes
             }
 
-            # 3. Dataset 3: vae_experiment_evidence_input
+            # 3. Dataset 3: vae_experiment_evidence_input (Exact Canonical IDs per Stage02 M1/M3 Registry)
             dataset_3 = {
                 'schema': 'vae_experiment_evidence_input.v1',
                 'save_id': self.save_id,
-                'contract_version': '20261101.v1',
+                'contract_version': '20261101.v2',
                 'game_mutation_status': 'NOT_AUTHORIZED; READ_ONLY',
                 'simulation_mode': 'CALENDAR_SIM_ONLY',
                 'pilots': [
@@ -448,12 +590,16 @@ class CalendarSimOrchestrator:
                         },
                         's1_intervention_candidate': {
                             'target_player_id': 'player:native:target',
-                            'setting_field': 'TENDENCY_SHOT_066',
+                            'setting_field': 'TENDENCY_NATIVE_001',
+                            'canonical_id': 'TENDENCY_NATIVE_001',
+                            'setting_name': 'ShotTendency',
                             'expected_intervention': 'old_value + 15',
-                            'rea_readback_field': 'TENDENCY_SHOT_066',
-                            'rea_readback_status': 'PENDING_HUMAN_GAMEPLAY'
+                            'rea_readback_field': 'TENDENCY_NATIVE_001',
+                            'rea_readback_status': 'PENDING_HUMAN_GAMEPLAY',
+                            'associated_metric_field': 'TENDENCY_NATIVE_066',
+                            'coach_play_setting': 'COACH_DEFAULT_001'
                         },
-                        'matched_control_team': 'SAME_SEED_UNMODIFIED_ROSTER',
+                        'matched_control_team': 'CONCURRENT_DIVISION_UNMODIFIED_ROSTER',
                         'falsification_criteria': 'ABS(delta_usage - delta_shot) <= 5.0',
                         'metrics': ['game_score_box_derived', 'true_shooting_pct', 'usage_pct', 'experimental_possession_load_index']
                     },
@@ -467,12 +613,14 @@ class CalendarSimOrchestrator:
                         },
                         's1_intervention_candidate': {
                             'target_team_id': 'team:native:target',
-                            'setting_field': 'COACH_DEFAULT_014_TEMPO',
+                            'setting_field': 'COACH_DEFAULT_014',
+                            'canonical_id': 'COACH_DEFAULT_014',
+                            'setting_name': 'CoachTempo',
                             'expected_intervention': 'old_value + 10',
-                            'rea_readback_field': 'COACH_DEFAULT_014_TEMPO',
+                            'rea_readback_field': 'COACH_DEFAULT_014',
                             'rea_readback_status': 'PENDING_HUMAN_GAMEPLAY'
                         },
-                        'matched_control_team': 'SAME_CONFERENCE_UNMODIFIED_COACH',
+                        'matched_control_team': 'CONCURRENT_CONFERENCE_UNMODIFIED_COACH',
                         'falsification_criteria': 'Pace_S1 > Pace_S0 AND Fastbreak_S1 > Fastbreak_S0',
                         'metrics': ['pace', 'possessions', 'fastbreak_pts', 'points_per_100_possessions']
                     },
@@ -486,19 +634,21 @@ class CalendarSimOrchestrator:
                         },
                         's1_intervention_candidate': {
                             'target_team_id': 'team:native:target',
-                            'setting_field': 'COACH_DEFAULT_002_HELP_DEFENSE',
+                            'setting_field': 'COACH_DEFAULT_015',
+                            'canonical_id': 'COACH_DEFAULT_015',
+                            'setting_name': 'HelpDefense',
                             'expected_intervention': 'old_value + 15',
-                            'rea_readback_field': 'COACH_DEFAULT_002_HELP_DEFENSE',
+                            'rea_readback_field': 'COACH_DEFAULT_015',
                             'rea_readback_status': 'PENDING_HUMAN_GAMEPLAY'
                         },
-                        'matched_control_team': 'SAME_DIVISION_MATCHED_DEFENSIVE_PROFILE',
+                        'matched_control_team': 'CONCURRENT_DIVISION_MATCHED_DEFENSIVE_PROFILE',
                         'falsification_criteria': 'DefRtg_S1 < DefRtg_S0 AND Opp_eFG_S1 < Opp_eFG_S0',
                         'metrics': ['defensive_rating', 'steals', 'blocks', 'opponent_effective_fg_pct']
                     }
                 ]
             }
 
-            # 4. Units & Timestamp bounds
+            # 4. Units & Timestamp bounds & Evidence Grade evaluation
             unit_bounds = conn.execute('''
                 SELECT MIN(observed_at) as earliest, MAX(observed_at) as latest, COUNT(*) as total_units
                 FROM capture_units
@@ -506,6 +656,48 @@ class CalendarSimOrchestrator:
             earliest = unit_bounds[0] if unit_bounds else None
             latest = unit_bounds[1] if unit_bounds else None
             total_units = unit_bounds[2] if unit_bounds else 0
+
+            # Evidence grades present in DB from capture_runs
+            grade_rows = conn.execute('SELECT DISTINCT source_grade FROM capture_runs').fetchall()
+            grades = set(r[0] for r in grade_rows if r[0])
+
+            # Determine manifest status based on actual evidence
+            if len(games) == 0:
+                d1_status = 'NO_DATA'
+                manifest_status = 'EMPTY_DATABASE_INITIALIZED'
+                gate_status = 'G1_CODE_READY; G1_LIVE_PENDING; G2_PROTOCOL_READY'
+                readiness_levels = {
+                    'CLI_ORCHESTRATION_CODE': 'VERIFIED',
+                    'FIXTURE_SQL_REPLAY': 'VERIFIED',
+                    'CURRENT_NATIVE_READ': 'LIVE_VALIDATION_PENDING',
+                    'FULL_REGISTERED_FAMILIES_COMMITTED': 'NO_DATA',
+                    'STANDARD_DATASET_EXPORTED': 'EMPTY_DATASET_GENERATED',
+                    'POST_CALENDAR_NEW_GAME_VERIFIED': 'PENDING_HUMAN_GAMEPLAY'
+                }
+            elif grades and grades.issubset({'RESEARCH_FIXTURE', 'FIXTURE_REPLAY', 'MOCK'}):
+                d1_status = 'FIXTURE_REPLAY_VERIFIED'
+                manifest_status = 'FIXTURE_REPLAY_SUCCESS'
+                gate_status = 'G1_FIXTURE_REPLAY_READY; G1_LIVE_PENDING; G2_PROTOCOL_READY'
+                readiness_levels = {
+                    'CLI_ORCHESTRATION_CODE': 'VERIFIED',
+                    'FIXTURE_SQL_REPLAY': 'VERIFIED',
+                    'CURRENT_NATIVE_READ': 'LIVE_VALIDATION_PENDING',
+                    'FULL_REGISTERED_FAMILIES_COMMITTED': 'FIXTURE_COMMITTED_ONLY',
+                    'STANDARD_DATASET_EXPORTED': 'VERIFIED',
+                    'POST_CALENDAR_NEW_GAME_VERIFIED': 'PENDING_HUMAN_GAMEPLAY'
+                }
+            else:
+                d1_status = 'READY'
+                manifest_status = 'DATASETS_EXPORTED_SUCCESS'
+                gate_status = 'G1_LIVE_VERIFIED; G2_PROTOCOL_READY'
+                readiness_levels = {
+                    'CLI_ORCHESTRATION_CODE': 'VERIFIED',
+                    'FIXTURE_SQL_REPLAY': 'VERIFIED',
+                    'CURRENT_NATIVE_READ': 'VERIFIED',
+                    'FULL_REGISTERED_FAMILIES_COMMITTED': 'COMMITTED_SUCCESS_VERIFIED',
+                    'STANDARD_DATASET_EXPORTED': 'VERIFIED',
+                    'POST_CALENDAR_NEW_GAME_VERIFIED': 'PENDING_HUMAN_GAMEPLAY'
+                }
 
             # Write dataset files
             f1 = out_dir / 'calendar_sim_completed_game_player_team_metrics.json'
@@ -527,20 +719,21 @@ class CalendarSimOrchestrator:
             # Manifest
             manifest = {
                 'schema_version': 'nba2k22.vae.standard_dataset_manifest.v1',
-                'sql_version': 'vae.sql.v1',
+                'sql_version': 'vae.sql.v2',
                 'metric_dictionary_version': 'Stage02.M3.Canonical38',
                 'db_schema_version': VERSION,
                 'save_id': self.save_id,
-                'game_mode': 'MyLEAGUE',
+                'game_mode': game_mode,
                 'timestamp_bounds': {'earliest': earliest, 'latest': latest},
                 'total_capture_units': total_units,
+                'evidence_grades': list(grades),
                 'datasets': {
                     'calendar_sim_completed_game_player_team_metrics': {
                         'filename': f1.name,
                         'sha256': sha1,
                         'byte_count': len(b1),
                         'games_count': len(games),
-                        'status': 'READY'
+                        'status': d1_status
                     },
                     'vae_setting_context_snapshot': {
                         'filename': f2.name,
@@ -559,15 +752,8 @@ class CalendarSimOrchestrator:
                     'MET_TOUCHES_NATIVE_ABSENT_IN_STATIC_TABLE',
                     'REAL_GAMEPLAY_INTERVENTION_PENDING'
                 ],
-                'readiness_levels': {
-                    'CLI_ORCHESTRATION_CODE': 'VERIFIED',
-                    'FIXTURE_SQL_REPLAY': 'VERIFIED',
-                    'CURRENT_NATIVE_READ': 'VERIFIED',
-                    'FULL_REGISTERED_FAMILIES_COMMITTED': 'READY_IN_PIPELINE',
-                    'STANDARD_DATASET_EXPORTED': 'VERIFIED',
-                    'POST_CALENDAR_NEW_GAME_VERIFIED': 'PENDING_HUMAN_GAMEPLAY'
-                },
-                'gate_status': 'G1_READY; G2_PROTOCOL_READY; LIVE_VALIDATION_PENDING'
+                'readiness_levels': readiness_levels,
+                'gate_status': gate_status
             }
             manifest_path = out_dir / 'manifest.json'
             manifest_bytes = json.dumps(manifest, ensure_ascii=False, indent=2).encode('utf-8')
@@ -579,14 +765,21 @@ class CalendarSimOrchestrator:
                 'manifest_sha256': hashlib.sha256(manifest_bytes).hexdigest(),
                 'datasets_exported': list(manifest['datasets'].keys()),
                 'games_count': len(games),
-                'status': 'DATASETS_EXPORTED_SUCCESS'
+                'evidence_grades': list(grades),
+                'status': manifest_status
             }
 
 
 def trigger_calendar_sim_capture(save_directory, loaded_filename, *, pid='auto', output_directory=None, force=False):
-    """Functional entrypoint for one-shot opt-in Calendar Sim capture."""
+    """Functional entrypoint forwarding to trigger_world_capture(mode='INCREMENTAL')."""
     orchestrator = CalendarSimOrchestrator(save_directory, loaded_filename)
-    return orchestrator.trigger_capture_if_new_game(reader_or_pid=pid, output_directory=output_directory, force=force)
+    return orchestrator.trigger_world_capture(reader_or_pid=pid, output_directory=output_directory, mode='INCREMENTAL', force=force)
+
+
+def trigger_world_capture(save_directory, loaded_filename, *, pid='auto', mode='INCREMENTAL', output_directory=None, resume_report=None, force=False):
+    """Functional entrypoint for one-shot full or incremental capture."""
+    orchestrator = CalendarSimOrchestrator(save_directory, loaded_filename)
+    return orchestrator.trigger_world_capture(reader_or_pid=pid, output_directory=output_directory, mode=mode, resume_report=resume_report, force=force)
 
 
 def export_vae_datasets(save_directory, loaded_filename, output_directory):
