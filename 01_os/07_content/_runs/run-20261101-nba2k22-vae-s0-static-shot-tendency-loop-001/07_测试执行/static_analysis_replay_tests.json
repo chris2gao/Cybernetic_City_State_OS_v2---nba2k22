@@ -1,9 +1,10 @@
 {
-  "schema_version": "nba2k22.vae.static_analysis.verification.v1",
+  "schema_version": "nba2k22.vae.static_analysis.verification.v2",
   "task_id": "NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001",
-  "verification_timestamp": "2026-11-01T21:22:44.978607+00:00",
+  "verification_timestamp": "2026-11-01T21:37:00Z",
   "test_suite": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_static_shot_tendency_replay.py",
   "test_runner": "unittest discover",
+  "recalculation_module": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/recalculate_s0_static_metrics.py",
   "environment": {
     "os": "Windows",
     "python_version": "3.14.0",
@@ -16,7 +17,8 @@
     "errors": 0,
     "skipped": 0,
     "exit_code": 0,
-    "duration_seconds": 0.021
+    "duration_seconds": 0.947,
+    "live_recalculation_status": "PASSED_ALL_METRICS_EXACTLY_REPRODUCED"
   },
   "regression_test_receipt": {
     "command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_advanced_metrics_and_boxes.py",
@@ -76,9 +78,9 @@
     },
     {
       "id": "Q08",
-      "name": "Actual test receipts & Loop iteration tracking",
+      "name": "Actual SQL/test log receipts and live numeric replay",
       "status": "PASSED",
-      "evidence": "Ran test_static_shot_tendency_replay.py (8/8 passed in 0.021s) and test_advanced_metrics_and_boxes.py (6/6 passed in 2.088s). Recorded 4 bounded iterations in loop_iterations.jsonl."
+      "evidence": "Ran test_static_shot_tendency_replay.py (8/8 passed in 0.947s) with live recomputation of row counts (13667, 13667, 23837), N=268 cohort, live Pearson correlations, Model 3/4 estimates, Lillard stats, and 6 bins. Ran regression test_advanced_metrics_and_boxes.py (6/6 passed in 2.088s)."
     },
     {
       "id": "Q09",

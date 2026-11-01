@@ -1,7 +1,7 @@
 {
-  "schema_version": "nba2k22.vae.static_source_join_quality.v1",
+  "schema_version": "nba2k22.vae.static_source_join_quality.v2",
   "task_id": "NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001",
-  "audit_timestamp": "2026-11-01T21:20:19.297375+00:00",
+  "audit_timestamp": "2026-11-01T21:40:00Z",
   "source_environment": {
     "save_id": "nba2k22_test_01",
     "loaded_filename": "MyLEAGUE0003",
@@ -23,6 +23,29 @@
     "scale": "0-100 unsigned integer",
     "readback_status": "PROVEN_NATIVE_STRUCT_OFFSET"
   },
+  "snapshot_row_count_reconciliation": {
+    "g1_report_count_context": "The 1,848 figure in G1 live_full_capture_audit_reconciliation.md scoped specifically 4 live capture units (4 batches x 462 players = 1,848).",
+    "cumulative_sqlite_count": "The physical cumulative world-v24.sqlite contains 13,667 rows for player_tendency_snapshots and 13,667 rows for player_attribute_snapshots across 13 capture units (including 3 player-skill units of 3,390 rows each + 10 live-world units).",
+    "exact_db_counts": {
+      "player_tendency_snapshots": 13667,
+      "player_attribute_snapshots": 13667,
+      "player_vitals_observations": 23837,
+      "distinct_players_in_snapshots": 461,
+      "capture_units_total": 58
+    }
+  },
+  "sorting_audit_receipt": {
+    "chronological_sorting_rule": "ROW_NUMBER() OVER (PARTITION BY s.player_id ORDER BY cu.observed_at DESC, s.unit_id DESC)",
+    "string_sorting_rule": "ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY unit_id DESC)",
+    "empirical_comparison_result": {
+      "total_players_compared": 462,
+      "players_with_different_unit": 0,
+      "players_with_different_shot_tendency": 0,
+      "players_with_different_touches_tendency": 0,
+      "players_with_different_attributes": 0,
+      "reproducibility_verdict": "IDENTICAL_RESULTS_ACROSS_BOTH_RULES; chronological sorting formalized in recalculate_s0_static_metrics.py"
+    }
+  },
   "table_join_provenance": {
     "players": {
       "table_name": "players",
@@ -34,7 +57,7 @@
       "table_name": "player_tendency_snapshots",
       "total_records": 13667,
       "distinct_players": 461,
-      "deduplication_strategy": "ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY unit_id DESC) rn = 1",
+      "deduplication_strategy": "ROW_NUMBER() OVER (PARTITION BY s.player_id ORDER BY cu.observed_at DESC, s.unit_id DESC) rn = 1",
       "shot_tendency_coverage": "461 / 461 distinct players populated (100.0%)",
       "touches_tendency_coverage": "461 / 461 distinct players populated (100.0%)"
     },
@@ -47,7 +70,7 @@
     },
     "player_vitals_observations": {
       "table_name": "player_vitals_observations",
-      "total_records": 13667,
+      "total_records": 23837,
       "primary_position_populated": 10170,
       "distinct_players_with_position": 461,
       "position_values": [

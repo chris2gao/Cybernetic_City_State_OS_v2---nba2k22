@@ -1,4 +1,4 @@
-"""Tests for S0 Static Shot Tendency Analysis, Join Quality, and Human-Gated Phase A Protocols.
+"""Tests for S0 Static Shot Tendency Analysis, Join Quality, and Live Numeric Replay.
 
 Part of NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001.
 """
@@ -7,9 +7,18 @@ import sqlite3
 import unittest
 from pathlib import Path
 
+# Add prototype to sys.path
+import sys
+BASE = Path(__file__).resolve().parents[1]
+if str(BASE) not in sys.path:
+    sys.path.insert(0, str(BASE))
+
+from recalculate_s0_static_metrics import recalculate_all_s0_metrics
+
 RUN_DIR = Path(__file__).resolve().parents[4] / "01_os" / "07_content" / "_runs" / "run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001"
 EXEC_DIR = RUN_DIR / "06_执行"
 DB_PATH = Path(__file__).resolve().parents[4] / "01_os" / "07_content" / "_runs" / "run-20261024-nba2k22-world-data-implementation-002" / "_runtime" / "world-saves" / "nba2k22_test_01" / "world-v24.sqlite"
+SCOPE_PATH = Path(__file__).resolve().parents[4] / "01_os" / "07_content" / "_runs" / "run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001" / "06_执行" / "score_discrepancy_scope.json"
 
 
 class StaticShotTendencyReplayTests(unittest.TestCase):
@@ -25,6 +34,11 @@ class StaticShotTendencyReplayTests(unittest.TestCase):
             cls.summary_data = json.load(f)
         with open(cls.report_path, "r", encoding="utf-8") as f:
             cls.report_text = f.read()
+
+        if DB_PATH.exists():
+            cls.live_metrics = recalculate_all_s0_metrics(DB_PATH, SCOPE_PATH)
+        else:
+            cls.live_metrics = None
 
     def test_q01_save_binding_and_db_matching(self):
         """Q01: Verify save binding matches MyLEAGUE0003 and local SQLite, no new capture/mutation."""
@@ -103,20 +117,57 @@ class StaticShotTendencyReplayTests(unittest.TestCase):
         self.assertEqual(smoke["status"], "PROPOSED_AWAITING_HUMAN_APPROVAL")
 
     def test_q08_sqlite_live_query_reproducibility(self):
-        """Q08: Run deterministic verification against world-v24.sqlite if present."""
-        if not DB_PATH.exists():
+        """Q08: Live recomputation of core sample, correlations, regressions, and bins on SQLite."""
+        if self.live_metrics is None:
             self.skipTest("SQLite DB not found at runtime path")
 
-        conn = sqlite3.connect(DB_PATH)
-        # Verify Lillard game count is 16
-        lillard_games = conn.execute("""
-            SELECT COUNT(DISTINCT pb.game_id)
-            FROM player_game_boxes pb
-            JOIN game_state_observations s ON pb.game_id = s.game_id AND pb.unit_id = s.unit_id
-            WHERE pb.player_id = 'player:native:2459' AND s.is_final = 1 AND s.was_simulated = 1
-        """).fetchone()[0]
-        self.assertEqual(lillard_games, 16)
-        conn.close()
+        res = self.live_metrics
+        # 1. Base table row counts in SQLite
+        rc = res["row_counts"]
+        self.assertEqual(rc["player_tendency_snapshots"], 13667)
+        self.assertEqual(rc["player_attribute_snapshots"], 13667)
+        self.assertEqual(rc["player_vitals_observations"], 23837)
+        self.assertEqual(rc["capture_units"], 58)
+
+        # 2. Sample sizes
+        self.assertEqual(res["cohort_all_count"], 268)
+        self.assertEqual(res["cohort_clean_count"], 257)
+
+        # 3. Live correlations match reported values
+        c = res["correlations"]
+        self.assertAlmostEqual(c["shot_tendency_vs_fga_per_game"], 0.9303, places=3)
+        self.assertAlmostEqual(c["shot_tendency_vs_fga_per_36"], 0.9008, places=3)
+        self.assertAlmostEqual(c["shot_tendency_vs_team_shot_share"], 0.9316, places=3)
+        self.assertAlmostEqual(c["shot_tendency_vs_mpg"], 0.6960, places=3)
+
+        # 4. Live Model 3 estimates match reported values
+        m3_coef = res["model_3"]["coefficients"]["ShotTendency"]
+        self.assertAlmostEqual(m3_coef["beta"], 0.2145, places=3)
+        self.assertAlmostEqual(m3_coef["std_error"], 0.0127, places=3)
+        self.assertAlmostEqual(m3_coef["t_stat"], 16.83, places=1)
+        self.assertAlmostEqual(res["model_3"]["r2"], 0.8446, places=3)
+
+        # 5. Live Model 4 estimates match reported values
+        m4_coef = res["model_4"]["coefficients"]["ShotTendency"]
+        self.assertAlmostEqual(m4_coef["beta"], 0.0017, places=4)
+        self.assertAlmostEqual(m4_coef["t_stat"], 17.35, places=1)
+        self.assertAlmostEqual(res["model_4"]["r2"], 0.9370, places=3)
+
+        # 6. Live Lillard statistics match reported values
+        lil = res["lillard"]
+        self.assertEqual(lil["games_played"], 16)
+        self.assertAlmostEqual(lil["fga_per_game"], 19.875, places=2)
+        self.assertAlmostEqual(lil["fga_per_36"], 19.670, places=2)
+        self.assertAlmostEqual(lil["team_shot_share"], 0.2309, places=3)
+
+        # 7. Live 6 bins match counts and strict monotonicity
+        expected_counts = [28, 108, 52, 44, 27, 9]
+        live_counts = [b["count"] for b in res["bins"]]
+        self.assertEqual(live_counts, expected_counts)
+        for i in range(len(res["bins"]) - 1):
+            self.assertLess(res["bins"][i]["mean_tendency"], res["bins"][i+1]["mean_tendency"])
+            self.assertLess(res["bins"][i]["mean_fga_36"], res["bins"][i+1]["mean_fga_36"])
+            self.assertLess(res["bins"][i]["mean_team_shot_share"], res["bins"][i+1]["mean_team_shot_share"])
 
 
 if __name__ == "__main__":
