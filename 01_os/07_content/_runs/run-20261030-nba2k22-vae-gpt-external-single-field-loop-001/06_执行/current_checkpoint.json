@@ -1,7 +1,7 @@
 {
   "schema_version": "nba2k22.vae.gpt_external_checkpoint.v1",
   "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
-  "status": "SWEEP1_RESEARCH_COMPLETE_PENDING_COMPREHENSIVE_STATIC_AUDIT",
+  "status": "SWEEP1_SOURCE_RESEARCH_COMPLETE_WITH_EVIDENCE_GAPS_PENDING_COMBINED_REVIEW",
   "sweep": 1,
   "cursor": 204,
   "next_field_id": null,
@@ -9,7 +9,7 @@
   "records_written": 204,
   "no_source_fields": 51,
   "model_identity": "GPT-6_CONVERSATION_DECLARED_NOT_PLATFORM_ATTESTED",
-  "next_step": "Conduct comprehensive frozen-seed 204-record static audit and determine next sweep from source gaps; no game or merger",
+  "next_step": "Human chooses Sweep 2 source remediation/Gemini REA evidence after reviewing 204-item audit; do not automatically close task or start new loop",
   "queue_blob_sha": "af5567e14e03cd9f7761e396a978311e347d7c17",
   "queue_records_total": 204,
   "completed_first_sweep": 204,
@@ -26,5 +26,8 @@
     "reason": "Old checkpoint at cursor20 had 0 despite field IDs 016/017/018 already reporting NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE",
     "records_reclassified": 0,
     "records_mutated": 0
-  }
+  },
+  "sweep1_static_audit": "07_测试执行/sweep01_full_204_static_audit.json",
+  "sweep1_summary": "08_结论/sweep01_research_summary.md",
+  "sweep1_rea_handoff": "08_结论/sweep01_gemini_rea_handoff.md"
 }

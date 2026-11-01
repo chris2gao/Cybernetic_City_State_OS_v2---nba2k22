@@ -1,0 +1,137 @@
+{
+  "schema_version": "nba2k22.vae.external_single_field_sweep1_completeness_audit.v1",
+  "task_id": "NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001",
+  "audit_date": "2026-11-01",
+  "model": "GPT-6_CONVERSATION_DECLARED_NOT_PLATFORM_ATTESTED",
+  "source_branch": "task/nba2k22-vae-gpt-external-single-field-loop-20261030",
+  "source_head": "13073bca95c7bf887e8d1ea1d4195d1be04cc382",
+  "queue_commit": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+  "queue_blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+  "scope": "Sweep 1 fixed 204-source research units, NOT native or combined review",
+  "method": [
+    "Read the original pinned queue and all 204 ledger rows",
+    "Enumerate all 204 dossiers and 204 exact sequential static receipts from GitHub directory API",
+    "Individually fetch and JSON-parse all 204 field dossier files in 17 audited batches",
+    "Inspect top-level REA question, unknown indicators, conflict keys and available structured source metadata; retain legacy structural differences",
+    "Compare ledger source_count to 204 parsed structured source arrays",
+    "Compare current Run checkpoint, queue identities and git branch ref; no game or native writes"
+  ],
+  "counts": {
+    "queue_total": 204,
+    "queue_families": {
+      "tendency": 99,
+      "world": 86,
+      "coach": 19
+    },
+    "ledger_rows": 204,
+    "unique_field_ids": 204,
+    "unbroken_cursor_sequence": true,
+    "dossier_file_count": 204,
+    "individual_receipt_count": 204,
+    "batch_receipt_count": 19,
+    "records_with_REA_question": 204,
+    "records_with_explicit_UNKNOWN_or_UNVERIFIED_or_NOT_RUN_indication": 204,
+    "records_with_top_level_conflict_or_contradiction_key": 189,
+    "records_without_such_top_level_key": 15,
+    "ledger_reported_source_references": 475,
+    "structured_dossier_source_items": 478,
+    "structured_source_items_missing_at_least_one_version_date_author_or_platform": 24,
+    "missing_version": 21,
+    "missing_date": 3,
+    "missing_author_or_platform": 0,
+    "source_items_not_equivalent_to_unique_urls": true,
+    "exact_no_direct_native_identity_source_result_count": 51,
+    "new_PC22_native_validation_this_resumed_window": 0,
+    "new_game_runs_this_resumed_window": 0,
+    "independent_audit": "NOT_RUN"
+  },
+  "gates": {
+    "GPT01_FIELD_CURSOR": "PASS",
+    "GPT02_SINGLE_FIELD": "PASS_EXISTENCE_UNIQUENESS",
+    "GPT03_SOURCE_VERSION_DATE": "PASS_WITH_24_METADATA_GAPS",
+    "GPT04_CLAIM_SOURCE_TRACE": "PARTIAL_THREE_LEDGER_COUNT_CONFLICTS_LEGACY_SCHEMAS",
+    "GPT05_CONFLICTS": "PASS_WITH_15_LEGACY_TOP_LEVEL_KEY_OMISSIONS",
+    "GPT06_NUMERIC_HYPOTHESIS_NOT_FACT": "STATIC_REVIEW_ONLY_NOT_ENGINE_PROOF",
+    "GPT07_REA_TEST_ORACLE": "PASS_204_QUESTIONS_PRESENT_NOT_EXECUTED",
+    "GPT08_CHECKPOINT_READBACK": "PASS_SOURCE_HEAD"
+  },
+  "source_metadata_gaps": [
+    {
+      "field_id": "TENDENCY_NATIVE_042",
+      "missing": "version",
+      "count": 3
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_071",
+      "missing": "date",
+      "count": 1
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_072",
+      "missing": "date",
+      "count": 1
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_073",
+      "missing": "date",
+      "count": 1
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_098",
+      "missing": "version",
+      "count": 3
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_099",
+      "missing": "version",
+      "count": 3
+    },
+    {
+      "field_id": "WORLD_REG_003",
+      "missing": "version",
+      "count": 3
+    },
+    {
+      "field_id": "WORLD_REG_004",
+      "missing": "version",
+      "count": 3
+    },
+    {
+      "field_id": "WORLD_REG_005",
+      "missing": "version",
+      "count": 3
+    },
+    {
+      "field_id": "WORLD_REG_006",
+      "missing": "version",
+      "count": 3
+    }
+  ],
+  "source_count_ledger_mismatches": [
+    {
+      "field_id": "TENDENCY_NATIVE_071",
+      "ledger": 0,
+      "dossier": 1
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_072",
+      "ledger": 0,
+      "dossier": 1
+    },
+    {
+      "field_id": "TENDENCY_NATIVE_073",
+      "ledger": 0,
+      "dossier": 1
+    }
+  ],
+  "qualifications": [
+    "The 51 NO_DIRECT result flags are a historical result-label count, not a measure of PC22 native certainty. Every candidate requires separate evidence.",
+    "Source references may recur across different fields, and ledger source_count reported total differs from parsed array total by three; do not silently reconcile prior immutable ledger.",
+    "Prior 155 dossiers used heterogeneous JSON structures; do not rewrite append-only history. Missing 15 top-level conflict keys may contain limitations elsewhere; no automatic declaration of zero conflict.",
+    "No new PC22 runtime native verification, value formula or numeric optimization certified. A static scan found no explicit native_mapping=VERIFIED or game=PASS declaration in the 204 dossier set, but heuristic string scans cannot substitute for an independent semantic audit.",
+    "Earlier project Coach read/write evidence remains historical with its own source; external research does not supersede or rerun it.",
+    "Documentation-only quality gate has caveats; not a final combined VAE/Gemini independent review.",
+    "The GitHub commit storing the audit must be verified by a separate postcommit readback; audit source_head anchors the fully researched 204-dossier tree."
+  ],
+  "followup": "Human decision on next sweep priorities and future Gemini REA handoff; no automatic Sweep 2 or master merge."
+}
