@@ -1,0 +1,20 @@
+task_id: NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001
+run_id: run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001
+domain: nba2k22
+role: execution
+assigned_model: Gemini
+actual_model: PENDING_EXECUTION_RECEIPT
+lifecycle: dispatched
+branch: task/nba2k22-vae-calendar-sim-g1g2-readiness-loop-20261101
+exact_parent_sha: 75e17813af64f0046a0393071a2115c44835092d
+objective: "G1 Calendar Sim post-game capture trigger + SQL integrity; G2 setting-to-metric evidence contract; no live game changes"
+task_packet_ref: 01_任务输入/task_packet.json
+dispatch_ref: 01_任务输入/execution_dispatch.md
+verification_ref: 01_任务输入/verification_plan.json
+review_schedule:
+  review_mode: deferred_to_series
+  must_review_before: protected_game_mutation_or_production_auto_tuning_or_master_integration
+game_mutation: NOT_AUTHORIZED
+save_mutation: NOT_AUTHORIZED
+automatic_monitor_activation: NOT_AUTHORIZED
+master_merge: NOT_AUTHORIZED
