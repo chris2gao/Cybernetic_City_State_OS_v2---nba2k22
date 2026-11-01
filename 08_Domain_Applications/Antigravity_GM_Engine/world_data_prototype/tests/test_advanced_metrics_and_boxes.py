@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 
-from family_codec import decode_schedule_date, extract_player_advanced_metrics
+from family_codec import decode_schedule_date, extract_player_advanced_metrics, ADVANCED_METRICS_RANGES, RESTRICTED_PLAYER_RANGES
 from live_reader import ROSTER_RVA
 from test_live_reader import FixtureReader
 from test_schedule import ScheduleMemory
@@ -228,9 +228,11 @@ class AdvancedMetricsAndBoxesTests(unittest.TestCase):
         self.assertEqual(len(log['records']), 1)
         rec = log['records'][0]
         self.assertIn('game_score', rec)
+        self.assertIn('game_score_box_derived', rec)
         self.assertIn('ts_pct', rec)
         self.assertIn('efg_pct', rec)
         self.assertEqual(log['provenance']['box_stats'], 'NATIVE_GAME_BOX; player_game_boxes')
+        self.assertIn('HOLLINGER_GAMESCORE_BOX_DERIVED', log['provenance']['game_score_box_derived'])
 
         # 2. Query Player Advanced Metrics
         adv = player_advanced_metrics(self.db, canonical_pid)
@@ -242,6 +244,11 @@ class AdvancedMetricsAndBoxesTests(unittest.TestCase):
         self.assertAlmostEqual(adv['season_advanced']['ts_pct'], 0.5796, places=3)
         self.assertAlmostEqual(adv['season_advanced']['efg_pct'], 0.5294, places=3)
         self.assertEqual(adv['season_advanced']['ast_to_tov_ratio'], 2.5)
+        # F05: Experimental possession load index (renamed from touches proxy)
+        self.assertIsNone(adv['season_advanced']['touches_native'])
+        self.assertIn('experimental_possession_load_index', adv['season_advanced'])
+        # formula: 170 + 0.44*45 + 20 + 0.33*50 = 170 + 19.8 + 20 + 16.5 = 226.3
+        self.assertAlmostEqual(adv['season_advanced']['experimental_possession_load_index'], 226.3, places=1)
         self.assertEqual(adv['game_score_summary']['games_tracked'], 1)
 
         # 3. Query Team Advanced Metrics
@@ -253,6 +260,121 @@ class AdvancedMetricsAndBoxesTests(unittest.TestCase):
         self.assertEqual(t_adv['ratings']['net_rating'], 8.0)
         self.assertEqual(t_adv['engine_precalculated_totals']['paint_points'], 480)
         self.assertEqual(t_adv['single_game_box_averages']['paint_points_avg'], facts['team_game_boxes'][0]['paint_points'])
+
+    def test_bounded_safe_intervals_and_dict_extraction(self):
+        # Assert ADVANCED_METRICS_RANGES never overlaps RESTRICTED_PLAYER_RANGES
+        self.assertTrue(all(
+            not (a < hi and lo < b)
+            for a, b in ADVANCED_METRICS_RANGES
+            for lo, hi in RESTRICTED_PLAYER_RANGES
+        ))
+        # Build dict of bounded slices
+        per_bytes = struct.pack('<HHHH', 5, 2, 3, 1)
+        scores_bytes = struct.pack('<fffff', 18.5, 22.0, 0.0, 0.0, 0.0)
+        d0 = (19 << 16) | (10 << 21) | (21 << 25)
+        d1 = (21 << 16) | (10 << 21) | (21 << 25)
+        dates_bytes = struct.pack('<IIIII', d0, d1, 0, 0, 0)
+        mins_bytes = bytes([32, 35, 0, 0, 0])
+        shot_bytes = struct.pack('<I', 15 << 20)
+
+        bounded_dict = {
+            'per_rankings': per_bytes,
+            'game_scores': scores_bytes,
+            'game_dates': dates_bytes,
+            'minutes': mins_bytes,
+            'shot_chart': shot_bytes,
+        }
+        extracted = extract_player_advanced_metrics(bounded_dict)
+        self.assertEqual(extracted['per_rankings']['league_per_rank'], 5)
+        self.assertEqual(extracted['recent_game_scores'][0]['game_score'], 18.5)
+        self.assertEqual(extracted['recent_game_scores'][0]['game_date'], '2021-10-19')
+        self.assertEqual(extracted['recent_game_scores'][0]['minutes'], 32)
+        self.assertFalse(extracted['recent_game_scores'][0]['dnp'])
+        self.assertTrue(extracted['recent_game_scores'][2]['dnp'])
+        self.assertEqual(extracted['shot_chart_index'], 15)
+        self.assertIn('BOUNDED_SAFE_RANGES_VERIFIED', extracted['provenance'])
+
+    def test_game_log_deduplication_and_dnp_semantics(self):
+        # Ingest first capture unit
+        facts_1 = {
+            'teams': [{'team_id': 'team:test:1', 'native_team_id': '1', 'display_name': 'Team 1'},
+                      {'team_id': 'team:test:2', 'native_team_id': '2', 'display_name': 'Team 2'}],
+            'players': [{'player_id': 'player:test:1', 'native_player_id': '1', 'display_name': 'Player 1'},
+                        {'player_id': 'player:test:2', 'native_player_id': '2', 'display_name': 'DNP Player'}],
+            'games': [{'game_id': 'game:test:1', 'home_team_id': 'team:test:1', 'away_team_id': 'team:test:2',
+                       'game_date': '2021-11-01', 'season_id': 's1'}],
+            'game_state_observations': [{'game_id': 'game:test:1', 'status_code': 'FINAL', 'is_final': 1,
+                                         'overtime_count': 0, 'attendance': 18000, 'was_simulated': 0,
+                                         'score_provenance': 'TEST'}],
+            'player_game_boxes': [
+                {'game_id': 'game:test:1', 'player_id': 'player:test:1', 'team_id': 'team:test:1',
+                 'is_starter': 1, 'minutes_raw': 34, 'points': 24, 'fg_made': 9, 'fg_attempted': 18,
+                 'three_made': 2, 'three_attempted': 5, 'ft_made': 4, 'ft_attempted': 5,
+                 'offensive_rebounds': 2, 'defensive_rebounds': 6, 'assists': 7, 'steals': 2, 'blocks': 1,
+                 'turnovers': 3, 'fouls': 2, 'plus_minus': 5},
+                # DNP row with None / NULL counting stats
+                {'game_id': 'game:test:1', 'player_id': 'player:test:2', 'team_id': 'team:test:1',
+                 'is_starter': 0, 'minutes_raw': 0, 'points': None, 'fg_made': None, 'fg_attempted': None,
+                 'three_made': None, 'three_attempted': None, 'ft_made': None, 'ft_attempted': None,
+                 'offensive_rebounds': None, 'defensive_rebounds': None, 'assists': None, 'steals': None,
+                 'blocks': None, 'turnovers': None, 'fouls': None, 'plus_minus': None}
+            ]
+        }
+        payload_1 = {
+            'save_id': 'test_save',
+            'run_id': 'unit_run_1',
+            'unit_id': 'unit_run_1',
+            'source_key': 'BOUND_TEST_1',
+            'observed_at': '2026-10-24T10:00:00Z',
+            'evidence_grade': 'RESEARCH_FIXTURE',
+            'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'},
+            'facts': facts_1,
+            'artifacts': [{'sha256': '1' * 64, 'payload_kind': 'TEST', 'payload_ref': 'test1.bin', 'byte_count': 10, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload_1)
+
+        # Ingest duplicate observation of same game in a second unit (observed later)
+        facts_2 = {
+            'player_game_boxes': [
+                {'game_id': 'game:test:1', 'player_id': 'player:test:1', 'team_id': 'team:test:1',
+                 'is_starter': 1, 'minutes_raw': 34, 'points': 24, 'fg_made': 9, 'fg_attempted': 18,
+                 'three_made': 2, 'three_attempted': 5, 'ft_made': 4, 'ft_attempted': 5,
+                 'offensive_rebounds': 2, 'defensive_rebounds': 6, 'assists': 7, 'steals': 2, 'blocks': 1,
+                 'turnovers': 3, 'fouls': 2, 'plus_minus': 5}
+            ]
+        }
+        payload_2 = {
+            'save_id': 'test_save',
+            'run_id': 'unit_run_2',
+            'unit_id': 'unit_run_2',
+            'source_key': 'BOUND_TEST_2',
+            'observed_at': '2026-10-24T12:00:00Z',
+            'evidence_grade': 'RESEARCH_FIXTURE',
+            'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'},
+            'facts': facts_2,
+            'artifacts': [{'sha256': '2' * 64, 'payload_kind': 'TEST', 'payload_ref': 'test2.bin', 'byte_count': 10, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload_2)
+
+        # Query player 1: should be exactly 1 deduplicated record from unit_run_2
+        log1 = player_game_log(self.db, 'player:test:1')
+        self.assertEqual(len(log1['records']), 1)
+        self.assertEqual(log1['records'][0]['unit_id'], 'unit_run_2')
+        self.assertFalse(log1['records'][0]['is_dnp'])
+        self.assertIsNotNone(log1['records'][0]['game_score'])
+
+        # Query player 2 (DNP): should have None for game_score and is_dnp True, points None
+        log2 = player_game_log(self.db, 'player:test:2')
+        self.assertEqual(len(log2['records']), 1)
+        rec2 = log2['records'][0]
+        self.assertTrue(rec2['is_dnp'])
+        self.assertIsNone(rec2['game_score'])
+        self.assertIsNone(rec2['points'])
+        self.assertIsNone(rec2['fg_pct'])
 
 
 if __name__ == '__main__':
