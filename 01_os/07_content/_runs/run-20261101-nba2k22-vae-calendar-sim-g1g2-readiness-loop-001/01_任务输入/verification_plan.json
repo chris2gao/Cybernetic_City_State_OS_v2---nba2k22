@@ -1,0 +1,51 @@
+{
+  "schema_version": "nba2k22.vae.calendar_sim_g1g2.verification.v1",
+  "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
+  "status": "NOT_RUN",
+  "checks": [
+    {
+      "id": "G01",
+      "test": "New final-game detection vs mere calendar date increment and same-state repeat."
+    },
+    {
+      "id": "G02",
+      "test": "Existing refresh-world invoked only once by opt-in trigger and stays source/save-bound, with failure-safe no duplicates."
+    },
+    {
+      "id": "G03",
+      "test": "Captured game/team/player keys match SQL query units, provenance, Calendar Sim mode and chronology."
+    },
+    {
+      "id": "G04",
+      "test": "Fail closed when running incomplete game, stale PID, process restart, uncertain save or mismatched checksum."
+    },
+    {
+      "id": "G05",
+      "test": "Dry-run/replay when no game; no resident monitoring started without Human authorization."
+    },
+    {
+      "id": "G06",
+      "test": "Two S0 game blocks compare only within matching Calendar Sim conditions; setting snapshot/readback not forged."
+    },
+    {
+      "id": "G07",
+      "test": "DNP/NULL/missing Touches/unknown Native remain unknown, no auto numeric zero or derived mislabel."
+    },
+    {
+      "id": "G08",
+      "test": "Existing 38 metric IDs remain intact, no direct game or protected branch writes."
+    },
+    {
+      "id": "G09",
+      "test": "Unit, fake Native reader, SQL staging and regression tests execute with real exit codes."
+    },
+    {
+      "id": "G10",
+      "test": "G1/G2 readiness per pilot is explicit at code/replay/live/SQL/post-intervention evidence level; no unsupported READY claims."
+    },
+    {
+      "id": "G11",
+      "test": "Remote branch diff, exact parent, permitted paths and completion pointer verified."
+    }
+  ]
+}
