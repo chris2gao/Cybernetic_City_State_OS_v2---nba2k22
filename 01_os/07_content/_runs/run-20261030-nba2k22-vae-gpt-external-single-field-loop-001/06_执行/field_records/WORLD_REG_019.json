@@ -1,0 +1,66 @@
+{
+  "field_id": "WORLD_REG_019",
+  "iteration_id": "SWEEP01_FIELD0118",
+  "research_date": "2026-11-01",
+  "primary_question": "Does the candidate contract_difficulty map to Contract Negotiation Difficulty for human offers, CPU offers, and acceptance thresholds, or another salary expectation control?",
+  "registry_candidate": {
+    "key": "settings.contracts.contract_difficulty",
+    "offset": "0x210",
+    "kind": "STATIC_REGISTRY_CANDIDATE",
+    "value_domain": "UNVERIFIED",
+    "UI_mapping": "UNKNOWN",
+    "engine_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021/22 release era",
+      "game": "NBA2K22",
+      "platform": "MyLeague/MyNBA PC specific source unknown",
+      "claim": "Lists Contract Negotiation Difficulty and CPU Re-Signing Aggressiveness as independent options",
+      "grade": "SAME_RELEASE_UI_LIST"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "DiamondLobby",
+      "date": "2022 release-era guide",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE exact PC build not proved",
+      "claim": "Explains changing player potential and non-financial ambitions during salary expectations and qualitative free agent behavior",
+      "grade": "SAME_RELEASE_UNCONTROLLED"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Contract Negotiation Difficulty 50 and re-signing aggression 50 reported as separate sliders; contracts left default",
+      "grade": "SAME_RELEASE_SETTINGS_OTHER_PLATFORM"
+    }
+  ],
+  "claims": [
+    "Same-release settings include a contract negotiation/nonfinancial ambition concept",
+    "NPC salary demand, negotiation difficulty, CPU resigning aggression and salary expectation sliders are distinct",
+    "No PC22 native pointer proof and no direction or response coefficient"
+  ],
+  "conflicts": [
+    "Salary expectations and player preferences are not the same as GM control/roster policy",
+    "User vs CPU franchise mode and platform may change behavior",
+    "Do not infer optimizer value from community settings"
+  ],
+  "metrics": [
+    "relative proposed contract salary/years vs player expected and native acceptance at fixed team finances",
+    "offers submitted and success separated from negotiated salaries",
+    "same role/ratings/team state and exact save/build"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_019",
+    "question": "For one current-build PC22 offline MyLEAGUE save, does read-only candidate 0x210 map to the exact settings.contracts.contract_difficulty UI value with immediate/delayed readback and no contract signing?",
+    "write": false
+  },
+  "result": "CONTRACT_SETTING_LABEL_SUPPORTED_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
