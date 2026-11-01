@@ -1,0 +1,2224 @@
+{
+  "schema_version": "nba2k22.vae.stage02.native_first_metric_requirements.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "policy": "Native game-computed same grain first; Reader coverage separate; derive only after game absence proven",
+  "never_infer": [
+    "USG equals Touches",
+    "FGA/36 equals play call probability",
+    "estimated possessions equals native Pace",
+    "NBA.com tracking implies 2K22 tracking",
+    "collector lacks data implies game lacks data"
+  ],
+  "metric_requirements": [
+    {
+      "metric_id": "PLAYER_FGA",
+      "definition": "Player FGA",
+      "unit": "attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "player_game_boxes:FGA",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_FGA",
+      "definition": "Team FGA",
+      "unit": "attempts",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:FGA",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_MINUTES",
+      "definition": "Player minutes with precision",
+      "unit": "minutes",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "player_game_boxes:minutes",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_PTS",
+      "definition": "Player points",
+      "unit": "points",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "player_game_boxes:points",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_AST",
+      "definition": "Player assists",
+      "unit": "assists",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "player_game_boxes:assists",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_FTA",
+      "definition": "Player FTA",
+      "unit": "attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "player_game_boxes:FTA",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_THREE_PA",
+      "definition": "Team 3PA",
+      "unit": "attempts",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:3PA",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_THREE_PM",
+      "definition": "Team 3PM",
+      "unit": "makes",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:3PM",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "OPPONENT_FGA",
+      "definition": "Opponent FGA",
+      "unit": "attempts",
+      "entity_grain": "team/opponent/game",
+      "observation_grain": "opponent/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:opponent FGA",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "OPPONENT_THREE_PA",
+      "definition": "Opponent 3PA",
+      "unit": "attempts",
+      "entity_grain": "team/opponent/game",
+      "observation_grain": "opponent/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:opponent 3PA",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "OPPONENT_FG_PCT",
+      "definition": "Opponent game FG%",
+      "unit": "percent",
+      "entity_grain": "team/opponent/game",
+      "observation_grain": "opponent/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_TOV",
+      "definition": "Team turnovers",
+      "unit": "count",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:TOV",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_STL",
+      "definition": "Team steals",
+      "unit": "count",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:STL",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_OREB",
+      "definition": "Team OREB",
+      "unit": "rebounds",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:OREB",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_DREB",
+      "definition": "Team DREB",
+      "unit": "rebounds",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Completed Game Box → player/team",
+        "Schedule → completed match → Box"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "team_game_boxes:DREB",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "GAME_PERIOD_SCORES",
+      "definition": "Period final points including OT",
+      "unit": "points",
+      "entity_grain": "team/period/game",
+      "observation_grain": "period/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Game Details → period scores",
+        "Calendar score"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "game_period_scores",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_USG_NATIVE",
+      "definition": "Game-native USG%, not Touches",
+      "unit": "percent",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_PER36_NATIVE",
+      "definition": "Game-native Per36 exact rounding",
+      "unit": "per36",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_PERGAME_NATIVE",
+      "definition": "Game-native Per Game stats and GP rule",
+      "unit": "pergame",
+      "entity_grain": "player/season",
+      "observation_grain": "season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_PACE_NATIVE",
+      "definition": "Game-native Pace, not estimated possessions",
+      "unit": "possessions-per48-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_OFFRTG_NATIVE",
+      "definition": "Game-native OffRtg",
+      "unit": "points-per100-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_DEFRTG_NATIVE",
+      "definition": "Game-native DefRtg",
+      "unit": "points-per100-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_NETRTG_NATIVE",
+      "definition": "Game-native NetRtg",
+      "unit": "points-per100-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_TS_NATIVE",
+      "definition": "Game-native TS% exact engine definition",
+      "unit": "percent",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_EFG_NATIVE",
+      "definition": "Game-native eFG% exact engine definition",
+      "unit": "percent",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Stats / Advanced / Per Game / Per36 (tab/field to confirm)",
+        "Team / League Advanced candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_SHOT_ZONES",
+      "definition": "Player zone chart makes and attempts",
+      "unit": "makes-attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Shot Chart / Zones (PC22 UI mapping unknown)",
+        "Game shooting breakdown candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "OPPONENT_PAINT_FGA",
+      "definition": "Opponent paint/rim attempts (zones not 2PA)",
+      "unit": "attempts",
+      "entity_grain": "opponent/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Shot Chart / Zones (PC22 UI mapping unknown)",
+        "Game shooting breakdown candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_PAINT_FGA",
+      "definition": "Player paint/rim attempts",
+      "unit": "attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card → Shot Chart / Zones (PC22 UI mapping unknown)",
+        "Game shooting breakdown candidate"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "OFFENSE_ACTION_TAGS",
+      "definition": "True Spot Up/Off Screen/Post/PnR events",
+      "unit": "events",
+      "entity_grain": "player/possession",
+      "observation_grain": "possession",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "PC22 game-native event/REA getter discovery; may be unavailable",
+        "Do not import NBA.com tracking as game-native"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "MET_TOUCHES_NATIVE",
+      "definition": "Actual received touches vs tendency",
+      "unit": "touches",
+      "entity_grain": "player/possession",
+      "observation_grain": "possession",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "PC22 game-native event/REA getter discovery; may be unavailable",
+        "Do not import NBA.com tracking as game-native"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_TRANSITION_POINTS",
+      "definition": "Game-native fastbreak points",
+      "unit": "points",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Team Stats / Game details candidate",
+        "PC22 exact label to confirm"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "TEAM_SECOND_CHANCE_POINTS",
+      "definition": "Game-native second-chance points",
+      "unit": "points",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Team Stats / Game details candidate",
+        "PC22 exact label to confirm"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_FATIGUE_STATE",
+      "definition": "Timestamped in-game stamina/fatigue",
+      "unit": "stamina-units-unknown",
+      "entity_grain": "player/timestamp/period",
+      "observation_grain": "timestamp/period",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player stamina visual and Native Getter candidate in 3D",
+        "Clock timestamp required"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "ROTATION_ACTUAL",
+      "definition": "Actual minutes and lineup presence",
+      "unit": "minutes",
+      "entity_grain": "team/player/game",
+      "observation_grain": "player/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "v24 lineups and native rotation; actual presence not confirmed",
+        "Game substitution events if native"
+      ],
+      "specific_game_native_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "NATIVE_PLAYCALL_EVENTS",
+      "definition": "Executed play/active Freelance event",
+      "unit": "event-ID",
+      "entity_grain": "team/possession",
+      "observation_grain": "possession",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "PC22 game-native event/REA getter discovery; may be unavailable",
+        "Do not import NBA.com tracking as game-native"
+      ],
+      "specific_game_native_status": "NATIVE_DISCOVERY_REQUIRED",
+      "reader_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "NATIVE_INJURY_STATE",
+      "definition": "Injury state of player",
+      "unit": "status-days",
+      "entity_grain": "player/current",
+      "observation_grain": "current",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card and v24 player-state/player-skills sources",
+        "Old-save only until current readback"
+      ],
+      "specific_game_native_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "PLAYER_ATTRIBUTE_SNAPSHOT",
+      "definition": "Native player attribute sample",
+      "unit": "native-units",
+      "entity_grain": "player/current-or-season",
+      "observation_grain": "current-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Player Card and v24 player-state/player-skills sources",
+        "Old-save only until current readback"
+      ],
+      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_candidate_path": "player_attribute_snapshots",
+      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    },
+    {
+      "metric_id": "SCORE_DISPLAY_CONSISTENCY",
+      "definition": "Calendar/Box/end-screen score same game",
+      "unit": "points",
+      "entity_grain": "game/team",
+      "observation_grain": "team",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "native_source_priority": "FIRST",
+      "native_discovery_candidates": [
+        "Calendar, Box, end screen separately",
+        "Both normalize toggles and mode recorded"
+      ],
+      "specific_game_native_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_candidate_path": null,
+      "reader_scope": null,
+      "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
+      "required_next_read": [
+        "Verify native PC22 exact UI label and source getter for same save/build/player/game",
+        "Preserve raw unit, precision, DNP and mode-specific definition",
+        "Check WorldData source and freshness independently of native existence"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      },
+      "source_refs": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+        }
+      ],
+      "unknowns": [
+        "No current game observation in Stage02",
+        "No native computed advanced column certified by Human category statement alone"
+      ]
+    }
+  ],
+  "action_behavior_metric_requirements": [
+    {
+      "case_id": "FGA_ALLOCATION",
+      "field_id": "TENDENCY_NATIVE_001",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Core FGA and usage",
+      "metric_ids": [
+        "PLAYER_FGA",
+        "PLAYER_MINUTES",
+        "PLAYER_USG_NATIVE"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "TOUCHES_VS_SHOT",
+      "field_id": "TENDENCY_NATIVE_066",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Touches vs Shot",
+      "metric_ids": [
+        "MET_TOUCHES_NATIVE",
+        "PLAYER_FGA",
+        "PLAYER_USG_NATIVE"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "THREE_AND_SPOTUP",
+      "field_id": "COACH_DEFAULT_011",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "3PA vs action type",
+      "metric_ids": [
+        "TEAM_THREE_PA",
+        "OFFENSE_ACTION_TAGS",
+        "PLAYER_SHOT_ZONES"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "DRIVE_PAINT",
+      "field_id": "TENDENCY_NATIVE_002",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Drive foul/paint/midrange",
+      "metric_ids": [
+        "PLAYER_PAINT_FGA",
+        "PLAYER_FTA",
+        "PLAYER_SHOT_ZONES"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "POST_PNR",
+      "field_id": "COACH_DEFAULT_001",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Post Up and PnR Roll/Pop",
+      "metric_ids": [
+        "OFFENSE_ACTION_TAGS",
+        "PLAYER_FGA"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "OFFENSE_POE",
+      "field_id": "COACH_DEFAULT_001",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "POE, playbook, freelance and actual actions",
+      "metric_ids": [
+        "NATIVE_PLAYCALL_EVENTS",
+        "PLAYER_FGA"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "TEMPO_TRANSITION",
+      "field_id": "COACH_DEFAULT_014",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Tempo and transition",
+      "metric_ids": [
+        "TEAM_PACE_NATIVE",
+        "TEAM_TRANSITION_POINTS"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "BENCH_ROTATION",
+      "field_id": "COACH_DEFAULT_010",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Depth/utilization and fatigue",
+      "metric_ids": [
+        "PLAYER_MINUTES",
+        "ROTATION_ACTUAL",
+        "PLAYER_FATIGUE_STATE"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "HELPDEF",
+      "field_id": "COACH_DEFAULT_015",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Help, paint and perimeter",
+      "metric_ids": [
+        "OPPONENT_THREE_PA",
+        "OPPONENT_PAINT_FGA"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "PAINT_ARC",
+      "field_id": "COACH_DEFAULT_004",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Rim vs arc protection",
+      "metric_ids": [
+        "OPPONENT_PAINT_FGA",
+        "OPPONENT_THREE_PA"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "TURNOVER_PRESS",
+      "field_id": "COACH_DEFAULT_005",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Defensive pressure vs turnovers",
+      "metric_ids": [
+        "TEAM_TOV",
+        "TEAM_STL"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "REBOUND_TRADEOFF",
+      "field_id": "COACH_DEFAULT_003",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "OReb vs retreat and DReb",
+      "metric_ids": [
+        "TEAM_OREB",
+        "TEAM_DREB",
+        "TEAM_SECOND_CHANCE_POINTS"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "ENGINE_SPLIT",
+      "field_id": "WORLD_REG_083",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "3D versus Calendar",
+      "metric_ids": [
+        "PLAYER_FGA",
+        "TEAM_PACE_NATIVE"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "NORMALIZATION",
+      "field_id": "WORLD_REG_084",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Quarter and two normalize flags",
+      "metric_ids": [
+        "GAME_PERIOD_SCORES",
+        "SCORE_DISPLAY_CONSISTENCY"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "SHOT_EFFICIENCY",
+      "field_id": "TENDENCY_NATIVE_001",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Shot selection versus shot percentage",
+      "metric_ids": [
+        "PLAYER_TS_NATIVE",
+        "PLAYER_EFG_NATIVE"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    },
+    {
+      "case_id": "PROGRESSION",
+      "field_id": "WORLD_REG_067",
+      "action_status": "READ_ONLY_REQUIREMENT_NOT_AUTHORIZED_SETTING_ACTION",
+      "information": "Setting/native identity + behavior + save/game context + game-native metric",
+      "behavior_hypothesis": "Progression and real improvement",
+      "metric_ids": [
+        "PLAYER_ATTRIBUTE_SNAPSHOT",
+        "PLAYER_PERGAME_NATIVE"
+      ],
+      "evidence_grade": "HYPOTHESIS_NOT_CONTROLLED_CAUSAL",
+      "control_requirements": [
+        "game mode",
+        "save/build",
+        "game ID",
+        "minutes",
+        "opponent",
+        "roster/health",
+        "season/phase",
+        "quarter length",
+        "sim quarter length",
+        "Normalize Stats",
+        "Normalize Played Minutes",
+        "ACE"
+      ]
+    }
+  ]
+}
