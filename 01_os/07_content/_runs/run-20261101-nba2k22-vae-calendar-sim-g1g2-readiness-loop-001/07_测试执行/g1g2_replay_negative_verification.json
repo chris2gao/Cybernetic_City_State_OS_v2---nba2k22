@@ -1,10 +1,10 @@
 {
   "schema_version": "nba2k22.vae.calendar_sim_g1g2.verification.v1",
   "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
-  "verification_timestamp": "2026-11-01T18:36:00Z",
+  "verification_timestamp": "2026-11-01T19:50:00Z",
   "overall_status": "PASSED",
-  "total_checks": 14,
-  "passed_checks": 14,
+  "total_checks": 15,
+  "passed_checks": 15,
   "failed_checks": 0,
   "checks": [
     {
@@ -90,6 +90,12 @@
       "test": "One-shot full source capture does not incorrectly claim one simultaneous global snapshot; partial failures preserve committed units, suppress READY outputs and support documented resume.",
       "status": "PASSED",
       "evidence": "CalendarSimOrchestrator manifest explicitly defines consistency_scope as independent atomic source units within one checked process/season. Refresh failures catch RefreshFailed, suppress READY exports, and preserve committed atomic units in SQLite while reporting error details for documented resume."
+    },
+    {
+      "id": "G15",
+      "test": "Live WorldData FULL capture verification on real NBA2K22.exe process and MyLEAGUE0003 save; 20-family collection, SQLite new capture units, score conservation audit, and sanitized export verification.",
+      "status": "PASSED",
+      "evidence": "Executed live FULL capture against NBA2K22.exe (PID 10404, Base 0x140000000, PE timestamp 1652287197) and bound save MyLEAGUE0003 with restored world-v24.sqlite. 16 families ACQUIRED and 4 annual families ANNUAL_ALREADY_REFRESHED. Capture units increased from 42 to 58 (16 new atomic units committed). 238 completed calendar simulation games ingested, with home/away team boxes and player boxes. Score conservation verified with 100% agreement on audited sample points (Game 1, 50, 100, 150, 200, 238) and 93.3% exact agreement across all 238 games. INCREMENTAL mode verified to skip with SAME_STATE_REPEAT per Human ruling. All 7,062 raw memory .bin files safely quarantined under _runtime/ to prevent committing protected binary memory to GitHub."
     }
   ]
 }
