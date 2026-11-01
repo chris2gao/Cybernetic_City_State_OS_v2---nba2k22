@@ -154,9 +154,20 @@ def schedule_facts(found,season,selected_native_ids):
             'overtime_count':g['overtime_count'],'attendance':g['attendance'],'was_simulated':int(g['was_simulated']),
             'score_provenance':'NATIVE_PERIOD_AND_DERIVED_BOX_CONSERVATION; TOTAL_FIELD_NOT_OBSERVED'})
         for side in ('home','away'):
+            other_side='away' if side=='home' else 'home'
             native_team=g[side+'_team_id'];team=tid(native_team)
+            team_players=g[side+'_players']
+            team_totals={'points':g[side+'_score'],'plus_minus':g[side+'_score']-g[other_side+'_score'],
+                         'minutes_raw':240+g.get('overtime_count',0)*25,
+                         'fg_made':sum(p['fgm'] for p in team_players),'fg_attempted':sum(p['fga'] for p in team_players),
+                         'three_made':sum(p['tpm'] for p in team_players),'three_attempted':sum(p['tpa'] for p in team_players),
+                         'ft_made':sum(p['ftm'] for p in team_players),'ft_attempted':sum(p['fta'] for p in team_players),
+                         'offensive_rebounds':sum(p['oreb'] for p in team_players),'defensive_rebounds':sum(p['dreb'] for p in team_players),
+                         'assists':sum(p['ast'] for p in team_players),'steals':sum(p['stl'] for p in team_players),
+                         'blocks':sum(p['blk'] for p in team_players),'turnovers':sum(p['tov'] for p in team_players),
+                         'fouls':sum(p['fouls'] for p in team_players)}
             facts['game_period_scores'].extend({'game_id':gid,'team_id':team,'period_index':q,'period_points':g['linescore'][side]['q'+str(q)]} for q in range(1,5))
-            facts['team_game_boxes'].append({'game_id':gid,'team_id':team,**{new:int(g['boxscore_meta'][side+'_'+old]) for old,new in
+            facts['team_game_boxes'].append({'game_id':gid,'team_id':team,**team_totals,**{new:int(g['boxscore_meta'][side+'_'+old]) for old,new in
                 (('fastbreak','fastbreak_points'),('paint','paint_points'),('2nd_chance','second_chance_points'),('pts_off_to','points_off_turnovers'),('lead','largest_lead'),('possessions','possessions_raw'))}})
             for row,p in enumerate(g[side+'_players']):
                 stats={new:p[old] for old,new in STAT_MAP.items()};resolved=p['in_use'] and p['player_id'] in selected_native_ids
