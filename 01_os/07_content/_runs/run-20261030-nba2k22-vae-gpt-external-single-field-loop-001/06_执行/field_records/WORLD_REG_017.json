@@ -1,0 +1,70 @@
+{
+  "field_id": "WORLD_REG_017",
+  "iteration_id": "SWEEP01_FIELD0116",
+  "date": "2026-11-01",
+  "question": "Does Blockbuster Trade Frequency select high-impact CPU-CPU transaction opportunities distinct from overall Trade Frequency, and is this option actually exposed in PC22?",
+  "candidate": {
+    "key": "settings.trade_rules.blockbuster_trade_frequency",
+    "offset": "0x17C",
+    "kind": "STATIC_REGISTRY_CANDIDATE",
+    "range_project": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-10/12",
+      "version": "NBA2K22",
+      "platform": "PS5, PC unknown",
+      "claim": "Describes Trade Frequency and Untouchable Premium, plus separate Untouchables automation list",
+      "grade": "SAME_VERSION_DIFFERENT_UI_CONCEPTS"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/678046-nba-2k15-official-myleague-mygm-thread/page41",
+      "author": "Operation Sports NBA2K15 contributor",
+      "date": "2014",
+      "version": "NBA2K15 not NBA2K22",
+      "platform": "legacy",
+      "claim": "Lists Blockbuster Trade Frequency independent of general Trade Frequency",
+      "grade": "CROSS_VERSION_ONLY"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "DiamondLobby",
+      "date": "2022-04 era",
+      "version": "NBA2K22",
+      "platform": "MyLeague/PC mapping unknown",
+      "claim": "Untouchable stars, player fame trade value and team valuation settings distinct",
+      "grade": "SAME_GAME_GUIDE"
+    }
+  ],
+  "claims": [
+    "Contextual labels and trade valuation are observable externally; offset still unverified",
+    "NBA2K15 specifically names this slider; 2K22 same-name not confirmed, cannot transport a 2014 semantic formula"
+  ],
+  "conflicts": [
+    "Original game CPU behavior versus external GM execution are separate",
+    "Trade override, frequency, player value and approval confound outcomes",
+    "PS5 and old 2K title are not PC22 binary address proofs"
+  ],
+  "metrics": [
+    "completed high-impact CPU-CPU trades / all eligible CPU transactions",
+    "trade frequency and proposal acceptance separately",
+    "player flags and team strategy tracked separately"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_017",
+    "question": "For current PC22 MyLEAGUE save, does read-only registry candidate 0x17C uniquely correspond to settings.trade_rules.blockbuster_trade_frequency in exact UI plus immediate/delayed readback, distinguishing similarly named settings?",
+    "write": false,
+    "if_no_match": "UNKNOWN"
+  },
+  "result": "SETTING_IDENTITY_AMBIGUOUS_NO_NATIVE_EFFECT",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
