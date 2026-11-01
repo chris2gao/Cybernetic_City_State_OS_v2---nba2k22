@@ -80,3 +80,14 @@ Human已经确定：**先只用Calendar Sim作设置影响的标准；3D真实�
 独立审核延迟至VAE系列集中审核，但在后续使用此接口发起自动设置修改前，须按已批准的风险门做关键子集确认并获得Human授权。
 
 请先读取当前分支实际HEAD和原任务包，从A0开始执行内部Loop。
+
+## Human 再确认：必须继承第一阶段 WorldData 一键采集架构（较本任务之前的 A1 描述优先）
+
+**在执行A0前先读取**：`01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/01_任务输入/worlddata_architecture_one_click_addendum.md`。该补充已同步写入本Run的 `task_packet.json` 和 `verification_plan.json`，体现 Human 进一步明确的**人工触发一次、本地脚本全自动完成**原则。
+
+- **改正此前的侧重点**：不需要为此单独开发后台监听/游戏事件Watcher；Human会在需要时主动触发一键采集。A1应是WorldData既有`refresh-world auto`的薄包装/可复用CLI。自动化在于一键完成20族受控来源采集、入库校验和固定VAE SQL导出，无需在每次触发时调用Gemini或消耗模型额度。
+- **原架构是刚性约束**：v24单存档SQLite、100 STRICT表/1775列、20族（16 ordinary + 4 annual）、`SOURCES`采集顺序、独立Atomic Source Unit、`capture_runs/units/artifacts`、Append-only历史、数据字典、已有`query-facts/export-filtered`及过滤/来源权限。新增字段在原Reader/Schema/Query结构内扩展，不新造数据库或采集体系。
+- **新增固定提取层**：仅以版本化SQL/查询配置为基础，让一键脚本直接从当前本地数据库输出三个完整带Manifest的VAE标准化数据集：Calendar Sim逐场球员球队指标、设置环境只读快照、实验前后指标合同输入。旧数据保持原样；新数据按Game/Season/Save/Mode/Unit与时间/来源绑定；UNKNOWN和衍生字段不能伪装Native。
+- **就绪仍严格分级**：Fixture/SQL成功不等于真实新比赛经一键采集成功；未获Human授权，不实机运行触发/读取、修改设置或推进日历；无实时数据时记录`LIVE_VALIDATION_PENDING`。
+
+其余 A0–A4、权限、内部开发Loop、系列审核与正式Workflow边界不变。**本项目的自动化是用户主动触发、程序独立运行；不是模型一直值守。**
