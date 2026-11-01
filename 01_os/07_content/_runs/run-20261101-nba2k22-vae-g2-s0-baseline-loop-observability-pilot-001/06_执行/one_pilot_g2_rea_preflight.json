@@ -1,0 +1,131 @@
+{
+  "schema_version": "nba2k22.vae.g2.one_pilot_preflight.v1",
+  "task_id": "NBA2K22-VAE-G2-S0-BASELINE-LOOP-OBSERVABILITY-20261101-001",
+  "pilot_id": "PILOT_01_SHOT_TOUCHES",
+  "pilot_title": "Player Shot Tendency (TENDENCY_NATIVE_001) Impact on FGA and Scoring Volume under Calendar Sim",
+  "target_subject": {
+    "player_id": "player:native:2459",
+    "player_name": "Damian Lillard",
+    "team_id": "team:native:28",
+    "team_name": "Portland Trail Blazers",
+    "division": "Northwest Division",
+    "conference": "Western Conference",
+    "position": "PG",
+    "jersey_number": 0
+  },
+  "native_setting_definition": {
+    "setting_field_id": "TENDENCY_NATIVE_001",
+    "canonical_name": "ShotTendency",
+    "memory_struct": "PlayerData",
+    "byte_offset": "0x458",
+    "data_type": "uint8",
+    "scale": "0-100 integer",
+    "baseline_s0_value": 95,
+    "associated_fields": [
+      {
+        "setting_field_id": "TENDENCY_NATIVE_066",
+        "canonical_name": "TouchesTendency",
+        "memory_struct": "PlayerData",
+        "byte_offset": "0x499",
+        "data_type": "uint8",
+        "scale": "0-100 integer",
+        "baseline_s0_value": 99,
+        "notes": "Touches tendency represents the player's propensity to demand the ball; in static tables, touches rate is proxy-monitored via ePOSS and FGA."
+      },
+      {
+        "setting_field_id": "COACH_DEFAULT_001",
+        "canonical_name": "CoachRunPlays",
+        "memory_struct": "TeamTactics",
+        "baseline_s0_value": 70,
+        "notes": "Team offensive tactic setting. Kept static across observation epochs."
+      }
+    ]
+  },
+  "rea_readback_protocol": {
+    "getter_evidence": {
+      "method": "READ_PROCESS_MEMORY_EXACT_OFFSET",
+      "source_specification": "08_PLAYER_TENDENCY_GUIDE.md (Offset 0x458) & PE disassembled PlayerData struct",
+      "readback_status": "PROVEN_NATIVE_READBACK",
+      "snapshot_verification": "Captured in player_tendency_snapshots table with value=95 at unit_id organization:7f4479ff59245a9cd65fbd2a"
+    },
+    "setter_contract_boundary": {
+      "setter_method": "WRITE_PROCESS_MEMORY_OR_GAME_UI",
+      "authorization_status": "NOT_AUTHORIZED_IN_EXECUTION_RUN",
+      "game_mutation_policy": "STRICT_READ_ONLY",
+      "safety_rationale": "Direct memory writes risk state corruption or crash without official game UI synchronization. All actual game mutations must be executed during human-authorized gameplay windows."
+    }
+  },
+  "proposed_s1_intervention": {
+    "intervention_id": "INT_PILOT01_LILLARD_SHOT_MINUS15",
+    "target_field_id": "TENDENCY_NATIVE_001",
+    "current_s0_value": 95,
+    "proposed_s1_value": 80,
+    "delta": -15,
+    "pct_change": -15.79,
+    "execution_status": "PENDING_HUMAN_GAMEPLAY",
+    "implementation_instruction": "In NBA2K22 Edit Player menu (or designated REA setter tool under supervision), navigate to Damian Lillard -> Tendencies -> Shot Tendency, decrement value from 95 to 80, save roster/savefile, and confirm REA memory readback reads 80."
+  },
+  "experimental_design": {
+    "s0_phase": {
+      "description": "Unmodified baseline epoch",
+      "condition": "Shot Tendency = 95, Touches Tendency = 99",
+      "sample_size": 16,
+      "mean_fga": 19.875,
+      "mean_pts": 29.562,
+      "mean_minutes": 36.375,
+      "mean_ts_pct": 0.663,
+      "all_games_score_conserved": true
+    },
+    "s1_phase": {
+      "description": "Setting modification epoch",
+      "condition": "Shot Tendency set to 80; Touches Tendency remains 99; all other tactics static",
+      "execution": "Manual UI or authorized setter"
+    },
+    "s2_phase": {
+      "description": "Post-intervention observation epoch",
+      "condition": "Calendar Sim next >= 10 games under identical season settings",
+      "sample_size_requirement": 10,
+      "data_extraction": "Full WorldData capture with score reconciliation and player box extraction"
+    }
+  },
+  "hypothesis_and_falsification": {
+    "hypothesis_statement": "Under Calendar Sim, a 15-point reduction in Damian Lillard's Shot Tendency (95 -> 80) will lead to a statistically measurable decrease in per-game field goal attempts (mean FGA < 19.88) while maintaining comparable minutes per game (> 34.0 MPG).",
+    "confidence_level": "MODERATE",
+    "falsification_criteria": [
+      "FALSIFICATION_1: If post-intervention mean FGA over >= 10 games is >= 19.88, the hypothesis that Shot Tendency positively scales simulated FGA volume is refuted.",
+      "FALSIFICATION_2: If two-sample Welch's t-test comparing S0 and S2 FGA yields p-value > 0.05, the observed difference cannot be distinguished from random simulation noise, and the effect is deemed inconclusive.",
+      "FALSIFICATION_3: If Lillard's average minutes shift by > 3.0 MPG (due to injury, foul trouble, or rotation change), the volume difference is confounded by playing time and cannot be attributed to tendency adjustment."
+    ],
+    "no_causal_overreach_clause": "Observational correlation in simulated outcomes does not imply exclusive mono-causality. NBA2K22 Calendar Sim contains coupled multi-variable interactions including team pace, opposing defensive ratings, coach gameplan, and secondary scorer tendencies."
+  },
+  "control_group_and_covariates": {
+    "matched_controls": [
+      {
+        "team_id": "team:native:19",
+        "team_name": "Denver Nuggets",
+        "anchor_player": "Nikola Jokic",
+        "role": "Same-division offensive anchor; unmodified tendency control"
+      },
+      {
+        "team_id": "team:native:14",
+        "team_name": "Minnesota Timberwolves",
+        "anchor_player": "Karl-Anthony Towns",
+        "role": "Same-division offensive anchor; unmodified tendency control"
+      },
+      {
+        "team_id": "team:native:30",
+        "team_name": "Utah Jazz",
+        "anchor_player": "Donovan Mitchell",
+        "role": "Same-division scoring guard; unmodified tendency control"
+      }
+    ],
+    "monitored_covariates": [
+      "Team offensive pace (team_possessions_raw)",
+      "Coach Run Plays setting (run_plays_raw = 70)",
+      "Coach Tempo setting (tempo_raw = 80)",
+      "Teammate CJ McCollum FGA and minutes (secondary scorer absorption)",
+      "Injury / health status"
+    ]
+  },
+  "preflight_verdict": "READY_FOR_HUMAN_GAMEPLAY_INTERVENTION"
+}
