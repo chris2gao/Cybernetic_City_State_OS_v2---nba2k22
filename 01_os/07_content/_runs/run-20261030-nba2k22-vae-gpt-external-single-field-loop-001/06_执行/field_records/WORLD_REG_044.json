@@ -1,0 +1,58 @@
+{
+  "field_id": "WORLD_REG_044",
+  "iteration_id": "SWEEP01_FIELD0143",
+  "question": "Does User max-rating dribble movement speed respond to this slider independently from player Speed With Ball, Game Speed and User minimum endpoint?",
+  "candidate": {
+    "key": "settings.gameplay_sliders.speed_with_ball_max_user",
+    "offset": "0x374",
+    "project_declared_raw_range": [
+      0,
+      1
+    ],
+    "UI_display_domain": "0–100 reported externally, not verified PC22 current screen",
+    "storage_encoding": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=yMGZbgeqqSM",
+      "author": "Shady Mike Gaming",
+      "date": "2021-10-31",
+      "version": "NBA2K22",
+      "platform": "PC mentioned for movement",
+      "claim": "Reports speed-with-ball changes apparently not working on PC despite recommended slider values",
+      "grade": "SAME_RELEASE_PC_ANECTODE"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "DiamondLobby",
+      "date": "NBA2K22 release era",
+      "version": "NBA2K22",
+      "platform": "platform not isolated",
+      "claim": "Lists separate User/CPU with-ball speed and acceleration Max/Min rating sliders",
+      "grade": "SAME_GAME_UI"
+    }
+  ],
+  "claims": [
+    "Same-release movement slider name found; no demonstrated mapping to raw 0x374",
+    "0–1 project range could be normalized storage rather than user-facing units; remains unknown"
+  ],
+  "conflicts": [
+    "PC author suggests certain settings did not change motion; community slider recommendations are not experiments",
+    "Min/Max endpoints and User/CPU sides must not be conflated",
+    "With-ball motion can be animation-limited and frame-drop-confounded"
+  ],
+  "metrics": [
+    "distance after fixed game-clock interval at matched rating and player UID",
+    "compare against equivalent CPU/User and Min/Max endpoints",
+    "control on-court game clock, in-game FPS and camera"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_044",
+    "question": "Does read-only PC22 world settings+0x374 equal visible speed_with_ball_max_user control and decode values independently from adjacent movement controls, without writing settings?",
+    "write": false
+  },
+  "result": "2K22_NAMED_MOVEMENT_PC_EFFECT_DISPUTED_OFFSET_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
