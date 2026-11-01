@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_079",
+  "iteration_id": "SWEEP01_FIELD0178",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x240 represent PC22 Chemistry Difficulty rather than team chemistry state or its performance effects?",
+  "candidate": {
+    "key": "world.injuries_and_morale.chemistry_difficulty",
+    "offset": "0x240",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "ui_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_036",
+    "physical_alias_verified": false
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021/22 original; page later updated",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE guides, exact PC22 menu not documented",
+      "grade": "SAME_RELEASE_MENU_REFERENCE",
+      "claim": "NBA2K22 difficulty sliders table lists Chemistry Difficulty 50."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword / Operation Sports",
+      "date": "2021-10-25",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX MyNBA, not PC current-gen",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "PS5 2K22 author also shows Chemistry Difficulty 50, but is not PC build mapping."
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/o8dbbi",
+      "author": "r/NBA2k commenters",
+      "date": "2021-06-26",
+      "version": "NBA 2K21-era current-gen",
+      "platform": "Current-gen MyLEAGUE, before NBA2K22 release",
+      "grade": "CROSS_VERSION_COMMUNITY",
+      "claim": "Previous-game community discussion distinguishes morale settings from chemistry, cross-version context."
+    }
+  ],
+  "claims": [
+    "Chemistry Difficulty: named same-release menu supported to varying degrees, not validated raw candidate or native effect.",
+    "Previous WORLD_REG_036 shares candidate SLOT_TRADE offset but this is a source registry duplication, not a proven physical alias."
+  ],
+  "conflicts": [
+    "This candidate might govern chemistry progression, but no simulation/3D consumer or numerical slope is proven.",
+    "PS5 and older-game UI references cannot certify PC22 current-gen exact source mapping."
+  ],
+  "metrics": [
+    "exact PC22 UI name/value and game mode",
+    "two same-save read-only candidate reads with slot and build identity",
+    "separate state, effect, setting and calendar versus 3D consumers"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_79",
+    "question": "Can current-gen PC22 Chemistry Difficulty UI and two stable raw +0x240 reads correlate with source settings counterpart WORLD_REG_036 without advancing calendar?",
+    "write": false,
+    "expected": "two read-only UI/raw correlations or UNKNOWN",
+    "confounders": [
+      "This candidate might govern chemistry progression, but no simulation/3D consumer or numerical slope is proven."
+    ]
+  },
+  "result": "SAME_RELEASE_UI_OR_GAMEPLAY_SOURCE_NATIVE_MAPPING_UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

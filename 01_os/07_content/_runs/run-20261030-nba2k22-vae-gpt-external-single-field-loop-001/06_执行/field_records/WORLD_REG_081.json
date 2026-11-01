@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_081",
+  "iteration_id": "SWEEP01_FIELD0180",
+  "date": "2026-11-01",
+  "primary_question": "Does candidate +0xF0 represent PC22 global Injuries enable toggle, distinct from frequency/effects and Use Roster Injuries?",
+  "candidate": {
+    "key": "world.injuries_and_morale.injuries_enabled",
+    "offset": "0xF0",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "ui_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_006",
+    "physical_alias_verified": false
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8 / Operation Sports",
+      "date": "2021/22 era, exact post date unverified",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE slider setup, PC unconfirmed",
+      "grade": "SAME_RELEASE_INJURY_TOGGLE",
+      "claim": "2K22 MyLeague settings post explicitly lists Injuries On separately from Injury Frequency and Career-Ending Injury Frequency."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-rosters/920138-import-rosters-with-injuries",
+      "author": "crazycarlxu11 and forum replies",
+      "date": "2022-01-06 to 2022-01-15",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE Online vs advanced MyNBA, not standalone PC22",
+      "grade": "SAME_RELEASE_MODE_CONTRAST",
+      "claim": "Jan 2022 players distinguish Use Roster Injuries advanced setup and MyLeague Online behavior."
+    },
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021/22 original; page later updated",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE guides, exact PC22 menu not documented",
+      "grade": "SAME_RELEASE_MENU_REFERENCE",
+      "claim": "2K22 generic sliders lists user and CPU injury frequencies/effects but not a verified binary address."
+    }
+  ],
+  "claims": [
+    "Injuries Enabled: named same-release menu supported to varying degrees, not validated raw candidate or native effect.",
+    "Previous WORLD_REG_006 shares candidate SLOT_TRADE offset but this is a source registry duplication, not a proven physical alias."
+  ],
+  "conflicts": [
+    "Enabled toggle, imported starting injury state, physical occurrence in real games and calendar simulation must not be conflated.",
+    "PS5 and older-game UI references cannot certify PC22 current-gen exact source mapping."
+  ],
+  "metrics": [
+    "exact PC22 UI name/value and game mode",
+    "two same-save read-only candidate reads with slot and build identity",
+    "separate state, effect, setting and calendar versus 3D consumers"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_81",
+    "question": "Can PC22 read-only Injuries toggle UI and registered +0xF0 be matched twice while differentiating inherited roster injuries, without triggering simulation?",
+    "write": false,
+    "expected": "two read-only UI/raw correlations or UNKNOWN",
+    "confounders": [
+      "Enabled toggle, imported starting injury state, physical occurrence in real games and calendar simulation must not be conflated."
+    ]
+  },
+  "result": "SAME_RELEASE_UI_OR_GAMEPLAY_SOURCE_NATIVE_MAPPING_UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_080",
+  "iteration_id": "SWEEP01_FIELD0179",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x244 match PC22 Chemistry Effects, not Chemistry Difficulty or a team's actual chemistry level?",
+  "candidate": {
+    "key": "world.injuries_and_morale.chemistry_effects",
+    "offset": "0x244",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "ui_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_037",
+    "physical_alias_verified": false
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021/22 original; page later updated",
+      "version": "NBA 2K22",
+      "platform": "MyNBA/MyLEAGUE guides, exact PC22 menu not documented",
+      "grade": "SAME_RELEASE_MENU_REFERENCE",
+      "claim": "2K22 article lists Chemistry Effects 100 editorial, independent of difficulty."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword / Operation Sports",
+      "date": "2021-10-25",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX MyNBA, not PC current-gen",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "2K22 PS5 user selected Chemistry Effects 50; no single optimal value."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8 / Operation Sports",
+      "date": "2021/22 era, exact post date unverified",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE slider setup, PC unconfirmed",
+      "grade": "SAME_RELEASE_INJURY_TOGGLE",
+      "claim": "2K22 shared settings describes Team Chemistry Off and franchise sliders, context does not prove a particular Chemistry Effects byte."
+    }
+  ],
+  "claims": [
+    "Chemistry Effects: named same-release menu supported to varying degrees, not validated raw candidate or native effect.",
+    "Previous WORLD_REG_037 shares candidate SLOT_TRADE offset but this is a source registry duplication, not a proven physical alias."
+  ],
+  "conflicts": [
+    "Chemistry state vs chemistry-effect weighting vs team enable flag are distinct; no proven attributes or win-rate equation.",
+    "PS5 and older-game UI references cannot certify PC22 current-gen exact source mapping."
+  ],
+  "metrics": [
+    "exact PC22 UI name/value and game mode",
+    "two same-save read-only candidate reads with slot and build identity",
+    "separate state, effect, setting and calendar versus 3D consumers"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_80",
+    "question": "Can PC22 read-only Chemistry Effects menu and candidate +0x244 correlate twice while checking team-chemistry enable state without writing?",
+    "write": false,
+    "expected": "two read-only UI/raw correlations or UNKNOWN",
+    "confounders": [
+      "Chemistry state vs chemistry-effect weighting vs team enable flag are distinct; no proven attributes or win-rate equation."
+    ]
+  },
+  "result": "SAME_RELEASE_UI_OR_GAMEPLAY_SOURCE_NATIVE_MAPPING_UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
