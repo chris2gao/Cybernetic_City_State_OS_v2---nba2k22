@@ -1,12 +1,11 @@
-# NBA2K22 VAE external single-field loop — Sweep 1 checkpoint 165/204
+# NBA2K22 VAE external single-field research — Sweep 1 checkpoint 170/204
 
-Task `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`; branch `task/nba2k22-vae-gpt-external-single-field-loop-20261030`; model GPT-6 conversation declared, not host attested.
+Task `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001` — GPT-6 conversation declared, not host attested.
 
-Seed commit 6436515330f77c0cc5cc675b521590adeb69c5d4, blob `af5567e14e03cd9f7761e396a978311e347d7c17`; previous HEAD `ceeba2942577db8426b9aa647a115afa0cf49519`.
-
-- **165/204** records, **39** remaining. Last WORLD_REG_066 (SWEEP01_FIELD0165); next WORLD_REG_067 (SWEEP01_FIELD0166).
-- Newly studied WORLD_REG_062–066: five separate salary-expectations candidates; 15 field-attributed source observations, five read-only REA test oracles and five verification receipts.
-- Some NBA2K22 PS5 menu entries corroborated; historical 2K19 developer rationale remains cross-version. No PC22 native mapping, formula, default, salary setting effect or optimized value certified. Duplicate settings/world candidate offsets do not prove physical alias.
-- Counter NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE stays 51 exact ledger rows (this is a result-label statistic, not count of all native-unknown fields).
-- Game, Gemini REA, PRMS save, independent review, protected branch actions, background worker: NOT_RUN.
-- Resume by GitHub HEAD, ledger, checkpoint and seed; older pointers retained in version history.
+- HEAD at beginning of this batch `8dbbcd1d30c13f7ff918936f8f4aa02512fcb3e5` on `task/nba2k22-vae-gpt-external-single-field-loop-20261030`; source queue SHA 6436515330f77c0cc5cc675b521590adeb69c5d4, blob `af5567e14e03cd9f7761e396a978311e347d7c17`.
+- **170/204** unique seed records, **34 remaining**. Last WORLD_REG_071 SWEEP01_FIELD0170; next WORLD_REG_072 SWEEP01_FIELD0171.
+- Batch 166–170: 067 Offseason Progression, 068 Regression, 069 Training Effects, 070 User Injury Frequency, 071 CPU Injury Frequency. 5 dossiers, 5 static receipts, 15 source observations, 5 no-write REA questions.
+- Actual PC22 native offset/UI linking, data range, 3D versus Calendar consumer, growth and injury coefficients unproven; source documents include 2K22 next-gen community, legacy producer context, conflicting MyNBA observations. No causal value or optimization claims.
+- Exact NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE result counter remains 51; native unknown extends beyond that result flag.
+- No game, Gemini REA, PRMS save, independent audit, master integration, background runner. All NOT_RUN.
+- Restore via remote HEAD + checkpoint + ledger + immutable queue. Earlier pointers accessible via Git history.

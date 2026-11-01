@@ -1,0 +1,84 @@
+{
+  "field_id": "WORLD_REG_070",
+  "iteration_id": "SWEEP01_FIELD0169",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x24C correspond to PC22 User Injury Frequency, and is User defined by controller side or GM control?",
+  "candidate": {
+    "key": "world.injuries_and_morale.user_injury_frequency",
+    "offset": "0x24C",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source": "R06A",
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_027",
+    "physical_alias_proven": false,
+    "source_settings_profile_only": {
+      "type": "uint32",
+      "default_value": 50,
+      "range": [
+        0,
+        100
+      ],
+      "PC22_native_proven": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-12-30 published; 2026-02-20 updated",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE/MyNBA, no confirmed PC raw memory",
+      "grade": "SAME_RELEASE_MENU_LIST",
+      "claim": "NBA2K22 guide gives separately labeled User/CPU injury frequency slider values as editorial suggestions."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/916673-nba-2k22-impressions-thread/page100?postcount=214",
+      "author": "AIRJ23 and Gotmadskillzson / Operation Sports",
+      "date": "2021-11-03 in cited discussion",
+      "version": "NBA 2K22",
+      "platform": "MyNBA, exact platform not proven; gameplay versus simulation debated",
+      "grade": "SAME_RELEASE_CONFLICTING_USER_REPORT",
+      "claim": "NBA2K22 MyNBA discussion disputes whether slider affects 3D injuries or simulated games."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword",
+      "date": "2021-10-25 original thread",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX next-gen MyNBA (not PC old-gen)",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "NBA2K22 PS5 author has standalone injury settings in franchise setup; exact native consumer not evidenced."
+    }
+  ],
+  "claims": [
+    "NBA2K22 sources name distinct User/CPU injury frequency sliders but do not prove live 3D versus calendar simulator consumers.",
+    "The same project slot+offset appears in earlier WORLD_REG_027; static alias possibility, not proven Native identity."
+  ],
+  "conflicts": [
+    "All-team user-controlled GM status does not imply every on-court AI consumes User injury frequency; no event rate formula.",
+    "Same release on PS5 or cross-version history cannot certify PC22 current-gen raw address, numeric behavior or default."
+  ],
+  "metrics": [
+    "exact PC22 current-gen option label and on-screen value",
+    "two independent same-save read-only raw observations with module/slot provenance",
+    "no game date advance, injury event generation or training operation"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_70",
+    "question": "Can PC22 settings menu and two raw +0x24C reads correlate without game or date advancement, recording user/controller/mode semantics?",
+    "write": false,
+    "expected": "correlated menu/raw read-only observation or UNKNOWN",
+    "confounders": [
+      "All-team user-controlled GM status does not imply every on-court AI consumes User injury frequency; no event rate formula."
+    ]
+  },
+  "result": "SAME_RELEASE_WORLD_CANDIDATE_DUPLICATE_NATIVE_EFFECT_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED"
+}

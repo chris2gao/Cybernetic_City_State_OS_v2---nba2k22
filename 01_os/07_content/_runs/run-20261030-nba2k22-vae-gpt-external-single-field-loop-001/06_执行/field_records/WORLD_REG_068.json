@@ -1,0 +1,84 @@
+{
+  "field_id": "WORLD_REG_068",
+  "iteration_id": "SWEEP01_FIELD0167",
+  "date": "2026-11-01",
+  "primary_question": "Is +0x274 PC22 Player Regression Rate and distinct from age peak/decline profiles?",
+  "candidate": {
+    "key": "world.progression_and_regression.regression_rate",
+    "offset": "0x274",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source": "R06A",
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_040",
+    "physical_alias_proven": false,
+    "source_settings_profile_only": {
+      "type": "uint32",
+      "default_value": 50,
+      "range": [
+        0,
+        100
+      ],
+      "PC22_native_proven": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword",
+      "date": "2021-10-25 original thread",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX next-gen MyNBA (not PC old-gen)",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "NBA2K22 next-gen player publishes Player Regression Rate 50."
+    },
+    {
+      "url": "https://tollbit.forbes.com/sites/brianmazique/2018/08/02/nba-2k19-myleague-mygm-create-a-player-blog-and-interview-with-senior-producer-erick-boenisch/",
+      "author": "Brian Mazique quoting Erick Boenisch",
+      "date": "2018-08-02",
+      "version": "NBA 2K19",
+      "platform": "prior game version",
+      "grade": "CROSS_VERSION_DEVELOPER_INTENT",
+      "claim": "2K19 developer discusses global regression and per-attribute growth, peak, decline controls."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917177-schnaidt1-s-nba-2k22-next-gen-mynba-gameplay-sliders-settings/page31",
+      "author": "tetoleetd / Operation Sports forum",
+      "date": "2022-02-01",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE user on 2K22 next-gen slider thread, exact hardware unverified",
+      "grade": "SAME_RELEASE_USER_ANOMALY",
+      "claim": "2K22 community question involving progression/regression remains observational and uncontrolled."
+    }
+  ],
+  "claims": [
+    "PS5 2K22 menu list includes Regression Rate; no current PC22 raw consumer or numeric effect established.",
+    "The same project slot+offset appears in earlier WORLD_REG_040; static alias possibility, not proven Native identity."
+  ],
+  "conflicts": [
+    "Historical aging/peak phase is not identical to global regression slider; no formula from player outcome.",
+    "Same release on PS5 or cross-version history cannot certify PC22 current-gen raw address, numeric behavior or default."
+  ],
+  "metrics": [
+    "exact PC22 current-gen option label and on-screen value",
+    "two independent same-save read-only raw observations with module/slot provenance",
+    "no game date advance, injury event generation or training operation"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_68",
+    "question": "Can read-only PC22 slider and candidate +0x274 be jointly observed twice and not confused with attribute-specific decline curves?",
+    "write": false,
+    "expected": "correlated menu/raw read-only observation or UNKNOWN",
+    "confounders": [
+      "Historical aging/peak phase is not identical to global regression slider; no formula from player outcome."
+    ]
+  },
+  "result": "SAME_RELEASE_WORLD_CANDIDATE_DUPLICATE_NATIVE_EFFECT_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED"
+}

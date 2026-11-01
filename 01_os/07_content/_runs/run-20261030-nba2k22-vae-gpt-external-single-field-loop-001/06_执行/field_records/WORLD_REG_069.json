@@ -1,0 +1,84 @@
+{
+  "field_id": "WORLD_REG_069",
+  "iteration_id": "SWEEP01_FIELD0168",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x268 identify PC22 Training Effects slider rather than the individual training intensity/preset?",
+  "candidate": {
+    "key": "world.progression_and_regression.training_effects",
+    "offset": "0x268",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source": "R06A",
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_038",
+    "physical_alias_proven": false,
+    "source_settings_profile_only": {
+      "type": "uint32",
+      "default_value": 50,
+      "range": [
+        0,
+        100
+      ],
+      "PC22_native_proven": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword",
+      "date": "2021-10-25 original thread",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX next-gen MyNBA (not PC old-gen)",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "2K22 PS5 slider set lists Training Effects 50 separately from five intensity levels."
+    },
+    {
+      "url": "https://tollbit.forbes.com/sites/brianmazique/2018/08/02/nba-2k19-myleague-mygm-create-a-player-blog-and-interview-with-senior-producer-erick-boenisch/",
+      "author": "Brian Mazique quoting Erick Boenisch",
+      "date": "2018-08-02",
+      "version": "NBA 2K19",
+      "platform": "prior game version",
+      "grade": "CROSS_VERSION_DEVELOPER_INTENT",
+      "claim": "2K19 producer states Training Effects affects in-season development, not proven same implementation in PC22."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/903204-official-nba-2k22-mynba-wish-list/page9",
+      "author": "Pollock342 / Operation Sports",
+      "date": "2021-07-22",
+      "version": "NBA2K21-era wish list for upcoming NBA2K22",
+      "platform": "MyNBA Online, not PC22 offline",
+      "grade": "PRE_RELEASE_WISH_NOT_RUNTIME",
+      "claim": "Online prelaunch user wishes to fix missing training sliders; online expectation does not prove offline PC22 functionality."
+    }
+  ],
+  "claims": [
+    "2K22 same-version PS5 author explicitly lists Training Effects and separate intensity bands; developer described older design.",
+    "The same project slot+offset appears in earlier WORLD_REG_038; static alias possibility, not proven Native identity."
+  ],
+  "conflicts": [
+    "Individual practice schedules, natural growth and a training effect slider are distinct layers; no PC22 growth coefficient proven.",
+    "Same release on PS5 or cross-version history cannot certify PC22 current-gen raw address, numeric behavior or default."
+  ],
+  "metrics": [
+    "exact PC22 current-gen option label and on-screen value",
+    "two independent same-save read-only raw observations with module/slot provenance",
+    "no game date advance, injury event generation or training operation"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_69",
+    "question": "Do PC22 current-gen training UI and two read-only source candidate reads correlate at +0x268 while distinguishing intensity sliders?",
+    "write": false,
+    "expected": "correlated menu/raw read-only observation or UNKNOWN",
+    "confounders": [
+      "Individual practice schedules, natural growth and a training effect slider are distinct layers; no PC22 growth coefficient proven."
+    ]
+  },
+  "result": "SAME_RELEASE_WORLD_CANDIDATE_DUPLICATE_NATIVE_EFFECT_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED"
+}

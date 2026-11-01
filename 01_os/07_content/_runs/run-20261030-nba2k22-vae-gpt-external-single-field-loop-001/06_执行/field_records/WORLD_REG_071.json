@@ -1,0 +1,84 @@
+{
+  "field_id": "WORLD_REG_071",
+  "iteration_id": "SWEEP01_FIELD0170",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x250 represent PC22 CPU Injury Frequency separately from User frequency, injury severity and durability?",
+  "candidate": {
+    "key": "world.injuries_and_morale.cpu_injury_frequency",
+    "offset": "0x250",
+    "raw_range": [
+      null,
+      null
+    ],
+    "source": "R06A",
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_registry_candidate": "WORLD_REG_028",
+    "physical_alias_proven": false,
+    "source_settings_profile_only": {
+      "type": "uint32",
+      "default_value": 50,
+      "range": [
+        0,
+        100
+      ],
+      "PC22_native_proven": false
+    }
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101 editorial",
+      "date": "2021-12-30 published; 2026-02-20 updated",
+      "version": "NBA 2K22",
+      "platform": "MyLEAGUE/MyNBA, no confirmed PC raw memory",
+      "grade": "SAME_RELEASE_MENU_LIST",
+      "claim": "2K22 settings article lists CPU Injury Frequency separately from User Injury Frequency and injury effects."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/916673-nba-2k22-impressions-thread/page100?postcount=214",
+      "author": "AIRJ23 and Gotmadskillzson / Operation Sports",
+      "date": "2021-11-03 in cited discussion",
+      "version": "NBA 2K22",
+      "platform": "MyNBA, exact platform not proven; gameplay versus simulation debated",
+      "grade": "SAME_RELEASE_CONFLICTING_USER_REPORT",
+      "claim": "2K22 players report high settings but inconsistent injuries, with sim versus played-game disagreement."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor and Sword",
+      "date": "2021-10-25 original thread",
+      "version": "NBA 2K22",
+      "platform": "PS5/XSX next-gen MyNBA (not PC old-gen)",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "2K22 next-gen franchise settings are customizable but lack PC old-gen native correlation."
+    }
+  ],
+  "claims": [
+    "Same-version sources list CPU Injury Frequency, while MyNBA players report uncertain effect in 3D versus simulation.",
+    "The same project slot+offset appears in earlier WORLD_REG_028; static alias possibility, not proven Native identity."
+  ],
+  "conflicts": [
+    "CPU-controlled franchise and CPU-controlled on-court players need not map to same scalar; samples too sparse for rates.",
+    "Same release on PS5 or cross-version history cannot certify PC22 current-gen raw address, numeric behavior or default."
+  ],
+  "metrics": [
+    "exact PC22 current-gen option label and on-screen value",
+    "two independent same-save read-only raw observations with module/slot provenance",
+    "no game date advance, injury event generation or training operation"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_71",
+    "question": "Can two stable no-write reads compare PC22 CPU Injury Frequency UI with +0x250 and independent User setting +0x24C?",
+    "write": false,
+    "expected": "correlated menu/raw read-only observation or UNKNOWN",
+    "confounders": [
+      "CPU-controlled franchise and CPU-controlled on-court players need not map to same scalar; samples too sparse for rates."
+    ]
+  },
+  "result": "SAME_RELEASE_WORLD_CANDIDATE_DUPLICATE_NATIVE_EFFECT_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "native_mapping": "UNVERIFIED"
+}
