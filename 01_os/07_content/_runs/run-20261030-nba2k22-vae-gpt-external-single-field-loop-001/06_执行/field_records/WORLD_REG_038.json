@@ -1,0 +1,72 @@
+{
+  "schema_version": "nba2k22.vae.single_field_research.v1",
+  "field_id": "WORLD_REG_038",
+  "iteration_id": "SWEEP01_FIELD0137",
+  "date": "2026-11-01",
+  "question": "Does Training Effects scale the result of an in-season team or individual training action without altering innate progression or player potential?",
+  "candidate": {
+    "key": "settings.progression.training_effects",
+    "offset": "0x268",
+    "raw_range_project": [
+      0,
+      100
+    ],
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "UI_identity": "UNKNOWN",
+    "storage_type": "UNKNOWN",
+    "engine_consumer": "UNKNOWN",
+    "effect_coefficient": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://fixsportsvideogames.wordpress.com/2021/10/27/a-guide-to-nba-2k22s-mynba-on-ps5/",
+      "author": "2K22 MyNBA PS5 community guide",
+      "date": "2021 NBA2K22 release era",
+      "version": "NBA2K22",
+      "platform": "PS5 MyNBA, PC22 equivalence unverified",
+      "claim": "Same-game setting category and nearby distinction; not memory address",
+      "grade": "SAME_RELEASE_CONTEXT"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/863174-barnsey-s-myleague-player-progression-regression-sliders-2k19/page11?t=939672",
+      "author": "Barnsey/Operation Sports community",
+      "date": "NBA2K19 era",
+      "version": "NBA2K19, not NBA2K22",
+      "platform": "community authored, PC22 direct test unavailable",
+      "claim": "Source illustrates contextual mechanism, not this candidate's original PC22 callsite",
+      "grade": "CROSS_VERSION_ONLY"
+    }
+  ],
+  "claims": [
+    {
+      "grade": "CONTEXT_ONLY",
+      "claim": "Relevant 2K22 named system or menu context, not an isolated Native field effect"
+    }
+  ],
+  "conflicts": [
+    "Explicit Training Effects numerical slider source is NBA2K19, not PC22. 2K22 PS5 guide confirms progression/training menu category, not numerical consumer.",
+    "Played 3D, Calendar Sim and persistent season history must not be treated as equivalent",
+    "Do not derive causal effect from simultaneous edits"
+  ],
+  "relations": [
+    "Coach training plans and player ratings are distinct from world settings",
+    "Salaries/transactions remain outside this field",
+    "Historical game state changes must be appended, not overwritten"
+  ],
+  "metrics": [
+    "attribute and badge changes after eligible training periods, matched playing-time/age/roster",
+    "same build, save, league rules, player UID and event timestamps",
+    "before/after raw game readback only; no new cumulative statistics engine"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_038",
+    "question": "For one exact PC22 offline MyLEAGUE save and build, does read-only settings candidate 0x268 match the visible settings.progression.training_effects value and remain consistent across immediate/delayed reads? Distinguish adjacent fields; perform no write.",
+    "if_matched": "MAPPING_ONLY",
+    "if_mismatch": "UNKNOWN",
+    "if_blocked": "BLOCKED",
+    "write": false
+  },
+  "result": "SAME_RELEASE_SYSTEM_CONTEXT_NO_NATIVE_MAPPING_OR_EFFECT",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
