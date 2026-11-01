@@ -28,3 +28,17 @@
 FIELD_ID_OR_REGISTRY、UI_SEMANTIC、NATIVE_IDENTITY、NATIVE_CONSUMER、GAME_OUTCOME 五轴独立。未经核对的Gemini Live证据只保留“开发者声称”的来源等级。对没有竞技直接作用的财务/合同/交易字段不强配FGA；所有 `proposed_metrics` 只是后续数据需求候选，不表示机制已经导致结果。
 
 **本M1输出**：`06_执行/field_evidence_matrix.json`，204条队列顺序、候选数据、GPT/Gemini证据指针、审查风险与指标关联。下一M2–M5使用该矩阵而不修改原任务来源。
+
+## 2026-11-01 · Human 长期研发原则补充（不扩大 Stage02）
+
+来源：Human 在本任务窗口的直接补充指令（会话来源，首次由本次 Git 提交持久化；不是旧任务既有批准事实）。正式执行边界仍以原 task packet / dispatch 为准。
+
+长期闭环：**原生游戏数据 → 模型分析与候选设置 → 经授权 REA 原生执行、即时独立读回 → 正常游玩或模拟 → 未来统一采集器追加新原生数据 → 检验支持/反驳/不可判定 → 版本化机制修正 → 下一轮**。
+
+- 未知字段可继续作为单变量、有输入/竞争解释/可观察 Native 指标/证伪条件的实验建议；**无需全部204项先行理论证明**，但也不得自动批准写入或证明作用。
+- Native Game Log、Advanced、Per Game 已计算结果优先于任何同名自算值；旧 Reader 未采集不等于游戏没有。后续只在另行授权的数据任务中扩展**既有统一采集体系**，不在本任务增加采集器。
+- 多成熟度共存：已证部分可以在其真正获授权的运行场景中使用；未知部分保留 `NEED_EVIDENCE` / `EXPERIMENT_PROPOSAL`；当前 Stage02 不启动 VAE 或游戏操作。
+- 新真实比赛证据可能支持、反驳、或无法判定。每次保留原始值、来源、存档、模式、时点及先前假说；相关不自动升格因果，旧事实不能被覆盖。
+- 具体机制证据分轴见 `field_evidence_matrix.json`，反馈状态见 `mechanism_metric_links.json`，Native First 见 `metric_native_first_requirements.json`，原生读写缺口见 `data_source_gap_matrix.json`，三个后续试验门见 `pilot_experiment_contracts.json`。
+
+**Stage02 M1–M5 原交付文件、204 / 68 / 50 / 38 / 3 范围以及未运行边界不变。**

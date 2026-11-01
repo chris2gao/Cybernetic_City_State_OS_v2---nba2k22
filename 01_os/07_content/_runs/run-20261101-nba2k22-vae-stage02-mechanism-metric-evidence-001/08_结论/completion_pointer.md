@@ -29,3 +29,15 @@
 **执行交付状态：`EXECUTION_DELIVERED_READY_FOR_INDEPENDENT_REVIEW_WITH_EVIDENCE_GAPS`**。结构完整性通过；Native PE来源、当前统计逐项存在性、游戏因果与效果成熟度均未独立验证。交Human/规划总线固定本次最终分支HEAD，Fork新的 `independent_review` 审核岗位。后续D1–D5仅在独立审核和Human决定后开展原生数据发现与Reader缺口收敛。
 
 GitHub API publication: expected branch HEAD 7340552eef77fa130bf62c3229c261b45d77fdc0, non-force compare-and-swap, only this Run path; API transport local hooks NOT_APPLICABLE, equivalent remote scope and ref gates executed.
+
+## Human 补充原则的后续证据治理（2026-11-01）
+
+原有完成状态与固定审查对象不变。
+长期闭环：**原生游戏数据 → 模型分析与候选设置 → 经授权 REA 原生执行、即时独立读回 → 正常游玩或模拟 → 未来统一采集器追加新原生数据 → 检验支持/反驳/不可判定 → 版本化机制修正 → 下一轮**。
+
+- 未知字段可继续作为单变量、有输入/竞争解释/可观察 Native 指标/证伪条件的实验建议；**无需全部204项先行理论证明**，但也不得自动批准写入或证明作用。
+- Native Game Log、Advanced、Per Game 已计算结果优先于任何同名自算值；旧 Reader 未采集不等于游戏没有。后续只在另行授权的数据任务中扩展**既有统一采集体系**，不在本任务增加采集器。
+- 多成熟度共存：已证部分可以在其真正获授权的运行场景中使用；未知部分保留 `NEED_EVIDENCE` / `EXPERIMENT_PROPOSAL`；当前 Stage02 不启动 VAE 或游戏操作。
+- 新真实比赛证据可能支持、反驳、或无法判定。每次保留原始值、来源、存档、模式、时点及先前假说；相关不自动升格因果，旧事实不能被覆盖。
+
+本次是同一任务原 Run 文件内的追加式版本修订，不代表前次独立审核已进行、游戏已操作、任何 Setter 被授权，或未来自动采集已上线。最终修订提交以远端最新分支 HEAD 为准。
