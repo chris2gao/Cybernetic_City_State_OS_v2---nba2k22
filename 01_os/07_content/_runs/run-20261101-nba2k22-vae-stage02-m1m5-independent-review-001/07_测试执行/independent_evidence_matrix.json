@@ -1,0 +1,275 @@
+{
+  "schema_version": "nba2k22.vae.stage02.independent_evidence_matrix.v1",
+  "review_task_id": "NBA2K22-VAE-STAGE02-M1M5-INDEPENDENT-REVIEW-20261101-001",
+  "subject_sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+  "verdict": "REWORK_REQUIRED_TARGETED_EVIDENCE_GATES",
+  "counts": {
+    "P0": 2,
+    "P1": 2,
+    "P2": 2
+  },
+  "findings": [
+    {
+      "id": "S02-P0-01",
+      "severity": "P0",
+      "gate": [
+        "M04",
+        "M06"
+      ],
+      "title": "9/16 old-save Reader-confirmed metric source assignments lack materialized columns or values",
+      "evidence": [
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/data_source_gap_matrix.json"
+        },
+        {
+          "ref": "WorldData v24",
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json"
+        },
+        {
+          "ref": "WorldData v24",
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/schema.sql"
+        }
+      ],
+      "independent_observation": "Fixed v24 team_game_boxes has 2124 rows but fg_attempted, three_attempted, three_made, turnovers, steals, offensive_rebounds, defensive_rebounds all have non_null_rows=0 (7 claimed metrics). Opponent FGA and opponent 3PA 'team_game_boxes:opponent ...' labels have no corresponding opponent_* column in team_game_boxes (2 claimed metrics); other side's value may require a validated team/opponent join, but is not direct proven Reader output. M4 labels all 9 'WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE'.",
+      "affected_metrics": [
+        "TEAM_FGA",
+        "TEAM_THREE_PA",
+        "TEAM_THREE_PM",
+        "TEAM_TOV",
+        "TEAM_STL",
+        "TEAM_OREB",
+        "TEAM_DREB",
+        "OPPONENT_FGA",
+        "OPPONENT_THREE_PA"
+      ],
+      "risk": "D-series may skip native game-stat discovery or assume old team box Reader can serve these metrics immediately.",
+      "required_fix": "Evaluate actual field-level non-null/materialized status, native source type, measured/save context, source provenance, and join/derivation separately. Downgrade 7 all-NULL to SCHEMA_PRESENT_DATA_NOT_OBSERVED and 2 opponent fields to NATIVE_SOURCE_OR_JOIN_DISCOVERY_REQUIRED (or produce exact validated old-save query/reader receipt). Propagate to M3/verification count. Do not infer game-native absence."
+    },
+    {
+      "id": "S02-P0-02",
+      "severity": "P0",
+      "gate": [
+        "M04",
+        "M06"
+      ],
+      "title": "PLAYER_PTS mislabeled as directly native-calculated old Reader source though stored value is derived by formula",
+      "evidence": [
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/metric_native_first_requirements.json"
+        },
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/data_source_gap_matrix.json"
+        },
+        {
+          "ref": "WorldData v24",
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json"
+        }
+      ],
+      "independent_observation": "WorldData v24 player_game_boxes.points: 26400/26400 non-null, source_declaration='DERIVED_WITH_FORMULA: 2*fg_made+three_made+ft_made; AG01D fixture replay'. Stage02 marks PLAYER_PTS NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE and WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE, without distinguishing this derived stored number from genuine game-computed native points.",
+      "risk": "Violation of Human Native-computed-first evidence semantics; derived value may be useful, but provenance and precision not Native proof.",
+      "required_fix": "Represent existing derived points as existing DERIVED_OBSERVATION/ESTIMATED_PROXY (not stage02-created calculator); independently discover native game-computed player points for same source/grain, allow native-to-derived reconciliation only after provenance. Do not delete legacy value or imply game itself lacks PTS."
+    },
+    {
+      "id": "S02-P1-03",
+      "severity": "P1",
+      "gate": [
+        "M02",
+        "M04"
+      ],
+      "title": "15 graph OBSERVABLE_METRIC bundle nodes have no typed mapping to 38 metric_requirement IDs",
+      "evidence": [
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/mechanism_metric_links.json"
+        },
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/metric_native_first_requirements.json"
+        }
+      ],
+      "independent_observation": "Graph uses MET_FGA, MET_PACE, MET_TOUCH, MET_DEF3 etc. None of 15 OBSERVABLE_METRIC nodes has metric_requirement_ids property; none matches exactly a metric_requirements[].metric_id such as PLAYER_FGA/TEAM_FGA, TEAM_PACE_NATIVE, MET_TOUCHES_NATIVE. Field-based action_behavior_metric_requirements partly overlaps graph but has no graph edge_id/node join. MET_ORATING and MET_ACTION are isolated. Structural node existence and 50-edge counts do not establish full Action->Behavior->native metric queryability.",
+      "risk": "Future D1 Action→Information→Field chain cannot determine which of multiple granular native metrics each graph outcome requires; trace can silently stop at a bundle.",
+      "required_fix": "Add explicit many-to-many mappings from each MET_* graph outcome to approved metric IDs, typed entity/grain and scope; document absent links and unresolved status. Enforce referential+coverage tests and sample traced end-to-end Shot→FGA, Tempo→Pace and HelpDefense→Opponent3PA. Do not invent new proven causal edges."
+    },
+    {
+      "id": "S02-P1-04",
+      "severity": "P1",
+      "gate": [
+        "M01",
+        "M02"
+      ],
+      "title": "GPT 24 metadata gaps, 3 ledger discrepancies and 15 nonstandard conflict-key cases only summarized globally, not explicitly localizable per affected field",
+      "evidence": [
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/02_证据/DUAL_STREAM_SOURCE_RECONCILIATION.md"
+        },
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/field_evidence_matrix.json"
+        },
+        {
+          "ref": "GPT",
+          "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+          "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+        }
+      ],
+      "independent_observation": "Each of 204 fields has individualized GPT result and valid dossier/ledger pointer; 51 NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE labels localize. But known_conflicts per field only include seed vs Gemini alias, blanket open P0 and no causal receipt; none explicitly labels GPT_METADATA_GAP/LEDGER_COUNT_DISCREPANCY/NONSTANDARD_CONFLICT_KEY, despite 24/3/15 summarized in prose. No field IDs for these separate forensic issues were established by this reviewer.",
+      "risk": "Decision architecture cannot use per-field risk filters for known GPT provenance anomalies; global summary is insufficient to route targeted repair.",
+      "required_fix": "Provide separate keyed provenance anomalies index sourced from fixed GPT audit, with impacted field IDs or explicit global-only/UNLOCATABLE status; preserve exact source and count discrepancy without inventing affected IDs. Optionally join into each field via field_id."
+    },
+    {
+      "id": "S02-P2-05",
+      "severity": "P2",
+      "gate": [
+        "M09"
+      ],
+      "title": "Published M09 verification receipt remains pre-closeout, although final branch was independently confirmed",
+      "evidence": [
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/07_测试执行/verification_receipt.json"
+        },
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/08_结论/completion_pointer.md"
+        }
+      ],
+      "independent_observation": "Receipt check M09 status PASS but verified_source_head 7340552..., commits6, changed_paths6 and final_commit_readback=PENDING_POST_PUBLICATION; actual finalized cf95 HEAD is +8 commits since dispatch and 9 changed Run files. The immutability/cannot self-reference own SHA caveat is understood; this is stale evidence scope, not proof remote publication failed.",
+      "risk": "Future reviews quoting M09 as final published evidence may confuse a prepublication gate with the independently verified final HEAD.",
+      "required_fix": "Record separately named postpublication verification evidence with fixed commit and scope or make M09 clearly PRE_PUBLICATION_PASS_FINAL_READBACK_EXTERNAL; never attempt impossible self-referential commit hash."
+    },
+    {
+      "id": "S02-P2-06",
+      "severity": "P2",
+      "gate": [
+        "M02",
+        "M03"
+      ],
+      "title": "Twelve graph nodes isolated, with possible semantic role ambiguity for rebound/POE relationships",
+      "evidence": [
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/mechanism_metric_links.json"
+        },
+        {
+          "ref": "Stage02",
+          "sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+          "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/06_执行/metric_native_first_requirements.json"
+        }
+      ],
+      "independent_observation": "Independent graph traversal found 68 nodes, 50 edges, DAG, 12 isolated nodes: COACH_DEFAULT_007/008/012, WORLD_REG_085/086, CTX_ROSTER/SAVE/PREGAME, CONS_ACE/GAME_STATS, MET_ORATING/ACTION. REBOUND_TRADEOFF action is keyed to COACH_DEFAULT_003=POEOffense3, and graph conjectures offensive rebounding behavior; it is correctly graded HYPOTHESIS but not a verified 'crash glass' setting.",
+      "risk": "Coverage numbers could imply stronger mechanism completeness than realized, or a semantic hypothesis could be misinterpreted as a specific native rebound control.",
+      "required_fix": "Declare intentionally isolated nodes as backlog/unknown, add per-node coverage status, and flag rebound POE linkage as provisional semantically unproven; do not add edges simply to eliminate isolation."
+    }
+  ],
+  "gate_results": [
+    {
+      "gate": "M01",
+      "status": "PASS_INDEPENDENT",
+      "evidence": "204 unique ID, 99/86/19 family, exact order and SHA of pinned queue af5567e..."
+    },
+    {
+      "gate": "M02",
+      "status": "PARTIAL",
+      "evidence": "Source SHA/paths, all edge grades and competing hypotheses present; per-field GPT anomalies not keyed and graph metric mapping missing"
+    },
+    {
+      "gate": "M03",
+      "status": "PASS_INDEPENDENT_STRUCTURE",
+      "evidence": "50 edges: 6 unauthenticated static, 21 external semantic, 20 pending game, 3 mode/context; 0 independently certified gameplay effects"
+    },
+    {
+      "gate": "M04",
+      "status": "FAIL_NATIVE_SOURCE_FIDELITY",
+      "evidence": "38 Native-first requirements exist; M4 falsely confirms 9 unusable old team-game Reader metrics and labels derived PLAYER_PTS native"
+    },
+    {
+      "gate": "M05",
+      "status": "PASS_DESIGN",
+      "evidence": "38 metric definitions/grains and separated 3D/Calendar/USER_CPU + two Normalize demands; future native exact labels unknown"
+    },
+    {
+      "gate": "M06",
+      "status": "FAIL_SOURCE_COVERAGE",
+      "evidence": "WorldData fixed source field-maturity contradicts 16 confirmed Reader inventory for 10 fields"
+    },
+    {
+      "gate": "M07",
+      "status": "PASS_DESIGN",
+      "evidence": "3 not-run pilots S0/S1/S2/S3, one-factor future control, readback, controls, SUPPORTS/REFUTES/INCONCLUSIVE"
+    },
+    {
+      "gate": "M08",
+      "status": "PASS_SCOPE",
+      "evidence": "Compared dispatch f278... to cf95...: 8 commits, 9 files, all within task Run; no game or source modifications shown"
+    },
+    {
+      "gate": "M09",
+      "status": "PASS_EXTERNAL_READBACK_WITH_RECEIPT_CAVEAT",
+      "evidence": "Remote branch cf95... and Git compare verified; in-Run receipt refers precloseout 734... and pending final verification"
+    }
+  ],
+  "independent_check_summary": {
+    "source_queue_sha": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+    "source_queue_blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "stage02_field_ids": 204,
+    "unique": 204,
+    "exact_order": true,
+    "family_counts": {
+      "tendency": 99,
+      "world": 86,
+      "coach": 19
+    },
+    "stage02_graph": {
+      "nodes": 68,
+      "edges": 50,
+      "dag": true,
+      "source_refs_complete": true,
+      "unmapped_observable_bundle_nodes": 15,
+      "isolated_nodes": 12
+    },
+    "metrics": 38,
+    "gaps": 38,
+    "actions": 16,
+    "pilots": 3,
+    "worlddata_v24": {
+      "source_sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "team_box_rows": 2124,
+      "team_metric_columns_all_null": 7,
+      "opponent_metric_direct_columns_absent": 2,
+      "player_points_non_null": 26400,
+      "player_points_source": "DERIVED_WITH_FORMULA",
+      "player_game_box_fixture_replay_source_not_live_accepted": true
+    },
+    "receipt_precloseout": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+    "actual_final_sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+    "scope_compare": {
+      "commits_after_dispatch": 8,
+      "files_modified": 9,
+      "all_within_task_run": true
+    },
+    "game_read": "NOT_RUN",
+    "collector": "NOT_RUN",
+    "current_MC_save": "NOT_ACCESSED",
+    "independent_v24_sqlite_execution": "NOT_RUN",
+    "gm_actions": "NONE"
+  },
+  "acceptance_boundary": "Stage02 semantic design can be retained, but M3/M4 source availability cannot be accepted until corrected; no physical data schema/collector/gameplay verification required to close these."
+}
