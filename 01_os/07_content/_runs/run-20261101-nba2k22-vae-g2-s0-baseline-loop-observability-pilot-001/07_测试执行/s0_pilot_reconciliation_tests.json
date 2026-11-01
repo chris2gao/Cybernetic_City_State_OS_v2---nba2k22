@@ -1,0 +1,108 @@
+{
+  "schema_version": "nba2k22.vae.g2.s0.loop_pilot.verification.v1",
+  "task_id": "NBA2K22-VAE-G2-S0-BASELINE-LOOP-OBSERVABILITY-20261101-001",
+  "verification_timestamp": "2026-11-01T20:28:27.526064+00:00",
+  "test_suite": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_s0_pilot_reconciliation.py",
+  "test_runner": "unittest discover",
+  "environment": {
+    "os": "Windows",
+    "python_version": "3.14.0",
+    "working_directory": "E:/gemini_space/nba2k22"
+  },
+  "test_execution_receipt": {
+    "command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_s0_pilot_reconciliation.py",
+    "tests_run": 5,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_seconds": 0.075
+  },
+  "regression_test_receipt": {
+    "command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_advanced_metrics_and_boxes.py",
+    "tests_run": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_seconds": 2.277
+  },
+  "overall_status": "PASSED",
+  "total_checks": 12,
+  "passed_checks": 12,
+  "failed_checks": 0,
+  "checks": [
+    {
+      "id": "V01",
+      "name": "G1 captured data sources & completeness verification",
+      "status": "PASSED",
+      "evidence": "G1 captured data sources in world-v24.sqlite verified against Batch ID 3a75c0e19302 and capture units. The database contains 238 completed games across 58 capture units. All player box units correctly retain their source grades (FULL_NATIVE_BOX, REUSED_FROZEN_BOX). Acknowledged that completeness=PARTIAL is standard and not every field is native complete."
+    },
+    {
+      "id": "V02",
+      "name": "Actual per-target Calendar Sim S0 valid-game count (>=10 required)",
+      "status": "PASSED",
+      "evidence": "Selected target Damian Lillard (player:native:2459, team:native:28) verified with exactly 16 valid completed Calendar Sim games (all was_simulated=1, is_final=1). Does NOT reuse the league-wide 238-game total as target sample size. 16 >= 10 meets adequacy criteria; verdict S0_BASELINE_READY."
+    },
+    {
+      "id": "V03",
+      "name": "Shared source unit per game & legitimate frozen reuse preserved",
+      "status": "PASSED",
+      "evidence": "Verified that games, game_state_observations, team_game_boxes, and player_game_boxes are queried and deduplicated using partition over cu.observed_at DESC, pb.unit_id DESC. 36 games utilize FULL_NATIVE_BOX and 202 games preserve REUSED_FROZEN_BOX without corruption."
+    },
+    {
+      "id": "V04",
+      "name": "Categorization of all 238-game score discrepancy cases",
+      "status": "PASSED",
+      "evidence": "All 238 games audited in score_discrepancy_scope.json: 222 exact conserved (93.28%), 4 games delta <= 3, 2 games delta == 4 (total 6 <= 4), 10 games delta > 4. Empirical causes identified without generic fabrication: exactly 5 Overtime games missing OT period scores in game_period_scores, and 11 Washington Wizards games with undercounted team active minutes (<240 min). 0 unknown causes."
+    },
+    {
+      "id": "V05",
+      "name": "Target-specific metric filtering & unknown preservation",
+      "status": "PASSED",
+      "evidence": "Lillard 16 S0 games verified to have 100.0% exact score conservation with zero overlap with the 16 discrepancy games. Metrics calculated strictly: FGA (mean 19.88), PTS (mean 29.56), TS% (mean 0.663), Hollinger GameScore (mean 22.36), and experimental possession load (mean 27.21). Unknown Touches tendency in static tables acknowledged as MET_TOUCHES_NATIVE_ABSENT_IN_STATIC_TABLE."
+    },
+    {
+      "id": "V06",
+      "name": "Single Pilot selection & REA Getter/Setter boundary",
+      "status": "PASSED",
+      "evidence": "Single Pilot selected: PILOT_01_SHOT_TOUCHES. Canonical setting TENDENCY_NATIVE_001 mapped to PlayerData byte offset 0x458 (uint8, 0-100 scale). Getter confirmed via READ_PROCESS_MEMORY_EXACT_OFFSET. Setter strictly bounded: authorization_status=NOT_AUTHORIZED_IN_EXECUTION_RUN, game_mutation_policy=STRICT_READ_ONLY."
+    },
+    {
+      "id": "V07",
+      "name": "Small deterministic SQL extraction without parallel database",
+      "status": "PASSED",
+      "evidence": "All S0 queries executed directly against existing single-save world-v24.sqlite using standard SQL CTEs and JOINs. No secondary SQLite database created. Output sanitized to s0_selected_pilot_baseline_and_sources.json with no raw memory dumps or private binaries."
+    },
+    {
+      "id": "V08",
+      "name": "G2 comparison design with controls and no causal overreach",
+      "status": "PASSED",
+      "evidence": "one_pilot_g2_rea_preflight.json establishes S0 baseline (Shot Tendency=95, FGA=19.88), S1 proposed intervention (Shot Tendency=80, delta=-15), and S2 observation protocol (>=10 games). Division control group defined (Nikola Jokic, Karl-Anthony Towns, Donovan Mitchell). Falsification criteria defined (refuted if mean FGA >= 19.88). Explicit no_causal_overreach_clause included."
+    },
+    {
+      "id": "V09",
+      "name": "Execution of targeted test suite in ordinary environment",
+      "status": "PASSED",
+      "evidence": "Ran unittest discover on test_s0_pilot_reconciliation.py (5 tests, 0 failures, 0 errors in 0.075s). Return code = 0. Zero RDC or game mutations."
+    },
+    {
+      "id": "V10",
+      "name": "Structured loop iterations JSONL & summary statistics",
+      "status": "PASSED",
+      "evidence": "Loop iterations recorded append-only in loop_iterations.jsonl (4 bounded development iterations). Summary statistics compiled into loop_summary.json with separated internal development and remediation counts."
+    },
+    {
+      "id": "V11",
+      "name": "Termination decision & Core stop authority",
+      "status": "PASSED",
+      "evidence": "Stop authority invoked under Core OS consensus: EXTERNAL_EVIDENCE_PENDING. S0 baseline and G2 protocol fully READY; actual S1 gameplay setting modification and subsequent S2 simulation require human in-game execution."
+    },
+    {
+      "id": "V12",
+      "name": "Git branch scope and sanitation verified",
+      "status": "PASSED",
+      "evidence": "Branch task/nba2k22-vae-g2-s0-baseline-loop-observability-pilot-20261101 scoped strictly to run directory and tests. No Core master or prior Run directories modified."
+    }
+  ]
+}
