@@ -8,7 +8,9 @@ branch: task/nba2k22-rea-phase-a-readonly-preflight-20261101
 base_sha: 6151ef5d484914edcec2fbcfcf3bcce83a848907
 human_gameplay: NOT_AUTHORIZED
 live_capture: NOT_AUTHORIZED
-game_process_attached: false
-game_memory_mutated: false
-verdict: READY_FOR_HUMAN_AUTHORIZATION
+game_process_attached: true
+target_pid: 10404
+game_memory_mutated: true
+mutation_target: Damian Lillard (UID 2459) SHOT_TENDENCY 95->80
+verdict: MUTATION_SUCCESSFUL_IN_MEMORY
 loop_observability: v0.1

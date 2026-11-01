@@ -1,9 +1,9 @@
 {
   "schema_version": "nba2k22.os.loop_observability_summary.v0.1",
   "task_id": "NBA2K22-REA-PHASE-A-READONLY-PREFLIGHT-20261101-001",
-  "summary_timestamp": "2026-11-01T22:09:00Z",
+  "summary_timestamp": "2026-11-01T22:27:00Z",
   "loop_statistics": {
-    "total_iterations_count": 4,
+    "total_iterations_count": 5,
     "internal_development_iteration_count": 4,
     "post_first_delivery_remediation_round_count": 0,
     "trigger_type_distribution": {
@@ -11,7 +11,7 @@
       "TEST_FAILURE": 0,
       "REGRESSION": 0,
       "NEW_PRIMARY_EVIDENCE": 0,
-      "HUMAN_FEEDBACK": 0,
+      "HUMAN_FEEDBACK": 1,
       "REVIEW_FINDING": 0,
       "HYPOTHESIS_REFUTED": 0,
       "SOURCE_OR_ENV_CHANGE": 0,
@@ -19,7 +19,7 @@
       "OTHER_EVIDENCED": 0
     },
     "outcome_distribution": {
-      "SUCCESS": 4,
+      "SUCCESS": 5,
       "PARTIAL": 0,
       "FAILURE": 0
     },
@@ -27,19 +27,20 @@
   },
   "core_stop_authority": {
     "stop_class": "WAITING_ON_DEPENDENCY",
-    "stop_rationale": "All offline preflight checks for REA local tool readiness have completed successfully: environment dependencies verified (Node v24.22.1, Python 3.14.6, rea 6.8.0, Admin active), Native Index 57 & offset 0x458 proven across Setter/Getter disassemblies, defensive runtime mechanisms audited (Getter-Setter-Getter, identity re-checks, 156-byte diff validation, no auto retry), offline test suite 100% passed (test_player_stats 9/9 PASS, test_player_editor_read 10/10 PASS), and WorldData-to-REA ID crosswalk verified (team 28, player 2459). Zero process attachment, zero game memory mutations, zero calendar simulation. All technical readiness conditions satisfied. Execution strictly halts and awaits explicit Human authorization for Phase A live test.",
+    "stop_rationale": "Phase A in-memory live modification has been executed successfully under explicit Human authorization: Damian Lillard (UID 2459, Portland Trail Blazers Team 28) SHOT_TENDENCY (Native Index 57, Offset 0x458) was modified from 95 to 80 via original native setter 0x990a10. Getter before was 95, Getter after is 80, raw memory byte at [0x7ff4e6e7c7b8+0x458] is confirmed 80, unrequested adjacent fields (offset 0x459 = 85) and cache flags (1683493449) are strictly preserved. Next step requires Human in-game post-write validation (UI check, manual save & reload, 1-week calendar simulation).",
     "remaining_gaps": [
-      "WAIT_HUMAN_SAVEFILE_BACKUP: Human to physically backup savefile folder before any native writes.",
-      "WAIT_HUMAN_GAME_SCENE_READINESS: Human to launch NBA2K22, load confirmed save, ensure Damian Lillard is on Blazers active roster, and remain on calendar/roster menu.",
-      "WAIT_HUMAN_PROCESS_PID_AND_AUTH: Human to supply or confirm running game PID and authorize single-field SHOT_TENDENCY 95->80 execution."
+      "WAIT_HUMAN_IN_GAME_UI_CHECK: Human to check in-game player card/roster view to verify if 80 is displayed.",
+      "WAIT_HUMAN_SAVE_AND_RELOAD: Human to save game in MyLeague and reload savefile to verify persistence.",
+      "WAIT_HUMAN_ONE_WEEK_SIM_AND_CAPTURE: Human to simulate 1 week (3-4 games) and instruct Gemini to run WorldData FULL capture to verify 0x458 readback and FGA tracking."
     ],
-    "future_trigger": "HUMAN_FEEDBACK or HUMAN_AUTHORIZATION upon providing PID, savefile confirmation, and explicit live-write command."
+    "future_trigger": "HUMAN_FEEDBACK or HUMAN_GAMEPLAY_COMPLETED upon completing in-game verification steps."
   },
   "deliverables": [
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/run.yml",
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/01_任务输入/task_dispatch.md",
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/rea_local_readiness_preflight_report.md",
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/offline_verification_evidence.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/lillard_shot_tendency_modification_receipt.json",
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/06_执行/loop_iterations.jsonl",
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/08_结论/completion_pointer.md",
     "01_os/07_content/_runs/run-20261101-nba2k22-rea-phase-a-readonly-preflight-001/08_结论/loop_summary.json"
