@@ -1,0 +1,66 @@
+{
+  "schema_version": "nba2k22.rea.deterministic_bulk_executor.task_packet.v1",
+  "task_id": "NBA2K22-REA-DETERMINISTIC-BULK-EXECUTOR-20261101-001",
+  "branch": "task/nba2k22-rea-deterministic-bulk-executor-20261101",
+  "base_sha": "3bbcbcaad98db6b9492ed915ce93aac076550c4f",
+  "os_role": "execution",
+  "model": "to_be_recorded_by_executor",
+  "human_goal": "Reuse existing REA native Getter/Setter with deterministic, scalable batch plans targeting up to 10k field changes; avoid manual single-request debug/setup and perform actual reliable readback",
+  "initial_current_state": {
+    "lillard_live_write": "in_memory_success_confirmed_by_Human_UI",
+    "phase_a_save_reload": "not_yet_verified",
+    "phase_a_week_sim": "not_yet_verified",
+    "fresh_post_mutation_full_capture": "not_yet_reported",
+    "batch_writer_live_validation": "not_authorized"
+  },
+  "existing_components": [
+    "research/rea_native_control/role_batches.py",
+    "research/rea_native_control/role_capabilities.py",
+    "research/rea_native_control/transport.py",
+    "research/rea_native_control/runtime_codegen.py",
+    "research/rea_native_control/runtime/player_stats.js",
+    "research/rea_native_control/runtime/gui_once.js",
+    "research/rea_native_control/run_native_program.ps1",
+    "research/rea_native_control/validation_batch.py",
+    "world_data_prototype/calendar_sim_orchestrator.py"
+  ],
+  "execution_scope": "OFFLINE_ENGINEERING_ONLY",
+  "no_live_mutation": true,
+  "no_process_attach": true,
+  "no_gameplay": true,
+  "no_new_capture": true,
+  "no_master_merge": true,
+  "quality_gates": [
+    "all exact input fields mapped to proven REA contracts",
+    "per-target expected_before strict equality",
+    "immutable manifest hash and save/process/build bindings",
+    "no automatic retry after UNKNOWN",
+    "chunking one controlled attach per bounded chunk; no per-field reattach",
+    "per-field readback+unrequested field invariants",
+    "durable local journal and exact-once attempt semantics",
+    "large synthetic benchmarks and honest failure injection",
+    "source-sensitive independent FULL recapture design waiting on Human",
+    "no cloud DB backups"
+  ],
+  "stop_conditions": [
+    "missing qualified Native binding",
+    "unverified identity/membership",
+    "unapproved field/role/phase",
+    "game process/build/save context mismatch",
+    "current value unexpectedly differs from expected_before",
+    "unverified GUI thread context",
+    "Native error/timeout/partial response",
+    "failed after readback or unrelated field change",
+    "read/compute/time budget exceeded"
+  ],
+  "deliverables": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/06_执行/bulk_architecture_inventory.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/06_执行/bulk_executor_design_and_validation.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/06_执行/offline_batch_benchmark.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/07_测试执行/bulk_executor_test_receipts.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/06_执行/loop_iterations.jsonl",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/08_结论/loop_summary.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-deterministic-bulk-executor-001/08_结论/completion_pointer.md"
+  ],
+  "acceptance": "working parameter-file-to-dryrun-to-prepared-script-to-synthetic test harness; live execution disabled pending separate Human approval and small-scale graded live testing."
+}
