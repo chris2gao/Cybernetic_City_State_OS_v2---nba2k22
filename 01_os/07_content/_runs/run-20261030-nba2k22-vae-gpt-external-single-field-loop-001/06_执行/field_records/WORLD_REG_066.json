@@ -1,0 +1,81 @@
+{
+  "field_id": "WORLD_REG_066",
+  "iteration_id": "SWEEP01_FIELD0165",
+  "date": "2026-11-01",
+  "primary_question": "Does candidate +0x22C represent fame's weight in contract salary expectations, not fame in trade valuation or an OVR bonus?",
+  "candidate": {
+    "key": "world.contracts_and_finances.player_fame_factor",
+    "offset": "0x22C",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "registry": "R06A",
+    "same_offset_registry_candidate": "WORLD_REG_025",
+    "source_profile_settings_type": "uint32",
+    "source_profile_settings_range": [
+      0,
+      100
+    ],
+    "source_profile_default": 50,
+    "native_range_and_default_verified": false
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918979-save-private-green-mynba-2k22-ps5",
+      "author": "Operation Sports PS5 MyNBA diary author (display name not independently extracted)",
+      "date": "2021/22 thread; exact cited post date not independently extracted",
+      "version": "NBA2K22",
+      "platform": "PS5 next-gen MyNBA",
+      "grade": "SAME_RELEASE_DIFFERENT_PLATFORM",
+      "claim": "2K22 PS5 author lists Player fame 20 under Contracts."
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k19-myleague-and-mygm-developer-blog/",
+      "author": "NBA 2K19 developer blog republished by Operation Sports",
+      "date": "2018 (exact article date not independently extracted)",
+      "version": "NBA2K19",
+      "platform": "legacy design not PC22",
+      "grade": "CROSS_VERSION_PRODUCER_DESIGN",
+      "claim": "2K19 producer discussed name recognition as a factor in salary/contract value."
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "Nemanja Ostojic",
+      "date": "2022-04-30",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE, platform unspecified",
+      "grade": "SAME_RELEASE_SETTINGS_CONTEXT",
+      "claim": "2K22 guide distinguishes salary expectations from separate Trade Player Fame Importance adjustment."
+    }
+  ],
+  "claims": [
+    "2K22 PS5 contract list has Player Fame 20, older producer design discusses reputation in expected salary; neither verifies PC22 raw mapping.",
+    "Source registry shares SLOT_TRADE and this offset with WORLD_REG_025 settings.* candidate, which does not establish proven physical alias."
+  ],
+  "conflicts": [
+    "A separate Player Fame Importance in trade valuation must not be conflated with salary-expectations Fame.",
+    "PC22 current-gen exact menu and memory mapping remain unverified; PS5 and older editions are not PC proof."
+  ],
+  "metrics": [
+    "exact original PC22 UI label and state",
+    "two stable same-save read-only module+slot+candidate reads",
+    "record relevant cap, salary curve and player-rating confounders without transactions"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_66",
+    "question": "Can PC22 Salary Expectations Player Fame be observed read-only and matched to +0x22C independent of trade-value sliders?",
+    "write": false,
+    "expected_observation": "UI and raw match or remain UNKNOWN",
+    "confounders": [
+      "A separate Player Fame Importance in trade valuation must not be conflated with salary-expectations Fame."
+    ]
+  },
+  "result": "SALARY_EXPECTATIONS_SAME_VERSION_MENU_CROSS_PLATFORM_NATIVE_UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

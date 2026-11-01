@@ -1,0 +1,81 @@
+{
+  "field_id": "WORLD_REG_064",
+  "iteration_id": "SWEEP01_FIELD0163",
+  "date": "2026-11-01",
+  "primary_question": "Is +0x220 the PC22 salary value weight assigned to player potential, not the player progression control?",
+  "candidate": {
+    "key": "world.contracts_and_finances.player_potential_factor",
+    "offset": "0x220",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "registry": "R06A",
+    "same_offset_registry_candidate": "WORLD_REG_023",
+    "source_profile_settings_type": "uint32",
+    "source_profile_settings_range": [
+      0,
+      100
+    ],
+    "source_profile_default": 50,
+    "native_range_and_default_verified": false
+  },
+  "sources": [
+    {
+      "url": "https://diamondlobby.com/nba-2k22/create-a-superteam-nba-2k22-myleague/",
+      "author": "Nemanja Ostojic",
+      "date": "2022-04-30",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE, platform unspecified",
+      "grade": "SAME_RELEASE_SETTINGS_CONTEXT",
+      "claim": "2K22 guide adjusts potential in salary expectations to value young players, without game-PC proof of coefficient."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918979-save-private-green-mynba-2k22-ps5",
+      "author": "Operation Sports PS5 MyNBA diary author (display name not independently extracted)",
+      "date": "2021/22 thread; exact cited post date not independently extracted",
+      "version": "NBA2K22",
+      "platform": "PS5 next-gen MyNBA",
+      "grade": "SAME_RELEASE_DIFFERENT_PLATFORM",
+      "claim": "2K22 PS5 author records Player pot 75 as personal setting, not default."
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k19-myleague-and-mygm-developer-blog/",
+      "author": "NBA 2K19 developer blog republished by Operation Sports",
+      "date": "2018 (exact article date not independently extracted)",
+      "version": "NBA2K19",
+      "platform": "legacy design not PC22",
+      "grade": "CROSS_VERSION_PRODUCER_DESIGN",
+      "claim": "2K19 producer described adjusting young players' potential importance in worth, historical only."
+    }
+  ],
+  "claims": [
+    "2K22 guide explicitly recommends changing player potential under salary expectations; producer explained potential matters to valuation in 2K19.",
+    "Source registry shares SLOT_TRADE and this offset with WORLD_REG_023 settings.* candidate, which does not establish proven physical alias."
+  ],
+  "conflicts": [
+    "Player potential in contract negotiation is not a change to actual player potential or natural development.",
+    "PC22 current-gen exact menu and memory mapping remain unverified; PS5 and older editions are not PC proof."
+  ],
+  "metrics": [
+    "exact original PC22 UI label and state",
+    "two stable same-save read-only module+slot+candidate reads",
+    "record relevant cap, salary curve and player-rating confounders without transactions"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_64",
+    "question": "Can two read-only PC22 Salary Expectations Player Potential menu observations correlate with +0x220 and distinguish any Progression menu factor?",
+    "write": false,
+    "expected_observation": "UI and raw match or remain UNKNOWN",
+    "confounders": [
+      "Player potential in contract negotiation is not a change to actual player potential or natural development."
+    ]
+  },
+  "result": "SALARY_EXPECTATIONS_SAME_VERSION_MENU_CROSS_PLATFORM_NATIVE_UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

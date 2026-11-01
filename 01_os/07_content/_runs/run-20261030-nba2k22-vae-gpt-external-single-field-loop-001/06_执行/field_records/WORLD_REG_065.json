@@ -1,0 +1,81 @@
+{
+  "field_id": "WORLD_REG_065",
+  "iteration_id": "SWEEP01_FIELD0164",
+  "date": "2026-11-01",
+  "primary_question": "Does +0x224 match salary-expectations Player Durability rather than injury frequency or an individual body-part durability rating?",
+  "candidate": {
+    "key": "world.contracts_and_finances.player_durability_factor",
+    "offset": "0x224",
+    "raw_range": [
+      null,
+      null
+    ],
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "registry": "R06A",
+    "same_offset_registry_candidate": "WORLD_REG_024",
+    "source_profile_settings_type": "uint32",
+    "source_profile_settings_range": [
+      0,
+      100
+    ],
+    "source_profile_default": 50,
+    "native_range_and_default_verified": false
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918979-save-private-green-mynba-2k22-ps5",
+      "author": "Operation Sports PS5 MyNBA diary author (display name not independently extracted)",
+      "date": "2021/22 thread; exact cited post date not independently extracted",
+      "version": "NBA2K22",
+      "platform": "PS5 next-gen MyNBA",
+      "grade": "SAME_RELEASE_DIFFERENT_PLATFORM",
+      "claim": "2K22 PS5 author records Player durability 25 under Contracts."
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k19-myleague-and-mygm-developer-blog/",
+      "author": "NBA 2K19 developer blog republished by Operation Sports",
+      "date": "2018 (exact article date not independently extracted)",
+      "version": "NBA2K19",
+      "platform": "legacy design not PC22",
+      "grade": "CROSS_VERSION_PRODUCER_DESIGN",
+      "claim": "Earlier official developer text discusses adjusting importance of durability for contract value."
+    },
+    {
+      "url": "https://www.operationsports.com/nba-2k21-sliders-from-schnaidt1-plus-myleague-setup/",
+      "author": "Operation Sports / schnaidt1",
+      "date": "2020 era (exact article date not verified)",
+      "version": "NBA2K21",
+      "platform": "Xbox One current-gen predecessor",
+      "grade": "CROSS_VERSION_MENU_NAMING",
+      "claim": "2K21 Xbox One salary slider list contains Player Durability 25."
+    }
+  ],
+  "claims": [
+    "Same-version PS5 MyNBA diary lists durability factor; historical developer guide says durability may affect expected player worth.",
+    "Source registry shares SLOT_TRADE and this offset with WORLD_REG_024 settings.* candidate, which does not establish proven physical alias."
+  ],
+  "conflicts": [
+    "Durability salary weighting and 16 body-part durability/injuries are distinct; formula and PC22 raw mapping unknown.",
+    "PC22 current-gen exact menu and memory mapping remain unverified; PS5 and older editions are not PC proof."
+  ],
+  "metrics": [
+    "exact original PC22 UI label and state",
+    "two stable same-save read-only module+slot+candidate reads",
+    "record relevant cap, salary curve and player-rating confounders without transactions"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_65",
+    "question": "Can PC22 read-only Salary Expectations Player Durability menu and +0x224 candidate align twice without editing any player's health?",
+    "write": false,
+    "expected_observation": "UI and raw match or remain UNKNOWN",
+    "confounders": [
+      "Durability salary weighting and 16 body-part durability/injuries are distinct; formula and PC22 raw mapping unknown."
+    ]
+  },
+  "result": "SALARY_EXPECTATIONS_SAME_VERSION_MENU_CROSS_PLATFORM_NATIVE_UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "numeric_effect": "UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
