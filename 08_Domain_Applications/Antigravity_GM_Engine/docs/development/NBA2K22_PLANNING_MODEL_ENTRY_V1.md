@@ -47,6 +47,7 @@
 ## 4. 窗口拆分、预算与长期任务
 
 OS的默认是`long_horizon_big_task`：一个连贯、已授权目标下的需求、证据、方案、测试、步骤、执行、修复、提交、证据收尾，可留在一个窗口直到真正停止条件发生。不要每个python文件或一次验证都开启新窗口。
+**2026-11-01 Human 裁决与共识**：连贯任务默认采用 `evidence_driven_iteration` 内部 Loop（需求→增量→施工→自测→比对修复/归档缺口→继续），不因单次通过自行退出；审核默认在系列完成后集中独立审核（`review_mode: deferred_to_series`），遇 master 集成、下游承重、T3 动作或证据不可逆时即时审核（`immediate_required`）。详见 [OS开发Loop与系列审核共识V1](NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md)（基于 Core 候选分支 `task/core-risk-based-series-review-cadence-20261101@94639afe`，Core master `934425cf` 尚未合并）。
 
 **必须分开**：不同产品目标、重大新的语义裁决、独立审核与执行、Human批准的生产数据库切换/游戏写入。派单、执行与最终独立审核不能由同会话一把包办。Gemini可承担快速探索，Codex承担复杂工程，审核优先独立模型族；具体选型遵守当次OS模型路由，不为降低额度把关键风险审查直接豁免。
 

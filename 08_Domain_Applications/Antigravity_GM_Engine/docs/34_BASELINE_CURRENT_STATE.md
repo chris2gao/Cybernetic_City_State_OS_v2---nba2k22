@@ -1,5 +1,14 @@
 # Codex 数据采集/开发/执行基线共用的当前状态与交接索引
 
+## 2026-11-01 Human 裁决：OS 开发 Loop 与系列审核机制临时执行共识
+
+**Human 确认**：OS 开发任务应默认通过内部 Loop（`evidence_driven_iteration`：需求/目标→增量→施工/研究→针对性验证→比对分析/归档缺口→继续）持续迭代，利用测试和真实证据不断改进成果，而不是依赖频繁开启独立审核窗口推动开发。
+该机制只适用于开发阶段的内部工作，不修改七阶段 Workflow 流转、Human 检查点或独立验收门，与业务运行期 VAE 闭环属于不同系统层次。
+**来源与状态**：基于 Core 候选分支 `task/core-risk-based-series-review-cadence-20261101`（HEAD `94639afe82d1bc1028ad8726f9c9cdbb6354d235`），Core master（`934425cf43d4fe3307b0112142aec1ba434a5734`）尚未合并。严禁误称已合并 master；待 Core 正式合并后更新权威状态。
+详见权威说明：[NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md](development/NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md)。
+今后新 Fork 的 `execution` 岗位遵循持续自测自修、不因单次通过宣布完成、有未知继续推进；审核默认在系列完成后集中独立执行，遇 master 集成、下游承重、T3 动作或证据不可逆时触发即时审核。
+
+
 ## 2026-10-22 最新架构纠错：允许从根本上重构数据平台
 
 玩家明确：旧双库、月度统计表、采集容器及相关API可以且应该根据长期平行篮球世界目标**整体重构**，不是不可更改的默认架构。旧工程是迁移的真实事实和安全机制来源，不能变成新模型的物理约束。新权威文档：[平行篮球世界数据架构V2](development/PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)。该设计区分world/save/generation/season/game/player incarnation/draft template身份，原生字节/解码事实/事件/状态快照/赛季累计/派生统计/AI决策与受控执行；允许改变SQLite库数量与Schema。候选逻辑与物理设计可以马上进行，正式DDL与数据迁移需Codex验收并单独批准；不直接变更当前生产库和游戏。下一段旧“复用双库”字样应理解为保留**已认证能力与事实**，并非禁止架构重构。

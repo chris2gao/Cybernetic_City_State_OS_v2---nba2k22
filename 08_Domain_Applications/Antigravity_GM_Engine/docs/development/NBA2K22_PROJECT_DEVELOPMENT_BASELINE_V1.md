@@ -20,7 +20,7 @@
 - **01_os/**提供Workflow、机制、上下文、路由、任务编排、验证和发布纪律；不得把通用机制复制到`08`，也不得擅改core-owned内容。
 - **08_Domain_Applications/Antigravity_GM_Engine/**负责业务代码、研究、项目事实、角色规范与已获采纳的设计决定；正式任务运行证据保存在`01_os/07_content/_runs/<run-id>/`。
 - 完整的项目任务图：[OS开发路线图](OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md)与[机读任务清单](NBA2K22_OS_TASK_BACKLOG_V1.json)；[新窗口交接](NBA2K22_OS_TASK_WINDOW_HANDOFF_TEMPLATE_V1.md)。任务运行生命周期必须遵守OS七值enum；不要借用业务能力成熟度标签当OS任务状态。
-- 默认**一个连贯可授权目标一个任务包/窗口**，窗口内可以完成多步骤和确定性修复。**最终独立审核与执行/派单必须隔离会话**。Human保留产品关键语义裁决、master合并和未预批准的保护动作。
+- 默认**一个连贯可授权目标一个任务包/窗口**，窗口内可以完成多步骤和确定性修复。**2026-11-01 Human 裁决与共识**：连贯任务默认采用 `evidence_driven_iteration` 内部 Loop（需求→增量→施工→自测→比对修复/归档缺口→继续），不因单次通过自行退出；审核默认在系列完成后集中独立审核（`review_mode: deferred_to_series`），遇 master 集成、下游承重、T3 动作或证据不可逆时即时审核（`immediate_required`）。详见 [OS开发Loop与系列审核共识V1](NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md)（基于 Core 候选分支 `task/core-risk-based-series-review-cadence-20261101@94639afe`，Core master `934425cf` 尚未合并）。**最终独立审核与执行/派单必须隔离会话**。Human保留产品关键语义裁决、master合并和未预批准的保护动作。
 - 当前窗口不应通过DCR读取本地仓库或运行命令；每次使用DCR**必须事前另行向玩家请求具体授权**，说明路径和命令；仅通过GitHub远端可以解决的任务不消耗DCR额度。
 
 ## 3. 已有资产与真实成熟度（摘要）

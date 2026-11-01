@@ -1,0 +1,50 @@
+task_packet:
+  task_id: NBA2K22-COMMON-BASELINE-OS-LOOP-SYNC-20261101-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T1_standard
+  exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+  branch: task/nba2k22-common-baseline-os-loop-sync-20261101
+  objective: >-
+    Synchronize Human-approved OS development Loop and series review principles from Core candidate
+    branch (task/core-risk-based-series-review-cadence-20261101@94639afe) into NBA2K22 common baseline
+    handover knowledge; establish temporary execution consensus without claiming Core master merge or
+    modifying 7-stage Workflow.
+  source_evidence:
+    - "Human ruling, 2026-11-01: default to evidence-driven internal iteration Loop and deferred series review; do not rely on frequent independent review windows."
+    - "Core candidate branch task/core-risk-based-series-review-cadence-20261101 at HEAD 94639afe82d1bc1028ad8726f9c9cdbb6354d235."
+    - "Core remote master HEAD 934425cf43d4fe3307b0112142aec1ba434a5734 (unmerged candidate status verified)."
+    - "NBA2K22 remote master HEAD 45cc45cae0550ddcda192a2179ea48509b27f6ee."
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PLANNING_MODEL_ENTRY_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/34_BASELINE_CURRENT_STATE.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/33_DEVELOPMENT_BASELINE_PROMPT.md
+    - 01_os/07_content/_runs/run-20261101-nba2k22-common-baseline-os-loop-sync-001/
+  verification_plan: 01_os/07_content/_runs/run-20261101-nba2k22-common-baseline-os-loop-sync-001/verification_plan.json
+  required_tests:
+    - scope_and_owner_isolation
+    - core_sha_and_candidate_status_honesty
+    - workflow_boundary_and_zero_alteration_check
+    - handoff_documentation_completeness
+    - git_transport_and_readback
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - execute_game_operations
+    - merge_core_master
+    - claim_core_master_merged
+    - alter_7_stage_workflow_states
+  required_completion_pointer: PR includes exact head SHA, changed paths, verification results, candidate status caveats, and handover context.
+  big_task: false
+  development_loop:
+    mode: one_step_sufficient
+    review_mode: deferred_to_series
+    series_id: nba2k22_common_baseline_governance_20261101
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: pending_Human_decision
+    expected_remote_master_head: 45cc45cae0550ddcda192a2179ea48509b27f6ee

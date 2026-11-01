@@ -1,0 +1,36 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_id": "NBA2K22-COMMON-BASELINE-OS-LOOP-SYNC-20261101-001",
+  "checks": [
+    {
+      "id": "CHK01_CORE_SHA_AND_CANDIDATE_STATUS",
+      "gate": "RV01_CORE_PROVENANCE",
+      "description": "Verify Core candidate HEAD is 94639afe82d1bc1028ad8726f9c9cdbb6354d235 and Core master HEAD is 934425cf43d4fe3307b0112142aec1ba434a5734, ensuring candidate is not falsely claimed as merged.",
+      "status": "PASS"
+    },
+    {
+      "id": "CHK02_WORKFLOW_BOUNDARY_INTEGRITY",
+      "gate": "RV02_ZERO_WORKFLOW_ALTERATION",
+      "description": "Verify that 7-stage workflow states (01..07), Human approval checkpoints, and independent review gates remain unchanged.",
+      "status": "PASS"
+    },
+    {
+      "id": "CHK03_COMMON_BASELINE_HANDOFF_COMPLETENESS",
+      "gate": "RV03_HANDOFF_DOCS",
+      "description": "Verify all handover documents (NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md, NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md, NBA2K22_PLANNING_MODEL_ENTRY_V1.md, NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md, 34_BASELINE_CURRENT_STATE.md, 33_DEVELOPMENT_BASELINE_PROMPT.md) exist and accurately document principles.",
+      "status": "PASS"
+    },
+    {
+      "id": "CHK04_ROLE_SEPARATION",
+      "gate": "RV04_GOVERNANCE_ROLE_SEPARATION",
+      "description": "Verify strict role separation among planning, execution, independent review, and Human.",
+      "status": "PASS"
+    },
+    {
+      "id": "CHK05_ZERO_PRIVILEGE_AND_ZERO_MUTATION",
+      "gate": "RV05_SAFETY",
+      "description": "Verify zero game memory writes, zero Core master merges, and zero protected operations executed.",
+      "status": "PASS"
+    }
+  ]
+}

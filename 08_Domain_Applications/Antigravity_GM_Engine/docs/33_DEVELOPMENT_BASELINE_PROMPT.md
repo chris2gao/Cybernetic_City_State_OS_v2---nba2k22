@@ -1,5 +1,8 @@
 # 迭代开发基线提示词
 
+> **2026-11-01 Human 裁决（开发 Loop 与系列审核临时共识）**：OS 开发任务默认采用 `evidence_driven_iteration` 内部 Loop（需求/增量/施工/针对性自测/比对分析与缺口归档/继续），不因单次通过宣布完成；审核默认延后至系列结束后集中独立审核，遇 master 集成、下游承重、T3 动作或证据不可逆时即时审核。严禁无新证据无限循环与自审自签。详见 [OS开发Loop与系列审核共识V1](development/NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md)（基于 Core 候选分支 `task/core-risk-based-series-review-cadence-20261101@94639afe`，Core master `934425cf` 尚未合并）。
+
+
 > [**开发规划窗口达到会话上限后的最新恢复快照**](development_snapshots/DEV_PLANNING_WINDOW_HANDOFF_20261021_V1.md)：开发规划/独立审核的新网页GPT窗口应首先读取此快照及当时的PROGRESS、共享状态。快照记录R07的最新独立复验门槛、PR12已合并、FINAL-CODEX/DEV28仍需玩家独立批准、六模型运行与人格开发边界；不要按本文其它旧阶段文字重启R研究。
 
 

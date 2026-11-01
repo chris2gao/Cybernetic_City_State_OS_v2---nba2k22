@@ -7,6 +7,7 @@
 | 优先级/范围 | Canonical来源（相对领域根，OS路径从仓库根） | 解释规则 |
 |---|---|---|
 | OS全局机制与权限 | `AGENT_WORKING_DISCIPLINE.md`, 根`AGENTS.md`, `01_os/README.md`, `01_os/开发入口与单窗口任务规范_v1.md`, `08_Domain_Applications/AGENTS.md` | 当下`master`或Human指派的确切OS版本；不由领域docs重写 |
+| OS开发迭代与系列审核共识 | [OS开发Loop与系列审核共识V1](NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md) | **2026-11-01 Human裁决临时执行共识**：基于Core候选分支`task/core-risk-based-series-review-cadence-20261101`（HEAD `94639afe`）；Core master（`934425cf`）尚未合并，严禁误称已合并master；面向新Fork窗口确立内部Loop与系列集中审核原则 |
 | 玩家产品目标和角色授权 | [项目宗旨](../PROJECT_INTENT_AND_MODEL_DEVELOPMENT_BOUNDARIES.md)、后续Human明确更新 | 六阶段参与顺序、自然成长、受控写入。业务文档不可将规划视作Human新的写游戏许可 |
 | NBA2K22 项目级开发协作 | [跨模型开发规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)，[旧V1](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V1.md) | **V2进入master后为当前项目默认**：GPT负责规划/Human关键决策，Codex唯一工程Owner，Antigravity顺序有界探索；共用本地仓库不得并行。V1保留历史和不冲突的证据/子代理限制。此行不是OS全局机制更新 |
 | 世界数据目标架构 | [平行世界V2](PARALLEL_BASKETBALL_WORLD_DATA_ARCHITECTURE_V2.md)及**未来通过审核的新ADR** | V2修订V1中“必须保留旧双库物理Schema”说法；**V2仍为目标设计而非通过的DDL** |
@@ -44,8 +45,8 @@
 ## 4. 按问题恢复上下文（最小读取集）
 
 - **我是NBA2K22开发规划/执行模型**：在OS启动文件后读取领域`AGENTS.md`所指向的[当前项目级跨模型规范V2](MULTI_MODEL_TASK_OWNERSHIP_AND_VERIFICATION_V2.md)；旧规划中的Codex/Antigravity并行或先全研究再开发要求，以最新Human决定的顺序结对与原型驱动为准。
-- **我是新开发执行模型**：读OS入口 + [开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) + 当前task packet + 前置完成指针；需要具体能力时定位[40族总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json)中的1项。
-- **我是新规划模型**：读OS入口 + [规划入口](NBA2K22_PLANNING_MODEL_ENTRY_V1.md) + [路线图](OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md)/backlog对应节点 + 直属上游设计裁决。
+- **我是新开发执行模型**：读OS入口 + [开发基线](NBA2K22_PROJECT_DEVELOPMENT_BASELINE_V1.md) + [OS开发Loop与系列审核共识V1](NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md) + 当前task packet + 前置完成指针；需要具体能力时定位[40族总账](PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json)中的1项。默认采用证据驱动内部Loop持续推进，不因单次通过自行退出。
+- **我是新规划模型**：读OS入口 + [规划入口](NBA2K22_PLANNING_MODEL_ENTRY_V1.md) + [OS开发Loop与系列审核共识V1](NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md) + [路线图](OS_GOVERNED_NEXT_STAGE_ROADMAP_20261022.md)/backlog对应节点 + 直属上游设计裁决。派发任务时规划内部Loop增量与审核排期模式（`review_mode`）。
 - **我想知道开发完成了什么**：能力总账→FINAL-CODEX机器矩阵→具体源码/验收报告和当前新run；不信“任务名称”或全局DONE。
 - **我想继续GAME/Box研究**：AG-NATIVE-01C/01D原始记录、测试、`CODEX_HANDOFF`及新Codex验收run，不读全部R07分卷。
 - **我想实现世界数据库**：平行世界V2→ARCH-01的获审身份ADR→Schema-01关系模型→Native-ACCEPT字段证据→变更/迁移任务包。
@@ -67,4 +68,12 @@ Codex 负责有界工程，Human 与独立审核维持各自职责。领域具�
 `01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md` 为准。
 此条只提供按需加载发现路径：不增加 G2、Role Handoff API、自动存储能力或
 第二套审批/任务状态。当前任务记录的 GitHub 分支与精确 SHA 必须重新查询。
+
+## 7. OS 开发 Loop 与系列审核机制临时执行共识（2026-11-01）
+
+Human 于 2026-11-01 明确裁决：OS 开发任务应默认通过内部 Loop（`evidence_driven_iteration`）持续迭代，利用测试和真实证据不断改进成果，而不是依赖频繁开启独立审核窗口推动开发。
+本共识基于 Core 候选分支 `task/core-risk-based-series-review-cadence-20261101`（HEAD `94639afe82d1bc1028ad8726f9c9cdbb6354d235`），当前 Core master 仍为 `934425cf43d4fe3307b0112142aec1ba434a5734`。本文件为 NBA2K22 领域临时执行共识，待 Core 正式集成 master 后更新权威状态。
+详见 [OS开发Loop与系列审核共识V1](NBA2K22_OS_DEVELOPMENT_LOOP_AND_SERIES_REVIEW_CONSENSUS_V1.md)。
+今后新 Fork 的 `execution` 岗位必须持续自测自修、不因单次绿灯误判完结、登记 UNKNOWN 继续施工；审核默认在系列完成后集中独立执行，遇 master 集成、下游承重、T3 动作或证据不可逆时即时审核。严禁无新证据无限循环与自审自签。
+
 
