@@ -1,0 +1,68 @@
+{
+  "field_id": "WORLD_REG_042",
+  "iteration_id": "SWEEP01_FIELD0141",
+  "date": "2026-11-01",
+  "question": "Does player-level User ball-handler speed low-rating endpoint slider affect actual in-game dribble movement speed independently of speed attribute and game speed?",
+  "candidate": {
+    "key": "settings.gameplay_sliders.speed_with_ball_min_user",
+    "offset": "0x37C",
+    "project_range": [
+      0,
+      1
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://www.youtube.com/watch?v=yMGZbgeqqSM",
+      "author": "Shady Mike Gaming",
+      "date": "2021-10-31",
+      "game": "NBA2K22",
+      "platform": "PC camera named and PC movement comments",
+      "claim": "CPU/User movement sliders explicitly listed; author says ball-speed controls seemed not to work on PC",
+      "grade": "SAME_VERSION_PC_QUALITATIVE"
+    },
+    {
+      "url": "https://diamondlobby.com/nba-2k22/realistic-game-sliders-nba-2k22/",
+      "author": "DiamondLobby",
+      "date": "2021 NBA2K22 release era",
+      "game": "NBA2K22",
+      "platform": "secondary slider guide",
+      "claim": "Movement min and max are separately listed for User/CPU, with suggested 40/73 values",
+      "grade": "SAME_VERSION_SLIDER_LIST"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/917142-mvpstax-s-2k22-next-gen-sim-sliders",
+      "author": "mvpstax",
+      "date": "2021-09",
+      "game": "NBA2K22",
+      "platform": "next-gen, not PC22",
+      "claim": "Game difficulty/movement custom sliders with different numbers",
+      "grade": "CROSS_PLATFORM_COMMUNITY"
+    }
+  ],
+  "claims": [
+    "Same-game movement and difficulty options exist but do not prove 0x37C candidate memory binding",
+    "Project candidate raw domain differs from game UI 0–100 scale; raw storage decoding unproven"
+  ],
+  "conflicts": [
+    "2021 PC player reported sliders ineffective, another community guide recommends changes; uncontrolled and conflicting",
+    "Custom difficulty may not be a 0..4 preset state",
+    "Game Speed, ratings, animation and FPS can confound motion"
+  ],
+  "metrics": [
+    "User ballhandler distance and measured in-game clock per straight dribble at low speed rating",
+    "keep 3D game clock vs FPS separate",
+    "user and CPU team control plus movement eligibility"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_042",
+    "question": "Read-only PC22 same-save/build: does candidate 0x37C map exactly to speed_with_ball_min_user visible UI value and storage encoding, separately from adjacent User/CPU and Min/Max? No writes.",
+    "write": false
+  },
+  "result": "SAME_VERSION_UI_PC_CONFLICT_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
