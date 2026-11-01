@@ -1,0 +1,67 @@
+{
+  "field_id": "WORLD_REG_052",
+  "iteration_id": "SWEEP01_FIELD0151",
+  "question": "Does the PC22 original Stepien Rule setting gate trading away future first-round selections in consecutive draft years, and can its candidate 0x180 be independently identified?",
+  "candidate": {
+    "key": "world.trade_and_draft_rules.ted_stepien_rule",
+    "offset": "0x180",
+    "range_from_queue": [
+      null,
+      null
+    ],
+    "storage_width": "UNKNOWN",
+    "UI_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021/22",
+      "game": "NBA2K22",
+      "platform": "MyNBA/MyLEAGUE exact PC menu unverified",
+      "claim": "Names CPU-CPU Trades, Trade Frequency and Stepien rule as separate rules",
+      "grade": "SAME_RELEASE_SETTINGS_LIST"
+    },
+    {
+      "url": "https://fixsportsvideogames.wordpress.com/2021/10/27/a-guide-to-nba-2k22s-mynba-on-ps5/",
+      "author": "PC-independent 2K22 PS5 MyNBA guide",
+      "date": "2021-10-27",
+      "game": "NBA2K22",
+      "platform": "PS5 not PC22",
+      "claim": "Stepien Rule limits trading away consecutive-year first-round picks; menu availability, not candidate byte",
+      "grade": "SAME_RELEASE_EXPLANATION"
+    },
+    {
+      "url": "https://devtrackers.gg/nba2k/p/8ff62bb9-nba-2k21-next-gen-mynba-courtside-report",
+      "author": "2K21 MyNBA developer report mirrored",
+      "date": "2020-10",
+      "game": "NBA2K21",
+      "platform": "next-gen, not PC22",
+      "claim": "Advanced CBA Stepien rule configurable; not proof of PC22 validator implementation",
+      "grade": "CROSS_VERSION_CONTEXT"
+    }
+  ],
+  "claims": [
+    "This is a distinct frozen queue record, not necessarily a physically distinct setting",
+    "Matching candidate offset or label does not validate Native byte identity"
+  ],
+  "conflicts": [
+    "Stepien rule and future-pick protections are separate transaction clauses",
+    "External GM trade rules require separate explicit policy",
+    "3D mode and Calendar simulation may apply different transaction paths"
+  ],
+  "metrics": [
+    "read-only exact option label/state versus candidate raw 0x180",
+    "native allowed/rejected proposed deals only during separately authorized tests",
+    "multi-year first-round pick ownership and protections tracked as source game history"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_052",
+    "question": "Read-only PC22 current build: can world.trade_and_draft_rules.ted_stepien_rule at candidate 0x180 match exact UI rule and distinguish alias NONE from separate memory consumer without trade execution?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_TRADE_RULE_NAME_DUPLICATE_OR_NATIVE_OFFSET_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
