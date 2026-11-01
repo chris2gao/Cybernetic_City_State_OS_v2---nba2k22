@@ -1,0 +1,1372 @@
+{
+  "schema_version": "nba2k22.vae.stage02.data_source_gap_matrix.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "date": "2026-11-01",
+  "native_priority": "PC22 game-computed field by native/UI/Getter, then existing Reader; derived only after game absence proven",
+  "current_game_runtime": "NOT_RUN",
+  "worlddata_old_save": "nba2k22_test_01 / MyLEAGUE0003, not current MC; 100 tables 1775 columns 20 source Reader families",
+  "native_advanced_status": "HUMAN_REPORTED_CATEGORY_ONLY_NOT_EXACT_COLUMN",
+  "gaps": [
+    {
+      "metric_id": "PLAYER_FGA",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "player_game_boxes:FGA",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_FGA",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:FGA",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_MINUTES",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "player_game_boxes:minutes",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_PTS",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "player_game_boxes:points",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_AST",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "player_game_boxes:assists",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_FTA",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "player_game_boxes:FTA",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_THREE_PA",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:3PA",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_THREE_PM",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:3PM",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "OPPONENT_FGA",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:opponent FGA",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "OPPONENT_THREE_PA",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:opponent 3PA",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "OPPONENT_FG_PCT",
+      "priority": "P1",
+      "status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_TOV",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:TOV",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_STL",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:STL",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_OREB",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:OREB",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_DREB",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "team_game_boxes:DREB",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "GAME_PERIOD_SCORES",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "game_period_scores",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_USG_NATIVE",
+      "priority": "P0",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_PER36_NATIVE",
+      "priority": "P0",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_PERGAME_NATIVE",
+      "priority": "P0",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_PACE_NATIVE",
+      "priority": "P0",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_OFFRTG_NATIVE",
+      "priority": "P0",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_DEFRTG_NATIVE",
+      "priority": "P1",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_NETRTG_NATIVE",
+      "priority": "P1",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_TS_NATIVE",
+      "priority": "P0",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_EFG_NATIVE",
+      "priority": "P1",
+      "status": "HUMAN_REPORTED_GAME_UI_CANDIDATE",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_SHOT_ZONES",
+      "priority": "P0",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "OPPONENT_PAINT_FGA",
+      "priority": "P0",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_PAINT_FGA",
+      "priority": "P0",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "OFFENSE_ACTION_TAGS",
+      "priority": "P1",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "MET_TOUCHES_NATIVE",
+      "priority": "P0",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_TRANSITION_POINTS",
+      "priority": "P1",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "TEAM_SECOND_CHANCE_POINTS",
+      "priority": "P1",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_FATIGUE_STATE",
+      "priority": "P0",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "ROTATION_ACTUAL",
+      "priority": "P1",
+      "status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "NATIVE_PLAYCALL_EVENTS",
+      "priority": "P0",
+      "status": "NATIVE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "UNKNOWN_NOT_READER_VERIFIED",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "NATIVE_INJURY_STATE",
+      "priority": "P1",
+      "status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "PLAYER_ATTRIBUTE_SNAPSHOT",
+      "priority": "P1",
+      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_source_candidate": "player_attribute_snapshots",
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    },
+    {
+      "metric_id": "SCORE_DISPLAY_CONSISTENCY",
+      "priority": "P1",
+      "status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN",
+      "specific_PC22_UI_label": "UNKNOWN",
+      "current_save_read": "NOT_RUN",
+      "native_source": "NATIVE_FIRST",
+      "reader_current_status": "SOURCE_CODE_OR_SCHEMA_ONLY",
+      "reader_source_candidate": null,
+      "reader_current_MC_verified": false,
+      "old_save_evidence": "NONE_EXACT",
+      "source_provenance": [
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        }
+      ],
+      "requirements": [
+        "Find precise PC22 game UI/native metric and original unit for current build/save",
+        "Look up existing old Reader/Getter separately with game ID, player UID and freshness",
+        "If found in game but Reader lacks it: NATIVE_FOUND_READER_GAP; never invent a formula",
+        "Only after evidence of absence from bounded game UI/native search propose separately named ESTIMATED_PROXY"
+      ],
+      "derived_fallback": {
+        "allowed": false,
+        "status": "PENDING_NATIVE_ABSENCE_PROOF",
+        "formula": null
+      }
+    }
+  ],
+  "reader_families": [
+    "schedule",
+    "game-mode",
+    "period-stats",
+    "organization",
+    "staff",
+    "coach-stats",
+    "lineups",
+    "finance",
+    "market",
+    "planning",
+    "settings",
+    "player-details",
+    "player-state",
+    "affiliations",
+    "player-skills",
+    "news",
+    "records",
+    "honors",
+    "league-history",
+    "staff-history"
+  ],
+  "priority_areas": [
+    {
+      "area": "Player Card Game Log/Per Game/Advanced",
+      "metric_ids": [
+        "PLAYER_PER36_NATIVE",
+        "PLAYER_PERGAME_NATIVE",
+        "PLAYER_USG_NATIVE",
+        "PLAYER_TS_NATIVE",
+        "PLAYER_EFG_NATIVE"
+      ],
+      "next": "PC22 exact tabs, units/rounding, game vs season"
+    },
+    {
+      "area": "Completed-game Box",
+      "metric_ids": [
+        "PLAYER_FGA",
+        "PLAYER_MINUTES",
+        "GAME_PERIOD_SCORES"
+      ],
+      "next": "Old save status versus current game and stable game ID"
+    },
+    {
+      "area": "Shot zones and offense actions",
+      "metric_ids": [
+        "PLAYER_SHOT_ZONES",
+        "OFFENSE_ACTION_TAGS",
+        "OPPONENT_PAINT_FGA"
+      ],
+      "next": "Actual in-game shot zone/event presence, never NBA.com assumption"
+    },
+    {
+      "area": "ACE, Coach, live stamina",
+      "metric_ids": [
+        "NATIVE_PLAYCALL_EVENTS",
+        "PLAYER_FATIGUE_STATE"
+      ],
+      "next": "Live and pregame state separate, no game operation authorized"
+    },
+    {
+      "area": "3D Calendar Sim normalization",
+      "metric_ids": [
+        "SCORE_DISPLAY_CONSISTENCY",
+        "TEAM_PACE_NATIVE"
+      ],
+      "next": "Read two normalize settings and same game multiple native score views"
+    }
+  ]
+}
