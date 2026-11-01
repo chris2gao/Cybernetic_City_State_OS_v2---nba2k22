@@ -1,0 +1,90 @@
+{
+  "schema_version": "nba2k22.vae.static_analysis.verification.v1",
+  "task_id": "NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001",
+  "verification_timestamp": "2026-11-01T21:22:44.978607+00:00",
+  "test_suite": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_static_shot_tendency_replay.py",
+  "test_runner": "unittest discover",
+  "environment": {
+    "os": "Windows",
+    "python_version": "3.14.0",
+    "working_directory": "E:/gemini_space/nba2k22"
+  },
+  "test_execution_receipt": {
+    "command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_static_shot_tendency_replay.py",
+    "tests_run": 8,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_seconds": 0.021
+  },
+  "regression_test_receipt": {
+    "command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_advanced_metrics_and_boxes.py",
+    "tests_run": 6,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "duration_seconds": 2.088
+  },
+  "overall_status": "PASSED",
+  "total_checks": 9,
+  "passed_checks": 9,
+  "failed_checks": 0,
+  "checks": [
+    {
+      "id": "Q01",
+      "name": "Save binding & local SQLite verification",
+      "status": "PASSED",
+      "evidence": "Verified save binding to MyLEAGUE0003 and nba2k22_test_01 via world-v24.sqlite. Zero runtime game captures, memory mutations, or calendar advancements executed."
+    },
+    {
+      "id": "Q02",
+      "name": "Source unit/timestamp & native offset verification",
+      "status": "PASSED",
+      "evidence": "Verified PlayerData byte offset 0x458 (1112 dec, uint8, CRC 952080370). Documented data gap: overall_raw is NULL in player_attribute_snapshots, but 5专项 shooting capability attributes are 100% available and used for controls."
+    },
+    {
+      "id": "Q03",
+      "name": "Sample eligibility & per-player game denominator",
+      "status": "PASSED",
+      "evidence": "Accurate player denominators verified: 461 in tendency snapshots, 369 with active simulated minutes, 268 in qualified regular rotation cohort (>= 10 games, >= 15 MPG), 257 in clean conserved cohort. No fake 462 equally qualified player assumption."
+    },
+    {
+      "id": "Q04",
+      "name": "FGA/36, team shot share & anomaly filtering",
+      "status": "PASSED",
+      "evidence": "FGA/36 (r = 0.9008) and team shot share (r = 0.9316) computed strictly from real player and team game boxes. Six adaptive tendency bins demonstrate strict monotonic increase from 7.62 to 19.39 FGA/36. 16 score-discrepancy games evaluated in sensitivity analysis."
+    },
+    {
+      "id": "Q05",
+      "name": "Multivariate stratification & no causal overreach",
+      "status": "PASSED",
+      "evidence": "Estimated 4 OLS regression models (Model 3 full multivariate R^2 = 0.8446, beta_tendency = 0.2145, t = 16.83). Explicit methodological caveats included: static cross-sectional slope is NOT causal dose-response for an individual player."
+    },
+    {
+      "id": "Q06",
+      "name": "Human declaration context incorporated",
+      "status": "PASSED",
+      "evidence": "Historical absence of manual player/coach edits incorporated as Human declaration and observational context; acknowledged that single-point snapshot 95 does not independently prove per-game setting constancy."
+    },
+    {
+      "id": "Q07",
+      "name": "Preservation of Phase A and Phase B Human gates",
+      "status": "PASSED",
+      "evidence": "Zero setting changes, zero new games, zero live captures claimed (all NOT_EXECUTED). Phase A smoke plan strictly framed with WAIT_HUMAN_AUTHORIZATION gate; Phase B N-day sim gate fully preserved."
+    },
+    {
+      "id": "Q08",
+      "name": "Actual test receipts & Loop iteration tracking",
+      "status": "PASSED",
+      "evidence": "Ran test_static_shot_tendency_replay.py (8/8 passed in 0.021s) and test_advanced_metrics_and_boxes.py (6/6 passed in 2.088s). Recorded 4 bounded iterations in loop_iterations.jsonl."
+    },
+    {
+      "id": "Q09",
+      "name": "Git sanitation & branch protection",
+      "status": "PASSED",
+      "evidence": "Zero binary SQLite, WAL, or raw dumps tracked in Git. Only lightweight sanitized JSON and Markdown committed on task/nba2k22-vae-s0-static-shot-tendency-loop-20261101."
+    }
+  ]
+}

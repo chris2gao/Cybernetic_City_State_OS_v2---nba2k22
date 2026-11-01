@@ -1,0 +1,103 @@
+{
+  "schema_version": "nba2k22.vae.static_source_join_quality.v1",
+  "task_id": "NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001",
+  "audit_timestamp": "2026-11-01T21:20:19.297375+00:00",
+  "source_environment": {
+    "save_id": "nba2k22_test_01",
+    "loaded_filename": "MyLEAGUE0003",
+    "database_file": "world-v24.sqlite",
+    "database_path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/_runtime/world-saves/nba2k22_test_01/world-v24.sqlite",
+    "human_declaration": "Human confirmed NO manual player or coach edits occurred during the historical simulated month; data represents unmanipulated static S0 baseline."
+  },
+  "native_setting_definition": {
+    "field_id": "TENDENCY_NATIVE_001",
+    "canonical_name": "ShotTendency",
+    "native_struct": "PlayerData",
+    "byte_offset_hex": "0x458",
+    "byte_offset_dec": 1112,
+    "width_bits": 8,
+    "size_bytes": 1,
+    "name_crc": 952080370,
+    "native_name": "ShotTendencyRaw",
+    "profile_source": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_skill_native_profile.json",
+    "scale": "0-100 unsigned integer",
+    "readback_status": "PROVEN_NATIVE_STRUCT_OFFSET"
+  },
+  "table_join_provenance": {
+    "players": {
+      "table_name": "players",
+      "total_records": 526,
+      "distinct_players": 526,
+      "join_key": "player_id"
+    },
+    "player_tendency_snapshots": {
+      "table_name": "player_tendency_snapshots",
+      "total_records": 13667,
+      "distinct_players": 461,
+      "deduplication_strategy": "ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY unit_id DESC) rn = 1",
+      "shot_tendency_coverage": "461 / 461 distinct players populated (100.0%)",
+      "touches_tendency_coverage": "461 / 461 distinct players populated (100.0%)"
+    },
+    "player_attribute_snapshots": {
+      "table_name": "player_attribute_snapshots",
+      "total_records": 13667,
+      "distinct_players": 461,
+      "overall_raw_status": "UNPOPULATED (NULL across all 13667 rows); documented data gap",
+      "individual_shooting_attributes_status": "POPULATED (13667 / 13667 rows): shot_close_raw, mid_range_shot_raw, three_point_shot_raw, shot_iq_raw, offensive_consistency_raw 100% available"
+    },
+    "player_vitals_observations": {
+      "table_name": "player_vitals_observations",
+      "total_records": 13667,
+      "primary_position_populated": 10170,
+      "distinct_players_with_position": 461,
+      "position_values": [
+        "POINT_GUARD (0)",
+        "SHOOTING_GUARD (1)",
+        "SMALL_FORWARD (2)",
+        "POWER_FORWARD (3)",
+        "CENTER (4)"
+      ]
+    },
+    "team_tactic_settings": {
+      "table_name": "team_tactic_settings",
+      "total_records": 30,
+      "distinct_teams": 30,
+      "tactics_coverage": "30 / 30 teams populated (100.0%): run_plays_raw, tempo_raw"
+    },
+    "player_game_boxes": {
+      "table_name": "player_game_boxes",
+      "total_simulated_boxes": 6133,
+      "distinct_simulated_games": 238,
+      "distinct_players_with_minutes": 369,
+      "active_player_box_filter": "s.is_final = 1 AND s.was_simulated = 1 AND pb.minutes_raw > 0"
+    }
+  },
+  "sample_population_breakdown": {
+    "raw_league_roster_count": 461,
+    "players_with_simulated_minutes": 369,
+    "cohort_5_plus_games": 348,
+    "cohort_10_plus_games": 313,
+    "cohort_qualified_rotation": {
+      "criteria": "games_played >= 10 AND mpg >= 15.0 AND shot_tendency IS NOT NULL",
+      "sample_size": 268,
+      "description": "Core analytical cohort of regular rotation players"
+    },
+    "cohort_clean_conserved_rotation": {
+      "criteria": "games_played >= 10 AND mpg >= 15.0 AND shot_tendency IS NOT NULL AND excluding 16 score-discrepant games",
+      "sample_size": 257,
+      "description": "Sensitivity control cohort excluding all 16 score discrepancy games"
+    }
+  },
+  "score_discrepancy_accounting": {
+    "total_simulated_games": 238,
+    "exact_conserved_games": 222,
+    "discrepancy_games": 16,
+    "breakdown": {
+      "overtime_period_truncation": 5,
+      "wizards_active_minutes_truncation": 11,
+      "unknown_causes": 0
+    },
+    "discrepancy_impact_on_regression_estimates": "Minimal impact: slope beta changes by < 0.005 between all-game and clean-game cohorts; full sensitivity analysis reported."
+  },
+  "join_integrity_verdict": "VERIFIED_VALID_FOR_STATIC_S0_STUDY"
+}

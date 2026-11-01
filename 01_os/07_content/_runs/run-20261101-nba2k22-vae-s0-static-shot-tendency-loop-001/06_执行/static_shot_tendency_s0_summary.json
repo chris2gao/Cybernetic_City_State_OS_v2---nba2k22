@@ -1,0 +1,442 @@
+{
+  "schema_version": "nba2k22.vae.static_shot_tendency_s0_summary.v1",
+  "task_id": "NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001",
+  "generation_timestamp": "2026-11-01T21:21:00.224177+00:00",
+  "dataset_provenance": {
+    "save_id": "nba2k22_test_01",
+    "loaded_filename": "MyLEAGUE0003",
+    "source_sqlite": "world-v24.sqlite",
+    "total_simulated_games": 238,
+    "clean_conserved_games": 222,
+    "score_discrepancy_games": 16,
+    "human_declaration": "Human confirmed NO manual player or coach modifications occurred during the historical simulated month; static S0 baseline is unmanipulated."
+  },
+  "cohort_definitions_and_counts": {
+    "total_players_in_tendency_snapshots": 461,
+    "total_players_with_simulated_minutes": 369,
+    "cohort_qualified_rotation": {
+      "description": "Regular rotation players with >= 10 simulated games and >= 15.0 MPG",
+      "count": 268,
+      "exclusion_criteria": "Excludes low-minute reserves and players with < 10 games to avoid small-sample distortion"
+    },
+    "cohort_clean_conserved_rotation": {
+      "description": "Sensitivity cohort with >= 10 games and >= 15.0 MPG strictly excluding the 16 score-discrepant games",
+      "count": 257
+    },
+    "cohort_elite_lead_guards": {
+      "description": "Point guards and shooting guards with >= 28.0 MPG and shot tendency >= 85",
+      "count": 15
+    }
+  },
+  "bivariate_correlations": {
+    "sample_size": 268,
+    "shot_tendency_vs_fga_per_game": 0.9303,
+    "shot_tendency_vs_fga_per_36": 0.9008,
+    "shot_tendency_vs_team_shot_share": 0.9316,
+    "shot_tendency_vs_minutes_per_game": 0.696,
+    "shot_tendency_vs_touches_tendency": 0.7289,
+    "shot_tendency_vs_three_point_rating": 0.0841,
+    "shot_tendency_vs_mid_range_rating": 0.1654
+  },
+  "tendency_bins_breakdown": [
+    {
+      "bin_label": "Very Low (0-49)",
+      "player_count": 28,
+      "mean_tendency": 41.4,
+      "mean_fga_game": 4.36,
+      "mean_fga_36": 7.62,
+      "mean_team_shot_share": 0.0494,
+      "mean_mpg": 20.7,
+      "mean_pts": 5.5
+    },
+    {
+      "bin_label": "Low (50-64)",
+      "player_count": 108,
+      "mean_tendency": 55.6,
+      "mean_fga_game": 7.35,
+      "mean_fga_36": 11.65,
+      "mean_team_shot_share": 0.0812,
+      "mean_mpg": 22.8,
+      "mean_pts": 9.1
+    },
+    {
+      "bin_label": "Medium (65-74)",
+      "player_count": 52,
+      "mean_tendency": 66.8,
+      "mean_fga_game": 9.43,
+      "mean_fga_36": 14.08,
+      "mean_team_shot_share": 0.1041,
+      "mean_mpg": 24.2,
+      "mean_pts": 11.7
+    },
+    {
+      "bin_label": "High (75-84)",
+      "player_count": 44,
+      "mean_tendency": 77.6,
+      "mean_fga_game": 12.59,
+      "mean_fga_36": 16.09,
+      "mean_team_shot_share": 0.1413,
+      "mean_mpg": 28.2,
+      "mean_pts": 15.8
+    },
+    {
+      "bin_label": "Very High (85-94)",
+      "player_count": 27,
+      "mean_tendency": 87.8,
+      "mean_fga_game": 15.8,
+      "mean_fga_36": 17.92,
+      "mean_team_shot_share": 0.1754,
+      "mean_mpg": 31.8,
+      "mean_pts": 21.3
+    },
+    {
+      "bin_label": "Elite (95-100)",
+      "player_count": 9,
+      "mean_tendency": 95.9,
+      "mean_fga_game": 17.45,
+      "mean_fga_36": 19.39,
+      "mean_team_shot_share": 0.1944,
+      "mean_mpg": 32.3,
+      "mean_pts": 24.3
+    }
+  ],
+  "multivariate_regression_models": {
+    "model_1_bivariate": {
+      "formula": "FGA_36 ~ Intercept + ShotTendency",
+      "n": 268,
+      "r2": 0.8114,
+      "adj_r2": 0.8107,
+      "rmse": 1.5085,
+      "shot_tendency_beta": 0.2109,
+      "shot_tendency_t_stat": 33.83,
+      "shot_tendency_ci_95": [
+        0.1987,
+        0.2231
+      ]
+    },
+    "model_2_controlling_mpg": {
+      "formula": "FGA_36 ~ Intercept + ShotTendency + MPG",
+      "n": 268,
+      "r2": 0.8342,
+      "adj_r2": 0.8329,
+      "rmse": 1.417,
+      "shot_tendency_beta": 0.2451,
+      "shot_tendency_t_stat": 30.06,
+      "shot_tendency_ci_95": [
+        0.2292,
+        0.2611
+      ],
+      "mpg_beta": -0.1446,
+      "mpg_t_stat": -6.04
+    },
+    "model_3_full_multivariate": {
+      "formula": "FGA_36 ~ Intercept + ShotTendency + MPG + TouchesTendency + 3PT_Rating + Mid_Rating + Position_Dummies + Coach_Tempo",
+      "n": 268,
+      "r2": 0.8446,
+      "adj_r2": 0.8386,
+      "rmse": 1.3928,
+      "coefficients": {
+        "ShotTendency": {
+          "beta": 0.2145,
+          "std_error": 0.0127,
+          "t_stat": 16.83,
+          "ci_95": [
+            0.1895,
+            0.2394
+          ]
+        },
+        "TouchesTendency": {
+          "beta": 0.0282,
+          "std_error": 0.0111,
+          "t_stat": 2.55,
+          "ci_95": [
+            0.0065,
+            0.0499
+          ]
+        },
+        "MPG": {
+          "beta": -0.1414,
+          "std_error": 0.0251,
+          "t_stat": -5.62,
+          "ci_95": [
+            -0.1906,
+            -0.0921
+          ]
+        },
+        "ThreePtRating": {
+          "beta": -0.0049,
+          "std_error": 0.003,
+          "t_stat": -1.66,
+          "ci_95": [
+            -0.0108,
+            0.0009
+          ]
+        },
+        "MidRangeRating": {
+          "beta": 0.0063,
+          "std_error": 0.0036,
+          "t_stat": 1.76,
+          "ci_95": [
+            -0.0007,
+            0.0134
+          ]
+        },
+        "Pos_SG": {
+          "beta": 0.4701,
+          "std_error": 0.2679,
+          "t_stat": 1.75,
+          "ci_95": [
+            -0.0549,
+            0.9951
+          ]
+        },
+        "Pos_SF": {
+          "beta": 0.0749,
+          "std_error": 0.2751,
+          "t_stat": 0.27,
+          "ci_95": [
+            -0.4643,
+            0.6142
+          ]
+        },
+        "Pos_PF": {
+          "beta": 0.2367,
+          "std_error": 0.2714,
+          "t_stat": 0.87,
+          "ci_95": [
+            -0.2952,
+            0.7686
+          ]
+        },
+        "Pos_C": {
+          "beta": -0.2826,
+          "std_error": 0.3249,
+          "t_stat": -0.87,
+          "ci_95": [
+            -0.9194,
+            0.3541
+          ]
+        },
+        "CoachTempo": {
+          "beta": 0.0012,
+          "std_error": 0.0047,
+          "t_stat": 0.24,
+          "ci_95": [
+            -0.0081,
+            0.0104
+          ]
+        }
+      }
+    },
+    "model_4_team_shot_share": {
+      "formula": "TeamShotShare ~ Intercept + ShotTendency + MPG + TouchesTendency + 3PT_Rating + Mid_Rating + Position_Dummies + Coach_Tempo",
+      "n": 268,
+      "r2": 0.937,
+      "adj_r2": 0.9345,
+      "rmse": 0.011,
+      "shot_tendency_beta": 0.0017,
+      "shot_tendency_t_stat": 17.35,
+      "shot_tendency_ci_95": [
+        0.0015,
+        0.0019
+      ],
+      "mpg_beta": 0.003,
+      "mpg_t_stat": 15.36
+    }
+  },
+  "target_lillard_and_peer_group": {
+    "target_player": {
+      "player_id": "player:native:2459",
+      "name": "Damian Lillard",
+      "team_id": "team:native:28",
+      "team_name": "Portland Trail Blazers",
+      "position": "POINT_GUARD",
+      "shot_tendency": 95,
+      "touches_tendency": 99,
+      "games_played": 16,
+      "mpg": 36.38,
+      "fga_per_game": 19.88,
+      "fga_per_36": 19.67,
+      "team_shot_share": 0.2309,
+      "pts_per_game": 29.56
+    },
+    "elite_guard_peers": [
+      {
+        "name": "Luka Doncic",
+        "tendency": 93,
+        "touches": 99,
+        "mpg": 32.6,
+        "fga_game": 18.4,
+        "fga_36": 20.32,
+        "share": 0.2048,
+        "pts": 24.73
+      },
+      {
+        "name": "Stephen Curry",
+        "tendency": 95,
+        "touches": 99,
+        "mpg": 32.31,
+        "fga_game": 18.13,
+        "fga_36": 20.19,
+        "share": 0.2037,
+        "pts": 26.0
+      },
+      {
+        "name": "Trae Young",
+        "tendency": 95,
+        "touches": 99,
+        "mpg": 32.0,
+        "fga_game": 18.07,
+        "fga_36": 20.33,
+        "share": 0.1954,
+        "pts": 23.07
+      },
+      {
+        "name": "James Harden",
+        "tendency": 88,
+        "touches": 85,
+        "mpg": 35.76,
+        "fga_game": 16.94,
+        "fga_36": 17.05,
+        "share": 0.1856,
+        "pts": 26.41
+      },
+      {
+        "name": "Bradley Beal",
+        "tendency": 90,
+        "touches": 95,
+        "mpg": 31.67,
+        "fga_game": 16.53,
+        "fga_36": 18.8,
+        "share": 0.1884,
+        "pts": 23.73
+      },
+      {
+        "name": "Shai Gilgeous-Alexander",
+        "tendency": 85,
+        "touches": 80,
+        "mpg": 31.93,
+        "fga_game": 16.2,
+        "fga_36": 18.26,
+        "share": 0.1764,
+        "pts": 23.67
+      },
+      {
+        "name": "Collin Sexton",
+        "tendency": 90,
+        "touches": 90,
+        "mpg": 31.82,
+        "fga_game": 16.18,
+        "fga_36": 18.3,
+        "share": 0.1784,
+        "pts": 21.59
+      },
+      {
+        "name": "Paul George",
+        "tendency": 88,
+        "touches": 99,
+        "mpg": 33.29,
+        "fga_game": 16.0,
+        "fga_36": 17.31,
+        "share": 0.1793,
+        "pts": 24.36
+      },
+      {
+        "name": "John Wall",
+        "tendency": 95,
+        "touches": 95,
+        "mpg": 31.33,
+        "fga_game": 15.87,
+        "fga_36": 18.23,
+        "share": 0.1818,
+        "pts": 20.33
+      },
+      {
+        "name": "Zach LaVine",
+        "tendency": 90,
+        "touches": 90,
+        "mpg": 30.62,
+        "fga_game": 15.81,
+        "fga_36": 18.59,
+        "share": 0.1739,
+        "pts": 22.81
+      },
+      {
+        "name": "Jaylen Brown",
+        "tendency": 86,
+        "touches": 99,
+        "mpg": 30.75,
+        "fga_game": 15.81,
+        "fga_36": 18.51,
+        "share": 0.1718,
+        "pts": 18.5
+      },
+      {
+        "name": "Anthony Edwards",
+        "tendency": 85,
+        "touches": 80,
+        "mpg": 30.5,
+        "fga_game": 15.33,
+        "fga_36": 18.1,
+        "share": 0.1747,
+        "pts": 18.67
+      },
+      {
+        "name": "De'Aaron Fox",
+        "tendency": 95,
+        "touches": 95,
+        "mpg": 28.9,
+        "fga_game": 15.3,
+        "fga_36": 19.06,
+        "share": 0.1704,
+        "pts": 21.1
+      },
+      {
+        "name": "Donovan Mitchell",
+        "tendency": 90,
+        "touches": 99,
+        "mpg": 30.73,
+        "fga_game": 14.87,
+        "fga_36": 17.41,
+        "share": 0.1681,
+        "pts": 18.67
+      },
+      {
+        "name": "CJ McCollum (Teammate)",
+        "tendency": 88,
+        "touches": 85,
+        "mpg": 34.81,
+        "fga_game": 15.38,
+        "fga_36": 15.9,
+        "share": 0.1782,
+        "pts": 20.19
+      }
+    ]
+  },
+  "static_evidence_evaluation_of_proposed_intervention": {
+    "proposed_intervention": "Damian Lillard Shot Tendency: 95 -> 80 (delta = -15)",
+    "cross_sectional_projected_delta_fga_36": -3.22,
+    "cross_sectional_projected_delta_fga_game": -3.25,
+    "cross_sectional_projected_delta_shot_share": -0.0255,
+    "methodological_caveats": [
+      "CROSS_SECTIONAL_SLOPE_NOT_CAUSAL_DOSE_RESPONSE: Static differences between different players do not guarantee an identical intra-individual shift upon dynamic in-game parameter alteration.",
+      "ROSTER_REALLOCATION_AND_TACTICAL_ABSORPTION: In real gameplay, teammates CJ McCollum and Jusuf Nurkic may absorb vacated attempts, dampening or amplifying individual FGA change.",
+      "NO_MANUAL_EXPERIMENT_WITHOUT_AUTHORIZATION: This projection serves exclusively as an evidence-based hypothesis generator; zero game mutations are permitted without Human authorization."
+    ]
+  },
+  "phase_a_human_smoke_test_recommendation": {
+    "phase": "PHASE_A_SETTING_PERSISTENCE_AND_READBACK_SMOKE",
+    "authorization_gate": "WAIT_HUMAN_AUTHORIZATION",
+    "target_setting": "TENDENCY_NATIVE_001 (ShotTendency)",
+    "target_player": "Damian Lillard (player:native:2459)",
+    "proposed_value": 80,
+    "recommended_protocol": [
+      "1. Inquire Human regarding official game UI edit menu navigation and confirmation steps.",
+      "2. Await Human execution of in-game edit (95 -> 80) and 1-week calendar simulation.",
+      "3. Human explicitly triggers Gemini FULL capture.",
+      "4. Gemini verifies setting persistence: compares expected value (80) against live memory readback and SQLite persistence.",
+      "5. Distinguish persistence verification from gameplay effect: 1-week sample evaluates whether the setting sticks, NOT full causal statistical power."
+    ],
+    "status": "PROPOSED_AWAITING_HUMAN_APPROVAL"
+  }
+}
