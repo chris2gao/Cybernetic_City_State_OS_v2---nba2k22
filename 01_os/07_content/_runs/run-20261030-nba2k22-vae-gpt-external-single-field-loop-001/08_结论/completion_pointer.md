@@ -1,39 +1,40 @@
-# NBA2K22 VAE GPT External Single-Field Loop — 115/204
+# VAE GPT External Single-Field Loop — Sweep 1 checkpoint 135/204
 
-Task: `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`
-Role: `execution`; model GPT-6 conversation-declared, not host-signed.
-Branch: `task/nba2k22-vae-gpt-external-single-field-loop-20261030`
-NBA master base: `45cc45cae0550ddcda192a2179ea48509b27f6ee`.
-Seed queue: `6436515330f77c0cc5cc675b521590adeb69c5d4`, blob `af5567e14e03cd9f7761e396a978311e347d7c17`.
-Run state commit before pointer: `a20d69aed051f6d5500ee14a3f49889bea585737`.
+Task `NBA2K22-VAE-GPT-EXTERNAL-SINGLE-FIELD-LOOP-20261030-001`
+Role `execution`; model GPT-6 conversation-declared, not platform signed.
+Branch `task/nba2k22-vae-gpt-external-single-field-loop-20261030`.
+NBA master baseline `45cc45cae0550ddcda192a2179ea48509b27f6ee`.
+Frozen queue commit `6436515330f77c0cc5cc675b521590adeb69c5d4`, blob `af5567e14e03cd9f7761e396a978311e347d7c17`.
+Run synchronization commit before pointer `6d1e604f2792b00d9447b6edab1013e7b1ef6c46`.
 
-## Current checkpoint
+## Current recoverable state
 
-- Sweep 1: **115 of 204 researched-with-explicit-unknown**, **89 remaining**.
-- This invocation resumed from 90, recovered previously committed 094–095, and completed **091–115** (25 fields including those recovered).
-- Latest `WORLD_REG_016` / candidate `settings.trade_rules.cpu_trade_frequency` at +`0x178`; next **`WORLD_REG_017`** / `settings.trade_rules.blockbuster_trade_frequency` candidate +`0x17C`.
-- `NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE`: **51** total (recount from 115 consecutive iteration rows). World setting candidate offsets are similarly unverified, but **not** counted as new NO_DIRECT_SOURCE result flags in this batch.
-- Exact authoritative resume files: `06_执行/current_checkpoint.json` + `06_执行/iteration_ledger.jsonl` at actual latest branch HEAD.
+- First sweep **135/204**, **69 remain**. Status `SWEEP1_IN_PROGRESS`, not complete.
+- 20 single-field dossiers/iterations added **WORLD_REG_017 through WORLD_REG_036** and 20 matching static verification receipts.
+- Last `WORLD_REG_036`, `settings.injuries_and_morale.chemistry_difficulty` candidate `0x240`; **next `WORLD_REG_037`, `chemistry_effects` candidate `0x244`**.
+- Cumulative `NO_DIRECT_NATIVE_FIELD_IDENTITY_SOURCE` **51** as recorded in 135 ledger rows. World setting candidate address mappings remain unknown even when source labels are supported; the 51 count is for the exact NO_DIRECT flag, not all uncertain offsets.
+- The authoritative resume cursor and entire log are in `06_执行/current_checkpoint.json` and `06_执行/iteration_ledger.jsonl` on the current actual GitHub HEAD.
 
-## New per-field findings and source limitations
+## 116–135 research summary
 
-**Player tendencies 091–099:** Flashy Pass, Alley-Oop Pass, Pass Interception, Take Charge, On Ball Steal, Contest Shot, Block Shot, Foul, Hard Foul. Same-version roster and official gameplay materials establish named categories and system changes; none validates PC22 candidate offsets `0x4B2–0x4BA` or native decision coefficients. Attempted actions, successful steals/blocks, resulting fouls and global CPU/User sliders must be measured separately.
+- 017 `blockbuster_trade_frequency`: same-name distinct slider found in older NBA 2K, but an exact PC22 native setting mapping and engine definition are unproven.
+- 018 `untouchable_threshold`: contemporary 2K22 PS5 franchise source uses *Untouchable Premium* and separate Untouchables automation list; exact mapping of candidate threshold remains unresolved.
+- 019–026 Contracts: Contract Negotiation Difficulty; Player Non-Financial Ambitions; Min/Max Rating anchors; Player Potential, Durability and Fame salary factors; CPU Re-Signing Interest. 2022-01 PS5 MyNBA setup explicitly lists Min Rating, Max Rating and Potential/Durability/Fame factors. The `cpu_interest_in_resigning` project key is not proven to be the original CPU Re-Signing Aggressiveness slider.
+- 027–033 Injury: User/CPU Injury Frequency and Effects, Severity, Duration, Career-Ending Frequency. 2022 same-release users report very few 3D injuries despite calendar-sim injuries; later 2K23 report claims an injury-duration anomaly was already present in 2K22. Neither is a controlled PC22 test. Do not mix injury incident rate, severity, rating effect, recovery time, and terminal injury outcome or rewrite historical injury records.
+- 034–036 Morale Difficulty, Morale Effects, Chemistry Difficulty. Distinguish player/team state changes from attribute/OVR modifiers. No verified native weights or PC22 value direction.
 
-**World settings 001–008:** Quarter Length, Game Speed, Free Throw Difficulty, Shot Clock, Foul Out, Injuries Enabled, Simulated Quarter Length, Normalize Stats. Differentiated played versus simulated quarters, player and CPU modes, per-minute versus per-stat normalization, injury On/Off vs injury frequency/effects. `WORLD_REG_004` `shot_clock` is a semantic collision (HUD On Court Shot Clock vs 24-second rule); `WORLD_REG_008` `normalize_stats` not yet uniquely mapped to Normalize Played to Sim Stats. Only the actual in-game UI and read-only memory evidence can decide.
+For each field, `06_执行/field_records/WORLD_REG_###.json` contains one scoped question, external source provenance with author/date/game version/platform, claims, limitations/conflicts, measurable indicators and one read-only Gemini REA identity question. Sources are contextual, not proof of candidate byte offsets.
 
-**World trade settings 009–016:** CPU-CPU Trades, Trade Override, Trade Deadline, Financial Trade Rules, Recently Signed Restrictions, Recently Traded Restrictions, Trade Difficulty, CPU Trade Frequency. Same-release trade menu proves distinct concepts, not exact native offsets or actual PC22 validators. Human-authorized external GM simulation remains a separate rule source; no trade or change to game configuration was performed. No imported NBA2K21/2K15 CBA detail was elevated to established PC22 behavior.
+## Static verification evidence
 
-Each new dossier has an external source question, URLs and author/date/version/platform limitations, caveats and confounders, suggested observable denominators, and **one** bounded read-only Gemini REA identity/readback question. The external research stream never runs Gemini or the game.
+- New dossiers: `06_执行/field_records/WORLD_REG_017.json` through `WORLD_REG_036.json`
+- Static verification: `07_测试执行/sweep01_field0116_static_verification.json` through `sweep01_field0135_static_verification.json`
+- Batch: `07_测试执行/sweep01_fields0116_0135_readback.json`.
+- Validation head `b11bc02889c7087270f82b5ebe36be4e5e1565b7`: 135 contiguous ledger rows, 51 exact no-direct source flags, all 135 dossiers and static receipts present, 286 changed paths entirely within authorized Run, expected NBA master merge base.
+- Subsequent commits add only batch verification, Run sync and this pointer. Re-read HEAD for newest evidence if continuing.
 
-## Evidence and correction
+## Boundaries
 
-- 25 field dossiers: `06_执行/field_records/TENDENCY_NATIVE_091.json`–`099.json` and `WORLD_REG_001.json`–`016.json`.
-- 25 per-field static receipts: `07_测试执行/sweep01_field0091_static_verification.json`–`sweep01_field0115_static_verification.json`.
-- Consolidated receipt: `07_测试执行/sweep01_fields0091_0115_readback.json`.
-- `07_测试执行/sweep01_field0092_0093_id_correction.json` explicitly documents prior field-ID zero-padding correction, with original Git parent commit preserving historic proof. The new canonical dossiers are `TENDENCY_NATIVE_092/093` and old unpadded files are absent. No source/game finding was changed by correction.
-- 115 chronological iteration records and exact next queue ID verified, all 115 dossiers and receipts present; only this Run changed, expected master merge base unchanged.
-- `run.yml` now has cursor 115 and remaining 89.
+No PC22 game operation, native getter execution, Gemini REA execution, player save write, contract/trade operation, numerical optimizer, simulation formula, independent review, PRMS SAVE_TASK_CONTEXT, formal Communication v2, Core/master merge or background scheduler. All remain `NOT_RUN` or `UNKNOWN` as appropriate.
 
-Not done: game runtime, REA validation, independent audit, PRMS task-context publication, formal Communication v2, Core/master merge, scheduler. No native mapping, causal weight, optimal number or simulation outcome claimed.
-
-**Status: `SWEEP1_CURSOR_115_CHECKPOINTED_LOOP_OPEN`.**
+**Status: `SWEEP1_CURSOR_135_CHECKPOINTED_LOOP_OPEN`**.
