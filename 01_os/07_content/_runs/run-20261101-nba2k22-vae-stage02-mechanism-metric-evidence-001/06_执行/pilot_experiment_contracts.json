@@ -1,0 +1,282 @@
+{
+  "schema_version": "nba2k22.vae.stage02.pilot_experiment_contracts.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "date": "2026-11-01",
+  "status": "DESIGN_ONLY",
+  "game": "NOT_RUN",
+  "rea_setter": "NOT_RUN",
+  "pilot_count": 3,
+  "contracts": [
+    {
+      "contract_id": "PILOT_01_SHOT_TOUCHES_POE",
+      "title": "Shot + Touches + Coach Run Plays/POE/Freelance → Player FGA share",
+      "status": "NOT_RUN_DESIGN_ONLY",
+      "canonical_target_field_ids": [
+        "TENDENCY_NATIVE_001",
+        "TENDENCY_NATIVE_066",
+        "COACH_DEFAULT_001",
+        "COACH_DEFAULT_009",
+        "COACH_DEFAULT_011",
+        "COACH_DEFAULT_016",
+        "COACH_DEFAULT_017",
+        "COACH_DEFAULT_018",
+        "COACH_DEFAULT_019"
+      ],
+      "hypothesis": "A one-field-at-a-time change in the governed shot-creation configuration might change core scorer native shot participation after minute/context adjustment; sign and threshold remain unproven.",
+      "competing_explanations": [
+        "Role Tier Branch C raw bytes missing from forensic receipt",
+        "Touches not equivalent to Shot or native USG%",
+        "ACE overrides and unmatched PlayTypes/playbook CRC",
+        "Lineup, defensive matchup and player ratings",
+        "Different game engine consumers"
+      ],
+      "primary_native_metric_ids": [
+        "PLAYER_FGA",
+        "PLAYER_MINUTES"
+      ],
+      "secondary_native_metric_ids": [
+        "PLAYER_USG_NATIVE",
+        "MET_TOUCHES_NATIVE",
+        "NATIVE_PLAYCALL_EVENTS",
+        "TEAM_FGA",
+        "PLAYER_SHOT_ZONES"
+      ],
+      "metric_source_policy": "GAME_NATIVE_CALCULATED_SAME_GRAIN_FIRST; current exact PC22 Advanced field requires independent read-only proof; do not use an estimated metric by default",
+      "data_availability": "SOME_OLD_SAVE_NATIVE_BOX_AVAILABLE; PRECISE_ADVANCED_AND_EVENTS_NEED_DISCOVERY",
+      "minimum_unit": "game+player within same save and matched opponent, with per-game FGA and actual minutes",
+      "stages": [
+        {
+          "name": "S0_BASELINE",
+          "authorization": "READ_ONLY_FUTURE_SEPARATE_ACCESS",
+          "method": "Record same-save exact field/native and PC22 UI before values twice, stable opponent/context and game-native outcome baseline. No writing by Stage02."
+        },
+        {
+          "name": "S1_INTERVENTION",
+          "authorization": "NOT_AUTHORIZED_BY_STAGE02",
+          "method": "Only after separate Human authority: one-factor REA Setter in designated safe save, independent immediate native readback, invariant-field readback, recorded original value, rollback and post-rollback confirmation. Abort on mismatch."
+        },
+        {
+          "name": "S2_OBSERVATION",
+          "authorization": "NOT_AUTHORIZED_BY_STAGE02",
+          "method": "Later collect comparable multiple real games, native game-calculated statistics first; distinguish 3D and Calendar Sim, observe original box and any Advanced native label, no assumed telemetry source."
+        },
+        {
+          "name": "S3_EVALUATION",
+          "authorization": "DESIGN_ONLY",
+          "method": "Pre-register direction/contrast and uncertainty; compare within stratum and comparable opponents, report SUPPORTS_HYPOTHESIS / DOES_NOT_SUPPORT / INCONCLUSIVE / NEED_EVIDENCE without causal production rule."
+        }
+      ],
+      "controls": [
+        "same save_instance, build, player/team/game IDs, and real game phase",
+        "3D_CPU_CPU, CALENDAR_SIM, USER_VS_CPU, SimCast treated as separate strata",
+        "quarter_length and sim_quarter_length recorded independently",
+        "normalize_stats and normalize_played_minutes distinct, UNKNOWN if not read",
+        "opponent, roster, game venue, injuries, substitutions and actual minutes",
+        "ACE runtime overrides, coach gameplan and true active freelance separated",
+        "native Player Card/Box/Advanced metric definition, original precision and freshness"
+      ],
+      "comparison": {
+        "design": "paired or blocked quasi-experimental by opponent and roster; isolate one selected field change per contrast",
+        "sample": "Several games in each stratum, justified by observed variance and feasible power. N>=10 alone never proves comparability.",
+        "mode_strata": [
+          "3D_CPU_CPU",
+          "CALENDAR_SIM"
+        ],
+        "user_v_cpu": "not pooled",
+        "baseline": "S0 identity, settings, native metric label and exact source readback",
+        "readback": "S1 modified field and invariant fields independent REA read-only confirmation after authorization",
+        "success": "Aligned native outcome direction within comparable stratum with credible interval/uncertainty, stable field mapping and recorded confounders",
+        "failure": "No consistent within-mode FGA-share direction under matched controls; no proof for deterministic ceiling or automatic Shot formula.",
+        "unknown": "Any missing exact native event/advanced source, mismatch or inadequate control is INCONCLUSIVE or NEED_EVIDENCE",
+        "operational_rule": "Never auto-propose production tuning from these pilot results"
+      },
+      "setter_authorized": false,
+      "game_run_authorized": false,
+      "new_reader_implementation_authorized": false,
+      "ddl_authorized": false
+    },
+    {
+      "contract_id": "PILOT_02_COACH_PACE_ROTATION",
+      "title": "Tempo + POE + rotation → native Pace/transition/stamina",
+      "status": "NOT_RUN_DESIGN_ONLY",
+      "canonical_target_field_ids": [
+        "COACH_DEFAULT_014",
+        "COACH_DEFAULT_001",
+        "COACH_DEFAULT_002",
+        "COACH_DEFAULT_003",
+        "COACH_DEFAULT_010",
+        "COACH_DEFAULT_013",
+        "WORLD_REG_082",
+        "WORLD_REG_083",
+        "WORLD_REG_084"
+      ],
+      "hypothesis": "Coach Tempo may alter possessions/transition under some engine modes, but submitted 10–70 clamp is static disassembly lead and not a measured game pace law.",
+      "competing_explanations": [
+        "PE provenance P0 unresolved",
+        "Calendar Sim and 3D pace mechanisms may differ",
+        "Game length and normalized stats obscure pace",
+        "AI injury/fatigue may override rotation minutes",
+        "Single stamina snapshot cannot establish fatigue rate"
+      ],
+      "primary_native_metric_ids": [
+        "TEAM_PACE_NATIVE",
+        "PLAYER_MINUTES"
+      ],
+      "secondary_native_metric_ids": [
+        "TEAM_TRANSITION_POINTS",
+        "ROTATION_ACTUAL",
+        "PLAYER_FATIGUE_STATE",
+        "TEAM_OFFRTG_NATIVE",
+        "GAME_PERIOD_SCORES"
+      ],
+      "metric_source_policy": "GAME_NATIVE_CALCULATED_SAME_GRAIN_FIRST; current exact PC22 Advanced field requires independent read-only proof; do not use an estimated metric by default",
+      "data_availability": "SOME_OLD_SAVE_NATIVE_BOX_AVAILABLE; PRECISE_ADVANCED_AND_EVENTS_NEED_DISCOVERY",
+      "minimum_unit": "team game plus clock-anchored player stamina observations if source exists",
+      "stages": [
+        {
+          "name": "S0_BASELINE",
+          "authorization": "READ_ONLY_FUTURE_SEPARATE_ACCESS",
+          "method": "Record same-save exact field/native and PC22 UI before values twice, stable opponent/context and game-native outcome baseline. No writing by Stage02."
+        },
+        {
+          "name": "S1_INTERVENTION",
+          "authorization": "NOT_AUTHORIZED_BY_STAGE02",
+          "method": "Only after separate Human authority: one-factor REA Setter in designated safe save, independent immediate native readback, invariant-field readback, recorded original value, rollback and post-rollback confirmation. Abort on mismatch."
+        },
+        {
+          "name": "S2_OBSERVATION",
+          "authorization": "NOT_AUTHORIZED_BY_STAGE02",
+          "method": "Later collect comparable multiple real games, native game-calculated statistics first; distinguish 3D and Calendar Sim, observe original box and any Advanced native label, no assumed telemetry source."
+        },
+        {
+          "name": "S3_EVALUATION",
+          "authorization": "DESIGN_ONLY",
+          "method": "Pre-register direction/contrast and uncertainty; compare within stratum and comparable opponents, report SUPPORTS_HYPOTHESIS / DOES_NOT_SUPPORT / INCONCLUSIVE / NEED_EVIDENCE without causal production rule."
+        }
+      ],
+      "controls": [
+        "same save_instance, build, player/team/game IDs, and real game phase",
+        "3D_CPU_CPU, CALENDAR_SIM, USER_VS_CPU, SimCast treated as separate strata",
+        "quarter_length and sim_quarter_length recorded independently",
+        "normalize_stats and normalize_played_minutes distinct, UNKNOWN if not read",
+        "opponent, roster, game venue, injuries, substitutions and actual minutes",
+        "ACE runtime overrides, coach gameplan and true active freelance separated",
+        "native Player Card/Box/Advanced metric definition, original precision and freshness"
+      ],
+      "comparison": {
+        "design": "paired or blocked quasi-experimental by opponent and roster; isolate one selected field change per contrast",
+        "sample": "Several games in each stratum, justified by observed variance and feasible power. N>=10 alone never proves comparability.",
+        "mode_strata": [
+          "3D_CPU_CPU",
+          "CALENDAR_SIM"
+        ],
+        "user_v_cpu": "not pooled",
+        "baseline": "S0 identity, settings, native metric label and exact source readback",
+        "readback": "S1 modified field and invariant fields independent REA read-only confirmation after authorization",
+        "success": "Aligned native outcome direction within comparable stratum with credible interval/uncertainty, stable field mapping and recorded confounders",
+        "failure": "After preserving mode/clock and opponent, native pace direction absent or inconsistent, or measured effect explained by minute/normalization; no production saturation curve.",
+        "unknown": "Any missing exact native event/advanced source, mismatch or inadequate control is INCONCLUSIVE or NEED_EVIDENCE",
+        "operational_rule": "Never auto-propose production tuning from these pilot results"
+      },
+      "setter_authorized": false,
+      "game_run_authorized": false,
+      "new_reader_implementation_authorized": false,
+      "ddl_authorized": false
+    },
+    {
+      "contract_id": "PILOT_03_HELP_DEFENSE",
+      "title": "HelpDefense + defensive POE + personal defense → protection and leakage",
+      "status": "NOT_RUN_DESIGN_ONLY",
+      "canonical_target_field_ids": [
+        "COACH_DEFAULT_015",
+        "COACH_DEFAULT_004",
+        "COACH_DEFAULT_005",
+        "COACH_DEFAULT_006",
+        "COACH_DEFAULT_012"
+      ],
+      "hypothesis": "Different defensive assistance could change opponent rim/arc attempts, but no fixed sign, success rate or precise help-rotation implementation is proven.",
+      "competing_explanations": [
+        "Defender ratings and on-ball personal instructions",
+        "ACE or opponent offensive system override",
+        "Opponent shot-variance and minutes",
+        "Rim shot zone native source may not exist",
+        "Screens, lineup and matchup differences"
+      ],
+      "primary_native_metric_ids": [
+        "OPPONENT_THREE_PA",
+        "OPPONENT_FGA"
+      ],
+      "secondary_native_metric_ids": [
+        "OPPONENT_PAINT_FGA",
+        "OPPONENT_FG_PCT",
+        "TEAM_DREB",
+        "TEAM_STL",
+        "TEAM_DEFRTG_NATIVE"
+      ],
+      "metric_source_policy": "GAME_NATIVE_CALCULATED_SAME_GRAIN_FIRST; current exact PC22 Advanced field requires independent read-only proof; do not use an estimated metric by default",
+      "data_availability": "SOME_OLD_SAVE_NATIVE_BOX_AVAILABLE; PRECISE_ADVANCED_AND_EVENTS_NEED_DISCOVERY",
+      "minimum_unit": "paired opponent-team-game; require native shot-zone definition before painting rim conclusion",
+      "stages": [
+        {
+          "name": "S0_BASELINE",
+          "authorization": "READ_ONLY_FUTURE_SEPARATE_ACCESS",
+          "method": "Record same-save exact field/native and PC22 UI before values twice, stable opponent/context and game-native outcome baseline. No writing by Stage02."
+        },
+        {
+          "name": "S1_INTERVENTION",
+          "authorization": "NOT_AUTHORIZED_BY_STAGE02",
+          "method": "Only after separate Human authority: one-factor REA Setter in designated safe save, independent immediate native readback, invariant-field readback, recorded original value, rollback and post-rollback confirmation. Abort on mismatch."
+        },
+        {
+          "name": "S2_OBSERVATION",
+          "authorization": "NOT_AUTHORIZED_BY_STAGE02",
+          "method": "Later collect comparable multiple real games, native game-calculated statistics first; distinguish 3D and Calendar Sim, observe original box and any Advanced native label, no assumed telemetry source."
+        },
+        {
+          "name": "S3_EVALUATION",
+          "authorization": "DESIGN_ONLY",
+          "method": "Pre-register direction/contrast and uncertainty; compare within stratum and comparable opponents, report SUPPORTS_HYPOTHESIS / DOES_NOT_SUPPORT / INCONCLUSIVE / NEED_EVIDENCE without causal production rule."
+        }
+      ],
+      "controls": [
+        "same save_instance, build, player/team/game IDs, and real game phase",
+        "3D_CPU_CPU, CALENDAR_SIM, USER_VS_CPU, SimCast treated as separate strata",
+        "quarter_length and sim_quarter_length recorded independently",
+        "normalize_stats and normalize_played_minutes distinct, UNKNOWN if not read",
+        "opponent, roster, game venue, injuries, substitutions and actual minutes",
+        "ACE runtime overrides, coach gameplan and true active freelance separated",
+        "native Player Card/Box/Advanced metric definition, original precision and freshness"
+      ],
+      "comparison": {
+        "design": "paired or blocked quasi-experimental by opponent and roster; isolate one selected field change per contrast",
+        "sample": "Several games in each stratum, justified by observed variance and feasible power. N>=10 alone never proves comparability.",
+        "mode_strata": [
+          "3D_CPU_CPU",
+          "CALENDAR_SIM"
+        ],
+        "user_v_cpu": "not pooled",
+        "baseline": "S0 identity, settings, native metric label and exact source readback",
+        "readback": "S1 modified field and invariant fields independent REA read-only confirmation after authorization",
+        "success": "Aligned native outcome direction within comparable stratum with credible interval/uncertainty, stable field mapping and recorded confounders",
+        "failure": "No robust shot-location change under comparable matchups and valid native zones, or competing explanation better explains change.",
+        "unknown": "Any missing exact native event/advanced source, mismatch or inadequate control is INCONCLUSIVE or NEED_EVIDENCE",
+        "operational_rule": "Never auto-propose production tuning from these pilot results"
+      },
+      "setter_authorized": false,
+      "game_run_authorized": false,
+      "new_reader_implementation_authorized": false,
+      "ddl_authorized": false
+    }
+  ],
+  "source_limitations": [
+    {
+      "sha": "6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/TELEMETRY_VALIDATION_CONTRACTS_V1.json"
+    },
+    {
+      "sha": "08ace12bcf92faaef20634c4701b7d6a03876a34",
+      "path": "01_os/07_content/_runs/run-20261031-nba2k22-vae-sweep5-remediation-independent-rereview-001/08_结论/consolidated_sweep5_independent_rereview.md"
+    }
+  ],
+  "no_fixed_sql_or_telemetry_format": true
+}
