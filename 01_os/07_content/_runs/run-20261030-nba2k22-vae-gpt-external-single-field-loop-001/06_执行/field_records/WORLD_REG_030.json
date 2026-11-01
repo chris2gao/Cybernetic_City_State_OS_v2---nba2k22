@@ -1,0 +1,63 @@
+{
+  "field_id": "WORLD_REG_030",
+  "iteration_id": "SWEEP01_FIELD0129",
+  "primary_question": "Does CPU Injury Effects affect on-court temporary attribute penalty under injury, not frequency or time off?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.cpu_injury_effects",
+    "offset": "0x258",
+    "source_status": "STATIC_REGISTRY_CANDIDATE",
+    "UI_mapping": "UNKNOWN",
+    "effect": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "game": "NBA2K22",
+      "platform": "PS5, not PC22",
+      "claim": "Explicit CPU/User Injury Effects 60 separately from Frequency 60",
+      "grade": "SAME_RELEASE_OPTIONS"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/926689-mynba-injury-duration",
+      "author": "ggsimmonds and coachmac75",
+      "date": "2022-09-18",
+      "game": "NBA2K23 discussion with claimed 2K22 similar bug",
+      "platform": "MyNBA offline, version crossed",
+      "claim": "Severity and duration values 99 reportedly did not prevent early recovery; community anecdote, not 2K22 native proof",
+      "grade": "CROSS_VERSION_REPORTED_2K22_ISSUE"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918956-2k22-ps5-mynba-detroit-pistons",
+      "author": "2K22 PS5 dynasty creator",
+      "date": "2021/22",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Reports separate CPU/User injury effects and frequency sliders",
+      "grade": "SAME_RELEASE_CROSS_PLATFORM"
+    }
+  ],
+  "claims": [
+    "2K22 injury effect and severity concepts should not be treated interchangeably",
+    "No verified +0x258 native mapping or monotonic effect"
+  ],
+  "conflicts": [
+    "PS5 vs PC mode, injury duration recovery bug reports across versions",
+    "Severity vs active injury status and attribute impact are distinct",
+    "Raw UI slider and displayed time-to-return may disagree"
+  ],
+  "metrics": [
+    "injured CPU player's temporary attribute/OVR deltas vs no injury",
+    "injury types, return time, disability effects separately",
+    "do not alter existing injury history"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_030",
+    "question": "Can read-only PC22 MyLEAGUE settings candidate 0x258 be matched to exact cpu_injury_effects UI with immediate/delayed readback, distinguishing neighboring injury sliders, no writes?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_INJURY_CONTEXT_NATIVE_EFFECT_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
