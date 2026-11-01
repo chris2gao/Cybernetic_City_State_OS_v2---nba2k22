@@ -1,0 +1,46 @@
+task_packet:
+  task_id: OS-CORE-EVIDENCE-LOOP-SERIES-REVIEW-20261101-001
+  role: decision_architecture
+  risk_tier: T2_semantic
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  exact_base_sha: 934425cf43d4fe3307b0112142aec1ba434a5734
+  branch: task/core-risk-based-series-review-cadence-20261101
+  objective: "Update existing canonical OS rules: default evidence-driven task-level iteration and deferrable series review; retain independent final review and all protected action boundaries."
+  source_evidence:
+    - "Human 2026-11-01 direct directive: stop requiring immediate independent review of every task; group review when later work can uncover errors or output does not affect downstream."
+    - "Human 2026-11-01 added directive: WorldData Stage01 Codex Loop continued 20+ development rounds; make each coherent task iterate via tests and evidence, not repeated independent review."
+    - "NBA2K22 WorldData Codex fixed source: task/nba2k22-world-data-full-implementation-20261024@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4:WORK_ORDER_CODEX_ANTIGRAVITY_SERIAL_V1.md and DEVELOPMENT_INCREMENT_01..27 plus increment28..37."
+    - "Core workflow stage07 reviewer-executor separation and runner completion gate at Core master 934425cf43d4fe3307b0112142aec1ba434a5734."
+  allowed_changed_paths:
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/03_mechanisms/task_orchestration/README.md
+    - 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+    - 01_os/05_registry/task_orchestration_v1.yml
+    - 01_os/_runs/run-20261101-core-series-review-and-iteration-001/
+  verification_plan: 01_os/_runs/run-20261101-core-series-review-and-iteration-001/07_测试执行/static_source_checks.md
+  required_tests:
+    - CORE_SCOPE_AND_REMOTE_COMPARE
+    - REVIEW_TRIGGER_DISCIPLINE
+    - LOOP_CONVERGENCE_AND_CHECKPOINTS
+    - WORKFLOW_GATES_NOT_BYPASSED
+    - CORE_REGISTRY_REACHABILITY
+    - PYTEST_WHEN_EXECUTOR_HAS_REPO
+  big_task: false
+  known_protected_actions: []
+  prohibitions:
+    - no_master_merge_without_review_and_Human_decision
+    - no_history_rewrite
+    - no_runtime_activation
+    - no_NBA_domain_core_owned_changes
+    - no_false_claim_of_automated_loop_engine
+  independent_review: required_before_Core_master_integration
+  publisher:
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+  development_loop:
+    mode: iterative_development
+    progress_evidence: "37 WorldData increments and Core versioned source-check ledger"
+    convergence_condition: "No contradictory canonical text, complete bounded documentation edits and honest test limits"
+  process_note: "This run record was established after the first canonical branch edit; prewrite packet sequence was not followed and is disclosed rather than backdated."
