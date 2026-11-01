@@ -1,0 +1,751 @@
+{
+  "schema_version": "nba2k22.vae.stage02.gpt_source_anomaly_index.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "date": "2026-11-01",
+  "source_audit": {
+    "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+    "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+    "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+  },
+  "source_ledger": {
+    "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+    "blob_sha": "72eeabc0171bdbbba948014983c95168cf6cedbe",
+    "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+  },
+  "source_dossier_commit": "f3233d285300ac40933b04e8086cf631fad46fbb",
+  "scope": "Historical GPT Sweep1 sources; no original dossier changes or reclassification as Native",
+  "counts": {
+    "metadata_missing_items": 24,
+    "metadata_field_ids": 10,
+    "ledger_count_discrepancy_ids": 3,
+    "nonstandard_conflict_key_ids": 15,
+    "no_direct_native_source_ids": 51,
+    "union_anomaly_field_ids": 23
+  },
+  "direct_native_source_missing_field_ids": [
+    "TENDENCY_NATIVE_016",
+    "TENDENCY_NATIVE_017",
+    "TENDENCY_NATIVE_018",
+    "TENDENCY_NATIVE_022",
+    "TENDENCY_NATIVE_023",
+    "TENDENCY_NATIVE_024",
+    "TENDENCY_NATIVE_025",
+    "TENDENCY_NATIVE_026",
+    "TENDENCY_NATIVE_030",
+    "TENDENCY_NATIVE_031",
+    "TENDENCY_NATIVE_032",
+    "TENDENCY_NATIVE_033",
+    "TENDENCY_NATIVE_034",
+    "TENDENCY_NATIVE_043",
+    "TENDENCY_NATIVE_047",
+    "TENDENCY_NATIVE_048",
+    "TENDENCY_NATIVE_049",
+    "TENDENCY_NATIVE_050",
+    "TENDENCY_NATIVE_051",
+    "TENDENCY_NATIVE_052",
+    "TENDENCY_NATIVE_053",
+    "TENDENCY_NATIVE_054",
+    "TENDENCY_NATIVE_055",
+    "TENDENCY_NATIVE_056",
+    "TENDENCY_NATIVE_057",
+    "TENDENCY_NATIVE_058",
+    "TENDENCY_NATIVE_059",
+    "TENDENCY_NATIVE_060",
+    "TENDENCY_NATIVE_061",
+    "TENDENCY_NATIVE_062",
+    "TENDENCY_NATIVE_063",
+    "TENDENCY_NATIVE_070",
+    "TENDENCY_NATIVE_071",
+    "TENDENCY_NATIVE_072",
+    "TENDENCY_NATIVE_073",
+    "TENDENCY_NATIVE_075",
+    "TENDENCY_NATIVE_076",
+    "TENDENCY_NATIVE_077",
+    "TENDENCY_NATIVE_078",
+    "TENDENCY_NATIVE_079",
+    "TENDENCY_NATIVE_080",
+    "TENDENCY_NATIVE_081",
+    "TENDENCY_NATIVE_082",
+    "TENDENCY_NATIVE_083",
+    "TENDENCY_NATIVE_084",
+    "TENDENCY_NATIVE_085",
+    "TENDENCY_NATIVE_086",
+    "TENDENCY_NATIVE_087",
+    "TENDENCY_NATIVE_088",
+    "TENDENCY_NATIVE_089",
+    "TENDENCY_NATIVE_090"
+  ],
+  "by_field_id": {
+    "TENDENCY_NATIVE_042": {
+      "field_id": "TENDENCY_NATIVE_042",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_042.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_071": {
+      "field_id": "TENDENCY_NATIVE_071",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "date",
+          "affected_source_item_count": 1,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        },
+        {
+          "type": "GPT_LEDGER_DOSSIER_SOURCE_COUNT_MISMATCH",
+          "ledger_source_count": 0,
+          "dossier_source_count": 1,
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          },
+          "ledger_source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "72eeabc0171bdbbba948014983c95168cf6cedbe",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+          },
+          "meaning": "Historical ledger preserved; dossier's source array is not erased"
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_071.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_072": {
+      "field_id": "TENDENCY_NATIVE_072",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "date",
+          "affected_source_item_count": 1,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        },
+        {
+          "type": "GPT_LEDGER_DOSSIER_SOURCE_COUNT_MISMATCH",
+          "ledger_source_count": 0,
+          "dossier_source_count": 1,
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          },
+          "ledger_source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "72eeabc0171bdbbba948014983c95168cf6cedbe",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+          },
+          "meaning": "Historical ledger preserved; dossier's source array is not erased"
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_072.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_073": {
+      "field_id": "TENDENCY_NATIVE_073",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "date",
+          "affected_source_item_count": 1,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        },
+        {
+          "type": "GPT_LEDGER_DOSSIER_SOURCE_COUNT_MISMATCH",
+          "ledger_source_count": 0,
+          "dossier_source_count": 1,
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          },
+          "ledger_source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "72eeabc0171bdbbba948014983c95168cf6cedbe",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/iteration_ledger.jsonl"
+          },
+          "meaning": "Historical ledger preserved; dossier's source array is not erased"
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_073.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_098": {
+      "field_id": "TENDENCY_NATIVE_098",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_098.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_099": {
+      "field_id": "TENDENCY_NATIVE_099",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_099.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_003": {
+      "field_id": "WORLD_REG_003",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_003.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_004": {
+      "field_id": "WORLD_REG_004",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_004.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_005": {
+      "field_id": "WORLD_REG_005",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        },
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_005.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_006": {
+      "field_id": "WORLD_REG_006",
+      "issues": [
+        {
+          "type": "GPT_SOURCE_METADATA_CANONICAL_KEY_GAP",
+          "missing_canonical_property": "version",
+          "affected_source_item_count": 3,
+          "source_index": "NOT_ENUMERATED_IN_FIXED_AUDIT",
+          "meaning": "Absence of canonical key does not establish publication date/version unknown; source may use alternate key (e.g. publication_date)",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        },
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_006.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_011": {
+      "field_id": "TENDENCY_NATIVE_011",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_011.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_022": {
+      "field_id": "TENDENCY_NATIVE_022",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_022.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_045": {
+      "field_id": "TENDENCY_NATIVE_045",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_045.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_049": {
+      "field_id": "TENDENCY_NATIVE_049",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_049.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_063": {
+      "field_id": "TENDENCY_NATIVE_063",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_063.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_082": {
+      "field_id": "TENDENCY_NATIVE_082",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_082.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_083": {
+      "field_id": "TENDENCY_NATIVE_083",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_083.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_084": {
+      "field_id": "TENDENCY_NATIVE_084",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_084.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "TENDENCY_NATIVE_085": {
+      "field_id": "TENDENCY_NATIVE_085",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/TENDENCY_NATIVE_085.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_001": {
+      "field_id": "WORLD_REG_001",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_001.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_002": {
+      "field_id": "WORLD_REG_002",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_002.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_015": {
+      "field_id": "WORLD_REG_015",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_015.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    },
+    "WORLD_REG_016": {
+      "field_id": "WORLD_REG_016",
+      "issues": [
+        {
+          "type": "GPT_NONSTANDARD_TOP_LEVEL_CONFLICT_KEY",
+          "top_level_conflict_or_contradictions_property": "ABSENT",
+          "meaning": "Fixed GPT dossier personally checked at anchored SHA; no standardized top-level conflict key. Does not mean the record has zero source conflicts.",
+          "source": {
+            "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+            "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+            "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+          }
+        }
+      ],
+      "dossier": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/06_执行/field_records/WORLD_REG_016.json"
+      },
+      "audit": {
+        "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+        "blob_sha": "7860d273926720a8abcc1e0b4946231091718397",
+        "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/07_测试执行/sweep01_full_204_static_audit.json"
+      }
+    }
+  },
+  "field_id_index": [
+    "TENDENCY_NATIVE_011",
+    "TENDENCY_NATIVE_022",
+    "TENDENCY_NATIVE_042",
+    "TENDENCY_NATIVE_045",
+    "TENDENCY_NATIVE_049",
+    "TENDENCY_NATIVE_063",
+    "TENDENCY_NATIVE_071",
+    "TENDENCY_NATIVE_072",
+    "TENDENCY_NATIVE_073",
+    "TENDENCY_NATIVE_082",
+    "TENDENCY_NATIVE_083",
+    "TENDENCY_NATIVE_084",
+    "TENDENCY_NATIVE_085",
+    "TENDENCY_NATIVE_098",
+    "TENDENCY_NATIVE_099",
+    "WORLD_REG_001",
+    "WORLD_REG_002",
+    "WORLD_REG_003",
+    "WORLD_REG_004",
+    "WORLD_REG_005",
+    "WORLD_REG_006",
+    "WORLD_REG_015",
+    "WORLD_REG_016"
+  ],
+  "cautions": [
+    "Missing top-level field does not mean no conflict",
+    "Missing canonical date or version may be represented in another field; inspect original dossier",
+    "Index derived from frozen GPT audit, ledger, and exact source dossier top-level key checks in read-only GitHub calls; does not create new historical facts",
+    "Exact source item ordinals for the 24 canonical metadata omissions are not enumerated in the fixed audit; source dossier link and per-field counts are provided without guessing indexes"
+  ]
+}
