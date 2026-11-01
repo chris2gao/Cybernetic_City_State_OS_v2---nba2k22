@@ -212,6 +212,120 @@ class CalendarSimOrchestratorTests(unittest.TestCase):
         self.assertEqual(exp2['experiment_id'], 'EXP_02_COACH_TEMPO_PACE_ROTATION')
         self.assertEqual(exp2['metrics_evaluation_contract']['primary_metric']['metric_id'], 'TEAM_PACE_NATIVE')
 
+    def test_export_vae_standard_datasets_deterministic_pipeline(self):
+        gid = 'game:native:888'
+        home_tid = 'team:native:1'
+        away_tid = 'team:native:2'
+        pid = 'player:native:77'
+
+        facts = {
+            'teams': [
+                {'team_id': home_tid, 'native_team_id': '1', 'display_name': 'Team 1'},
+                {'team_id': away_tid, 'native_team_id': '2', 'display_name': 'Team 2'}
+            ],
+            'players': [
+                {'player_id': pid, 'native_player_id': '77', 'display_name': 'Star Player'}
+            ],
+            'games': [
+                {'game_id': gid, 'home_team_id': home_tid, 'away_team_id': away_tid,
+                 'game_date': '2021-11-01', 'season_id': 's1'}
+            ],
+            'game_state_observations': [
+                {'game_id': gid, 'status_code': 'FINAL', 'is_final': 1,
+                 'overtime_count': 0, 'attendance': 18500, 'was_simulated': 1, 'score_provenance': 'TEST'}
+            ],
+            'team_game_boxes': [
+                {'game_id': gid, 'team_id': home_tid, 'points': 105, 'possessions_raw': 98, 'fastbreak_points': 14},
+                {'game_id': gid, 'team_id': away_tid, 'points': 95, 'possessions_raw': 98, 'fastbreak_points': 8}
+            ],
+            'player_game_boxes': [
+                {'game_id': gid, 'player_id': pid, 'team_id': home_tid, 'minutes_raw': 34,
+                 'points': 28, 'fg_attempted': 20, 'fg_made': 11}
+            ],
+            'team_tactic_settings': [
+                {'team_id': home_tid, 'tempo_raw': 65, 'help_defense_raw': 60, 'run_plays_raw': 55}
+            ],
+            'player_tendency_snapshots': [
+                {'player_id': pid, 'shot_tendency_raw': 85, 'touches_tendency_raw': 80}
+            ],
+            'player_attribute_snapshots': [
+                {'player_id': pid, 'overall_raw': 92}
+            ]
+        }
+        payload = {
+            'save_id': self.save_id,
+            'run_id': 'unit_vae_export_1',
+            'unit_id': 'unit_vae_export_1',
+            'source_key': 'BOUND_TEST',
+            'observed_at': '2026-11-01T10:00:00Z',
+            'evidence_grade': 'RESEARCH_FIXTURE',
+            'decoder_version': '1.0',
+            'season': {'season_id': 's1', 'season_code': '2021-22'},
+            'facts': facts,
+            'artifacts': [{'sha256': 'a' * 64, 'payload_kind': 'TEST', 'payload_ref': 'test.bin', 'byte_count': 10, 'source_version': '1', 'restricted': 1}]
+        }
+        with connect(self.db) as conn:
+            ingest_capture(conn, payload)
+
+        orch = CalendarSimOrchestrator(str(self.save_dir), self.loaded_filename, str(self.db))
+        export_out = self.tmp_path / 'vae_exports'
+        res = orch.export_vae_standard_datasets(export_out)
+
+        self.assertEqual(res['status'], 'DATASETS_EXPORTED_SUCCESS')
+        self.assertEqual(res['games_count'], 1)
+
+        # Check all 3 dataset files and manifest exist
+        m1 = export_out / 'calendar_sim_completed_game_player_team_metrics.json'
+        m2 = export_out / 'vae_setting_context_snapshot.json'
+        m3 = export_out / 'vae_experiment_evidence_input.json'
+        manifest_file = export_out / 'manifest.json'
+
+        self.assertTrue(m1.exists())
+        self.assertTrue(m2.exists())
+        self.assertTrue(m3.exists())
+        self.assertTrue(manifest_file.exists())
+
+        d1 = json.loads(m1.read_text(encoding='utf-8'))
+        self.assertEqual(d1['games_count'], 1)
+        self.assertEqual(d1['simulation_mode'], 'CALENDAR_SIM_ONLY')
+        self.assertEqual(len(d1['team_boxes']), 2)
+        self.assertEqual(len(d1['player_boxes']), 1)
+
+        d2 = json.loads(m2.read_text(encoding='utf-8'))
+        self.assertEqual(d2['team_tactics_count'], 1)
+        self.assertEqual(d2['player_tendencies_count'], 1)
+        self.assertEqual(d2['player_attributes_count'], 1)
+
+        d3 = json.loads(m3.read_text(encoding='utf-8'))
+        self.assertEqual(len(d3['pilots']), 3)
+
+        manifest = json.loads(manifest_file.read_text(encoding='utf-8'))
+        self.assertEqual(manifest['schema_version'], 'nba2k22.vae.standard_dataset_manifest.v1')
+        self.assertEqual(manifest['metric_dictionary_version'], 'Stage02.M3.Canonical38')
+        self.assertEqual(manifest['readiness_levels']['STANDARD_DATASET_EXPORTED'], 'VERIFIED')
+        self.assertEqual(manifest['readiness_levels']['POST_CALENDAR_NEW_GAME_VERIFIED'], 'PENDING_HUMAN_GAMEPLAY')
+
+    def test_cli_vae_export_datasets(self):
+        from cli import dispatch
+        import argparse
+        import io
+        from contextlib import redirect_stdout
+
+        export_out = self.tmp_path / 'cli_vae_exports'
+        parser = argparse.Namespace(
+            action='vae-export-datasets',
+            save_directory=str(self.save_dir),
+            loaded_filename=self.loaded_filename,
+            output_directory=str(export_out)
+        )
+        buf = io.StringIO()
+        with redirect_stdout(buf):
+            dispatch(parser)
+        out = buf.getvalue()
+        res = json.loads(out)
+        self.assertEqual(res['status'], 'DATASETS_EXPORTED_SUCCESS')
+        self.assertTrue((export_out / 'manifest.json').exists())
+
 
 if __name__ == '__main__':
     unittest.main()

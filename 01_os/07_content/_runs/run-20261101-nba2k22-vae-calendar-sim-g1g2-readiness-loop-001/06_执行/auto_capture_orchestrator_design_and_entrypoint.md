@@ -1,42 +1,56 @@
-# Calendar Sim 自动采集编排器设计与入口文档 (Auto Capture Orchestrator Design & Entrypoint)
+# Calendar Sim 一键全量采集编排器与固定提取设计文档 (One-Click Auto Capture & VAE Dataset Pipeline)
 
 ## 一、设计目标与定位
 
-针对 VAE 第一阶段（Calendar Sim）自动化数据闭环的 **G1 就绪门**，本编排器提供：
+根据 Human 最新裁决（`worlddata_architecture_one_click_addendum.md`），针对 VAE 第一阶段（Calendar Sim）数据闭环的 **G1 就绪门**，本编排器提供：
 1. **纯非驻留设计（Nonresident）**：零系统服务、零常驻轮询后台守护进程、零未授权线程，完全遵循 Human 裁决与安全纪律。
-2. **明确选择机制（Explicit Opt-in）**：必须由 Human 或自动化执行流主动发起调用（`calendar-sim-trigger` 或 Python 函数）。
+2. **人工一次显式触发、程序完全自动化（One-Shot Automated）**：由 Human 主动触发一次本地命令，自动识别当前游戏进程与既定存档，完成全部已注册 20 族 Reader 的采集与入库，无需每次采集调用 Gemini 或消耗模型额度。
 3. **精准状态甄别**：区分“新完赛比赛（NEW_FINAL_GAME_DETECTED）”、“同一状态重复调用（SAME_STATE_REPEAT）”、“仅日期推移未完赛（DATE_ADVANCED_NO_NEW_GAME）”与“模拟进行中（INCOMPLETE_GAME_IN_PROGRESS）”。
 4. **确定性熔断安全（Fail-Closed）**：若检测到比赛未打完、进程异常退出/重启、PID 复用或校验和不匹配，坚决拒绝发起写入事务。
 5. **SQL 完整性闭环核验**：完成采集后，自动在同一事务上下文中对新入库比赛执行比分守恒、节得分与球员 Box 完整性核对，返回原子事实回执。
+6. **固定 VAE 标准化数据包提取层**：在单存档 SQLite 主账本基础上，通过固定版本化 SQL 提取三个规范化 VAE 数据集及清单文件，使后续模型直接读取结构化产物，不再重复开发统计提取代码。
 
 ---
 
-## 二、架构与状态机
+## 二、架构与状态机流水线
 
 ```mermaid
 flowchart TD
-    A["调用入口 (CLI / Python)"] --> B["前置检查: 进程存活与 PE 时间戳"]
-    B -- "异常/终止" --> C["Fail-Closed: 抛出或拒绝 REJECTED_STALE_PROCESS"]
-    B -- "正常" --> D["读取内存赛程 Header 与当前日期"]
+    A["人工调用入口 (CLI / Python)"] --> B["前置检查: 进程存活与 PE 时间戳"]
+    B -- "异常/终止" --> C["Fail-Closed: 拒绝 REJECTED_STALE_PROCESS"]
+    B -- "正常" --> D["读取内存赛程 Header 与比赛状态"]
     D --> E{"内存比赛状态判断"}
-    E -- "存在 status == 1 (进行中)" --> F["Fail-Closed: REJECTED_GAME_IN_PROGRESS"]
-    E -- "最新完赛与 DB 最新完赛一致" --> G["跳过采集: SKIPPED_SAME_STATE"]
-    E -- "仅日期推移但无新完赛" --> H["跳过采集: SKIPPED_NO_GAME_ON_DATE"]
-    E -- "发现最新未入库完赛比赛 (status == 2)" --> I["触发受控单次 refresh-world (A1)"]
-    I --> J["SQLite 数据持久化与去重 (A2)"]
-    J --> K["执行同一 Game ID SQL 比分守恒回读核验"]
-    K --> L["输出 SUCCESS_INGESTED 完整凭据"]
+    E -- "存在 status == 1 (进行中)" --> F["Fail-Closed: 拒绝 REJECTED_GAME_IN_PROGRESS"]
+    E -- "最新完赛与 DB 最新一致" --> G["跳过采集: SAME_STATE_REPEAT"]
+    E -- "发现最新未入库完赛 (status == 2)" --> H["触发已有 20 族 refresh-world auto"]
+    H --> I["单存档 SQLite 事务入库与原子单元提交"]
+    I --> J["SQL 比赛比分与单节守恒回读核验"]
+    J --> K["执行固定 VAE 3 类数据集提取与 Manifest 生成"]
+    K --> L["输出 SUCCESS_INGESTED 完整凭据与标准化产物"]
 ```
 
 ---
 
-## 三、接口规范与 CLI 调用
+## 三、固定 VAE 标准数据集规范
+
+编排器在每次采集入库后，或通过专用命令直接生成如下三个规范数据集与 Manifest：
+
+| 数据集文件名 | 包含内容与数据结构 | 规范依据 | 状态要求 |
+| :--- | :--- | :--- | :--- |
+| **`calendar_sim_completed_game_player_team_metrics.json`** | 逐场已完赛（`status == 2` 且 `was_simulated == 1`）比赛观察、主客队单场 Box、球员单场 Box（含 PTS, FGA, FGM, MIN, ORtg, DRtg, GameScore 等）。 | Stage02 M3 38 项 Canonical 指标；严格排除 3D 比赛混淆。 | `READY` (已通过 SQL 入库回读) |
+| **`vae_setting_context_snapshot.json`** | 当前倾向快照、球员属性快照、教练偏好（Coach Preferences）、球队战术设置（Team Tactics: POE, Run Plays, Help Defense, Tempo 等）。 | 只读捕获观察；尚未可采的项显式保留为 UNKNOWN，严禁伪造补零。 | `READY` (只读观测就绪) |
+| **`vae_experiment_evidence_input.json`** | Pilot 1 (出手/触球)、Pilot 2 (节奏/快攻)、Pilot 3 (协防/防守评级) 的 S0 基线块 vs S1 干预候选对照合同、同种子对照组规则与可证伪准则。 | 只读实验合同；参数修改状态明确为 `NOT_AUTHORIZED; READ_ONLY`。 | `READY` (实验协议就绪) |
+| **`manifest.json`** | 数据集 SHA256、行数/字节数、时间戳区间、数据库 Schema 版本、指标字典版本与 6 维就绪门评级状态。 | 包含完整的溯源哈希与状态等级。 | `PUBLISHED` |
+
+---
+
+## 四、接口规范与 CLI 调用
 
 ### 1. Python 编程入口
 位于 `08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py`：
 
 ```python
-from calendar_sim_orchestrator import CalendarSimOrchestrator, trigger_calendar_sim_capture
+from calendar_sim_orchestrator import CalendarSimOrchestrator, trigger_calendar_sim_capture, export_vae_datasets
 
 # 实例化编排器
 orchestrator = CalendarSimOrchestrator(save_directory, loaded_filename)
@@ -44,54 +58,37 @@ orchestrator = CalendarSimOrchestrator(save_directory, loaded_filename)
 # 1. 状态侦测（不触发采集写入）
 inspection = orchestrator.inspect_calendar_progress(reader_or_pid='auto')
 
-# 2. 受控条件触发（仅在有新完赛比赛时触发）
+# 2. 一键全量采集（自动执行 20 族 Reader、SQL 核验与 VAE 提取）
 receipt = orchestrator.trigger_capture_if_new_game(
     reader_or_pid='auto',
     output_directory=None,  # 自动生成临时输出目录
-    families=['schedule', 'game-mode', 'period-stats', 'coach-stats'],
-    force=False  # 若 True 则强制重刷
+    families=None,          # 默认为 None，按 20 族注册顺序全量执行
+    force=False             # 若 True 则强制重刷
 )
+
+# 3. 独立执行 VAE 数据集提取（从现有单档 SQLite 导出）
+export_summary = orchestrator.export_vae_standard_datasets(output_directory)
 ```
 
 ### 2. CLI 命令行入口
 位于 `cli.py`：
 
 ```bash
-# 1. 侦测当前状态
-python cli.py calendar-sim-inspect SAVE_DIRECTORY LOADED_FILENAME [--pid PID]
+# 1. 一键触发全量采集与 VAE 数据导出（Human 正常推日历后单次执行）
+python cli.py calendar-sim-trigger <save_directory> <loaded_filename> [--pid auto] [--output-directory DIR]
 
-# 2. 触发条件采集与 SQL 验证
-python cli.py calendar-sim-trigger SAVE_DIRECTORY LOADED_FILENAME [--pid PID] [--output-directory DIR] [--force]
+# 2. 从已有数据库独立导出三类 VAE 标准化数据集与 Manifest
+python cli.py vae-export-datasets <save_directory> <loaded_filename> <output_directory>
+
+# 3. 快速核验内存比赛与 DB 同步状态（只读检查，不写库）
+python cli.py calendar-sim-inspect <save_directory> <loaded_filename> [--pid auto]
 ```
 
 ---
 
-## 四、返回凭据结构示例 (SUCCESS_INGESTED)
+## 五、安全与非驻留纪律
 
-```json
-{
-  "status": "SUCCESS_INGESTED",
-  "triggered": true,
-  "game_id": "game:native:1240",
-  "native_game_id": 1240,
-  "was_simulated": true,
-  "simulation_mode": "CALENDAR_SIM",
-  "refresh_batch_id": "a1b2c3d4e5f6",
-  "sql_verification": {
-    "verified_in_db": true,
-    "score_conservation": true,
-    "home_points": 108,
-    "away_points": 102,
-    "team_boxes_count": 2,
-    "player_boxes_count": 26
-  }
-}
-```
-
----
-
-## 五、安全与纪律约束
-
-1. **绝对只读游戏内存**：本编排器仅使用 `ReadOnlyGameProcess` (VM_READ | QUERY_LIMITED_INFORMATION) 读取公开赛程头部与进度，零内存注入、零按键模拟。
-2. **绝不私自推进日历**：日历推进必须由 Human 明确在游戏内完成；本编排器仅负责被动检测日历推进后的赛后状态。
-3. **绝不常驻**：执行完成后主进程立即退出，操作系统不残留任何后台监听。
+1. **零常驻**：绝不在系统内启动后台轮询进程或注册守护服务；
+2. **零模型开销**：采集与提取完全由本地确定性代码和 SQL 执行，无需消耗 LLM Token；
+3. **零未授权修改**：不调用 REA Setter，不修改游戏内存或 Save 文件，不自动推进日历；
+4. **单档隔离**：所有事实持久化严格绑定到目标存档专属的 SQLite 数据库，严禁多存档混淆。

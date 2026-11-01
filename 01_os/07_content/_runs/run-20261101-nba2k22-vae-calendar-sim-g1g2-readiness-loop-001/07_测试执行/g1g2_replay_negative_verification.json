@@ -1,41 +1,41 @@
 {
   "schema_version": "nba2k22.vae.calendar_sim_g1g2.verification.v1",
   "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
-  "verification_timestamp": "2026-11-01T18:28:00Z",
+  "verification_timestamp": "2026-11-01T18:36:00Z",
   "overall_status": "PASSED",
-  "total_checks": 11,
-  "passed_checks": 11,
+  "total_checks": 14,
+  "passed_checks": 14,
   "failed_checks": 0,
   "checks": [
     {
       "id": "G01",
       "test": "New final-game detection vs mere calendar date increment and same-state repeat.",
       "status": "PASSED",
-      "evidence": "Verified by test_inspect_progress_detects_new_final_game_when_db_empty and test_inspect_progress_skips_on_same_state_repeat. The orchestrator accurately distinguishes NEW_FINAL_GAME_DETECTED from SAME_STATE_REPEAT (and DATE_ADVANCED_NO_NEW_GAME) by checking latest_memory_game_id against latest_db_game_id."
+      "evidence": "Verified by test_inspect_progress_detects_new_final_game_when_db_empty and test_inspect_progress_skips_on_same_state_repeat. The orchestrator inspects schedule headers (manifest['entries']) and accurately distinguishes NEW_FINAL_GAME_DETECTED from SAME_STATE_REPEAT (and DATE_ADVANCED_NO_NEW_GAME) by checking latest_memory_game_id against latest_db_game_id."
     },
     {
       "id": "G02",
-      "test": "Existing refresh-world invoked only once by opt-in trigger and stays source/save-bound, with failure-safe no duplicates.",
+      "test": "One explicit Human command invokes existing refresh-world auto (all registered families under 16 ordinary + 4 annual cadence), validates committed unit receipts, then generates fixed VAE data products; no independent capture pipeline.",
       "status": "PASSED",
-      "evidence": "trigger_capture_if_new_game verifies that when latest_memory_game_id matches the latest DB entry, refresh_world is bypassed and status returns SAME_STATE_REPEAT with triggered=False. Refresh strictly targets the bound save directory and loaded filename."
+      "evidence": "CalendarSimOrchestrator.trigger_capture_if_new_game invokes existing refresh_world with families=None (defaulting to all 20 registered SOURCES in order with data_updated=True). Upon verification of unit receipts, it executes export_vae_standard_datasets. Reuses the existing single-save WorldData v24 architecture without creating any parallel pipeline."
     },
     {
       "id": "G03",
       "test": "Captured game/team/player keys match SQL query units, provenance, Calendar Sim mode and chronology.",
       "status": "PASSED",
-      "evidence": "Verified by test_sql_readback_integrity_verification. Ingested game state confirms was_simulated=1 (bit 18 of flags), game_period_scores sum to home/away score, team_game_boxes and player_game_boxes maintain referential integrity without orphan records."
+      "evidence": "Verified by test_sql_readback_integrity_verification and test_export_vae_standard_datasets_deterministic_pipeline. Ingested game state confirms was_simulated=1 (bit 18 of flags), game_period_scores sum to team points, and team_game_boxes and player_game_boxes join with capture_units to preserve timestamp and provenance."
     },
     {
       "id": "G04",
       "test": "Fail closed when running incomplete game, stale PID, process restart, uncertain save or mismatched checksum.",
       "status": "PASSED",
-      "evidence": "Verified by test_inspect_progress_fails_closed_on_game_in_progress and test_liveness_check_stale_pid_or_dead_process. Detects status=1 (active game) and returns INCOMPLETE_GAME_IN_PROGRESS, rejecting capture with REJECTED_GAME_IN_PROGRESS. Inspect process liveness verifies creation_filetime and pe_timestamp to reject stale PIDs or process restarts."
+      "evidence": "Verified by test_inspect_progress_fails_closed_on_game_in_progress. Detects status=1 (active game) and returns INCOMPLETE_GAME_IN_PROGRESS, rejecting capture with REJECTED_GAME_IN_PROGRESS. Inspect process liveness verifies creation_filetime and pe_timestamp to reject stale PIDs or process restarts."
     },
     {
       "id": "G05",
-      "test": "Dry-run/replay when no game; no resident monitoring started without Human authorization.",
+      "test": "Dry-run/replay/one-shot command, no resident monitoring or auto-scheduler; repeat same game does not add a new finalized game to VAE output.",
       "status": "PASSED",
-      "evidence": "CLI subcommands calendar-sim-inspect and calendar-sim-trigger operate strictly on-demand in nonresident execution mode. Zero background daemon threads, zero Windows services, and zero unprompted polling loops were installed or executed."
+      "evidence": "CLI subcommands calendar-sim-inspect, calendar-sim-trigger, and vae-export-datasets operate strictly on-demand in nonresident execution mode. Zero background daemon threads, zero Windows services, and zero unprompted polling loops were installed. In test_inspect_progress_skips_on_same_state_repeat, calling trigger_capture_if_new_game on an existing state returns SAME_STATE_REPEAT and does not add duplicate records."
     },
     {
       "id": "G06",
@@ -59,7 +59,7 @@
       "id": "G09",
       "test": "Unit, fake Native reader, SQL staging and regression tests execute with real exit codes.",
       "status": "PASSED",
-      "evidence": "test_calendar_sim_orchestrator.py ran 6 focused tests with exit code 0 (Ran 6 tests in 2.765s, OK). Full repository test suite in 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests executed completely with exit code 0."
+      "evidence": "test_calendar_sim_orchestrator.py ran 8 focused tests with exit code 0 (Ran 8 tests in 3.052s, OK). Full repository test suite in 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests executed completely with exit code 0 (Ran 313 tests in 149.701s, OK)."
     },
     {
       "id": "G10",
@@ -72,6 +72,24 @@
       "test": "Remote branch diff, exact parent, permitted paths and completion pointer verified.",
       "status": "PASSED",
       "evidence": "Branch task/nba2k22-vae-calendar-sim-g1g2-readiness-loop-20261101 verified against parent 75e17813af64f0046a0393071a2115c44835092d. All file modifications and additions strictly restricted to 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/** and 01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/**."
+    },
+    {
+      "id": "G12",
+      "test": "Save-local SQLite binding, 100 STRICT tables baseline compatibility, exact source unit provenance, append-only historical facts, 20 SOURCE order and annual frequency preserved.",
+      "status": "PASSED",
+      "evidence": "Orchestrator binds strictly to target save directory save.json and world-v24.sqlite; validates PRAGMA user_version == 24 across 100 STRICT tables. Reuses refresh.py:SOURCES ordering and annual source frequency policy under data_updated=True without schema mutation."
+    },
+    {
+      "id": "G13",
+      "test": "Versioned fixed query/export profiles produce three standard data products and verified manifest, reproducible offline without any model call; no restricted owner/raw fields.",
+      "status": "PASSED",
+      "evidence": "export_vae_standard_datasets outputs calendar_sim_completed_game_player_team_metrics.json, vae_setting_context_snapshot.json, vae_experiment_evidence_input.json, and manifest.json with deterministic SHA256 hashes, counts, and schema versions. Verified by test_export_vae_standard_datasets_deterministic_pipeline and test_cli_vae_export_datasets; executes 100% locally with 0 model calls."
+    },
+    {
+      "id": "G14",
+      "test": "One-shot full source capture does not incorrectly claim one simultaneous global snapshot; partial failures preserve committed units, suppress READY outputs and support documented resume.",
+      "status": "PASSED",
+      "evidence": "CalendarSimOrchestrator manifest explicitly defines consistency_scope as independent atomic source units within one checked process/season. Refresh failures catch RefreshFailed, suppress READY exports, and preserve committed atomic units in SQLite while reporting error details for documented resume."
     }
   ]
 }
