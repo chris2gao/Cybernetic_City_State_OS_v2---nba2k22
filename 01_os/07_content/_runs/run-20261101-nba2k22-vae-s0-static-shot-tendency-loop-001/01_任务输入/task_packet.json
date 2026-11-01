@@ -1,0 +1,78 @@
+{
+  "schema_version": "nba2k22.vae.static_analysis.dispatch.v1",
+  "task_id": "NBA2K22-VAE-S0-STATIC-SHOT-TENDENCY-LOOP-20261101-001",
+  "run_id": "run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001",
+  "os_role": "execution",
+  "assigned_model": "Gemini (record actual model)",
+  "base_sha": "d7e6b0a03a9a166bcf243a26d8353095f6cd9228",
+  "branch": "task/nba2k22-vae-s0-static-shot-tendency-loop-20261101",
+  "objective": "Read-only historical S0 analysis of shot tendency and measured Calendar Sim shooting frequency across player cohorts; create evidence-based design for later Human-controlled Phase A setting change verification.",
+  "source_binding": {
+    "save_id": "nba2k22_test_01",
+    "loaded_filename": "MyLEAGUE0003",
+    "database": "local WorldData v24 world-v24.sqlite, never uploaded",
+    "existing_sample": "historical one-month pre-task simulation, 238 league games; Lillard has 16 analyzed games"
+  },
+  "human_decisions": [
+    "Human confirmed NO manually modified values during the historical month; existing games can serve as static S0 without re-simulation.",
+    "Current real game has NOT advanced during G1/G2 development; no S1 writing, post-intervention game, or effect verification exists.",
+    "Human alone triggers ordinary capture via Gemini, calendar simulation, and authorized gameplay changes.",
+    "Three Human-gated workflows: ordinary capture on explicit request; post-modification one-week simulation plus Human-triggered capture for persistence/safety; N-day simulation and Human-triggered capture for mechanism effect.",
+    "FULL refresh is allowed without new completed game; no new game requirement should be added to FULL.",
+    "Original large SQLite and backup files remain local; never Git-upload databases, compressed DB backups, raw memory or entire dumps."
+  ],
+  "scope": {
+    "authorized": "Read existing local SQLite and project code; create small deterministic queries, source-quality audit, stats and sanitized summaries; use existing WorldData and G1/G2 source evidence.",
+    "prohibited": "Any memory mutation, save file editing, game actions, calendar advancing, automatic or self-triggered game capture, resident scheduling, indiscriminate native research, uploading database or backups, master merge or Core canonical modifications.",
+    "existing_source_refs": [
+      "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/08_结论/human_static_baseline_and_three_trigger_protocol_20261101.md",
+      "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/06_执行/s0_selected_pilot_baseline_and_sources.json",
+      "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/live_full_capture_sql_reconciliation.json",
+      "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_skill_native_profile.json"
+    ]
+  },
+  "workstream": [
+    "Verify unique player ID and exact shot_tendency_raw mapping from native skill profile and current snapshot with provenance; no guesswork about Shot Tendency equals shooting volume.",
+    "Read existing 238 calendar games and all relevant player_game_boxes, join player identity + tendency + attributes + positions + teams and coach/team contextual data by existing WorldData safe query semantics; do not invent numeric zeros or force unavailable join keys.",
+    "Per-player eligible-game denominators, min thresholds, minutes, team FGA, score anomaly exclusion, injured/rotation change flags, source unit, snapshot observed_at and human-confirmed no manual changes; distinguish unknown engine-side variation.",
+    "Compute descriptive distributions, tendency bins that adapt to observed sample, FGA/36, FGA/team share, mean FGA vs tendency, source-aware correlation, cautious stratified/adjusted regressions only if sample supports, plus confidence intervals or honest limitations.",
+    "Specifically compare Damian Lillard to eligible lead guards/usage peers with genuine comparable controls; don't infer a -15 tendency effect from unmodified historical Lillard. Keep 3PA mechanism separate from overall shot tendency; if no field source, explicitly UNKNOWN.",
+    "Evaluate whether cross-player static evidence motivates the proposed 95->80 test; flag alternative targets/deltas as candidates, not changes.",
+    "Construct one focused next Phase A Human-run smoke plan WITHOUT executing it: authorized modification method to be confirmed by Human, one week of user simulation, Human triggers Gemini FULL capture, compare each target's expected current value to native/SQLite readbacks, distinguish persistence from gameplay effect.",
+    "Do not accidentally start Phase B; no automatic waiting loops or proactive remote DB calls."
+  ],
+  "acceptance": [
+    "Every statistic traceable to actual query, source units and true eligible-player count; local SQLite unavailable -> explicitly DATA_NOT_AVAILABLE, no fabricated values.",
+    "Historical S0 unmodified per Human is accepted, but no dose response inferred from single player unchanged over month.",
+    "Score anomaly 222 exact and 16 discrepant; previous 228 figures were <=4 threshold, not <=3; provenance/cause classification remains evidence bounded.",
+    "No arbitrary causal claim or treating p>0.05 as null effect proven; uncertainty and confounding explicit.",
+    "One concise report and machine readable small anonymized/aggregated summary; DB and huge backups remain local.",
+    "Honest read-only Phase A readiness boundary and Human gate; not a setter or write authorization.",
+    "Structured Loop v0.1 observation per genuine bounded iterative round and actual stop causality; distinguish planned increments, test failure, Human feedback and no-evidence repeats, initial development vs post-delivery remediation.",
+    "Protect task branch only, no master/Core source writes."
+  ],
+  "deliverables": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/06_执行/static_shot_tendency_s0_analysis.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/06_执行/static_shot_tendency_s0_summary.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/06_执行/static_source_join_quality.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/06_执行/loop_iterations.jsonl",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/07_测试执行/static_analysis_replay_tests.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/08_结论/loop_summary.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-s0-static-shot-tendency-loop-001/08_结论/completion_pointer.md"
+  ],
+  "loop_observability": {
+    "approved_human_pilot": true,
+    "core_plan_branch": "task/core-development-loop-observability-model-20261101",
+    "per_iteration": "trigger_type, trigger_ref, bounded_objective, action, evidence receipts and actual exit code, outcome delta, sha before/after, next decision",
+    "summary": "valid internal rounds, trigger distribution, true improvements, regressions, post-delivery remediation separately, stop_class+evidence and Human resumption conditions",
+    "not_counted": "commands, tests, stages, report writing alone, or no-new-evidence repeated attempts"
+  },
+  "review_schedule": {
+    "review_mode": "deferred_to_series",
+    "must_review_before": "experimental field becomes authoritative setter/write contract or master integration"
+  },
+  "stop_class_on_success": "OBJECTIVE_MET for read-only static analysis; future experiment separately requires HUMAN_GAMEPLAY_WAIT",
+  "game_modification_authorized": false,
+  "game_capture_authorized": false,
+  "protected_integration_authorized": false
+}
