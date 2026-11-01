@@ -1,0 +1,66 @@
+{
+  "field_id": "WORLD_REG_033",
+  "iteration_id": "SWEEP01_FIELD0132",
+  "question": "Does Career-Ending Injury Frequency determine a rare terminal-injury outcome rate distinct from normal incident rate and severity?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.career_ending_injury_frequency",
+    "offset": "0x264",
+    "project_range": [
+      0,
+      100
+    ],
+    "native_UI": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/926689-mynba-injury-duration",
+      "author": "coachmac75/ggsimmonds",
+      "date": "2022-09 to 11",
+      "game": "NBA2K23 with reference to NBA2K22",
+      "platform": "offline MyNBA, PC22 not confirmed",
+      "claim": "Injury duration and severity high settings reportedly still led to earlier-than-display recovery; retrospective cross-version",
+      "grade": "CROSS_VERSION_BUG_HYPOTHESIS"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Lists Career Ending Injury Frequency separately from main injury On/Off and User/CPU difficulty options",
+      "grade": "SAME_RELEASE_UI"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8",
+      "date": "2022 NBA2K22 era",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE console/PC not isolated",
+      "claim": "Lists Career-Ending Injury Frequency in Injuries subsection",
+      "grade": "SAME_VERSION_MENU"
+    }
+  ],
+  "claims": [
+    "Same-release injury duration or terminal-frequency concept plausible",
+    "No evidence for exact candidate offset or effect response curve"
+  ],
+  "conflicts": [
+    "Injury incident category, severity, recovery days and career end are different facts",
+    "Reported 2023/2022 issue cannot establish current PC22 mapping",
+    "Player fatigue, durability and injury count confound"
+  ],
+  "metrics": [
+    "terminal injuries per eligible player season and total injuries separately",
+    "raw scheduled recovery date vs actual return, save time",
+    "newly generated facts appended not overwritten"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_033",
+    "question": "For same PC22 MyLEAGUE save/build can read-only injury settings+0x264 be matched to exact career_ending_injury_frequency UI option without editing any injuries or saves?",
+    "write": false
+  },
+  "result": "INJURY_SETTING_LABEL_NATIVE_CONSUMER_UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
