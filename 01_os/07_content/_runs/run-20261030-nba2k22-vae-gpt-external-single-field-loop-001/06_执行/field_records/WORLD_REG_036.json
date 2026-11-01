@@ -1,0 +1,54 @@
+{
+  "field_id": "WORLD_REG_036",
+  "iteration_id": "SWEEP01_FIELD0135",
+  "question": "Does Chemistry Difficulty affect how team-chemistry state changes with game events, separate from Chemistry Effects on player skill and performance?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.chemistry_difficulty",
+    "offset": "0x240",
+    "range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021-22",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE/MyNBA exact PC unverified",
+      "claim": "Chemistry Difficulty and Chemistry Effects have distinct settings"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Shows independent chosen settings for difficulty/effects"
+    }
+  ],
+  "claims": [
+    "Same-release UI concept supported but native +0x240 mapping unknown",
+    "Difficulty of changing chemistry not proven to equal chemistry impact coefficient"
+  ],
+  "conflicts": [
+    "Roster/rotation wins/losses and player morale can confound team-chemistry changes",
+    "Global league feature Team Chemistry toggle separate from this difficulty slider",
+    "PC current-gen engine and Calendar may have different consumers"
+  ],
+  "metrics": [
+    "chemistry state delta per game at matched team events",
+    "chemistry-driven attribute delta separate from chemistry itself"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_036",
+    "question": "Does read-only settings+0x240 map to exact Chemistry Difficulty UI state in PC22, distinct from Chemistry Effects and Team Chemistry On/Off, in same save/build?",
+    "write": false
+  },
+  "result": "SAME_RELEASE_CHEMISTRY_UI_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
