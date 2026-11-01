@@ -1,0 +1,152 @@
+{
+  "schema_version": "nba2k22.vae.stage02.verification_receipt.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "model": "GPT-6_CONVERSATION_DECLARED_NOT_HOST_ATTESTED",
+  "date": "2026-11-01",
+  "verified_source_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+  "dispatch_sha": "f27846c86e92345e279ad01816593d909595f472",
+  "toolchain": "GitHub REST connected API + deterministic ECMAScript list/equality/ref checks, no current game access",
+  "checks": [
+    {
+      "id": "M01_204_ID_UNIQUE_AND_ORDER",
+      "status": "PASS",
+      "details": {
+        "count": 204,
+        "unique": 204,
+        "family_counts": {
+          "player_tendency": 99,
+          "world_settings": 86,
+          "coach_settings": 19
+        },
+        "queue_sha": "af5567e14e03cd9f7761e396a978311e347d7c17"
+      }
+    },
+    {
+      "id": "M02_GPT_GEMINI_CONFLICT_AUDIT",
+      "status": "PASS",
+      "details": {
+        "review": "REWORK_REQUIRED_WITH_SUBSTANTIAL_PROGRESS",
+        "open_findings": "P0=3 P1=4 P2=2",
+        "key_alias": "TENDENCY_NATIVE_066 legacy-vs-Gemini"
+      }
+    },
+    {
+      "id": "M03_NATIVE_EVIDENCE_NOT_PROMOTED",
+      "status": "PASS",
+      "details": {
+        "native_claims_in_independent_tier": 0,
+        "graph_edges": 50,
+        "game_operation": "NOT_RUN"
+      }
+    },
+    {
+      "id": "M04_METRIC_NATIVE_FIRST",
+      "status": "PASS",
+      "details": {
+        "metric_count": 38,
+        "gaps": 38,
+        "derived_enabled": 0
+      }
+    },
+    {
+      "id": "M05_STAT_GRAIN_AND_ENGINE_MODE",
+      "status": "PASS",
+      "details": {
+        "mode_strata": [
+          "3D_CPU_CPU",
+          "CALENDAR_SIM"
+        ],
+        "normalize_flags": 2
+      }
+    },
+    {
+      "id": "M06_SOURCE_COVERAGE_AND_GAP_HONESTY",
+      "status": "PASS",
+      "details": {
+        "gap_status_counts": {
+          "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE": 16,
+          "SOURCE_CODE_OR_SCHEMA_ONLY": 4,
+          "HUMAN_REPORTED_GAME_UI_CANDIDATE": 9,
+          "NATIVE_DISCOVERY_REQUIRED": 9
+        },
+        "worlddata": "OLD_SAVE_ONLY_NOT_CURRENT_MC"
+      }
+    },
+    {
+      "id": "M07_EXPERIMENT_COMPARABILITY_AND_FALSIFIABILITY",
+      "status": "PASS",
+      "details": {
+        "pilot_count": 3,
+        "game": "NOT_RUN"
+      }
+    },
+    {
+      "id": "M08_NO_COLLECTOR_GAME_WRITE_OR_NEW_DDL",
+      "status": "PASS",
+      "details": {
+        "changed_paths": 6,
+        "scope": "ONLY_RUN",
+        "game": "NOT_RUN"
+      }
+    },
+    {
+      "id": "M09_REMOTE_GIT_SCOPE_READBACK",
+      "status": "PASS",
+      "details": {
+        "pre_final_head": "7340552eef77fa130bf62c3229c261b45d77fdc0",
+        "commits": 6,
+        "changed_paths": 6,
+        "final_commit_readback": "PENDING_POST_PUBLICATION"
+      }
+    }
+  ],
+  "verified_counts": {
+    "field_evidence": 204,
+    "graph_nodes": 68,
+    "graph_edges": 50,
+    "native_first_metric_requirements": 38,
+    "source_gap_rows": 38,
+    "action_behavior_links": 16,
+    "pilot_designs": 3
+  },
+  "source_evidence": {
+    "seed_blob": "af5567e14e03cd9f7761e396a978311e347d7c17",
+    "source_files": [
+      {
+        "file": "field_evidence_matrix.json",
+        "blob_sha": "7e6a416eeccb062e2c27e3996cf40b7bf6a84a7e",
+        "bytes": 700020
+      },
+      {
+        "file": "mechanism_metric_links.json",
+        "blob_sha": "ceeb072445c676c8421b7a635bbb4c039b7244d3",
+        "bytes": 62176
+      },
+      {
+        "file": "metric_native_first_requirements.json",
+        "blob_sha": "6ca0bebd76466ec88f985e1995ba251f18b1d137",
+        "bytes": 97617
+      },
+      {
+        "file": "data_source_gap_matrix.json",
+        "blob_sha": "0ac5fb08cad709f1e3e9364a5748c5373caf948d",
+        "bytes": 60115
+      },
+      {
+        "file": "pilot_experiment_contracts.json",
+        "blob_sha": "a6a848ccc3aa21b8ea9a63d90ffe96503f063584",
+        "bytes": 15683
+      }
+    ]
+  },
+  "negative_boundaries": {
+    "native_game_engine_validation": "NOT_RUN",
+    "new_PC22_advanced_ui_field_authentication": "NOT_RUN",
+    "real_game_pilot": "NOT_RUN",
+    "independent_review": "NOT_RUN",
+    "collector_implementation": "NOT_RUN",
+    "DB_schema": "UNCHANGED",
+    "master": "UNCHANGED"
+  },
+  "provisional_git_gate": "Source-head compare passed; final commit must be read back from remote and compared."
+}
