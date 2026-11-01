@@ -10,15 +10,15 @@
     {
       "metric_id": "PLAYER_FGA",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_source_candidate": "player_game_boxes:FGA",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "MATERIALIZED_WITH_SOURCE_LIMITATIONS",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -27,6 +27,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -39,20 +45,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "player_game_boxes",
+        "column": "fg_attempted",
+        "non_null_rows": 26400,
+        "null_rows": 0,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "TEAM_FGA",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:FGA",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -61,6 +88,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -73,20 +106,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "fg_attempted",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "PLAYER_MINUTES",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_source_candidate": "player_game_boxes:minutes",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "MATERIALIZED_WITH_SOURCE_LIMITATIONS",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -95,6 +149,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -107,20 +167,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "player_game_boxes",
+        "column": "minutes_raw",
+        "non_null_rows": 26400,
+        "null_rows": 0,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "minutes (research decoder)",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "PLAYER_PTS",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "EXISTING_DERIVED_OLD_SAVE_VALUE",
+      "game_native_exact_field_exists": "UNKNOWN_NOT_PROVEN_BY_DERIVED_LEGACY_COLUMN",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "EXISTING_DERIVED_OLD_SAVE_VALUE",
       "reader_source_candidate": "player_game_boxes:points",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "MATERIALIZED_WITH_SOURCE_LIMITATIONS",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -129,6 +210,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -141,20 +228,52 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
-      }
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "player_game_boxes",
+        "column": "points",
+        "non_null_rows": 26400,
+        "null_rows": 0,
+        "source_declaration": "DERIVED_WITH_FORMULA: 2*fg_made+three_made+ft_made; AG01D fixture replay",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
+      },
+      "existing_derived_observation": {
+        "label": "EXISTING_DERIVED_OLD_SAVE_VALUE",
+        "stored_points_non_null": 26400,
+        "stored_total": 26400,
+        "formula_recorded_in_v24": "2*fg_made + three_made + ft_made",
+        "source": "AG01D fixture replay",
+        "formula_is_legacy_not_new_stage02": true,
+        "permitted_native_substitution": false,
+        "needs_native_computed_points_discovery": true
+      },
+      "native_same_metric_source": "DISCOVERY_REQUIRED"
     },
     {
       "metric_id": "PLAYER_AST",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_source_candidate": "player_game_boxes:assists",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "MATERIALIZED_WITH_SOURCE_LIMITATIONS",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -163,6 +282,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -175,20 +300,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "player_game_boxes",
+        "column": "assists",
+        "non_null_rows": 26400,
+        "null_rows": 0,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "PLAYER_FTA",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_source_candidate": "player_game_boxes:FTA",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "MATERIALIZED_WITH_SOURCE_LIMITATIONS",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -197,6 +343,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -209,20 +361,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "player_game_boxes",
+        "column": "ft_attempted",
+        "non_null_rows": 26400,
+        "null_rows": 0,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "TEAM_THREE_PA",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:3PA",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -231,6 +404,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -243,20 +422,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "three_attempted",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "TEAM_THREE_PM",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:3PM",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -265,6 +465,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -277,20 +483,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "three_made",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "OPPONENT_FGA",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED",
       "reader_source_candidate": "team_game_boxes:opponent FGA",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -299,6 +526,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -311,20 +544,39 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "direct_opponent_column": "NOT_IN_SCHEMA",
+        "join_status": "NOT_EXECUTED",
+        "same_game_two_team_rows": "NOT_VERIFIED_BY_QUERY",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "OPPONENT_THREE_PA",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED",
       "reader_source_candidate": "team_game_boxes:opponent 3PA",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -333,6 +585,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -345,6 +603,25 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "direct_opponent_column": "NOT_IN_SCHEMA",
+        "join_status": "NOT_EXECUTED",
+        "same_game_two_team_rows": "NOT_VERIFIED_BY_QUERY",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
@@ -384,15 +661,15 @@
     {
       "metric_id": "TEAM_TOV",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:TOV",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -401,6 +678,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -413,20 +696,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "turnovers",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "TEAM_STL",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:STL",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -435,6 +739,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -447,20 +757,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "steals",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "TEAM_OREB",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:OREB",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -469,6 +800,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -481,20 +818,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "offensive_rebounds",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "TEAM_DREB",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_source_candidate": "team_game_boxes:DREB",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -503,6 +861,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -515,20 +879,41 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "team_game_boxes",
+        "column": "defensive_rebounds",
+        "non_null_rows": 0,
+        "null_rows": 2124,
+        "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
       "metric_id": "GAME_PERIOD_SCORES",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "MATERIALIZED_PERIOD_RESEARCH_FIXTURE_ONLY",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "MATERIALIZED_PERIOD_RESEARCH_FIXTURE_ONLY",
       "reader_source_candidate": "game_period_scores",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "MATERIALIZED_WITH_SOURCE_LIMITATIONS",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -537,6 +922,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -549,6 +940,27 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "game_period_scores",
+        "column": "period_points",
+        "non_null_rows": 8496,
+        "null_rows": 0,
+        "source_declaration": "AG_NATIVE_01D SEASON_GAME +44..51 bytes; regulation periods only; RESEARCH_FIXTURE",
+        "unit_declaration": "UNKNOWN/native representation",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        }
       }
     },
     {
@@ -1234,15 +1646,15 @@
     {
       "metric_id": "PLAYER_ATTRIBUTE_SNAPSHOT",
       "priority": "P1",
-      "status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
-      "game_native_exact_field_exists": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+      "status": "MIXED_ATTRIBUTE_FIELD_LEVEL_EVIDENCE_REQUIRED",
+      "game_native_exact_field_exists": "UNKNOWN_PC22_NATIVE_SAME_METRIC_UNVERIFIED",
       "specific_PC22_UI_label": "UNKNOWN",
       "current_save_read": "NOT_RUN",
       "native_source": "NATIVE_FIRST",
-      "reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "reader_current_status": "MIXED_ATTRIBUTE_FIELD_LEVEL_EVIDENCE_REQUIRED",
       "reader_source_candidate": "player_attribute_snapshots",
       "reader_current_MC_verified": false,
-      "old_save_evidence": "WORLDDATA_V24_OLD_SAVE",
+      "old_save_evidence": "SCHEMA_OR_JOIN_ONLY_NOT_USABLE",
       "source_provenance": [
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
@@ -1251,6 +1663,12 @@
         {
           "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
           "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+        },
+        {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
         }
       ],
       "requirements": [
@@ -1263,6 +1681,28 @@
         "allowed": false,
         "status": "PENDING_NATIVE_ABSENCE_PROOF",
         "formula": null
+      },
+      "prior_statement_correction": {
+        "old_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_reader_current_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_exact": "OLD_SAVE_NATIVE_SOURCE_OBSERVED",
+        "source": "independent_review_553ee3af; archived_field_maturity_v24",
+        "at": "2026-11-01"
+      },
+      "reader_field_maturity": {
+        "table": "player_attribute_snapshots",
+        "column": "overall_raw",
+        "non_null_rows": 0,
+        "null_rows": 9822,
+        "source_declaration": "UNKNOWN: overall field source not certified",
+        "unit_declaration": "native raw value",
+        "origin": {
+          "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+          "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+          "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+          "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+        },
+        "attribute_raw_non_null_column_count": 56
       }
     },
     {
@@ -1382,5 +1822,29 @@
     "automatic_collection_status": "FUTURE_DEPENDENCY_NOT_IMPLEMENTED_OR_SCHEDULED_HERE",
     "no_new_physical_schema": true,
     "reader_gap_vs_game_absence_separate": true
+  },
+  "reader_status_summary_corrected": {
+    "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY": 4,
+    "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED": 7,
+    "EXISTING_DERIVED_OLD_SAVE_VALUE": 1,
+    "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED": 2,
+    "SOURCE_CODE_OR_SCHEMA_ONLY": 4,
+    "MATERIALIZED_PERIOD_RESEARCH_FIXTURE_ONLY": 1,
+    "HUMAN_REPORTED_GAME_UI_CANDIDATE": 9,
+    "NATIVE_DISCOVERY_REQUIRED": 9,
+    "MIXED_ATTRIBUTE_FIELD_LEVEL_EVIDENCE_REQUIRED": 1
+  },
+  "archived_source_correction": {
+    "maturity_source": {
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+      "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+      "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+    },
+    "corrected_count": 16,
+    "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+    "original_16_confirmed_not_retained_as_verified": true,
+    "player_points_derived": "2*fg_made+three_made+ft_made",
+    "no_live_game_or_db_replay": true
   }
 }

@@ -22,10 +22,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_candidate_path": "player_game_boxes:FGA",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -62,7 +62,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 26400,
+        "recorded_old_value_present": true,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "player_game_boxes",
+          "column": "fg_attempted",
+          "non_null_rows": 26400,
+          "null_rows": 0,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "TEAM_FGA",
@@ -76,10 +109,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:FGA",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -116,7 +149,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "fg_attempted",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "PLAYER_MINUTES",
@@ -130,10 +196,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_candidate_path": "player_game_boxes:minutes",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -170,7 +236,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 26400,
+        "recorded_old_value_present": true,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "player_game_boxes",
+          "column": "minutes_raw",
+          "non_null_rows": 26400,
+          "null_rows": 0,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "minutes (research decoder)",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "PLAYER_PTS",
@@ -184,10 +283,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "EXISTING_DERIVED_OLD_SAVE_VALUE",
       "reader_candidate_path": "player_game_boxes:points",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -224,6 +323,49 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-02",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 26400,
+        "recorded_old_value_present": true,
+        "old_value_provenance": "DERIVED_WITH_FORMULA: 2*fg_made+three_made+ft_made; AG01D fixture replay",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "player_game_boxes",
+          "column": "points",
+          "non_null_rows": 26400,
+          "null_rows": 0,
+          "source_declaration": "DERIVED_WITH_FORMULA: 2*fg_made+three_made+ft_made; AG01D fixture replay",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER",
+      "existing_derived_observation": {
+        "label": "EXISTING_DERIVED_OLD_SAVE_VALUE",
+        "stored_points_non_null": 26400,
+        "stored_total": 26400,
+        "formula_recorded_in_v24": "2*fg_made + three_made + ft_made",
+        "source": "AG01D fixture replay",
+        "formula_is_legacy_not_new_stage02": true,
+        "permitted_native_substitution": false,
+        "needs_native_computed_points_discovery": true
       }
     },
     {
@@ -238,10 +380,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_candidate_path": "player_game_boxes:assists",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -278,7 +420,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 26400,
+        "recorded_old_value_present": true,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "player_game_boxes",
+          "column": "assists",
+          "non_null_rows": 26400,
+          "null_rows": 0,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "PLAYER_FTA",
@@ -292,10 +467,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "MATERIALIZED_RESEARCH_FIXTURE_REPLAY_ONLY",
       "reader_candidate_path": "player_game_boxes:FTA",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -332,7 +507,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 26400,
+        "recorded_old_value_present": true,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "player_game_boxes",
+          "column": "ft_attempted",
+          "non_null_rows": 26400,
+          "null_rows": 0,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "TEAM_THREE_PA",
@@ -346,10 +554,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:3PA",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -386,7 +594,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "three_attempted",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "TEAM_THREE_PM",
@@ -400,10 +641,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:3PM",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -440,7 +681,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "three_made",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "OPPONENT_FGA",
@@ -454,10 +728,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED",
       "reader_candidate_path": "team_game_boxes:opponent FGA",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -494,7 +768,38 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": false,
+        "materialized_non_null_count": null,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "NO_DIRECT_COLUMN",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "direct_opponent_column": "NOT_IN_SCHEMA",
+          "join_status": "NOT_EXECUTED",
+          "same_game_two_team_rows": "NOT_VERIFIED_BY_QUERY",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "OPPONENT_THREE_PA",
@@ -508,10 +813,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "JOIN_OR_NATIVE_SOURCE_DISCOVERY_REQUIRED",
       "reader_candidate_path": "team_game_boxes:opponent 3PA",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -548,7 +853,38 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": false,
+        "materialized_non_null_count": null,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "NO_DIRECT_COLUMN",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "direct_opponent_column": "NOT_IN_SCHEMA",
+          "join_status": "NOT_EXECUTED",
+          "same_game_two_team_rows": "NOT_VERIFIED_BY_QUERY",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "OPPONENT_FG_PCT",
@@ -616,10 +952,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:TOV",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -656,7 +992,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "turnovers",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "TEAM_STL",
@@ -670,10 +1039,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:STL",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -710,7 +1079,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "steals",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "TEAM_OREB",
@@ -724,10 +1126,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:OREB",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -764,7 +1166,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "offensive_rebounds",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "TEAM_DREB",
@@ -778,10 +1213,10 @@
         "Completed Game Box → player/team",
         "Schedule → completed match → Box"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "SCHEMA_PRESENT_OLD_SAVE_VALUE_NOT_OBSERVED",
       "reader_candidate_path": "team_game_boxes:DREB",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -818,7 +1253,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "team_game_boxes",
+          "column": "defensive_rebounds",
+          "non_null_rows": 0,
+          "null_rows": 2124,
+          "source_declaration": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+          "unit_declaration": "count or signed count; native/UI range UNKNOWN",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "GAME_PERIOD_SCORES",
@@ -832,10 +1300,10 @@
         "Game Details → period scores",
         "Calendar score"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "MATERIALIZED_PERIOD_RESEARCH_FIXTURE_ONLY",
       "reader_candidate_path": "game_period_scores",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -872,7 +1340,40 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 8496,
+        "recorded_old_value_present": true,
+        "old_value_provenance": "AG_NATIVE_01D SEASON_GAME +44..51 bytes; regulation periods only; RESEARCH_FIXTURE",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "game_period_scores",
+          "column": "period_points",
+          "non_null_rows": 8496,
+          "null_rows": 0,
+          "source_declaration": "AG_NATIVE_01D SEASON_GAME +44..51 bytes; regulation periods only; RESEARCH_FIXTURE",
+          "unit_declaration": "UNKNOWN/native representation",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          }
+        }
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "PLAYER_USG_NATIVE",
@@ -1966,10 +2467,10 @@
         "Player Card and v24 player-state/player-skills sources",
         "Old-save only until current readback"
       ],
-      "specific_game_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
-      "reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+      "specific_game_native_status": "EXACT_GAME_COMPUTED_NATIVE_PROVENANCE_UNKNOWN",
+      "reader_status": "MIXED_ATTRIBUTE_FIELD_LEVEL_EVIDENCE_REQUIRED",
       "reader_candidate_path": "player_attribute_snapshots",
-      "reader_scope": "old nba2k22_test_01 MyLEAGUE0003, NOT CURRENT MC; exact typed field/source checks required",
+      "reader_scope": "FROZEN_WORLDDATA_V24_OLD_SAVE_ARCHIVE_ONLY; NO_CURRENT_MC_OR_LIVE_READER_ACCEPTANCE",
       "game_ui_category": "HUMAN_REPORTED_RICH_PLAYER_CARD_ADVANCED/PER_GAME; SPECIFIC_FIELD_UNCONFIRMED",
       "required_next_read": [
         "Verify native PC22 exact UI label and source getter for same save/build/player/game",
@@ -2006,7 +2507,43 @@
         "current_live_capture": "NOT_RUN",
         "on_new_game": "Read exact same native metric, preserve game+mode+context and compare after bounded experiment; append even if contradictory",
         "fallback_only_after_native_absence": true
-      }
+      },
+      "prior_statement_correction": {
+        "old_reader_status": "WORLDDATA_READER_CONFIRMED_ON_OLD_SAVE",
+        "old_native_status": "NATIVE_BOX_OR_PLAYER_SOURCE_ON_OLD_SAVE",
+        "corrected_at": "2026-11-01",
+        "review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+        "review_finding": "S02-P0-01",
+        "reason": "Old evidence of table/schema/materialized fixture/derived output cannot be represented as a verified game-native directly readable field; original claim retained as superseded"
+      },
+      "reader_evidence_axes": {
+        "schema_column_present": true,
+        "materialized_non_null_count": 0,
+        "recorded_old_value_present": false,
+        "old_value_provenance": "UNKNOWN: overall field source not certified",
+        "old_data_game_native_proven": false,
+        "old_data_current_MC_proven": false,
+        "native_same_metric_PC22_UI_GETTER": "UNKNOWN",
+        "native_game_metric_absence_proven": false,
+        "evidence": {
+          "table": "player_attribute_snapshots",
+          "column": "overall_raw",
+          "non_null_rows": 0,
+          "null_rows": 9822,
+          "source_declaration": "UNKNOWN: overall field source not certified",
+          "unit_declaration": "native raw value",
+          "origin": {
+            "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+            "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+            "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+            "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+          },
+          "attribute_raw_non_null_column_count": 56
+        },
+        "attribute_raw_non_null_column_count": 56,
+        "note": "overall_raw 0/9822, but other individual attribute *_raw columns have materialized and CURRENT_NATIVE-prefixed source declarations. Evidence must be judged per attribute, not silently discarded or promoted."
+      },
+      "reader_source_specificity": "FIELD_LEVEL_ARCHIVED_MATURITY_ONLY_NOT_EXACT_CURRENT_NATIVE_READER"
     },
     {
       "metric_id": "SCORE_DISPLAY_CONSISTENCY",
@@ -2516,5 +3053,18 @@
       "no_causality_from_correlation": true,
       "collector_task": "separate future D/WorldData native discovery and reuse; none launched here"
     }
+  },
+  "native_source_correction": {
+    "independent_review_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+    "maturity_source": {
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "blob_sha": "693e4d1021b6f2d9ca90e24b4ba6114712f5f2a7",
+      "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json",
+      "meaning": "Fixed archived field non-null counts and source_declaration, NOT live game or source acceptance"
+    },
+    "corrected_original_legacy_reader_promotions": 16,
+    "semantic_rule": "Non-null does not establish native source; fixture replay materialization does not certify live reader; empty column does not establish game absence; derived legacy PTS cannot be labeled native",
+    "native_first_policy_preserved": true,
+    "physical_DDL_or_collector_change": false
   }
 }
