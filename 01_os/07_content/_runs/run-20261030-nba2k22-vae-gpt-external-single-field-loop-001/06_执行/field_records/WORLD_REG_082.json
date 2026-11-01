@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_082",
+  "iteration_id": "SWEEP01_FIELD0181",
+  "date": "2026-11-01",
+  "primary_question": "Does candidate SLOT_SETTINGS+0x14 represent played LIVE_3D Quarter Length, as opposed to quick simulation length?",
+  "candidate": {
+    "key": "world.gameplay_and_calendar.quarter_length",
+    "offset": "0x14",
+    "slot_candidate": "SLOT_SETTINGS",
+    "raw_range": [
+      null,
+      null
+    ],
+    "ui_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_source_candidate": "WORLD_REG_001",
+    "physical_alias_proven": false
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8 / Operation Sports",
+      "date": "2021/22 NBA2K22 period (exact message date not extracted)",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE configuration; PC version not independently proven",
+      "grade": "SAME_RELEASE_USER_SETTINGS",
+      "claim": "2K22 MyLEAGUE shared setup independently lists Quarter Length 12 and Sim Quarter Length 12, two controls."
+    },
+    {
+      "url": "https://steamcommunity.com/app/1644960/discussions/0/4588603157853225691/",
+      "author": "klomenDJ and iPikachuBootey",
+      "date": "2021-12-20/21",
+      "version": "NBA2K22",
+      "platform": "PC Steam MyCAREER, not MyLEAGUE",
+      "grade": "PC_SAME_RELEASE_DIFFERENT_MODE",
+      "claim": "PC 2K22 MyCAREER player asks about 5-minute played versus 12-minute simulated match difference, not MyLEAGUE setting validation."
+    },
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md",
+      "author": "DEV29 NBA2K22 project R06A",
+      "date": "2026-10-21",
+      "version": "NBA2K22 research covering 2K20–23",
+      "platform": "PC current-gen target; external sourced literature, no runtime",
+      "grade": "PROJECT_RESEARCH_SYNTHESIS",
+      "claim": "Project R06A guide distinguishes LIVE_3D and CALENDAR_SIM, their quarter lengths and statistical normalization."
+    }
+  ],
+  "claims": [
+    "Quarter Length has same-version menu/source corroboration, but the proposed candidate address/format remains unverified.",
+    "Settings/world registry overlap with WORLD_REG_001 is static; slot identity matters, especially the two +0x00 candidates."
+  ],
+  "conflicts": [
+    "MyCAREER inability to adjust Sim length must not imply MyLEAGUE inability; no PC22 physical address proven.",
+    "Playing games, calendar simulation, controller side, storage and display normalization differ."
+  ],
+  "metrics": [
+    "exact mode and displayed field names",
+    "two read-only slot- and build-qualified raw values at candidate address",
+    "no game simulation, play, setting edit, save or write"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_82",
+    "question": "Can two unchanged PC22 MyLEAGUE played quarter UI observations match SLOT_SETTINGS+0x14 while separately reading SLOT_TRADE+0xB4?",
+    "write": false,
+    "expected": "correlate two independent UI/raw reads or UNKNOWN",
+    "confounders": [
+      "MyCAREER inability to adjust Sim length must not imply MyLEAGUE inability; no PC22 physical address proven."
+    ]
+  },
+  "result": "WORLD_GAMEPLAY_UI_REFERENCE_NATIVE_STORAGE_AND_EFFECT_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}

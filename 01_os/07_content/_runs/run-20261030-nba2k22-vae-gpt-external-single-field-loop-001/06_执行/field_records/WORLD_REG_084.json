@@ -1,0 +1,75 @@
+{
+  "field_id": "WORLD_REG_084",
+  "iteration_id": "SWEEP01_FIELD0183",
+  "date": "2026-11-01",
+  "primary_question": "Does candidate +0x600 encode PC22 Normalize Played to Sim Stats rather than Normalize Played to Sim Minutes?",
+  "candidate": {
+    "key": "world.gameplay_and_calendar.normalize_stats",
+    "offset": "0x600",
+    "slot_candidate": "SLOT_TRADE",
+    "raw_range": [
+      null,
+      null
+    ],
+    "ui_mapping": "UNKNOWN",
+    "native_consumer": "UNKNOWN",
+    "duplicate_source_candidate": "WORLD_REG_008",
+    "physical_alias_proven": false
+  },
+  "sources": [
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/920479-gu8lal8-s-competitive-sliders",
+      "author": "gu8lal8 / Operation Sports",
+      "date": "2021/22 NBA2K22 period (exact message date not extracted)",
+      "version": "NBA2K22",
+      "platform": "MyLEAGUE configuration; PC version not independently proven",
+      "grade": "SAME_RELEASE_USER_SETTINGS",
+      "claim": "2K22 MyLEAGUE guide lists separately Normalize Played to Sim Minutes and Normalize Played to Sim Stats, both On."
+    },
+    {
+      "url": "https://www.reddit.com/r/NBA2k/comments/18khh5z",
+      "author": "r/NBA2k poster and replies",
+      "date": "2023-12-17 to 20",
+      "version": "User reports NBA2K22 specifically",
+      "platform": "NBA2K22 MyGM uncertain PC console",
+      "grade": "POST_RELEASE_DIFFERENT_MODE_REPORT",
+      "claim": "2023 2K22 MyGM player reports short played quarters versus full simulation and asks about normalization, but UI location/behavior not PC MyLEAGUE evidence."
+    },
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K05_K10_K11_WORLD_RULES_SIM_HISTORY_SAVE.md",
+      "author": "DEV29 NBA2K22 project R06A",
+      "date": "2026-10-21",
+      "version": "NBA2K22 research covering 2K20–23",
+      "platform": "PC current-gen target; external sourced literature, no runtime",
+      "grade": "PROJECT_RESEARCH_SYNTHESIS",
+      "claim": "Project R06A records observed abnormal final stat rescaling complaints and distinguishes played real box versus normalized season totals."
+    }
+  ],
+  "claims": [
+    "Normalize Played to Sim Stats has same-version menu/source corroboration, but the proposed candidate address/format remains unverified.",
+    "Settings/world registry overlap with WORLD_REG_008 is static; slot identity matters, especially the two +0x00 candidates."
+  ],
+  "conflicts": [
+    "Raw candidate is a single key, but normalized minutes and stats are two distinct public toggles; encoding and authority for persisted box unknown.",
+    "Playing games, calendar simulation, controller side, storage and display normalization differ."
+  ],
+  "metrics": [
+    "exact mode and displayed field names",
+    "two read-only slot- and build-qualified raw values at candidate address",
+    "no game simulation, play, setting edit, save or write"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_84",
+    "question": "Can two read-only PC22 exact UI checks distinguish Normalize Played to Sim Stats and Minutes, and test correlation of +0x600 with only the Stats flag, without any game progression?",
+    "write": false,
+    "expected": "correlate two independent UI/raw reads or UNKNOWN",
+    "confounders": [
+      "Raw candidate is a single key, but normalized minutes and stats are two distinct public toggles; encoding and authority for persisted box unknown."
+    ]
+  },
+  "result": "WORLD_GAMEPLAY_UI_REFERENCE_NATIVE_STORAGE_AND_EFFECT_UNKNOWN",
+  "numeric_effect": "UNKNOWN",
+  "native_mapping": "UNVERIFIED",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
