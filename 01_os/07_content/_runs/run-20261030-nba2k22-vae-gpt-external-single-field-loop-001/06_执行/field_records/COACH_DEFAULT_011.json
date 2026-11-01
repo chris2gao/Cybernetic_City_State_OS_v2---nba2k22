@@ -1,0 +1,68 @@
+{
+  "field_id": "COACH_DEFAULT_011",
+  "iteration_id": "SWEEP01_FIELD0196",
+  "date": "2026-11-01",
+  "primary_question": "Is the registered RunPlayTendency a coach preference for called set plays, not actual guaranteed play count per 100 possessions?",
+  "candidate": {
+    "key": "RunPlayTendency",
+    "offset": "UNKNOWN_NOT_IN_QUEUE",
+    "source": "K04_COACH_AND_PLAYS",
+    "raw_range": null,
+    "ui_mapping": "PROJECT_K04_PARTIAL",
+    "current_game_consumer": "UNKNOWN",
+    "project_native_evidence": "REFERENCED_NOT_RERUN"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "NBA2K22 project DEV29 K04",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC target, NBA2K20–23 research",
+      "platform": "Project registered Coach original research; not new test",
+      "grade": "PROJECT_SOURCE_REGISTRY",
+      "claim": "K04 lists RunPlayTendency 0..100 registered project setting, explicitly not play execution percentage."
+    },
+    {
+      "url": "https://www.utplay.com/news/2469--nba-2k22-best-defensive--offensive-settings-next--current-gen",
+      "author": "UTPlay editorial",
+      "date": "2022-era article; exact date unverified",
+      "version": "NBA2K22",
+      "platform": "current and next-gen coaching recommendation, PC raw unknown",
+      "grade": "SAME_RELEASE_COACHING_SLIDERS",
+      "claim": "2K22 guide labels Run Plays Frequency as coaching slider and recommends zero for manual 5-out; preference not universal."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917203-nba-2k22-useful-findings",
+      "author": "jimbo3772 / Operation Sports",
+      "date": "2021-09-18",
+      "version": "NBA2K22",
+      "platform": "community user gameplay, PC not individually proven",
+      "grade": "SAME_RELEASE_PLAYCALLING_DISCUSSION",
+      "claim": "2K22 user's set-play versus freestyle experiences depend on coach focal point, Playbook and PlayTypes."
+    }
+  ],
+  "claims": [
+    "RunPlayTendency is a distinct project-registered Coach candidate with prior evidence; no new Native test conducted.",
+    "External observations support concepts but do not certify CPU playbook selection, substitution, tempo or defense causal formula."
+  ],
+  "conflicts": [
+    "ACE and Offense Playcalling Auto can override or constrain coach defaults; 0 or 95 tips are not physical effect measurements.",
+    "User manual coaching suggestions, ACE automatic actions and CPU-vs-CPU behaviors must remain distinct."
+  ],
+  "metrics": [
+    "same-save same-coach read-only gameplan UI",
+    "two source-native getter snapshots with exact program/build",
+    "separate actual 3D game statistics from settings claims"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_011",
+    "question": "Can two PC22 gameplan read-only Run Plays/RunPlayTendency and native getter reads match same coach and distinguish on-court called-play telemetry without changing ACE?",
+    "write": false,
+    "expected": "UI/raw reconciliation or explicit unknown"
+  },
+  "result": "COACH_SETTING_SOURCE_STUDY_NATIVE_EFFECT_UNVERIFIED_THIS_RUN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "numeric_effect": "UNKNOWN",
+  "original_project_native": "PRIOR_RESEARCH_NOT_RERUN"
+}

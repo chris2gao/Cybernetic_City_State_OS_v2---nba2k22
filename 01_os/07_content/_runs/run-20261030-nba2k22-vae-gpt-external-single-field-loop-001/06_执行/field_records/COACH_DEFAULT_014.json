@@ -1,0 +1,68 @@
+{
+  "field_id": "COACH_DEFAULT_014",
+  "iteration_id": "SWEEP01_FIELD0199",
+  "date": "2026-11-01",
+  "primary_question": "Is raw Tempo a separate PC22 coach strategic field, as opposed to POEOffense2 neutral tempo, Calendar Sim Pace or overall Game Speed?",
+  "candidate": {
+    "key": "Tempo",
+    "offset": "UNKNOWN_NOT_IN_QUEUE",
+    "source": "K04_COACH_AND_PLAYS",
+    "raw_range": null,
+    "ui_mapping": "PROJECT_K04_PARTIAL",
+    "current_game_consumer": "UNKNOWN",
+    "project_native_evidence": "REFERENCED_NOT_RERUN"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "NBA2K22 project DEV29 K04",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC target, NBA2K20–23 research",
+      "platform": "Project registered Coach original research; not new test",
+      "grade": "PROJECT_SOURCE_REGISTRY",
+      "claim": "K04 has existing raw Tempo field but its exact UI semantics/endpoints remain UNKNOWN; explicitly must not infer 0..100."
+    },
+    {
+      "url": "https://www.utplay.com/news/2469--nba-2k22-best-defensive--offensive-settings-next--current-gen",
+      "author": "UTPlay editorial",
+      "date": "2022-era article; exact date unverified",
+      "version": "NBA2K22",
+      "platform": "current and next-gen coaching recommendation, PC raw unknown",
+      "grade": "SAME_RELEASE_COACHING_SLIDERS",
+      "claim": "2K22 guide discusses gameplan and adaptive engine; does NOT prove raw Tempo mapping."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917100-nba-2k22-the-eccentric-edition-realistic-ng-slider-set/page11?postcount=140",
+      "author": "ggsimmonds / Operation Sports",
+      "date": "2022-01-25 (last edited)",
+      "version": "NBA2K22",
+      "platform": "Next-gen user observations",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "2K22 user focuses on separate tactical plans and help defense, without a verified coach Tempo UI label."
+    }
+  ],
+  "claims": [
+    "Tempo is a distinct project-registered Coach candidate with prior evidence; no new Native test conducted.",
+    "External observations support concepts but do not certify CPU playbook selection, substitution, tempo or defense causal formula."
+  ],
+  "conflicts": [
+    "Same word 'tempo' appears in offensive POE, team pace, gameplay speed and fast sim; do not silently equate or ascribe optimum.",
+    "User manual coaching suggestions, ACE automatic actions and CPU-vs-CPU behaviors must remain distinct."
+  ],
+  "metrics": [
+    "same-save same-coach read-only gameplan UI",
+    "two source-native getter snapshots with exact program/build",
+    "separate actual 3D game statistics from settings claims"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_014",
+    "question": "Does current PC22 Coach source getter read an independently stable Tempo field, and can any UI label actually be mapped with a second read, without altering gameplay or assuming percentage?",
+    "write": false,
+    "expected": "UI/raw reconciliation or explicit unknown"
+  },
+  "result": "COACH_SETTING_SOURCE_STUDY_NATIVE_EFFECT_UNVERIFIED_THIS_RUN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "numeric_effect": "UNKNOWN",
+  "original_project_native": "PRIOR_RESEARCH_NOT_RERUN"
+}

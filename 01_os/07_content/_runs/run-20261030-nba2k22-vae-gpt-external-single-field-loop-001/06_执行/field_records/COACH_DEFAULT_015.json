@@ -1,0 +1,68 @@
+{
+  "field_id": "COACH_DEFAULT_015",
+  "iteration_id": "SWEEP01_FIELD0200",
+  "date": "2026-11-01",
+  "primary_question": "Does HelpDefense govern coach help-defense propensity, distinct from per-player onball help and gameplay slider Help Defense Strength?",
+  "candidate": {
+    "key": "HelpDefense",
+    "offset": "UNKNOWN_NOT_IN_QUEUE",
+    "source": "K04_COACH_AND_PLAYS",
+    "raw_range": null,
+    "ui_mapping": "PROJECT_K04_PARTIAL",
+    "current_game_consumer": "UNKNOWN",
+    "project_native_evidence": "REFERENCED_NOT_RERUN"
+  },
+  "sources": [
+    {
+      "url": "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/45cc45cae0550ddcda192a2179ea48509b27f6ee/08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K04_COACH_AND_PLAYS.md",
+      "author": "NBA2K22 project DEV29 K04",
+      "date": "2026-10-21",
+      "version": "NBA2K22 PC target, NBA2K20–23 research",
+      "platform": "Project registered Coach original research; not new test",
+      "grade": "PROJECT_SOURCE_REGISTRY",
+      "claim": "K04 lists Coach HelpDefense 0..100 and warns it is separate from OnballHelp/ScreenHelp and opponent-specific hedge."
+    },
+    {
+      "url": "https://www.utplay.com/news/2469--nba-2k22-best-defensive--offensive-settings-next--current-gen",
+      "author": "UTPlay editorial",
+      "date": "2022-era article; exact date unverified",
+      "version": "NBA2K22",
+      "platform": "current and next-gen coaching recommendation, PC raw unknown",
+      "grade": "SAME_RELEASE_COACHING_SLIDERS",
+      "claim": "2K22 coaching guide offers Help Defense 0 for human control; not demonstrated optimum for CPU-vs-CPU."
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/917100-nba-2k22-the-eccentric-edition-realistic-ng-slider-set/page11?postcount=140",
+      "author": "ggsimmonds / Operation Sports",
+      "date": "2022-01-25 (last edited)",
+      "version": "NBA2K22",
+      "platform": "Next-gen user observations",
+      "grade": "SAME_RELEASE_OTHER_PLATFORM",
+      "claim": "2K22 user adjusts coach help defense between 55/65 by opponent and notes multiple confounders; not controlled test."
+    }
+  ],
+  "claims": [
+    "HelpDefense is a distinct project-registered Coach candidate with prior evidence; no new Native test conducted.",
+    "External observations support concepts but do not certify CPU playbook selection, substitution, tempo or defense causal formula."
+  ],
+  "conflicts": [
+    "Coach setting and gameplay slider affect different layers; third defender rotating cannot be guaranteed by a single numeric slider.",
+    "User manual coaching suggestions, ACE automatic actions and CPU-vs-CPU behaviors must remain distinct."
+  ],
+  "metrics": [
+    "same-save same-coach read-only gameplan UI",
+    "two source-native getter snapshots with exact program/build",
+    "separate actual 3D game statistics from settings claims"
+  ],
+  "REA_question": {
+    "id": "REA_COACH_015",
+    "question": "Can same-team PC22 native Coach HelpDefense and gameplan UI correlate twice, while separately logging gameplay slider and ACE mode, with no help-defense setting writes?",
+    "write": false,
+    "expected": "UI/raw reconciliation or explicit unknown"
+  },
+  "result": "COACH_SETTING_SOURCE_STUDY_NATIVE_EFFECT_UNVERIFIED_THIS_RUN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN",
+  "numeric_effect": "UNKNOWN",
+  "original_project_native": "PRIOR_RESEARCH_NOT_RERUN"
+}
