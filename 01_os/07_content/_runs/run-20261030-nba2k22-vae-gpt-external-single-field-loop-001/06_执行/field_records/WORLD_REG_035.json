@@ -1,0 +1,66 @@
+{
+  "field_id": "WORLD_REG_035",
+  "iteration_id": "SWEEP01_FIELD0134",
+  "question": "Does Morale Effects scale attribute/OVR penalties or bonuses given current morale, independently of how morale is generated?",
+  "candidate": {
+    "key": "settings.injuries_and_morale.morale_effects",
+    "offset": "0x23C",
+    "range": [
+      0,
+      100
+    ],
+    "UI_mapping": "UNKNOWN",
+    "consumer": "UNKNOWN"
+  },
+  "sources": [
+    {
+      "url": "https://realsport101.com/article/nba-2k22-sliders-realistic-settings-gameplay-options-optimized-experience-offense-defense-movement-attributes",
+      "author": "RealSport101",
+      "date": "2021/22",
+      "game": "NBA2K22",
+      "platform": "MyLEAGUE/MyNBA PC exact variant unknown",
+      "claim": "Morale Difficulty/Effects and Chemistry Difficulty/Effects listed separately",
+      "grade": "SAME_RELEASE_UI"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/basketball/nba-2k-basketball/nba-2k-basketball-sliders/918473-armor-sword%E2%80%99s-average-joe%E2%80%9D-nba-2k22-pro-real-fg-ft-custom-sliders-ps5-x-s",
+      "author": "Armor & Sword",
+      "date": "2021-12-14",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Independent slider values for Morale Difficulty/Effects and Chemistry Difficulty/Effects",
+      "grade": "SAME_VERSION_EDIT_OTHER_PLATFORM"
+    },
+    {
+      "url": "https://forums.operationsports.com/forums/forum/dynasty-headquarters/basketball-dynasties/918956-2k22-ps5-mynba-detroit-pistons",
+      "author": "NBA2K22 Pistons dynasty author",
+      "date": "2021/22 season era",
+      "game": "NBA2K22",
+      "platform": "PS5",
+      "claim": "Same sliders listed with different chosen values in long-run franchise",
+      "grade": "SAME_GAME_UNCONTROLLED"
+    }
+  ],
+  "claims": [
+    "Same-release distinct morale/chemistry slider names documented",
+    "No PC22 native address or isolated signed effect established"
+  ],
+  "conflicts": [
+    "State generation difficulty vs state-to-rating effect not the same",
+    "Team chemistry may produce team attribute impact while morale is player-specific",
+    "Coach rotation and user-controlled teams are confounders"
+  ],
+  "metrics": [
+    "attribute/temporary OVR modifier at matched morale level",
+    "persistent state vs transient modifiers recorded separately",
+    "no modifications or cumulative stats recomputation"
+  ],
+  "REA_question": {
+    "id": "REA_WORLD_035",
+    "question": "Does PC22 MyLEAGUE read-only settings candidate 0x23C map exactly to morale_effects UI value, distinct from adjacent effects/difficulty option, in same save/build?",
+    "write": false
+  },
+  "result": "MORALE_CHEMISTRY_NAMED_SAME_RELEASE_NATIVE_UNKNOWN",
+  "game": "NOT_RUN",
+  "REA": "NOT_RUN"
+}
