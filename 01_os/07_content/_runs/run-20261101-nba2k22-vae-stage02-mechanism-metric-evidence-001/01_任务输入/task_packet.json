@@ -1,0 +1,128 @@
+{
+  "schema_version": "nba2k22.vae.stage02.mechanism_metric_evidence_dispatch.v1",
+  "task_id": "NBA2K22-VAE-STAGE02-MECHANISM-METRIC-EVIDENCE-20261101-001",
+  "parent_task_id": "NBA2K22-VANILLA-AI-ENHANCEMENT-20261030-001",
+  "domain": "nba2k22",
+  "collaboration_role": "execution",
+  "assigned_model": "GPT-6",
+  "actual_model": "PENDING_EXECUTION_RECEIPT",
+  "executor_profile": "GPT research/evidence integration; Python deterministic reconciliation for 204 sources; no local game execution",
+  "risk_tier": "T1_standard",
+  "big_task": true,
+  "objective": "Integrate 204 GPT external field dossiers with Gemini REA candidate and independent audit into evidence-graded mechanism/interactions/outcome metrics model and native-first data requirements, without new live game or collector work.",
+  "exact_base_sha": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+  "branch": "task/nba2k22-vae-stage02-mechanism-metric-evidence-20261101",
+  "run_root": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/",
+  "human_decisions": [
+    "MC offline insertion completed; resume VAE Stage02 primary planning.",
+    "Approve Stage02 M1-M5 evidence integration first, separately defer data collection improvement until this contract completes.",
+    "Game player cards have rich advanced and per-game statistics (Human-reported observation); prefer native game-computed values/source before estimating or recomputing, with independent source verification by later data task.",
+    "Only if direct native calculated metric is unavailable and documented may derived formulas be considered; never confuse game-calculated engine-specific metric with estimated proxy.",
+    "No game writes, no new telemetry collectors or finalized D-series DB schema in this task."
+  ],
+  "evidence_sources": [
+    {
+      "kind": "GPT_SWEEP1",
+      "sha": "f3233d285300ac40933b04e8086cf631fad46fbb",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gpt-external-single-field-loop-001/08_结论/completion_pointer.md",
+      "note": "204/204 external field research; not 204 native proofs; 24 metadata gaps, 3 legacy ledger count mismatches, 15 nonstandard conflict keys"
+    },
+    {
+      "kind": "GEMINI_REA_CANDIDATE",
+      "sha": "6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/MECHANISM_RELATIONSHIP_GRAPH_V1.json",
+      "note": "16 nodes, 13 edges, three effects pending gameplay proof; static disassembly provenance contested"
+    },
+    {
+      "kind": "GEMINI_TELEMETRY",
+      "sha": "6f8dfe23c3c3d4d64ee64117620233fcdfcaebfe",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-rea-single-field-loop-001/02_证据/TELEMETRY_VALIDATION_CONTRACTS_V1.json",
+      "note": "Three experimental requirement candidates, not final data schema or verified effects"
+    },
+    {
+      "kind": "INDEPENDENT_REREVIEW",
+      "sha": "08ace12bcf92faaef20634c4701b7d6a03876a34",
+      "path": "01_os/07_content/_runs/run-20261031-nba2k22-vae-sweep5-remediation-independent-rereview-001/08_结论/consolidated_sweep5_independent_rereview.md",
+      "note": "REWORK_REQUIRED_WITH_SUBSTANTIAL_PROGRESS, 3 P0,4 P1,2 P2; do not promote unverified Native claims"
+    },
+    {
+      "kind": "EARLIER_GEMINI",
+      "sha": "803183ca0fd8d5512df602b31c864cadcd72abf8",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-gemini-integrated-loop-001/02_证据/PER_SETTING_MECHANISM_DOSSIER_V3.md",
+      "note": "Research hypotheses and project background, not certified empirical relationships"
+    },
+    {
+      "kind": "SEED_QUEUE",
+      "sha": "6436515330f77c0cc5cc675b521590adeb69c5d4",
+      "blob_sha": "af5567e14e03cd9f7761e396a978311e347d7c17",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_FIELD_INVENTORY_SHARED_V1.json",
+      "note": "99 tendencies, 19 coach fields, 86 world candidate entries; retain exact field_id"
+    },
+    {
+      "kind": "GAME_KNOWLEDGE",
+      "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/",
+      "note": "K01/K02 game box and native stats, K03/K12 tendency, K04 coach tactics, K05 world/sim distinctions"
+    },
+    {
+      "kind": "WORLDDATA_V24_CANDIDATE",
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md",
+      "note": "Read-only 100-table engineering candidate; must not infer all player-card advanced stats exposed or current-save coverage"
+    },
+    {
+      "kind": "PREVIOUS_PLANNER",
+      "sha": "190044b49e1867e07882ad48a94e553233fc571f",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage01-001/01_任务输入/VAE_NEXT_PHASE_MECHANISM_DATA_INTEGRATION_PLAN_20261031.md"
+    },
+    {
+      "kind": "PRIOR_STAGE02_DEFERRED",
+      "sha": "90f42546b2e6d17bd52f28f3e9b26342888a4bcc",
+      "path": "01_os/07_content/_runs/run-20261030-nba2k22-vae-stage02-g01-g03-readonly-001/08_结论/RESOURCE_AVAILABILITY_DEFERRAL_20261030.md",
+      "note": "Historical Codex task deferred; do not reopen or misattribute execution"
+    }
+  ],
+  "allowed_changed_paths": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001/"
+  ],
+  "required_deliverables": [
+    "02_证据/DUAL_STREAM_SOURCE_RECONCILIATION.md",
+    "06_执行/field_evidence_matrix.json (exact 204 IDs, stable order)",
+    "06_执行/mechanism_metric_links.json (graded directed links, no fabricated edges)",
+    "06_执行/metric_native_first_requirements.json (metric semantics, native source-first eligibility)",
+    "06_执行/data_source_gap_matrix.json (game UI vs reader vs derived vs missing)",
+    "06_执行/pilot_experiment_contracts.json (three bounded mechanism families)",
+    "07_测试执行/verification_receipt.json (deterministic counted/provenance checks)",
+    "08_结论/completion_pointer.md (scope, SHA, audit caveats, follow-on data task boundaries)",
+    "run.yml updated within Run"
+  ],
+  "minimum_work_unit": "Action/Setting → observable game behavior → metric(s) → native game-stat discovery candidate → current source/readability → evidence grade → counterexamples → experiment",
+  "required_gates": [
+    "M01_204_ID_UNIQUE_AND_ORDER",
+    "M02_GPT_GEMINI_CONFLICT_AUDIT",
+    "M03_NATIVE_EVIDENCE_NOT_PROMOTED",
+    "M04_METRIC_NATIVE_FIRST",
+    "M05_STAT_GRAIN_AND_ENGINE_MODE",
+    "M06_SOURCE_COVERAGE_AND_GAP_HONESTY",
+    "M07_EXPERIMENT_COMPARABILITY_AND_FALSIFIABILITY",
+    "M08_NO_COLLECTOR_GAME_WRITE_OR_NEW_DDL",
+    "M09_REMOTE_GIT_SCOPE_READBACK"
+  ],
+  "scope_exclusions": [
+    "Modify NBA master or Core",
+    "Run game, attach REA/Frida, change settings, seasons, saves",
+    "Create/alter WorldData production collector, SQL schema, D2/D3/D4 implementation",
+    "Compute already-native game calculated stats by default",
+    "Call unreviewed Gemini heuristic a proven Native causal relation",
+    "Launch Sweep2 or rerun all Sweep1",
+    "Claim previous deferred Codex Stage02 work completed",
+    "Auto-merge, force-push, or publish production gameplay optimizer"
+  ],
+  "follow_on_after_review": "Separate future D1-D5/WorldData data discovery/reader gap closure task; native player-card per-game advanced metrics first; only after independently accepted mechanism-metric demand map.",
+  "publisher": {
+    "publication_transport": "github_api_connector",
+    "source_branch_publication": "task_scope_default",
+    "master_integration_confirmation": "not_requested"
+  },
+  "independent_review": "New independent_review fork from common baseline, fixed execution HEAD; Human decides formal acceptance and later data task."
+}
