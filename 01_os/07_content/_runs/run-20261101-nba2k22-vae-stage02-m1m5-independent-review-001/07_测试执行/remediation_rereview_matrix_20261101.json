@@ -1,0 +1,78 @@
+{
+  "schema_version": "nba2k22.vae.stage02.m1m5.targeted_rereview.v1",
+  "review_task": "NBA2K22-VAE-STAGE02-M1M5-INDEPENDENT-REVIEW-20261101-001",
+  "role": "independent_review",
+  "fixed_remediation_sha": "c812042e087f4c7000d27ac42d3839741039c188",
+  "prior_candidate_sha": "cf95f2451bbe5722b6d946434078c515564252a9",
+  "prior_independent_audit_sha": "553ee3af68dba5cd42e52969e739ab0748989faa",
+  "verdict": "PASS_REQUIREMENT_BASELINE_WITH_RESEARCH_GAPS",
+  "human_review_threshold": "Block only material logic/numerical/source misclassification, wrong join/field identity, operational safety violation; minor phrasing and future UNKNOWN are nonblocking",
+  "findings": [
+    {
+      "id": "S02-P0-01",
+      "outcome": "CLOSED",
+      "evidence": "16 v24 old-reader metric rows now correctly split into 7 all-null schema only, 2 opponent JOIN/source discovery, 1 existing derived points, 4 materialized research fixture-only player stats, 1 period fixture, 1 mixed-attribute field-level source; each has status and source limitations.",
+      "remaining": "No new live Native proof claimed"
+    },
+    {
+      "id": "S02-P0-02",
+      "outcome": "CLOSED",
+      "evidence": "PLAYER_PTS explicitly retains fixed v24 26400 observed derived values and original formula 2*fg_made+three_made+ft_made; separate game-native provenance remains UNKNOWN.",
+      "remaining": "Future Native discovery; not stage02 blocker"
+    },
+    {
+      "id": "S02-P1-03",
+      "outcome": "CLOSED",
+      "evidence": "15/15 OBSERVABLE_METRIC nodes have matching typed metric requirement IDs from 38-item inventory. All 3 representative sample traces have true contiguous edge IDs and target metric IDs.",
+      "remaining": "Causal effects still PENDING_GAMEPLAY_VALIDATION"
+    },
+    {
+      "id": "S02-P1-04",
+      "outcome": "CLOSED",
+      "evidence": "Source GPT audit fixed SHA f3233d... independently re-read: metadata gaps 24 items / 10 fields, ledger source discrepancies 3 fields, 15 conflict-key-absent dossiers, 51 no direct native IDs. New anomaly index has 23 affected field IDs and 204 dossier records have queryable reference structure.",
+      "remaining": "Historical source quality flaws preserved, not silently corrected or promoted"
+    },
+    {
+      "id": "S02-P2-05",
+      "outcome": "CLOSED",
+      "evidence": "Old prepublication 7340552... status and prior published cf95... separated from new c812... remote HEAD. Exact compare cf95..c812 returns 4 commits, 11 changed paths all in permitted execution Run.",
+      "remaining": "Immutable commit cannot contain own eventual SHA; remote postpublication verification is sufficient"
+    },
+    {
+      "id": "S02-P2-06",
+      "outcome": "CLOSED",
+      "evidence": "12/12 isolated graph nodes explicitly tagged UNLINKED_PROSPECTIVE_NODE; no invented edge. 68 nodes and 50 edges retained.",
+      "remaining": "Future exploration may link them if evidence emerges"
+    }
+  ],
+  "cross_checks": {
+    "metric_count": 38,
+    "field_count": 204,
+    "graph_node_count": 68,
+    "graph_edge_count": 50,
+    "experiment_count": 3,
+    "old16_status_distribution": {
+      "all_null_schema": 7,
+      "opponent_join_or_source_required": 2,
+      "derived_player_points": 1,
+      "player_research_fixture": 4,
+      "period_research_fixture": 1,
+      "mixed_attribute_field": 1
+    },
+    "validated_graph_bundle_count": 15,
+    "trace_count": 3,
+    "anomaly_unique_field_count": 23,
+    "scope_changed_files": 11,
+    "scope_all_permitted": true
+  },
+  "nonblocking_observation": "M3 specific_game_native_status and M4 game_native_exact_field_exists use different UNKNOWN-only taxonomies, but both remain unverified and reader_status aligns. Not a data-contract error for Stage02 scope; defer normalization until actual D-series integration if needed.",
+  "not_validated": [
+    "Current live game or MC save",
+    "Original PE/Native Getter authenticity",
+    "Native player-card advanced UI field by field",
+    "Controlled causal effects in real games",
+    "Physical unified collector/SQL implementation"
+  ],
+  "new_authorization_granted": false,
+  "master_merge_performed": false
+}
