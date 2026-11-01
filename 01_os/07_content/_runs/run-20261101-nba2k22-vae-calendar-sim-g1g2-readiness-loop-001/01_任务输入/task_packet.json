@@ -11,13 +11,15 @@
   "source_parent_task": "NBA2K22-VAE-NATIVE-METRIC-HARDENING-S0-20261101-001",
   "stage": "development_only_S0_to_S1_readiness",
   "risk_tier": "T2_semantic; game process access or setting writes require separate Human authorization",
-  "objective": "Prepare actual Calendar Sim G1 automatic post-simulation capture trigger and validated SQL readback, plus G2 setting-to-observation before/after evidence contract, without touching game settings, original saves or starting watchers.",
+  "objective": "On Human's explicit one-click invocation, reuse WorldData v24 full registered Reader/SOURCES collection to save-local SQLite, verify committed source units, and run deterministic versioned SQL exports for VAE; plus G2 setting/effect evidence contract. No resident watcher, autonomous polling or game operation.",
   "human_decisions": [
     "Calendar Sim is the only first-phase effects evaluation standard; 3D matches are segregated observations, not pooled for causal inference.",
     "Two readiness gates must both be satisfied before Human advances calendar for formal VAE verification: G1 new-game automated capture persisted and SQL queryable, G2 settings and behavior comparison contracts with S0 and REA readback readiness.",
     "Historical games can support baseline and design but cannot demonstrate causal effect of future setting changes.",
     "Before actual setting changes, Human authorization is needed, each change must have REA readback; this task does not perform changes.",
-    "Develop iteratively via evidence-driven loop; independent review deferred to series unless load-bearing adoption or protected integration."
+    "Develop iteratively via evidence-driven loop; independent review deferred to series unless load-bearing adoption or protected integration.",
+    "Human clarified automated means manually initiated ONE-SHOT local script that performs all 20 registered WorldData source families, database receipts, fixed VAE SQL extracts and manifests without per-run model tokens; NOT automatic background game polling.",
+    "WorldData v24 first-stage architecture is mandatory: save-bound one DB, versioned schema/field dictionary, ordered 20 SOURCES families (16 ordinary/4 annual), source-unit hashes and append-only history, atomic receipts/recovery and allowlisted typed query/export."
   ],
   "fixed_sources": [
     {
@@ -49,15 +51,18 @@
     }
   ],
   "scope": [
-    "G1 create a minimal opt-in orchestrator or one-shot/event-debounced trigger integrated with existing refresh-world; must detect actual newly finalized Calendar Sim games and game date/stage, never equate date advance to final game alone; no duplicate output on unchanged game state.",
+    "G1 create the smallest explicit Human-invoked ONE-SHOT wrapper on existing refresh-world auto; detect only newly finalized Calendar Sim games for reporting/dedup; no background watcher or autonomous process polling.",
     "G1 verify read-only Native-process binding and source game identity; ensure DB save_id/season/game/team/player/mode/source-unit provenance, latest capture, idempotent retries, freshness, content completeness, SQL typed query and invariants.",
-    "G1 provide opt-in entrypoint and dry-run/replay tests; never install/start resident service/scheduler or poll actual game without Human permission. Any test needing live process must be separately authorized.",
+    "G1 provide reusable local script+CLI/config with dry-run/replay and return statuses; a single Human invocation automatically handles all applicable registered Reader families, source receipts and versioned standard VAE exports.",
     "G2 build settings-to-game-observation contract: exact stable setting IDs, original values, proposed changes, post-REA readback placeholders, baseline source units, treatment vs comparison Calendar Sim game blocks, opponent/team/roster/injury/normalize/quarter-length/calendar-period controls, confidence and counterexamples.",
     "G2 add query-level evidence manifest and validation-only export joining setting snapshots, selected game boxes and metric sources. No auto-tuning production rules.",
     "G2 first Pilot recommend smallest feasible group with truly available data (e.g. Shot/Coach setting to FGA/shot distribution); never call EXPERIMENTAL_POSSESSION_LOAD_INDEX real Touches, nor assume Coach ID for Run Plays without registry proof.",
     "Retain existing 38 IDs, append-only history and existing WorldData 20 Reader architecture; no parallel database or hidden Potential reads.",
     "Mark readiness separately at code/static/mock, live native, committed DB/SQL, automatic trigger, experiment protocol, and future setting mutation; G1 READY only with actual confirmed runtime acquisition of new game after progress or equivalent authoritative approved read-only real in-place test.",
-    "Use real evidence for pilot coverage and game-mode distinction: CALENDAR_SIM only; mark 3D separate."
+    "Use real evidence for pilot coverage and game-mode distinction: CALENDAR_SIM only; mark 3D separate.",
+    "Use the first-stage WordData v24 SOURCES order, 16 ordinary/4 annual refresh cadence, save binding and source-unit ledger; full collection means all registered sources, not unverified total Native-game coverage.",
+    "Deterministic local extraction profiles: calendar_sim_completed_game_player_team_metrics; vae_setting_context_snapshot; vae_experiment_evidence_input. Manifest records schema/query/field revisions, binding, mode, source units, freshness, completeness, counts/hashes; no LLM needed at execution time.",
+    "Full registered source refresh is a series of independently atomic units, not a global simultaneous snapshot; only publish validated complete VAE output manifest if necessary units and joins are consistent."
   ],
   "allow_write_paths": [
     "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**",
@@ -78,11 +83,11 @@
     },
     {
       "code": "A1",
-      "goal": "Implement nonresident opt-in detection/triggers for newly finalized calendar games and one-shot integrated WorldData refresh; no actual game execution."
+      "goal": "Implement one manually invoked nonresident ONE-SHOT wrapper on refresh-world auto with 20 registered source family cadence, binding checks, failure/retry, new-completed-game detection and idempotent VAE reporting. Do not design background watchers."
     },
     {
       "code": "A2",
-      "goal": "Validate staging SQLite deduplication, source identity, monotonic observed_at, freshness, changed-game-only capture, same-game SQL queries, incomplete fail-closed states."
+      "goal": "Validate source-unit bound SQLite facts, historical integrity and freshness; deterministic parameterized/allowlisted SQL extraction to three versioned VAE datasets and manifest with counts/hashes, fail-closed on incomplete required units."
     },
     {
       "code": "A3",
@@ -99,7 +104,9 @@
     "Requires pre/post setting snapshots and readable REA settings interface, experiment ID, exact canonical field IDs, 3D vs Calendar Sim mode; no causal claim without new simulated games.",
     "Tests demonstrate duplicate unit handling, DNP/NULL, game completion status, stale PID/save context, scheduled refresh interruption, source inconsistency and game progress mid-capture.",
     "Autonomous runtime activity not deployed; future Human permission required for live observer activation and real REA change.",
-    "Per pilot G1/G2 separate statuses; both actual READY only after all required evidence, not same label for S0 design readiness."
+    "Per pilot G1/G2 separate statuses; both actual READY only after all required evidence, not same label for S0 design readiness.",
+    "One local Human-triggered invocation performs full applicable registered WorldData source-family refresh and deterministic VAE dataset extraction, with no model calls or permanent watcher.",
+    "All source-identity/provenance/save/history/annual-cadence/query-access contracts and existing schema preserved; standard VAE datasets reproduce from SQLite and do not become a second datastore."
   ],
   "deliverables": [
     "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/02_证据/g1g2_requirement_to_evidence_matrix.json",
@@ -109,12 +116,29 @@
     "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/06_执行/loop_iteration_log.md",
     "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/07_测试执行/g1g2_replay_negative_verification.json",
     "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/08_结论/completion_pointer.md",
-    "Actual code/tests under existing world_data_prototype/"
+    "Actual code/tests under existing world_data_prototype/",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/01_任务输入/worlddata_architecture_one_click_addendum.md",
+    "Versioned local one-shot executable or CLI subcommand, fixed SQL/query profiles and tests in existing world_data_prototype/ tree"
   ],
   "review_schedule": {
     "review_mode": "deferred_to_series",
     "series_id": "NBA2K22-VAE-SETTING-GAME-DATA-FEEDBACK",
     "must_review_before": "controlled_live_setting_mutation_or_production_auto_tuning_or_master_integration"
   },
-  "stop": "When bounded programmatic readiness is implemented/tested; live test requiring gameplay/observer authorization explicitly marked NOT_RUN and handed to Human, without blocking other safe work."
+  "stop": "When bounded programmatic readiness is implemented/tested; live test requiring gameplay/observer authorization explicitly marked NOT_RUN and handed to Human, without blocking other safe work.",
+  "architecture_clarification": {
+    "source": "Human 2026-11-01 direct instruction, WorldData v24 BASELINE_HANDOFF and current implementation",
+    "authoritative_addendum": "01_os/07_content/_runs/run-20261101-nba2k22-vae-calendar-sim-g1g2-readiness-loop-001/01_任务输入/worlddata_architecture_one_click_addendum.md",
+    "full_scope": "20 currently registered Reader families under refresh.py:SOURCES; not every unknown game field",
+    "trigger": "EXPLICIT_HUMAN_LOCAL_ONE_SHOT",
+    "automatic_backend": "registered Reader -> local SQLite -> verified source units -> deterministic query/export manifests",
+    "background_monitor": "NOT_REQUESTED_NOT_AUTHORIZED",
+    "data_products": [
+      "calendar_sim_completed_game_player_team_metrics",
+      "vae_setting_context_snapshot",
+      "vae_experiment_evidence_input"
+    ],
+    "history": "append_only_save_local",
+    "no_model_tokens_per_collection": true
+  }
 }
