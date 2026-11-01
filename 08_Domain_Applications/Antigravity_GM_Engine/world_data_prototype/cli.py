@@ -73,6 +73,8 @@ def main():
     live=sub.add_parser('capture-live');live.add_argument('pid',type=int);live.add_argument('save_directory');live.add_argument('loaded_filename');live.add_argument('new_output_directory');live.add_argument('--game-index',type=int,default=0)
     from refresh import SOURCES
     refresh=sub.add_parser('refresh-world');refresh.add_argument('pid',type=pid_argument);refresh.add_argument('save_directory');refresh.add_argument('loaded_filename');refresh.add_argument('new_output_directory');refresh.add_argument('--families',nargs='+',choices=list(SOURCES));refresh.add_argument('--resume-report');refresh.add_argument('--data-updated',action='store_true')
+    cal_trig=sub.add_parser('calendar-sim-trigger');cal_trig.add_argument('save_directory');cal_trig.add_argument('loaded_filename');cal_trig.add_argument('--pid',type=pid_argument,default='auto');cal_trig.add_argument('--output-directory');cal_trig.add_argument('--force',action='store_true')
+    cal_insp=sub.add_parser('calendar-sim-inspect');cal_insp.add_argument('save_directory');cal_insp.add_argument('loaded_filename');cal_insp.add_argument('--pid',type=pid_argument,default='auto')
     session=sub.add_parser('reconnect-game');session.add_argument('save_directory');session.add_argument('loaded_filename');session.add_argument('new_output_directory');session.add_argument('--pid',type=pid_argument,default=None)
     saved_upgrade=sub.add_parser('upgrade-save');saved_upgrade.add_argument('save_directory');saved_upgrade.add_argument('loaded_filename')
     season_capture=sub.add_parser('capture-season');season_capture.add_argument('pid',type=int);season_capture.add_argument('save_directory');season_capture.add_argument('loaded_filename');season_capture.add_argument('new_output_directory');season_capture.add_argument('--recheck-frozen',action='store_true')
@@ -213,6 +215,16 @@ def dispatch(args):
         except RefreshFailed as error:
             print(json.dumps(error.report,ensure_ascii=False));raise SystemExit(2) from None
         print(json.dumps(result,ensure_ascii=False));return
+    if args.action=='calendar-sim-trigger':
+        from calendar_sim_orchestrator import CalendarSimOrchestrator
+        orchestrator=CalendarSimOrchestrator(args.save_directory,args.loaded_filename)
+        res=orchestrator.trigger_capture_if_new_game(reader_or_pid=args.pid,output_directory=args.output_directory,force=args.force)
+        print(json.dumps(res,ensure_ascii=False,indent=2));return
+    if args.action=='calendar-sim-inspect':
+        from calendar_sim_orchestrator import CalendarSimOrchestrator
+        orchestrator=CalendarSimOrchestrator(args.save_directory,args.loaded_filename)
+        res=orchestrator.inspect_calendar_progress(reader_or_pid=args.pid)
+        print(json.dumps(res,ensure_ascii=False,indent=2));return
     if args.action=='reconnect-game':
         from process_session import reconnect
         print(json.dumps(reconnect(args.save_directory,args.loaded_filename,args.new_output_directory,pid=args.pid),ensure_ascii=False));return
