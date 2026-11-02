@@ -1,8 +1,8 @@
 {
   "schema_version": "nba2k22.rea.bulk_executor.test_receipts.v1",
   "task_id": "NBA2K22-REA-DETERMINISTIC-BULK-EXECUTOR-20261101-001",
-  "execution_timestamp": "2026-11-01T23:50:00Z",
-  "remediation_round": 1,
+  "execution_timestamp": "2026-11-02T02:23:27Z",
+  "remediation_round": 2,
   "test_environment": {
     "os": "Windows 10/Server x64",
     "python": "3.14.6",
@@ -12,13 +12,13 @@
     "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
   },
   "overall_summary": {
-    "total_tests_executed": 54,
-    "bulk_executor_specific_tests": 15,
+    "total_tests_executed": 60,
+    "bulk_executor_specific_tests": 21,
     "regression_tests": 39,
-    "passed": 54,
+    "passed": 60,
     "failed": 0,
     "skipped": 0,
-    "total_duration_seconds": 7.59,
+    "total_duration_seconds": 10.16,
     "status": "ALL_TESTS_PASSED"
   },
   "verification_plan_gate_receipts": [
@@ -104,13 +104,49 @@
       "gate_id": "GATE_14_CHECKPOINT014_TRANSPORT_FAIL_CLOSED",
       "test_name": "test_rea_chunk_transport_adapter_default_prohibits_live",
       "status": "PASSED",
-      "evidence": "ReaChunkTransportAdapter verified to raise PermissionError('LIVE_MUTATION_NOT_AUTHORIZED') by default, preventing unauthorized live process attachment."
+      "evidence": "ReaChunkTransportAdapter verified to raise PermissionError('LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE') by default, preventing unauthorized live process attachment."
     },
     {
       "gate_id": "GATE_15_BENCHMARK_AUTO_GENERATION",
       "test_name": "test_10k_synthetic_benchmark_auto_generation",
       "status": "PASSED",
       "evidence": "10,000-item synthetic benchmark automatically executed and generated from pytest; verified 3-way separation of mock timings, session overhead estimates, and live native projections."
+    },
+    {
+      "gate_id": "GATE_R2_G1_DEFAULT_DENIAL",
+      "test_name": "test_gate_g1_default_denial",
+      "status": "PASSED",
+      "evidence": "Default invocation without authorization raises PermissionError('LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE') fail-closed."
+    },
+    {
+      "gate_id": "GATE_R2_G2_E2E_FAKE_TRANSPORT",
+      "test_name": "test_gate_g2_e2e_fake_transport",
+      "status": "PASSED",
+      "evidence": "End-to-end execution of mixed player and coach batch across teams with pluggable fake transport producing valid receipts and conservation."
+    },
+    {
+      "gate_id": "GATE_R2_G3_PROTOCOL_NEGATIVE_HANDLING",
+      "test_name": "test_gate_g3_protocol_negative_handling",
+      "status": "PASSED",
+      "evidence": "Verified protocol validation catches non-dict responses, error envelopes, wrong kind, mismatched chunk_id/digests, and duplicate receipts."
+    },
+    {
+      "gate_id": "GATE_R2_G4_NODE_VM_NATIVE_CONTRACTS",
+      "test_name": "test_gate_g4_node_vm_native_contracts_and_fault_injections",
+      "status": "PASSED",
+      "evidence": "Verified synthetic Node VM executes Frida chunk script with common.js, gui_once.js, FNV-32 signatures, vtable, 156-byte snapshot check, and fault injections."
+    },
+    {
+      "gate_id": "GATE_R2_G5_RECOVERY_CRASH_WINDOW",
+      "test_name": "test_gate_g5_recovery_and_journal_fault_injection",
+      "status": "PASSED",
+      "evidence": "Simulated process crash before receipts, verified startup recovery marks claim UNKNOWN and locks resource; verified corrupt lock ledger and reused intent ID detection."
+    },
+    {
+      "gate_id": "GATE_R2_G6_BENCHMARK_DYNAMIC_AGGREGATION",
+      "test_name": "test_gate_g6_benchmark_dynamic_aggregation",
+      "status": "PASSED",
+      "evidence": "Verified benchmark dynamically computes outcome_conservation from actual receipt items and labels metrics clearly across 3 tiers."
     }
   ],
   "regression_suite": [
@@ -118,6 +154,6 @@
     {"file": "test_role_capabilities.py", "tests": 4, "status": "PASSED"},
     {"file": "test_player_stats.py", "tests": 9, "status": "PASSED"},
     {"file": "test_player_editor_read.py", "tests": 10, "status": "PASSED"},
-    {"file": "test_bulk_executor.py", "tests": 15, "status": "PASSED"}
+    {"file": "test_bulk_executor.py", "tests": 21, "status": "PASSED"}
   ]
 }

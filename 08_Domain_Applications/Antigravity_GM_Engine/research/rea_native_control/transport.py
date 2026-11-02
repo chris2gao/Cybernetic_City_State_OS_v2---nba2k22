@@ -29,6 +29,6 @@ class ReaCliTransport:
   if r.returncode or not (output/'evidence.json').exists():return {'outcome':'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY','runtime_directory':str(output),'runner_exit':r.returncode}
   raw=json.loads((output/'evidence.json').read_text(encoding='utf-8-sig'));n=raw['normalized_result'];messages=n.get('messages',[])
   if n.get('cleanup_error') is not None or any(m['type']=='error' for m in messages):return {'outcome':'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY','evidence_id':raw.get('evidence_id'),'runtime_directory':str(output)}
-  results=[m['payload'] for m in messages if m['type']=='send' and m['payload'].get('kind')=='native-control-result']
+  results=[m['payload'] for m in messages if m['type']=='send' and m['payload'].get('kind') in ('native-control-result','chunk-execution-result')]
   if len(results)!=1:return {'outcome':'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY','evidence_id':raw.get('evidence_id'),'runtime_directory':str(output),'receipt_count':len(results)}
   return results[0]|{'evidence_id':raw.get('evidence_id'),'runtime_directory':str(output)}
