@@ -72,6 +72,19 @@ def resolve_canonical_action(action_id: str) -> str:
     raise ValueError(f"VALIDATION_ERROR: unrecognized action_id '{action_id}' or UNSUPPORTED_DOMAIN. Must be one of {sorted(CANONICAL_ACTIONS.keys())}")
 
 
+def get_field_family(item: 'BulkIntentItem', catalog: Dict[str, Any]) -> str:
+    c_act = resolve_canonical_action(item.action_id)
+    if c_act == 'COACH_SET_KNOWN_CURRENT_SETTINGS' or item.player_id is None:
+        return 'coach'
+    if item.field_id in catalog.get('tendencies', {}):
+        return 'tendencies'
+    if item.field_id in catalog.get('attributes', {}):
+        return 'attributes'
+    if c_act in CANONICAL_ACTIONS:
+        return CANONICAL_ACTIONS[c_act]
+    return 'unknown'
+
+
 def canonical_encode(obj: Any) -> str:
     """Deterministic JSON string encoding."""
     return json.dumps(obj, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
@@ -86,6 +99,19 @@ def sha256_digest(obj: Any) -> str:
     else:
         content = canonical_encode(obj).encode('utf-8')
     return hashlib.sha256(content).hexdigest()
+
+
+def atomic_write_json(path: Path | str, data: Any):
+    """Atomically writes data as canonical JSON to path via temp file on same volume and os.replace."""
+    p = Path(path).resolve()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = p.with_suffix(f".tmp.{os.getpid()}.{time.time_ns()}")
+    payload = canonical_encode(data) if not isinstance(data, str) else data
+    with open(tmp_path, 'w', encoding='utf-8') as f:
+        f.write(payload)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp_path, p)
 
 
 def get_resource_key(team_id: int, player_id: Optional[int], field_id: str) -> str:
@@ -187,6 +213,14 @@ class BulkBatch:
     header: BulkBatchHeader
     intents: Tuple[BulkIntentItem, ...]
     plan_digest: str = ""
+
+    def __post_init__(self):
+        if not self.plan_digest:
+            d = sha256_digest({
+                'header': asdict(self.header),
+                'intents': [asdict(i) for i in self.intents]
+            })
+            object.__setattr__(self, 'plan_digest', d)
 
     @classmethod
     def load(cls, file_path: Path | str) -> 'BulkBatch':
@@ -323,11 +357,32 @@ class BulkBatchPlanner:
             else:
                 entity_field_targets[entity_key] = (item.value, item.intent_id)
 
-        # Dependency check
+        # Dependency check and cycle detection (DEP_CYCLE)
         for item in batch.intents:
             for dep in item.dependencies:
                 if dep not in seen_intents:
                     issues.append(f"MISSING_DEPENDENCY: '{item.intent_id}' depends on non-existent '{dep}'")
+
+        dep_graph: Dict[str, List[str]] = {it.intent_id: list(it.dependencies) for it in batch.intents}
+        color: Dict[str, int] = {it.intent_id: 0 for it in batch.intents}
+        cycle_detected = []
+
+        def dfs(node: str, path: List[str]):
+            color[node] = 1
+            for nbr in dep_graph.get(node, []):
+                if nbr in color:
+                    if color[nbr] == 1:
+                        cycle_detected.append(f"{' -> '.join(path + [nbr])}")
+                    elif color[nbr] == 0:
+                        dfs(nbr, path + [nbr])
+            color[node] = 2
+
+        for it in batch.intents:
+            if color[it.intent_id] == 0:
+                dfs(it.intent_id, [it.intent_id])
+
+        if cycle_detected:
+            issues.append(f"DEPENDENCY_CYCLE: DEP_CYCLE detected involving cycle: {cycle_detected[0]}")
 
         return issues
 
@@ -336,25 +391,25 @@ class BulkBatchPlanner:
         if issues:
             raise ValueError(f"Batch validation failed with {len(issues)} issues: {issues[:3]}")
 
-        # Group by (save_instance_id, team_id)
-        groups: Dict[Tuple[str, int], List[BulkIntentItem]] = {}
+        # Partition by (save_instance_id, team_id, canonical_action, field_family)
+        groups: Dict[Tuple[str, int, str, str], List[BulkIntentItem]] = {}
         for item in batch.intents:
-            key = (batch.header.save_instance_id, item.team_id)
+            c_act = resolve_canonical_action(item.action_id)
+            fam = get_field_family(item, self.catalog)
+            key = (batch.header.save_instance_id, item.team_id, c_act, fam)
             groups.setdefault(key, []).append(item)
 
-        chunks = []
+        raw_chunks: List[PlannedChunk] = []
         chunk_counter = 1
-        for (save_id, team_id) in sorted(groups.keys()):
-            group_intents = groups[(save_id, team_id)]
+        for (save_id, team_id, c_act, fam) in sorted(groups.keys()):
+            group_intents = groups[(save_id, team_id, c_act, fam)]
             for i in range(0, len(group_intents), max_chunk_size):
                 chunk_slice = tuple(group_intents[i:i + max_chunk_size])
                 call_count = len(chunk_slice) * 3
                 sub_size = max_call_budget // 3 if call_count > max_call_budget else len(chunk_slice)
                 for j in range(0, len(chunk_slice), sub_size):
                     sub_slice = chunk_slice[j:j + sub_size]
-                    actions = {resolve_canonical_action(it.action_id) for it in sub_slice}
-                    primary_action = sub_slice[0].action_id if len(actions) == 1 else 'PLAYER_PATCH_TENDENCIES'
-                    action_slug = resolve_canonical_action(primary_action).lower().replace('_', '-')
+                    action_slug = c_act.lower().replace('_', '-')
                     cid = f"chunk-{chunk_counter:04d}-team-{team_id:02d}-{action_slug}"
                     chunk_counter += 1
                     cdigest = sha256_digest({
@@ -362,14 +417,14 @@ class BulkBatchPlanner:
                         'save_instance_id': save_id,
                         'chunk_id': cid,
                         'team_id': team_id,
-                        'action_id': primary_action,
+                        'action_id': c_act,
                         'plan_digest': batch.plan_digest,
                         'intents': [asdict(item) for item in sub_slice]
                     })
-                    chunks.append(PlannedChunk(
+                    raw_chunks.append(PlannedChunk(
                         chunk_id=cid,
                         team_id=team_id,
-                        action_id=primary_action,
+                        action_id=c_act,
                         intents=sub_slice,
                         estimated_call_count=len(sub_slice) * 3,
                         estimated_duration_ms=min(max_duration_ms, 500 + len(sub_slice) * 20),
@@ -378,7 +433,36 @@ class BulkBatchPlanner:
                         plan_digest=batch.plan_digest,
                         chunk_digest=cdigest
                     ))
-        return tuple(chunks)
+
+        # Order chunks respecting inter-chunk dependencies
+        intent_to_chunk_idx = {it.intent_id: idx for idx, ch in enumerate(raw_chunks) for it in ch.intents}
+        chunk_in_degree = [0] * len(raw_chunks)
+        chunk_graph: Dict[int, Set[int]] = {i: set() for i in range(len(raw_chunks))}
+
+        for ch_idx, ch in enumerate(raw_chunks):
+            for it in ch.intents:
+                for dep in it.dependencies:
+                    dep_ch_idx = intent_to_chunk_idx.get(dep)
+                    if dep_ch_idx is not None and dep_ch_idx != ch_idx:
+                        if ch_idx not in chunk_graph[dep_ch_idx]:
+                            chunk_graph[dep_ch_idx].add(ch_idx)
+                            chunk_in_degree[ch_idx] += 1
+
+        ready = [i for i in range(len(raw_chunks)) if chunk_in_degree[i] == 0]
+        ordered_indices = []
+        while ready:
+            curr = ready.pop(0)
+            ordered_indices.append(curr)
+            for nxt in sorted(chunk_graph[curr]):
+                chunk_in_degree[nxt] -= 1
+                if chunk_in_degree[nxt] == 0:
+                    ready.append(nxt)
+
+        if len(ordered_indices) != len(raw_chunks):
+            raise ValueError("DEPENDENCY_CYCLE: DEP_CYCLE detected across chunks")
+
+        ordered_chunks = [raw_chunks[i] for i in ordered_indices]
+        return tuple(ordered_chunks)
 
 
 class BulkFridaScriptCompiler:
@@ -802,7 +886,7 @@ class ReaChunkTransportAdapter:
                 "live writes remain fail-closed"
             )
         raise PermissionError(
-            "LIVE_MUTATION_NOT_AUTHORIZED: live game execution is disabled by default; "
+            "LIVE_MUTATION_NOT_AUTHORIZED: LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution is disabled by default; "
             "requires explicit external verifier"
         )
 
@@ -835,14 +919,46 @@ class ExecutionJournal:
             if claim.get('state') == 'STARTED':
                 claim['state'] = 'UNKNOWN_EXECUTION_OUTCOME'
                 claim['interrupted_at'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
-                claim_path.write_text(canonical_encode(claim), encoding='utf-8')
+                atomic_write_json(claim_path, claim)
                 for item in claim.get('intents', []):
                     if item.get('intent_id') not in completed_intents:
                         self.lock_resource(item['resource_key'], item['intent_id'])
 
     def claim_chunk(self, chunk: PlannedChunk):
-        claim_file = self.claims_dir / f"{chunk.chunk_id}.json"
+        claim_identity = sha256_digest({
+            'batch_id': chunk.batch_id,
+            'save_instance_id': chunk.save_instance_id,
+            'plan_digest': chunk.plan_digest,
+            'chunk_digest': chunk.chunk_digest,
+            'action_id': chunk.action_id,
+            'intents': [
+                {
+                    'intent_id': it.intent_id,
+                    'team_id': it.team_id,
+                    'player_id': it.player_id,
+                    'field_id': it.field_id,
+                    'expected_before': it.expected_before,
+                    'value': it.value,
+                }
+                for it in chunk.intents
+            ]
+        })
 
+        # Claim file name based on chunk_id and claim_identity to prevent collision across different plans
+        claim_file = self.claims_dir / f"claim_{chunk.chunk_id}_{claim_identity[:12]}.json"
+        legacy_file = self.claims_dir / f"{chunk.chunk_id}.json"
+        target_file = legacy_file if legacy_file.exists() else claim_file
+
+        for existing_path in self.claims_dir.glob('*.json'):
+            try:
+                existing = json.loads(existing_path.read_text(encoding='utf-8'))
+                if existing.get('plan_digest') == chunk.plan_digest and existing.get('chunk_id') == chunk.chunk_id:
+                    if existing.get('claim_identity') and existing.get('claim_identity') != claim_identity:
+                        raise ValueError(f"DUPLICATE_CHUNK_ID_DIFFERENT_PLAN: chunk '{chunk.chunk_id}' in plan '{chunk.plan_digest}' already claimed with different payload")
+            except (json.JSONDecodeError, KeyError):
+                raise RuntimeError(f"CORRUPT_LOCK_LEDGER: existing claim file {existing_path.name} is corrupted")
+
+        # Verify cross-claim and cross-receipt payload immutability for all items in chunk
         for item in chunk.intents:
             res_key = get_resource_key(item.team_id, item.player_id, item.field_id)
             for existing_claim_file in self.claims_dir.glob('*.json'):
@@ -852,16 +968,31 @@ class ExecutionJournal:
                         if e_intent.get('intent_id') == item.intent_id:
                             if (e_intent.get('expected_before') != item.expected_before or
                                 e_intent.get('value') != item.value or
-                                e_intent.get('resource_key') != res_key):
+                                e_intent.get('resource_key') != res_key or
+                                (cdata.get('save_instance_id') and cdata.get('save_instance_id') != chunk.save_instance_id) or
+                                (cdata.get('plan_digest') and cdata.get('plan_digest') != chunk.plan_digest)):
                                 raise ValueError(
                                     f"INTENT_ID_REUSED_WITH_DIFFERENT_PAYLOAD: intent '{item.intent_id}' "
-                                    f"was previously claimed with different payload"
+                                    f"was previously claimed with different payload, save_instance, or plan"
                                 )
                 except (json.JSONDecodeError, KeyError):
                     continue
 
+            for r in self.load_receipts():
+                if r.intent_id == item.intent_id:
+                    if (r.team_id != item.team_id or
+                        r.player_id != item.player_id or
+                        r.field_id != item.field_id or
+                        r.expected_before != item.expected_before or
+                        r.requested != item.value):
+                        raise ValueError(
+                            f"INTENT_ID_REUSED_WITH_DIFFERENT_PAYLOAD: intent '{item.intent_id}' "
+                            f"was previously executed with different payload"
+                        )
+
         claim_data = {
             'claim_id': chunk.chunk_id,
+            'claim_identity': claim_identity,
             'batch_id': chunk.batch_id,
             'plan_digest': chunk.plan_digest,
             'chunk_id': chunk.chunk_id,
@@ -881,16 +1012,16 @@ class ExecutionJournal:
                 for item in chunk.intents
             ]
         }
-        claim_file.write_text(canonical_encode(claim_data), encoding='utf-8')
+        atomic_write_json(target_file, claim_data)
 
     def record_batch_manifest(self, batch: BulkBatch):
         manifest_path = self.root / f"batch_{batch.header.batch_id}.json"
-        manifest_path.write_text(canonical_encode({
+        atomic_write_json(manifest_path, {
             'batch_id': batch.header.batch_id,
             'plan_digest': batch.plan_digest,
             'header': asdict(batch.header),
             'intent_count': len(batch.intents)
-        }), encoding='utf-8')
+        })
 
     def append_receipts(self, receipts: List[ItemReceipt]):
         with self.receipts_file.open('a', encoding='utf-8') as f:
@@ -900,6 +1031,24 @@ class ExecutionJournal:
             if r.outcome == 'UNKNOWN_EXECUTION_OUTCOME':
                 res_key = get_resource_key(r.team_id, r.player_id, r.field_id)
                 self.lock_resource(res_key, r.intent_id)
+
+        # Update claim states corresponding to these receipts
+        chunk_ids = {r.chunk_id for r in receipts if r.chunk_id}
+        all_receipt_ids = {r.intent_id for r in self.load_receipts()}
+        for cid in chunk_ids:
+            for claim_path in self.claims_dir.glob('*.json'):
+                try:
+                    cdata = json.loads(claim_path.read_text(encoding='utf-8'))
+                    if cdata.get('chunk_id') == cid and cdata.get('state') == 'STARTED':
+                        c_intents = {it['intent_id'] for it in cdata.get('intents', [])}
+                        # Only transition claim from STARTED if ALL intents in chunk have receipts!
+                        if c_intents and all(iid in all_receipt_ids for iid in c_intents):
+                            has_unknown = any(r.intent_id in c_intents and r.outcome == 'UNKNOWN_EXECUTION_OUTCOME' for r in receipts)
+                            cdata['state'] = 'UNKNOWN_EXECUTION_OUTCOME' if has_unknown else 'COMPLETED'
+                            cdata['completed_at'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+                            atomic_write_json(claim_path, cdata)
+                except Exception:
+                    continue
 
     def load_receipts(self) -> List[ItemReceipt]:
         if not self.receipts_file.exists():
@@ -911,19 +1060,50 @@ class ExecutionJournal:
                 items.append(ItemReceipt(**json.loads(line)))
         return items
 
-    def is_intent_completed(self, intent_id: str) -> bool:
+    def is_intent_completed(self, intent_id: str, item: Optional[BulkIntentItem] = None) -> bool:
         for r in self.load_receipts():
-            if r.intent_id == intent_id and r.outcome in ('SUCCESS_APPLIED', 'UNCHANGED_ALREADY_TARGET', 'RECONCILED_SUCCESS', 'REUSED_HISTORICAL_RECEIPT'):
-                return True
+            if r.intent_id == intent_id:
+                if item is not None:
+                    if (r.team_id != item.team_id or
+                        r.player_id != item.player_id or
+                        r.field_id != item.field_id or
+                        r.expected_before != item.expected_before or
+                        r.requested != item.value):
+                        raise ValueError(
+                            f"INTENT_ID_REUSED_WITH_DIFFERENT_PAYLOAD: intent '{intent_id}' "
+                            f"matches completed receipt with different payload"
+                        )
+                if r.outcome in ('SUCCESS_APPLIED', 'UNCHANGED_ALREADY_TARGET', 'RECONCILED_SUCCESS', 'REUSED_HISTORICAL_RECEIPT'):
+                    return True
         return False
 
     def get_locked_resources(self) -> Dict[str, str]:
         if not self.locks_file.exists():
-            return {}
+            locks = {}
+            for claim_path in self.claims_dir.glob('*.json'):
+                try:
+                    cdata = json.loads(claim_path.read_text(encoding='utf-8'))
+                    if cdata.get('state') in ('STARTED', 'UNKNOWN_EXECUTION_OUTCOME'):
+                        for it in cdata.get('intents', []):
+                            locks[it['resource_key']] = it['intent_id']
+                except Exception as e:
+                    raise RuntimeError(f"CORRUPT_LOCK_LEDGER: claim file {claim_path.name} is corrupted: {e}")
+            res_latest_outcome = {}
+            res_latest_intent = {}
+            for r in self.load_receipts():
+                rk = get_resource_key(r.team_id, r.player_id, r.field_id)
+                res_latest_outcome[rk] = r.outcome
+                res_latest_intent[rk] = r.intent_id
+            for rk, outcome in res_latest_outcome.items():
+                if outcome == 'UNKNOWN_EXECUTION_OUTCOME':
+                    locks[rk] = res_latest_intent[rk]
+                elif outcome in ('RECONCILED_SUCCESS', 'RECONCILED_REJECTED') and rk in locks:
+                    del locks[rk]
+            return locks
         try:
             return json.loads(self.locks_file.read_text(encoding='utf-8'))
-        except Exception:
-            return {}
+        except Exception as e:
+            raise RuntimeError(f"CORRUPT_LOCK_LEDGER: locked_resources.json is corrupted: {e}")
 
     def is_resource_locked(self, res_key: str) -> Optional[str]:
         locks = self.get_locked_resources()
@@ -932,13 +1112,13 @@ class ExecutionJournal:
     def lock_resource(self, res_key: str, intent_id: str):
         locks = self.get_locked_resources()
         locks[res_key] = intent_id
-        self.locks_file.write_text(canonical_encode(locks), encoding='utf-8')
+        atomic_write_json(self.locks_file, locks)
 
     def unlock_resource(self, res_key: str):
         locks = self.get_locked_resources()
         if res_key in locks:
             del locks[res_key]
-            self.locks_file.write_text(canonical_encode(locks), encoding='utf-8')
+            atomic_write_json(self.locks_file, locks)
 
     def reconcile_unknown(self, intent_id: str, evidence: Dict[str, Any]) -> ItemReceipt:
         receipts = self.load_receipts()
@@ -952,18 +1132,26 @@ class ExecutionJournal:
         if evidence.get('intent_id') != intent_id:
             raise ValueError(f"Evidence intent_id mismatch: expected '{intent_id}', got '{evidence.get('intent_id')}'")
 
-        if 'readback_getter_value' in evidence and 'target_value' in evidence:
-            applied = (evidence['readback_getter_value'] == target.requested and evidence['target_value'] == target.requested)
-        elif 'applied' in evidence:
-            applied = bool(evidence['applied'])
-        else:
-            raise ValueError("RECONCILIATION_INCOMPLETE_EVIDENCE: missing required evidence fields")
+        # Must reject applied-only boolean without observation evidence
+        if 'applied' in evidence and 'readback_getter_value' not in evidence:
+            raise ValueError("RECONCILIATION_INCOMPLETE_EVIDENCE: applied-only boolean rejected; independent observation metadata required")
 
+        required_fields = ['readback_getter_value', 'target_value', 'observation_timestamp', 'independent_source', 'unaltered_fields_verified']
+        missing = [f for f in required_fields if f not in evidence]
+        if missing:
+            raise ValueError(f"RECONCILIATION_INCOMPLETE_EVIDENCE: missing required metadata {missing}")
+
+        if evidence.get('unaltered_fields_verified') is not True:
+            raise ValueError("RECONCILIATION_INCOMPLETE_EVIDENCE: unaltered_fields_verified must be True")
+
+        readback_val = evidence['readback_getter_value']
+        target_val = evidence['target_value']
+
+        applied = (readback_val == target.requested and target_val == target.requested)
         new_outcome = 'RECONCILED_SUCCESS' if applied else 'RECONCILED_REJECTED'
         ev_id = evidence.get('evidence_id', 'manual')
-        ev_src = evidence.get('evidence_source', 'external')
-        ts = evidence.get('timestamp') or time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
-        readback_val = evidence.get('readback_getter_value', (target.requested if applied else target.expected_before))
+        ev_src = evidence.get('independent_source', 'external')
+        ts = evidence.get('observation_timestamp') or time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
 
         updated_receipt = ItemReceipt(
             intent_id=target.intent_id,
@@ -979,7 +1167,7 @@ class ExecutionJournal:
             getter_after=readback_val,
             raw_after=target.raw_after,
             unaltered_fields_check=True,
-            reason=f"RECONCILED_VIA_EVIDENCE:{ev_id}:{ev_src}",
+            reason=f"RECONCILED_VIA_PROVENANCE:{ev_id}:{ev_src}",
             execution_evidence_id=ev_id
         )
 
@@ -992,8 +1180,18 @@ class ExecutionJournal:
             }) + '\n')
 
         self.append_receipts([updated_receipt])
-        res_key = get_resource_key(target.team_id, target.player_id, target.field_id)
-        self.unlock_resource(res_key)
+        if new_outcome == 'RECONCILED_SUCCESS':
+            res_key = get_resource_key(target.team_id, target.player_id, target.field_id)
+            self.unlock_resource(res_key)
+            for claim_path in self.claims_dir.glob('*.json'):
+                try:
+                    cdata = json.loads(claim_path.read_text(encoding='utf-8'))
+                    if any(it.get('intent_id') == intent_id for it in cdata.get('intents', [])):
+                        cdata['state'] = 'RECONCILED'
+                        cdata['reconciled_at'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+                        atomic_write_json(claim_path, cdata)
+                except Exception:
+                    continue
         return updated_receipt
 
 
@@ -1153,8 +1351,22 @@ class BulkExecutorService:
                 res_key = get_resource_key(item.team_id, item.player_id, item.field_id)
                 locking_id = self.journal.is_resource_locked(res_key)
 
-                if self.journal.is_intent_completed(item.intent_id):
-                    # Already completed in a prior run -> REUSED_HISTORICAL_RECEIPT
+                if locking_id:
+                    # Resource locked by unresolved UNKNOWN -> BLOCKED_BY_PRIOR_UNKNOWN_CLAIM (even for identical intent_id)
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='BLOCKED_BY_PRIOR_UNKNOWN_CLAIM',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=f"RESOURCE_LOCKED_BY_PRIOR_UNKNOWN:{locking_id}"
+                    ))
+                elif self.journal.is_intent_completed(item.intent_id, item):
+                    # Already completed in a prior run with verified identical payload -> REUSED_HISTORICAL_RECEIPT
                     chunk_receipts.append(ItemReceipt(
                         intent_id=item.intent_id,
                         team_id=item.team_id,
@@ -1168,24 +1380,23 @@ class BulkExecutorService:
                         reused_historical_receipt=True,
                         reason="INTENT_ALREADY_COMPLETED_IN_JOURNAL"
                     ))
-                elif locking_id and locking_id != item.intent_id:
-                    # Resource locked by unresolved UNKNOWN -> BLOCKED_BY_PRIOR_UNKNOWN_CLAIM
-                    chunk_receipts.append(ItemReceipt(
-                        intent_id=item.intent_id,
-                        team_id=item.team_id,
-                        player_id=item.player_id,
-                        field_id=item.field_id,
-                        expected_before=item.expected_before,
-                        requested=item.value,
-                        outcome='BLOCKED_BY_PRIOR_UNKNOWN_CLAIM',
-                        chunk_id=chunk.chunk_id,
-                        timestamp=ts,
-                        reason=f"RESOURCE_LOCKED_BY_PRIOR_UNKNOWN:{locking_id}"
-                    ))
                 else:
                     chunk_to_execute_intents.append(item)
 
             if chunk_to_execute_intents:
+                if len(chunk_to_execute_intents) < len(chunk.intents):
+                    sub_chunk_digest = sha256_digest({
+                        'batch_id': batch.header.batch_id,
+                        'save_instance_id': chunk.save_instance_id,
+                        'chunk_id': chunk.chunk_id,
+                        'team_id': chunk.team_id,
+                        'action_id': chunk.action_id,
+                        'plan_digest': batch.plan_digest,
+                        'intents': [asdict(item) for item in chunk_to_execute_intents]
+                    })
+                else:
+                    sub_chunk_digest = chunk.chunk_digest
+
                 sub_chunk = PlannedChunk(
                     chunk_id=chunk.chunk_id,
                     team_id=chunk.team_id,
@@ -1196,7 +1407,7 @@ class BulkExecutorService:
                     batch_id=chunk.batch_id,
                     save_instance_id=chunk.save_instance_id,
                     plan_digest=chunk.plan_digest,
-                    chunk_digest=chunk.chunk_digest
+                    chunk_digest=sub_chunk_digest
                 )
                 self.journal.claim_chunk(sub_chunk)
                 executed_receipts = env.execute_chunk(sub_chunk)
@@ -1279,7 +1490,22 @@ class BulkExecutorService:
                 res_key = get_resource_key(item.team_id, item.player_id, item.field_id)
                 locking_id = self.journal.is_resource_locked(res_key)
 
-                if self.journal.is_intent_completed(item.intent_id):
+                if locking_id:
+                    # Resource locked by prior UNKNOWN -> BLOCKED_BY_PRIOR_UNKNOWN_CLAIM (even for identical intent_id)
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='BLOCKED_BY_PRIOR_UNKNOWN_CLAIM',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=f"RESOURCE_LOCKED_BY_PRIOR_UNKNOWN:{locking_id}"
+                    ))
+                elif self.journal.is_intent_completed(item.intent_id, item):
+                    # Already completed with identical payload -> REUSED_HISTORICAL_RECEIPT
                     chunk_receipts.append(ItemReceipt(
                         intent_id=item.intent_id,
                         team_id=item.team_id,
@@ -1293,19 +1519,6 @@ class BulkExecutorService:
                         reused_historical_receipt=True,
                         reason="INTENT_ALREADY_COMPLETED_IN_JOURNAL"
                     ))
-                elif locking_id and locking_id != item.intent_id:
-                    chunk_receipts.append(ItemReceipt(
-                        intent_id=item.intent_id,
-                        team_id=item.team_id,
-                        player_id=item.player_id,
-                        field_id=item.field_id,
-                        expected_before=item.expected_before,
-                        requested=item.value,
-                        outcome='BLOCKED_BY_PRIOR_UNKNOWN_CLAIM',
-                        chunk_id=chunk.chunk_id,
-                        timestamp=ts,
-                        reason=f"RESOURCE_LOCKED_BY_PRIOR_UNKNOWN:{locking_id}"
-                    ))
                 else:
                     chunk_to_execute_intents.append(item)
 
@@ -1313,6 +1526,19 @@ class BulkExecutorService:
                 all_receipts.extend(chunk_receipts)
                 self.journal.append_receipts(chunk_receipts)
                 continue
+
+            if len(chunk_to_execute_intents) < len(chunk.intents):
+                sub_chunk_digest = sha256_digest({
+                    'batch_id': batch.header.batch_id,
+                    'save_instance_id': chunk.save_instance_id,
+                    'chunk_id': chunk.chunk_id,
+                    'team_id': chunk.team_id,
+                    'action_id': chunk.action_id,
+                    'plan_digest': batch.plan_digest,
+                    'intents': [asdict(item) for item in chunk_to_execute_intents]
+                })
+            else:
+                sub_chunk_digest = chunk.chunk_digest
 
             sub_chunk = PlannedChunk(
                 chunk_id=chunk.chunk_id,
@@ -1324,7 +1550,7 @@ class BulkExecutorService:
                 batch_id=chunk.batch_id,
                 save_instance_id=chunk.save_instance_id,
                 plan_digest=chunk.plan_digest,
-                chunk_digest=chunk.chunk_digest
+                chunk_digest=sub_chunk_digest
             )
 
             # Record claim BEFORE transport call
@@ -1355,52 +1581,44 @@ class BulkExecutorService:
                 self.journal.append_receipts(chunk_receipts)
                 continue
 
-            # Protocol validation (Gate G3)
+            # Protocol validation (Gate G3 / G5)
             validation_error = None
             if not isinstance(transport_result, dict):
                 validation_error = "TRANSPORT_RESULT_NOT_DICT"
             elif transport_result.get('outcome') == 'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY':
                 validation_error = transport_result.get('error') or transport_result.get('details', {}).get('reason') or "TRANSPORT_RETURNED_UNKNOWN"
-            elif transport_result.get('kind') not in ('chunk-execution-result', 'native-control-result'):
+            elif transport_result.get('kind') != 'chunk-execution-result':
                 validation_error = f"INVALID_MESSAGE_KIND:{transport_result.get('kind')}"
             elif transport_result.get('chunk_id') != sub_chunk.chunk_id:
                 validation_error = f"CHUNK_ID_MISMATCH: expected {sub_chunk.chunk_id}, got {transport_result.get('chunk_id')}"
-            elif 'chunk_digest' in transport_result and transport_result['chunk_digest'] != sub_chunk.chunk_digest:
+            elif transport_result.get('batch_id') and transport_result.get('batch_id') != batch.header.batch_id:
+                validation_error = f"BATCH_ID_MISMATCH: expected {batch.header.batch_id}, got {transport_result.get('batch_id')}"
+            elif transport_result.get('save_instance_id') and transport_result.get('save_instance_id') != batch.header.save_instance_id:
+                validation_error = f"SAVE_INSTANCE_ID_MISMATCH: expected {batch.header.save_instance_id}, got {transport_result.get('save_instance_id')}"
+            elif transport_result.get('action_id') and transport_result.get('action_id') != sub_chunk.action_id:
+                validation_error = f"ACTION_ID_MISMATCH: expected {sub_chunk.action_id}, got {transport_result.get('action_id')}"
+            elif not transport_result.get('chunk_digest'):
+                validation_error = "MISSING_CHUNK_DIGEST: chunk_digest must be present in result envelope"
+            elif transport_result.get('chunk_digest') != sub_chunk.chunk_digest:
                 validation_error = f"CHUNK_DIGEST_MISMATCH: expected {sub_chunk.chunk_digest}, got {transport_result.get('chunk_digest')}"
-            elif 'plan_digest' in transport_result and transport_result['plan_digest'] != batch.plan_digest:
+            elif not transport_result.get('plan_digest'):
+                validation_error = "MISSING_PLAN_DIGEST: plan_digest must be present in result envelope"
+            elif transport_result.get('plan_digest') != batch.plan_digest:
                 validation_error = f"PLAN_DIGEST_MISMATCH: expected {batch.plan_digest}, got {transport_result.get('plan_digest')}"
 
-            if validation_error:
-                batch_halted = True
-                halt_reason = validation_error
-                for item in chunk_to_execute_intents:
-                    chunk_receipts.append(ItemReceipt(
-                        intent_id=item.intent_id,
-                        team_id=item.team_id,
-                        player_id=item.player_id,
-                        field_id=item.field_id,
-                        expected_before=item.expected_before,
-                        requested=item.value,
-                        outcome='UNKNOWN_EXECUTION_OUTCOME',
-                        chunk_id=chunk.chunk_id,
-                        timestamp=ts,
-                        reason=halt_reason
-                    ))
-                all_receipts.extend(chunk_receipts)
-                self.journal.append_receipts(chunk_receipts)
-                continue
-
-            raw_receipts = transport_result.get('receipts', [])
-            executed_receipt_map = {}
-            for r_data in raw_receipts:
-                iid = r_data.get('intent_id')
-                if iid in executed_receipt_map:
-                    validation_error = f"DUPLICATE_RECEIPT_FOR_INTENT:{iid}"
-                    break
-                executed_receipt_map[iid] = r_data
-
-            if not validation_error and len(raw_receipts) != len(chunk_to_execute_intents):
-                validation_error = f"RECEIPT_COUNT_MISMATCH: expected {len(chunk_to_execute_intents)}, got {len(raw_receipts)}"
+            if not validation_error:
+                raw_receipts = transport_result.get('receipts', [])
+                if not isinstance(raw_receipts, list):
+                    validation_error = "RECEIPTS_NOT_LIST"
+                else:
+                    raw_receipt_ids = [r.get('intent_id') for r in raw_receipts if isinstance(r, dict)]
+                    expected_intent_ids = [it.intent_id for it in chunk_to_execute_intents]
+                    if len(raw_receipts) != len(chunk_to_execute_intents):
+                        validation_error = f"RECEIPT_COUNT_MISMATCH: expected {len(chunk_to_execute_intents)}, got {len(raw_receipts)}"
+                    elif set(raw_receipt_ids) != set(expected_intent_ids):
+                        validation_error = f"RECEIPT_IDS_MISMATCH: expected {expected_intent_ids}, got {raw_receipt_ids}"
+                    elif len(raw_receipt_ids) != len(set(raw_receipt_ids)):
+                        validation_error = "DUPLICATE_RECEIPT_IDS: duplicate intent IDs found in receipts"
 
             if validation_error:
                 batch_halted = True
@@ -1422,10 +1640,32 @@ class BulkExecutorService:
                 self.journal.append_receipts(chunk_receipts)
                 continue
 
+            executed_receipt_map = {r['intent_id']: r for r in raw_receipts}
             has_failure = False
             for item in chunk_to_execute_intents:
                 r_dict = executed_receipt_map[item.intent_id]
                 outcome = r_dict.get('outcome', 'UNKNOWN_EXECUTION_OUTCOME')
+                gb = r_dict.get('getter_before')
+                ga = r_dict.get('getter_after')
+                unaltered = r_dict.get('unaltered_fields_check')
+
+                if outcome == 'SUCCESS_APPLIED':
+                    if gb != item.expected_before or ga != item.value or unaltered is not True:
+                        outcome = 'UNKNOWN_EXECUTION_OUTCOME'
+                        has_failure = True
+                        halt_reason = (
+                            f"INVALID_SUCCESS_APPLIED: expected before={item.expected_before}, after={item.value}, unaltered=True; "
+                            f"got before={gb}, after={ga}, unaltered={unaltered}"
+                        )
+                elif outcome == 'UNCHANGED_ALREADY_TARGET':
+                    if gb != item.expected_before or gb != item.value:
+                        outcome = 'UNKNOWN_EXECUTION_OUTCOME'
+                        has_failure = True
+                        halt_reason = (
+                            f"INVALID_UNCHANGED_ALREADY_TARGET: expected before==after==target ({item.value}); "
+                            f"got before={gb}, after={ga}"
+                        )
+
                 if outcome not in ('SUCCESS_APPLIED', 'UNCHANGED_ALREADY_TARGET', 'REUSED_HISTORICAL_RECEIPT'):
                     has_failure = True
                     if not halt_reason:
@@ -1441,15 +1681,15 @@ class BulkExecutorService:
                     outcome=outcome,
                     chunk_id=chunk.chunk_id,
                     timestamp=ts,
-                    getter_before=r_dict.get('getter_before'),
-                    getter_after=r_dict.get('getter_after'),
+                    getter_before=gb,
+                    getter_after=ga,
                     raw_after=r_dict.get('raw_after'),
-                    unaltered_fields_check=r_dict.get('unaltered_fields_check', True),
-                    reason=r_dict.get('reason'),
-                    execution_evidence_id=transport_result.get('evidence_id')
+                    unaltered_fields_check=bool(unaltered),
+                    reason=r_dict.get('reason') or (halt_reason if outcome == 'UNKNOWN_EXECUTION_OUTCOME' else None),
+                    execution_evidence_id=transport_result.get('evidence_id') or r_dict.get('execution_evidence_id')
                 ))
 
-            if has_failure and transport_result.get('outcome') == 'CHUNK_HALTED':
+            if has_failure:
                 batch_halted = True
 
             all_receipts.extend(chunk_receipts)
