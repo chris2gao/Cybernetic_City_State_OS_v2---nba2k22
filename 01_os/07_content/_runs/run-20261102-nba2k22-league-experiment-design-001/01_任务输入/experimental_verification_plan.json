@@ -1,0 +1,175 @@
+{
+  "schema_version": "nba2k22.vae.league_experiment_design.v1",
+  "task_id": "NBA2K22-VAE-LEAGUE-WIDE-EXPERIMENT-DESIGN-20261102-001",
+  "status": "DESIGN_ONLY_NOT_EXECUTED",
+  "planner": "GPT-6",
+  "base_sha": "25eae0063cfe72cab595263bc57c0ceb8fc22889",
+  "goals": [
+    "Estimation of native field main effects under calendar simulation",
+    "Detection and quantified control of teammate, opponent and team-level interference",
+    "Repeated multi-worldline confirmatory testing",
+    "Mapping outcome evidence into VAE, not direct unreviewed AI self-tuning"
+  ],
+  "research_inventory": {
+    "player_native_slots": 99,
+    "named_player_slots": 48,
+    "unnamed_read_only_slots": 51,
+    "coach_projection_fields": 10,
+    "vae_stage02_observation_fields": 204,
+    "observation_fields_are_not_intervention_fields": true
+  },
+  "design_units": {
+    "player": "player within team and game, dependent teammates",
+    "coach": "team-cluster (N<=30)",
+    "global": "independent worldline"
+  },
+  "arm_worldlines": [
+    {
+      "id": "W0",
+      "kind": "CONTROL",
+      "writes": "none"
+    },
+    {
+      "id": "WP",
+      "kind": "PLAYER_SCREEN",
+      "writes": "only approved independently verified player fields"
+    },
+    {
+      "id": "WC",
+      "kind": "COACH_SCREEN",
+      "writes": "only separately approved and live-verified coach field actions"
+    },
+    {
+      "id": "WI",
+      "kind": "INTERACTION",
+      "writes": "optional later, preplanned 2x2 factor interactions"
+    }
+  ],
+  "round_window_game_days": 7,
+  "player_screen_capacity_example": {
+    "roster_eligible_player_slots_estimate": 240,
+    "named_field_candidates_if_eligible": 48,
+    "replicates_per_field_target": 3,
+    "treated_players_if_fully_eligible": 144,
+    "controls_example": 48,
+    "unassigned_or_protected": 48,
+    "interpretation": "screening coverage only; eligibility, position and interference reduce field coverage"
+  },
+  "coach_screen_capacity_example": {
+    "teams": 30,
+    "field_candidates": 10,
+    "field_treated_teams_if_eligible": 2,
+    "treated_teams_total": 20,
+    "untreated_teams": 10,
+    "interpretation": "screening only; 1-2 fields per round for confirmation, at most 30 independent coach units per worldline"
+  },
+  "per_item": {
+    "minimum": [
+      "experiment_id",
+      "worldline",
+      "round",
+      "game_build",
+      "base_save_fingerprint",
+      "field_id",
+      "native_mapping_ref",
+      "action_validation_grade",
+      "player_or_team_id",
+      "team_id",
+      "role",
+      "stratum",
+      "treatment_value",
+      "baseline_value",
+      "arm",
+      "randomization_seed",
+      "eligible_opportunity",
+      "predicted_metric",
+      "matched_control",
+      "interference_neighbors",
+      "source_snapshot_ref",
+      "plan_digest",
+      "human_authorization_ref",
+      "pre_game_getter_ref",
+      "post_game_getter_ref",
+      "outcome_window",
+      "readback_receipt_ref"
+    ]
+  },
+  "effect_states": [
+    "UNTESTED",
+    "BROAD_SCREENED",
+    "EFFECT_CANDIDATE",
+    "CONFIRMING",
+    "REPLICATED_EFFECT",
+    "NO_DETECTED_EFFECT_WITH_POWER",
+    "UNDERPOWERED",
+    "NO_OPPORTUNITY",
+    "UNOBSERVABLE_ENDPOINT",
+    "SETTER_NOT_VERIFIED"
+  ],
+  "preconditions": [
+    "Host P0 fixes completed and verified before any live setter",
+    "Native readback independently verified",
+    "Player/coaching controls not mixed except planned interaction",
+    "Worldline restore isolation rechecked end-to-end",
+    "No changes made before explicit user approval of each complete batch plan digest"
+  ],
+  "gates": [
+    {
+      "id": "G1",
+      "name": "Inventory and native write qualification",
+      "accept": "named/unnamed and data/setting distinctions maintained, live writer never inferred"
+    },
+    {
+      "id": "G2",
+      "name": "Eligible pool and baseline",
+      "accept": "opportunity, minutes and roster eligibility from WorldData"
+    },
+    {
+      "id": "G3",
+      "name": "Worldline clone reproducibility",
+      "accept": "save/data/game dates independent, repeat no-change calendar sim to quantify noise"
+    },
+    {
+      "id": "G4",
+      "name": "Constrained stratified randomization",
+      "accept": "reproducible random seed, matched controls, bounded within-team interference"
+    },
+    {
+      "id": "G5",
+      "name": "Exact planned action list",
+      "accept": "Human approves per worldline+batch+field+objects+target before native edits"
+    },
+    {
+      "id": "G6",
+      "name": "Live write proofs",
+      "accept": "all writers from certified action list and strict native receipt+fresh readback"
+    },
+    {
+      "id": "G7",
+      "name": "Outcome eligibility",
+      "accept": "only actual calendar-sim native or verified derived metrics, no hallucinated stats"
+    },
+    {
+      "id": "G8",
+      "name": "Causal scope",
+      "accept": "player/team/worldline independent unit preserved; interference and season trends reported"
+    },
+    {
+      "id": "G9",
+      "name": "Replicated/confirmatory round",
+      "accept": "weak signal must be confirmed in new preplanned sample; power/CI/FDR tracked"
+    },
+    {
+      "id": "G10",
+      "name": "Season decision-feedback loop",
+      "accept": "Human still controls sim, capture, plan seal, mutation, pause and next period"
+    }
+  ],
+  "phase_status": {
+    "experiment_design": "PUBLISHED",
+    "live_host_safety": "BLOCKED_PENDING_CURRENT_P0_FIXES",
+    "full_arm_engineering": "NOT_STARTED",
+    "human_live_experiment": "NOT_AUTHORIZED"
+  },
+  "reference": "01_任务输入/league_wide_experimental_design.md"
+}
