@@ -1,0 +1,48 @@
+{
+  "schema_version": "nba2k22.optimization.benchmark_comparison.v1",
+  "task_id": "NBA2K22-REA-BULK-THROUGHPUT-OPT-20261101-001",
+  "timestamp": "2026-11-02T06:23:08Z",
+  "actual_executor_model": "Gemini 2.5 Pro (execution)",
+  "comparison_scope": "12 real Player SHOT_TENDENCY mutations across 2 chunks (MIL and POR)",
+  "baseline_single_chunk_attach": {
+    "source_run": "run-20261101-nba2k22-rea-controlled-live-bulk-pilot-001",
+    "batch_id": "BATCH-PILOT-STAGE2-MUTATION-20261101",
+    "chunk_count": 2,
+    "frida_attach_count": 2,
+    "intents_planned": 12,
+    "intents_success": 12,
+    "total_wall_time_seconds": 39.40411,
+    "seconds_per_successful_setter": 3.2836758333333336,
+    "seconds_per_chunk": 19.702055
+  },
+  "optimized_bounded_session": {
+    "batch_id": "BATCH-BENCH-MUT-TO-1",
+    "chunk_count": 2,
+    "frida_attach_count": 1,
+    "intents_planned": 12,
+    "intents_success": 12,
+    "total_wall_time_seconds": 7.23892,
+    "seconds_per_successful_setter": 0.60324,
+    "seconds_per_chunk": 3.61946,
+    "conservation_holds": true
+  },
+  "restoration_round_to_zero": {
+    "batch_id": "BATCH-BENCH-MUT-TO-0",
+    "chunk_count": 2,
+    "frida_attach_count": 1,
+    "intents_planned": 12,
+    "intents_success": 12,
+    "total_wall_time_seconds": 7.76659,
+    "seconds_per_successful_setter": 0.64722,
+    "conservation_holds": true,
+    "in_game_final_state": "All 12 target players restored to SHOT_TENDENCY=0"
+  },
+  "performance_improvement": {
+    "wall_time_saved_seconds": 32.16519,
+    "reduction_percent": 81.63,
+    "speedup_factor": 5.44,
+    "attach_reduction": "Reduced from 2 attaches to 1 attach (100% per-chunk attach elimination)",
+    "powershell_process_reduction": "Reduced from 2 processes to 1 process",
+    "file_hash_overhead_reduction": "Computed once instead of once per chunk"
+  }
+}
