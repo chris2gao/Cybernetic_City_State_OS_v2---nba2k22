@@ -583,18 +583,19 @@ def test_coach_and_player_script_generation_routing(planner, valid_header):
     )
     batch = BulkBatch(header=valid_header, intents=(item_player, item_coach))
     chunks = planner.plan(batch)
-    assert len(chunks) == 1
-    script = compiler.compile_chunk(chunks[0], valid_header)
+    assert len(chunks) == 2
+    script_player = compiler.compile_chunk(chunks[0], valid_header)
+    script_coach = compiler.compile_chunk(chunks[1], valid_header)
 
     # Verify Player routing code
-    assert "rosterPlayer" in script
-    assert "call('player.get_stat_ui'" in script
-    assert "call('player.set_stat_ui'" in script
+    assert "rosterPlayer" in script_player
+    assert "call('player.get_stat_ui'" in script_player
+    assert "call('player.set_stat_ui'" in script_player
 
     # Verify Coach routing code
-    assert "franchiseRecord" in script
-    assert "call('coach.apply_gameplan'" in script
-    assert "coach_items" in script
+    assert "franchiseRecord" in script_coach
+    assert "call('coach.apply_gameplan'" in script_coach
+    assert "coach_items" in script_coach
 
 
 # ---------------------------------------------------------------------------
@@ -644,17 +645,27 @@ def test_unknown_resource_locking_and_reconciliation(tmp_path, valid_header):
     assert len(receipts2) == 1
     assert receipts2[0].outcome == "BLOCKED_BY_PRIOR_UNKNOWN_CLAIM"
 
-    # 3. Third step: Reconcile the UNKNOWN intent with independent evidence
+    # 3. Third step: Attempting reconcile with applied-only boolean must fail (fail-closed)
+    with pytest.raises(ValueError, match="RECONCILIATION_INCOMPLETE_EVIDENCE"):
+        service.journal.reconcile_unknown("I-LOCK-001", {"intent_id": "I-LOCK-001", "applied": False})
+
+    # Reconcile with verified independent provenance evidence
     recon_evidence = {
         "intent_id": "I-LOCK-001",
+        "claim_id": "chunk-0001-team-28-player-patch-tendencies",
+        "save_instance_id": "save_test_001",
         "team_id": 28,
         "player_id": 2459,
         "field_id": "SHOT_TENDENCY",
-        "applied": False,
+        "readback_getter_value": 80,
+        "target_value": 80,
+        "observation_timestamp": "2026-11-01T20:00:00Z",
+        "independent_source": "worlddata_sqlite_readonly",
+        "unaltered_fields_verified": True,
         "evidence_id": "ev_reconciliation_obs_001"
     }
     updated_receipt = service.journal.reconcile_unknown("I-LOCK-001", recon_evidence)
-    assert updated_receipt.outcome == "RECONCILED_REJECTED"
+    assert updated_receipt.outcome == "RECONCILED_SUCCESS"
 
     # Verify resource lock is released!
     assert service.journal.is_resource_locked(res_key) is None
@@ -894,8 +905,8 @@ def test_gate_g2_e2e_fake_transport(tmp_path, valid_header):
 
     result = service.run_with_transport(batch, adapter)
 
-    # Verify Fake transport received execution calls for both teams
-    assert len(fake_calls) == 2
+    # Verify Fake transport received execution calls for all chunks (Team 1 attrs, Team 1 tendencies, Team 28 tendencies)
+    assert len(fake_calls) == 3
     assert result['metrics']['num_planned'] == 3
     assert result['metrics']['num_success'] == 3
     assert result['metrics']['conservation_holds'] is True
