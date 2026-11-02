@@ -58,6 +58,67 @@ from role_batches import (
 )
 from role_capabilities import RoleCapabilityProfile, RoleCapabilityService
 from schema_model import VERSION
+from validate_batch_execution import validate_batch_execution
+
+
+class TrustedRoleRegistry:
+    """Manages authenticated roles bound to the current worldline, save instance, season, and team."""
+
+    def __init__(self):
+        # Default authenticated roles mapped by (role_type, team_id) -> actor_uid
+        self._actors: Dict[Tuple[str, int], str] = {
+            ("GM", 1): "gm_user_01",
+            ("GM", 25): "gm_user_01",
+            ("GM", 28): "gm_user_01",
+            ("COACH", 1): "coach_user_01"
+        }
+        self._allowed_actions: Dict[str, Set[str]] = {
+            "GM": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "GM.TRADE.MIXED"},
+            "COACH": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "COACH.STRATEGY.RUN_PLAY"}
+        }
+        self._phase_grants: Set[Tuple[str, str]] = {
+            ("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
+            ("gm_user_01", "PLAYER_PATCH_TENDENCIES"),
+            ("coach_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
+            ("coach_user_01", "PLAYER_PATCH_TENDENCIES"),
+            ("coach_user_01", "COACH.STRATEGY.RUN_PLAY"),
+            ("gm_user_01", "GM.TRADE.MIXED")
+        }
+
+    def is_actor_authenticated(self, role_type: str, team_id: int, actor_uid: str) -> bool:
+        expected = self._actors.get((role_type.upper(), int(team_id)))
+        return expected is not None and expected == actor_uid
+
+    def get_phase_grants(self) -> Set[Tuple[str, str]]:
+        return set(self._phase_grants)
+
+    def get_profiles(self, ctx: BatchContext) -> Tuple[RoleCapabilityProfile, RoleCapabilityProfile]:
+        gm = RoleCapabilityProfile(
+            role_type="GM",
+            actor_uid="gm_user_01",
+            team_scope=(1, 25, 28),
+            world_id=ctx.world_id,
+            save_instance_id=ctx.save_instance_id,
+            generation_id=ctx.generation_id,
+            season_id=ctx.season_id,
+            phase=ctx.phase,
+            snapshot_ref=ctx.snapshot_ref,
+            allowed_actions=frozenset(self._allowed_actions["GM"])
+        )
+        coach = RoleCapabilityProfile(
+            role_type="COACH",
+            actor_uid="coach_user_01",
+            team_scope=(1,),
+            world_id=ctx.world_id,
+            save_instance_id=ctx.save_instance_id,
+            generation_id=ctx.generation_id,
+            season_id=ctx.season_id,
+            phase=ctx.phase,
+            snapshot_ref=ctx.snapshot_ref,
+            allowed_actions=frozenset(self._allowed_actions["COACH"])
+        )
+        return gm, coach
+
 
 
 class HostState:
@@ -99,6 +160,7 @@ class SeasonCycleHost:
         self.capability_service = RoleCapabilityService()
         self.bridge = DecisionBatchBridge(self.capability_service)
         self.outbox = DecisionOutbox(self.outbox_db, capability_service=self.capability_service)
+        self.role_registry = TrustedRoleRegistry()
 
         self.state: Dict[str, Any] = self._load_state()
 
@@ -162,12 +224,18 @@ class SeasonCycleHost:
             catalog_version=self.capability_service.version
         )
 
-    def _get_live_getter(self) -> Optional[Any]:
+    def _get_live_getter(self, expected_pid: Optional[int] = None) -> Optional[Any]:
         """Provides a real-time player tendency getter from NBA2K22 memory (pure ReadProcessMemory)."""
+        return self._get_fresh_live_getter(expected_pid)
+
+    def _get_fresh_live_getter(self, expected_pid: Optional[int] = None) -> Optional[Any]:
+        """Connects fresh to NBA2K22 memory post-execution and returns a live reader function."""
         try:
             from refresh import resolve_pid
             from player_skill_reader import collect_player_skills
             actual_pid = resolve_pid("auto")
+            if expected_pid is not None and actual_pid != expected_pid:
+                raise RuntimeError(f"PID_MISMATCH_FRESH_GETTER: expected {expected_pid}, found {actual_pid}")
             reader = ReadOnlyGameProcess(actual_pid)
             try:
                 m, _ = collect_player_skills(reader)
@@ -177,7 +245,7 @@ class SeasonCycleHost:
                     s_idx = p["source_player_index"]
                     player_tendencies[uid] = m["skill_rows"][s_idx]["tendencies"]
 
-                def live_getter(player_id: int, field_id: str) -> Optional[int]:
+                def fresh_getter(player_id: int, field_id: str) -> Optional[int]:
                     tdict = player_tendencies.get(int(player_id), {})
                     norm_key = field_id.lower()
                     if not norm_key.endswith("_raw"):
@@ -187,50 +255,55 @@ class SeasonCycleHost:
                         val = tdict.get(field_id)
                     return val
 
-                return live_getter
+                return fresh_getter
             finally:
                 reader.close()
+        except RuntimeError as e:
+            if "PID_MISMATCH_FRESH_GETTER" in str(e):
+                raise
+            return None
         except Exception:
             return None
 
     def _make_profiles(self, ctx: BatchContext) -> Tuple[RoleCapabilityProfile, RoleCapabilityProfile]:
-        gm = RoleCapabilityProfile(
-            role_type="GM",
-            actor_uid="gm_user_01",
-            team_scope=(1, 25, 28),
-            world_id=ctx.world_id,
-            save_instance_id=ctx.save_instance_id,
-            generation_id=ctx.generation_id,
-            season_id=ctx.season_id,
-            phase=ctx.phase,
-            snapshot_ref=ctx.snapshot_ref,
-            allowed_actions=frozenset(["PLAYER.EDIT.TENDENCY_BATCH", "GM.TRADE.MIXED"])
-        )
-        coach = RoleCapabilityProfile(
-            role_type="COACH",
-            actor_uid="coach_user_01",
-            team_scope=(1,),
-            world_id=ctx.world_id,
-            save_instance_id=ctx.save_instance_id,
-            generation_id=ctx.generation_id,
-            season_id=ctx.season_id,
-            phase=ctx.phase,
-            snapshot_ref=ctx.snapshot_ref,
-            allowed_actions=frozenset(["COACH.STRATEGY.RUN_PLAY", "PLAYER.EDIT.TENDENCY_BATCH"])
-        )
-        return gm, coach
+        return self.role_registry.get_profiles(ctx)
 
     def inspect_worldline(
         self,
         save_dir: Path,
         loaded_filename: str,
-        current_game_date: Optional[str] = None
+        current_game_date: Optional[str] = None,
+        target_worldline_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Detect save binding and check if backward date requires isolated worldline branching (Gate G02)."""
+        """Detect save binding, manage worldlines manifest, and isolate backward dates (Gates G02, P1)."""
+        save_json_path = save_dir / "save.json"
+        manifest_path = save_dir / "worldlines_manifest.json"
+
         binding, binding_hash = read_binding(save_dir, loaded_filename)
         save_id = binding["save_id"]
         default_db = bound_database(save_dir, binding)
-        
+
+        # Load or initialize append-only worldlines manifest (P1)
+        manifest = {}
+        if manifest_path.exists():
+            try:
+                manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            except Exception:
+                manifest = {}
+        if not manifest:
+            manifest = {
+                "original_save_id": save_id,
+                "primary_database_file": "world.sqlite",
+                "active_worldline_id": "worldline-main",
+                "worldlines": {
+                    "worldline-main": {
+                        "database_file": "world.sqlite",
+                        "created_at": datetime.now(timezone.utc).isoformat(),
+                        "parent_worldline_id": None
+                    }
+                }
+            }
+
         latest_db_date = None
         if default_db.exists():
             with closing(connect(default_db, True)) as conn:
@@ -246,29 +319,62 @@ class SeasonCycleHost:
                     pass
 
         is_backward = False
-        worldline_id = "worldline-main"
+        worldline_id = manifest.get("active_worldline_id", "worldline-main")
         target_db = default_db
 
-        if current_game_date and latest_db_date:
-            if current_game_date < latest_db_date:
-                is_backward = True
-                date_slug = current_game_date.replace("-", "")
+        if target_worldline_id and target_worldline_id in manifest.get("worldlines", {}):
+            worldline_id = target_worldline_id
+            db_name = manifest["worldlines"][worldline_id]["database_file"]
+            target_db = save_dir / db_name
+            manifest["active_worldline_id"] = worldline_id
+        elif current_game_date and latest_db_date and current_game_date < latest_db_date:
+            is_backward = True
+            date_slug = current_game_date.replace("-", "")
+            # Preserve deterministic idempotent identity if already created
+            existing_wl = next((w_id for w_id, w_info in manifest.get("worldlines", {}).items() if w_info.get("fork_game_date") == current_game_date), None)
+            if existing_wl:
+                worldline_id = existing_wl
+                target_db = save_dir / manifest["worldlines"][existing_wl]["database_file"]
+            else:
                 worldline_id = f"worldline-{save_id}-{date_slug}-{uuid.uuid4().hex[:6]}"
                 target_db = save_dir / f"world-{worldline_id}.sqlite"
                 if not target_db.exists():
                     create_database(target_db, save_id)
-                # Atomically update save.json to bind database_file to the child worldline DB
-                save_json_path = save_dir / "save.json"
-                if save_json_path.exists():
-                    try:
-                        sdata = json.loads(save_json_path.read_bytes())
-                        sdata["database_file"] = target_db.name
-                        tmp_sjson = save_json_path.with_suffix(".tmp")
-                        tmp_sjson.write_text(json.dumps(sdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-                        os.replace(tmp_sjson, save_json_path)
-                        binding, binding_hash = read_binding(save_dir, loaded_filename)
-                    except Exception:
-                        pass
+                manifest["worldlines"][worldline_id] = {
+                    "database_file": target_db.name,
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                    "fork_game_date": current_game_date,
+                    "parent_worldline_id": manifest.get("active_worldline_id", "worldline-main")
+                }
+            manifest["active_worldline_id"] = worldline_id
+        elif worldline_id in manifest.get("worldlines", {}):
+            target_db = save_dir / manifest["worldlines"][worldline_id]["database_file"]
+            if not target_db.exists():
+                target_db = default_db
+
+        # Atomic write to save.json with immediate verification and rollback (P1)
+        orig_bytes = save_json_path.read_bytes() if save_json_path.exists() else None
+        try:
+            sdata = json.loads(orig_bytes) if orig_bytes else {"save_id": save_id, "loaded_filename": loaded_filename}
+            sdata["database_file"] = target_db.name
+            sdata["worldline_id"] = worldline_id
+            tmp_sjson = save_json_path.with_suffix(".tmp")
+            tmp_sjson.write_text(json.dumps(sdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            os.replace(tmp_sjson, save_json_path)
+
+            new_binding, new_hash = read_binding(save_dir, loaded_filename)
+            bound_db = bound_database(save_dir, new_binding)
+            if bound_db != target_db or not target_db.exists():
+                raise RuntimeError(f"SAVE_BINDING_VERIFICATION_FAILED: bound_db {bound_db} != target_db {target_db}")
+            binding, binding_hash = new_binding, new_hash
+
+            tmp_m = manifest_path.with_suffix(".tmp")
+            tmp_m.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            os.replace(tmp_m, manifest_path)
+        except Exception as e:
+            if orig_bytes and save_json_path.exists():
+                save_json_path.write_bytes(orig_bytes)
+            raise RuntimeError(f"WORLDLINE_BINDING_UPDATE_FAILED_FAIL_CLOSED: {e}")
 
         return {
             "save_id": save_id,
@@ -279,7 +385,8 @@ class SeasonCycleHost:
             "latest_db_date": latest_db_date,
             "current_game_date": current_game_date,
             "is_backward": is_backward,
-            "worldline_id": worldline_id
+            "worldline_id": worldline_id,
+            "active_worldline_id": manifest.get("active_worldline_id")
         }
 
     def initialize_season(
@@ -440,7 +547,7 @@ class SeasonCycleHost:
         progress_status = "DATE_ADVANCED"
         live_reader_instance = None
         should_close_reader = False
-        is_mock = self.state.get("is_offline_mock", False) or (mock_game_date is not None)
+        is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True)) or (mock_game_date is not None)
 
         if is_mock:
             # Offline mock mode
@@ -533,7 +640,13 @@ class SeasonCycleHost:
                 actor_uid = item.get("actor_uid", "gm_user_01" if issuer == "GM" else "coach_user_01")
                 aid = item.get("action_id", "PLAYER.EDIT.TENDENCY_BATCH")
                 params = item.get("parameters", {})
-                
+                tid = params.get("team_id", 1)
+
+                # Trusted role actor check (P0-C)
+                if not self.role_registry.is_actor_authenticated(issuer, int(tid), actor_uid):
+                    unauthorized.append({"intent_id": iid, "issuer": issuer, "actor_uid": actor_uid, "team_id": tid, "reason": "ROLE_ACTOR_NOT_AUTHENTICATED"})
+                    continue
+
                 # Check role profile
                 prof = gm_profile if issuer == "GM" else (coach_profile if issuer == "COACH" else None)
                 if prof is None or aid not in prof.allowed_actions or (actor_uid, aid) not in phase_grants:
@@ -600,7 +713,7 @@ class SeasonCycleHost:
         if self.state["status"] != HostState.DECISION_OPEN or self.state["current_cycle_id"] != cycle_id:
             raise ValueError(f"Cycle {cycle_id} is not in DECISION_OPEN status (current: {self.state['status']})")
 
-        is_mock = self.state.get("is_offline_mock", False)
+        is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
         if not is_mock:
             # LIVE MODE: Mandatory real-time Getter and dynamic PID
             if getter_func is None:
@@ -787,22 +900,31 @@ class SeasonCycleHost:
         if not active_plan or active_plan.get("plan_digest") != plan_digest:
             raise ValueError(f"DIGEST_MISMATCH_AUTHORIZATION_DENIED: provided '{plan_digest}' != sealed '{active_plan.get('plan_digest') if active_plan else None}'")
 
-        is_mock = self.state.get("is_offline_mock", False) or (transport is not None)
-        if not is_mock:
-            # LIVE MODE: Verify live process and require live getter-after
+        is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
+        if is_mock:
+            if transport is None:
+                raise RuntimeError(
+                    "OFFLINE_MOCK_CANNOT_EXECUTE_WITHOUT_FAKE_TRANSPORT: "
+                    "Refusing to construct live native session in mock mode. "
+                    "Mock mode is physically prohibited from executing real Native Setters."
+                )
+        else:
+            # LIVE MODE: Verify live process and reject fake transport
+            if transport is not None:
+                raise RuntimeError(
+                    "LIVE_MODE_REJECTS_FAKE_TRANSPORT: "
+                    "Live mode requires direct native execution with live GameProcess; "
+                    "fake transport is strictly prohibited in live mode."
+                )
             try:
                 from refresh import resolve_pid
                 actual_pid = resolve_pid("auto")
             except Exception as e:
                 raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: NBA2K22.exe is not running ({e})")
             expected_pid = actual_pid
-            if getter_after_func is None:
-                getter_after_func = self._get_live_getter()
-                if getter_after_func is None:
-                    raise RuntimeError("LIVE_GETTER_REQUIRED: Cannot authorize live execution without live Getter-after.")
-        else:
-            if expected_pid is None:
-                expected_pid = 5720
+
+        if expected_pid is None:
+            expected_pid = 5720
 
         j_dir = Path(journal_dir) if journal_dir else (self.state_file.parent / "journals" / cycle_id)
         r_dir = j_dir / "runtime"
@@ -832,12 +954,7 @@ class SeasonCycleHost:
         ctx = self._make_context(cycle_id)
         gm_profile, coach_profile = self._make_profiles(ctx)
         profiles = (gm_profile, coach_profile)
-        phase_grants = {
-            ("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "COACH.STRATEGY.RUN_PLAY"),
-            ("gm_user_01", "GM.TRADE.MIXED")
-        }
+        phase_grants = self.role_registry.get_phase_grants()
 
         bridge_res = self.bridge.bridge_batch(
             sealed_batch,
@@ -847,6 +964,16 @@ class SeasonCycleHost:
         )
         bulk_batch = bridge_res.bulk_batch
         assert bulk_batch is not None, "bulk_batch must exist for executable plan"
+
+        # Enforce certified live scope allowlist (P0-C)
+        if not is_mock:
+            for it in bulk_batch.intents:
+                act = str(it.action_id).upper()
+                fid = str(it.field_id).upper()
+                if act not in ("PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES"):
+                    raise ValueError(f"LIVE_SCOPE_VIOLATION: action '{it.action_id}' is not in certified live allowlist (PLAYER_PATCH_TENDENCIES only)")
+                if fid != "SHOT_TENDENCY":
+                    raise ValueError(f"LIVE_SCOPE_VIOLATION: field '{it.field_id}' is not in certified live allowlist (SHOT_TENDENCY only)")
 
         # 3. Execute via BoundedSessionExecutor
         executor = BoundedSessionExecutor(
@@ -860,29 +987,137 @@ class SeasonCycleHost:
 
         journal_receipts = executor.journal.load_receipts()
 
-        # 4. Independent readback check
+        # 4. Independent fresh readback (P0-A)
+        fresh_getter_func = None
+        if is_mock:
+            fresh_getter_func = getter_after_func
+        else:
+            fresh_getter_func = self._get_fresh_live_getter(expected_pid=expected_pid)
+            if fresh_getter_func is None:
+                raise RuntimeError("LIVE_POST_RUN_GETTER_FAILED: Could not establish fresh connection to read back post-execution memory.")
+
         readback_passed = True
         readback_details = []
-        if not is_mock and getter_after_func is None:
+        fresh_timestamp = datetime.now(timezone.utc).isoformat()
+        if fresh_getter_func is None:
             readback_passed = False
         else:
-            for r in journal_receipts:
-                item = next((it for it in bulk_batch.intents if it.intent_id == r.intent_id), None)
-                if item and getter_after_func:
-                    observed_after = getter_after_func(item.player_id, item.field_id)
-                    matched = (observed_after == item.value)
-                    readback_details.append({
-                        "intent_id": r.intent_id,
-                        "target_value": item.value,
-                        "observed_after": observed_after,
-                        "matched": matched
-                    })
-                    if not matched:
-                        readback_passed = False
+            for item in bulk_batch.intents:
+                observed_after = fresh_getter_func(item.player_id, item.field_id)
+                matched = (observed_after == item.value)
+                readback_details.append({
+                    "intent_id": item.intent_id,
+                    "player_id": item.player_id,
+                    "team_id": item.team_id,
+                    "field_id": item.field_id,
+                    "expected_before": item.expected_before,
+                    "target_value": item.value,
+                    "observed_after": observed_after,
+                    "matched": matched,
+                    "read_timestamp": fresh_timestamp,
+                    "source": "NBA2K22_POST_EXECUTION_MEMORY"
+                })
+                if not matched:
+                    readback_passed = False
 
-        # 5. Map receipts back to Outbox (Gate G07)
+        independent_readback_report = {
+            "schema_version": "nba2k22.rea.independent_readback.v1",
+            "timestamp": fresh_timestamp,
+            "pid": expected_pid,
+            "intent_count": len(bulk_batch.intents),
+            "missed_count": sum(1 for d in readback_details if not d["matched"]),
+            "all_100_persisted_in_game": (len(readback_details) > 0 and all(d["matched"] for d in readback_details)),
+            "verified_items": [
+                {
+                    "intent_id": d["intent_id"],
+                    "player_id": d["player_id"],
+                    "readback_getter": d["observed_after"],
+                    "target_tendency": d["target_value"],
+                    "confirmed": d["matched"]
+                }
+                for d in readback_details
+            ]
+        }
+
+        # 5. Multi-layer batch validation (P0-B)
+        planned_chunks = executor.planner.plan(bulk_batch, max_chunk_size=50)
+
+        receipts_by_chunk: Dict[str, List[Dict[str, Any]]] = {}
+        for r in journal_receipts:
+            cid = getattr(r, "chunk_id", None) or (r.get("chunk_id") if isinstance(r, dict) else "")
+            iid = getattr(r, "intent_id", None) or (r.get("intent_id") if isinstance(r, dict) else "")
+            tid = getattr(r, "team_id", None) or (r.get("team_id") if isinstance(r, dict) else None)
+            pid = getattr(r, "player_id", None) or (r.get("player_id") if isinstance(r, dict) else None)
+            fid = getattr(r, "field_id", None) or (r.get("field_id") if isinstance(r, dict) else None)
+            exp_b = getattr(r, "expected_before", None) if hasattr(r, "expected_before") else (r.get("expected_before") if isinstance(r, dict) else None)
+            req = getattr(r, "requested", None) if hasattr(r, "requested") else (r.get("requested") if isinstance(r, dict) else None)
+            out = getattr(r, "outcome", None) or (r.get("outcome") if isinstance(r, dict) else "")
+            unaltered = getattr(r, "unaltered_fields_check", False) if hasattr(r, "unaltered_fields_check") else (r.get("unaltered_fields_check", False) if isinstance(r, dict) else False)
+            get_b = getattr(r, "getter_before", None) if hasattr(r, "getter_before") else (r.get("getter_before") if isinstance(r, dict) else None)
+            get_a = getattr(r, "getter_after", None) if hasattr(r, "getter_after") else (r.get("getter_after") if isinstance(r, dict) else None)
+            raw_a = getattr(r, "raw_after", None) if hasattr(r, "raw_after") else (r.get("raw_after") if isinstance(r, dict) else None)
+
+            receipts_by_chunk.setdefault(cid, []).append({
+                "intent_id": iid,
+                "team_id": tid,
+                "player_id": pid,
+                "field_id": fid,
+                "expected_before": exp_b,
+                "getter_before": get_b,
+                "requested": req,
+                "getter_after": get_a,
+                "raw_after": raw_a,
+                "outcome": out,
+                "unaltered_fields_check": unaltered
+            })
+
+        raw_chunk_msgs = []
+        for c in planned_chunks:
+            c_receipts = receipts_by_chunk.get(c.chunk_id, [])
+            has_chunk_unknown = any("UNKNOWN" in str(r.get("outcome", "")).upper() for r in c_receipts)
+            c_outcome = "CHUNK_FAILED" if has_chunk_unknown else ("CHUNK_SKIPPED" if not c_receipts else "CHUNK_SUCCESS")
+            raw_chunk_msgs.append({
+                "kind": "chunk-execution-result",
+                "chunk_id": c.chunk_id,
+                "chunk_digest": c.chunk_digest,
+                "plan_digest": c.plan_digest,
+                "action_id": c.action_id,
+                "batch_id": c.batch_id,
+                "save_instance_id": c.save_instance_id,
+                "outcome": c_outcome,
+                "receipts": c_receipts
+            })
+
+        validation_res = validate_batch_execution(
+            batch=bulk_batch,
+            chunks=planned_chunks,
+            raw_messages=raw_chunk_msgs,
+            receipts=journal_receipts,
+            independent_readback=independent_readback_report
+        )
+        batch_validation_passed = validation_res.get("validation_passed", False)
+
+        # 6. Map receipts back to Outbox (Gate G07)
         outbox_receipts = self.bridge.map_receipts_to_outbox(journal_receipts, bridge_res)
-        has_unknown = any(r.get("outcome") == "UNKNOWN" for r in outbox_receipts)
+        has_unknown = (
+            any("UNKNOWN" in str(r.get("outcome") or "").upper() for r in outbox_receipts)
+            or any("UNKNOWN" in str(getattr(r, "outcome", None) or r.get("outcome") or "").upper() for r in journal_receipts)
+            or session_summary.get("metrics", {}).get("num_unknown", 0) > 0
+        )
+
+        if not readback_passed or not batch_validation_passed:
+            readback_map = {d["intent_id"]: d["matched"] for d in readback_details}
+            for obr in outbox_receipts:
+                iid = obr.get("intent_id")
+                if iid in readback_map and not readback_map[iid]:
+                    if "UNKNOWN" not in str(obr.get("outcome", "")).upper():
+                        obr["outcome"] = "READBACK_MISMATCH_FAILED"
+                        obr["reason"] = "Independent readback observed value does not match target"
+
+        if batch_validation_passed and readback_passed and not has_unknown:
+            for obr in outbox_receipts:
+                if obr.get("outcome") in ("SUCCESS", "SUCCESS_APPLIED"):
+                    obr["outcome"] = "VERIFIED_SUCCESS"
 
         # Record execution receipts into Outbox DB
         self.outbox.record_execution_receipts(
@@ -902,23 +1137,25 @@ class SeasonCycleHost:
                 "elapsed_seconds": round(elapsed_s, 4),
                 "executed_count": len(outbox_receipts),
                 "readback_verified": False,
+                "validation_errors": validation_res.get("errors", []),
                 "reason": "UNKNOWN execution outcome detected in journal receipts; Host locked to prevent blind retries."
             }
             self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **summary})
             return summary
 
-        if not readback_passed:
+        if not readback_passed or not batch_validation_passed:
             self.state["status"] = HostState.STOPPED_PARTIAL
             self._save_state()
             summary = {
-                "status": "STOPPED_READBACK_FAILED",
+                "status": "STOPPED_READBACK_FAILED" if not readback_passed else "STOPPED_VALIDATION_FAILED",
                 "cycle_id": cycle_id,
                 "plan_digest": plan_digest,
                 "elapsed_seconds": round(elapsed_s, 4),
                 "executed_count": len(outbox_receipts),
-                "readback_verified": False,
-                "readback_details": readback_details,
-                "reason": "Independent readback verification failed against memory; active plan preserved, cycle halted."
+                "readback_verified": readback_passed,
+                "readback_details": [d for d in readback_details if not d["matched"]][:5],
+                "validation_errors": validation_res.get("errors", []),
+                "reason": "Independent readback or batch validation failed against memory; active plan preserved, cycle halted."
             }
             self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **summary})
             return summary
@@ -941,6 +1178,7 @@ class SeasonCycleHost:
             "success_count": success_count,
             "failure_count": failure_count,
             "readback_verified": True,
+            "batch_validation_passed": True,
             "readback_details": readback_details[:5]
         }
         self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **result})
@@ -953,6 +1191,13 @@ class SeasonCycleHost:
         reader: Any = None
     ) -> Dict[str, Any]:
         """Checks game calendar advance and prepares for next cycle."""
+        if self.state["status"] in (HostState.UNKNOWN_LOCKED, HostState.STOPPED_PARTIAL):
+            return {
+                "status": "ADVANCE_REFUSED_CYCLE_NOT_CLEARED",
+                "current_status": self.state["status"],
+                "reason": f"Cannot advance calendar while Host is in abnormal/locked state '{self.state['status']}'. Active plan is preserved pending manual resolution."
+            }
+
         save_dir = Path(self.state["save_directory"])
         target_db = Path(self.state["database_file"])
         orchestrator = CalendarSimOrchestrator(
@@ -962,7 +1207,7 @@ class SeasonCycleHost:
         )
 
         curr_date = self.state.get("current_game_date", "2021-10-25")
-        is_mock = self.state.get("is_offline_mock", False) or (mock_advanced_date is not None)
+        is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True)) or (mock_advanced_date is not None)
 
         if is_mock:
             new_date = mock_advanced_date or curr_date

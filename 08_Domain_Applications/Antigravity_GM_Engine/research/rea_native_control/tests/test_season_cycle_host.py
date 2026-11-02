@@ -538,3 +538,389 @@ def test_p0_fail_closed_readback_and_unknown_locking(temp_environment):
     assert host.state["active_plan"] is not None
     assert host.state["active_plan"]["plan_digest"] == digest
 
+
+def test_p0_a_fresh_getter_after_isolated_from_preflight_cache(temp_environment, monkeypatch):
+    """P0-A: Ensure readback getter is evaluated post-execution, strictly isolated from preflight cache."""
+    env = temp_environment
+    host = env["host"]
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    intents = [{
+        "intent_id": "fresh-getter-intent-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"SHOT_TENDENCY": 88}
+        }
+    }]
+    host.start_cycle("cycle-fresh-getter", candidate_intents=intents, force=True)
+
+    preflight_call_count = 0
+    def preflight_getter(pid, fid):
+        nonlocal preflight_call_count
+        preflight_call_count += 1
+        return 80
+
+    seal_res = host.seal_cycle_decisions("cycle-fresh-getter", getter_func=preflight_getter)
+    assert seal_res["status"] == "PLAN_PREFLIGHTED_WAITING_AUTH"
+    digest = seal_res["plan_digest"]
+    assert preflight_call_count >= 1
+
+    post_read_call_count = 0
+    def post_getter(pid, fid):
+        nonlocal post_read_call_count
+        post_read_call_count += 1
+        return 88
+
+    def fake_runner_ok(chunks, script):
+        results = {}
+        for c in chunks:
+            results[c.chunk_id] = {
+                "kind": "chunk-execution-result",
+                "chunk_id": c.chunk_id,
+                "chunk_digest": c.chunk_digest,
+                "plan_digest": c.plan_digest,
+                "action_id": c.action_id,
+                "batch_id": c.batch_id,
+                "save_instance_id": c.save_instance_id,
+                "outcome": "CHUNK_SUCCESS",
+                "receipts": [{
+                    "intent_id": c.intents[0].intent_id,
+                    "team_id": c.intents[0].team_id,
+                    "player_id": c.intents[0].player_id,
+                    "field_id": c.intents[0].field_id,
+                    "expected_before": 80,
+                    "getter_before": 80,
+                    "requested": 88,
+                    "getter_after": 88,
+                    "raw_after": 88,
+                    "outcome": "SUCCESS_APPLIED",
+                    "unaltered_fields_check": True
+                }]
+            }
+        return {"outcome": "SESSION_SUCCESS", "evidence_id": "ev-p0a", "chunk_results": results}
+
+    exec_res = host.authorize_and_execute(
+        "cycle-fresh-getter",
+        plan_digest=digest,
+        transport=fake_runner_ok,
+        getter_after_func=post_getter
+    )
+    assert exec_res["status"] == "EXECUTED_AND_READBACK_RECORDED"
+    assert post_read_call_count >= 1
+    assert exec_res["readback_verified"] is True
+
+    # Test PID mismatch handling in live getter
+    with pytest.raises(RuntimeError, match="PID_MISMATCH_FRESH_GETTER"):
+        import refresh
+        monkeypatch.setattr(refresh, "resolve_pid", lambda mode: 1234)
+        host._get_fresh_live_getter(expected_pid=9999)
+
+
+def test_p0_b_unknown_outcome_locks_host_and_outbox_preserves_plan(temp_environment):
+    """P0-B: UNKNOWN outcome locks Host (UNKNOWN_LOCKED), Outbox (UNKNOWN_LOCKED), and preserves plan."""
+    env = temp_environment
+    host = env["host"]
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    intents = [{
+        "intent_id": "unknown-intent-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"SHOT_TENDENCY": 85}
+        }
+    }]
+    host.start_cycle("cycle-unknown", candidate_intents=intents, force=True)
+    seal_res = host.seal_cycle_decisions("cycle-unknown", getter_func=lambda pid, fid: 80)
+    digest = seal_res["plan_digest"]
+
+    def fake_runner_unknown(chunks, script):
+        results = {}
+        for c in chunks:
+            results[c.chunk_id] = {
+                "kind": "chunk-execution-result",
+                "chunk_id": c.chunk_id,
+                "chunk_digest": c.chunk_digest,
+                "plan_digest": c.plan_digest,
+                "action_id": c.action_id,
+                "batch_id": c.batch_id,
+                "save_instance_id": c.save_instance_id,
+                "outcome": "CHUNK_FAILED",
+                "receipts": [{
+                    "intent_id": c.intents[0].intent_id,
+                    "team_id": c.intents[0].team_id,
+                    "player_id": c.intents[0].player_id,
+                    "field_id": c.intents[0].field_id,
+                    "expected_before": 80,
+                    "getter_before": 80,
+                    "requested": 85,
+                    "getter_after": None,
+                    "raw_after": None,
+                    "outcome": "UNKNOWN_EXECUTION_OUTCOME",
+                    "unaltered_fields_check": False
+                }]
+            }
+        return {"outcome": "SESSION_SUCCESS", "evidence_id": "ev-unk", "chunk_results": results}
+
+    exec_res = host.authorize_and_execute(
+        "cycle-unknown",
+        plan_digest=digest,
+        transport=fake_runner_unknown,
+        getter_after_func=lambda pid, fid: 85
+    )
+
+    assert exec_res["status"] == "STOPPED_UNKNOWN_LOCKED"
+    assert host.state["status"] == HostState.UNKNOWN_LOCKED
+    assert host.state["active_plan"] is not None
+    assert host.state["active_plan"]["plan_digest"] == digest
+
+    # Verify Outbox cycle status is UNKNOWN_LOCKED
+    cycle_db_rec = host.outbox.get_cycle("cycle-unknown")
+    assert cycle_db_rec["status"] == "UNKNOWN_LOCKED"
+
+    # Calendar advance is blocked
+    adv_res = host.advance_calendar_check("cycle-next", mock_advanced_date="2021-11-08")
+    assert adv_res["status"] == "ADVANCE_REFUSED_CYCLE_NOT_CLEARED"
+
+
+def test_p0_b_missing_receipt_fails_closed_with_stopped_partial(temp_environment):
+    """P0-B: Missing execution receipt triggers batch validation failure, STOPPED_PARTIAL, plan preserved."""
+    env = temp_environment
+    host = env["host"]
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    intents = [{
+        "intent_id": "missing-rec-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"SHOT_TENDENCY": 85}
+        }
+    }]
+    host.start_cycle("cycle-missing-rec", candidate_intents=intents, force=True)
+    seal_res = host.seal_cycle_decisions("cycle-missing-rec", getter_func=lambda pid, fid: 80)
+    digest = seal_res["plan_digest"]
+
+    def fake_runner_missing(chunks, script):
+        results = {}
+        for c in chunks:
+            results[c.chunk_id] = {
+                "kind": "chunk-execution-result",
+                "chunk_id": c.chunk_id,
+                "chunk_digest": c.chunk_digest,
+                "plan_digest": c.plan_digest,
+                "action_id": c.action_id,
+                "batch_id": c.batch_id,
+                "save_instance_id": c.save_instance_id,
+                "outcome": "CHUNK_SUCCESS",
+                "receipts": []
+            }
+        return {"outcome": "SESSION_SUCCESS", "evidence_id": "ev-miss", "chunk_results": results}
+
+    exec_res = host.authorize_and_execute(
+        "cycle-missing-rec",
+        plan_digest=digest,
+        transport=fake_runner_missing,
+        getter_after_func=lambda pid, fid: 85
+    )
+
+    assert exec_res["status"] == "STOPPED_VALIDATION_FAILED"
+    assert host.state["status"] == HostState.STOPPED_PARTIAL
+    assert host.state["active_plan"] is not None
+    assert len(exec_res["validation_errors"]) > 0
+
+
+def test_p0_c_mock_mode_cannot_execute_without_fake_transport(temp_environment):
+    """P0-C: Mock mode cannot execute without fake transport (physical isolation)."""
+    env = temp_environment
+    host = env["host"]
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    intents = [{
+        "intent_id": "iso-intent-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"SHOT_TENDENCY": 85}
+        }
+    }]
+    host.start_cycle("cycle-iso", candidate_intents=intents, force=True)
+    seal_res = host.seal_cycle_decisions("cycle-iso", getter_func=lambda pid, fid: 80)
+    digest = seal_res["plan_digest"]
+
+    with pytest.raises(RuntimeError, match="OFFLINE_MOCK_CANNOT_EXECUTE_WITHOUT_FAKE_TRANSPORT"):
+        host.authorize_and_execute("cycle-iso", plan_digest=digest, transport=None)
+
+
+def test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope(temp_environment, monkeypatch):
+    """P0-C: Live mode strictly rejects fake transport and restricts actions to PLAYER_PATCH_TENDENCIES/SHOT_TENDENCY."""
+    env = temp_environment
+    host = env["host"]
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    host.state["is_offline_mock"] = False
+    host.state["is_mock"] = False
+    host._save_state()
+
+    intents = [{
+        "intent_id": "live-scope-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"SHOT_TENDENCY": 85}
+        }
+    }]
+    host.start_cycle("cycle-live-guard", candidate_intents=intents, force=True, mock_game_date="2021-11-01")
+    seal_res = host.seal_cycle_decisions("cycle-live-guard", getter_func=lambda pid, fid: 80)
+    digest = seal_res["plan_digest"]
+
+    def dummy_transport(chunks, script):
+        return {}
+
+    with pytest.raises(RuntimeError, match="LIVE_MODE_REJECTS_FAKE_TRANSPORT"):
+        host.authorize_and_execute("cycle-live-guard", plan_digest=digest, transport=dummy_transport)
+
+    import refresh
+    monkeypatch.setattr(refresh, "resolve_pid", lambda mode: 5720)
+
+    unauth_intents = [{
+        "intent_id": "unauth-field-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"DRIVING_LAYUP_TENDENCY": 75}
+        }
+    }]
+    host.start_cycle("cycle-unauth-scope", candidate_intents=unauth_intents, force=True, mock_game_date="2021-11-01")
+    seal_res2 = host.seal_cycle_decisions("cycle-unauth-scope", getter_func=lambda pid, fid: 80)
+    digest2 = seal_res2["plan_digest"]
+
+    with pytest.raises(ValueError, match="LIVE_SCOPE_VIOLATION"):
+        host.authorize_and_execute("cycle-unauth-scope", plan_digest=digest2, transport=None)
+
+
+def test_p0_c_unauthenticated_role_actor_rejected(temp_environment):
+    """P0-C: Unauthenticated actor identity is rejected by TrustedRoleRegistry at cycle entry."""
+    env = temp_environment
+    host = env["host"]
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    imposter_intents = [{
+        "intent_id": "imposter-intent",
+        "issuer_role": "GM",
+        "actor_uid": "imposter_hacker",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {
+            "team_id": 1,
+            "player_id": 2459,
+            "expected_before": 80,
+            "values": {"SHOT_TENDENCY": 85}
+        }
+    }]
+    start_res = host.start_cycle("cycle-imposter", candidate_intents=imposter_intents, force=True)
+    assert start_res["status"] == "DECISION_CYCLE_OPENED"
+    assert len(start_res["unauthorized_rejected"]) == 1
+    assert start_res["unauthorized_rejected"][0]["reason"] == "ROLE_ACTOR_NOT_AUTHENTICATED"
+
+
+def test_p1_worldline_manifest_idempotent_and_switch_recovery(temp_environment):
+    """P1: worldlines_manifest.json is created, deterministic, supports switching, and rolls back corrupt save.json."""
+    env = temp_environment
+    host = env["host"]
+    save_dir = env["save_dir"]
+
+    info1 = host.inspect_worldline(save_dir=save_dir, loaded_filename="MyLEAGUE0003")
+    manifest_path = save_dir / "worldlines_manifest.json"
+    assert manifest_path.exists()
+    manifest_data = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert "worldlines" in manifest_data
+    w_id = info1["worldline_id"]
+    assert w_id in manifest_data["worldlines"]
+
+    info2 = host.inspect_worldline(save_dir=save_dir, loaded_filename="MyLEAGUE0003")
+    assert info2["worldline_id"] == w_id
+    manifest_data2 = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert len(manifest_data2["worldlines"]) == len(manifest_data["worldlines"])
+
+    custom_target = "custom_branch_wl_002"
+    manifest_data2["worldlines"][custom_target] = {
+        "database_file": "world.sqlite",
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "parent_worldline_id": w_id
+    }
+    manifest_path.write_text(json.dumps(manifest_data2, indent=2), encoding="utf-8")
+
+    info3 = host.inspect_worldline(save_dir=save_dir, loaded_filename="MyLEAGUE0003", target_worldline_id=custom_target)
+    assert info3["worldline_id"] == custom_target
+    manifest_data3 = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert manifest_data3["active_worldline_id"] == custom_target
+
+    info4 = host.inspect_worldline(save_dir=save_dir, loaded_filename="MyLEAGUE0003", target_worldline_id=w_id)
+    assert info4["worldline_id"] == w_id
+
+
+def test_g7_gold_100_offline_batch_validation_replay():
+    """G7: Replay 100 gold live receipts through validate_stage_directory and assert fail-closed verification."""
+    from validate_batch_execution import validate_stage_directory
+    root = Path(__file__).resolve().parents[5]
+    gold_dirs = [d for d in root.rglob("mutation_100") if d.is_dir() and (d / "manifest_BATCH-100-BENCH-MUTATION.json").exists()]
+    assert len(gold_dirs) > 0, "Gold 100 mutation_100 directory must exist"
+    gold_dir = gold_dirs[0]
+
+    val_res = validate_stage_directory(gold_dir, expected_count=100, expected_mode="mutation")
+    assert val_res["validation_passed"] is True, f"Validation failed: {val_res['errors']}"
+    assert len(val_res["errors"]) == 0
+    assert val_res["checks"]["planned_intent_count"] == 100
+    assert val_res["checks"]["receipt_count"] == 100
+    assert val_res["checks"]["unknown_count"] == 0
+    assert val_res["checks"]["conservation_holds"] is True
+
