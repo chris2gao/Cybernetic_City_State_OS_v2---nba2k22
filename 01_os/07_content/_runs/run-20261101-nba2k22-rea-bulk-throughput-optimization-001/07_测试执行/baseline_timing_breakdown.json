@@ -1,0 +1,138 @@
+{
+  "metadata": {
+    "task_id": "NBA2K22-REA-BULK-THROUGHPUT-OPT-20261101-001",
+    "run_id": "run-20261101-nba2k22-rea-bulk-throughput-optimization-001",
+    "baseline_source_run": "run-20261101-nba2k22-rea-controlled-live-bulk-pilot-001",
+    "timestamp": "2026-11-02T06:07:10Z",
+    "actual_executor_model": "Gemini 2.5 Pro (execution)"
+  },
+  "baseline_provenance": {
+    "source_file": "01_os/07_content/_runs/run-20261101-nba2k22-rea-controlled-live-bulk-pilot-001/07_测试执行/stage2_mutation/execution_result.json",
+    "batch_id": "BATCH-PILOT-STAGE2-MUTATION-20261101",
+    "plan_digest": "6d8bee102cf29322aff977fd2745660b35ff007176f417ae8244ac3547ac7b3b",
+    "chunk_count": 2,
+    "intents_planned": 12,
+    "intents_success": 12,
+    "total_wall_time_seconds": 39.40411,
+    "total_wall_time_ms": 39404.11,
+    "time_per_successful_setter_seconds": 3.283676,
+    "time_per_chunk_seconds": 19.702055,
+    "frida_attach_count": 2,
+    "powershell_process_count": 2,
+    "node_process_count": 2
+  },
+  "noop_baseline_provenance": {
+    "source_file": "01_os/07_content/_runs/run-20261101-nba2k22-rea-controlled-live-bulk-pilot-001/07_测试执行/stage1_noop/execution_result.json",
+    "batch_id": "BATCH-PILOT-STAGE1-NOOP-20261101",
+    "plan_digest": "b954fab7813cd04f47e41d85b7e10fffc4729df0254e80d206ff6c7c95aff52f",
+    "chunk_count": 2,
+    "intents_planned": 12,
+    "intents_noop": 12,
+    "total_wall_time_seconds": 39.52493,
+    "time_per_chunk_seconds": 19.76246
+  },
+  "empirical_stage_breakdown_per_chunk_ms": {
+    "python_preparation": {
+      "duration_ms": 1.35,
+      "measurement_method": "time.perf_counter() monotonic timer",
+      "scope": "directory creation, manifest serialization, script sha256 computation"
+    },
+    "powershell_bootstrap": {
+      "duration_ms": 241.0,
+      "measurement_method": "System.Diagnostics.Stopwatch via pwsh",
+      "scope": "powershell.exe launch, -NoProfile argument processing, SecurityPrincipal Admin check"
+    },
+    "game_exe_sha256_hash": {
+      "duration_ms": 1378.0,
+      "measurement_method": "Measure-Command Get-FileHash",
+      "scope": "reading NBA2K22.exe (~200MB) from disk and computing SHA256 against pinned build"
+    },
+    "node_rea_frida_attach_init": {
+      "duration_ms": 2400.0,
+      "measurement_method": "measured subtraction: rea total (duration=1000) - 1000ms delay - PS overhead",
+      "scope": "Node.js startup, rea-agents module load, Frida local device enumeration, process attach (PID 10404)"
+    },
+    "frida_script_compile_and_inject": {
+      "duration_ms": 250.0,
+      "measurement_method": "Frida script load event latency",
+      "scope": "session.create_script, script.load, v8 bytecode compile inside target process"
+    },
+    "gui_thread_window_enum_and_hook": {
+      "duration_ms": 15.0,
+      "measurement_method": "performance.now() in Frida JS runtime",
+      "scope": "EnumWindows, GetWindowThreadProcessId, Interceptor.attach on PeekMessageA, PostMessageW"
+    },
+    "gui_callback_and_native_execution": {
+      "duration_ms": 4.5,
+      "measurement_method": "Frida JS performance.now() inside PeekMessageA onLeave",
+      "scope": "6 players: 6 Getters-before, 6 Setters, 6 Getters-after, 156-byte integrity verification"
+    },
+    "frida_message_send_and_hook_detach": {
+      "duration_ms": 2.0,
+      "measurement_method": "Frida JS performance.now()",
+      "scope": "send() JSON payload to runner, hook.detach()"
+    },
+    "rea_cli_duration_ms_sleep": {
+      "duration_ms": 15000.0,
+      "measurement_method": "REA CLI source code inspection: await delay(input.durationMs)",
+      "scope": "Mandatory fixed sleep inside FridaInstrumentationService.js. Baseline used duration_ms=15000"
+    },
+    "frida_detach_and_cleanup": {
+      "duration_ms": 275.0,
+      "measurement_method": "process exit minus sleep and attach time",
+      "scope": "session.detach, session.close, JSON evidence serialization to stdout"
+    },
+    "python_evidence_parse_and_journal": {
+      "duration_ms": 3.0,
+      "measurement_method": "time.perf_counter() monotonic timer",
+      "scope": "json.loads(evidence.json), message payload extraction, journal claim resolution"
+    }
+  },
+  "chunk_total_reconstruction_ms": {
+    "sum_of_stages_ms": 19569.85,
+    "actual_baseline_chunk_ms": 19702.05,
+    "unaccounted_jitter_ms": 132.2,
+    "percentage_fixed_sleep_delay": 76.13,
+    "percentage_process_and_hashing_overhead": 23.85,
+    "percentage_native_game_execution": 0.02
+  },
+  "findings_and_bottlenecks": [
+    {
+      "rank": 1,
+      "bottleneck": "REA CLI `--duration-ms` Mandatory Sleep (15.0s per chunk)",
+      "impact_ms": 15000.0,
+      "share_pct": 76.1,
+      "mechanism": "REA CLI FridaInstrumentationService unconditionally calls `await delay(input.durationMs)`. When duration_ms=15000, 15 seconds are completely idle waiting for the timer after the GUI hook has already detached in <5ms.",
+      "remedy": "In a multi-chunk session, execute all chunks within a single session and tune duration_ms to ~2000ms (sufficient for GUI loop dispatch with 40x safety margin)."
+    },
+    {
+      "rank": 2,
+      "bottleneck": "Per-Chunk Process Lifecycle (PowerShell + Node + REA + Frida Attach)",
+      "impact_ms": 4290.0,
+      "share_pct": 21.8,
+      "mechanism": "Every chunk runs a distinct PowerShell process (241ms), recalculates 200MB game EXE hash (1378ms), spawns Node.js (800ms), and attaches Frida to PID 10404 (1870ms). With N chunks, this ~4.3s overhead is paid N times.",
+      "remedy": "SessionBatchTransport attaches Frida ONCE and reuses the single session for N chunks."
+    },
+    {
+      "rank": 3,
+      "bottleneck": "Native Game Execution is NOT the Bottleneck (<5ms for 6 items)",
+      "impact_ms": 4.5,
+      "share_pct": 0.02,
+      "mechanism": "The actual memory reads, Native Setters, and byte verification take under 5 milliseconds total per chunk.",
+      "remedy": "Preserve all existing safety, CAS, unchanged byte verifications, and journal invariants without modification, because native execution overhead is negligible."
+    }
+  ],
+  "projected_speedup_model": {
+    "single_session_2_chunks": {
+      "estimated_ps_and_hash_overhead_ms": 1600.0,
+      "estimated_rea_attach_overhead_ms": 2500.0,
+      "estimated_native_execution_2_chunks_ms": 10.0,
+      "configured_duration_ms": 2000.0,
+      "estimated_cleanup_ms": 300.0,
+      "total_estimated_wall_time_ms": 4410.0,
+      "estimated_wall_time_seconds": 4.41,
+      "speedup_factor": 8.93,
+      "reduction_percent": 88.8
+    }
+  }
+}
