@@ -55,6 +55,28 @@ def _insert(conn,table,record):
     conn.execute(f'INSERT INTO {ident(table)} ({",".join(map(ident,cols))}) VALUES ({",".join("?" for _ in cols)})',tuple(record.values()))
 
 
+def _insert_batch(conn,table,records,batch_size=10000):
+    if not records:return
+    allowed={c.name:c for c in TABLES[table].columns}
+    by_keys={}
+    for r in records:
+        extra=set(r)-allowed.keys()
+        if extra:raise PermissionError('unknown/unapproved columns for '+table+': '+','.join(sorted(extra)))
+        for k,v in r.items():
+            if v is None:continue
+            kind=allowed[k].kind
+            if kind=='INTEGER' and (not isinstance(v,int) or isinstance(v,bool)):raise ValueError(table+'.'+k+' must be integer or null')
+            if kind=='TEXT' and not isinstance(v,str):raise ValueError(table+'.'+k+' must be text or null')
+            if kind=='REAL' and (not isinstance(v,(int,float)) or isinstance(v,bool)):raise ValueError(table+'.'+k+' must be numeric or null')
+        by_keys.setdefault(tuple(r.keys()),[]).append(r)
+    for k_tuple,group in by_keys.items():
+        cols=list(k_tuple)
+        sql=f'INSERT INTO {ident(table)} ({",".join(map(ident,cols))}) VALUES ({",".join("?" for _ in cols)})'
+        tuples=[tuple(r[c] for c in cols) for r in group]
+        for i in range(0,len(tuples),batch_size):
+            conn.executemany(sql,tuples[i:i+batch_size])
+
+
 def _ensure_record(conn,table,key,record,match_fields=None):
     current=conn.execute(f'SELECT * FROM {ident(table)} WHERE {ident(key)}=?',(record[key],)).fetchone()
     if current is None:_insert(conn,table,record)
@@ -164,13 +186,23 @@ def ingest_capture(conn,payload,*,_live_receipt=None):
         for name in TABLES:
             if name not in payload.get('facts',{}):continue
             spec=TABLES[name]
-            for n,original in enumerate(payload['facts'][name]):
-                item=dict(original);cols={c.name for c in spec.columns}
-                if 'unit_id' in cols:item.setdefault('unit_id',unit)
-                if 'save_id' in cols:item.setdefault('save_id',payload['save_id'])
-                item.setdefault(spec.key,f'{unit}:{name}:{n}')
-                if not spec.observation or name=='native_fields':_ensure_record(conn,name,spec.key,item)
-                else:_insert(conn,name,item)
+            cols={c.name for c in spec.columns}
+            if not spec.observation or name=='native_fields':
+                for n,original in enumerate(payload['facts'][name]):
+                    item=dict(original)
+                    if 'unit_id' in cols:item.setdefault('unit_id',unit)
+                    if 'save_id' in cols:item.setdefault('save_id',payload['save_id'])
+                    item.setdefault(spec.key,f'{unit}:{name}:{n}')
+                    _ensure_record(conn,name,spec.key,item)
+            else:
+                batch=[]
+                for n,original in enumerate(payload['facts'][name]):
+                    item=dict(original)
+                    if 'unit_id' in cols:item.setdefault('unit_id',unit)
+                    if 'save_id' in cols:item.setdefault('save_id',payload['save_id'])
+                    item.setdefault(spec.key,f'{unit}:{name}:{n}')
+                    batch.append(item)
+                _insert_batch(conn,name,batch)
     return 'failed_recorded' if status=='failed' else 'ingested'
 
 
