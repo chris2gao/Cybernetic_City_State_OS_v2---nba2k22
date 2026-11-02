@@ -1,0 +1,109 @@
+{
+  "schema_version": "nba2k22.rea.validation_result.v1",
+  "task_id": "NBA2K22-REA-100-LIVE-BENCHMARK-20261102-001",
+  "timestamp": "2026-11-02T11:52:58Z",
+  "overall_status": "ALL_GATES_PASSED",
+  "stages": {
+    "preflight": {
+      "status": "PASSED",
+      "duration_seconds": 0.699
+    },
+    "probe_scan": {
+      "status": "PASSED",
+      "selected_candidates": 100,
+      "duration_seconds": 15.06376
+    },
+    "stage1_noop": {
+      "schema_version": "nba2k22.rea.receipt_validation.v1",
+      "stage_directory": "E:\\gemini_space\\nba2k22\\01_os\\07_content\\_runs\\run-20261102-nba2k22-rea-100-live-benchmark-001\\07_测试执行\\noop_100",
+      "expected_mode": "noop",
+      "expected_count": 100,
+      "validation_passed": true,
+      "errors": [],
+      "checks": {
+        "manifest_file": "manifest_BATCH-100-BENCH-NOOP.json",
+        "batch_file": "batch_BATCH-100-BENCH-NOOP.json",
+        "execution_result_file": "execution_result.json",
+        "manifest_game_build_valid": true,
+        "cold_backup_exists": true,
+        "planned_intent_count": 100,
+        "unique_intent_ids_count": 100,
+        "unique_resource_keys_count": 100,
+        "recomputed_plan_digest": "32d5fb2769336bb0c05854eecb5a7a0b303c482258ed8abfddc0b928dceb659e",
+        "plan_digest_verified": true,
+        "claim_files_count": 7,
+        "claimed_chunk_ids": [
+          "chunk-0001-team-00-player-patch-tendencies",
+          "chunk-0002-team-01-player-patch-tendencies",
+          "chunk-0003-team-02-player-patch-tendencies",
+          "chunk-0004-team-03-player-patch-tendencies",
+          "chunk-0005-team-04-player-patch-tendencies",
+          "chunk-0006-team-05-player-patch-tendencies",
+          "chunk-0007-team-06-player-patch-tendencies"
+        ],
+        "receipt_count": 100,
+        "outcomes_breakdown": {
+          "UNCHANGED_ALREADY_TARGET": 100
+        },
+        "unknown_count": 0,
+        "missing_intents_count": 0,
+        "conservation_holds": true,
+        "frida_attach_count": 1,
+        "execution_time_ms": 10395.540099999835,
+        "chunk_count": 7,
+        "rea_session_dirs_count": 1,
+        "evidence_chunk_messages_count": 7,
+        "rea_evidence_verified": true
+      }
+    },
+    "stage2_mutation": {
+      "schema_version": "nba2k22.rea.receipt_validation.v1",
+      "stage_directory": "E:\\gemini_space\\nba2k22\\01_os\\07_content\\_runs\\run-20261102-nba2k22-rea-100-live-benchmark-001\\07_测试执行\\mutation_100",
+      "expected_mode": "mutation",
+      "expected_count": 100,
+      "validation_passed": true,
+      "errors": [],
+      "checks": {
+        "manifest_file": "manifest_BATCH-100-BENCH-MUTATION.json",
+        "batch_file": "batch_BATCH-100-BENCH-MUTATION.json",
+        "execution_result_file": "execution_result.json",
+        "manifest_game_build_valid": true,
+        "cold_backup_exists": true,
+        "planned_intent_count": 100,
+        "unique_intent_ids_count": 100,
+        "unique_resource_keys_count": 100,
+        "recomputed_plan_digest": "9c09debe1133138670f9ed3b651d3278dd1ce2f444e592f8883d003254ff345e",
+        "plan_digest_verified": true,
+        "claim_files_count": 7,
+        "claimed_chunk_ids": [
+          "chunk-0001-team-00-player-patch-tendencies",
+          "chunk-0002-team-01-player-patch-tendencies",
+          "chunk-0003-team-02-player-patch-tendencies",
+          "chunk-0004-team-03-player-patch-tendencies",
+          "chunk-0005-team-04-player-patch-tendencies",
+          "chunk-0006-team-05-player-patch-tendencies",
+          "chunk-0007-team-06-player-patch-tendencies"
+        ],
+        "receipt_count": 100,
+        "outcomes_breakdown": {
+          "SUCCESS_APPLIED": 100
+        },
+        "unknown_count": 0,
+        "missing_intents_count": 0,
+        "conservation_holds": true,
+        "frida_attach_count": 1,
+        "execution_time_ms": 10295.745800000077,
+        "chunk_count": 7,
+        "rea_session_dirs_count": 1,
+        "evidence_chunk_messages_count": 7,
+        "rea_evidence_verified": true
+      }
+    },
+    "stage3_readback": {
+      "status": "PASSED",
+      "verified_count": 100,
+      "missed_count": 0,
+      "duration_seconds": 15.47985
+    }
+  }
+}
