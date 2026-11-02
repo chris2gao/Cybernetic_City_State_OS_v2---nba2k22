@@ -162,26 +162,17 @@ class DecisionOutbox:
             row = cur.fetchone()
             return dict(row) if row else None
 
-    def add_intent(
+    def _validate_intent_submission(
         self,
-        cycle_id: str,
+        cycle: Dict[str, Any],
         intent: ActionIntent,
         profile: RoleCapabilityProfile,
-        phase_grants: Set[Tuple[str, str]],
-        *,
-        source_evidence_ref: str = "",
-        decision_reason: str = ""
-    ) -> ActionIntent:
-        """Adds an ActionIntent submitted by an authenticated host profile to the outbox."""
+        phase_grants: Set[Tuple[str, str]]
+    ):
+        """Unified host authenticated profile, capability, phase grant, and scope validation."""
         # 1. Host identity verification
-        if intent.issuer_uid != profile.actor_uid:
+        if intent.issuer_uid != profile.actor_uid and profile.role_type != "WORLD_ADMIN":
             raise PermissionError(f"SUBMISSION_ISSUER_DOES_NOT_MATCH_AUTHENTICATED_PROFILE: {intent.issuer_uid} != {profile.actor_uid}")
-
-        cycle = self.get_cycle(cycle_id)
-        if not cycle:
-            raise ValueError(f"CYCLE_NOT_FOUND: {cycle_id}")
-        if cycle["status"] not in ("COLLECTING", "CONFLICTED"):
-            raise ValueError(f"CANNOT_ADD_INTENT_TO_SEALED_CYCLE: cycle {cycle_id} is {cycle['status']}")
 
         # 2. Context binding verification
         ctx = json.loads(cycle["context_json"])
@@ -210,11 +201,36 @@ class DecisionOutbox:
             if target_pid is not None and target_pid not in profile.player_scope and profile.role_type != "WORLD_ADMIN":
                 raise PermissionError(f"PLAYER_SCOPE_VIOLATION: player {target_pid} not in profile scope {profile.player_scope}")
 
-        resource_key = _derive_resource_key(intent.action_id, params)
+    def add_intent(
+        self,
+        cycle_id: str,
+        intent: ActionIntent,
+        profile: RoleCapabilityProfile,
+        phase_grants: Set[Tuple[str, str]],
+        *,
+        source_evidence_ref: str = "",
+        decision_reason: str = ""
+    ) -> ActionIntent:
+        """Adds an ActionIntent submitted by an authenticated host profile to the outbox."""
+        cycle = self.get_cycle(cycle_id)
+        if not cycle:
+            raise ValueError(f"CYCLE_NOT_FOUND: {cycle_id}")
+        if cycle["status"] not in ("COLLECTING", "CONFLICTED"):
+            raise ValueError(f"CANNOT_ADD_INTENT_TO_SEALED_CYCLE: cycle {cycle_id} is {cycle['status']}")
+
+        self._validate_intent_submission(cycle, intent, profile, phase_grants)
+
+        resource_key = _derive_resource_key(intent.action_id, intent.parameters)
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
         with self._get_connection() as conn:
             cur = conn.cursor()
+            cur.execute("BEGIN IMMEDIATE")
+            cur.execute("SELECT revision, status FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+            c_row = cur.fetchone()
+            if not c_row or c_row["status"] not in ("COLLECTING", "CONFLICTED"):
+                raise ValueError(f"CANNOT_ADD_INTENT_TO_SEALED_CYCLE: cycle {cycle_id} status changed concurrently")
+
             # Check for duplicate intent_id
             cur.execute("SELECT * FROM decision_intents WHERE intent_id = ?", (intent.intent_id,))
             existing = cur.fetchone()
@@ -224,7 +240,7 @@ class DecisionOutbox:
                     return intent
                 raise ValueError(f"INTENT_ID_REUSED_WITH_DIFFERENT_PAYLOAD: {intent.intent_id}")
 
-            new_rev = cycle["revision"] + 1
+            new_rev = c_row["revision"] + 1
             cur.execute("""
             INSERT INTO decision_intents (
                 intent_id, cycle_id, issuer_uid, role_type, action_id, parameters_json,
@@ -248,8 +264,11 @@ class DecisionOutbox:
             ))
 
             cur.execute("""
-            UPDATE decision_cycles SET revision = ?, status = 'COLLECTING', updated_at = ? WHERE cycle_id = ?
-            """, (new_rev, now, cycle_id))
+            UPDATE decision_cycles SET revision = ?, status = 'COLLECTING', updated_at = ?
+            WHERE cycle_id = ? AND status IN ('COLLECTING', 'CONFLICTED') AND revision = ?
+            """, (new_rev, now, cycle_id, c_row["revision"]))
+            if cur.rowcount == 0:
+                raise ValueError("CONCURRENT_MODIFICATION_DETECTED_IN_ADD_INTENT")
 
             cur.execute("""
             INSERT INTO outbox_events (
@@ -287,10 +306,19 @@ class DecisionOutbox:
         if cycle["status"] not in ("COLLECTING", "CONFLICTED"):
             raise ValueError(f"CANNOT_SUPERSEDE_IN_SEALED_CYCLE: cycle {cycle_id} is {cycle['status']}")
 
+        # Validate the NEW intent with identical host validation!
+        self._validate_intent_submission(cycle, new_intent, profile, phase_grants)
+
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
         with self._get_connection() as conn:
             cur = conn.cursor()
+            cur.execute("BEGIN IMMEDIATE")
+            cur.execute("SELECT revision, status FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+            c_row = cur.fetchone()
+            if not c_row or c_row["status"] not in ("COLLECTING", "CONFLICTED"):
+                raise ValueError(f"CANNOT_SUPERSEDE_IN_SEALED_CYCLE: cycle {cycle_id} status changed concurrently")
+
             cur.execute("SELECT * FROM decision_intents WHERE intent_id = ? AND cycle_id = ?", (old_intent_id, cycle_id))
             old_row = cur.fetchone()
             if not old_row:
@@ -298,12 +326,11 @@ class DecisionOutbox:
             if old_row["status"] != "DRAFT":
                 raise ValueError(f"CANNOT_SUPERSEDE_NON_DRAFT_INTENT: intent {old_intent_id} has status {old_row['status']}")
 
-            # Issuer check
+            # Issuer check: profile must own the old intent
             if old_row["issuer_uid"] != profile.actor_uid and profile.role_type != "WORLD_ADMIN":
                 raise PermissionError("CANNOT_SUPERSEDE_ANOTHER_ISSUERS_INTENT")
 
-            # Validate and add new intent
-            new_rev = cycle["revision"] + 1
+            new_rev = c_row["revision"] + 1
             resource_key = _derive_resource_key(new_intent.action_id, new_intent.parameters)
 
             cur.execute("""
@@ -333,7 +360,12 @@ class DecisionOutbox:
                 now
             ))
 
-            cur.execute("UPDATE decision_cycles SET revision = ?, status = 'COLLECTING', updated_at = ? WHERE cycle_id = ?", (new_rev, now, cycle_id))
+            cur.execute("""
+            UPDATE decision_cycles SET revision = ?, status = 'COLLECTING', updated_at = ?
+            WHERE cycle_id = ? AND status IN ('COLLECTING', 'CONFLICTED') AND revision = ?
+            """, (new_rev, now, cycle_id, c_row["revision"]))
+            if cur.rowcount == 0:
+                raise ValueError("CONCURRENT_MODIFICATION_DETECTED_IN_SUPERSEDE")
 
             cur.execute("""
             INSERT INTO outbox_events (
@@ -482,72 +514,75 @@ class DecisionOutbox:
         expected_revision: Optional[int] = None
     ) -> RoleActionBatch:
         """Seals the active decision cycle into an immutable RoleActionBatch."""
-        cycle = self.get_cycle(cycle_id)
-        if not cycle:
-            raise ValueError(f"CYCLE_NOT_FOUND: {cycle_id}")
-
-        # Idempotent seal check
-        if cycle["status"] == "SEALED":
-            if cycle["sealed_batch_id"] == aggregate_batch_id:
-                # Reconstruct and return existing sealed batch
-                ctx = BatchContext(**json.loads(cycle["context_json"]))
-                intents_rows = self.list_intents(cycle_id, status="SEALED")
-                action_intents = tuple(
-                    ActionIntent.decided(
-                        r["intent_id"],
-                        r["issuer_uid"],
-                        r["action_id"],
-                        json.loads(r["parameters_json"]),
-                        dependencies=tuple(json.loads(r["dependencies_json"])),
-                        agreement_ref=r["agreement_ref"]
-                    )
-                    for r in intents_rows
-                )
-                return RoleActionBatch(aggregate_batch_id, ctx, action_intents)
-            raise ValueError(f"CYCLE_ALREADY_SEALED_WITH_DIFFERENT_BATCH_ID: {cycle['sealed_batch_id']} != {aggregate_batch_id}")
-
-        if cycle["status"] != "COLLECTING":
-            raise ValueError(f"CANNOT_SEAL_CYCLE_IN_STATE: {cycle['status']}")
-
-        if expected_revision is not None and cycle["revision"] != expected_revision:
-            raise ValueError(f"REVISION_CAS_MISMATCH: expected {expected_revision}, got {cycle['revision']}")
-
-        # Inspect conflicts
-        analysis = self.inspect_conflicts_and_dependencies(cycle_id)
-        if analysis["has_blocking_issues"]:
-            with self._get_connection() as conn:
-                conn.execute("UPDATE decision_cycles SET status = 'CONFLICTED' WHERE cycle_id = ?", (cycle_id,))
-                conn.commit()
-            raise ValueError(f"CYCLE_HAS_BLOCKING_CONFLICTS: {analysis}")
-
-        draft_rows = self.list_intents(cycle_id, status="DRAFT")
-        if not draft_rows:
-            raise ValueError(f"CANNOT_SEAL_EMPTY_CYCLE: no active DRAFT intents in {cycle_id}")
-
-        ctx = BatchContext(**json.loads(cycle["context_json"]))
-        action_intents = tuple(
-            ActionIntent.decided(
-                r["intent_id"],
-                r["issuer_uid"],
-                r["action_id"],
-                json.loads(r["parameters_json"]),
-                dependencies=tuple(json.loads(r["dependencies_json"])),
-                agreement_ref=r["agreement_ref"]
-            )
-            for r in draft_rows
-        )
-        sealed_batch = RoleActionBatch(aggregate_batch_id, ctx, action_intents)
-        sealed_digest_str = digest({
-            "batch_id": aggregate_batch_id,
-            "context": asdict(ctx),
-            "intents": [asdict(i) for i in action_intents]
-        })
-
-        now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-        new_rev = cycle["revision"] + 1
-
         with self._get_connection() as conn:
             cur = conn.cursor()
+            cur.execute("BEGIN IMMEDIATE")
+            cur.execute("SELECT * FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+            cycle = cur.fetchone()
+            if not cycle:
+                raise ValueError(f"CYCLE_NOT_FOUND: {cycle_id}")
+
+            # Idempotent seal check
+            if cycle["status"] == "SEALED":
+                if cycle["sealed_batch_id"] == aggregate_batch_id:
+                    # Reconstruct and return existing sealed batch
+                    ctx = BatchContext(**json.loads(cycle["context_json"]))
+                    cur.execute("SELECT * FROM decision_intents WHERE cycle_id = ? AND status = 'SEALED'", (cycle_id,))
+                    intents_rows = cur.fetchall()
+                    action_intents = tuple(
+                        ActionIntent.decided(
+                            r["intent_id"],
+                            r["issuer_uid"],
+                            r["action_id"],
+                            json.loads(r["parameters_json"]),
+                            dependencies=tuple(json.loads(r["dependencies_json"])),
+                            agreement_ref=r["agreement_ref"]
+                        )
+                        for r in intents_rows
+                    )
+                    return RoleActionBatch(aggregate_batch_id, ctx, action_intents)
+                raise ValueError(f"CYCLE_ALREADY_SEALED_WITH_DIFFERENT_BATCH_ID: {cycle['sealed_batch_id']} != {aggregate_batch_id}")
+
+            if cycle["status"] != "COLLECTING":
+                raise ValueError(f"CANNOT_SEAL_CYCLE_IN_STATE: {cycle['status']}")
+
+            if expected_revision is not None and cycle["revision"] != expected_revision:
+                raise ValueError(f"REVISION_CAS_MISMATCH: expected {expected_revision}, got {cycle['revision']}")
+
+            # Inspect conflicts
+            analysis = self.inspect_conflicts_and_dependencies(cycle_id)
+            if analysis["has_blocking_issues"]:
+                cur.execute("UPDATE decision_cycles SET status = 'CONFLICTED' WHERE cycle_id = ?", (cycle_id,))
+                conn.commit()
+                raise ValueError(f"CYCLE_HAS_BLOCKING_CONFLICTS: {analysis}")
+
+            cur.execute("SELECT * FROM decision_intents WHERE cycle_id = ? AND status = 'DRAFT'", (cycle_id,))
+            draft_rows = cur.fetchall()
+            if not draft_rows:
+                raise ValueError(f"CANNOT_SEAL_EMPTY_CYCLE: no active DRAFT intents in {cycle_id}")
+
+            ctx = BatchContext(**json.loads(cycle["context_json"]))
+            action_intents = tuple(
+                ActionIntent.decided(
+                    r["intent_id"],
+                    r["issuer_uid"],
+                    r["action_id"],
+                    json.loads(r["parameters_json"]),
+                    dependencies=tuple(json.loads(r["dependencies_json"])),
+                    agreement_ref=r["agreement_ref"]
+                )
+                for r in draft_rows
+            )
+            sealed_batch = RoleActionBatch(aggregate_batch_id, ctx, action_intents)
+            sealed_digest_str = digest({
+                "batch_id": aggregate_batch_id,
+                "context": asdict(ctx),
+                "intents": [asdict(i) for i in action_intents]
+            })
+
+            now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            new_rev = cycle["revision"] + 1
+
             cur.execute("""
             UPDATE decision_cycles SET
                 status = 'SEALED',
@@ -556,8 +591,10 @@ class DecisionOutbox:
                 sealed_at = ?,
                 revision = ?,
                 updated_at = ?
-            WHERE cycle_id = ?
-            """, (aggregate_batch_id, sealed_digest_str, now, new_rev, now, cycle_id))
+            WHERE cycle_id = ? AND status = 'COLLECTING' AND revision = ?
+            """, (aggregate_batch_id, sealed_digest_str, now, new_rev, now, cycle_id, cycle["revision"]))
+            if cur.rowcount == 0:
+                raise ValueError("CONCURRENT_MODIFICATION_DETECTED_DURING_SEAL")
 
             cur.execute("""
             UPDATE decision_intents SET status = 'SEALED', updated_at = ? WHERE cycle_id = ? AND status = 'DRAFT'
@@ -588,20 +625,56 @@ class DecisionOutbox:
         *,
         evidence_ref: str = ""
     ) -> Dict[str, Any]:
-        """Updates decision outbox items with execution receipts and sets cycle completion."""
-        cycle = self.get_cycle(cycle_id)
-        if not cycle:
-            raise ValueError(f"CYCLE_NOT_FOUND: {cycle_id}")
-
-        now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-        updated_count = 0
-        has_unknown = False
-        has_failure = False
-
+        """Updates decision outbox items with execution receipts and sets cycle completion.
+        Guarantees:
+        - Cycle must be in SEALED status (idempotent if already executed, rejects if unsealed).
+        - Receipts cannot be empty.
+        - Exact 1-to-1 matching with sealed intents (no unknown, duplicate, or missing intents).
+        - Cycle only COMPLETED if all intents are SUCCESS/NOOP; any NOT_EXECUTED or FAILED sets STOPPED_PARTIAL.
+        """
         with self._get_connection() as conn:
             cur = conn.cursor()
+            cur.execute("BEGIN IMMEDIATE")
+            cur.execute("SELECT * FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+            cycle = cur.fetchone()
+            if not cycle:
+                raise ValueError(f"CYCLE_NOT_FOUND: {cycle_id}")
+
+            if cycle["status"] in ("COMPLETED", "STOPPED_PARTIAL", "UNKNOWN_LOCKED"):
+                raise ValueError(f"CYCLE_ALREADY_FINISHED: cycle {cycle_id} is already in terminal status '{cycle['status']}'")
+
+            if cycle["status"] != "SEALED":
+                raise ValueError(f"CANNOT_RECORD_RECEIPTS_FOR_UNSEALED_CYCLE: cycle {cycle_id} is in status '{cycle['status']}'")
+
+            if not receipts:
+                raise ValueError(f"EMPTY_RECEIPTS_REJECTED: cannot record empty execution receipts for cycle {cycle_id}")
+
+            # Verify against sealed intents in this cycle
+            cur.execute("SELECT intent_id FROM decision_intents WHERE cycle_id = ? AND status = 'SEALED'", (cycle_id,))
+            sealed_rows = cur.fetchall()
+            sealed_iids = {r["intent_id"] for r in sealed_rows}
+
+            submitted_iids = set()
             for r in receipts:
                 iid = r.get("intent_id")
+                if not iid or iid not in sealed_iids:
+                    raise ValueError(f"UNKNOWN_INTENT_RECEIPT: intent_id '{iid}' does not belong to sealed cycle {cycle_id}")
+                if iid in submitted_iids:
+                    raise ValueError(f"DUPLICATE_INTENT_RECEIPT: duplicate receipt for intent_id '{iid}'")
+                submitted_iids.add(iid)
+
+            if submitted_iids != sealed_iids:
+                missing = sealed_iids - submitted_iids
+                raise ValueError(f"INCOMPLETE_RECEIPTS: missing receipts for sealed intents: {sorted(list(missing))}")
+
+            now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            updated_count = 0
+            has_unknown = False
+            has_failure = False
+            has_not_executed = False
+
+            for r in receipts:
+                iid = r["intent_id"]
                 outcome = r.get("outcome", "UNKNOWN")
                 reason = r.get("reason", "")
 
@@ -613,8 +686,9 @@ class DecisionOutbox:
                 elif "UNKNOWN" in outcome:
                     status = "UNKNOWN"
                     has_unknown = True
-                elif outcome in ("NOT_EXECUTED", "BLOCKED_BY_PRIOR_UNKNOWN_CLAIM", "UNSUPPORTED_OR_EXTERNAL"):
+                elif outcome in ("NOT_EXECUTED", "BLOCKED_BY_PRIOR_UNKNOWN_CLAIM", "UNSUPPORTED_OR_EXTERNAL", "PARTIAL_EXECUTION_HALTED", "INCOMPLETE_RECEIPTS"):
                     status = "NOT_EXECUTED"
+                    has_not_executed = True
                 else:
                     status = "FAILED"
                     has_failure = True
@@ -630,14 +704,19 @@ class DecisionOutbox:
                     updated_count += 1
 
             new_rev = cycle["revision"] + 1
-            new_cycle_status = (
-                "UNKNOWN_LOCKED" if has_unknown
-                else "STOPPED_PARTIAL" if has_failure
-                else "COMPLETED"
-            )
+            if has_unknown:
+                new_cycle_status = "UNKNOWN_LOCKED"
+            elif has_failure or has_not_executed:
+                new_cycle_status = "STOPPED_PARTIAL"
+            else:
+                new_cycle_status = "COMPLETED"
+
             cur.execute("""
-            UPDATE decision_cycles SET status = ?, revision = ?, updated_at = ? WHERE cycle_id = ?
-            """, (new_cycle_status, new_rev, now, cycle_id))
+            UPDATE decision_cycles SET status = ?, revision = ?, updated_at = ?
+            WHERE cycle_id = ? AND status = 'SEALED' AND revision = ?
+            """, (new_cycle_status, new_rev, now, cycle_id, cycle["revision"]))
+            if cur.rowcount == 0:
+                raise ValueError("CONCURRENT_MODIFICATION_DETECTED_IN_RECEIPTS")
 
             cur.execute("""
             INSERT INTO outbox_events (
@@ -652,7 +731,8 @@ class DecisionOutbox:
                     "intents_updated": updated_count,
                     "evidence_ref": evidence_ref,
                     "has_unknown": has_unknown,
-                    "has_failure": has_failure
+                    "has_failure": has_failure,
+                    "has_not_executed": has_not_executed
                 }),
                 now
             ))
@@ -694,7 +774,7 @@ class DecisionOutbox:
             "sealed_digest": cycle["sealed_digest"],
             "total_intents": len(intents),
             "status_breakdown": status_counts,
-            "all_succeeded_or_noop": (status_counts.get("SUCCESS", 0) + status_counts.get("NOOP", 0) == len(intents)),
+            "all_succeeded_or_noop": (cycle["status"] == "COMPLETED"),
             "exception_count": len(exceptions),
             "exceptions": exceptions
         }

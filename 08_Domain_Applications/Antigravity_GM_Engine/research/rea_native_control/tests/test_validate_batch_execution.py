@@ -167,3 +167,221 @@ def test_g7_fault_injection_missing_receipt():
     assert res["validation_passed"] is False
     assert res["checks"]["missing_intents_count"] == 1
     assert any("Count mismatch" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_unexpected_extra_receipt():
+    """Blocker B3: Fails closed when receipt_ids contains unexpected extra IDs not in batch."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    extra_receipt = deepcopy(receipts[0])
+    extra_receipt["intent_id"] = "I-FORGED-EXTRA-999"
+    tampered_receipts = receipts + [extra_receipt]
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[],
+        raw_messages=[],
+        receipts=tampered_receipts,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Unexpected receipts for unplanned intents" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_mismatched_target_identity():
+    """Blocker B3: Fails closed when receipt player_id does not match planned item."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    tampered_receipts = deepcopy(receipts)
+    tampered_receipts[0]["player_id"] = 99999
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[],
+        raw_messages=[],
+        receipts=tampered_receipts,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Receipt player_id mismatch" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_missing_unaltered_fields_check():
+    """Blocker B3: Fails closed when unaltered_fields_check is False or missing on SUCCESS_APPLIED."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    tampered_receipts = deepcopy(receipts)
+    tampered_receipts[0]["unaltered_fields_check"] = False
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[],
+        raw_messages=[],
+        receipts=tampered_receipts,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Unaltered fields conservation missing or failed" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_tampered_manifest_game_build():
+    """Blocker B3: Fails closed when manifest game build SHA mismatch occurs."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    manifest = json.loads(list(stage_dir.glob("manifest_*.json"))[0].read_text(encoding="utf-8-sig"))
+    manifest["game_build_sha256"] = "bad_build_sha_256"
+    if "header" in manifest:
+        manifest["header"]["game_build_sha256"] = "bad_build_sha_256"
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[],
+        raw_messages=[],
+        receipts=receipts,
+        manifest=manifest,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Manifest build hash invalid or mismatch" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_cas_mismatch_before_val():
+    """Blocker B3: Fails closed when getter_before does not match expected_before."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    tampered_receipts = deepcopy(receipts)
+    # Alter getter_before to conflict with expected_before
+    tampered_receipts[0]["getter_before"] = tampered_receipts[0]["expected_before"] + 5
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[],
+        raw_messages=[],
+        receipts=tampered_receipts,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("CAS mismatch" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_tampered_raw_chunk_digest():
+    """Blocker B3: Fails closed when raw chunk envelope digest is tampered."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    # Build a simulated chunk and raw message envelope
+    c0 = {
+        "chunk_id": "chunk-0001",
+        "action_id": "PLAYER_PATCH_TENDENCIES",
+        "chunk_digest": "correct_digest_111111",
+        "intents": [receipts[0]["intent_id"]]
+    }
+    raw0 = {
+        "kind": "chunk-execution-result",
+        "chunk_id": "chunk-0001",
+        "chunk_digest": "forged_digest_000000",
+        "action_id": "PLAYER_PATCH_TENDENCIES",
+        "outcome": "SUCCESS_CHUNK_APPLIED"
+    }
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[c0],
+        raw_messages=[raw0],
+        receipts=receipts,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Raw chunk_digest mismatch" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_readback_item_value_mismatch():
+    """Blocker B3: Fails closed when independent readback records player value mismatch."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    first_p = batch["intents"][0]
+    fake_readback = {
+        "all_100_persisted_in_game": True,
+        "missed_count": 0,
+        "verified_items": [
+            {
+                "player_id": first_p["player_id"],
+                "confirmed": True,
+                "readback_getter": first_p["value"] + 10  # Mismatch!
+            }
+        ]
+    }
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=[],
+        raw_messages=[],
+        receipts=receipts,
+        independent_readback=fake_readback,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Independent readback value mismatch" in err for err in res["errors"])
+
+
+def test_b3_fault_injection_missing_raw_chunk():
+    """Blocker B3: Fails closed when a planned chunk has no matching raw message envelope."""
+    stage_dir = GOLD_RUN_DIR / "mutation_100"
+    batch = json.loads(list(stage_dir.glob("batch_*.json"))[0].read_text(encoding="utf-8-sig"))
+    receipts = [
+        json.loads(line) for line in
+        (stage_dir / "journal/receipts.jsonl").read_text(encoding="utf-8-sig").splitlines()
+        if line.strip()
+    ]
+    chunks = [
+        {"chunk_id": "chunk-0001", "action_id": "PLAYER_PATCH_TENDENCIES", "intents": [receipts[0]["intent_id"]]},
+        {"chunk_id": "chunk-0002", "action_id": "PLAYER_PATCH_TENDENCIES", "intents": [receipts[1]["intent_id"]]}
+    ]
+    raw_messages = [
+        # Only chunk-0001 present, chunk-0002 missing!
+        {"chunk_id": "chunk-0001", "action_id": "PLAYER_PATCH_TENDENCIES", "outcome": "SUCCESS_CHUNK_APPLIED"}
+    ]
+
+    res = validate_batch_execution(
+        batch=batch,
+        chunks=chunks,
+        raw_messages=raw_messages,
+        receipts=receipts,
+        expected_mode="mutation"
+    )
+    assert res["validation_passed"] is False
+    assert any("Raw chunk messages count mismatch" in err or "Missing raw chunk message" in err for err in res["errors"])

@@ -99,9 +99,12 @@ def validate_batch_execution(
 
     # Check manifest constraints
     if manifest:
-        if manifest.get("game_build_sha256") and manifest["game_build_sha256"] != contracts.BUILD:
-            errors.append(f"Manifest build hash mismatch: {manifest['game_build_sha256']} != {contracts.BUILD}")
-        checks["manifest_game_build_valid"] = (manifest.get("game_build_sha256") == contracts.BUILD)
+        build_sha = manifest.get("game_build_sha256") or manifest.get("header", {}).get("game_build_sha256")
+        if not build_sha or build_sha != contracts.BUILD:
+            errors.append(f"Manifest build hash invalid or mismatch: '{build_sha}' != '{contracts.BUILD}'")
+            checks["manifest_game_build_valid"] = False
+        else:
+            checks["manifest_game_build_valid"] = True
 
     # 2. Normalize and check receipts
     normalized_receipts: List[Dict[str, Any]] = []
@@ -117,7 +120,8 @@ def validate_batch_execution(
     if len(batch_intents) != len(normalized_receipts):
         errors.append(f"Count mismatch: planned {len(batch_intents)} intents, got {len(normalized_receipts)} receipts")
 
-    planned_ids = {it["intent_id"] for it in batch_intents}
+    planned_items_map = {it["intent_id"]: it for it in batch_intents}
+    planned_ids = set(planned_items_map.keys())
     receipt_ids = set()
     outcomes_breakdown: Dict[str, int] = {}
     unknown_count = 0
@@ -131,6 +135,11 @@ def validate_batch_execution(
             errors.append(f"Duplicate receipt for intent_id: {iid}")
         receipt_ids.add(iid)
 
+        p_item = planned_items_map.get(iid)
+        if not p_item:
+            errors.append(f"Receipt intent_id '{iid}' not in planned batch")
+            continue
+
         outcome = r.get("outcome", "MISSING_OUTCOME")
         outcomes_breakdown[outcome] = outcomes_breakdown.get(outcome, 0) + 1
 
@@ -138,6 +147,27 @@ def validate_batch_execution(
         if "UNKNOWN" in outcome or outcome == "TIMEOUT":
             unknown_count += 1
             errors.append(f"UNKNOWN outcome detected for intent '{iid}': outcome={outcome}")
+
+        # Check resource binding consistency between receipt and planned item
+        if r.get("team_id") != p_item["team_id"]:
+            errors.append(f"Receipt team_id mismatch for intent '{iid}': {r.get('team_id')} != {p_item['team_id']}")
+        if r.get("field_id") != p_item["field_id"]:
+            errors.append(f"Receipt field_id mismatch for intent '{iid}': {r.get('field_id')} != {p_item['field_id']}")
+        if p_item.get("player_id") is not None and r.get("player_id") != p_item["player_id"]:
+            errors.append(f"Receipt player_id mismatch for intent '{iid}': {r.get('player_id')} != {p_item['player_id']}")
+
+        # Check expected_before and requested value presence and match
+        exp_before_rec = r.get("expected_before")
+        req_rec = r.get("requested")
+        if exp_before_rec is None:
+            errors.append(f"Missing expected_before in receipt for intent '{iid}'")
+        elif exp_before_rec != p_item["expected_before"]:
+            errors.append(f"Receipt expected_before mismatch for intent '{iid}': {exp_before_rec} != {p_item['expected_before']}")
+
+        if req_rec is None:
+            errors.append(f"Missing requested value in receipt for intent '{iid}'")
+        elif req_rec != p_item["value"]:
+            errors.append(f"Receipt requested mismatch for intent '{iid}': {req_rec} != {p_item['value']}")
 
         # Check getter values (fail-closed: must be present)
         before_val = r.get("getter_before") if r.get("getter_before") is not None else r.get("actual_before")
@@ -148,27 +178,28 @@ def validate_batch_execution(
         if after_val is None and outcome in ("SUCCESS_APPLIED", "UNCHANGED_ALREADY_TARGET"):
             errors.append(f"Missing getter_after for intent '{iid}'")
 
-        # Value semantics check
-        expected_before = r.get("expected_before")
-        requested = r.get("requested")
-
         if outcome == "SUCCESS_APPLIED":
-            if before_val is not None and expected_before is not None and before_val != expected_before:
-                errors.append(f"CAS mismatch for intent '{iid}': getter_before={before_val} != expected_before={expected_before}")
-            if after_val is not None and requested is not None and after_val != requested:
-                errors.append(f"Target value mismatch for intent '{iid}': getter_after={after_val} != requested={requested}")
+            if before_val is not None and before_val != p_item["expected_before"]:
+                errors.append(f"CAS mismatch for intent '{iid}': getter_before={before_val} != expected_before={p_item['expected_before']}")
+            if after_val is not None and after_val != p_item["value"]:
+                errors.append(f"Target value mismatch for intent '{iid}': getter_after={after_val} != requested={p_item['value']}")
+            # Unaltered fields conservation check MUST be explicitly True!
+            if r.get("unaltered_fields_check") is not True:
+                errors.append(f"Unaltered fields conservation missing or failed for intent '{iid}'")
         elif outcome == "UNCHANGED_ALREADY_TARGET":
-            if before_val is not None and requested is not None and before_val != requested:
-                errors.append(f"No-op before mismatch for intent '{iid}': getter_before={before_val} != requested={requested}")
-            if after_val is not None and requested is not None and after_val != requested:
-                errors.append(f"No-op after mismatch for intent '{iid}': getter_after={after_val} != requested={requested}")
-
-        # Check unaltered fields check
-        if "unaltered_fields_check" in r and r["unaltered_fields_check"] is False:
-            errors.append(f"Unaltered fields conservation failed for intent '{iid}'")
+            if before_val is not None and before_val != p_item["value"]:
+                errors.append(f"No-op before mismatch for intent '{iid}': getter_before={before_val} != requested={p_item['value']}")
+            if after_val is not None and after_val != p_item["value"]:
+                errors.append(f"No-op after mismatch for intent '{iid}': getter_after={after_val} != requested={p_item['value']}")
 
     checks["outcomes_breakdown"] = outcomes_breakdown
     checks["unknown_count"] = unknown_count
+
+    # Check for unexpected receipts
+    unexpected_intents = receipt_ids - planned_ids
+    if unexpected_intents:
+        errors.append(f"Unexpected receipts for unplanned intents: {sorted(list(unexpected_intents))[:5]}")
+    checks["unexpected_intents_count"] = len(unexpected_intents)
 
     # Check for missing intents
     missing_intents = planned_ids - receipt_ids
@@ -199,20 +230,52 @@ def validate_batch_execution(
 
     if chunks:
         checks["expected_chunk_count"] = len(chunks)
+        chunks_map = {c.chunk_id if hasattr(c, "chunk_id") else c["chunk_id"]: c for c in chunks}
         if len(chunk_msgs) != len(chunks):
             errors.append(f"Raw evidence chunk count mismatch: expected {len(chunks)}, got {len(chunk_msgs)}")
 
-    for cm in chunk_msgs:
-        payload = cm.get("payload", cm)
-        cid = payload.get("chunk_id")
-        cdigest = payload.get("chunk_digest")
-        pdigest = payload.get("plan_digest")
-        c_outcome = payload.get("outcome")
+        seen_chunk_ids = set()
+        for cm in chunk_msgs:
+            payload = cm.get("payload", cm)
+            cid = payload.get("chunk_id")
+            if not cid or cid not in chunks_map:
+                errors.append(f"Raw chunk message has unknown or missing chunk_id: '{cid}'")
+                continue
+            if cid in seen_chunk_ids:
+                errors.append(f"Duplicate raw chunk message for chunk_id: '{cid}'")
+            seen_chunk_ids.add(cid)
 
-        if pdigest and plan_digest and pdigest != plan_digest:
-            errors.append(f"Raw message plan_digest mismatch in chunk '{cid}': {pdigest} != {plan_digest}")
-        if c_outcome not in ("CHUNK_SUCCESS", "CHUNK_SKIPPED"):
-            errors.append(f"Raw chunk execution outcome failed in chunk '{cid}': {c_outcome}")
+            exp_c = chunks_map[cid]
+            exp_cdigest = exp_c.chunk_digest if hasattr(exp_c, "chunk_digest") else exp_c.get("chunk_digest")
+            exp_pdigest = exp_c.plan_digest if hasattr(exp_c, "plan_digest") else exp_c.get("plan_digest")
+            exp_aid = exp_c.action_id if hasattr(exp_c, "action_id") else exp_c.get("action_id")
+            exp_bid = exp_c.batch_id if hasattr(exp_c, "batch_id") else exp_c.get("batch_id")
+            exp_sid = exp_c.save_instance_id if hasattr(exp_c, "save_instance_id") else exp_c.get("save_instance_id")
+
+            if payload.get("chunk_digest") != exp_cdigest:
+                errors.append(f"Raw chunk_digest mismatch in chunk '{cid}': {payload.get('chunk_digest')} != {exp_cdigest}")
+            if payload.get("plan_digest") != exp_pdigest:
+                errors.append(f"Raw plan_digest mismatch in chunk '{cid}': {payload.get('plan_digest')} != {exp_pdigest}")
+            if payload.get("action_id") != exp_aid:
+                errors.append(f"Raw action_id mismatch in chunk '{cid}': {payload.get('action_id')} != {exp_aid}")
+            if payload.get("batch_id") != exp_bid:
+                errors.append(f"Raw batch_id mismatch in chunk '{cid}': {payload.get('batch_id')} != {exp_bid}")
+            if payload.get("save_instance_id") != exp_sid:
+                errors.append(f"Raw save_instance_id mismatch in chunk '{cid}': {payload.get('save_instance_id')} != {exp_sid}")
+
+            if payload.get("outcome") not in ("CHUNK_SUCCESS", "CHUNK_SKIPPED"):
+                errors.append(f"Raw chunk execution outcome failed in chunk '{cid}': {payload.get('outcome')}")
+
+            # Verify receipts inside raw chunk message match expected intents
+            exp_intents = exp_c.intents if hasattr(exp_c, "intents") else exp_c.get("intents", [])
+            exp_iids = {it if isinstance(it, str) else (it.intent_id if hasattr(it, "intent_id") else it.get("intent_id")) for it in exp_intents}
+            raw_receipt_iids = {r.get("intent_id") for r in payload.get("receipts", [])}
+            if raw_receipt_iids != exp_iids:
+                errors.append(f"Raw chunk '{cid}' receipt intents mismatch: {raw_receipt_iids} != {exp_iids}")
+
+        missing_cids = set(chunks_map.keys()) - seen_chunk_ids
+        if missing_cids:
+            errors.append(f"Missing raw chunk messages for planned chunks: {sorted(list(missing_cids))}")
 
     # 5. Check Independent Readback if provided
     if independent_readback:
@@ -224,6 +287,29 @@ def validate_batch_execution(
         checks["readback_all_persisted"] = independent_readback.get("all_100_persisted_in_game", False)
         if not checks["readback_all_persisted"]:
             errors.append("Independent readback reported unconfirmed player values")
+
+        # Granular per-item verification
+        verified_items = (
+            independent_readback.get("verified_items")
+            or independent_readback.get("readback_items")
+            or independent_readback.get("records")
+        )
+        if verified_items and isinstance(verified_items, list):
+            readback_map = {}
+            for item in verified_items:
+                pid = item.get("player_id")
+                if pid is not None:
+                    readback_map[pid] = item
+
+            for it in batch_intents:
+                pid = it.get("player_id")
+                if pid is not None and pid in readback_map:
+                    rec = readback_map[pid]
+                    if rec.get("confirmed") is False:
+                        errors.append(f"Independent readback confirmation False for player {pid}")
+                    read_val = rec.get("readback_getter") if rec.get("readback_getter") is not None else rec.get("target_tendency")
+                    if read_val is not None and read_val != it.get("value"):
+                        errors.append(f"Independent readback value mismatch for player {pid}: read {read_val} != requested {it.get('value')}")
 
     passed = (len(errors) == 0)
     return {

@@ -361,3 +361,122 @@ def test_g10_1k_and_10k_outbox_insertion_performance(temp_db):
     bench_file = (_RESEARCH_DIR / "../../../.." / "01_os/07_content/_runs/run-20261102-nba2k22-rea-decision-outbox-001" / ("07_" + "\u6d4b\u8bd5\u6267\u884c") / "10k_outbox_benchmark.json").resolve()
     bench_file.parent.mkdir(parents=True, exist_ok=True)
     bench_file.write_text(json.dumps(bench_data, indent=2), encoding="utf-8")
+
+
+def test_b2_supersede_intent_host_auth_checks(temp_db):
+    """Blocker B2: supersede_intent strictly enforces identical profile, phase, scope, and ownership checks."""
+    outbox = DecisionOutbox(temp_db)
+    ctx = make_context()
+    gm, coach = make_profiles()
+    phase_grants_gm = {("gm_user_01", "PLAYER_PATCH_TENDENCIES")}
+    outbox.open_cycle("CYCLE-SUPER-AUTH", ctx)
+
+    i1 = ActionIntent.decided(
+        "I-ORIG", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 75}
+    )
+    outbox.add_intent("CYCLE-SUPER-AUTH", i1, gm, phase_grants_gm)
+
+    # 1. Coach attempts to supersede GM's intent -> Ownership mismatch rejected
+    i_coach = ActionIntent.decided(
+        "I-SUPER-COACH", "coach_user_01", "COACH.STRATEGY.RUN_PLAY",
+        {"team_id": 1, "field_id": "RunPlayTendency", "expected_before": 50, "value": 60}
+    )
+    with pytest.raises(PermissionError, match="CANNOT_SUPERSEDE_ANOTHER_ISSUERS_INTENT"):
+        outbox.supersede_intent("CYCLE-SUPER-AUTH", "I-ORIG", i_coach, coach, {("coach_user_01", "COACH.STRATEGY.RUN_PLAY")})
+
+    # 2. GM attempts to supersede with an action not granted in phase_grants
+    i_unattested = ActionIntent.decided(
+        "I-SUPER-NO-PHASE", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 80}
+    )
+    with pytest.raises(PermissionError, match="PHASE_APPLICABILITY_NOT_ATTESTED"):
+        outbox.supersede_intent("CYCLE-SUPER-AUTH", "I-ORIG", i_unattested, gm, set())
+
+    # 3. GM attempts to supersede targeting a team outside team_scope
+    i_out_of_scope = ActionIntent.decided(
+        "I-SUPER-SCOPE", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 15, "player_id": 9999, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 80}
+    )
+    with pytest.raises(PermissionError, match="TEAM_SCOPE_VIOLATION"):
+        outbox.supersede_intent("CYCLE-SUPER-AUTH", "I-ORIG", i_out_of_scope, gm, phase_grants_gm)
+
+    # 4. Valid supersede succeeds
+    i_valid = ActionIntent.decided(
+        "I-SUPER-VALID", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 85}
+    )
+    res = outbox.supersede_intent("CYCLE-SUPER-AUTH", "I-ORIG", i_valid, gm, phase_grants_gm)
+    assert res.intent_id == "I-SUPER-VALID"
+    intents = {i["intent_id"]: i for i in outbox.list_intents("CYCLE-SUPER-AUTH")}
+    assert intents["I-ORIG"]["status"] == "SUPERSEDED"
+    assert intents["I-SUPER-VALID"]["status"] == "DRAFT"
+
+
+def test_b1_record_execution_receipts_validation(temp_db):
+    """Blocker B1: record_execution_receipts requires sealed cycle, validates complete matching receipts, and reports truthful cycle outcome."""
+    outbox = DecisionOutbox(temp_db)
+    ctx = make_context()
+    gm, _ = make_profiles()
+    phase_grants = {("gm_user_01", "PLAYER_PATCH_TENDENCIES")}
+    outbox.open_cycle("CYCLE-RCPT", ctx)
+
+    i1 = ActionIntent.decided(
+        "I-1", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 75}
+    )
+    i2 = ActionIntent.decided(
+        "I-2", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 1, "player_id": 2492, "field_id": "SHOT_TENDENCY", "expected_before": 80, "value": 85}
+    )
+    outbox.add_intent("CYCLE-RCPT", i1, gm, phase_grants)
+    outbox.add_intent("CYCLE-RCPT", i2, gm, phase_grants)
+
+    # 1. Attempting to record receipts before cycle is SEALED must fail
+    with pytest.raises(ValueError, match="CANNOT_RECORD_RECEIPTS_FOR_UNSEALED_CYCLE"):
+        outbox.record_execution_receipts("CYCLE-RCPT", [{"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"}])
+
+    # Seal the cycle
+    outbox.seal_cycle("CYCLE-RCPT", aggregate_batch_id="BATCH-RCPT-001")
+
+    # 2. Empty receipts rejected
+    with pytest.raises(ValueError, match="EMPTY_RECEIPTS_REJECTED"):
+        outbox.record_execution_receipts("CYCLE-RCPT", [])
+
+    # 3. Receipt with unknown intent rejected
+    with pytest.raises(ValueError, match="UNKNOWN_INTENT_RECEIPT"):
+        outbox.record_execution_receipts("CYCLE-RCPT", [
+            {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"},
+            {"intent_id": "I-UNKNOWN", "outcome": "SUCCESS_APPLIED"}
+        ])
+
+    # 4. Duplicate receipt rejected
+    with pytest.raises(ValueError, match="DUPLICATE_INTENT_RECEIPT"):
+        outbox.record_execution_receipts("CYCLE-RCPT", [
+            {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"},
+            {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"}
+        ])
+
+    # 5. Incomplete receipt set rejected (missing I-2)
+    with pytest.raises(ValueError, match="INCOMPLETE_RECEIPTS"):
+        outbox.record_execution_receipts("CYCLE-RCPT", [
+            {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"}
+        ])
+
+    # 6. Mixed outcome: 1 SUCCESS + 1 NOT_EXECUTED -> cycle status must be STOPPED_PARTIAL
+    res = outbox.record_execution_receipts("CYCLE-RCPT", [
+        {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED", "actual_before": 70, "actual_after": 75},
+        {"intent_id": "I-2", "outcome": "NOT_EXECUTED", "reason": "UNSUPPORTED_OR_BLOCKED"}
+    ])
+    assert res["status"] == "STOPPED_PARTIAL"
+    assert res["receipts_processed"] == 2
+    assert res["intents_updated"] == 2
+    cycle = outbox.get_cycle("CYCLE-RCPT")
+    assert cycle["status"] == "STOPPED_PARTIAL"
+
+    # 7. Calling record_execution_receipts again on finished cycle rejected
+    with pytest.raises(ValueError, match="CYCLE_ALREADY_FINISHED"):
+        outbox.record_execution_receipts("CYCLE-RCPT", [
+            {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"},
+            {"intent_id": "I-2", "outcome": "SUCCESS_APPLIED"}
+        ])

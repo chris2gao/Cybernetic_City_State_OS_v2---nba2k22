@@ -133,17 +133,41 @@ Human 在前期 100 项实机基准测试（`NBA2K22-REA-100-LIVE-BENCHMARK-2026
    - `decision_outbox_cli.py`：面向 Host 与自动化测试的轻量命令行接口。
    - `validate_batch_execution.py`：通用 Fail-Closed 批次执行校验器。
 2. **测试与回归套件**：
-   - `tests/test_decision_outbox.py`（6/6 PASSED）
-   - `tests/test_decision_batch_bridge.py`（3/3 PASSED）
-   - `tests/test_validate_batch_execution.py`（7/7 PASSED）
-   - `tests/test_offline_closed_loop.py`（3/3 PASSED）
-   - 全量回归测试：65/65 PASSED（耗时 11.05 秒）。
+   - `tests/test_decision_outbox.py`（8/8 PASSED，含 B1/B2 专项验证）
+   - `tests/test_decision_batch_bridge.py`（6/6 PASSED，含多字段守恒与 CAS 上下文验证）
+   - `tests/test_validate_batch_execution.py`（15/15 PASSED，含 8 项 B3 针对性故障注入）
+   - `tests/test_offline_closed_loop.py`（3/3 PASSED，含真实端到端与 UNKNOWN 锁）
+   - 全量回归测试：78/78 PASSED（耗时 11.91 秒）。
 3. **元数据与审计凭证**（`01_os/07_content/_runs/run-20261102-nba2k22-rea-decision-outbox-001/`）：
    - `06_执行/sqlite_outbox_schema.md`：详细数据库表结构、外键与事件字典。
-   - `06_执行/loop_iterations.jsonl`：5 个工程迭代循环的完整实证日志。
+   - `06_执行/loop_iterations.jsonl`：6 个工程迭代循环的完整实证日志。
    - `06_执行/loop_summary_validation.json`：由原始日志复算的门禁核验摘要。
-   - `07_测试执行/10k_outbox_benchmark.json`：1k/10k 吞吐性能压测数据。
+   - `07_测试执行/10k_outbox_benchmark.json`：1k/10k 吞吐性能压测数据（2.8万+条/秒）。
    - `07_测试执行/offline_end_to_end_receipts.json`：端到端离线闭环执行收据与校验结果。
    - `08_结论/decision_outbox_report.md`：本综合工程报告。
    - `08_结论/completion_pointer.md`：交付索引指引。
    - `run.yml`：状态更新为 `COMPLETED`，如实登记模型 `Gemini 2.5 Pro (execution)`。
+
+---
+
+## 7. GPT-6 审核 Blockers (B1/B2/B3) 定向整改闭环
+
+在收到 GPT-6 架构审核报告（Commit `01475bd44289fe7837acc741d5144b34caebeb38`）后，本执行岗位立即启动了第 6 轮定向工程整改（Loop Iteration 6），针对三组核心正确性问题进行了严格的 Fail-Closed 修复：
+
+### 7.1 B1 修复：执行结果回填守恒与部分执行状态真实性
+- **多字段子意图守恒**：重构 `decision_batch_bridge.py:map_receipts_to_outbox`，严格按照 `role_to_bulk_map` 声明的子意图全集进行对账。若子意图回执缺失，标记为 `INCOMPLETE_RECEIPTS`；若部分成功部分失败/未执行，标记为 `PARTIAL_EXECUTION_HALTED`，绝不虚报整条成功。
+- **Cycle 终态真实性**：重写 `decision_outbox.py:record_execution_receipts`，必须在周期已封存（`SEALED`）状态下接收回执；拒绝空回执、未知意图回执与重复意图回执；仅当所有意图均为 `SUCCESS` 或 `NOOP` 时将周期标记为 `COMPLETED`，一旦包含 `NOT_EXECUTED` 或 `FAILED`，周期必须如实反映为 `STOPPED_PARTIAL`；遇到 `UNKNOWN` 则锁定为 `UNKNOWN_LOCKED`。已进入终态的周期不可再次重复覆盖。
+- **CAS 上下文严格化**：移除 `_translate_action` 中静默默认填 0 的逻辑，缺失 `expected_before` 或 `team_id` 时显式拒绝或隔离为 `UNSUPPORTED_OR_BLOCKED: MISSING_REQUIRED_CAS_CONTEXT`。在 `ExecutionAggregator.plan` 阶段提供 Sanitized 投影以兼容冻结 catalog，而在 Native 翻译阶段严格校验 CAS 参数。
+
+### 7.2 B2 修复：Supersede/Seal 身份凭证与并发 CAS 闭合
+- **统一宿主鉴权抽取**：在 `decision_outbox.py` 中抽取 `_validate_intent_submission` 统一校验逻辑，`supersede_intent` 强制执行与 `add_intent` 完全一致的 Host Authenticated Profile、Context、Phase Grant 以及 Team/Player Scope 边界检查；同时强制检查旧意图的所属权，防止通过替代路径绕过权限。
+- **SQLite 事务与 Revision CAS**：在 `add_intent`、`supersede_intent` 与 `seal_cycle` 中全部采用 `BEGIN IMMEDIATE` 独占事务与 `WHERE revision = ? AND status = 'COLLECTING'` CAS 约束，杜绝并发交替执行产生的脏读或竞态封存。
+- **CLI 本地操作模式声明**：更新 `decision_outbox_cli.py` 模块文档与帮助信息，明确声明 `--profile-file` 和 `--phase-grants-file` 运行在 `LOCAL_OPERATOR_TEST_MODE`，真实生产中角色身份与阶段授权必须由受信任的宿主环境签发。
+
+### 7.3 B3 修复：通用回执校验器 Fail-Closed 强化
+- **严格全集对账**：`validate_batch_execution.py` 强制校验 `receipt_ids - planned_ids`，出现任何未计划的意外回执立即失败；逐条将回执字段（`team_id`、`player_id`、`field_id`、`expected_before`、`requested`）与计划项进行强绑定，发生任何篡改立即失败。
+- **Unaltered Fields 强断言**：对于 `SUCCESS_APPLIED`，强制断言 `unaltered_fields_check is True`，缺值或 False 均判定校验失败。
+- **Manifest 构建指纹核对**：强制校验 Manifest 中的 `game_build_sha256` 必须与 `contracts.BUILD` 一致，杜绝跨版本冒充。
+- **Raw Chunk 消息信封验证**：校验原始 Frida/REA 消息的 `chunk_id`、`chunk_digest`、`plan_digest`、`action_id`、`batch_id`、`save_instance_id` 与内部回执集合完全一致。
+- **Granular Readback 细粒度核对**：独立只读扫描如果提供 `verified_items`，逐人核对 `readback_getter` 与计划目标值是否一致。
+- **针对性故障注入测试**：在 `test_validate_batch_execution.py` 中新增 8 项故障注入测试（多余意外回执、对象身份篡改、缺失 unaltered 标志、构建指纹不符、CAS 期望值冲突、原始 chunk digest 篡改、只读值不符、原始 chunk 缺失），测试用例由 7 项扩充至 15 项，全部通过。

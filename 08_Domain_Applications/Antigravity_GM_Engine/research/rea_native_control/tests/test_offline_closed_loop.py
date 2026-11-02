@@ -114,6 +114,7 @@ def test_g9_full_offline_decision_to_execution_closed_loop(tmp_path):
         {
             "team_id": 1,
             "player_id": 1607,
+            "expected_before": 70,
             "values": {
                 "SHOT_TENDENCY": 75,
                 "SHOT_CLOSE_TENDENCY": 90
@@ -130,6 +131,7 @@ def test_g9_full_offline_decision_to_execution_closed_loop(tmp_path):
         {
             "team_id": 28,
             "player_id": 2459,
+            "expected_before": 75,
             "values": {
                 "SHOT_TENDENCY": 80
             }
@@ -144,6 +146,7 @@ def test_g9_full_offline_decision_to_execution_closed_loop(tmp_path):
         "COACH.STRATEGY.RUN_PLAY",
         {
             "team_id": 1,
+            "expected_before": 50,
             "settings": {
                 "RunPlayTendency": 65
             }
@@ -311,11 +314,12 @@ def test_g9_full_offline_decision_to_execution_closed_loop(tmp_path):
         evidence_ref="evidence-e2e-fake-001"
     )
     assert record_res["intents_updated"] == 4
-    assert record_res["status"] == "COMPLETED"
+    assert record_res["status"] == "STOPPED_PARTIAL"
 
     summary = outbox.get_outcome_summary(cycle_id)
     assert summary["cycle_id"] == cycle_id
-    assert summary["cycle_status"] == "COMPLETED"
+    assert summary["cycle_status"] == "STOPPED_PARTIAL"
+    assert summary["all_succeeded_or_noop"] is False
     assert summary["total_intents"] == 4
     assert summary["status_breakdown"]["SUCCESS"] == 3
     assert summary["status_breakdown"]["NOT_EXECUTED"] == 1
@@ -361,7 +365,7 @@ def test_g8_unknown_outcome_locks_resource_and_prevents_replay(tmp_path):
         "I-UNKNOWN-PLAYER",
         "gm_user_01",
         "PLAYER.EDIT.TENDENCY_BATCH",
-        {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 99}}
+        {"team_id": 1, "player_id": 1607, "expected_before": 50, "values": {"SHOT_TENDENCY": 99}}
     )
     outbox.add_intent(cycle_id, intent, gm, phase_grants)
     sealed_batch = outbox.seal_cycle(cycle_id, aggregate_batch_id=f"ROLE-BATCH-{cycle_id}")
@@ -438,7 +442,7 @@ def test_g8_unknown_outcome_locks_resource_and_prevents_replay(tmp_path):
         "I-RETRY-LOCKED",
         "gm_user_01",
         "PLAYER.EDIT.TENDENCY_BATCH",
-        {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 99}}
+        {"team_id": 1, "player_id": 1607, "expected_before": 50, "values": {"SHOT_TENDENCY": 99}}
     )
     outbox.add_intent(cycle2_id, intent2, gm, phase_grants)
     sealed2 = outbox.seal_cycle(cycle2_id, aggregate_batch_id=f"ROLE-BATCH-{cycle2_id}")
@@ -466,7 +470,7 @@ def test_g8_crash_recovery_and_immutability(tmp_path):
     outbox1.open_cycle(cycle_id, ctx)
     outbox1.add_intent(cycle_id, ActionIntent.decided(
         "I-CRASH-1", "gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH",
-        {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 70}}
+        {"team_id": 1, "player_id": 1607, "expected_before": 50, "values": {"SHOT_TENDENCY": 70}}
     ), gm, phase_grants)
     sealed = outbox1.seal_cycle(cycle_id, aggregate_batch_id=f"ROLE-BATCH-{cycle_id}")
 
@@ -481,5 +485,5 @@ def test_g8_crash_recovery_and_immutability(tmp_path):
     with pytest.raises(ValueError, match="CANNOT_ADD_INTENT_TO_SEALED_CYCLE"):
         outbox2.add_intent(cycle_id, ActionIntent.decided(
             "I-TAMPER", "gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH",
-            {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 85}}
+            {"team_id": 1, "player_id": 1607, "expected_before": 50, "values": {"SHOT_TENDENCY": 85}}
         ), gm, phase_grants)

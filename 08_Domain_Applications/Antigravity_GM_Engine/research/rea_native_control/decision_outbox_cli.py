@@ -1,4 +1,11 @@
-"""CLI tool for Decision Outbox management and cycle lifecycle inspection."""
+"""CLI tool for Decision Outbox management and cycle lifecycle inspection.
+
+NOTE ON SECURITY & AUTHENTICATION MODE:
+The CLI flags `--profile-file` and `--phase-grants-file` operate in LOCAL_OPERATOR_TEST_MODE.
+In production or multi-agent network topologies, caller identity, role profiles, and phase
+grants must be resolved and authenticated by the trusted host service / OS gateway, not supplied
+as unverified local input files.
+"""
 import argparse
 import json
 from pathlib import Path

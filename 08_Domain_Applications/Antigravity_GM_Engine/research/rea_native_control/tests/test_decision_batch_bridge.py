@@ -82,6 +82,7 @@ def test_g6_bridge_translates_supported_actions():
         {
             "team_id": 1,
             "player_id": 1607,
+            "expected_before": 70,
             "values": {
                 "SHOT_TENDENCY": 75,
                 "SHOT_CLOSE_TENDENCY": 90
@@ -94,7 +95,7 @@ def test_g6_bridge_translates_supported_actions():
         "I-COACH-STRATEGY",
         "coach_user_01",
         "COACH.STRATEGY.RUN_PLAY",
-        {"team_id": 1, "settings": {"RunPlayTendency": 65}}
+        {"team_id": 1, "expected_before": 50, "settings": {"RunPlayTendency": 65}}
     )
 
     role_batch = RoleActionBatch("ROLE-BATCH-001", ctx, (i1, i2))
@@ -141,7 +142,7 @@ def test_g6_bridge_partitions_unsupported_actions_without_fake_success():
         "I-SUPP",
         "gm_user_01",
         "PLAYER.EDIT.TENDENCY_BATCH",
-        {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 75}}
+        {"team_id": 1, "player_id": 1607, "expected_before": 70, "values": {"SHOT_TENDENCY": 75}}
     )
 
     # Unsupported intent (trade requirement)
@@ -195,6 +196,7 @@ def test_g6_bridge_receipt_mapping_back_to_outbox():
         {
             "team_id": 1,
             "player_id": 1607,
+            "expected_before": 70,
             "values": {"SHOT_TENDENCY": 75}
         }
     )
@@ -230,3 +232,90 @@ def test_g6_bridge_receipt_mapping_back_to_outbox():
 
     assert lookup["I-TRADE-MAP"]["outcome"] == "NOT_EXECUTED"
     assert "UNSUPPORTED" in lookup["I-TRADE-MAP"]["reason"]
+
+
+def test_bridge_missing_cas_context_is_partitioned():
+    """Test that missing expected_before fails closed and is routed to unsupported_intents."""
+    bridge = DecisionBatchBridge()
+    ctx = make_context(bridge.service.version)
+    gm, _ = make_profiles()
+
+    i_no_cas = ActionIntent.decided(
+        "I-NO-CAS",
+        "gm_user_01",
+        "PLAYER.EDIT.TENDENCY_BATCH",
+        {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 75}}
+    )
+    role_batch = RoleActionBatch("BATCH-NO-CAS", ctx, (i_no_cas,))
+    res = bridge.bridge_batch(role_batch, profiles=(gm,), phase_grants={("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH")})
+
+    assert res.has_executable_batch is False
+    assert len(res.unsupported_intents) == 1
+    assert "MISSING_REQUIRED_CAS_CONTEXT" in res.unsupported_intents[0]["reason"]
+
+
+def test_bridge_multi_field_partial_execution_outcome():
+    """Blocker B1: Multi-field intent where one sub-intent fails/halts must yield PARTIAL_EXECUTION_HALTED."""
+    bridge = DecisionBatchBridge()
+    ctx = make_context(bridge.service.version)
+    gm, _ = make_profiles()
+
+    i_multi = ActionIntent.decided(
+        "I-MULTI",
+        "gm_user_01",
+        "PLAYER.EDIT.TENDENCY_BATCH",
+        {
+            "team_id": 1,
+            "player_id": 1607,
+            "expected_before": 50,
+            "values": {
+                "SHOT_TENDENCY": 75,
+                "SHOT_CLOSE_TENDENCY": 80
+            }
+        }
+    )
+    role_batch = RoleActionBatch("BATCH-MULTI", ctx, (i_multi,))
+    res = bridge.bridge_batch(role_batch, profiles=(gm,), phase_grants={("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH")})
+    assert len(res.bulk_batch.intents) == 2
+    b1_id, b2_id = res.role_to_bulk_map["I-MULTI"]
+
+    # 1 succeeded, 1 halted/not executed
+    mock_receipts = [
+        {"intent_id": b1_id, "outcome": "SUCCESS_APPLIED", "getter_before": 50, "getter_after": 75, "reason": "OK"},
+        {"intent_id": b2_id, "outcome": "NOT_EXECUTED", "getter_before": 50, "getter_after": 50, "reason": "PREV_FAILURE"}
+    ]
+    outbox_receipts = bridge.map_receipts_to_outbox(mock_receipts, res)
+    assert len(outbox_receipts) == 1
+    r = outbox_receipts[0]
+    assert r["intent_id"] == "I-MULTI"
+    assert r["outcome"] == "PARTIAL_EXECUTION_HALTED"
+    assert "PARTIAL_EXECUTION_HALTED: 1 of 2 sub-intents succeeded" in r["reason"]
+
+
+def test_bridge_missing_sub_intent_receipt():
+    """Blocker B1: Missing sub-intent in receipts yields INCOMPLETE_RECEIPTS."""
+    bridge = DecisionBatchBridge()
+    ctx = make_context(bridge.service.version)
+    gm, _ = make_profiles()
+
+    i_multi = ActionIntent.decided(
+        "I-MULTI-2",
+        "gm_user_01",
+        "PLAYER.EDIT.TENDENCY_BATCH",
+        {
+            "team_id": 1,
+            "player_id": 1607,
+            "expected_before": 50,
+            "values": {"SHOT_TENDENCY": 75, "SHOT_CLOSE_TENDENCY": 80}
+        }
+    )
+    role_batch = RoleActionBatch("BATCH-MULTI-2", ctx, (i_multi,))
+    res = bridge.bridge_batch(role_batch, profiles=(gm,), phase_grants={("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH")})
+    b1_id = res.role_to_bulk_map["I-MULTI-2"][0]
+
+    # Only 1 receipt returned
+    mock_receipts = [
+        {"intent_id": b1_id, "outcome": "SUCCESS_APPLIED", "getter_before": 50, "getter_after": 75, "reason": "OK"}
+    ]
+    outbox_receipts = bridge.map_receipts_to_outbox(mock_receipts, res)
+    assert outbox_receipts[0]["outcome"] == "INCOMPLETE_RECEIPTS"
