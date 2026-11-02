@@ -1,0 +1,47 @@
+{
+  "schema_version": "nba2k22.optimization.live_refresh_world_unified_receipt.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "recorded_at": "2026-11-02T20:40:22.770849+00:00",
+  "execution_nature": "UNIFIED_LIVE_REFRESH_WORLD_SINGLE_FAMILY_TEST",
+  "target_environment": {
+    "process_name": "NBA2K22.exe",
+    "pid": 3596,
+    "game_season_year": 2022,
+    "save_id": "nba2k22_test_01",
+    "native_save_filename": "MyLEAGUE0003",
+    "binding_sha256": "8f8b71dd2114d52aa0da6bd0db355c36bd47dffd3618399cbc02beacf962502a"
+  },
+  "end_to_end_wall_clock_metrics": {
+    "started_at": "2026-11-02T20:38:57.969122+00:00",
+    "finished_at": "2026-11-02T20:40:22.618876+00:00",
+    "total_wall_seconds": 84.6498,
+    "family": "player-details",
+    "family_status": "ACQUIRED",
+    "commit_status": "COMMITTED_SUCCESS_VERIFIED"
+  },
+  "comparison_with_historical_baseline": {
+    "historical_player_details_seconds": 126.762655,
+    "historical_baseline_source": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment21/refresh-report.json",
+    "historical_player_details_badges": 332220,
+    "actual_live_unified_seconds": 84.6498,
+    "time_saved_seconds": 42.1129,
+    "speedup_percentage": 33.22
+  },
+  "database_committed_facts": {
+    "player_badge_values": 332220,
+    "player_contract_observations": 3390,
+    "native_player_sources": 3390,
+    "native_fields": 1890,
+    "capture_units": 1,
+    "source_artifacts": 33
+  },
+  "storage_and_projection_boundary": {
+    "persistent_artifact_name": "player-detail-public-projections.bin",
+    "persistent_artifact_bytes": 650880,
+    "persistent_artifact_sha256": "3b8812a2ad73802567d608e34020768f9cc9078bde0002370d2f6f2cc7b9b270",
+    "persistent_stride_bytes": 192,
+    "bridge_bytes_in_storage": 0
+  },
+  "verification_verdict": "UNIFIED_LIVE_REFRESH_WALL_TIME_MEASURED_AND_VERIFIED"
+}

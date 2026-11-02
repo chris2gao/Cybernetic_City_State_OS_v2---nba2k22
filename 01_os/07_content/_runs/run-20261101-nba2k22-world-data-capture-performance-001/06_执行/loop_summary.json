@@ -2,8 +2,8 @@
   "schema_version": "nba2k22.optimization.loop_summary.v1",
   "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
   "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
-  "total_iterations": 5,
-  "passed_iterations": 5,
+  "total_iterations": 6,
+  "passed_iterations": 6,
   "failed_iterations": 0,
   "actual_executor_model": "Gemini 2.5 Pro (execution)",
   "phases_covered": [
@@ -11,7 +11,8 @@
     "D1",
     "D2",
     "D3",
-    "D4"
+    "D4",
+    "D4_REMEDIATION"
   ],
   "gates_verified": [
     "G1",
@@ -68,6 +69,14 @@
       "gate": "G8, G9, G10",
       "status": "PASS",
       "timestamp": "2026-11-02T15:23:56Z"
+    },
+    {
+      "iteration": 6,
+      "phase": "D4_REMEDIATION",
+      "increment": "bridge_byte_isolation_and_unified_live_refresh_receipt",
+      "gate": "G5, G7, G8, G9, G10",
+      "status": "PASS",
+      "timestamp": "2026-11-02T20:41:00Z"
     }
   ]
 }

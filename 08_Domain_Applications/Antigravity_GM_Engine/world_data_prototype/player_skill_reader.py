@@ -65,8 +65,13 @@ def verify_skill_metadata(reader):
     return metadata
 
 def collect_player_skills(reader,*,ranges=None):
-    if ranges is None:ranges=coalesced_skill_projection_ranges()
-    m,blobs=collect_public_player_pool(reader,ranges=ranges,metadata=verify_skill_metadata(reader));raw=blobs.pop('player-detail-public-projections.bin');blobs['player-skill-public-projections.bin']=raw
+    base_ranges=skill_projection_ranges()
+    if ranges is None:
+        ranges=coalesced_skill_projection_ranges()
+        m,blobs=collect_public_player_pool(reader,ranges=ranges,archive_ranges=base_ranges,metadata=verify_skill_metadata(reader))
+    else:
+        m,blobs=collect_public_player_pool(reader,ranges=ranges,metadata=verify_skill_metadata(reader))
+    raw=blobs.pop('player-detail-public-projections.bin');blobs['player-skill-public-projections.bin']=raw
     stride=m['projection_stride'];m['skill_rows']=[{'source_player_index':i,**decode_skills(reconstruct_projection(raw[i*stride:(i+1)*stride],m['projection_ranges']))} for i in range(len(m['players']))]
     m['source_coverage']='COMPLETE_CURRENT_NATIVE_56_PUBLIC_ATTRIBUTES_99_TENDENCIES_FOUR_PLAYTYPE_SLOTS_AND_INITIATOR'
     return m,blobs

@@ -78,11 +78,16 @@ def verify_detail_metadata(reader):
     return metadata
 
 
-def collect_public_player_pool(reader,*,ranges,metadata):
+def collect_public_player_pool(reader,*,ranges,metadata,archive_ranges=None):
     ranges=[tuple(r) for r in ranges]
+    if archive_ranges is None:archive_ranges=ranges
+    else:archive_ranges=[tuple(r) for r in archive_ranges]
     if any(not 0<=low<high<=1264 or high-low>1248 or any(low<b and a<high for a,b in RESTRICTED_PLAYER_RANGES) for low,high in ranges):raise ValueError('invalid/private public PLAYER interval')
+    if any(not 0<=low<high<=1264 or high-low>1248 or any(low<b and a<high for a,b in RESTRICTED_PLAYER_RANGES) for low,high in archive_ranges):raise ValueError('invalid/private archive public PLAYER interval')
     for low,high in ((0,80),(96,104),(244,246),(760,764)):
-        if not any(a<=low and high<=b for a,b in ranges):raise ValueError('public projection lacks required identity interval')
+        if not any(a<=low and high<=b for a,b in archive_ranges):raise ValueError('public projection lacks required identity interval')
+    for a_low,a_high in archive_ranges:
+        if not any(r_low<=a_low and a_high<=r_high for r_low,r_high in ranges):raise ValueError('archive interval outside read ranges')
     year=observed_game_season_year(reader)
     pointer=reader.read(reader.module_base+ROSTER_RVA,8,'PLAYER_DETAIL_ROSTER_POINTER');root=int.from_bytes(pointer,'little');descriptors={};tables={};controls=[];blobs={}
     for slot,maximum,stride in ((1,8192,1264),(8,1024,4696)):
@@ -107,7 +112,8 @@ def collect_public_player_pool(reader,*,ranges,metadata):
         address=tables[1]['address']+index*1264;pieces=[]
         for low,high in ranges:
             raw=reader.read(address+low,high-low,f'PLAYER_DETAIL_PUBLIC:{index}:{low}');pieces.append(raw);controls.append((address+low,raw,f'PLAYER_DETAIL_PUBLIC_RECHECK:{index}:{low}'))
-        projection=b''.join(pieces);parts.append(projection);raw=reconstruct_projection(projection,ranges)
+        projection=b''.join(pieces);raw=reconstruct_projection(projection,ranges)
+        parts.append(b''.join(raw[low:high] for low,high in archive_ranges))
         try:name=(decode_fixed_utf16(raw[40:80])+' '+decode_fixed_utf16(raw[:40])).strip() or None;status='OBSERVED_UTF16_PREFIX' if name else 'NO_PUBLIC_NAME'
         except UnicodeDecodeError:name=None;status='INVALID_UTF16_PREFIX'
         team=teams.get(int.from_bytes(raw[96:104],'little'));current=assigned.get(index)
@@ -122,14 +128,19 @@ def collect_public_player_pool(reader,*,ranges,metadata):
         if reader.read(root+slot*16,16,f'PLAYER_DETAIL_SLOT{slot}_RECHECK')!=raw:raise ValueError('native player descriptor changed')
     if reader.read(reader.module_base+ROSTER_RVA,8,'PLAYER_DETAIL_ROOT_RECHECK')!=pointer or observed_game_season_year(reader)!=year:raise ValueError('native player context/year changed')
     return {'season_year':year,'descriptors':tables,'metadata':metadata,'players':players,'core_team_pointer_map':teams,
-        'projection_ranges':ranges,'projection_stride':sum(b-a for a,b in ranges),'current_core_roster_count':len(assigned),
+        'projection_ranges':archive_ranges,'projection_stride':sum(b-a for a,b in archive_ranges),'current_core_roster_count':len(assigned),
         'source_coverage':'COMPLETE_NATIVE_PLAYER_POOL_PUBLIC_PROJECTION',
+        'read_coalesced_ranges':ranges if ranges!=archive_ranges else None,
         'excluded_player_byte_ranges':list(RESTRICTED_PLAYER_RANGES),'game_writes':False,'full_player_struct_reads':0,'restricted_player_bytes_read':0},blobs
 
 
 def collect_player_details(reader,*,ranges=None):
-    if ranges is None:ranges=coalesced_projection_ranges()
-    manifest,blobs=collect_public_player_pool(reader,ranges=ranges,metadata=verify_detail_metadata(reader))
+    base_ranges=projection_ranges()
+    if ranges is None:
+        ranges=coalesced_projection_ranges()
+        manifest,blobs=collect_public_player_pool(reader,ranges=ranges,archive_ranges=base_ranges,metadata=verify_detail_metadata(reader))
+    else:
+        manifest,blobs=collect_public_player_pool(reader,ranges=ranges,metadata=verify_detail_metadata(reader))
     stride=manifest['projection_stride'];ranges=manifest['projection_ranges'];data=blobs['player-detail-public-projections.bin'];contracts=[];badges=[]
     for index in range(len(manifest['players'])):
         raw=reconstruct_projection(data[index*stride:(index+1)*stride],ranges)

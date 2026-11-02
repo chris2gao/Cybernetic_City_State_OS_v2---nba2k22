@@ -1,0 +1,118 @@
+{
+  "schema_version": "nba2k22.optimization.live_reader_timed_receipt.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "recorded_at": "2026-11-02T20:36:54.711360+00:00",
+  "target_environment": {
+    "process_name": "NBA2K22.exe",
+    "pid": 3596,
+    "module_base": "0x140000000",
+    "season_year": 2022,
+    "access_mode": "PROCESS_VM_READ | PROCESS_QUERY_LIMITED_INFORMATION (Read-Only)",
+    "game_writes": false,
+    "restricted_player_bytes_read": 0
+  },
+  "timing_metrics": {
+    "started_at": "2026-11-02T20:36:52.737197+00:00",
+    "finished_at": "2026-11-02T20:36:54.702592+00:00",
+    "duration_seconds": 1.96543,
+    "players_count": 3390,
+    "read_rate_players_per_sec": 1724.81
+  },
+  "syscall_and_io_metrics": {
+    "total_read_process_memory_calls": 20796,
+    "total_bytes_transferred": 6007835,
+    "player_pool_reads_count": 20340,
+    "baseline_theoretical_calls": 102156,
+    "calls_reduction_ratio": 0.7955,
+    "coalesced_ranges": [
+      [
+        0,
+        764
+      ],
+      [
+        788,
+        856
+      ],
+      [
+        1211,
+        1251
+      ]
+    ],
+    "coalesced_ranges_count": 3,
+    "coalesced_span_bytes": 872
+  },
+  "storage_and_projection_boundary": {
+    "persistent_artifact_name": "player-detail-public-projections.bin",
+    "persistent_artifact_bytes": 650880,
+    "persistent_artifact_sha256": "3b8812a2ad73802567d608e34020768f9cc9078bde0002370d2f6f2cc7b9b270",
+    "persistent_stride_bytes": 192,
+    "canonical_projection_ranges_count": 15,
+    "canonical_projection_ranges": [
+      [
+        0,
+        80
+      ],
+      [
+        96,
+        104
+      ],
+      [
+        168,
+        176
+      ],
+      [
+        244,
+        246
+      ],
+      [
+        348,
+        352
+      ],
+      [
+        420,
+        444
+      ],
+      [
+        656,
+        660
+      ],
+      [
+        760,
+        764
+      ],
+      [
+        788,
+        792
+      ],
+      [
+        796,
+        797
+      ],
+      [
+        812,
+        815
+      ],
+      [
+        832,
+        835
+      ],
+      [
+        836,
+        839
+      ],
+      [
+        852,
+        856
+      ],
+      [
+        1211,
+        1251
+      ]
+    ],
+    "bridge_bytes_in_persistent_storage": 0,
+    "contract_rows_count": 3390,
+    "badge_rows_count": 332220
+  },
+  "verification_status": "VERIFIED_CANONICAL_SCHEMA_AND_COALESCED_READ_PERFORMANCE"
+}
