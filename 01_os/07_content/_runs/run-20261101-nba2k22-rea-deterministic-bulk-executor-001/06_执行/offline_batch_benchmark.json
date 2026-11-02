@@ -1,6 +1,6 @@
 {
   "schema_version": "nba2k22.rea.bulk_executor.benchmark.v1",
-  "benchmark_timestamp": "2026-11-01T23:49:27Z",
+  "benchmark_timestamp": "2026-11-02T02:23:35Z",
   "test_machine": {
     "platform": "Windows-10-10.0.19045-SP0",
     "processor": "Intel64 Family 6 Model 142 Stepping 9, GenuineIntel",
@@ -17,24 +17,26 @@
     "max_chunk_size": 50
   },
   "mock_execution_timings": {
-    "batch_generation_and_parse_time_ms": 61.94,
-    "planning_and_validation_time_ms": 41.24,
-    "sample_frida_script_compile_time_ms": 0.33,
-    "compiled_script_bytes": 21623,
-    "total_mock_execution_time_ms": 150.71,
-    "mock_throughput_ops_per_sec": 66352.5,
+    "metric_type": "MEASURED_MOCK",
+    "batch_generation_and_parse_time_ms": 68.67,
+    "planning_and_validation_time_ms": 199.49,
+    "sample_frida_script_compile_time_ms": 5.21,
+    "compiled_script_bytes": 79345,
+    "total_mock_execution_time_ms": 164.67,
+    "mock_throughput_ops_per_sec": 60726.7,
     "chunk_level_latency_ms": {
-      "p50": 0.7245,
-      "p95": 0.895,
-      "p99": 1.3685
+      "p50": 0.751,
+      "p95": 1.1568,
+      "p99": 1.5436
     },
     "item_level_latency_ms": {
-      "p50": 0.0145,
-      "p95": 0.0185,
-      "p99": 0.0274
+      "p50": 0.015,
+      "p95": 0.0239,
+      "p99": 0.0345
     }
   },
   "session_overhead_estimates": {
+    "metric_type": "ESTIMATED_THEORETICAL",
     "unchunked_legacy_sessions": 10000,
     "unchunked_estimated_overhead_seconds": 40000.0,
     "unchunked_overhead_hours": 11.11,
@@ -44,6 +46,7 @@
     "session_overhead_reduction_percent": 97.99
   },
   "projected_live_native_duration": {
+    "metric_type": "PROJECTED_NOT_RUN",
     "basis_measurement": "Damian Lillard live execution receipt confirmed native Setter 0x990a10 + Getter 0x978360 takes < 50ms per call",
     "estimated_live_native_call_seconds": 500.0,
     "estimated_live_native_call_minutes": 8.33,
@@ -51,12 +54,13 @@
     "projected_unchunked_live_duration_hours": 11.25
   },
   "outcome_conservation": {
+    "metric_type": "DYNAMICALLY_AGGREGATED_RECEIPTS",
     "num_planned": 10000,
-    "num_success": 9825,
+    "num_success": 9700,
     "num_noop": 150,
     "num_blocked": 2,
     "num_unknown": 1,
-    "num_not_executed": 22,
+    "num_not_executed": 147,
     "total_accounted": 10000,
     "conservation_holds": true
   }

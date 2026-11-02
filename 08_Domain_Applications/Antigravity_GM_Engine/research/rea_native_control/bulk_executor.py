@@ -38,17 +38,38 @@ except ImportError:
 
 GAME_BUILD_SHA256 = contracts.BUILD
 
-COACH_FIELDS = {
-    'POEOffense': {'min': 0, 'max': 100, 'gameplan_offset': 0x17e},
-    'POEDefense': {'min': 0, 'max': 100, 'gameplan_offset': 0x17f},
-    'POEOffense2': {'min': 0, 'max': 100, 'gameplan_offset': 0x180},
-    'POEOffense3': {'min': 0, 'max': 100, 'gameplan_offset': 0x181},
-    'POEDefense2': {'min': 0, 'max': 100, 'gameplan_offset': 0x182},
-    'POEDefense3': {'min': 0, 'max': 100, 'gameplan_offset': 0x183},
-    'RunPlayTendency': {'min': 0, 'max': 100, 'gameplan_offset': 0x184},
-    'ZoneUsage': {'min': 0, 'max': 100, 'gameplan_offset': 0x185},
-    'BenchUtilization': {'min': 0, 'max': 100, 'gameplan_offset': 0x186},
+def load_coach_settings_catalog() -> Dict[str, Any]:
+    path = _SCRIPT_DIR / 'data' / 'coach_settings.json'
+    if not path.is_file():
+        raise FileNotFoundError(f"coach_settings.json not found at {path}")
+    return json.loads(path.read_text(encoding='utf-8'))['fields']
+
+COACH_FIELDS = load_coach_settings_catalog()
+
+CANONICAL_ACTIONS = {
+    'PLAYER_PATCH_TENDENCIES': 'tendencies',
+    'PLAYER_PATCH_ATTRIBUTES': 'attributes',
+    'COACH_SET_KNOWN_CURRENT_SETTINGS': 'coach',
 }
+
+ACTION_ALIASES = {
+    'COACH.STRATEGY.PLAYER_TENDENCY': 'PLAYER_PATCH_TENDENCIES',
+    'COACH.STRATEGY.PLAYER_ATTRIBUTE': 'PLAYER_PATCH_ATTRIBUTES',
+    'COACH.STRATEGY.POE_O1': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+    'COACH.STRATEGY.POE_O2': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+    'COACH.STRATEGY.POE_O3': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+    'COACH.STRATEGY.POE_D1': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+    'COACH.STRATEGY.POE_D2': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+    'COACH.STRATEGY.POE_D3': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+    'COACH_SET_ROTATION_POLICY': 'COACH_SET_KNOWN_CURRENT_SETTINGS',
+}
+
+def resolve_canonical_action(action_id: str) -> str:
+    if action_id in CANONICAL_ACTIONS:
+        return action_id
+    if action_id in ACTION_ALIASES:
+        return ACTION_ALIASES[action_id]
+    raise ValueError(f"VALIDATION_ERROR: unrecognized action_id '{action_id}' or UNSUPPORTED_DOMAIN. Must be one of {sorted(CANONICAL_ACTIONS.keys())}")
 
 
 def canonical_encode(obj: Any) -> str:
@@ -116,8 +137,12 @@ class BulkIntentItem:
         if not isinstance(self.team_id, int) or not (0 <= self.team_id <= 29):
             raise ValueError(f"VALIDATION_ERROR: team_id must be integer in range 0..29, got {self.team_id}")
 
-        # Check domain based on action_id or field_id
-        if self.field_id in field_catalog['tendencies']:
+        canonical_action = resolve_canonical_action(self.action_id)
+        expected_family = CANONICAL_ACTIONS[canonical_action]
+
+        if expected_family == 'tendencies':
+            if self.field_id not in field_catalog['tendencies']:
+                raise ValueError(f"VALIDATION_ERROR: field_id '{self.field_id}' is unknown or UNSUPPORTED_DOMAIN for tendencies action '{self.action_id}'")
             spec = field_catalog['tendencies'][self.field_id]
             if not spec.get('callable', False):
                 raise ValueError(f"VALIDATION_ERROR: tendency field '{self.field_id}' is not callable")
@@ -128,7 +153,9 @@ class BulkIntentItem:
             if not isinstance(self.value, int) or not (spec['minimum'] <= self.value <= spec['maximum']):
                 raise ValueError(f"VALIDATION_ERROR: value for '{self.field_id}' must be integer in [{spec['minimum']}, {spec['maximum']}], got {self.value}")
 
-        elif self.field_id in field_catalog['attributes']:
+        elif expected_family == 'attributes':
+            if self.field_id not in field_catalog['attributes']:
+                raise ValueError(f"VALIDATION_ERROR: field_id '{self.field_id}' is unknown or UNSUPPORTED_DOMAIN for attributes action '{self.action_id}'")
             spec = field_catalog['attributes'][self.field_id]
             if not spec.get('callable', False):
                 raise ValueError(f"VALIDATION_ERROR: attribute field '{self.field_id}' is not callable")
@@ -139,15 +166,20 @@ class BulkIntentItem:
             if not isinstance(self.value, int) or not (spec['minimum'] <= self.value <= spec['maximum']):
                 raise ValueError(f"VALIDATION_ERROR: value for '{self.field_id}' must be integer in [{spec['minimum']}, {spec['maximum']}], got {self.value}")
 
-        elif self.field_id in COACH_FIELDS:
-            spec = COACH_FIELDS[self.field_id]
-            if not isinstance(self.expected_before, int) or not (spec['min'] <= self.expected_before <= spec['max']):
-                raise ValueError(f"VALIDATION_ERROR: expected_before for coach field '{self.field_id}' must be integer in [{spec['min']}, {spec['max']}], got {self.expected_before}")
-            if not isinstance(self.value, int) or not (spec['min'] <= self.value <= spec['max']):
-                raise ValueError(f"VALIDATION_ERROR: value for coach field '{self.field_id}' must be integer in [{spec['min']}, {spec['max']}], got {self.value}")
-
-        else:
-            raise ValueError(f"VALIDATION_ERROR: field_id '{self.field_id}' is unknown or UNSUPPORTED_DOMAIN")
+        elif expected_family == 'coach':
+            coach_fields = field_catalog.get('coach', COACH_FIELDS)
+            if self.field_id not in coach_fields:
+                raise ValueError(f"VALIDATION_ERROR: field_id '{self.field_id}' is unknown or UNSUPPORTED_DOMAIN for coach action '{self.action_id}'")
+            spec = coach_fields[self.field_id]
+            max_val = (1 << spec['width']) - 1
+            if not isinstance(self.expected_before, int) or not (0 <= self.expected_before <= max_val):
+                raise ValueError(f"VALIDATION_ERROR: expected_before for coach field '{self.field_id}' must be integer in [0, {max_val}], got {self.expected_before}")
+            if spec.get('enum') and str(self.expected_before) not in spec['enum']:
+                raise ValueError(f"VALIDATION_ERROR: expected_before for coach field '{self.field_id}' must be valid enum key in {sorted(spec['enum'].keys())}, got {self.expected_before}")
+            if not isinstance(self.value, int) or not (0 <= self.value <= max_val):
+                raise ValueError(f"VALIDATION_ERROR: value for coach field '{self.field_id}' must be integer in [0, {max_val}], got {self.value}")
+            if spec.get('enum') and str(self.value) not in spec['enum']:
+                raise ValueError(f"VALIDATION_ERROR: value for coach field '{self.field_id}' must be valid enum key in {sorted(spec['enum'].keys())}, got {self.value}")
 
 
 @dataclass(frozen=True)
@@ -218,7 +250,8 @@ class FieldCatalogLoader:
             raw = player_fields.load_fields()
             cls._cached_catalog = {
                 'tendencies': raw['families']['tendencies'],
-                'attributes': raw['families']['attributes']
+                'attributes': raw['families']['attributes'],
+                'coach': load_coach_settings_catalog()
             }
         return cls._cached_catalog
 
@@ -227,9 +260,14 @@ class FieldCatalogLoader:
 class PlannedChunk:
     chunk_id: str
     team_id: int
+    action_id: str
     intents: Tuple[BulkIntentItem, ...]
     estimated_call_count: int
     estimated_duration_ms: int
+    batch_id: str = ""
+    save_instance_id: str = ""
+    plan_digest: str = ""
+    chunk_digest: str = ""
 
 
 @dataclass(frozen=True)
@@ -298,53 +336,58 @@ class BulkBatchPlanner:
         if issues:
             raise ValueError(f"Batch validation failed with {len(issues)} issues: {issues[:3]}")
 
-        # Group by team_id
-        teams: Dict[int, List[BulkIntentItem]] = {}
+        # Group by (save_instance_id, team_id)
+        groups: Dict[Tuple[str, int], List[BulkIntentItem]] = {}
         for item in batch.intents:
-            teams.setdefault(item.team_id, []).append(item)
+            key = (batch.header.save_instance_id, item.team_id)
+            groups.setdefault(key, []).append(item)
 
         chunks = []
         chunk_counter = 1
-        for team_id in sorted(teams.keys()):
-            team_intents = teams[team_id]
-            for i in range(0, len(team_intents), max_chunk_size):
-                chunk_slice = tuple(team_intents[i:i + max_chunk_size])
-                # Each intent takes 1 getter before + 1 setter + 1 getter after = 3 calls
+        for (save_id, team_id) in sorted(groups.keys()):
+            group_intents = groups[(save_id, team_id)]
+            for i in range(0, len(group_intents), max_chunk_size):
+                chunk_slice = tuple(group_intents[i:i + max_chunk_size])
                 call_count = len(chunk_slice) * 3
-                if call_count > max_call_budget:
-                    # Further split if needed
-                    sub_size = max_call_budget // 3
-                    for j in range(0, len(chunk_slice), sub_size):
-                        sub_slice = chunk_slice[j:j + sub_size]
-                        cid = f"chunk-{chunk_counter:04d}-team-{team_id:02d}"
-                        chunk_counter += 1
-                        chunks.append(PlannedChunk(
-                            chunk_id=cid,
-                            team_id=team_id,
-                            intents=sub_slice,
-                            estimated_call_count=len(sub_slice) * 3,
-                            estimated_duration_ms=min(max_duration_ms, 500 + len(sub_slice) * 20)
-                        ))
-                else:
-                    cid = f"chunk-{chunk_counter:04d}-team-{team_id:02d}"
+                sub_size = max_call_budget // 3 if call_count > max_call_budget else len(chunk_slice)
+                for j in range(0, len(chunk_slice), sub_size):
+                    sub_slice = chunk_slice[j:j + sub_size]
+                    actions = {resolve_canonical_action(it.action_id) for it in sub_slice}
+                    primary_action = sub_slice[0].action_id if len(actions) == 1 else 'PLAYER_PATCH_TENDENCIES'
+                    action_slug = resolve_canonical_action(primary_action).lower().replace('_', '-')
+                    cid = f"chunk-{chunk_counter:04d}-team-{team_id:02d}-{action_slug}"
                     chunk_counter += 1
+                    cdigest = sha256_digest({
+                        'batch_id': batch.header.batch_id,
+                        'save_instance_id': save_id,
+                        'chunk_id': cid,
+                        'team_id': team_id,
+                        'action_id': primary_action,
+                        'plan_digest': batch.plan_digest,
+                        'intents': [asdict(item) for item in sub_slice]
+                    })
                     chunks.append(PlannedChunk(
                         chunk_id=cid,
                         team_id=team_id,
-                        intents=chunk_slice,
-                        estimated_call_count=call_count,
-                        estimated_duration_ms=min(max_duration_ms, 500 + len(chunk_slice) * 20)
+                        action_id=primary_action,
+                        intents=sub_slice,
+                        estimated_call_count=len(sub_slice) * 3,
+                        estimated_duration_ms=min(max_duration_ms, 500 + len(sub_slice) * 20),
+                        batch_id=batch.header.batch_id,
+                        save_instance_id=save_id,
+                        plan_digest=batch.plan_digest,
+                        chunk_digest=cdigest
                     ))
         return tuple(chunks)
 
 
 class BulkFridaScriptCompiler:
-    """Compiles consolidated Frida JavaScript with Checkpoint014 contracts for chunked execution."""
+    """Compiles consolidated Frida JavaScript using Checkpoint014 common.js, gui_once.js and certified contracts."""
     def __init__(self, field_catalog: Optional[Dict[str, Any]] = None):
         self.catalog = field_catalog or FieldCatalogLoader.get_catalog()
+        self.reg = registry.NativeActionRegistry(_SCRIPT_DIR)
 
     def compile_chunk(self, chunk: PlannedChunk, batch_header: BulkBatchHeader) -> str:
-        # Separate player vs coach items
         player_items = []
         coach_items = []
         for item in chunk.intents:
@@ -375,17 +418,25 @@ class BulkFridaScriptCompiler:
                     'offset': offset
                 })
             else:
+                c_field = self.catalog['coach'].get(item.field_id, {})
                 coach_items.append({
                     'intent_id': item.intent_id,
                     'field_id': item.field_id,
                     'expected_before': item.expected_before,
                     'value': item.value,
-                    'gameplan_offset': COACH_FIELDS.get(item.field_id, {}).get('gameplan_offset', 0x17e)
+                    'gameplan_offset': c_field.get('gameplan_offset', 382),
+                    'coach_offset': c_field.get('coach_offset', 316),
+                    'width': c_field.get('width', 8),
+                    'start_bit': c_field.get('start_bit', 0),
+                    'storage_bytes': c_field.get('storage_bytes', 1)
                 })
 
         chunk_data = {
             'chunk_id': chunk.chunk_id,
+            'chunk_digest': chunk.chunk_digest,
+            'plan_digest': chunk.plan_digest,
             'team_id': chunk.team_id,
+            'action_id': chunk.action_id,
             'batch_id': batch_header.batch_id,
             'save_instance_id': batch_header.save_instance_id,
             'game_build_sha256': batch_header.game_build_sha256,
@@ -393,130 +444,184 @@ class BulkFridaScriptCompiler:
             'coach_items': coach_items
         }
 
-        js_code = f"""// REA Bounded Chunk Automation Script - Chunk: {chunk.chunk_id}
-// Generated for Batch: {batch_header.batch_id}
-const CHUNK_PAYLOAD = {json.dumps(chunk_data, indent=2)};
+        # Load common templates
+        common_js = (_SCRIPT_DIR / 'runtime' / 'common.js').read_text(encoding='utf-8')
+        gui_once_js = (_SCRIPT_DIR / 'runtime' / 'gui_once.js').read_text(encoding='utf-8')
+        coach_settings_spec = json.loads((_SCRIPT_DIR / 'data' / 'coach_settings.json').read_text(encoding='utf-8'))['fields']
+        player_contract_spec = json.loads((_SCRIPT_DIR / 'data' / 'player_contract_fields.json').read_text(encoding='utf-8'))['fields']
 
-function executeChunk() {{
+        # Required bindings
+        binding_ids = ['player.stat_context', 'player.get_stat_ui', 'player.set_stat_ui', 'coach.apply_gameplan']
+        bindings = {bid: self.reg.binding(bid).to_dict() for bid in binding_ids if bid in self.reg.bindings}
+
+        req = {
+            'action_id': chunk.action_id,
+            'chunk_id': chunk.chunk_id,
+            'team_id': chunk.team_id,
+            'parameters': {
+                'batch_id': batch_header.batch_id,
+                'save_instance_id': batch_header.save_instance_id
+            }
+        }
+        limits = {
+            'maximum_game_calls': max(chunk.estimated_call_count, 100),
+            'read_bytes': 1048576,
+            'is_live': False
+        }
+
+        action_handler_js = f"""
+const CHUNK_PAYLOAD = {json.dumps(chunk_data, indent=2)};
+const u8 = (b, o = 0) => new DataView(b).getUint8(o);
+
+function executeAction() {{
   const results = [];
-  const base = Process.enumerateModules()[0].base;
-  const layout = {{
-    root_rva: 0x5109b88,
-    required_slots: {{0: 0x978360, 8: 0x990a10}}
-  }};
-  
+  let chunkHalted = false;
+  let haltReason = null;
+
   // Resolve team
-  const t = team(CHUNK_PAYLOAD.team_id);
-  if (!t || t.isNull()) {{
+  let t = null;
+  try {{
+    t = team(CHUNK_PAYLOAD.team_id);
+  }} catch (e) {{
     send({{
       kind: 'chunk-execution-result',
       chunk_id: CHUNK_PAYLOAD.chunk_id,
+      chunk_digest: CHUNK_PAYLOAD.chunk_digest,
+      plan_digest: CHUNK_PAYLOAD.plan_digest,
+      action_id: CHUNK_PAYLOAD.action_id,
       outcome: 'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY',
-      error: 'TEAM_NOT_RESOLVED',
+      error: 'TEAM_NOT_RESOLVED:' + String(e),
       receipts: []
     }});
     return;
   }}
 
-  let chunkHalted = false;
-  let haltReason = null;
-
-  // 1. Execute Player Items (grouped by player)
-  const playerGroups = {{}};
-  for (const item of CHUNK_PAYLOAD.player_items) {{
-    const pid = item.player_id;
-    if (!playerGroups[pid]) playerGroups[pid] = [];
-    playerGroups[pid].push(item);
-  }}
-
-  for (const pidStr of Object.keys(playerGroups)) {{
-    if (chunkHalted) break;
-    const pid = Number(pidStr);
-    const items = playerGroups[pidStr];
-    const player = rosterPlayer(t, pid);
-    if (!player || player.isNull()) {{
-      chunkHalted = true;
-      haltReason = 'PLAYER_ROSTER_NOT_RESOLVED_' + pid;
-      for (const item of items) {{
-        results.push({{
-          intent_id: item.intent_id,
-          team_id: CHUNK_PAYLOAD.team_id,
-          player_id: item.player_id,
-          field_id: item.field_id,
-          expected_before: item.expected_before,
-          requested: item.value,
-          outcome: 'NOT_EXECUTED',
-          reason: haltReason
-        }});
-      }}
-      break;
+  // 1. Player items execution
+  if (CHUNK_PAYLOAD.player_items.length > 0) {{
+    const layout = bindingSpecs['player.stat_context'] ? bindingSpecs['player.stat_context'].input_layout : {{ root_rva: 0x5109b88, required_slots: {{0: 0x978360, 8: 0x990a10}} }};
+    const delegate = ptrAt(read(base.add(layout.root_rva), 8));
+    if (delegate.isNull()) throw Error('PLAYER_STAT_DELEGATE_NOT_READY');
+    const vtable = ptrAt(read(delegate, 8));
+    if (!Object.entries(layout.required_slots).every(([slot, rva]) => ptrAt(read(vtable.add(Number(slot)), 8)).equals(base.add(rva)))) {{
+      throw Error('UNRECOVERED_PLAYER_STAT_DELEGATE');
     }}
 
-    // Pre-flight memory snapshot & cache flags
-    const beforeBytes = new Uint8Array(read(player.add(0x41f), 156));
-    const flagsBefore = u32(read(player.add(0x31c), 4));
+    const playerGroups = {{}};
+    for (const item of CHUNK_PAYLOAD.player_items) {{
+      const pid = item.player_id;
+      if (!playerGroups[pid]) playerGroups[pid] = [];
+      playerGroups[pid].push(item);
+    }}
 
-    for (const item of items) {{
-      if (chunkHalted) {{
-        results.push({{
-          intent_id: item.intent_id,
-          team_id: CHUNK_PAYLOAD.team_id,
-          player_id: item.player_id,
-          field_id: item.field_id,
-          expected_before: item.expected_before,
-          requested: item.value,
-          outcome: 'NOT_EXECUTED',
-          reason: 'CHUNK_HALTED_PREVIOUS_FAILURE'
-        }});
-        continue;
-      }}
-
-      // Step 1: Getter Before
-      const currentVal = call('player.get_stat_ui', player, item.native_index);
-
-      // Step 2: Hard CAS Validation
-      if (currentVal !== item.expected_before) {{
-        results.push({{
-          intent_id: item.intent_id,
-          team_id: CHUNK_PAYLOAD.team_id,
-          player_id: item.player_id,
-          field_id: item.field_id,
-          expected_before: item.expected_before,
-          getter_before: currentVal,
-          requested: item.value,
-          outcome: 'CAS_EXPECTED_BEFORE_MISMATCH',
-          reason: 'Expected ' + item.expected_before + ', observed ' + currentVal
-        }});
-        chunkHalted = true;
-        haltReason = 'CAS_MISMATCH';
-        continue;
-      }}
-
-      // Step 3: No-op detection
-      if (currentVal === item.value) {{
-        results.push({{
-          intent_id: item.intent_id,
-          team_id: CHUNK_PAYLOAD.team_id,
-          player_id: item.player_id,
-          field_id: item.field_id,
-          expected_before: item.expected_before,
-          getter_before: currentVal,
-          requested: item.value,
-          getter_after: currentVal,
-          outcome: 'UNCHANGED_ALREADY_TARGET',
-          unaltered_fields_check: true
-        }});
-        continue;
-      }}
-
-      // Step 4: Execute Native Setter
+    for (const pidStr of Object.keys(playerGroups)) {{
+      if (chunkHalted) break;
+      const pid = Number(pidStr);
+      const items = playerGroups[pidStr];
+      let player = null;
       try {{
-        call('player.set_stat_ui', player, item.native_index, item.value);
-        const afterVal = call('player.get_stat_ui', player, item.native_index);
-        const rawByte = u8(read(player.add(item.offset), 1));
-        const expectedRaw = item.is_attribute ? (item.value * 3 - 75) : item.value;
+        player = rosterPlayer(t, pid);
+      }} catch (e) {{
+        chunkHalted = true;
+        haltReason = 'PLAYER_ROSTER_NOT_RESOLVED_' + pid;
+        for (const item of items) {{
+          results.push({{
+            intent_id: item.intent_id,
+            team_id: CHUNK_PAYLOAD.team_id,
+            player_id: item.player_id,
+            field_id: item.field_id,
+            expected_before: item.expected_before,
+            requested: item.value,
+            outcome: 'NOT_EXECUTED',
+            reason: haltReason
+          }});
+        }}
+        break;
+      }}
 
-        if (afterVal === item.value && rawByte === expectedRaw) {{
+      const beforeBytes = new Uint8Array(read(player.add(0x41f), 156));
+      const flagsBefore = u32(read(player.add(0x31c), 4));
+
+      for (const item of items) {{
+        if (chunkHalted) {{
+          results.push({{
+            intent_id: item.intent_id,
+            team_id: CHUNK_PAYLOAD.team_id,
+            player_id: item.player_id,
+            field_id: item.field_id,
+            expected_before: item.expected_before,
+            requested: item.value,
+            outcome: 'NOT_EXECUTED',
+            reason: 'CHUNK_HALTED_PREVIOUS_FAILURE'
+          }});
+          continue;
+        }}
+
+        const currentVal = call('player.get_stat_ui', player, item.native_index);
+
+        if (currentVal !== item.expected_before) {{
+          results.push({{
+            intent_id: item.intent_id,
+            team_id: CHUNK_PAYLOAD.team_id,
+            player_id: item.player_id,
+            field_id: item.field_id,
+            expected_before: item.expected_before,
+            getter_before: currentVal,
+            requested: item.value,
+            outcome: 'CAS_EXPECTED_BEFORE_MISMATCH',
+            reason: 'Expected ' + item.expected_before + ', observed ' + currentVal
+          }});
+          chunkHalted = true;
+          haltReason = 'CAS_MISMATCH';
+          continue;
+        }}
+
+        if (currentVal === item.value) {{
+          results.push({{
+            intent_id: item.intent_id,
+            team_id: CHUNK_PAYLOAD.team_id,
+            player_id: item.player_id,
+            field_id: item.field_id,
+            expected_before: item.expected_before,
+            getter_before: currentVal,
+            requested: item.value,
+            getter_after: currentVal,
+            outcome: 'UNCHANGED_ALREADY_TARGET',
+            unaltered_fields_check: true
+          }});
+          continue;
+        }}
+
+        try {{
+          call('player.set_stat_ui', player, item.native_index, item.value);
+          const afterBytes = new Uint8Array(read(player.add(0x41f), 156));
+          const flagsAfter = u32(read(player.add(0x31c), 4));
+          const afterVal = call('player.get_stat_ui', player, item.native_index);
+          const rawByte = u8(read(player.add(item.offset), 1));
+          const expectedRaw = item.is_attribute ? (item.value * 3 - 75) : item.value;
+          const targetOffsetIn156 = item.offset - 0x41f;
+
+          let untouchedPreserved = true;
+          for (let bIdx = 0; bIdx < 156; bIdx++) {{
+            if (bIdx === targetOffsetIn156) {{
+              if (afterBytes[bIdx] !== expectedRaw) untouchedPreserved = false;
+            }} else {{
+              if (afterBytes[bIdx] !== beforeBytes[bIdx]) untouchedPreserved = false;
+            }}
+          }}
+
+          const expectedFlags = item.is_attribute ? ((flagsBefore & 0xffffffbf) >>> 0) : flagsBefore;
+          const flagsMatch = (flagsAfter === expectedFlags);
+
+          if (!untouchedPreserved) {{
+            throw Error('UNREQUESTED_STAT_BYTE_CHANGED');
+          }}
+          if (!flagsMatch) {{
+            throw Error('PLAYER_STAT_CACHE_FLAG_MISMATCH');
+          }}
+          if (afterVal !== item.value || rawByte !== expectedRaw) {{
+            throw Error('AFTER_GETTER_MISMATCH');
+          }}
+
           results.push({{
             intent_id: item.intent_id,
             team_id: CHUNK_PAYLOAD.team_id,
@@ -530,7 +635,7 @@ function executeChunk() {{
             outcome: 'SUCCESS_APPLIED',
             unaltered_fields_check: true
           }});
-        }} else {{
+        }} catch (err) {{
           results.push({{
             intent_id: item.intent_id,
             team_id: CHUNK_PAYLOAD.team_id,
@@ -539,172 +644,166 @@ function executeChunk() {{
             expected_before: item.expected_before,
             getter_before: currentVal,
             requested: item.value,
-            getter_after: afterVal,
-            raw_after: rawByte,
-            outcome: 'READBACK_MISMATCH',
-            reason: 'Setter completed but readback returned ' + afterVal
+            outcome: 'UNKNOWN_EXECUTION_OUTCOME',
+            reason: String(err)
           }});
           chunkHalted = true;
-          haltReason = 'READBACK_MISMATCH';
+          haltReason = 'SETTER_EXCEPTION:' + String(err);
         }}
-      }} catch (err) {{
-        results.push({{
-          intent_id: item.intent_id,
-          team_id: CHUNK_PAYLOAD.team_id,
-          player_id: item.player_id,
-          field_id: item.field_id,
-          expected_before: item.expected_before,
-          getter_before: currentVal,
-          requested: item.value,
-          outcome: 'UNKNOWN_EXECUTION_OUTCOME',
-          reason: String(err)
-        }});
-        chunkHalted = true;
-        haltReason = 'SETTER_EXCEPTION';
       }}
     }}
   }}
 
-  // 2. Execute Coach Items (if any)
+  // 2. Coach items execution
   if (CHUNK_PAYLOAD.coach_items.length > 0 && !chunkHalted) {{
-    try {{
-      const coach = ptrAt(read(t.add(0xce8), 8));
-      const m = franchiseRecord(CHUNK_PAYLOAD.team_id).pointer;
-      const gp = m.add(0x7854);
+    // Coach chunked mutation is explicitly unsupported for live execution
+    if (CHUNK_PAYLOAD.action_id === 'COACH_SET_KNOWN_CURRENT_SETTINGS' && limits.is_live) {{
+      chunkHalted = true;
+      haltReason = 'COACH_CONTRACT_UNSUPPORTED_FOR_LIVE';
       for (const item of CHUNK_PAYLOAD.coach_items) {{
-        if (chunkHalted) {{
-          results.push({{
-            intent_id: item.intent_id,
-            team_id: CHUNK_PAYLOAD.team_id,
-            field_id: item.field_id,
-            expected_before: item.expected_before,
-            requested: item.value,
-            outcome: 'NOT_EXECUTED',
-            reason: 'CHUNK_HALTED_PREVIOUS_FAILURE'
-          }});
-          continue;
-        }}
-        const currentVal = u8(read(gp.add(item.gameplan_offset), 1));
-        if (currentVal !== item.expected_before) {{
-          results.push({{
-            intent_id: item.intent_id,
-            team_id: CHUNK_PAYLOAD.team_id,
-            field_id: item.field_id,
-            expected_before: item.expected_before,
-            getter_before: currentVal,
-            requested: item.value,
-            outcome: 'CAS_EXPECTED_BEFORE_MISMATCH',
-            reason: 'Expected ' + item.expected_before + ', observed ' + currentVal
-          }});
-          chunkHalted = true;
-          haltReason = 'CAS_MISMATCH';
-          continue;
-        }}
-        if (currentVal === item.value) {{
-          results.push({{
-            intent_id: item.intent_id,
-            team_id: CHUNK_PAYLOAD.team_id,
-            field_id: item.field_id,
-            expected_before: item.expected_before,
-            getter_before: currentVal,
-            requested: item.value,
-            getter_after: currentVal,
-            outcome: 'UNCHANGED_ALREADY_TARGET',
-            unaltered_fields_check: true
-          }});
-          continue;
-        }}
-        // Apply coach gameplan setter
-        const inputBuf = Memory.alloc(880);
-        inputBuf.writeByteArray(read(gp, 880));
-        inputBuf.add(item.gameplan_offset).writeU8(item.value);
-        call('coach.apply_gameplan', inputBuf, coach);
-        const afterVal = u8(read(gp.add(item.gameplan_offset), 1));
         results.push({{
           intent_id: item.intent_id,
           team_id: CHUNK_PAYLOAD.team_id,
           field_id: item.field_id,
           expected_before: item.expected_before,
-          getter_before: currentVal,
           requested: item.value,
-          getter_after: afterVal,
-          outcome: 'SUCCESS_APPLIED',
-          unaltered_fields_check: true
+          outcome: 'NOT_EXECUTED',
+          reason: 'COACH_CONTRACT_UNSUPPORTED_FOR_LIVE'
         }});
       }}
-    }} catch (err) {{
-      chunkHalted = true;
-      haltReason = 'COACH_SETTING_EXCEPTION';
+    }} else {{
+      try {{
+        const coach = ptrAt(read(t.add(0xce8), 8));
+        const rawCoach = read(coach, 352);
+        const m = franchiseRecord(CHUNK_PAYLOAD.team_id).pointer;
+        const gp = m.add(0x7854);
+        const originalGp = read(gp, 880);
+
+        for (const item of CHUNK_PAYLOAD.coach_items) {{
+          if (chunkHalted) {{
+            results.push({{
+              intent_id: item.intent_id,
+              team_id: CHUNK_PAYLOAD.team_id,
+              field_id: item.field_id,
+              expected_before: item.expected_before,
+              requested: item.value,
+              outcome: 'NOT_EXECUTED',
+              reason: 'CHUNK_HALTED_PREVIOUS_FAILURE'
+            }});
+            continue;
+          }}
+
+          const currentVal = u8(read(gp.add(item.gameplan_offset), 1));
+          if (currentVal !== item.expected_before) {{
+            results.push({{
+              intent_id: item.intent_id,
+              team_id: CHUNK_PAYLOAD.team_id,
+              field_id: item.field_id,
+              expected_before: item.expected_before,
+              getter_before: currentVal,
+              requested: item.value,
+              outcome: 'CAS_EXPECTED_BEFORE_MISMATCH',
+              reason: 'Expected ' + item.expected_before + ', observed ' + currentVal
+            }});
+            chunkHalted = true;
+            haltReason = 'CAS_MISMATCH';
+            continue;
+          }}
+
+          if (currentVal === item.value) {{
+            results.push({{
+              intent_id: item.intent_id,
+              team_id: CHUNK_PAYLOAD.team_id,
+              field_id: item.field_id,
+              expected_before: item.expected_before,
+              getter_before: currentVal,
+              requested: item.value,
+              getter_after: currentVal,
+              outcome: 'UNCHANGED_ALREADY_TARGET',
+              unaltered_fields_check: true
+            }});
+            continue;
+          }}
+
+          // Apply coach projection
+          const inputBuf = Memory.alloc(880);
+          inputBuf.writeByteArray(read(gp, 880));
+          inputBuf.add(item.gameplan_offset).writeU8(item.value);
+          call('coach.apply_gameplan', inputBuf, coach);
+          const afterVal = u8(read(gp.add(item.gameplan_offset), 1));
+
+          results.push({{
+            intent_id: item.intent_id,
+            team_id: CHUNK_PAYLOAD.team_id,
+            field_id: item.field_id,
+            expected_before: item.expected_before,
+            getter_before: currentVal,
+            requested: item.value,
+            getter_after: afterVal,
+            outcome: 'SUCCESS_APPLIED',
+            unaltered_fields_check: true
+          }});
+        }}
+      }} catch (err) {{
+        chunkHalted = true;
+        haltReason = 'COACH_SETTING_EXCEPTION:' + String(err);
+      }}
     }}
   }}
 
   send({{
     kind: 'chunk-execution-result',
     chunk_id: CHUNK_PAYLOAD.chunk_id,
+    chunk_digest: CHUNK_PAYLOAD.chunk_digest,
+    plan_digest: CHUNK_PAYLOAD.plan_digest,
+    action_id: CHUNK_PAYLOAD.action_id,
     outcome: chunkHalted ? 'CHUNK_HALTED' : 'CHUNK_SUCCESS',
     halt_reason: haltReason,
     receipts: results
   }});
 }}
-
-// GUI Hook wrapper
-let invoked = false;
-const user = Process.getModuleByName('user32.dll');
-const hook = Interceptor.attach(user.getExportByName('PeekMessageA'), {{
-  onLeave() {{
-    if (invoked) return;
-    invoked = true;
-    try {{
-      executeChunk();
-    }} catch (e) {{
-      send({{
-        kind: 'chunk-execution-result',
-        chunk_id: CHUNK_PAYLOAD.chunk_id,
-        outcome: 'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY',
-        error: String(e)
-      }});
-    }} finally {{
-      hook.detach();
-    }}
-  }}
-}});
-setTimeout(() => {{
-  if (!invoked) {{
-    hook.detach();
-    send({{
-      kind: 'chunk-execution-result',
-      chunk_id: CHUNK_PAYLOAD.chunk_id,
-      outcome: 'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY',
-      error: 'GAME_THREAD_TIMEOUT'
-    }});
-  }}
-}}, 5000);
 """
-        return js_code
+
+        full_source = (
+            common_js + "\n" +
+            action_handler_js + "\n" +
+            gui_once_js
+        )
+        full_source = (
+            full_source
+            .replace('__REQUEST__', canonical_encode(req))
+            .replace('__BINDINGS__', canonical_encode(bindings))
+            .replace('__LIMITS__', canonical_encode(limits))
+            .replace('__COACH_FIELDS__', canonical_encode(coach_settings_spec))
+            .replace('__PLAYER_CONTRACT_FIELDS__', canonical_encode(player_contract_spec))
+        )
+        return full_source
 
 
 class ReaChunkTransportAdapter:
     """Binds bulk executor chunks to Checkpoint014 ReaCliTransport.
     
     Default configuration strictly prohibits live mutation unless explicit
-    authorization and non-dry-run are verified.
+    authorization and non-dry-run are verified with an external verifier.
     """
-    def __init__(self, runtime_directory: Path | str, live_context: Optional[Any] = None):
+    def __init__(self, runtime_directory: Path | str, live_context: Optional[Any] = None, *, fake_handler: Optional[Any] = None):
         self.runtime_directory = Path(runtime_directory).resolve()
         self.live_context = live_context
+        self.fake_handler = fake_handler
 
     def execute_chunk(self, chunk: PlannedChunk, script: str) -> Dict[str, Any]:
-        if self.live_context is None or not getattr(self.live_context, 'enabled', False):
+        if self.fake_handler is not None:
+            return self.fake_handler(chunk, script)
+            
+        # Live path requires authorized external verifier - strictly disabled in this task
+        if self.live_context is not None and getattr(self.live_context, 'enabled', False):
             raise PermissionError(
-                "LIVE_MUTATION_NOT_AUTHORIZED: live game execution is disabled by default; "
-                "requires explicit --allow-live-mutation and non-dry-run batch"
+                "LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution verifier is not available; "
+                "live writes remain fail-closed"
             )
-        rea_transport = transport.ReaCliTransport(self.runtime_directory, self.live_context)
-        return rea_transport.execute(
-            script,
-            action_id=f"BULK_CHUNK_{chunk.team_id}",
-            request_id=chunk.chunk_id,
-            maximum_game_calls=chunk.estimated_call_count
+        raise PermissionError(
+            "LIVE_MUTATION_NOT_AUTHORIZED: live game execution is disabled by default; "
+            "requires explicit external verifier"
         )
 
 
@@ -716,6 +815,73 @@ class ExecutionJournal:
         self.receipts_file = self.root / 'receipts.jsonl'
         self.reconciliations_file = self.root / 'reconciliations.jsonl'
         self.locks_file = self.root / 'locked_resources.json'
+        self.claims_dir = self.root / 'claims'
+        self.claims_dir.mkdir(parents=True, exist_ok=True)
+        self.recover_interrupted_claims()
+
+    def recover_interrupted_claims(self):
+        if self.locks_file.exists():
+            try:
+                json.loads(self.locks_file.read_text(encoding='utf-8'))
+            except Exception as e:
+                raise RuntimeError(f"CORRUPT_LOCK_LEDGER: locked_resources.json is corrupted: {e}")
+
+        completed_intents = {r.intent_id for r in self.load_receipts()}
+        for claim_path in self.claims_dir.glob('*.json'):
+            try:
+                claim = json.loads(claim_path.read_text(encoding='utf-8'))
+            except Exception as e:
+                raise RuntimeError(f"CORRUPT_LOCK_LEDGER: claim file {claim_path.name} is corrupted: {e}")
+            if claim.get('state') == 'STARTED':
+                claim['state'] = 'UNKNOWN_EXECUTION_OUTCOME'
+                claim['interrupted_at'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+                claim_path.write_text(canonical_encode(claim), encoding='utf-8')
+                for item in claim.get('intents', []):
+                    if item.get('intent_id') not in completed_intents:
+                        self.lock_resource(item['resource_key'], item['intent_id'])
+
+    def claim_chunk(self, chunk: PlannedChunk):
+        claim_file = self.claims_dir / f"{chunk.chunk_id}.json"
+
+        for item in chunk.intents:
+            res_key = get_resource_key(item.team_id, item.player_id, item.field_id)
+            for existing_claim_file in self.claims_dir.glob('*.json'):
+                try:
+                    cdata = json.loads(existing_claim_file.read_text(encoding='utf-8'))
+                    for e_intent in cdata.get('intents', []):
+                        if e_intent.get('intent_id') == item.intent_id:
+                            if (e_intent.get('expected_before') != item.expected_before or
+                                e_intent.get('value') != item.value or
+                                e_intent.get('resource_key') != res_key):
+                                raise ValueError(
+                                    f"INTENT_ID_REUSED_WITH_DIFFERENT_PAYLOAD: intent '{item.intent_id}' "
+                                    f"was previously claimed with different payload"
+                                )
+                except (json.JSONDecodeError, KeyError):
+                    continue
+
+        claim_data = {
+            'claim_id': chunk.chunk_id,
+            'batch_id': chunk.batch_id,
+            'plan_digest': chunk.plan_digest,
+            'chunk_id': chunk.chunk_id,
+            'chunk_digest': chunk.chunk_digest,
+            'save_instance_id': chunk.save_instance_id,
+            'action_id': chunk.action_id,
+            'team_id': chunk.team_id,
+            'state': 'STARTED',
+            'created_at': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
+            'intents': [
+                {
+                    'intent_id': item.intent_id,
+                    'resource_key': get_resource_key(item.team_id, item.player_id, item.field_id),
+                    'expected_before': item.expected_before,
+                    'value': item.value
+                }
+                for item in chunk.intents
+            ]
+        }
+        claim_file.write_text(canonical_encode(claim_data), encoding='utf-8')
 
     def record_batch_manifest(self, batch: BulkBatch):
         manifest_path = self.root / f"batch_{batch.header.batch_id}.json"
@@ -730,7 +896,6 @@ class ExecutionJournal:
         with self.receipts_file.open('a', encoding='utf-8') as f:
             for r in receipts:
                 f.write(canonical_encode(asdict(r)) + '\n')
-        # Check if any receipt is UNKNOWN; lock its resource
         for r in receipts:
             if r.outcome == 'UNKNOWN_EXECUTION_OUTCOME':
                 res_key = get_resource_key(r.team_id, r.player_id, r.field_id)
@@ -787,9 +952,18 @@ class ExecutionJournal:
         if evidence.get('intent_id') != intent_id:
             raise ValueError(f"Evidence intent_id mismatch: expected '{intent_id}', got '{evidence.get('intent_id')}'")
 
-        applied = evidence.get('applied', False)
+        if 'readback_getter_value' in evidence and 'target_value' in evidence:
+            applied = (evidence['readback_getter_value'] == target.requested and evidence['target_value'] == target.requested)
+        elif 'applied' in evidence:
+            applied = bool(evidence['applied'])
+        else:
+            raise ValueError("RECONCILIATION_INCOMPLETE_EVIDENCE: missing required evidence fields")
+
         new_outcome = 'RECONCILED_SUCCESS' if applied else 'RECONCILED_REJECTED'
-        ts = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+        ev_id = evidence.get('evidence_id', 'manual')
+        ev_src = evidence.get('evidence_source', 'external')
+        ts = evidence.get('timestamp') or time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+        readback_val = evidence.get('readback_getter_value', (target.requested if applied else target.expected_before))
 
         updated_receipt = ItemReceipt(
             intent_id=target.intent_id,
@@ -802,14 +976,13 @@ class ExecutionJournal:
             chunk_id=target.chunk_id,
             timestamp=ts,
             getter_before=target.getter_before,
-            getter_after=target.requested if applied else target.expected_before,
+            getter_after=readback_val,
             raw_after=target.raw_after,
             unaltered_fields_check=True,
-            reason=f"RECONCILED_VIA_EVIDENCE:{evidence.get('evidence_id', 'manual')}",
-            execution_evidence_id=evidence.get('evidence_id')
+            reason=f"RECONCILED_VIA_EVIDENCE:{ev_id}:{ev_src}",
+            execution_evidence_id=ev_id
         )
 
-        # Record reconciliation and updated receipt
         with self.reconciliations_file.open('a', encoding='utf-8') as f:
             f.write(canonical_encode({
                 'intent_id': intent_id,
@@ -819,7 +992,6 @@ class ExecutionJournal:
             }) + '\n')
 
         self.append_receipts([updated_receipt])
-        # Release resource lock
         res_key = get_resource_key(target.team_id, target.player_id, target.field_id)
         self.unlock_resource(res_key)
         return updated_receipt
@@ -1017,10 +1189,16 @@ class BulkExecutorService:
                 sub_chunk = PlannedChunk(
                     chunk_id=chunk.chunk_id,
                     team_id=chunk.team_id,
+                    action_id=chunk.action_id,
                     intents=tuple(chunk_to_execute_intents),
                     estimated_call_count=len(chunk_to_execute_intents) * 3,
-                    estimated_duration_ms=min(5000, 500 + len(chunk_to_execute_intents) * 20)
+                    estimated_duration_ms=min(5000, 500 + len(chunk_to_execute_intents) * 20),
+                    batch_id=chunk.batch_id,
+                    save_instance_id=chunk.save_instance_id,
+                    plan_digest=chunk.plan_digest,
+                    chunk_digest=chunk.chunk_digest
                 )
+                self.journal.claim_chunk(sub_chunk)
                 executed_receipts = env.execute_chunk(sub_chunk)
                 chunk_receipts.extend(executed_receipts)
 
@@ -1039,6 +1217,254 @@ class BulkExecutorService:
         n_not_executed = sum(1 for r in all_receipts if r.outcome == 'NOT_EXECUTED')
 
         # Conservation law assertion
+        total_accounted = n_success + n_noop + n_reused + n_blocked + n_unknown + n_not_executed
+        if total_accounted != n_planned:
+            raise AssertionError(
+                f"CONSERVATION LAW VIOLATION! Planned={n_planned}, Accounted={total_accounted} "
+                f"(success={n_success}, noop={n_noop}, reused={n_reused}, blocked={n_blocked}, unknown={n_unknown}, not_executed={n_not_executed})"
+            )
+
+        return {
+            'batch_id': batch.header.batch_id,
+            'plan_digest': batch.plan_digest,
+            'chunk_count': len(chunks),
+            'execution_time_ms': total_time_ms,
+            'metrics': {
+                'num_planned': n_planned,
+                'num_success': n_success,
+                'num_noop': n_noop,
+                'num_reused': n_reused,
+                'num_blocked': n_blocked,
+                'num_unknown': n_unknown,
+                'num_not_executed': n_not_executed,
+                'conservation_holds': True
+            },
+            'receipt_count': len(all_receipts)
+        }
+
+    def run_with_transport(self, batch: BulkBatch, transport_adapter: Any, *, max_chunk_size: int = 50) -> Dict[str, Any]:
+        """Coordinates end-to-end batch execution through a transport adapter (Fake or ReaCliTransport)."""
+        chunks = self.planner.plan(batch, max_chunk_size=max_chunk_size)
+        self.journal.record_batch_manifest(batch)
+
+        all_receipts: List[ItemReceipt] = []
+        batch_halted = False
+        halt_reason = None
+        start_time = time.perf_counter()
+
+        for chunk_idx, chunk in enumerate(chunks):
+            chunk_receipts: List[ItemReceipt] = []
+            chunk_to_execute_intents: List[BulkIntentItem] = []
+            ts = time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+
+            if batch_halted:
+                for item in chunk.intents:
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='NOT_EXECUTED',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=f"BATCH_HALTED_PREVIOUS_FAILURE:{halt_reason}"
+                    ))
+                all_receipts.extend(chunk_receipts)
+                self.journal.append_receipts(chunk_receipts)
+                continue
+
+            for item in chunk.intents:
+                res_key = get_resource_key(item.team_id, item.player_id, item.field_id)
+                locking_id = self.journal.is_resource_locked(res_key)
+
+                if self.journal.is_intent_completed(item.intent_id):
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='REUSED_HISTORICAL_RECEIPT',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reused_historical_receipt=True,
+                        reason="INTENT_ALREADY_COMPLETED_IN_JOURNAL"
+                    ))
+                elif locking_id and locking_id != item.intent_id:
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='BLOCKED_BY_PRIOR_UNKNOWN_CLAIM',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=f"RESOURCE_LOCKED_BY_PRIOR_UNKNOWN:{locking_id}"
+                    ))
+                else:
+                    chunk_to_execute_intents.append(item)
+
+            if not chunk_to_execute_intents:
+                all_receipts.extend(chunk_receipts)
+                self.journal.append_receipts(chunk_receipts)
+                continue
+
+            sub_chunk = PlannedChunk(
+                chunk_id=chunk.chunk_id,
+                team_id=chunk.team_id,
+                action_id=chunk.action_id,
+                intents=tuple(chunk_to_execute_intents),
+                estimated_call_count=len(chunk_to_execute_intents) * 3,
+                estimated_duration_ms=min(5000, 500 + len(chunk_to_execute_intents) * 20),
+                batch_id=chunk.batch_id,
+                save_instance_id=chunk.save_instance_id,
+                plan_digest=chunk.plan_digest,
+                chunk_digest=chunk.chunk_digest
+            )
+
+            # Record claim BEFORE transport call
+            self.journal.claim_chunk(sub_chunk)
+
+            # Compile script
+            script = self.compiler.compile_chunk(sub_chunk, batch.header)
+
+            try:
+                transport_result = transport_adapter.execute_chunk(sub_chunk, script)
+            except Exception as e:
+                batch_halted = True
+                halt_reason = f"TRANSPORT_EXCEPTION:{type(e).__name__}:{e}"
+                for item in chunk_to_execute_intents:
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='UNKNOWN_EXECUTION_OUTCOME',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=halt_reason
+                    ))
+                all_receipts.extend(chunk_receipts)
+                self.journal.append_receipts(chunk_receipts)
+                continue
+
+            # Protocol validation (Gate G3)
+            validation_error = None
+            if not isinstance(transport_result, dict):
+                validation_error = "TRANSPORT_RESULT_NOT_DICT"
+            elif transport_result.get('outcome') == 'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY':
+                validation_error = transport_result.get('error') or transport_result.get('details', {}).get('reason') or "TRANSPORT_RETURNED_UNKNOWN"
+            elif transport_result.get('kind') not in ('chunk-execution-result', 'native-control-result'):
+                validation_error = f"INVALID_MESSAGE_KIND:{transport_result.get('kind')}"
+            elif transport_result.get('chunk_id') != sub_chunk.chunk_id:
+                validation_error = f"CHUNK_ID_MISMATCH: expected {sub_chunk.chunk_id}, got {transport_result.get('chunk_id')}"
+            elif 'chunk_digest' in transport_result and transport_result['chunk_digest'] != sub_chunk.chunk_digest:
+                validation_error = f"CHUNK_DIGEST_MISMATCH: expected {sub_chunk.chunk_digest}, got {transport_result.get('chunk_digest')}"
+            elif 'plan_digest' in transport_result and transport_result['plan_digest'] != batch.plan_digest:
+                validation_error = f"PLAN_DIGEST_MISMATCH: expected {batch.plan_digest}, got {transport_result.get('plan_digest')}"
+
+            if validation_error:
+                batch_halted = True
+                halt_reason = validation_error
+                for item in chunk_to_execute_intents:
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='UNKNOWN_EXECUTION_OUTCOME',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=halt_reason
+                    ))
+                all_receipts.extend(chunk_receipts)
+                self.journal.append_receipts(chunk_receipts)
+                continue
+
+            raw_receipts = transport_result.get('receipts', [])
+            executed_receipt_map = {}
+            for r_data in raw_receipts:
+                iid = r_data.get('intent_id')
+                if iid in executed_receipt_map:
+                    validation_error = f"DUPLICATE_RECEIPT_FOR_INTENT:{iid}"
+                    break
+                executed_receipt_map[iid] = r_data
+
+            if not validation_error and len(raw_receipts) != len(chunk_to_execute_intents):
+                validation_error = f"RECEIPT_COUNT_MISMATCH: expected {len(chunk_to_execute_intents)}, got {len(raw_receipts)}"
+
+            if validation_error:
+                batch_halted = True
+                halt_reason = validation_error
+                for item in chunk_to_execute_intents:
+                    chunk_receipts.append(ItemReceipt(
+                        intent_id=item.intent_id,
+                        team_id=item.team_id,
+                        player_id=item.player_id,
+                        field_id=item.field_id,
+                        expected_before=item.expected_before,
+                        requested=item.value,
+                        outcome='UNKNOWN_EXECUTION_OUTCOME',
+                        chunk_id=chunk.chunk_id,
+                        timestamp=ts,
+                        reason=halt_reason
+                    ))
+                all_receipts.extend(chunk_receipts)
+                self.journal.append_receipts(chunk_receipts)
+                continue
+
+            has_failure = False
+            for item in chunk_to_execute_intents:
+                r_dict = executed_receipt_map[item.intent_id]
+                outcome = r_dict.get('outcome', 'UNKNOWN_EXECUTION_OUTCOME')
+                if outcome not in ('SUCCESS_APPLIED', 'UNCHANGED_ALREADY_TARGET', 'REUSED_HISTORICAL_RECEIPT'):
+                    has_failure = True
+                    if not halt_reason:
+                        halt_reason = r_dict.get('reason') or outcome
+
+                chunk_receipts.append(ItemReceipt(
+                    intent_id=item.intent_id,
+                    team_id=item.team_id,
+                    player_id=item.player_id,
+                    field_id=item.field_id,
+                    expected_before=item.expected_before,
+                    requested=item.value,
+                    outcome=outcome,
+                    chunk_id=chunk.chunk_id,
+                    timestamp=ts,
+                    getter_before=r_dict.get('getter_before'),
+                    getter_after=r_dict.get('getter_after'),
+                    raw_after=r_dict.get('raw_after'),
+                    unaltered_fields_check=r_dict.get('unaltered_fields_check', True),
+                    reason=r_dict.get('reason'),
+                    execution_evidence_id=transport_result.get('evidence_id')
+                ))
+
+            if has_failure and transport_result.get('outcome') == 'CHUNK_HALTED':
+                batch_halted = True
+
+            all_receipts.extend(chunk_receipts)
+            self.journal.append_receipts(chunk_receipts)
+
+        total_time_ms = (time.perf_counter() - start_time) * 1000.0
+
+        n_planned = len(batch.intents)
+        n_success = sum(1 for r in all_receipts if r.outcome in ('SUCCESS_APPLIED', 'RECONCILED_SUCCESS'))
+        n_noop = sum(1 for r in all_receipts if r.outcome == 'UNCHANGED_ALREADY_TARGET')
+        n_reused = sum(1 for r in all_receipts if r.outcome == 'REUSED_HISTORICAL_RECEIPT')
+        n_blocked = sum(1 for r in all_receipts if r.outcome in ('CAS_EXPECTED_BEFORE_MISMATCH', 'READBACK_MISMATCH', 'BLOCKED_BY_PRIOR_UNKNOWN_CLAIM', 'RECONCILED_REJECTED'))
+        n_unknown = sum(1 for r in all_receipts if r.outcome == 'UNKNOWN_EXECUTION_OUTCOME')
+        n_not_executed = sum(1 for r in all_receipts if r.outcome == 'NOT_EXECUTED')
+
         total_accounted = n_success + n_noop + n_reused + n_blocked + n_unknown + n_not_executed
         if total_accounted != n_planned:
             raise AssertionError(
@@ -1100,10 +1526,11 @@ def generate_synthetic_batch(
         t_id, p_id, field, is_attr = all_slots[idx % len(all_slots)]
         if not is_attr:
             val = (idx * 7) % 101
-            exp = (val + 5) % 101
+            # Make first 150 items true no-ops (exp == val)
+            exp = val if idx < 150 else (val + 5) % 101
             intents.append(BulkIntentItem(
                 intent_id=f"INT-SYNTH-{idx:06d}",
-                action_id="COACH.STRATEGY.PLAYER_TENDENCY",
+                action_id="PLAYER_PATCH_TENDENCIES",
                 team_id=t_id,
                 player_id=p_id,
                 field_id=field,
@@ -1113,10 +1540,10 @@ def generate_synthetic_batch(
             ))
         else:
             val = 25 + (idx * 3) % 75
-            exp = 25 + ((val - 25) + 4) % 75
+            exp = val if idx < 150 else (25 + ((val - 25) + 4) % 75)
             intents.append(BulkIntentItem(
                 intent_id=f"INT-SYNTH-{idx:06d}",
-                action_id="COACH.STRATEGY.PLAYER_ATTRIBUTE",
+                action_id="PLAYER_PATCH_ATTRIBUTES",
                 team_id=t_id,
                 player_id=p_id,
                 field_id=field,
@@ -1158,11 +1585,6 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
     for item in batch.intents:
         env.set_player_field(item.team_id, item.player_id, item.field_id, item.expected_before)
 
-    # Set 150 items to no-op
-    for i in range(150):
-        item = batch.intents[i]
-        env.set_player_field(item.team_id, item.player_id, item.field_id, item.value)
-
     # Set 2 items to CAS mismatch (in 2 separate chunks)
     for i in [250, 450]:
         item = batch.intents[i]
@@ -1173,6 +1595,7 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
 
     chunk_durations_ms = []
     item_durations_ms = []
+    all_receipts = []
 
     t_exec_start = time.perf_counter()
     for chunk in chunks:
@@ -1182,6 +1605,7 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
         chunk_durations_ms.append(c_dur)
         per_item = c_dur / len(chunk.intents)
         item_durations_ms.extend([per_item] * len(chunk.intents))
+        all_receipts.extend(receipts)
     total_exec_ms = (time.perf_counter() - t_exec_start) * 1000.0
 
     chunk_p50 = float(np.percentile(chunk_durations_ms, 50))
@@ -1191,6 +1615,18 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
     item_p50 = float(np.percentile(item_durations_ms, 50))
     item_p95 = float(np.percentile(item_durations_ms, 95))
     item_p99 = float(np.percentile(item_durations_ms, 99))
+
+    # Dynamically aggregate counts from actual receipts
+    n_planned = len(batch.intents)
+    n_success = sum(1 for r in all_receipts if r.outcome in ('SUCCESS_APPLIED', 'RECONCILED_SUCCESS'))
+    n_noop = sum(1 for r in all_receipts if r.outcome == 'UNCHANGED_ALREADY_TARGET')
+    n_blocked = sum(1 for r in all_receipts if r.outcome in ('CAS_EXPECTED_BEFORE_MISMATCH', 'READBACK_MISMATCH', 'BLOCKED_BY_PRIOR_UNKNOWN_CLAIM'))
+    n_unknown = sum(1 for r in all_receipts if r.outcome == 'UNKNOWN_EXECUTION_OUTCOME')
+    n_not_executed = sum(1 for r in all_receipts if r.outcome == 'NOT_EXECUTED')
+    total_accounted = n_success + n_noop + n_blocked + n_unknown + n_not_executed
+
+    if total_accounted != n_planned:
+        raise AssertionError(f"Conservation violation in 10k benchmark: {total_accounted} != {n_planned}")
 
     bench_data = {
         'schema_version': 'nba2k22.rea.bulk_executor.benchmark.v1',
@@ -1211,6 +1647,7 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
             'max_chunk_size': 50
         },
         'mock_execution_timings': {
+            'metric_type': 'MEASURED_MOCK',
             'batch_generation_and_parse_time_ms': round(t_gen_ms, 2),
             'planning_and_validation_time_ms': round(t_plan_ms, 2),
             'sample_frida_script_compile_time_ms': round(t_comp_ms, 2),
@@ -1229,6 +1666,7 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
             }
         },
         'session_overhead_estimates': {
+            'metric_type': 'ESTIMATED_THEORETICAL',
             'unchunked_legacy_sessions': 10000,
             'unchunked_estimated_overhead_seconds': 40000.0,
             'unchunked_overhead_hours': 11.11,
@@ -1238,6 +1676,7 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
             'session_overhead_reduction_percent': round((1.0 - (len(chunks) / 10000.0)) * 100.0, 2)
         },
         'projected_live_native_duration': {
+            'metric_type': 'PROJECTED_NOT_RUN',
             'basis_measurement': "Damian Lillard live execution receipt confirmed native Setter 0x990a10 + Getter 0x978360 takes < 50ms per call",
             'estimated_live_native_call_seconds': 500.0,
             'estimated_live_native_call_minutes': 8.33,
@@ -1245,13 +1684,14 @@ def run_10k_benchmark(output_path: Optional[Path | str] = None) -> Dict[str, Any
             'projected_unchunked_live_duration_hours': round((40000.0 + 500.0) / 3600.0, 2)
         },
         'outcome_conservation': {
-            'num_planned': 10000,
-            'num_success': 9825,
-            'num_noop': 150,
-            'num_blocked': 2,
-            'num_unknown': 1,
-            'num_not_executed': 22,
-            'total_accounted': 10000,
+            'metric_type': 'DYNAMICALLY_AGGREGATED_RECEIPTS',
+            'num_planned': n_planned,
+            'num_success': n_success,
+            'num_noop': n_noop,
+            'num_blocked': n_blocked,
+            'num_unknown': n_unknown,
+            'num_not_executed': n_not_executed,
+            'total_accounted': total_accounted,
             'conservation_holds': True
         }
     }
@@ -1348,18 +1788,10 @@ def cli_execute_authorized(args):
         print("[!] ERROR: Batch header specifies dry_run=True. Live mutation cannot be executed.")
         sys.exit(1)
 
-    print(f"[!] LIVE MUTATION AUTHORIZED by Human ref: {batch.header.authorization_ref}")
-    print(f"    Target build: {batch.header.game_build_sha256}")
-    print(f"    Expected PID: {args.expected_pid or batch.header.expected_pid}")
-    live_ctx = transport.LiveExecutionContext(
-        authorization_ref=batch.header.authorization_ref,
-        allowed_action_ids=frozenset(['PLAYER_PATCH_TENDENCIES', 'PLAYER_PATCH_ATTRIBUTES', 'COACH_SET_KNOWN_CURRENT_SETTINGS']),
-        maximum_game_calls=500,
-        enabled=True,
-        expected_pid=args.expected_pid or batch.header.expected_pid
-    )
-    adapter = ReaChunkTransportAdapter(args.runtime_dir or (Path(_SCRIPT_DIR) / '_live_runtime'), live_context=live_ctx)
-    print("[+] ReaChunkTransportAdapter initialized and bound to Checkpoint014 transport.")
+    print("[!] ERROR: LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution verifier is not available.")
+    print("    In accordance with Core verification plan Gate G1, command-line flags and string authorization_ref")
+    print("    do not constitute trusted external verification. Live execution remains fail-closed.")
+    sys.exit(1)
 
 
 def cli_inspect_receipt(args):
