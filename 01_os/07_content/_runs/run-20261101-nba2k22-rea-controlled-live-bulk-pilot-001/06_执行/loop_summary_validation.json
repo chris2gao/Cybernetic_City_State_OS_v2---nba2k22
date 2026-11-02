@@ -1,0 +1,38 @@
+{
+  "schema_version": "nba2k22.rea.loop_summary_validation.v1",
+  "task_id": "NBA2K22-REA-CONTROLLED-LIVE-BULK-PILOT-20261101-001",
+  "recomputed_from_raw_log": true,
+  "raw_log_path": "06_执行/loop_iterations.jsonl",
+  "total_effective_iterations": 5,
+  "successful_iterations": 5,
+  "failed_iterations": 0,
+  "actual_executor_model": "Gemini 2.5 Pro (execution)",
+  "stop_reason": "ALL_GATES_PASSED_AND_TECHNICAL_OBJECTIVES_FULFILLED",
+  "gates_validation": {
+    "G1_human_authorization": "PASSED_BOUND_TO_MANIFEST",
+    "G2_technical_preflight": "PASSED_PID_AND_BUILD_AND_BACKUP_VERIFIED",
+    "G3_single_executor_lock": "PASSED_CROSS_PROCESS_FILE_LOCK",
+    "G4_native_bridge_protocol": "PASSED_ENVELOPE_AND_IDENTITY_VERIFIED",
+    "G5_live_noop_multichunk": "PASSED_12_ITEMS_2_CHUNKS_0_SETTERS",
+    "G6_live_bounded_mutation": "PASSED_12_ITEMS_2_CHUNKS_MUTATED_TO_0",
+    "G7_failure_stop_fail_closed": "PASSED_CAS_UNKNOWN_STOP_VERIFIED",
+    "G8_evidence_and_loop_observability": "PASSED_RECORDED_TRUTHFULLY"
+  },
+  "metrics_conservation": {
+    "stage1_noop": {
+      "planned": 12,
+      "applied": 0,
+      "noop": 12,
+      "conservation_holds": true
+    },
+    "stage2_mutation": {
+      "planned": 12,
+      "applied": 12,
+      "noop": 0,
+      "conservation_holds": true
+    },
+    "total_planned_items": 24,
+    "total_applied_items": 12,
+    "total_noop_items": 12
+  }
+}

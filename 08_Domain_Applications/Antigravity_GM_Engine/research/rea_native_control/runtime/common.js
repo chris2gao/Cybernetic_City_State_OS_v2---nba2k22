@@ -3,7 +3,7 @@ const request=__REQUEST__,bindingSpecs=__BINDINGS__,limits=__LIMITS__,base=Proce
 const coachSettingSpecs=__COACH_FIELDS__;
 const playerContractFields=__PLAYER_CONTRACT_FIELDS__;
 if(Process.arch!=='x64'||Process.mainModule.name.toLowerCase()!=='nba2k22.exe')throw Error('PC22_X64_TARGET_REQUIRED');
-function read(p,n){if(n<1||n>32768||readBytes+n>limits.read_bytes)throw Error('BOUNDED_READ_LIMIT');let at=p,left=n;while(left){const r=Process.findRangeByAddress(at);if(!r||!r.protection.includes('r'))throw Error('OBJECT_RANGE_UNREADABLE');const size=Math.min(left,r.base.add(r.size).sub(at).toUInt32());if(size<1)throw Error('OBJECT_RANGE_END');at=at.add(size);left-=size;}readBytes+=n;return p.readByteArray(n);}
+let lastRange=null;function read(p,n){if(n<1||n>32768||readBytes+n>limits.read_bytes)throw Error('BOUNDED_READ_LIMIT');let at=p,left=n;while(left){const inRange=lastRange&&(at.compare?(at.compare(lastRange.base)>=0&&at.compare(lastRange.base.add(lastRange.size))<0):at.equals(lastRange.base));if(!inRange){lastRange=Process.findRangeByAddress(at);if(!lastRange||!lastRange.protection.includes('r'))throw Error('OBJECT_RANGE_UNREADABLE');}const size=Math.min(left,lastRange.base.add(lastRange.size).sub(at).toUInt32());if(size<1)throw Error('OBJECT_RANGE_END');at=at.add(size);left-=size;}readBytes+=n;return p.readByteArray(n);}
 const u16=(b,o=0)=>new DataView(b).getUint16(o,true),u32=(b,o=0)=>new DataView(b).getUint32(o,true),ptrAt=(b,o=0)=>ptr('0x'+new DataView(b).getBigUint64(o,true).toString(16));
 function text(b){let out='';for(let o=0;o+1<b.byteLength;o+=2){const c=u16(b,o);if(!c)break;out+=String.fromCharCode(c);}return out;}
 function equal(a,b){const x=new Uint8Array(a),y=new Uint8Array(b);return x.length===y.length&&x.every((v,i)=>v===y[i]);}

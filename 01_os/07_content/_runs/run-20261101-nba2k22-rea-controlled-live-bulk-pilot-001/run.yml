@@ -3,11 +3,37 @@ run_id: run-20261101-nba2k22-rea-controlled-live-bulk-pilot-001
 branch: task/nba2k22-rea-controlled-live-bulk-pilot-20261101
 base_sha: 568f795f75a0099d6560c1fa448a5ef37f9e7b8e
 os_role: execution
-status: DISPATCHED_HUMAN_LIVE_BATCH_TEST_AUTHORIZED
+status: LIVE_BULK_PILOT_COMPLETED
 human_live_bulk_pilot_authorized: true
 additional_human_sign_off_within_authorized_scope_required: false
-live_bridge_engineering_and_preflight_pending: true
-live_test_executed: false
+live_bridge_engineering_and_preflight_pending: false
+live_test_executed: true
 master_merge_authorized: false
 core_loop_observability_candidate: true
-actual_model: pending_executor_report
+actual_model: Gemini 2.5 Pro (execution)
+gates_passed:
+  - G1
+  - G2
+  - G3
+  - G4
+  - G5
+  - G6
+  - G7
+  - G8
+live_execution_summary:
+  stage1_noop:
+    intents: 12
+    chunks: 2
+    outcome: 12 UNCHANGED_ALREADY_TARGET
+    setters_called: 0
+  stage2_mutation:
+    intents: 12
+    chunks: 2
+    outcome: 12 SUCCESS_APPLIED
+    target_value: 0
+    raw_after: 0
+    getter_after: 0
+    unaltered_fields_verified: true
+  stage3_readback:
+    verified_persistent_zeros: 12
+    verified_unaltered_peers: true
