@@ -122,3 +122,61 @@ rootdir: E:\gemini_space\nba2k22
 ```
 
 全量测试零失败，零回归。
+
+
+---
+
+## 6. GPT-6 实机守卫专项整改（Iteration 7）
+
+依据 GPT-6 审核报告（`25eae0063cfe72cab595263bc57c0ceb8fc22889`）的 6 项实机准入核心接口要求，完成了全部定向整改与负向单测覆盖：
+
+### 6.1 六项关键接口整改成果
+
+1. **真实执行后实时 Getter（P0-A）**：
+   - 彻底废除预检倾向闭包复用。`_get_fresh_live_getter(expected_pid)` 在执行后重新通过 `ReadOnlyGameProcess(actual_pid)` 动态连接 NBA2K22 内存，实时读取球员倾向字典。
+   - 增加 PID 校验：若实时解析的实际 PID 与执行期望 PID 不一致，立即抛出 `RuntimeError("PID_MISMATCH_FRESH_GETTER")`，严禁跨进程读取。
+2. **UNKNOWN 状态多层一致性（P0-B）**：
+   - 发生 `UNKNOWN_EXECUTION_OUTCOME` 时，Host 状态置为 `UNKNOWN_LOCKED`，Outbox 周期状态标记为 `UNKNOWN_LOCKED`，Journal 中记录锁定凭据。
+   - 严格保留活动计划（`active_plan` 不清除），`resume()` 与 `advance_calendar_check()` 全面拒绝并返回阻断状态（`ADVANCE_REFUSED_CYCLE_NOT_CLEARED`），严禁盲目重试或跳过。
+3. **多层收据自动验证与 VERIFIED_SUCCESS 回填（P0-B）**：
+   - 引入通用的多层校验器 `validate_batch_execution`，从计划摘要、Chunk 摘要、原始 REA 消息、Journal 收据及独立读回报告 5 个维度执行 Fail-Closed 验证。
+   - 读回不匹配的项在 Outbox 中被置为 `READBACK_MISMATCH_FAILED`，Host 进入 `STOPPED_PARTIAL` 状态并保留活动计划。只有在所有层级验证和读回全部 100% 通过且无 UNKNOWN 时，才回填 `VERIFIED_SUCCESS`。
+4. **Mock 模式与真实 Native 物理隔离（P0-C）**：
+   - Mock 模式下未提供 Fake Transport 执行时，立即抛出 `OFFLINE_MOCK_CANNOT_EXECUTE_WITHOUT_FAKE_TRANSPORT`，严禁在 Mock 状态下构造或触发真实 Native 会话。
+   - Live 模式下如果传入 Fake Transport，立即抛出 `LIVE_MODE_REJECTS_FAKE_TRANSPORT`，确保真实测试绝不伪造结果。
+5. **已认证动作范围与可信角色注册表（P0-C）**：
+   - 真实执行严格限制在已认证的白名单范围：动作必须为 `PLAYER_PATCH_TENDENCIES`，字段必须为 `SHOT_TENDENCY`，否则抛出 `LIVE_SCOPE_VIOLATION`。
+   - 引入 `TrustedRoleRegistry`，对发起意图的角色（GM/Coach）与球队身份进行可信绑定（`gm_user_01`, `coach_user_01`），cycle 入口处彻底阻断非可信测试身份冒充（`ROLE_ACTOR_NOT_AUTHENTICATED`）。
+6. **世界线清单、回读验证与原子回滚（P1）**：
+   - 在存档目录下维护不可变追加清单 `worldlines_manifest.json`，确保相同回档日期幂等复用同一子世界线数据库，并支持安全的 `target_worldline_id` 分支切换。
+   - 对 `save.json` 的更新采取 `.tmp` 原子替换，并在替换后立即执行 `read_binding` 读回验证，若绑定不匹配立即使用原字节执行原子回滚。
+
+### 6.2 负向与回放回归测试指标
+
+在 `test_season_cycle_host.py` 中新增 8 项专用负向与回放回归测试，总测试数扩展为 15 项，全部通过：
+
+```text
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1
+rootdir: E:\gemini_space\nba2k22
+
+08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py:
+  test_g02_worldline_backward_date_isolation                                    PASSED [  6%]
+  test_g04_capture_chronology_and_same_state_repeat                             PASSED [ 13%]
+  test_g05_role_authorization_and_conflicts                                     PASSED [ 20%]
+  test_g06_cas_mismatch_fails_closed                                            PASSED [ 26%]
+  test_g08_four_offline_closed_loop_cycles                                      PASSED [ 33%]
+  test_p1_pause_resume_unknown_locked_and_outbox_alignment                      PASSED [ 40%]
+  test_p0_fail_closed_readback_and_unknown_locking                               PASSED [ 46%]
+  test_p0_a_fresh_getter_after_isolated_from_preflight_cache                     PASSED [ 53%]
+  test_p0_b_unknown_outcome_locks_host_and_outbox_preserves_plan                 PASSED [ 60%]
+  test_p0_b_missing_receipt_fails_closed_with_stopped_partial                   PASSED [ 66%]
+  test_p0_c_mock_mode_cannot_execute_without_fake_transport                    PASSED [ 73%]
+  test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope            PASSED [ 80%]
+  test_p0_c_unauthenticated_role_actor_rejected                                 PASSED [ 86%]
+  test_p1_worldline_manifest_idempotent_and_switch_recovery                     PASSED [ 93%]
+  test_g7_gold_100_offline_batch_validation_replay                               PASSED [100%]
+============================= 15 passed in 15.55s =============================
+```
+
+在 `test_g7_gold_100_offline_batch_validation_replay` 中，成功载入此前实机执行通过的 100 项黄金收据目录（`run-20261102-nba2k22-rea-100-live-benchmark-001/07_产出/mutation_100`），通过 `validate_stage_directory` 执行了完整的离线重放校验，验证了 100 项收据守恒律（`conservation_holds=True`）、Chunk 摘要一致性以及零 UNKNOWN。

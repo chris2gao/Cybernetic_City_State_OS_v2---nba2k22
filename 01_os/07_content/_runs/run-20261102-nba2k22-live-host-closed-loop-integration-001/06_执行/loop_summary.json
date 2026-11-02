@@ -2,7 +2,7 @@
   "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
   "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
   "actual_executor_model": "Gemini 2.5 Pro (execution)",
-  "total_iterations": 6,
+  "total_iterations": 7,
   "all_offline_gates_satisfied": true,
   "gpt6_audit_remediation": {
     "audit_commit_sha": "bf4f044e9f83665eb573638425f44cd97d7e7d93",
@@ -39,10 +39,11 @@
     "completion_pointer": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/08_结论/completion_pointer.md"
   },
   "test_metrics": {
-    "host_integration_tests": "7 passed, 0 failed in 7.45s (test_season_cycle_host.py)",
+    "host_integration_tests": "15 passed, 0 failed in 15.55s (test_season_cycle_host.py)",
     "host_full_pipeline_tests": "37 passed, 0 failed in 12.36s (host + outbox + bridge + role_batches)",
     "world_data_prototype_tests": "337 passed, 2 warnings, 103 subtests passed in 147.21s",
-    "regressions_detected": 0
+    "regressions_detected": 0,
+    "gold_100_offline_replay": "PASS (100 receipts replayed and verified via validate_stage_directory)"
   },
   "governance_adherence": {
     "created_new_native_setter": false,
@@ -52,5 +53,18 @@
     "unapproved_live_mutations": false,
     "marked_fake_as_live": false,
     "merged_diverged_old_task_branches": false
+  },
+  "gpt6_post_remediation_audit": {
+    "audit_commit_sha": "25eae0063cfe72cab595263bc57c0ceb8fc22889",
+    "review_document": "08_结论/gpt6_post_remediation_live_guard_review_20261102.md",
+    "review_status": "POST_REMEDIATION_ACCEPTED_READY_FOR_ENABLEMENT",
+    "critical_interface_remediations": {
+      "1_fresh_live_getter": "RESOLVED: _get_fresh_live_getter dynamically connects to NBA2K22 memory via ReadOnlyGameProcess post-execution, strictly isolated from preflight cache; verifies expected PID fail-closed (PID_MISMATCH_FRESH_GETTER).",
+      "2_unknown_outcome_consistency": "RESOLVED: UNKNOWN_EXECUTION_OUTCOME triggers synchronized UNKNOWN_LOCKED across Host state, Outbox cycle, and Journal; preserves active plan and strictly blocks calendar advance.",
+      "3_multi_layer_batch_validation": "RESOLVED: Multi-layer validation (validate_batch_execution) checks batch plan digest, chunk digests, raw REA messages, journal receipts, and independent readback; non-matching items mapped to READBACK_MISMATCH_FAILED, Host routed to STOPPED_PARTIAL preserving plan, and VERIFIED_SUCCESS only granted on complete verification.",
+      "4_mock_physical_isolation": "RESOLVED: Mock mode requires fake transport (OFFLINE_MOCK_CANNOT_EXECUTE_WITHOUT_FAKE_TRANSPORT); Live mode strictly rejects fake transport (LIVE_MODE_REJECTS_FAKE_TRANSPORT).",
+      "5_certified_live_scope_and_role_registry": "RESOLVED: Live execution restricted to PLAYER_PATCH_TENDENCIES and SHOT_TENDENCY (LIVE_SCOPE_VIOLATION); TrustedRoleRegistry validates GM and Coach actors per team at cycle entry.",
+      "6_worldline_manifest_and_rollback": "RESOLVED: worldlines_manifest.json tracks parent/child worldlines, deterministic date fork reuse, target_worldline_id switching, and atomic save.json write with immediate readback verification and rollback."
+    }
   }
 }
