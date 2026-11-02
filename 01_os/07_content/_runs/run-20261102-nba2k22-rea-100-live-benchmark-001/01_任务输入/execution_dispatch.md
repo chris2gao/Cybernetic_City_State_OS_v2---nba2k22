@@ -81,7 +81,7 @@
 ### L2 — 一次真实 100 条批量修改
 
 1. 将上述100个经读回证实的唯一 Player intents 固定为一个新 batch、一次 nonce、一次 session；精确记录全部队伍ID、球员ID、旧值与目标值。选择现有允许的 `max_chunk_size`，确保多球队、多 chunk 能保守停止。
-2. **仅运行一次**：`execute_batch` 负责 Claim-before-Setter，跨进程互斥必须在整个执行期间生效，完成所有 Chunk 的真实 Setter 前后确认。出现任何 UNKNOWN、CAS mismatch、对象漂移、超时、读回不一致、runner 报错、游戏无响应，即停止而不是重放/分组补齐。
+2. **仅运行一次**：`execute_batch` 负责 Claim-before-Setter，采用现有互斥并在启动前确认仅有本次执行器；**本任务不声称已经证明跨进程全过程无竞争**。如果现场存在并发 REA 执行者、锁获取失败或 Claim 状态冲突，停止，不为了本次跑分修改核心锁设计。完成所有 Chunk 的真实 Setter 前后确认。出现任何 UNKNOWN、CAS mismatch、对象漂移、超时、读回不一致、runner 报错、游戏无响应，即停止而不是重放/分组补齐。
 3. 完成后保存一次新会话的100个真实 Getter、每个 Chunk 的 Runner 原始 messages/收据、执行会话清理状态。
 4. **不执行100项还原的第二批次**，Human 会手动恢复冷备份。对当前世界线的临时修改不进行模拟赛程或保存覆盖。
 5. 若最终100/100成功并完成独立读回，标记 `LIVE_100_ITEM_MEASUREMENT_CONFIRMED`；若少于100，按实际 `LIVE_PARTIAL_OR_BLOCKED` 处理，不重复启动以补齐。
