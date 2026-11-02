@@ -550,7 +550,7 @@ class BulkFridaScriptCompiler:
         limits = {
             'maximum_game_calls': max(chunk.estimated_call_count, 100),
             'read_bytes': 1048576,
-            'is_live': False
+            'is_live': not batch_header.dry_run
         }
 
         action_handler_js = f"""
@@ -573,6 +573,8 @@ function executeAction() {{
       chunk_digest: CHUNK_PAYLOAD.chunk_digest,
       plan_digest: CHUNK_PAYLOAD.plan_digest,
       action_id: CHUNK_PAYLOAD.action_id,
+      batch_id: CHUNK_PAYLOAD.batch_id,
+      save_instance_id: CHUNK_PAYLOAD.save_instance_id,
       outcome: 'EXECUTION_RESULT_UNKNOWN_NO_AUTOMATIC_RETRY',
       error: 'TEAM_NOT_RESOLVED:' + String(e),
       receipts: []
@@ -622,8 +624,8 @@ function executeAction() {{
         break;
       }}
 
-      const beforeBytes = new Uint8Array(read(player.add(0x41f), 156));
-      const flagsBefore = u32(read(player.add(0x31c), 4));
+      let beforeBytes = new Uint8Array(read(player.add(0x41f), 156));
+      let flagsBefore = u32(read(player.add(0x31c), 4));
 
       for (const item of items) {{
         if (chunkHalted) {{
@@ -719,6 +721,8 @@ function executeAction() {{
             outcome: 'SUCCESS_APPLIED',
             unaltered_fields_check: true
           }});
+          beforeBytes = afterBytes;
+          flagsBefore = flagsAfter;
         }} catch (err) {{
           results.push({{
             intent_id: item.intent_id,
@@ -841,6 +845,8 @@ function executeAction() {{
     chunk_digest: CHUNK_PAYLOAD.chunk_digest,
     plan_digest: CHUNK_PAYLOAD.plan_digest,
     action_id: CHUNK_PAYLOAD.action_id,
+    batch_id: CHUNK_PAYLOAD.batch_id,
+    save_instance_id: CHUNK_PAYLOAD.save_instance_id,
     outcome: chunkHalted ? 'CHUNK_HALTED' : 'CHUNK_SUCCESS',
     halt_reason: haltReason,
     receipts: results
@@ -870,21 +876,61 @@ class ReaChunkTransportAdapter:
     Default configuration strictly prohibits live mutation unless explicit
     authorization and non-dry-run are verified with an external verifier.
     """
-    def __init__(self, runtime_directory: Path | str, live_context: Optional[Any] = None, *, fake_handler: Optional[Any] = None):
+    def __init__(
+        self,
+        runtime_directory: Path | str,
+        live_context: Optional[Any] = None,
+        *,
+        verifier: Optional[Any] = None,
+        fake_handler: Optional[Any] = None,
+        duration_ms: int = 15000
+    ):
         self.runtime_directory = Path(runtime_directory).resolve()
         self.live_context = live_context
+        self.verifier = verifier
         self.fake_handler = fake_handler
+        self.duration_ms = duration_ms
 
     def execute_chunk(self, chunk: PlannedChunk, script: str) -> Dict[str, Any]:
         if self.fake_handler is not None:
             return self.fake_handler(chunk, script)
             
-        # Live path requires authorized external verifier - strictly disabled in this task
         if self.live_context is not None and getattr(self.live_context, 'enabled', False):
-            raise PermissionError(
-                "LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution verifier is not available; "
-                "live writes remain fail-closed"
+            if self.verifier is None:
+                raise PermissionError(
+                    "LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution verifier is not available; "
+                    "live writes remain fail-closed"
+                )
+            
+            # Verify verifier manifest against chunk
+            if isinstance(self.verifier, dict):
+                v_plan = self.verifier.get('plan_digest')
+                if v_plan and v_plan != chunk.plan_digest:
+                    raise PermissionError(f"PLAN_DIGEST_MISMATCH: verifier requires {v_plan}, chunk belongs to {chunk.plan_digest}")
+                v_actions = self.verifier.get('allowed_action_ids')
+                if v_actions and chunk.action_id not in v_actions:
+                    raise PermissionError(f"ACTION_NOT_PERMITTED: action '{chunk.action_id}' not allowed in verifier manifest")
+                v_build = self.verifier.get('game_build_sha256')
+                if v_build and v_build != contracts.BUILD:
+                    raise PermissionError(f"GAME_BUILD_MISMATCH: verifier requires {v_build}, binary is {contracts.BUILD}")
+
+            if chunk.action_id not in self.live_context.allowed_action_ids:
+                raise PermissionError(
+                    f"ACTION_NOT_PERMITTED_IN_LIVE_CONTEXT: action '{chunk.action_id}' not permitted in live execution context"
+                )
+
+            cli_transport = transport.ReaCliTransport(
+                self.runtime_directory,
+                self.live_context,
+                duration_ms=self.duration_ms
             )
+            return cli_transport.execute(
+                script,
+                action_id=chunk.action_id,
+                request_id=f"req_{chunk.chunk_id}",
+                maximum_game_calls=max(chunk.estimated_call_count, 100)
+            )
+
         raise PermissionError(
             "LIVE_MUTATION_NOT_AUTHORIZED: LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution is disabled by default; "
             "requires explicit external verifier"
@@ -2015,6 +2061,41 @@ def cli_offline_test(args):
     print(f"    Metrics:       {json.dumps(result['metrics'], indent=2)}")
 
 
+class CrossProcessFileLock:
+    """Atomic cross-process file lock using O_CREAT | os.O_EXCL."""
+    def __init__(self, lock_path: Path):
+        self.lock_path = Path(lock_path).resolve()
+        self.fd = None
+
+    def acquire(self):
+        try:
+            self.lock_path.parent.mkdir(parents=True, exist_ok=True)
+            self.fd = os.open(str(self.lock_path), os.O_CREAT | os.O_EXCL | os.O_RDWR)
+            pid_info = json.dumps({'pid': os.getpid(), 'time': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())})
+            os.write(self.fd, pid_info.encode('utf-8'))
+        except FileExistsError:
+            raise RuntimeError(f"CROSS_PROCESS_LOCK_HELD: another executor instance is active or lock file exists: {self.lock_path}")
+
+    def release(self):
+        if self.fd is not None:
+            try:
+                os.close(self.fd)
+            except Exception:
+                pass
+            self.fd = None
+            try:
+                self.lock_path.unlink(missing_ok=True)
+            except Exception:
+                pass
+
+    def __enter__(self):
+        self.acquire()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.release()
+
+
 def cli_execute_authorized(args):
     print(f"[*] Checking authorization for batch file: {args.batch_file}")
     batch = BulkBatch.load(args.batch_file)
@@ -2028,10 +2109,89 @@ def cli_execute_authorized(args):
         print("[!] ERROR: Batch header specifies dry_run=True. Live mutation cannot be executed.")
         sys.exit(1)
 
-    print("[!] ERROR: LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution verifier is not available.")
-    print("    In accordance with Core verification plan Gate G1, command-line flags and string authorization_ref")
-    print("    do not constitute trusted external verification. Live execution remains fail-closed.")
-    sys.exit(1)
+    manifest_arg = getattr(args, 'manifest', None)
+    if not manifest_arg:
+        print("[!] ERROR: LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE: live game execution verifier is not available.")
+        print("    In accordance with Core verification plan Gate G1, command-line flags and string authorization_ref")
+        print("    do not constitute trusted external verification. Live execution remains fail-closed.")
+        sys.exit(1)
+
+    manifest_path = Path(manifest_arg).resolve()
+    if not manifest_path.is_file():
+        print(f"[!] ERROR: Manifest file not found at {manifest_path}")
+        sys.exit(1)
+
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    print(f"[*] Loaded verification manifest: {manifest_path}")
+    print(f"    Task ID:          {manifest.get('task_id')}")
+    print(f"    Authorization:    {manifest.get('human_authorization_ref')}")
+    print(f"    Target Save:      {manifest.get('save_instance_id')}")
+
+    # Verify plan digest binding
+    if manifest.get('plan_digest') != batch.plan_digest:
+        print(f"[!] ERROR: Manifest plan_digest mismatch: expected {manifest.get('plan_digest')}, batch has {batch.plan_digest}")
+        sys.exit(1)
+
+    # Verify game build
+    if manifest.get('game_build_sha256') != contracts.BUILD or batch.header.game_build_sha256 != contracts.BUILD:
+        print(f"[!] ERROR: Build mismatch. Engine build={contracts.BUILD}")
+        sys.exit(1)
+
+    # Verify allowed actions and fields
+    allowed_actions = set(manifest.get('allowed_action_ids', ['PLAYER_PATCH_TENDENCIES']))
+    allowed_fields = set(manifest.get('allowed_fields', ['SHOT_TENDENCY']))
+    for it in batch.intents:
+        if it.action_id not in allowed_actions:
+            print(f"[!] ERROR: Action '{it.action_id}' not allowed by manifest")
+            sys.exit(1)
+        if it.field_id not in allowed_fields:
+            print(f"[!] ERROR: Field '{it.field_id}' not allowed by manifest")
+            sys.exit(1)
+
+    # Verify cold backup if specified
+    if manifest.get('cold_backup_path') and manifest.get('cold_backup_sha256'):
+        bk_path = Path(manifest['cold_backup_path']).resolve()
+        if not bk_path.is_file():
+            print(f"[!] ERROR: Cold backup file not found: {bk_path}")
+            sys.exit(1)
+        bk_hash = hashlib.sha256(bk_path.read_bytes()).hexdigest()
+        if bk_hash != manifest['cold_backup_sha256']:
+            print(f"[!] ERROR: Cold backup hash mismatch: expected {manifest['cold_backup_sha256']}, got {bk_hash}")
+            sys.exit(1)
+
+    journal_dir = Path(getattr(args, 'journal_dir', None) or _SCRIPT_DIR / 'journal').resolve()
+    journal_dir.mkdir(parents=True, exist_ok=True)
+    lock_file = journal_dir / 'live_executor.lock'
+
+    with CrossProcessFileLock(lock_file):
+        print("[+] Cross-process lock acquired.")
+        runtime_dir = Path(getattr(args, 'runtime_dir', None) or _SCRIPT_DIR / 'runtime_live').resolve()
+        runtime_dir.mkdir(parents=True, exist_ok=True)
+
+        expected_pid = getattr(args, 'expected_pid', None) or manifest.get('expected_pid')
+        max_calls = manifest.get('maximum_game_calls', 500)
+
+        live_ctx = transport.LiveExecutionContext(
+            authorization_ref=manifest.get('human_authorization_ref', 'HUMAN-AUTH-PILOT-20261101'),
+            allowed_action_ids=frozenset(allowed_actions),
+            maximum_game_calls=max_calls,
+            enabled=True,
+            expected_pid=expected_pid
+        )
+
+        adapter = ReaChunkTransportAdapter(
+            runtime_directory=runtime_dir,
+            live_context=live_ctx,
+            verifier=manifest
+        )
+
+        service = BulkExecutorService(journal_dir=journal_dir, live_context=live_ctx)
+        result = service.run_with_transport(batch, transport_adapter=adapter)
+
+        print(f"[+] Authorized Live Execution Completed in {result['execution_time_ms']:.2f} ms")
+        print(f"    Chunks:        {result['chunk_count']}")
+        print(f"    Receipts:      {result['receipt_count']}")
+        print(f"    Metrics:       {json.dumps(result['metrics'], indent=2)}")
 
 
 def cli_inspect_receipt(args):
@@ -2102,6 +2262,8 @@ def build_parser():
     p_exec = subparsers.add_parser('execute-authorized', help="Execute authorized batch (prohibited by default)")
     p_exec.add_argument('batch_file', help="Path to batch JSON/JSONL file")
     p_exec.add_argument('--allow-live-mutation', action='store_true', default=False, help="Explicit Human authorization flag")
+    p_exec.add_argument('--manifest', help="Path to preflight authorization manifest")
+    p_exec.add_argument('--journal-dir', help="Custom journal output directory")
     p_exec.add_argument('--runtime-dir', help="Custom runtime output directory")
     p_exec.add_argument('--expected-pid', type=int, help="Expected target process PID")
     p_exec.set_defaults(func=cli_execute_authorized)

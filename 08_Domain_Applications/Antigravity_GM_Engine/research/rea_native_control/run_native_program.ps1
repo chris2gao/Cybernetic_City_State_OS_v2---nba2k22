@@ -1,5 +1,6 @@
 param([Parameter(Mandatory=$true)][string]$Directory,[Parameter(Mandatory=$true)][string]$NodePath,[Parameter(Mandatory=$true)][string]$ReaPath,[int]$DurationMs=15000)
 $ErrorActionPreference='Stop'
+Import-Module Microsoft.PowerShell.Utility -ErrorAction SilentlyContinue
 $principal=New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if(-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){throw 'Next-task caller must start its authorized runtime in an administrator session'}
 $manifest=Get-Content -LiteralPath (Join-Path $Directory 'request.json') -Raw -Encoding UTF8 | ConvertFrom-Json
