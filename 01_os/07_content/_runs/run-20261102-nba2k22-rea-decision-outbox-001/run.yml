@@ -1,0 +1,15 @@
+task_id: NBA2K22-REA-DECISION-OUTBOX-20261102-001
+run_id: run-20261102-nba2k22-rea-decision-outbox-001
+branch: task/nba2k22-rea-decision-outbox-20261102
+base_sha: 80955e8ed501a9ab57fc4b363646b525c0748a98
+os_role: execution
+planning_model: GPT-6
+planned_executor_model: Gemini
+actual_executor_model: pending_execution
+status: DISPATCHED_NOT_EXECUTED
+business_goal: incremental_role_decisions_to_sealed_batch_to_automated_receipt_feedback
+reuse_modules: role_batches.py,role_capabilities.py,bulk_executor.py,bounded_session_transport.py
+worlddata_performance_status: DEFERRED_BY_HUMAN
+human_accepted_existing_100_item_performance: true
+live_game_writes_authorized_for_this_task: false
+master_merge_requested: false
