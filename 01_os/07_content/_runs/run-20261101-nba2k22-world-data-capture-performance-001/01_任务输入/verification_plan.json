@@ -1,0 +1,88 @@
+{
+  "schema_version": "nba2k22.optimization.task_verification.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "branch": "task/nba2k22-world-data-capture-performance-20261101",
+  "baseline_sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+  "dispatch": "01_任务输入/execution_dispatch.md",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "role": "execution",
+  "planned_model": "Gemini Flash 3.8",
+  "actual_model": "MUST_RECORD_ACTUAL",
+  "objective": "WORLDDATA_NATIVE_READ_AND_SQLITE_PROFILING",
+  "permissions": {
+    "live_game_read_only": true,
+    "game_mutation": false,
+    "save_mutation": false,
+    "production_database_overwrite": false,
+    "master_merge": "CONDITIONAL_SCOPED_PR_ONLY"
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "baseline provenance",
+      "acceptance": "old 2026-10-25 source 199.51s; details 126.76s; three annual reused"
+    },
+    {
+      "id": "G2",
+      "name": "profiling",
+      "acceptance": "segmented Reader/metadata/decoder/artifact/ingest timings and provenance"
+    },
+    {
+      "id": "G3",
+      "name": "SQL AB",
+      "acceptance": "same 332220 badges and full facts, independent DB copies, repeat and compare"
+    },
+    {
+      "id": "G4",
+      "name": "transactions",
+      "acceptance": "foreign keys, identity, provenance, rollback, append only unchanged"
+    },
+    {
+      "id": "G5",
+      "name": "native read AB",
+      "acceptance": "public intervals only; no private Potential reads; bounded size; recheck preserved"
+    },
+    {
+      "id": "G6",
+      "name": "freshness",
+      "acceptance": "cache if any bound to exact process/save/season/roster; no stale promotion"
+    },
+    {
+      "id": "G7",
+      "name": "live read-only",
+      "acceptance": "if available, real same-source capture with no game writes or advance"
+    },
+    {
+      "id": "G8",
+      "name": "equivalence",
+      "acceptance": "same row counts/schema/values/source artifact hash, receipt and lineage"
+    },
+    {
+      "id": "G9",
+      "name": "performance",
+      "acceptance": "same-machine AB and CPU/IO/RSS measured; distinct historical comparison"
+    },
+    {
+      "id": "G10",
+      "name": "Loop",
+      "acceptance": "append-only verified summary with model/stop"
+    }
+  ],
+  "evidence_grades": [
+    "ORIGINAL_BASELINE_RECEIPT",
+    "OFFLINE_FIXTURE",
+    "NODE_VM",
+    "LIVE_READ",
+    "LIVE_SETTER",
+    "INDEPENDENT_CODE_REVIEW",
+    "HUMAN_DECISION"
+  ],
+  "stop_conditions": [
+    "no_measured_improvement_with_new_evidence",
+    "source_schema_or_memory_safety_violation",
+    "unknown_native_or_process_state",
+    "plan_scope_exceeded",
+    "unverifiable provenance",
+    "CORE_OS_11_STOP"
+  ]
+}
