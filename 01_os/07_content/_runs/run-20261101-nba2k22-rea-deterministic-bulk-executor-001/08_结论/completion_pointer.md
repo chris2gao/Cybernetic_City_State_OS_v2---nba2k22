@@ -6,6 +6,7 @@
 **基线 SHA**：`3bbcbcaad98db6b9492ed915ce93aac076550c4f`  
 **首轮整改提交**：`ffa65322f911559ec4c97e732539a4519841807f` / `1a800563c0051999fb882cc7231f75ec724b832f`  
 **任务发布 HEAD**：`f02f4ed2307c5016f865aa71df6d13b0355c23d5`  
+**本轮整改最终 Commit**：`3868c9f0fb95b674036970f0e0cb2f50826ec40a`  
 **最终交付判定**：`OFFLINE_END_TO_END_BATCH_EXECUTION_VERIFIED`  
 **执行模型**：`Gemini 2.5 Pro (execution)`  
 **整改完成时间**：2026-11-02T02:25:00Z  
