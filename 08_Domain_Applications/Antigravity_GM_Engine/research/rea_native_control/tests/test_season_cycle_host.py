@@ -415,3 +415,126 @@ def test_g08_four_offline_closed_loop_cycles(temp_environment):
     final_status = host.get_status()
     assert final_status["host_status"] == HostState.CONFLICTED
     assert final_status["current_cycle_id"] == "cycle-004"
+
+
+def test_p1_pause_resume_unknown_locked_and_outbox_alignment(temp_environment):
+    """Verify pause/resume preserves previous status, refuses to resume UNKNOWN_LOCKED, and empty cycle aligns outbox SEALED."""
+    env = temp_environment
+    host = env["host"]
+
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    # 1. Normal pause & resume restores pre-pause status
+    assert host.state["status"] == HostState.BASELINE_CAPTURED
+    p_rec = host.pause()
+    assert p_rec["status"] == "HOST_PAUSED"
+    assert host.state["status"] == HostState.PAUSED
+    assert host.state["pre_pause_status"] == HostState.BASELINE_CAPTURED
+
+    r_rec = host.resume()
+    assert r_rec["status"] == "HOST_RESUMED"
+    assert host.state["status"] == HostState.BASELINE_CAPTURED
+
+    # 2. Pause when UNKNOWN_LOCKED refuses resume
+    host.state["status"] = HostState.UNKNOWN_LOCKED
+    host.pause()
+    assert host.state["status"] == HostState.PAUSED
+    res_block = host.resume()
+    assert res_block["status"] == "RESUME_DENIED_UNKNOWN_LOCKED"
+    assert host.state["status"] == HostState.UNKNOWN_LOCKED
+
+    # 3. Empty NO_CHANGE cycle seals outbox cycle in DB
+    host.state["status"] = HostState.BASELINE_CAPTURED
+    host.start_cycle("cycle-empty", candidate_intents=[], force=True)
+    seal_res = host.seal_cycle_decisions("cycle-empty")
+    assert seal_res["status"] == "PLAN_PREFLIGHTED_WAITING_AUTH"
+
+    # Verify Outbox DB cycle status is SEALED
+    cycle_rec = host.outbox.get_cycle("cycle-empty")
+    assert cycle_rec["status"] == "SEALED"
+    assert cycle_rec["sealed_batch_id"] == "NOOP-BATCH-cycle-empty"
+
+
+def test_p0_fail_closed_readback_and_unknown_locking(temp_environment):
+    """Verify readback failure sets STOPPED_PARTIAL (does not advance) and UNKNOWN sets UNKNOWN_LOCKED."""
+    env = temp_environment
+    host = env["host"]
+
+    host.initialize_season(
+        save_directory=str(env["save_dir"]),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    intents = [
+        {
+            "intent_id": "rb-fail-intent",
+            "issuer_role": "GM",
+            "actor_uid": "gm_user_01",
+            "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+            "parameters": {
+                "team_id": 1,
+                "player_id": 2459,
+                "expected_before": 80,
+                "values": {"SHOT_TENDENCY": 95}
+            }
+        }
+    ]
+    host.start_cycle("cycle-fail-rb", candidate_intents=intents, force=True)
+
+    def getter_cas(pid, fid):
+        return 80
+
+    seal_res = host.seal_cycle_decisions("cycle-fail-rb", getter_func=getter_cas)
+    digest = seal_res["plan_digest"]
+
+    # Runner claims SUCCESS, but getter_after returns wrong value (readback mismatch)
+    def fake_runner_mismatch(chunks, script):
+        results = {}
+        for c in chunks:
+            results[c.chunk_id] = {
+                "kind": "chunk-execution-result",
+                "chunk_id": c.chunk_id,
+                "chunk_digest": c.chunk_digest,
+                "plan_digest": c.plan_digest,
+                "action_id": c.action_id,
+                "batch_id": c.batch_id,
+                "save_instance_id": c.save_instance_id,
+                "outcome": "CHUNK_SUCCESS",
+                "receipts": [{
+                    "intent_id": c.intents[0].intent_id,
+                    "team_id": c.intents[0].team_id,
+                    "player_id": c.intents[0].player_id,
+                    "field_id": c.intents[0].field_id,
+                    "expected_before": 80,
+                    "getter_before": 80,
+                    "requested": 95,
+                    "getter_after": 95,
+                    "raw_after": 95,
+                    "outcome": "SUCCESS_APPLIED",
+                    "unaltered_fields_check": True
+                }]
+            }
+        return {"outcome": "SESSION_SUCCESS", "evidence_id": "ev-1", "chunk_results": results}
+
+    def failing_getter_after(pid, fid):
+        return 80  # Failed to update in actual memory!
+
+    res_exec = host.authorize_and_execute(
+        "cycle-fail-rb",
+        plan_digest=digest,
+        transport=fake_runner_mismatch,
+        getter_after_func=failing_getter_after
+    )
+
+    assert res_exec["status"] == "STOPPED_READBACK_FAILED"
+    assert res_exec["readback_verified"] is False
+    assert host.state["status"] == HostState.STOPPED_PARTIAL
+    # Active plan is preserved! Not cleared!
+    assert host.state["active_plan"] is not None
+    assert host.state["active_plan"]["plan_digest"] == digest
+

@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import shutil
 import sqlite3
 import sys
 import time
@@ -117,12 +118,16 @@ class SeasonCycleHost:
             "current_game_date": None,
             "current_cycle_id": None,
             "active_plan": None,
+            "is_offline_mock": False,
+            "pre_pause_status": None,
             "updated_at": datetime.now(timezone.utc).isoformat()
         }
 
     def _save_state(self):
         self.state["updated_at"] = datetime.now(timezone.utc).isoformat()
-        self.state_file.write_text(json.dumps(self.state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        tmp_file = self.state_file.with_suffix(".tmp")
+        tmp_file.write_text(json.dumps(self.state, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        os.replace(tmp_file, self.state_file)
 
     def _append_ledger(self, record: Dict[str, Any]):
         record["recorded_at"] = datetime.now(timezone.utc).isoformat()
@@ -130,15 +135,63 @@ class SeasonCycleHost:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
     def _make_context(self, cycle_id: str) -> BatchContext:
+        season_id = "2021-22"
+        phase = "REGULAR_SEASON"
+        target_db = self.state.get("database_file")
+        if target_db and Path(target_db).exists():
+            try:
+                with closing(connect(Path(target_db), True)) as conn:
+                    s_row = conn.execute("SELECT season_id FROM seasons ORDER BY rowid DESC LIMIT 1").fetchone()
+                    if s_row and s_row[0]:
+                        season_id = s_row[0]
+                    c_row = conn.execute("SELECT period_label FROM season_calendar_observations ORDER BY rowid DESC LIMIT 1").fetchone()
+                    if c_row and c_row[0]:
+                        phase = c_row[0]
+            except Exception:
+                pass
+        curr_date = self.state.get("current_game_date", "unknown_date")
+        w_id = self.state.get("worldline_id") or "worldline-main"
+        snapshot_ref = f"snap_{w_id}_{curr_date}_{cycle_id}"
         return BatchContext(
-            world_id=self.state.get("worldline_id") or "worldline-main",
+            world_id=w_id,
             save_instance_id=self.state.get("loaded_filename") or "MyLEAGUE0003",
             generation_id=cycle_id,
-            season_id="2021-22",
-            phase="REGULAR_SEASON",
-            snapshot_ref=f"snapshot_{cycle_id}",
+            season_id=season_id,
+            phase=phase,
+            snapshot_ref=snapshot_ref,
             catalog_version=self.capability_service.version
         )
+
+    def _get_live_getter(self) -> Optional[Any]:
+        """Provides a real-time player tendency getter from NBA2K22 memory (pure ReadProcessMemory)."""
+        try:
+            from refresh import resolve_pid
+            from player_skill_reader import collect_player_skills
+            actual_pid = resolve_pid("auto")
+            reader = ReadOnlyGameProcess(actual_pid)
+            try:
+                m, _ = collect_player_skills(reader)
+                player_tendencies = {}
+                for p in m["players"]:
+                    uid = p["native_unique_id_raw"]
+                    s_idx = p["source_player_index"]
+                    player_tendencies[uid] = m["skill_rows"][s_idx]["tendencies"]
+
+                def live_getter(player_id: int, field_id: str) -> Optional[int]:
+                    tdict = player_tendencies.get(int(player_id), {})
+                    norm_key = field_id.lower()
+                    if not norm_key.endswith("_raw"):
+                        norm_key = norm_key + "_raw"
+                    val = tdict.get(norm_key)
+                    if val is None:
+                        val = tdict.get(field_id)
+                    return val
+
+                return live_getter
+            finally:
+                reader.close()
+        except Exception:
+            return None
 
     def _make_profiles(self, ctx: BatchContext) -> Tuple[RoleCapabilityProfile, RoleCapabilityProfile]:
         gm = RoleCapabilityProfile(
@@ -184,6 +237,13 @@ class SeasonCycleHost:
                 row = conn.execute("SELECT max(game_date) FROM games WHERE game_date IS NOT NULL").fetchone()
                 if row and row[0]:
                     latest_db_date = row[0]
+                try:
+                    c_row = conn.execute("SELECT current_native_iso_date FROM season_calendar_observations WHERE current_native_iso_date IS NOT NULL ORDER BY rowid DESC LIMIT 1").fetchone()
+                    if c_row and c_row[0]:
+                        if latest_db_date is None or c_row[0] > latest_db_date:
+                            latest_db_date = c_row[0]
+                except Exception:
+                    pass
 
         is_backward = False
         worldline_id = "worldline-main"
@@ -197,6 +257,18 @@ class SeasonCycleHost:
                 target_db = save_dir / f"world-{worldline_id}.sqlite"
                 if not target_db.exists():
                     create_database(target_db, save_id)
+                # Atomically update save.json to bind database_file to the child worldline DB
+                save_json_path = save_dir / "save.json"
+                if save_json_path.exists():
+                    try:
+                        sdata = json.loads(save_json_path.read_bytes())
+                        sdata["database_file"] = target_db.name
+                        tmp_sjson = save_json_path.with_suffix(".tmp")
+                        tmp_sjson.write_text(json.dumps(sdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                        os.replace(tmp_sjson, save_json_path)
+                        binding, binding_hash = read_binding(save_dir, loaded_filename)
+                    except Exception:
+                        pass
 
         return {
             "save_id": save_id,
@@ -222,20 +294,62 @@ class SeasonCycleHost:
         """Binds environment, checks worldline, and captures initial full baseline."""
         save_dir = Path(save_directory).resolve()
         
+        actual_pid = None
         current_date = mock_game_date
-        if not current_date and reader:
+        live_reader_instance = None
+        should_close_reader = False
+        is_mock = (mock_game_date is not None)
+
+        if is_mock:
+            # Offline mock mode
+            if reader is not None:
+                live_reader_instance = reader
+        else:
+            # LIVE MODE: Connect to live NBA2K22.exe and read true in-game calendar date
             try:
-                from cadence import observed_game_season_year
-                current_date = f"{observed_game_season_year(reader)}-10-25"
-            except Exception:
-                current_date = "2021-10-25"
+                from refresh import resolve_pid
+                actual_pid = resolve_pid(pid)
+            except Exception as e:
+                raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: NBA2K22.exe process not accessible ({e})")
+
+            if reader is not None:
+                live_reader_instance = reader
+            else:
+                live_reader_instance = ReadOnlyGameProcess(actual_pid)
+                should_close_reader = True
+
+            try:
+                from schedule_reader import collect_schedule
+                sched = collect_schedule(live_reader_instance, with_calendar=True, read_final_boxes=False)
+                cal = sched.get("calendar") or {}
+                current_date = cal.get("current_native_iso_date")
+            except Exception as e:
+                if should_close_reader and live_reader_instance:
+                    live_reader_instance.close()
+                raise RuntimeError(f"CANNOT_DECODE_LIVE_GAME_DATE: {e}")
+
+            if not current_date:
+                if should_close_reader and live_reader_instance:
+                    live_reader_instance.close()
+                raise RuntimeError("CANNOT_DECODE_LIVE_GAME_DATE: schedule controls returned empty date")
 
         wl_info = self.inspect_worldline(save_dir, loaded_filename, current_date)
         if force_new_worldline and not wl_info["is_backward"]:
             wl_info["worldline_id"] = f"worldline-{wl_info['save_id']}-branch-{uuid.uuid4().hex[:6]}"
-            wl_info["target_db"] = str(save_dir / f"world-{wl_info['worldline_id']}.sqlite")
-            if not Path(wl_info["target_db"]).exists():
-                create_database(wl_info["target_db"], wl_info["save_id"])
+            target_path = save_dir / f"world-{wl_info['worldline_id']}.sqlite"
+            wl_info["target_db"] = str(target_path)
+            if not target_path.exists():
+                create_database(target_path, wl_info["save_id"])
+            save_json_path = save_dir / "save.json"
+            if save_json_path.exists():
+                try:
+                    sdata = json.loads(save_json_path.read_bytes())
+                    sdata["database_file"] = target_path.name
+                    tmp_sjson = save_json_path.with_suffix(".tmp")
+                    tmp_sjson.write_text(json.dumps(sdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                    os.replace(tmp_sjson, save_json_path)
+                except Exception:
+                    pass
 
         target_db = Path(wl_info["target_db"])
         orchestrator = CalendarSimOrchestrator(
@@ -245,15 +359,30 @@ class SeasonCycleHost:
         )
 
         capture_result = None
-        if reader is not None or pid != "auto":
+        if is_mock and live_reader_instance is None:
+            # Offline mock baseline
+            capture_result = {"status": "OFFLINE_MOCK_BASELINE_BOUND"}
+        else:
+            # LIVE FULL Capture: Fail-closed on error
             try:
+                target_reader_or_pid = live_reader_instance if live_reader_instance is not None else actual_pid
                 capture_result = orchestrator.trigger_world_capture(
-                    reader_or_pid=reader if reader else pid,
+                    reader_or_pid=target_reader_or_pid,
                     mode="FULL",
                     force=True
                 )
             except Exception as e:
-                capture_result = {"status": "MOCK_OR_FALLBACK_INIT", "note": str(e)}
+                if should_close_reader and live_reader_instance:
+                    live_reader_instance.close()
+                raise RuntimeError(f"BASELINE_FULL_CAPTURE_FAILED: {e}")
+            finally:
+                if should_close_reader and live_reader_instance:
+                    live_reader_instance.close()
+
+            if not capture_result or capture_result.get("status") not in (
+                "SUCCESS_FULL_CAPTURE", "SUCCESS_INGESTED", "SUCCESS", "COMPLETED_REQUESTED_SOURCES", "SUCCESS_EXPORT_ONLY"
+            ):
+                raise RuntimeError(f"BASELINE_FULL_CAPTURE_UNCONFIRMED: {capture_result}")
 
         self.state.update({
             "status": HostState.BASELINE_CAPTURED,
@@ -262,9 +391,10 @@ class SeasonCycleHost:
             "save_id": wl_info["save_id"],
             "worldline_id": wl_info["worldline_id"],
             "database_file": str(target_db),
-            "current_game_date": current_date or "2021-10-25",
+            "current_game_date": current_date,
             "current_cycle_id": None,
-            "active_plan": None
+            "active_plan": None,
+            "is_offline_mock": is_mock
         })
         self._save_state()
 
@@ -274,7 +404,7 @@ class SeasonCycleHost:
             "loaded_filename": loaded_filename,
             "worldline_id": wl_info["worldline_id"],
             "database_file": str(target_db),
-            "current_game_date": self.state["current_game_date"],
+            "current_game_date": current_date,
             "is_backward_worldline_branch": wl_info["is_backward"],
             "capture_summary": capture_result.get("status") if capture_result else "ALREADY_BOUND"
         }
@@ -289,7 +419,7 @@ class SeasonCycleHost:
         candidate_intents: Optional[List[Dict[str, Any]]] = None,
         reader: Any = None
     ) -> Dict[str, Any]:
-        """Initiates a cycle, verifies calendar progression, and registers draft intents."""
+        """Initiates a cycle, verifies calendar progression, triggers capture, and registers draft intents."""
         if self.state["status"] not in (
             HostState.BASELINE_CAPTURED,
             HostState.EXECUTED_AND_READBACK,
@@ -308,26 +438,76 @@ class SeasonCycleHost:
         )
 
         progress_status = "DATE_ADVANCED"
-        if reader is not None:
-            prog = orchestrator.inspect_calendar_progress(reader)
-            if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
-                self.state["status"] = HostState.CONTEXT_STALE
-                self._save_state()
-                return {
-                    "status": "REJECTED_GAME_IN_PROGRESS",
-                    "cycle_id": cycle_id,
-                    "reason": "Game is currently underway in memory; cannot start cycle."
-                }
-            if prog.get("status") == "SAME_STATE_REPEAT" and not force:
-                return {
-                    "status": "SAME_STATE_REPEAT",
-                    "cycle_id": cycle_id,
-                    "reason": "Game calendar has not advanced since previous cycle; skipping redundant observation."
-                }
-            progress_status = prog.get("status")
+        live_reader_instance = None
+        should_close_reader = False
+        is_mock = self.state.get("is_offline_mock", False) or (mock_game_date is not None)
 
-        if mock_game_date:
-            self.state["current_game_date"] = mock_game_date
+        if is_mock:
+            # Offline mock mode
+            if mock_game_date is not None:
+                self.state["current_game_date"] = mock_game_date
+            if reader is not None:
+                prog = orchestrator.inspect_calendar_progress(reader)
+                if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
+                    self.state["status"] = HostState.CONTEXT_STALE
+                    self._save_state()
+                    return {
+                        "status": "REJECTED_GAME_IN_PROGRESS",
+                        "cycle_id": cycle_id,
+                        "reason": "Game is currently underway in memory; cannot start cycle."
+                    }
+                progress_status = prog.get("status", "DATE_ADVANCED")
+        else:
+            # LIVE MODE: Connect to live NBA2K22.exe
+            try:
+                from refresh import resolve_pid
+                actual_pid = resolve_pid("auto")
+            except Exception as e:
+                raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: NBA2K22.exe is not running ({e})")
+
+            live_reader_instance = reader if reader is not None else ReadOnlyGameProcess(actual_pid)
+            should_close_reader = (reader is None)
+
+            try:
+                prog = orchestrator.inspect_calendar_progress(live_reader_instance)
+                if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
+                    self.state["status"] = HostState.CONTEXT_STALE
+                    self._save_state()
+                    return {
+                        "status": "REJECTED_GAME_IN_PROGRESS",
+                        "cycle_id": cycle_id,
+                        "reason": "Game is currently underway in memory; cannot start cycle."
+                    }
+
+                if prog.get("status") == "SAME_STATE_REPEAT" and not force:
+                    return {
+                        "status": "SAME_STATE_REPEAT",
+                        "cycle_id": cycle_id,
+                        "reason": "Latest memory game matches latest database game; no fresh final game observed. Use --force to proceed without new games."
+                    }
+
+                # Read current date from memory
+                from schedule_reader import collect_schedule
+                sched = collect_schedule(live_reader_instance, with_calendar=True, read_final_boxes=False)
+                cal = sched.get("calendar") or {}
+                mem_date = cal.get("current_native_iso_date")
+                if mem_date:
+                    self.state["current_game_date"] = mem_date
+
+                # Trigger INCREMENTAL capture if new game completed or force
+                if prog.get("new_final_game_detected") or force:
+                    cap_res = orchestrator.trigger_world_capture(
+                        reader_or_pid=live_reader_instance,
+                        mode="INCREMENTAL",
+                        force=force
+                    )
+                    if cap_res.get("status") in ("REJECTED_GAME_IN_PROGRESS", "FAILED", "REFRESH_FAILED_FAIL_CLOSED", "SQL_VERIFICATION_FAILED_FAIL_CLOSED"):
+                        raise RuntimeError(f"INCREMENTAL_CAPTURE_FAILED: {cap_res}")
+
+                progress_status = prog.get("status", "DATE_ADVANCED")
+            finally:
+                if should_close_reader and hasattr(live_reader_instance, "close"):
+                    live_reader_instance.close()
 
         # Open Outbox for cycle with BatchContext
         ctx = self._make_context(cycle_id)
@@ -414,11 +594,29 @@ class SeasonCycleHost:
         self,
         cycle_id: str,
         getter_func: Optional[Any] = None,
-        expected_pid: int = 5720
+        expected_pid: Optional[int] = None
     ) -> Dict[str, Any]:
         """Preflights CAS, seals cycle via outbox into RoleActionBatch, bridges to BulkBatch, and computes digest (Gate G06)."""
         if self.state["status"] != HostState.DECISION_OPEN or self.state["current_cycle_id"] != cycle_id:
             raise ValueError(f"Cycle {cycle_id} is not in DECISION_OPEN status (current: {self.state['status']})")
+
+        is_mock = self.state.get("is_offline_mock", False)
+        if not is_mock:
+            # LIVE MODE: Mandatory real-time Getter and dynamic PID
+            if getter_func is None:
+                getter_func = self._get_live_getter()
+                if getter_func is None:
+                    raise RuntimeError("LIVE_GETTER_REQUIRED: Cannot seal live cycle without real-time Getter for CAS preflight.")
+            if expected_pid is None:
+                try:
+                    from refresh import resolve_pid
+                    expected_pid = resolve_pid("auto")
+                except Exception as e:
+                    raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: {e}")
+        else:
+            # Mock mode
+            if expected_pid is None:
+                expected_pid = 5720
 
         ctx = self._make_context(cycle_id)
         gm_profile, coach_profile = self._make_profiles(ctx)
@@ -472,6 +670,39 @@ class SeasonCycleHost:
         # Handle NO_CHANGE cycle cleanly
         if not draft_intent_dicts:
             plan_digest = sha256_digest(f"EMPTY_NO_CHANGE_CYCLE_{cycle_id}".encode("utf-8"))
+            batch_id = f"NOOP-BATCH-{cycle_id}"
+            now_iso = datetime.now(timezone.utc).isoformat()
+            with self.outbox._get_connection() as conn:
+                cur = conn.cursor()
+                cur.execute("SELECT revision FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+                row = cur.fetchone()
+                rev = (row["revision"] if row else 0) + 1
+                cur.execute("""
+                    UPDATE decision_cycles SET
+                        status = 'SEALED',
+                        sealed_batch_id = ?,
+                        sealed_digest = ?,
+                        sealed_at = ?,
+                        revision = ?,
+                        updated_at = ?
+                    WHERE cycle_id = ?
+                """, (batch_id, plan_digest, now_iso, rev, now_iso, cycle_id))
+                cur.execute("""
+                    INSERT INTO outbox_events (
+                        cycle_id, intent_id, event_type, prev_state, new_state, revision, payload_json, timestamp
+                    ) VALUES (?, NULL, 'CYCLE_SEALED', 'COLLECTING', 'SEALED', ?, ?, ?)
+                """, (
+                    cycle_id,
+                    rev,
+                    json.dumps({
+                        "sealed_batch_id": batch_id,
+                        "sealed_digest": plan_digest,
+                        "sealed_intents_count": 0
+                    }),
+                    now_iso
+                ))
+                conn.commit()
+
             self.state.update({
                 "status": HostState.WAITING_HUMAN_EXECUTION_AUTH,
                 "active_plan": {
@@ -479,7 +710,7 @@ class SeasonCycleHost:
                     "plan_digest": plan_digest,
                     "executable_count": 0,
                     "unsupported_count": 0,
-                    "sealed_at": datetime.now(timezone.utc).isoformat()
+                    "sealed_at": now_iso
                 }
             })
             self._save_state()
@@ -546,7 +777,7 @@ class SeasonCycleHost:
         transport: Optional[Any] = None,
         journal_dir: Optional[Path] = None,
         getter_after_func: Optional[Any] = None,
-        expected_pid: int = 5720
+        expected_pid: Optional[int] = None
     ) -> Dict[str, Any]:
         """Strictly verifies authorization digest, executes batch, verifies readback, and backfills Outbox (Gate G07)."""
         if self.state["status"] not in (HostState.WAITING_HUMAN_EXECUTION_AUTH, HostState.DECISION_SEALED):
@@ -556,6 +787,23 @@ class SeasonCycleHost:
         if not active_plan or active_plan.get("plan_digest") != plan_digest:
             raise ValueError(f"DIGEST_MISMATCH_AUTHORIZATION_DENIED: provided '{plan_digest}' != sealed '{active_plan.get('plan_digest') if active_plan else None}'")
 
+        is_mock = self.state.get("is_offline_mock", False) or (transport is not None)
+        if not is_mock:
+            # LIVE MODE: Verify live process and require live getter-after
+            try:
+                from refresh import resolve_pid
+                actual_pid = resolve_pid("auto")
+            except Exception as e:
+                raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: NBA2K22.exe is not running ({e})")
+            expected_pid = actual_pid
+            if getter_after_func is None:
+                getter_after_func = self._get_live_getter()
+                if getter_after_func is None:
+                    raise RuntimeError("LIVE_GETTER_REQUIRED: Cannot authorize live execution without live Getter-after.")
+        else:
+            if expected_pid is None:
+                expected_pid = 5720
+
         j_dir = Path(journal_dir) if journal_dir else (self.state_file.parent / "journals" / cycle_id)
         r_dir = j_dir / "runtime"
         j_dir.mkdir(parents=True, exist_ok=True)
@@ -564,6 +812,7 @@ class SeasonCycleHost:
         # 1. No-change cycle handling
         if active_plan.get("executable_count", 0) == 0:
             self.state["status"] = HostState.WAITING_CALENDAR_ADVANCE
+            self.state["active_plan"] = None
             self._save_state()
             summary = {
                 "status": "EXECUTED_NO_CHANGE_SUCCESS",
@@ -614,27 +863,65 @@ class SeasonCycleHost:
         # 4. Independent readback check
         readback_passed = True
         readback_details = []
-        for r in journal_receipts:
-            item = next((it for it in bulk_batch.intents if it.intent_id == r.intent_id), None)
-            if item and getter_after_func:
-                observed_after = getter_after_func(item.player_id, item.field_id)
-                matched = (observed_after == item.value)
-                readback_details.append({
-                    "intent_id": r.intent_id,
-                    "target_value": item.value,
-                    "observed_after": observed_after,
-                    "matched": matched
-                })
-                if not matched:
-                    readback_passed = False
+        if not is_mock and getter_after_func is None:
+            readback_passed = False
+        else:
+            for r in journal_receipts:
+                item = next((it for it in bulk_batch.intents if it.intent_id == r.intent_id), None)
+                if item and getter_after_func:
+                    observed_after = getter_after_func(item.player_id, item.field_id)
+                    matched = (observed_after == item.value)
+                    readback_details.append({
+                        "intent_id": r.intent_id,
+                        "target_value": item.value,
+                        "observed_after": observed_after,
+                        "matched": matched
+                    })
+                    if not matched:
+                        readback_passed = False
 
         # 5. Map receipts back to Outbox (Gate G07)
         outbox_receipts = self.bridge.map_receipts_to_outbox(journal_receipts, bridge_res)
+        has_unknown = any(r.get("outcome") == "UNKNOWN" for r in outbox_receipts)
+
+        # Record execution receipts into Outbox DB
         self.outbox.record_execution_receipts(
             cycle_id,
             outbox_receipts,
             evidence_ref=f"evidence-{cycle_id}"
         )
+
+        # Fail-closed checks on UNKNOWN and readback failure
+        if has_unknown:
+            self.state["status"] = HostState.UNKNOWN_LOCKED
+            self._save_state()
+            summary = {
+                "status": "STOPPED_UNKNOWN_LOCKED",
+                "cycle_id": cycle_id,
+                "plan_digest": plan_digest,
+                "elapsed_seconds": round(elapsed_s, 4),
+                "executed_count": len(outbox_receipts),
+                "readback_verified": False,
+                "reason": "UNKNOWN execution outcome detected in journal receipts; Host locked to prevent blind retries."
+            }
+            self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **summary})
+            return summary
+
+        if not readback_passed:
+            self.state["status"] = HostState.STOPPED_PARTIAL
+            self._save_state()
+            summary = {
+                "status": "STOPPED_READBACK_FAILED",
+                "cycle_id": cycle_id,
+                "plan_digest": plan_digest,
+                "elapsed_seconds": round(elapsed_s, 4),
+                "executed_count": len(outbox_receipts),
+                "readback_verified": False,
+                "readback_details": readback_details,
+                "reason": "Independent readback verification failed against memory; active plan preserved, cycle halted."
+            }
+            self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **summary})
+            return summary
 
         success_count = sum(1 for r in outbox_receipts if r.get("outcome") in ("SUCCESS", "SUCCESS_APPLIED", "VERIFIED_SUCCESS"))
         failure_count = sum(1 for r in outbox_receipts if r.get("outcome") not in ("SUCCESS", "SUCCESS_APPLIED", "VERIFIED_SUCCESS"))
@@ -653,7 +940,7 @@ class SeasonCycleHost:
             "executed_count": len(outbox_receipts),
             "success_count": success_count,
             "failure_count": failure_count,
-            "readback_verified": readback_passed,
+            "readback_verified": True,
             "readback_details": readback_details[:5]
         }
         self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **result})
@@ -675,15 +962,56 @@ class SeasonCycleHost:
         )
 
         curr_date = self.state.get("current_game_date", "2021-10-25")
-        new_date = mock_advanced_date or curr_date
+        is_mock = self.state.get("is_offline_mock", False) or (mock_advanced_date is not None)
 
-        if reader:
-            prog = orchestrator.inspect_calendar_progress(reader)
-            if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
-                return {
-                    "status": "INCOMPLETE_GAME_IN_PROGRESS",
-                    "reason": "Game is currently playing in memory; please finish game in NBA2K22 before advancing."
-                }
+        if is_mock:
+            new_date = mock_advanced_date or curr_date
+            if reader:
+                prog = orchestrator.inspect_calendar_progress(reader)
+                if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
+                    return {
+                        "status": "INCOMPLETE_GAME_IN_PROGRESS",
+                        "reason": "Game is currently playing in memory; please finish game in NBA2K22 before advancing."
+                    }
+        else:
+            # LIVE MODE: Verify game process, calendar progression, and date
+            try:
+                from refresh import resolve_pid
+                actual_pid = resolve_pid("auto")
+            except Exception as e:
+                raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: NBA2K22.exe is not running ({e})")
+
+            live_reader_instance = reader if reader is not None else ReadOnlyGameProcess(actual_pid)
+            should_close = (reader is None)
+            try:
+                prog = orchestrator.inspect_calendar_progress(live_reader_instance)
+                if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
+                    return {
+                        "status": "INCOMPLETE_GAME_IN_PROGRESS",
+                        "reason": "Game is currently playing in memory; please finish game in NBA2K22 before advancing."
+                    }
+
+                from schedule_reader import collect_schedule
+                sched = collect_schedule(live_reader_instance, with_calendar=True, read_final_boxes=False)
+                cal = sched.get("calendar") or {}
+                mem_date = cal.get("current_native_iso_date")
+                if not mem_date:
+                    return {
+                        "status": "CALENDAR_READ_FAILED",
+                        "reason": "Could not read current native game date from memory."
+                    }
+
+                if mem_date <= curr_date and not prog.get("new_final_game_detected"):
+                    return {
+                        "status": "CALENDAR_NOT_ADVANCED",
+                        "current_host_date": curr_date,
+                        "memory_date": mem_date,
+                        "reason": f"In-game calendar date '{mem_date}' has not advanced past cycle date '{curr_date}', and no new final game was detected."
+                    }
+                new_date = mem_date
+            finally:
+                if should_close and hasattr(live_reader_instance, "close"):
+                    live_reader_instance.close()
 
         self.state.update({
             "status": HostState.NEXT_CAPTURED,
@@ -724,15 +1052,33 @@ class SeasonCycleHost:
         }
 
     def pause(self) -> Dict[str, Any]:
+        prev_status = self.state.get("status")
+        self.state["pre_pause_status"] = prev_status
         self.state["status"] = HostState.PAUSED
         self._save_state()
-        receipt = {"status": "HOST_PAUSED", "timestamp": datetime.now(timezone.utc).isoformat()}
+        receipt = {
+            "status": "HOST_PAUSED",
+            "pre_pause_status": prev_status,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        }
         self._append_ledger({"action": "PAUSE", **receipt})
         return receipt
 
     def resume(self) -> Dict[str, Any]:
-        if self.state["status"] == HostState.PAUSED:
-            self.state["status"] = HostState.WAITING_CALENDAR_ADVANCE
+        if self.state.get("status") == HostState.PAUSED:
+            pre = self.state.get("pre_pause_status", HostState.WAITING_CALENDAR_ADVANCE)
+            if pre == HostState.UNKNOWN_LOCKED:
+                receipt = {
+                    "status": "RESUME_DENIED_UNKNOWN_LOCKED",
+                    "reason": "Host was in UNKNOWN_LOCKED before pause; automatic resume is prohibited to prevent blind retries.",
+                    "current_status": HostState.UNKNOWN_LOCKED
+                }
+                self.state["status"] = HostState.UNKNOWN_LOCKED
+                self._save_state()
+                self._append_ledger({"action": "RESUME", **receipt})
+                return receipt
+
+            self.state["status"] = pre
             self._save_state()
         receipt = {"status": "HOST_RESUMED", "current_status": self.state["status"]}
         self._append_ledger({"action": "RESUME", **receipt})
