@@ -22,6 +22,22 @@ def skill_projection_ranges():
         else:merged.append((low,high))
     return merged
 
+
+def coalesced_skill_projection_ranges():
+    base=skill_projection_ranges()
+    coalesced=[]
+    current_low,current_high=base[0]
+    for low,high in base[1:]:
+        candidate_span=(current_low,max(current_high,high))
+        crosses=any(candidate_span[0]<b and a<candidate_span[1] for a,b in RESTRICTED_PLAYER_RANGES)
+        if candidate_span[1]-candidate_span[0]<=1248 and not crosses:
+            current_high=candidate_span[1]
+        else:
+            coalesced.append((current_low,current_high))
+            current_low,current_high=low,high
+    coalesced.append((current_low,current_high))
+    return coalesced
+
 def verify_skill_metadata(reader):
     metadata=[];enum_entry=next(e for e in PROFILE['types'] if e['name']=='PLAYERDATA_PLAYTYPE')
     for entry in PROFILE['types']:
@@ -48,8 +64,9 @@ def verify_skill_metadata(reader):
         metadata.append(value)
     return metadata
 
-def collect_player_skills(reader):
-    m,blobs=collect_public_player_pool(reader,ranges=skill_projection_ranges(),metadata=verify_skill_metadata(reader));raw=blobs.pop('player-detail-public-projections.bin');blobs['player-skill-public-projections.bin']=raw
+def collect_player_skills(reader,*,ranges=None):
+    if ranges is None:ranges=coalesced_skill_projection_ranges()
+    m,blobs=collect_public_player_pool(reader,ranges=ranges,metadata=verify_skill_metadata(reader));raw=blobs.pop('player-detail-public-projections.bin');blobs['player-skill-public-projections.bin']=raw
     stride=m['projection_stride'];m['skill_rows']=[{'source_player_index':i,**decode_skills(reconstruct_projection(raw[i*stride:(i+1)*stride],m['projection_ranges']))} for i in range(len(m['players']))]
     m['source_coverage']='COMPLETE_CURRENT_NATIVE_56_PUBLIC_ATTRIBUTES_99_TENDENCIES_FOUR_PLAYTYPE_SLOTS_AND_INITIATOR'
     return m,blobs

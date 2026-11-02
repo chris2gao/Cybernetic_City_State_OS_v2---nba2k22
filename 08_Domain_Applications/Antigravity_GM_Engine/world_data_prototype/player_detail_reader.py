@@ -25,6 +25,22 @@ def projection_ranges():
     return merged
 
 
+def coalesced_projection_ranges():
+    base=projection_ranges()
+    coalesced=[]
+    current_low,current_high=base[0]
+    for low,high in base[1:]:
+        candidate_span=(current_low,max(current_high,high))
+        crosses=any(candidate_span[0]<b and a<candidate_span[1] for a,b in RESTRICTED_PLAYER_RANGES)
+        if candidate_span[1]-candidate_span[0]<=1248 and not crosses:
+            current_high=candidate_span[1]
+        else:
+            coalesced.append((current_low,current_high))
+            current_low,current_high=low,high
+    coalesced.append((current_low,current_high))
+    return coalesced
+
+
 def reconstruct_projection(part,ranges):
     if len(part)!=sum(b-a for a,b in ranges):raise ValueError('incomplete PLAYER detail projection')
     raw=bytearray(1264);at=0
@@ -111,8 +127,9 @@ def collect_public_player_pool(reader,*,ranges,metadata):
         'excluded_player_byte_ranges':list(RESTRICTED_PLAYER_RANGES),'game_writes':False,'full_player_struct_reads':0,'restricted_player_bytes_read':0},blobs
 
 
-def collect_player_details(reader):
-    manifest,blobs=collect_public_player_pool(reader,ranges=projection_ranges(),metadata=verify_detail_metadata(reader))
+def collect_player_details(reader,*,ranges=None):
+    if ranges is None:ranges=coalesced_projection_ranges()
+    manifest,blobs=collect_public_player_pool(reader,ranges=ranges,metadata=verify_detail_metadata(reader))
     stride=manifest['projection_stride'];ranges=manifest['projection_ranges'];data=blobs['player-detail-public-projections.bin'];contracts=[];badges=[]
     for index in range(len(manifest['players'])):
         raw=reconstruct_projection(data[index*stride:(index+1)*stride],ranges)

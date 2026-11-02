@@ -1,0 +1,73 @@
+{
+  "schema_version": "nba2k22.optimization.loop_summary.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "total_iterations": 5,
+  "passed_iterations": 5,
+  "failed_iterations": 0,
+  "actual_executor_model": "Gemini 2.5 Pro (execution)",
+  "phases_covered": [
+    "D0",
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+  ],
+  "gates_verified": [
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "G6",
+    "G7",
+    "G8",
+    "G9",
+    "G10"
+  ],
+  "stop_condition_triggered": false,
+  "stop_reason": null,
+  "task_status": "WORLDDATA_CAPTURE_PERFORMANCE_OPTIMIZED_VERIFIED",
+  "iterations_index": [
+    {
+      "iteration": 1,
+      "phase": "D0",
+      "increment": "baseline_locking_and_environment_setup",
+      "gate": "G1",
+      "status": "PASS",
+      "timestamp": "2026-11-02T14:51:40Z"
+    },
+    {
+      "iteration": 2,
+      "phase": "D1",
+      "increment": "low_overhead_segmented_profiling",
+      "gate": "G2",
+      "status": "PASS",
+      "timestamp": "2026-11-02T15:04:44Z"
+    },
+    {
+      "iteration": 3,
+      "phase": "D2",
+      "increment": "sqlite_safe_batching_ab_and_failure_injection",
+      "gate": "G3, G4",
+      "status": "PASS",
+      "timestamp": "2026-11-02T15:19:03Z"
+    },
+    {
+      "iteration": 4,
+      "phase": "D3",
+      "increment": "reader_interval_coalescing_and_session_cache",
+      "gate": "G5, G6, G7",
+      "status": "PASS",
+      "timestamp": "2026-11-02T15:13:05Z"
+    },
+    {
+      "iteration": 5,
+      "phase": "D4",
+      "increment": "data_equivalence_and_full_suite_regression",
+      "gate": "G8, G9, G10",
+      "status": "PASS",
+      "timestamp": "2026-11-02T15:23:56Z"
+    }
+  ]
+}

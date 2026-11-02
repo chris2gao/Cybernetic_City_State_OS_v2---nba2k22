@@ -1,0 +1,188 @@
+{
+  "schema_version": "nba2k22.optimization.source_equivalence_check.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "verified_at": "2026-11-02T15:23:55Z",
+  "fixture_provenance": {
+    "fixture_path": "E:\\gemini_space\\nba2k22\\08_Domain_Applications\\Antigravity_GM_Engine\\world_data_prototype\\tests\\fixtures\\player_details_20261025\\manifest.json.gz",
+    "manifest_player_count": 3390,
+    "manifest_badge_count": 332220,
+    "manifest_contract_count": 3390
+  },
+  "tables": {
+    "native_player_sources": {
+      "row_count": 3390,
+      "column_count": 12,
+      "columns": [
+        "player_source_id",
+        "unit_id",
+        "source_player_index",
+        "native_unique_id_raw",
+        "preserved_id_raw",
+        "observed_name",
+        "name_status",
+        "native_team_id",
+        "current_core_roster_status",
+        "current_roster_slot",
+        "player_id",
+        "canonical_link_status"
+      ],
+      "content_sha256": "7959a517d64786b22e3bac49cf4ce0821b29440e09b3e1bb09f4a3aa8253b32c",
+      "status": "VERIFIED_EQUIVALENT"
+    },
+    "player_contract_observations": {
+      "row_count": 3390,
+      "column_count": 25,
+      "columns": [
+        "contract_obs_id",
+        "player_id",
+        "team_id",
+        "unit_id",
+        "bird_years_raw",
+        "original_contract_years_raw",
+        "years_left_on_contract_raw",
+        "contract_option_raw",
+        "no_trade_raw",
+        "extension_length_raw",
+        "extension_option_raw",
+        "extension_no_trade_raw",
+        "contract_year_1_raw",
+        "contract_year_2_raw",
+        "contract_year_3_raw",
+        "contract_year_4_raw",
+        "contract_year_5_raw",
+        "contract_year_6_raw",
+        "contract_type_raw",
+        "euro_stash_years_left_raw",
+        "two_way_days_left_raw",
+        "source_player_id",
+        "layout_version",
+        "native_contract_team_id_raw",
+        "contract_team_status"
+      ],
+      "content_sha256": "bb8f0af3d6e9761ae3034814567ec784c4320dba20b6d193de84dc95bf23f9c3",
+      "status": "VERIFIED_EQUIVALENT"
+    },
+    "player_badge_values": {
+      "row_count": 332220,
+      "column_count": 12,
+      "columns": [
+        "badge_observation_id",
+        "player_id",
+        "unit_id",
+        "badge_key",
+        "native_code",
+        "tier_label",
+        "owned_state",
+        "source_player_id",
+        "native_field_id",
+        "native_badge_id",
+        "native_kind",
+        "native_level_status"
+      ],
+      "content_sha256": "8caff7100a73aea0d8ec7f087b76fef345a264b2c8dda94b103b4018874e955a",
+      "status": "VERIFIED_EQUIVALENT"
+    },
+    "native_fields": {
+      "row_count": 1890,
+      "column_count": 16,
+      "columns": [
+        "field_id",
+        "source_group",
+        "native_key",
+        "ui_label",
+        "evidence_grade",
+        "visibility",
+        "min_native_value",
+        "max_native_value",
+        "table_name",
+        "column_name",
+        "codec",
+        "layout_version",
+        "source_ref",
+        "unit",
+        "legal_range_state",
+        "null_meaning"
+      ],
+      "content_sha256": "3502cfe34a415e83c407602c41386d0c1ef3faebe61a986b8c6a612bc39e2a7b",
+      "status": "VERIFIED_EQUIVALENT"
+    },
+    "field_gaps": {
+      "row_count": 3,
+      "column_count": 9,
+      "columns": [
+        "gap_id",
+        "field_id",
+        "affected_domain",
+        "reason",
+        "impact",
+        "human_exception_ref",
+        "target_field",
+        "alternative",
+        "status"
+      ],
+      "content_sha256": "ae7155863234c1d94a9017531f8dd9f859cbfcf4f9203571665689da08e20eaa",
+      "status": "VERIFIED_EQUIVALENT"
+    },
+    "capture_units": {
+      "row_count": 1,
+      "column_count": 9,
+      "columns": [
+        "unit_id",
+        "run_id",
+        "source_key",
+        "payload_sha256",
+        "unit_status",
+        "observed_at",
+        "effective_at",
+        "layout_version",
+        "completeness"
+      ],
+      "content_sha256": "805e52fe9d172cf0ee59e8c8adf6209b51c64af35aedc74fc4bfaa56f65b84a5",
+      "status": "VERIFIED_EQUIVALENT"
+    },
+    "source_artifacts": {
+      "row_count": 1,
+      "column_count": 8,
+      "columns": [
+        "artifact_id",
+        "unit_id",
+        "sha256",
+        "payload_kind",
+        "restricted",
+        "source_version",
+        "payload_ref",
+        "byte_count"
+      ],
+      "content_sha256": "2690552f882ebe59414e2292360f3108137e3e9556f5996c3df293d243768d36",
+      "status": "VERIFIED_EQUIVALENT"
+    }
+  },
+  "restricted_bytes_conservation": {
+    "restricted_ranges": [
+      [
+        785,
+        786
+      ],
+      [
+        880,
+        882
+      ],
+      [
+        930,
+        931
+      ],
+      [
+        1089,
+        1090
+      ]
+    ],
+    "restricted_bytes_in_database": 0,
+    "restricted_fields_in_payload": 0,
+    "conservation_status": "PASS"
+  },
+  "gate_G8_compliance": {
+    "status": "PASS",
+    "evidence": "Exact row counts, schemas, and content SHA256 hashes verified equivalent across all 332,220 badge rows and public source tables."
+  }
+}

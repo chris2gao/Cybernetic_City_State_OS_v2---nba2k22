@@ -1,0 +1,154 @@
+{
+  "schema_version": "nba2k22.optimization.sqlite_ab_benchmark.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "benchmark_date": "2026-11-02T15:19:02Z",
+  "dataset": {
+    "source_fixture": "tests/fixtures/player_details_20261025/manifest.json.gz",
+    "player_badge_values_count": 332220,
+    "native_player_sources_count": 3390,
+    "player_contract_observations_count": 3390,
+    "native_fields_count": 115,
+    "field_gaps_count": 3,
+    "total_rows_inserted_per_run": 339118
+  },
+  "repeats": 3,
+  "baseline_row_by_row": {
+    "runs": [
+      {
+        "run": 1,
+        "elapsed_seconds": 86.8113,
+        "db_size_bytes": 226131968,
+        "peak_working_set_bytes": 728252416
+      },
+      {
+        "run": 2,
+        "elapsed_seconds": 88.0492,
+        "db_size_bytes": 226131968,
+        "peak_working_set_bytes": 729407488
+      },
+      {
+        "run": 3,
+        "elapsed_seconds": 86.3189,
+        "db_size_bytes": 226131968,
+        "peak_working_set_bytes": 729407488
+      }
+    ],
+    "summary": {
+      "min_seconds": 86.3189,
+      "median_seconds": 86.8113,
+      "max_seconds": 88.0492,
+      "mean_seconds": 87.0598,
+      "stdev_seconds": 0.8915
+    }
+  },
+  "safe_batching_optimized": {
+    "runs": [
+      {
+        "run": 1,
+        "elapsed_seconds": 68.3804,
+        "db_size_bytes": 226131968,
+        "peak_working_set_bytes": 729407488
+      },
+      {
+        "run": 2,
+        "elapsed_seconds": 69.4819,
+        "db_size_bytes": 226131968,
+        "peak_working_set_bytes": 730152960
+      },
+      {
+        "run": 3,
+        "elapsed_seconds": 69.9823,
+        "db_size_bytes": 226131968,
+        "peak_working_set_bytes": 731660288
+      }
+    ],
+    "summary": {
+      "min_seconds": 68.3804,
+      "median_seconds": 69.4819,
+      "max_seconds": 69.9823,
+      "mean_seconds": 69.2815,
+      "stdev_seconds": 0.8195
+    }
+  },
+  "performance_improvement": {
+    "median_speedup_factor": 1.25,
+    "median_seconds_saved": 17.33,
+    "throughput_baseline_rows_per_second": 3906.4,
+    "throughput_optimized_rows_per_second": 4880.7
+  },
+  "equivalence_verification": {
+    "native_player_sources": {
+      "row_count": 3390,
+      "baseline_sha256": "72956bdd0b814058113ea27271f80e4b4ce3d0d6357062825f6452c48fdeab1f",
+      "optimized_sha256": "72956bdd0b814058113ea27271f80e4b4ce3d0d6357062825f6452c48fdeab1f",
+      "equivalent": true
+    },
+    "player_contract_observations": {
+      "row_count": 3390,
+      "baseline_sha256": "1c8508636d7b686b8606dda15a60cc7061d8d5644c32ff6de63694d17900dd64",
+      "optimized_sha256": "1c8508636d7b686b8606dda15a60cc7061d8d5644c32ff6de63694d17900dd64",
+      "equivalent": true
+    },
+    "player_badge_values": {
+      "row_count": 332220,
+      "baseline_sha256": "4b804169be8e73db77012edbeaa89c71ebe90e4d343d6673a22183f13f57fbab",
+      "optimized_sha256": "4b804169be8e73db77012edbeaa89c71ebe90e4d343d6673a22183f13f57fbab",
+      "equivalent": true
+    },
+    "native_fields": {
+      "row_count": 1890,
+      "baseline_sha256": "3502cfe34a415e83c407602c41386d0c1ef3faebe61a986b8c6a612bc39e2a7b",
+      "optimized_sha256": "3502cfe34a415e83c407602c41386d0c1ef3faebe61a986b8c6a612bc39e2a7b",
+      "equivalent": true
+    },
+    "field_gaps": {
+      "row_count": 3,
+      "baseline_sha256": "3269fa7cbb06bd0114ec0c547b9204c4c471ab52d9e341018cf494640d491da5",
+      "optimized_sha256": "3269fa7cbb06bd0114ec0c547b9204c4c471ab52d9e341018cf494640d491da5",
+      "equivalent": true
+    },
+    "capture_units": {
+      "row_count": 1,
+      "baseline_sha256": "3bedae89b6b7013cfee6701c829c5ad9c9a44421726ffad54ea44f0e3cc65704",
+      "optimized_sha256": "3bedae89b6b7013cfee6701c829c5ad9c9a44421726ffad54ea44f0e3cc65704",
+      "equivalent": true
+    },
+    "source_artifacts": {
+      "row_count": 1,
+      "baseline_sha256": "8e752bd8248215137515cd955c6eb229baa8f24170eb7542bc7617f02f4a5662",
+      "optimized_sha256": "8e752bd8248215137515cd955c6eb229baa8f24170eb7542bc7617f02f4a5662",
+      "equivalent": true
+    }
+  },
+  "safety_and_failure_injection": {
+    "foreign_key_violation": {
+      "passed": true,
+      "exception": "sqlite3.IntegrityError",
+      "rolled_back": true
+    },
+    "unapproved_column_violation": {
+      "passed": true,
+      "exception": "PermissionError",
+      "rolled_back": true
+    },
+    "type_mismatch_violation": {
+      "passed": true,
+      "exception": "ValueError",
+      "rolled_back": true
+    },
+    "idempotency": {
+      "first_result": "ingested",
+      "second_result": "already_applied",
+      "passed": true
+    }
+  },
+  "gate_G3_compliance": {
+    "status": "PASS",
+    "evidence": "A/B benchmark executed on 332,220 badge facts with 3 repetitions each on independent DB copies. Safe batching achieved 1.25x speedup (17.33s saved)."
+  },
+  "gate_G4_compliance": {
+    "status": "PASS",
+    "evidence": "All constraints, foreign keys, triggers, identity checks, and rollback behavior verified identical under failure injection."
+  }
+}

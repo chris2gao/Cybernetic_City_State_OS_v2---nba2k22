@@ -1,0 +1,202 @@
+{
+  "schema_version": "nba2k22.optimization.reader_ab_benchmark.v1",
+  "task_id": "NBA2K22-WORLDDATA-CAPTURE-PERFORMANCE-20261101-001",
+  "run_id": "run-20261101-nba2k22-world-data-capture-performance-001",
+  "benchmark_date": "2026-11-02T15:13:05Z",
+  "player_pool_size": 3390,
+  "restricted_ranges_tested": [
+    [
+      785,
+      786
+    ],
+    [
+      880,
+      882
+    ],
+    [
+      930,
+      931
+    ],
+    [
+      1089,
+      1090
+    ]
+  ],
+  "restricted_bytes_accessed": 0,
+  "player_details_reader": {
+    "baseline_uncoalesced_intervals": [
+      [
+        0,
+        80
+      ],
+      [
+        96,
+        104
+      ],
+      [
+        168,
+        176
+      ],
+      [
+        244,
+        246
+      ],
+      [
+        348,
+        352
+      ],
+      [
+        420,
+        444
+      ],
+      [
+        656,
+        660
+      ],
+      [
+        760,
+        764
+      ],
+      [
+        788,
+        792
+      ],
+      [
+        796,
+        797
+      ],
+      [
+        812,
+        815
+      ],
+      [
+        832,
+        835
+      ],
+      [
+        836,
+        839
+      ],
+      [
+        852,
+        856
+      ],
+      [
+        1211,
+        1251
+      ]
+    ],
+    "baseline_intervals_count": 15,
+    "baseline_calls_per_player": 15,
+    "baseline_total_calls_with_recheck": 101700,
+    "coalesced_intervals": [
+      [
+        0,
+        764
+      ],
+      [
+        788,
+        856
+      ],
+      [
+        1211,
+        1251
+      ]
+    ],
+    "coalesced_intervals_count": 3,
+    "coalesced_calls_per_player": 3,
+    "coalesced_total_calls_with_recheck": 20340,
+    "calls_reduction_ratio": 5.0,
+    "percentage_calls_eliminated": 80.0
+  },
+  "player_skills_reader": {
+    "baseline_uncoalesced_intervals": [
+      [
+        0,
+        80
+      ],
+      [
+        96,
+        104
+      ],
+      [
+        244,
+        246
+      ],
+      [
+        360,
+        363
+      ],
+      [
+        760,
+        764
+      ],
+      [
+        1055,
+        1089
+      ],
+      [
+        1090,
+        1211
+      ]
+    ],
+    "baseline_intervals_count": 7,
+    "baseline_calls_per_player": 7,
+    "baseline_total_calls_with_recheck": 47460,
+    "coalesced_intervals": [
+      [
+        0,
+        764
+      ],
+      [
+        1055,
+        1089
+      ],
+      [
+        1090,
+        1211
+      ]
+    ],
+    "coalesced_intervals_count": 3,
+    "coalesced_calls_per_player": 3,
+    "coalesced_total_calls_with_recheck": 20340,
+    "calls_reduction_ratio": 2.33,
+    "percentage_calls_eliminated": 57.1
+  },
+  "combined_cross_source_impact": {
+    "baseline_total_calls": 149160,
+    "coalesced_total_calls": 40680,
+    "coalesced_with_session_cache_calls": 20360,
+    "total_syscall_reduction_factor": 7.33,
+    "total_calls_saved": 128800
+  },
+  "decoding_equivalence_verified": {
+    "synthetic_players_tested": 1000,
+    "contracts_match_rate": 1.0,
+    "badges_match_rate": 1.0,
+    "skills_match_rate": 1.0,
+    "restricted_bytes_clean": true
+  },
+  "session_cache_freshness_verified": {
+    "bound_fields": [
+      "pid",
+      "creation_filetime",
+      "save_id",
+      "season_year",
+      "roster_count",
+      "root_pointer"
+    ],
+    "reconnect_invalidation_verified": true,
+    "save_switch_invalidation_verified": true,
+    "season_advance_invalidation_verified": true,
+    "stale_promotion_prevented": true
+  },
+  "gate_G5_compliance": {
+    "status": "PASS",
+    "evidence": "Adjacent public intervals coalesced into 3 intervals (<= 764 bytes), strictly avoiding RESTRICTED_PLAYER_RANGES. Syscalls reduced by 80% while recheck and decoding remain 100% equivalent."
+  },
+  "gate_G6_compliance": {
+    "status": "PASS",
+    "evidence": "Session cache strictly bound to (pid, creation_filetime, save_id, season_year, roster_count). Automatically invalidated on process restart, save switch, or calendar advance."
+  }
+}
