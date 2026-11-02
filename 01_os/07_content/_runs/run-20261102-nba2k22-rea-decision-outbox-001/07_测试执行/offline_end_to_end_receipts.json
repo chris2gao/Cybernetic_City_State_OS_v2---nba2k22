@@ -1,0 +1,119 @@
+{
+  "schema_version": "nba2k22.decision_outbox.e2e_receipts.v1",
+  "task_id": "NBA2K22-REA-DECISION-OUTBOX-20261102-001",
+  "cycle_id": "CYCLE-E2E-CLOSED-LOOP-001",
+  "sealed_batch_id": "ROLE-BATCH-CYCLE-E2E-CLOSED-LOOP-001",
+  "sealed_digest": "fece2a85031e2f04dbdd501caa44291307754414963ea31f98e69c37ca96e29f",
+  "bulk_batch_id": "BULK-ROLE-BATCH-CYCLE-E2E-CLOSED-LOOP-001",
+  "bulk_plan_digest": "91f133e6aa2421be68d31acb523a98ece44286b31e9dfb787fdd472392dd68f2",
+  "execution_summary": {
+    "batch_id": "BULK-ROLE-BATCH-CYCLE-E2E-CLOSED-LOOP-001",
+    "plan_digest": "91f133e6aa2421be68d31acb523a98ece44286b31e9dfb787fdd472392dd68f2",
+    "chunk_count": 3,
+    "frida_attach_count": 1,
+    "execution_time_ms": 147.29759999954695,
+    "transport_wall_ms": 18.5,
+    "metrics": {
+      "num_planned": 4,
+      "num_success": 4,
+      "num_noop": 0,
+      "num_reused": 0,
+      "num_blocked": 0,
+      "num_unknown": 0,
+      "num_not_executed": 0,
+      "num_cas_mismatch": 0,
+      "conservation_holds": true
+    },
+    "receipt_count": 4
+  },
+  "validation_result": {
+    "schema_version": "nba2k22.rea.generic_batch_validation.v1",
+    "validation_passed": true,
+    "errors": [],
+    "checks": {
+      "recomputed_plan_digest": "91f133e6aa2421be68d31acb523a98ece44286b31e9dfb787fdd472392dd68f2",
+      "plan_digest_verified": true,
+      "manifest_game_build_valid": false,
+      "planned_intent_count": 4,
+      "receipt_count": 4,
+      "outcomes_breakdown": {
+        "SUCCESS_APPLIED": 4
+      },
+      "unknown_count": 0,
+      "missing_intents_count": 0,
+      "conservation_holds": true,
+      "claims_count": 3,
+      "claimed_chunk_ids": [
+        "chunk-0001-team-01-coach-set-known-current-settings",
+        "chunk-0002-team-01-player-patch-tendencies",
+        "chunk-0003-team-28-player-patch-tendencies"
+      ],
+      "raw_chunk_messages_count": 3,
+      "expected_chunk_count": 3
+    }
+  },
+  "outbox_summary": {
+    "cycle_id": "CYCLE-E2E-CLOSED-LOOP-001",
+    "cycle_status": "COMPLETED",
+    "sealed_batch_id": "ROLE-BATCH-CYCLE-E2E-CLOSED-LOOP-001",
+    "sealed_digest": "fece2a85031e2f04dbdd501caa44291307754414963ea31f98e69c37ca96e29f",
+    "total_intents": 4,
+    "status_breakdown": {
+      "NOT_EXECUTED": 1,
+      "SUCCESS": 3
+    },
+    "all_succeeded_or_noop": false,
+    "exception_count": 1,
+    "exceptions": [
+      {
+        "intent_id": "I-GM-TRADE-PROPOSAL",
+        "issuer_uid": "gm_user_01",
+        "action_id": "GM.TRADE.MIXED",
+        "status": "NOT_EXECUTED",
+        "reason": "UNSUPPORTED_OR_BLOCKED: EXACT_TRADE_AGREEMENT_REQUIRED"
+      }
+    ]
+  },
+  "outbox_receipts": [
+    {
+      "intent_id": "I-COACH-RUN-PLAY",
+      "bulk_intent_ids": [
+        "I-COACH-RUN-PLAY-0"
+      ],
+      "outcome": "SUCCESS_APPLIED",
+      "reason": "OK",
+      "actual_before": 0,
+      "actual_after": 65,
+      "timestamp": "2026-11-02T12:48:46Z"
+    },
+    {
+      "intent_id": "I-GM-GIANNIS-TENDENCIES",
+      "bulk_intent_ids": [
+        "I-GM-GIANNIS-TENDENCIES-0",
+        "I-GM-GIANNIS-TENDENCIES-1"
+      ],
+      "outcome": "SUCCESS_APPLIED",
+      "reason": "OK",
+      "actual_before": 0,
+      "actual_after": 75,
+      "timestamp": "2026-11-02T12:48:46Z"
+    },
+    {
+      "intent_id": "I-GM-LILLARD-TENDENCIES",
+      "bulk_intent_ids": [
+        "I-GM-LILLARD-TENDENCIES-0"
+      ],
+      "outcome": "SUCCESS_APPLIED",
+      "reason": "OK",
+      "actual_before": 0,
+      "actual_after": 80,
+      "timestamp": "2026-11-02T12:48:46Z"
+    },
+    {
+      "intent_id": "I-GM-TRADE-PROPOSAL",
+      "outcome": "NOT_EXECUTED",
+      "reason": "UNSUPPORTED_OR_BLOCKED: EXACT_TRADE_AGREEMENT_REQUIRED",
+      "timestamp": "2026-11-02T12:48:46Z"
+    }
+  ]
+}

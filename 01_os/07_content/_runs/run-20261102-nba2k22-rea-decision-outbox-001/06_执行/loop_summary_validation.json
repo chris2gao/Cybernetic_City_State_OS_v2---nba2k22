@@ -1,0 +1,35 @@
+{
+  "schema_version": "nba2k22.rea.loop_summary_validation.v1",
+  "task_id": "NBA2K22-REA-DECISION-OUTBOX-20261102-001",
+  "recomputed_from_raw_log": true,
+  "raw_log_path": "06_执行/loop_iterations.jsonl",
+  "total_effective_iterations": 5,
+  "successful_iterations": 5,
+  "failed_iterations": 0,
+  "actual_executor_model": "Gemini 2.5 Pro (execution)",
+  "stop_reason": "ALL_10_GATES_PASSED_AND_OFFLINE_CLOSED_LOOP_VERIFIED",
+  "gates_validation": {
+    "G1_draft_intents": "PASSED_DRAFT_ADD_SUPERSEDE_LIST_RESTART",
+    "G2_context_binding": "PASSED_WORLD_SAVE_SEASON_PHASE_BINDING",
+    "G3_role_credentials": "PASSED_ROLE_CREDENTIALS_REUSED_NO_SELF_GRANT",
+    "G4_collision_dependency": "PASSED_COLLISION_AND_DEPENDENCY_DETECTION",
+    "G5_immutable_seal": "PASSED_IMMUTABLE_SEAL_AND_REVISION_CAS",
+    "G6_role_to_native_bridge": "PASSED_PURE_ROLE_TO_NATIVE_ADAPTER_UNSUPPORTED_PARTITIONED",
+    "G7_strict_generic_validator": "PASSED_STRICT_GENERIC_VALIDATOR_100_GOLD_REPLAY_FAULT_INJECTION",
+    "G8_crash_recovery_unknown_lock": "PASSED_RECOVER_SAFELY_UNKNOWN_LOCK_NO_REPLAY",
+    "G9_full_offline_closed_loop": "PASSED_FULL_OFFLINE_CLOSED_LOOP_FEEDBACK_COMPLETE",
+    "G10_performance_and_provenance": "PASSED_10K_BENCHMARK_25K_PER_SEC_PROVENANCE_AND_ACCURATE_MODEL"
+  },
+  "benchmarks": {
+    "sqlite_journal_mode": "WAL",
+    "insert_1000_intents_seconds": 0.03864,
+    "insert_10000_intents_seconds": 0.38518,
+    "throughput_1k_intents_per_sec": 25877.0,
+    "throughput_10k_intents_per_sec": 25961.9
+  },
+  "tests_summary": {
+    "total_native_control_tests": 65,
+    "tests_passed": 65,
+    "tests_failed": 0
+  }
+}
