@@ -1,0 +1,93 @@
+{
+  "schema_version": "nba2k22.rea.bulk_safety_admission.task_packet.v1",
+  "task_id": "NBA2K22-REA-BULK-SAFETY-ADMISSION-20261101-001",
+  "run_id": "run-20261101-nba2k22-rea-bulk-safety-admission-001",
+  "task_kind": "NEW_ROOT_CAUSE_SAFETY_ADMISSION_PHASE_NOT_PRIOR_REMEDIATION_ROUND3",
+  "branch": "task/nba2k22-rea-bulk-safety-admission-20261101",
+  "base_sha": "04c378151c576140b5e347c94a1b0952b15903cd",
+  "upstream_task": {
+    "task_id": "NBA2K22-REA-DETERMINISTIC-BULK-EXECUTOR-20261101-001",
+    "final_sha": "04c378151c576140b5e347c94a1b0952b15903cd",
+    "post_delivery_remediation_rounds_used": 2,
+    "budget_exhausted": true,
+    "status": "OFFLINE_PARTIAL_VERIFIED_WITH_SAFETY_GAPS",
+    "evidence_note": "Prior task frozen; no backfill of its missing iter-005"
+  },
+  "human_decision": "APPROVED_NEW_OFFLINE_ROOT_CAUSE_SAFETY_ADMISSION_TASK_NOT_LIVE_EXECUTION",
+  "role": "execution",
+  "executor_model_target": "Gemini Flash 3.8",
+  "actual_executor_model": "TO_BE_RECORDED_FOR_EACH_EXECUTION",
+  "planner_model": "GPT-6",
+  "risk_tier": "T3_high_risk_futurerealmutations_offline_current_task",
+  "permission_scope": {
+    "offline_engineering": true,
+    "synthetic_fixtures": true,
+    "github_task_branch_push": true,
+    "process_attach": false,
+    "live_native_setter": false,
+    "save_mutation": false,
+    "gameplay": false,
+    "worlddata_capture": false,
+    "core_changes": false,
+    "nba_master_merge": false,
+    "runtime_activation": false
+  },
+  "allowed_changed_paths": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/transport.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_bulk_executor.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/node_vm_chunk_runner.js",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/*safety*helper*.py",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-bulk-safety-admission-001/**"
+  ],
+  "read_only_references": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_batches.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/registry.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/runtime_codegen.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/runtime/common.js",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/runtime/gui_once.js",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/runtime/player_stats.js",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/runtime/coach_settings.js",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/data/action_registry.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/data/native_bindings.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/data/coach_settings.json"
+  ],
+  "scope_objectives": [
+    "S1 at-most-once and durable claims/locks",
+    "S2 canonical action isolation and strict receipt protocol",
+    "S3 unforgeable future authorization gate design; real adapter remains denied",
+    "S4 offline fault injection, 10k Mock, deterministic Loop evidence"
+  ],
+  "quality_gates": [
+    "G1_OFFLINE_DENIAL",
+    "G2_UNKNOWN_RESUME",
+    "G3_RECONCILIATION_PROVENANCE",
+    "G4_CANONICAL_ACTION_AND_DIGEST",
+    "G5_ENVELOPE_AND_RECEIPT_BINDING",
+    "G6_NODE_VM_AND_COACH_FAIL_CLOSED",
+    "G7_10K_MOCK_REPRODUCIBLE",
+    "G8_REGRESSION_EVIDENCE",
+    "G9_LOOP_OBSERVABILITY_CONSISTENT"
+  ],
+  "mandatory_stops": [
+    "Core §11 stop conditions",
+    "Missing verified Native contract or need for protected runtime",
+    "Unexpected worktree/baseline",
+    "Any changes outside allowed paths",
+    "Unverifiable test or repeated non-progress",
+    "Need for new Human semantic decision"
+  ],
+  "acceptance": "OFFLINE_SAFETY_ADMISSION_CANDIDATE_NOT_LIVE_READY",
+  "formal_review": "Independently review load-bearing safety path before any actual human-authorized runtime activation or live mutation",
+  "master_change_authorized": false,
+  "core_loop_trial": {
+    "pilot_role": "new independent developer task candidate within sample 3-5 evaluation",
+    "sample_status": "NOT_COMPLETED_NOT_YET_COUNTED",
+    "core_candidate_sha": "4d883cc220de19d871a558244b0f53dd9a135b71",
+    "separate_studies": [
+      "loop audit quality",
+      "Gemini Flash function-level instruction impact"
+    ],
+    "require_actual_model_capture": true
+  }
+}
