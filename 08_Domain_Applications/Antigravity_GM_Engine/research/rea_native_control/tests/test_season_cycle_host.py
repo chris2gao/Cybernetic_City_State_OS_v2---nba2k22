@@ -51,6 +51,24 @@ def temp_environment(tmp_path):
             VALUES ('game:002', 'season:2021', '2021-11-05', 'team:1', 'team:3', '102')
         """)
 
+    auth_manifest = {
+        "schema_version": "nba2k22.rea.role_authorizations.v1",
+        "save_id": "nba2k22_test_01",
+        "worldline_id": "worldline-main",
+        "bound_database_file": "world.sqlite",
+        "authorized_worldlines": ["worldline-main", "*"],
+        "authorized_databases": ["world.sqlite", "*"],
+        "human_authorization_ref": "HUMAN_TEST_AUTH_20261102",
+        "provenance": "SAVE_DB_VERIFIED_DELEGATION",
+        "roles": [
+            {"role_type": "GM", "team_id": 1, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION", "human_authorization_ref": "HUMAN_TEST_AUTH_20261102"},
+            {"role_type": "GM", "team_id": 25, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION", "human_authorization_ref": "HUMAN_TEST_AUTH_20261102"},
+            {"role_type": "GM", "team_id": 28, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION", "human_authorization_ref": "HUMAN_TEST_AUTH_20261102"},
+            {"role_type": "COACH", "team_id": 1, "actor_uid": "coach_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION", "human_authorization_ref": "HUMAN_TEST_AUTH_20261102"}
+        ]
+    }
+    (save_dir / "role_authorizations.json").write_text(json.dumps(auth_manifest, indent=2), encoding="utf-8")
+
     state_file = tmp_path / "season_host_state.json"
     ledger_file = tmp_path / "season_run_ledger.jsonl"
     outbox_db = tmp_path / "outbox.db"
@@ -1083,4 +1101,365 @@ def test_validate_batch_execution_rejects_reconstructed_mock_as_native_evidence(
     assert res_mock_ok["validation_passed"] is True
     assert res_mock_ok["checks"]["native_transport_evidence_verified"] is False
     assert res_mock_ok["checks"]["raw_evidence_status"] == "OFFLINE_MOCK_TRANSPORT_SKIPPED"
+
+
+
+
+def test_h1_authorization_file_missing_default_denies_and_generates_template(tmp_path):
+    """H1: When role_authorizations.json is missing, Live mode generates template only, default denies, and blocks execution."""
+    save_dir = tmp_path / "save_missing"
+    native_file = tmp_path / "MyLEAGUE0003"
+    native_file.write_bytes(b"FAKE_SAVE")
+    initialize_save(str(save_dir), "save_missing_01", str(native_file))
+
+    host = SeasonCycleHost(
+        workspace_root=tmp_path,
+        state_file=tmp_path / "state_missing.json",
+        ledger_file=tmp_path / "ledger_missing.jsonl",
+        outbox_db=tmp_path / "outbox_missing.db"
+    )
+
+    init_res = host.initialize_season(
+        save_directory=str(save_dir),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    auth_file = save_dir / "role_authorizations.json"
+    template_file = save_dir / "role_authorizations.template.json"
+    assert not auth_file.exists(), "Must NOT create role_authorizations.json automatically in live mode"
+    assert template_file.is_file(), "Template file must be created for operator reference"
+    tpl_data = json.loads(template_file.read_text(encoding="utf-8"))
+    assert tpl_data["status"] == "TEMPLATE_PENDING_HUMAN_AUTHORIZATION"
+    assert host.role_registry.is_authorized is False
+    assert host.role_registry.authorization_status == "AUTHORIZATION_FILE_MISSING"
+
+    # Candidate intents rejected fail-closed
+    intents = [{
+        "intent_id": "missing-intent-1",
+        "issuer_role": "GM",
+        "actor_uid": "gm_user_01",
+        "action_id": "PLAYER_PATCH_TENDENCIES",
+        "parameters": {"team_id": 1, "player_id": 2019, "values": {"SHOT_TENDENCY": 80}}
+    }]
+    cycle_res = host.start_cycle("cycle-missing-auth", candidate_intents=intents, force=True)
+    assert cycle_res["status"] == "DECISION_CYCLE_OPENED"
+    assert len(cycle_res["unauthorized_rejected"]) == 1
+    assert cycle_res["unauthorized_rejected"][0]["reason"] == "ROLE_ACTOR_NOT_AUTHENTICATED"
+
+
+def test_h1_template_cannot_become_active_authorization(tmp_path):
+    """H1: Configuration template with TEMPLATE_PENDING_HUMAN_AUTHORIZATION cannot be used as active authorization."""
+    save_dir = tmp_path / "save_tpl"
+    native_file = tmp_path / "MyLEAGUE0003"
+    native_file.write_bytes(b"FAKE_SAVE")
+    initialize_save(str(save_dir), "save_tpl_01", str(native_file))
+
+    template_content = {
+        "schema_version": "nba2k22.rea.role_authorizations.v1",
+        "save_id": "save_tpl_01",
+        "worldline_id": "worldline-main",
+        "bound_database_file": "world.sqlite",
+        "status": "TEMPLATE_PENDING_HUMAN_AUTHORIZATION",
+        "human_authorization_ref": None,
+        "provenance": "PENDING_OPERATOR_SIGNING",
+        "roles": [{"role_type": "GM", "team_id": 1, "actor_uid": "gm_user_01"}]
+    }
+    (save_dir / "role_authorizations.json").write_text(json.dumps(template_content, indent=2), encoding="utf-8")
+
+    from season_cycle_host import TrustedRoleRegistry
+    reg = TrustedRoleRegistry()
+    success = reg.bind_save_context(save_dir, "save_tpl_01", "worldline-main", save_dir / "world.sqlite")
+    assert success is False
+    assert reg.is_authorized is False
+    assert reg.authorization_status == "TEMPLATE_CANNOT_BECOME_ACTIVE_AUTHORIZATION"
+
+
+def test_h1_mock_authorization_strictly_isolated_from_live():
+    """H1: Mock role authorization injection is physically blocked in Live mode."""
+    from season_cycle_host import TrustedRoleRegistry
+    live_registry = TrustedRoleRegistry(is_mock=False)
+    with pytest.raises(ValueError, match="LIVE_MODE_REJECTS_MOCK_AUTHORIZATION"):
+        live_registry.inject_mock_authorizations([{"role_type": "GM", "team_id": 1, "actor_uid": "mock_gm"}])
+
+    mock_registry = TrustedRoleRegistry(is_mock=True)
+    mock_registry.inject_mock_authorizations([{"role_type": "GM", "team_id": 1, "actor_uid": "mock_gm"}])
+    assert mock_registry.authorization_status == "AUTHORIZED_MOCK"
+    assert mock_registry.is_authorized is True
+    assert mock_registry.get_actor("GM", 1) == "mock_gm"
+
+
+def test_h2_database_missing_read_failure_and_empty_teams_fail_closed(tmp_path):
+    """H2: Database missing, unreadable, or empty teams table fails closed."""
+    from season_cycle_host import TrustedRoleRegistry
+    reg = TrustedRoleRegistry()
+
+    # Case A: Non-existent database file
+    reg.database_path = tmp_path / "nonexistent.sqlite"
+    assert reg._verify_team_in_database(28) is False
+
+    # Case B: Corrupted / invalid SQLite file
+    corrupt_db = tmp_path / "corrupt.sqlite"
+    corrupt_db.write_bytes(b"NOT_A_SQLITE_DATABASE_HEADER")
+    reg.database_path = corrupt_db
+    assert reg._verify_team_in_database(28) is False
+
+    # Case C: Database exists but has 0 rows in teams table
+    empty_db = tmp_path / "empty_teams.sqlite"
+    create_database(empty_db, "save_empty_teams_01")
+    reg.save_id = "save_empty_teams_01"
+    reg.database_path = empty_db
+    assert reg._verify_team_in_database(28) is False
+    assert reg._get_teams_from_database() == set()
+
+    # Case D: Database save_id mismatch
+    reg.save_id = "different_save_id_expected"
+    assert reg._verify_team_in_database(28) is False
+
+
+def test_h2_team_native_format_positive_and_invalid_id_negative(tmp_path):
+    """H2: Correctly parses current schema team:native:<ID> and rejects invalid IDs."""
+    from season_cycle_host import TrustedRoleRegistry, parse_team_numeric_id
+    assert parse_team_numeric_id("team:native:28") == 28
+    assert parse_team_numeric_id("team:native:0") == 0
+    assert parse_team_numeric_id("team:25") == 25
+    assert parse_team_numeric_id(1) == 1
+    assert parse_team_numeric_id("invalid") is None
+    assert parse_team_numeric_id(None) is None
+
+    db_path = tmp_path / "teams_native.sqlite"
+    create_database(db_path, "save_native_teams_01")
+    with connect(db_path) as conn:
+        conn.execute("INSERT INTO teams (team_id, display_name) VALUES ('team:native:28', 'LAL'), ('team:native:0', 'PHI'), ('team:native:25', 'GSW')")
+
+    reg = TrustedRoleRegistry(save_id="save_native_teams_01", database_path=db_path)
+    db_teams = reg._get_teams_from_database()
+    assert 28 in db_teams
+    assert 0 in db_teams
+    assert 25 in db_teams
+
+    assert reg._verify_team_in_database(28) is True
+    assert reg._verify_team_in_database("team:native:28") is True
+    assert reg._verify_team_in_database(0) is True
+    assert reg._verify_team_in_database(9999) is False
+    assert reg._verify_team_in_database(-1) is False
+    assert reg._verify_team_in_database("malformed") is False
+
+
+def test_h3_save_worldline_and_db_context_mismatch_fails_closed(temp_environment):
+    """H3: Context binding mismatches (save_id, worldline_id, database_file, provenance) fail closed."""
+    env = temp_environment
+    save_dir = env["save_dir"]
+    auth_file = save_dir / "role_authorizations.json"
+    base_auth = json.loads(auth_file.read_text(encoding="utf-8"))
+
+    from season_cycle_host import TrustedRoleRegistry
+    reg = TrustedRoleRegistry()
+
+    # 1. save_id mismatch
+    bad_save = dict(base_auth)
+    bad_save["save_id"] = "different_save_99"
+    auth_file.write_text(json.dumps(bad_save), encoding="utf-8")
+    assert reg.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite") is False
+    assert reg.authorization_status == "AUTHORIZATION_SAVE_ID_MISMATCH"
+
+    # 2. worldline_id mismatch
+    bad_wl = dict(base_auth)
+    bad_wl["worldline_id"] = "isolated_worldline_strict"
+    bad_wl["authorized_worldlines"] = ["isolated_worldline_strict"]
+    auth_file.write_text(json.dumps(bad_wl), encoding="utf-8")
+    assert reg.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite") is False
+    assert reg.authorization_status == "AUTHORIZATION_WORLDLINE_MISMATCH"
+
+    # 3. database_file mismatch
+    bad_db = dict(base_auth)
+    bad_db["bound_database_file"] = "other_database.sqlite"
+    bad_db["authorized_databases"] = ["other_database.sqlite"]
+    auth_file.write_text(json.dumps(bad_db), encoding="utf-8")
+    assert reg.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite") is False
+    assert reg.authorization_status == "AUTHORIZATION_DATABASE_FILE_MISMATCH"
+
+    # 4. human authorization provenance missing
+    bad_prov = dict(base_auth)
+    bad_prov["human_authorization_ref"] = None
+    bad_prov["provenance"] = None
+    auth_file.write_text(json.dumps(bad_prov), encoding="utf-8")
+    assert reg.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite") is False
+    assert reg.authorization_status == "AUTHORIZATION_PROVENANCE_MISSING"
+
+    # Restore valid auth file
+    auth_file.write_text(json.dumps(base_auth), encoding="utf-8")
+
+
+def test_h4_ambiguous_multiple_actors_fails_closed_and_missing_actor_uid_rejected(temp_environment):
+    """H4: Multiple actors for a single role profile fail closed with explicit ambiguity error; missing actor_uid is rejected."""
+    env = temp_environment
+    host = env["host"]
+    save_dir = env["save_dir"]
+    auth_file = save_dir / "role_authorizations.json"
+    base_auth = json.loads(auth_file.read_text(encoding="utf-8"))
+
+    # Case A: Ambiguous multiple GM actors
+    ambiguous_auth = dict(base_auth)
+    ambiguous_auth["roles"] = [
+        {"role_type": "GM", "team_id": 1, "actor_uid": "gm_alice", "provenance": "SAVE_DB_VERIFIED_DELEGATION", "human_authorization_ref": "HUMAN_GRANT_01"},
+        {"role_type": "GM", "team_id": 25, "actor_uid": "gm_bob", "provenance": "SAVE_DB_VERIFIED_DELEGATION", "human_authorization_ref": "HUMAN_GRANT_01"}
+    ]
+    auth_file.write_text(json.dumps(ambiguous_auth), encoding="utf-8")
+    host.role_registry.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite")
+
+    ctx = host._make_context("test-ambiguity-cycle")
+    with pytest.raises(ValueError, match="AMBIGUOUS_MULTIPLE_ACTORS_FOR_ROLE"):
+        host.role_registry.get_profiles(ctx)
+
+    # Restore valid auth file
+    auth_file.write_text(json.dumps(base_auth), encoding="utf-8")
+    host.role_registry.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite")
+
+    host.initialize_season(
+        save_directory=str(save_dir),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    # Case B: Missing actor_uid for an unregistered team cannot be authenticated
+    unregistered_team_intent = [{
+        "intent_id": "unregistered-team-intent-1",
+        "issuer_role": "GM",
+        "action_id": "PLAYER_PATCH_TENDENCIES",
+        "parameters": {"team_id": 999, "player_id": 2019, "values": {"SHOT_TENDENCY": 80}}
+    }]
+    c_res = host.start_cycle("cycle-missing-actor", candidate_intents=unregistered_team_intent, force=True)
+    assert len(c_res["unauthorized_rejected"]) == 1
+    assert c_res["unauthorized_rejected"][0]["reason"] == "ACTOR_UID_MISSING_AND_UNAUTHENTICATED"
+
+
+def test_h4_fixed_default_roles_cannot_automatically_obtain_live_permissions():
+    """H4: TrustedRoleRegistry has no hardcoded default actors; unconfigured registry default denies."""
+    from season_cycle_host import TrustedRoleRegistry
+    reg = TrustedRoleRegistry(is_mock=False)
+    assert reg.is_authorized is False
+    assert reg._actors == {}
+    assert reg.get_authenticated_teams("GM") == ()
+    assert reg.get_authenticated_teams("COACH") == ()
+    assert reg.is_actor_authenticated("GM", 1, "gm_user_01") is False
+    assert reg.is_actor_authenticated("COACH", 1, "coach_user_01") is False
+
+
+def test_raw_transport_missing_or_forged_evidence_rejected_in_live(temp_environment):
+    """Verify live validation rejects missing, forged, or mismatched raw REA transport evidence."""
+    import contracts
+    from bulk_executor import BulkBatch, BulkBatchHeader, BulkIntentItem, ItemReceipt, PlannedChunk
+    from validate_batch_execution import validate_batch_execution
+
+    header = BulkBatchHeader(
+        batch_id="BATCH-TEST-NATIVE-FAIL",
+        save_instance_id="MyLEAGUE0003",
+        game_build_sha256=contracts.BUILD,
+        authorization_ref="AUTH-TEST-NATIVE",
+        source_snapshot_ref="SNAP-TEST-NATIVE",
+        expected_process_name="NBA2K22.exe",
+        expected_pid=5720,
+        dry_run=False
+    )
+    item = BulkIntentItem(
+        intent_id="i-test-1",
+        player_id=2019,
+        field_id="SHOT_TENDENCY",
+        expected_before=65,
+        value=75,
+        action_id="PLAYER_PATCH_TENDENCIES",
+        team_id=1
+    )
+    batch = BulkBatch(header=header, intents=(item,))
+    planned_chunks = [PlannedChunk(
+        chunk_id="chunk-test-1",
+        team_id=1,
+        action_id="PLAYER_PATCH_TENDENCIES",
+        intents=(item,),
+        estimated_call_count=1,
+        estimated_duration_ms=100,
+        batch_id="BATCH-TEST-NATIVE-FAIL",
+        save_instance_id="MyLEAGUE0003",
+        plan_digest=batch.plan_digest,
+        chunk_digest="b" * 64
+    )]
+    receipts = [ItemReceipt(
+        intent_id="i-test-1",
+        team_id=1,
+        player_id=2019,
+        field_id="SHOT_TENDENCY",
+        expected_before=65,
+        requested=75,
+        outcome="SUCCESS_APPLIED",
+        chunk_id="chunk-test-1",
+        timestamp="2026-11-02T12:00:00Z",
+        getter_before=65,
+        getter_after=75,
+        raw_after=75,
+        unaltered_fields_check=True
+    )]
+    readback = {
+        "missed_count": 0,
+        "all_100_persisted_in_game": True,
+        "verified_items": [{
+            "intent_id": "i-test-1",
+            "player_id": 2019,
+            "readback_getter": 75,
+            "target_tendency": 75,
+            "confirmed": True
+        }]
+    }
+
+    # 1. Unknown chunk_id in raw evidence
+    mismatched_chunk_msg = [{
+        "type": "send",
+        "payload": {
+            "kind": "chunk-execution-result",
+            "chunk_id": "chunk-wrong-id",
+            "chunk_digest": "b" * 64,
+            "plan_digest": batch.plan_digest,
+            "action_id": "PLAYER_PATCH_TENDENCIES",
+            "batch_id": "BATCH-TEST-NATIVE-FAIL",
+            "save_instance_id": "MyLEAGUE0003",
+            "outcome": "CHUNK_SUCCESS",
+            "receipts": [{"intent_id": "i-test-1"}]
+        }
+    }]
+    res_bad_id = validate_batch_execution(
+        batch=batch,
+        chunks=planned_chunks,
+        raw_messages=mismatched_chunk_msg,
+        receipts=receipts,
+        independent_readback=readback,
+        require_native_transport_evidence=True
+    )
+    assert res_bad_id["validation_passed"] is False
+    assert any("unknown or missing chunk_id" in e for e in res_bad_id["errors"])
+
+    # 2. Corrupted chunk_digest in raw evidence
+    corrupt_digest_msg = [{
+        "type": "send",
+        "payload": {
+            "kind": "chunk-execution-result",
+            "chunk_id": "chunk-test-1",
+            "chunk_digest": "corrupted_digest_xxx",
+            "plan_digest": batch.plan_digest,
+            "action_id": "PLAYER_PATCH_TENDENCIES",
+            "batch_id": "BATCH-TEST-NATIVE-FAIL",
+            "save_instance_id": "MyLEAGUE0003",
+            "outcome": "CHUNK_SUCCESS",
+            "receipts": [{"intent_id": "i-test-1"}]
+        }
+    }]
+    res_bad_digest = validate_batch_execution(
+        batch=batch,
+        chunks=planned_chunks,
+        raw_messages=corrupt_digest_msg,
+        receipts=receipts,
+        independent_readback=readback,
+        require_native_transport_evidence=True
+    )
+    assert res_bad_digest["validation_passed"] is False
+    assert any("Raw chunk_digest mismatch" in e for e in res_bad_digest["errors"])
 

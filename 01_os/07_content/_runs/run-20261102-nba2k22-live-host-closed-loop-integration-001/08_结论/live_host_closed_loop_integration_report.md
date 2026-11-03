@@ -234,4 +234,40 @@ rootdir: E:\gemini_space\nba2k22
 ============================= 17 passed in 24.56s =============================
 ```
 
-当前 `run.yml` 状态严格保持 `OFFLINE_VERIFIED_AWAITING_HUMAN_LIVE_TRIGGER`，四轮实机闭环尚未执行，静待 Human 用户启动实机游戏并发出触发指令。
+---
+
+## 八、H1–H4 角色身份与授权门定向收口与原生传输证据确认 (Task NBA2K22-HOST-LIVE-AUTHORIZATION-CLOSEOUT-20261102-002)
+
+### 8.1 承重缺陷与整改实现
+1. **H1 · 角色授权默认拒绝 (Default-Deny)**:
+   - 彻底移除了 `TrustedRoleRegistry._init_defaults()` 中的硬编码角色和球队。
+   - 初始默认状态置为 `DEFAULT_DENIED_UNBOUND`，`is_authorized` 为 `False`。
+   - 缺失 `role_authorizations.json` 时仅写入待签署的非执行模板 `role_authorizations.template.json`（标记 `TEMPLATE_PENDING_HUMAN_AUTHORIZATION`），不自动生成具有执行效力的授权，返回 `AUTHORIZATION_FILE_MISSING`。
+   - `inject_mock_authorizations` 严格与实机物理隔离，当 `is_mock=False` 时直接抛出 `LIVE_MODE_REJECTS_MOCK_AUTHORIZATION`。
+2. **H2 · 数据库球队身份真实验证 (Fail-Closed Database Team Verification)**:
+   - 完整适配当前 WorldData 模式 `team:native:<ID>`（如 `team:native:28`），并通过 `parse_team_numeric_id` 鲁棒解析数字 ID。
+   - 修复了原 `_verify_team_in_database` 中数据库为空返回 True 的 fail-open 漏洞。数据库缺失、文件损坏、查询失败、teams 表为空、或与当前 `save_id` 不匹配时，全部严格 fail-closed 返回 `False`。
+3. **H3 · 授权文件绑定完整性 (Context Binding Integrity)**:
+   - `bind_save_context` 严格校验 `save_id`、`worldline_id`、`bound_database_file` 以及 `human_authorization_ref` / `provenance`。
+   - 任何字段与当前上下文不符或缺失人类授权来源时，一律返回 False 并将状态标记为具体的拒绝原因。
+4. **H4 · 消除后续固定身份隐式授权与多角色冲突消解 (Dynamic Grants & Ambiguity Guard)**:
+   - `start_cycle` 与 `seal_cycle_decisions` 全面由 `self.role_registry.get_phase_grants()` 动态提供阶段授权。
+   - 候选意图缺失 `actor_uid` 时，由已验证的注册表根据 `(issuer, team_id)` 动态反查，未登记或无匹配者一律 fail-closed 拦截。
+   - `get_profiles` 增加多角色消解守卫：若同一角色登记了多个不同 Actor（例如多个 GM），立即抛出 `AMBIGUOUS_MULTIPLE_ACTORS_FOR_ROLE` 阻断，杜绝单 Profile 接口隐式扩大权限。
+5. **Native 证据接口定向确认**:
+   - 验证了 `mutation_100` 真实生成的 `evidence.json`（含 `normalized_result.messages`，每条 payload 为 `kind: "chunk-execution-result"`）。
+   - 实机模式下严格要求真实证据，未提供或伪造/摘要不匹配均 fail-closed 拦截；离线 Mock 模式跳过真实传输层并透明记录。
+
+### 8.2 26 项全量测试套件验证结果
+`test_season_cycle_host.py` 测试套件扩展至 26 项，26 项全部通过：
+- 17 项既有系统基准与安全门禁测试通过。
+- 9 项 H1–H4 负向拦截、模板隔离、数据库防击穿、上下文不匹配、多角色冲突、原生传输证据验证测试全部通过。
+```text
+============================= 26 passed in 25.70s =============================
+```
+
+### 8.3 交付状态界定
+- 离线整改候选版本状态：`OFFLINE_HOST_REMEDIATION_READY_FOR_REVIEW`（离线代码与测试完备，准备提交评审）。
+- 游戏内 4 轮试点状态：`LIVE_PILOT_NOT_EXECUTED`（未在真实游戏中推进或执行实机写入）。
+
+当前交付状态严格保持 `OFFLINE_HOST_REMEDIATION_READY_FOR_REVIEW`，四轮实机闭环状态为 `LIVE_PILOT_NOT_EXECUTED`。
