@@ -13,8 +13,9 @@ entries:
     deletion_rule: protected
   - path: 01_os/03_mechanisms/task_orchestration/{README.md,大任务与长时执行契约_v1.yml}
     purpose: >-
-      默认大任务与长时执行的 canonical 契约：内部 continuation 集合、真停止集合、
-      闭合前检查必填项、终态生命周期声明要求。授予任何权限均不由本机制产生。
+      默认大任务与长时执行的 canonical 契约：证据驱动的增量 Loop、内部 continuation 集合、
+      真停止集合、闭合前检查必填项与终态生命周期声明；系列集中独立审核时机由
+      01_os/开发入口与单窗口任务规范_v1.md 第9节统一判定。授予任何权限均不由本机制产生。
     loader: 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
     loader_class: in_repo_program
     discovery: referenced from AGENTS.md and 01_os/开发入口与单窗口任务规范_v1.md
@@ -33,6 +34,16 @@ entries:
     cache_dirs: []
     failure_surfacing: next explicit command or pytest run
     deletion_rule: protected
+  - path: 01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json
+    purpose: Strict opt-in development-Loop checkpoint fields, enums and evidence requirements; not a Workflow state.
+    loader: 01_os/06_execution/task_orchestration/big_task/loop_observability.py
+    loader_class: in_repo_program
+    discovery: 01_os/03_mechanisms/task_orchestration/README.md
+    evidence: 01_os/06_execution/task_orchestration/big_task/test_loop_observability.py
+    cache_dirs: []
+    failure_surfacing: explicit CLI exit 1 or 3; legacy gaps never promote to strict PASS
+    deletion_rule: protected
+
 excluded:
   # 本机制目前没有 01_os/02_boot/ 启动清单：该路径不在产生本机制的任务的
   # allowed_changed_paths 内，执行者不自行扩边界。是否需要 boot manifest 是一条
