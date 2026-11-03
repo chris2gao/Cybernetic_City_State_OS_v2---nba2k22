@@ -2,7 +2,7 @@
   "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
   "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
   "actual_executor_model": "Gemini 2.5 Pro (execution)",
-  "total_iterations": 9,
+  "total_iterations": 10,
   "all_offline_gates_satisfied": true,
   "gpt6_audit_remediation": {
     "audit_commit_sha": "bf4f044e9f83665eb573638425f44cd97d7e7d93",
@@ -39,11 +39,13 @@
     "completion_pointer": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/08_结论/completion_pointer.md"
   },
   "test_metrics": {
-    "host_integration_tests": "26 passed, 0 failed in 25.70s (test_season_cycle_host.py)",
-    "host_full_pipeline_tests": "48 passed, 0 failed in 26.50s (host + outbox + bridge + role_batches)",
+    "host_integration_tests": "26 passed, 0 failed in 26.79s (test_season_cycle_host.py)",
+    "host_full_pipeline_tests": "49 passed, 0 failed in 5.66s (outbox + bridge + role_batches + capabilities + validate)",
     "world_data_prototype_tests": "337 passed, 2 warnings, 103 subtests passed in 147.21s",
     "regressions_detected": 0,
-    "gold_100_offline_replay": "PASS (100 receipts replayed and verified via validate_stage_directory)"
+    "gold_100_offline_replay": "PASS (100 receipts replayed and verified via validate_stage_directory)",
+    "f1_f2_targeted_tests": "8 passed, 0 failed in 4.47s (test_f1_f2_saves_identity_and_worldline_rebind.py)",
+    "total_tests_passing": "83 (26 host + 8 f1f2 + 49 pipeline)"
   },
   "governance_adherence": {
     "created_new_native_setter": false,
@@ -81,5 +83,15 @@
     "h3_context_binding_integrity": "RESOLVED: bind_save_context enforces exact match for save_id, worldline_id, bound_database_file, and requires human_authorization_ref / provenance; context mismatches fail closed.",
     "h4_dynamic_phase_grants_and_disambiguation": "RESOLVED: start_cycle and seal_cycle_decisions use role_registry.get_phase_grants(); get_profiles raises AMBIGUOUS_MULTIPLE_ACTORS_FOR_ROLE on multiple GM/Coach actors; unregistered teams or missing actor_uid rejected fail closed.",
     "native_evidence_compatibility": "RESOLVED: Verified authentic evidence.json schema from mutation_100 with chunk-execution-result messages; Live mode strictly enforces authentic Frida transport evidence; synthetic or mock messages rejected fail closed."
+  },
+  "f1_f2_final_closeout": {
+    "input_head": "f3a1031988201d2e43bed9de3a6f4abe996fe27b",
+    "task_id": "NBA2K22-HOST-LIVE-AUTHORIZATION-FINAL-CLOSEOUT-20261102-003",
+    "live_pilot_status": "NOT_EXECUTED",
+    "f2_worldline_rebind_after_branch": "RESOLVED: initialize_season(force_new_worldline=True) calls role_registry.bind_save_context(save_dir, wl_info['save_id'], wl_info['worldline_id'], target_path) immediately after branch DB creation and save.json update. Registry is re-bound to new worldline ID and new branch DB. Old worldline auth cannot carry over. Verified by 3 dedicated tests.",
+    "final_candidate_status": "OFFLINE_HOST_REMEDIATION_READY_FOR_SERIES_REVIEW",
+    "f1_saves_strict_failclosed": "RESOLVED: _get_teams_from_database() saves table check extracted outside swallowing except block. OperationalError on missing saves table immediately returns set() (fail-closed). Empty singleton row, null save_id, or save_id mismatch all return set(). Verified by 5 dedicated tests including positive control.",
+    "timestamp": "2026-11-02T17:46:10Z",
+    "wildcard_scope_guard": "RESOLVED: bind_save_context() wildcard guard now requires explicit allow_wildcard_scope, wildcard_authorization_purpose, wildcard_scope_declaration, or WILDCARD keyword in human_authorization_ref/provenance. Test fixture updated with allow_wildcard_scope=True. All 26 existing tests continue to pass."
   }
 }

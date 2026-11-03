@@ -209,7 +209,8 @@ class TrustedRoleRegistry:
             return False
 
         allowed_worldlines = auth_data.get("authorized_worldlines", [])
-        if auth_data.get("worldline_id") != self.worldline_id and self.worldline_id not in allowed_worldlines and "*" not in allowed_worldlines:
+        has_wl_wildcard = ("*" in allowed_worldlines)
+        if auth_data.get("worldline_id") != self.worldline_id and self.worldline_id not in allowed_worldlines and not has_wl_wildcard:
             self._actors.clear()
             self._actor_provenance.clear()
             self._phase_grants.clear()
@@ -218,12 +219,50 @@ class TrustedRoleRegistry:
 
         expected_db_name = self.database_path.name if self.database_path else "world.sqlite"
         allowed_databases = auth_data.get("authorized_databases", [])
-        if auth_data.get("bound_database_file") != expected_db_name and expected_db_name not in allowed_databases and "*" not in allowed_databases:
+        has_db_wildcard = ("*" in allowed_databases)
+        if auth_data.get("bound_database_file") != expected_db_name and expected_db_name not in allowed_databases and not has_db_wildcard:
             self._actors.clear()
             self._actor_provenance.clear()
             self._phase_grants.clear()
             self.authorization_status = "AUTHORIZATION_DATABASE_FILE_MISMATCH"
             return False
+
+        # Wildcard scope validation (F2):
+        # If wildcard is used, it MUST be qualified by explicit human authorization declaration,
+        # and verified against the actual registered worldlines manifest and active database.
+        if has_wl_wildcard or has_db_wildcard:
+            has_explicit_declaration = bool(
+                auth_data.get("wildcard_authorization_purpose")
+                or auth_data.get("wildcard_scope_declaration")
+                or auth_data.get("allow_wildcard_scope")
+                or "WILDCARD" in str(auth_data.get("human_authorization_ref", "")).upper()
+                or "WILDCARD" in str(auth_data.get("provenance", "")).upper()
+            )
+            if not has_explicit_declaration:
+                self._actors.clear()
+                self._actor_provenance.clear()
+                self._phase_grants.clear()
+                self.authorization_status = "AUTHORIZATION_WILDCARD_NOT_DECLARED_BY_HUMAN"
+                return False
+
+            manifest_file = self.save_dir / "worldlines_manifest.json" if self.save_dir else None
+            if manifest_file and manifest_file.exists():
+                try:
+                    m_data = json.loads(manifest_file.read_text(encoding="utf-8"))
+                    known_wls = set(m_data.get("worldlines", {}).keys())
+                    known_wls.add("worldline-main")
+                    if self.worldline_id not in known_wls:
+                        self._actors.clear()
+                        self._actor_provenance.clear()
+                        self._phase_grants.clear()
+                        self.authorization_status = "AUTHORIZATION_WILDCARD_TARGET_UNVERIFIED"
+                        return False
+                except Exception:
+                    self._actors.clear()
+                    self._actor_provenance.clear()
+                    self._phase_grants.clear()
+                    self.authorization_status = "AUTHORIZATION_WILDCARD_TARGET_UNVERIFIED"
+                    return False
 
         # Check Human Authorization / Provenance (H3)
         auth_ref = auth_data.get("human_authorization_ref") or auth_data.get("provenance")
@@ -234,7 +273,7 @@ class TrustedRoleRegistry:
             self.authorization_status = "AUTHORIZATION_PROVENANCE_MISSING"
             return False
 
-        # Validate database integrity and teams (H2)
+        # Validate database integrity and teams (H2, F1)
         db_teams = self._get_teams_from_database()
         if not db_teams:
             self._actors.clear()
@@ -300,26 +339,34 @@ class TrustedRoleRegistry:
         return True
 
     def _get_teams_from_database(self) -> Set[int]:
-        """Queries numeric team IDs from the active save database with fail-closed semantics."""
+        """Queries numeric team IDs from the active save database with fail-closed semantics.
+
+        Enforces strict save identity (F1): the database MUST contain a 'saves' table confirming
+        ownership matching self.save_id. If saves table is missing, query fails, no matching
+        singleton record exists, or save_id mismatches, access is strictly denied (returns empty set).
+        """
         teams = set()
         if not self.database_path or not self.database_path.is_file():
-            return teams
+            return set()
+        if not self.save_id or not str(self.save_id).strip():
+            return set()
+
         try:
             with closing(connect(self.database_path, True)) as conn:
-                # 1. Verify saves table matches active save_id if save_id is bound
-                if self.save_id:
-                    try:
-                        cur = conn.cursor()
-                        cur.execute("SELECT save_id FROM saves WHERE singleton=1")
-                        row = cur.fetchone()
-                        if row and str(row[0]) != str(self.save_id):
-                            # Database belongs to a different save; fail closed!
-                            return set()
-                    except Exception:
-                        pass
+                cur = conn.cursor()
+                # 1. Strictly verify saves table matches active save_id (F1)
+                try:
+                    cur.execute("SELECT save_id FROM saves WHERE singleton=1")
+                    row = cur.fetchone()
+                except Exception:
+                    # saves table missing, unreadable, or query error -> fail closed
+                    return set()
+
+                if not row or not row[0] or str(row[0]).strip() != str(self.save_id).strip():
+                    # No record, null save_id, or save_id mismatch -> fail closed
+                    return set()
 
                 # 2. Query team_id and native_team_id
-                cur = conn.cursor()
                 cols = [c[1] for c in cur.execute("PRAGMA table_info(teams)").fetchall()]
                 if not cols:
                     return set()
@@ -340,6 +387,8 @@ class TrustedRoleRegistry:
     def _verify_team_in_database(self, team_id: int) -> bool:
         """Verifies that a team actually exists in the active save database. Fail-closed on any failure."""
         if not self.database_path or not self.database_path.is_file():
+            return False
+        if not self.save_id or not str(self.save_id).strip():
             return False
         db_teams = self._get_teams_from_database()
         if not db_teams:
@@ -861,6 +910,16 @@ class SeasonCycleHost:
                     os.replace(tmp_sjson, save_json_path)
                 except Exception:
                     pass
+
+            # F2: Re-bind role registry to new worldline+database immediately after branch creation.
+            # The earlier inspect_worldline() call bound the registry to the original worldline.
+            # Without this re-bind, old worldline auth would remain active for the new worldline execution.
+            self.role_registry.bind_save_context(
+                save_dir,
+                wl_info["save_id"],
+                wl_info["worldline_id"],  # new branch worldline ID set above
+                target_path               # new branch DB path
+            )
 
         target_db = Path(wl_info["target_db"])
         orchestrator = CalendarSimOrchestrator(

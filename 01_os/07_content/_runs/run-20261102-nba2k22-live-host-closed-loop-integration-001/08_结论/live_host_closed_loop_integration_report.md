@@ -271,3 +271,59 @@ rootdir: E:\gemini_space\nba2k22
 - 游戏内 4 轮试点状态：`LIVE_PILOT_NOT_EXECUTED`（未在真实游戏中推进或执行实机写入）。
 
 当前交付状态严格保持 `OFFLINE_HOST_REMEDIATION_READY_FOR_REVIEW`，四轮实机闭环状态为 `LIVE_PILOT_NOT_EXECUTED`。
+
+
+---
+
+## Section 9 · F1/F2 最终承重接口定向整改（Iteration 10）
+
+**任务 ID**：NBA2K22-HOST-LIVE-AUTHORIZATION-FINAL-CLOSEOUT-20261102-003  
+**时间**：2026-11-02T17:47:27Z  
+**输入 HEAD**：3a1031988201d2e43bed9de3a6f4abe996fe27b
+
+### 9.1 F1 — saves 表严格 Fail-Closed
+
+**问题**：_get_teams_from_database() 将 saves 表查询包在 xcept: pass 中。saves 表缺失触发 OperationalError 被静默吞掉，代码继续查询 teams 表并返回结果，_verify_team_in_database(28) 错误返回 True（GPT-6 真实 SQLite 负例验证发现）。
+
+**修复**：将 saves 表查询单独提取到自身的 xcept Exception: return set() 守卫块中。任何异常（table not found、read error 等）立即返回空集合。同时添加空行、空 save_id、save_id 不一致的守卫，均返回空集合（fail-closed）。
+
+**测试覆盖**（5 个专项测试，均 PASS）：
+- 	est_f1_missing_saves_table_fails_closed：无 saves 表 → 返回 False
+- 	est_f1_saves_table_empty_no_singleton_fails_closed：saves 表空 → 返回 False
+- 	est_f1_saves_id_mismatch_fails_closed：save_id 不一致 → 返回 False
+- 	est_f1_correct_saves_id_succeeds：正确 save_id → 返回 True（正例对照）
+- 	est_f1_no_save_id_on_registry_fails_closed：注册表无 save_id → 返回 False
+
+### 9.2 F2 — 新世界线切换后授权注册表重绑
+
+**问题**：initialize_season(force_new_worldline=True) 创建新分支 DB 并更新 save.json 后，未重新调用 ole_registry.bind_save_context()。注册表仍绑定于原始 inspect_worldline() 调用时的旧世界线，旧授权文件可越权授权新世界线执行（auth carry-over 缺陷）。
+
+**修复（F2-B）**：在 orce_new_worldline 分支末尾（save.json 原子写入后）插入：
+`python
+self.role_registry.bind_save_context(
+    save_dir, wl_info["save_id"], wl_info["worldline_id"], target_path
+)
+`
+
+**修复（F2-A，通配符范围守卫）**：ind_save_context() 中，若 uthorized_worldlines 或 uthorized_databases 包含 *，须有明确声明（llow_wildcard_scope: true / wildcard_authorization_purpose / WILDCARD 关键词）；否则返回 AUTHORIZATION_WILDCARD_NOT_DECLARED_BY_HUMAN（fail-closed）。测试 fixture 已添加 llow_wildcard_scope: True，原有 26 项测试全部继续通过。
+
+**测试覆盖**（3 个专项测试，均 PASS）：
+- 	est_f2_force_new_worldline_registry_rebound_to_new_worldline：注册表切换到新世界线 ID 和新分支 DB
+- 	est_f2_original_worldline_registry_not_polluted_after_branch：原始 Host 注册表不受分支影响
+- 	est_f2_old_worldline_auth_cannot_authorize_strict_new_worldline：严格作用域拒绝新世界线绑定
+
+### 9.3 测试结果汇总
+
+| 测试文件 | 通过数 | 失败数 | 耗时 |
+|----------|--------|--------|------|
+| 	est_season_cycle_host.py | 26 | 0 | 26.79s |
+| 	est_f1_f2_saves_identity_and_worldline_rebind.py | 8 | 0 | 4.47s |
+| 	est_decision_outbox.py + pipeline | 49 | 0 | 5.66s |
+| **合计** | **83** | **0** | — |
+
+### 9.4 最终状态
+
+- 当前状态：OFFLINE_HOST_REMEDIATION_READY_FOR_SERIES_REVIEW
+- 真实游戏状态：LIVE_PILOT_NOT_EXECUTED
+- 所有承重缺口 H1–H4、F1–F2 已修复完毕
+- 等待 GPT-6 系列审核确认后方可启用真实游戏驾驶

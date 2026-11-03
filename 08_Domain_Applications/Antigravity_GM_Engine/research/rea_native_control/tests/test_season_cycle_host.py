@@ -58,6 +58,7 @@ def temp_environment(tmp_path):
         "bound_database_file": "world.sqlite",
         "authorized_worldlines": ["worldline-main", "*"],
         "authorized_databases": ["world.sqlite", "*"],
+        "allow_wildcard_scope": True,  # F2: explicit human-declared wildcard scope for test fixture
         "human_authorization_ref": "HUMAN_TEST_AUTH_20261102",
         "provenance": "SAVE_DB_VERIFIED_DELEGATION",
         "roles": [
