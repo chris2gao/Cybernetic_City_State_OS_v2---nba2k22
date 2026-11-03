@@ -88,6 +88,7 @@ def validate(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen: set[str] = set()
     task: str | None = None
     prev_sha: str | None = None
+    unresolved_gap_ids: set[str] = set()
     for pos, row in enumerate(rows, 1):
         missing = [k for k in REQUIRED if k not in row]
         findings.extend(issue("REQUIRED_FIELD_MISSING:" + key, pos) for key in missing)
@@ -162,7 +163,13 @@ def validate(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if not isinstance(gaps, list) or any(not isinstance(v, dict) or not _string(v.get("id")) or not _member(v.get("status"), {"OPEN", "CLOSED", "BLOCKED"}) for v in gaps):
             findings.append(issue("INVALID_REMAINING_GAPS", pos))
             gaps = []
-        if outcome == "objective_met_ready_for_series_review" and any(v.get("status") in ("OPEN", "BLOCKED") for v in gaps):
+        gap_ids = [v["id"] for v in gaps]
+        if len(gap_ids) != len(set(gap_ids)):
+            findings.append(issue("DUPLICATE_GAP_ID", pos))
+        if not unresolved_gap_ids.issubset(set(gap_ids)):
+            findings.append(issue("UNRESOLVED_GAP_SILENTLY_DROPPED", pos))
+        unresolved_gap_ids = {v["id"] for v in gaps if v["status"] in ("OPEN", "BLOCKED")}
+        if outcome == "objective_met_ready_for_series_review" and unresolved_gap_ids:
             findings.append(issue("OPEN_GAP_CONTRADICTS_OBJECTIVE_MET", pos))
         if outcome == "objective_met_ready_for_series_review" and (grade != "EXECUTED_VERIFIED" or any_failure or not any_pass):
             findings.append(issue("COMPLETION_WITHOUT_EXECUTED_EVIDENCE", pos))
@@ -255,15 +262,16 @@ def build_report(rows: list[dict[str, Any]], fmt: str, findings: list[dict[str, 
     records = normalized if normalized is not None else rows
     test_counts = Counter()
     changes: set[str] = set()
-    open_gaps: list[dict[str, Any]] = []
+    latest_gap_states: dict[str, dict[str, Any]] = {}
     for r in records:
         for t in r.get("actual_test_receipts", []) if isinstance(r.get("actual_test_receipts"), list) else []:
             if isinstance(t, dict):
                 test_counts[str(t.get("status", "UNKNOWN"))] += 1
         changes.update(x for x in r.get("changed_paths", []) if isinstance(x, str)) if isinstance(r.get("changed_paths"), list) else None
         for g in r.get("remaining_gaps", []) if isinstance(r.get("remaining_gaps"), list) else []:
-            if isinstance(g, dict) and g.get("status") != "CLOSED":
-                open_gaps.append(g)
+            if isinstance(g, dict) and isinstance(g.get("id"), str):
+                latest_gap_states[g["id"]] = g
+    open_gaps = [v for _, v in sorted(latest_gap_states.items()) if v.get("status") in ("OPEN", "BLOCKED")]
     missing = sum(1 for f in findings if "MISSING" in f["code"] or "PROOF" in f["code"])
     outcomes = Counter(str(r.get("outcome", r.get("source_status", "UNKNOWN"))) for r in records)
     triggers = Counter(str(r.get("trigger_type", r.get("trigger_type_source", "UNKNOWN"))) for r in records)
