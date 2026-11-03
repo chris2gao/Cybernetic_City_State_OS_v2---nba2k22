@@ -327,3 +327,69 @@ self.role_registry.bind_save_context(
 - 真实游戏状态：LIVE_PILOT_NOT_EXECUTED
 - 所有承重缺口 H1–H4、F1–F2 已修复完毕
 - 等待 GPT-6 系列审核确认后方可启用真实游戏驾驶
+
+
+---
+
+## Section 10 · F2 世界线状态一致性修正（Iteration 11）
+
+**任务 ID**：NBA2K22-HOST-LIVE-AUTHORIZATION-FINAL-CLOSEOUT-20261102-003（Iteration 11）  
+**时间**：2026-11-03T01:34:20Z  
+**GPT-6 审核 SHA**：15f4149146be5180bd70481f5d13f15119204815
+
+### 10.1 根因（GPT-6 RDC 临时存档复现）
+
+orce_new_worldline=True 分支在 Iteration 10 之后仍存在以下三处状态不一致：
+
+1. **worldlines_manifest.json 未注册新世界线**：inspect_worldline() 写入 manifest，但 orce_new_worldline 块未再次更新，新世界线 ID 不在 manifest 的 worldlines 字典中。
+2. **save.json.worldline_id 未更新**：旧代码只更新了 database_file，未写 worldline_id，故 save.json 仍显示 worldline-main。
+3. **回执状态不准确**：is_authorized=False 时（AUTHORIZATION_WILDCARD_TARGET_UNVERIFIED）仍报告 INITIALIZED_AND_BASELINE_BOUND，暗示 Live 执行已就绪。
+
+### 10.2 修复内容
+
+**orce_new_worldline 块**：
+
+- 读取 inspect_worldline() 已写的最新 manifest 内容
+- 将新世界线登记到 manifest（含 parent_worldline_id、ranch_reason、created_at）
+- 原子写 manifest .tmp → replace；读回验证 
+ew_wl_id in manifest["worldlines"] 和 ctive_worldline_id == new_wl_id
+- 原子写 save.json，同时更新 database_file **和** worldline_id；读回验证 worldline_id == new_wl_id 和 database_file == target_path.name
+- 任何异常均回滚 manifest 和 save.json，抛出 FORCE_NEW_WORLDLINE_STATE_UPDATE_FAILED_FAIL_CLOSED
+
+**回执状态区分**：
+
+- is_authorized=True → INITIALIZED_AND_BASELINE_BOUND（含 ole_authorization_ready: True）
+- is_authorized=False → INITIALIZED_BASELINE_BOUND_AUTHORIZATION_PENDING（含 ole_authorization_ready: False）
+
+**seal_cycle_decisions PID 逻辑**：
+
+- 外部传入 getter_func 时跳过 esolve_pid（PID 严格验证在 uthorize_and_execute 中执行）；只有在内部获取 getter 时才调用 esolve_pid，防止测试环境 LIVE_PROCESS_NOT_FOUND 误触发。
+
+### 10.3 测试覆盖（8 项新 C1–C8）
+
+| 测试 | 内容 | 结果 |
+|------|------|------|
+| C1 | 新 DB 创建，manifest 包含并激活新世界线，parent 正确记录 | PASS |
+| C2 | save.json worldline_id 和 database_file 均指向新世界线 | PASS |
+| C3 | Manifest、save.json、Registry 三者世界线和 DB 全一致 | PASS |
+| C4 | 有效 Human 授权（wildcard 声明）通过验证；回执 INITIALIZED_AND_BASELINE_BOUND | PASS |
+| C5 | 旧 worldline-main 专属授权不能越权用于新世界线 | PASS |
+| C6 | 二次初始化（无 force）正确恢复新世界线和 DB | PASS |
+| C7 | manifest 写入中途失败 → 回滚 → 抛出 FORCE_NEW_WORLDLINE_STATE_UPDATE_FAILED_FAIL_CLOSED → save.json 无新分支 ID 泄漏 | PASS |
+| C8 | 无授权文件时回执为 INITIALIZED_BASELINE_BOUND_AUTHORIZATION_PENDING；世界线状态仍正确更新 | PASS |
+
+### 10.4 测试汇总
+
+| 测试文件 | 通过 | 失败 | 耗时 |
+|----------|------|------|------|
+| 	est_season_cycle_host.py | 26 | 0 | 42.06s |
+| 	est_f1_f2_saves_identity_and_worldline_rebind.py | 8 | 0 | — |
+| 	est_f2_worldline_state_consistency.py | 8 | 0 | — |
+| 管道测试（5 个文件） | 49 | 0 | 6.15s |
+| **合计** | **91** | **0** | — |
+
+### 10.5 最终状态
+
+- 当前状态：OFFLINE_HOST_REMEDIATION_READY_FOR_SERIES_REVIEW
+- 真实游戏状态：LIVE_PILOT_NOT_EXECUTED
+- H1–H4、F1、F2 所有承重缺口全部修复完毕
