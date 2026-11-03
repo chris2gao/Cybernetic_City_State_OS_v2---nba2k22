@@ -117,3 +117,11 @@ def test_review_ready_requires_verified_evidence_and_schedule():
     assert not codes([r]);assert m.build_report([r],'strict',[])['review_candidate']
     r['review_schedule']['downstream_consumption']='blocking_authoritative_dependency'
     assert 'DEFERRED_REVIEW_BOUNDARY_INCOMPLETE' in codes([r])
+
+
+def test_report_cannot_overwrite_raw_log(tmp_path):
+    p=tmp_path/"input.jsonl"
+    raw=json.dumps(record())+"\n"
+    p.write_text(raw)
+    assert m.main(["--input",str(p),"--report",str(p)])==3
+    assert p.read_text()==raw
