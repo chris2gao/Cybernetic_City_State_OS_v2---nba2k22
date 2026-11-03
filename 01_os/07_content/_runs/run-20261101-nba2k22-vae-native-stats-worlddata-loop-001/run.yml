@@ -1,0 +1,29 @@
+task_id: NBA2K22-VAE-NATIVE-STATS-WORLDDATA-LOOP-20261101-001
+run_id: run-20261101-nba2k22-vae-native-stats-worlddata-loop-001
+domain: nba2k22
+role: execution
+assigned_model: Gemini
+actual_model: Gemini-2.5-Pro
+ownership: NBA2K22_domain
+lifecycle: candidate_loop_completed
+branch: task/nba2k22-vae-native-advanced-stats-worlddata-loop-20261101
+base_sha: 17ec1cea88c2bb6c36264792f70c94bef9a8bdb4
+base_kind: Human_approved_WorldData_v24_source_candidate_not_master
+master_at_dispatch: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+objective: "Find native PC NBA2K22 Player Card Game Log / Advanced / Per Game metrics and extend existing WorldData v24 read-only capture pipeline, using evidence-driven development Loop."
+task_packet_ref: 01_任务输入/task_packet.json
+dispatch_ref: 01_任务输入/execution_dispatch.md
+verification_plan_ref: 01_任务输入/verification_plan.json
+review_schedule:
+  review_mode: deferred_to_series
+  series_id: NBA2K22-VAE-SETTING-GAME-DATA-FEEDBACK
+  review_trigger: before_new_data_results_become_authoritative_VAE_auto_tuning
+  must_review_before: real_world_production_read_write_or_master_integration
+  candidate_only: true
+human_stage02_review_sha: 8ed0baff7fd7cf6439c0a49e158dea5b1838d1e3
+accepted_semantic_candidate_sha: c812042e087f4c7000d27ac42d3839741039c188
+source_worlddata_v24_sha: 17ec1cea88c2bb6c36264792f70c94bef9a8bdb4
+game_runtime: LIVE_READ_VERIFIED
+game_mutation: NOT_AUTHORIZED
+database_schema_change: ZERO_SCHEMA_MUTATION_PRESERVED
+master_merge: NOT_AUTHORIZED

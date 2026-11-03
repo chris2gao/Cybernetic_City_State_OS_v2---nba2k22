@@ -1,0 +1,33 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Add bounded single-source league standings and player leaderboards over the
+    already captured real totals, retaining Human overall deferral.
+  implementation_or_review_method: >-
+    Select one successful unit for an exact season and phase before filtering;
+    rank same-row counts and rational rates; expose source metadata, exclusions,
+    exact ties, user thresholds, source-pinned pagination and acquisition cutoffs.
+    Compare every supported metric against independent SQL/Fraction results on
+    the bound real v24 database and run query regression tests and SQLite smoke.
+  supportability_rationale: >-
+    RES-L includes season summaries, standings and statistical leaderboards.
+    Existing per-entity latest summaries cannot establish a single capture cohort.
+    This query layer consumes observed values without inventing game formulas,
+    official seeds, tiebreaks, league qualification, phase labels or UI rounding.
+  feasibility_rationale: >-
+    Existing player and team totals provide separately source-qualified cohorts.
+    No new game access, schema migration, annual refresh or historical rewrite is
+    needed; unavailable fields remain excluded with reasons. Subsequent pages
+    require an explicit unit, preserving a stable cohort across later captures.
+  exact_result_or_candidate_ref: 06_执行/increment36/verification-report.json
+  verification_evidence:
+    - 06_执行/increment36/verification-report.json
+    - 06_执行/increment36/actual-standings.json
+    - 06_执行/increment36/actual-player-leaderboard.json
+    - 06_执行/increment36/cli-results.json
+    - 06_执行/increment36/verification/operations.json
+  residual_risk_or_unproved_limits:
+    - Captured cohort counts do not prove every eligible league subject was captured.
+    - Native cumulative phase, official qualification and tiebreak semantics remain unproved.
+    - No new live game or UI evidence is acquired by a database-only query increment.
+    - Human-deferred overall, future real scenes and full-system independent acceptance remain open.

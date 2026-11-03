@@ -1,0 +1,1606 @@
+{
+  "source_kind": "PINNED_PE_SELECTED_RIP_LEA_NOT_REA_PROVIDER",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "game_access": false,
+  "targets_rva": [
+    80184496,
+    82877184,
+    82877248,
+    82877312,
+    82877376
+  ],
+  "radius_bytes": 64,
+  "references": [
+    {
+      "site_rva": 941090,
+      "target_rva": 82877440,
+      "requested_target_rva": 82877376,
+      "primary_rva": 941056,
+      "unwind_chain": [
+        {
+          "begin": 941056,
+          "end": 941107,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "instruction_boundary_confirmed": true,
+      "window": [
+        {
+          "rva": 941056,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 941060,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x22501e5]"
+        },
+        {
+          "rva": 941067,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "rva": 941076,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32ba2d5]"
+        },
+        {
+          "rva": 941083,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32ba6b6]"
+        },
+        {
+          "rva": 941090,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e23fd7]"
+        },
+        {
+          "rva": 941097,
+          "mnemonic": "call",
+          "operands": "RVA+0x1e53f30"
+        },
+        {
+          "rva": 941102,
+          "mnemonic": "add",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 941106,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    {
+      "site_rva": 942306,
+      "target_rva": 82877120,
+      "requested_target_rva": 82877184,
+      "primary_rva": 942272,
+      "unwind_chain": [
+        {
+          "begin": 942272,
+          "end": 942323,
+          "unwind_rva": 49978776,
+          "flags": 0
+        }
+      ],
+      "instruction_boundary_confirmed": true,
+      "window": [
+        {
+          "rva": 942272,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 942276,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x224f9b5]"
+        },
+        {
+          "rva": 942283,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "rva": 942292,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32b9a75]"
+        },
+        {
+          "rva": 942299,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32b9c26]"
+        },
+        {
+          "rva": 942306,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e239d7]"
+        },
+        {
+          "rva": 942313,
+          "mnemonic": "call",
+          "operands": "RVA+0x1e53f30"
+        },
+        {
+          "rva": 942318,
+          "mnemonic": "add",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 942322,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    }
+  ],
+  "unconfirmed_candidates": [
+    {
+      "site_candidate_rva": 631077,
+      "target_rva": 80184496,
+      "requested_target_rva": 80184496,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 631077,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4bde384]"
+        },
+        {
+          "rva": 631084,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 631089,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631090,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631091,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631092,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631093,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631094,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631095,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631096,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631097,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631098,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631099,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631100,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631101,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631102,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631103,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631104,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x218bb79]"
+        },
+        {
+          "rva": 631111,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x30c4d6a]"
+        },
+        {
+          "rva": 631118,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x30c51cb]"
+        },
+        {
+          "rva": 631125,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4bddcd4]"
+        },
+        {
+          "rva": 631132,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 631137,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631138,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631139,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631140,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631141,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631142,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631143,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631144,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631145,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631146,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631147,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631148,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631149,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631150,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631151,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 631152,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x218b999]"
+        },
+        {
+          "rva": 631159,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x30c4b42]"
+        },
+        {
+          "rva": 631166,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x30c4b63]"
+        }
+      ]
+    },
+    {
+      "site_candidate_rva": 632709,
+      "target_rva": 80184432,
+      "requested_target_rva": 80184496,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 632709,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4bddce4]"
+        },
+        {
+          "rva": 632716,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 632721,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632722,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632723,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632724,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632725,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632726,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632727,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632728,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632729,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632730,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632731,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632732,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632733,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632734,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632735,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632736,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x218f3a9]"
+        },
+        {
+          "rva": 632743,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x30c7d62]"
+        },
+        {
+          "rva": 632750,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x30c7e1b]"
+        },
+        {
+          "rva": 632757,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4bddf74]"
+        },
+        {
+          "rva": 632764,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 632769,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632770,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632771,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632772,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632773,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632774,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632775,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632776,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632777,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632778,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632779,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632780,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632781,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632782,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632783,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 632784,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 632788,
+          "mnemonic": "lea",
+          "operands": "rax, [rip + 0x1f2805]"
+        },
+        {
+          "rva": 632795,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x219095e]"
+        }
+      ]
+    },
+    {
+      "site_candidate_rva": 633813,
+      "target_rva": 80184560,
+      "requested_target_rva": 80184496,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 633813,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4bdd914]"
+        },
+        {
+          "rva": 633820,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 633825,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633826,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633827,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633828,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633829,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633830,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633831,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633832,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633833,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633834,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633835,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633836,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633837,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633838,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633839,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633840,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x2189449]"
+        },
+        {
+          "rva": 633847,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x30c266a]"
+        },
+        {
+          "rva": 633854,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x30c268b]"
+        },
+        {
+          "rva": 633861,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4bdcfa4]"
+        },
+        {
+          "rva": 633868,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 633873,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633874,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633875,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633876,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633877,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633878,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633879,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633880,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633881,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633882,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633883,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633884,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633885,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633886,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633887,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 633888,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x2199af9]"
+        },
+        {
+          "rva": 633895,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x30d69c2]"
+        },
+        {
+          "rva": 633902,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x30d6b33]"
+        }
+      ]
+    },
+    {
+      "site_candidate_rva": 940933,
+      "target_rva": 82877376,
+      "requested_target_rva": 82877376,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 940933,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e24034]"
+        },
+        {
+          "rva": 940940,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 940945,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940946,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940947,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940948,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940949,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940950,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940951,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940952,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940953,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940954,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940955,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940956,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940957,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940958,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940959,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940960,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x224ff89]"
+        },
+        {
+          "rva": 940967,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32ba182]"
+        },
+        {
+          "rva": 940974,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32ba1f3]"
+        },
+        {
+          "rva": 940981,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e23f44]"
+        },
+        {
+          "rva": 940988,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 940993,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940994,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940995,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940996,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940997,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940998,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940999,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941000,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941001,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941002,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941003,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941004,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941005,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941006,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941007,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941008,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x22500d9]"
+        },
+        {
+          "rva": 941015,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32ba1f2]"
+        },
+        {
+          "rva": 941022,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32ba21b]"
+        }
+      ]
+    },
+    {
+      "site_candidate_rva": 940981,
+      "target_rva": 82877184,
+      "requested_target_rva": 82877184,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 940981,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e23f44]"
+        },
+        {
+          "rva": 940988,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 940993,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940994,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940995,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940996,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940997,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940998,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 940999,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941000,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941001,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941002,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941003,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941004,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941005,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941006,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941007,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941008,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x22500d9]"
+        },
+        {
+          "rva": 941015,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32ba1f2]"
+        },
+        {
+          "rva": 941022,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32ba21b]"
+        },
+        {
+          "rva": 941029,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e23f54]"
+        },
+        {
+          "rva": 941036,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 941041,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941042,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941043,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941044,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941045,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941046,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941047,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941048,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941049,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941050,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941051,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941052,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941053,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941054,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941055,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941056,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 941060,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x22501e5]"
+        },
+        {
+          "rva": 941067,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x20], 0"
+        }
+      ]
+    },
+    {
+      "site_candidate_rva": 941029,
+      "target_rva": 82877248,
+      "requested_target_rva": 82877248,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 941029,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e23f54]"
+        },
+        {
+          "rva": 941036,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 941041,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941042,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941043,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941044,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941045,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941046,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941047,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941048,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941049,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941050,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941051,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941052,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941053,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941054,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941055,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941056,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 941060,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x22501e5]"
+        },
+        {
+          "rva": 941067,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rsp + 0x20], 0"
+        },
+        {
+          "rva": 941076,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32ba2d5]"
+        },
+        {
+          "rva": 941083,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32ba6b6]"
+        },
+        {
+          "rva": 941090,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e23fd7]"
+        },
+        {
+          "rva": 941097,
+          "mnemonic": "call",
+          "operands": "RVA+0x1e53f30"
+        },
+        {
+          "rva": 941102,
+          "mnemonic": "add",
+          "operands": "rsp, 0x38"
+        },
+        {
+          "rva": 941106,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "rva": 941107,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941108,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941109,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941110,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941111,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941112,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941113,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941114,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941115,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941116,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941117,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941118,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 941119,
+          "mnemonic": "int3",
+          "operands": ""
+        }
+      ]
+    },
+    {
+      "site_candidate_rva": 943797,
+      "target_rva": 82877312,
+      "requested_target_rva": 82877312,
+      "instruction_boundary_confirmed": false,
+      "reason": "NO_UNWIND_OR_OVERSIZED_FRAGMENT",
+      "window_from_pattern_candidate": [
+        {
+          "rva": 943797,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e234c4]"
+        },
+        {
+          "rva": 943804,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 943809,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943810,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943811,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943812,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943813,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943814,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943815,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943816,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943817,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943818,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943819,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943820,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943821,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943822,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943823,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943824,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x224d919]"
+        },
+        {
+          "rva": 943831,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32f6fe2]"
+        },
+        {
+          "rva": 943838,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32f7003]"
+        },
+        {
+          "rva": 943845,
+          "mnemonic": "lea",
+          "operands": "rcx, [rip + 0x4e22d54]"
+        },
+        {
+          "rva": 943852,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x1e53e90"
+        },
+        {
+          "rva": 943857,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943858,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943859,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943860,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943861,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943862,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943863,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943864,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943865,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943866,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943867,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943868,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943869,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943870,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943871,
+          "mnemonic": "int3",
+          "operands": ""
+        },
+        {
+          "rva": 943872,
+          "mnemonic": "lea",
+          "operands": "r9, [rip + 0x22515f9]"
+        },
+        {
+          "rva": 943879,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x32f0fa2]"
+        },
+        {
+          "rva": 943886,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x32f0ffb]"
+        }
+      ]
+    }
+  ],
+  "reference_limit": 24,
+  "truncated": false,
+  "limitations": [
+    "Only selected7-byte RIP-relative LEA forms are searched",
+    "No-unwind/oversized-fragment candidates are separate unconfirmed leads; windows are not entry or ABI proof",
+    "Reference windows do not prove a complete function ABI or game effect"
+  ]
+}

@@ -1,0 +1,31 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Add a usable Native season-stat reference query over the already captured
+    annual source, with same-unit resolution and retained historical provenance.
+  implementation_or_review_method: >-
+    Trace bounded native getters and the singleton resolver, match four current
+    code windows and25-slot metadata, then compare every source reference and
+    every returned public raw-stat field with the retained acquisition bytes.
+  supportability_rationale: >-
+    All3390 sources and84750 references pass34 pinned pages.3325 references resolve,
+    including1029 after gaps, with146300 raw-field comparisons and56 shared records
+    kept as separate source associations. Current Native code matches469 bytes.
+  feasibility_rationale: >-
+    All197 tests and SQLite smoke pass. Schema remains v18 with86 STRICT tables
+    and1376 columns. The complete database hash is unchanged, and the prior annual
+    bucket keeps its original acquisition time; no history refresh or migration runs.
+  exact_result_or_candidate_ref: 2ce59cf6907df9a048c1a1aea6c2eb8e1f7d79fc
+  verification_evidence:
+    - 06_执行/increment25/actual-stat-reference-report.json
+    - 06_执行/increment25/native-contract-report.json
+    - 06_执行/increment25/verification/operations_report.json
+    - 06_执行/increment25/queries/stephen-curry.json
+    - 06_执行/increment25/sources/player-stat-bank.bin
+    - 06_执行/increment25/delivery_check.json
+  residual_risk_or_unproved_limits:
+    - Source references do not establish allocation, ownership or historical lifecycle.
+    - No cumulative phase, chronological array order, career sum or UI units are inferred.
+    - Zero-index behavior is code and fixture verified; no actual zero reference is claimed.
+    - Old annual data is not relabeled as freshly acquired by current code verification.
+    - Full-season capacity and complete-system independent/Human acceptance remain open.

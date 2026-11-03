@@ -1,0 +1,4558 @@
+{
+  "schema_version": "nba2k22.native_control.registry.v1",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "Human_model_source": "nba2k22.rea.native_control.capability_model.v1",
+  "domains": [
+    {
+      "id": "D01",
+      "name": "交易"
+    },
+    {
+      "id": "D02",
+      "name": "签约与合同"
+    },
+    {
+      "id": "D03",
+      "name": "球员和员工属性修改"
+    },
+    {
+      "id": "D04",
+      "name": "教练机制与战术"
+    },
+    {
+      "id": "D05",
+      "name": "球队管理"
+    },
+    {
+      "id": "D06",
+      "name": "选秀大会"
+    },
+    {
+      "id": "D07",
+      "name": "训练系统"
+    },
+    {
+      "id": "D08",
+      "name": "游戏数据读取"
+    },
+    {
+      "id": "D09",
+      "name": "球探与新秀考察"
+    }
+  ],
+  "actions": [
+    {
+      "action_id": "TRADE_PLAYERS",
+      "domain": "D01",
+      "title": "指定双方球队与球员集合",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "PRIOR_LIVE_SUCCESS",
+      "runtime_handler": "trade.players",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PLAYER",
+          "binding_id": "trade.add_player",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM(request.team_a/team_b) for the supplied asset side",
+            "to_team": "Opposite supplied TEAM",
+            "player": "Exact UID from request.players_a/players_b, resolved on from-team roster"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.validate",
+          "arguments": {
+            "proposal": "Same private proposal; reject result0 without modifying requested assets"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.commit_wrapper",
+          "arguments": {
+            "proposal": "Same validated private proposal",
+            "output": "Owned4-byte output; wrapper invokes FullCheck and Process once"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-independent-after/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Only prior exact MIL9842/WAS9879 one-for-one succeeded; general IDs are recovered implementation, not additional live proof"
+    },
+    {
+      "action_id": "TRADE_PICKS",
+      "domain": "D01",
+      "title": "指定双方选秀权资产及归属",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "trade.assets",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "pick.by_id",
+          "arguments": {
+            "pick_id": "Exact request.picks_a/picks_b element (uint32)"
+          }
+        },
+        {
+          "operation": "VERIFY_EXACT_PICK_ID",
+          "binding_id": "pick.unique_id",
+          "arguments": {
+            "pick": "Resolved requested asset or current native draft selection"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "trade.add_pick",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM of supplied pick side",
+            "to_team": "Opposite supplied TEAM",
+            "pick": "Original pick.by_id(request.picks_*) with native UID/current owner rechecked"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.validate",
+          "arguments": {
+            "proposal": "Same private proposal; reject result0 without modifying requested assets"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.commit_wrapper",
+          "arguments": {
+            "proposal": "Same validated private proposal",
+            "output": "Owned4-byte output; wrapper invokes FullCheck and Process once"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-02.json",
+        "evidence/static/bodies-pick-10.json",
+        "evidence/static/pick_getter_leaf.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRADE_MIXED_ASSETS",
+      "domain": "D01",
+      "title": "指定球员与选秀权混合交易包",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "trade.assets",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PLAYER",
+          "binding_id": "trade.add_player",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM(request.team_a/team_b) for the supplied asset side",
+            "to_team": "Opposite supplied TEAM",
+            "player": "Exact UID from request.players_a/players_b, resolved on from-team roster"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "pick.by_id",
+          "arguments": {
+            "pick_id": "Exact request.picks_a/picks_b element (uint32)"
+          }
+        },
+        {
+          "operation": "VERIFY_EXACT_PICK_ID",
+          "binding_id": "pick.unique_id",
+          "arguments": {
+            "pick": "Resolved requested asset or current native draft selection"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "trade.add_pick",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM of supplied pick side",
+            "to_team": "Opposite supplied TEAM",
+            "pick": "Original pick.by_id(request.picks_*) with native UID/current owner rechecked"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.validate",
+          "arguments": {
+            "proposal": "Same private proposal; reject result0 without modifying requested assets"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.commit_wrapper",
+          "arguments": {
+            "proposal": "Same validated private proposal",
+            "output": "Owned4-byte output; wrapper invokes FullCheck and Process once"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-02.json",
+        "evidence/static/bodies-pick-10.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRADE_VALIDATE_COMMIT",
+      "domain": "D01",
+      "title": "同一笔外部提案调用游戏原生合法性检查与提交",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "PRIOR_LIVE_SUCCESS",
+      "runtime_handler": "trade.players",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PLAYER",
+          "binding_id": "trade.add_player",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM(request.team_a/team_b) for the supplied asset side",
+            "to_team": "Opposite supplied TEAM",
+            "player": "Exact UID from request.players_a/players_b, resolved on from-team roster"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.validate",
+          "arguments": {
+            "proposal": "Same private proposal; reject result0 without modifying requested assets"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.commit_wrapper",
+          "arguments": {
+            "proposal": "Same validated private proposal",
+            "output": "Owned4-byte output; wrapper invokes FullCheck and Process once"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-qualified/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Inherited one-for-one case; no new returns/persistence research"
+    },
+    {
+      "action_id": "SIGN_FREE_AGENT",
+      "domain": "D02",
+      "title": "指定球队球员和合同年限薪资与选项",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "signing_type": {
+              "type": "string",
+              "enum": [
+                "FREE_AGENT"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "option_type": {
+              "type": "string",
+              "enum": [
+                "NO_OPTION",
+                "TEAM_OPTION",
+                "PLAYER_OPTION",
+                "TEAM_OPTION_2"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "contract_type": {
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "TEN_DAY",
+                "HARDSHIP",
+                "TWO_WAY"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "distribution": {
+              "type": "string",
+              "enum": [
+                "CUSTOM",
+                "ASCEND_BIRD",
+                "ASCEND",
+                "FLAT",
+                "DESCEND"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "annual_wages_native": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              },
+              "description": "Six exact Native wage slots, including explicit unused zeros; no default price or unit conversion"
+            },
+            "years_native": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7,
+              "description": "Native3-bit encoding bounds only; legal duration and option-year meaning unverified"
+            },
+            "no_trade_clause": {
+              "type": "boolean",
+              "description": "Explicit supplied clause bit; eligibility unverified"
+            }
+          },
+          "required": [
+            "signing_type",
+            "option_type",
+            "contract_type",
+            "distribution",
+            "annual_wages_native",
+            "years_native",
+            "no_trade_clause"
+          ],
+          "additionalProperties": false,
+          "description": "Private explicit-term encoding only; fresh offer lifecycle and runtime dispatch remain unresolved"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Explicit terms/enums encode privately, but fresh-offer lifecycle and safe origin/mode/context remain unqualified",
+        "Offer return1 and ACCEPTED status do not prove completed signing; independent roster/contract/readback and deferred completion remain unresolved"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "ORIGINAL_TECHNICAL_CONTEXT_TYPE_NOT_TARGET_SELECTION",
+          "binding_id": "sign.default_type",
+          "arguments": {
+            "player": "Resolve/encode from unchanged request: player",
+            "team": "Resolve/encode from unchanged request: team"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "sign.offer_contract",
+          "arguments": {
+            "signing": "Resolve/encode from unchanged request: signing",
+            "context_or_null": "Resolve/encode from unchanged request: context_or_null",
+            "origin_flag": "Resolve/encode from unchanged request: origin_flag",
+            "mode_flag": "Resolve/encode from unchanged request: mode_flag"
+          }
+        },
+        {
+          "operation": "GAME_OWNED_CONDITIONAL_STEP",
+          "binding_id": "sign.process",
+          "arguments": {
+            "signing": "Resolve/encode from unchanged request: signing",
+            "context": "Resolve/encode from unchanged request: context",
+            "mode": "Resolve/encode from unchanged request: mode",
+            "source_tag": "Resolve/encode from unchanged request: source_tag",
+            "source_line": "Resolve/encode from unchanged request: source_line"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json",
+        "evidence/static/types-signing-02.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_native_enums_007.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pool_lookup_and_allocate_003.json",
+        "SIGNING_RECOVERY_PROGRESS.md"
+      ],
+      "executed_this_task": false,
+      "scope_note": null,
+      "effect_contract": {
+        "scope": "Caller-decided free-agent terms; no wage generation, forced offer or accepted-status patching",
+        "encoding": "25 registered fields and27 enum values known; current Native currency units/legal terms remain unverified",
+        "dispatch": "UNAVAILABLE_FRESH_LIFECYCLE_NOT_QUALIFIED"
+      }
+    },
+    {
+      "action_id": "RE_SIGN_PLAYER",
+      "domain": "D02",
+      "title": "指定球员续约合同",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "contract": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Extension signing type and eligible phase/counterparty status unresolved"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "sign.offer_contract",
+          "arguments": {
+            "signing": "Resolve/encode from unchanged request: signing",
+            "context_or_null": "Resolve/encode from unchanged request: context_or_null",
+            "origin_flag": "Resolve/encode from unchanged request: origin_flag",
+            "mode_flag": "Resolve/encode from unchanged request: mode_flag"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "RELEASE_WAIVE_PLAYER",
+      "domain": "D02",
+      "title": "指定球员裁员或放弃操作",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "waiver_parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Eight-argument waiver service found; flags and public wrapper not closed; no guessed bypass"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "team.waive",
+          "arguments": {
+            "team": "Resolve/encode from unchanged request: team",
+            "player": "Resolve/encode from unchanged request: player",
+            "mode": "Resolve/encode from unchanged request: mode",
+            "reason": "Resolve/encode from unchanged request: reason",
+            "validation_flag": "Resolve/encode from unchanged request: validation_flag",
+            "extra_flag": "Resolve/encode from unchanged request: extra_flag",
+            "source_tag": "Resolve/encode from unchanged request: source_tag",
+            "source_line": "Resolve/encode from unchanged request: source_line"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "CONTRACT_OPTION_ACTION",
+      "domain": "D02",
+      "title": "指定球员合同选项与选择值",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "option_decision": {
+          "type": "string"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Need native option-marking setter before ProcessMarkedOptions; do not edit option memory directly"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "sign.process_options",
+          "arguments": {
+            "player": "Resolve/encode from unchanged request: player"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "PLAYER_SET_ATTRIBUTE",
+      "domain": "D03",
+      "title": "按明确字段设置球员能力/耐久评级",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "field_id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 25,
+          "maximum": 99
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_BEFORE",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
+          "arguments": {
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_AFTER",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
+        "../../config/memory_field_profile.json",
+        "../../config/state_io_native/player.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "WORLD_ADMIN"
+        ],
+        "family": "attributes",
+        "gm_attribute_exception": "intangibles",
+        "unnamed_fields_world_editor_only": true
+      }
+    },
+    {
+      "action_id": "PLAYER_SET_TENDENCY",
+      "domain": "D03",
+      "title": "按明确字段设置球员倾向",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "field_id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_BEFORE",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
+          "arguments": {
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_AFTER",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
+        "../../config/memory_field_profile.json",
+        "../../config/state_io_native/player.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "COACH",
+          "PLAYER",
+          "WORLD_ADMIN"
+        ],
+        "family": "tendencies",
+        "gm_attribute_exception": null,
+        "unnamed_fields_world_editor_only": true
+      }
+    },
+    {
+      "action_id": "PLAYER_SET_BADGE",
+      "domain": "D03",
+      "title": "原版规则下设置指定徽章并匹配明确的联动前后状态",
+      "decision_roles": [
+        "WORLD_ADMIN"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "field_id": {
+          "type": "string",
+          "enum": [
+            "Acrobat",
+            "AlphaDog",
+            "AnkleBraces",
+            "AnkleBreaker",
+            "BackdownPunisher",
+            "BailOut",
+            "BallAndChain",
+            "BallStripper",
+            "BigEgo",
+            "BigMarketPlayer",
+            "Blinders",
+            "Box",
+            "BreakStarter",
+            "BrickWall",
+            "BulletPasser",
+            "CareerGymEliminator",
+            "CatchAndShoot",
+            "ChasedownArtist",
+            "Chef",
+            "CircusThrees",
+            "Clamps",
+            "ClutchShooter",
+            "CornerSpecialist",
+            "Deadeye",
+            "DefensiveLeader",
+            "DifficultShots",
+            "Dimer",
+            "Downhill",
+            "DreamShake",
+            "Enforcer",
+            "Expressive",
+            "FadeAce",
+            "FairWeatherPlayer",
+            "FastTwitch",
+            "FearlessFinisher",
+            "FloorGeneral",
+            "GiantSlayer",
+            "GlueHands",
+            "GraceUnderPressure",
+            "GreenMachine",
+            "HandlesForDays",
+            "HighFriendliness",
+            "HighWorkEthic",
+            "HookSpecialist",
+            "HotSpotHunter",
+            "Hustler",
+            "Hyperdrive",
+            "Interceptor",
+            "Intimidator",
+            "LaidBack",
+            "LimitlessSpotUp",
+            "LimitlessTakeoff",
+            "LobCityFinisher",
+            "LowFriendliness",
+            "LuckyNumber7",
+            "Menace",
+            "MismatchExpert",
+            "MouseInTheHouse",
+            "NeedleThreader",
+            "NegativelyMotivated",
+            "OffBallPest",
+            "OnCourtCoach",
+            "PickDodger",
+            "PickPocket",
+            "Pogostick",
+            "PositivelyMotivated",
+            "PostDropStepper",
+            "PostLockdown",
+            "PostPlaymaker",
+            "PostSpinTechnician",
+            "Posterizer",
+            "ProTouch",
+            "PutbackArtist",
+            "QuickFirstStep",
+            "ReboundChaser",
+            "RhythmShooter",
+            "RimProtector",
+            "RiseUp",
+            "SetShooter",
+            "SlipperyOffball",
+            "SlitheryFinisher",
+            "SmallEgo",
+            "Sniper",
+            "SpaceCreator",
+            "SpecialDelivery",
+            "StopAndGo",
+            "StopAndPop",
+            "TaxAvoiderPlayer",
+            "TearDropper",
+            "TightHandles",
+            "TirelessDefender",
+            "TripleThreatJuke",
+            "Unpluckable",
+            "Unpredictable",
+            "Unstrippable",
+            "VeryHighWorkEthic",
+            "VolumeShooter",
+            "Worm"
+          ]
+        },
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "expected_before": {
+          "type": "object",
+          "description": "Exact possible coupled group of raw levels from the current approved snapshot"
+        },
+        "expected_after": {
+          "type": "object",
+          "description": "Explicit complete coupled group after-state; must match original rules, never guessed or substituted"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.badges",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new real-game invocation, independent observer, UI, simulation or Save/Reload evidence",
+        "Host must attest the current league editor scene and exact save/process context; a generic delegate footprint alone is not scene authorization",
+        "Internal technical flag availability and UI labels per mode remain unverified; technical editor selection is explicit",
+        "Modifier provenance/lifetime is not asserted; current bounded snapshots and Native read-only Getter comparisons qualify only this operation",
+        "Any asynchronous change, failed assertion preflight, mismatch or interruption defers or leaves UNKNOWN without retry or rollback"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_VALIDATE_BADGE_CONTEXT",
+          "binding_id": "player.badge_context"
+        },
+        {
+          "operation": "COMPARE_READ_ONLY_EFFECTIVE_LEVELS",
+          "binding_id": "player.badge_effective_level",
+          "arguments": {
+            "badge_ids": [
+              5,
+              21,
+              24
+            ],
+            "normalization": 0
+          }
+        },
+        {
+          "operation": "SET_EXACT_BADGE_WITH_ORIGINAL_RULES",
+          "binding_id": "player.set_badge",
+          "arguments": {
+            "rule_flag": 0
+          }
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_badge_setter_014.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_coupling_helpers_017.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_setter_callers_018.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null,
+      "role_policy": {
+        "roles": [
+          "WORLD_ADMIN"
+        ],
+        "policy": "Badge technical editing requires explicit world-editor authority; ordinary GM/Coach/Player self-improvement is unavailable"
+      },
+      "effect_contract": {
+        "input_meaning": "Choose one internal named Badge field and level; explicitly acknowledge the complete possible coupled group before/after",
+        "value_meaning": "Recovered raw level0..per-field maximum1/4. Internal enum names and technical flags do not certify original UI/mode semantics.",
+        "rules": "Normal original flag0. Exclusive counterparts and Expressive/Unpredictable/LaidBack traits may change; reject if supplied after-state differs from original effects.",
+        "rights": "Explicit WORLD_ADMIN grant only; NONE sentinel cannot be submitted; no ordinary persona Badge editing."
+      }
+    },
+    {
+      "action_id": "PLAYER_SET_PLAY_TYPES_1_TO_4",
+      "domain": "D03",
+      "title": "按明确槽位和值调用球员四个战术类型原生Setter",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "slot_values": {
+          "type": "object",
+          "description": "Nonempty exact slot keys1..4, each maps to an integer PlayType enum0..15"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.playtypes",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live invocation, independently observed effect, UI, CPU selection or Save/Reload evidence",
+        "Direct-call scan found no slot1 caller; actual startup LEA references install these dedicated setters in property descriptors",
+        "No parent/child editor copy or refresh is used; scene-specific cache behavior and later AI overrides remain unverified",
+        "Existing TEAM resolver covers15 roster slots; technical mutability never grants a persona permission"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_EXACT_ROSTER_PLAYER",
+          "arguments": {
+            "team_id": "supplied team",
+            "player_id": "supplied native PLAYER UID16"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_1",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[1]"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_2",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[2]"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_3",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[3]"
+          }
+        },
+        {
+          "operation": "CALL_ONLY_IF_SLOT_EXPLICITLY_SUPPLIED",
+          "binding_id": "player.set_playtype_4",
+          "arguments": {
+            "player": "same exact PLAYER",
+            "play_type": "unchanged slot_values[4]"
+          }
+        },
+        {
+          "operation": "RAW_READBACK_WITHOUT_RETRY",
+          "arguments": {
+            "check": "entire+0x168 word equals original patched only at supplied slots; recheck roster identity"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_PLAYTYPE_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_native_leaf_windows_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_playtype_registration_leads_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_property_setter_descriptors_006.json",
+        "../../config/state_io_native/player.json",
+        "../../docs/game_mechanics/catalogs/R04B_TENDENCY_PLAYSTYLE_RESEARCH_V1.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Promotes prior noncallable PlayType lead to a deferred dedicated-setter implementation. Group schema is an explicit slot object; each role requirement is constrained to its own single slot. No new live effect."
+    },
+    {
+      "action_id": "STAFF_SET_ATTRIBUTE",
+      "domain": "D03",
+      "title": "指定教练或其他员工能力字段和目标值（具体允许项待证实）",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "staff_id": {
+          "type": "integer"
+        },
+        "field_id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "capability": "REFERENCE_ONLY",
+      "runtime_handler": null,
+      "unknowns": [
+        "Staff/Coach raw layouts exist but no qualified arbitrary staff-attribute native mutator is recovered"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "../../config/memory_field_profile.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "PLAYER_SET_EDITABLE_INFO",
+      "domain": "D03",
+      "title": "指定球员其他可修改资料字段和值",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "field_id": {
+          "type": "string"
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Complete parent/child copy bodies now recovered, but safe field-specific input construction, normalization, ownership and refresh/readback are not closed; whole editor copy is not a qualified standalone field operation"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "STATIC_COPY_LEAD_DO_NOT_DISPATCH",
+          "binding_id": "player.copy_parent_candidate",
+          "arguments": {
+            "destination_player": "Resolve/encode from unchanged request: destination_player",
+            "source_player": "Resolve/encode from unchanged request: source_player"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/player_editor_closure_11.json",
+        "evidence/static/editor_copy_entry_windows.json",
+        "../../config/memory_field_profile.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_and_children_complete_005.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_parent_copy_callback_windows_008.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_APPLY_OFFENSE_POE",
+      "domain": "D04",
+      "title": "指定球队教练与进攻重点",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "value": {
+          "type": "integer",
+          "maximum": 31,
+          "enum": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        },
+        "expected_before": {
+          "type": "integer",
+          "maximum": 31,
+          "required": false
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "coach.poe",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "coach.apply_gameplan",
+          "arguments": {
+            "input_GAMEPLAN": "Private880 bytes: preserve current Coach projection; encode only request.value/settings",
+            "target_COACHDATA": "resolve TEAM(request.team_id)+0xce8; reciprocal owner+0x18"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/static/chained_bodies.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_APPLY_DEFENSE_POE",
+      "domain": "D04",
+      "title": "指定球队教练与防守重点枚举",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "value": {
+          "type": "integer",
+          "enum": [
+            0,
+            13,
+            14,
+            15
+          ]
+        },
+        "expected_before": {
+          "type": "integer",
+          "maximum": 31,
+          "required": false
+        }
+      },
+      "capability": "PRIOR_LIVE_SUCCESS",
+      "runtime_handler": "coach.poe",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "coach.apply_gameplan",
+          "arguments": {
+            "input_GAMEPLAN": "Private880 bytes: preserve current Coach projection; encode only request.value/settings",
+            "target_COACHDATA": "resolve TEAM(request.team_id)+0xce8; reciprocal owner+0x18"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/coach-visible/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Only prior IND RickCarlisle14->13 current projection; no persistence proof"
+    },
+    {
+      "action_id": "COACH_SET_GAMEPLAN",
+      "domain": "D04",
+      "title": "指定球队/对手场景与完整Gameplan参数",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "opponent_team_id": {
+          "type": "integer"
+        },
+        "gameplan": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Creating an opponent plan and applying a projection does not restore full persistent Gameplan commit"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "gameplan.ensure_opponent",
+          "arguments": {
+            "manager": "FRANCHISE+0x19cfd0 + selected native team index*0x13e70",
+            "opponent_team": "TEAM(request.opponent_team_id)"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "coach.apply_gameplan",
+          "arguments": {
+            "input_GAMEPLAN": "Private880 bytes: preserve current Coach projection; encode only request.value/settings",
+            "target_COACHDATA": "resolve TEAM(request.team_id)+0xce8; reciprocal owner+0x18"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_ADD_REPLACE_PLAY",
+      "domain": "D04",
+      "title": "指定战术、目标槽位、添加或替换",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "../../config/coach_tactics_profile.json",
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_REPLACE_PLAYBOOK",
+      "domain": "D04",
+      "title": "指定球队、战术手册ID",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "../../config/coach_tactics_profile.json",
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_SET_SYSTEM_FREELANCE_ACE",
+      "domain": "D04",
+      "title": "指定攻防体系、自由战术或ACE设置",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Legacy playbook/setting layouts are read/write references only; native add/replace/apply/refresh service or non-null reference lookup is not restored"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "../../config/coach_tactics_profile.json",
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_SET_ROTATION_POLICY",
+      "domain": "D04",
+      "title": "指定教练相关轮换决策参数",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "settings": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "coach.settings",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "coach.apply_gameplan",
+          "arguments": {
+            "input_GAMEPLAN": "Private880 bytes: preserve current Coach projection; encode only request.value/settings",
+            "target_COACHDATA": "resolve TEAM(request.team_id)+0xce8; reciprocal owner+0x18"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/static/chained_bodies.json",
+        "../../config/coach_tactics_profile.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Only BenchDepth and BenchUtilization through recovered current-Coach projection; not lineup/minutes"
+    },
+    {
+      "action_id": "TEAM_SET_ROSTER_ASSIGNMENT",
+      "domain": "D05",
+      "title": "指定球员的球队归属或名单位置；以原生合法业务操作执行",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "runtime_handler": null,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_SET_STARTERS",
+      "domain": "D05",
+      "title": "指定首发5人及位置",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "runtime_handler": null,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_SET_MINUTES_ROTATION",
+      "domain": "D05",
+      "title": "指定球员轮换顺序与上场时间",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "runtime_handler": null,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_SET_PLAYER_ROLE_POSITION",
+      "domain": "D05",
+      "title": "指定球员角色/位置",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "NOT_FOUND_WITH_SEARCH_SCOPE",
+      "runtime_handler": null,
+      "unknowns": [
+        "Bounded named-Setter searches found only unrelated MyTEAM/world/roster-file callers or lower-level ownership helpers, not this complete MyLEAGUE transaction; do not replace with a raw field write"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-operations.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_MANAGE_STAFF",
+      "domain": "D05",
+      "title": "指定工作人员聘用解雇或职责",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Staff offer struct recovered; hire/fire lifecycle and full ABI incomplete"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "staff.sign",
+          "arguments": {
+            "signing": "Resolve/encode from unchanged request: signing"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_OTHER_SUPPORTED_OPERATIONS",
+      "domain": "D05",
+      "title": "根据PC22实际功能目录追加球队管理动作",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "DRAFT_SELECT_PROSPECT",
+      "domain": "D06",
+      "title": "指定选秀权/顺位/球队和候选球员ID，执行本次选秀",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "pick_id": {
+          "type": "integer",
+          "maximum": 4294967294
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "draft.select",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "QUALIFY_CURRENT_SPECIFIED_PICK",
+          "arguments": {
+            "method": "Current session type/round/slot; native pick UID equals request.pick_id; owner and empty selected-player slot; no stage advance to find another pick"
+          }
+        },
+        {
+          "operation": "CURRENT_SESSION_TYPE0_OR1",
+          "binding_id": "draft.current_selection",
+          "arguments": {
+            "round_key": "Current FRANCHISE+0xbc",
+            "slot_key": "Current FRANCHISE+0xc0",
+            "table_kind": "5 for current raw draft_type1, otherwise0"
+          }
+        },
+        {
+          "operation": "CURRENT_SESSION_TYPE2_3_OR4",
+          "binding_id": "draft.expansion_selection",
+          "arguments": {
+            "round_key": "Current FRANCHISE+0xbc",
+            "slot_key": "Current FRANCHISE+0xc0"
+          }
+        },
+        {
+          "operation": "VERIFY_EXACT_PICK_ID",
+          "binding_id": "pick.unique_id",
+          "arguments": {
+            "pick": "Resolved requested asset or current native draft selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "draft.select",
+          "arguments": {
+            "player": "Current-class prospect whose PLAYER UID==request.player_id",
+            "team": "TEAM(request.team_id); owner must match current record whose native UID==request.pick_id"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json",
+        "evidence/static/bodies-draft-09.json",
+        "evidence/static/pick_getter_leaf.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Current active unconsumed pick only; no future-pick auto-selection or stage advancement to reach a requested pick"
+    },
+    {
+      "action_id": "DRAFT_PICK_RIGHTS_ACTION",
+      "domain": "D06",
+      "title": "指定选秀权归属或权利处理，需区分交易业务",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "DRAFT_STAGE_REQUIRED_CONTEXT",
+      "domain": "D06",
+      "title": "恢复选秀大会执行所需原生会话、顺位和对象关系",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {},
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "draft.context",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Current UI scene still requires next-task scene qualification; this only reads current native draft record"
+      ],
+      "call_sequence": [
+        {
+          "operation": "CURRENT_SESSION_TYPE0_OR1",
+          "binding_id": "draft.current_selection",
+          "arguments": {
+            "round_key": "Current FRANCHISE+0xbc",
+            "slot_key": "Current FRANCHISE+0xc0",
+            "table_kind": "5 for current raw draft_type1, otherwise0"
+          }
+        },
+        {
+          "operation": "CURRENT_SESSION_TYPE2_3_OR4",
+          "binding_id": "draft.expansion_selection",
+          "arguments": {
+            "round_key": "Current FRANCHISE+0xbc",
+            "slot_key": "Current FRANCHISE+0xc0"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "pick.unique_id",
+          "arguments": {
+            "pick": "Resolved requested asset or current native draft selection"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-draft-09.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRAIN_TEAM_SET_SCHEDULE",
+      "domain": "D07",
+      "title": "指定球队训练日期与项目",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "date": {
+          "type": "integer",
+          "maximum": 2147483647
+        },
+        "training": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "training.team_date",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.set_team_on_date",
+          "arguments": {
+            "team": "TEAM(request.team_id)",
+            "native_date_key": "request.date unchanged",
+            "training_input": "Private64 bytes; native daily payload at+8, exact requested values"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json",
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRAIN_TEAM_SET_INTENSITY",
+      "domain": "D07",
+      "title": "指定球队训练强度和重点",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "date": {
+          "type": "integer",
+          "maximum": 2147483647
+        },
+        "value": {
+          "type": "integer",
+          "maximum": 7
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "training.intensity",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.daily_by_date",
+          "arguments": {
+            "team": "TEAM(request.team_id)",
+            "native_date_key": "request.date unchanged"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.set_team_on_date",
+          "arguments": {
+            "team": "TEAM(request.team_id)",
+            "native_date_key": "request.date unchanged",
+            "training_input": "Private64 bytes; native daily payload at+8, exact requested values"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json",
+        "evidence/static/bodies-core-03.json",
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRAIN_PLAYER_SET_FOCUS",
+      "domain": "D07",
+      "title": "指定球员训练项目、方向或强度",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRAIN_PLAYER_MENTOR_ASSIGNMENT",
+      "domain": "D07",
+      "title": "指定球员导师关系（真实原生能力需确认）",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "mentor_player_id": {
+          "type": "integer"
+        },
+        "mentee_player_ids": {
+          "type": "array"
+        },
+        "badge_ids": {
+          "type": "array"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Manager/list/UID mapping and complete arguments unresolved"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "mentor.append",
+          "arguments": {
+            "manager": "Resolve/encode from unchanged request: manager",
+            "UNKNOWN": "Resolve/encode from unchanged request: UNKNOWN"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "mentor.set_current_team",
+          "arguments": {
+            "UNKNOWN": "Resolve/encode from unchanged request: UNKNOWN"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_LEAGUE_SETTINGS_AND_CALENDAR",
+      "domain": "D08",
+      "title": "读取存档赛季、联盟设置、时间表和阶段",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_TEAM_ROSTER_ROTATION_FINANCE",
+      "domain": "D08",
+      "title": "读取球队资料、名单、轮换、战绩、工资/合同和选秀权",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "read.team",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Rotation/minutes, full financial subobjects and complete pick holdings are not provided by this subset"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.team_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-independent-after/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+      "domain": "D08",
+      "title": "读取球员身份、当前数值、倾向、徽章、伤病与合同",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "read.player",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Only identity/current-contract teams and existing contract profile fields emitted; full ability/tendency/badge child objects not bound"
+      ],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "player.by_id",
+          "arguments": {
+            "player_uid": "Exact request.player_id"
+          }
+        }
+      ],
+      "evidence": [
+        "../../config/memory_field_profile.json",
+        "../../src/source_extensions.py"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_PLAYER_MATCH_SEASON_CAREER_STATS",
+      "domain": "D08",
+      "title": "读取比赛/赛季/职业统计及可见进阶数据",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_COACH_STAFF_GAMEPLAN_TRAINING",
+      "domain": "D08",
+      "title": "读取工作人员资料、教练战术及训练设置",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "read.coach",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Other staff, complete Gameplan/training subobjects remain separate unresolved readers"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.coach_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/coach-visible/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_GAMES_STANDINGS_AWARDS_HISTORY",
+      "domain": "D08",
+      "title": "读取赛程、比赛结果、排名、奖项、历史与新闻记录",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_DRAFT_CLASS_PICKS_AND_SCOUT_REPORTS",
+      "domain": "D08",
+      "title": "读取候选新秀、选秀权和当前已获知的球探报告",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "required": false
+        },
+        "player_id": {
+          "type": "integer",
+          "required": false
+        },
+        "season_id": {
+          "type": "integer",
+          "required": false
+        },
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "No complete PC22 logical entity/parameter/commit binding for this exact action; see domain source leads"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_LIST_DRAFT_PROSPECTS",
+      "domain": "D09",
+      "title": "根据当前赛季/适用届次读取将参加选秀的候选名单及现有公开资料",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.list",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_READ_PROSPECT_INFO",
+      "domain": "D09",
+      "title": "按候选人ID读取当前可见能力、预测、排名、球探进度等字段，存在才返回",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_id": {
+          "type": "integer",
+          "required": false
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "scout.info",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Visible ability estimate/presentation getters unresolved; only public identity and raw public-ranking arrays available"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_ASSIGN_TARGETS",
+      "domain": "D09",
+      "title": "由外部GM提供候选球员或球探目标，找原生考察分派/确认入口",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_ids": {
+          "type": "array"
+        },
+        "priority_raw": {
+          "type": "integer",
+          "maximum": 1,
+          "required": false
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.append_goal",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "PRIVATE_PROPOSAL",
+          "binding_id": "scout.initialize_goal",
+          "arguments": {
+            "goal": "Owned148-byte private goal"
+          }
+        },
+        {
+          "operation": "EXACT_REQUESTED_TARGETS",
+          "binding_id": "scout.focus_specific",
+          "arguments": {
+            "goal": "Private new goal or explicitly requested existing Trip+4+goal_index*148",
+            "count": "len(request.player_ids),0..17",
+            "prospect_pointer_array": "Owned array of exact current-class DRAFT_PROSPECT* selected by supplied PLAYER UIDs"
+          }
+        },
+        {
+          "operation": "APPEND_ONCE_OR_RETURN_NATIVE_REJECTION",
+          "binding_id": "scout.append_goal",
+          "arguments": {
+            "trip": "Selected FRANCHISE_TEAM_DATA+0x13aac",
+            "goal": "Same private initialized specified-prospects goal",
+            "team": "TEAM(request.team_id); per-team aggregation"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-05.json",
+        "evidence/static/bodies-core-06.json",
+        "evidence/static/bodies-core-08.json",
+        "evidence/static/scout_goal_ctor_complete.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Creates a private specified-prospects goal, lets native Append aggregate targets and copy it into the next free slot; no automatic goal replacement or trip execution"
+    },
+    {
+      "action_id": "SCOUT_READ_PROGRESS_REPORT",
+      "domain": "D09",
+      "title": "读取考察已揭示的数据及进度，区分尚未开放字段",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "scout.progress",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Game report text and revealed-rating/disclosure presentation not mapped; raw team scouting progress only"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_READ_STAFF_CAPACITY_SCHEDULE",
+      "domain": "D09",
+      "title": "读取球探人员、可用任务槽位和考察周期（是否存在需实证）",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": "scout.budget",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Staff capability/schedule unavailable; only trip budget and existing goal count"
+      ],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json",
+        "evidence/static/bodies-core-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_ENSURE_OPPONENT_GAMEPLAN",
+      "domain": "D04",
+      "title": "为指定对手取得或创建Gameplan记录",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "opponent_team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "gameplan.ensure",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "gameplan.ensure_opponent",
+          "arguments": {
+            "manager": "FRANCHISE+0x19cfd0 + selected native team index*0x13e70",
+            "opponent_team": "TEAM(request.opponent_team_id)"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_TEAM_ROSTER_BASIC",
+      "domain": "D08",
+      "title": "读取已知名单与两项财务摘要，不冒充完整财务/轮换",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.team",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.team_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-independent-after/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_COACH_CURRENT",
+      "domain": "D08",
+      "title": "读取当前Coach身份与六项POE投影",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.coach",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.coach_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/coach-visible/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS",
+      "domain": "D09",
+      "title": "读取当前选秀届次未隐藏候选人的身份",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "limit": {
+          "type": "integer",
+          "maximum": 150,
+          "required": false
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.list",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_READ_PROGRESS_RAW",
+      "domain": "D09",
+      "title": "读取指定队已记录的球探点数与体测标志；报告文本未绑定",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.progress",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_READ_TRIP_BUDGET",
+      "domain": "D09",
+      "title": "读取当前球队剩余考察次数和已存在目标数",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.budget",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "READ_LAYOUT",
+          "binding_id": "read.scout_layout",
+          "arguments": {}
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_EXECUTE_CURRENT_TRIP",
+      "domain": "D09",
+      "title": "显式执行当前已配置的考察任务；消耗一次额度",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.execute_trip",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "scout.execute_trip",
+          "arguments": {
+            "team": "TEAM(request.team_id); only explicit execute action, never automatic after assignment"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRADE_MULTI_PLAYER_PACKAGE",
+      "domain": "D01",
+      "title": "按指定资产集合构造多球员提案，不替模型选择或配平",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "trade.assets",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PLAYER",
+          "binding_id": "trade.add_player",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM(request.team_a/team_b) for the supplied asset side",
+            "to_team": "Opposite supplied TEAM",
+            "player": "Exact UID from request.players_a/players_b, resolved on from-team roster"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "pick.by_id",
+          "arguments": {
+            "pick_id": "Exact request.picks_a/picks_b element (uint32)"
+          }
+        },
+        {
+          "operation": "VERIFY_EXACT_ID",
+          "binding_id": "pick.unique_id",
+          "arguments": {
+            "pick": "Resolved requested asset or current native draft selection"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "trade.add_pick",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM of supplied pick side",
+            "to_team": "Opposite supplied TEAM",
+            "pick": "Original pick.by_id(request.picks_*) with native UID/current owner rechecked"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.validate",
+          "arguments": {
+            "proposal": "Same private proposal; reject result0 without modifying requested assets"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.commit_wrapper",
+          "arguments": {
+            "proposal": "Same validated private proposal",
+            "output": "Owned4-byte output; wrapper invokes FullCheck and Process once"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_add_player_complete.json",
+        "evidence/static/bodies-pick-10.json",
+        "evidence/static/pick_getter_leaf.json",
+        "evidence/static/bodies-core-02.json",
+        "../rea_native_action/evidence/live/trade-qualified/evidence.json",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS",
+      "domain": "D04",
+      "title": "设置六项POE和四项已知原生投影字节字段",
+      "decision_roles": [
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "settings": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "coach.settings",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "coach.apply_gameplan",
+          "arguments": {
+            "input_GAMEPLAN": "Private880 bytes: preserve current Coach projection; encode only request.value/settings",
+            "target_COACHDATA": "resolve TEAM(request.team_id)+0xce8; reciprocal owner+0x18"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/verified-poc/evidence.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "SCOUT_SET_EXISTING_GOAL_TARGETS",
+      "domain": "D09",
+      "title": "仅设置既有目标记录；Trip聚合刷新另列待测",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_ids": {
+          "type": "array"
+        },
+        "goal_index": {
+          "type": "integer",
+          "maximum": 2
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "scout.existing_goal",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_LOGICAL_ENTITIES",
+          "arguments": {
+            "method": "Fresh pinned roster/franchise roots; supplied team IDs only; no automatic target selection"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "scout.focus_specific",
+          "arguments": {
+            "goal": "Private new goal or explicitly requested existing Trip+4+goal_index*148",
+            "count": "len(request.player_ids),0..17",
+            "prospect_pointer_array": "Owned array of exact current-class DRAFT_PROSPECT* selected by supplied PLAYER UIDs"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-02.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "READ_CURRENT_DRAFT_PICK",
+      "domain": "D08",
+      "title": "读取当前选秀会话的选秀权Native ID与归属；不推进",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "READ",
+      "input_schema": {},
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "draft.context",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CURRENT_SESSION_TYPE0_OR1",
+          "binding_id": "draft.current_selection",
+          "arguments": {
+            "round_key": "Current FRANCHISE+0xbc",
+            "slot_key": "Current FRANCHISE+0xc0",
+            "table_kind": "5 for current raw draft_type1, otherwise0"
+          }
+        },
+        {
+          "operation": "CURRENT_SESSION_TYPE2_3_OR4",
+          "binding_id": "draft.expansion_selection",
+          "arguments": {
+            "round_key": "Current FRANCHISE+0xbc",
+            "slot_key": "Current FRANCHISE+0xc0"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "pick.unique_id",
+          "arguments": {
+            "pick": "Resolved requested asset or current native draft selection"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/bodies-draft-09.json",
+        "evidence/static/pick_getter_leaf.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_SET_CHEMISTRY",
+      "domain": "D05",
+      "title": "设置球队化学反应的原生float参数",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "value": {
+          "type": "number"
+        },
+        "reason_mode": {
+          "type": "integer"
+        }
+      },
+      "capability": "PARTIAL_BINDING",
+      "runtime_handler": null,
+      "unknowns": [
+        "Reason mode and delegate readiness unclosed; no default mode invented"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "CALL",
+          "binding_id": "team.set_chemistry",
+          "arguments": {
+            "team": "Resolve/encode from unchanged request: team",
+            "value": "Resolve/encode from unchanged request: value",
+            "reason_mode": "Resolve/encode from unchanged request: reason_mode"
+          }
+        }
+      ],
+      "evidence": [
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TEAM_CONDITIONAL_COACHING_RULES",
+      "domain": "D05",
+      "title": "条件执教规则原生提交线索",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "REFERENCE_ONLY",
+      "runtime_handler": null,
+      "unknowns": [
+        "Nextgen official feature lead plus PC22 type/field names; actual PC22 mutation/commit binding unresolved"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "data/reference_leads.json",
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "STAFF_ASSIGN_SPECIALIST_ROLE",
+      "domain": "D05",
+      "title": "工作人员专长角色分派线索",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "REFERENCE_ONLY",
+      "runtime_handler": null,
+      "unknowns": [
+        "Nextgen official feature lead plus PC22 type/field names; actual PC22 mutation/commit binding unresolved"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "data/reference_leads.json",
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRAIN_PREP_HUB_RECOVERY_PLAN",
+      "domain": "D07",
+      "title": "训练恢复计划与背靠背休息设置线索",
+      "decision_roles": [
+        "GM",
+        "COACH"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "parameters": {
+          "type": "object"
+        }
+      },
+      "capability": "REFERENCE_ONLY",
+      "runtime_handler": null,
+      "unknowns": [
+        "Nextgen official feature lead plus PC22 type/field names; actual PC22 mutation/commit binding unresolved"
+      ],
+      "coverage_unknowns": [],
+      "call_sequence": [],
+      "evidence": [
+        "data/reference_leads.json",
+        "evidence/static/surface-discovery.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": null
+    },
+    {
+      "action_id": "TRADE_EXECUTE_AGREED_PACKAGE",
+      "domain": "D01",
+      "title": "执行外部GM已同意的明确资产包（直接原生Process）",
+      "decision_roles": [
+        "GM"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_a": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "team_b": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "players_a": {
+          "type": "array"
+        },
+        "players_b": {
+          "type": "array"
+        },
+        "picks_a": {
+          "type": "array"
+        },
+        "picks_b": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "trade.agreed",
+      "unknowns": [],
+      "coverage_unknowns": [],
+      "call_sequence": [
+        {
+          "operation": "RESOLVE_AND_MARSHAL_EXACT_ASSETS",
+          "arguments": {
+            "method": "Both supplied teams; exact supplied PLAYER/PICK IDs; private proposal; no salary matching/asset replacement"
+          }
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PLAYER",
+          "binding_id": "trade.add_player",
+          "arguments": {
+            "proposal": "Private1668-byte proposal",
+            "from_team": "TEAM(request.team_a/team_b) for the supplied asset side",
+            "to_team": "Opposite supplied TEAM",
+            "player": "Exact UID from request.players_a/players_b, resolved on from-team roster"
+          }
+        },
+        {
+          "operation": "RESOLVE_REQUESTED_PICK",
+          "binding_id": "pick.by_id",
+          "arguments": {}
+        },
+        {
+          "operation": "VERIFY_REQUESTED_PICK_UID",
+          "binding_id": "pick.unique_id",
+          "arguments": {}
+        },
+        {
+          "operation": "FOR_EACH_REQUESTED_PICK",
+          "binding_id": "trade.add_pick",
+          "arguments": {
+            "source": "Exact requested pick UID; none when empty"
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.context",
+          "arguments": {}
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "trade.process",
+          "arguments": {
+            "proposal": "Same owned1668-byte proposal",
+            "context": "Original no-argument getter result",
+            "output": "Owned int32; nonzero return means Process accepted"
+          }
+        }
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_process_complete.json",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "No executor salary/ability/consent checks. Process intrinsic asset identity checks remain. Player/pick variants beyond actual retained cases remain unverified."
+    },
+    {
+      "action_id": "TRAIN_TEAM_PATCH_FOCUS_RAW",
+      "domain": "D07",
+      "title": "仅更新指定日三个原生训练重点值",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "date": {
+          "type": "integer",
+          "maximum": 2147483647
+        },
+        "focus_values_raw": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "training.patch",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Raw values only; UI units, per-slot labels and scene effects remain unverified",
+        "No new live game test or Save/Reload evidence"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_EXISTING_NATIVE_DAILY_RECORD",
+          "binding_id": "training.daily_by_date",
+          "arguments": {
+            "team": "exact supplied TEAM",
+            "date": "exact supplied native date key"
+          }
+        },
+        {
+          "operation": "PATCH_PRIVATE_INPUT_ONLY",
+          "arguments": {
+            "input": "64-byte private input, daily copy at+8",
+            "fields": [
+              "focus_values_raw"
+            ]
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.set_team_on_date",
+          "arguments": {
+            "team": "same TEAM",
+            "date": "same supplied native date key",
+            "input": "private copied input"
+          }
+        }
+      ],
+      "evidence": [
+        "TRAINING_PATCH_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "scope_note": "New parameterized composition of recovered Native getter/setter; not a new function discovery or live validation."
+    },
+    {
+      "action_id": "TRAIN_TEAM_PATCH_PROFILE_RAW",
+      "domain": "D07",
+      "title": "仅更新指定日训练类型与子项目原生值",
+      "decision_roles": [
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "date": {
+          "type": "integer",
+          "maximum": 2147483647
+        },
+        "profile_values_raw": {
+          "type": "array"
+        },
+        "subfocus_points_raw": {
+          "type": "array"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "training.patch",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "Raw values only; UI units, per-slot labels and scene effects remain unverified",
+        "No new live game test or Save/Reload evidence"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_EXISTING_NATIVE_DAILY_RECORD",
+          "binding_id": "training.daily_by_date",
+          "arguments": {
+            "team": "exact supplied TEAM",
+            "date": "exact supplied native date key"
+          }
+        },
+        {
+          "operation": "PATCH_PRIVATE_INPUT_ONLY",
+          "arguments": {
+            "input": "64-byte private input, daily copy at+8",
+            "fields": [
+              "profile_values_raw",
+              "subfocus_points_raw"
+            ]
+          }
+        },
+        {
+          "operation": "CALL",
+          "binding_id": "training.set_team_on_date",
+          "arguments": {
+            "team": "same TEAM",
+            "date": "same supplied native date key",
+            "input": "private copied input"
+          }
+        }
+      ],
+      "evidence": [
+        "TRAINING_PATCH_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "scope_note": "New parameterized composition of recovered Native getter/setter; not a new function discovery or live validation."
+    },
+    {
+      "action_id": "COACH_ROTATION_SET_PLAYER_MINUTES",
+      "domain": "D04",
+      "title": "为指定本队球员设置明确轮换分钟；不自动补齐全队分钟",
+      "decision_roles": [
+        "Coach"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 48
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "rotation.minutes",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No live test, independently observed effect, UI refresh, game simulation or Save/Reload evidence",
+        "Only active delegate profiles with recovered generic setter, allow predicate and team-change thunk are accepted",
+        "Existing TEAM resolver exposes15 roster slots; additional roster representations are not covered",
+        "A set of exact minutes can have a non240 sum; executor neither validates a basketball strategy nor silently balances it"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_NATIVE_DELEGATE_SLOT_PROFILE",
+          "binding_id": "rotation.current_delegate",
+          "arguments": {}
+        },
+        {
+          "operation": "VALIDATE_EXACT_FRANCHISE_TEAM_INDEX",
+          "binding_id": "rotation.franchise_team_index",
+          "arguments": {
+            "team": "TEAM supplied by role"
+          }
+        },
+        {
+          "operation": "CALL_EXACT_MINUTES",
+          "binding_id": "rotation.set_player_minutes",
+          "arguments": {
+            "delegate": "same current delegate",
+            "player": "exact supplied current roster PLAYER",
+            "minutes": "unchanged supplied integer0..48"
+          }
+        },
+        {
+          "operation": "NATIVE_TEAM_CHANGE_NOTIFICATION",
+          "binding_id": "rotation.mark_team_change",
+          "arguments": {
+            "team": "same TEAM",
+            "change_kind": 1,
+            "flag": 0
+          }
+        },
+        {
+          "operation": "RAW_READBACK_WITHOUT_RETRY",
+          "arguments": {
+            "verify": "exact supplied minutes, all other roster words unchanged and native change flag0"
+          }
+        }
+      ],
+      "evidence": [
+        "ROTATION_MINUTES_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_adjust_and_system_setter_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_leaf_field_candidates_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_virtual_field_join_002.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_business_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_team_refresh_dependencies_001.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/rotation_qualified_entry_windows_003.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "New static ABI/call-chain recovery and deferred handler. Does not use career clamp or UI menu callbacks; no game access during implementation."
+    },
+    {
+      "action_id": "PLAYER_PATCH_ATTRIBUTES",
+      "domain": "D03",
+      "title": "按明确字段集合批量设置球员能力/耐久评级",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "values": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_BEFORE",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
+          "arguments": {
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_AFTER",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
+        "../../config/memory_field_profile.json",
+        "../../config/state_io_native/player.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "WORLD_ADMIN"
+        ],
+        "family": "attributes",
+        "gm_attribute_exception": "intangibles",
+        "unnamed_fields_world_editor_only": true
+      }
+    },
+    {
+      "action_id": "PLAYER_PATCH_TENDENCIES",
+      "domain": "D03",
+      "title": "按明确字段集合批量设置球员倾向",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER"
+      ],
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "maximum": 65534
+        },
+        "values": {
+          "type": "object"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "player.stats",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, independent readback, UI, simulation or persistence evidence",
+        "Potential and two unnamed native attribute indices are excluded; unlabelled tendencies remain semantically UNKNOWN",
+        "Attribute leaf updates native cache flags; these are Native side effects, not extra role decisions",
+        "Before/after displayed-value integers are original Getter results; same-handler agreement is not independent UI or persistent-effect proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "VALIDATE_CURRENT_NATIVE_STAT_DELEGATE",
+          "binding_id": "player.stat_context",
+          "arguments": {}
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_BEFORE",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "FOR_EACH_EXACT_REQUESTED_FIELD",
+          "binding_id": "player.set_stat_ui",
+          "arguments": {
+            "player": "exact requested current roster PLAYER",
+            "stat_index": "internal recovered field map",
+            "value": "unchanged supplied UI integer"
+          }
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_VALUES_AFTER",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "RAW_READBACK_NO_RETRY",
+          "arguments": {
+            "compare": "all156 stat bytes and native cache flag; disclose requested fields only"
+          }
+        }
+      ],
+      "evidence": [
+        "PLAYER_STAT_NATIVE_CONTRACT.md",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_setters_012.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_indexed_stat_field_contract_015.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_delegate_thunk_016.json",
+        "../../config/memory_field_profile.json",
+        "../../config/state_io_native/player.json"
+      ],
+      "executed_this_task": false,
+      "scope_note": "Dedicated indexed Native setter and original notification path; no broad parent/child editor copy. Role policy is separate from technical mutability.",
+      "role_policy": {
+        "roles": [
+          "GM",
+          "COACH",
+          "PLAYER",
+          "WORLD_ADMIN"
+        ],
+        "family": "tendencies",
+        "gm_attribute_exception": null,
+        "unnamed_fields_world_editor_only": true
+      }
+    },
+    {
+      "action_id": "READ_PLAYER_EDITOR_STATE",
+      "domain": "D03",
+      "title": "显式字段选择的球员属性/倾向/徽章/战术槽位只读观察",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER",
+        "WORLD_ADMIN"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "projection": {
+          "type": "object",
+          "description": "Exact attributes/tendencies/badges/play_types arrays; explicit nonempty union, no wildcard or implicit all",
+          "properties": {
+            "attributes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "3pt_shot",
+                  "acceleration",
+                  "back_durability",
+                  "ball_control",
+                  "block",
+                  "defensive_consistency",
+                  "defensive_rebound",
+                  "draw_foul",
+                  "driving_dunk",
+                  "driving_layup",
+                  "free_throw",
+                  "hands",
+                  "head_durability",
+                  "help_defensive_iq",
+                  "hustle",
+                  "intangibles",
+                  "interior_defense",
+                  "lateral_quickness",
+                  "left_ankle_durability",
+                  "left_elbow_durability",
+                  "left_foot_durability",
+                  "left_hip_durability",
+                  "left_knee_durability",
+                  "left_shoulder_durability",
+                  "mid_range_shot",
+                  "misc_durability",
+                  "neck_durability",
+                  "offensive_consistency",
+                  "offensive_rebound",
+                  "pass_perception",
+                  "passing_accuracy",
+                  "passing_iq",
+                  "passing_vision",
+                  "perimeter_defense",
+                  "pick_and_roll_defensive_iq",
+                  "post_fadeaway",
+                  "post_hook",
+                  "post_moves",
+                  "right_ankle_durability",
+                  "right_elbow_durability",
+                  "right_foot_durability",
+                  "right_hip_durability",
+                  "right_knee_durability",
+                  "right_shoulder_durability",
+                  "shot_close",
+                  "shot_contest",
+                  "shot_iq",
+                  "speed",
+                  "speed_with_ball",
+                  "stamina",
+                  "standing_dunk",
+                  "steal",
+                  "strength",
+                  "vertical"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "tendencies": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ALLEY_OOP_PASS_TENDENCY",
+                  "ALLEY_OOP_TENDENCY",
+                  "ATTACK_STRONG_ON_DRIVE",
+                  "BLOCK_SHOT_TENDENCY",
+                  "CONTESTED_JUMPER_MID_RANGE",
+                  "CONTESTED_JUMPER_THREE",
+                  "CONTEST_SHOT_TENDENCY",
+                  "CRASH_TENDENCY",
+                  "DISH_TO_OPEN_MAN_TENDENCY",
+                  "DRIVE_PULL_UP_MID_RANGE",
+                  "DRIVE_PULL_UP_THREE",
+                  "DRIVE_TENDENCY",
+                  "DRIVING_DUNK_TENDENCY",
+                  "DRIVING_LAYUP_TENDENCY",
+                  "EURO_STEP_LAYUP_TENDENCY",
+                  "FLASHY_DUNK_TENDENCY",
+                  "FLASHY_PASS_TENDENCY",
+                  "FLOATER_TENDENCY",
+                  "FOUL_TENDENCY",
+                  "HARD_FOUL_TENDENCY",
+                  "HOP_STEP_LAYUP_TENDENCY",
+                  "OFF_SCREEN_DRIVE_TENDENCY",
+                  "OFF_SCREEN_SHOT_MID_RANGE",
+                  "OFF_SCREEN_SHOT_THREE",
+                  "ON_BALL_STEAL_TENDENCY",
+                  "PASS_INTERCEPTION_TENDENCY",
+                  "PLAY_DISCIPLINE_TENDENCY",
+                  "POST_UP_TENDENCY",
+                  "PUTBACK_TENDENCY",
+                  "ROLL_VS_POP_TENDENCY",
+                  "SHOT_CLOSE_TENDENCY",
+                  "SHOT_MID_RANGE_TENDENCY",
+                  "SHOT_TENDENCY",
+                  "SHOT_THREE_TENDENCY",
+                  "SHOT_UNDER_BASKET_TENDENCY",
+                  "SPIN_JUMPER_TENDENCY",
+                  "SPIN_LAYUP_TENDENCY",
+                  "SPOT_UP_DRIVE_TENDENCY",
+                  "SPOT_UP_SHOT_MID_RANGE",
+                  "SPOT_UP_SHOT_THREE",
+                  "STANDING_DUNK_TENDENCY",
+                  "STEPBACK_JUMPER_MID_RANGE",
+                  "STEPBACK_JUMPER_THREE",
+                  "STEP_THROUGH_SHOT_TENDENCY",
+                  "TAKE_CHARGE_TENDENCY",
+                  "TOUCHES_TENDENCY",
+                  "TRANSITION_PULL_UP_THREE",
+                  "TRANSITION_SPOT_UP",
+                  "UNIDENTIFIED_TENDENCY_15",
+                  "UNIDENTIFIED_TENDENCY_16",
+                  "UNIDENTIFIED_TENDENCY_17",
+                  "UNIDENTIFIED_TENDENCY_21",
+                  "UNIDENTIFIED_TENDENCY_22",
+                  "UNIDENTIFIED_TENDENCY_23",
+                  "UNIDENTIFIED_TENDENCY_24",
+                  "UNIDENTIFIED_TENDENCY_25",
+                  "UNIDENTIFIED_TENDENCY_29",
+                  "UNIDENTIFIED_TENDENCY_30",
+                  "UNIDENTIFIED_TENDENCY_31",
+                  "UNIDENTIFIED_TENDENCY_32",
+                  "UNIDENTIFIED_TENDENCY_33",
+                  "UNIDENTIFIED_TENDENCY_42",
+                  "UNIDENTIFIED_TENDENCY_46",
+                  "UNIDENTIFIED_TENDENCY_47",
+                  "UNIDENTIFIED_TENDENCY_48",
+                  "UNIDENTIFIED_TENDENCY_49",
+                  "UNIDENTIFIED_TENDENCY_50",
+                  "UNIDENTIFIED_TENDENCY_51",
+                  "UNIDENTIFIED_TENDENCY_52",
+                  "UNIDENTIFIED_TENDENCY_53",
+                  "UNIDENTIFIED_TENDENCY_54",
+                  "UNIDENTIFIED_TENDENCY_55",
+                  "UNIDENTIFIED_TENDENCY_56",
+                  "UNIDENTIFIED_TENDENCY_57",
+                  "UNIDENTIFIED_TENDENCY_58",
+                  "UNIDENTIFIED_TENDENCY_59",
+                  "UNIDENTIFIED_TENDENCY_60",
+                  "UNIDENTIFIED_TENDENCY_61",
+                  "UNIDENTIFIED_TENDENCY_62",
+                  "UNIDENTIFIED_TENDENCY_69",
+                  "UNIDENTIFIED_TENDENCY_70",
+                  "UNIDENTIFIED_TENDENCY_71",
+                  "UNIDENTIFIED_TENDENCY_72",
+                  "UNIDENTIFIED_TENDENCY_74",
+                  "UNIDENTIFIED_TENDENCY_75",
+                  "UNIDENTIFIED_TENDENCY_76",
+                  "UNIDENTIFIED_TENDENCY_77",
+                  "UNIDENTIFIED_TENDENCY_78",
+                  "UNIDENTIFIED_TENDENCY_79",
+                  "UNIDENTIFIED_TENDENCY_80",
+                  "UNIDENTIFIED_TENDENCY_81",
+                  "UNIDENTIFIED_TENDENCY_82",
+                  "UNIDENTIFIED_TENDENCY_83",
+                  "UNIDENTIFIED_TENDENCY_84",
+                  "UNIDENTIFIED_TENDENCY_85",
+                  "UNIDENTIFIED_TENDENCY_86",
+                  "UNIDENTIFIED_TENDENCY_87",
+                  "UNIDENTIFIED_TENDENCY_88",
+                  "UNIDENTIFIED_TENDENCY_89"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "badges": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Acrobat",
+                  "AlphaDog",
+                  "AnkleBraces",
+                  "AnkleBreaker",
+                  "BackdownPunisher",
+                  "BailOut",
+                  "BallAndChain",
+                  "BallStripper",
+                  "BigEgo",
+                  "BigMarketPlayer",
+                  "Blinders",
+                  "Box",
+                  "BreakStarter",
+                  "BrickWall",
+                  "BulletPasser",
+                  "CareerGymEliminator",
+                  "CatchAndShoot",
+                  "ChasedownArtist",
+                  "Chef",
+                  "CircusThrees",
+                  "Clamps",
+                  "ClutchShooter",
+                  "CornerSpecialist",
+                  "Deadeye",
+                  "DefensiveLeader",
+                  "DifficultShots",
+                  "Dimer",
+                  "Downhill",
+                  "DreamShake",
+                  "Enforcer",
+                  "Expressive",
+                  "FadeAce",
+                  "FairWeatherPlayer",
+                  "FastTwitch",
+                  "FearlessFinisher",
+                  "FloorGeneral",
+                  "GiantSlayer",
+                  "GlueHands",
+                  "GraceUnderPressure",
+                  "GreenMachine",
+                  "HandlesForDays",
+                  "HighFriendliness",
+                  "HighWorkEthic",
+                  "HookSpecialist",
+                  "HotSpotHunter",
+                  "Hustler",
+                  "Hyperdrive",
+                  "Interceptor",
+                  "Intimidator",
+                  "LaidBack",
+                  "LimitlessSpotUp",
+                  "LimitlessTakeoff",
+                  "LobCityFinisher",
+                  "LowFriendliness",
+                  "LuckyNumber7",
+                  "Menace",
+                  "MismatchExpert",
+                  "MouseInTheHouse",
+                  "NeedleThreader",
+                  "NegativelyMotivated",
+                  "OffBallPest",
+                  "OnCourtCoach",
+                  "PickDodger",
+                  "PickPocket",
+                  "Pogostick",
+                  "PositivelyMotivated",
+                  "PostDropStepper",
+                  "PostLockdown",
+                  "PostPlaymaker",
+                  "PostSpinTechnician",
+                  "Posterizer",
+                  "ProTouch",
+                  "PutbackArtist",
+                  "QuickFirstStep",
+                  "ReboundChaser",
+                  "RhythmShooter",
+                  "RimProtector",
+                  "RiseUp",
+                  "SetShooter",
+                  "SlipperyOffball",
+                  "SlitheryFinisher",
+                  "SmallEgo",
+                  "Sniper",
+                  "SpaceCreator",
+                  "SpecialDelivery",
+                  "StopAndGo",
+                  "StopAndPop",
+                  "TaxAvoiderPlayer",
+                  "TearDropper",
+                  "TightHandles",
+                  "TirelessDefender",
+                  "TripleThreatJuke",
+                  "Unpluckable",
+                  "Unpredictable",
+                  "Unstrippable",
+                  "VeryHighWorkEthic",
+                  "VolumeShooter",
+                  "Worm"
+                ]
+              },
+              "uniqueItems": true
+            },
+            "play_types": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "1",
+                  "2",
+                  "3",
+                  "4"
+                ]
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "attributes",
+            "tendencies",
+            "badges",
+            "play_types"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.player_editor",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new game attachment, read capture, UI or live acceptance",
+        "Current native target scope is15 current roster slots; no free-agent/reserve/global PLAYER coverage is inferred",
+        "Native save/world/phase identity is not emitted; exact host observation context and provenance remain required",
+        "Potential, unclassified stats and complete PLAYER child-object coverage remain unavailable",
+        "Internal enum labels and getter observations do not prove UI/mode meaning, gameplay effect or persistence"
+      ],
+      "call_sequence": [
+        {
+          "operation": "SNAPSHOT_EXACT_SELECTED_PLAYER_STATE",
+          "binding_id": "player.editor_read_context"
+        },
+        {
+          "operation": "READ_SELECTED_ORIGINAL_UI_STAT_GETTERS",
+          "binding_id": "player.get_stat_ui"
+        },
+        {
+          "operation": "CHECK_SELECTED_EFFECTIVE_BADGES",
+          "binding_id": "player.badge_effective_level",
+          "arguments": {
+            "normalization": 0
+          }
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_stat_read_getter_contract_026.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_badge_names_fields_and_modifiers_025.json"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Read only with explicit projection; no setter or role-edit grant",
+        "source": "Original stat/effective Badge Getters and packed ordered categories, not guessed attribute rounding",
+        "unknowns": "No Potential, Native save identity, complete player child objects or inferred UI/persistence"
+      }
+    },
+    {
+      "action_id": "READ_TEAM_SIGNING_OFFERS",
+      "domain": "D02",
+      "title": "指定球队和状态的原生签约报价池只读观察",
+      "decision_roles": [
+        "GM",
+        "WORLD_ADMIN"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "statuses": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "OFFERED",
+              "RFA_QUALIFIED",
+              "WAITING",
+              "REJECTED_WAIT",
+              "REJECTED",
+              "ACCEPTED",
+              "TEAM_DECLINED",
+              "SIGNED",
+              "BANNED",
+              "UNRECOGNIZED"
+            ]
+          },
+          "description": "Explicit selected internal statuses; EMPTY never emitted. UNRECOGNIZED explicitly selects raw10..15."
+        },
+        "include_archived": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1,
+          "enum": [
+            0,
+            1
+          ]
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.signing_offers",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new game attachment, capture or live acceptance",
+        "Internal pool status is not independent roster/contract signing completion proof",
+        "Currency/UI/term legality, native save/world/phase identity and atomicity/ABA remain unverified",
+        "Team-filtered signing pool only; not a complete contract ledger or pending UI transaction source"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_FILTERED_TEAM_SIGNING_POOL",
+          "binding_id": "sign.pool_read_context"
+        }
+      ],
+      "evidence": [
+        "evidence/static/types-signing-02.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_native_enums_007.json",
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pool_lookup_and_allocate_003.json"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Read only; no allocator/reset, GenerateContract, OfferContract or Process",
+        "source": "Registered44-byte records in the game-owned pool; explicit Team UID, statuses and archive inclusion",
+        "interpretation": "ACCEPTED6 and SIGNED8 remain distinct; status alone is not an independent effect check"
+      }
+    },
+    {
+      "action_id": "READ_PLAYER_CONTRACT_STATE",
+      "domain": "D02",
+      "title": "指定球员的原版合同Getter与原始合同字段只读观察",
+      "decision_roles": [
+        "GM",
+        "COACH",
+        "PLAYER",
+        "WORLD_ADMIN"
+      ],
+      "kind": "READ",
+      "input_schema": {
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "read.player_contract",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new game capture, live acceptance, currency/UI or persistence proof",
+        "Lookup uses existing global UID service; no complete global/FA/reserve runtime coverage is certified",
+        "Host save/world/phase identity, observation provenance and role-sanitized provider remain required",
+        "Invalid encoded year sums are returned raw; original assertion-bearing Getter is deliberately not called",
+        "Same-handler brackets do not prove atomicity/ABA or independent completion of signing"
+      ],
+      "call_sequence": [
+        {
+          "operation": "READ_EXACT_PLAYER_UID",
+          "binding_id": "player.by_id"
+        },
+        {
+          "operation": "BRACKET_REGISTERED_CONTRACT_FIELDS",
+          "binding_id": "player.contract_read_context"
+        },
+        {
+          "operation": "READ_SIX_YEAR_SALARIES",
+          "binding_id": "player.get_salary"
+        },
+        {
+          "operation": "GUARDED_YEARS_WITH_AND_WITHOUT_OPTIONS",
+          "binding_id": "player.get_remaining_contract_years"
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/player_contract_native_readback_021.json"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Original contract Getters and scoped raw fields only; no offer/process/mark write",
+        "remaining_years": "Raw base5 bits + extension3 bits + optional0/1/2 years, guarded at6",
+        "salary": "Six Native31-bit wage values; no price optimization or unit conversion"
+      }
+    },
+    {
+      "action_id": "CONTRACT_SUBMIT_FREE_AGENT_OFFER",
+      "domain": "D02",
+      "title": "在原生FA_SIGNING阶段提交明确自由球员合同报价",
+      "decision_roles": [
+        "GM"
+      ],
+      "role_policy": {
+        "roles": [
+          "GM"
+        ]
+      },
+      "kind": "MUTATE",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "contract": {
+          "type": "object",
+          "properties": {
+            "signing_type": {
+              "type": "string",
+              "enum": [
+                "FREE_AGENT"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "option_type": {
+              "type": "string",
+              "enum": [
+                "NO_OPTION",
+                "TEAM_OPTION",
+                "PLAYER_OPTION",
+                "TEAM_OPTION_2"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "contract_type": {
+              "type": "string",
+              "enum": [
+                "NORMAL",
+                "HARDSHIP"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "distribution": {
+              "type": "string",
+              "enum": [
+                "CUSTOM"
+              ],
+              "description": "Recovered internal Native enum; current UI availability is unverified"
+            },
+            "annual_wages_native": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 2147483647
+              },
+              "description": "Exactly six caller-supplied slots: active years positive31-bit, remaining slots explicitly zero"
+            },
+            "years_native": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6,
+              "description": "Explicit total years1..6 including the selected0/1/2 option years"
+            },
+            "no_trade_clause": {
+              "type": "boolean",
+              "description": "Explicit supplied clause bit; eligibility unverified"
+            }
+          },
+          "required": [
+            "signing_type",
+            "option_type",
+            "contract_type",
+            "distribution",
+            "annual_wages_native",
+            "years_native",
+            "no_trade_clause"
+          ],
+          "additionalProperties": false,
+          "description": "Exact fresh FA-period offer terms; NORMAL/HARDSHIP, CUSTOM wages, no automatic generation; submission does not complete signing"
+        }
+      },
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "sign.fa_offer",
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live call, UI, persistence or independent acceptance",
+        "Native period22 is checked; FA offer substate/current save/world are host attestations, not Native identity detection",
+        "Only fresh available-player NORMAL/HARDSHIP CUSTOM offers; extensions, other periods/types/distributions and replacing existing offers remain unqualified",
+        "OfferContract can update negotiation/player-response/quota state; return/status is not final signing",
+        "Same-handler terms/record/contract-subset brackets are not atomicity or independent completion proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "QUALIFY_NATIVE_FA_PERIOD_ROOTS_AND_EMPTY_TEMPLATE",
+          "binding_id": "sign.fa_offer_context"
+        },
+        {
+          "operation": "CHECK_ORIGINAL_AVAILABLE_COUNT",
+          "binding_id": "sign.fa_available_count"
+        },
+        {
+          "operation": "CHECK_EXACT_AVAILABLE_POOL_MEMBERSHIP_AND_BRACKET",
+          "binding_id": "sign.fa_available_pool"
+        },
+        {
+          "operation": "RESOLVE_EXACT_UID_AND_RECHECK_AFTER",
+          "binding_id": "player.by_id"
+        },
+        {
+          "operation": "VERIFY_EXPLICIT_FREE_AGENT_TYPE_NOT_CHOOSE_TARGET",
+          "binding_id": "sign.default_type"
+        },
+        {
+          "operation": "SUBMIT_ORIGINAL_OFFER_ONCE",
+          "binding_id": "sign.offer_fa_phase",
+          "arguments": {
+            "context_or_null": null,
+            "origin_flag": 0,
+            "mode_flag": 0
+          }
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_fa_offer_runtime_contract_027.json",
+        "FA_OFFER_NATIVE_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Native fresh offer submission only, not completed signing",
+        "native_scene_requirement": "FA_SIGNING period22 plus trusted host FA_SIGNING_OFFERS current-subscene attestation",
+        "caller_values": "Exact supplied Player/Team, six wages, years, option and no-trade clause; no pricing or substitution",
+        "completion_boundary": "Observed pending offer is distinct from acceptance/roster-contract application; independent readback remains required",
+        "known_effects": "Original validation/negotiation may reject, create pending/rejected records, change quota and response state",
+        "unsupported": "No Native generator/acquire-reset/direct pool writes, direct Process, phase advance, offer replacement or automatic retry"
+      }
+    },
+    {
+      "action_id": "CONTRACT_WITHDRAW_PENDING_OFFER",
+      "domain": "D02",
+      "title": "撤回指定待处理自由球员报价",
+      "decision_roles": [
+        "GM"
+      ],
+      "role_policy": {
+        "roles": [
+          "GM"
+        ]
+      },
+      "kind": "MUTATE",
+      "capability": "CALL_LOGIC_RECOVERED",
+      "runtime_handler": "sign.withdraw_offer",
+      "input_schema": {
+        "team_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "player_id": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 65534
+        },
+        "expected_offer": {
+          "type": "object",
+          "properties": {
+            "PlayerId": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "TeamId": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 65535
+            },
+            "Wage": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4294967295
+            },
+            "ForcedWage": {
+              "type": "array",
+              "minItems": 6,
+              "maxItems": 6,
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4294967295
+              }
+            },
+            "PissedOffLevel": {
+              "type": "integer",
+              "minimum": -128,
+              "maximum": 127
+            },
+            "NegotiationLevel": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 15
+            },
+            "NoTradeClause": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "RecentOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "IsCounterOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "IsExistingOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "ForcedOffer": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "HasMadeVerbalDeal": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "Status": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 15
+            },
+            "Type": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            "Distribution": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            "OptionType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "ContractType": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            },
+            "IntSalary": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntTerm": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntWinner": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntRole": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "IntCity": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "Years": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            "IsArchived": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "IsUserInitiated": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "PlayerId",
+            "TeamId",
+            "Wage",
+            "ForcedWage",
+            "PissedOffLevel",
+            "NegotiationLevel",
+            "NoTradeClause",
+            "RecentOffer",
+            "IsCounterOffer",
+            "IsExistingOffer",
+            "ForcedOffer",
+            "HasMadeVerbalDeal",
+            "Status",
+            "Type",
+            "Distribution",
+            "OptionType",
+            "ContractType",
+            "IntSalary",
+            "IntTerm",
+            "IntWinner",
+            "IntRole",
+            "IntCity",
+            "Years",
+            "IsArchived",
+            "IsUserInitiated"
+          ],
+          "additionalProperties": false,
+          "description": "Complete registered fields from the explicitly selected current team-offer observation; Status1 Type2 archive0 and exact UIDs required"
+        }
+      },
+      "unknowns": [],
+      "coverage_unknowns": [
+        "No new live/UI/save or independent acceptance",
+        "Only unarchived OFFERED FREE_AGENT status clear, distinct from rejection/acceptance/final signing",
+        "Current save/world and FA offer subscene remain trusted host attestations",
+        "No quota/refund/response rollback is certified; same-handler brackets are not atomicity proof"
+      ],
+      "call_sequence": [
+        {
+          "operation": "QUALIFY_CURRENT_PERIOD_AND_POOL",
+          "binding_id": "sign.withdraw_context"
+        },
+        {
+          "operation": "RESOLVE_AND_RECHECK_EXACT_PLAYER",
+          "binding_id": "player.by_id"
+        },
+        {
+          "operation": "WITHDRAW_EXACT_PENDING_OFFER_ONCE",
+          "binding_id": "sign.cancel_pending_offer",
+          "arguments": {
+            "original_zero_flag": 0
+          }
+        }
+      ],
+      "evidence": [
+        "01_os/07_content/_runs/run-20261028-role-native-execution-system-001/static/sign_pending_offer_withdrawal_contract_034.json",
+        "OFFER_WITHDRAWAL_NATIVE_CONTRACT.md"
+      ],
+      "executed_this_task": false,
+      "effect_contract": {
+        "scope": "Remove one caller-selected pending FREE_AGENT offer from the active pool via original status clear",
+        "identity": "Exact Team/Player and all25 expected registered fields, unique active lookup identity",
+        "caller_values": "No target/price/term selection or rewrite; all other selected bytes and pool rows must remain equal",
+        "completion_boundary": "Same-handler native return/status only; independent observer required; no acceptance/signing/refund claim",
+        "native_scene_requirement": "Native FA_SIGNING22 plus trusted host FA_SIGNING_OFFERS",
+        "unsupported": "Other statuses/types, competitor clearing, automatic rollback/retry, direct backend business writes"
+      }
+    }
+  ],
+  "execution_policy": "No execution or tests in discovery task; next-task transport required; never auto-rematch"
+}

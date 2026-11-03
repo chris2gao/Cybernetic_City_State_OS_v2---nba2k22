@@ -1,0 +1,134 @@
+{
+  "schema_version": "nba2k22.rea.100_item_live_benchmark.v1",
+  "task_id": "NBA2K22-REA-100-LIVE-BENCHMARK-20261102-001",
+  "branch": "task/nba2k22-rea-100-live-benchmark-20261102",
+  "baseline_sha": "f68b2703a7b7be691b92c3f816480e2fa6f9a449",
+  "work_type": "ONE_SHOT_LIVE_MEASUREMENT_NO_CORE_OPTIMIZATION",
+  "human_authorization": {
+    "status": "APPROVED_FOR_THIS_ONCE",
+    "description": "100 real Player SHOT_TENDENCY updates in one verified active save, one bounded session with multiple team-chunks",
+    "permitted": [
+      "READ_ONLY_ROSTER_SCAN",
+      "100_LIVE_NOOP_BATCH_ZERO_SETTERS",
+      "ONE_100_ITEM_LIVE_SETTER_BATCH",
+      "POST_READBACK",
+      "MINIMAL_HARNESS_AND_VERIFIER_SCRIPT"
+    ],
+    "forbidden": [
+      "SECOND_LIVE_MUTATION_BATCH",
+      "AUTO_RESTORE",
+      "UNKNOWN_AUTO_RETRY",
+      "COACH_OR_ATTRIBUTES",
+      "GAME_SIMULATION",
+      "OVER_100_LIVE_SETTERS",
+      "RESIDENT_IPC_DEVELOPMENT",
+      "WORLD_DATA_CAPTURE",
+      "MASTER_MERGE"
+    ]
+  },
+  "scope": {
+    "field": "SHOT_TENDENCY",
+    "action_id": "PLAYER_PATCH_TENDENCIES",
+    "unique_active_players": 100,
+    "intent_count": 100,
+    "target_policy": "If 0..99 => before + 1; if 100 => 99; all one-point changes, fresh live Getter required",
+    "one_new_intent_per_player": true,
+    "single_live_session_per_mutation": true,
+    "chunk_count": "derived_by_existing_planner_and_team_grouping",
+    "no_existing_old_PID_or_save_assumptions": true,
+    "reuse_old_12_player_script": false,
+    "prior_user_restore_by_hand": true
+  },
+  "test_plan": [
+    {
+      "id": "G1",
+      "name": "Frozen engine no refactor",
+      "check": "All runtime core files unchanged, only small one-shot harness and independent validator, no new writer"
+    },
+    {
+      "id": "G2",
+      "name": "Live snapshot validity",
+      "check": "Exact process start, exe hash, save+season+team/roster and cold backup fresh verified"
+    },
+    {
+      "id": "G3",
+      "name": "100 distinct targets",
+      "check": "Exactly 100 unique (team,player,field) and 100 unique intent ids, all fresh Getter/CAS within legal bounds"
+    },
+    {
+      "id": "G4",
+      "name": "Single process preflight",
+      "check": "No competing REA writer or prior unresolved UNKNOWN claim; no new concurrency subsystem, do not claim global concurrency proof"
+    },
+    {
+      "id": "G5",
+      "name": "Synthetic replay",
+      "check": "100 intents, multi team chunk, Node VM and fault injection on existing budget, no code change"
+    },
+    {
+      "id": "G6",
+      "name": "Live No-op",
+      "check": "Separate batch exactly 100 NOOP zero Setter, isolated Journal, each chunk validated"
+    },
+    {
+      "id": "G7",
+      "name": "Real 100 write once",
+      "check": "One batch 100 real attempts once, stop on failure, no retry/rollback"
+    },
+    {
+      "id": "G8",
+      "name": "Strict automatic receipt verification",
+      "check": "Every chunk identity/digest and intent set matched, per-item Getter before/after and field checks, conservation; no post hoc false pass"
+    },
+    {
+      "id": "G9",
+      "name": "Independent live readback",
+      "check": "New read-only session proves exact 100 after values and identifies misses"
+    },
+    {
+      "id": "G10",
+      "name": "Exact benchmark timing",
+      "check": "Separately report full wall, transport, no-op, preflight, readback, time per planned/success, attach/chunks, not extrapolated"
+    }
+  ],
+  "provenance": {
+    "old_live_12s": "7.23892s for 12 successful writes, 2 chunks and 1 attach",
+    "prior_failed_cases": [
+      "u8_UNDEFINED_UNKNOWN",
+      "CAS_MISMATCH",
+      "CONSERVATION_FALSE"
+    ],
+    "do_not_rewrite_prior_records": true
+  },
+  "engineering_limits": {
+    "no_changes_to": [
+      "bounded_session_transport.py",
+      "bulk_executor.py",
+      "transport.py",
+      "run_native_program.ps1",
+      "runtime/*",
+      "data/*",
+      "WorldData"
+    ],
+    "minimum_additions": [
+      "benchmark_100_live_once.py",
+      "validate_100_receipts.py",
+      "tests/test_benchmark_100_live_once.py"
+    ],
+    "stop_on_missing_safe_execution": true,
+    "user_manual_restore_only": true
+  },
+  "expected_outputs": [
+    "preflight.json",
+    "live_candidate_inventory.json",
+    "noop_100_execution_result.json",
+    "mutation_100_execution_result.json",
+    "validation_result.json",
+    "independent_readback.json",
+    "benchmark_100_result.md",
+    "completion_pointer.md",
+    "loop_iterations.jsonl"
+  ],
+  "executor_model": "ACTUAL_MODEL_MUST_BE_RECORDED",
+  "stage_status": "DISPATCHED_NOT_EXECUTED"
+}

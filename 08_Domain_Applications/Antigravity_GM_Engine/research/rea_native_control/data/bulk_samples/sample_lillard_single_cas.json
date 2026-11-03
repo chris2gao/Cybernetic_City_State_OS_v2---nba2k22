@@ -1,0 +1,22 @@
+{
+  "batch_id": "BATCH-20261101-LILLARD-CAS-001",
+  "save_instance_id": "save_20261101_user_active",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "expected_process_name": "NBA2K22.exe",
+  "expected_pid": 10404,
+  "authorization_ref": "AUTH-HUMAN-20261101-PHASE-A-001",
+  "source_snapshot_ref": "snap_worlddata_20261101_full_001",
+  "dry_run": false,
+  "intents": [
+    {
+      "intent_id": "INT-LILLARD-SHOT-TENDENCY-001",
+      "action_id": "COACH.STRATEGY.PLAYER_TENDENCY",
+      "team_id": 28,
+      "player_id": 2459,
+      "field_id": "SHOT_TENDENCY",
+      "expected_before": 95,
+      "value": 80,
+      "source_justification": "Phase A Lillard baseline calibration 95 -> 80 with hard CAS assertion"
+    }
+  ]
+}

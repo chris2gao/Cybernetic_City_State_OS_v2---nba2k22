@@ -1,0 +1,132 @@
+{
+  "status": "NATIVE_ARCHIVED_AWARDS_AND_ORDINARY_EVENTS_SOURCE_TO_QUERY_VERIFIED_FULL_GOAL_INCOMPLETE",
+  "candidate_code_head": "1e4fdace05b4e90f550469b254895f4ea2ec3dfd",
+  "schema": {
+    "save_id": "nba2k22_test_01",
+    "schema_version": 12,
+    "table_count": 83,
+    "column_count": 1138,
+    "game_count": 1232,
+    "box_observations": 11455,
+    "attribute_observations": 811,
+    "capture_units": 14,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "LIVE_READ": 14
+    },
+    "nonempty_fact_tables": [
+      "league_rule_observations",
+      "field_gaps",
+      "game_setting_observations",
+      "team_state_observations",
+      "game_period_scores",
+      "team_game_boxes",
+      "native_player_stat_observations",
+      "player_season_totals",
+      "player_attribute_snapshots",
+      "player_play_type_slots",
+      "native_league_history_observations",
+      "draft_pool_slot_observations",
+      "teams",
+      "native_mentor_relation_observations",
+      "team_seasons",
+      "team_finance_observations",
+      "draft_pick_assets",
+      "season_record_entries",
+      "native_player_stat_links",
+      "native_identity_links",
+      "staff_skill_observations",
+      "mentor_manager_observations",
+      "team_training_settings",
+      "team_playbook_slots",
+      "staff_members",
+      "native_transaction_observations",
+      "player_vitals_observations",
+      "team_tactic_settings",
+      "game_state_observations",
+      "coach_preferences",
+      "staff_team_assignments",
+      "player_game_boxes",
+      "gameplan_rotation_observations",
+      "player_tendency_snapshots",
+      "player_training_slot_observations",
+      "game_news_entries",
+      "player_contract_observations",
+      "gameplan_observations",
+      "player_training_observations",
+      "games",
+      "gameplan_defense_observations",
+      "native_award_matrix_observations",
+      "waived_salary_observations",
+      "native_transaction_item_observations",
+      "mentorship_relations",
+      "native_player_sources",
+      "team_season_totals",
+      "players",
+      "native_box_observations",
+      "native_social_message_observations",
+      "staff_contract_observations",
+      "award_recipients",
+      "roster_memberships",
+      "season_award_instances",
+      "native_league_capture_controls",
+      "draft_pick_ownerships"
+    ]
+  },
+  "sources": {
+    "history": {
+      "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+      "counts": {
+        "native_league_history_observations": 6769,
+        "season_award_instances": 764,
+        "award_recipients": 2315,
+        "fact_conflicts": 0,
+        "native_award_matrix_observations": 75,
+        "native_league_capture_controls": 1,
+        "field_gaps": 3
+      },
+      "runtime_types_verified": 19,
+      "source_year": 2022
+    },
+    "news": {
+      "unit_id": "native-league:58b1a2b1e2b8d4ee5db8e120",
+      "counts": {
+        "native_social_message_observations": 4000,
+        "game_news_entries": 1281,
+        "native_transaction_observations": 250,
+        "native_transaction_item_observations": 9750,
+        "native_league_capture_controls": 1,
+        "field_gaps": 3
+      },
+      "runtime_types_verified": 19,
+      "source_year": 2022
+    }
+  },
+  "raw_records_or_items_redecoded": 20519,
+  "source_to_typed_rows_compared": 25212,
+  "old_schema11_rows_preserved": 431138,
+  "old_schema11_file_hash_unchanged": true,
+  "annual_history_repeat_control_calls": 12,
+  "annual_history_repeat_control_bytes": 90,
+  "pinned_history_and_news_rows": {
+    "history": 2769,
+    "news": 1281
+  },
+  "export_rows": {
+    "native_league_history_observations": 6769,
+    "season_award_instances": 764,
+    "award_recipients": 2315,
+    "native_award_matrix_observations": 75
+  },
+  "world_sqlite_sha256": "146b54c3227c0ed18a701addb58af59d0a077847271703c5f55aa8e024adbaa4",
+  "game_writes": false,
+  "player_struct_reads": 0,
+  "full_goal_complete": false,
+  "independent_review": false,
+  "limits": [
+    "Native roster history finality does not certify this save simulating historical years.",
+    "Historical subject lifecycle identities remain unbound.",
+    "News rendering/parameter meanings and active UI semantics remain unaccepted.",
+    "Date epoch/month/time UI, transaction lifecycle and remaining full-system domain/capacity/recovery/acceptance are open."
+  ]
+}

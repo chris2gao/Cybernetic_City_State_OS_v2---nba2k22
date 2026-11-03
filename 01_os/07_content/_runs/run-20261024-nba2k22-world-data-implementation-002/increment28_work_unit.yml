@@ -1,0 +1,31 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Add a typed Native TEAM finance source, copy-upgrade the immutable per-save
+    database to v20, and expose complete-source-unit finance/history queries.
+  implementation_or_review_method: >-
+    Verify current TEAMDATA field signatures and primitive CRCs, exact enum tables
+    and name dimensions. Read bounded core TEAM projections, repeat all source
+    controls, pair same-unit Native game-mode context, and compare typed SQL/query
+    values with captured raw words while preserving every older factual column.
+  supportability_rationale: >-
+    Current Native metadata distinguishes Salary/u32 from ExpPayroll/int and
+    BankBalance/int. Typed columns retain original float words and nonfinite/null
+    semantics; old unsigned aliases remain immutable and explicitly qualified.
+  feasibility_rationale: >-
+    225 tests and SQLite smoke pass at the exact candidate. A separate v20 file
+    retains v19 as rollback evidence. Only the ordinary finance family is invoked;
+    annual history/awards, capacity work and game-state writes are not performed.
+  exact_result_or_candidate_ref: 618255cc42d8a5c128120ed2ba904e827da343ea
+  verification_evidence:
+    - 06_执行/increment28/verification-repaired/operations_report.json
+    - 06_执行/increment28/actual-finance-report.json
+    - 06_执行/increment28/queries/all-core-team-finance.json
+    - 06_执行/increment28/native-sources.archive.json
+    - 06_执行/increment28/world-v20.snapshot.json
+    - 06_执行/increment28/ui-capture-failure.json
+  residual_risk_or_unproved_limits:
+    - UI capture failed; no screenshot, currency scale or UI acceptance is established.
+    - Observation season and mode do not establish accounting duration or financial transitions.
+    - Native tax and budget enums do not establish legal spending, cap space or profit.
+    - Full-season capacity and complete-system independent/Human acceptance remain open.

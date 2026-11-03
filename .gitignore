@@ -29,3 +29,33 @@ Thumbs.db
 # person's 16k always-on thinking budget ended up cloned into every domain
 # repository.
 .claude/settings.local.json
+
+# NBA2K22 integration 2026-11-03: keep large generated worlds and backups OFF GitHub.
+# Existing tracked small research fixtures are unchanged by these ignore rules.
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.sqlite.gz
+*.sqlite.gz.part*
+*.db
+*.db.gz
+*.db.gz.part*
+*.tar.gz.part*
+# Preserve tiny deterministic fixtures when explicitly added by task-approved tests.
+!**/tests/fixtures/*.sqlite
+!**/tests/fixtures/*.sqlite3
+!**/tests/fixtures/*.db
+!**/tests/fixtures/**/*.sqlite
+!**/tests/fixtures/**/*.sqlite3
+!**/tests/fixtures/**/*.db
+# Native capture archives and large world capture output stay in offline archive.
+**/06_执行/**/native_sources/*.tar.gz
+**/06_执行/**/native_sources/*.tar.gz.part*
+**/06_执行/**/native-sources.tar.gz.part*
+**/06_执行/**/world-*.sqlite*
+# Never commit a local-only archive or restored raw capture directory.
+local_offline_archive/
+local_offline_archives/
+offline_worlddata_archive/

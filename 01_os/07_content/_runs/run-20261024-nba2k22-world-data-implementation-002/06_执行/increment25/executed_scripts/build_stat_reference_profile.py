@@ -1,0 +1,8 @@
+"""Retain exact code windows supporting only independent signed-index resolution."""
+import json,zlib
+from pathlib import Path
+runtime=Path(__file__).resolve().parent;app=Path.cwd()/'08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype';code=json.loads((runtime/'stat-consumer-code.json').read_bytes());award=json.loads((app/'award_native_profile.json').read_bytes());field=award['player_fields']['SeasonStats']
+roles={'0xf22220':'DIRECT_INDEX_GETTER_SIGNED16_AND_BANK_COUNT','0xf3f880':'ROSTER_PLAYER_STAT_BY_INDEX_STRIDE48','0xf22270':'YEAR_OR_SPECIAL_POSITION_GETTER_NO_PHASE_LABEL','0x11d5de0':'ROSTER_SINGLETON_RESOLVER'}
+windows=[{'role':role,'rva':int(rva,16),'code_hex':next(t['code_hex'] for t in code['targets'] if t['rva']==rva),'sha256':next(t['sha256'] for t in code['targets'] if t['rva']==rva)} for rva,role in roles.items()]
+result={'format_version':1,'rule':'NATIVE_SIGNED_INT16_STAT_INDEX_V1','season_stats_name_crc':zlib.crc32(b'SeasonStats'),'season_stats_field':{k:field[k] for k in ('offset','size','width','start_bit','format')},'array_dimension_control_hex':award['season_stats_array_dimension_control_hex'],'verified_array_count':25,'roster_pointer_rva':0x6347720,'stat_descriptor_offset':0x180,'stat_stride':48,'code_windows':windows,'limits':['No getter invocation is required or authorized by this profile.','No phase labels, allocation, chronological slot order or historical subject identity are established.']}
+(app/'stat_reference_native_profile.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps({'windows':len(windows),'bytes':sum(len(bytes.fromhex(w['code_hex'])) for w in windows),'array_count':25}))

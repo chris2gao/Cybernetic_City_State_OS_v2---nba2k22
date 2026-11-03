@@ -1,0 +1,198 @@
+{
+  "schema_version": "nba2k22.vae.native_stats.worlddata_loop_dispatch.v1",
+  "task_id": "NBA2K22-VAE-NATIVE-STATS-WORLDDATA-LOOP-20261101-001",
+  "domain": "nba2k22",
+  "os_role": "execution",
+  "assigned_provider": "Gemini",
+  "assigned_model": "record_exact_runtime_model_at_start",
+  "risk_tier": "T2_semantic with T3 boundary for any game/save write, runtime injection or protected integration",
+  "objective": "Reverse/discover the game-computed per-game, Advanced, Per Game, Game Log, shot-zone and relevant team metrics in PC NBA2K22 and extend the existing WorldData v24 read-only unified capture system with reproducible source evidence, using internal evidence-driven development Loop.",
+  "repo": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "branch": "task/nba2k22-vae-native-advanced-stats-worlddata-loop-20261101",
+  "exact_base_sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+  "base_selection": "Existing WorldData v24 code is NOT in NBA master. Fork specifically from its frozen candidate 17ec1...; never represent as merged or independently accepted. Read other Stage02 and review from exact SHAs, don't cherry-pick their tree.",
+  "sources": [
+    {
+      "kind": "STAGE02_SEMANTIC_CANDIDATE",
+      "sha": "c812042e087f4c7000d27ac42d3839741039c188",
+      "root": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-mechanism-metric-evidence-001",
+      "files": [
+        "06_执行/metric_native_first_requirements.json",
+        "06_执行/data_source_gap_matrix.json",
+        "06_执行/pilot_experiment_contracts.json",
+        "06_执行/mechanism_metric_links.json"
+      ],
+      "requirement_count": 38
+    },
+    {
+      "kind": "FINAL_TARGETED_REREVIEW",
+      "sha": "8ed0baff7fd7cf6439c0a49e158dea5b1838d1e3",
+      "root": "01_os/07_content/_runs/run-20261101-nba2k22-vae-stage02-m1m5-independent-review-001",
+      "verdict": "PASS_REQUIREMENT_BASELINE_WITH_RESEARCH_GAPS",
+      "finding": "6/6 targeted findings closed; not Native/game/production acceptance"
+    },
+    {
+      "kind": "WORLDDATA_V24",
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "root": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype",
+      "resources": [
+        "BASELINE_HANDOFF.md",
+        "README.md",
+        "refresh.py",
+        "live_reader.py",
+        "player_detail_reader.py",
+        "period_stats_reader.py",
+        "field_dictionary.json",
+        "schema_model.py",
+        "schema.sql",
+        "tests/"
+      ],
+      "baseline": "100 STRICT tables, 1775 columns, 20 Reader families, frozen regular season candidate; not final complete-world acceptance"
+    },
+    {
+      "kind": "WORLDDATA_FIELD_MATURITY",
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/field-maturity.json"
+    },
+    {
+      "kind": "WORLDDATA_SOURCE_COVERAGE",
+      "sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/source-coverage.json"
+    },
+    {
+      "kind": "GAME_KNOWLEDGE_GUIDE",
+      "sha": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/guides/K01_K02_GAME_STATS.md"
+    }
+  ],
+  "human_decisions": [
+    "VAE Stage02 M1-M5 may be consumed as a semantic requirements baseline after targeted rereview, but not as Native gameplay proof or automatic-tuning authorization.",
+    "Native game-computed stats and genuine player-card game-log / advanced fields must be searched first; only after substantiated game absence consider a distinct estimated derivative.",
+    "Reuse existing WorldData single-save capture and refresh; no parallel DB, no independent collector framework, no rebuilding cumulative game statistics.",
+    "Develop via bounded implement-test-analyze-fix-checkpoint Loop; separate independent review at coherent series milestone unless needed before a load-bearing interface or risky boundary.",
+    "Current task focuses native-first data discovery and read-only data engineering, not active VAE settings changes, live match control or optimizer deployment."
+  ],
+  "research_priorities": [
+    {
+      "rank": 0,
+      "group": "PLAYER_CARD_ADVANCED",
+      "ids": [
+        "PLAYER_USG_NATIVE",
+        "PLAYER_TS_NATIVE",
+        "PLAYER_EFG_NATIVE",
+        "PLAYER_PER36_NATIVE",
+        "PLAYER_PERGAME_NATIVE"
+      ]
+    },
+    {
+      "rank": 1,
+      "group": "PLAYER_GAME_LOG",
+      "ids": [
+        "PLAYER_FGA",
+        "PLAYER_MINUTES",
+        "PLAYER_PTS",
+        "PLAYER_AST",
+        "PLAYER_FTA",
+        "GAME_PERIOD_SCORES"
+      ]
+    },
+    {
+      "rank": 2,
+      "group": "TEAM_ADVANCED",
+      "ids": [
+        "TEAM_PACE_NATIVE",
+        "TEAM_OFFRTG_NATIVE",
+        "TEAM_DEFRTG_NATIVE",
+        "TEAM_NETRTG_NATIVE"
+      ]
+    },
+    {
+      "rank": 3,
+      "group": "SHOT_ZONES_ACTIONS",
+      "ids": [
+        "PLAYER_SHOT_ZONES",
+        "PLAYER_PAINT_FGA",
+        "OPPONENT_PAINT_FGA",
+        "MET_TOUCHES_NATIVE",
+        "NATIVE_PLAYCALL_EVENTS",
+        "OFFENSE_ACTION_TAGS"
+      ]
+    },
+    {
+      "rank": 4,
+      "group": "EXISTING_20_READER_COVERAGE",
+      "ids": [
+        "ROTATION_ACTUAL",
+        "PLAYER_FATIGUE_STATE",
+        "NATIVE_INJURY_STATE",
+        "PLAYER_ATTRIBUTE_SNAPSHOT",
+        "SCORE_DISPLAY_CONSISTENCY"
+      ]
+    }
+  ],
+  "full_inventory": "All 38 Stage02 metric IDs must receive explicit disposition; not all must be implemented if game source is absent/unverified. Prioritize verified high-value, same-grain fields.",
+  "allowed_changed_paths": [
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/"
+  ],
+  "allowed_source_read_only": [
+    "Stage02 candidate/review at pinned SHA",
+    "docs/game_mechanics sources at pinned SHA",
+    "WorldData v24 frozen execution evidence"
+  ],
+  "prohibitions": [
+    "No running-game settings or player/coach/rotation modification; no gameplay or season advancement.",
+    "No save-file edits, overwrite of original v24 database, reclassification of materialized old fixture values as Native.",
+    "No Frida injection, native mutator/getter calling with uncertain side effects, patching PE, DLL injection, or elevated process action outside current separate authorization.",
+    "No new standalone collection pipeline or replacement of existing WorldData and D1-D5 architecture.",
+    "No fabricated UI labels, per-game attribution, player IDs, field versions, unit conversions, or collected advanced metrics.",
+    "No hidden private attributes/Player Potential in public player card or role exports.",
+    "No unrelated lifecycle feature expansion, season capacity tuning, auto gameplay adjustment, master writes, rebases, force pushes, or protected merge."
+  ],
+  "access_boundary": {
+    "allow_static_pe_and_code_study": true,
+    "allow_readonly_game_process_for_user_designated_offline_test_instance": "only when current process/save binding and existing Human access conditions are independently confirmed; stop at privilege/injection boundary",
+    "allow_readonly_existing_save_files": true,
+    "allow_new_staging_copy_of_worlddata_DB": true,
+    "allow_automated_user_gameplay": false,
+    "allow_runtime_injection": false,
+    "external_relay": "Human mediated where independent model needed"
+  },
+  "required_deliverables": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/02_证据/native_stats_discovery_inventory.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/02_证据/ui_native_reader_binding_dossier.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/06_执行/metric38_coverage_and_readiness.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/06_执行/reader_integration_log.md",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/07_测试执行/loop_verification_and_regression_report.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/08_结论/completion_pointer.md",
+    "Corresponding minimum Reader/codec/refresh/query/test changes inside existing world_data_prototype"
+  ],
+  "iterative_process": {
+    "mode": "evidence_driven_iteration",
+    "scope": "development_phase_only",
+    "cycle": [
+      "select highest-value bounded unknown",
+      "inspect game UI/native source or existing Reader",
+      "write/read minimal adapter implementation",
+      "execute original value consistency and negative tests",
+      "diagnose/fix failures or explicitly classify unavailable source",
+      "checkpoint exact SHA, logs, before/after evidence, next hypothesis"
+    ],
+    "no_fixed_round_count": true,
+    "stop_when": "bounded objective achieved or no further lawful evidence-producing increment; report residuals without claiming verified coverage"
+  },
+  "source_evidence_axis": [
+    "UI_LABEL_SEEN_CURRENT_PC22",
+    "RAW_NATIVE_LOCATION_AND_LAYOUT",
+    "GAME_COMPUTED_CONFIRMED",
+    "PLAYER_GAME_GRAIN_CONFIRMED",
+    "READONLY_READER_ACTUAL_RUN",
+    "UNIFIED_REFRESH_CAPTURE_VERIFIED",
+    "STAGING_DB_QUERY_VERIFIED",
+    "VAE_METRIC_JOIN_ELIGIBLE"
+  ],
+  "acceptance_pilot": "At least one identified per-game source and one identified genuinely advanced game-native metric should have real read-only capture + stable player/game/season identity + refresh/query round-trip, if available in the designated test environment; if impossible, deliver truthful partial candidate and bounded blocker instead of success.",
+  "candidate_only_until_review": true,
+  "master_integration": "Human decision and separate review required",
+  "independent_review": "series combined review unless authoritative interface/risky boundary earlier"
+}

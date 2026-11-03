@@ -1,0 +1,213 @@
+{
+  "schema": "world_data_live_full_capture_sql_reconciliation.v1",
+  "verified_at": "2026-11-01T19:48:00+00:00",
+  "database_file": "world-v24.sqlite",
+  "total_capture_units": 58,
+  "pre_capture_units": 42,
+  "new_capture_units_ingested": 16,
+  "new_capture_units": [
+    {
+      "unit_id": "live-world:7ee46f148cc7e2c4f9701cb8",
+      "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+      "observed_at": "2026-11-01T19:33:25.362395+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-game-mode:2773733731ff0e4a874bb414",
+      "source_key": "BOUND_NATIVE_GAME_MODE_PERIOD",
+      "observed_at": "2026-11-01T19:33:37.124256+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-period-stats:6db82f6399174901596b4d3b",
+      "source_key": "BOUND_NATIVE_CURRENT_PERIOD_PLAYER_STATS",
+      "observed_at": "2026-11-01T19:33:37.263227+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "organization:9dcbb9101c5f5e499641ce51",
+      "source_key": "BOUND_CORE_ORGANIZATION",
+      "observed_at": "2026-11-01T19:33:41.964072+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-staff:263ce9c6768483b50c307821",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL",
+      "observed_at": "2026-11-01T19:33:43.430671+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-current-coach:2e7a1c03c77a04cec2909270",
+      "source_key": "BOUND_NATIVE_CURRENT_COACH_STATS",
+      "observed_at": "2026-11-01T19:33:48.710515+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-lineups:7ac64973fe0004432d82b6ca",
+      "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION",
+      "observed_at": "2026-11-01T19:33:51.044210+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-finance:996594e8dd605d76c2deec9f",
+      "source_key": "BOUND_NATIVE_TYPED_TEAM_FINANCE",
+      "observed_at": "2026-11-01T19:33:56.644673+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "market:36f65ca0df210eb0c13cfcaf",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES",
+      "observed_at": "2026-11-01T19:33:56.896642+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "planning:9a38760516f65b20419b7ee8",
+      "source_key": "BOUND_PLANNING_AND_TRAINING",
+      "observed_at": "2026-11-01T19:33:58.130637+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "settings:50f5b2e179b58b43f17a0a0b",
+      "source_key": "BOUND_SETTINGS_AND_RULES",
+      "observed_at": "2026-11-01T19:34:14.369647+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "player-detail:e5d2bf670b322925d23dfe47",
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES",
+      "observed_at": "2026-11-01T19:34:14.692089+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "player-state:d4989763d1f719960e3e6832",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+      "observed_at": "2026-11-01T19:36:27.394269+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "player-affiliation:21ceaa9b11ac5b8d512b9e36",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION",
+      "observed_at": "2026-11-01T19:36:40.192360+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "player-skill:e01990ebd0990e8eaa3a1c77",
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS",
+      "observed_at": "2026-11-01T19:36:48.193463+00:00",
+      "completeness": "PARTIAL"
+    },
+    {
+      "unit_id": "native-league:2a2f0fe493bc392dad82b027",
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS",
+      "observed_at": "2026-11-01T19:37:02.005957+00:00",
+      "completeness": "PARTIAL"
+    }
+  ],
+  "schedule_game_counts": {
+    "total_schedule_entries": 1232,
+    "finalized_games_in_db": 238,
+    "latest_batch_source_checks": {
+      "FULL_NATIVE_BOX": 36,
+      "HEADER_ONLY_NOT_FINAL": 994,
+      "REUSED_FROZEN_BOX": 202
+    },
+    "total_final_games_sum": 238
+  },
+  "box_score_inventory": {
+    "total_team_game_boxes_rows": 2196,
+    "total_player_game_boxes_rows": 27293,
+    "total_game_period_scores_rows": 8784,
+    "exported_completed_games_count": 238,
+    "exported_team_boxes_count": 476,
+    "exported_player_boxes_count": 6133
+  },
+  "score_conservation_audit": {
+    "total_audited_games": 238,
+    "exact_score_conserved_games": 222,
+    "exact_conservation_rate": "93.2773%",
+    "native_uncredited_variance_conserved_games": 228,
+    "native_uncredited_variance_rate": "95.7983%",
+    "sample_verification_points": [
+      {
+        "native_game_id": 1,
+        "game_id": "season:native-year:2022:game:1",
+        "unit_id": "live-world:00606ee2a7703ad2322a4e3d",
+        "home_team": "team:native:1",
+        "away_team": "team:native:18",
+        "home_period_pts": 122,
+        "away_period_pts": 106,
+        "home_player_pts": 122,
+        "away_player_pts": 106,
+        "exact_conserved": true
+      },
+      {
+        "native_game_id": 100,
+        "game_id": "season:native-year:2022:game:100",
+        "unit_id": "live-world:00606ee2a7703ad2322a4e3d",
+        "home_team": "team:native:8",
+        "away_team": "team:native:19",
+        "home_period_pts": 130,
+        "away_period_pts": 92,
+        "home_player_pts": 130,
+        "away_player_pts": 92,
+        "exact_conserved": true
+      },
+      {
+        "native_game_id": 150,
+        "game_id": "season:native-year:2022:game:150",
+        "unit_id": "live-world:00606ee2a7703ad2322a4e3d",
+        "home_team": "team:native:17",
+        "away_team": "team:native:11",
+        "home_period_pts": 104,
+        "away_period_pts": 141,
+        "home_player_pts": 104,
+        "away_player_pts": 141,
+        "exact_conserved": true
+      },
+      {
+        "native_game_id": 200,
+        "game_id": "season:native-year:2022:game:200",
+        "unit_id": "live-world:00606ee2a7703ad2322a4e3d",
+        "home_team": "team:native:21",
+        "away_team": "team:native:13",
+        "home_period_pts": 109,
+        "away_period_pts": 103,
+        "home_player_pts": 109,
+        "away_player_pts": 103,
+        "exact_conserved": true
+      },
+      {
+        "native_game_id": 238,
+        "game_id": "season:native-year:2022:game:238",
+        "unit_id": "live-world:00606ee2a7703ad2322a4e3d",
+        "home_team": "team:native:13",
+        "away_team": "team:native:22",
+        "home_period_pts": 100,
+        "away_period_pts": 130,
+        "home_player_pts": 100,
+        "away_player_pts": 130,
+        "exact_conserved": true
+      },
+      {
+        "native_game_id": 50,
+        "game_id": "season:native-year:2022:game:50",
+        "unit_id": "live-world:00606ee2a7703ad2322a4e3d",
+        "home_team": "team:native:14",
+        "away_team": "team:native:0",
+        "home_period_pts": 112,
+        "away_period_pts": 103,
+        "home_player_pts": 112,
+        "away_player_pts": 103,
+        "exact_conserved": true
+      }
+    ]
+  },
+  "setting_context_snapshot_inventory": {
+    "team_tactics_count": 30,
+    "coach_preferences_count": 30,
+    "game_setting_observations_count": 168,
+    "player_tendencies_count": 462,
+    "player_attributes_count": 462
+  },
+  "reproducibility_verdict": "EXACT_SQL_REPRODUCIBILITY_VERIFIED"
+}

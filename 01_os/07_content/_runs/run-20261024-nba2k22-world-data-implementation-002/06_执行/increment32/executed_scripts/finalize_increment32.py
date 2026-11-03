@@ -1,0 +1,23 @@
+import hashlib,json,shutil,subprocess,sys,zlib
+from pathlib import Path
+repo=Path.cwd();r=Path(__file__).parent;run=r.parent;dest=run/'06_执行/increment32';app=repo/'08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype';sys.path.insert(0,str(app))
+from database_operations import file_sha256
+def write(path,value):path.write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+tested=json.loads((dest/'verification-final/operations_report.json').read_bytes());actual=json.loads((dest/'actual-staff-history-report.json').read_bytes());terminal=json.loads((dest/'worker-terminal.json').read_bytes());head=tested['candidate_code_head'];assert head==actual['candidate_code_head']=='9db85720f4c00587c296eacae0c035018104f22b';assert tested['exit_codes']=={'tests':0,'sqlite_smoke':0} and 'Ran 261 tests' in (dest/'verification-final/tests.stderr.log').read_text(encoding='utf-8')
+assert terminal['worker_process_absent'] and actual['prior_rows_preserved']==1402757 and actual['prior_tables_preserved']==96 and actual['signed_reference_comparisons']==40*actual['source_staff_count'] and actual['scalar_comparisons']==7*actual['referenced_coach_stat_records'] and actual['same_year_skip_no_staff_or_stat_values_read'] and actual['old_annual_families_unchanged'] and actual['stat_years_all_null']
+for name,digest in tested['code_sha256'].items():
+    relative=(app/name).relative_to(repo).as_posix();blob=subprocess.run(['git','show',head+':'+relative],capture_output=True,check=True).stdout;assert hashlib.sha256(blob).hexdigest()==digest and hashlib.sha256((app/name).read_bytes()).hexdigest()==digest,name
+manifest=json.loads((dest/'world-v23.snapshot.json').read_bytes());encoded=hashlib.sha256();decoded=hashlib.sha256();decoder=zlib.decompressobj(31)
+for part in manifest['parts']:
+    assert file_sha256(dest/part['file'])==part['sha256'] and (dest/part['file']).stat().st_size==part['bytes']
+    with (dest/part['file']).open('rb') as src:
+        while block:=src.read(4*1024*1024):
+            encoded.update(block);pending=block
+            while pending:decoded.update(decoder.decompress(pending,4*1024*1024));pending=decoder.unconsumed_tail
+decoded.update(decoder.flush());assert decoder.eof and not decoder.unused_data and encoded.hexdigest()==manifest['stream_sha256'] and decoded.hexdigest()==actual['database_sha256']==manifest['database_sha256']
+native=json.loads((dest/'native-history-evidence.archive.json').read_bytes());assert file_sha256(dest/native['file'])==native['sha256']
+preflight=subprocess.run([sys.executable,'01_os/06_execution/task_discipline/preflight/preflight_task_context.py','--packet',str(run/'任务包.yml'),'--repo-root',str(repo),'--allow-dirty','--json'],capture_output=True,text=True,encoding='utf-8');assert preflight.returncode==0,preflight.stderr[:500];write(dest/'preflight.json',json.loads(preflight.stdout))
+artifact=run/'increment32_work_unit.yml';validation=subprocess.run([sys.executable,'01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py','artifact',str(artifact),'--require-mwu'],capture_output=True,text=True,encoding='utf-8');assert validation.returncode==0,validation.stdout[:500]+validation.stderr[:500];receipt=json.loads((dest.parent/'increment31/mwu_load_receipt.json').read_bytes());receipt.update(artifact=artifact.name,validator_exit_code=0,validator_output=validation.stdout.strip());write(dest/'mwu_load_receipt.json',receipt)
+for name in ('finalize_increment32.py','verify_staff_history_terminal32.ps1'):shutil.copyfile(r/name,dest/'executed_scripts'/name)
+write(dest/'delivery_check.json',{'status':'NATIVE_ANNUAL_STAFF_STATS_V23_CODE_RAW_LINKS_QUERY_HISTORY_AND_SNAPSHOT_CONSISTENT','candidate_code_head':head,'code_hashes_matched_to_commit':len(tested['code_sha256']),'tests':261,'schema_version':23,'tables':99,'columns':1756,'source_staff_count':actual['source_staff_count'],'referenced_coach_stat_records':actual['referenced_coach_stat_records'],'signed_reference_comparisons':actual['signed_reference_comparisons'],'scalar_comparisons':actual['scalar_comparisons'],'old_rows_preserved':1402757,'snapshot_decompressed_sha256_verified':True,'same_year_skip_no_staff_or_stat_values_read':True,'computer_use_used':False,'game_writes':False,'capacity_work_executed':False,'full_goal_complete':False,'independent_acceptance':False})
+print(json.dumps({'status':'DELIVERY_VERIFIED','tests':261,'source_staff_count':actual['source_staff_count'],'signed_reference_comparisons':actual['signed_reference_comparisons'],'snapshot_parts':len(manifest['parts']),'full_goal_complete':False}))

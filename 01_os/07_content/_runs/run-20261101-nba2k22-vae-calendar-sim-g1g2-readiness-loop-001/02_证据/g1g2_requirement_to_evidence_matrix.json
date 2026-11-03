@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
+  "source_parent_sha": "75e17813af64f0046a0393071a2115c44835092d",
+  "assigned_model": "Gemini",
+  "timestamp": "2026-11-01T18:17:00Z",
+  "evaluation_standard": "CALENDAR_SIM_FIRST",
+  "human_principles_acknowledged": [
+    "Calendar Sim is the sole standard for Phase 1 VAE setting effect evaluation; 3D match data is segregated.",
+    "G1 (data ingestion & SQL gate) and G2 (setting-to-metric verification contract) must both be ready before advancing calendar.",
+    "Zero unsolicited resident background watchers; auto-capture orchestrator must be nonresident and opt-in.",
+    "Zero game memory writes, zero save mutations, zero automatic REA Setter calls in S0 readiness phase.",
+    "No claims that old fixture tests prove live auto trigger."
+  ],
+  "code_vs_real_evidence_ledger": [
+    {
+      "component": "CLI_REFRESH_WORLD",
+      "current_implementation": "cli.py: refresh-world auto ... runs all 20 source adapters serially on demand.",
+      "code_readiness": "CODE_READY",
+      "live_evidence_gap": "Does not detect whether a fresh game just finalized; calling repeatedly on same state would re-read static banks unless --resume-report is supplied.",
+      "g1_resolution": "Implement nonresident CalendarSimOrchestrator that checks latest game status (is_final==1, was_simulated==1) vs DB latest game ID before triggering refresh."
+    },
+    {
+      "component": "GAME_MODE_DATE_DETECTION",
+      "current_implementation": "game_mode_reader.py collects today_native_iso_date and period_raw.",
+      "code_readiness": "CODE_READY",
+      "live_evidence_gap": "A mere calendar date increment does not prove a game was played (e.g. off-days in schedule).",
+      "g1_resolution": "Orchestrator checks schedule pool index and status==2 (FINAL) alongside date advance."
+    },
+    {
+      "component": "FAIL_CLOSED_GUARDS",
+      "current_implementation": "refresh.py checks PE timestamp and module base, raises RefreshFailed on mismatch.",
+      "code_readiness": "CODE_READY",
+      "live_evidence_gap": "If simulation is interrupted mid-game (status==1), partial boxlines might be exposed.",
+      "g1_resolution": "Orchestrator asserts game status is strictly FINAL (2) with complete linescores before initiating SQLite transaction."
+    },
+    {
+      "component": "SQL_QUERY_VERIFICATION",
+      "current_implementation": "query.py provides player_game_log, player_advanced_metrics, team_advanced_metrics with capture deduplication.",
+      "code_readiness": "CODE_READY",
+      "live_evidence_gap": "Need automated round-trip verification that newly captured Calendar Sim game is immediately queryable with exact score conservation.",
+      "g1_resolution": "Orchestrator includes post-ingest SQL verification step returning committed game receipts."
+    },
+    {
+      "component": "G2_SETTING_EXPERIMENT_CONTRACT",
+      "current_implementation": "Settings tables exist in schema, but no structured contract binds setting changes to expected metric deltas.",
+      "code_readiness": "GAP_TO_BE_IMPLEMENTED_IN_A3",
+      "live_evidence_gap": "No formal before-and-after join query exists to compare S0 baseline games vs S1 intervention games.",
+      "g2_resolution": "Define experiment_settings_metrics_contract.json and queryable before-after evaluation contract for the 3 Pilot groups."
+    }
+  ],
+  "canonical_38_metrics_calendar_sim_applicability": {
+    "direct_calendar_sim_observable": [
+      "PLAYER_FGA",
+      "TEAM_FGA",
+      "PLAYER_MINUTES",
+      "PLAYER_PTS",
+      "PLAYER_AST",
+      "PLAYER_FTA",
+      "TEAM_THREE_PA",
+      "TEAM_THREE_PM",
+      "OPPONENT_FGA",
+      "OPPONENT_THREE_PA",
+      "OPPONENT_FG_PCT",
+      "TEAM_TOV",
+      "TEAM_STL",
+      "TEAM_OREB",
+      "TEAM_DREB",
+      "GAME_PERIOD_SCORES",
+      "PLAYER_PER36_NATIVE",
+      "PLAYER_PERGAME_NATIVE",
+      "TEAM_PACE_NATIVE",
+      "TEAM_OFFRTG_NATIVE",
+      "TEAM_DEFRTG_NATIVE",
+      "TEAM_NETRTG_NATIVE",
+      "PLAYER_TS_NATIVE",
+      "PLAYER_EFG_NATIVE",
+      "TEAM_TRANSITION_POINTS",
+      "TEAM_SECOND_CHANCE_POINTS",
+      "ROTATION_ACTUAL",
+      "SCORE_DISPLAY_CONSISTENCY"
+    ],
+    "proxy_or_state_observable": [
+      "MET_TOUCHES_NATIVE (via EXPERIMENTAL_POSSESSION_LOAD_INDEX)",
+      "PLAYER_FATIGUE_STATE",
+      "NATIVE_INJURY_STATE",
+      "PLAYER_ATTRIBUTE_SNAPSHOT",
+      "PLAYER_SHOT_ZONES (chart index)",
+      "PLAYER_USG_NATIVE (UI getter)"
+    ],
+    "calendar_sim_gaps_segregated": [
+      "OFFENSE_ACTION_TAGS (3D event engine only)",
+      "NATIVE_PLAYCALL_EVENTS (3D playcall telemetry only)",
+      "OPPONENT_PAINT_FGA (unseparated from total 2PA in static tables)",
+      "PLAYER_PAINT_FGA (unseparated from total 2PA in static tables)"
+    ]
+  },
+  "work_package_execution_plan": {
+    "A0": "COMPLETED - Gap matrix and evidence ledger established.",
+    "A1": "IN_PROGRESS - Build calendar_sim_orchestrator.py and auto-capture trigger entrypoint.",
+    "A2": "PLANNED - Validate SQLite deduplication and query readback.",
+    "A3": "PLANNED - Formalize G2 experiment contract and pilot gates.",
+    "A4": "PLANNED - Negative regression tests, changelog, checks report, completion pointer."
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "schema": "pc22.native_live_validation.v1",
+  "task": "NBA2K22-REA-MYLEAGUE-NATIVE-CONTROL-VALIDATION-01",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "scope": "Per-example evidence overlays the static registry. No promotion of untested fields, argument combinations, full coverage, UI or persistence.",
+  "actions": {
+    "COACH_SET_KNOWN_CURRENT_SETTINGS": {
+      "status": "REAL_NATIVE_EFFECT_VERIFIED_SUBSET",
+      "exact_input": {
+        "team_id": 20,
+        "settings": {
+          "RunPlayTendency": 55
+        }
+      },
+      "before": 90,
+      "independent_after": 55,
+      "native_call_count_observed": 1,
+      "other_nine_known_fields_unchanged": true,
+      "native_full_projection_matches": true,
+      "original_gameplan_unchanged": true,
+      "repeated_previous_success": false,
+      "source_commit": "8bda78883cbb8f9b10eeabf9a8f08a116fe296db",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/batch-01/sequence-summary.json",
+      "native_evidence_id": "ev_fdcd36d4e4bca9a380d8ad3622943f0c6c5b2c12fac332e59037a92a0536ad26",
+      "independent_read_evidence_id": "ev_0b3698af41a6a33fdaeeefb4e519d4579024bb616b918266bea25978ad6321e4",
+      "UI_correspondence": "UNKNOWN_NOT_OBSERVED",
+      "save_reload": "NOT_STUDIED",
+      "independent_reviewer": "NOT_THIS_EXECUTOR"
+    },
+    "READ_TEAM_ROSTER_BASIC": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "team_id": 20
+      },
+      "identity": "IND;15 roster players",
+      "UI_comparison": "NOT_OBSERVED",
+      "coverage_complete": false
+    },
+    "READ_COACH_CURRENT": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "team_id": 20
+      },
+      "identity": "Rick Carlisle, reciprocal TEAM link",
+      "known_fields_read": 10,
+      "UI_comparison": "NOT_OBSERVED",
+      "coverage_complete": false
+    },
+    "SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "limit": 20
+      },
+      "public_identity_rows": 20,
+      "first_UIDs": [
+        33142,
+        33143,
+        33144
+      ],
+      "UI_comparison": "NOT_OBSERVED",
+      "coverage_complete": false
+    },
+    "SCOUT_READ_TRIP_BUDGET": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "team_id": 20
+      },
+      "franchise_record_index": 18,
+      "num_goals": 3,
+      "remaining_trips_raw": 7,
+      "UI_comparison": "NOT_OBSERVED",
+      "coverage_complete": false
+    },
+    "SCOUT_SET_EXISTING_GOAL_TARGETS": {
+      "status": "REAL_NATIVE_EFFECT_VERIFIED_GOAL_RECORD_ONLY",
+      "checks": {
+        "native_return_received": true,
+        "same_team": true,
+        "goal_count_unchanged": true,
+        "exact_target": true,
+        "real_before_after_change": true,
+        "other_goals_unchanged": true,
+        "trips_unchanged": true,
+        "progress_unchanged_from_batch02": true
+      },
+      "exact_input": {
+        "team_id": 20,
+        "goal_index": 0,
+        "player_ids": [
+          33143
+        ]
+      },
+      "native_evidence_id": "ev_c71c0d11cd9dbc166e91d8e2057247191e21c5253b15803ad26761dd41018c97",
+      "independent_read_evidence_id": "ev_698eda52debf62935fee6319bfecba3a204030eb31186aad6c09b564d4aa9a9a",
+      "trip_consumer_cache_and_report": "NOT_VERIFIED",
+      "source_commit": "cd61cdb876fe1ea0bec8429294d9b4820dd57f30",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/LIVE_OUTCOME_AUDIT.json",
+      "UI_correspondence": "NOT_OBSERVED_THIS_TASK",
+      "save_reload": "NOT_STUDIED",
+      "independent_reviewer": "NOT_THIS_EXECUTOR"
+    },
+    "TRADE_EXECUTE_AGREED_PACKAGE": {
+      "status": "REAL_NATIVE_EFFECT_VERIFIED_EXACT_PACKAGE",
+      "checks": {
+        "native_return_received": true,
+        "canaries_intact": true,
+        "full_check_not_called_by_bridge": true,
+        "ind_exact_roster_swap": true,
+        "ind_count_unchanged": true,
+        "ind_roster_identity_links": true,
+        "other_exact_roster_swap": true,
+        "other_count_unchanged": true,
+        "other_roster_identity_links": true,
+        "brogdon_uid_unchanged": true,
+        "brogdon_both_owner_links_transferred": true,
+        "brogdon_all_six_wages_unchanged": true,
+        "donte_uid_unchanged": true,
+        "donte_both_owner_links_transferred": true,
+        "donte_all_six_wages_unchanged": true,
+        "requested_salary_mismatch": true
+      },
+      "external_call_sequence": [
+        "trade.add_player",
+        "trade.add_player",
+        "trade.context",
+        "trade.process"
+      ],
+      "exact_input": {
+        "team_a": 20,
+        "team_b": 1,
+        "players_a": [
+          7239
+        ],
+        "players_b": [
+          7716
+        ],
+        "picks_a": [],
+        "picks_b": []
+      },
+      "salary_year1_raw": {
+        "brogdon": 21700000,
+        "donte": 4675830
+      },
+      "native_evidence_id": "ev_51940f985b1457dc16c9658ba2b2fecc57030d49ed27cd7470e7fff8a896f781",
+      "independent_after_ids": [
+        "ev_d8c9d2ea2fad174c7fb2d3c111f76492ede14e720a048ed6320e2302a1342299",
+        "ev_4ca417de3f426df53cc0b9cb71480146e801de9d90e822f1b56e2d294aae2aba",
+        "ev_0da63edff8d7db609652db20186838d9727d45da600c288ec7c43b8d38f2e876",
+        "ev_a608c9a995d26ebca24251a41881952477af0f37390c34dce1218915af036211"
+      ],
+      "restored": false,
+      "source_commit": "cd61cdb876fe1ea0bec8429294d9b4820dd57f30",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/LIVE_OUTCOME_AUDIT.json",
+      "UI_correspondence": "NOT_OBSERVED_THIS_TASK",
+      "save_reload": "NOT_STUDIED",
+      "independent_reviewer": "NOT_THIS_EXECUTOR"
+    },
+    "SCOUT_ASSIGN_TARGETS": {
+      "status": "REJECTED_BY_GAME",
+      "exact_input": {
+        "team_id": 20,
+        "player_ids": [
+          33143
+        ]
+      },
+      "native_append_result": 0,
+      "reason_observed": "THREE_EXISTING_GOALS_CAPACITY_FULL",
+      "old_goals_and_trips_and_progress_unchanged": true,
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/batch-02/sequence-summary.json"
+    },
+    "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "player_id": 7239
+      },
+      "coverage_complete": false,
+      "note": "Identity and17 contract fields only; also7716 sampled",
+      "UI_comparison": "NOT_OBSERVED",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/LIVE_OUTCOME_AUDIT.json"
+    },
+    "SCOUT_READ_PROSPECT_INFO": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "player_id": 33143
+      },
+      "coverage_complete": false,
+      "note": "Public Sam Perkins identity and raw rankings only",
+      "UI_comparison": "NOT_OBSERVED",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/LIVE_OUTCOME_AUDIT.json"
+    },
+    "SCOUT_READ_PROGRESS_RAW": {
+      "status": "REAL_BOUND_SUBSET_READ",
+      "exact_input": {
+        "team_id": 20,
+        "player_id": 33143
+      },
+      "coverage_complete": false,
+      "note": "points69,workoutfalse,medicalfalse; not unlocked report",
+      "UI_comparison": "NOT_OBSERVED",
+      "evidence": "01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/07_测试执行/LIVE_OUTCOME_AUDIT.json"
+    }
+  }
+}

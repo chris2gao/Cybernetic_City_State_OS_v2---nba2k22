@@ -1,0 +1,179 @@
+"""Read-only public PLAYER family decoding from explicit registered layouts.
+
+Bit widths describe storage, never legal UI ranges. Registration and a binary
+fixture are separate evidence from current-process/UI verification.
+"""
+import hashlib
+import json
+import importlib.util
+import math
+import struct
+from functools import lru_cache
+from schema_model import PROFILE,PLAYER_CONFIG,DOMAIN
+from player_detail_codec import native_contracts,LAYOUT as CONTRACT_LAYOUT,PROFILE as DETAIL_PROFILE
+
+
+@lru_cache(maxsize=1)
+def _rating_codec():
+    path=DOMAIN/'src/config.py'
+    spec=importlib.util.spec_from_file_location('world_registered_rating_config',path)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    return module.raw_to_rating
+
+
+def registered_rating_candidate(raw):
+    if type(raw) is not int or not 0<=raw<=255:
+        return {'value':None,'status':'OUTSIDE_REGISTERED_BYTE_STORAGE'}
+    return {'value':_rating_codec()(raw),'codec':'src/config.py:raw_to_rating',
+            'status':'DERIVED_REGISTERED_CODEC','target_ui_validation':'NOT_OBSERVED'}
+
+
+def decode_fixed_utf16(raw):
+    """Decode only initialized code units before the aligned NUL terminator.
+
+    Padding in the fixed-width Native name field is not necessarily UTF-16.
+    Invalid text before the terminator still raises, rather than guessing a name.
+    """
+    if len(raw)%2:raise ValueError('UTF16 field must contain whole code units')
+    end=next((i for i in range(0,len(raw),2) if raw[i:i+2]==b'\0\0'),len(raw))
+    return raw[:end].decode('utf-16le')
+
+
+def extract_unsigned(raw,definition):
+    offset=definition['offset']
+    start=definition.get('start_bit',0)
+    width=definition.get('bits',definition.get('bytes',0)*8)
+    if type(offset) is not int or type(start) is not int or type(width) is not int:
+        raise ValueError('integer layout required')
+    if offset<0 or start<0 or not 1<=width<=64:raise ValueError('invalid unsigned field layout')
+    size=(start+width+7)//8
+    if offset+size>len(raw):raise ValueError('incomplete registered field read')
+    return (int.from_bytes(raw[offset:offset+size],'little')>>start)&((1<<width)-1)
+
+
+def public_player_families(raw):
+    if len(raw)!=PROFILE['record_bytes']['PLAYER']:
+        raise ValueError('PLAYER record must be exactly registered length')
+    attrs={};contracts={**native_contracts(raw),'layout_version':CONTRACT_LAYOUT}
+    for definition in PROFILE['fields']['PLAYER']:
+        name=definition['name']
+        if name=='potential' or definition['group']=='contract':continue
+        value=extract_unsigned(raw,definition)
+        if definition['group']=='attributes':attrs[('three_point_shot' if name=='3pt_shot' else name)+'_raw']=value
+    tendencies={}
+    for name,offset in PLAYER_CONFIG['TENDENCY_OFFSETS'].items():
+        if not 0<=offset<len(raw):raise ValueError('tendency outside PLAYER')
+        tendencies[name.lower()+'_raw']=raw[offset]
+    # Only names actually present in the registry are decoded. The other raw
+    # tendency bytes remain unknown rather than acquiring guessed field names.
+    play_types=[{'slot_index':i,'native_play_code':str((raw[0x168+i//2]>>(4*(i%2)))&15)} for i in range(4)]
+    vitals={'last_name':decode_fixed_utf16(raw[0:40]),
+            'first_name':decode_fixed_utf16(raw[40:80])}
+    return {'attributes':attrs,'contracts':contracts,'tendencies':tendencies,'play_types':play_types,'vitals':vitals,
+            'source_status':'REGISTERED_PUBLIC_FAMILIES; CONTRACT_LAYOUT_CURRENT_NATIVE_PROFILE; NOT_UI_ACCEPTANCE',
+            'family_completeness':{'attributes':'ALL_PUBLIC_REGISTERED_FIELDS','contracts':'ALL_REGISTERED_FIELDS',
+                                   'tendencies':'NAMED_FIELDS_ONLY_NOT_ENTIRE_NATIVE_TENDENCY_FAMILY',
+                                   'play_types':'FOUR_ORDERED_REGISTERED_SLOTS','badges':'SEPARATE_NATIVE_DETAIL_CAPTURE; NOT_INCLUDED_BY_THIS_REGISTERED_FAMILY_FUNCTION'}}
+
+
+def profile_layout_receipt():
+    """Evidence for the apparent offset-833 alias: disjoint registered bit ranges."""
+    definitions={f['name']:f for f in PROFILE['fields']['PLAYER']}
+    a=definitions['original_contract_years'];b=definitions['extension_length']
+    def span(d):return [d['offset']*8+d.get('start_bit',0),d['offset']*8+d.get('start_bit',0)+d['bits']-1]
+    sa,sb=span(a),span(b)
+    return {'source':'config/memory_field_profile.json','source_grade':'REGISTERED_BIT_LAYOUT',
+            'original_contract_years':{'definition':a,'absolute_bit_span':sa},
+            'extension_length':{'definition':b,'absolute_bit_span':sb},
+            'registered_bits_overlap':max(sa[0],sb[0])<=min(sa[1],sb[1]),
+            'current_native_contract_bindings':{name:{k:f[k] for k in ('native_name','offset','start_bit','width')} for name,f in DETAIL_PROFILE['contract_fields'].items()},
+            'native_width_corrections':[r for r in DETAIL_PROFILE['contract_width_comparison'] if r['old_width']!=r['native_width']],
+            'current_game_semantics':'Native field layout/option/roster enums verified; salary scale, sentinels and target UI separate',
+            'profile_sha256':hashlib.sha256(json.dumps(PROFILE,sort_keys=True).encode()).hexdigest()}
+
+
+def decode_schedule_date(date_int: int):
+    """Decode 2K SCHEDULEDATE 32-bit bitfield into ISO date string."""
+    day = (date_int >> 16) & 0x1F
+    month = (date_int >> 21) & 0x0F
+    year_offset = (date_int >> 25) & 0x7F
+    year = 2000 + year_offset
+    return f"{year:04d}-{month:02d}-{day:02d}"
+
+
+ADVANCED_METRICS_RANGES = ((544, 552), (580, 620), (768, 772), (780, 785))
+RESTRICTED_PLAYER_RANGES = ((785, 786), (880, 882), (930, 931), (1089, 1090))
+assert not any(a < hi and lo < b for a, b in ADVANCED_METRICS_RANGES for lo, hi in RESTRICTED_PLAYER_RANGES), (
+    "ADVANCED_METRICS_RANGES must never intersect RESTRICTED_PLAYER_RANGES"
+)
+
+
+def extract_player_advanced_metrics(raw):
+    """Extract native engine-calculated PER rankings and GameScore history.
+
+    Operates strictly on safe, bounded public offsets:
+    ADVANCED_METRICS_RANGES = ((544, 552), (580, 620), (768, 772), (780, 785))
+    Never touches RESTRICTED_PLAYER_RANGES ((785, 786), (880, 882), (930, 931), (1089, 1090)).
+    Accepts either full 1264-byte PLAYERDATA or a dict with safe slices.
+    """
+    if isinstance(raw, dict):
+        per_bytes = raw['per_rankings']
+        scores_bytes = raw['game_scores']
+        dates_bytes = raw['game_dates']
+        shot_bytes = raw['shot_chart']
+        mins_bytes = raw['minutes']
+        per_rankings = {
+            'league_per_rank': struct.unpack_from('<H', per_bytes, 0)[0],
+            'league_position_per_rank': struct.unpack_from('<H', per_bytes, 2)[0],
+            'conference_per_rank': struct.unpack_from('<H', per_bytes, 4)[0],
+            'conference_position_per_rank': struct.unpack_from('<H', per_bytes, 6)[0],
+        }
+        recent_game_scores = []
+        for i in range(5):
+            val = struct.unpack_from('<f', scores_bytes, i * 4)[0]
+            date_raw = struct.unpack_from('<I', dates_bytes, i * 4)[0]
+            mins = mins_bytes[i]
+            date_iso = decode_schedule_date(date_raw) if date_raw != 0 else None
+            recent_game_scores.append({
+                'history_slot': i,
+                'game_score': round(val, 2) if math.isfinite(val) else None,
+                'game_date': date_iso,
+                'date_raw': date_raw,
+                'minutes': mins,
+                'dnp': bool(val == 0.0 and date_raw == 0 and mins == 0),
+            })
+        shot_chart_index = (struct.unpack_from('<I', shot_bytes, 0)[0] >> 20) & 0x3FF
+    elif isinstance(raw, (bytes, bytearray)):
+        if len(raw) != 1264:
+            raise ValueError('PLAYER record must be exactly 1264 bytes')
+        per_rankings = {
+            'league_per_rank': struct.unpack_from('<H', raw, 544)[0],
+            'league_position_per_rank': struct.unpack_from('<H', raw, 546)[0],
+            'conference_per_rank': struct.unpack_from('<H', raw, 548)[0],
+            'conference_position_per_rank': struct.unpack_from('<H', raw, 550)[0],
+        }
+        recent_game_scores = []
+        for i in range(5):
+            val = struct.unpack_from('<f', raw, 580 + i * 4)[0]
+            date_raw = struct.unpack_from('<I', raw, 600 + i * 4)[0]
+            mins = raw[780 + i]
+            date_iso = decode_schedule_date(date_raw) if date_raw != 0 else None
+            recent_game_scores.append({
+                'history_slot': i,
+                'game_score': round(val, 2) if math.isfinite(val) else None,
+                'game_date': date_iso,
+                'date_raw': date_raw,
+                'minutes': mins,
+                'dnp': bool(val == 0.0 and date_raw == 0 and mins == 0),
+            })
+        shot_chart_index = (struct.unpack_from('<I', raw, 768)[0] >> 20) & 0x3FF
+    else:
+        raise TypeError('raw must be bytes, bytearray, or bounded dict')
+
+    return {
+        'per_rankings': per_rankings,
+        'recent_game_scores': recent_game_scores,
+        'shot_chart_index': shot_chart_index,
+        'provenance': 'NATIVE_PLAYERDATA_PRECALCULATED_ENGINE_STORAGE; BOUNDED_SAFE_RANGES_VERIFIED; PE_CRC32_VERIFIED',
+    }
+

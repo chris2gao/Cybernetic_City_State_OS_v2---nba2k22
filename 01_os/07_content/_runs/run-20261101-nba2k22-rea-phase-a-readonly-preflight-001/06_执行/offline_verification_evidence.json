@@ -1,0 +1,125 @@
+{
+  "schema_version": "nba2k22.rea.phase_a_preflight_evidence.v1",
+  "task_id": "NBA2K22-REA-PHASE-A-READONLY-PREFLIGHT-20261101-001",
+  "generated_at": "2026-11-01T22:08:00Z",
+  "environment_audit": {
+    "os": "Windows 10 / Windows Server 64-bit",
+    "node_version": "v24.22.1",
+    "python_version": "3.14.6",
+    "rea_cli_version": "6.8.0",
+    "rea_cli_path": "C:\\Users\\gk\\AppData\\Roaming\\npm\\node_modules\\rea-agents\\scripts\\rea.mjs",
+    "frida_instrumentation_available": true,
+    "administrator_session_active": true
+  },
+  "fixed_game_build": {
+    "binary_name": "NBA2K22.exe",
+    "expected_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "base_address": "0x140000000"
+  },
+  "native_tendency_abi_forensics": {
+    "field_id": "SHOT_TENDENCY",
+    "native_index": 57,
+    "byte_offset_decimal": 1112,
+    "byte_offset_hex": "0x458",
+    "value_domain": [0, 100],
+    "setter_entry_rva": 10029584,
+    "setter_jump_table_rva": 10034952,
+    "case_57_rva": 10031638,
+    "case_57_disassembly": [
+      {"mnemonic": "xor", "operands": "ecx, ecx"},
+      {"mnemonic": "mov", "operands": "edx, 0x64"},
+      {"mnemonic": "test", "operands": "r8d, r8d"},
+      {"mnemonic": "cmovg", "operands": "ecx, r8d"},
+      {"mnemonic": "cmp", "operands": "ecx, edx"},
+      {"mnemonic": "movzx", "operands": "eax, cl"},
+      {"mnemonic": "cmovl", "operands": "edx, eax"},
+      {"mnemonic": "mov", "operands": "byte ptr [rsi + 0x458], dl"},
+      {"mnemonic": "jmp", "operands": "RVA+0x991ec8"}
+    ],
+    "getter_entry_rva": 9929568,
+    "getter_case_57_rva": 9930316,
+    "getter_57_disassembly": [
+      {"mnemonic": "movzx", "operands": "eax, byte ptr [rcx + 0x458]"},
+      {"mnemonic": "xor", "operands": "ecx, ecx"},
+      {"mnemonic": "test", "operands": "eax, eax"},
+      {"mnemonic": "cmovne", "operands": "ecx, eax"},
+      {"mnemonic": "mov", "operands": "eax, 0x64"},
+      {"mnemonic": "cmp", "operands": "ecx, eax"},
+      {"mnemonic": "cmovb", "operands": "eax, ecx"},
+      {"mnemonic": "movd", "operands": "xmm0, eax"},
+      {"mnemonic": "cvtdq2ps", "operands": "xmm0, xmm0"},
+      {"mnemonic": "cvtss2si", "operands": "eax, xmm0"},
+      {"mnemonic": "ret", "operands": ""}
+    ]
+  },
+  "runtime_safety_mechanisms": {
+    "getter_setter_getter_bracket": true,
+    "maximum_game_calls_per_field": 3,
+    "target_identity_recheck_preflight": true,
+    "target_identity_recheck_post_setter": true,
+    "target_identity_recheck_post_readback": true,
+    "delegate_vtable_stability_check": true,
+    "unrequested_stat_bytes_checked": 156,
+    "unrequested_stat_bytes_preservation_enforced": true,
+    "cache_flags_preservation_enforced": true,
+    "failure_no_auto_retry_enforced": true,
+    "caller_privilege_check_in_launcher": true
+  },
+  "offline_test_results": {
+    "test_player_stats": {
+      "file": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_player_stats.py",
+      "tests_run": 9,
+      "passed": 9,
+      "failed": 0,
+      "errors": 0,
+      "duration_seconds": 1.492,
+      "key_assertions": [
+        "PLAYER_SET_TENDENCY bounds [0, 100] enforced",
+        "SHOT_TENDENCY 101 rejected with ValueError",
+        "Coach planning with SHOT_TENDENCY 80 succeeds without issues",
+        "All 99 tendency offsets verified in range [0x458, 0x4bb]",
+        "Unrequested bytes corruption triggers PLAYER_STAT_VALUE_OR_OTHER_FIELD_MISMATCH"
+      ]
+    },
+    "test_player_editor_read": {
+      "file": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_player_editor_read.py",
+      "tests_run": 10,
+      "passed": 10,
+      "failed": 0,
+      "errors": 0,
+      "duration_seconds": 2.381,
+      "key_assertions": [
+        "All 251 direct getter paths covered",
+        "SHOT_TENDENCY read projection verified against synthetic Native ABI",
+        "Concurrent snapshot disruption rejected"
+      ]
+    }
+  },
+  "cross_domain_id_crosswalk": {
+    "pilot_player": {
+      "display_name": "Damian Lillard",
+      "worlddata_player_id": "player:native:2459",
+      "worlddata_preserved_id_raw": 2459,
+      "worlddata_unique_id_raw": 2459,
+      "rea_player_uid": 2459,
+      "rea_player_offset": "0xf4",
+      "rea_player_data_type": "uint16",
+      "mapping_rule": "Strip 'player:native:' prefix -> integer 2459"
+    },
+    "pilot_team": {
+      "display_name": "Portland Trail Blazers",
+      "worlddata_team_id": "team:native:28",
+      "worlddata_native_team_id": "28",
+      "rea_team_id": 28,
+      "rea_team_offset": "0xca8",
+      "rea_team_data_type": "uint16",
+      "mapping_rule": "Strip 'team:native:' prefix -> integer 28"
+    }
+  },
+  "maturity_assessment": {
+    "single_field_setter": "CALL_LOGIC_RECOVERED_AND_OFFLINE_VERIFIED",
+    "multi_field_patch": "CALL_LOGIC_RECOVERED_SEQUENTIAL_NON_ATOMIC",
+    "in_game_live_status": "NOT_EXECUTED_PENDING_HUMAN_AUTHORIZATION"
+  },
+  "verdict": "READY_FOR_HUMAN_AUTHORIZATION"
+}
