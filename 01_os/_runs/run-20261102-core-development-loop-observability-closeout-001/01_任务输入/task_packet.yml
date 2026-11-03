@@ -1,0 +1,26 @@
+task_id: OS-CORE-DEVELOPMENT-LOOP-OBSERVABILITY-CLOSEOUT-20261102-001
+domain: Cybernetic_City_State_OS_Core
+role: execution
+source: Human instruction dated 2026-11-02
+input_candidate_sha: 94639afe82d1bc1028ad8726f9c9cdbb6354d235
+objective: Minimal deterministic development Loop observability and legacy read-only replay
+allowed_changed_paths:
+  - 01_os/06_execution/task_orchestration/big_task/**
+  - 01_os/03_mechanisms/task_orchestration/**
+  - 01_os/05_registry/task_orchestration_v1.yml
+  - 01_os/_runs/run-20261102-core-development-loop-observability-closeout-001/**
+known_protected_actions:
+  - core_master_integration
+evidence_gates:
+  - full_existing_core_task_orchestration_regressions
+  - parsed_yaml
+  - raw_legacy_replays
+  - negative_checks
+  - human_and_workflow_boundary_checks
+stop_conditions:
+  - scope_escape_beyond_allowed_changed_paths
+  - runtime_or_scheduler_activation
+  - evidence_cannot_support_the_claim
+final_reviewer_boundary: separate_Human_assigned_independent_reviewer
+terminal_lifecycle_state: candidate_pending_validation
+completion_pointer_shape: exact_head_tests_source_sha_gaps_next_owner
