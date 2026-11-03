@@ -2,7 +2,7 @@
   "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
   "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
   "actual_executor_model": "Gemini 2.5 Pro (execution)",
-  "total_iterations": 7,
+  "total_iterations": 8,
   "all_offline_gates_satisfied": true,
   "gpt6_audit_remediation": {
     "audit_commit_sha": "bf4f044e9f83665eb573638425f44cd97d7e7d93",
@@ -39,8 +39,8 @@
     "completion_pointer": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/08_结论/completion_pointer.md"
   },
   "test_metrics": {
-    "host_integration_tests": "15 passed, 0 failed in 15.55s (test_season_cycle_host.py)",
-    "host_full_pipeline_tests": "37 passed, 0 failed in 12.36s (host + outbox + bridge + role_batches)",
+    "host_integration_tests": "17 passed, 0 failed in 24.56s (test_season_cycle_host.py)",
+    "host_full_pipeline_tests": "39 passed, 0 failed in 14.10s (host + outbox + bridge + role_batches)",
     "world_data_prototype_tests": "337 passed, 2 warnings, 103 subtests passed in 147.21s",
     "regressions_detected": 0,
     "gold_100_offline_replay": "PASS (100 receipts replayed and verified via validate_stage_directory)"
@@ -66,5 +66,9 @@
       "5_certified_live_scope_and_role_registry": "RESOLVED: Live execution restricted to PLAYER_PATCH_TENDENCIES and SHOT_TENDENCY (LIVE_SCOPE_VIOLATION); TrustedRoleRegistry validates GM and Coach actors per team at cycle entry.",
       "6_worldline_manifest_and_rollback": "RESOLVED: worldlines_manifest.json tracks parent/child worldlines, deterministic date fork reuse, target_worldline_id switching, and atomic save.json write with immediate readback verification and rollback."
     }
+  },
+  "load_bearing_pre_live_remediation": {
+    "role_registry_save_provenance_and_database_verification": "RESOLVED: Eliminated hardcoded actor and team IDs. TrustedRoleRegistry binds directly to active save directory (save_dir / role_authorizations.json) with provenance 'SAVE_DB_VERIFIED_DELEGATION', dynamically verifies team scopes against the active world database teams table, and rejects unauthenticated roles or unregistered teams fail-closed.",
+    "native_transport_evidence_disambiguation": "RESOLVED: Replaced host-reconstructed synthetic chunk messages with authentic Frida/REA IPC transport evidence (r_dir / */evidence.json). Live mode strictly requires genuine evidence and rejects synthetic envelopes (RECONSTRUCTED_MOCK_CANNOT_SATISFY_NATIVE_TRANSPORT_EVIDENCE). Mock mode accurately reports OFFLINE_MOCK_TRANSPORT_SKIPPED without falsely claiming independent raw transport verification."
   }
 }

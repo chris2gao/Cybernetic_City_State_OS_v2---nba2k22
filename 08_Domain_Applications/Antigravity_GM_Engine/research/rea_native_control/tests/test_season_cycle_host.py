@@ -38,7 +38,9 @@ def temp_environment(tmp_path):
             VALUES ('season:2021', '2021-22', 'nba2k22_test_01')
         """)
         conn.execute("""
-            INSERT INTO teams (team_id, display_name) VALUES ('team:1', 'MIL'), ('team:2', 'BKN'), ('team:3', 'POR')
+            INSERT INTO teams (team_id, display_name) VALUES
+            ('team:1', 'MIL'), ('team:2', 'BKN'), ('team:3', 'POR'),
+            ('team:25', 'GSW'), ('team:28', 'LAL')
         """)
         conn.execute("""
             INSERT INTO games (game_id, season_id, game_date, home_team_id, away_team_id, native_game_id)
@@ -923,4 +925,162 @@ def test_g7_gold_100_offline_batch_validation_replay():
     assert val_res["checks"]["receipt_count"] == 100
     assert val_res["checks"]["unknown_count"] == 0
     assert val_res["checks"]["conservation_holds"] is True
+
+
+def test_trusted_role_registry_save_provenance_and_database_verification(temp_environment):
+    """Verify TrustedRoleRegistry binds to save directory, generates role_authorizations.json, and validates teams against save DB."""
+    env = temp_environment
+    host = env["host"]
+    save_dir = env["save_dir"]
+
+    # 1. Initialize season binds registry to save_dir and creates role_authorizations.json
+    host.initialize_season(
+        save_directory=str(save_dir),
+        loaded_filename="MyLEAGUE0003",
+        mock_game_date="2021-11-01"
+    )
+
+    auth_file = save_dir / "role_authorizations.json"
+    assert auth_file.is_file(), "role_authorizations.json must be persisted in save directory"
+    auth_data = json.loads(auth_file.read_text(encoding="utf-8"))
+    assert auth_data["save_id"] == "nba2k22_test_01"
+    assert auth_data["bound_database_file"].endswith(".sqlite")
+    assert len(auth_data["roles"]) >= 2
+
+    # 2. Valid team in save database authenticates
+    assert host.role_registry.is_actor_authenticated("GM", 1, "gm_user_01") is True
+    assert host.role_registry.is_actor_authenticated("COACH", 1, "coach_user_01") is True
+
+    # 3. Invalid actor for valid team rejected
+    assert host.role_registry.is_actor_authenticated("GM", 1, "fake_actor") is False
+
+    # 4. Team that does NOT exist in the save database is rejected even if actor matches
+    assert host.role_registry.is_actor_authenticated("GM", 9999, "gm_user_01") is False
+
+    # 5. Modifying role_authorizations.json with custom actor updates bindings faithfully
+    custom_roles = [
+        {"role_type": "GM", "team_id": 2, "actor_uid": "custom_gm_bkn", "provenance": "CUSTOM_AUTHORIZED_DELEGATION"}
+    ]
+    auth_data["roles"] = custom_roles
+    auth_file.write_text(json.dumps(auth_data, indent=2), encoding="utf-8")
+
+    # Re-bind registry to save
+    host.role_registry.bind_save_context(save_dir, "nba2k22_test_01", "worldline-main", save_dir / "world.sqlite")
+    assert host.role_registry.is_actor_authenticated("GM", 2, "custom_gm_bkn") is True
+    # Old mapping no longer authenticated
+    assert host.role_registry.is_actor_authenticated("GM", 1, "gm_user_01") is False
+
+
+def test_validate_batch_execution_rejects_reconstructed_mock_as_native_evidence():
+    """Verify validate_batch_execution refuses to accept host-reconstructed chunk messages as genuine native transport IPC."""
+    import contracts
+    from bulk_executor import BulkBatch, BulkBatchHeader, BulkIntentItem, ItemReceipt
+    from validate_batch_execution import validate_batch_execution
+
+    header = BulkBatchHeader(
+        batch_id="TEST-BATCH-RECON",
+        save_instance_id="save-01",
+        game_build_sha256=contracts.BUILD,
+        authorization_ref="AUTH-01",
+        source_snapshot_ref="SNAP-01",
+        expected_process_name="NBA2K22.exe",
+        expected_pid=5720,
+        dry_run=False
+    )
+    intents = (
+        BulkIntentItem(
+            intent_id="i-1",
+            action_id="PLAYER_PATCH_TENDENCIES",
+            team_id=1,
+            field_id="SHOT_TENDENCY",
+            expected_before=80,
+            value=85,
+            player_id=2459
+        ),
+    )
+    batch = BulkBatch(header=header, intents=intents)
+    from bulk_executor import BulkBatchPlanner
+    chunks = BulkBatchPlanner().plan(batch, max_chunk_size=50)
+
+    receipts = [
+        ItemReceipt(
+            intent_id="i-1",
+            team_id=1,
+            player_id=2459,
+            field_id="SHOT_TENDENCY",
+            expected_before=80,
+            requested=85,
+            getter_before=80,
+            getter_after=85,
+            raw_after=85,
+            outcome="SUCCESS_APPLIED",
+            chunk_id=chunks[0].chunk_id,
+            timestamp="2026-11-02T12:00:00Z",
+            unaltered_fields_check=True
+        )
+    ]
+    readback = {
+        "all_100_persisted_in_game": True,
+        "missed_count": 0,
+        "verified_items": [{
+            "intent_id": "i-1",
+            "player_id": 2459,
+            "readback_getter": 85,
+            "target_tendency": 85,
+            "confirmed": True
+        }]
+    }
+
+    # 1. Reconstructed mock message tagged with OFFLINE_MOCK_RECONSTRUCTED must be rejected if require_native_transport_evidence=True
+    reconstructed_raw = [{
+        "kind": "chunk-execution-result",
+        "provenance": "OFFLINE_MOCK_RECONSTRUCTED",
+        "chunk_id": chunks[0].chunk_id,
+        "chunk_digest": chunks[0].chunk_digest,
+        "plan_digest": chunks[0].plan_digest,
+        "action_id": chunks[0].action_id,
+        "batch_id": chunks[0].batch_id,
+        "save_instance_id": chunks[0].save_instance_id,
+        "outcome": "CHUNK_SUCCESS",
+        "receipts": [{"intent_id": "i-1", "outcome": "SUCCESS_APPLIED"}]
+    }]
+
+    res_reject = validate_batch_execution(
+        batch=batch,
+        chunks=chunks,
+        raw_messages=reconstructed_raw,
+        receipts=receipts,
+        independent_readback=readback,
+        require_native_transport_evidence=True
+    )
+    assert res_reject["validation_passed"] is False
+    assert any("RECONSTRUCTED_MOCK_CANNOT_SATISFY_NATIVE_TRANSPORT_EVIDENCE" in e for e in res_reject["errors"])
+    assert res_reject["checks"]["raw_evidence_is_reconstructed"] is True
+    assert res_reject["checks"]["native_transport_evidence_verified"] is False
+
+    # 2. Live mode without any raw messages must fail closed (NATIVE_TRANSPORT_EVIDENCE_MISSING)
+    res_missing = validate_batch_execution(
+        batch=batch,
+        chunks=chunks,
+        raw_messages=[],
+        receipts=receipts,
+        independent_readback=readback,
+        require_native_transport_evidence=True
+    )
+    assert res_missing["validation_passed"] is False
+    assert any("NATIVE_TRANSPORT_EVIDENCE_MISSING" in e for e in res_missing["errors"])
+    assert res_missing["checks"]["native_transport_evidence_verified"] is False
+
+    # 3. Offline mock mode (require_native_transport_evidence=False) safely skips raw transport without false claims
+    res_mock_ok = validate_batch_execution(
+        batch=batch,
+        chunks=chunks,
+        raw_messages=[],
+        receipts=receipts,
+        independent_readback=readback,
+        require_native_transport_evidence=False
+    )
+    assert res_mock_ok["validation_passed"] is True
+    assert res_mock_ok["checks"]["native_transport_evidence_verified"] is False
+    assert res_mock_ok["checks"]["raw_evidence_status"] == "OFFLINE_MOCK_TRANSPORT_SKIPPED"
 

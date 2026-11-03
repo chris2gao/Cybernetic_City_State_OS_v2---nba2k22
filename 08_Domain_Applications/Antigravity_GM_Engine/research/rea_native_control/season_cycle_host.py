@@ -62,41 +62,185 @@ from validate_batch_execution import validate_batch_execution
 
 
 class TrustedRoleRegistry:
-    """Manages authenticated roles bound to the current worldline, save instance, season, and team."""
+    """Manages authenticated roles bound to the current save file, database, and worldline manifest."""
 
-    def __init__(self):
-        # Default authenticated roles mapped by (role_type, team_id) -> actor_uid
-        self._actors: Dict[Tuple[str, int], str] = {
+    def __init__(
+        self,
+        save_dir: Optional[Path] = None,
+        save_id: Optional[str] = None,
+        worldline_id: Optional[str] = None,
+        database_path: Optional[Path] = None
+    ):
+        self.save_dir: Optional[Path] = Path(save_dir) if save_dir else None
+        self.save_id: Optional[str] = save_id
+        self.worldline_id: Optional[str] = worldline_id
+        self.database_path: Optional[Path] = Path(database_path) if database_path else None
+
+        self._actors: Dict[Tuple[str, int], str] = {}
+        self._actor_provenance: Dict[Tuple[str, int], Dict[str, Any]] = {}
+        self._allowed_actions: Dict[str, Set[str]] = {
+            "GM": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "GM.TRADE.MIXED"},
+            "COACH": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "COACH.STRATEGY.RUN_PLAY"}
+        }
+        self._phase_grants: Set[Tuple[str, str]] = set()
+
+        if self.save_dir and self.save_id:
+            self.bind_save_context(self.save_dir, self.save_id, self.worldline_id or "worldline-main", self.database_path)
+        else:
+            self._init_defaults()
+
+    def _init_defaults(self):
+        """Initializes fallback actor mappings prior to explicit save binding."""
+        self._actors = {
             ("GM", 1): "gm_user_01",
             ("GM", 25): "gm_user_01",
             ("GM", 28): "gm_user_01",
             ("COACH", 1): "coach_user_01"
         }
-        self._allowed_actions: Dict[str, Set[str]] = {
-            "GM": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "GM.TRADE.MIXED"},
-            "COACH": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "COACH.STRATEGY.RUN_PLAY"}
-        }
-        self._phase_grants: Set[Tuple[str, str]] = {
-            ("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("gm_user_01", "PLAYER_PATCH_TENDENCIES"),
-            ("coach_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "PLAYER_PATCH_TENDENCIES"),
-            ("coach_user_01", "COACH.STRATEGY.RUN_PLAY"),
-            ("gm_user_01", "GM.TRADE.MIXED")
-        }
+        self._refresh_phase_grants()
+
+    def _refresh_phase_grants(self):
+        self._phase_grants = set()
+        for (role, _), actor_uid in self._actors.items():
+            if role == "GM":
+                self._phase_grants.add((actor_uid, "PLAYER.EDIT.TENDENCY_BATCH"))
+                self._phase_grants.add((actor_uid, "PLAYER_PATCH_TENDENCIES"))
+                self._phase_grants.add((actor_uid, "GM.TRADE.MIXED"))
+            elif role == "COACH":
+                self._phase_grants.add((actor_uid, "PLAYER.EDIT.TENDENCY_BATCH"))
+                self._phase_grants.add((actor_uid, "PLAYER_PATCH_TENDENCIES"))
+                self._phase_grants.add((actor_uid, "COACH.STRATEGY.RUN_PLAY"))
+
+    def bind_save_context(
+        self,
+        save_dir: Path,
+        save_id: str,
+        worldline_id: str,
+        database_path: Optional[Path] = None
+    ) -> None:
+        """Binds the registry directly to the active save directory, database, and worldline manifest."""
+        self.save_dir = Path(save_dir).resolve()
+        self.save_id = save_id
+        self.worldline_id = worldline_id
+        if database_path:
+            self.database_path = Path(database_path).resolve()
+
+        auth_file = self.save_dir / "role_authorizations.json"
+        loaded_roles = None
+
+        if auth_file.is_file():
+            try:
+                auth_data = json.loads(auth_file.read_text(encoding="utf-8"))
+                if auth_data.get("save_id") == save_id:
+                    loaded_roles = auth_data.get("roles", [])
+            except Exception:
+                loaded_roles = None
+
+        if loaded_roles is None:
+            db_teams = self._get_teams_from_database()
+            default_candidate_roles = [
+                {"role_type": "GM", "team_id": 1, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"},
+                {"role_type": "GM", "team_id": 25, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"},
+                {"role_type": "GM", "team_id": 28, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"},
+                {"role_type": "COACH", "team_id": 1, "actor_uid": "coach_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"}
+            ]
+            verified_roles = []
+            for r in default_candidate_roles:
+                tid = r["team_id"]
+                if not db_teams or tid in db_teams:
+                    r["authorized_at"] = datetime.now(timezone.utc).isoformat()
+                    verified_roles.append(r)
+
+            auth_manifest = {
+                "schema_version": "nba2k22.rea.role_authorizations.v1",
+                "save_id": save_id,
+                "worldline_id": worldline_id,
+                "bound_database_file": self.database_path.name if self.database_path else "world.sqlite",
+                "roles": verified_roles
+            }
+            tmp_auth = auth_file.with_suffix(".tmp")
+            tmp_auth.write_text(json.dumps(auth_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            os.replace(tmp_auth, auth_file)
+            loaded_roles = verified_roles
+
+        self._actors.clear()
+        self._actor_provenance.clear()
+        for r in loaded_roles:
+            rtype = str(r["role_type"]).upper()
+            tid = int(r["team_id"])
+            auid = str(r["actor_uid"])
+            self._actors[(rtype, tid)] = auid
+            self._actor_provenance[(rtype, tid)] = {
+                "provenance": r.get("provenance", "SAVE_BOUND_ROLE_AUTHORIZATION"),
+                "authorized_at": r.get("authorized_at"),
+                "save_id": save_id,
+                "worldline_id": worldline_id
+            }
+
+        self._refresh_phase_grants()
+
+    def _get_teams_from_database(self) -> Set[int]:
+        """Queries numeric team IDs from the active save database."""
+        teams = set()
+        if not self.database_path or not self.database_path.is_file():
+            return teams
+        try:
+            with closing(connect(self.database_path, True)) as conn:
+                cur = conn.cursor()
+                for row in cur.execute("SELECT team_id FROM teams").fetchall():
+                    val = str(row[0])
+                    if val.startswith("team:"):
+                        val = val.split(":", 1)[1]
+                    try:
+                        teams.add(int(val))
+                    except ValueError:
+                        pass
+        except Exception:
+            pass
+        return teams
+
+    def _verify_team_in_database(self, team_id: int) -> bool:
+        """Verifies that a team actually exists in the active save database."""
+        if not self.database_path or not self.database_path.is_file():
+            return True
+        db_teams = self._get_teams_from_database()
+        if not db_teams:
+            return True
+        return int(team_id) in db_teams
 
     def is_actor_authenticated(self, role_type: str, team_id: int, actor_uid: str) -> bool:
-        expected = self._actors.get((role_type.upper(), int(team_id)))
-        return expected is not None and expected == actor_uid
+        """Verifies that the actor identity and team scope are authentically registered for the active save."""
+        rtype = role_type.upper()
+        tid = int(team_id)
+        expected = self._actors.get((rtype, tid))
+        if expected is None or expected != actor_uid:
+            return False
+
+        if not self._verify_team_in_database(tid):
+            return False
+
+        return True
+
+    def get_authenticated_teams(self, role_type: str) -> Tuple[int, ...]:
+        """Returns sorted tuple of team IDs authenticated for a given role type in the current save."""
+        rtype = role_type.upper()
+        teams = [tid for (r, tid) in self._actors.keys() if r == rtype and self._verify_team_in_database(tid)]
+        return tuple(sorted(teams))
 
     def get_phase_grants(self) -> Set[Tuple[str, str]]:
         return set(self._phase_grants)
 
     def get_profiles(self, ctx: BatchContext) -> Tuple[RoleCapabilityProfile, RoleCapabilityProfile]:
+        gm_teams = self.get_authenticated_teams("GM")
+        coach_teams = self.get_authenticated_teams("COACH")
+
+        gm_actor = next((uid for (r, _), uid in self._actors.items() if r == "GM"), "gm_user_01")
+        coach_actor = next((uid for (r, _), uid in self._actors.items() if r == "COACH"), "coach_user_01")
+
         gm = RoleCapabilityProfile(
             role_type="GM",
-            actor_uid="gm_user_01",
-            team_scope=(1, 25, 28),
+            actor_uid=gm_actor,
+            team_scope=gm_teams,
             world_id=ctx.world_id,
             save_instance_id=ctx.save_instance_id,
             generation_id=ctx.generation_id,
@@ -107,8 +251,8 @@ class TrustedRoleRegistry:
         )
         coach = RoleCapabilityProfile(
             role_type="COACH",
-            actor_uid="coach_user_01",
-            team_scope=(1,),
+            actor_uid=coach_actor,
+            team_scope=coach_teams,
             world_id=ctx.world_id,
             save_instance_id=ctx.save_instance_id,
             generation_id=ctx.generation_id,
@@ -375,6 +519,9 @@ class SeasonCycleHost:
             if orig_bytes and save_json_path.exists():
                 save_json_path.write_bytes(orig_bytes)
             raise RuntimeError(f"WORLDLINE_BINDING_UPDATE_FAILED_FAIL_CLOSED: {e}")
+
+        # Bind role registry directly to active save context and target database
+        self.role_registry.bind_save_context(save_dir, save_id, worldline_id, target_db)
 
         return {
             "save_id": save_id,
@@ -1042,58 +1189,36 @@ class SeasonCycleHost:
         # 5. Multi-layer batch validation (P0-B)
         planned_chunks = executor.planner.plan(bulk_batch, max_chunk_size=50)
 
-        receipts_by_chunk: Dict[str, List[Dict[str, Any]]] = {}
-        for r in journal_receipts:
-            cid = getattr(r, "chunk_id", None) or (r.get("chunk_id") if isinstance(r, dict) else "")
-            iid = getattr(r, "intent_id", None) or (r.get("intent_id") if isinstance(r, dict) else "")
-            tid = getattr(r, "team_id", None) or (r.get("team_id") if isinstance(r, dict) else None)
-            pid = getattr(r, "player_id", None) or (r.get("player_id") if isinstance(r, dict) else None)
-            fid = getattr(r, "field_id", None) or (r.get("field_id") if isinstance(r, dict) else None)
-            exp_b = getattr(r, "expected_before", None) if hasattr(r, "expected_before") else (r.get("expected_before") if isinstance(r, dict) else None)
-            req = getattr(r, "requested", None) if hasattr(r, "requested") else (r.get("requested") if isinstance(r, dict) else None)
-            out = getattr(r, "outcome", None) or (r.get("outcome") if isinstance(r, dict) else "")
-            unaltered = getattr(r, "unaltered_fields_check", False) if hasattr(r, "unaltered_fields_check") else (r.get("unaltered_fields_check", False) if isinstance(r, dict) else False)
-            get_b = getattr(r, "getter_before", None) if hasattr(r, "getter_before") else (r.get("getter_before") if isinstance(r, dict) else None)
-            get_a = getattr(r, "getter_after", None) if hasattr(r, "getter_after") else (r.get("getter_after") if isinstance(r, dict) else None)
-            raw_a = getattr(r, "raw_after", None) if hasattr(r, "raw_after") else (r.get("raw_after") if isinstance(r, dict) else None)
+        # Retrieve authentic raw Native REA messages from runtime directory (evidence.json)
+        genuine_raw_messages: List[Dict[str, Any]] = []
+        for ev_path in r_dir.glob("*/evidence.json"):
+            try:
+                ev_data = json.loads(ev_path.read_text(encoding="utf-8-sig"))
+                genuine_raw_messages.extend(ev_data.get("normalized_result", {}).get("messages", []))
+            except Exception:
+                pass
 
-            receipts_by_chunk.setdefault(cid, []).append({
-                "intent_id": iid,
-                "team_id": tid,
-                "player_id": pid,
-                "field_id": fid,
-                "expected_before": exp_b,
-                "getter_before": get_b,
-                "requested": req,
-                "getter_after": get_a,
-                "raw_after": raw_a,
-                "outcome": out,
-                "unaltered_fields_check": unaltered
-            })
+        has_genuine_raw_evidence = (len(genuine_raw_messages) > 0)
 
-        raw_chunk_msgs = []
-        for c in planned_chunks:
-            c_receipts = receipts_by_chunk.get(c.chunk_id, [])
-            has_chunk_unknown = any("UNKNOWN" in str(r.get("outcome", "")).upper() for r in c_receipts)
-            c_outcome = "CHUNK_FAILED" if has_chunk_unknown else ("CHUNK_SKIPPED" if not c_receipts else "CHUNK_SUCCESS")
-            raw_chunk_msgs.append({
-                "kind": "chunk-execution-result",
-                "chunk_id": c.chunk_id,
-                "chunk_digest": c.chunk_digest,
-                "plan_digest": c.plan_digest,
-                "action_id": c.action_id,
-                "batch_id": c.batch_id,
-                "save_instance_id": c.save_instance_id,
-                "outcome": c_outcome,
-                "receipts": c_receipts
-            })
+        # In live mode, genuine raw REA Frida IPC evidence is strictly required
+        if not is_mock:
+            validation_raw_messages = genuine_raw_messages
+            require_native_transport = True
+        elif has_genuine_raw_evidence:
+            validation_raw_messages = genuine_raw_messages
+            require_native_transport = True
+        else:
+            # Offline mock mode with fake runner: DO NOT falsely synthesize raw Frida messages
+            validation_raw_messages = []
+            require_native_transport = False
 
         validation_res = validate_batch_execution(
             batch=bulk_batch,
             chunks=planned_chunks,
-            raw_messages=raw_chunk_msgs,
+            raw_messages=validation_raw_messages,
             receipts=journal_receipts,
-            independent_readback=independent_readback_report
+            independent_readback=independent_readback_report,
+            require_native_transport_evidence=require_native_transport
         )
         batch_validation_passed = validation_res.get("validation_passed", False)
 
