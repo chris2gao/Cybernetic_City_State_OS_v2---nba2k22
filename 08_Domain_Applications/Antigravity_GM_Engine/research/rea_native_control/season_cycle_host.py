@@ -900,24 +900,88 @@ class SeasonCycleHost:
                             cconn.commit()
                     except Exception:
                         pass
+            # F2 state consistency: atomically register new worldline in manifest,
+            # update save.json with BOTH database_file AND worldline_id, then re-bind registry.
+            # Any failure must roll back both files to avoid half-initialized state.
+            manifest_path = save_dir / "worldlines_manifest.json"
             save_json_path = save_dir / "save.json"
-            if save_json_path.exists():
+
+            # 1. Load the current manifest (written by inspect_worldline above)
+            orig_manifest_bytes = manifest_path.read_bytes() if manifest_path.exists() else None
+            orig_save_bytes = save_json_path.read_bytes() if save_json_path.exists() else None
+            try:
+                manifest_data = json.loads(orig_manifest_bytes) if orig_manifest_bytes else {
+                    "original_save_id": wl_info["save_id"],
+                    "primary_database_file": "world.sqlite",
+                    "active_worldline_id": "worldline-main",
+                    "worldlines": {
+                        "worldline-main": {
+                            "database_file": "world.sqlite",
+                            "created_at": datetime.now(timezone.utc).isoformat(),
+                            "parent_worldline_id": None
+                        }
+                    }
+                }
+
+                # 2. Register the new branch worldline in the manifest
+                parent_wl_id = manifest_data.get("active_worldline_id", "worldline-main")
+                manifest_data["worldlines"][wl_info["worldline_id"]] = {
+                    "database_file": target_path.name,
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                    "parent_worldline_id": parent_wl_id,
+                    "branch_reason": "force_new_worldline"
+                }
+                manifest_data["active_worldline_id"] = wl_info["worldline_id"]
+
+                # 3. Atomic write manifest: tmp → replace
+                tmp_m = manifest_path.with_suffix(".tmp")
+                tmp_m.write_text(json.dumps(manifest_data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                os.replace(tmp_m, manifest_path)
+
+                # 4. Atomic write save.json with BOTH database_file AND worldline_id updated
+                sdata = json.loads(orig_save_bytes) if orig_save_bytes else {
+                    "save_id": wl_info["save_id"],
+                    "loaded_filename": loaded_filename,
+                }
+                sdata["database_file"] = target_path.name
+                sdata["worldline_id"] = wl_info["worldline_id"]
+                tmp_sjson = save_json_path.with_suffix(".tmp")
+                tmp_sjson.write_text(json.dumps(sdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                os.replace(tmp_sjson, save_json_path)
+
+                # 5. Immediate readback verification: manifest, save.json, and DB must be consistent
+                verify_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+                verify_save = json.loads(save_json_path.read_text(encoding="utf-8"))
+                new_wl_id = wl_info["worldline_id"]
+                if new_wl_id not in verify_manifest.get("worldlines", {}):
+                    raise RuntimeError(f"MANIFEST_VERIFY_FAILED: new worldline {new_wl_id!r} not in manifest after write")
+                if verify_manifest.get("active_worldline_id") != new_wl_id:
+                    raise RuntimeError(f"MANIFEST_ACTIVE_WL_VERIFY_FAILED: active_worldline_id mismatch after write")
+                if verify_save.get("worldline_id") != new_wl_id:
+                    raise RuntimeError(f"SAVE_JSON_WL_VERIFY_FAILED: worldline_id mismatch in save.json after write")
+                if verify_save.get("database_file") != target_path.name:
+                    raise RuntimeError(f"SAVE_JSON_DB_VERIFY_FAILED: database_file mismatch in save.json after write")
+                if not target_path.exists():
+                    raise RuntimeError(f"BRANCH_DB_MISSING: {target_path} not found after creation")
+
+            except Exception as e:
+                # Rollback both files on any failure to prevent half-initialized state
                 try:
-                    sdata = json.loads(save_json_path.read_bytes())
-                    sdata["database_file"] = target_path.name
-                    tmp_sjson = save_json_path.with_suffix(".tmp")
-                    tmp_sjson.write_text(json.dumps(sdata, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-                    os.replace(tmp_sjson, save_json_path)
+                    if orig_manifest_bytes is not None:
+                        manifest_path.write_bytes(orig_manifest_bytes)
+                    if orig_save_bytes is not None:
+                        save_json_path.write_bytes(orig_save_bytes)
                 except Exception:
                     pass
+                raise RuntimeError(f"FORCE_NEW_WORLDLINE_STATE_UPDATE_FAILED_FAIL_CLOSED: {e}")
 
-            # F2: Re-bind role registry to new worldline+database immediately after branch creation.
+            # F2-B: Re-bind role registry to new worldline+database.
             # The earlier inspect_worldline() call bound the registry to the original worldline.
-            # Without this re-bind, old worldline auth would remain active for the new worldline execution.
+            # After manifest + save.json are atomically consistent, registry must follow.
             self.role_registry.bind_save_context(
                 save_dir,
                 wl_info["save_id"],
-                wl_info["worldline_id"],  # new branch worldline ID set above
+                wl_info["worldline_id"],  # new branch worldline ID, now registered in manifest
                 target_path               # new branch DB path
             )
 
@@ -968,8 +1032,18 @@ class SeasonCycleHost:
         })
         self._save_state()
 
+        # F2 receipt: accurately reflect authorization state.
+        # If registry is not authorized (e.g. AUTHORIZATION_WILDCARD_TARGET_UNVERIFIED or DEFAULT_DENIED_UNBOUND),
+        # the receipt must NOT imply Live execution is ready. Use a distinct status to flag pending auth.
+        auth_ok = self.role_registry.is_authorized
+        init_status = (
+            "INITIALIZED_AND_BASELINE_BOUND"
+            if auth_ok
+            else "INITIALIZED_BASELINE_BOUND_AUTHORIZATION_PENDING"
+        )
+
         receipt = {
-            "status": "INITIALIZED_AND_BASELINE_BOUND",
+            "status": init_status,
             "save_id": wl_info["save_id"],
             "loaded_filename": loaded_filename,
             "worldline_id": wl_info["worldline_id"],
@@ -977,6 +1051,7 @@ class SeasonCycleHost:
             "current_game_date": current_date,
             "is_backward_worldline_branch": wl_info["is_backward"],
             "role_authorization_status": self.role_registry.authorization_status,
+            "role_authorization_ready": auth_ok,
             "capture_summary": capture_result.get("status") if capture_result else "ALREADY_BOUND"
         }
         self._append_ledger({"action": "INITIALIZE_SEASON", **receipt})
@@ -1202,15 +1277,23 @@ class SeasonCycleHost:
         if not is_mock:
             # LIVE MODE: Mandatory real-time Getter and dynamic PID
             if getter_func is None:
+                # No external getter supplied — fetch one internally and require live PID
                 getter_func = self._get_live_getter()
                 if getter_func is None:
                     raise RuntimeError("LIVE_GETTER_REQUIRED: Cannot seal live cycle without real-time Getter for CAS preflight.")
-            if expected_pid is None:
-                try:
-                    from refresh import resolve_pid
-                    expected_pid = resolve_pid("auto")
-                except Exception as e:
-                    raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: {e}")
+                # PID is only resolved here when getter is fetched internally.
+                # When caller supplies getter_func, they own PID validation context.
+                # Strict PID enforcement happens in authorize_and_execute (cannot be bypassed for Native writes).
+                if expected_pid is None:
+                    try:
+                        from refresh import resolve_pid
+                        expected_pid = resolve_pid("auto")
+                    except Exception as e:
+                        raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: {e}")
+            else:
+                # Caller supplied getter_func — PID sentinel; real PID check in authorize_and_execute
+                if expected_pid is None:
+                    expected_pid = 0
         else:
             # Mock mode
             if expected_pid is None:

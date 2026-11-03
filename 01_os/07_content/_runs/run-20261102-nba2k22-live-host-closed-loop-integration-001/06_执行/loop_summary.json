@@ -2,7 +2,7 @@
   "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
   "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
   "actual_executor_model": "Gemini 2.5 Pro (execution)",
-  "total_iterations": 10,
+  "total_iterations": 11,
   "all_offline_gates_satisfied": true,
   "gpt6_audit_remediation": {
     "audit_commit_sha": "bf4f044e9f83665eb573638425f44cd97d7e7d93",
@@ -39,13 +39,14 @@
     "completion_pointer": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/08_结论/completion_pointer.md"
   },
   "test_metrics": {
-    "host_integration_tests": "26 passed, 0 failed in 26.79s (test_season_cycle_host.py)",
-    "host_full_pipeline_tests": "49 passed, 0 failed in 5.66s (outbox + bridge + role_batches + capabilities + validate)",
+    "host_integration_tests": "26 passed, 0 failed in 42.06s (test_season_cycle_host.py)",
+    "host_full_pipeline_tests": "49 passed, 0 failed in 6.15s",
     "world_data_prototype_tests": "337 passed, 2 warnings, 103 subtests passed in 147.21s",
     "regressions_detected": 0,
     "gold_100_offline_replay": "PASS (100 receipts replayed and verified via validate_stage_directory)",
-    "f1_f2_targeted_tests": "8 passed, 0 failed in 4.47s (test_f1_f2_saves_identity_and_worldline_rebind.py)",
-    "total_tests_passing": "83 (26 host + 8 f1f2 + 49 pipeline)"
+    "f1_f2_targeted_tests": "8 passed, 0 failed (test_f1_f2_saves_identity_and_worldline_rebind.py)",
+    "it11_state_consistency_tests": "8 passed, 0 failed (test_f2_worldline_state_consistency.py)",
+    "total_tests_passing": "91 (26 host + 8 f1f2 + 8 it11 + 49 pipeline)"
   },
   "governance_adherence": {
     "created_new_native_setter": false,
@@ -93,5 +94,14 @@
     "f1_saves_strict_failclosed": "RESOLVED: _get_teams_from_database() saves table check extracted outside swallowing except block. OperationalError on missing saves table immediately returns set() (fail-closed). Empty singleton row, null save_id, or save_id mismatch all return set(). Verified by 5 dedicated tests including positive control.",
     "timestamp": "2026-11-02T17:46:10Z",
     "wildcard_scope_guard": "RESOLVED: bind_save_context() wildcard guard now requires explicit allow_wildcard_scope, wildcard_authorization_purpose, wildcard_scope_declaration, or WILDCARD keyword in human_authorization_ref/provenance. Test fixture updated with allow_wildcard_scope=True. All 26 existing tests continue to pass."
+  },
+  "it11_f2_state_consistency_closeout": {
+    "final_candidate_status": "OFFLINE_HOST_REMEDIATION_READY_FOR_SERIES_REVIEW",
+    "timestamp": "2026-11-03T01:33:47Z",
+    "fixes": "manifest registration, save.json worldline_id, receipt status distinction, seal_cycle_decisions PID logic",
+    "task_id": "Iteration 11 F2 State Consistency",
+    "root_cause": "force_new_worldline block did not register new worldline in manifest or update save.json worldline_id",
+    "live_pilot_status": "NOT_EXECUTED",
+    "tests_passed": "26+8+8+49=91"
   }
 }
