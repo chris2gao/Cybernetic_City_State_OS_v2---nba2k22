@@ -1,0 +1,31 @@
+'use strict';
+const plan=__PLAN__,image=Process.mainModule,base=image.base;let used=0;
+function read(p,n){if(n<1||n>32768||used+n>plan.budget)throw Error('READ_BUDGET');let at=p,left=n;while(left){const r=Process.findRangeByAddress(at);if(!r||!r.protection.includes('r'))throw Error('UNREADABLE_RANGE');const take=Math.min(left,r.base.add(r.size).sub(at).toUInt32());if(take<1)throw Error('UNREADABLE_RANGE');left-=take;at=at.add(take);}used+=n;return p.readByteArray(n);}
+const ptrAt=(b,o=0)=>ptr('0x'+new DataView(b).getBigUint64(o,true).toString(16));
+const u16=(b,o=0)=>new DataView(b).getUint16(o,true),u32=(b,o=0)=>new DataView(b).getUint32(o,true);
+function fnv(b){let h=2166136261;for(const v of new Uint8Array(b))h=Math.imul(h^v,16777619)>>>0;return h;}
+function text(b){let s='';for(let o=0;o+1<b.byteLength;o+=2){const c=u16(b,o);if(!c)break;s+=String.fromCharCode(c);}return s;}
+function rootGetter(rva,prefix){const code=read(base.add(rva),8),v=new Uint8Array(code);if(v[0]!==0x48||v[1]!==0x8b||v[2]!==prefix)throw Error('ROOT_GETTER_CHANGED');return ptrAt(read(base.add(rva+7+new DataView(code).getInt32(3,true)),8));}
+function fields(rva){const h=read(base.add(rva),48),count=Number(new DataView(h).getBigUint64(0,true));if(count<1||count>800)throw Error('FIELD_BUDGET');const rows=read(ptrAt(h,8),count*40),found={};for(let i=0;i<count;i++)for(const [key,crc] of Object.entries(plan.field_crcs))if(u32(rows,i*40)===crc)found[key]={offset:u32(rows,i*40+8),size:u32(rows,i*40+12),format:u32(rows,i*40+16)};return {field_count:count,found};}
+if(fnv(read(base.add(plan.apply_rva),plan.apply_bytes))!==plan.apply_fnv32)throw Error('NATIVE_APPLY_CODE_CHANGED');
+const roster=rootGetter(plan.roster_getter_rva,0x05),franchise=rootGetter(plan.franchise_getter_rva,0x1d),root=roster.sub(8);
+const td=read(root.add(0x88),32),teamCount=Number(new DataView(td).getBigUint64(0,true)),teamBase=ptrAt(td,8);if(teamCount<1||teamCount>1000)throw Error('TEAM_ENUMERATION_LIMIT');
+const matches=[];for(let i=0;i<teamCount;i++){const t=teamBase.add(i*4696);try{if(u16(read(t.add(0xca8),2))===plan.team_id)matches.push(t);}catch(e){}}
+if(matches.length!==1)throw Error('TARGET_TEAM_NOT_UNIQUE');const team=matches[0],coach=ptrAt(read(team.add(0xce8),8));if(coach.isNull())throw Error('TARGET_COACH_NULL');
+const raw=read(coach,352),cv=new DataView(raw),word=u32(raw,316),ownerMatch=ptrAt(raw,0x18).equals(team);
+let manager=null;for(let i=0;i<36;i++){const p=franchise.add(1691600+i*81520);if(u16(read(p,2))===plan.team_id){if(manager)throw Error('MANAGER_NOT_UNIQUE');manager=p;}}
+if(!manager)throw Error('MANAGER_NOT_FOUND');const gp=manager.add(0x7854),gameplan=read(gp,880),gv=new DataView(gameplan);
+// Keep non-null reference identity UNKNOWN here. Historical playbook labels
+// were not proven; the common lookup service is also used for PLAYER UIDs.
+const books=[];for(let i=0;i<3;i++){const bp=ptrAt(raw,0x120+i*8);books.push(bp.isNull()?{slot:i,is_null:true,id:65535}:{slot:i,is_null:false,id:null});}
+const input_projection={poe_offense:(word>>>15)&31,poe_offense2:(word>>>20)&31,poe_offense3:(word>>>25)&31,poe_defense:word&31,poe_defense2:(word>>>5)&31,poe_defense3:(word>>>10)&31,system_proficiency:(u32(raw,0x148)>>>17)&255,coach_e0:cv.getUint8(0xe0),coach_e2:cv.getUint8(0xe2),coach_de:cv.getUint8(0xde),coach_138:cv.getUint8(0x138),coach_df:cv.getUint8(0xdf),coach_109:cv.getUint8(0x109),coach_fc_bits25_30:(u32(raw,0xfc)>>>25)&63,playbook_ids:books.map(b=>b.id)};
+const sd=read(root.add(0x138),32),staff=ptrAt(sd,8),staffEnd=ptrAt(sd,24);
+const observation={kind:'native-action-read-only-preflight',team_id:plan.team_id,team_abbreviation:text(read(team.add(0x30a),10)),coach_name_candidates:[text(raw.slice(0x30,0x58)),text(raw.slice(0x58,0x80))],coach_readable_bytes:352,reciprocal_team_link:ownerMatch,staff_hypothesis:{inside_pool:coach.compare(staff)>=0&&coach.compare(staffEnd)<0,aligned:(BigInt(coach.toString())-BigInt(staff.toString()))%352n===0n,hard_read_gate:false},coach_poe_word:word,input_projection,gameplan_owner:u16(gameplan,2),gameplan_opponent:u16(gameplan,4),current_gameplan_poe:Array.from(new Uint8Array(gameplan.slice(0x17e,0x184))),current_gameplan_book_ids:[u16(gameplan,0x178),u16(gameplan,0x17a),u16(gameplan,0x17c)],gameplan_type:fields(plan.gameplan_type_rva),coach_type:fields(plan.coach_type_rva),apply_code_fingerprint_match:true,fingerprint_kind:'FNV1A32_PLUS_ADMIN_FULL_FILE_SHA256',apply_entry_rva:plan.apply_rva,explicit_native_calls:0,business_writes:0};
+observation.stable_context_recheck=rootGetter(plan.roster_getter_rva,0x05).equals(roster)&&rootGetter(plan.franchise_getter_rva,0x1d).equals(franchise)&&ptrAt(read(team.add(0xce8),8)).equals(coach)&&fnv(read(coach,352))===fnv(raw);
+send(observation);
+const events=[],errors=[],hooks=[];
+function rva(p){return p.compare(base)>=0&&p.compare(base.add(image.size))<0?p.sub(base).toUInt32():null;}
+for(const [label,target] of [['apply_gameplan_to_coach',plan.apply_rva],['manager_apply_pending',20050352],['roster_getter',plan.roster_getter_rva]]){
+ try{hooks.push(Interceptor.attach(base.add(target),{onEnter(args){if(events.length>=plan.max_events)return;const event={label,thread_id:Process.getCurrentThreadId(),caller_rva:rva(this.returnAddress)};if(label==='apply_gameplan_to_coach'){event.destination_matches_selected_coach=args[1].equals(coach);try{event.input_team_id=u16(read(args[0].add(2),2));event.input_defense=new Uint8Array(read(args[0].add(0x181),1))[0];}catch(e){event.read_error='ARGUMENT_READ_FAILED';}}events.push(event);}}));}catch(e){errors.push({label,error:'HOOK_INSTALL_FAILED'});}
+}
+setTimeout(()=>{for(const h of hooks)h.detach();send({kind:'native-action-trace-summary',events,errors,event_limit:plan.max_events,observation_window_ms:plan.window_ms,hooks_detached:hooks.length,explicit_read_bytes:used,explicit_native_calls:0,business_writes:0,AI_caller_proven:false,absolute_addresses_emitted:false});},plan.window_ms);

@@ -1,0 +1,1386 @@
+{
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "bindings": [
+    {
+      "binding_id": "coach.apply_gameplan",
+      "rva": 21424800,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "input_GAMEPLAN",
+          "type": "pointer"
+        },
+        {
+          "name": "target_COACHDATA",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Fresh team/reciprocal Coach/manager objects",
+        "Three referenced slots NULL; marshal all other current settings"
+      ],
+      "lifecycle": [
+        "Current Coach projection; original Gameplan remains unchanged"
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/live/verified-poc/evidence.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "input_bytes": 880,
+        "coach_bytes": 352,
+        "defense_source": 385,
+        "shared_word": 316,
+        "defense_shift": 0,
+        "offense_shift": 15,
+        "code_signatures": [
+          {
+            "rva": 21424800,
+            "bytes": 426,
+            "fnv32": 2422672907
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.add_player",
+      "rva": 19786784,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        },
+        {
+          "name": "from_team",
+          "type": "pointer"
+        },
+        {
+          "name": "to_team",
+          "type": "pointer"
+        },
+        {
+          "name": "player",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Private1668-byte proposal; actual TEAM and PLAYER matching supplied IDs"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_add_player_complete.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19786784,
+            "bytes": 494,
+            "fnv32": 907542704
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.validate",
+      "rva": 19843376,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-qualified/evidence.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19843376,
+            "bytes": 688,
+            "fnv32": 503539651
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.full_check",
+      "rva": 19798016,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        },
+        {
+          "name": "current_team_in_trade",
+          "type": "int"
+        },
+        {
+          "name": "context",
+          "type": "pointer"
+        },
+        {
+          "name": "checks",
+          "type": "int"
+        },
+        {
+          "name": "zero",
+          "type": "int"
+        },
+        {
+          "name": "output",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_check_complete.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19798016,
+            "bytes": 1965,
+            "fnv32": 2947072893
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.commit_wrapper",
+      "rva": 20101184,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        },
+        {
+          "name": "output",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [
+        "Offline local delegate mode1; active franchise; no conflicting lifecycle flag",
+        "Wrapper performs original FullCheck then Process; 0 is local success return"
+      ],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "proposal_bytes": 1668,
+        "elements": 18,
+        "element_bytes": 92,
+        "no_automatic_asset_substitution": true,
+        "code_signatures": [
+          {
+            "rva": 20101184,
+            "bytes": 891,
+            "fnv32": 1781753348
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.add_pick",
+      "rva": 19785808,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        },
+        {
+          "name": "from_team",
+          "type": "pointer"
+        },
+        {
+          "name": "to_team",
+          "type": "pointer"
+        },
+        {
+          "name": "pick",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Actual32-byte PICK resolved by native ID; current owner at+0 must match from TEAM",
+        "Do not derive ID from pointer offsets: use original pick.unique_id"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-02.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19785808,
+            "bytes": 522,
+            "fnv32": 1961622933
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "pick.by_id",
+      "rva": 15976960,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "pick_id",
+          "type": "uint"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-pick-10.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15976960,
+            "bytes": 321,
+            "fnv32": 2426445017
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "pick.unique_id",
+      "rva": 9728816,
+      "return_type": "uint",
+      "parameters": [
+        {
+          "name": "pick",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/pick_getter_leaf.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 9728816,
+            "bytes": 141,
+            "fnv32": 574134391
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "player.by_id",
+      "rva": 15988096,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "player_uid",
+          "type": "uint"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Original player lookup called with low16 player UID by native Add/Validate; verify returned PLAYER+0xf4 matches exactly"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "../rea_native_action/evidence/static/trade/trade_add_player_complete.json"
+      ],
+      "unknowns": [],
+      "input_layout": {}
+    },
+    {
+      "binding_id": "training.set_team_on_date",
+      "rva": 20078352,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        },
+        {
+          "name": "native_date_key",
+          "type": "int"
+        },
+        {
+          "name": "training_input",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "TEAM from logical ID",
+        "Private64-byte input: TEAM_TRAINING_DAILY payload at+8"
+      ],
+      "lifecycle": [
+        "No game scheduled on requested native date according to original check",
+        "Daily training record must exist in native training data"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "bytes": 64,
+        "daily_payload_offset": 8,
+        "percentage_per_focus": {
+          "offset": 8,
+          "count": 3,
+          "encoding": "float32"
+        },
+        "profile_per_focus": {
+          "offset": 20,
+          "count": 3,
+          "encoding": "uint8"
+        },
+        "points_per_subfocus": {
+          "offset": 23,
+          "count": 38,
+          "encoding": "uint8"
+        },
+        "intensity": {
+          "offset": 61,
+          "bits": 3
+        },
+        "date_key": "Native packed date integer, no guessed civil-date conversion",
+        "code_signatures": [
+          {
+            "rva": 20078352,
+            "bytes": 622,
+            "fnv32": 1205207861
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "training.daily_by_date",
+      "rva": 19862416,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        },
+        {
+          "name": "native_date_key",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Existing56-byte daily record; never synthesize a game calendar slot"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-03.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19862416,
+            "bytes": 114,
+            "fnv32": 3284813109
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "gameplan.ensure_opponent",
+      "rva": 19153456,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "manager",
+          "type": "pointer"
+        },
+        {
+          "name": "opponent_team",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "FRANCHISE_GAMEPLAN_MANAGER at selected team record start",
+        "Actual opponent TEAM"
+      ],
+      "lifecycle": [
+        "Returns existing or initializes unused opponent plan; no arbitrary full plan commit claimed"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "array_offset": 4,
+        "plan_bytes": 880,
+        "opponent_slots": 35,
+        "default_slot": 35,
+        "code_signatures": [
+          {
+            "rva": 19153456,
+            "bytes": 287,
+            "fnv32": 609224798
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "scout.focus_specific",
+      "rva": 20066096,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "goal",
+          "type": "pointer"
+        },
+        {
+          "name": "count",
+          "type": "int"
+        },
+        {
+          "name": "prospect_pointer_array",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "148-byte SCOUTING_GOAL",
+        "0..17 current640-byte draft prospect records; not PLAYER pointers"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-02.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "goal_bytes": 148,
+        "max_targets": 17,
+        "focus_type": 2,
+        "count_word_offset": 136,
+        "count_start_bit": 12,
+        "code_signatures": [
+          {
+            "rva": 20066096,
+            "bytes": 382,
+            "fnv32": 988799131
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "scout.initialize_goal",
+      "rva": 19232096,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "goal",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Private148-byte goal; constructor initializes target sentinels and flags"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/scout_goal_ctor_complete.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19232096,
+            "bytes": 591,
+            "fnv32": 110825763
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "scout.append_goal",
+      "rva": 19154304,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "trip",
+          "type": "pointer"
+        },
+        {
+          "name": "goal",
+          "type": "pointer"
+        },
+        {
+          "name": "team",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "960-byte current team scouting trip",
+        "148-byte private goal; copies into next of3 slots",
+        "TEAM forwarded to0x13191d0 for per-team target aggregation"
+      ],
+      "lifecycle": [
+        "Native returns0 at3 goals; no automatic replacement/goal removal"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-06.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19154304,
+            "bytes": 166,
+            "fnv32": 1571147539
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "scout.execute_trip",
+      "rva": 19275072,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [
+        "Scouting trips remaining>0; consumes one trip and runs current goals",
+        "Explicit execute-trip action only; assignment must not automatically consume a trip"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19275072,
+            "bytes": 235,
+            "fnv32": 1198854987
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "scout.goal_prospect_by_index",
+      "rva": 19867536,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "goal",
+          "type": "pointer"
+        },
+        {
+          "name": "index",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [
+        "index within encoded goal target count"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-02.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "prospect_stride": 640,
+        "pool_offset": 16152,
+        "code_signatures": [
+          {
+            "rva": 19867536,
+            "bytes": 246,
+            "fnv32": 3188210972
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "sign.offer_contract",
+      "rva": 19649728,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "signing",
+          "type": "pointer"
+        },
+        {
+          "name": "context_or_null",
+          "type": "pointer"
+        },
+        {
+          "name": "origin_flag",
+          "type": "int"
+        },
+        {
+          "name": "mode_flag",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "44-byte FRANCHISE_SIGNING with exact provided terms/IDs"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/sign_offer_callers.json"
+      ],
+      "unknowns": [
+        "Fresh proposal initialization/default enum values and flag meanings are not fully closed",
+        "Offer accepted/pending is not identical to completed signing"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19649728,
+            "bytes": 1424,
+            "fnv32": 4237952072
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "sign.default_type",
+      "rva": 19627360,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "team",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [
+        "Franchise mode flag+0x208==1; native derives type1/2 from current Player/Team state",
+        "Return values are not mapped to free-agent/extension labels without further caller proof"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-07.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19627360,
+            "bytes": 224,
+            "fnv32": 2631403705
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "sign.process",
+      "rva": 19652208,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "signing",
+          "type": "pointer"
+        },
+        {
+          "name": "context",
+          "type": "pointer"
+        },
+        {
+          "name": "mode",
+          "type": "int"
+        },
+        {
+          "name": "source_tag",
+          "type": "uint"
+        },
+        {
+          "name": "source_line",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-03.json"
+      ],
+      "unknowns": [
+        "Commit preconditions, exact return and offer-status flow require caller closure; do not bypass OfferContract"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19652208,
+            "bytes": 5935,
+            "fnv32": 2353267989
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "sign.process_options",
+      "rva": 19660480,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-03.json"
+      ],
+      "unknowns": [
+        "This processes marked options; exact mark-setting entry and full ABI remain unresolved"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19660480,
+            "bytes": 446,
+            "fnv32": 697268758
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "staff.sign",
+      "rva": 20086240,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "signing",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [
+        "Staff signing object44 bytes recovered; full ABI and proposal lifecycle unresolved"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 20086240,
+            "bytes": 1060,
+            "fnv32": 1306021128
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "draft.current_selection",
+      "rva": 9610912,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "round_key",
+          "type": "int"
+        },
+        {
+          "name": "slot_key",
+          "type": "int"
+        },
+        {
+          "name": "table_kind",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [
+        "Use current session keys; table_kind5 for raw draft_type1, otherwise0"
+      ],
+      "evidence": [
+        "evidence/static/bodies-draft-09.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 9610912,
+            "bytes": 90,
+            "fnv32": 2626018483
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "draft.expansion_selection",
+      "rva": 9611008,
+      "return_type": "pointer",
+      "parameters": [
+        {
+          "name": "round_key",
+          "type": "int"
+        },
+        {
+          "name": "slot_key",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [
+        "Current raw draft_type2/3/4 branch only"
+      ],
+      "evidence": [
+        "evidence/static/bodies-draft-09.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 9611008,
+            "bytes": 53,
+            "fnv32": 567775093
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "draft.select",
+      "rva": 15504912,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "team",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Current draft session: b8 type,bc round,c0 slot",
+        "Current selection32 bytes: owner+0, selected PLAYER+0x10",
+        "Require native pick.unique_id to equal exactly supplied pick_id; selected PLAYER slot must be empty",
+        "PLAYER must resolve from requested current-class prospect UID"
+      ],
+      "lifecycle": [
+        "Only an actual current draft-selection scene; next-task owner must provide this scene",
+        "Selection invokes native follow-up and advances draft flow; no arbitrary future-pick selection"
+      ],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 15504912,
+            "bytes": 778,
+            "fnv32": 1101885417
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "mentor.append",
+      "rva": 19198192,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "manager",
+          "type": "pointer"
+        },
+        {
+          "name": "UNKNOWN",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [
+        "Mentee identity/list slot arguments and target mentor placement need recovery"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19198192,
+            "bytes": 320,
+            "fnv32": 1150213570
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "mentor.remove",
+      "rva": 19262832,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "manager",
+          "type": "pointer"
+        },
+        {
+          "name": "UNKNOWN",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-01.json"
+      ],
+      "unknowns": [
+        "Full index/UID contract and stable mentor manager resolver need recovery"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19262832,
+            "bytes": 185,
+            "fnv32": 2155369243
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "mentor.set_current_team",
+      "rva": 20067024,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "UNKNOWN",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-02.json"
+      ],
+      "unknowns": [
+        "Current-team/global manager dependencies and pointer-array schema not closed"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 20067024,
+            "bytes": 1516,
+            "fnv32": 2013509339
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "player.editor_save",
+      "rva": 21100256,
+      "return_type": "void",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-04.json"
+      ],
+      "unknowns": [
+        "UI/global created-player editor state; no individual attribute/tendency/badge setter qualified",
+        "Do not run editor Save for an arbitrary MyLEAGUE player"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 21100256,
+            "bytes": 399,
+            "fnv32": 2281318742
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "player.copy_parent_candidate",
+      "rva": 9420384,
+      "return_type": "UNKNOWN",
+      "parameters": [
+        {
+          "name": "destination_player",
+          "type": "pointer"
+        },
+        {
+          "name": "source_player",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "First two pointer arguments visible in actual native editor-flush call",
+        "Global editor+0x28 destination, editor+0x30 private parent, additional child copies0x8f3b50/0x8f9270/0x915dd0 then refresh0x99b670"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/editor_copy_entry_windows.json"
+      ],
+      "unknowns": [
+        "Generic parent copy exceeds selected24KiB/32-fragment bound; remaining ABI/complete footprint not recovered",
+        "Child object schemas, source ownership, callback and mandatory refresh sequence unresolved; not a standalone field setter"
+      ],
+      "input_layout": {}
+    },
+    {
+      "binding_id": "team.set_chemistry",
+      "rva": 19734624,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        },
+        {
+          "name": "value",
+          "type": "float"
+        },
+        {
+          "name": "reason_mode",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-03.json"
+      ],
+      "unknowns": [
+        "Reason enum and delegate readiness require closure before exposing this extra action"
+      ],
+      "input_layout": {
+        "field_offset": 3780,
+        "encoding": "float32; native clamp",
+        "code_signatures": [
+          {
+            "rva": 19734624,
+            "bytes": 389,
+            "fnv32": 3735259885
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "team.waive",
+      "rva": 19744048,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        },
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "mode",
+          "type": "int"
+        },
+        {
+          "name": "reason",
+          "type": "int"
+        },
+        {
+          "name": "validation_flag",
+          "type": "int"
+        },
+        {
+          "name": "extra_flag",
+          "type": "int"
+        },
+        {
+          "name": "source_tag",
+          "type": "uint"
+        },
+        {
+          "name": "source_line",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/waive_callers.json"
+      ],
+      "unknowns": [
+        "Business modes/reason/validation flag semantics and correct public wrapper must be recovered; do not default a validation bypass"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19744048,
+            "bytes": 1397,
+            "fnv32": 218754701
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "team.release_internal",
+      "rva": 19729248,
+      "return_type": "void",
+      "parameters": [
+        {
+          "name": "team",
+          "type": "pointer"
+        },
+        {
+          "name": "player",
+          "type": "pointer"
+        },
+        {
+          "name": "mode",
+          "type": "int"
+        },
+        {
+          "name": "reason",
+          "type": "int"
+        },
+        {
+          "name": "extra1",
+          "type": "int"
+        },
+        {
+          "name": "extra2",
+          "type": "int"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/bodies-core-08.json"
+      ],
+      "unknowns": [
+        "Internal removal helper participates in trade/waive; it is not a complete standalone roster or waiver transaction"
+      ],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19729248,
+            "bytes": 1233,
+            "fnv32": 1287338009
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "read.team_layout",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Roster getter18701792; directory root-8+0x88; TEAM stride4696"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "../rea_native_action/evidence/live/trade-independent-after/evidence.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "team_id": 3240,
+        "roster_slots": 15,
+        "count": 3249,
+        "salary": 3260,
+        "payroll": 4084
+      }
+    },
+    {
+      "binding_id": "read.coach_layout",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "TEAM+0xce8 -> Coach352; reciprocal+0x18"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "../rea_native_action/evidence/live/coach-visible/evidence.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "bytes": 352,
+        "poe_word": 316
+      }
+    },
+    {
+      "binding_id": "read.scout_layout",
+      "rva": null,
+      "return_type": "LAYOUT",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Global draft class from0x1308f04 RIP target, class+0x3f08; pool+0x3f18",
+        "TEAM_DATA per native franchise team index, not arbitrary team ID index"
+      ],
+      "lifecycle": [],
+      "evidence": [
+        "evidence/static/types-training-scout-01.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "class_bytes": 96016,
+        "prospect_limit": 150,
+        "prospect_stride": 640,
+        "per_team_offset": 24,
+        "per_team_stride": 16,
+        "goal_bytes": 148,
+        "trip_bytes": 960
+      }
+    },
+    {
+      "binding_id": "trade.context",
+      "rva": 12232672,
+      "return_type": "pointer",
+      "parameters": [],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact original caller ABI; owned proposal/output; actual context getter result"
+      ],
+      "lifecycle": [
+        "Offline active MyLEAGUE context; Process intrinsic Validate remains; FullCheck is not invoked"
+      ],
+      "evidence": [
+        "../../../../../01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/02_研究分析/direct-business/",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 12232672,
+            "bytes": 8,
+            "fnv32": 3685854965
+          }
+        ]
+      }
+    },
+    {
+      "binding_id": "trade.process",
+      "rva": 19829680,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "proposal",
+          "type": "pointer"
+        },
+        {
+          "name": "context",
+          "type": "pointer"
+        },
+        {
+          "name": "output",
+          "type": "pointer"
+        }
+      ],
+      "abi": "win64",
+      "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+      "object_requirements": [
+        "Exact original caller ABI; owned proposal/output; actual context getter result"
+      ],
+      "lifecycle": [
+        "Offline active MyLEAGUE context; Process intrinsic Validate remains; FullCheck is not invoked"
+      ],
+      "evidence": [
+        "../../../../../01_os/07_content/_runs/run-20261027-nba2k22-myleague-native-control-validation-001/02_研究分析/direct-business/",
+        "../rea_native_action/evidence/static/trade/trade_validate_process_wrapper.json"
+      ],
+      "unknowns": [],
+      "input_layout": {
+        "code_signatures": [
+          {
+            "rva": 19829680,
+            "bytes": 64,
+            "fnv32": 2843881914
+          }
+        ]
+      }
+    }
+  ]
+}

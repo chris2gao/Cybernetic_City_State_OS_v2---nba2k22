@@ -1,0 +1,89 @@
+schema_version: nba2k22.rea.stage02.retrieval_limits.v1
+date: '2026-10-27'
+status: RECORDED_LIMITS_NO_RUNTIME_REPLAY
+searched:
+  - research_question_id: RQ-REA-01
+    queries_or_paths:
+      - codex_20261027_REA_playbook_handoff_metadata_evidence_growth_findings
+      - repo_master_game_mechanics_source_catalog_and_specific_guide_paths
+    result: fixed_windows_game_metadata_source_reads_exist; full_function_graph_not_established
+  - research_question_id: RQ-REA-02
+    queries_or_paths:
+      - growth-evidence.json
+      - growth-findings.json
+      - PLAYER_BADGES_R04_A_REFERENCE.json
+      - 12_NATIVE_MENTORSHIP_AND_STAFF_GUIDE.md
+    result: mentor/progression/badge_effect_type_definitions_and_unproven_numeric_claims; no_exact_game_badge_upgrade_threshold
+  - research_question_id: RQ-REA-03
+    queries_or_paths:
+      - docs/39_COACHING_TACTICS.md
+      - docs/40_COACHING_EXECUTION_RUNBOOK.md
+      - call-trace-fixture/call-trace-results.json
+    result: historical_real_memory_edit_and_restore_claims; no_verified_game_native_coaching_setter_and_applied_consumer_trace
+  - research_question_id: RQ-REA-04
+    queries_or_paths:
+      - catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json
+      - old_37_APPROVED_TRADE_EXECUTOR_filename_reference
+      - call_trace_fixture
+    result: native_roster_candidate_and_game_menu_guide_only; no_trade_commit_function_proven
+  - research_question_id: RQ-REA-05
+    queries_or_paths:
+      - bulk-fixture/bulk-fixture-results.json
+      - call-trace-fixture/call-trace-results.json
+    result: owned_fixture_game_target_false; no_game_call_and_no_current_Human_permission
+  - research_question_id: RQ-REA-06
+    queries_or_paths: [Human_approved_A0_and_A, legacy_project_execution_and_mechanic_boundary_docs]
+    result: existing_execution_architecture_is_approved; any_native_reuse_decision_remains_open
+  - research_question_id: RQ-REA-07
+    queries_or_paths:
+      - SOURCE_MANIFEST.json_52_entries
+      - frozen_Git_blob_references_for_primary_8_file_sample
+      - 01_os/01_workflow/02_信息收集与提炼/实现/证据包schema_v1.md
+    result: fixed_Git_source_paths_present; 52_SHA256_entries_not_all_recomputed_or_independently_replayed
+empty_returns:
+  - query_or_source: GitHub_repository_code_search_four_broad_guide_queries
+    interpretation: Search returned empty; direct master tree and explicit mechanism catalog files were available; search empty does not imply no prior sources
+  - query_or_source: master_01_os/01_workflow/02_信息收集与提炼/方法论_v0.4.md
+    interpretation: Path returned NOT_FOUND; existing schema_v1 and 执行清单_v1.2 are authoritative checked procedure inputs
+truncations:
+  - source: master_tree_recursive
+    limit: 4138_entries_full_tree_reported_not_truncated_but_keyword_candidates_were_filtered_for_display
+  - source: game_mechanics_SOURCES.md
+    limit: 88752_chars_returned_but_only_relevant_keyword_matched_lines_examined
+  - source: badge_catalog_80_main_plus_20_personality_candidates
+    limit: metadata_and_first_candidate_only_because_existing_catalog_has_research_not_native_identity_status
+  - source: all_52_origin_evidence_files
+    limit: manifest_retrieved_but_selected_primary_files_only_opened; no_sha256_recompute_for_all
+inaccessible_sources:
+  - source: fresh_PC22_game_process_native_function_and_live_scene
+    reason: Human_current_task_only_GPT_planning_and_no_Windows_native_permissions
+    handling: separate_CodeX_scope_and_Human_authorization
+  - source: native_trade_validator_commit_and_game_thread_ABI
+    reason: not_in_accessed_primary_archive_and_requires_real_game_reverse_engineering
+    handling: remain_UNKNOWN_no_function_call
+  - source: selected_badge_actual_progression_threshold_and_application_scene
+    reason: metadata_definitions_not_instances_and_cannot_advance_game_during_stage02
+    handling: no_threshold_claim_until_Codex_new_authorized_game_evidence
+  - source: 2K_and_community_guide_URL_full_web_pages
+    reason: only_prior_fixed_PROJECT_SOURCES_catalog_consulted_not_the_current_live_web_articles
+    handling: versioned_hypotheses_only_until_a_specific_claim_needs_direct_primary_review
+  - source: past_CODEX_task_execution_runtime_after_paused_snapshot
+    reason: Human_explicitly_said_task_was_interrupted_and_source_is_partial
+    handling: fixed_snapshot_only_not_completed_task
+search_asymmetry:
+  - lanes: [original_Codex_Live_Metadata, legacy_Project_Game_Guide]
+    difference: first_is_game_source_primary_observation_of_types; second_is_cross_game_community_or_project_research_of_mechanism_semantics
+    effect_on_coverage: cannot_estimate_capture_recap_Nor_count_them_as_two_independent_measurements_of_same_claim
+  - lanes: [game_OWNED_FIXTURE, actual_MyLEAGUE]
+    difference: fixture_has_replayable_writes_and_hooks_but_no_game_transaction_or_AI
+    effect_on_coverage: tool_capability_only_not_native_game_callability
+  - lanes: [badge_effect_field_names, natural_badge_upgrade]
+    difference: unrelated_interpretations_can_share_badge_label
+    effect_on_coverage: cannot_infer_upgrade_threshold_from_trigger_bonuses
+stop_notes:
+  static_read_scope: >-
+    At this stage, repeated source browsing without new build/scene/runtime
+    evidence has low EIG for exact badge threshold, tactical application and
+    trade commit; B0 planning remains useful with unknowns explicit.
+  formal_stage02_verdict: NOT_ASSESSED
+  external_P0_Codex_work: NOT_DISPATCHED

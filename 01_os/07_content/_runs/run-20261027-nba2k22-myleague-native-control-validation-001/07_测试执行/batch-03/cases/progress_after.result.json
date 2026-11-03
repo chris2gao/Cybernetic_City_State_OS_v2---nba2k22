@@ -1,0 +1,50 @@
+{
+  "case_id": "progress_after",
+  "batch_sha256": "2e41c4ca36a733e55e7fc5e3b635dab11a48820f7ed3e85a19ad57d2088fdd91",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "SCOUT_READ_PROGRESS_RAW",
+    "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+    "original_request": {
+      "team_id": 20,
+      "player_id": 33143
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "SCOUT_READ_PROGRESS_RAW",
+      "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+      "details": {
+        "read_only": true,
+        "player_id": 33143,
+        "team_id": 20,
+        "scouting_points_raw": 69,
+        "had_workout": false,
+        "had_medical": false,
+        "report_text": "UNKNOWN_NATIVE_PRESENTATION_GETTER",
+        "revealed_ratings": "UNKNOWN_DISCLOSURE_MAPPING",
+        "scope": "Per-team raw progress flags; not an unlocked report or direct hidden player attributes"
+      },
+      "first_hand_game_calls": 0,
+      "read_bytes": 2118,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_a71c1470a4a45b1f9a102cbdedce01c81c4f23678b4acd10274db5d634e27598",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-03\\raw\\1825a6a7163947e6b285b07679f14b6f"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_unknowns": []
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": true,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}

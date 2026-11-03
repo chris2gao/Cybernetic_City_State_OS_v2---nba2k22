@@ -1,0 +1,68 @@
+{
+  "case_id": "prospect_read",
+  "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "SCOUT_READ_PROSPECT_INFO",
+    "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+    "original_request": {
+      "player_id": 33143
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "SCOUT_READ_PROSPECT_INFO",
+      "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+      "details": {
+        "read_only": true,
+        "data": {
+          "player_id": 33143,
+          "name": "Sam Perkins",
+          "expert_rank_raw": [
+            25,
+            40,
+            23
+          ],
+          "expert_position_rank_raw": [
+            3,
+            6,
+            3
+          ],
+          "mock_draft_rank_raw": [
+            24,
+            28,
+            17
+          ]
+        },
+        "unknown_fields": [
+          "UI_rank_conversion",
+          "visible_ability_estimates",
+          "report_text"
+        ],
+        "scope": "Public identity and static-named global rank bytes only; not hidden ratings/potential"
+      },
+      "first_hand_game_calls": 0,
+      "read_bytes": 2292,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_e4012534b81c6e90c6d218dc707d4f0788608ca27adf43781f29483567ae0141",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\34464823cea0465c937e9f2f8cf10abb"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "PARTIAL_BINDING",
+      "coverage_unknowns": [
+        "Visible ability estimate/presentation getters unresolved; only public identity and raw public-ranking arrays available"
+      ]
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": true,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}

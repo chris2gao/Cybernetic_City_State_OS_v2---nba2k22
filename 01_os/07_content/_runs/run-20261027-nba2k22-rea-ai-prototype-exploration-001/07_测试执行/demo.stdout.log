@@ -1,0 +1,129 @@
+{
+  "scope": "OFFLINE_PROTOTYPE_ONLY",
+  "knowledge": {
+    "mechanism_id": "AI_COACH_DEFENSE_M1",
+    "can_reason": true,
+    "can_execute": false,
+    "actor_scope_verdict": "AI_PATH_UNVERIFIED"
+  },
+  "cases": [
+    {
+      "case": "native-candidate-context-missing-memory-fixture",
+      "route": "VALIDATED_MEMORY_WRITE_FIXTURE",
+      "result": "FIXTURE_ONLY_PASS",
+      "game_target": false,
+      "reasons": [
+        "COMMON_POSTCONDITIONS_MATCH; NOT_A_GAME_RESULT"
+      ]
+    },
+    {
+      "case": "native-first-fixture-model",
+      "route": "NATIVE_FIXTURE_MODEL",
+      "result": "FIXTURE_ONLY_PASS",
+      "game_target": false,
+      "reasons": [
+        "COMMON_POSTCONDITIONS_MATCH; NOT_A_GAME_RESULT"
+      ]
+    },
+    {
+      "case": "knowledge-with-no-safe-executor",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "AI_PATH_UNVERIFIED",
+        "NATIVE_NOT_QUALIFIED",
+        "MEMORY_NOT_QUALIFIED",
+        "NO_LIVE_ADAPTER_INSTALLED",
+        "MISSING_EXACT_ACTION_AUTHORIZATION"
+      ]
+    },
+    {
+      "case": "both-fixture-paths-unqualified",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "AI_CALLSITE_OR_CONTEXT_UNPROVEN",
+        "CURRENT_FIELD_CONSUMER_CACHE_READBACK_UNPROVEN",
+        "NEITHER_PATH_SAFE"
+      ]
+    },
+    {
+      "case": "declared-side-effects-disagree",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "BACKEND_SEMANTIC_CONTRACT_MISMATCH"
+      ]
+    },
+    {
+      "case": "shared-word-corruption",
+      "route": "VALIDATED_MEMORY_WRITE_FIXTURE",
+      "result": "FAILED_READBACK",
+      "game_target": false,
+      "reasons": [
+        "FRESH_POSTSTATE_OR_SIDE_EFFECT_MISMATCH"
+      ]
+    },
+    {
+      "case": "cache-not-refreshed",
+      "route": "VALIDATED_MEMORY_WRITE_FIXTURE",
+      "result": "FAILED_READBACK",
+      "game_target": false,
+      "reasons": [
+        "FRESH_POSTSTATE_OR_SIDE_EFFECT_MISMATCH"
+      ]
+    },
+    {
+      "case": "native-partial-failure-no-auto-memory",
+      "route": "NATIVE_FIXTURE_MODEL",
+      "result": "EXECUTED_BUT_UNVERIFIED",
+      "game_target": false,
+      "reasons": [
+        "POSSIBLE_PARTIAL_SIDE_EFFECTS",
+        "NO_AUTOMATIC_FALLBACK_AFTER_SIDE_EFFECTS"
+      ]
+    },
+    {
+      "case": "stale-revision",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "STALE_PLAN"
+      ]
+    },
+    {
+      "case": "build-difference",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "BUILD_SAVE_OR_SCENE_MISMATCH"
+      ]
+    },
+    {
+      "case": "engine-human-flag",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "CONTROL_FLAG_CONFLICT"
+      ]
+    },
+    {
+      "case": "human-trade-path-excluded",
+      "route": "NO_SAFE_PATH",
+      "result": "NOT_EXECUTED",
+      "game_target": false,
+      "reasons": [
+        "HUMAN_ONLY_EXCLUDED"
+      ]
+    }
+  ],
+  "game_operations": 0,
+  "live_adapter_installed": false,
+  "overall_result": "DEMO_CONTRACT_VERIFIED"
+}

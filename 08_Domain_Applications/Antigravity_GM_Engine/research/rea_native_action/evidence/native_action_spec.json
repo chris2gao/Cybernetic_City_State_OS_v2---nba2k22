@@ -1,0 +1,27 @@
+{
+  "action_id": "C1-SET-POE-DEFENSE",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "mode": "PC22_OFFLINE_MYLEAGUE_ISOLATED_TEST_SAVE",
+  "entry_rva": 21424800,
+  "abi": "win64",
+  "arguments": [
+    "pointer:GAMEPLAN_const",
+    "pointer:COACHDATA"
+  ],
+  "return_type": "void",
+  "source_input_offset": 385,
+  "destination_word_offset": 316,
+  "allowed_values": [
+    0,
+    13,
+    14,
+    15
+  ],
+  "thread_model": "FRIDA_AGENT_THREAD_ONLY_FOR_STATIC_NULL_PLAYBOOK_NO_NESTED_CALL_BRANCH",
+  "AI_caller_proven": false,
+  "service_provenance": "GAME_OWNED_GAMEPLAN_TO_COACH_APPLY_WITH_THREE_STATIC_MANAGER_CALLERS",
+  "effects": "Apply whole bounded coach-setting projection; marshal all other inputs to current values; verify full 352 bytes and original Gameplan remain unchanged except requested low5 bits.",
+  "permission": "FIRST_EFFECTFUL_BOUNDED_HUMAN_APPROVAL",
+  "lifetime": "Fresh roster/franchise/team/reciprocal coach binding; stable raw prestate; temporary input stays alive until calls and readback complete.",
+  "rollback": "Same native service with fresh validated original-value input; no automatic direct-memory fallback."
+}

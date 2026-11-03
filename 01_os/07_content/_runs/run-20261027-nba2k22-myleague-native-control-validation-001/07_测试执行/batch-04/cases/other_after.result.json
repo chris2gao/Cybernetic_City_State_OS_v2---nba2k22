@@ -1,0 +1,163 @@
+{
+  "case_id": "other_after",
+  "batch_sha256": "1c037007c0fd6ad0881e6b6f5b450048a41e0abf32df4b08c8ca33deef4114d7",
+  "target": {
+    "pid": 10940,
+    "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+    "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "result": {
+    "action_id": "READ_TEAM_ROSTER_BASIC",
+    "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+    "original_request": {
+      "team_id": 1
+    },
+    "native_result": {
+      "kind": "native-control-result",
+      "action_id": "READ_TEAM_ROSTER_BASIC",
+      "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+      "details": {
+        "read_only": true,
+        "data": {
+          "team_id": 1,
+          "abbreviation": "MIL",
+          "roster_count": 14,
+          "salary_total_raw": 168115385,
+          "payroll_raw": 29796928,
+          "players": [
+            {
+              "slot": 0,
+              "contract_year_1_raw": 32431333,
+              "player_id": 1607,
+              "name": "Jrue Holiday",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 1,
+              "contract_year_1_raw": 35500000,
+              "player_id": 2492,
+              "name": "Khris Middleton",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 2,
+              "contract_year_1_raw": 39344900,
+              "player_id": 2768,
+              "name": "Giannis Antetokounmpo",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 3,
+              "contract_year_1_raw": 13302325,
+              "player_id": 1516,
+              "name": "Brook Lopez",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 4,
+              "contract_year_1_raw": 5333334,
+              "player_id": 4392,
+              "name": "Pat Connaughton",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 5,
+              "contract_year_1_raw": 4347600,
+              "player_id": 4454,
+              "name": "Bobby Portis Jr.",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 6,
+              "contract_year_1_raw": 4000000,
+              "player_id": 1531,
+              "name": "George Hill",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 7,
+              "contract_year_1_raw": 1618000,
+              "player_id": 7529,
+              "name": "Semi Ojeleye",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 8,
+              "contract_year_1_raw": 1618000,
+              "player_id": 4100,
+              "name": "Rodney Hood",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 9,
+              "contract_year_1_raw": 1729217,
+              "player_id": 4180,
+              "name": "Thanasis Antetokounmpo",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 10,
+              "contract_year_1_raw": 4054695,
+              "player_id": 7720,
+              "name": "Grayson Allen",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 11,
+              "contract_year_1_raw": 1618000,
+              "player_id": 7870,
+              "name": "Tremont Waters",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 12,
+              "contract_year_1_raw": 1517981,
+              "player_id": 9879,
+              "name": "Anthony Gill",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            },
+            {
+              "slot": 13,
+              "contract_year_1_raw": 21700000,
+              "player_id": 7239,
+              "name": "Malcolm Brogdon",
+              "current_team_matches": true,
+              "contract_team_matches": true
+            }
+          ]
+        },
+        "coverage": "Prior roster and two financial summary fields only; rotation and full finance UNKNOWN"
+      },
+      "first_hand_game_calls": 0,
+      "read_bytes": 22878,
+      "automatic_retry": false,
+      "request_substitution": false,
+      "effect_verified_by_this_result": false,
+      "absolute_addresses_emitted": false,
+      "evidence_id": "ev_4ca417de3f426df53cc0b9cb71480146e801de9d90e822f1b56e2d294aae2aba",
+      "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-04\\raw\\badb0aac54694e8ea3ea8640f76077a4"
+    },
+    "details": {
+      "automatic_retry": false,
+      "request_substitution": false,
+      "capability": "CALL_LOGIC_RECOVERED",
+      "coverage_unknowns": []
+    }
+  },
+  "owner_reviewed_prerequisite_satisfied": true,
+  "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+  "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+}

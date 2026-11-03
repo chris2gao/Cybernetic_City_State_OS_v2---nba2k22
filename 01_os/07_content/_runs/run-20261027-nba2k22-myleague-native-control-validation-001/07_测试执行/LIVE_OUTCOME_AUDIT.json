@@ -1,0 +1,300 @@
+{
+  "source_kind": "RETAINED_REAL_GAME_OBSERVATION_AUDIT",
+  "game_access_by_audit": false,
+  "independent_reviewer": false,
+  "integrity": [
+    {
+      "batch": "01",
+      "sessions": 6,
+      "native_calls": 1,
+      "all_retained_hashes_match": true,
+      "exact_scripts_and_inputs_match": true,
+      "launcher_exit_code": 0,
+      "finished_utc": "2026-10-28T07:03:46.9196531Z"
+    },
+    {
+      "batch": "02",
+      "sessions": 7,
+      "native_calls": 4,
+      "all_retained_hashes_match": true,
+      "exact_scripts_and_inputs_match": true,
+      "launcher_exit_code": 0,
+      "finished_utc": "2026-10-28T07:16:36.8388393Z"
+    },
+    {
+      "batch": "03",
+      "sessions": 7,
+      "native_calls": 1,
+      "all_retained_hashes_match": true,
+      "exact_scripts_and_inputs_match": true,
+      "launcher_exit_code": 0,
+      "finished_utc": "2026-10-28T07:37:31.0347860Z"
+    },
+    {
+      "batch": "04",
+      "sessions": 9,
+      "native_calls": 8,
+      "all_retained_hashes_match": true,
+      "exact_scripts_and_inputs_match": true,
+      "launcher_exit_code": 0,
+      "finished_utc": "2026-10-28T07:41:40.7453613Z"
+    }
+  ],
+  "coach_status": "REAL_NATIVE_EFFECT_VERIFIED_SUBSET",
+  "scout_existing_goal": {
+    "status": "REAL_NATIVE_EFFECT_VERIFIED_GOAL_RECORD_ONLY",
+    "checks": {
+      "native_return_received": true,
+      "same_team": true,
+      "goal_count_unchanged": true,
+      "exact_target": true,
+      "real_before_after_change": true,
+      "other_goals_unchanged": true,
+      "trips_unchanged": true,
+      "progress_unchanged_from_batch02": true
+    },
+    "exact_input": {
+      "team_id": 20,
+      "goal_index": 0,
+      "player_ids": [
+        33143
+      ]
+    },
+    "native_evidence_id": "ev_c71c0d11cd9dbc166e91d8e2057247191e21c5253b15803ad26761dd41018c97",
+    "independent_read_evidence_id": "ev_698eda52debf62935fee6319bfecba3a204030eb31186aad6c09b564d4aa9a9a",
+    "trip_consumer_cache_and_report": "NOT_VERIFIED"
+  },
+  "trade": {
+    "status": "REAL_NATIVE_EFFECT_VERIFIED_EXACT_PACKAGE",
+    "checks": {
+      "native_return_received": true,
+      "canaries_intact": true,
+      "full_check_not_called_by_bridge": true,
+      "ind_exact_roster_swap": true,
+      "ind_count_unchanged": true,
+      "ind_roster_identity_links": true,
+      "other_exact_roster_swap": true,
+      "other_count_unchanged": true,
+      "other_roster_identity_links": true,
+      "brogdon_uid_unchanged": true,
+      "brogdon_both_owner_links_transferred": true,
+      "brogdon_all_six_wages_unchanged": true,
+      "donte_uid_unchanged": true,
+      "donte_both_owner_links_transferred": true,
+      "donte_all_six_wages_unchanged": true,
+      "requested_salary_mismatch": true
+    },
+    "external_call_sequence": [
+      "trade.add_player",
+      "trade.add_player",
+      "trade.context",
+      "trade.process"
+    ],
+    "exact_input": {
+      "team_a": 20,
+      "team_b": 1,
+      "players_a": [
+        7239
+      ],
+      "players_b": [
+        7716
+      ],
+      "picks_a": [],
+      "picks_b": []
+    },
+    "salary_year1_raw": {
+      "brogdon": 21700000,
+      "donte": 4675830
+    },
+    "native_evidence_id": "ev_51940f985b1457dc16c9658ba2b2fecc57030d49ed27cd7470e7fff8a896f781",
+    "independent_after_ids": [
+      "ev_d8c9d2ea2fad174c7fb2d3c111f76492ede14e720a048ed6320e2302a1342299",
+      "ev_4ca417de3f426df53cc0b9cb71480146e801de9d90e822f1b56e2d294aae2aba",
+      "ev_0da63edff8d7db609652db20186838d9727d45da600c288ec7c43b8d38f2e876",
+      "ev_a608c9a995d26ebca24251a41881952477af0f37390c34dce1218915af036211"
+    ],
+    "restored": false
+  },
+  "UI": "NOT_OBSERVED_THIS_TASK",
+  "save_reload": "NOT_STUDIED",
+  "game_automatic_save": "NOT_OBSERVED",
+  "native_calls_total": 14,
+  "attach_sessions_total": 29,
+  "session_note": "REA normalized state snapshot says running; complete CLI and administrator launcher exit0 observed; no cleanup_error. Not represented as a DETACHED receipt.",
+  "final_source_script_comparison": [
+    {
+      "batch": "01",
+      "case_id": "team_read",
+      "identical_script": false,
+      "expected_read_only_salary_column_extension": true
+    },
+    {
+      "batch": "01",
+      "case_id": "coach_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "01",
+      "case_id": "public_prospects_read",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "01",
+      "case_id": "scout_budget_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "01",
+      "case_id": "coach_new_field",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "01",
+      "case_id": "coach_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "player_read",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "prospect_read",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "progress_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "scout_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "scout_append",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "scout_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "02",
+      "case_id": "progress_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "ind_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "other_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "scout_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "prospect_read",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "scout_set_existing",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "scout_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "03",
+      "case_id": "progress_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "ind_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "other_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "brogdon_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "donte_before",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "trade_agreed",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "ind_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "other_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "brogdon_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    },
+    {
+      "batch": "04",
+      "case_id": "donte_after",
+      "identical_script": true,
+      "expected_read_only_salary_column_extension": false
+    }
+  ]
+}

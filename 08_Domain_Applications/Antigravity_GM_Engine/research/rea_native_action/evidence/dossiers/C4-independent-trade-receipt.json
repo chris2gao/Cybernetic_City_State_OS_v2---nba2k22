@@ -1,0 +1,41 @@
+{
+  "receipt_kind": "DERIVED_INDEPENDENT_READBACK_NOT_MISSING_NATIVE_RETURN",
+  "status": "REAL_GAME_EFFECT_VERIFIED",
+  "source_kind": "REAL_GAME_REA_BEFORE_AFTER_PLUS_HUMAN_FEEDBACK",
+  "evidence_ids": {
+    "trade-restarted-before": "ev_360262a341f7bfb461a47afd1eba115c741eab2dca5dcb1bc2515a93162c0445",
+    "trade-qualified": "ev_e31c4aeefa4bf96b9a924249ec0288136d7c94a53119892ea3e6f925a2f52691",
+    "trade-swap-attempt": "ev_4c161466825988012a12745b93a75b11eadc7fe8d2bc77cbd1af568b3b547812",
+    "trade-independent-after": "ev_d992aee885c991b50ab99aed9a1598de74c76945444f72921aa6f49f5e3aa422"
+  },
+  "native_attempt_has_receipt": false,
+  "native_return_value_observed": false,
+  "native_call_count_observed": false,
+  "maximum_first_hand_native_calls_by_script": 4,
+  "maximum_native_commit_calls_by_script": 1,
+  "execution_observed_via": "Exact submitted script/admin build and PID bound; fresh independent raw REA shows the exact reciprocal player/contract/roster effect",
+  "invariants": {
+    "team_1_exact_swap": true,
+    "team_1_count": true,
+    "team_1_money": true,
+    "team_2_exact_swap": true,
+    "team_2_count": true,
+    "team_2_money": true,
+    "player_9842_reciprocal_ownership": true,
+    "player_9842_contract_preserved": true,
+    "player_9879_reciprocal_ownership": true,
+    "player_9879_contract_preserved": true,
+    "all_30_core_team_summaries_unchanged": true,
+    "stable_roots_and_no_isolated_failures": true
+  },
+  "retained_for_Human_inspection": true,
+  "Human_feedback_verbatim": "成功了，证明我们这个机制可以跑通。现在可以结束测试，并给出报告了，我好安排下一个任务",
+  "Human_feedback_scope": "Overall mechanism success, without separately supplied screenshots or exact UI field observations",
+  "transaction_history_or_event_record_proven": false,
+  "full_28_other_teams_byte_comparison_proven": false,
+  "pick_pool_comparison_proven": false,
+  "save_reload_proven": false,
+  "AI_autonomous_caller_proven": false,
+  "production_replacement_qualified": false,
+  "direct_game_business_writes_by_script": 0
+}

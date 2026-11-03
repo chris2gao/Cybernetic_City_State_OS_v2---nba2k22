@@ -1,0 +1,101 @@
+schema_version: nba2k22.rea_mechanism.stage02.evidence_index.v1
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+date: '2026-10-27'
+status: INITIAL_STATIC_REVIEW_NOT_FEASIBILITY_GATE
+fixed_external_code_commit: b16e69727987f29bff5e2ee31ce82891102ab2d9
+source_run: run-20261027-rea-development-exploration-01
+source_project_state: PARTIAL_HUMAN_PAUSED
+research_questions: [RQ-REA-01, RQ-REA-02, RQ-REA-03, RQ-REA-04, RQ-REA-05, RQ-REA-06, RQ-REA-07]
+requirements_version: A-v1-RC01_HUMAN_APPROVED
+requirements_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+source_reliability_note: >-
+  Fixed files are Git-retrievable from original Codex work; runtime claims are
+  same-developer archived observations, not independently reproduced by GPT.
+  The manifest's 52 SHA256 entries were not all separately recomputed.
+evidence:
+  - evidence_id: E-REA02-001
+    RQ: [RQ-REA-01, RQ-REA-07]
+    result_items: [RES-REA-01, RES-REA-07]
+    claim: >-
+      Codex research branch contains paused handoff, REA playbook, script README
+      and 52-file declared hash manifest with complete fixed Git source paths.
+    direction: support_source_traceability
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/08_结论/PLANNING_HANDOFF.md
+        blob_sha: 9c3dbc11ee5268a3e4e4a9ed28dcdd5a2a6e1376
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_DEVELOPMENT_PLAYBOOK_V1.md
+        blob_sha: aa2dda60421c59b8db37831cf271a46979a7324f
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/SOURCE_MANIFEST.json
+        blob_sha: c26a28615f5b87544088a3f9716eedf6fbdde897
+    confidence: HIGH_FOR_GIT_FILE_EXISTENCE_ONLY
+    limitation: same_developer_report_not_independent_game_test_and_52_hash_values_not_all_recalculated
+  - evidence_id: E-REA02-002
+    RQ: [RQ-REA-01, RQ-REA-02]
+    result_items: [RES-REA-01, RES-REA-02]
+    claim: >-
+      Frida game-process source evidence and findings contain 9 growth/badge
+      metadata type definitions and related field candidates, including
+      FRANCHISE_PROGRESSION_TUNING, not verified current instance values or
+      an actual MyLEAGUE badge upgrade threshold/consumer.
+    direction: partial_support_and_major_gap
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-evidence.json
+        blob_sha: 89345f04c77170dcb1d0d19900306f43b6851142
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-findings.json
+        blob_sha: a799c013f7dbd86a76dde0d8b72c6627e9a5f181
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/metadata-findings.json
+        blob_sha: 11cc8909b104067ee2cecdff08e88965469ba94f
+    confidence: BOUNDED_REPORTED_GAME_METADATA_OBSERVATION_WITH_PRIMARY_ARTIFACT
+    limitation: metadata_definitions_not_instantiated_values_or_badge_level_rules; CAREERMODE_is_separate
+  - evidence_id: E-REA02-003
+    RQ: [RQ-REA-05]
+    result_items: [RES-REA-05]
+    claim: >-
+      Controlled owned Python fixture had 4096 live records actually written,
+      independently checked, restored and checked with game_target false.
+    direction: supports_tool_feasibility_only
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/bulk-fixture/bulk-fixture-results.json
+        blob_sha: 593e5e3740fb85f0fb9985e0d9875ee61bb2b423
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/bulk-fixture/apply-evidence.json
+        blob_sha: 0772aaf04ef09cb4d6da8f2a5e3709c7dcad1248
+    confidence: ORIGINAL_OWNED_FIXTURE_RECORDED_WITH_FRIDA_ARTIFACT_NOT_GAME_PROOF
+    limitation: no_native_game_write_legal_transaction_index_UI_gamecache_or_save_persistence_proof
+  - evidence_id: E-REA02-004
+    RQ: [RQ-REA-03, RQ-REA-04, RQ-REA-05]
+    result_items: [RES-REA-03, RES-REA-04, RES-REA-05]
+    claim: >-
+      Controlled native ABI fixture captured 16 reader/writer callback events
+      with consistent argument and result while game_target false.
+    direction: tool_capability_support_game_callability_unproven
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/call-trace-fixture/call-trace-results.json
+        blob_sha: 290d40661d8a677664f77427c662e8a320f7081f
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/call-trace-fixture/trace-evidence.json
+        blob_sha: 3fea86f0c3a528fc040dc144004781dfa1407b6c
+    confidence: ORIGINAL_OWNED_FIXTURE_INTERCEPTION_NOT_GAME_INTEROP
+    limitation: no_game_hooks_or_known_game_ABI_thread_this_or_commit
+  - evidence_id: E-REA02-005
+    RQ: [RQ-REA-01, RQ-REA-04, RQ-REA-06, RQ-REA-07]
+    result_items: [RES-REA-01, RES-REA-04, RES-REA-06, RES-REA-07]
+    claim: >-
+      Prior game overall read exists but does not establish mechanism execution;
+      whole NBA2K22.exe Ghidra analysis has four reported provider timeouts and
+      cannot be a verified unbounded prerequisite.
+    direction: feasibility_limit
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/prior-overall/overall-live-findings.json
+        blob_sha: 37a5114c4e3e23864e5e83adac7cb8f8891f0ae9
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_DEVELOPMENT_PLAYBOOK_V1.md
+        blob_sha: aa2dda60421c59b8db37831cf271a46979a7324f
+    confidence: DELEGATED_ENGINEERING_REPORT_AND_PINNED_SAMPLES_NO_NEW_GHIDRA_REPLAY
+    limitation: does_not_prove_any_trade_or_coach_native_function_is_callable
+unresolved_core_evidence:
+  - RQ-REA-02_actual_MyLEAGUE_badge_instance_and_upgrade_trigger_function
+  - RQ-REA-03_coach_offense_or_defense_UI_to_native_consumer_and_applied_state
+  - RQ-REA-04_trade_validator_vs_commit_complete_state_dependencies
+  - RQ-REA-05_Human_authorized_safe_game_native_function_call_and_new_capture
+  - RQ-REA-06_evidence_based_native_reuse_vs_external_simulation
+stage02_feasibility_verdict: NOT_ASSESSED
+p0_task_completion: NOT_DONE
+codex_new_execution: NOT_DISPATCHED

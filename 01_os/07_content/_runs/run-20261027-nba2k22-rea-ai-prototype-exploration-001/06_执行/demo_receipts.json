@@ -1,0 +1,1203 @@
+{
+  "scope": "OFFLINE_PROTOTYPE_ONLY",
+  "knowledge": {
+    "mechanism_id": "AI_COACH_DEFENSE_M1",
+    "title": "AI教练防守重点：保护禁区（候选）",
+    "description_zh": "研究对象是教练/球队AI的防守重点选择和比赛消费。当前构建元数据与enum CRC已核对：POEDefense的13为PROTECT_PAINT；PHI和IND当前存值均为14中性防守。AI选择入口与比赛消费者仍未知。",
+    "mode": "PC22_OFFLINE_MYLEAGUE",
+    "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "last_verified_at_or_unknown": "2026-10-27T16:56:43.1027726Z",
+    "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+    "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+    "original_game_rule": "UNKNOWN：不能承诺该值会改变真实场上防守站位或比赛结果。现有资料支持按教练重点字段开展定向观察。",
+    "field_semantics": [
+      {
+        "field_id": "POEDefense",
+        "meaning": "当前元数据及枚举匹配：0无偏好、13保护禁区、14中性防守、15限制外围；当前两队存值14。这里只验证类型/存值，不证明AI在比赛中应用。",
+        "unit": "CANDIDATE_ENUM",
+        "legal_write_scope": "NOT_QUALIFIED",
+        "consumer_and_refresh": "UNKNOWN",
+        "dependent_states": "共享POE位域、比赛缓存与应用时点待证"
+      }
+    ],
+    "decision_guidance": {
+      "status": "ILLUSTRATIVE_AI_STRATEGY_NOT_GAME_RULE",
+      "text": "教练可基于对手内线威胁提出保护禁区的候选意图；应考虑让出外围机会的风险。此为外部战术推理，非已破解的2K选择算法。"
+    },
+    "unknowns": [
+      "AI设置调用点与引擎控制标志",
+      "比赛消费者和刷新时点",
+      "对实际场上行为的因果效果",
+      "当前构建安全写入与存档保持"
+    ],
+    "source_refs": [
+      "SRC-COACH-PROFILE",
+      "SRC-COACH-READER",
+      "SRC-COACH-CODEC",
+      "SRC-LIVE-COACH",
+      "SRC-LIVE-TRACE"
+    ],
+    "can_reason": true,
+    "can_recommend": true,
+    "can_execute": false,
+    "role_visibility": [
+      "COACH",
+      "GM"
+    ],
+    "source_origin_group": "LEGACY_PROFILE_PLUS_ISSUE9_CURRENT_READ; NO_INDEPENDENT_AI_BEHAVIOR_PROOF",
+    "provenance": {
+      "origin_groups": [
+        "ISSUE9_CURRENT_READ_AND_TRACE_SINGLE_OWNER",
+        "LEGACY_COACH_PROJECT_SINGLE_ORIGIN"
+      ],
+      "origin_count": 2,
+      "classification": "MULTIPLE_ORIGINS_NOT_INDEPENDENT_CONFIRMATION",
+      "independent_AI_game_confirmation": false
+    }
+  },
+  "cases": [
+    {
+      "case": "native-candidate-context-missing-memory-fixture",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "VALIDATED_MEMORY_WRITE_FIXTURE",
+        "execution": "COMPLETED_REPORTED",
+        "result": "FIXTURE_ONLY_PASS",
+        "backend_selected": "MEMORY_WRITE",
+        "reasons": [
+          "COMMON_POSTCONDITIONS_MATCH; NOT_A_GAME_RESULT"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 2,
+          "coaches": {
+            "A": {
+              "poe_word": 163853,
+              "applied_focus": 13,
+              "cache_epoch": 1
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "affected_set_comparison": {
+          "expected": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "unexpected_differences": []
+        },
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 1,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        },
+        "returned": {
+          "returned_success": true,
+          "implementation": "SYNTHETIC_MEMORY_AND_CACHE_MODEL_NOT_PROCESS_WRITE"
+        },
+        "before_sha256": "11bc1eebff97f23f7d15ea2b28ddba505cf7805cf0e44df348bf136759ffff20",
+        "after_sha256": "ba1d082cdc3712ea53fd829b30c11dafc316a2d8964cdcb80e507b3f8a92ff24"
+      }
+    },
+    {
+      "case": "native-first-fixture-model",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "NATIVE_FIXTURE_MODEL",
+        "execution": "COMPLETED_REPORTED",
+        "result": "FIXTURE_ONLY_PASS",
+        "backend_selected": "NATIVE_FUNCTION",
+        "reasons": [
+          "COMMON_POSTCONDITIONS_MATCH; NOT_A_GAME_RESULT"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_MODEL_ONLY"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 2,
+          "coaches": {
+            "A": {
+              "poe_word": 163853,
+              "applied_focus": 13,
+              "cache_epoch": 1
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "affected_set_comparison": {
+          "expected": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "unexpected_differences": []
+        },
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 1,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        },
+        "returned": {
+          "returned_success": true,
+          "implementation": "PYTHON_NATIVE_INTERFACE_SIMULATOR_NOT_GAME_NATIVE_CALL"
+        },
+        "before_sha256": "11bc1eebff97f23f7d15ea2b28ddba505cf7805cf0e44df348bf136759ffff20",
+        "after_sha256": "ba1d082cdc3712ea53fd829b30c11dafc316a2d8964cdcb80e507b3f8a92ff24"
+      }
+    },
+    {
+      "case": "knowledge-with-no-safe-executor",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "REAL_GAME",
+        "game_target": false,
+        "requested_game_target": true,
+        "knowledge_available": true,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "AI_PATH_UNVERIFIED",
+          "NATIVE_NOT_QUALIFIED",
+          "MEMORY_NOT_QUALIFIED",
+          "NO_LIVE_ADAPTER_INSTALLED",
+          "MISSING_EXACT_ACTION_AUTHORIZATION"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "REAL_GAME",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "REAL_GAME",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "CURRENT_FIELD_CONSUMER_CACHE_READBACK_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "before_snapshot": null,
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        }
+      }
+    },
+    {
+      "case": "both-fixture-paths-unqualified",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "AI_CALLSITE_OR_CONTEXT_UNPROVEN",
+          "CURRENT_FIELD_CONSUMER_CACHE_READBACK_UNPROVEN",
+          "NEITHER_PATH_SAFE"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "CURRENT_FIELD_CONSUMER_CACHE_READBACK_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        }
+      }
+    },
+    {
+      "case": "declared-side-effects-disagree",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "BACKEND_SEMANTIC_CONTRACT_MISMATCH"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_MODEL_ONLY"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "coach:B.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        }
+      }
+    },
+    {
+      "case": "shared-word-corruption",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "VALIDATED_MEMORY_WRITE_FIXTURE",
+        "execution": "COMPLETED_REPORTED",
+        "result": "FAILED_READBACK",
+        "backend_selected": "MEMORY_WRITE",
+        "reasons": [
+          "FRESH_POSTSTATE_OR_SIDE_EFFECT_MISMATCH"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 2,
+          "coaches": {
+            "A": {
+              "poe_word": 13,
+              "applied_focus": 13,
+              "cache_epoch": 1
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "affected_set_comparison": {
+          "expected": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "unexpected_differences": [
+            "/coaches/A/poe_word"
+          ]
+        },
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 1,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        },
+        "returned": {
+          "returned_success": true,
+          "implementation": "SYNTHETIC_MEMORY_AND_CACHE_MODEL_NOT_PROCESS_WRITE"
+        },
+        "before_sha256": "11bc1eebff97f23f7d15ea2b28ddba505cf7805cf0e44df348bf136759ffff20",
+        "after_sha256": "49f870b26e6e1c75f682351f56e4a4f6252974e67bd20052c5f4325e46875a44"
+      }
+    },
+    {
+      "case": "cache-not-refreshed",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "VALIDATED_MEMORY_WRITE_FIXTURE",
+        "execution": "COMPLETED_REPORTED",
+        "result": "FAILED_READBACK",
+        "backend_selected": "MEMORY_WRITE",
+        "reasons": [
+          "FRESH_POSTSTATE_OR_SIDE_EFFECT_MISMATCH"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 2,
+          "coaches": {
+            "A": {
+              "poe_word": 163853,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "affected_set_comparison": {
+          "expected": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "unexpected_differences": [
+            "/coaches/A/cache_epoch"
+          ]
+        },
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 1,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        },
+        "returned": {
+          "returned_success": true,
+          "implementation": "SYNTHETIC_MEMORY_AND_CACHE_MODEL_NOT_PROCESS_WRITE"
+        },
+        "before_sha256": "11bc1eebff97f23f7d15ea2b28ddba505cf7805cf0e44df348bf136759ffff20",
+        "after_sha256": "7569f34fd1fb236f8f9675b65ab27edbd45847ff19f37792f02306f456c4690d"
+      }
+    },
+    {
+      "case": "native-partial-failure-no-auto-memory",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "NATIVE_FIXTURE_MODEL",
+        "execution": "ABORTED",
+        "result": "EXECUTED_BUT_UNVERIFIED",
+        "backend_selected": "NATIVE_FUNCTION",
+        "reasons": [
+          "POSSIBLE_PARTIAL_SIDE_EFFECTS",
+          "NO_AUTOMATIC_FALLBACK_AFTER_SIDE_EFFECTS"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_MODEL_ONLY"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 2,
+          "coaches": {
+            "A": {
+              "poe_word": 163853,
+              "applied_focus": 13,
+              "cache_epoch": 1
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 1,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        }
+      }
+    },
+    {
+      "case": "stale-revision",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "STALE_PLAN"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        }
+      }
+    },
+    {
+      "case": "build-difference",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": true,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "BUILD_SAVE_OR_SCENE_MISMATCH"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0,
+        "knowledge_ref": {
+          "mechanism_id": "AI_COACH_DEFENSE_M1",
+          "source_refs": [
+            "SRC-COACH-PROFILE",
+            "SRC-COACH-READER",
+            "SRC-COACH-CODEC",
+            "SRC-LIVE-COACH",
+            "SRC-LIVE-TRACE"
+          ],
+          "proof_level": "L1_NATIVE_TYPE_OR_INSTANCE",
+          "actor_scope_verdict": "AI_PATH_UNVERIFIED",
+          "live_execution_qualified": false,
+          "unknowns": [
+            "AI设置调用点与引擎控制标志",
+            "比赛消费者和刷新时点",
+            "对实际场上行为的因果效果",
+            "当前构建安全写入与存档保持"
+          ]
+        }
+      }
+    },
+    {
+      "case": "engine-human-flag",
+      "receipt": {
+        "intent_ref": "fixture-coach-001",
+        "environment": "OWNED_FIXTURE",
+        "game_target": false,
+        "requested_game_target": false,
+        "knowledge_available": false,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "CONTROL_FLAG_CONFLICT"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "OWNED_FIXTURE",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "OWNED_FIXTURE",
+          "qualified": true,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [],
+          "proof_scope": "OWNED_FIXTURE_ONLY"
+        },
+        "before_snapshot": {
+          "build": "OWNED_COACH_FIXTURE_V1",
+          "mode": "PC22_OFFLINE_MYLEAGUE",
+          "save_id": "fixture-save",
+          "scene_id": "fixture-coach-scene",
+          "revision": 1,
+          "coaches": {
+            "A": {
+              "poe_word": 163854,
+              "applied_focus": 14,
+              "cache_epoch": 0
+            },
+            "B": {
+              "poe_word": 131085,
+              "applied_focus": 13,
+              "cache_epoch": 0
+            }
+          }
+        },
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0
+      }
+    },
+    {
+      "case": "human-trade-path-excluded",
+      "receipt": {
+        "intent_ref": "trade-human-negative",
+        "environment": "REAL_GAME",
+        "game_target": false,
+        "requested_game_target": true,
+        "knowledge_available": false,
+        "route": "NO_SAFE_PATH",
+        "execution": "NOT_EXECUTED",
+        "result": "NOT_EXECUTED",
+        "backend_selected": null,
+        "reasons": [
+          "HUMAN_ONLY_EXCLUDED"
+        ],
+        "native_capability": {
+          "backend": "NATIVE_FUNCTION",
+          "environment": "REAL_GAME",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "AI_CALLSITE_OR_CONTEXT_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "memory_capability": {
+          "backend": "MEMORY_WRITE",
+          "environment": "REAL_GAME",
+          "qualified": false,
+          "declared_effects": [
+            "coach:A.applied_focus",
+            "coach:A.cache_epoch",
+            "coach:A.poe_word",
+            "revision"
+          ],
+          "missing_proofs": [
+            "CURRENT_FIELD_CONSUMER_CACHE_READBACK_UNPROVEN"
+          ],
+          "proof_scope": "UNQUALIFIED"
+        },
+        "before_snapshot": null,
+        "fresh_readback": null,
+        "affected_set_comparison": null,
+        "game_proof_level": "NOT_PROMOTED",
+        "game_persistence": "NOT_TESTED",
+        "operation_count": 0
+      }
+    }
+  ],
+  "game_operations": 0,
+  "live_adapter_installed": false,
+  "overall_result": "DEMO_CONTRACT_VERIFIED"
+}

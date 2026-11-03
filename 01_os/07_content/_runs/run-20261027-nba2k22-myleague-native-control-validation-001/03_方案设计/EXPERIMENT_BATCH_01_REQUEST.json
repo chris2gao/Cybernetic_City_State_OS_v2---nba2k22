@@ -1,0 +1,12 @@
+{
+  "batch_id": "EXPERIMENT_BATCH_01_IND_COACH_AND_PUBLIC_SCOUT_READS",
+  "save_context": "Human confirmed MyLEAGUE, calendar page, independent test save; chose Indiana and delegated remaining test inputs",
+  "cases": [
+    {"case_id": "team_read", "action_id": "READ_TEAM_ROSTER_BASIC", "parameters": {"team_id": 20}, "input_source": "Human selected Indiana; prior native mapping IND=20 must be freshly checked against abbreviation"},
+    {"case_id": "coach_before", "action_id": "READ_COACH_CURRENT", "parameters": {"team_id": 20}, "input_source": "Human selected Indiana"},
+    {"case_id": "public_prospects_read", "action_id": "SCOUT_LIST_CURRENT_PUBLIC_PROSPECTS", "parameters": {"limit": 20}, "input_source": "Human delegated scouting test inputs; obtain actual public identities before selecting one"},
+    {"case_id": "scout_budget_before", "action_id": "SCOUT_READ_TRIP_BUDGET", "parameters": {"team_id": 20}, "input_source": "Human selected Indiana and delegated scouting test inputs"},
+    {"case_id": "coach_new_field", "action_id": "COACH_SET_KNOWN_CURRENT_SETTINGS", "parameters": {"team_id": 20, "settings": {"RunPlayTendency": 55}}, "input_source": "Human explicitly delegated remaining values; Owner selected a single new uint8 Coach field, raw55; not the old defense test", "requires_successful_cases": ["team_read", "coach_before"]},
+    {"case_id": "coach_after", "action_id": "READ_COACH_CURRENT", "parameters": {"team_id": 20}, "input_source": "Independent session readback of the exact selected field; permitted even if effect receipt is missing"}
+  ]
+}

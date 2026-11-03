@@ -1,0 +1,794 @@
+{
+  "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+  "cases": {
+    "player_read": {
+      "case_id": "player_read",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+        "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+        "original_request": {
+          "player_id": 7239
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "READ_PLAYER_PROFILE_ATTRIBUTES_TENDENCIES_BADGES",
+          "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+          "details": {
+            "read_only": true,
+            "data": {
+              "player_id": 7239,
+              "name": "Malcolm Brogdon",
+              "current_team_id": 20,
+              "contract_team_id": 20,
+              "contract_raw": {
+                "bird_years": 2,
+                "original_contract_years": 4,
+                "years_left_on_contract": 2,
+                "contract_option": 0,
+                "no_trade": 0,
+                "extension_length": 0,
+                "extension_option": 0,
+                "extension_no_trade": 0,
+                "contract_year_1": 21700000,
+                "contract_year_2": 22600000,
+                "contract_year_3": 0,
+                "contract_year_4": 0,
+                "contract_year_5": 0,
+                "contract_year_6": 0,
+                "contract_type": 0,
+                "euro_stash_years_left": 0,
+                "two_way_days_left": 0
+              }
+            },
+            "unknown_fields": [
+              "complete_attributes",
+              "tendencies",
+              "badges",
+              "child_objects"
+            ],
+            "scope": "Identity and contract only; no potential or arbitrary player-byte dump"
+          },
+          "first_hand_game_calls": 1,
+          "read_bytes": 1316,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_4ad3cfd1f20c321f6732ee6bd024f6e0990ffd07c87778c51f4ecba8caecb253",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\123823aba66c41e7895f3f6dfb05a3c9"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "PARTIAL_BINDING",
+          "coverage_unknowns": [
+            "Only identity/current-contract teams and existing contract profile fields emitted; full ability/tendency/badge child objects not bound"
+          ]
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": true,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    },
+    "prospect_read": {
+      "case_id": "prospect_read",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "SCOUT_READ_PROSPECT_INFO",
+        "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+        "original_request": {
+          "player_id": 33143
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "SCOUT_READ_PROSPECT_INFO",
+          "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+          "details": {
+            "read_only": true,
+            "data": {
+              "player_id": 33143,
+              "name": "Sam Perkins",
+              "expert_rank_raw": [
+                25,
+                40,
+                23
+              ],
+              "expert_position_rank_raw": [
+                3,
+                6,
+                3
+              ],
+              "mock_draft_rank_raw": [
+                24,
+                28,
+                17
+              ]
+            },
+            "unknown_fields": [
+              "UI_rank_conversion",
+              "visible_ability_estimates",
+              "report_text"
+            ],
+            "scope": "Public identity and static-named global rank bytes only; not hidden ratings/potential"
+          },
+          "first_hand_game_calls": 0,
+          "read_bytes": 2292,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_e4012534b81c6e90c6d218dc707d4f0788608ca27adf43781f29483567ae0141",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\34464823cea0465c937e9f2f8cf10abb"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "PARTIAL_BINDING",
+          "coverage_unknowns": [
+            "Visible ability estimate/presentation getters unresolved; only public identity and raw public-ranking arrays available"
+          ]
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": true,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    },
+    "progress_before": {
+      "case_id": "progress_before",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "SCOUT_READ_PROGRESS_RAW",
+        "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+        "original_request": {
+          "team_id": 20,
+          "player_id": 33143
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "SCOUT_READ_PROGRESS_RAW",
+          "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+          "details": {
+            "read_only": true,
+            "player_id": 33143,
+            "team_id": 20,
+            "scouting_points_raw": 69,
+            "had_workout": false,
+            "had_medical": false,
+            "report_text": "UNKNOWN_NATIVE_PRESENTATION_GETTER",
+            "revealed_ratings": "UNKNOWN_DISCLOSURE_MAPPING",
+            "scope": "Per-team raw progress flags; not an unlocked report or direct hidden player attributes"
+          },
+          "first_hand_game_calls": 0,
+          "read_bytes": 2118,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_1870762ef2ca82a180e5a51d05b2d99a9bb0f7f454e52b84952367b407e0742c",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\fe9ec866be3a4cf4ac428caab9a6788c"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "CALL_LOGIC_RECOVERED",
+          "coverage_unknowns": []
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": true,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    },
+    "scout_before": {
+      "case_id": "scout_before",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "SCOUT_READ_TRIP_BUDGET",
+        "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+        "original_request": {
+          "team_id": 20
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "SCOUT_READ_TRIP_BUDGET",
+          "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+          "details": {
+            "read_only": true,
+            "team_id": 20,
+            "franchise_record_index": 18,
+            "remaining_trips_raw": 7,
+            "num_existing_goals": 3,
+            "goals": [
+              {
+                "goal_index": 0,
+                "focus_type_raw": 0,
+                "num_targets_raw": 11,
+                "targets": [
+                  {
+                    "class_index_raw": 34,
+                    "player_id": 33176,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 40,
+                    "player_id": 33182,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 55,
+                    "player_id": 33197,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 25,
+                    "player_id": 33167,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 135,
+                    "player_id": 33277,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 82,
+                    "player_id": 33224,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 123,
+                    "player_id": 33265,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 122,
+                    "player_id": 33264,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 38,
+                    "player_id": 33180,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 128,
+                    "player_id": 33270,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 106,
+                    "player_id": 33248,
+                    "public_identity_resolved": true
+                  }
+                ],
+                "fingerprint_fnv32": 4240036897
+              },
+              {
+                "goal_index": 1,
+                "focus_type_raw": 0,
+                "num_targets_raw": 11,
+                "targets": [
+                  {
+                    "class_index_raw": 76,
+                    "player_id": 33218,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 58,
+                    "player_id": 33200,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 108,
+                    "player_id": 33250,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 88,
+                    "player_id": 33230,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 96,
+                    "player_id": 33238,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 11,
+                    "player_id": 33153,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 16,
+                    "player_id": 33158,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 39,
+                    "player_id": 33181,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 102,
+                    "player_id": 33244,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 51,
+                    "player_id": 33193,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 2,
+                    "player_id": 33144,
+                    "public_identity_resolved": true
+                  }
+                ],
+                "fingerprint_fnv32": 3634137573
+              },
+              {
+                "goal_index": 2,
+                "focus_type_raw": 3,
+                "num_targets_raw": 11,
+                "targets": [
+                  {
+                    "class_index_raw": 0,
+                    "player_id": 33142,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 4,
+                    "player_id": 33146,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 89,
+                    "player_id": 33231,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 124,
+                    "player_id": 33266,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 48,
+                    "player_id": 33190,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 93,
+                    "player_id": 33235,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 62,
+                    "player_id": 33204,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 90,
+                    "player_id": 33232,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 63,
+                    "player_id": 33205,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 75,
+                    "player_id": 33217,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 87,
+                    "player_id": 33229,
+                    "public_identity_resolved": true
+                  }
+                ],
+                "fingerprint_fnv32": 2126768622
+              }
+            ],
+            "quality_flags": [],
+            "scope": "Bounded Goal target identity decoding from native SetSpecific packed class index; no hidden ratings or report claims"
+          },
+          "first_hand_game_calls": 0,
+          "read_bytes": 1905,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_f38a54852b494a5f905effab102c60d82a986c5c0e7abc5ffebda3f568f2173f",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\a222d98a7d4e46cdbc1ea0ac6f80e94a"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "CALL_LOGIC_RECOVERED",
+          "coverage_unknowns": []
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": true,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    },
+    "scout_append": {
+      "case_id": "scout_append",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "SCOUT_ASSIGN_TARGETS",
+        "outcome": "REJECTED_BY_GAME",
+        "original_request": {
+          "team_id": 20,
+          "player_ids": [
+            33143
+          ]
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "SCOUT_ASSIGN_TARGETS",
+          "outcome": "REJECTED_BY_GAME",
+          "details": {
+            "native_append_result": 0,
+            "requested_player_ids": [
+              33143
+            ],
+            "num_goals_after": 3,
+            "scope": "Append exact targets through native per-team aggregation; no trip execution or automatic replacement"
+          },
+          "first_hand_game_calls": 3,
+          "read_bytes": 3242,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_f5926e49fa75f29d1f4d75d11d99d97dab4170df7e9faa5a0c963e4c57a0d83f",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\5e460592243f475aab1ba850701d4960"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "CALL_LOGIC_RECOVERED",
+          "coverage_unknowns": []
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": false,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    },
+    "scout_after": {
+      "case_id": "scout_after",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "SCOUT_READ_TRIP_BUDGET",
+        "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+        "original_request": {
+          "team_id": 20
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "SCOUT_READ_TRIP_BUDGET",
+          "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+          "details": {
+            "read_only": true,
+            "team_id": 20,
+            "franchise_record_index": 18,
+            "remaining_trips_raw": 7,
+            "num_existing_goals": 3,
+            "goals": [
+              {
+                "goal_index": 0,
+                "focus_type_raw": 0,
+                "num_targets_raw": 11,
+                "targets": [
+                  {
+                    "class_index_raw": 34,
+                    "player_id": 33176,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 40,
+                    "player_id": 33182,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 55,
+                    "player_id": 33197,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 25,
+                    "player_id": 33167,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 135,
+                    "player_id": 33277,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 82,
+                    "player_id": 33224,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 123,
+                    "player_id": 33265,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 122,
+                    "player_id": 33264,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 38,
+                    "player_id": 33180,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 128,
+                    "player_id": 33270,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 106,
+                    "player_id": 33248,
+                    "public_identity_resolved": true
+                  }
+                ],
+                "fingerprint_fnv32": 4240036897
+              },
+              {
+                "goal_index": 1,
+                "focus_type_raw": 0,
+                "num_targets_raw": 11,
+                "targets": [
+                  {
+                    "class_index_raw": 76,
+                    "player_id": 33218,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 58,
+                    "player_id": 33200,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 108,
+                    "player_id": 33250,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 88,
+                    "player_id": 33230,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 96,
+                    "player_id": 33238,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 11,
+                    "player_id": 33153,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 16,
+                    "player_id": 33158,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 39,
+                    "player_id": 33181,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 102,
+                    "player_id": 33244,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 51,
+                    "player_id": 33193,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 2,
+                    "player_id": 33144,
+                    "public_identity_resolved": true
+                  }
+                ],
+                "fingerprint_fnv32": 3634137573
+              },
+              {
+                "goal_index": 2,
+                "focus_type_raw": 3,
+                "num_targets_raw": 11,
+                "targets": [
+                  {
+                    "class_index_raw": 0,
+                    "player_id": 33142,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 4,
+                    "player_id": 33146,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 89,
+                    "player_id": 33231,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 124,
+                    "player_id": 33266,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 48,
+                    "player_id": 33190,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 93,
+                    "player_id": 33235,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 62,
+                    "player_id": 33204,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 90,
+                    "player_id": 33232,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 63,
+                    "player_id": 33205,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 75,
+                    "player_id": 33217,
+                    "public_identity_resolved": true
+                  },
+                  {
+                    "class_index_raw": 87,
+                    "player_id": 33229,
+                    "public_identity_resolved": true
+                  }
+                ],
+                "fingerprint_fnv32": 2126768622
+              }
+            ],
+            "quality_flags": [],
+            "scope": "Bounded Goal target identity decoding from native SetSpecific packed class index; no hidden ratings or report claims"
+          },
+          "first_hand_game_calls": 0,
+          "read_bytes": 1905,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_fc02fae62e78d065eb4ab2a20d62f8803be3e54ab6c88423942eb608623b02ce",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\bc19a3a9a08a4d1f89e37d33f0af00b0"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "CALL_LOGIC_RECOVERED",
+          "coverage_unknowns": []
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": true,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    },
+    "progress_after": {
+      "case_id": "progress_after",
+      "batch_sha256": "7c7d45475ded7bd5a72b24b986baf5a00424b26a9c32bcb166f5804b365ed4f6",
+      "target": {
+        "pid": 10940,
+        "process_start_utc": "2026-10-28T06:38:23.0486449Z",
+        "exe_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+      },
+      "result": {
+        "action_id": "SCOUT_READ_PROGRESS_RAW",
+        "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+        "original_request": {
+          "team_id": 20,
+          "player_id": 33143
+        },
+        "native_result": {
+          "kind": "native-control-result",
+          "action_id": "SCOUT_READ_PROGRESS_RAW",
+          "outcome": "NATIVE_CALL_RETURNED_EFFECT_NOT_TESTED",
+          "details": {
+            "read_only": true,
+            "player_id": 33143,
+            "team_id": 20,
+            "scouting_points_raw": 69,
+            "had_workout": false,
+            "had_medical": false,
+            "report_text": "UNKNOWN_NATIVE_PRESENTATION_GETTER",
+            "revealed_ratings": "UNKNOWN_DISCLOSURE_MAPPING",
+            "scope": "Per-team raw progress flags; not an unlocked report or direct hidden player attributes"
+          },
+          "first_hand_game_calls": 0,
+          "read_bytes": 2118,
+          "automatic_retry": false,
+          "request_substitution": false,
+          "effect_verified_by_this_result": false,
+          "absolute_addresses_emitted": false,
+          "evidence_id": "ev_9ebdb488dcaea9229bc888efe6683a3e08b834368ed17b5ecf90f33a1fb41bdd",
+          "runtime_directory": "C:\\Users\\gk\\Documents\\ChatGPT\\nba2k22\\rea-native-validation-runtime\\execution-batch-02\\raw\\543f6c2aa0d548408a4b664e4c91e90b"
+        },
+        "details": {
+          "automatic_retry": false,
+          "request_substitution": false,
+          "capability": "CALL_LOGIC_RECOVERED",
+          "coverage_unknowns": []
+        }
+      },
+      "owner_reviewed_prerequisite_satisfied": true,
+      "effect_verdict": "NOT_YET_INDEPENDENTLY_READ_BACK",
+      "prerequisite_review_method": "DETERMINISTIC_READ_IDENTITY_CHECK_NOT_HUMAN_ACCEPTANCE"
+    }
+  },
+  "coach_effect": {
+    "status": "NO_NEW_EFFECT_PROVEN",
+    "automatic_second_submission": false
+  },
+  "scout_effect": {
+    "action_id": "SCOUT_ASSIGN_TARGETS",
+    "exact_request": {
+      "team_id": 20,
+      "player_ids": [
+        33143
+      ]
+    },
+    "native_append_result": 0,
+    "before_goals": 3,
+    "after_goals": 3,
+    "old_goals_unchanged": true,
+    "trip_budget_unchanged": true,
+    "status": "REJECTED_BY_GAME",
+    "rejection_unchanged_state_verified": true,
+    "automatic_second_submission": false
+  }
+}

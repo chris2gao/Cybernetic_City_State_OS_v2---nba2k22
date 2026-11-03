@@ -1,0 +1,8 @@
+function onGameGuiThreadOnce(work,finish,windowMs=1800){
+ const user=Process.getModuleByName('user32.dll'),cell=Memory.alloc(4),titleBuffer=Memory.alloc(256),windows=[];let selected=null,fired=false,hook=null;
+ const tidOf=new NativeFunction(user.getExportByName('GetWindowThreadProcessId'),'uint',['pointer','pointer'],'win64'),isVisible=new NativeFunction(user.getExportByName('IsWindowVisible'),'int',['pointer'],'win64'),getTitle=new NativeFunction(user.getExportByName('GetWindowTextW'),'int',['pointer','pointer','int'],'win64');
+ const enumerate=new NativeCallback((h,l)=>{const tid=tidOf(h,cell);if(cell.readU32()===Process.id&&isVisible(h)){const n=getTitle(h,titleBuffer,128),label=n?titleBuffer.readUtf16String(n):'';windows.push({thread_id:tid,title:label});if(!selected||/NBA/i.test(label))selected={handle:h,thread:tid};}return windows.length<8?1:0;},'int',['pointer','pointer'],'win64');
+ new NativeFunction(user.getExportByName('EnumWindows'),'int',['pointer','pointer'],'win64')(enumerate,ptr(0));
+ if(selected){hook=Interceptor.attach(user.getExportByName('PeekMessageA'),{onLeave(){if(fired||Process.getCurrentThreadId()!==selected.thread)return;fired=true;try{work({thread_id:selected.thread,entry:'PeekMessageA.onLeave',windows});}catch(e){finish({status:'FAILED_OR_ABORTED',error:String(e).replace(/0x[0-9a-f]+/gi,'[address]')});}}});new NativeFunction(user.getExportByName('PostMessageW'),'int',['pointer','uint','pointer','pointer'],'win64')(selected.handle,0,ptr(0),ptr(0));}
+ setTimeout(()=>{if(hook)hook.detach();finish({bridge_completed:true,game_window_thread_observed:!!selected,work_started:fired,hook_detached:!!hook,wake_message:'WM_NULL_ONLY',window_ms:windowMs});},windowMs);
+}

@@ -1,0 +1,13 @@
+{
+  "batch_id": "EXPERIMENT_BATCH_03",
+  "save_context": "Human confirmed independent recoverable MyLEAGUE calendar save; later standing execution authority",
+  "cases": [
+    {"case_id":"ind_before","action_id":"READ_TEAM_ROSTER_BASIC","parameters":{"team_id":20}},
+    {"case_id":"other_before","action_id":"READ_TEAM_ROSTER_BASIC","parameters":{"team_id":1}},
+    {"case_id":"scout_before","action_id":"SCOUT_READ_TRIP_BUDGET","parameters":{"team_id":20}},
+    {"case_id":"prospect_read","action_id":"SCOUT_READ_PROSPECT_INFO","parameters":{"player_id":33143}},
+    {"case_id":"scout_set_existing","action_id":"SCOUT_SET_EXISTING_GOAL_TARGETS","parameters":{"team_id":20,"goal_index":0,"player_ids":[33143]},"input_source":"Human delegated IND scouting test selection; explicitly select existing Goal0 and Sam Perkins UID33143; replace only this goal, no append/trip","requires_successful_cases":["scout_before","prospect_read"]},
+    {"case_id":"scout_after","action_id":"SCOUT_READ_TRIP_BUDGET","parameters":{"team_id":20}},
+    {"case_id":"progress_after","action_id":"SCOUT_READ_PROGRESS_RAW","parameters":{"team_id":20,"player_id":33143}}
+  ]
+}
