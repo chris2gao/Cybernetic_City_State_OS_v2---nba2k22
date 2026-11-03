@@ -281,6 +281,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source-ref", help="Exact immutable historical source ref supplied by caller")
     parser.add_argument("--report", type=Path, help="Optional derived report; original JSONL never changed")
     args = parser.parse_args(argv)
+    if args.report is not None and args.input.resolve() == args.report.resolve():
+        print("REPORT_MUST_NOT_OVERWRITE_INPUT", file=sys.stderr)
+        return 3
     try:
         rows = read_jsonl(args.input)
         fmt = detect_format(rows, args.format)
