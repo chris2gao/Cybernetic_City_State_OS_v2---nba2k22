@@ -36,7 +36,8 @@ def validate_batch_execution(
     *,
     manifest: Optional[Dict[str, Any]] = None,
     claims: Optional[List[Dict[str, Any]]] = None,
-    expected_mode: str = "mutation"  # "mutation", "noop", or "mixed"
+    expected_mode: str = "mutation",  # "mutation", "noop", or "mixed"
+    require_native_transport_evidence: bool = True
 ) -> Dict[str, Any]:
     """Validates execution results with fail-closed semantics across all evidence layers."""
     errors: List[str] = []
@@ -228,7 +229,33 @@ def validate_batch_execution(
     ]
     checks["raw_chunk_messages_count"] = len(chunk_msgs)
 
-    if chunks:
+    # Detect whether raw messages are host-reconstructed mock summaries or authentic native transport messages
+    is_reconstructed = any(
+        m.get("provenance") == "OFFLINE_MOCK_RECONSTRUCTED"
+        or m.get("payload", {}).get("provenance") == "OFFLINE_MOCK_RECONSTRUCTED"
+        for m in raw_messages
+    )
+    checks["raw_evidence_is_reconstructed"] = is_reconstructed
+
+    if is_reconstructed:
+        checks["native_transport_evidence_verified"] = False
+        if require_native_transport_evidence:
+            errors.append(
+                "RECONSTRUCTED_MOCK_CANNOT_SATISFY_NATIVE_TRANSPORT_EVIDENCE: "
+                "Host reconstructed chunk receipt summaries cannot masquerade as genuine "
+                "Frida/REA native transport IPC messages in live verification."
+            )
+    elif chunk_msgs:
+        checks["native_transport_evidence_verified"] = True
+    else:
+        checks["native_transport_evidence_verified"] = False
+        if require_native_transport_evidence and chunks:
+            errors.append(
+                "NATIVE_TRANSPORT_EVIDENCE_MISSING: Genuine raw native transport messages "
+                "required for live verification, but none were captured or provided."
+            )
+
+    if chunks and (chunk_msgs or require_native_transport_evidence):
         checks["expected_chunk_count"] = len(chunks)
         chunks_map = {c.chunk_id if hasattr(c, "chunk_id") else c["chunk_id"]: c for c in chunks}
         if len(chunk_msgs) != len(chunks):
@@ -276,6 +303,10 @@ def validate_batch_execution(
         missing_cids = set(chunks_map.keys()) - seen_chunk_ids
         if missing_cids:
             errors.append(f"Missing raw chunk messages for planned chunks: {sorted(list(missing_cids))}")
+    elif not chunks:
+        checks["expected_chunk_count"] = 0
+    else:
+        checks["raw_evidence_status"] = "OFFLINE_MOCK_TRANSPORT_SKIPPED"
 
     # 5. Check Independent Readback if provided
     if independent_readback:

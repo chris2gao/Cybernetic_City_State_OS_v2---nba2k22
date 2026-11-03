@@ -180,3 +180,58 @@ rootdir: E:\gemini_space\nba2k22
 ```
 
 在 `test_g7_gold_100_offline_batch_validation_replay` 中，成功载入此前实机执行通过的 100 项黄金收据目录（`run-20261102-nba2k22-rea-100-live-benchmark-001/07_产出/mutation_100`），通过 `validate_stage_directory` 执行了完整的离线重放校验，验证了 100 项收据守恒律（`conservation_holds=True`）、Chunk 摘要一致性以及零 UNKNOWN。
+
+
+---
+
+## 7. 承重接口定向强化（Iteration 8）
+
+针对 Live 实机启用前的两个核心承重问题，本轮迭代执行了严谨的定向加固与证据隔离，彻底杜绝代码硬编码角色和假冒原始消息验证：
+
+### 7.1 角色身份存档归属与数据库验证 (Save-Bound Role Provenance & DB Verification)
+
+- **问题根因**：原 `TrustedRoleRegistry` 将 `gm_user_01`、`coach_user_01` 及球队 ID 直接写在代码常量中。虽然实现了登记表校验，但无法证明角色身份真正来自当前真实存档的可信授权来源。
+- **整改实现**：
+  1. **存档目录绑定 (`role_authorizations.json`)**：`TrustedRoleRegistry` 增加 `bind_save_context(save_dir, save_id, worldline_id, database_path)` 接口。角色授权信息自动持久化于各存档专属的 `<save_dir>/role_authorizations.json`，元数据标明 `"provenance": "SAVE_DB_VERIFIED_DELEGATION"` 并记录绑定的世界线 ID 与数据库文件名。
+  2. **世界数据库球队真实性验证**：新增 `_verify_team_in_database(team_id)`，直接动态查询当前绑定的世界线 SQLite 数据库（`world.sqlite` 或子世界线 DB）的 `teams` 表。只有在真实数据库中存在的球队（如 `team:25`、`team:28`）才允许登记与鉴权；任何未登记或伪造的球队 ID（如 `9999`）立即被拦截。
+  3. **Host 动态集成**：Host 在 `inspect_worldline` 和 `initialize_season` 中严格绑定当前真实存档上下文，并通过 `get_profiles(ctx)` 动态拉取当前存档内认证的球队列表生成决策 Profile，彻底移除了所有硬编码身份。
+
+### 7.2 原生传输证据去伪与模式明确区分 (Native Transport Evidence Disambiguation)
+
+- **问题根因**：原 `authorize_and_execute` 中，Host 从分块计划和 Journal 重新构造了模拟的 `raw_chunk_msgs` 并传递给 `validate_batch_execution`。这种把 Host 重构消息当作 Frida/REA IPC 原生传输消息的做法，存在虚假声称通过了独立原始消息验证的风险。
+- **整改实现**：
+  1. **彻底移除合成消息**：移除一切根据分块和收据合成 `raw_chunk_msgs` 的逻辑。Host 改为直接扫描执行器运行目录 `r_dir`，查找 Frida/REA runner 真实生成的原始 IPC 消息文件（`*/evidence.json`）。
+  2. **Live 模式硬性强制真实证据**：实机模式（`is_mock == False`）下调用 `validate_batch_execution(..., require_native_transport_evidence=True)`。如果不存在真实的 `evidence.json`，校验器直接抛出 `NATIVE_TRANSPORT_EVIDENCE_MISSING` 失败闭环；若检测到重构模拟标记（`OFFLINE_MOCK_RECONSTRUCTED`），则抛出 `RECONSTRUCTED_MOCK_CANNOT_SATISFY_NATIVE_TRANSPORT_EVIDENCE` 强行阻断。
+  3. **Mock 模式透明报告跳过**：在离线 Mock 模式（`is_mock == True`）下，明确传入 `raw_messages=[]` 且 `require_native_transport_evidence=False`。校验器准确在 `checks` 中记录 `"raw_evidence_status": "OFFLINE_MOCK_TRANSPORT_SKIPPED"` 和 `"native_transport_evidence_verified": False`，诚实反映离线模式跳过真实传输层，绝不伪造原始验证通过。
+
+### 7.3 17 项全量回归测试套件验证结果
+
+在 `test_season_cycle_host.py` 中新增 `test_trusted_role_registry_save_provenance_and_database_verification` 和 `test_validate_batch_execution_rejects_reconstructed_mock_as_native_evidence` 2 项承重测试，测试套件扩展为 17 项，全部通过：
+
+```text
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1
+rootdir: E:\gemini_space\nba2k22
+
+08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py:
+  test_g02_worldline_backward_date_isolation                                    PASSED [  5%]
+  test_g04_capture_chronology_and_same_state_repeat                             PASSED [ 11%]
+  test_g05_role_authorization_and_conflicts                                     PASSED [ 17%]
+  test_g06_cas_mismatch_fails_closed                                            PASSED [ 23%]
+  test_g08_four_offline_closed_loop_cycles                                      PASSED [ 29%]
+  test_p1_pause_resume_unknown_locked_and_outbox_alignment                      PASSED [ 35%]
+  test_p0_fail_closed_readback_and_unknown_locking                               PASSED [ 41%]
+  test_p0_a_fresh_getter_after_isolated_from_preflight_cache                     PASSED [ 47%]
+  test_p0_b_unknown_outcome_locks_host_and_outbox_preserves_plan                 PASSED [ 52%]
+  test_p0_b_missing_receipt_fails_closed_with_stopped_partial                   PASSED [ 58%]
+  test_p0_c_mock_mode_cannot_execute_without_fake_transport                    PASSED [ 64%]
+  test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope            PASSED [ 70%]
+  test_p0_c_unauthenticated_role_actor_rejected                                 PASSED [ 76%]
+  test_p1_worldline_manifest_idempotent_and_switch_recovery                     PASSED [ 82%]
+  test_g7_gold_100_offline_batch_validation_replay                               PASSED [ 88%]
+  test_trusted_role_registry_save_provenance_and_database_verification          PASSED [ 94%]
+  test_validate_batch_execution_rejects_reconstructed_mock_as_native_evidence   PASSED [100%]
+============================= 17 passed in 24.56s =============================
+```
+
+当前 `run.yml` 状态严格保持 `OFFLINE_VERIFIED_AWAITING_HUMAN_LIVE_TRIGGER`，四轮实机闭环尚未执行，静待 Human 用户启动实机游戏并发出触发指令。
