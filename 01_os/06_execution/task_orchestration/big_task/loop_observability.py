@@ -162,7 +162,7 @@ def validate(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if not isinstance(gaps, list) or any(not isinstance(v, dict) or not _string(v.get("id")) or not _member(v.get("status"), {"OPEN", "CLOSED", "BLOCKED"}) for v in gaps):
             findings.append(issue("INVALID_REMAINING_GAPS", pos))
             gaps = []
-        if outcome == "objective_met_ready_for_series_review" and any(v.get("status") == "OPEN" for v in gaps):
+        if outcome == "objective_met_ready_for_series_review" and any(v.get("status") in ("OPEN", "BLOCKED") for v in gaps):
             findings.append(issue("OPEN_GAP_CONTRADICTS_OBJECTIVE_MET", pos))
         if outcome == "objective_met_ready_for_series_review" and (grade != "EXECUTED_VERIFIED" or any_failure or not any_pass):
             findings.append(issue("COMPLETION_WITHOUT_EXECUTED_EVIDENCE", pos))
