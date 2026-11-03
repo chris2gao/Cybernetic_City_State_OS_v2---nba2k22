@@ -61,20 +61,41 @@ from schema_model import VERSION
 from validate_batch_execution import validate_batch_execution
 
 
+def parse_team_numeric_id(raw_val: Any) -> Optional[int]:
+    """Parses numeric team ID from team:native:<ID>, team:<ID>, <ID>, or int."""
+    if raw_val is None:
+        return None
+    s = str(raw_val).strip()
+    if s.startswith("team:native:"):
+        s = s[len("team:native:"):]
+    elif s.startswith("team:"):
+        s = s[len("team:"):]
+    try:
+        return int(s)
+    except (ValueError, TypeError):
+        return None
+
+
 class TrustedRoleRegistry:
-    """Manages authenticated roles bound to the current save file, database, and worldline manifest."""
+    """Manages authenticated roles bound to the current save file, database, and worldline manifest.
+    
+    Enforces strict default-deny authorization semantics (H1, H2, H3, H4).
+    """
 
     def __init__(
         self,
         save_dir: Optional[Path] = None,
         save_id: Optional[str] = None,
         worldline_id: Optional[str] = None,
-        database_path: Optional[Path] = None
+        database_path: Optional[Path] = None,
+        *,
+        is_mock: bool = False
     ):
-        self.save_dir: Optional[Path] = Path(save_dir) if save_dir else None
+        self.save_dir: Optional[Path] = Path(save_dir).resolve() if save_dir else None
         self.save_id: Optional[str] = save_id
         self.worldline_id: Optional[str] = worldline_id
-        self.database_path: Optional[Path] = Path(database_path) if database_path else None
+        self.database_path: Optional[Path] = Path(database_path).resolve() if database_path else None
+        self.is_mock: bool = is_mock
 
         self._actors: Dict[Tuple[str, int], str] = {}
         self._actor_provenance: Dict[Tuple[str, int], Dict[str, Any]] = {}
@@ -83,21 +104,16 @@ class TrustedRoleRegistry:
             "COACH": {"PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES", "COACH.STRATEGY.RUN_PLAY"}
         }
         self._phase_grants: Set[Tuple[str, str]] = set()
+        self.authorization_status: str = "UNINITIALIZED"
 
         if self.save_dir and self.save_id:
             self.bind_save_context(self.save_dir, self.save_id, self.worldline_id or "worldline-main", self.database_path)
         else:
-            self._init_defaults()
+            self.authorization_status = "DEFAULT_DENIED_UNBOUND"
 
-    def _init_defaults(self):
-        """Initializes fallback actor mappings prior to explicit save binding."""
-        self._actors = {
-            ("GM", 1): "gm_user_01",
-            ("GM", 25): "gm_user_01",
-            ("GM", 28): "gm_user_01",
-            ("COACH", 1): "coach_user_01"
-        }
-        self._refresh_phase_grants()
+    @property
+    def is_authorized(self) -> bool:
+        return self.authorization_status in ("AUTHORIZED", "AUTHORIZED_MOCK") and len(self._actors) > 0
 
     def _refresh_phase_grants(self):
         self._phase_grants = set()
@@ -116,130 +132,305 @@ class TrustedRoleRegistry:
         save_dir: Path,
         save_id: str,
         worldline_id: str,
-        database_path: Optional[Path] = None
-    ) -> None:
-        """Binds the registry directly to the active save directory, database, and worldline manifest."""
+        database_path: Optional[Path] = None,
+        *,
+        is_mock: Optional[bool] = None
+    ) -> bool:
+        """Binds the registry directly to the active save directory, database, and worldline manifest.
+        
+        Enforces strict fail-closed authorization verification (H1, H2, H3).
+        """
         self.save_dir = Path(save_dir).resolve()
         self.save_id = save_id
         self.worldline_id = worldline_id
         if database_path:
             self.database_path = Path(database_path).resolve()
+        if is_mock is not None:
+            self.is_mock = is_mock
 
         auth_file = self.save_dir / "role_authorizations.json"
-        loaded_roles = None
+        if not auth_file.is_file():
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "AUTHORIZATION_FILE_MISSING"
 
-        if auth_file.is_file():
-            try:
-                auth_data = json.loads(auth_file.read_text(encoding="utf-8"))
-                if auth_data.get("save_id") == save_id:
-                    loaded_roles = auth_data.get("roles", [])
-            except Exception:
-                loaded_roles = None
-
-        if loaded_roles is None:
-            db_teams = self._get_teams_from_database()
-            default_candidate_roles = [
-                {"role_type": "GM", "team_id": 1, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"},
-                {"role_type": "GM", "team_id": 25, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"},
-                {"role_type": "GM", "team_id": 28, "actor_uid": "gm_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"},
-                {"role_type": "COACH", "team_id": 1, "actor_uid": "coach_user_01", "provenance": "SAVE_DB_VERIFIED_DELEGATION"}
-            ]
-            verified_roles = []
-            for r in default_candidate_roles:
-                tid = r["team_id"]
-                if not db_teams or tid in db_teams:
-                    r["authorized_at"] = datetime.now(timezone.utc).isoformat()
-                    verified_roles.append(r)
-
-            auth_manifest = {
+            # Generate configuration template for operator guidance, but never make it active (H1)
+            template_path = self.save_dir / "role_authorizations.template.json"
+            template_manifest = {
                 "schema_version": "nba2k22.rea.role_authorizations.v1",
                 "save_id": save_id,
                 "worldline_id": worldline_id,
                 "bound_database_file": self.database_path.name if self.database_path else "world.sqlite",
-                "roles": verified_roles
+                "status": "TEMPLATE_PENDING_HUMAN_AUTHORIZATION",
+                "human_authorization_ref": None,
+                "provenance": "PENDING_OPERATOR_SIGNING",
+                "roles": [
+                    {
+                        "role_type": "GM",
+                        "team_id": 28,
+                        "actor_uid": "<HUMAN_OR_AGENT_UID>",
+                        "human_authorization_ref": "<HUMAN_DELEGATION_GRANT_REF>",
+                        "provenance": "SAVE_DB_VERIFIED_DELEGATION"
+                    }
+                ]
             }
-            tmp_auth = auth_file.with_suffix(".tmp")
-            tmp_auth.write_text(json.dumps(auth_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-            os.replace(tmp_auth, auth_file)
-            loaded_roles = verified_roles
+            try:
+                tmp_tpl = template_path.with_suffix(".tmp")
+                tmp_tpl.write_text(json.dumps(template_manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                os.replace(tmp_tpl, template_path)
+            except Exception:
+                pass
+            return False
+
+        try:
+            auth_data = json.loads(auth_file.read_text(encoding="utf-8"))
+        except Exception:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "AUTHORIZATION_FILE_CORRUPT"
+            return False
+
+        # Reject template masquerading as active authorization (H1)
+        if auth_data.get("status") == "TEMPLATE_PENDING_HUMAN_AUTHORIZATION":
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "TEMPLATE_CANNOT_BECOME_ACTIVE_AUTHORIZATION"
+            return False
+
+        # Context Binding Checks (H3)
+        if auth_data.get("save_id") != self.save_id:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "AUTHORIZATION_SAVE_ID_MISMATCH"
+            return False
+
+        allowed_worldlines = auth_data.get("authorized_worldlines", [])
+        if auth_data.get("worldline_id") != self.worldline_id and self.worldline_id not in allowed_worldlines and "*" not in allowed_worldlines:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "AUTHORIZATION_WORLDLINE_MISMATCH"
+            return False
+
+        expected_db_name = self.database_path.name if self.database_path else "world.sqlite"
+        allowed_databases = auth_data.get("authorized_databases", [])
+        if auth_data.get("bound_database_file") != expected_db_name and expected_db_name not in allowed_databases and "*" not in allowed_databases:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "AUTHORIZATION_DATABASE_FILE_MISMATCH"
+            return False
+
+        # Check Human Authorization / Provenance (H3)
+        auth_ref = auth_data.get("human_authorization_ref") or auth_data.get("provenance")
+        if not auth_ref or "TEMPLATE" in str(auth_ref).upper():
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "AUTHORIZATION_PROVENANCE_MISSING"
+            return False
+
+        # Validate database integrity and teams (H2)
+        db_teams = self._get_teams_from_database()
+        if not db_teams:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "DATABASE_VERIFICATION_FAILED"
+            return False
+
+        raw_roles = auth_data.get("roles", [])
+        if not isinstance(raw_roles, list) or not raw_roles:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "NO_ROLES_SPECIFIED"
+            return False
+
+        verified_roles = []
+        for r in raw_roles:
+            rtype = str(r.get("role_type", "")).upper()
+            tid = parse_team_numeric_id(r.get("team_id"))
+            auid = str(r.get("actor_uid", "")).strip()
+            role_auth = r.get("human_authorization_ref") or r.get("provenance") or auth_ref
+
+            if rtype not in ("GM", "COACH") or tid is None or not auid or not role_auth:
+                continue
+
+            if not self._verify_team_in_database(tid):
+                continue
+
+            verified_roles.append({
+                "role_type": rtype,
+                "team_id": tid,
+                "actor_uid": auid,
+                "human_authorization_ref": role_auth,
+                "provenance": r.get("provenance", auth_data.get("provenance", "SAVE_DB_VERIFIED_DELEGATION")),
+                "authorized_at": r.get("authorized_at", auth_data.get("authorized_at"))
+            })
+
+        if not verified_roles:
+            self._actors.clear()
+            self._actor_provenance.clear()
+            self._phase_grants.clear()
+            self.authorization_status = "NO_VALID_AUTHENTICATED_ROLES"
+            return False
 
         self._actors.clear()
         self._actor_provenance.clear()
-        for r in loaded_roles:
-            rtype = str(r["role_type"]).upper()
-            tid = int(r["team_id"])
-            auid = str(r["actor_uid"])
+        for r in verified_roles:
+            rtype = r["role_type"]
+            tid = r["team_id"]
+            auid = r["actor_uid"]
             self._actors[(rtype, tid)] = auid
             self._actor_provenance[(rtype, tid)] = {
-                "provenance": r.get("provenance", "SAVE_BOUND_ROLE_AUTHORIZATION"),
-                "authorized_at": r.get("authorized_at"),
-                "save_id": save_id,
-                "worldline_id": worldline_id
+                "provenance": r["provenance"],
+                "human_authorization_ref": r["human_authorization_ref"],
+                "authorized_at": r["authorized_at"],
+                "save_id": self.save_id,
+                "worldline_id": self.worldline_id
             }
 
+        self.authorization_status = "AUTHORIZED"
         self._refresh_phase_grants()
+        return True
 
     def _get_teams_from_database(self) -> Set[int]:
-        """Queries numeric team IDs from the active save database."""
+        """Queries numeric team IDs from the active save database with fail-closed semantics."""
         teams = set()
         if not self.database_path or not self.database_path.is_file():
             return teams
         try:
             with closing(connect(self.database_path, True)) as conn:
-                cur = conn.cursor()
-                for row in cur.execute("SELECT team_id FROM teams").fetchall():
-                    val = str(row[0])
-                    if val.startswith("team:"):
-                        val = val.split(":", 1)[1]
+                # 1. Verify saves table matches active save_id if save_id is bound
+                if self.save_id:
                     try:
-                        teams.add(int(val))
-                    except ValueError:
+                        cur = conn.cursor()
+                        cur.execute("SELECT save_id FROM saves WHERE singleton=1")
+                        row = cur.fetchone()
+                        if row and str(row[0]) != str(self.save_id):
+                            # Database belongs to a different save; fail closed!
+                            return set()
+                    except Exception:
                         pass
+
+                # 2. Query team_id and native_team_id
+                cur = conn.cursor()
+                cols = [c[1] for c in cur.execute("PRAGMA table_info(teams)").fetchall()]
+                if not cols:
+                    return set()
+
+                query = "SELECT team_id" + (", native_team_id" if "native_team_id" in cols else "") + " FROM teams"
+                for row in cur.execute(query).fetchall():
+                    tid = parse_team_numeric_id(row[0])
+                    if tid is not None:
+                        teams.add(tid)
+                    if len(row) > 1 and row[1] is not None:
+                        nid = parse_team_numeric_id(row[1])
+                        if nid is not None:
+                            teams.add(nid)
         except Exception:
-            pass
+            return set()
         return teams
 
     def _verify_team_in_database(self, team_id: int) -> bool:
-        """Verifies that a team actually exists in the active save database."""
+        """Verifies that a team actually exists in the active save database. Fail-closed on any failure."""
         if not self.database_path or not self.database_path.is_file():
-            return True
+            return False
         db_teams = self._get_teams_from_database()
         if not db_teams:
-            return True
-        return int(team_id) in db_teams
+            return False
+        parsed_tid = parse_team_numeric_id(team_id)
+        if parsed_tid is None:
+            return False
+        return parsed_tid in db_teams
+
+    def get_actor(self, role_type: str, team_id: int) -> Optional[str]:
+        """Returns the authenticated actor_uid for a given role and team, or None."""
+        rtype = str(role_type).upper()
+        parsed_tid = parse_team_numeric_id(team_id)
+        if parsed_tid is None:
+            return None
+        return self._actors.get((rtype, parsed_tid))
 
     def is_actor_authenticated(self, role_type: str, team_id: int, actor_uid: str) -> bool:
         """Verifies that the actor identity and team scope are authentically registered for the active save."""
-        rtype = role_type.upper()
-        tid = int(team_id)
-        expected = self._actors.get((rtype, tid))
-        if expected is None or expected != actor_uid:
+        if not self.is_authorized:
+            return False
+        rtype = str(role_type).upper()
+        parsed_tid = parse_team_numeric_id(team_id)
+        if parsed_tid is None or not actor_uid:
+            return False
+        expected = self._actors.get((rtype, parsed_tid))
+        if expected is None or expected != str(actor_uid):
             return False
 
-        if not self._verify_team_in_database(tid):
+        if not self._verify_team_in_database(parsed_tid):
             return False
 
         return True
 
     def get_authenticated_teams(self, role_type: str) -> Tuple[int, ...]:
         """Returns sorted tuple of team IDs authenticated for a given role type in the current save."""
-        rtype = role_type.upper()
+        if not self.is_authorized:
+            return ()
+        rtype = str(role_type).upper()
         teams = [tid for (r, tid) in self._actors.keys() if r == rtype and self._verify_team_in_database(tid)]
         return tuple(sorted(teams))
 
     def get_phase_grants(self) -> Set[Tuple[str, str]]:
+        if not self.is_authorized:
+            return set()
         return set(self._phase_grants)
 
     def get_profiles(self, ctx: BatchContext) -> Tuple[RoleCapabilityProfile, RoleCapabilityProfile]:
-        gm_teams = self.get_authenticated_teams("GM")
-        coach_teams = self.get_authenticated_teams("COACH")
+        gm_actors = {uid for (r, _), uid in self._actors.items() if r == "GM"}
+        if len(gm_actors) > 1:
+            raise ValueError(
+                f"AMBIGUOUS_MULTIPLE_ACTORS_FOR_ROLE: Multiple GM actors detected ({sorted(list(gm_actors))}); "
+                "single-profile interface cannot disambiguate without expanding privilege."
+            )
+        elif len(gm_actors) == 1:
+            gm_actor = next(iter(gm_actors))
+            gm_teams = tuple(sorted([
+                tid for (r, tid), uid in self._actors.items()
+                if r == "GM" and uid == gm_actor and self._verify_team_in_database(tid)
+            ]))
+        else:
+            gm_actor = "unauthorized_gm"
+            gm_teams = ()
 
-        gm_actor = next((uid for (r, _), uid in self._actors.items() if r == "GM"), "gm_user_01")
-        coach_actor = next((uid for (r, _), uid in self._actors.items() if r == "COACH"), "coach_user_01")
+        coach_actors = {uid for (r, _), uid in self._actors.items() if r == "COACH"}
+        if len(coach_actors) > 1:
+            raise ValueError(
+                f"AMBIGUOUS_MULTIPLE_ACTORS_FOR_ROLE: Multiple Coach actors detected ({sorted(list(coach_actors))}); "
+                "single-profile interface cannot disambiguate without expanding privilege."
+            )
+        elif len(coach_actors) == 1:
+            coach_actor = next(iter(coach_actors))
+            coach_teams = tuple(sorted([
+                tid for (r, tid), uid in self._actors.items()
+                if r == "COACH" and uid == coach_actor and self._verify_team_in_database(tid)
+            ]))
+        else:
+            coach_actor = "unauthorized_coach"
+            coach_teams = ()
+
+        gm_actor_id = gm_actor if (self.is_authorized and gm_actor != "unauthorized_gm") else "unauthorized_gm"
+        gm_actions = frozenset(self._allowed_actions["GM"]) if (self.is_authorized and gm_actor != "unauthorized_gm") else frozenset()
+        gm_teams = gm_teams if self.is_authorized else ()
+
+        coach_actor_id = coach_actor if (self.is_authorized and coach_actor != "unauthorized_coach") else "unauthorized_coach"
+        coach_actions = frozenset(self._allowed_actions["COACH"]) if (self.is_authorized and coach_actor != "unauthorized_coach") else frozenset()
+        coach_teams = coach_teams if self.is_authorized else ()
 
         gm = RoleCapabilityProfile(
             role_type="GM",
-            actor_uid=gm_actor,
+            actor_uid=gm_actor_id,
             team_scope=gm_teams,
             world_id=ctx.world_id,
             save_instance_id=ctx.save_instance_id,
@@ -247,11 +438,12 @@ class TrustedRoleRegistry:
             season_id=ctx.season_id,
             phase=ctx.phase,
             snapshot_ref=ctx.snapshot_ref,
-            allowed_actions=frozenset(self._allowed_actions["GM"])
+            allowed_actions=gm_actions
         )
+
         coach = RoleCapabilityProfile(
             role_type="COACH",
-            actor_uid=coach_actor,
+            actor_uid=coach_actor_id,
             team_scope=coach_teams,
             world_id=ctx.world_id,
             save_instance_id=ctx.save_instance_id,
@@ -259,9 +451,41 @@ class TrustedRoleRegistry:
             season_id=ctx.season_id,
             phase=ctx.phase,
             snapshot_ref=ctx.snapshot_ref,
-            allowed_actions=frozenset(self._allowed_actions["COACH"])
+            allowed_actions=coach_actions
         )
         return gm, coach
+
+    def inject_mock_authorizations(
+        self,
+        roles: List[Dict[str, Any]],
+        *,
+        human_authorization_ref: str = "HUMAN_TEST_MOCK_GRANT"
+    ) -> None:
+        """Explicitly injects test role authorizations for offline mock testing only.
+        
+        Strictly prohibited in live mode (H1).
+        """
+        if not self.is_mock:
+            raise ValueError(
+                "LIVE_MODE_REJECTS_MOCK_AUTHORIZATION: "
+                "Mock authorization injection is strictly prohibited in live mode."
+            )
+        self._actors.clear()
+        self._actor_provenance.clear()
+        for r in roles:
+            rtype = str(r["role_type"]).upper()
+            tid = parse_team_numeric_id(r["team_id"])
+            auid = str(r["actor_uid"])
+            if tid is not None and auid:
+                self._actors[(rtype, tid)] = auid
+                self._actor_provenance[(rtype, tid)] = {
+                    "provenance": r.get("provenance", "OFFLINE_TEST_MOCK_INJECTION"),
+                    "human_authorization_ref": human_authorization_ref,
+                    "save_id": self.save_id or "mock_save",
+                    "worldline_id": self.worldline_id or "mock_worldline"
+                }
+        self.authorization_status = "AUTHORIZED_MOCK"
+        self._refresh_phase_grants()
 
 
 
@@ -484,6 +708,22 @@ class SeasonCycleHost:
                 target_db = save_dir / f"world-{worldline_id}.sqlite"
                 if not target_db.exists():
                     create_database(target_db, save_id)
+                    if default_db and default_db.exists():
+                        try:
+                            with closing(connect(default_db, True)) as pconn, closing(connect(target_db, False)) as cconn:
+                                pcur = pconn.cursor()
+                                ccur = cconn.cursor()
+                                for srow in pcur.execute("SELECT season_id, season_code, save_id FROM seasons").fetchall():
+                                    ccur.execute("INSERT OR IGNORE INTO seasons (season_id, season_code, save_id) VALUES (?, ?, ?)", (srow[0], srow[1], srow[2]))
+                                cols = [c[1] for c in pcur.execute("PRAGMA table_info(teams)").fetchall()]
+                                if cols:
+                                    col_names = ", ".join(cols)
+                                    placeholders = ", ".join(["?"] * len(cols))
+                                    for trow in pcur.execute(f"SELECT {col_names} FROM teams").fetchall():
+                                        ccur.execute(f"INSERT OR IGNORE INTO teams ({col_names}) VALUES ({placeholders})", trow)
+                                cconn.commit()
+                        except Exception:
+                            pass
                 manifest["worldlines"][worldline_id] = {
                     "database_file": target_db.name,
                     "created_at": datetime.now(timezone.utc).isoformat(),
@@ -594,6 +834,23 @@ class SeasonCycleHost:
             wl_info["target_db"] = str(target_path)
             if not target_path.exists():
                 create_database(target_path, wl_info["save_id"])
+                base_db = save_dir / "world.sqlite"
+                if base_db.exists():
+                    try:
+                        with closing(connect(base_db, True)) as pconn, closing(connect(target_path, False)) as cconn:
+                            pcur = pconn.cursor()
+                            ccur = cconn.cursor()
+                            for srow in pcur.execute("SELECT season_id, season_code, save_id FROM seasons").fetchall():
+                                ccur.execute("INSERT OR IGNORE INTO seasons (season_id, season_code, save_id) VALUES (?, ?, ?)", (srow[0], srow[1], srow[2]))
+                            cols = [c[1] for c in pcur.execute("PRAGMA table_info(teams)").fetchall()]
+                            if cols:
+                                col_names = ", ".join(cols)
+                                placeholders = ", ".join(["?"] * len(cols))
+                                for trow in pcur.execute(f"SELECT {col_names} FROM teams").fetchall():
+                                    ccur.execute(f"INSERT OR IGNORE INTO teams ({col_names}) VALUES ({placeholders})", trow)
+                            cconn.commit()
+                    except Exception:
+                        pass
             save_json_path = save_dir / "save.json"
             if save_json_path.exists():
                 try:
@@ -660,6 +917,7 @@ class SeasonCycleHost:
             "database_file": str(target_db),
             "current_game_date": current_date,
             "is_backward_worldline_branch": wl_info["is_backward"],
+            "role_authorization_status": self.role_registry.authorization_status,
             "capture_summary": capture_result.get("status") if capture_result else "ALREADY_BOUND"
         }
         self._append_ledger({"action": "INITIALIZE_SEASON", **receipt})
@@ -766,12 +1024,7 @@ class SeasonCycleHost:
         # Open Outbox for cycle with BatchContext
         ctx = self._make_context(cycle_id)
         gm_profile, coach_profile = self._make_profiles(ctx)
-        phase_grants = {
-            ("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "COACH.STRATEGY.RUN_PLAY"),
-            ("gm_user_01", "GM.TRADE.MIXED")
-        }
+        phase_grants = self.role_registry.get_phase_grants()
 
         self.outbox.open_cycle(cycle_id, ctx)
 
@@ -783,21 +1036,47 @@ class SeasonCycleHost:
             seen_targets: Dict[Tuple[int, str], Any] = {}
             for item in candidate_intents:
                 iid = item.get("intent_id", f"{cycle_id}-intent-{len(added_intents)+1}")
-                issuer = item.get("issuer_role", "GM")
-                actor_uid = item.get("actor_uid", "gm_user_01" if issuer == "GM" else "coach_user_01")
-                aid = item.get("action_id", "PLAYER.EDIT.TENDENCY_BATCH")
+                issuer = str(item.get("issuer_role", "GM")).upper()
                 params = item.get("parameters", {})
-                tid = params.get("team_id", 1)
+                tid = params.get("team_id", item.get("team_id", params.get("team_a")))
 
-                # Trusted role actor check (P0-C)
-                if not self.role_registry.is_actor_authenticated(issuer, int(tid), actor_uid):
-                    unauthorized.append({"intent_id": iid, "issuer": issuer, "actor_uid": actor_uid, "team_id": tid, "reason": "ROLE_ACTOR_NOT_AUTHENTICATED"})
+                actor_uid = item.get("actor_uid")
+                if not actor_uid and tid is not None:
+                    actor_uid = self.role_registry.get_actor(issuer, int(tid))
+
+                if not actor_uid:
+                    unauthorized.append({
+                        "intent_id": iid,
+                        "issuer": issuer,
+                        "actor_uid": None,
+                        "team_id": tid,
+                        "reason": "ACTOR_UID_MISSING_AND_UNAUTHENTICATED"
+                    })
+                    continue
+
+                aid = item.get("action_id", "PLAYER.EDIT.TENDENCY_BATCH")
+
+                # Trusted role actor check (P0-C & H1-H4)
+                if tid is None or not self.role_registry.is_actor_authenticated(issuer, int(tid), actor_uid):
+                    unauthorized.append({
+                        "intent_id": iid,
+                        "issuer": issuer,
+                        "actor_uid": actor_uid,
+                        "team_id": tid,
+                        "reason": "ROLE_ACTOR_NOT_AUTHENTICATED"
+                    })
                     continue
 
                 # Check role profile
                 prof = gm_profile if issuer == "GM" else (coach_profile if issuer == "COACH" else None)
                 if prof is None or aid not in prof.allowed_actions or (actor_uid, aid) not in phase_grants:
-                    unauthorized.append({"intent_id": iid, "issuer": issuer, "action_id": aid, "reason": "ROLE_NOT_AUTHORIZED_FOR_ACTION"})
+                    unauthorized.append({
+                        "intent_id": iid,
+                        "issuer": issuer,
+                        "actor_uid": actor_uid,
+                        "action_id": aid,
+                        "reason": "ROLE_NOT_AUTHORIZED_FOR_ACTION"
+                    })
                     continue
 
                 # Target check
@@ -881,12 +1160,7 @@ class SeasonCycleHost:
         ctx = self._make_context(cycle_id)
         gm_profile, coach_profile = self._make_profiles(ctx)
         profiles = (gm_profile, coach_profile)
-        phase_grants = {
-            ("gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "PLAYER.EDIT.TENDENCY_BATCH"),
-            ("coach_user_01", "COACH.STRATEGY.RUN_PLAY"),
-            ("gm_user_01", "GM.TRADE.MIXED")
-        }
+        phase_grants = self.role_registry.get_phase_grants()
 
         # Inspect draft intents before sealing for CAS preflight
         draft_intent_dicts = self.outbox.list_intents(cycle_id, status="DRAFT")
@@ -1046,6 +1320,12 @@ class SeasonCycleHost:
         active_plan = self.state.get("active_plan")
         if not active_plan or active_plan.get("plan_digest") != plan_digest:
             raise ValueError(f"DIGEST_MISMATCH_AUTHORIZATION_DENIED: provided '{plan_digest}' != sealed '{active_plan.get('plan_digest') if active_plan else None}'")
+
+        if not self.role_registry.is_authorized:
+            raise ValueError(
+                f"ROLE_AUTHORIZATION_REQUIRED: Active save has no verified role authorizations "
+                f"(status: {self.role_registry.authorization_status}). Execution aborted fail-closed."
+            )
 
         is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
         if is_mock:
