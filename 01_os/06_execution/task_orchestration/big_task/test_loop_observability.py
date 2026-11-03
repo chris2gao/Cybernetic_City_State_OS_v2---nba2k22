@@ -126,3 +126,28 @@ def test_report_cannot_overwrite_raw_log(tmp_path):
     p.write_text(raw)
     assert m.main(["--input",str(p),"--report",str(p)])==3
     assert p.read_text()==raw
+
+
+def test_open_gap_cannot_silently_disappear_from_later_checkpoint():
+    a=record();a["remaining_gaps"]=[{"id":"g1","status":"OPEN"}]
+    b=record(index=2,before=SHA2,after=SHA2)
+    b["outcome"]="objective_met_ready_for_series_review"
+    assert "UNRESOLVED_GAP_SILENTLY_DROPPED" in codes([a,b])
+
+def test_closed_gap_resolves_and_summary_excludes_it():
+    a=record();a["remaining_gaps"]=[{"id":"g1","status":"OPEN"}]
+    b=record(index=2,before=SHA2,after=SHA2)
+    b["remaining_gaps"]=[{"id":"g1","status":"CLOSED"}]
+    assert codes([a,b])==set()
+    assert m.build_report([a,b],"strict",[])["open_gaps"]==[]
+
+def test_duplicate_gap_id_is_rejected():
+    a=record();a["remaining_gaps"]=[{"id":"g1","status":"OPEN"},{"id":"g1","status":"BLOCKED"}]
+    assert "DUPLICATE_GAP_ID" in codes([a])
+
+def test_summary_keeps_only_last_open_status():
+    a=record();a["remaining_gaps"]=[{"id":"g1","status":"OPEN"},{"id":"g2","status":"OPEN"}]
+    b=record(index=2,before=SHA2,after=SHA2)
+    b["remaining_gaps"]=[{"id":"g1","status":"CLOSED"},{"id":"g2","status":"BLOCKED"}]
+    rep=m.build_report([a,b],"strict",m.validate([a,b]))
+    assert [g["id"] for g in rep["open_gaps"]]==["g2"]
