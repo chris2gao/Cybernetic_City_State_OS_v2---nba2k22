@@ -1,0 +1,88 @@
+{
+  "schema_version": "nba2k22.decision_outbox.verification_plan.v1",
+  "task_id": "NBA2K22-REA-DECISION-OUTBOX-20261102-001",
+  "status": "DISPATCHED_NOT_EXECUTED",
+  "base_sha": "80955e8ed501a9ab57fc4b363646b525c0748a98",
+  "human_goals": {
+    "performance": "100 live shot tendencies in approximately 10.3 s accepted; no further speed work now",
+    "standardization": "Incrementally gather decided intents from GM/Coach/Player roles, seal once, translate actions, execute batch with truthful receipts",
+    "worlddata": "DEFERRED"
+  },
+  "scope": {
+    "write_game": false,
+    "save_mutation": false,
+    "baseline_receipt_replay": true,
+    "fake_transport": true,
+    "role_host_identity_required": true,
+    "no_new_approval_authority": true
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "Draft add/supersede/list/restart",
+      "check": "per-item stable identity and append-only events; no mutation of sealed revision"
+    },
+    {
+      "id": "G2",
+      "name": "World/save/season/phase binding",
+      "check": "mismatched context fails and does not silently rebase expected before"
+    },
+    {
+      "id": "G3",
+      "name": "Role credentials reused",
+      "check": "profile and grants host-provided, model JSON cannot self-grant"
+    },
+    {
+      "id": "G4",
+      "name": "Collision and dependencies",
+      "check": "same resource conflicting targets require resolution; cycles and missing refs fail"
+    },
+    {
+      "id": "G5",
+      "name": "Immutable seal",
+      "check": "deterministic RoleActionBatch & digest, revision CAS, idempotent seal"
+    },
+    {
+      "id": "G6",
+      "name": "Pure role to native adapter",
+      "check": "recognized mappings and exact field contract; unsupported actions not silently dropped"
+    },
+    {
+      "id": "G7",
+      "name": "Strict generic validator",
+      "check": "100 archived live receipts and raw messages all match, mutated raw or missing getter fails"
+    },
+    {
+      "id": "G8",
+      "name": "Recover safely",
+      "check": "outbox reopens after crash, never replays attempted/UNKNOWN native action"
+    },
+    {
+      "id": "G9",
+      "name": "Full offline closed loop",
+      "check": "GM and Coach action accumulation, seal, Fake execution and feedback; unsupported action explicitly pending"
+    },
+    {
+      "id": "G10",
+      "name": "Performance and provenance",
+      "check": "1000 and 10000 outbox inserts measured; 100 verified live gold receipt replay but no new live writes; accurate Loop and SHA"
+    }
+  ],
+  "deliverables": [
+    "decision_outbox.py",
+    "decision_batch_bridge.py",
+    "decision_outbox_cli.py",
+    "validate_batch_execution.py",
+    "tests/test_decision_outbox.py",
+    "tests/test_decision_batch_bridge.py",
+    "tests/test_validate_batch_execution.py",
+    "sqlite_outbox_schema.md",
+    "offline_end_to_end_receipts.json",
+    "10k_outbox_benchmark.json",
+    "loop_iterations.jsonl",
+    "loop_summary_validation.json",
+    "completion_pointer.md"
+  ],
+  "remaining_live_authority": "Any new live execution requires actual current Human scenario authorization; prior 100-item benchmark authorization exhausted",
+  "executor_model": "MUST_RECORD_ACTUAL_MODEL_NOT_INFERRED"
+}

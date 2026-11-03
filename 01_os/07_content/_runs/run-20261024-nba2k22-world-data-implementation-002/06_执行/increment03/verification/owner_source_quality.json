@@ -1,0 +1,66 @@
+{
+  "unit": {
+    "unit_id": "owner-capture-replay:edd2f91907efbf2608fdfe4f",
+    "run_id": "owner-capture-replay:edd2f91907efbf2608fdfe4f",
+    "source_key": "OWNER_RECORDED_GAME_1",
+    "payload_sha256": "99b62df6bdc7ded8613f7361911c5f62a8970585e02281c1cd6db1b1db62807b",
+    "unit_status": "success",
+    "observed_at": "2026-10-24T13:22:15.789787+00:00",
+    "effective_at": null,
+    "layout_version": "OWNER_LIVE_CAPTURE_REPLAY_V1",
+    "completeness": "PARTIAL",
+    "source_grade": "RESEARCH_FIXTURE",
+    "decoder_version": "OWNER_LIVE_CAPTURE_REPLAY_V1",
+    "save_binding_ref": "UNKNOWN_PERSISTENT_SAVE; CAPTURE_SESSION_REPORT_SHA256:edd2f91907efbf2608fdfe4f308944c95a8bacd753182f3b3429ae650d599799"
+  },
+  "typed_native_box_staging": [
+    {
+      "game_id": "source-game:edd2f91907efbf26:1",
+      "side": "AWAY",
+      "native_team_id": 18,
+      "rows": 13,
+      "derived_box_points": 106
+    },
+    {
+      "game_id": "source-game:edd2f91907efbf26:1",
+      "side": "HOME",
+      "native_team_id": 1,
+      "rows": 13,
+      "derived_box_points": 122
+    }
+  ],
+  "period_sums": [
+    {
+      "game_id": "source-game:edd2f91907efbf26:1",
+      "team_id": "source-team:1",
+      "regulation_period_sum": 122
+    },
+    {
+      "game_id": "source-game:edd2f91907efbf26:1",
+      "team_id": "source-team:18",
+      "regulation_period_sum": 106
+    }
+  ],
+  "canonical_player_box_rows": 0,
+  "gaps": [
+    {
+      "target_field": "PERSISTENT_SAVE_BINDING",
+      "reason": "Current process/capture session does not establish persistent save identity",
+      "impact": "Research staging only; no accepted cross-capture world identity or Q10 exception",
+      "human_exception_ref": null
+    },
+    {
+      "target_field": "BOX_CANONICAL_PLAYER_IDENTITIES",
+      "reason": "This replay has no accepted active-player mapping; actual pool controls found duplicate Native IDs",
+      "impact": "Box values remain typed source observations; no invented canonical PLAYER or Q10 exception",
+      "human_exception_ref": null
+    },
+    {
+      "target_field": "SCHEDULE_DATE_UI_ENCODING",
+      "reason": "Raw date decoded by historical candidate codec; target calendar/UI month semantics unverified",
+      "impact": "Canonical game_date remains NULL, raw date retained in hashed source",
+      "human_exception_ref": null
+    }
+  ],
+  "status": "RESEARCH_SOURCE_NOT_CANONICAL_PLAYER_ACCEPTANCE"
+}

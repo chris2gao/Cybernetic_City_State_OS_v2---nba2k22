@@ -1,0 +1,32 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Implement Native global lineup arrays, complete stored advanced rotation and
+    public PLAYER PlayingTime/ForceNonStarter fields with typed v21 ingest and queries.
+  implementation_or_review_method: >-
+    Verify current TEAM/PLAYER field signatures, primitive and enum bindings,
+    array dimensions/strides and private exclusions. Recheck all public subjects,
+    TEAM pointers/rosters/data/directories and same-unit mode. Compare actual SQL
+    and query values with raw pointer arrays, float-free scalar words and matrix bytes.
+  supportability_rationale: >-
+    Native metadata establishes thirteen LineupPlayer slots, eight named five-slot
+    arrays and a48-by5 uint16 matrix. Pointer referents retain null/outside/misaligned
+    and reciprocal-roster status. Native PlayingTime is retained without UI-minute
+    conversion; the advanced ID namespace remains explicitly unassigned.
+  feasibility_rationale: >-
+    All235 tests and SQLite smoke pass at the exact candidate. v21 is a separate
+    copy with v20 retained, and every prior factual column is compared. Only the
+    ordinary lineups family is captured; annual history, capacity and game writes
+    remain outside this increment. Query pages pin the same source unit and cutoff.
+  exact_result_or_candidate_ref: 1cc410befcebf9fb8848ad0dcabfc91e31666fb7
+  verification_evidence:
+    - 06_执行/increment29/verification/operations_report.json
+    - 06_执行/increment29/actual-lineup-report.json
+    - 06_执行/increment29/queries/team-0-lineups.json
+    - 06_执行/increment29/native-sources.archive.json
+    - 06_执行/increment29/world-v21.snapshot.json
+  residual_risk_or_unproved_limits:
+    - PlayingTime UI minutes/units and actual lineup deployment are unproved.
+    - Native advanced axes/strides are observed; clock/position labels and ID namespace are unproved.
+    - Pointer/current-roster aliases do not certify historical subject lifecycle.
+    - Full-season capacity and complete-system independent/Human acceptance remain open.

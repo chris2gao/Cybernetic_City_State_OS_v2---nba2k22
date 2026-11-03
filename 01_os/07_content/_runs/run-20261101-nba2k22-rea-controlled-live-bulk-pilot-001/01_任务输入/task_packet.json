@@ -1,0 +1,101 @@
+{
+  "schema_version": "nba2k22.rea.controlled_live_bulk_pilot.v1",
+  "task_id": "NBA2K22-REA-CONTROLLED-LIVE-BULK-PILOT-20261101-001",
+  "branch": "task/nba2k22-rea-controlled-live-bulk-pilot-20261101",
+  "base_sha": "568f795f75a0099d6560c1fa448a5ef37f9e7b8e",
+  "human_authorization": {
+    "status": "APPROVED",
+    "source": "Human conversation instruction 2026-11-01: 批准，许可授权，直接做批量的测试吧; explicit follow-up confirms Human authority",
+    "scope": "single verified recoverable test save; Player SHOT_TENDENCY live multi-intent multi-chunk tests; real native getters and bounded setters permitted",
+    "new_human_approval_required_within_scope": false,
+    "two_person_rule": "NOT_ADOPTED_BY_HUMAN_NO_EXTRA_SIGNER",
+    "limits": "10-30 live/no-op candidates; first live mutation batch 10-20 valid intents if preconditions hold; limited extra observation batch only after clean success; no auto escalation to mass 10k writes"
+  },
+  "role": "execution",
+  "planner_model": "GPT-6",
+  "actual_executor_model": "MUST_BE_RECORDED_TRUTHFULLY",
+  "execution_mode": "CONDITIONALLY_LIVE_ALLOWED_BY_HUMAN_WITH_TECHNICAL_PRECHECKS",
+  "permissions": {
+    "native_attach_within_verified_save": true,
+    "native_getter": true,
+    "bounded_live_player_shot_tendency_setter": true,
+    "coach_setter": false,
+    "player_attributes": false,
+    "trade": false,
+    "other_native_mutations": false,
+    "game_calendar": false,
+    "game_save_overwrite": false,
+    "master_merge": false,
+    "rdc_as_executor": false
+  },
+  "must_verify_before_setter": [
+    "recoverable_cold_save_backup",
+    "exact_game_SHA256",
+    "PID_and_process_start_epoch",
+    "actual_save_and_active_roster_identity",
+    "live_getter_CAS",
+    "plan_digest_scoped_exact_intents",
+    "one_active_executor_cross_process_lock",
+    "durable_claim_and_unknown_fail_closed",
+    "matching_full_receipt_envelope",
+    "regression_and_negative_test_evidence",
+    "bounded_runtime_calls_and_no_automatic_retries"
+  ],
+  "gates": [
+    {
+      "id": "G1",
+      "name": "Human authorization recognized",
+      "pass": "No duplicate Human approval; source grant bound to fixed scope and live preflight manifest; unauthenticated CLI flag alone cannot widen scope"
+    },
+    {
+      "id": "G2",
+      "name": "Technical preflight",
+      "pass": "Live executable SHA and PID epoch, save/roster context and recoverable backup independently confirmed"
+    },
+    {
+      "id": "G3",
+      "name": "Single-executor",
+      "pass": "No concurrent native mutation, durable claim before execution; unknown locks never automatically reconciled"
+    },
+    {
+      "id": "G4",
+      "name": "Native bridge and protocol",
+      "pass": "Existing REA CLI called with registered native bindings, full batch/save/plan/chunk IDs in envelope and verified getter/setter evidence"
+    },
+    {
+      "id": "G5",
+      "name": "Live No-op multi-chunk",
+      "pass": "At least 2 chunks, genuine game readback and no Setter calls"
+    },
+    {
+      "id": "G6",
+      "name": "Live bounded mutation batch",
+      "pass": "10-20 authenticated live Player SHOT_TENDENCY intents if available, at least 2 chunks, no other fields, per-intent +1/-1, exact CAS and post-write verify"
+    },
+    {
+      "id": "G7",
+      "name": "Failure stop",
+      "pass": "CAS/UNKNOWN/cleanup failures lead to halt, no retries or auto rollback, conservative receipts"
+    },
+    {
+      "id": "G8",
+      "name": "Evidence and Loop",
+      "pass": "Real runner evidence separated from Fake/Node and reports true model, executable SHA, exact test command, bounded iteration and stop reason"
+    }
+  ],
+  "files_allowed": [
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/transport.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/run_native_program.ps1",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/live_bulk_pilot.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/**",
+    "01_os/07_content/_runs/run-20261101-nba2k22-rea-controlled-live-bulk-pilot-001/**"
+  ],
+  "stop_if": "insufficient technical evidence, wrong build/save, no recoverable backup, inconsistent native results, unverified concurrent instance, scope overflow, missing safe UI state",
+  "success": "LIVE_BULK_PILOT_OBSERVED_ONLY_WITH_MATCHING_NATIVE_EVIDENCE",
+  "no_claims": [
+    "PRODUCTION_LIVE_READY",
+    "10K_LIVE_VERIFIED",
+    "COACH_BULK_CERTIFIED"
+  ]
+}

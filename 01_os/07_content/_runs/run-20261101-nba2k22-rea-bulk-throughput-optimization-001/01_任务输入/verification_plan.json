@@ -1,0 +1,89 @@
+{
+  "schema_version": "nba2k22.optimization.task_verification.v1",
+  "task_id": "NBA2K22-REA-BULK-THROUGHPUT-OPT-20261101-001",
+  "branch": "task/nba2k22-rea-bulk-throughput-optimization-20261101",
+  "baseline_sha": "25b3748fa7d861d69a7e6d350bb0d36c1eefc17f",
+  "dispatch": "01_任务输入/execution_dispatch.md",
+  "run_id": "run-20261101-nba2k22-rea-bulk-throughput-optimization-001",
+  "role": "execution",
+  "planned_model": "Gemini Flash 3.8",
+  "actual_model": "MUST_RECORD_ACTUAL",
+  "objective": "REA_SINGLE_SESSION_MULTI_CHUNK_PERFORMANCE",
+  "permissions": {
+    "live_game_read": true,
+    "limited_live_shot_tendency_mutation": true,
+    "max_real_setter_intents_per_new_test": 12,
+    "unknown_retry": false,
+    "game_save_write": false,
+    "master_merge": "CONDITIONAL_SCOPED_PR_ONLY"
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "baseline provenance",
+      "acceptance": "39.40411s 12 real successful Setter 2 chunks; timing scopes explicit"
+    },
+    {
+      "id": "G2",
+      "name": "profiling",
+      "acceptance": "stage wall times from true clock provenance; unknown values not fabricated"
+    },
+    {
+      "id": "G3",
+      "name": "offline bounded session",
+      "acceptance": "one simulated attachment supports >=2 chunks with distinct receipts"
+    },
+    {
+      "id": "G4",
+      "name": "durable safety",
+      "acceptance": "all claims before execution, interprocess lock, strict CAS, no UNKNOWN replay"
+    },
+    {
+      "id": "G5",
+      "name": "game-thread budget",
+      "acceptance": "single Hook only and bounded yielding/segmentation; no unbounded callbacks"
+    },
+    {
+      "id": "G6",
+      "name": "real no-op",
+      "acceptance": "two+ chunk live Getter/no-op, zero Setter"
+    },
+    {
+      "id": "G7",
+      "name": "real bounded mutation",
+      "acceptance": "12 verified Player SHOT_TENDENCY intents, new plan and CAS, one attempt, 2+ chunks, rollback not automatic"
+    },
+    {
+      "id": "G8",
+      "name": "comparison",
+      "acceptance": "old and new normalized end-to-end wall time per successful Setter, native call counts, real cleanup receipt"
+    },
+    {
+      "id": "G9",
+      "name": "regression",
+      "acceptance": "existing 78+ tests and new fault injections with exact source SHA"
+    },
+    {
+      "id": "G10",
+      "name": "Loop",
+      "acceptance": "append-only, machine-recomputed counts, actual model/stop"
+    }
+  ],
+  "evidence_grades": [
+    "ORIGINAL_BASELINE_RECEIPT",
+    "OFFLINE_FIXTURE",
+    "NODE_VM",
+    "LIVE_READ",
+    "LIVE_SETTER",
+    "INDEPENDENT_CODE_REVIEW",
+    "HUMAN_DECISION"
+  ],
+  "stop_conditions": [
+    "no_measured_improvement_with_new_evidence",
+    "source_schema_or_memory_safety_violation",
+    "unknown_native_or_process_state",
+    "plan_scope_exceeded",
+    "unverifiable provenance",
+    "CORE_OS_11_STOP"
+  ]
+}

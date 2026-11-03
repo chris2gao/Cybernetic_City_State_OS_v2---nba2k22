@@ -1,0 +1,32 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-prototype-001/任务包.yml",
+  "checks": [
+    {
+      "id": "PYTHON_UNIT",
+      "argv": [
+        "@python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SQLITE_SMOKE",
+      "argv": [
+        "@python",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py",
+        "smoke"
+      ],
+      "timeout_seconds": 60,
+      "expected_exit_code": 0
+    }
+  ]
+}

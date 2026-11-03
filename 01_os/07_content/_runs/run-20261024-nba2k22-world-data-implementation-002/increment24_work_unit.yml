@@ -1,0 +1,32 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Remove organization acquisition's duplicate final Box reads while retaining
+    live schedule identity, calendar stability and team-total reconciliation.
+  implementation_or_review_method: >-
+    Add explicit auxiliary header-only mode, prevent Box-fact conversion of that
+    mode, and run an explicit two-source schedule/organization refresh with fresh
+    read-only process controls. Compare all old rows and independent raw points.
+  supportability_rationale: >-
+    Actual organization trace has zero Box and PLAYER reads. All1232 index rows
+    match current TEAM pointers and238 played headers support30 reconciled team
+    totals with120 independent raw field comparisons. Earlier Box source ages
+    remain intact; auxiliary headers never claim Box conservation.
+  feasibility_rationale: >-
+    Schema remains v18 with86 STRICT tables and1376 columns.188 tests and SQLite
+    smoke pass at the executed code commit. All1361150 prior rows across86 tables
+    are retained by every column. The save binding and process epoch are stable.
+  exact_result_or_candidate_ref: 912304120b12fe80d8234d52ede32e88fac02d5a
+  verification_evidence:
+    - 06_执行/increment24/actual-auxiliary-report.json
+    - 06_执行/increment24/verification/operations_report.json
+    - 06_执行/increment24/queries/organization-team-header-reconciliation.json
+    - 06_执行/increment24/native-sources.archive.json
+    - 06_执行/increment24/world-v18.snapshot.json
+    - 06_执行/increment24/delivery_check.json
+  residual_risk_or_unproved_limits:
+    - Only schedule and organization were refreshed; other families retain prior times.
+    - Unread organization Box bytes are not revalidated.
+    - Static stat-index getter candidates do not establish cumulative-stat phase.
+    - UI semantics and identity lifecycle remain separately unproved.
+    - Full-season capacity and full-system independent/Human acceptance remain open.

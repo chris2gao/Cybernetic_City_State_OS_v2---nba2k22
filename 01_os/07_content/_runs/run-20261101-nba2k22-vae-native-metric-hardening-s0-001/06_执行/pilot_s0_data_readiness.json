@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "task_id": "NBA2K22-VAE-NATIVE-METRIC-HARDENING-S0-20261101-001",
+  "evaluation_mode": "CALENDAR_SIM_STANDARDS",
+  "human_context": "Human confirmed that VAE real-world game effects will be verified via game data collection during regular gameplay, without requiring frequent dedicated test games. S0 establishes strictly read-only baseline readiness.",
+  "dual_gate_architecture": {
+    "G1_data_ingestion_and_sql_gate": "Verifies that game box scores, season totals, player metrics, and team ratings are read from native memory, ingested into SQLite, deduplicated, and exposed via GM Query API.",
+    "G2_setting_and_effect_verification_gate": "Verifies that setting-to-stat causal contracts, baseline snapshots, and comparison bounds are defined. S1 REA Setter mutations remain deferred."
+  },
+  "pilots": [
+    {
+      "pilot_id": "PILOT_01_SHOT_TOUCHES_COACH_PLAYS",
+      "mechanisms": [
+        "Tendency: Shot (TENDENCY_NATIVE_001)",
+        "Tendency: Touches (TENDENCY_NATIVE_066)",
+        "Coach: Run Plays (COACH_DEFAULT_001)",
+        "Coach: POE Offense (COACH_DEFAULT_002)",
+        "Coach: Freelance (COACH_DEFAULT_003)"
+      ],
+      "calendar_sim_evaluation": {
+        "applicable_metrics": [
+          "PLAYER_FGA",
+          "PLAYER_PTS",
+          "PLAYER_AST",
+          "TEAM_FGA",
+          "MET_TOUCHES_NATIVE (EXPERIMENTAL_POSSESSION_LOAD_INDEX)",
+          "PLAYER_TS_NATIVE",
+          "PLAYER_EFG_NATIVE"
+        ],
+        "g1_data_gate": {
+          "status": "READY",
+          "evidence": "Single-game player_game_boxes (fga, fgm, pts, ast) and season totals fully ingested to SQLite and queryable via player_game_log and player_advanced_metrics.",
+          "notes": "Touches tracked via experimental_possession_load_index (FGA + 0.44*FTA + TOV + 0.33*AST); native touch counter marked NO_NATIVE_SOURCE_FOUND in static banks."
+        },
+        "g2_effect_gate": {
+          "status": "PARTIAL",
+          "evidence": "Read-only baseline query contracts and Hollinger GameScore metrics ready. Active setting mutation via REA Setter is deferred to S1 per task boundaries.",
+          "deferred_action": "S1 REA Setter live memory parameter mutation and long-term game tracking."
+        },
+        "overall_s0_readiness": "S0_READY"
+      }
+    },
+    {
+      "pilot_id": "PILOT_02_TEMPO_POE_ROTATION",
+      "mechanisms": [
+        "Coach: Tempo (COACH_DEFAULT_014)",
+        "Coach: POE Defense 2 (COACH_DEFAULT_005)",
+        "Rotation: Actual playing time and starters"
+      ],
+      "calendar_sim_evaluation": {
+        "applicable_metrics": [
+          "TEAM_PACE_NATIVE",
+          "TEAM_POSSESSIONS",
+          "TEAM_OFFRTG_NATIVE",
+          "TEAM_DEFRTG_NATIVE",
+          "TEAM_NETRTG_NATIVE",
+          "TEAM_TRANSITION_POINTS",
+          "TEAM_SECOND_CHANCE_POINTS",
+          "PLAYER_MINUTES",
+          "ROTATION_ACTUAL"
+        ],
+        "g1_data_gate": {
+          "status": "READY",
+          "evidence": "Team possessions (Slot 28), pace, transition points, second chance points, and player active minutes (in_use == 1) fully ingested and deduplicated via team_advanced_metrics and team_game_boxes.",
+          "notes": "Deduplication across multiple capture units and season qualification verified by unit tests."
+        },
+        "g2_effect_gate": {
+          "status": "PARTIAL",
+          "evidence": "Baseline tempo and pace tracking established; causal delta measurement ready to compare calendar sim blocks after setting modification.",
+          "deferred_action": "S1 setting adjustment of COACH_DEFAULT_014 (Tempo integer algorithm)."
+        },
+        "overall_s0_readiness": "S0_READY"
+      }
+    },
+    {
+      "pilot_id": "PILOT_03_HELP_DEFENSE_DEFENSIVE_POE",
+      "mechanisms": [
+        "Coach: Help Defense Slider",
+        "Coach: Defensive POE Settings",
+        "Attribute: Defensive IQ / Help Defense IQ"
+      ],
+      "calendar_sim_evaluation": {
+        "applicable_metrics": [
+          "OPPONENT_FGA",
+          "OPPONENT_THREE_PA",
+          "OPPONENT_FG_PCT",
+          "TEAM_STL",
+          "TEAM_TOV",
+          "TEAM_DEFRTG_NATIVE",
+          "PLAYER_PAINT_FGA (GAP)",
+          "OPPONENT_PAINT_FGA (GAP)"
+        ],
+        "g1_data_gate": {
+          "status": "PARTIAL",
+          "evidence": "Opponent FGA, 3PA, opponent points, defensive rating, steals, and team turnovers ready from Slot 28 and game boxes. Specific opponent paint FGA is marked as an honest evidence gap (not stored natively in static banks).",
+          "notes": "Paint points and points in the paint are natively captured; paint shot attempts are unseparated from total 2PA in static memory."
+        },
+        "g2_effect_gate": {
+          "status": "PARTIAL",
+          "evidence": "Defensive rating and opponent shooting efficiency metrics ready as high-level effect proxies; paint attempt tracking requires future 3D telemetry if needed.",
+          "deferred_action": "S1 defensive setting modification and longitudinal calendar tracking."
+        },
+        "overall_s0_readiness": "S0_PARTIAL"
+      }
+    }
+  ],
+  "constraints_compliance": {
+    "memory_write": "ZERO_WRITES_TO_GAME_MEMORY",
+    "save_mutation": "ZERO_MUTATIONS_TO_SAVE_FILES",
+    "setting_tampering": "ZERO_SETTING_TAMPERING",
+    "mode_discipline": "CALENDAR_SIM_FIRST"
+  }
+}

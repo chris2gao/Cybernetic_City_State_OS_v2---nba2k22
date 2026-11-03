@@ -1,0 +1,35 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/任务包.yml",
+  "note": "Human2026-10-26 requests bounded centralized closeout of the current regular-season engineering baseline. Actual results are in increment37/verification-report.json and verification/operations.json; the plan alone is not run evidence. Full underlying-system/lifecycle acceptance and independent review remain separate.",
+  "checks": [
+    {
+      "id": "PYTHON_UNIT",
+      "argv": [
+        "@python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "timeout_seconds": 180,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "SQLITE_SMOKE",
+      "argv": [
+        "@python",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py",
+        "smoke"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    }
+  ],
+  "baseline_result_ref": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/verification-report.json",
+  "final_human_readable_acceptance": "Current regular-season engineering candidate only: exact implemented schema, retained real-source database/snapshot and reader/query interfaces, source maturity/gaps and explicit deferrals. Full lifecycle, 100-season capacity, game writes, independent acceptance and master integration are not established by this closeout."
+}

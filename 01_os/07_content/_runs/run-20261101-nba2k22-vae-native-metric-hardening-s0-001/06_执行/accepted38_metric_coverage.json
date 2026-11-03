@@ -1,0 +1,994 @@
+{
+  "schema_version": "1.0",
+  "task_id": "NBA2K22-VAE-NATIVE-METRIC-HARDENING-S0-20261101-001",
+  "canonical_38_total": 38,
+  "exact_match_status": "ALL_38_CANONICAL_IDS_PRESERVED_NO_DRIFT",
+  "evaluation_mode": "CALENDAR_SIM_PRIORITY",
+  "metric_coverage": [
+    {
+      "canonical_metric_id": "PLAYER_FGA",
+      "definition": "Player FGA",
+      "unit": "attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "player_game_boxes:FGA",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_FGA",
+      "definition": "Team FGA",
+      "unit": "attempts",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:FGA",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_MINUTES",
+      "definition": "Player minutes with precision",
+      "unit": "minutes",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "player_game_boxes:minutes",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_PTS",
+      "definition": "Player points",
+      "unit": "points",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "player_game_boxes:points",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_AST",
+      "definition": "Player assists",
+      "unit": "assists",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "player_game_boxes:assists",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_FTA",
+      "definition": "Player FTA",
+      "unit": "attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "player_game_boxes:FTA",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_THREE_PA",
+      "definition": "Team 3PA",
+      "unit": "attempts",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:3PA",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_THREE_PM",
+      "definition": "Team 3PM",
+      "unit": "makes",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:3PM",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "OPPONENT_FGA",
+      "definition": "Opponent FGA",
+      "unit": "attempts",
+      "entity_grain": "team/opponent/game",
+      "observation_grain": "opponent/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_28_TEAMSTATDATA",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_TOTALS",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:opponent FGA",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "OPPONENT_THREE_PA",
+      "definition": "Opponent 3PA",
+      "unit": "attempts",
+      "entity_grain": "team/opponent/game",
+      "observation_grain": "opponent/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_28_TEAMSTATDATA",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_TOTALS",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:opponent 3PA",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "OPPONENT_FG_PCT",
+      "definition": "Opponent game FG%",
+      "unit": "percent",
+      "entity_grain": "team/opponent/game",
+      "observation_grain": "opponent/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_OPP_TOTALS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_TOTALS",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_TOV",
+      "definition": "Team turnovers",
+      "unit": "count",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:TOV",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_STL",
+      "definition": "Team steals",
+      "unit": "count",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:STL",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_OREB",
+      "definition": "Team OREB",
+      "unit": "rebounds",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:OREB",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_DREB",
+      "definition": "Team DREB",
+      "unit": "rebounds",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_BOX",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "team_game_boxes:DREB",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "GAME_PERIOD_SCORES",
+      "definition": "Period final points including OT",
+      "unit": "points",
+      "entity_grain": "team/period/game",
+      "observation_grain": "period/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_HEADER",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "PERIOD_LINESCORE",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "game_period_scores",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_USG_NATIVE",
+      "definition": "Game-native USG%, not Touches",
+      "unit": "percent",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "GAME_UI_GETTER_CALCULATED",
+        "live_read": "UNVERIFIED_STATIC_STORAGE",
+        "reader_code": "NOT_IMPLEMENTED_AS_NATIVE_COLUMN",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "NOT_EXPOSED",
+        "data_grain": "SEASON_UI_RATE",
+        "status_summary": "S0_PARTIAL_UI_DYNAMIC_UNCONFIRMED_STATIC"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_PER36_NATIVE",
+      "definition": "Game-native Per36 exact rounding",
+      "unit": "per36",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_TOTALS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_RATE_PER36",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_PERGAME_NATIVE",
+      "definition": "Game-native Per Game stats and GP rule",
+      "unit": "pergame",
+      "entity_grain": "player/season",
+      "observation_grain": "season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_TOTALS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_PER_GAME",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_PACE_NATIVE",
+      "definition": "Game-native Pace, not estimated possessions",
+      "unit": "possessions-per48-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_28_TEAMSTATDATA",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_TOTALS",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_OFFRTG_NATIVE",
+      "definition": "Game-native OffRtg",
+      "unit": "points-per100-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_PTS_AND_POSS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_RATE_PER_100",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_DEFRTG_NATIVE",
+      "definition": "Game-native DefRtg",
+      "unit": "points-per100-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_OPP_PTS_AND_POSS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_RATE_PER_100",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_NETRTG_NATIVE",
+      "definition": "Game-native NetRtg",
+      "unit": "points-per100-candidate",
+      "entity_grain": "team/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_OFFRTG_DEFRTG",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_RATE_NET",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_TS_NATIVE",
+      "definition": "Game-native TS% exact engine definition",
+      "unit": "percent",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_TOTALS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_AND_SINGLE_GAME_RATE",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_EFG_NATIVE",
+      "definition": "Game-native eFG% exact engine definition",
+      "unit": "percent",
+      "entity_grain": "player/game-or-season",
+      "observation_grain": "game-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "DERIVED_FROM_NATIVE_TOTALS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "DERIVED_ON_QUERY",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SEASON_AND_SINGLE_GAME_RATE",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_SHOT_ZONES",
+      "definition": "Player zone chart makes and attempts",
+      "unit": "makes-attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_PLAYERDATA_OFFSET_768",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "NOT_EXPOSED",
+        "data_grain": "PLAYER_CHART_INDEX",
+        "status_summary": "S0_PARTIAL_SAFE_EXTRACTION_VERIFIED"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "OPPONENT_PAINT_FGA",
+      "definition": "Opponent paint/rim attempts (zones not 2PA)",
+      "unit": "attempts",
+      "entity_grain": "opponent/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "NO_DIRECT_NATIVE_SOURCE_FOUND",
+        "live_read": "UNVERIFIED_STATIC_STORAGE",
+        "reader_code": "NOT_IMPLEMENTED",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "NOT_EXPOSED",
+        "data_grain": "UNKNOWN",
+        "status_summary": "S0_NOT_READY_NATIVE_GAP"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_PAINT_FGA",
+      "definition": "Player paint/rim attempts",
+      "unit": "attempts",
+      "entity_grain": "player/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "NO_DIRECT_NATIVE_SOURCE_FOUND",
+        "live_read": "UNVERIFIED_STATIC_STORAGE",
+        "reader_code": "NOT_IMPLEMENTED",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "NOT_EXPOSED",
+        "data_grain": "UNKNOWN",
+        "status_summary": "S0_NOT_READY_NATIVE_GAP"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "OFFENSE_ACTION_TAGS",
+      "definition": "True Spot Up/Off Screen/Post/PnR events",
+      "unit": "events",
+      "entity_grain": "player/possession",
+      "observation_grain": "possession",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "3D_SIMULATION_EVENT_LOG_ONLY",
+        "live_read": "UNVERIFIED_IN_CALENDAR_SIM",
+        "reader_code": "NOT_IMPLEMENTED",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "NOT_EXPOSED",
+        "data_grain": "3D_GAME_EVENT",
+        "status_summary": "S0_NOT_READY_CALENDAR_SIM_ABSENT"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "MET_TOUCHES_NATIVE",
+      "definition": "Actual received touches vs tendency",
+      "unit": "touches",
+      "entity_grain": "player/possession",
+      "observation_grain": "possession",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "NO_DIRECT_NATIVE_SOURCE_FOUND",
+        "live_read": "UNVERIFIED_IN_STATIC_BANKS",
+        "reader_code": "NOT_IMPLEMENTED_AS_NATIVE_COUNTER",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "EXPOSED_AS_EXPERIMENTAL_POSSESSION_LOAD_INDEX",
+        "data_grain": "ESTIMATED_POSSESSION_LOAD",
+        "status_summary": "S0_PARTIAL_PROXY_ONLY_NATIVE_ABSENT"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_TRANSITION_POINTS",
+      "definition": "Game-native fastbreak points",
+      "unit": "points",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_HEADER_OFFSET_20",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "TEAM_SECOND_CHANCE_POINTS",
+      "definition": "Game-native second-chance points",
+      "unit": "points",
+      "entity_grain": "team/game",
+      "observation_grain": "game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_HEADER_OFFSET_28",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "SINGLE_GAME_BOX",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_FATIGUE_STATE",
+      "definition": "Timestamped in-game stamina/fatigue",
+      "unit": "stamina-units-unknown",
+      "entity_grain": "player/timestamp/period",
+      "observation_grain": "timestamp/period",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_PLAYERDATA",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_VIA_RAW_SQL",
+        "data_grain": "SNAPSHOT_STATE",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "ROTATION_ACTUAL",
+      "definition": "Actual minutes and lineup presence",
+      "unit": "minutes",
+      "entity_grain": "team/player/game",
+      "observation_grain": "player/game",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_ROTATION_BANKS",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_VIA_RAW_SQL",
+        "data_grain": "ROTATION_SCHEDULE",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "NATIVE_PLAYCALL_EVENTS",
+      "definition": "Executed play/active Freelance event",
+      "unit": "event-ID",
+      "entity_grain": "team/possession",
+      "observation_grain": "possession",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "3D_GAMEPLAY_ENGINE_ONLY",
+        "live_read": "UNVERIFIED_IN_CALENDAR_SIM",
+        "reader_code": "NOT_IMPLEMENTED",
+        "refresh_ingest": "NOT_INTEGRATED_TO_DB",
+        "query": "NOT_EXPOSED",
+        "data_grain": "3D_PLAYCALL_EVENT",
+        "status_summary": "S0_NOT_READY_CALENDAR_SIM_ABSENT"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "NATIVE_INJURY_STATE",
+      "definition": "Injury state of player",
+      "unit": "status-days",
+      "entity_grain": "player/current",
+      "observation_grain": "current",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_PLAYERDATA",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_VIA_RAW_SQL",
+        "data_grain": "SNAPSHOT_STATE",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "PLAYER_ATTRIBUTE_SNAPSHOT",
+      "definition": "Native player attribute sample",
+      "unit": "native-units",
+      "entity_grain": "player/current-or-season",
+      "observation_grain": "current-or-season",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_PLAYERDATA",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_VIA_RAW_SQL",
+        "data_grain": "SNAPSHOT_ATTRIBUTES",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": "player_attribute_snapshots",
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    },
+    {
+      "canonical_metric_id": "SCORE_DISPLAY_CONSISTENCY",
+      "definition": "Calendar/Box/end-screen score same game",
+      "unit": "points",
+      "entity_grain": "game/team",
+      "observation_grain": "team",
+      "mode_policy": "3D_CPU_CPU / CALENDAR_SIM / USER_VS_CPU / SIMCAST MUST BE DISTINCT unless empirically reconciled",
+      "evidence_axes": {
+        "game_native_source": "PE_MEMORY_SLOT_01_SEASON_GAME_HEADER",
+        "live_read": "READABLE_BOUNDED_MEMORY",
+        "reader_code": "IMPLEMENTED_AND_BOUNDED",
+        "refresh_ingest": "INGESTED_TO_SQLITE",
+        "query": "EXPOSED_IN_QUERY_API",
+        "data_grain": "CROSS_HEADER_BOX_VERIFIED",
+        "status_summary": "S0_READY_CALENDAR_SIM"
+      },
+      "reader_candidate_path": null,
+      "derived_fallback": {
+        "allowed": false,
+        "status": "ONLY_AFTER_DIRECT_NATIVE_ABSENCE_PROVEN",
+        "formula": null,
+        "if_authorized": "Separate ESTIMATED_PROXY metric ID, formula, input units, precision, mode and error"
+      }
+    }
+  ],
+  "discovered_native_metric_aliases": [
+    {
+      "alias_id": "PLAYER_GAME_SCORE_HISTORY",
+      "native_storage": "PE_MEMORY_SLOT_01_PLAYERDATA_OFFSET_580_TO_600",
+      "data_type": "float32[5]",
+      "reader_function": "family_codec.extract_player_advanced_metrics",
+      "db_status": "NOT_INTEGRATED_INTO_DB; RESEARCH_CANDIDATE_ONLY",
+      "query_counterpart": "query.player_game_log:game_score_box_derived (HOLLINGER_GAMESCORE_BOX_DERIVED)"
+    },
+    {
+      "alias_id": "PLAYER_PER_RANKINGS",
+      "native_storage": "PE_MEMORY_SLOT_01_PLAYERDATA_OFFSET_544_TO_552",
+      "data_type": "uint16[4] (league, position, conference, conf_position)",
+      "reader_function": "family_codec.extract_player_advanced_metrics",
+      "db_status": "NOT_INTEGRATED_INTO_DB; RESEARCH_CANDIDATE_ONLY",
+      "query_counterpart": "None"
+    },
+    {
+      "alias_id": "PLAYER_SHOT_CHART_INDEX",
+      "native_storage": "PE_MEMORY_SLOT_01_PLAYERDATA_OFFSET_768",
+      "data_type": "uint32 bitfield (bits 20..29)",
+      "reader_function": "family_codec.extract_player_advanced_metrics",
+      "db_status": "NOT_INTEGRATED_INTO_DB; RESEARCH_CANDIDATE_ONLY",
+      "query_counterpart": "None"
+    },
+    {
+      "alias_id": "TEAM_POSSESSIONS",
+      "native_storage": "PE_MEMORY_SLOT_28_TEAMSTATDATA_AND_GAME_HEADER",
+      "data_type": "int32 / uint16",
+      "reader_function": "schedule_reader.schedule_facts",
+      "db_status": "INGESTED_TO_SQLITE (team_game_boxes:possessions_raw, team_season_totals:possessions_raw)",
+      "query_counterpart": "query.team_advanced_metrics:engine_precalculated_totals.possessions"
+    },
+    {
+      "alias_id": "TEAM_PAINT_POINTS",
+      "native_storage": "PE_MEMORY_SLOT_01_GAME_HEADER_AND_SLOT_28",
+      "data_type": "uint16",
+      "reader_function": "schedule_reader.schedule_facts",
+      "db_status": "INGESTED_TO_SQLITE (team_game_boxes:paint_points, team_season_totals:paint_points)",
+      "query_counterpart": "query.team_advanced_metrics:single_game_box_averages.paint_points_avg"
+    },
+    {
+      "alias_id": "TEAM_POINTS_OFF_TO",
+      "native_storage": "PE_MEMORY_SLOT_01_GAME_HEADER_AND_SLOT_28",
+      "data_type": "uint16",
+      "reader_function": "schedule_reader.schedule_facts",
+      "db_status": "INGESTED_TO_SQLITE (team_game_boxes:points_off_turnovers)",
+      "query_counterpart": "query.team_advanced_metrics:single_game_box_averages.points_off_turnovers_avg"
+    },
+    {
+      "alias_id": "TEAM_BENCH_POINTS",
+      "native_storage": "PE_MEMORY_SLOT_28_TEAMSTATDATA",
+      "data_type": "uint16",
+      "reader_function": "team_season_totals_reader",
+      "db_status": "INGESTED_TO_SQLITE (team_season_totals:bench_points)",
+      "query_counterpart": "query.team_advanced_metrics:engine_precalculated_totals.bench_points"
+    },
+    {
+      "alias_id": "TEAM_LARGEST_LEAD",
+      "native_storage": "PE_MEMORY_SLOT_01_GAME_HEADER_OFFSET_40",
+      "data_type": "uint16",
+      "reader_function": "schedule_reader.schedule_facts",
+      "db_status": "INGESTED_TO_SQLITE (team_game_boxes:largest_lead)",
+      "query_counterpart": "query.team_advanced_metrics:single_game_box_averages.largest_lead_avg"
+    }
+  ],
+  "summary_counts": {
+    "canonical_requirements_count": 38,
+    "s0_ready_calendar_sim": 31,
+    "s0_partial_ready": 3,
+    "s0_not_ready_native_gap": 4,
+    "discovered_extra_aliases_count": 8
+  }
+}

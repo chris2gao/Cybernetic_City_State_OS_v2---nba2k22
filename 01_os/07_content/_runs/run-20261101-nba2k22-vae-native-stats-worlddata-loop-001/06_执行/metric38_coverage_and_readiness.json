@@ -1,0 +1,437 @@
+{
+  "schema_version": "nba2k22.vae.native_stats.coverage_and_readiness.v1",
+  "task_id": "NBA2K22-VAE-NATIVE-STATS-WORLDDATA-LOOP-20261101-001",
+  "total_metrics_evaluated": 38,
+  "status_summary": {
+    "REAL_NATIVE_READABLE": 31,
+    "NO_NATIVE_SOURCE_FOUND": 6,
+    "READER_IMPLEMENTED_NOT_LIVE_VERIFIED": 1,
+    "DERIVED_ONLY": 0,
+    "FIXTURE_ONLY": 0,
+    "UI_CANDIDATE": 0,
+    "UNKNOWN": 0
+  },
+  "metrics": [
+    {
+      "metric_id": "PLAYER_FGA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.fg_attempted & player_season_totals.fg_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 PLAYERSTATDATA offset 8 bit 15..27 & BOXSCORE_STATLINE w1",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Exact native integer in game box and season total banks."
+    },
+    {
+      "metric_id": "TEAM_FGA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.fg_attempted & team_season_totals.fg_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 TEAMSTATDATA offset 14 (FieldGoalsAttempted) & team_game_boxes aggregation",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Exact native uint16 in team season stat bank and single game box."
+    },
+    {
+      "metric_id": "PLAYER_MINUTES",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.minutes_raw & player_season_totals.minutes_raw",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 12 bit 7..19 & PLAYERDATA offset 780 & BOXSCORE_STATLINE w0",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Maintained in boxline, last 5 games history, and season total bank."
+    },
+    {
+      "metric_id": "PLAYER_PTS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.points & player_season_totals.points",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 32 (TotalPoints, uint16); boxscore derived 2*fgm + 3pm + ftm (100% score conserved)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Native calculated in season totals; single game box unpacked and verified against game header score."
+    },
+    {
+      "metric_id": "PLAYER_AST",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.assists & player_season_totals.assists",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 24 bit 11..21 & BOXSCORE_STATLINE w4",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_FTA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.ft_attempted & player_season_totals.ft_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 20 bit 11..21 & BOXSCORE_STATLINE w2",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "TEAM_THREE_PA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.three_attempted & team_season_totals.three_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 TEAMSTATDATA offset 22 (ThreePointShotsAttempted) & team_game_boxes aggregation",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct uint16 in team season stat bank and single game box."
+    },
+    {
+      "metric_id": "PLAYER_THREE_PA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.three_attempted & player_season_totals.three_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 24 bit 0..10 & BOXSCORE_STATLINE w1",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_OREB",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.offensive_rebounds & player_season_totals.offensive_rebounds",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 20 bit 22..31 & BOXSCORE_STATLINE w4",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_DREB",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.defensive_rebounds & player_season_totals.defensive_rebounds",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 28 bit 0..10 & BOXSCORE_STATLINE w2",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_STL",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.steals & player_season_totals.steals",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 16 bit 0..9 & BOXSCORE_STATLINE w2",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_BLK",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.blocks & player_season_totals.blocks",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 16 bit 10..19 & BOXSCORE_STATLINE w2",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_TOV",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.turnovers & player_season_totals.turnovers",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 28 bit 11..21 & BOXSCORE_STATLINE w4",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_FOULS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.fouls & player_season_totals.fouls",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 16 bit 20..29 & BOXSCORE_STATLINE w5",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_PLUS_MINUS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes.plus_minus & player_season_totals.plus_minus",
+      "engine_precalculated": true,
+      "native_storage": "Slot 24 offset 34 bit 0..15 (PlusMinus, signed int16) & BOXSCORE_STATLINE w0 (signed int8)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Direct signed integer in single game and season stat banks."
+    },
+    {
+      "metric_id": "PLAYER_GAME_SCORE",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "PLAYERDATA offset 580 (GameScoreHistoryValue, 5x float32) & query.player_game_log.game_score",
+      "engine_precalculated": true,
+      "native_storage": "PLAYERDATA offset 580 (crc 668601006, 5x IEEE-754 float32 array)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Live verified: Joel Embiid 2021-10-18 boxscore yields 21.10; readback from PLAYERDATA offset 580 is exactly 21.100000. Engine calculates and stores native array."
+    },
+    {
+      "metric_id": "PLAYER_PER_RANKING",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "PLAYERDATA offsets 544..552 (LeaguePERScoreRanking, etc.) & query.player_advanced_metrics",
+      "engine_precalculated": true,
+      "native_storage": "PLAYERDATA offset 544 (uint16 crc 4222897561) & 546 (uint16 crc 3642450594)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively maintains 4 PER ranking slots (league, position, conference, conf position)."
+    },
+    {
+      "metric_id": "PLAYER_USG_NATIVE",
+      "status": "NO_NATIVE_SOURCE_FOUND",
+      "reader_path": "None (Proxy available via query.player_advanced_metrics standard formula)",
+      "engine_precalculated": false,
+      "native_storage": "None in PE symbols, Slot 24, Slot 01, or Slot 28",
+      "readiness_for_vae": "BLOCKED_REQUIRES_PROXY",
+      "notes": "Engine calculates Usage % dynamically on UI display layer; no persistent column stored in memory banks."
+    },
+    {
+      "metric_id": "PLAYER_TS_NATIVE",
+      "status": "NO_NATIVE_SOURCE_FOUND",
+      "reader_path": "None (Proxy available via query.player_advanced_metrics ts_pct)",
+      "engine_precalculated": false,
+      "native_storage": "None in PE symbols, Slot 24, Slot 01, or Slot 28",
+      "readiness_for_vae": "BLOCKED_REQUIRES_PROXY",
+      "notes": "Engine calculates TS% dynamically on UI display layer; no persistent float column stored."
+    },
+    {
+      "metric_id": "PLAYER_EFG_NATIVE",
+      "status": "NO_NATIVE_SOURCE_FOUND",
+      "reader_path": "None (Proxy available via query.player_advanced_metrics efg_pct)",
+      "engine_precalculated": false,
+      "native_storage": "None in PE symbols, Slot 24, Slot 01, or Slot 28",
+      "readiness_for_vae": "BLOCKED_REQUIRES_PROXY",
+      "notes": "Engine calculates eFG% dynamically on UI display layer; no persistent float column stored."
+    },
+    {
+      "metric_id": "PLAYER_PER36_STATS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "query.player_advanced_metrics.per_36",
+      "engine_precalculated": false,
+      "native_storage": "Base totals in Slot 24; Per36 is standard 36 * Stat / Minutes scaling",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Base inputs (PTS, REB, AST, STL, BLK, TOV, MIN) are 100% native engine precalculated."
+    },
+    {
+      "metric_id": "PLAYER_HOT_ZONES",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "PLAYERDATA offsets 304, 400..808 (14 Hot Zones)",
+      "engine_precalculated": true,
+      "native_storage": "PLAYERDATA 14 2-bit enum slots (0=Cold, 1=Neutral, 2=Hot)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "14 distinct hot zones for shooting tendencies and performance."
+    },
+    {
+      "metric_id": "PLAYER_FATIGUE_STATE",
+      "status": "READER_IMPLEMENTED_NOT_LIVE_VERIFIED",
+      "reader_path": "player_state_reader.player_health_observations (fatigue_raw)",
+      "engine_precalculated": true,
+      "native_storage": "PLAYERDATA health group offset 760",
+      "readiness_for_vae": "NEEDS_LIVE_SESSION_VERIFICATION",
+      "notes": "Implemented in reader; in-game match runtime verification pending next live gameplay session."
+    },
+    {
+      "metric_id": "TEAM_POSSESSIONS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.possessions_raw & team_season_totals.possessions_raw",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 58 (Possessions, uint16 crc 1033285114) & SEASON_GAME offset 40",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Natively tracked and stored by engine in game header and team season totals."
+    },
+    {
+      "metric_id": "TEAM_PACE",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_season_totals.pace_raw",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 60 (Pace, uint16 crc 888764020)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively computes and maintains Pace in Slot 28."
+    },
+    {
+      "metric_id": "TEAM_FASTBREAK_PTS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.fastbreak_points & team_season_totals (FastBreakPoints)",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 56 (FastBreakPoints, crc 1695420310) & SEASON_GAME offset 25/33",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Natively tracked in both single game header (bytes 25, 33) and team season bank."
+    },
+    {
+      "metric_id": "TEAM_PAINT_PTS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.paint_points & team_season_totals.paint_points",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 42 (PointsInPaint, crc 3156687989) & SEASON_GAME offset 26/34",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Natively tracked in single game header and team season bank."
+    },
+    {
+      "metric_id": "TEAM_SECOND_CHANCE_PTS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.second_chance_points & team_season_totals.second_chance_points",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 40 (SecondChancePoints, crc 1362080327) & SEASON_GAME offset 27/35",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Natively tracked in single game header and team season bank."
+    },
+    {
+      "metric_id": "TEAM_PTS_OFF_TOV",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.points_off_turnovers & team_season_totals.points_off_turnovers",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 38 (PointsOffTurnovers, crc 2197170138) & SEASON_GAME offset 31/39",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Natively tracked in single game header and team season bank."
+    },
+    {
+      "metric_id": "TEAM_BENCH_PTS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_season_totals.bench_points",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 54 (BenchPoints, crc 4252684807)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively tracks bench scoring in Slot 28."
+    },
+    {
+      "metric_id": "TEAM_LARGEST_LEAD",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_game_boxes.largest_lead",
+      "engine_precalculated": true,
+      "native_storage": "SEASON_GAME offset 24 (home_lead) & offset 32 (away_lead)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Natively recorded in 60-byte game struct bytes 24 and 32."
+    },
+    {
+      "metric_id": "TEAM_OPPONENT_PTS",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_season_totals.opponent_points",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 36 (PointsAllowed, crc 4287515093)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively tracks opponent points in Slot 28."
+    },
+    {
+      "metric_id": "TEAM_OPPONENT_FGA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_season_totals.opponent_fg_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 24 (OpponentFieldGoalsAttempted, crc 1814652230)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively tracks opponent FGA in Slot 28."
+    },
+    {
+      "metric_id": "TEAM_OPPONENT_3PA",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "team_season_totals.opponent_three_attempted",
+      "engine_precalculated": true,
+      "native_storage": "Slot 28 offset 26 (OpponentThreePointShotsAttempted, crc 4268155981)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively tracks opponent 3PA in Slot 28."
+    },
+    {
+      "metric_id": "OFFENSE_ACTION_TAGS",
+      "status": "NO_NATIVE_SOURCE_FOUND",
+      "reader_path": "None",
+      "engine_precalculated": false,
+      "native_storage": "Not retained in persistent memory banks (transient in-game runtime event)",
+      "readiness_for_vae": "BLOCKED_REQUIRES_RUNTIME_HOOK",
+      "notes": "Engine does not log offensive play execution tags in persistent save memory."
+    },
+    {
+      "metric_id": "MET_TOUCHES_NATIVE",
+      "status": "NO_NATIVE_SOURCE_FOUND",
+      "reader_path": "None",
+      "engine_precalculated": false,
+      "native_storage": "Not retained in persistent memory banks (transient tracking statistic)",
+      "readiness_for_vae": "BLOCKED_REQUIRES_PROXY",
+      "notes": "Touches is an NBA tracking category not tracked as a persistent counter in PC 2K22."
+    },
+    {
+      "metric_id": "NATIVE_PLAYCALL_EVENTS",
+      "status": "NO_NATIVE_SOURCE_FOUND",
+      "reader_path": "None",
+      "engine_precalculated": false,
+      "native_storage": "Transient gameplay audio/HUD animation call, no persistent bank",
+      "readiness_for_vae": "BLOCKED_REQUIRES_RUNTIME_HOOK",
+      "notes": "Only playbooks and coach offensive sets are persistent; individual live calls are transient."
+    },
+    {
+      "metric_id": "DEFENSIVE_STOPS_NATIVE",
+      "status": "REAL_NATIVE_READABLE",
+      "reader_path": "player_game_boxes (defensive_fg_made, defensive_fg_attempted, defensive_points)",
+      "engine_precalculated": true,
+      "native_storage": "BOXSCORE_STATLINE w3 (def_fgm, def_fga, def_pts)",
+      "readiness_for_vae": "FULLY_READY",
+      "notes": "Engine natively records defensive match-up performance per player in box score."
+    }
+  ],
+  "pilot_readiness_evaluation": {
+    "PILOT_01_TEMPO_PACE_FEEDBACK": {
+      "target_mechanism": "COACH_TEMPO & POE_OFFENSE_TEMPO",
+      "status": "DATA_COLLECTION_READY",
+      "required_metrics": [
+        "TEAM_POSSESSIONS",
+        "TEAM_PACE",
+        "TEAM_FASTBREAK_PTS",
+        "TEAM_PAINT_PTS",
+        "TEAM_FGA"
+      ],
+      "available_metrics": [
+        "TEAM_POSSESSIONS",
+        "TEAM_PACE",
+        "TEAM_FASTBREAK_PTS",
+        "TEAM_PAINT_PTS",
+        "TEAM_FGA"
+      ],
+      "missing_metrics": [],
+      "comparability_conditions": {
+        "3d_cpu_cpu": "Must enforce 12-minute quarters, normalize_stats=0, pace_raw and possessions_raw directly comparable.",
+        "calendar_sim": "Engine simulation applies pace setting; season totals capture pace_raw and possessions_raw natively."
+      },
+      "reader_pipeline_path": "organization_reader (team_season_totals) & schedule_reader (team_game_boxes)"
+    },
+    "PILOT_02_TOUCHES_DISTRIBUTION": {
+      "target_mechanism": "TENDENCY_TOUCHES & TENDENCY_SHOT",
+      "status": "DATA_COLLECTION_READY_WITH_PROXY",
+      "required_metrics": [
+        "PLAYER_FGA",
+        "PLAYER_FTA",
+        "PLAYER_PTS",
+        "MET_TOUCHES_NATIVE",
+        "PLAYER_USG_NATIVE"
+      ],
+      "available_metrics": [
+        "PLAYER_FGA",
+        "PLAYER_FTA",
+        "PLAYER_PTS"
+      ],
+      "missing_metrics": [
+        "MET_TOUCHES_NATIVE",
+        "PLAYER_USG_NATIVE"
+      ],
+      "proxy_solution": {
+        "touches_proxy": "FGA + 0.44*FTA + TOV + 0.33*AST (Standard possession ending touches)",
+        "usg_proxy": "query.player_advanced_metrics ts_pct and per_36 FGA"
+      },
+      "comparability_conditions": {
+        "3d_cpu_cpu": "Per-possession touch proxy requires player box score aggregates across same rotation minutes.",
+        "calendar_sim": "Slot 24 cumulative FGA/FTA/TOV reflects player hierarchy."
+      },
+      "reader_pipeline_path": "player_game_boxes & query.player_game_log"
+    },
+    "PILOT_03_DEFENSIVE_PRESSURE_OPPONENT": {
+      "target_mechanism": "COACH_DEFENSIVE_PRESSURE & POE_DEFENSE",
+      "status": "DATA_COLLECTION_READY",
+      "required_metrics": [
+        "TEAM_OPPONENT_PTS",
+        "TEAM_OPPONENT_FGA",
+        "TEAM_OPPONENT_3PA",
+        "DEFENSIVE_STOPS_NATIVE",
+        "TEAM_PTS_OFF_TOV"
+      ],
+      "available_metrics": [
+        "TEAM_OPPONENT_PTS",
+        "TEAM_OPPONENT_FGA",
+        "TEAM_OPPONENT_3PA",
+        "DEFENSIVE_STOPS_NATIVE",
+        "TEAM_PTS_OFF_TOV"
+      ],
+      "missing_metrics": [],
+      "comparability_conditions": {
+        "3d_cpu_cpu": "Defensive matchup stats (def_pts, def_fga) in BOXSCORE_STATLINE w3 directly record player-level defensive contest results.",
+        "calendar_sim": "Slot 28 opponent totals (OpponentFieldGoalsAttempted, PointsAllowed) provide team-level defensive containment."
+      },
+      "reader_pipeline_path": "organization_reader (team_season_totals) & schedule_reader (team_game_boxes, native_box_observations)"
+    }
+  }
+}

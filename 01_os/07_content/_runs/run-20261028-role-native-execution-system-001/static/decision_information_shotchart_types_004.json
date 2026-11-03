@@ -1,0 +1,119 @@
+{
+  "source_kind": "PC22_STATIC_TYPE_REGISTRATIONS_NOT_LIVE",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "types": [
+    {
+      "registration_rva": 663360,
+      "name": "SHOTCHARTDATA",
+      "runtime_descriptor_rva": 81087904,
+      "static_fields_rva": 52326576,
+      "static_info_rva": 52326696,
+      "object_size": 114,
+      "field_count": 3,
+      "fields": [
+        {
+          "crc": 2814383293,
+          "name_candidates": [
+            "NextFree"
+          ],
+          "type_crc": 2761744770,
+          "offset": 0,
+          "element_size": 2,
+          "format": 335548416,
+          "flags_raw": 1,
+          "image_ref_rvas": [
+            null,
+            null
+          ]
+        },
+        {
+          "crc": 3236788441,
+          "name_candidates": [
+            "OffensiveStats"
+          ],
+          "type_crc": 2761744770,
+          "offset": 2,
+          "element_size": 2,
+          "format": 335548416,
+          "flags_raw": 131073,
+          "image_ref_rvas": [
+            52086336,
+            null
+          ]
+        },
+        {
+          "crc": 840904698,
+          "name_candidates": [
+            "DefensiveStats"
+          ],
+          "type_crc": 2761744770,
+          "offset": 58,
+          "element_size": 2,
+          "format": 335548416,
+          "flags_raw": 131073,
+          "image_ref_rvas": [
+            52086384,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "registration_rva": 663248,
+      "name": "SHOTCHARTDATA_MINI",
+      "runtime_descriptor_rva": 81094304,
+      "static_fields_rva": 52380888,
+      "static_info_rva": 52380928,
+      "object_size": 28,
+      "field_count": 1,
+      "fields": [
+        {
+          "crc": 2262273411,
+          "name_candidates": [
+            "Shots"
+          ],
+          "type_crc": 999499730,
+          "offset": 0,
+          "element_size": 1,
+          "format": 67110912,
+          "flags_raw": 131073,
+          "image_ref_rvas": [
+            52090056,
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "registration_rva": 1279072,
+      "name": "SHOTCHARTMANAGERDATA",
+      "runtime_descriptor_rva": 87902256,
+      "static_fields_rva": 59535888,
+      "static_info_rva": 59535928,
+      "object_size": 2,
+      "field_count": 1,
+      "fields": [
+        {
+          "crc": 2993593403,
+          "name_candidates": [
+            "FirstFree"
+          ],
+          "type_crc": 2761744770,
+          "offset": 0,
+          "element_size": 2,
+          "format": 335548416,
+          "flags_raw": 1,
+          "image_ref_rvas": [
+            null,
+            null
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "CRC name matches are hypotheses if multiple names collide",
+    "format and static image refs are preserved raw; do not assume every ref is a getter",
+    "No current save or game process was read"
+  ]
+}

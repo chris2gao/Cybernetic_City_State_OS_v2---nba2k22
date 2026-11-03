@@ -1,0 +1,32 @@
+{
+  "schema_version": "nba2k22.optimization.loop_summary_validation.v1",
+  "task_id": "NBA2K22-REA-BULK-THROUGHPUT-OPT-20261101-001",
+  "validation_timestamp": "2026-11-02T06:24:57Z",
+  "model_identity_checked": "Gemini 2.5 Pro (execution)",
+  "iteration_counts": {
+    "total_iterations": 5,
+    "passed_iterations": 5,
+    "failed_iterations": 0
+  },
+  "gates_matrix": {
+    "G1_baseline_provenance": "PASSED",
+    "G2_profiling_breakdown": "PASSED",
+    "G3_offline_bounded_session": "PASSED",
+    "G4_durable_safety_and_claims": "PASSED",
+    "G5_game_thread_budget_and_fail_stop": "PASSED",
+    "G6_real_game_noop": "PASSED",
+    "G7_real_bounded_mutation": "PASSED",
+    "G8_benchmark_comparison": "PASSED",
+    "G9_regression_tests": "PASSED",
+    "G10_loop_observability": "PASSED"
+  },
+  "performance_achieved": {
+    "baseline_wall_time_s": 39.40411,
+    "optimized_wall_time_s": 7.23892,
+    "wall_time_reduction_percent": 81.63,
+    "speedup_factor": 5.44,
+    "seconds_per_successful_setter": 0.60324,
+    "frida_attaches_per_batch": 1
+  },
+  "final_status": "ALL_GATES_SATISFIED"
+}

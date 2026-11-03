@@ -1,0 +1,65 @@
+{
+  "schema_version": "nba2k22.vae.native_stats.worlddata_loop.validation.v1",
+  "task_id": "NBA2K22-VAE-NATIVE-STATS-WORLDDATA-LOOP-20261101-001",
+  "status": "PLANNED_NOT_EXECUTED",
+  "checks": [
+    {
+      "id": "V01_SOURCE_FIXED_SHA_AND_38_IDS",
+      "requirement": "All 38 IDs match accepted M3/M4 exactly, with source SHAs."
+    },
+    {
+      "id": "V02_NATIVE_GAME_COMPUTED_VS_DERIVED_PROVENANCE",
+      "requirement": "No old fixture, SQL expression or approximate formula marked game computed Native."
+    },
+    {
+      "id": "V03_UI_LABEL_GRAIN_BUILD_AND_MODE",
+      "requirement": "Real label / native byte / player game identity / 3D vs SIM / snapshot date shown with appropriate per-axis evidence and UNKNOWN."
+    },
+    {
+      "id": "V04_WORLDDATA_V24_EXISTING_READER_REUSE",
+      "requirement": "Changes build on 20 Reader families and source unit conventions, not a parallel system."
+    },
+    {
+      "id": "V05_EXACT_NATIVE_READBACK_AND_BOUNDARIES",
+      "requirement": "For every newly verified field: raw bytes/Getter source, decode, comparison and negative/alternate sample."
+    },
+    {
+      "id": "V06_UNIFIED_REFRESH_PIPELINE_END_TO_END",
+      "requirement": "For implemented fields: read -> validate -> append unit -> typed query/export, independent same-unit readback."
+    },
+    {
+      "id": "V07_STAGING_DB_SNAPSHOT_AND_MIGRATION",
+      "requirement": "No mutation to frozen v24 evidence DB; repeatable copy upgrade only if schema change required; row-level preservation."
+    },
+    {
+      "id": "V08_REGRESSION_AND_PRIVACY",
+      "requirement": "Existing WorldData unit and SQLite smoke regression, old snapshot integrity, hidden Potential privacy and raw owner restrictions."
+    },
+    {
+      "id": "V09_REPEATABILITY_AND_RESTART",
+      "requirement": "Fresh PID/process-create-time/native roots when runtime used; same input stable output; no stale pointer."
+    },
+    {
+      "id": "V10_SOURCE_AND_SAFETY_SCOPE",
+      "requirement": "Only allowed file paths, no game/save/production modify, no forbidden injection, no master change."
+    },
+    {
+      "id": "V11_PILOT_READINESS",
+      "requirement": "M5 three pilot group data readiness and exact missing native stats enumerated; do not claim actual VAE experiment results."
+    },
+    {
+      "id": "V12_FINAL_REMOTE_READBACK",
+      "requirement": "Candidate HEAD, changed paths and remote verification actually performed; all partial status honest."
+    }
+  ],
+  "special_assertions": [
+    "Existing player_game_boxes.points is v24 DERIVED_WITH_FORMULA; must never become NATIVE_PLAYER_PTS without independent direct source proof.",
+    "Seven team_game_boxes fields are all-null in frozen v24 sample; schema existence is not data availability.",
+    "Game UI high-level categories are Human-reported, exact labels and native fields require Gemini real evidence.",
+    "3D_CPU_CPU vs CALENDAR_SIM statistics and normalize flags remain distinct.",
+    "No forward estimation of exact game metric from box if directly game-calculated metric has not been ruled out.",
+    "A validated Native Reader for a single field does not prove the full 38-field inventory."
+  ],
+  "completion_candidate_condition": "V01-V12 relevant checks actually executed; if no live accessible instance, explicitly classify blocked runtime and don't mark native integration verified; pass only achieved evidence scopes.",
+  "independent_review": "deferred_to_series, unless high-risk/load-bearing integration"
+}

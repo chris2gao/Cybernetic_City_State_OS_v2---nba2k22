@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-10-24T12:55:50.868036+00:00",
+  "pid": 2564,
+  "game_index": 0,
+  "source_mode": "LIVE_READ_ATTEMPT",
+  "game_writes": false,
+  "save_binding": "UNKNOWN",
+  "source_facts_ingested": false,
+  "status": "SOURCE_UNAVAILABLE",
+  "error_type": "PermissionError",
+  "winerror": 5,
+  "reason": "[WinError 5] Access is denied.",
+  "read_trace": [
+    {
+      "operation": "OpenProcess",
+      "pid": 2564,
+      "requested_access": "0x1010 VM_READ|QUERY_LIMITED_INFORMATION",
+      "success": false,
+      "winerror": 5
+    }
+  ],
+  "artifact_sha256": {}
+}

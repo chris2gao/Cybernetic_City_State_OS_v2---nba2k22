@@ -1,0 +1,67 @@
+{
+  "schema_version": "nba2k22.season_host.cadence_policy.v1",
+  "policy_name": "HUMAN_TRIGGERED_WEEKLY_CADENCE_AND_EVENT_CHECKPOINTS",
+  "pilot_phase": {
+    "target_cycles": 4,
+    "cadence_days_per_cycle": 7,
+    "manual_game_advance": true,
+    "allowed_live_actions": [
+      "PLAYER_PATCH_TENDENCIES"
+    ],
+    "max_live_modifications_per_cycle": 10
+  },
+  "season_scale_phase": {
+    "observation_target_min": 20,
+    "observation_target_max": 40,
+    "regular_cadence_days": 7,
+    "same_day_consolidation": true,
+    "event_checkpoints": [
+      {"name": "SEASON_OPENER", "type": "MANDATORY_FULL_BASELINE"},
+      {"name": "IN_SEASON_TOURNAMENT_FINAL", "type": "KEY_EVENT_CHECKPOINT"},
+      {"name": "TRADE_DEADLINE", "type": "KEY_EVENT_CHECKPOINT"},
+      {"name": "ALL_STAR_BREAK", "type": "KEY_EVENT_CHECKPOINT"},
+      {"name": "REGULAR_SEASON_END", "type": "KEY_EVENT_CHECKPOINT"},
+      {"name": "PLAYOFF_FIRST_ROUND_END", "type": "SERIES_EVENT_CHECKPOINT"},
+      {"name": "PLAYOFF_CONFERENCE_SEMIS_END", "type": "SERIES_EVENT_CHECKPOINT"},
+      {"name": "PLAYOFF_CONFERENCE_FINALS_END", "type": "SERIES_EVENT_CHECKPOINT"},
+      {"name": "NBA_FINALS_END", "type": "SEASON_EVENT_CHECKPOINT"},
+      {"name": "OFFSEASON_DRAFT", "type": "OFFSEASON_EVENT_CHECKPOINT"},
+      {"name": "OFFSEASON_FREE_AGENCY_MORATORIUM", "type": "OFFSEASON_EVENT_CHECKPOINT"}
+    ]
+  },
+  "capture_modes": {
+    "BASELINE_FULL": {
+      "trigger": "INITIAL_BINDING, SAVE_SWITCH, OR_EXPLICIT_FULL_REQUEST",
+      "scope": "ALL_20_REGISTERED_FAMILIES",
+      "annual_policy": "EXECUTE_OR_SKIP_IF_CURRENT_YEAR_VERIFIED"
+    },
+    "WEEKLY_INCREMENTAL": {
+      "trigger": "CALENDAR_ADVANCE_WITH_NEW_FINAL_GAMES",
+      "scope": "INCREMENTAL_SCHEDULE_ROSTER_STATS_DETAILS",
+      "no_new_game_handling": "SAME_STATE_REPEAT (Skip redundant acquisition)"
+    },
+    "FORCE_REFRESH": {
+      "trigger": "EXPLICIT_USER_FORCE_WHEN_SETTINGS_CHANGED_WITHOUT_GAMES",
+      "scope": "SELECTED_FAMILIES_OR_FULL",
+      "annual_policy": "RESPECT_ANNUAL_CADENCE"
+    },
+    "TARGETED_READBACK": {
+      "trigger": "POST_MUTATION_VERIFICATION",
+      "scope": "AFFECTED_NATIVE_FIELDS_ONLY",
+      "rationale": "Verify exact Native Getter values without 20-family heavy refresh"
+    }
+  },
+  "worldline_isolation_policy": {
+    "backward_date_detection": "STRICT",
+    "rule": "IF current_game_date < latest_db_date THEN create isolated worldline branch database, NEVER overwrite or delete historical facts",
+    "worldline_id_format": "worldline-{save_id}-{game_date}-{timestamp}",
+    "database_file_pattern": "world-{worldline_id}.sqlite"
+  },
+  "decision_and_execution_safety": {
+    "execution_requires_human_plan_digest": true,
+    "automatic_game_calendar_advance": false,
+    "unsupported_actions_outcome": "NOT_EXECUTED",
+    "cas_mismatch_outcome": "FAIL_CLOSED_NO_AUTOMATIC_RETRY",
+    "unknown_outcome": "LOCK_CYCLE_MANUAL_TRIAGE_REQUIRED"
+  }
+}

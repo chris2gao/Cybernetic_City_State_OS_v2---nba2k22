@@ -1,0 +1,304 @@
+{
+  "schema_version": "1.0",
+  "contract_id": "VAE-CALENDAR-SIM-EXPERIMENT-CONTRACT-20261101",
+  "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
+  "framework": "evidence_driven_iteration",
+  "evaluation_mode": "CALENDAR_SIM_STRICT",
+  "human_authorization_requirement": "MANDATORY_BEFORE_ANY_LIVE_SETTING_WRITE_OR_MEMORY_MUTATION",
+  "experiments": [
+    {
+      "experiment_id": "EXP_01_SHOT_TOUCHES_COACH_RUN_PLAYS",
+      "pilot_group": "PILOT_01",
+      "title": "Player Shot Tendency and Coach Run Plays Impact on Shot Volume and Load",
+      "target_save_context": {
+        "save_id": "nba2k22_test_01",
+        "loaded_filename": "MyLEAGUE0003",
+        "game_mode": "MyLEAGUE",
+        "season_code": "2021-22",
+        "engine_version": "NBA2K22_PC_STEAM_x64"
+      },
+      "setting_interventions": [
+        {
+          "field_id": "TENDENCY_NATIVE_001",
+          "field_name": "ShotTendency",
+          "target_entity": "player:native:target_scorer",
+          "storage_location": "PE_MEMORY_SLOT_01_PLAYERDATA_OFFSET_20",
+          "data_type": "uint8",
+          "old_value": 50,
+          "proposed_value": 75,
+          "value_domain": [
+            0,
+            100
+          ],
+          "rea_readback_contract": {
+            "verification_method": "READ_PROCESS_MEMORY_EXACT_OFFSET",
+            "target_address_type": "PLAYERDATA_SLOT_BASE_PLUS_OFFSET_20",
+            "read_mask": "0xFF",
+            "expected_post_write_value": 75,
+            "verification_timing": "POST_SETTER_PRE_SIMULATION"
+          }
+        },
+        {
+          "field_id": "TENDENCY_NATIVE_066",
+          "field_name": "TouchesTendency",
+          "target_entity": "player:native:target_scorer",
+          "storage_location": "PE_MEMORY_SLOT_01_PLAYERDATA_OFFSET_84",
+          "data_type": "uint8",
+          "old_value": 50,
+          "proposed_value": 70,
+          "value_domain": [
+            0,
+            100
+          ],
+          "rea_readback_contract": {
+            "verification_method": "READ_PROCESS_MEMORY_EXACT_OFFSET",
+            "target_address_type": "PLAYERDATA_SLOT_BASE_PLUS_OFFSET_84",
+            "read_mask": "0xFF",
+            "expected_post_write_value": 70,
+            "verification_timing": "POST_SETTER_PRE_SIMULATION"
+          }
+        },
+        {
+          "field_id": "COACH_DEFAULT_001",
+          "field_name": "CoachRunPlays",
+          "target_entity": "team:native:target_team",
+          "storage_location": "PE_MEMORY_SLOT_01_COACHDATA_OFFSET_04",
+          "data_type": "uint8",
+          "old_value": 50,
+          "proposed_value": 60,
+          "value_domain": [
+            0,
+            100
+          ],
+          "rea_readback_contract": {
+            "verification_method": "READ_PROCESS_MEMORY_EXACT_OFFSET",
+            "target_address_type": "COACHDATA_BASE_PLUS_OFFSET_04",
+            "read_mask": "0xFF",
+            "expected_post_write_value": 60,
+            "verification_timing": "POST_SETTER_PRE_SIMULATION"
+          }
+        }
+      ],
+      "experimental_blocks": {
+        "s0_baseline_block": {
+          "block_name": "S0_CALENDAR_SIM_BASELINE",
+          "game_count_minimum": 10,
+          "simulation_filter": "s.was_simulated == 1 AND s.is_final == 1",
+          "date_window": "PRE_INTERVENTION_CONSECUTIVE_GAMES"
+        },
+        "s1_evaluation_block": {
+          "block_name": "S1_CALENDAR_SIM_INTERVENTION",
+          "game_count_minimum": 10,
+          "simulation_filter": "s.was_simulated == 1 AND s.is_final == 1",
+          "date_window": "POST_INTERVENTION_CONSECUTIVE_GAMES"
+        }
+      },
+      "matched_controls": {
+        "simulation_engine": "CALENDAR_SIM_ONLY (was_simulated == 1)",
+        "quarter_length_minutes": 12,
+        "sim_quarter_length_minutes": 12,
+        "ace_adaptive_coaching": "LOCKED_DISABLED",
+        "roster_stability_rule": "TARGET_PLAYER_MUST_PLAY_MIN_20_MPG; NO_TRADE_NO_INJURY_DNP",
+        "opponent_strength_matching": "OPPONENT_DEFENSIVE_RATING_IQR_MATCHED"
+      },
+      "metrics_evaluation_contract": {
+        "primary_metric": {
+          "metric_id": "PLAYER_FGA",
+          "sql_selector": "b.fg_attempted",
+          "expected_direction": "INCREASE",
+          "minimum_detectable_delta": 3.0
+        },
+        "secondary_metrics": [
+          {
+            "metric_id": "PLAYER_PTS",
+            "sql_selector": "b.points",
+            "expected_direction": "INCREASE",
+            "minimum_detectable_delta": 4.0
+          },
+          {
+            "metric_id": "EXPERIMENTAL_POSSESSION_LOAD_INDEX",
+            "sql_selector": "(b.fg_attempted + 0.44*b.ft_attempted + b.turnovers + 0.33*b.assists)",
+            "expected_direction": "INCREASE",
+            "minimum_detectable_delta": 4.0
+          },
+          {
+            "metric_id": "PLAYER_TS_NATIVE",
+            "sql_selector": "b.points / (2.0 * (b.fg_attempted + 0.44 * b.ft_attempted))",
+            "expected_direction": "NEUTRAL_TO_SLIGHT_DECREASE",
+            "tolerance_band": 0.05
+          }
+        ]
+      },
+      "falsification_criteria": {
+        "supported_condition": "delta(PLAYER_FGA) >= +3.0 AND delta(EXPERIMENTAL_POSSESSION_LOAD_INDEX) >= +4.0 (p < 0.05)",
+        "refuted_condition": "delta(PLAYER_FGA) <= 0.0 OR delta(EXPERIMENTAL_POSSESSION_LOAD_INDEX) <= 0.0",
+        "inconclusive_conditions": [
+          "Target player injured or played < 20 minutes in >= 20% of block games",
+          "Opponent defensive rating difference across blocks > 5.0 points/100",
+          "Sample size < 10 completed Calendar Sim games per block"
+        ]
+      }
+    },
+    {
+      "experiment_id": "EXP_02_COACH_TEMPO_PACE_ROTATION",
+      "pilot_group": "PILOT_02",
+      "title": "Coach Tempo Setting and Rotation Constraints on Team Pace and Possessions",
+      "target_save_context": {
+        "save_id": "nba2k22_test_01",
+        "loaded_filename": "MyLEAGUE0003",
+        "game_mode": "MyLEAGUE",
+        "season_code": "2021-22",
+        "engine_version": "NBA2K22_PC_STEAM_x64"
+      },
+      "setting_interventions": [
+        {
+          "field_id": "COACH_DEFAULT_014",
+          "field_name": "CoachTempo",
+          "target_entity": "team:native:target_team",
+          "storage_location": "PE_MEMORY_SLOT_01_COACHDATA_OFFSET_38",
+          "data_type": "uint8",
+          "old_value": 50,
+          "proposed_value": 68,
+          "value_domain": [
+            10,
+            70
+          ],
+          "rea_readback_contract": {
+            "verification_method": "READ_PROCESS_MEMORY_EXACT_OFFSET",
+            "target_address_type": "COACHDATA_BASE_PLUS_OFFSET_38",
+            "read_mask": "0xFF",
+            "expected_post_write_value": 68,
+            "verification_timing": "POST_SETTER_PRE_SIMULATION"
+          }
+        }
+      ],
+      "experimental_blocks": {
+        "s0_baseline_block": {
+          "block_name": "S0_CALENDAR_SIM_BASELINE",
+          "game_count_minimum": 10,
+          "simulation_filter": "s.was_simulated == 1 AND s.is_final == 1"
+        },
+        "s1_evaluation_block": {
+          "block_name": "S1_CALENDAR_SIM_INTERVENTION",
+          "game_count_minimum": 10,
+          "simulation_filter": "s.was_simulated == 1 AND s.is_final == 1"
+        }
+      },
+      "matched_controls": {
+        "simulation_engine": "CALENDAR_SIM_ONLY",
+        "normalize_minutes": true,
+        "opponent_pace_control": "MATCHED_PAIR_OPPONENT_PACE_NORMALIZED"
+      },
+      "metrics_evaluation_contract": {
+        "primary_metric": {
+          "metric_id": "TEAM_PACE_NATIVE",
+          "sql_selector": "t.possessions_raw",
+          "expected_direction": "INCREASE",
+          "minimum_detectable_delta": 2.5
+        },
+        "secondary_metrics": [
+          {
+            "metric_id": "TEAM_TRANSITION_POINTS",
+            "sql_selector": "tb.fastbreak_points",
+            "expected_direction": "INCREASE",
+            "minimum_detectable_delta": 3.0
+          },
+          {
+            "metric_id": "TEAM_OFFRTG_NATIVE",
+            "sql_selector": "100.0 * tb.points / tb.possessions_raw",
+            "expected_direction": "OBSERVED_DRIFT",
+            "tolerance_band": 4.0
+          }
+        ]
+      },
+      "falsification_criteria": {
+        "supported_condition": "delta(TEAM_PACE_NATIVE) >= +2.5 possessions/game AND delta(fastbreak_points) >= +2.5",
+        "refuted_condition": "delta(TEAM_PACE_NATIVE) <= -1.0",
+        "inconclusive_conditions": [
+          "Average opponent defensive pace shifted by > 4.0 possessions across blocks",
+          "Block overtime games > 20% skewing raw possession totals"
+        ]
+      }
+    },
+    {
+      "experiment_id": "EXP_03_HELP_DEFENSE_AND_DEFENSIVE_POE",
+      "pilot_group": "PILOT_03",
+      "title": "Coach Help Defense Slider and Defensive POE on Opponent Shooting Rates",
+      "target_save_context": {
+        "save_id": "nba2k22_test_01",
+        "loaded_filename": "MyLEAGUE0003",
+        "game_mode": "MyLEAGUE",
+        "season_code": "2021-22",
+        "engine_version": "NBA2K22_PC_STEAM_x64"
+      },
+      "setting_interventions": [
+        {
+          "field_id": "COACH_DEFAULT_015",
+          "field_name": "HelpDefenseSlider",
+          "target_entity": "team:native:target_team",
+          "storage_location": "PE_MEMORY_SLOT_01_COACHDATA_DEFENSE",
+          "data_type": "uint8",
+          "old_value": 50,
+          "proposed_value": 75,
+          "value_domain": [
+            0,
+            100
+          ],
+          "rea_readback_contract": {
+            "verification_method": "READ_PROCESS_MEMORY_EXACT_OFFSET",
+            "target_address_type": "COACHDATA_DEFENSE_OFFSET",
+            "read_mask": "0xFF",
+            "expected_post_write_value": 75,
+            "verification_timing": "POST_SETTER_PRE_SIMULATION"
+          }
+        }
+      ],
+      "experimental_blocks": {
+        "s0_baseline_block": {
+          "block_name": "S0_CALENDAR_SIM_BASELINE",
+          "game_count_minimum": 10,
+          "simulation_filter": "s.was_simulated == 1 AND s.is_final == 1"
+        },
+        "s1_evaluation_block": {
+          "block_name": "S1_CALENDAR_SIM_INTERVENTION",
+          "game_count_minimum": 10,
+          "simulation_filter": "s.was_simulated == 1 AND s.is_final == 1"
+        }
+      },
+      "matched_controls": {
+        "simulation_engine": "CALENDAR_SIM_ONLY",
+        "opponent_offense_control": "MATCHED_OPPONENT_OFFENSIVE_RATING_IQR"
+      },
+      "metrics_evaluation_contract": {
+        "primary_metric": {
+          "metric_id": "OPPONENT_FG_PCT",
+          "sql_selector": "round(opp_fgm / opp_fga, 4)",
+          "expected_direction": "DECREASE",
+          "minimum_detectable_delta": -0.015
+        },
+        "secondary_metrics": [
+          {
+            "metric_id": "TEAM_DEFRTG_NATIVE",
+            "sql_selector": "100.0 * opp_points / possessions",
+            "expected_direction": "DECREASE",
+            "minimum_detectable_delta": -2.0
+          },
+          {
+            "metric_id": "TEAM_STL",
+            "sql_selector": "tb.steals",
+            "expected_direction": "INCREASE",
+            "minimum_detectable_delta": 1.0
+          }
+        ]
+      },
+      "falsification_criteria": {
+        "supported_condition": "delta(OPPONENT_FG_PCT) <= -0.015 AND delta(TEAM_DEFRTG) <= -2.0 (improved defense)",
+        "refuted_condition": "delta(OPPONENT_FG_PCT) >= +0.020",
+        "inconclusive_conditions": [
+          "Opposing star player missing > 30% of games in either block",
+          "Opponent paint FGA cannot be directly tracked from static tables (acknowledged gap)"
+        ]
+      }
+    }
+  ]
+}

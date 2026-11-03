@@ -1,0 +1,55 @@
+{
+  "schema_version": "nba2k22.vae.g2.s0.loop_pilot.verification.v1",
+  "task_id": "NBA2K22-VAE-G2-S0-BASELINE-LOOP-OBSERVABILITY-20261101-001",
+  "status": "NOT_RUN",
+  "checks": [
+    {
+      "id": "V01",
+      "test": "Existing G1 captured data sources matched to fixed Batch ID and selected live/frozen units; no false claim of every field Native complete."
+    },
+    {
+      "id": "V02",
+      "test": "Actual per-target Calendar Sim S0 valid-game count (>=10 only if proven) with exact season/save/setting epoch; no reuse of league-level 238 as target sample count."
+    },
+    {
+      "id": "V03",
+      "test": "Game-state, team boxes, player boxes and periods share the selected source unit, legitimate prior frozen reuse preserved."
+    },
+    {
+      "id": "V04",
+      "test": "All 238-game discrepancy cases correctly categorized: 222 exact, 6 additional within 3, 10 beyond; root cause not invented."
+    },
+    {
+      "id": "V05",
+      "test": "Only compatible game-mode, score-quality, provenance and timestamp observations enter relevant target-specific pilot metrics; unknown stays unknown."
+    },
+    {
+      "id": "V06",
+      "test": "Select exactly one Pilot; canonical setting ID and actual read-only REA Getter/Setter research receipt, without game writes."
+    },
+    {
+      "id": "V07",
+      "test": "Small deterministic public SQL/manifest extraction from existing SQLite, no parallel database, no protected raw/hidden fields published."
+    },
+    {
+      "id": "V08",
+      "test": "New G2 comparison design records S0, future S1/S2, opponent/roster/coach/normalize controls, unrelated setting drift and no automatic causality or success thresholds."
+    },
+    {
+      "id": "V09",
+      "test": "Run targeted SQL/regression tests in ordinary Gemini environment; preserve input refs, SHA and actual return codes; no RDC or game mutation."
+    },
+    {
+      "id": "V10",
+      "test": "Actual evidence-driven iteration JSONL records valid bounded loops with trigger refs; summary counts and post-delivery remediation rounds separate and machine-recomputable."
+    },
+    {
+      "id": "V11",
+      "test": "Termination decision states exact existing Core stop authority/evidence, explicit remaining gap and future Human trigger; candidate not independently accepted."
+    },
+    {
+      "id": "V12",
+      "test": "Git branch scope and remote SHA verified, no master/core or prior Run modifications."
+    }
+  ]
+}

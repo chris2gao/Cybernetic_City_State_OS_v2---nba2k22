@@ -1,0 +1,3231 @@
+{
+  "save_id": "nba2k22_test_01",
+  "schema_version": 16,
+  "sqlite_version": "3.53.1",
+  "database_file_bytes": 555216896,
+  "page_size": 4096,
+  "page_count": 135551,
+  "freelist_pages": 0,
+  "allocated_page_bytes": 555216896,
+  "journal_mode": "delete",
+  "sidecar_bytes": {
+    "-wal": 0,
+    "-shm": 0,
+    "-journal": 0
+  },
+  "dbstat_status": "MEASURED_SQLITE_DBSTAT",
+  "database_objects": [
+    {
+      "name": "award_recipients",
+      "bytes": 532480,
+      "pages": 130
+    },
+    {
+      "name": "capture_runs",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "capture_units",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "coach_preferences",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "draft_pick_assets",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "draft_pick_ownerships",
+      "bytes": 57344,
+      "pages": 14
+    },
+    {
+      "name": "draft_pool_slot_observations",
+      "bytes": 20480,
+      "pages": 5
+    },
+    {
+      "name": "draft_prospect_attribute_snapshots",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "draft_prospect_play_type_slots",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "draft_prospect_tendency_snapshots",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "draft_prospects",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "draft_results",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "external_execution_receipts",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "external_readback_checks",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "external_transaction_events",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "fact_conflicts",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "field_gaps",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "game_news_entries",
+      "bytes": 438272,
+      "pages": 107
+    },
+    {
+      "name": "game_period_scores",
+      "bytes": 606208,
+      "pages": 148
+    },
+    {
+      "name": "game_setting_observations",
+      "bytes": 184320,
+      "pages": 45
+    },
+    {
+      "name": "game_state_observations",
+      "bytes": 471040,
+      "pages": 115
+    },
+    {
+      "name": "gameplan_defense_observations",
+      "bytes": 5038080,
+      "pages": 1230
+    },
+    {
+      "name": "gameplan_observations",
+      "bytes": 135168,
+      "pages": 33
+    },
+    {
+      "name": "gameplan_rotation_observations",
+      "bytes": 4169728,
+      "pages": 1018
+    },
+    {
+      "name": "games",
+      "bytes": 131072,
+      "pages": 32
+    },
+    {
+      "name": "idx_award_recipients_award_id",
+      "bytes": 126976,
+      "pages": 31
+    },
+    {
+      "name": "idx_award_recipients_player_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_award_recipients_source_history_id",
+      "bytes": 167936,
+      "pages": 41
+    },
+    {
+      "name": "idx_award_recipients_staff_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_award_recipients_team_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_award_recipients_unit_id",
+      "bytes": 126976,
+      "pages": 31
+    },
+    {
+      "name": "idx_capture_runs_season_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_capture_units_run_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_coach_preferences_staff_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_coach_preferences_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_pick_assets_original_team_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_draft_pick_assets_save_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_draft_pick_ownerships_event_ref",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_pick_ownerships_owner_team_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_draft_pick_ownerships_pick_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_draft_pick_ownerships_unit_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_draft_pool_slot_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospect_attribute_snapshots_prospect_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospect_attribute_snapshots_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospect_play_type_slots_prospect_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospect_play_type_slots_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospect_tendency_snapshots_prospect_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospect_tendency_snapshots_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospects_save_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_prospects_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_results_pick_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_results_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_results_prospect_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_results_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_draft_results_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_execution_receipts_save_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_execution_receipts_transaction_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_execution_receipts_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_readback_checks_receipt_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_readback_checks_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_transaction_events_save_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_external_transaction_events_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_fact_conflicts_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_field_gaps_field_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_game_news_entries_season_id",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "idx_game_news_entries_source_message_id",
+      "bytes": 90112,
+      "pages": 22
+    },
+    {
+      "name": "idx_game_news_entries_unit_id",
+      "bytes": 69632,
+      "pages": 17
+    },
+    {
+      "name": "idx_game_period_scores_game_id",
+      "bytes": 167936,
+      "pages": 41
+    },
+    {
+      "name": "idx_game_period_scores_team_id",
+      "bytes": 94208,
+      "pages": 23
+    },
+    {
+      "name": "idx_game_period_scores_unit_id",
+      "bytes": 188416,
+      "pages": 46
+    },
+    {
+      "name": "idx_game_setting_observations_field_id",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "idx_game_setting_observations_unit_id",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "idx_game_state_observations_game_id",
+      "bytes": 114688,
+      "pages": 28
+    },
+    {
+      "name": "idx_game_state_observations_unit_id",
+      "bytes": 122880,
+      "pages": 30
+    },
+    {
+      "name": "idx_gameplan_defense_observations_defender_player_id",
+      "bytes": 188416,
+      "pages": 46
+    },
+    {
+      "name": "idx_gameplan_defense_observations_opponent_player_id",
+      "bytes": 434176,
+      "pages": 106
+    },
+    {
+      "name": "idx_gameplan_defense_observations_plan_id",
+      "bytes": 1200128,
+      "pages": 293
+    },
+    {
+      "name": "idx_gameplan_defense_observations_unit_id",
+      "bytes": 946176,
+      "pages": 231
+    },
+    {
+      "name": "idx_gameplan_observations_opponent_team_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_gameplan_observations_team_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_gameplan_observations_unit_id",
+      "bytes": 45056,
+      "pages": 11
+    },
+    {
+      "name": "idx_gameplan_rotation_observations_plan_id",
+      "bytes": 1200128,
+      "pages": 293
+    },
+    {
+      "name": "idx_gameplan_rotation_observations_player_id",
+      "bytes": 458752,
+      "pages": 112
+    },
+    {
+      "name": "idx_gameplan_rotation_observations_unit_id",
+      "bytes": 946176,
+      "pages": 231
+    },
+    {
+      "name": "idx_games_away_team_id",
+      "bytes": 36864,
+      "pages": 9
+    },
+    {
+      "name": "idx_games_home_team_id",
+      "bytes": 36864,
+      "pages": 9
+    },
+    {
+      "name": "idx_games_season_id",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "idx_league_rule_observations_season_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_league_rule_observations_setting_obs_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_league_rule_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_market_state_observations_player_id",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "idx_market_state_observations_source_player_id",
+      "bytes": 233472,
+      "pages": 57
+    },
+    {
+      "name": "idx_market_state_observations_staff_id",
+      "bytes": 36864,
+      "pages": 9
+    },
+    {
+      "name": "idx_market_state_observations_unit_id",
+      "bytes": 200704,
+      "pages": 49
+    },
+    {
+      "name": "idx_mentor_manager_observations_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_mentor_manager_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_mentorship_relations_mentor_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_mentorship_relations_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_mentorship_relations_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_mentorship_relations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_native_award_matrix_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_native_box_observations_game_id",
+      "bytes": 544768,
+      "pages": 133
+    },
+    {
+      "name": "idx_native_box_observations_unit_id",
+      "bytes": 610304,
+      "pages": 149
+    },
+    {
+      "name": "idx_native_college_observations_unit_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_native_identity_links_save_id",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "idx_native_identity_links_unit_id",
+      "bytes": 57344,
+      "pages": 14
+    },
+    {
+      "name": "idx_native_league_capture_controls_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_native_league_history_observations_award_id",
+      "bytes": 172032,
+      "pages": 42
+    },
+    {
+      "name": "idx_native_league_history_observations_unit_id",
+      "bytes": 368640,
+      "pages": 90
+    },
+    {
+      "name": "idx_native_mentor_relation_observations_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_native_mentor_relation_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_native_player_sources_player_id",
+      "bytes": 241664,
+      "pages": 59
+    },
+    {
+      "name": "idx_native_player_sources_unit_id",
+      "bytes": 1085440,
+      "pages": 265
+    },
+    {
+      "name": "idx_native_player_stat_links_player_source_id",
+      "bytes": 12341248,
+      "pages": 3013
+    },
+    {
+      "name": "idx_native_player_stat_links_stat_observation_id",
+      "bytes": 2002944,
+      "pages": 489
+    },
+    {
+      "name": "idx_native_player_stat_links_unit_id",
+      "bytes": 9134080,
+      "pages": 2230
+    },
+    {
+      "name": "idx_native_player_stat_observations_unit_id",
+      "bytes": 1044480,
+      "pages": 255
+    },
+    {
+      "name": "idx_native_social_message_observations_unit_id",
+      "bytes": 212992,
+      "pages": 52
+    },
+    {
+      "name": "idx_native_transaction_item_observations_native_transaction_id",
+      "bytes": 671744,
+      "pages": 164
+    },
+    {
+      "name": "idx_native_transaction_item_observations_unit_id",
+      "bytes": 524288,
+      "pages": 128
+    },
+    {
+      "name": "idx_native_transaction_observations_unit_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_player_attribute_snapshots_player_id",
+      "bytes": 77824,
+      "pages": 19
+    },
+    {
+      "name": "idx_player_attribute_snapshots_source_player_id",
+      "bytes": 221184,
+      "pages": 54
+    },
+    {
+      "name": "idx_player_attribute_snapshots_unit_id",
+      "bytes": 217088,
+      "pages": 53
+    },
+    {
+      "name": "idx_player_badge_values_native_field_id",
+      "bytes": 17547264,
+      "pages": 4284
+    },
+    {
+      "name": "idx_player_badge_values_player_id",
+      "bytes": 4423680,
+      "pages": 1080
+    },
+    {
+      "name": "idx_player_badge_values_source_player_id",
+      "bytes": 21585920,
+      "pages": 5270
+    },
+    {
+      "name": "idx_player_badge_values_unit_id",
+      "bytes": 17903616,
+      "pages": 4371
+    },
+    {
+      "name": "idx_player_contract_observations_player_id",
+      "bytes": 77824,
+      "pages": 19
+    },
+    {
+      "name": "idx_player_contract_observations_source_player_id",
+      "bytes": 225280,
+      "pages": 55
+    },
+    {
+      "name": "idx_player_contract_observations_team_id",
+      "bytes": 65536,
+      "pages": 16
+    },
+    {
+      "name": "idx_player_contract_observations_unit_id",
+      "bytes": 221184,
+      "pages": 54
+    },
+    {
+      "name": "idx_player_game_boxes_game_id",
+      "bytes": 507904,
+      "pages": 124
+    },
+    {
+      "name": "idx_player_game_boxes_player_id",
+      "bytes": 327680,
+      "pages": 80
+    },
+    {
+      "name": "idx_player_game_boxes_team_id",
+      "bytes": 278528,
+      "pages": 68
+    },
+    {
+      "name": "idx_player_game_boxes_unit_id",
+      "bytes": 565248,
+      "pages": 138
+    },
+    {
+      "name": "idx_player_health_observations_player_id",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "idx_player_health_observations_source_player_id",
+      "bytes": 212992,
+      "pages": 52
+    },
+    {
+      "name": "idx_player_health_observations_unit_id",
+      "bytes": 176128,
+      "pages": 43
+    },
+    {
+      "name": "idx_player_morale_observations_player_id",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "idx_player_morale_observations_source_player_id",
+      "bytes": 212992,
+      "pages": 52
+    },
+    {
+      "name": "idx_player_morale_observations_unit_id",
+      "bytes": 176128,
+      "pages": 43
+    },
+    {
+      "name": "idx_player_play_type_slots_player_id",
+      "bytes": 262144,
+      "pages": 64
+    },
+    {
+      "name": "idx_player_play_type_slots_source_player_id",
+      "bytes": 884736,
+      "pages": 216
+    },
+    {
+      "name": "idx_player_play_type_slots_unit_id",
+      "bytes": 868352,
+      "pages": 212
+    },
+    {
+      "name": "idx_player_restricted_observations_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_player_restricted_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_player_season_totals_player_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_player_season_totals_season_id",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "idx_player_season_totals_team_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_player_season_totals_unit_id",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "idx_player_tendency_snapshots_player_id",
+      "bytes": 77824,
+      "pages": 19
+    },
+    {
+      "name": "idx_player_tendency_snapshots_source_player_id",
+      "bytes": 221184,
+      "pages": 54
+    },
+    {
+      "name": "idx_player_tendency_snapshots_unit_id",
+      "bytes": 217088,
+      "pages": 53
+    },
+    {
+      "name": "idx_player_training_observations_player_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_player_training_observations_team_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_player_training_observations_unit_id",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "idx_player_training_slot_observations_unit_id",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "idx_player_vitals_observations_native_college_obs_id",
+      "bytes": 270336,
+      "pages": 66
+    },
+    {
+      "name": "idx_player_vitals_observations_player_id",
+      "bytes": 106496,
+      "pages": 26
+    },
+    {
+      "name": "idx_player_vitals_observations_source_player_id",
+      "bytes": 458752,
+      "pages": 112
+    },
+    {
+      "name": "idx_player_vitals_observations_unit_id",
+      "bytes": 417792,
+      "pages": 102
+    },
+    {
+      "name": "idx_playoff_series_games_game_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_playoff_series_games_series_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_playoff_series_games_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_playoff_series_season_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_playoff_series_team_a_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_playoff_series_team_b_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_playoff_series_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_roster_memberships_player_id",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "idx_roster_memberships_team_id",
+      "bytes": 32768,
+      "pages": 8
+    },
+    {
+      "name": "idx_roster_memberships_unit_id",
+      "bytes": 65536,
+      "pages": 16
+    },
+    {
+      "name": "idx_season_award_instances_season_id",
+      "bytes": 32768,
+      "pages": 8
+    },
+    {
+      "name": "idx_season_award_instances_unit_id",
+      "bytes": 45056,
+      "pages": 11
+    },
+    {
+      "name": "idx_season_finalizations_season_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_season_finalizations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_season_record_entries_holder_player_id",
+      "bytes": 1392640,
+      "pages": 340
+    },
+    {
+      "name": "idx_season_record_entries_holder_team_id",
+      "bytes": 1392640,
+      "pages": 340
+    },
+    {
+      "name": "idx_season_record_entries_observed_in_season_id",
+      "bytes": 5025792,
+      "pages": 1227
+    },
+    {
+      "name": "idx_season_record_entries_season_id",
+      "bytes": 1392640,
+      "pages": 340
+    },
+    {
+      "name": "idx_season_record_entries_unit_id",
+      "bytes": 6471680,
+      "pages": 1580
+    },
+    {
+      "name": "idx_seasons_save_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_source_artifacts_unit_id",
+      "bytes": 323584,
+      "pages": 79
+    },
+    {
+      "name": "idx_staff_contract_observations_staff_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_staff_contract_observations_unit_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_staff_skill_observations_staff_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_staff_skill_observations_unit_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_staff_team_assignments_staff_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_staff_team_assignments_team_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_staff_team_assignments_unit_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_startup_config_checks_config_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_startup_config_checks_setting_obs_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_startup_config_checks_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_finance_observations_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_finance_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_game_boxes_game_id",
+      "bytes": 45056,
+      "pages": 11
+    },
+    {
+      "name": "idx_team_game_boxes_team_id",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "idx_team_game_boxes_unit_id",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "idx_team_playbook_slots_team_id",
+      "bytes": 61440,
+      "pages": 15
+    },
+    {
+      "name": "idx_team_playbook_slots_unit_id",
+      "bytes": 110592,
+      "pages": 27
+    },
+    {
+      "name": "idx_team_rotation_slots_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_rotation_slots_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_rotation_slots_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_season_totals_season_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_season_totals_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_season_totals_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_seasons_season_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_seasons_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_seasons_unit_id",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "idx_team_state_observations_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_state_observations_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_tactic_settings_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_tactic_settings_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_training_settings_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_team_training_settings_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_from_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_pick_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_staff_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_to_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_transaction_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_transaction_components_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_waived_salary_observations_player_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_waived_salary_observations_team_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_waived_salary_observations_unit_id",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "idx_worldline_config_versions_save_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "idx_worldline_config_versions_unit_id",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "league_rule_observations",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "market_state_observations",
+      "bytes": 1392640,
+      "pages": 340
+    },
+    {
+      "name": "mentor_manager_observations",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "mentorship_relations",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "native_award_matrix_observations",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "native_box_observations",
+      "bytes": 2998272,
+      "pages": 732
+    },
+    {
+      "name": "native_college_observations",
+      "bytes": 94208,
+      "pages": 23
+    },
+    {
+      "name": "native_fields",
+      "bytes": 630784,
+      "pages": 154
+    },
+    {
+      "name": "native_identity_links",
+      "bytes": 258048,
+      "pages": 63
+    },
+    {
+      "name": "native_league_capture_controls",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "native_league_history_observations",
+      "bytes": 1847296,
+      "pages": 451
+    },
+    {
+      "name": "native_mentor_relation_observations",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "native_player_sources",
+      "bytes": 4493312,
+      "pages": 1097
+    },
+    {
+      "name": "native_player_stat_links",
+      "bytes": 36839424,
+      "pages": 8994
+    },
+    {
+      "name": "native_player_stat_observations",
+      "bytes": 3547136,
+      "pages": 866
+    },
+    {
+      "name": "native_social_message_observations",
+      "bytes": 1155072,
+      "pages": 282
+    },
+    {
+      "name": "native_transaction_item_observations",
+      "bytes": 1900544,
+      "pages": 464
+    },
+    {
+      "name": "native_transaction_observations",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "player_attribute_snapshots",
+      "bytes": 1495040,
+      "pages": 365
+    },
+    {
+      "name": "player_badge_values",
+      "bytes": 103120896,
+      "pages": 25176
+    },
+    {
+      "name": "player_contract_observations",
+      "bytes": 1101824,
+      "pages": 269
+    },
+    {
+      "name": "player_game_boxes",
+      "bytes": 2772992,
+      "pages": 677
+    },
+    {
+      "name": "player_health_observations",
+      "bytes": 1007616,
+      "pages": 246
+    },
+    {
+      "name": "player_morale_observations",
+      "bytes": 1216512,
+      "pages": 297
+    },
+    {
+      "name": "player_play_type_slots",
+      "bytes": 3399680,
+      "pages": 830
+    },
+    {
+      "name": "player_restricted_observations",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "player_season_totals",
+      "bytes": 180224,
+      "pages": 44
+    },
+    {
+      "name": "player_tendency_snapshots",
+      "bytes": 1585152,
+      "pages": 387
+    },
+    {
+      "name": "player_training_observations",
+      "bytes": 90112,
+      "pages": 22
+    },
+    {
+      "name": "player_training_slot_observations",
+      "bytes": 126976,
+      "pages": 31
+    },
+    {
+      "name": "player_vitals_observations",
+      "bytes": 3522560,
+      "pages": 860
+    },
+    {
+      "name": "players",
+      "bytes": 32768,
+      "pages": 8
+    },
+    {
+      "name": "playoff_series",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "playoff_series_games",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "roster_memberships",
+      "bytes": 225280,
+      "pages": 55
+    },
+    {
+      "name": "saves",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "season_award_instances",
+      "bytes": 241664,
+      "pages": 59
+    },
+    {
+      "name": "season_finalizations",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "season_record_entries",
+      "bytes": 61505536,
+      "pages": 15016
+    },
+    {
+      "name": "seasons",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "source_artifacts",
+      "bytes": 1806336,
+      "pages": 441
+    },
+    {
+      "name": "sqlite_autoindex_award_recipients_1",
+      "bytes": 225280,
+      "pages": 55
+    },
+    {
+      "name": "sqlite_autoindex_capture_runs_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_capture_units_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_capture_units_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_coach_preferences_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_coach_preferences_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_pick_assets_1",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "sqlite_autoindex_draft_pick_assets_2",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_draft_pick_ownerships_1",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "sqlite_autoindex_draft_pick_ownerships_2",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "sqlite_autoindex_draft_pool_slot_observations_1",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_draft_pool_slot_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospect_attribute_snapshots_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospect_attribute_snapshots_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospect_play_type_slots_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospect_play_type_slots_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospect_tendency_snapshots_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospect_tendency_snapshots_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_prospects_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_draft_results_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_external_execution_receipts_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_external_readback_checks_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_external_transaction_events_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_external_transaction_events_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_fact_conflicts_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_field_gaps_1",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_game_news_entries_1",
+      "bytes": 106496,
+      "pages": 26
+    },
+    {
+      "name": "sqlite_autoindex_game_period_scores_1",
+      "bytes": 290816,
+      "pages": 71
+    },
+    {
+      "name": "sqlite_autoindex_game_period_scores_2",
+      "bytes": 401408,
+      "pages": 98
+    },
+    {
+      "name": "sqlite_autoindex_game_setting_observations_1",
+      "bytes": 36864,
+      "pages": 9
+    },
+    {
+      "name": "sqlite_autoindex_game_setting_observations_2",
+      "bytes": 69632,
+      "pages": 17
+    },
+    {
+      "name": "sqlite_autoindex_game_state_observations_1",
+      "bytes": 208896,
+      "pages": 51
+    },
+    {
+      "name": "sqlite_autoindex_game_state_observations_2",
+      "bytes": 212992,
+      "pages": 52
+    },
+    {
+      "name": "sqlite_autoindex_gameplan_defense_observations_1",
+      "bytes": 1703936,
+      "pages": 416
+    },
+    {
+      "name": "sqlite_autoindex_gameplan_defense_observations_2",
+      "bytes": 2129920,
+      "pages": 520
+    },
+    {
+      "name": "sqlite_autoindex_gameplan_observations_1",
+      "bytes": 57344,
+      "pages": 14
+    },
+    {
+      "name": "sqlite_autoindex_gameplan_observations_2",
+      "bytes": 69632,
+      "pages": 17
+    },
+    {
+      "name": "sqlite_autoindex_gameplan_rotation_observations_1",
+      "bytes": 1732608,
+      "pages": 423
+    },
+    {
+      "name": "sqlite_autoindex_gameplan_rotation_observations_2",
+      "bytes": 2129920,
+      "pages": 520
+    },
+    {
+      "name": "sqlite_autoindex_games_1",
+      "bytes": 61440,
+      "pages": 15
+    },
+    {
+      "name": "sqlite_autoindex_league_rule_observations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_league_rule_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_market_state_observations_1",
+      "bytes": 315392,
+      "pages": 77
+    },
+    {
+      "name": "sqlite_autoindex_market_state_observations_2",
+      "bytes": 401408,
+      "pages": 98
+    },
+    {
+      "name": "sqlite_autoindex_mentor_manager_observations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_mentor_manager_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_mentorship_relations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_mentorship_relations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_native_award_matrix_observations_1",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_native_award_matrix_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_native_box_observations_1",
+      "bytes": 999424,
+      "pages": 244
+    },
+    {
+      "name": "sqlite_autoindex_native_box_observations_2",
+      "bytes": 1097728,
+      "pages": 268
+    },
+    {
+      "name": "sqlite_autoindex_native_college_observations_1",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "sqlite_autoindex_native_college_observations_2",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "sqlite_autoindex_native_fields_1",
+      "bytes": 118784,
+      "pages": 29
+    },
+    {
+      "name": "sqlite_autoindex_native_identity_links_1",
+      "bytes": 86016,
+      "pages": 21
+    },
+    {
+      "name": "sqlite_autoindex_native_league_capture_controls_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_native_league_capture_controls_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_native_league_history_observations_1",
+      "bytes": 446464,
+      "pages": 109
+    },
+    {
+      "name": "sqlite_autoindex_native_league_history_observations_2",
+      "bytes": 385024,
+      "pages": 94
+    },
+    {
+      "name": "sqlite_autoindex_native_mentor_relation_observations_1",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_native_mentor_relation_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_native_player_sources_1",
+      "bytes": 1376256,
+      "pages": 336
+    },
+    {
+      "name": "sqlite_autoindex_native_player_sources_2",
+      "bytes": 1150976,
+      "pages": 281
+    },
+    {
+      "name": "sqlite_autoindex_native_player_stat_links_1",
+      "bytes": 14708736,
+      "pages": 3591
+    },
+    {
+      "name": "sqlite_autoindex_native_player_stat_links_2",
+      "bytes": 19886080,
+      "pages": 4855
+    },
+    {
+      "name": "sqlite_autoindex_native_player_stat_observations_1",
+      "bytes": 1220608,
+      "pages": 298
+    },
+    {
+      "name": "sqlite_autoindex_native_player_stat_observations_2",
+      "bytes": 1105920,
+      "pages": 270
+    },
+    {
+      "name": "sqlite_autoindex_native_social_message_observations_1",
+      "bytes": 278528,
+      "pages": 68
+    },
+    {
+      "name": "sqlite_autoindex_native_social_message_observations_2",
+      "bytes": 229376,
+      "pages": 56
+    },
+    {
+      "name": "sqlite_autoindex_native_transaction_item_observations_1",
+      "bytes": 954368,
+      "pages": 233
+    },
+    {
+      "name": "sqlite_autoindex_native_transaction_item_observations_2",
+      "bytes": 1114112,
+      "pages": 272
+    },
+    {
+      "name": "sqlite_autoindex_native_transaction_observations_1",
+      "bytes": 20480,
+      "pages": 5
+    },
+    {
+      "name": "sqlite_autoindex_native_transaction_observations_2",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "sqlite_autoindex_player_attribute_snapshots_1",
+      "bytes": 364544,
+      "pages": 89
+    },
+    {
+      "name": "sqlite_autoindex_player_attribute_snapshots_2",
+      "bytes": 253952,
+      "pages": 62
+    },
+    {
+      "name": "sqlite_autoindex_player_attribute_snapshots_3",
+      "bytes": 401408,
+      "pages": 98
+    },
+    {
+      "name": "sqlite_autoindex_player_badge_values_1",
+      "bytes": 27283456,
+      "pages": 6661
+    },
+    {
+      "name": "sqlite_autoindex_player_badge_values_2",
+      "bytes": 24064000,
+      "pages": 5875
+    },
+    {
+      "name": "sqlite_autoindex_player_badge_values_3",
+      "bytes": 41598976,
+      "pages": 10156
+    },
+    {
+      "name": "sqlite_autoindex_player_contract_observations_1",
+      "bytes": 376832,
+      "pages": 92
+    },
+    {
+      "name": "sqlite_autoindex_player_contract_observations_2",
+      "bytes": 249856,
+      "pages": 61
+    },
+    {
+      "name": "sqlite_autoindex_player_contract_observations_3",
+      "bytes": 409600,
+      "pages": 100
+    },
+    {
+      "name": "sqlite_autoindex_player_game_boxes_1",
+      "bytes": 843776,
+      "pages": 206
+    },
+    {
+      "name": "sqlite_autoindex_player_game_boxes_2",
+      "bytes": 1183744,
+      "pages": 289
+    },
+    {
+      "name": "sqlite_autoindex_player_health_observations_1",
+      "bytes": 299008,
+      "pages": 73
+    },
+    {
+      "name": "sqlite_autoindex_player_health_observations_2",
+      "bytes": 184320,
+      "pages": 45
+    },
+    {
+      "name": "sqlite_autoindex_player_health_observations_3",
+      "bytes": 364544,
+      "pages": 89
+    },
+    {
+      "name": "sqlite_autoindex_player_morale_observations_1",
+      "bytes": 299008,
+      "pages": 73
+    },
+    {
+      "name": "sqlite_autoindex_player_morale_observations_2",
+      "bytes": 184320,
+      "pages": 45
+    },
+    {
+      "name": "sqlite_autoindex_player_morale_observations_3",
+      "bytes": 364544,
+      "pages": 89
+    },
+    {
+      "name": "sqlite_autoindex_player_play_type_slots_1",
+      "bytes": 1380352,
+      "pages": 337
+    },
+    {
+      "name": "sqlite_autoindex_player_play_type_slots_2",
+      "bytes": 1007616,
+      "pages": 246
+    },
+    {
+      "name": "sqlite_autoindex_player_play_type_slots_3",
+      "bytes": 1613824,
+      "pages": 394
+    },
+    {
+      "name": "sqlite_autoindex_player_restricted_observations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_player_season_totals_1",
+      "bytes": 57344,
+      "pages": 14
+    },
+    {
+      "name": "sqlite_autoindex_player_season_totals_2",
+      "bytes": 73728,
+      "pages": 18
+    },
+    {
+      "name": "sqlite_autoindex_player_tendency_snapshots_1",
+      "bytes": 356352,
+      "pages": 87
+    },
+    {
+      "name": "sqlite_autoindex_player_tendency_snapshots_2",
+      "bytes": 253952,
+      "pages": 62
+    },
+    {
+      "name": "sqlite_autoindex_player_tendency_snapshots_3",
+      "bytes": 401408,
+      "pages": 98
+    },
+    {
+      "name": "sqlite_autoindex_player_training_observations_1",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "sqlite_autoindex_player_training_observations_2",
+      "bytes": 32768,
+      "pages": 8
+    },
+    {
+      "name": "sqlite_autoindex_player_training_slot_observations_1",
+      "bytes": 73728,
+      "pages": 18
+    },
+    {
+      "name": "sqlite_autoindex_player_training_slot_observations_2",
+      "bytes": 45056,
+      "pages": 11
+    },
+    {
+      "name": "sqlite_autoindex_player_vitals_observations_1",
+      "bytes": 679936,
+      "pages": 166
+    },
+    {
+      "name": "sqlite_autoindex_player_vitals_observations_2",
+      "bytes": 458752,
+      "pages": 112
+    },
+    {
+      "name": "sqlite_autoindex_player_vitals_observations_3",
+      "bytes": 806912,
+      "pages": 197
+    },
+    {
+      "name": "sqlite_autoindex_players_1",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "sqlite_autoindex_playoff_series_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_playoff_series_games_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_playoff_series_games_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_roster_memberships_1",
+      "bytes": 94208,
+      "pages": 23
+    },
+    {
+      "name": "sqlite_autoindex_roster_memberships_2",
+      "bytes": 86016,
+      "pages": 21
+    },
+    {
+      "name": "sqlite_autoindex_saves_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_season_award_instances_1",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "sqlite_autoindex_season_award_instances_2",
+      "bytes": 61440,
+      "pages": 15
+    },
+    {
+      "name": "sqlite_autoindex_season_finalizations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_season_finalizations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_season_record_entries_1",
+      "bytes": 10563584,
+      "pages": 2579
+    },
+    {
+      "name": "sqlite_autoindex_season_record_entries_2",
+      "bytes": 7016448,
+      "pages": 1713
+    },
+    {
+      "name": "sqlite_autoindex_seasons_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_seasons_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_source_artifacts_1",
+      "bytes": 425984,
+      "pages": 104
+    },
+    {
+      "name": "sqlite_autoindex_staff_contract_observations_1",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "sqlite_autoindex_staff_contract_observations_2",
+      "bytes": 20480,
+      "pages": 5
+    },
+    {
+      "name": "sqlite_autoindex_staff_members_1",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_staff_skill_observations_1",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "sqlite_autoindex_staff_skill_observations_2",
+      "bytes": 20480,
+      "pages": 5
+    },
+    {
+      "name": "sqlite_autoindex_staff_team_assignments_1",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "sqlite_autoindex_staff_team_assignments_2",
+      "bytes": 24576,
+      "pages": 6
+    },
+    {
+      "name": "sqlite_autoindex_startup_config_checks_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_finance_observations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_finance_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_game_boxes_1",
+      "bytes": 69632,
+      "pages": 17
+    },
+    {
+      "name": "sqlite_autoindex_team_game_boxes_2",
+      "bytes": 98304,
+      "pages": 24
+    },
+    {
+      "name": "sqlite_autoindex_team_playbook_slots_1",
+      "bytes": 163840,
+      "pages": 40
+    },
+    {
+      "name": "sqlite_autoindex_team_playbook_slots_2",
+      "bytes": 143360,
+      "pages": 35
+    },
+    {
+      "name": "sqlite_autoindex_team_rotation_slots_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_rotation_slots_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_season_totals_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_season_totals_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_seasons_1",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "sqlite_autoindex_team_seasons_2",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "sqlite_autoindex_team_state_observations_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_state_observations_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_tactic_settings_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_tactic_settings_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_training_settings_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_team_training_settings_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_teams_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_transaction_components_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_waived_salary_observations_1",
+      "bytes": 20480,
+      "pages": 5
+    },
+    {
+      "name": "sqlite_autoindex_waived_salary_observations_2",
+      "bytes": 16384,
+      "pages": 4
+    },
+    {
+      "name": "sqlite_autoindex_worldline_config_versions_1",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_autoindex_worldline_config_versions_2",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "sqlite_schema",
+      "bytes": 249856,
+      "pages": 61
+    },
+    {
+      "name": "staff_contract_observations",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "staff_members",
+      "bytes": 28672,
+      "pages": 7
+    },
+    {
+      "name": "staff_skill_observations",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "staff_team_assignments",
+      "bytes": 40960,
+      "pages": 10
+    },
+    {
+      "name": "startup_config_checks",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "team_finance_observations",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "team_game_boxes",
+      "bytes": 176128,
+      "pages": 43
+    },
+    {
+      "name": "team_playbook_slots",
+      "bytes": 290816,
+      "pages": 71
+    },
+    {
+      "name": "team_rotation_slots",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "team_season_totals",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "team_seasons",
+      "bytes": 20480,
+      "pages": 5
+    },
+    {
+      "name": "team_state_observations",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "team_tactic_settings",
+      "bytes": 12288,
+      "pages": 3
+    },
+    {
+      "name": "team_training_settings",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "teams",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "transaction_components",
+      "bytes": 4096,
+      "pages": 1
+    },
+    {
+      "name": "waived_salary_observations",
+      "bytes": 49152,
+      "pages": 12
+    },
+    {
+      "name": "worldline_config_versions",
+      "bytes": 4096,
+      "pages": 1
+    }
+  ],
+  "tables": {
+    "award_recipients": {
+      "rows": 2315,
+      "table_bytes": 532480,
+      "index_bytes": 720896,
+      "latest_source_unit_rows": {
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 2315
+      },
+      "allocated_bytes": 1253376,
+      "allocated_bytes_per_existing_row": 541.4151187904968
+    },
+    "capture_runs": {
+      "rows": 18,
+      "table_bytes": 4096,
+      "index_bytes": 8192,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 1,
+        "BOUND_CORE_ORGANIZATION": 1,
+        "BOUND_GAME_PLAYER_WORLD": 1,
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 1,
+        "BOUND_NATIVE_HONOR_STATS": 1,
+        "BOUND_NATIVE_MARKET_SOURCES": 1,
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 1,
+        "BOUND_PLANNING_AND_TRAINING": 1,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 1,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 1,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 1,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 1,
+        "BOUND_RECORD_BOOK": 1,
+        "BOUND_SETTINGS_AND_RULES": 1
+      },
+      "allocated_bytes": 12288,
+      "allocated_bytes_per_existing_row": 682.6666666666666
+    },
+    "capture_units": {
+      "rows": 18,
+      "table_bytes": 12288,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 1,
+        "BOUND_CORE_ORGANIZATION": 1,
+        "BOUND_GAME_PLAYER_WORLD": 1,
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 1,
+        "BOUND_NATIVE_HONOR_STATS": 1,
+        "BOUND_NATIVE_MARKET_SOURCES": 1,
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 1,
+        "BOUND_PLANNING_AND_TRAINING": 1,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 1,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 1,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 1,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 1,
+        "BOUND_RECORD_BOOK": 1,
+        "BOUND_SETTINGS_AND_RULES": 1
+      },
+      "allocated_bytes": 24576,
+      "allocated_bytes_per_existing_row": 1365.3333333333333
+    },
+    "coach_preferences": {
+      "rows": 30,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 30
+      },
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": 682.6666666666666
+    },
+    "draft_pick_assets": {
+      "rows": 300,
+      "table_bytes": 24576,
+      "index_bytes": 53248,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 77824,
+      "allocated_bytes_per_existing_row": 259.41333333333336
+    },
+    "draft_pick_ownerships": {
+      "rows": 300,
+      "table_bytes": 57344,
+      "index_bytes": 98304,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_MARKET_SOURCES": 300
+      },
+      "allocated_bytes": 155648,
+      "allocated_bytes_per_existing_row": 518.8266666666667
+    },
+    "draft_pool_slot_observations": {
+      "rows": 90,
+      "table_bytes": 20480,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_MARKET_SOURCES": 90
+      },
+      "allocated_bytes": 40960,
+      "allocated_bytes_per_existing_row": 455.1111111111111
+    },
+    "draft_prospect_attribute_snapshots": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "draft_prospect_play_type_slots": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "draft_prospect_tendency_snapshots": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "draft_prospects": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 16384,
+      "allocated_bytes_per_existing_row": null
+    },
+    "draft_results": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 24576,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 28672,
+      "allocated_bytes_per_existing_row": null
+    },
+    "external_execution_receipts": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "external_readback_checks": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 16384,
+      "allocated_bytes_per_existing_row": null
+    },
+    "external_transaction_events": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "fact_conflicts": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 8192,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 12288,
+      "allocated_bytes_per_existing_row": null
+    },
+    "field_gaps": {
+      "rows": 83,
+      "table_bytes": 28672,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 45056,
+      "allocated_bytes_per_existing_row": 542.843373493976
+    },
+    "game_news_entries": {
+      "rows": 1281,
+      "table_bytes": 438272,
+      "index_bytes": 315392,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 1281
+      },
+      "allocated_bytes": 753664,
+      "allocated_bytes_per_existing_row": 588.3403590944574
+    },
+    "game_period_scores": {
+      "rows": 3824,
+      "table_bytes": 606208,
+      "index_bytes": 1142784,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 1904,
+        "BOUND_GAME_PLAYER_WORLD": 8
+      },
+      "allocated_bytes": 1748992,
+      "allocated_bytes_per_existing_row": 457.3723849372385
+    },
+    "game_setting_observations": {
+      "rows": 546,
+      "table_bytes": 184320,
+      "index_bytes": 176128,
+      "latest_source_unit_rows": {
+        "BOUND_SETTINGS_AND_RULES": 546
+      },
+      "allocated_bytes": 360448,
+      "allocated_bytes_per_existing_row": 660.1611721611722
+    },
+    "game_state_observations": {
+      "rows": 2466,
+      "table_bytes": 471040,
+      "index_bytes": 659456,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 1232,
+        "BOUND_GAME_PLAYER_WORLD": 1
+      },
+      "allocated_bytes": 1130496,
+      "allocated_bytes_per_existing_row": 458.4330900243309
+    },
+    "gameplan_defense_observations": {
+      "rows": 20010,
+      "table_bytes": 5038080,
+      "index_bytes": 6602752,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 20010
+      },
+      "allocated_bytes": 11640832,
+      "allocated_bytes_per_existing_row": 581.7507246376812
+    },
+    "gameplan_observations": {
+      "rows": 870,
+      "table_bytes": 135168,
+      "index_bytes": 221184,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 870
+      },
+      "allocated_bytes": 356352,
+      "allocated_bytes_per_existing_row": 409.6
+    },
+    "gameplan_rotation_observations": {
+      "rows": 20010,
+      "table_bytes": 4169728,
+      "index_bytes": 6467584,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 20010
+      },
+      "allocated_bytes": 10637312,
+      "allocated_bytes_per_existing_row": 531.59980009995
+    },
+    "games": {
+      "rows": 1232,
+      "table_bytes": 131072,
+      "index_bytes": 184320,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 315392,
+      "allocated_bytes_per_existing_row": 256.0
+    },
+    "league_rule_observations": {
+      "rows": 35,
+      "table_bytes": 12288,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {
+        "BOUND_SETTINGS_AND_RULES": 35
+      },
+      "allocated_bytes": 32768,
+      "allocated_bytes_per_existing_row": 936.2285714285714
+    },
+    "market_state_observations": {
+      "rows": 3390,
+      "table_bytes": 1392640,
+      "index_bytes": 1236992,
+      "latest_source_unit_rows": {
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 3390
+      },
+      "allocated_bytes": 2629632,
+      "allocated_bytes_per_existing_row": 775.7026548672567
+    },
+    "mentor_manager_observations": {
+      "rows": 30,
+      "table_bytes": 12288,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 30
+      },
+      "allocated_bytes": 28672,
+      "allocated_bytes_per_existing_row": 955.7333333333333
+    },
+    "mentorship_relations": {
+      "rows": 61,
+      "table_bytes": 16384,
+      "index_bytes": 24576,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 61
+      },
+      "allocated_bytes": 40960,
+      "allocated_bytes_per_existing_row": 671.4754098360655
+    },
+    "native_award_matrix_observations": {
+      "rows": 75,
+      "table_bytes": 16384,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 75
+      },
+      "allocated_bytes": 36864,
+      "allocated_bytes_per_existing_row": 491.52
+    },
+    "native_box_observations": {
+      "rows": 12392,
+      "table_bytes": 2998272,
+      "index_bytes": 3252224,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 6170,
+        "BOUND_GAME_PLAYER_WORLD": 26
+      },
+      "allocated_bytes": 6250496,
+      "allocated_bytes_per_existing_row": 504.39767591994837
+    },
+    "native_college_observations": {
+      "rows": 322,
+      "table_bytes": 94208,
+      "index_bytes": 77824,
+      "latest_source_unit_rows": {
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 322
+      },
+      "allocated_bytes": 172032,
+      "allocated_bytes_per_existing_row": 534.2608695652174
+    },
+    "native_fields": {
+      "rows": 1850,
+      "table_bytes": 630784,
+      "index_bytes": 118784,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 749568,
+      "allocated_bytes_per_existing_row": 405.1718918918919
+    },
+    "native_identity_links": {
+      "rows": 922,
+      "table_bytes": 258048,
+      "index_bytes": 172032,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_HONOR_STATS": 461
+      },
+      "allocated_bytes": 430080,
+      "allocated_bytes_per_existing_row": 466.4642082429501
+    },
+    "native_league_capture_controls": {
+      "rows": 2,
+      "table_bytes": 4096,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 1,
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 1
+      },
+      "allocated_bytes": 16384,
+      "allocated_bytes_per_existing_row": 8192.0
+    },
+    "native_league_history_observations": {
+      "rows": 6769,
+      "table_bytes": 1847296,
+      "index_bytes": 1372160,
+      "latest_source_unit_rows": {
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 6769
+      },
+      "allocated_bytes": 3219456,
+      "allocated_bytes_per_existing_row": 475.6176687841631
+    },
+    "native_mentor_relation_observations": {
+      "rows": 61,
+      "table_bytes": 16384,
+      "index_bytes": 24576,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 61
+      },
+      "allocated_bytes": 40960,
+      "allocated_bytes_per_existing_row": 671.4754098360655
+    },
+    "native_player_sources": {
+      "rows": 20340,
+      "table_bytes": 4493312,
+      "index_bytes": 3854336,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_HONOR_STATS": 3390,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 3390,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 3390,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 3390,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 3390
+      },
+      "allocated_bytes": 8347648,
+      "allocated_bytes_per_existing_row": 410.4055063913471
+    },
+    "native_player_stat_links": {
+      "rows": 169500,
+      "table_bytes": 36839424,
+      "index_bytes": 58073088,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_HONOR_STATS": 84750
+      },
+      "allocated_bytes": 94912512,
+      "allocated_bytes_per_existing_row": 559.9558230088495
+    },
+    "native_player_stat_observations": {
+      "rows": 19546,
+      "table_bytes": 3547136,
+      "index_bytes": 3371008,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_HONOR_STATS": 9773
+      },
+      "allocated_bytes": 6918144,
+      "allocated_bytes_per_existing_row": 353.9416760462499
+    },
+    "native_social_message_observations": {
+      "rows": 4000,
+      "table_bytes": 1155072,
+      "index_bytes": 720896,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 4000
+      },
+      "allocated_bytes": 1875968,
+      "allocated_bytes_per_existing_row": 468.992
+    },
+    "native_transaction_item_observations": {
+      "rows": 9750,
+      "table_bytes": 1900544,
+      "index_bytes": 3264512,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 9750
+      },
+      "allocated_bytes": 5165056,
+      "allocated_bytes_per_existing_row": 529.7493333333333
+    },
+    "native_transaction_observations": {
+      "rows": 250,
+      "table_bytes": 40960,
+      "index_bytes": 53248,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 250
+      },
+      "allocated_bytes": 94208,
+      "allocated_bytes_per_existing_row": 376.832
+    },
+    "player_attribute_snapshots": {
+      "rows": 4201,
+      "table_bytes": 1495040,
+      "index_bytes": 1536000,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 411,
+        "BOUND_GAME_PLAYER_WORLD": 26,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 3390
+      },
+      "allocated_bytes": 3031040,
+      "allocated_bytes_per_existing_row": 721.5044037134015
+    },
+    "player_badge_values": {
+      "rows": 332220,
+      "table_bytes": 103120896,
+      "index_bytes": 154406912,
+      "latest_source_unit_rows": {
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 332220
+      },
+      "allocated_bytes": 257527808,
+      "allocated_bytes_per_existing_row": 775.1725001505026
+    },
+    "player_contract_observations": {
+      "rows": 4201,
+      "table_bytes": 1101824,
+      "index_bytes": 1626112,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 411,
+        "BOUND_GAME_PLAYER_WORLD": 26,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 3390
+      },
+      "allocated_bytes": 2727936,
+      "allocated_bytes_per_existing_row": 649.3539633420614
+    },
+    "player_game_boxes": {
+      "rows": 11455,
+      "table_bytes": 2772992,
+      "index_bytes": 3706880,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 6133,
+        "BOUND_GAME_PLAYER_WORLD": 26
+      },
+      "allocated_bytes": 6479872,
+      "allocated_bytes_per_existing_row": 565.6806634657355
+    },
+    "player_health_observations": {
+      "rows": 3390,
+      "table_bytes": 1007616,
+      "index_bytes": 1286144,
+      "latest_source_unit_rows": {
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 3390
+      },
+      "allocated_bytes": 2293760,
+      "allocated_bytes_per_existing_row": 676.6253687315634
+    },
+    "player_morale_observations": {
+      "rows": 3390,
+      "table_bytes": 1216512,
+      "index_bytes": 1286144,
+      "latest_source_unit_rows": {
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 3390
+      },
+      "allocated_bytes": 2502656,
+      "allocated_bytes_per_existing_row": 738.2466076696165
+    },
+    "player_play_type_slots": {
+      "rows": 16804,
+      "table_bytes": 3399680,
+      "index_bytes": 6017024,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 1644,
+        "BOUND_GAME_PLAYER_WORLD": 104,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 13560
+      },
+      "allocated_bytes": 9416704,
+      "allocated_bytes_per_existing_row": 560.3846703165913
+    },
+    "player_restricted_observations": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 16384,
+      "allocated_bytes_per_existing_row": null
+    },
+    "player_season_totals": {
+      "rows": 731,
+      "table_bytes": 180224,
+      "index_bytes": 237568,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 369,
+        "BOUND_GAME_PLAYER_WORLD": 25
+      },
+      "allocated_bytes": 417792,
+      "allocated_bytes_per_existing_row": 571.5348837209302
+    },
+    "player_tendency_snapshots": {
+      "rows": 4201,
+      "table_bytes": 1585152,
+      "index_bytes": 1527808,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 411,
+        "BOUND_GAME_PLAYER_WORLD": 26,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 3390
+      },
+      "allocated_bytes": 3112960,
+      "allocated_bytes_per_existing_row": 741.0045227326827
+    },
+    "player_training_observations": {
+      "rows": 456,
+      "table_bytes": 90112,
+      "index_bytes": 131072,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 456
+      },
+      "allocated_bytes": 221184,
+      "allocated_bytes_per_existing_row": 485.05263157894734
+    },
+    "player_training_slot_observations": {
+      "rows": 786,
+      "table_bytes": 126976,
+      "index_bytes": 159744,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 786
+      },
+      "allocated_bytes": 286720,
+      "allocated_bytes_per_existing_row": 364.78371501272267
+    },
+    "player_vitals_observations": {
+      "rows": 7591,
+      "table_bytes": 3522560,
+      "index_bytes": 3198976,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 411,
+        "BOUND_GAME_PLAYER_WORLD": 26,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 3390,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 3390
+      },
+      "allocated_bytes": 6721536,
+      "allocated_bytes_per_existing_row": 885.4612040574365
+    },
+    "players": {
+      "rows": 461,
+      "table_bytes": 32768,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 49152,
+      "allocated_bytes_per_existing_row": 106.62039045553145
+    },
+    "playoff_series": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 24576,
+      "allocated_bytes_per_existing_row": null
+    },
+    "playoff_series_games": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 24576,
+      "allocated_bytes_per_existing_row": null
+    },
+    "roster_memberships": {
+      "rows": 1272,
+      "table_bytes": 225280,
+      "index_bytes": 319488,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 411,
+        "BOUND_GAME_PLAYER_WORLD": 26,
+        "BOUND_PLANNING_AND_TRAINING": 461
+      },
+      "allocated_bytes": 544768,
+      "allocated_bytes_per_existing_row": 428.27672955974845
+    },
+    "saves": {
+      "rows": 1,
+      "table_bytes": 4096,
+      "index_bytes": 4096,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 8192,
+      "allocated_bytes_per_existing_row": 8192.0
+    },
+    "season_award_instances": {
+      "rows": 764,
+      "table_bytes": 241664,
+      "index_bytes": 180224,
+      "latest_source_unit_rows": {
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 764
+      },
+      "allocated_bytes": 421888,
+      "allocated_bytes_per_existing_row": 552.2094240837696
+    },
+    "season_finalizations": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "season_record_entries": {
+      "rows": 138080,
+      "table_bytes": 61505536,
+      "index_bytes": 33255424,
+      "latest_source_unit_rows": {
+        "BOUND_RECORD_BOOK": 69040
+      },
+      "allocated_bytes": 94760960,
+      "allocated_bytes_per_existing_row": 686.2757821552723
+    },
+    "seasons": {
+      "rows": 76,
+      "table_bytes": 4096,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 16384,
+      "allocated_bytes_per_existing_row": 215.57894736842104
+    },
+    "source_artifacts": {
+      "rows": 6755,
+      "table_bytes": 1806336,
+      "index_bytes": 749568,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 1087,
+        "BOUND_CORE_ORGANIZATION": 631,
+        "BOUND_GAME_PLAYER_WORLD": 63,
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 5,
+        "BOUND_NATIVE_HONOR_STATS": 39,
+        "BOUND_NATIVE_MARKET_SOURCES": 825,
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 6,
+        "BOUND_PLANNING_AND_TRAINING": 2713,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 34,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 33,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 34,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 33,
+        "BOUND_RECORD_BOOK": 7,
+        "BOUND_SETTINGS_AND_RULES": 49
+      },
+      "allocated_bytes": 2555904,
+      "allocated_bytes_per_existing_row": 378.3721687638786
+    },
+    "staff_contract_observations": {
+      "rows": 240,
+      "table_bytes": 40960,
+      "index_bytes": 77824,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 240
+      },
+      "allocated_bytes": 118784,
+      "allocated_bytes_per_existing_row": 494.93333333333334
+    },
+    "staff_members": {
+      "rows": 240,
+      "table_bytes": 28672,
+      "index_bytes": 12288,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 40960,
+      "allocated_bytes_per_existing_row": 170.66666666666666
+    },
+    "staff_skill_observations": {
+      "rows": 240,
+      "table_bytes": 40960,
+      "index_bytes": 73728,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 240
+      },
+      "allocated_bytes": 114688,
+      "allocated_bytes_per_existing_row": 477.8666666666667
+    },
+    "staff_team_assignments": {
+      "rows": 240,
+      "table_bytes": 40960,
+      "index_bytes": 90112,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 240
+      },
+      "allocated_bytes": 131072,
+      "allocated_bytes_per_existing_row": 546.1333333333333
+    },
+    "startup_config_checks": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    },
+    "team_finance_observations": {
+      "rows": 30,
+      "table_bytes": 12288,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 30
+      },
+      "allocated_bytes": 28672,
+      "allocated_bytes_per_existing_row": 955.7333333333333
+    },
+    "team_game_boxes": {
+      "rows": 956,
+      "table_bytes": 176128,
+      "index_bytes": 290816,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 476,
+        "BOUND_GAME_PLAYER_WORLD": 2
+      },
+      "allocated_bytes": 466944,
+      "allocated_bytes_per_existing_row": 488.43514644351467
+    },
+    "team_playbook_slots": {
+      "rows": 2040,
+      "table_bytes": 290816,
+      "index_bytes": 479232,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 2040
+      },
+      "allocated_bytes": 770048,
+      "allocated_bytes_per_existing_row": 377.4745098039216
+    },
+    "team_rotation_slots": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 24576,
+      "allocated_bytes_per_existing_row": null
+    },
+    "team_season_totals": {
+      "rows": 30,
+      "table_bytes": 12288,
+      "index_bytes": 20480,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 30
+      },
+      "allocated_bytes": 32768,
+      "allocated_bytes_per_existing_row": 1092.2666666666667
+    },
+    "team_seasons": {
+      "rows": 102,
+      "table_bytes": 20480,
+      "index_bytes": 49152,
+      "latest_source_unit_rows": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 34,
+        "BOUND_CORE_ORGANIZATION": 30,
+        "BOUND_GAME_PLAYER_WORLD": 2
+      },
+      "allocated_bytes": 69632,
+      "allocated_bytes_per_existing_row": 682.6666666666666
+    },
+    "team_state_observations": {
+      "rows": 30,
+      "table_bytes": 12288,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 30
+      },
+      "allocated_bytes": 28672,
+      "allocated_bytes_per_existing_row": 955.7333333333333
+    },
+    "team_tactic_settings": {
+      "rows": 30,
+      "table_bytes": 12288,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {
+        "BOUND_CORE_ORGANIZATION": 30
+      },
+      "allocated_bytes": 28672,
+      "allocated_bytes_per_existing_row": 955.7333333333333
+    },
+    "team_training_settings": {
+      "rows": 30,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {
+        "BOUND_PLANNING_AND_TRAINING": 30
+      },
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": 682.6666666666666
+    },
+    "teams": {
+      "rows": 34,
+      "table_bytes": 4096,
+      "index_bytes": 4096,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 8192,
+      "allocated_bytes_per_existing_row": 240.94117647058823
+    },
+    "transaction_components": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 32768,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 36864,
+      "allocated_bytes_per_existing_row": null
+    },
+    "waived_salary_observations": {
+      "rows": 222,
+      "table_bytes": 49152,
+      "index_bytes": 61440,
+      "latest_source_unit_rows": {
+        "BOUND_NATIVE_MARKET_SOURCES": 222
+      },
+      "allocated_bytes": 110592,
+      "allocated_bytes_per_existing_row": 498.1621621621622
+    },
+    "worldline_config_versions": {
+      "rows": 0,
+      "table_bytes": 4096,
+      "index_bytes": 16384,
+      "latest_source_unit_rows": {},
+      "allocated_bytes": 20480,
+      "allocated_bytes_per_existing_row": null
+    }
+  },
+  "latest_source_units": [
+    {
+      "unit_id": "live-world:abffaed591a079206825b8fe",
+      "run_id": "live-world:abffaed591a079206825b8fe",
+      "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+      "observed_at": "2026-10-24T14:24:50.999326+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "organization:7f4479ff59245a9cd65fbd2a",
+      "run_id": "organization:7f4479ff59245a9cd65fbd2a",
+      "source_key": "BOUND_CORE_ORGANIZATION",
+      "observed_at": "2026-10-24T17:17:49.581561+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "live-world:56808e9a15330710abd658d6",
+      "run_id": "live-world:56808e9a15330710abd658d6",
+      "source_key": "BOUND_GAME_PLAYER_WORLD",
+      "observed_at": "2026-10-24T14:07:29.116903+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+      "run_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+      "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS",
+      "observed_at": "2026-10-25T06:28:28.651155+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+      "run_id": "native-honors:100325e0dd8283cf68d85b19",
+      "source_key": "BOUND_NATIVE_HONOR_STATS",
+      "observed_at": "2026-10-25T06:08:40.188991+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "market:07abd06399c30efc865ba490",
+      "run_id": "market:07abd06399c30efc865ba490",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES",
+      "observed_at": "2026-10-24T17:37:26.520152+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "native-league:58b1a2b1e2b8d4ee5db8e120",
+      "run_id": "native-league:58b1a2b1e2b8d4ee5db8e120",
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS",
+      "observed_at": "2026-10-25T06:28:30.491871+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "planning:f43131b31d031d382695961a",
+      "run_id": "planning:f43131b31d031d382695961a",
+      "source_key": "BOUND_PLANNING_AND_TRAINING",
+      "observed_at": "2026-10-24T18:10:28.875247+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "player-affiliation:d9bd6383250bde23984b186f",
+      "run_id": "player-affiliation:d9bd6383250bde23984b186f",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION",
+      "observed_at": "2026-10-25T08:20:30.715384+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "player-detail:ddda1bfad226ccd835d73328",
+      "run_id": "player-detail:ddda1bfad226ccd835d73328",
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES",
+      "observed_at": "2026-10-25T07:05:45.240630+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "player-state:0cdec9c404bf1ced7f0af1f8",
+      "run_id": "player-state:0cdec9c404bf1ced7f0af1f8",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+      "observed_at": "2026-10-25T07:55:07.574574+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "player-skill:842230daefd491c6e04660eb",
+      "run_id": "player-skill:842230daefd491c6e04660eb",
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS",
+      "observed_at": "2026-10-25T11:54:01.504889+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "records:385449b5f4470a90df76d8f9",
+      "run_id": "records:385449b5f4470a90df76d8f9",
+      "source_key": "BOUND_RECORD_BOOK",
+      "observed_at": "2026-10-25T06:08:26.786660+00:00",
+      "source_grade": "LIVE_READ"
+    },
+    {
+      "unit_id": "settings:65f1ecac8394e6c8e514bc12",
+      "run_id": "settings:65f1ecac8394e6c8e514bc12",
+      "source_key": "BOUND_SETTINGS_AND_RULES",
+      "observed_at": "2026-10-24T18:46:55.490015+00:00",
+      "source_grade": "LIVE_READ"
+    }
+  ],
+  "latest_source_raw_artifact_bytes": {
+    "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 5114765,
+    "BOUND_CORE_ORGANIZATION": 2029783,
+    "BOUND_GAME_PLAYER_WORLD": 1835160,
+    "BOUND_LEAGUE_HISTORY_AND_AWARDS": 8426948,
+    "BOUND_NATIVE_HONOR_STATS": 42783380,
+    "BOUND_NATIVE_MARKET_SOURCES": 1345887,
+    "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 7420295,
+    "BOUND_PLANNING_AND_TRAINING": 22884760,
+    "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 37252462,
+    "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 166151994,
+    "BOUND_PLAYER_VITALS_HEALTH_MORALE": 65854262,
+    "BOUND_PUBLIC_PLAYER_SKILLS": 42341460,
+    "BOUND_RECORD_BOOK": 45741108,
+    "BOUND_SETTINGS_AND_RULES": 360952
+  },
+  "latest_source_artifact_missing_byte_counts": {
+    "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 0,
+    "BOUND_CORE_ORGANIZATION": 0,
+    "BOUND_GAME_PLAYER_WORLD": 0,
+    "BOUND_LEAGUE_HISTORY_AND_AWARDS": 0,
+    "BOUND_NATIVE_HONOR_STATS": 0,
+    "BOUND_NATIVE_MARKET_SOURCES": 0,
+    "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 0,
+    "BOUND_PLANNING_AND_TRAINING": 0,
+    "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 0,
+    "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 0,
+    "BOUND_PLAYER_VITALS_HEALTH_MORALE": 0,
+    "BOUND_PUBLIC_PLAYER_SKILLS": 0,
+    "BOUND_RECORD_BOOK": 0,
+    "BOUND_SETTINGS_AND_RULES": 0
+  },
+  "elapsed_seconds": 1.4839999999967404,
+  "scope": "MEASURED_CURRENT_DATABASE; not a 100-season workload or resource-budget acceptance",
+  "game_access": false,
+  "host_volume_bytes": {
+    "C": {
+      "total": 273787367424,
+      "used": 133758259200,
+      "free": 140029108224
+    },
+    "E": {
+      "total": 211850096640,
+      "used": 176333328384,
+      "free": 35516768256
+    }
+  }
+}
