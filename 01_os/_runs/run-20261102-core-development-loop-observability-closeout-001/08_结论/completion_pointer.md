@@ -39,3 +39,12 @@ G2/S0: four source records, five source test receipts with exit=0, stable report
 SeasonCycleHost: eight source records, status PASS claimed for each, but no raw per-test exit codes, no per-round before/after SHA and no final next action in the JSONL. Strict audit cannot pass; inferred values are prohibited.
 
 No games, saved games, runtime schedulers or master branches were changed. This task remains an open development candidate, not a formal acceptance verdict.
+
+
+## Continuation checkpoint — 2026-11-02, additional guarded repair
+
+Previous pointer HEAD was `2482a7842c40f50b75bb22ed9130e1ad9ac2b796`. Subsequent same-branch candidate-only work corrected a cross-iteration gap accounting problem. Previous behavior could silently drop an earlier OPEN/BLOCKED gap at a later iteration, and derived summaries accumulated historical OPEN states even after CLOSED evidence appeared. The validator now reports `UNRESOLVED_GAP_SILENTLY_DROPPED`, refuses duplicate gap IDs, and summarizes the latest explicit gap status per ID.
+
+New isolated test result: `python -m pytest test_loop_observability.py -q` → **33 passed in 0.05s**, exit 0. JSON Schema Draft202012 meta-validation PASS. The two modified source Git blobs are `747690849930337a7b2b050051eea55f145b30bb` and `45aa13e09ba5daf36882d0ebbbd236d710f396e2`. See `07_测试执行/continuation_20261102_verified.json`.
+
+**Unchanged blockers:** original Core Task Orchestration regression tests in a complete checkout, entire modified YAML parse, actual Python direct replay of fixed NBA source JSONL, and seven-stage Workflow execution/transition regression are NOT RUN. The previous two JSON source inspections are valid source-based summaries but not CLI replay execution. Candidate remains `candidate_pending_validation`. Neither independent review nor master integration is authorized or claimed.
