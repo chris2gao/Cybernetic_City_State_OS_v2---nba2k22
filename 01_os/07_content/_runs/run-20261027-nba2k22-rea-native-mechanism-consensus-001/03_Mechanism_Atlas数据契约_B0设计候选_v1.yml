@@ -1,0 +1,133 @@
+schema_version: nba2k22.rea.mechanism_atlas.contract_design.v1
+status: STAGE02_B0_LOGICAL_CONTRACT_NOT_STAGE03_APPROVED_B_NOT_RUNTIME_ATLAS
+approved_requirement: A-v1-RC01
+approved_requirement_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+scope: PC22_OFFLINE_MYLEAGUE
+purpose: >-
+  Future Codex investigations produce reproducible descriptions of exactly
+  one native game mechanism each. Mechanism facts are never inferred merely
+  from a guide, field label, xref, write fixture or function address.
+storage_policy: document_catalog_first_SQLITE_SCHEMA_DELTA_ONLY_WHEN_ACTUAL_PROJECT_REQUIRES
+version_bindings:
+  game_build: {exe_sha256: REQUIRED_ON_REAL_OBSERVATION, mode: OFFLINE_MYLEAGUE, platform: WINDOWS_PC_CURRENT_GEN}
+  study: {rea_version: REQUIRED, provider_version: REQUIRED, codex_commit: REQUIRED_WHEN_SUBMITTED}
+  evidence: {source_artifact_sha256: REQUIRED_WHEN_REPLAYABLE, source_branch_commit: REQUIRED}
+primary_record:
+  mechanism_id: unique_within_this_task
+  domain: one_of[BADGE_NATURAL_UPGRADE, COACH_TACTIC_APPLICATION, TRADE_VALIDATE_COMMIT]
+  claim_scope:
+    game_mode: explicit
+    game_build_sha: exact_or_UNOBSERVED
+    in_game_scene: known_UI_page_and_state_or_UNKNOWN
+    subject_ids: {player: optional, coach: optional, team: optional, save: optional}
+    time: {game_date: optional, observed_at_utc: optional}
+    provenance: SOURCE_ONLY_OR_LIVE_OBSERVATION
+  guide_hypotheses:
+    format: list_of_source_id_claim_version_platform_scope
+    status: HYPOTHESIS_UNTIL_NATIVE_AND_OR_SCENE_CORROBORATION
+  native_types:
+    fields: [type_name, native_label_candidate, crc, rva, byte_offset, bit_width, storage_type, confidence, evidence_refs]
+    unresolved_aliases: PRESERVE_ALL_NOT_GUESS
+    real_instance_read: false_until_measured
+  native_functions:
+    fields:
+      - candidate_function_id
+      - module_and_build_sha
+      - rva_or_function_signature
+      - static_code_window_or_pseudocode_artifact_ref
+      - callers_callees_xrefs_and_branch_refs
+      - ABI_this_and_thread_context_known_or_UNKNOWN
+      - read_set_and_write_set_known_or_UNKNOWN
+      - side_effects_callbacks_scheduler_and_cache_invalidation
+    rule: static_code_window_does_not_prove_game_runtime_execution
+  state_transition:
+    prerequisites: exact_observed_or_UNKNOWN
+    native_input_fields: proven_or_hypothesis_with_status
+    branch_predicates: observed_or_static_only
+    expected_outcome: exact_state_field_set_or_UNKNOWN
+    actual_outcome: exact_fresh_scene_evidence_or_NOT_OBSERVED
+    negatives: one_or_more_counterexamples_or_documented_inaccessible
+    consumer_path: none_or_specific_function_and_scene_evidence
+  claim_records:
+    required_fields: [claim_id, proposition, source_ids, original_source_line_or_artifact, origin_group, evidence_grade, direct_fact, inference, refutation, applicability, residual_unknown]
+    atomicity: one_binary_claim_per_record
+    cross_source_rule: two_project_files_with_same_origin_count_as_one_source
+  maturity:
+    levels:
+      L0: DOCUMENTED_GUIDE_HYPOTHESIS
+      L1: GAME_NATIVE_LAYOUT_OR_INSTANCE_SOURCE_PROVEN
+      L2: GAME_FUNCTION_AND_BRANCH_PATH_STATIC_PROVEN
+      L3: GAME_SCENE_CONSUMER_AND_RESULT_OBSERVED_IN_SAME_MODE
+      L4: HUMAN_AUTHORIZED_SAFE_CALL_POC_WITH_NEW_NATIVE_READBACK
+      L5: PRODUCTION_INTEGRATION_INDEPENDENTLY_ACCEPTED
+    current_level: UNASSESSED
+    rule: maturity_is_per_claim_and_scene_not_globally_held_for_all_functions
+  native_callability:
+    statuses: [NOT_A_CALL_TARGET, STATIC_CANDIDATE, PRECONDITIONS_PARTIAL, SAFE_TEST_PRECONDITIONS_IDENTIFIED, HUMAN_AUTHORIZED_POC_SUCCEEDED, HUMAN_AUTHORIZED_POC_FAILED, INFEASIBLE, BOUNDED_UNKNOWN, NOT_EXECUTED]
+    independent_of_maturity: true
+    explicit_test_auth_ref: REQUIRED_FOR_ANY_EFFECTFUL_REAL_GAME_CALL
+    gate_matrix: [signature_ABI, instance_this, game_thread, object_lifetime, source_game_mode, dependent_game_state, affected_object_set, validation_vs_commit, rollback_or_safe_stop, fresh_readback, current_Human_auth]
+  architecture_reuse:
+    candidates: [NATIVE_REUSE, MEMORY_EDIT, EXTERNAL_SIMULATION, HYBRID, UNDECIDED]
+    evidence_refs: REQUIRED
+    old_approved_contracts_affected: explicit_or_none
+    Human_revision_required: true_if_changes_existing_approved_game_transaction_path
+  unresolved_gaps:
+    fields: [gap_id, severity, source_ambiguity, required_Human_scene_or_Codex_evidence, cost_limit, safe_stop]
+  evidence_manifest:
+    fields: [artifact_path, sha256_or_git_blob, original_source_id, observer, provider, game_build_sha, source_scene, recorded_time, changed_game_state, cleanup_status, independent_replay_status]
+    report_only_when_missing_raw: true
+  acceptance:
+    linked_result_item: RES_REA_01_07
+    linked_success_criteria: SC_REA_01_08
+    status: [PENDING, EVIDENCED_TO_SCOPE, NEGATIVE_EVIDENCE_COMPLETE, BOUNDED_UNKNOWN_EXPLAINED, FAILED]
+    disallow_auto_pass_on_unknown: true
+representative_records:
+  - mechanism_id: M1_MYLEAGUE_BADGE_UPGRADE_ONE_BADGE
+    domain: BADGE_NATURAL_UPGRADE
+    existing_source_leads:
+      - FRANCHISE_MENTOR_BADGE_TYPE_DEFINITION_ONLY
+      - FRANCHISE_PROGRESSION_TUNING_TYPE_DEFINITION_ONLY
+      - PROJECT_PLAYER_BADGE_RESEARCH_REFERENCE_NON_NATIVE
+    under_investigation:
+      - selected_badge_native_identity
+      - active_mentor_mentee_and_natural_upgrade_preconditions
+      - whether_a_specific_attribute_threshold_actually_exists
+      - update_consumer_function_and_game_date
+      - counterexample_below_threshold_or_no_progress
+    related_second_badge: LIGHT_CONTRAST_ONLY
+    hard_exclusions: [CAREERMODE_BADGE_POINT_RULES_AS_MYLEAGUE_FACT, BADGE_EFFECT_BONUS_AS_UPGRADE_RULE]
+    current_proof_level: L1_LAYOUT_ON_SELECTED_TYPES_NOT_L2_OR_L3
+  - mechanism_id: M2_COACH_ONE_OFFENSE_OR_DEFENSE_APPLICATION
+    domain: COACH_TACTIC_APPLICATION
+    existing_source_leads:
+      - DEV07_COACH_NATIVE_MEMORY_FIELD_WRITES_AND_RESTORE_REPORTED
+      - COACH_V2_RUNBOOK_DOCUMENTED
+    under_investigation:
+      - one_actual_MyLEAGUE_UI_setting_and_subject_ownership
+      - native_stored_field_vs_setter_function
+      - who_consumes_setting_during_game
+      - game_applied_state_evidence
+    opposite_side_setting: LIGHT_CONTRAST_ONLY
+    prospective_poc_priority: FIRST_IF_PROVEN_AND_AUTHORIZED
+    current_proof_level: STORED_FIELDS_PARTIAL_NOT_NATIVE_FUNCTION_APPLIED
+  - mechanism_id: M3_TRADE_NATIVE_VALIDATOR_AND_COMMIT
+    domain: TRADE_VALIDATE_COMMIT
+    existing_source_leads:
+      - PROJECT_R05B_TRADE_MENU_ROSTER_NATIVE_CANDIDATE
+      - OLD_TRADE_EXECUTOR_DOCUMENTATION_NEEDS_DETAILED_READ
+      - OWNED_ABI_TRACE_FIXTURE_NOT_GAME
+    under_investigation:
+      - validator_vs_UI_controller_vs_commit
+      - thread_instance_signature_preconditions
+      - linked_team_roster_contract_salary_cap_pick_ledger_news
+      - partial_update_failures_and_native_rollback
+      - whether_safe_game_function_reuse_is_better_than_external_path
+    prospective_poc_priority: SECOND_ONLY_IF_SAFETY_AND_HUMAN_APPROVAL
+    current_proof_level: UNVERIFIED_GAME_CALL_PATH
+validation_notes:
+  - This is a future artifact contract, not evidence that named game functions exist.
+  - Source hypotheses must not be automatically rewritten as game-native verified facts.
+  - A game cached field and the function changing it are separate targets.
+  - Do not invent exact thresholds, native RVAs, function names, ABI or runtime side effects.
+  - Preserve all authentic code/source limits and attribute outcomes to specific build/mode.

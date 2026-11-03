@@ -1,0 +1,525 @@
+schema_version: nba2k22.rea.stage03.B0.result_model.v1
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+document_status: STAGE03_B0_CANDIDATE_NOT_HUMAN_APPROVED
+date: '2026-10-27'
+source_branch: task/nba2k22-rea-native-mechanism-consensus-20261027
+source_run_root: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/
+github_sync_state: STAGE02_APPROVAL_GITHUB_COMMITTED_B0_DRAFT_LOCAL_NOT_IN_GITHUB
+source_contracts:
+  approved_A0_blob: 8bd15794ad0f8b9b06363e4a04b7f806c4c55acd
+  approved_A_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+  Human_approved_stage02_feasibility: partially_supported
+  stage02_candidate_blob: 36c216429d8ae1a300a6e7b88243e72879f5eda8
+  evidence_index_v3_blob: d16ab7c91d2124d943866e3f070ab304a3963884
+  Human_approved_unresolved_gaps:
+  - GAP-REA02-01
+  - GAP-REA02-02
+  - GAP-REA02-03
+  - GAP-REA02-04
+  - GAP-REA02-05
+B_success_relation: B outcome is a bounded, evidence-linked study of three representative PC22 offline MyLEAGUE mechanisms,
+  with a conditional coach-first PoC receipt or explicit nonexecution and an architecture decision input. It does not
+  assert every unknown game mechanic is proven.
+common_object_fields:
+- stable_id
+- type
+- game_build
+- platform
+- game_mode
+- mechanism_id
+- source_claim_ids
+- original_evidence_ids
+- source_origin_group
+- proof_level
+- research_disposition
+- scoped_counterexamples
+- unresolved_gaps
+- last_verified_at_or_unknown
+result_objects:
+- result_id: RES-REA-01
+  name: 原生机制图谱及证据目录
+  result_form: machine_readable_catalog_and_reviewable_cards
+  implementation_method:
+    type: configuration
+    description: Versioned machine contract plus human evidence card; future game source collection is separately delegated
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-103
+  - E-REA02-104
+  - E-REA02-108
+  - E-REA02-109
+  - E-REA02-110
+  - E-REA02-111
+  success_criteria:
+  - SC-REA-01
+  - SC-REA-02
+  observable_end_state: M1/M2/M3 三份实名机制记录，各主张注明证据状态而不是推断为已证原生函数
+  required_fields:
+  - mechanism_id
+  - game_build_and_mode
+  - source_claims
+  - native_data_layouts
+  - candidate_functions
+  - state_conditions
+  - side_effect_scope
+  - evidence_refs
+  - proof_level
+  - gaps
+  accepted_dispositions:
+  - source_grounded
+  - negative_to_scope
+  - bounded_unknown
+  failure_visibility:
+  - mechanism_without_source
+  - wrong_game_mode
+  - unqualified_function_assertion
+  relations:
+  - Claim->Evidence
+  - Mechanism->FunctionCandidate
+  - Mechanism->Dossier
+- result_id: RES-REA-02
+  name: 徽章自然升级代表机制档案
+  result_form: one_deep_case_plus_light_contrast
+  implementation_method:
+    type: document
+    description: Compare one approved-scope badge and a light-control badge; future runtime observation only when separately
+      authorized
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-104
+  - E-REA02-105
+  - E-REA02-109
+  - E-REA02-113
+  - E-REA02-115
+  success_criteria:
+  - SC-REA-03
+  observable_end_state: 一枚具体徽章自然升级机制的事实、否定或有边界未知结论，不将比赛效果冒充升级
+  required_fields:
+  - badge_identity
+  - game_mode
+  - player_and_mentor_relation
+  - progress_sources
+  - upgrade_predicate_if_proven
+  - consumer_candidate
+  - event_timing
+  - before_after_or_reason_unavailable
+  - light_control_badge
+  accepted_dispositions:
+  - verified_rule_to_scope
+  - bounded_unknown_with_attempts
+  - not_applicable_proved
+  failure_visibility:
+  - unproven_number_as_threshold
+  - career_vs_myleague_scope_conflict
+  - false_upgrade_claim
+  relations:
+  - BadgeCase->Mechanism
+  - BadgeCase->Evidence
+  - BadgeCase->Counterexample
+- result_id: RES-REA-03
+  name: 教练进攻或防守设置的消费与生效档案
+  result_form: one_deep_offense_or_defense_plus_light_contrast
+  implementation_method:
+    type: document
+    description: Trace one setting from UI and stored native source to consuming function and applied result where observed;
+      future data collection gated
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-110
+  - E-REA02-114
+  - E-REA02-117
+  success_criteria:
+  - SC-REA-04
+  observable_end_state: 一项设置的显示、保存、消费、生效分别报告，不将原有内存写入等同原生调用
+  required_fields:
+  - setting_identity
+  - setting_owner
+  - UI_value
+  - native_persisted
+  - consumer_evidence
+  - applied_evidence_or_gap
+  - opposite_side_light_control
+  - counterexamples
+  accepted_dispositions:
+  - applied_to_scope
+  - stored_only
+  - static_consumer_only
+  - bounded_unknown
+  failure_visibility:
+  - stored_equals_applied_without_observation
+  - wrong_platform_coaching_feature
+  relations:
+  - CoachCase->Mechanism
+  - CoachCase->FunctionCandidate
+  - CoachCase->Observation
+- result_id: RES-REA-04
+  name: 交易验证与实际提交函数机制档案
+  result_form: transaction_mechanism_dossier
+  implementation_method:
+    type: document
+    description: Compare validation, commit and affected-entity completeness from fixed original code/scene evidence;
+      do not perform transactional action under this planning task
+    executor: GPT planning / Codex future evidence
+  basis:
+  - E-REA02-107
+  - E-REA02-111
+  - E-REA02-112
+  - E-REA02-116
+  success_criteria:
+  - SC-REA-05
+  observable_end_state: 准确区分交易菜单、校验、提交和联动结果，并报告可调用性可行/不可行/有界未知
+  required_fields:
+  - trade_context
+  - validator_identity_or_gap
+  - commit_identity_or_gap
+  - required_preconditions
+  - affected_entity_set
+  - failure_modes
+  - callability_verdict
+  - trace_refs
+  accepted_dispositions:
+  - feasible_to_scope
+  - infeasible_to_scope
+  - bounded_unknown
+  failure_visibility:
+  - single_field_change_as_full_transaction
+  - UI_dispatch_as_commit
+  - missing_affected_set
+  relations:
+  - TradeCase->FunctionCandidate
+  - TradeCase->StateImpact
+  - TradeCase->Decision
+- result_id: RES-REA-05
+  name: 有条件原生调用代表验证结果
+  result_form: conditional_poc_receipt_or_explicit_not_executed
+  implementation_method:
+    type: process
+    description: Future engineering test by Codex only after independent precise Human action authorization; coach setting
+      first, trade second only if qualified
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-106
+  - E-REA02-107
+  success_criteria:
+  - SC-REA-06
+  observable_end_state: 最多1-2个受控代表PoC；无安全条件或无许可时，必须交付明确的 NOT_EXECUTED 研究结果，不伪称执行成功
+  required_fields:
+  - candidate_ref
+  - context_safety_assessment
+  - explicit_action_authority_ref
+  - run_status
+  - fresh_readback
+  - affected_state_diff
+  - cleanup_or_block_reason
+  accepted_dispositions:
+  - verified_poc_to_scope
+  - not_executed_with_evidence
+  - failed_with_trace
+  failure_visibility:
+  - effectful_operation_without_authorization
+  - missing_fresh_readback_labelled_success
+  - fixture_claimed_as_game_poc
+  relations:
+  - PoC->Authority
+  - PoC->RunReceipt
+  - PoC->Verification
+- result_id: RES-REA-06
+  name: 外挂与游戏原生执行路径的架构决策输入
+  result_form: evidence_linked_alternatives_matrix
+  implementation_method:
+    type: document
+    description: Compare native reuse, direct data edit, external simulation, hybrid and undecided routes, without modifying
+      earlier approved product architecture
+    executor: GPT planning / Codex future evidence
+  basis:
+  - E-REA02-110
+  - E-REA02-112
+  - E-REA02-107
+  success_criteria:
+  - SC-REA-07
+  observable_end_state: 三机制均有带证据的路径优劣和残余风险；只能建议产品变更，不自动改变旧批准路线
+  required_fields:
+  - mechanism_id
+  - route_candidate
+  - compatibility
+  - side_effect_coverage
+  - portability
+  - risk
+  - supporting_evidence
+  - disconfirming_evidence
+  - Human_change_gate
+  accepted_dispositions:
+  - recommendation_with_limits
+  - undecided_with_reasons
+  failure_visibility:
+  - silent_overwrite_of_approved_architecture
+  - source_free_best_route
+  relations:
+  - Decision->Evidence
+  - Decision->PriorApprovedArchitecture
+- result_id: RES-REA-07
+  name: 原始证据、负例与可恢复交接
+  result_form: versioned_evidence_manifest_and_review_receipt
+  implementation_method:
+    type: machine_manifest
+    description: Bind fixed original sources, failures and future runtime research artifacts and independent-review outcomes
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-101
+  - E-REA02-102
+  - E-REA02-108
+  success_criteria:
+  - SC-REA-01
+  - SC-REA-08
+  observable_end_state: 三代表各自可查来源/错误/版本；旧52项清单只作归档来源，不宣称已独立复验全部文件
+  required_fields:
+  - source_origin
+  - fixed_blob_or_digest
+  - game_build
+  - mode
+  - claim_ids
+  - negative_cases
+  - failure_budget
+  - review_state
+  - replay_limitations
+  accepted_dispositions:
+  - reviewable_package
+  - limited_reproducibility_declared
+  failure_visibility:
+  - two_files_from_same_run_as_independent_sources
+  - missing_negative_log
+  - claim_exceeds_original_artifact
+  relations:
+  - EvidenceManifest->Claims
+  - EvidenceManifest->ReviewReceipt
+composition:
+  MechanismAtlas:
+  - BadgeDossier
+  - CoachDossier
+  - TradeDossier
+  EvidenceManifest:
+  - EvidenceAtom
+  - SourceArtifact
+  - NegativeCase
+  - ReviewReceipt
+  PoCResult:
+  - FunctionCandidate
+  - Qualification
+  - ExactAuthorization
+  - ExecutionReceipt
+  - FreshReadback
+  - AffectedStateCheck
+  ArchitectureDecision:
+  - MechanismAtlas
+  - FeasibilityGrades
+  - PriorApprovedExecutionPath
+  - HumanChangeRequest_if_needed
+  boundary: The same evidence/source is referenced, not duplicated as independently observed.
+state_dimensions:
+  proof_level:
+  - UNASSESSED
+  - L0_GUIDE_HYPOTHESIS
+  - L1_NATIVE_TYPE_OR_INSTANCE
+  - L2_STATIC_FUNCTION_BRANCH
+  - L3_SAME_MODE_GAME_BEHAVIOR
+  - L4_AUTHORIZED_CALL_WITH_FRESH_READBACK
+  - L5_PRODUCTION_ACCEPTED_OUT_OF_SCOPE
+  research_disposition:
+  - OPEN
+  - SUPPORTED_TO_SCOPE
+  - REFUTED_TO_SCOPE
+  - BOUNDED_UNKNOWN
+  - NOT_APPLICABLE_TO_THIS_BUILD
+  game_applicability:
+  - UNKNOWN
+  - PC22_OFFLINE_MYLEAGUE_PROVEN
+  - OTHER_MODE_ONLY
+  - OTHER_PLATFORM_ONLY
+  callability:
+  - NOT_EVALUATED
+  - FUNCTION_CANDIDATE_ONLY
+  - CONTEXT_MISSING
+  - PRECONDITIONS_QUALIFIED_FOR_FUTURE_TEST
+  - INFEASIBLE_TO_SCOPE
+  - BOUNDED_UNKNOWN
+  - TESTED_WITH_RECEIPT
+  authorization:
+  - NONE
+  - PROPOSED
+  - EXACT_HUMAN_APPROVED_FOR_SPECIFIC_ACTION
+  - DENIED
+  - EXPIRED
+  execution:
+  - NOT_EXECUTED
+  - STARTED
+  - ABORTED
+  - COMPLETED_REPORTED
+  verification:
+  - NOT_PERFORMED
+  - RAW_SOURCE_PRESENT
+  - FRESH_NATIVE_COMPARISON_PRESENT
+  - AFFECTED_SET_CONSISTENT
+  - MISMATCH_OR_INCOMPLETE
+  independent_review:
+  - PENDING
+  - PARTIAL_LIMITED_REVIEW
+  - ACCEPTED_TO_SCOPE
+  - REJECTED
+  P0_task_outcome:
+  - DESIGN_IN_PROGRESS
+  - ENGINEERING_EVIDENCE_PENDING
+  - RESEARCH_EVIDENCE_COMPLETE_PENDING_HUMAN
+  - HUMAN_ACCEPTED_P0_EXIT
+allowed_transitions:
+- from: L0_GUIDE_HYPOTHESIS
+  to: L1_NATIVE_TYPE_OR_INSTANCE
+  requires:
+  - same_build_source
+  - mode_tag
+  - original evidence
+  not_sufficient:
+  - guide_repeated_in_another_project_document
+- from: L1_NATIVE_TYPE_OR_INSTANCE
+  to: L2_STATIC_FUNCTION_BRANCH
+  requires:
+  - original code/reference link
+  - function identity
+  - scoped branch evidence
+  not_sufficient:
+  - field name resembles game rule
+- from: L2_STATIC_FUNCTION_BRANCH
+  to: L3_SAME_MODE_GAME_BEHAVIOR
+  requires:
+  - same-mode game scene
+  - game state observations
+  - consumer or behavioral corroboration
+  not_sufficient:
+  - static xref alone
+- from: PRECONDITIONS_QUALIFIED_FOR_FUTURE_TEST
+  to: TESTED_WITH_RECEIPT
+  requires:
+  - exact Human approval
+  - separate Codex test permission
+  - effect-specific fresh game readback
+  not_sufficient:
+  - approved A-v1 or stage02 result
+- from: STARTED
+  to: ABORTED
+  requires:
+  - failure or stop trigger
+  - retained reason and source
+  not_sufficient: []
+- from: COMPLETED_REPORTED
+  to: AFFECTED_SET_CONSISTENT
+  requires:
+  - new data observation
+  - applicable affected-entity invariants checked
+  not_sufficient:
+  - call return value only
+- from: RESEARCH_EVIDENCE_COMPLETE_PENDING_HUMAN
+  to: HUMAN_ACCEPTED_P0_EXIT
+  requires:
+  - all three scoped dossiers with honest dispositions
+  - architecture matrix
+  - evidence archive
+  - Human explicit P0 exit judgment
+  not_sufficient:
+  - the Codex runner reports done
+rejected_transitions:
+- transition: L1 -> L3/L4 without intermediate game-specific proof
+  failure_code: UNSUPPORTED_MATURITY_PROMOTION
+- transition: fixture traced event -> game original function verified
+  failure_code: FIXTURE_TO_GAME_CONFLATION
+- transition: stored coaching config -> applied game tactic
+  failure_code: PERSISTENCE_IS_NOT_APPLICATION
+- transition: badge effect constants -> natural badge upgrade threshold
+  failure_code: WRONG_MECHANISM
+- transition: MyCAREER or next-generation MyNBA -> PC22 MyLEAGUE game fact
+  failure_code: GAME_MODE_PLATFORM_SCOPE_MISMATCH
+- transition: partial roster state change -> complete trade commit
+  failure_code: INCOMPLETE_TRANSACTION
+- transition: authorized requirement or stage transition -> runtime permission
+  failure_code: MISSING_ACTION_AUTHORIZATION
+- transition: unknown -> proven negative without bounded reason
+  failure_code: ABSENCE_OF_EVIDENCE_AS_REFUTATION
+- transition: same-source archived evidence -> two independent first-hand game confirmations
+  failure_code: SHARED_ORIGIN_DOUBLE_COUNT
+- transition: no actual test -> PoC success
+  failure_code: FALSE_POC_SUCCESS
+invariants:
+- id: INV-01
+  assertion: Any game-mechanic factual claim has source ID, first-hand or archived origin, build/mode scope and evidence
+    maturity.
+  on_violation: UNSUPPORTED_CLAIM
+- id: INV-02
+  assertion: Product requirement approval, technical qualification, action authorization, run receipt and independent
+    acceptance are distinct states.
+  on_violation: AUTHORITY_CONFLATION
+- id: INV-03
+  assertion: Missing safe PoC conditions yield NOT_EXECUTED, never PASS; bounded unknown can fulfill an honest research
+    report only with documented attempts and Human acceptance.
+  on_violation: FALSE_SUCCESS
+- id: INV-04
+  assertion: M1 one deep badge/one light comparison and M2 one deep coach offense or defense setting/other side light;
+    M3 original trade validator and commit remain in scope.
+  on_violation: HUMAN_SCOPE_DRIFT
+- id: INV-05
+  assertion: Before claiming a complete original game trade, roster, contract, finance, pick and game-event impact must
+    be traced or each missing part explicitly identified.
+  on_violation: PARTIAL_TRANSACTION_CLAIM
+- id: INV-06
+  assertion: No future path may silently replace Human-approved external trading/signing/draft design without separate
+    change approval.
+  on_violation: SILENT_ARCHITECTURE_CHANGE
+- id: INV-07
+  assertion: Old Codex 52-source manifest is archival; independent confirmation of all 52 checks or same-mode engine
+    behavior must not be inferred.
+  on_violation: EVIDENCE_PROVENANCE_INFLATION
+- id: INV-08
+  assertion: P0 exit and resumption of paused world-data Stage02 require distinct Human acceptance after real evidence
+    work.
+  on_violation: PREMATURE_P0_EXIT
+five_deferred_gaps:
+  GAP-REA02-01:
+    on_future_evidence: M1 real badge upgrade logic and predicate or bounded negative
+    not_blocking_current_B_draft: true
+  GAP-REA02-02:
+    on_future_evidence: M2 actual game tactic consumer and applied state
+    not_blocking_current_B_draft: true
+  GAP-REA02-03:
+    on_future_evidence: M3 validator/commit and cross-entity update
+    not_blocking_current_B_draft: true
+  GAP-REA02-04:
+    on_future_evidence: qualified native call plus explicit Human test approval if feasible
+    not_blocking_current_B_draft: true
+  GAP-REA02-05:
+    on_future_evidence: independent game-mode-specific verification or recorded limitation
+    not_blocking_current_B_draft: true
+acceptance_mapping:
+  SC-REA-01:
+  - RES-REA-01
+  - RES-REA-07
+  SC-REA-02:
+  - RES-REA-01
+  SC-REA-03:
+  - RES-REA-02
+  SC-REA-04:
+  - RES-REA-03
+  SC-REA-05:
+  - RES-REA-04
+  SC-REA-06:
+  - RES-REA-05
+  SC-REA-07:
+  - RES-REA-06
+  SC-REA-08:
+  - RES-REA-07
+authorization_boundary:
+  stage03_design_permission: true
+  new_Codex_development_task_authorized: false
+  game_operation_authorized: false
+  game_function_invocation_authorized: false
+  master_merge_authorized: false
+B_model_review:
+  Human_exact_version_approval: PENDING
+  independent_review: NOT_RUN
+  formal_stage03_completion: false

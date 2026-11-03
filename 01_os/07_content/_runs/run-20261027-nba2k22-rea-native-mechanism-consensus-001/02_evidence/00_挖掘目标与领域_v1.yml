@@ -1,0 +1,104 @@
+schema_version: nba2k22.rea.stage02.research_targets.v1
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+approved_requirement_version: A-v1-RC01
+approved_requirement_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+date: '2026-10-27'
+status: STAGE02_RESEARCH_DESIGN_NOT_RUNTIME_FINDINGS
+two_sided_feasibility_target:
+  supports: >-
+    For each of one MyLEAGUE badge progression rule, one coach
+    offense/defense applied-setting rule, and one native trade validation/
+    commit path, traceable game-specific data/function/condition evidence
+    exists (or credible bounded negative evidence exists), so a maintainable
+    Mechanism Atlas and valid integration feasibility choices can be made.
+    A potential coach-first Native call PoC further requires independently
+    verified preconditions and explicit Human action authorization.
+  falsifies_or_limits: >-
+    Selected candidate types prove unrelated to actual MyLEAGUE behavior,
+    required functions are inseparable from opaque UI/engine context or
+    cannot safely be reentered, full transaction dependencies cannot be
+    bounded, or controlled investigations exhaust their approved budgets.
+    Owned-fixture Hook and write success never substitutes for game-native
+    execution.
+research_questions:
+  - id: RQ-REA-01
+    问题: Which target mechanic identity, types, native layouts and executable consumers can be identified on one exact PC22 build?
+    类型: 开放发现
+    用途: Mechanism Atlas data model, source relations and Codex bounded target selection
+    捕获单位: unique_mechanic_function_or_data_structure_semantics_on_pinned_build_not_number_of_search_hits
+    停止条件: >-
+      Each of M1/M2/M3 has known relevant source leads or explicit bounded
+      source gap; full exe/global completeness is not a requirement.
+    coverage_method: NO_CAPTURE_RECAPTURE_WITHOUT_TWO_INDEPENDENT_COMPARABLE_COMPLETE_SAMPLES
+  - id: RQ-REA-02
+    问题: Does a chosen MyLEAGUE badge actually upgrade under discoverable native condition/threshold/trigger?
+    类型: 定向核实
+    用途: RES-REA-02 and SC-REA-03, distinguish badge effect from natural progression
+    捕获单位: null
+    停止条件: single_badge_deep_trace_or_evidenced_bounded_unknown_after_approved_budget
+  - id: RQ-REA-03
+    问题: Does one real coaching offense OR defense UI setting feed a native consumer and affect gameplay state?
+    类型: 定向核实
+    用途: RES-REA-03/05, save-vs-applied distinction and PoC prioritization
+    捕获单位: null
+    停止条件: one_deep_case_with_applied_evidence_or_bounded_gap_plus_opposite_side_light_reference
+  - id: RQ-REA-04
+    问题: Is game native trade validation distinct from commit, and what other object changes are required?
+    类型: 定向核实
+    用途: RES-REA-04/06, state/transaction model and safety feasibility
+    捕获单位: null
+    停止条件: explicitly_classified_validator_commit_and_side_effects_or_source_bound_unresolved_risk
+  - id: RQ-REA-05
+    问题: Is any coach-first game native function safely callable by an external decision layer when separately authorized?
+    类型: 定向核实
+    用途: RES-REA-05, PoC gating, permission and proof contract
+    捕获单位: null
+    停止条件: safe_explicitly_authorized_representative_fresh_readback_or_NOT_EXECUTED_with_reason
+  - id: RQ-REA-06
+    问题: Would native-function reuse outperform direct memory edits, external business simulation or hybrid under approved goals?
+    类型: 定向核实
+    用途: RES-REA-06, non-silent architecture alternative for future Human approval
+    捕获单位: null
+    停止条件: evidence_linked_tradeoff_for_all_three_cases_with_unknowns_preserved
+  - id: RQ-REA-07
+    问题: Are original claims, negatives, program versions and resource budgets independently inspectable?
+    类型: 定向核实
+    用途: RES-REA-07, SC-REA-01/08 and OS evidence packet
+    捕获单位: null
+    停止条件: all_required_claims_link_to_fixed_primary_artifacts_or_are_flagged_SINGLE_OR_MISSING
+domains:
+  - domain: OFFLINE_PC22_RUNTIME_AND_REVERSE_ENGINEERING
+    why: determines limits of game source/function accessibility
+    RQ: [RQ-REA-01, RQ-REA-05, RQ-REA-07]
+    missed_if_omitted: aliases_static_to_runtime_and_fixture_to_game
+  - domain: PLAYER_BADGE_NATURAL_PROGRESSION_AND_MENTORING
+    why: badge upgrade is not BADGE_TUNING gameplay bonus or MyCAREER points
+    RQ: [RQ-REA-01, RQ-REA-02]
+    missed_if_omitted: fictitious MyLEAGUE thresholds
+  - domain: COACH_UI_CONFIG_FUNCTION_CONSUMPTION_AND_GAMEPLAY_AI
+    why: existing memory writer success does not show original gameplay consumption
+    RQ: [RQ-REA-03, RQ-REA-05]
+    missed_if_omitted: stored_value_as_applied
+  - domain: TRADE_VALIDATION_COMMIT_AND_CROSS_ENTITY_CONSISTENCY
+    why: requires complete roster contract salary pick and event side effects
+    RQ: [RQ-REA-04, RQ-REA-06]
+    missed_if_omitted: partial_write_marked_complete_trade
+  - domain: GOVERNANCE_AUTHORIZATION_AND_APPROVED_EXTERNAL_GM_ARCHITECTURE
+    why: the research cannot silently replace accepted original design or run native writes
+    RQ: [RQ-REA-05, RQ-REA-06, RQ-REA-07]
+    missed_if_omitted: unauthorized_engineering_execution
+information_gain_priority:
+  P0: reuse_project_badge_coach_trade_guides_and_pinned_Codex_growth_metadata
+  P1: locate_exact_game_instance_and_consumer_path_per_representative_in_future_Codex_task
+  P2: investigate_callable_function_preconditions_and_affected_object_set_only_when_source_supports
+  deferred: whole_exe_Ghidra_unbounded_retry_all_badges_all_coaching_all_transactions_noncore_presentation
+applicability:
+  game: NBA2K22
+  platform: PC_CURRENT_GEN_WINDOWS
+  mode: OFFLINE_MYLEAGUE
+  cross_generation_material: HYPOTHESIS_ONLY_UNLESS_GAME_BUILD_EVIDENCE
+source_reuse_policy: >-
+  Reuse previously collected official/community and local Native source leads
+  first; no automatic independent-source promotion when multiple project files
+  cite the same guide, one Codex run, or one original 2K article.
+stage02_verdict: NOT_ASSESSED

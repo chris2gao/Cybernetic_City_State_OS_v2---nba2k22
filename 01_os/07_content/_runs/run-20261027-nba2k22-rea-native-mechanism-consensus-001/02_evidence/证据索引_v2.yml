@@ -1,0 +1,241 @@
+schema_version: nba2k22.rea_mechanism.stage02.evidence_index.v2
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+date: '2026-10-27'
+status: EXPANDED_FIRSTHAND_PROJECT_SOURCE_CROSSCHECK_STILL_NOT_FORMAL_FEASIBILITY_GATE
+fixed_external_code_commit: b16e69727987f29bff5e2ee31ce82891102ab2d9
+source_run: run-20261027-rea-development-exploration-01
+source_project_state: PARTIAL_HUMAN_PAUSED
+research_questions: [RQ-REA-01, RQ-REA-02, RQ-REA-03, RQ-REA-04, RQ-REA-05, RQ-REA-06, RQ-REA-07]
+requirements_version: A-v1-RC01_HUMAN_APPROVED
+requirements_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+source_reliability_note: >-
+  Fixed files are Git-retrievable from original Codex work; runtime claims are
+  same-developer archived observations, not independently reproduced by GPT.
+  The manifest's 52 SHA256 entries were not all separately recomputed.
+evidence:
+  - evidence_id: E-REA02-001
+    origin_group: CODEX_2026_10_27_ONE_RESEARCH_RUN
+    source_id: SRC-REA-03
+    独立性: ONE_ORIGINAL_RESEARCH_RUN_NOT_INDEPENDENT_NATIVE_REPLAY
+    信息可信度: 3
+    可信度理由: Fixed primary archive supports precisely described bounded observations but no current independent PC22 execution of the claimed mechanic
+    与A的关系: approved_A_v1_RC01_subset
+    事实与推断:
+      读到的事实: See atomic claim and fixed source refs below
+      合并方推断: Only the stated scope can inform B0 technical feasibility not real game callability
+    RQ: [RQ-REA-01, RQ-REA-07]
+    result_items: [RES-REA-01, RES-REA-07]
+    claim: >-
+      Codex research branch contains paused handoff, REA playbook, script README
+      and 52-file declared hash manifest with complete fixed Git source paths.
+    direction: support_source_traceability
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/08_结论/PLANNING_HANDOFF.md
+        blob_sha: 9c3dbc11ee5268a3e4e4a9ed28dcdd5a2a6e1376
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_DEVELOPMENT_PLAYBOOK_V1.md
+        blob_sha: aa2dda60421c59b8db37831cf271a46979a7324f
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/SOURCE_MANIFEST.json
+        blob_sha: c26a28615f5b87544088a3f9716eedf6fbdde897
+    confidence: HIGH_FOR_GIT_FILE_EXISTENCE_ONLY
+    limitation: same_developer_report_not_independent_game_test_and_52_hash_values_not_all_recalculated
+  - evidence_id: E-REA02-002
+    origin_group: CODEX_2026_10_27_ONE_RESEARCH_RUN
+    source_id: SRC-REA-03
+    独立性: ONE_ORIGINAL_RESEARCH_RUN_NOT_INDEPENDENT_NATIVE_REPLAY
+    信息可信度: 3
+    可信度理由: Fixed primary archive supports precisely described bounded observations but no current independent PC22 execution of the claimed mechanic
+    与A的关系: approved_A_v1_RC01_subset
+    事实与推断:
+      读到的事实: See atomic claim and fixed source refs below
+      合并方推断: Only the stated scope can inform B0 technical feasibility not real game callability
+    RQ: [RQ-REA-01, RQ-REA-02]
+    result_items: [RES-REA-01, RES-REA-02]
+    claim: >-
+      Frida game-process source evidence and findings contain 9 growth/badge
+      metadata type definitions and related field candidates, including
+      FRANCHISE_PROGRESSION_TUNING, not verified current instance values or
+      an actual MyLEAGUE badge upgrade threshold/consumer.
+    direction: partial_support_and_major_gap
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-evidence.json
+        blob_sha: 89345f04c77170dcb1d0d19900306f43b6851142
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-findings.json
+        blob_sha: a799c013f7dbd86a76dde0d8b72c6627e9a5f181
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/metadata-findings.json
+        blob_sha: 11cc8909b104067ee2cecdff08e88965469ba94f
+    confidence: BOUNDED_REPORTED_GAME_METADATA_OBSERVATION_WITH_PRIMARY_ARTIFACT
+    limitation: metadata_definitions_not_instantiated_values_or_badge_level_rules; CAREERMODE_is_separate
+  - evidence_id: E-REA02-003
+    origin_group: CODEX_2026_10_27_ONE_RESEARCH_RUN
+    source_id: SRC-REA-03
+    独立性: ONE_ORIGINAL_RESEARCH_RUN_NOT_INDEPENDENT_NATIVE_REPLAY
+    信息可信度: 3
+    可信度理由: Fixed primary archive supports precisely described bounded observations but no current independent PC22 execution of the claimed mechanic
+    与A的关系: approved_A_v1_RC01_subset
+    事实与推断:
+      读到的事实: See atomic claim and fixed source refs below
+      合并方推断: Only the stated scope can inform B0 technical feasibility not real game callability
+    RQ: [RQ-REA-05]
+    result_items: [RES-REA-05]
+    claim: >-
+      Controlled owned Python fixture had 4096 live records actually written,
+      independently checked, restored and checked with game_target false.
+    direction: supports_tool_feasibility_only
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/bulk-fixture/bulk-fixture-results.json
+        blob_sha: 593e5e3740fb85f0fb9985e0d9875ee61bb2b423
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/bulk-fixture/apply-evidence.json
+        blob_sha: 0772aaf04ef09cb4d6da8f2a5e3709c7dcad1248
+    confidence: ORIGINAL_OWNED_FIXTURE_RECORDED_WITH_FRIDA_ARTIFACT_NOT_GAME_PROOF
+    limitation: no_native_game_write_legal_transaction_index_UI_gamecache_or_save_persistence_proof
+  - evidence_id: E-REA02-004
+    origin_group: CODEX_2026_10_27_ONE_RESEARCH_RUN
+    source_id: SRC-REA-03
+    独立性: ONE_ORIGINAL_RESEARCH_RUN_NOT_INDEPENDENT_NATIVE_REPLAY
+    信息可信度: 3
+    可信度理由: Fixed primary archive supports precisely described bounded observations but no current independent PC22 execution of the claimed mechanic
+    与A的关系: approved_A_v1_RC01_subset
+    事实与推断:
+      读到的事实: See atomic claim and fixed source refs below
+      合并方推断: Only the stated scope can inform B0 technical feasibility not real game callability
+    RQ: [RQ-REA-03, RQ-REA-04, RQ-REA-05]
+    result_items: [RES-REA-03, RES-REA-04, RES-REA-05]
+    claim: >-
+      Controlled native ABI fixture captured 16 reader/writer callback events
+      with consistent argument and result while game_target false.
+    direction: tool_capability_support_game_callability_unproven
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/call-trace-fixture/call-trace-results.json
+        blob_sha: 290d40661d8a677664f77427c662e8a320f7081f
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/call-trace-fixture/trace-evidence.json
+        blob_sha: 3fea86f0c3a528fc040dc144004781dfa1407b6c
+    confidence: ORIGINAL_OWNED_FIXTURE_INTERCEPTION_NOT_GAME_INTEROP
+    limitation: no_game_hooks_or_known_game_ABI_thread_this_or_commit
+  - evidence_id: E-REA02-005
+    origin_group: CODEX_2026_10_27_ONE_RESEARCH_RUN
+    source_id: SRC-REA-03
+    独立性: ONE_ORIGINAL_RESEARCH_RUN_NOT_INDEPENDENT_NATIVE_REPLAY
+    信息可信度: 3
+    可信度理由: Fixed primary archive supports precisely described bounded observations but no current independent PC22 execution of the claimed mechanic
+    与A的关系: approved_A_v1_RC01_subset
+    事实与推断:
+      读到的事实: See atomic claim and fixed source refs below
+      合并方推断: Only the stated scope can inform B0 technical feasibility not real game callability
+    RQ: [RQ-REA-01, RQ-REA-04, RQ-REA-06, RQ-REA-07]
+    result_items: [RES-REA-01, RES-REA-04, RES-REA-06, RES-REA-07]
+    claim: >-
+      Prior game overall read exists but does not establish mechanism execution;
+      whole NBA2K22.exe Ghidra analysis has four reported provider timeouts and
+      cannot be a verified unbounded prerequisite.
+    direction: feasibility_limit
+    source_refs:
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/prior-overall/overall-live-findings.json
+        blob_sha: 37a5114c4e3e23864e5e83adac7cb8f8891f0ae9
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/development/REA_DEVELOPMENT_PLAYBOOK_V1.md
+        blob_sha: aa2dda60421c59b8db37831cf271a46979a7324f
+    confidence: DELEGATED_ENGINEERING_REPORT_AND_PINNED_SAMPLES_NO_NEW_GHIDRA_REPLAY
+    limitation: does_not_prove_any_trade_or_coach_native_function_is_callable
+  - evidence_id: E-REA02-006
+    RQ: [RQ-REA-01, RQ-REA-02]
+    result_items: [RES-REA-01, RES-REA-02]
+    source_id: SRC-REA-05
+    origin_group: PROJECT_OLD_MECHANICS_RESEARCH_BADGE_R04A
+    claim: >-
+      Existing R04A guide catalog has 80 gameplay and 20 personality badge
+      reference candidates but explicitly says it is NOT a native PC22
+      badge dictionary and MyPLAYER unlock conditions cannot prove MyLEAGUE
+      natural upgrade thresholds.
+    direction: limits_false_badge_threshold_inference
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json
+        blob_sha: f3902a8e3f80296a2d790b24a2b989216d18315f
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/SOURCES.md
+        blob_sha: 9a3cc7315ff7684075eb8174d50f1229a03ad58c
+    独立性: BOTH_PROJECT_DOCS_MAY_CITE_SAME_PRIOR_GUIDE_NOT_TWO_INDEPENDENT_NATIVE_SOURCES
+    信息可信度: 4
+    可信度理由: Source catalog explicitly states its own origin and negative applicability boundary; not positive game fact
+    适用边界: guide_subject_labels_and_coverage_only_not_actual_game_badge_thresholds
+    事实与推断:
+      读到的事实: source_scope_notice_and_native_registry_status_are_explicitly_unknown
+      合并方推断: Codex should use guide as candidate UI term dictionary only
+  - evidence_id: E-REA02-007
+    RQ: [RQ-REA-03, RQ-REA-05]
+    result_items: [RES-REA-03, RES-REA-05]
+    source_id: SRC-REA-05
+    origin_group: PROJECT_OLD_DEV07_COACHING_ENGINEERING
+    claim: >-
+      Existing coaching V1/V2 reports contain specifically scoped native
+      memory setting writes/readback and conditional restore evidence,
+      but they do not certify discovery or safe external invocation
+      of original game setter/consumer or actual 3D gameplay application.
+    direction: partial_support_and_mechanism_gap
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/39_COACHING_TACTICS.md
+        blob_sha: 4a484b80b541d2cf79fbd2d138447d0162b73637
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/40_COACHING_EXECUTION_RUNBOOK.md
+        blob_sha: 42eb6b1b276de95d4a6d986b7bb689169b5d6a42
+    独立性: TWO_PROJECT_DOCS_REFER_TO_OLDER_DEV07_SAME_ENGINEERING_LINEAGE
+    信息可信度: 3
+    可信度理由: Historical project test reporting with explicit limitations; no new live gameplay observation or independent caller verification
+    适用边界: same_historic_game_build_and_approved_field_scope_as_the_original_docs
+    事实与推断:
+      读到的事实: prior_Raw_memory_COACH_field_write_and_restore_are_reported_with_scope_and_uncertified_parts
+      合并方推断: bounded_one_coach_setting_UI_native_source_reuse_is_a_good_PoC_candidate_not_a_safe_native_function_proof
+  - evidence_id: E-REA02-008
+    RQ: [RQ-REA-04, RQ-REA-06]
+    result_items: [RES-REA-04, RES-REA-06]
+    source_id: SRC-REA-05
+    origin_group: PROJECT_OLD_R05B_TRADE_RESEARCH
+    claim: >-
+      Existing trade catalog lists 16 researched native menu candidates,
+      14 roster layout entries and historical CBA reference formulas,
+      with many PC22 effects and game menu mappings explicitly unverified,
+      and it provides no original trade validator-to-commit proof.
+    direction: source_leads_with_core_gap
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R05B_TRADE_PICK_ROSTER_MECHANICS_V1.json
+        blob_sha: 58769beb2fcf0026ea03588caf03a1a449f7e039
+    独立性: ONE_PROJECT_RESEARCH_CATALOG_NOT_NATIVE_FUNCTION_SOURCE
+    信息可信度: 4
+    可信度理由: Catalog's precise candidate counts and own unverified flags are readable; not primary engine mechanism confirmation
+    适用边界: research_options_and_known_roster_sources_not_live_native_trade_commit
+    事实与推断:
+      读到的事实: pc22_game_menu_directly_verified_false_and_legacy_CBA_reference_not_game_validation
+      合并方推断: transaction_source_gap_requires_game_function_and_affected_object_verification
+  - evidence_id: E-REA02-009
+    RQ: [RQ-REA-02, RQ-REA-06]
+    result_items: [RES-REA-02, RES-REA-06]
+    source_id: SRC-REA-05
+    origin_group: PROJECT_OLD_MENTOR_GUIDE_UNVERIFIED_NUMERICAL_CLAIMS
+    claim: >-
+      Historical mentorship/staff guide asserts numerical trainer,
+      badge progression and injury reductions such as 1.8x, 40% and 60%
+      without corroboration from the pinned Codex game Native findings.
+    direction: requires_corroboration_not_a_negative_proof_of_game_rule
+    source_refs:
+      - path: 08_Domain_Applications/Antigravity_GM_Engine/docs/12_NATIVE_MENTORSHIP_AND_STAFF_GUIDE.md
+        blob_sha: ff8a8b25e86fe5e5fd6fd31f92d5d18d6e4e4ce3
+      - path: 01_os/07_content/_runs/run-20261027-rea-development-exploration-01/06_执行/evidence/growth-findings.json
+        blob_sha: a799c013f7dbd86a76dde0d8b72c6627e9a5f181
+    独立性: DOCUMENT_ASSERTIONS_VS_NATIVE_TYPE_DEFINITIONS_NOT_TWO_CONFIRMED_MEASUREMENTS_OF_SAME_RULE
+    信息可信度: 3
+    可信度理由: It is certain the guide contains numbers; truth of those numerical gameplay effects is unverified
+    适用边界: source_assertion_only_not_accepted_PC22_MYLEAGUE_ENGINE_CONSTANT
+    事实与推断:
+      读到的事实: guide_states_numbers_and_current_growth_findings_read_only_type_definitions_not_values
+      合并方推断: numbers_to_be_marked_HYPOTHESIS_UNTIL_Codex_direct_function_or_scenario_evidence
+unresolved_core_evidence:
+  - RQ-REA-02_actual_MyLEAGUE_badge_instance_and_upgrade_trigger_function
+  - RQ-REA-03_coach_offense_or_defense_UI_to_native_consumer_and_applied_state
+  - RQ-REA-04_trade_validator_vs_commit_complete_state_dependencies
+  - RQ-REA-05_Human_authorized_safe_game_native_function_call_and_new_capture
+  - RQ-REA-06_evidence_based_native_reuse_vs_external_simulation
+stage02_feasibility_verdict: NOT_ASSESSED
+p0_task_completion: NOT_DONE
+codex_new_execution: NOT_DISPATCHED
+source_catalog_ref: 02_evidence/信源清单_v1.yml
+source_use_log_ref: 02_evidence/信源使用记录_v1.yml
+boundary_log_ref: 02_evidence/边界记录_v1.yml
+feasibility_candidate_ref: 02_evidence/可行性判断_候选_v1.yml
+independent_game_acceptance: NOT_RUN
+default_failed_inference: GUIDE_OR_FIXTURE_IS_NOT_GAME_NATIVE_MECHANISM_PROOF

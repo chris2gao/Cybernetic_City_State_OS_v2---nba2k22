@@ -1,0 +1,1065 @@
+schema_version: nba2k22.rea.stage03.B.result_model.v1
+task_id: NBA2K22-REA-NATIVE-MECHANISM-DISCOVERY-01
+document_status: STAGE03_B_V1_RC01_COMPLETE_CANDIDATE_PENDING_EXACT_HUMAN_AND_INDEPENDENT_REVIEW
+date: '2026-10-27'
+source_branch: task/nba2k22-rea-native-mechanism-consensus-20261027
+source_run_root: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/
+github_sync_state: STAGE03_B_V1_RC01_PLANNING_BRANCH_CANDIDATE
+source_contracts:
+  approved_A0_blob: 8bd15794ad0f8b9b06363e4a04b7f806c4c55acd
+  approved_A_blob: 9bcf28bd2bb3283f61bd79b07ba04b88af721c93
+  Human_approved_stage02_feasibility: partially_supported
+  Human_subsequent_actor_scope_directive: 03_Human机制主体边界裁决_AI与AI优先_20261027.md
+  Human_subsequent_dual_track_directive: 03_Human最终目标补充_机制知识与双执行路径_20261027.md
+  prior_B0_V2_exact_blob: ad063e7ec9f45f346d946de9fbfbcd43fdf70a95
+  prior_B0_V3_exact_blob: eb1fa238eea53799b1f93e5b0f24613420a87fe1
+  unchanged_approved_A0_A_baselines: true
+  actor_scope_narrows_research_target_not_functionality_already_proven: true
+  stage02_candidate_blob: 36c216429d8ae1a300a6e7b88243e72879f5eda8
+  evidence_index_v3_blob: d16ab7c91d2124d943866e3f070ab304a3963884
+  Human_approved_unresolved_gaps:
+  - GAP-REA02-01
+  - GAP-REA02-02
+  - GAP-REA02-03
+  - GAP-REA02-04
+  - GAP-REA02-05
+B_success_relation: >-
+  B outcome is a bounded, evidence-linked study of AI-controlled actors
+  and AI-to-AI interaction mechanisms actually used by PC22 offline MyLEAGUE,
+  using one AI player's badge progression, one AI coach/team strategy effect,
+  one AI-GM-to-AI-GM transaction validation/commit route, and a conditional
+  coach-AI-first native call PoC. Human-controlled menu handlers are excluded
+  from mechanism execution targets, but can serve as clearly tagged read-only
+  observation aids; no native AI mechanism or unsafe call is presumed proven.
+long_term_product_goal_vs_P0_scope:
+  final_product_goal: >
+    Reverse engineer the game AI mechanisms to create reliable, permission-
+    filtered knowledge usable by external GM/Coach/Player reasoning and
+    action planning; choose a native game-function backend when safely
+    proven, or a semantically validated live-memory writing backend when
+    native callability is absent, without changing the game behavior contract.
+  P0_approved_research_exit: >
+    One deep AI badge-growth case, one deep AI coach strategy case,
+    one AI-to-AI GM trade validator/commit research case, with conditional
+    coach-first safe native call PoC and honest unknown/negative outcomes.
+    Full game encyclopedia and all production backend integrations are
+    long-term follow-up work, not hidden new P0 completion requirements.
+  rule: Game mechanic knowledge and actionable intent must exist
+    independently of which backend is available.
+common_object_fields:
+- stable_id
+- type
+- game_build
+- platform
+- game_mode
+- mechanism_id
+- source_claim_ids
+- original_evidence_ids
+- source_origin_group
+- proof_level
+- research_disposition
+- scoped_counterexamples
+- unresolved_gaps
+- last_verified_at_or_unknown
+- initiator_control
+- counterparty_control
+- engine_team_control_flag_source
+- actor_dispatch_condition
+- path_kind
+- human_ui_dependency
+- ai_callsite_evidence_refs
+- shared_kernel_evidence_refs
+- actor_scope_verdict
+- documented_game_mechanism_semantics_or_unknown
+- typed_action_or_read_only_insight
+- backend_capability_status
+- semantic_proof_level
+- expected_game_effect_and_affected_objects
+- result_readback_contract
+- role_knowledge_visibility
+result_objects:
+- result_id: RES-REA-01
+  name: 原生机制图谱及证据目录
+  result_form: machine_readable_catalog_and_reviewable_cards
+  implementation_method:
+    type: 配置
+    description: Versioned machine contract plus human evidence card; future game source collection is separately delegated
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-103
+  - E-REA02-104
+  - E-REA02-108
+  - E-REA02-109
+  - E-REA02-110
+  - E-REA02-111
+  success_criteria:
+  - SC-REA-01
+  - SC-REA-02
+  observable_end_state: M1/M2/M3 三份实名机制记录，各主张注明证据状态而不是推断为已证原生函数
+  required_fields:
+  - mechanism_id
+  - game_build_and_mode
+  - source_claims
+  - native_data_layouts
+  - candidate_functions
+  - state_conditions
+  - side_effect_scope
+  - evidence_refs
+  - proof_level
+  - gaps
+  accepted_dispositions:
+  - source_grounded
+  - negative_to_scope
+  - bounded_unknown
+  failure_visibility:
+  - mechanism_without_source
+  - wrong_game_mode
+  - unqualified_function_assertion
+  relations:
+  - Claim->Evidence
+  - Mechanism->FunctionCandidate
+  - Mechanism->Dossier
+  actor_boundary:
+    primary_mechanism_selection: AI_CONTROLLED_OR_AI_AI_ONLY
+    exclude: [HUMAN_UI_DIALOG, HUMAN_TRADE_CONFIRMATION, HUMAN_EDIT_TRANSACTION, MYCAREER_HUMAN_BADGE_POINT_UNLOCK]
+    shared_kernel_rule: shared_business_function_admissible_only_if_actual_AI_callsite_and_no_mandatory_Human_gate_evidenced
+  acceptance_supplement:
+  - each_mechanism_has_AI_dispatch_evidence_or_explicit_AI_PATH_UNVERIFIED
+  - original_UI_pages_are_observation_only_not_primary_AI_execution_mechanisms
+  knowledge_delivery:
+    outputs: [MechanismKnowledgeCard, FieldSemanticDictionary, RoleSpecificMechanicGuide, EvidenceQualifiedRuleExplanation]
+    consumers: [EXTERNAL_AI_GM, EXTERNAL_AI_COACH, EXTERNAL_AI_PLAYER]
+    content_fields:
+    - mechanism_description_and_real_game_reasoning
+    - original_AI_specific_rule_predicate_or_bounded_unknown
+    - field_id_owner_scope_value_domain_and_meaning
+    - trigger_phase_preconditions_and_effect
+    - how_agent_should_reason_about_the_setting_or_trade
+    - confidence_provenance_game_build_and_freshness
+    - available_actions_and_permissions_not_raw_game_addresses
+    delivery_rule: Explain game semantics in a language-model-usable form with source-linked uncertainty, not just code disassembly.
+  dual_execution_obligation:
+    source_contract: CommonActionSemantics referenced from each knowledge card
+    target: VERIFIED_NATIVE_FUNCTION_OR_VALIDATED_MEMORY_WRITE_OR_BLOCKED
+- result_id: RES-REA-02
+  name: 徽章自然升级代表机制档案
+  result_form: one_deep_case_plus_light_contrast
+  implementation_method:
+    type: 文档
+    description: Compare one approved-scope badge and a light-control badge; future runtime observation only when separately
+      authorized
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-104
+  - E-REA02-105
+  - E-REA02-109
+  - E-REA02-113
+  - E-REA02-115
+  success_criteria:
+  - SC-REA-03
+  observable_end_state: 一枚具体徽章自然升级机制的事实、否定或有边界未知结论，不将比赛效果冒充升级
+  required_fields:
+  - badge_identity
+  - game_mode
+  - player_and_mentor_relation
+  - progress_sources
+  - upgrade_predicate_if_proven
+  - consumer_candidate
+  - event_timing
+  - before_after_or_reason_unavailable
+  - light_control_badge
+  accepted_dispositions:
+  - verified_rule_to_scope
+  - bounded_unknown_with_attempts
+  - not_applicable_proved
+  failure_visibility:
+  - unproven_number_as_threshold
+  - career_vs_myleague_scope_conflict
+  - false_upgrade_claim
+  relations:
+  - BadgeCase->Mechanism
+  - BadgeCase->Evidence
+  - BadgeCase->Counterexample
+  actor_boundary:
+    target: AI_PLAYER_NATURAL_BADGE_GROWTH_IN_PC22_OFFLINE_MYLEAGUE
+    cross_mode_candidate: MYCAREER_NPC_AI_BADGE_PATH_Human_REPORTED_HYPOTHESIS_ONLY
+    excluded: [MYCAREER_HUMAN_PLAYER_BADGE_POINT_SYSTEM, HUMAN_SELECTED_BADGE_UNLOCKS, PLAYER_MENU_CONFIRMATION]
+  actor_specific_required_fields:
+  - game_controlled_vs_Human_controlled_player_distinction
+  - AI_growth_update_callsite_and_dispatch
+  - MyCAREER_NPC_AI_shared_mechanism_hypothesis_verified_or_unknown
+  acceptance_supplement:
+  - cannot_promote_MyCAREER_NPC_similarity_to_PC22_MyLEAGUE_without_same_build_AI_consumer_evidence
+  - badge_effect_trigger_is_not_badge_natural_growth
+  knowledge_delivery:
+    game_mechanic_explanation: why_an_AI_player_badge_naturally_grows_and_when
+    required_fields: [original_growth_trigger_or_unknown, source_attribute_meaning, AI_progression_rule, league_time_dependence, badge_tier_effect, negative_and_counterexample]
+    consumer: EXTERNAL_AI_PLAYER_AND_RELEVANT_COACH
+    must_separate: [BADGE_NATURAL_UPGRADE, BADGE_IN_GAME_EFFECT, HUMAN_MyCAREER_UNLOCK]
+  dual_execution_obligation:
+    target: KNOWLEDGE_FIRST_NO_ASSUMED_BADGE_WRITER_OR_FUNCTION_INVOCATION
+    reason: researching_badge_growth_does_not_authorize_manual_badge_grant
+- result_id: RES-REA-03
+  name: 教练进攻或防守设置的消费与生效档案
+  result_form: one_deep_offense_or_defense_plus_light_contrast
+  implementation_method:
+    type: 文档
+    description: Trace one setting from UI and stored native source to consuming function and applied result where observed;
+      future data collection gated
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-110
+  - E-REA02-114
+  - E-REA02-117
+  success_criteria:
+  - SC-REA-04
+  observable_end_state: 一项设置的显示、保存、消费、生效分别报告，不将原有内存写入等同原生调用
+  required_fields:
+  - setting_identity
+  - setting_owner
+  - UI_value
+  - native_persisted
+  - consumer_evidence
+  - applied_evidence_or_gap
+  - opposite_side_light_control
+  - counterexamples
+  accepted_dispositions:
+  - applied_to_scope
+  - stored_only
+  - static_consumer_only
+  - bounded_unknown
+  failure_visibility:
+  - stored_equals_applied_without_observation
+  - wrong_platform_coaching_feature
+  relations:
+  - CoachCase->Mechanism
+  - CoachCase->FunctionCandidate
+  - CoachCase->Observation
+  actor_boundary:
+    target: AI_COACH_OR_AI_TEAM_AUTONOMOUS_STRATEGY_SELECTION_AND_GAMEPLAY_CONSUMPTION
+    excluded: [HUMAN_GAMEPLAN_MANUAL_EDITOR_HANDLER, PLAYER_COACH_SLIDER_CONFIRMATION_EVENT]
+    allowed_UI_use: READ_ONLY_VALUE_OR_BEHAVIOR_OBSERVATION_NOT_AI_SETTER_PROOF
+  actor_specific_required_fields:
+  - AI_strategy_selection_trigger
+  - AI_coach_or_team_controller_state
+  - AI_setting_consumer_callsite
+  - native_shared_kernel_and_player_UI_path_separation
+  acceptance_supplement:
+  - historic_DEV07_Human_editing_field_not_native_AI_strategy_executor
+  - first_PoC_must_target_verified_AI_coach_native_call_path
+  knowledge_delivery:
+    game_mechanic_explanation: what_an_AI_coach_setting_means_in_NBA2K22_and_why_or_when_to_choose_it
+    required_fields: [tactic_label_native_definition, accepted_values, offense_defense_context, game_ai_consumer, applied_game_effect_or_unknown, dependencies_and_cache]
+    consumers: [EXTERNAL_AI_COACH, EXTERNAL_AI_GM]
+    limit: player_manually_edits_POE_is_not_AI_coach_selection_evidence
+  dual_execution_obligation:
+    preferred: VERIFIED_NATIVE_AI_COACH_FUNCTION
+    fallback: VALIDATED_MEMORY_WRITE_ONLY_WHEN_FieldSemantics_AND_SideEffects_AND_Readback_PROVED
+    neither: NO_SAFE_PATH_REPORT_NOT_A_SILENT_WRITE
+- result_id: RES-REA-04
+  name: 交易验证与实际提交函数机制档案
+  result_form: transaction_mechanism_dossier
+  implementation_method:
+    type: 文档
+    description: Compare validation, commit and affected-entity completeness from fixed original code/scene evidence;
+      do not perform transactional action under this planning task
+    executor: GPT planning / Codex future evidence
+  basis:
+  - E-REA02-107
+  - E-REA02-111
+  - E-REA02-112
+  - E-REA02-116
+  success_criteria:
+  - SC-REA-05
+  observable_end_state: 准确区分交易菜单、校验、提交和联动结果，并报告可调用性可行/不可行/有界未知
+  required_fields:
+  - trade_context
+  - validator_identity_or_gap
+  - commit_identity_or_gap
+  - required_preconditions
+  - affected_entity_set
+  - failure_modes
+  - callability_verdict
+  - trace_refs
+  accepted_dispositions:
+  - feasible_to_scope
+  - infeasible_to_scope
+  - bounded_unknown
+  failure_visibility:
+  - single_field_change_as_full_transaction
+  - UI_dispatch_as_commit
+  - missing_affected_set
+  relations:
+  - TradeCase->FunctionCandidate
+  - TradeCase->StateImpact
+  - TradeCase->Decision
+  actor_boundary:
+    target: AI_GM_TO_AI_GM_TRADE_EVALUATION_VALIDATION_AND_COMMIT
+    excluded: [AI_HUMAN_PLAYER_TRADE_WINDOW, HUMAN_GM_TRADE_EDIT, HUMAN_CONFIRM_REJECT_LOOP, PLAYER_PROPOSE_TRADE_UI]
+    allowed_reused_function: lower_level_business_kernel_ONLY_IF_AI_CALLSITE_AND_CONTEXT_IDENTIFIED
+  actor_specific_required_fields:
+  - initiator_GM_control_is_AI
+  - counterparty_GM_control_is_AI
+  - automatic_AI_proposal_and_evaluation_path
+  - player_confirmation_gate_absent_in_AI_path_with_evidence
+  - transaction_commit_and_effects_Ai_path
+  acceptance_supplement:
+  - Human_visible_acceptance_dialog_not_sufficient_to_identify_AI_AI_validator_or_commit
+  - game_save_user_team_controller_status_must_be_checked_before_claiming_AI_AI_dispatch
+  knowledge_delivery:
+    game_mechanic_explanation: how_AI_GM_agents_evaluate_validate_reject_accept_and_commit_AI_TO_AI_trades
+    required_fields: [AI_evaluation_rule_or_unknown, salary_roster_pick_constraints, AI_proposal_conditions, transaction_cross_entity_side_effects, reasons_for_rejection, source]
+    consumers: [EXTERNAL_AI_GM]
+    excludes: HUMAN_ACCEPT_OR_EDIT_TRADE_UI
+  dual_execution_obligation:
+    preferred: VERIFIED_NATIVE_AI_AI_TRANSACTION_COMMIT
+    fallback: VALIDATED_MEMORY_WRITE_ONLY_IF_COMPLETE_BUSINESS_STATE_AND_GAME_CONSISTENCY_COVERAGE_PROVED
+    neither: BLOCK_TRANSACTION_AND_KEEP_APPROVED_EXTERNAL_SIMULATION_OPTION_UNCHANGED
+    note: Existing_external_transaction_execution_remains_Human_approved_until_later_change_decision
+- result_id: RES-REA-05
+  name: 有条件原生调用代表验证结果
+  result_form: conditional_poc_receipt_or_explicit_not_executed
+  implementation_method:
+    type: 流程
+    description: Future engineering test by Codex only after independent precise Human action authorization; coach setting
+      first, trade second only if qualified
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-106
+  - E-REA02-107
+  success_criteria:
+  - SC-REA-06
+  observable_end_state: 最多1-2个受控代表PoC；无安全条件或无许可时，必须交付明确的 NOT_EXECUTED 研究结果，不伪称执行成功
+  required_fields:
+  - candidate_ref
+  - context_safety_assessment
+  - explicit_action_authority_ref
+  - run_status
+  - fresh_readback
+  - affected_state_diff
+  - cleanup_or_block_reason
+  accepted_dispositions:
+  - verified_poc_to_scope
+  - not_executed_with_evidence
+  - failed_with_trace
+  failure_visibility:
+  - effectful_operation_without_authorization
+  - missing_fresh_readback_labelled_success
+  - fixture_claimed_as_game_poc
+  relations:
+  - PoC->Authority
+  - PoC->RunReceipt
+  - PoC->Verification
+  actor_boundary:
+    POC_first: AI_COACH_INTERNAL_SETTING_OR_APPLY_FUNCTION_IF_QUALIFIED_AND_AUTHORIZED
+    POC_second: AI_AI_TRADE_NATIVE_CALL_ONLY_IF_EVIDENCED_SAFE_AND_SEPARATELY_AUTHORIZED
+    mandatory_verdict: NO_GAME_NATIVE_POC_WHEN_TARGET_IS_HUMAN_UI_ONLY
+  actor_specific_required_fields:
+  - exact_AI_actor_context_and_control_flag
+  - AI_callsite_qualifies_candidate
+  - shared_kernel_preconditions_if_used
+  - no_Human_confirmation_or_edit_dependency
+  acceptance_supplement:
+  - PoC_must_run_as_authentic_AI_path_not_by_simulating_Human_button_click
+  - game_current_user_team_control_state_is_a_possible_blocker_not_auto_reconfiguration_permission
+  knowledge_delivery:
+    action_safety_explanation: show_agent_which_backend_can_execute_this_game_behavior_with_what_guards
+    output: ActionCapabilityRecord
+  dual_execution_obligation:
+    native_poc_first: COACH_AI_FUNCTION_CONDITIONALLY_AFTER_Human_PERMISSION
+    memory_path: not_assumed_verified_by_fixture_or_old_writer
+    gating: [AI_actor_proven, game_version, input_domain, game_phase, object_identity, Human_action_authority, backend_preconditions, affected_state_verification]
+    no_safe_path: explicit_rejection_plus_evidence_gap_and_next_test
+- result_id: RES-REA-06
+  name: 外挂与游戏原生执行路径的架构决策输入
+  result_form: evidence_linked_alternatives_matrix
+  implementation_method:
+    type: 文档
+    description: Compare native reuse, direct data edit, external simulation, hybrid and undecided routes, without modifying
+      earlier approved product architecture
+    executor: GPT planning / Codex future evidence
+  basis:
+  - E-REA02-110
+  - E-REA02-112
+  - E-REA02-107
+  success_criteria:
+  - SC-REA-07
+  observable_end_state: 三机制均有带证据的路径优劣和残余风险；只能建议产品变更，不自动改变旧批准路线
+  required_fields:
+  - mechanism_id
+  - route_candidate
+  - compatibility
+  - side_effect_coverage
+  - portability
+  - risk
+  - supporting_evidence
+  - disconfirming_evidence
+  - Human_change_gate
+  accepted_dispositions:
+  - recommendation_with_limits
+  - undecided_with_reasons
+  failure_visibility:
+  - silent_overwrite_of_approved_architecture
+  - source_free_best_route
+  relations:
+  - Decision->Evidence
+  - Decision->PriorApprovedArchitecture
+  actor_boundary:
+    architecture_consumer: AI_GM_AI_COACH_AI_PLAYER_EXTERNAL_DECISION_MODELS
+    native_execution_target: AI_AI_GAME_BUSINESS_MECHANISMS
+    forbidden_route: HUMAN_DIALOG_AUTOMATION_AS_SUBSTITUTE_FOR_AI_NATIVE_MECHANIC
+  acceptance_supplement:
+  - show_what_to_do_when_controlled_user_team_triggers_Human_branch_instead_of_AI_branch
+  - preserve_Human_approval_gate_for_any_worldline_control_switch_or_existing_approved_route_change
+  knowledge_delivery:
+    consumers: [EXTERNAL_AI_GM, EXTERNAL_AI_COACH, EXTERNAL_AI_PLAYER]
+    output: TypedActionSemantics_AND_ExecutionCapabilityMatrix
+  dual_execution_obligation:
+    canonical_request: DomainActionIntent_not_arbitrary_function_pointer_or_memory_address
+    execution_choices: [VERIFIED_NATIVE_FUNCTION, VALIDATED_MEMORY_WRITE, EVIDENCE_QUALIFIED_HYBRID_FUTURE_OPTION, NO_SAFE_PATH]
+    priority: VERIFIED_NATIVE_FUNCTION_BEFORE_VALIDATED_MEMORY_WRITE_IF_SAFE_COMPLETE_AND_AUTHORITATIVE
+    fallback_rule: >
+      Use live memory only when original mechanics explain which fields,
+      values, context, cache refresh, dependent states and effects must
+      be written and verified. Otherwise NO_SAFE_PATH.
+    stable_semantics: both_backends_must_satisfy_same_domain_preconditions_and_postconditions
+    interface_design_only: do_not_build_second_major_task_API_under_this_P0_research
+- result_id: RES-REA-07
+  name: 原始证据、负例与可恢复交接
+  result_form: versioned_evidence_manifest_and_review_receipt
+  implementation_method:
+    type: 配置
+    description: Bind fixed original sources, failures and future runtime research artifacts and independent-review outcomes
+    executor: Codex only after separate approved execution task
+  basis:
+  - E-REA02-101
+  - E-REA02-102
+  - E-REA02-108
+  success_criteria:
+  - SC-REA-01
+  - SC-REA-08
+  observable_end_state: 三代表各自可查来源/错误/版本；旧52项清单只作归档来源，不宣称已独立复验全部文件
+  required_fields:
+  - source_origin
+  - fixed_blob_or_digest
+  - game_build
+  - mode
+  - claim_ids
+  - negative_cases
+  - failure_budget
+  - review_state
+  - replay_limitations
+  accepted_dispositions:
+  - reviewable_package
+  - limited_reproducibility_declared
+  failure_visibility:
+  - two_files_from_same_run_as_independent_sources
+  - missing_negative_log
+  - claim_exceeds_original_artifact
+  relations:
+  - EvidenceManifest->Claims
+  - EvidenceManifest->ReviewReceipt
+  actor_boundary:
+    require_actor_path_provenance: true
+    game_mode_proof_is_insufficient_without_AI_control_and_AI_AI_dispatch
+  actor_specific_required_fields:
+  - actor_dispatch_provenance
+  - control_flag_read_source
+  - AI_callsite_or_path_not_reached_reason
+  - function_shared_with_Human_branch_evidence
+  - unauthorized_player_UI_exclusion_checks
+  knowledge_delivery:
+    artifact_types: [SourceNativeTrace, ReadableMechanismGuide, FieldMeaningCard, GameVersionApplicability, RoleConsumptionReceipt]
+    disclosure: hide_internal_native_fields_from_unapproved_ordinary_AI_roles
+  dual_execution_obligation:
+    source_for_route_selection: separate_evidence_for_native_function_and_live_memory_writing
+    readback: observe_actual_game_state_effect_and_related_entities_and_save_persistence_when_applicable
+    route_switch: retain_provenance_and_reason_when_native_backend_not_selected
+dual_track_result_composition:
+  knowledge_system:
+    MechanismKnowledgeCard: [mechanism_id, original_game_explanation, AI_actor_scope, conditions, value_semantics, role_guidance, provenance, allowed_or_unknown_claims]
+    FieldSemanticDictionary: [native_field, game_owner, meaningful_range, unit, game_effect, source, caller_or_consumer, constraints, uncertainty]
+    RoleSpecificMechanicGuide: [role_GM_Coach_Player, supported_decisions, available_actions, warnings, research_state, permissions]
+  execution_system:
+    DomainActionIntent: [action_id, AI_initiator, AI_counterparty, typed_parameters, target_objects, game_context, expected_result, permission_scope]
+    BackendCapability: [native_function_qualification, memory_write_qualification, no_safe_path_rationale, evidentiary_grade, source_build]
+    ExecutionReceipt: [selected_route, selection_reason, exact_authorization, prestate, attempted_action, fresh_poststate, affected_entity_consistency, errors_and_cleanup]
+    dual_contract_rule: Same domain action before/after constraints apply to native and memory backends.
+    forbidden: [letting_LLM_choose_raw_game_addresses, treating_field_writable_as_game_correct, silently_auto_switching_game_controller]
+composition:
+  MechanismAtlas:
+  - BadgeDossier
+  - CoachDossier
+  - TradeDossier
+  EvidenceManifest:
+  - EvidenceAtom
+  - SourceArtifact
+  - NegativeCase
+  - ReviewReceipt
+  PoCResult:
+  - FunctionCandidate
+  - Qualification
+  - ExactAuthorization
+  - ExecutionReceipt
+  - FreshReadback
+  - AffectedStateCheck
+  ArchitectureDecision:
+  - MechanismAtlas
+  - FeasibilityGrades
+  - PriorApprovedExecutionPath
+  - HumanChangeRequest_if_needed
+  boundary: The same evidence/source is referenced, not duplicated as independently observed.
+state_dimensions:
+  proof_level:
+  - UNASSESSED
+  - L0_GUIDE_HYPOTHESIS
+  - L1_NATIVE_TYPE_OR_INSTANCE
+  - L2_STATIC_FUNCTION_BRANCH
+  - L3_SAME_MODE_GAME_BEHAVIOR
+  - L4_AUTHORIZED_CALL_WITH_FRESH_READBACK
+  - L5_PRODUCTION_ACCEPTED_OUT_OF_SCOPE
+  research_disposition:
+  - OPEN
+  - SUPPORTED_TO_SCOPE
+  - REFUTED_TO_SCOPE
+  - BOUNDED_UNKNOWN
+  - NOT_APPLICABLE_TO_THIS_BUILD
+  game_applicability:
+  - UNKNOWN
+  - PC22_OFFLINE_MYLEAGUE_PROVEN
+  - OTHER_MODE_ONLY
+  - OTHER_PLATFORM_ONLY
+  callability:
+  - NOT_EVALUATED
+  - FUNCTION_CANDIDATE_ONLY
+  - CONTEXT_MISSING
+  - PRECONDITIONS_QUALIFIED_FOR_FUTURE_TEST
+  - INFEASIBLE_TO_SCOPE
+  - BOUNDED_UNKNOWN
+  - TESTED_WITH_RECEIPT
+  authorization:
+  - NONE
+  - PROPOSED
+  - EXACT_HUMAN_APPROVED_FOR_SPECIFIC_ACTION
+  - DENIED
+  - EXPIRED
+  execution:
+  - NOT_EXECUTED
+  - STARTED
+  - ABORTED
+  - COMPLETED_REPORTED
+  verification:
+  - NOT_PERFORMED
+  - RAW_SOURCE_PRESENT
+  - FRESH_NATIVE_COMPARISON_PRESENT
+  - AFFECTED_SET_CONSISTENT
+  - MISMATCH_OR_INCOMPLETE
+  independent_review:
+  - PENDING
+  - PARTIAL_LIMITED_REVIEW
+  - ACCEPTED_TO_SCOPE
+  - REJECTED
+  actor_control:
+  - AI_CONTROLLED
+  - HUMAN_CONTROLLED
+  - MIXED_OR_UNKNOWN
+  actor_dispatch:
+  - AI_AUTONOMOUS_INTERNAL
+  - AI_TO_AI_TRANSACTION
+  - SHARED_KERNEL_WITH_PROVEN_AI_CALLSITE
+  - HUMAN_UI_ONLY
+  - AI_HUMAN_INTERACTION
+  - UNKNOWN_NEEDS_TRACE
+  actor_scope_verdict:
+  - AI_PATH_PROVEN_TO_SCOPE
+  - AI_PATH_CANDIDATE
+  - AI_PATH_UNVERIFIED
+  - HUMAN_ONLY_EXCLUDED
+  - CONTROL_FLAG_CONFLICT
+  knowledge_state:
+  - UNDOCUMENTED
+  - RAW_SOURCE_ONLY
+  - FIELD_SEMANTICS_CANDIDATE
+  - MECHANISM_EXPLANATION_EVIDENCED
+  - ROLE_GUIDE_QUALIFIED_TO_SCOPE
+  - BOUNDED_UNKNOWN_VISIBLE_TO_AGENT
+  executor_capability:
+  - UNASSESSED
+  - NATIVE_AI_FUNCTION_QUALIFIED
+  - MEMORY_WRITE_SEMANTICALLY_QUALIFIED
+  - NATIVE_AND_MEMORY_BOTH_QUALIFIED
+  - NEITHER_PATH_SAFE
+  execution_route:
+  - NOT_SELECTED
+  - VERIFIED_NATIVE_FUNCTION
+  - VALIDATED_MEMORY_WRITE
+  - EVIDENCE_QUALIFIED_HYBRID_NOT_DEFAULT
+  - NO_SAFE_PATH
+  P0_task_outcome:
+  - DESIGN_IN_PROGRESS
+  - ENGINEERING_EVIDENCE_PENDING
+  - RESEARCH_EVIDENCE_COMPLETE_PENDING_HUMAN
+  - HUMAN_ACCEPTED_P0_EXIT
+allowed_transitions:
+- from: L0_GUIDE_HYPOTHESIS
+  to: L1_NATIVE_TYPE_OR_INSTANCE
+  requires:
+  - same_build_source
+  - mode_tag
+  - original evidence
+  not_sufficient:
+  - guide_repeated_in_another_project_document
+- from: L1_NATIVE_TYPE_OR_INSTANCE
+  to: L2_STATIC_FUNCTION_BRANCH
+  requires:
+  - original code/reference link
+  - function identity
+  - scoped branch evidence
+  not_sufficient:
+  - field name resembles game rule
+- from: L2_STATIC_FUNCTION_BRANCH
+  to: L3_SAME_MODE_GAME_BEHAVIOR
+  requires:
+  - same-mode game scene
+  - game state observations
+  - consumer or behavioral corroboration
+  not_sufficient:
+  - static xref alone
+- from: PRECONDITIONS_QUALIFIED_FOR_FUTURE_TEST
+  to: TESTED_WITH_RECEIPT
+  requires:
+  - exact Human approval
+  - separate Codex test permission
+  - effect-specific fresh game readback
+  not_sufficient:
+  - approved A-v1 or stage02 result
+- from: STARTED
+  to: ABORTED
+  requires:
+  - failure or stop trigger
+  - retained reason and source
+  not_sufficient: []
+- from: COMPLETED_REPORTED
+  to: AFFECTED_SET_CONSISTENT
+  requires:
+  - new data observation
+  - applicable affected-entity invariants checked
+  not_sufficient:
+  - call return value only
+- from: RESEARCH_EVIDENCE_COMPLETE_PENDING_HUMAN
+  to: HUMAN_ACCEPTED_P0_EXIT
+  requires:
+  - all three scoped dossiers with honest dispositions
+  - architecture matrix
+  - evidence archive
+  - Human explicit P0 exit judgment
+  not_sufficient:
+  - the Codex runner reports done
+dual_executor_transitions:
+- from: FIELD_SEMANTICS_CANDIDATE
+  to: MECHANISM_EXPLANATION_EVIDENCED
+  requires: [PC22_AI_mechanism_provenance, original_game_field_or_function_context, conditions_and_effect_evidence]
+  not_sufficient: project_guide_numeric_assertion
+- from: MECHANISM_EXPLANATION_EVIDENCED
+  to: ROLE_GUIDE_QUALIFIED_TO_SCOPE
+  requires: [source_links, game_mode_and_build, permitted_role_visibility, conditions_and_uncertainty, illustrative_AI_decision_rationale]
+  not_sufficient: raw_decompiler_dump_without_semantic_explanation
+- from: UNASSESSED
+  to: NATIVE_AI_FUNCTION_QUALIFIED
+  requires: [AI_callsite, function_signature, ABI_this_thread_context, complete_business_effect, failure_guards]
+  not_sufficient: function_address_or_fixture_Hook
+- from: UNASSESSED
+  to: MEMORY_WRITE_SEMANTICALLY_QUALIFIED
+  requires: [native_field_identity, real_game_semantic_value_domain, original_mechanism_effect, dependencies_and_cache, validated_write_and_fresh_readback_in_current_scope]
+  not_sufficient: prior_memory_writer_exists_or_field_value_changes
+- from: NATIVE_AI_FUNCTION_QUALIFIED
+  to: VERIFIED_NATIVE_FUNCTION
+  requires: [exact_action_authorization, current_game_build_and_AI_actor_context, independently_tested_game_result]
+  not_sufficient: research_model_permission_or_static_callgraph
+- from: MEMORY_WRITE_SEMANTICALLY_QUALIFIED
+  to: VALIDATED_MEMORY_WRITE
+  requires: [native_not_selected_for_supported_reason, exact_action_authorization, value_and_scope_guards, fresh_poststate_consistency]
+  not_sufficient: generic_Fraida_memory_write_or_no_known_function
+- from: NEITHER_PATH_SAFE
+  to: NO_SAFE_PATH
+  requires: [recorded_native_block_reason, recorded_memory_block_reason, safe_failure_response]
+  not_sufficient: return_success_without_game_change
+actor_controlled_transitions:
+- from: AI_PATH_CANDIDATE
+  to: AI_PATH_PROVEN_TO_SCOPE
+  requires: [same_build_AI_callsite_or_runtime_dispatch, controller_flag_source, evidence_that_no_Human_UI_gate_is_required]
+  does_not_require: human_menu_button_click
+- from: SHARED_KERNEL_WITH_PROVEN_AI_CALLSITE
+  to: PRECONDITIONS_QUALIFIED_FOR_FUTURE_TEST
+  requires: [function_ABI_this_thread, AI_owned_objects, game_state_context, affected_state_scope, no_Human_confirmation, later_exact_Human_permission_for_actual_call]
+- from: AI_PATH_UNVERIFIED
+  to: HUMAN_ONLY_EXCLUDED
+  requires: [actual_evidence_that_function_is_Human_UI_exclusive_for_target_build]
+  not_sufficient: absence_of_AI_trace_in_a_single_static_probe
+rejected_transitions:
+- transition: L1 -> L3/L4 without intermediate game-specific proof
+  failure_code: UNSUPPORTED_MATURITY_PROMOTION
+- transition: fixture traced event -> game original function verified
+  failure_code: FIXTURE_TO_GAME_CONFLATION
+- transition: stored coaching config -> applied game tactic
+  failure_code: PERSISTENCE_IS_NOT_APPLICATION
+- transition: badge effect constants -> natural badge upgrade threshold
+  failure_code: WRONG_MECHANISM
+- transition: MyCAREER or next-generation MyNBA -> PC22 MyLEAGUE game fact
+  failure_code: GAME_MODE_PLATFORM_SCOPE_MISMATCH
+- transition: partial roster state change -> complete trade commit
+  failure_code: INCOMPLETE_TRANSACTION
+- transition: authorized requirement or stage transition -> runtime permission
+  failure_code: MISSING_ACTION_AUTHORIZATION
+- transition: unknown -> proven negative without bounded reason
+  failure_code: ABSENCE_OF_EVIDENCE_AS_REFUTATION
+- transition: same-source archived evidence -> two independent first-hand game confirmations
+  failure_code: SHARED_ORIGIN_DOUBLE_COUNT
+- transition: no actual test -> PoC success
+  failure_code: FALSE_POC_SUCCESS
+- transition: human trader dialog or player confirmation -> AI_AI native trade proof
+  failure_code: HUMAN_UI_PATH_AS_AI_TRANSACTION
+- transition: MyCAREER human badge point rule -> MyLEAGUE AI badge growth
+  failure_code: HUMAN_BADGE_PATH_AS_AI_GROWTH
+- transition: manual coach UI edit -> AI coach selection or game AI consumer
+  failure_code: HUMAN_GAMEPLAN_UI_AS_AI_COACH_FUNCTION
+- transition: shared function -> AI execution without proven AI caller
+  failure_code: SHARED_KERNEL_NO_AI_CALLSITE
+- transition: external AI-model role -> game internal AI flag without verifying game controller state
+  failure_code: UNPROVEN_AI_CONTROLLER_CONTEXT
+- transition: native function not callable -> arbitrary unverified memory patch
+  failure_code: UNVERIFIED_FALLBACK_WRITE
+- transition: field modified -> correct original game decision or full behavior
+  failure_code: FIELD_WRITE_AS_GAMEPLAY_PROOF
+- transition: agent receives reverse engineering address -> direct free-form process memory operation
+  failure_code: UNGUARDED_LLM_NATIVE_MEMORY_CONTROL
+- transition: documented claim without evidence -> agent guideline states verified game rule
+  failure_code: UNSOURCED_AGENT_MECHANISM_KNOWLEDGE
+- transition: native backend result and memory backend result not semantically equivalent -> both marked interchangeable
+  failure_code: BACKEND_SEMANTIC_CONTRACT_MISMATCH
+invariants:
+- id: INV-01
+  assertion: Any game-mechanic factual claim has source ID, first-hand or archived origin, build/mode scope and evidence
+    maturity.
+  on_violation: UNSUPPORTED_CLAIM
+- id: INV-02
+  assertion: Product requirement approval, technical qualification, action authorization, run receipt and independent
+    acceptance are distinct states.
+  on_violation: AUTHORITY_CONFLATION
+- id: INV-03
+  assertion: Missing safe PoC conditions yield NOT_EXECUTED, never PASS; bounded unknown can fulfill an honest research
+    report only with documented attempts and Human acceptance.
+  on_violation: FALSE_SUCCESS
+- id: INV-04
+  assertion: M1 one deep badge/one light comparison and M2 one deep coach offense or defense setting/other side light;
+    M3 original trade validator and commit remain in scope.
+  on_violation: HUMAN_SCOPE_DRIFT
+- id: INV-05
+  assertion: Before claiming a complete original game trade, roster, contract, finance, pick and game-event impact must
+    be traced or each missing part explicitly identified.
+  on_violation: PARTIAL_TRANSACTION_CLAIM
+- id: INV-06
+  assertion: No future path may silently replace Human-approved external trading/signing/draft design without separate
+    change approval.
+  on_violation: SILENT_ARCHITECTURE_CHANGE
+- id: INV-07
+  assertion: Old Codex 52-source manifest is archival; independent confirmation of all 52 checks or same-mode engine
+    behavior must not be inferred.
+  on_violation: EVIDENCE_PROVENANCE_INFLATION
+- id: INV-08
+  assertion: P0 exit and resumption of paused world-data Stage02 require distinct Human acceptance after real evidence
+    work.
+  on_violation: PREMATURE_P0_EXIT
+- id: INV-09
+  assertion: Only actual AI actor or AI-to-AI flows qualify as target native mechanism; Human input/confirmation/editing functions are excluded as execution pathways.
+  on_violation: ACTOR_SCOPE_DRIFT
+- id: INV-10
+  assertion: AI player entity is distinct from a human controller. A function shared with Human UI must have a proven AI callsite before selection.
+  on_violation: CONTROLLER_ROLE_OR_SHARED_KERNEL_CONFLATION
+- id: INV-11
+  assertion: MyCAREER AI-NPC badge growth equivalence to PC22 MyLEAGUE AI player growth is a Human-reported hypothesis, not a verified identical algorithm.
+  on_violation: UNSUPPORTED_CROSS_MODE_AI_EQUIVALENCE
+- id: INV-12
+  assertion: A MyLEAGUE game save's Human-controlled-team engine flag is not overwritten simply because an external GM AI model represents that team.
+  on_violation: UNSANCTIONED_GAME_CONTROLLER_CHANGE
+- id: INV-13
+  assertion: Every useful reversed AI mechanism delivers both a human/model-readable original game rule explanation and evidence with applicability, not only raw addresses or assembly.
+  on_violation: RAW_RE_ONLY_NO_AGENT_KNOWLEDGE
+- id: INV-14
+  assertion: When a safe qualified native AI function exists, choose it ahead of live memory editing; unqualified functions cannot be invoked on priority alone.
+  on_violation: NATIVE_PRIORITY_WITHOUT_SAFETY
+- id: INV-15
+  assertion: Live-memory fallback is only eligible if field semantics, game constraints, dependent state changes, cache and fresh verification are proven for that current build and action.
+  on_violation: BLIND_MEMORY_FALLBACK
+- id: INV-16
+  assertion: Native and memory implementations of one domain action share identical expected business effects and postconditions and both respect precise action authorization.
+  on_violation: DIFFERENT_BUSINESS_SEMANTICS_BY_BACKEND
+- id: INV-17
+  assertion: Without a proven safe native or memory path the action is blocked, not reported as completed; knowledge remains valuable independently of actionability.
+  on_violation: FALSE_EXECUTION_AND_KNOWLEDGE_CONFLATION
+- id: INV-18
+  assertion: Agent guides reveal only role-approved knowledge and typed actions. Internal native data exposed during reverse engineering is not automatically available to ordinary AI roles.
+  on_violation: ROLE_INFORMATION_LEAK
+five_deferred_gaps:
+  GAP-REA02-01:
+    on_future_evidence: M1 real badge upgrade logic and predicate or bounded negative
+    not_blocking_current_B_draft: true
+  GAP-REA02-02:
+    on_future_evidence: M2 actual game tactic consumer and applied state
+    not_blocking_current_B_draft: true
+  GAP-REA02-03:
+    on_future_evidence: M3 validator/commit and cross-entity update
+    not_blocking_current_B_draft: true
+  GAP-REA02-04:
+    on_future_evidence: qualified native call plus explicit Human test approval if feasible
+    not_blocking_current_B_draft: true
+  GAP-REA02-05:
+    on_future_evidence: independent game-mode-specific verification or recorded limitation
+    not_blocking_current_B_draft: true
+acceptance_mapping:
+  SC-REA-01:
+  - RES-REA-01
+  - RES-REA-07
+  SC-REA-02:
+  - RES-REA-01
+  SC-REA-03:
+  - RES-REA-02
+  SC-REA-04:
+  - RES-REA-03
+  SC-REA-05:
+  - RES-REA-04
+  SC-REA-06:
+  - RES-REA-05
+  SC-REA-07:
+  - RES-REA-06
+  SC-REA-08:
+  - RES-REA-07
+dual_track_Human_goal:
+  directive: 03_Human最终目标补充_机制知识与双执行路径_20261027.md
+  first_deliverable: EVIDENCED_AI_GAME_MECHANISM_KNOWLEDGE_USABLE_BY_FUTURE_GM_COACH_PLAYER_MODELS
+  second_deliverable: TYPED_AI_DOMAIN_ACTION_WITH_PROVEN_BACKEND_ROUTING_CONTRACT
+  backend_order: VERIFIED_NATIVE_FUNCTION_THEN_VALIDATED_MEMORY_WRITE_ELSE_NO_SAFE_PATH
+  native_not_callable_outcome: CONTINUE_SEMANTIC_DOCUMENTATION_AND_EVALUATE_PROVEN_MEMORY_BACKEND
+  current_P0_limit: THREE_AI_REPRESENTATIVE_MECHANISMS_ONLY
+  production_API_and_full_mechanism_encyclopedia: LATER_SEPARATE_APPROVED_TASKS
+  raw_native_knowledge_permissions: FILTERED_TO_ROLE_APPROVED
+ai_only_research_boundary:
+  Human_directive: 03_Human机制主体边界裁决_AI与AI优先_20261027.md
+  included_actor_contexts: [AI_PLAYER_GROWTH, AI_COACH_TEAM_STRATEGY, AI_GM_TO_AI_GM_TRADE]
+  excluded_execution_contexts: [HUMAN_MyCAREER_BADGES, HUMAN_COACH_UI_EDITING, HUMAN_GM_CONFIRMATION, AI_TO_HUMAN_TRADE_DIALOG]
+  UI_usage: READ_ONLY_OBSERVATION_WHEN_NECESSARY
+  real_game_Ai_dispatch_verification: PENDING_NEW_CODEX_EVIDENCE
+  game_controller_state_for_user_managed_team: UNKNOWN_NO_AUTO_SWITCH
+  cross_mode_AI_equivalence: HUMAN_REPORTED_HYPOTHESIS_NOT_GAME_PROVEN
+  shared_kernel_rule: PERMITTED_ONLY_WITH_EVIDENCED_AI_CALLSITE
+  existing_APPROVED_A: FROZEN_UNMODIFIED_WITH_NEW_HUMAN_CLARIFICATION_TRACKED_AS_DELTA
+authorization_boundary:
+  stage03_design_permission: true
+  new_Codex_development_task_authorized: false
+  game_operation_authorized: false
+  game_function_invocation_authorized: false
+  master_merge_authorized: false
+B_model_review:
+  Human_exact_version_approval: PENDING_B_V1_RC01
+  independent_review: NOT_RUN
+  formal_stage03_completion: false
+  OS_profile_gate: A_RESULT_COVERAGE_PLUS_GMA_ACH_PLUS_SCHEMAS_PLUS_HUMAN_CONFIRMATION_AND_INDEPENDENT_REVIEW
+
+canonical_result_shape:
+  identity: [task_id, mechanism_id, game_build_sha, mode, AI_actor_control, evidence_snapshot_revision]
+  output_set:
+    - mechanism_atlas_index
+    - selected_AI_badge_knowledge_dossier_with_light_control
+    - selected_AI_coach_knowledge_dossier_with_light_control
+    - AI_AI_trade_validation_and_commit_dossier
+    - conditional_coach_first_native_call_test_dossier_or_NOT_EXECUTED
+    - decision_and_backend_qualification_matrix
+    - pinned_evidence_manifest_and_review
+  reusable_contracts:
+    KnowledgeCard:
+      keys: [mechanism_id, AI_actor_scope, original_game_rule, source_confidence, native_field_meanings, update_triggers, game_effects, examples, not_applicable_or_unknown, role_visibility]
+      content_criterion: >
+        A role model can distinguish the supported game rule, unverified
+        hypothesis, applicable AI actors and whether it may only reason,
+        recommend or submit a typed action. Native RVA dumps alone fail.
+      accepted_readiness: [EVIDENCED, BOUNDED_UNKNOWN_DOCUMENTED, NOT_APPLICABLE_WITH_SUPPORT]
+      unacceptable: [UNSOURCED_NUMERIC_THRESHOLD, CROSS_MODE_MIGRATION_AS_FACT, SECRET_FIELD_TO_ROLE_WITHOUT_PERMISSION]
+    FieldSemantics:
+      keys: [field_id, source_type_or_pointer_lifetime, owning_AI_entity, real_unit_and_enum_domain, read_path, legal_write_scope, consumer_and_refresh, dependent_states, reversible_test_or_safe_abort, original_evidence]
+      constraint: game_semantics_may_be_known_even_when_write_path_is_NOT_QUALIFIED
+    DomainActionIntent:
+      keys: [action_type, initiator_AI, counterparty_AI_or_NONE, game_mode, save_and_scene, target_object_ids, typed_arguments, business_preconditions, expected_affected_set, expected_postconditions, Human_permission_ref]
+      rule: typed_intent_must_not_expose_raw_RVA_or_memory_address_to_external_role_agents
+    BackendProof:
+      native:
+        requires: [AI_callsite, signature_ABI, this_and_object_lifetime, right_thread_and_engine_state, legality_or_business_rules, affected_state_completeness, failure_behavior, action_authorization_if_executed]
+      memory:
+        requires: [real_field_id_and_value_domain, ownership_and_write_window, original_rule_meaning, game_consumer_and_refresh, consistency_updates_and_staleness, game_build_specific_read_write_test, fresh_readback, action_authorization_if_executed]
+      never_claim: fixture_games_are_equivalent_or_stale_save_values_prove_live_effect
+    ResultReceipt:
+      keys: [intent_ref, backend_selected, reason, before_snapshot, actual_call_or_write_status, new_native_snapshot, UI_or_game_behavioral_check_if_applicable, affected_set_comparison, complete_or_block_reason, provenance]
+      invariant: NO_CALL_OR_WRITE_IMPLIES_NOT_EXECUTED_NOT_PASS
+    KnowledgeDistribution:
+      roles: [GM, COACH, PLAYER]
+      visibility_states: [PUBLIC_ROLE_APPROVED, INTERNAL_NATIVE_RESEARCH_ONLY, NOT_YET_VERIFIED]
+      rule: original_native_hidden_fields_are_not_automatically_distributed_to_ordinary_personas
+  no_production_service_in_P0: true
+
+acceptance_criteria_contract:
+  - id: SC-REA-01
+    fulfills: [RES-REA-01, RES-REA-07]
+    success_oracle: 3_distinct_M1_M2_M3_dossiers_each_claim_references_primary_evidence_build_AI_scope_and_UNKNOWN
+    minimum_artifacts: [mechanism_atlas_index, evidence_manifest, three_mechanism_dossiers]
+    positive_case: provenance_lookups_resolve_exact_origin_for_each_mechanism
+    negative_case: unsourced_function_or_threshold_claim_rejected
+    current_verdict: NOT_TESTED_REAL_GAME
+  - id: SC-REA-02
+    fulfills: [RES-REA-01]
+    success_oracle: atlas_distinguishes_guides_native_layouts_functions_AI_callers_gameplay_results_and_platforms
+    minimum_artifacts: [atlas_catalog, per_function_and_claim_provenance, role_KnowledgeCards]
+    positive_case: developer_and_role_agent_can_tell_a_verified_2K22_AI_rule_from_hypothesis
+    negative_case: nextgen_conditional_coaching_as_currentgen_native_implementation_rejected
+    current_verdict: NOT_TESTED_REAL_GAME
+  - id: SC-REA-03
+    fulfills: [RES-REA-02]
+    success_oracle: one_deep_AI_badge_natural_growth_case_and_second_light_control_are_source_bounded
+    minimum_artifacts: [M1_badge_dossier, comparative_badge_lead, source_or_bounded_failure]
+    positive_case: actual_upgrade_threshold_or_trigger_is_reported_only_with_game_specific_branch_or_control
+    negative_case: MyCAREER_human_unlock_and_BADGE_TUNING_effect_are_not_upgrade_conditions
+    current_verdict: NOT_TESTED_REAL_GAME
+  - id: SC-REA-04
+    fulfills: [RES-REA-03]
+    success_oracle: one_AI_offense_or_defense_setting_deep_trace_with_read_vs_setter_vs_consumer_vs_game_effect_and_opposite_side_light_control
+    minimum_artifacts: [M2_coach_dossier, field_meaning_card, consumer_or_bounded_unknown]
+    positive_case: setting_value_and_actual_game_ai_consumption_are_separately evidenced
+    negative_case: historic_Human_UI_value_edit_is_not_proof_of_AI_coach_function
+    current_verdict: NOT_TESTED_REAL_GAME
+  - id: SC-REA-05
+    fulfills: [RES-REA-04]
+    success_oracle: AI_AI_trade_proposal_evaluation_validation_commit_and_affected_state_have_distinct_mechanism_conclusions
+    minimum_artifacts: [M3_transaction_dossier, validator_commit_disposition, side_effect_and_callability_matrix]
+    positive_case: validated_business_commit_or_bounded_infeasibility_unknown_declares_exact_missing_functions
+    negative_case: AI_to_Human_trade_window_and_single_player_team_pointer_are_not_AI_AI_commit
+    current_verdict: NOT_TESTED_REAL_GAME
+  - id: SC-REA-06
+    fulfills: [RES-REA-05]
+    success_oracle: coach_first_1_to_2_conditionally_safe_calls_only_after_Human_exact_authority_or_explicitly_NOT_EXECUTED
+    minimum_artifacts: [G0_G7_gate_receipt, function_candidate_or_block_log, optional_PoC_readback_and_affected_state]
+    positive_case: only_Human_approved_effectful_AI_game_call_with_fresh_consistent_readback_has_PASS
+    negative_case: owned_fixture_success_or_unpermitted_candidate_is_NOT_EXECUTED
+    current_verdict: NOT_TESTED_REAL_GAME
+  - id: SC-REA-07
+    fulfills: [RES-REA-06]
+    success_oracle: mechanism_specific_native_vs_validated_memory_vs_external_simulation_hybrid_vs_no_safe_path_compared_without_silent_product_change
+    minimum_artifacts: [domain_action_contract, backends_capability_matrix, architecture_tradeoff_and_prior_approval_impact]
+    positive_case: choosing_safe_native_or_safe_memory_preserves_same_action_postconditions_and_game_AI_actor
+    negative_case: unsafe_native_fails_over_to_unqualified_memory_is_blocked
+    current_verdict: DESIGN_ONLY_NOT_ENGINEERED
+  - id: SC-REA-08
+    fulfills: [RES-REA-07]
+    success_oracle: raw_evidence_negative_timeouts_cleanup_and_reproducibility_limits_remain_auditable
+    minimum_artifacts: [source_manifest, runtime_or_reason_missing, review_and_cleanup_log]
+    positive_case: reviewer_traces_a_claim_to_unchanged_artifact_and_explicit_shared_origin
+    negative_case: two_reports_from_same_Codex_run_claimed_as_two_independent_live_sources_rejected
+    current_verdict: NOT_INDEPENDENTLY_REVIEWED
+
+failure_and_counterexample_contract:
+  - id: CX-REA-B-01
+    given: MyCAREER_human_badge_points_are_seen_but_no_MyLEAGUE_AI_growth_consumer
+    expected: WRONG_MECHANISM_AND_AI_PATH_UNVERIFIED
+    reject: L3_badge_rule_or_role_knowledge_verified
+    criteria: [SC-REA-03]
+  - id: CX-REA-B-02
+    given: badge_progression_type_has_integer_candidate_named_Progression_without_live_instance
+    expected: L1_FIELD_LAYOUT_ONLY_AND_BOUNDED_UNKNOWN
+    reject: numeric_AI_upgrade_threshold
+    criteria: [SC-REA-02, SC-REA-03]
+  - id: CX-REA-B-03
+    given: manual_coach_UI_setting_writes_and_reads_same_value_but_game_AI_consumer_not_observed
+    expected: PERSISTED_ONLY_OR_BOUND_UNKNOWN_AI_PATH
+    reject: APPLIED_OR_NATIVE_SETTER_VERIFIED
+    criteria: [SC-REA-04]
+  - id: CX-REA-B-04
+    given: traded_player_team_ID_changes_but_contract_salary_picks_or_event_side_effects_not_bounded
+    expected: PARTIAL_TRANSACTION_CLAIM
+    reject: AI_AI_TRADE_COMMITTED
+    criteria: [SC-REA-05]
+  - id: CX-REA-B-05
+    given: candidate_game_trade_function_is_actually_player_confirmation_UI_dispatch
+    expected: HUMAN_UI_ONLY_EXCLUDED
+    reject: AI_AI_FUNCTION_CALLABILITY_QUALIFIED
+    criteria: [SC-REA-05]
+  - id: CX-REA-B-06
+    given: owned_fixture_hook_records_sixteen_calls_but_game_target_false
+    expected: FIXTURE_TO_GAME_CONFLATION
+    reject: GAME_NATIVE_L4
+    criteria: [SC-REA-06]
+  - id: CX-REA-B-07
+    given: callable_signature_and_AI_callsite_but_missing_Human_exact_test_authorization
+    expected: NOT_AUTHORIZED_NOT_EXECUTED
+    reject: PoC_SUCCESS
+    criteria: [SC-REA-06]
+  - id: CX-REA-B-08
+    given: native_function_unqualified_and_memory_field_write_semantics_unqualified
+    expected: NO_SAFE_PATH_WITH_REASON
+    reject: SILENT_MEMORY_FALLBACK
+    criteria: [SC-REA-07]
+  - id: CX-REA-B-09
+    given: both_backends_apparently_respond_but_business_side_effect_sets_differ
+    expected: BACKEND_SEMANTIC_CONTRACT_MISMATCH
+    reject: INTERCHANGEABLE_BACKENDS
+    criteria: [SC-REA-07]
+  - id: CX-REA-B-10
+    given: two_archived_Codex_reports_use_same_source_run
+    expected: SINGLE_ORIGIN_UNRESOLVED
+    reject: INDEPENDENT_LIVE_EVIDENCE_ACCEPTED
+    criteria: [SC-REA-01, SC-REA-08]
+  - id: CX-REA-B-11
+    given: native_current_game_has_Human_controlled_team_flag_even_if_external_AI_GM_claims_control
+    expected: CONTROL_FLAG_CONFLICT_NO_AUTO_SWITCH
+    reject: AI_AI_PATH_PROVEN
+    criteria: [SC-REA-04, SC-REA-05]
+  - id: CX-REA-B-12
+    given: role_guide_contains_internal_native_field_not_approved_for_GM_Coach_Player
+    expected: ROLE_INFORMATION_LEAK_BLOCK_DISTRIBUTION
+    reject: ROLE_GUIDE_QUALIFIED_TO_SCOPE
+    criteria: [SC-REA-02, SC-REA-07]
+  - id: CX-REA-B-13
+    given: game_mechanism_documented_from_real_source_but_neither_executor_backend_proven
+    expected: KNOWLEDGE_CARD_CAN_BE_SOURCE_QUALIFIED_WHILE_ACTION_NO_SAFE_PATH
+    reject: EQUATING_KNOWLEDGE_WITH_EXECUTION_SUCCESS
+    criteria: [SC-REA-02, SC-REA-07]
+  - id: CX-REA-B-14
+    given: affected_set_fresh_readback_mismatch_or_save_persistence_unverified
+    expected: EXECUTED_BUT_UNVERIFIED_OR_FAILED
+    reject: VERIFIED_BUSINESS_ACTION
+    criteria: [SC-REA-06, SC-REA-07]
+
+requirements_and_review_gates:
+  required_result_ids: [RES-REA-01, RES-REA-02, RES-REA-03, RES-REA-04, RES-REA-05, RES-REA-06, RES-REA-07]
+  required_criteria_ids: [SC-REA-01, SC-REA-02, SC-REA-03, SC-REA-04, SC-REA-05, SC-REA-06, SC-REA-07, SC-REA-08]
+  all_human_atomic_Q_decisions: [Q1_B, Q2_A, Q3_A, Q4_A, Q5_A, Q6_B]
+  Human_actor_scope_clarification: AI_ACTORS_AND_AI_TO_AI_ONLY_EXCEPT_READ_ONLY_UI_OBSERVATION
+  Human_knowledge_executor_clarification: GAME_MECHANISM_KNOWLEDGE_NATIVE_SAFE_FIRST_VALIDATED_MEMORY_FALLBACK_NO_SAFE_PATH
+  stage02_Human_judgment: partially_supported
+  future_Codex_native_gaps_explicitly_deferred:
+    - GAP-REA02-01
+    - GAP-REA02-02
+    - GAP-REA02-03
+    - GAP-REA02-04
+    - GAP-REA02-05
+  exact_B_candidate_id: B-v1-RC01
+  exact_Human_B_confirmation: PENDING
+  independently_reviewed: false
+  stage03_model_completed: CANDIDATE_ONLY
+  current_P0_research_completed: false
+  external_Codex_task_dispatch: NOT_GRANTED
+  game_behavior_execution: NOT_AUTHORIZED
+  native_function_call: NOT_AUTHORIZED
+  repository_master_merge: NOT_AUTHORIZED
+  world_data_stage02: PAUSED_NOT_ASSESSED
+  deliberate_non_goals:
+    - mass_reverse_engineer_entire_game_before_P0_exit
+    - implement_full_GM_Coach_Player_personality_systems
+    - implement_production_native_function_adapter_or_complete_GM_write_API_now
+    - treat_unverified_native_AI_paths_as_safe_execution_recommendation

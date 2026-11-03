@@ -1,0 +1,100 @@
+schema_version: nba2k22.rea.stage02.source_platforms.v1
+date: '2026-10-27'
+status: SOURCE_CATALOG_AND_INDEPENDENCE_NOT_ALL_GUIDE_LINKS_OPENED
+sources:
+  - source_id: SRC-REA-01
+    名称: Human批准的REA需求A0-v1和完整需求结果A-v1-RC01
+    地址: 01_os/07_content/_runs/run-20261027-nba2k22-rea-native-mechanism-consensus-001/
+    类型: 内部证据
+    信源可靠性: A
+    可靠性理由: Exact Human approvals bound to immutable A0 and A file blobs; product authorization only
+    发布时间或版本: 2026-10-27_A0_v1_and_A_v1_RC01
+    访问日期: '2026-10-27'
+    检索限制: {索引偏向: product_goals_not_runtime, 返回上限: fixed_docs, 付费墙: 无, 时间覆盖: 2026_10_27, 术语壁垒: Human_product_decisions_not_Native_game_truth}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-02
+    名称: REA官方工具项目
+    地址: https://github.com/morluto/rea
+    类型: 工程代码
+    信源可靠性: A
+    可靠性理由: Official public repository documents tool intended capabilities; availability on Windows depends on backend not repository tool count
+    发布时间或版本: 570abe95f2a35b5c580a5ec2fca90c33d4114bdc
+    访问日期: '2026-10-27'
+    检索限制: {索引偏向: tool_generic_not_2K22_game, 返回上限: targeted_native_investigation_docs, 付费墙: 无, 时间覆盖: fixed_official_tool_commit, 术语壁垒: static_xref_vs_actual_runtime_function_call}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-03
+    名称: Codex暂停REA研究包固定证据与脚本
+    地址: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/commit/b16e69727987f29bff5e2ee31ce82891102ab2d9
+    类型: 内部证据
+    信源可靠性: B
+    可靠性理由: Git-pinned original evidence and source scripts with exact observed results; all claims from one earlier Codex run, no current independent game rerun
+    发布时间或版本: b16e69727987f29bff5e2ee31ce82891102ab2d9
+    访问日期: '2026-10-27'
+    检索限制: {索引偏向: selected_9_growth_types_13_general_types_and_owned_fixtures, 返回上限: 52_declared_files_not_all_rehashed_or_replayed, 付费墙: 无, 时间覆盖: 2026_10_27_paused, 术语壁垒: metadata_type_vs_live_instance_vs_game_function_and_fixture_vs_game}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-04
+    名称: 现有游戏机制知识库和玩家社区原始资料索引
+    地址: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/SOURCES.md
+    类型: 内部证据
+    信源可靠性: B
+    可靠性理由: Versioned original source links with context and prior caveats; many items are community or cross-generation and not direct native game mechanism evidence
+    发布时间或版本: master_7742568ac677b3c16079887463f05e81cb1191ed
+    访问日期: '2026-10-27'
+    检索限制: {索引偏向: cross_platform_and_research_catalog_not_game_exe, 返回上限: only_relevant_index_rows_examined, 付费墙: 未知, 时间覆盖: previous_2026_project_research, 术语壁垒: official_PC22_vs_nextgen_MyNBA_vs_older_MyLEAGUE}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-05
+    名称: 原始项目徽章/交易/教练研究目录与历史工程文档
+    地址: 08_Domain_Applications/Antigravity_GM_Engine/docs/
+    类型: 内部证据
+    信源可靠性: B
+    可靠性理由: Direct Git fixed catalogs and source/profiles; reference claims, real test claims and native effects differ by document and item
+    发布时间或版本: master_7742568ac677b3c16079887463f05e81cb1191ed
+    访问日期: '2026-10-27'
+    检索限制: {索引偏向: selected_badge_R04A_coach_V1_V2_trade_R05B, 返回上限: representative_files_only_not_full_dev29_research, 付费墙: 无, 时间覆盖: 2026_10_17_to_21, 术语壁垒: prior_memory_writer_vs_native_game_setter_and_guide_claim_vs_game_truth}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-06
+    名称: 2K官方PC22操作手册及MyNBA官方说明原始链接
+    地址: https://cdn.2kgames.com/manuals/nba2k22/PC/2KSWIN_NBA2K22_PC_Online_Manual_ENG.pdf
+    类型: 业界官方
+    信源可靠性: A
+    可靠性理由: Official primary game manual identified by previous project catalog; not directly re-fetched by this run
+    发布时间或版本: NBA2K22_PC_2021_guide_link_from_SRC_0004
+    访问日期: NOT_DIRECTLY_ACCESSED_THIS_RUN
+    检索限制: {索引偏向: controls_and_UI_not_native_function_signatures, 返回上限: document_not_reopened, 付费墙: 未知, 时间覆盖: NBA2K22_launch_period, 术语壁垒: official_designed_UI_vs_binary_implementation}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-07
+    名称: Operation Sports Reddit 2KFilmRoom等原始社区研究资料
+    地址: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/SOURCES.md
+    类型: 民间活跃
+    信源可靠性: C
+    可靠性理由: Player reports and specialized guide leads can frame native experiments; exact claims require original thread and platform/mode check, which this run has not re-opened
+    发布时间或版本: many_2K20_to_23_sources_with_platform_scope
+    访问日期: NOT_DIRECTLY_ACCESSED_THIS_RUN
+    检索限制: {索引偏向: MyPLAYER_nextgen_or_older_seasons_may_not_match_PC22_MyLEAGUE, 返回上限: catalogs_only_now, 付费墙: 未知, 时间覆盖: multiple_2020_to_2023, 术语壁垒: badge_effect_vs_upgrade_and_UI_rule_vs_native_execution}
+    可访问性: 模型可直接访问
+  - source_id: SRC-REA-08
+    名称: 未来Codex授权的真实PC22可重放游戏场景与独立核查
+    地址: FUTURE_HUMAN_APPROVED_TEST_SAVE_AND_NATIVE_CAPTURE
+    类型: 内部证据
+    信源可靠性: B
+    可靠性理由: No observation yet; would provide primary same-build runtime evidence when generated
+    发布时间或版本: NOT_AVAILABLE
+    访问日期: NOT_AVAILABLE
+    检索限制: {索引偏向: test_scene_specific, 返回上限: Human_authorization_required, 付费墙: 无, 时间覆盖: future, 术语壁垒: same_mode_same_build_and_effectful_test_vs_production}
+    可访问性: 需人工
+independence_groups:
+  - group: HUMAN_REQUIREMENT_AUTHORITY
+    members: [SRC-REA-01]
+    independence_note: product_goals_not_game_behavior
+  - group: REA_OFFICIAL_TOOL
+    members: [SRC-REA-02]
+    independence_note: REA_feature_list_not_game_proof
+  - group: CODEX_2026_10_27_ONE_RESEARCH_RUN
+    members: [SRC-REA-03]
+    independence_note: handoff_playbook_findings_original_Evidence_all_one_origin
+  - group: PROJECT_OLD_MECHANICS_RESEARCH
+    members: [SRC-REA-04, SRC-REA-05, SRC-REA-06, SRC-REA-07]
+    independence_note: original_official_or_community_item_may_repeat_across_project_docs; count_original_firsthand_source_not_catalogs
+  - group: FUTURE_REAL_GAME
+    members: [SRC-REA-08]
+    independence_note: currently_no_replay_available

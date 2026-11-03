@@ -1,0 +1,71 @@
+{
+  "schema_version": "nba2k22.rea.stage02.static_gate_check.v1",
+  "date": "2026-10-27",
+  "scope": "STATIC_REFERENTIAL_CHECK_ONLY_NOT_FULL_YAML_SCHEMA_PARSER_OR_NATIVE_GAME_RUNTIME_TEST",
+  "source_blobs": [
+    {
+      "path": "02_evidence/00_挖掘目标与领域_v1.yml",
+      "blob": "3f88ee6f214a094ca9552e4fa5162aef6bf258d8"
+    },
+    {
+      "path": "02_evidence/信源清单_v2.yml",
+      "blob": "085f9fc14e515630db2cec0332cf35478748caed"
+    },
+    {
+      "path": "02_evidence/证据索引_v3_原子归一化.yml",
+      "blob": "d16ab7c91d2124d943866e3f070ab304a3963884"
+    },
+    {
+      "path": "02_evidence/可行性判断_v2_停止判定候选.yml",
+      "blob": "36c216429d8ae1a300a6e7b88243e72879f5eda8"
+    },
+    {
+      "path": "01b_需求结果模型_A_v1_RC01_待Human正式确认.yml",
+      "blob": "9bcf28bd2bb3283f61bd79b07ba04b88af721c93"
+    }
+  ],
+  "checks": {
+    "seven_research_questions_unique": true,
+    "twelve_sources_unique": true,
+    "seventeen_atomic_evidence_ids_unique": true,
+    "five_gaps_unique": true,
+    "source_refs_resolved": true,
+    "every_rq_has_evidence": true,
+    "every_success_criterion_has_evidence": true,
+    "entry_count_evidence_grade": true,
+    "entry_count_independence": true,
+    "official_stage02_not_yet_approved": true,
+    "partial_supported_candidate": true,
+    "EIG_stop_only_static_source_search": true,
+    "P0_not_completed": true,
+    "Codex_no_dispatch": true,
+    "correct_approved_A_blob": true
+  },
+  "source_coverage": {
+    "rq": {
+      "RQ-REA-01": 2,
+      "RQ-REA-02": 5,
+      "RQ-REA-03": 3,
+      "RQ-REA-04": 3,
+      "RQ-REA-05": 2,
+      "RQ-REA-06": 2,
+      "RQ-REA-07": 2
+    },
+    "success_criteria": {
+      "SC-REA-01": 1,
+      "SC-REA-02": 2,
+      "SC-REA-03": 5,
+      "SC-REA-04": 3,
+      "SC-REA-05": 3,
+      "SC-REA-06": 2,
+      "SC-REA-07": 2,
+      "SC-REA-08": 1
+    }
+  },
+  "note": "Source-to-success-criterion linkage means the claim informs that criterion; it does not mean the criterion's real-game acceptance passed.",
+  "recommendation": "READY_FOR_HUMAN_STAGE02_PARTIALLY_SUPPORTED_GATE_WITH_FIVE_ESCALATED_NATIVE_GAPS",
+  "official_verdict": "NOT_ASSESSED",
+  "engineer_execution": "NOT_DISPATCHED",
+  "game_runtime": "NOT_OPERATED",
+  "master_integration": "NOT_AUTHORIZED"
+}

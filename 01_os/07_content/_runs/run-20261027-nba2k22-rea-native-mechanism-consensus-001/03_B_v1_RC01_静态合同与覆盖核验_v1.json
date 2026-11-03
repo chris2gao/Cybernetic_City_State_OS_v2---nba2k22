@@ -1,0 +1,99 @@
+{
+  "schema_version": "nba2k22.rea.stage03.B.v1.RC01.static_contract_check.v1",
+  "date": "2026-10-27",
+  "scope": "STATIC_DETERMINISTIC_REFERENTIAL_AND_TEXT_STRUCTURE_CHECK_ONLY; NOT_COMPLETE_YAML_SCHEMA_VALIDATION_OR_NATIVE_GAME_TEST",
+  "sources": [
+    {
+      "file": "NBA2K22_REA_03_完整结果模型_B_v1_RC01_待Human确认.yml",
+      "git_blob": "f711261d00b0df202906992597fdae7b895fcfb0"
+    },
+    {
+      "file": "01b_需求结果模型_A_v1_RC01_待Human正式确认.yml",
+      "git_blob": "9bcf28bd2bb3283f61bd79b07ba04b88af721c93"
+    },
+    {
+      "file": "02_evidence/证据索引_v3_原子归一化.yml",
+      "git_blob": "d16ab7c91d2124d943866e3f070ab304a3963884"
+    },
+    {
+      "file": "03_B_v1_形态分析与ACH冲突审查_v1.md",
+      "git_blob": "d175f04a65a4d3ca224d65d34c001d8f869f0005"
+    }
+  ],
+  "checks": {
+    "approved_A_exact_sha": true,
+    "seven_unique_approved_outputs": true,
+    "eight_unique_approved_criteria": true,
+    "each_result_has_method_basis_knowledge_execution_result_failure": true,
+    "all_criteria_have_result_mappings": true,
+    "all_criteria_have_positive_negative_and_bounded_current_status": true,
+    "fourteen_unique_counterexamples": true,
+    "counterexample_SC_references_resolve": true,
+    "each_SC_has_counterexample": true,
+    "every_evidence_reference_exists": true,
+    "invariants_eighteen_with_failure_code": true,
+    "rejected_transitions_twenty_with_error_code": true,
+    "retains_five_unproved_Native_GAPs": true,
+    "AI_only_execution_scope": true,
+    "MechanismKnowledge_for_GM_Coach_Player": true,
+    "native_memory_no_safe_path_independent": true,
+    "B_not_formally_approved": true,
+    "no_runtime_or_Codex_authority": true
+  },
+  "counts": {
+    "approved_result_objects": 7,
+    "approved_success_criteria": 8,
+    "atomic_evidence_referenced": 17,
+    "counterexample_contracts": 14,
+    "invariants": 18,
+    "blocked_transition_classes": 20,
+    "open_Codex_native_evidence_gaps": 5
+  },
+  "traceability": {
+    "criteria_to_results": {
+      "SC-REA-01": [
+        "RES-REA-01",
+        "RES-REA-07"
+      ],
+      "SC-REA-02": [
+        "RES-REA-01"
+      ],
+      "SC-REA-03": [
+        "RES-REA-02"
+      ],
+      "SC-REA-04": [
+        "RES-REA-03"
+      ],
+      "SC-REA-05": [
+        "RES-REA-04"
+      ],
+      "SC-REA-06": [
+        "RES-REA-05"
+      ],
+      "SC-REA-07": [
+        "RES-REA-06"
+      ],
+      "SC-REA-08": [
+        "RES-REA-07"
+      ]
+    },
+    "criteria_negative_case_counts": {
+      "SC-REA-01": 1,
+      "SC-REA-02": 3,
+      "SC-REA-03": 2,
+      "SC-REA-04": 2,
+      "SC-REA-05": 3,
+      "SC-REA-06": 3,
+      "SC-REA-07": 5,
+      "SC-REA-08": 1
+    }
+  },
+  "limitations": [
+    "does not check proprietary PC22 binary/game process",
+    "does not replace independent reviewer",
+    "does not prove gameplay effects",
+    "does not execute code, native functions or memory writers",
+    "does not mean the eight future Codex acceptance tests already pass"
+  ],
+  "candidate_status": "READY_FOR_HUMAN_AND_INDEPENDENT_DESIGN_REVIEW_NOT_STAGE03_COMPLETED"
+}
