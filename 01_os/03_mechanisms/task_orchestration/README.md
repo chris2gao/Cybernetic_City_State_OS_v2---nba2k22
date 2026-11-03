@@ -58,3 +58,24 @@ WorldData 的 Codex 工程任务 `nba2k22-world-data-full-implementation-01` 在
 ```bash
 python -m pytest 01_os/06_execution/task_orchestration -q
 ```
+
+## Development Loop evidence (opt-in, read-only)
+
+`loop_iteration_schema_v1.json` is the strict per-iteration record. Run the deterministic
+`01_os/06_execution/task_orchestration/big_task/loop_observability.py` against
+an immutable JSONL with `--input LOG --format strict --report DERIVED.json`.
+It reports authority_effect=none and never modifies the source log. Exit codes:
+0 = strict validated; 1 = evidence/validation findings; 3 = malformed input or output error.
+A strict PASS is syntactic and internally consistent; it does not independently verify
+receipt authenticity or replace independent review or Human authorization.
+
+Historical read-only compatibility is `--format legacy_g2_s0` (2026-11-01 four rounds)
+and `--format legacy_season_host` (2026-11-02 eight rounds). `--format auto`
+detects homogeneous logs. Supply `--task-id` and `--source-ref` only as explicit
+provenance from immutable `run.yml`/Git SHA, never as invented original fields.
+Historical PASS/status or test-count assertions without actual exit codes remain
+`LEGACY_EVIDENCE_MISSING`; compatibility is not strict audit acceptance.
+See existing `closure_preflight.py` for the canonical `internal_continuation`,
+`genuine_stop` and lifecycle enums; this CLI creates no parallel stop gate.
+
+Tests: `python -m pytest 01_os/06_execution/task_orchestration -q`.
