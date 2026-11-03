@@ -61,6 +61,7 @@ def test_replay_host_claim_pass_is_not_exit_code():
     ({'actual_test_receipts':[{'test_name':'x','status':'PASS','exit_code':2,'receipt_ref':'07_tests/x.out'}]},'PASS_CONTRADICTS_EXIT_CODE'),
     ({'actual_test_receipts':[{'test_name':'x','status':'FAIL','exit_code':1,'receipt_ref':'07_tests/x.out'}],'outcome':'improvement_verified_in_scope'},'SUCCESS_CLAIM_WITH_FAILED_TEST'),
     ({'outcome':'objective_met_ready_for_series_review','remaining_gaps':[{'id':'g1','status':'OPEN'}]},'OPEN_GAP_CONTRADICTS_OBJECTIVE_MET'),
+    ({'outcome':'objective_met_ready_for_series_review','remaining_gaps':[{'id':'g1','status':'BLOCKED'}]},'OPEN_GAP_CONTRADICTS_OBJECTIVE_MET'),
     ({'independent_review_status':'PASS'},'SELF_DECLARED_INDEPENDENT_REVIEW'),
     ({'protected_actions':[{'action':'merge-master','status':'EXECUTED'}]},'PROTECTED_ACTION_REQUIRES_EXTERNAL_HUMAN_PROOF'),
     ({'lifecycle':'completed'},'LIFECYCLE_NOT_IN_CANONICAL_ENUM'),
