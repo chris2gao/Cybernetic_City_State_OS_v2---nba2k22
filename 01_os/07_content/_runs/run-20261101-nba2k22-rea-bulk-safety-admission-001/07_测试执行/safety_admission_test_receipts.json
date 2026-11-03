@@ -1,0 +1,48 @@
+{
+  "schema_version": "nba2k22.rea.bulk_safety_admission.test_receipts.v1",
+  "task_id": "NBA2K22-REA-BULK-SAFETY-ADMISSION-20261101-001",
+  "actual_execution_model": "Gemini 2.5 Pro (execution)",
+  "timestamp": "2026-11-02T03:26:19Z",
+  "git_head_sha": "a110b21e8cfca1567b50e1b619ed6c17c18ab393",
+  "execution_command": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe -m pytest 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_bulk_executor.py 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_safety_admission.py 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_role_batches.py 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_role_capabilities.py 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_player_stats.py 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_player_editor_read.py -v",
+  "returncode": 0,
+  "duration_seconds": 13.22,
+  "total_tests_collected": 78,
+  "num_passed": 78,
+  "num_failed": 0,
+  "all_tests_passed": true,
+  "test_suites": {
+    "test_bulk_executor.py": 21,
+    "test_safety_admission.py": 18,
+    "test_role_batches.py": 16,
+    "test_role_capabilities.py": 4,
+    "test_player_stats.py": 9,
+    "test_player_editor_read.py": 10
+  },
+  "failure_injection_coverage": [
+    "SAME_INTENT_PRIOR_UNKNOWN",
+    "CROSS_SAVE_IDENTICAL_INTENT_ID",
+    "PRESTART_CLAIM_CRASH",
+    "PARTIAL_RECEIPT_FILE",
+    "DUPLICATE_CHUNK_ID_DIFFERENT_PLAN",
+    "CORRUPT_LOCK_LEDGER",
+    "MISSING_LOCK_INDEX",
+    "APPLIED_ONLY_RECONCILE",
+    "NO_OR_WRONG_DIGEST",
+    "SAME_COUNT_WRONG_RECEIPT_IDS",
+    "FAKE_SUCCESS_MISSING_GETTER_AFTER",
+    "FALSE_UNALTERED_FIELDS",
+    "CHUNK_SUCCESS_WITH_ITEM_FAILURE",
+    "MIXED_ACTION_SINGLE_TEAM",
+    "DEP_CYCLE",
+    "COACH_LIVE_UNSUPPORTED",
+    "UNREQUESTED_STAT_BYTE_CHANGED"
+  ],
+  "environment": {
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.14.6",
+    "node": "v24.22.1",
+    "rea_cli": "6.8.0"
+  },
+  "raw_summary": "============================= 78 passed in 12.30s ============================="
+}

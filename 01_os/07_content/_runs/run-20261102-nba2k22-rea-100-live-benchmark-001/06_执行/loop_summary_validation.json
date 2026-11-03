@@ -1,0 +1,40 @@
+{
+  "schema_version": "nba2k22.rea.loop_summary_validation.v1",
+  "task_id": "NBA2K22-REA-100-LIVE-BENCHMARK-20261102-001",
+  "recomputed_from_raw_log": true,
+  "raw_log_path": "06_执行/loop_iterations.jsonl",
+  "total_effective_iterations": 6,
+  "successful_iterations": 6,
+  "failed_iterations": 0,
+  "actual_executor_model": "Gemini 2.5 Pro (execution)",
+  "stop_reason": "ALL_10_GATES_PASSED_AND_100_ITEM_BENCHMARK_CONFIRMED",
+  "gates_validation": {
+    "G1_frozen_engine_no_refactor": "PASSED_CORE_FILES_UNCHANGED",
+    "G2_live_snapshot_validity": "PASSED_PID_5720_BUILD_AND_COLD_BACKUP_VERIFIED",
+    "G3_100_distinct_targets": "PASSED_100_UNIQUE_PLAYERS_7_TEAMS_FRESH_GETTERS",
+    "G4_single_process_preflight": "PASSED_NO_COMPETING_REA_LOCKS",
+    "G5_synthetic_replay": "PASSED_9_UNIT_TESTS_INCLUDING_FAULT_INJECTION",
+    "G6_live_noop_100_items": "PASSED_100_NOOP_0_SETTERS_1_ATTACH_7_CHUNKS",
+    "G7_real_100_write_once": "PASSED_100_SUCCESS_0_UNKNOWN_1_ATTACH_7_CHUNKS",
+    "G8_strict_automatic_receipt_verification": "PASSED_VALIDATE_STAGE_ALL_CHECKS_HELD",
+    "G9_independent_live_readback": "PASSED_100_OF_100_PERSISTED_IN_GAME_MEMORY",
+    "G10_exact_benchmark_timing": "PASSED_WALL_10_318S_0_10318S_PER_SETTER_31_8X_SPEEDUP"
+  },
+  "metrics_conservation": {
+    "stage1_noop": {
+      "planned": 100,
+      "applied": 0,
+      "noop": 100,
+      "conservation_holds": true
+    },
+    "stage2_mutation": {
+      "planned": 100,
+      "applied": 100,
+      "noop": 0,
+      "conservation_holds": true
+    },
+    "total_planned_items": 200,
+    "total_applied_items": 100,
+    "total_noop_items": 100
+  }
+}

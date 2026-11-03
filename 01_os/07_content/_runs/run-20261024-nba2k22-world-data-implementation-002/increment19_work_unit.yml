@@ -1,0 +1,34 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Add coherent acquisition-time historical queries, complete observation-history
+    paging and last-observed ordered PlayType values without changing stored facts.
+  implementation_or_review_method: >-
+    Freeze eligible committed successful unit IDs at an inclusive timezone-aware
+    cutoff. Reuse existing public queries through read-only temporary projections,
+    gate static identities on visible evidence and bind keyset cursors to their
+    observation ledger. Compare actual results with independent main-database SQL.
+  supportability_rationale: >-
+    Actual data checks cover 19 cutoffs and56 public observation tables with1064
+    direct count comparisons,1124 per-field value/age comparisons and23 latest
+    query equivalences. All4201 attribute observations page completely across17
+    pages; the pre-skill export correctly includes only811 earlier observations.
+    Original database hash and active binding remain unchanged.
+  feasibility_rationale: >-
+    Existing append-only typed data and immutable capture units support temporal
+    views without a migration or database copy. Partial fields keep their original
+    age; native NONE is distinct from an unavailable slot. Scope-bound cursors
+    reject a changed backfill ledger. Complete suite passes139 tests plus smoke.
+  exact_result_or_candidate_ref: f2035751aaef8d352e38ee4a0a678c3e1ada359a
+  verification_evidence:
+    - 06_执行/increment19/actual-observation-history-report.json
+    - 06_执行/increment19/queries/curry-cutoff-2.json
+    - 06_执行/increment19/queries/historical-export-receipt.json
+    - 06_执行/increment19/verification-corrected/operations_report.json
+    - 06_执行/increment19/verification-corrected/tests.stderr.log
+  residual_risk_or_unproved_limits:
+    - Acquisition cutoffs are not native game dates or proof of unobserved event transitions.
+    - Current schema/decoder interpretation and existing identity lifecycle limits remain explicit.
+    - Controlled projections are query functionality, not an ACL for an owner holding the raw database.
+    - Full-season evidence precedes capacity/retention work under current Human direction.
+    - Remaining Native/UI coverage and final independent/Human acceptance remain open.

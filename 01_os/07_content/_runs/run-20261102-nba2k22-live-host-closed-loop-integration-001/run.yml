@@ -1,0 +1,23 @@
+task_id: NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001
+run_id: run-20261102-nba2k22-live-host-closed-loop-integration-001
+branch: task/nba2k22-live-host-closed-loop-integration-20261102
+role: execution
+planner_model: GPT-6
+intended_executor_model: Codex
+actual_executor_model: Gemini 2.5 Pro (execution)
+status: OFFLINE_VERIFIED_AWAITING_HUMAN_LIVE_TRIGGER
+base_rea_outbox_review_sha: 6f3a04fd62368aca261a9f0179e081ffee7be6fb
+worlddata_source_sha: a231708df8255a9f2ccf1087c736325a3f606afb
+worlddata_final_review_sha: 341e9f9395649cf44e93a40093bd4789be47310a
+human_game_participation: true
+pilot_cycles: 4
+cadence_game_days: 7
+season_observation_target_min: 20
+season_observation_target_max: 40
+live_calendar_advance_method: Human manually simulates in-game
+live_native_write_allowed_without_specific_cycle_grant: false
+real_test_save: detected_at_initialization
+master_merge_requested: false
+dispatch_file: 01_任务输入/execution_dispatch.md
+human_trigger_file: 01_任务输入/human_trigger_playbook.md
+verification_file: 01_任务输入/verification_plan.json

@@ -1,0 +1,61 @@
+{
+  "schema_version": "nba2k22.host_integration.source_matrix.v1",
+  "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
+  "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
+  "recorded_at": "2026-11-02T21:11:00Z",
+  "source_integration_policy": {
+    "merge_whole_branch_rejected": true,
+    "rationale": "task/nba2k22-world-data-capture-performance-20261101 diverged prior to calendar_sim_orchestrator.py addition; full merge would destroy calendar orchestrator; selective import of 4 verified optimization modules preserves full architecture and all 20 families.",
+    "source_branch": "task/nba2k22-world-data-capture-performance-20261101",
+    "source_commit": "a231708df8255a9f2ccf1087c736325a3f606afb"
+  },
+  "integrated_modules": {
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/performance_trace.py": {
+      "status": "NEW_IMPORTED",
+      "bytes": 4639,
+      "sha256": "07173bc73f87bb12984f3336ead6bc5f45c99708412abad05418d819365b53c9",
+      "purpose": "Low overhead (<4us) segmented profiler"
+    },
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/engine.py": {
+      "status": "SELECTIVELY_INTEGRATED",
+      "bytes": 18569,
+      "sha256": "c99100d26ceb26b990b66219fb9db6ac5d0da05703dc7f52eddf93dc711d4b36",
+      "purpose": "Safe SQLite executemany batching with type and whitelist validation"
+    },
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_reader.py": {
+      "status": "SELECTIVELY_INTEGRATED",
+      "bytes": 18609,
+      "sha256": "ddce9571fb9463e26c99c7e873443c66159ee94cdf15eae29316a9f3cbd8f1bb",
+      "purpose": "3 coalesced read ranges (80% syscall reduction) + in-memory 192B slicing to isolate bridge bytes"
+    },
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_skill_reader.py": {
+      "status": "SELECTIVELY_INTEGRATED",
+      "bytes": 12522,
+      "sha256": "0d4cb75ed9881b0435c626bc22d908c2ae673eeca9d32b75d12f6130a068e4b0",
+      "purpose": "3 coalesced skill read ranges + in-memory 210B slicing to isolate bridge bytes"
+    }
+  },
+  "preserved_host_components": {
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py": "PRESERVED_INTACT",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py": "PRESERVED_INTACT",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_batches.py": "PRESERVED_INTACT",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_batch_bridge.py": "PRESERVED_INTACT",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py": "PRESERVED_INTACT",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bounded_session_transport.py": "PRESERVED_INTACT"
+  },
+  "verification": {
+    "gate": "G01",
+    "status": "PASS",
+    "tests_run": [
+      "test_player_details.py",
+      "test_player_skills.py",
+      "test_calendar_sim_orchestrator.py",
+      "test_decision_outbox.py",
+      "test_role_batches.py",
+      "test_bulk_executor.py",
+      "test_decision_batch_bridge.py",
+      "test_validate_batch_execution.py"
+    ],
+    "all_passed": true
+  }
+}

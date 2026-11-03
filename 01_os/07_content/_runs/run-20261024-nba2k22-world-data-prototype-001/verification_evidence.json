@@ -1,0 +1,51 @@
+{
+  "schema_version": "nba2k22.world_data_prototype_run_evidence.v1",
+  "task_id": "nba2k22-world-data-prototype-mainline-01",
+  "base_sha": "977890d93210107a87acdce70b528065f82d49d0",
+  "source_branch": "task/nba2k22-world-data-prototype-mainline-20261024",
+  "source_directory": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/",
+  "developer_runtime": "isolated container; Python standard library sqlite3; no user machine or NBA2K22 game interaction",
+  "tests": [
+    {
+      "id": "PYTHON_UNIT",
+      "command": "python -m unittest discover -s .../world_data_prototype/tests -p 'test_*.py' -v",
+      "executed": true,
+      "passed": 11,
+      "failed": 0,
+      "errors": 0,
+      "exit_code": 0
+    },
+    {
+      "id": "SQLITE_SMOKE",
+      "command": "python .../world_data_prototype/cli.py smoke",
+      "executed": true,
+      "exit_code": 0,
+      "output": {
+        "attribute_observations": 2,
+        "box_observations": 2,
+        "capture_units": 2,
+        "foreign_key_errors": 0,
+        "game_count": 1,
+        "save_id": "demo-alpha",
+        "table_count": 16
+      }
+    }
+  ],
+  "verified_source_blobs": {
+    "schema.sql": "6d49e4bba31f77257e6c8e3f89ed77553c9d38c2",
+    "engine.py": "77b0e4fff89ed92e9b9c79fc3a548cf7eae6afbd",
+    "cli.py": "8777771c7cf383490947079381be4c99d289b55b",
+    "tests/test_prototype.py": "85930f66eb44bbac3c657a3d77ba72393ba90b43",
+    "__init__.py": "dc9534fa0ccff58e1f50008a4ff78f616bc5d16c"
+  },
+  "evidence_limits": [
+    "Tests executed in isolated runtime using exact bytes confirmed against published GitHub blobs.",
+    "OS managed_verify was not executed against an authorized full local clone.",
+    "Independent reviewer has not run; no independent PASS is claimed.",
+    "Real NBA2K22 test computer connection was offline. No game process/memory/save accessed.",
+    "Only 16 tables implemented, not full 59-table candidate, no native-verified field values."
+  ],
+  "master_integrated": false,
+  "force_push": false,
+  "production_or_game_write": false
+}

@@ -1,0 +1,952 @@
+{
+  "schema_version": 24,
+  "tables": [
+    {
+      "table": "saves",
+      "domain": "RES-D",
+      "rows": 1,
+      "columns": 7,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one independent game save per SQLite file"
+    },
+    {
+      "table": "seasons",
+      "domain": "RES-L",
+      "rows": 76,
+      "columns": 3,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one save-local season"
+    },
+    {
+      "table": "teams",
+      "domain": "RES-T",
+      "rows": 34,
+      "columns": 4,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "stable save-local team identity"
+    },
+    {
+      "table": "players",
+      "domain": "RES-P",
+      "rows": 461,
+      "columns": 4,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "stable save-local player instance"
+    },
+    {
+      "table": "staff_members",
+      "domain": "RES-C",
+      "rows": 240,
+      "columns": 4,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "save-local staff identity"
+    },
+    {
+      "table": "games",
+      "domain": "RES-G",
+      "rows": 1232,
+      "columns": 7,
+      "public": true,
+      "source": "SEASON_GAME 60-byte candidate",
+      "grain": "one identified season game, not its changing observed state"
+    },
+    {
+      "table": "capture_runs",
+      "domain": "RES-D",
+      "rows": 42,
+      "columns": 9,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one acquisition session"
+    },
+    {
+      "table": "capture_units",
+      "domain": "RES-D",
+      "rows": 42,
+      "columns": 9,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one immutable atomic source consistency unit"
+    },
+    {
+      "table": "source_artifacts",
+      "domain": "RES-D",
+      "rows": 21861,
+      "columns": 8,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one bounded source artifact hash, no public raw bytes"
+    },
+    {
+      "table": "native_fields",
+      "domain": "RES-D",
+      "rows": 2319,
+      "columns": 16,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "versioned source-field mapping metadata"
+    },
+    {
+      "table": "field_gaps",
+      "domain": "RES-D",
+      "rows": 149,
+      "columns": 9,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one unresolved target-field gap or Human exception"
+    },
+    {
+      "table": "fact_conflicts",
+      "domain": "RES-D",
+      "rows": 0,
+      "columns": 7,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one quarantined conflict with an existing fact"
+    },
+    {
+      "table": "team_seasons",
+      "domain": "RES-T",
+      "rows": 332,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "team participation in one season"
+    },
+    {
+      "table": "roster_memberships",
+      "domain": "RES-T",
+      "rows": 3964,
+      "columns": 6,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "observed player team membership; not a transfer event"
+    },
+    {
+      "table": "native_player_sources",
+      "domain": "RES-D",
+      "rows": 40680,
+      "columns": 12,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one PLAYER pool source projection with both native identity fields and optional current canonical match"
+    },
+    {
+      "table": "native_college_observations",
+      "domain": "RES-P",
+      "rows": 644,
+      "columns": 12,
+      "public": true,
+      "source": "Current COLLEGEDATA header/field signature; native name[34], CRC, group, packed raw IDs and high-school flag; no inferred nationality",
+      "grain": "one distinct pointed COLLEGEDATA referent in a capture unit"
+    },
+    {
+      "table": "player_vitals_observations",
+      "domain": "RES-P",
+      "rows": 16602,
+      "columns": 40,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one actual vitals observation"
+    },
+    {
+      "table": "player_attribute_snapshots",
+      "domain": "RES-P",
+      "rows": 9822,
+      "columns": 62,
+      "public": true,
+      "source": "config/memory_field_profile.json",
+      "grain": "one player successful typed attribute family observation"
+    },
+    {
+      "table": "player_tendency_snapshots",
+      "domain": "RES-P",
+      "rows": 9822,
+      "columns": 105,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one player named tendency family observation"
+    },
+    {
+      "table": "player_badge_values",
+      "domain": "RES-P",
+      "rows": 664440,
+      "columns": 12,
+      "public": true,
+      "source": "Current PLAYERDATA field CRCs, all99 base-dispatch cases and BADGE/BADGE_LEVEL enums; legacy research labels remain historical",
+      "grain": "one observed native base badge/boolean flag, canonical or source-only; absence is not unowned"
+    },
+    {
+      "table": "player_play_type_slots",
+      "domain": "RES-P",
+      "rows": 39288,
+      "columns": 8,
+      "public": true,
+      "source": "Current PLAYERDATA.PlayType1..4 and PLAYERDATA_PLAYTYPE enum; ordered source slots, not playbook categories or effect proof",
+      "grain": "one ordered player play type slot"
+    },
+    {
+      "table": "player_contract_observations",
+      "domain": "RES-M",
+      "rows": 9822,
+      "columns": 25,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one actual contract source observation, not inferred signing event"
+    },
+    {
+      "table": "player_health_observations",
+      "domain": "RES-P",
+      "rows": 6780,
+      "columns": 39,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "observed health separate from attribute durability"
+    },
+    {
+      "table": "player_morale_observations",
+      "domain": "RES-P",
+      "rows": 6780,
+      "columns": 18,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "observed native morale/role, not AI personality"
+    },
+    {
+      "table": "player_training_observations",
+      "domain": "RES-P",
+      "rows": 912,
+      "columns": 13,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "observed personal training settings"
+    },
+    {
+      "table": "game_state_observations",
+      "domain": "RES-G",
+      "rows": 8020,
+      "columns": 11,
+      "public": true,
+      "source": "AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance",
+      "grain": "observed status and native score if actually available"
+    },
+    {
+      "table": "game_period_scores",
+      "domain": "RES-G",
+      "rows": 8496,
+      "columns": 6,
+      "public": true,
+      "source": "SEASON_GAME +44..51; OT byte is aggregate, not individually split",
+      "grain": "one team one actual period score observation"
+    },
+    {
+      "table": "team_game_boxes",
+      "domain": "RES-G",
+      "rows": 2124,
+      "columns": 26,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one game team native box observation"
+    },
+    {
+      "table": "player_game_boxes",
+      "domain": "RES-G",
+      "rows": 26400,
+      "columns": 28,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one game player native box observation"
+    },
+    {
+      "table": "playoff_series",
+      "domain": "RES-G",
+      "rows": 0,
+      "columns": 6,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one identified native playoff series"
+    },
+    {
+      "table": "playoff_series_games",
+      "domain": "RES-G",
+      "rows": 0,
+      "columns": 5,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "evidenced series-to-game association"
+    },
+    {
+      "table": "player_season_totals",
+      "domain": "RES-L",
+      "rows": 2580,
+      "columns": 29,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "native cumulative player season totals observation"
+    },
+    {
+      "table": "team_season_totals",
+      "domain": "RES-L",
+      "rows": 90,
+      "columns": 35,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "native cumulative team season observation"
+    },
+    {
+      "table": "staff_team_assignments",
+      "domain": "RES-C",
+      "rows": 720,
+      "columns": 5,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "evidenced actual staff role assignment"
+    },
+    {
+      "table": "staff_contract_observations",
+      "domain": "RES-C",
+      "rows": 720,
+      "columns": 5,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one staff contract observation"
+    },
+    {
+      "table": "staff_skill_observations",
+      "domain": "RES-C",
+      "rows": 720,
+      "columns": 10,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one staff typed skill family observation"
+    },
+    {
+      "table": "coach_preferences",
+      "domain": "RES-C",
+      "rows": 90,
+      "columns": 6,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one coach preferences observation"
+    },
+    {
+      "table": "team_tactic_settings",
+      "domain": "RES-C",
+      "rows": 90,
+      "columns": 31,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one team actual tactics settings observation"
+    },
+    {
+      "table": "team_playbook_slots",
+      "domain": "RES-C",
+      "rows": 6120,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one ordered actual team playbook entry"
+    },
+    {
+      "table": "team_training_settings",
+      "domain": "RES-C",
+      "rows": 60,
+      "columns": 12,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one team actual training settings"
+    },
+    {
+      "table": "mentorship_relations",
+      "domain": "RES-C",
+      "rows": 122,
+      "columns": 10,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "observed actual mentor association"
+    },
+    {
+      "table": "team_finance_observations",
+      "domain": "RES-M",
+      "rows": 90,
+      "columns": 15,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "native financial snapshot, not external CBA inference"
+    },
+    {
+      "table": "native_team_finance_observations",
+      "domain": "RES-M",
+      "rows": 30,
+      "columns": 67,
+      "public": true,
+      "source": "CURRENT_NATIVE_TEAMDATA_SIGNED_UNSIGNED_FLOAT_ENUM; same-unit game_mode_observations; no derived cap-space/profit/legal-spending assertion",
+      "grain": "one typed Native core TEAM finance projection; observation season is context, not accounting coverage"
+    },
+    {
+      "table": "team_lineup_observations",
+      "domain": "RES-T",
+      "rows": 30,
+      "columns": 20,
+      "public": true,
+      "source": "CURRENT_NATIVE_TEAMDATA_POINTER_ARRAYS_DIMENSIONS_FLAGS_AND_CUSTOM_NAME",
+      "grain": "one Native global lineup/control context for a core team"
+    },
+    {
+      "table": "native_player_rotation_observations",
+      "domain": "RES-P",
+      "rows": 3390,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one public Native PLAYER rotation field pair, independent of a current lineup"
+    },
+    {
+      "table": "team_rotation_slots",
+      "domain": "RES-T",
+      "rows": 390,
+      "columns": 11,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role"
+    },
+    {
+      "table": "team_lineup_slots",
+      "domain": "RES-T",
+      "rows": 1200,
+      "columns": 8,
+      "public": true,
+      "source": "CURRENT_NATIVE TEAMDATA named PLAYERDATA pointer arrays; actual pointer addresses remain restricted artifacts",
+      "grain": "one slot in each complete Native named five-player TEAM lineup"
+    },
+    {
+      "table": "team_advanced_rotation_slots",
+      "domain": "RES-T",
+      "rows": 7200,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values"
+    },
+    {
+      "table": "native_staff_sources",
+      "domain": "RES-C",
+      "rows": 1470,
+      "columns": 25,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one COACHDATA descriptor slot with current source identity and independently qualified role/pointer/status observations"
+    },
+    {
+      "table": "native_staff_profile_observations",
+      "domain": "RES-C",
+      "rows": 1470,
+      "columns": 93,
+      "public": true,
+      "source": "CURRENT_NATIVE_COACHDATA_PUBLIC_FIELDS; no growth/max-grade or annual SeasonStats acquisition",
+      "grain": "one complete public Native staff profile field family; source-only identities retained"
+    },
+    {
+      "table": "native_staff_tactic_observations",
+      "domain": "RES-C",
+      "rows": 1470,
+      "columns": 87,
+      "public": true,
+      "source": "CURRENT_NATIVE_COACHDATA_PUBLIC_FIELDS; no growth/max-grade or annual SeasonStats acquisition",
+      "grain": "one complete public Native staff tactics field family; source-only identities retained"
+    },
+    {
+      "table": "native_staff_team_slots",
+      "domain": "RES-C",
+      "rows": 240,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one of eight complete current core TEAM.Coach_Internal pointer slots, including missing/unmatched references"
+    },
+    {
+      "table": "native_staff_history_subjects",
+      "domain": "RES-H",
+      "rows": 1470,
+      "columns": 8,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one annual staff descriptor identity, independent of ordinary staff acquisition"
+    },
+    {
+      "table": "native_current_coach_stat_observations",
+      "domain": "RES-C",
+      "rows": 2940,
+      "columns": 19,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one staff source with exactly position0 Native increment-target reference and current win/loss observation, independent of annual history"
+    },
+    {
+      "table": "native_coach_stat_observations",
+      "domain": "RES-H",
+      "rows": 217,
+      "columns": 12,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one referenced COACHSTATDATA bank row observed in an annual staff history source"
+    },
+    {
+      "table": "native_staff_stat_links",
+      "domain": "RES-H",
+      "rows": 58800,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one of40 independent signed Native COACHDATA.SeasonStats references, including rejected indices"
+    },
+    {
+      "table": "team_state_observations",
+      "domain": "RES-T",
+      "rows": 90,
+      "columns": 5,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one team observed native chemistry/fan state"
+    },
+    {
+      "table": "market_state_observations",
+      "domain": "RES-M",
+      "rows": 6780,
+      "columns": 29,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "native or external market state with explicit origin"
+    },
+    {
+      "table": "external_transaction_events",
+      "domain": "RES-M",
+      "rows": 0,
+      "columns": 8,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "explicit completed external transaction, never roster-diff inference"
+    },
+    {
+      "table": "draft_pick_assets",
+      "domain": "RES-M",
+      "rows": 300,
+      "columns": 6,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one actual draft pick identity"
+    },
+    {
+      "table": "transaction_components",
+      "domain": "RES-M",
+      "rows": 0,
+      "columns": 10,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one evidenced external transaction component"
+    },
+    {
+      "table": "draft_pick_ownerships",
+      "domain": "RES-M",
+      "rows": 600,
+      "columns": 10,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "observed or explicit event-backed pick ownership"
+    },
+    {
+      "table": "draft_prospects",
+      "domain": "RES-M",
+      "rows": 0,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one named prospect source observation, separate from PLAYER instance"
+    },
+    {
+      "table": "draft_pool_slot_observations",
+      "domain": "RES-M",
+      "rows": 180,
+      "columns": 8,
+      "public": true,
+      "source": "ROSTERDATA Slot4 count/pointer, 1264-byte public template excluding Potential; allocated slots are not necessarily people",
+      "grain": "one actual draft-pool slot observation, including uninitialized slots"
+    },
+    {
+      "table": "draft_prospect_attribute_snapshots",
+      "domain": "RES-P",
+      "rows": 0,
+      "columns": 58,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one named prospect public attribute observation"
+    },
+    {
+      "table": "draft_prospect_tendency_snapshots",
+      "domain": "RES-P",
+      "rows": 0,
+      "columns": 51,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one named prospect registered tendency observation"
+    },
+    {
+      "table": "draft_prospect_play_type_slots",
+      "domain": "RES-P",
+      "rows": 0,
+      "columns": 5,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one named prospect ordered native play-type observation"
+    },
+    {
+      "table": "waived_salary_observations",
+      "domain": "RES-M",
+      "rows": 444,
+      "columns": 13,
+      "public": true,
+      "source": "ROSTERDATA Slot61 stride136; TEAM pointer+8; candidate inline UTF16 surname+56/given+96",
+      "grain": "one observed 136-byte native waived-salary source record; not an inferred release event"
+    },
+    {
+      "table": "draft_results",
+      "domain": "RES-M",
+      "rows": 0,
+      "columns": 8,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "actual source-backed draft result"
+    },
+    {
+      "table": "worldline_config_versions",
+      "domain": "RES-S",
+      "rows": 0,
+      "columns": 6,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "versioned desired configuration, never actual game state"
+    },
+    {
+      "table": "game_setting_observations",
+      "domain": "RES-S",
+      "rows": 1092,
+      "columns": 14,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one actual native setting word with typed value and qualified semantics"
+    },
+    {
+      "table": "startup_config_checks",
+      "domain": "RES-S",
+      "rows": 0,
+      "columns": 6,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "desired-vs-observed configuration check"
+    },
+    {
+      "table": "league_rule_observations",
+      "domain": "RES-L",
+      "rows": 70,
+      "columns": 9,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one actual season rule observation, not external business policy"
+    },
+    {
+      "table": "native_league_history_observations",
+      "domain": "RES-H",
+      "rows": 6769,
+      "columns": 26,
+      "public": true,
+      "source": "ROSTER Slot41 + current LEAGUEHISTORYDATA metadata; archived roster history, world occurrence not inferred",
+      "grain": "one native 152-byte league history slot per acquisition"
+    },
+    {
+      "table": "season_award_instances",
+      "domain": "RES-H",
+      "rows": 764,
+      "columns": 9,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "actual source-recorded awarded honor; scope and finality basis explicit; leaders are not winners"
+    },
+    {
+      "table": "award_recipients",
+      "domain": "RES-H",
+      "rows": 2315,
+      "columns": 9,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one source-recorded award recipient, canonical or inline historical identity"
+    },
+    {
+      "table": "native_social_message_observations",
+      "domain": "RES-H",
+      "rows": 8000,
+      "columns": 38,
+      "public": false,
+      "source": "CURRENT_NATIVE.FRANCHISE.SocialMedia; generic parameters/text remain owner-only until rendered UI semantics verified",
+      "grain": "one native social-message bank slot, including inactive storage"
+    },
+    {
+      "table": "native_transaction_observations",
+      "domain": "RES-M",
+      "rows": 500,
+      "columns": 13,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one allocated native transaction slot, not an accepted external execution"
+    },
+    {
+      "table": "native_transaction_item_observations",
+      "domain": "RES-M",
+      "rows": 19500,
+      "columns": 6,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one native transaction parameter storage slot"
+    },
+    {
+      "table": "native_award_matrix_observations",
+      "domain": "RES-H",
+      "rows": 75,
+      "columns": 5,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one current franchise award matrix cell, not a final award"
+    },
+    {
+      "table": "native_league_capture_controls",
+      "domain": "RES-D",
+      "rows": 3,
+      "columns": 12,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one source mode and allocator/count observations per acquisition"
+    },
+    {
+      "table": "season_record_entries",
+      "domain": "RES-H",
+      "rows": 138080,
+      "columns": 25,
+      "public": true,
+      "source": "ROSTERDATA Slot39; actual native getter count/pointer/52-byte stride, research field semantics",
+      "grain": "one observed native record-book slot; source subjects and historical scopes need separate identity proof"
+    },
+    {
+      "table": "external_execution_receipts",
+      "domain": "RES-D",
+      "rows": 0,
+      "columns": 8,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "external executor report, not proof of readback"
+    },
+    {
+      "table": "external_readback_checks",
+      "domain": "RES-D",
+      "rows": 0,
+      "columns": 6,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "separate observed readback reconciliation"
+    },
+    {
+      "table": "native_identity_links",
+      "domain": "RES-D",
+      "rows": 922,
+      "columns": 8,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one versioned native ID to actual save-local entity link"
+    },
+    {
+      "table": "player_restricted_observations",
+      "domain": "RES-P",
+      "rows": 0,
+      "columns": 6,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "restricted external-storage metadata; raw Potential never in world facts"
+    },
+    {
+      "table": "game_news_entries",
+      "domain": "RES-H",
+      "rows": 2562,
+      "columns": 8,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one source-observed native news item observation"
+    },
+    {
+      "table": "season_finalizations",
+      "domain": "RES-D",
+      "rows": 0,
+      "columns": 5,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "explicit evidenced season closure boundary"
+    },
+    {
+      "table": "native_box_observations",
+      "domain": "RES-D",
+      "rows": 27522,
+      "columns": 27,
+      "public": false,
+      "source": "UNKNOWN",
+      "grain": "one captured Box row before canonical player identity is proven"
+    },
+    {
+      "table": "game_source_checks",
+      "domain": "RES-G",
+      "rows": 4928,
+      "columns": 45,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one current game-header check and explicit Box acquisition/reuse decision"
+    },
+    {
+      "table": "season_calendar_observations",
+      "domain": "RES-L",
+      "rows": 3,
+      "columns": 25,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one observed SEASON calendar/period and native schedule-control window"
+    },
+    {
+      "table": "game_mode_observations",
+      "domain": "RES-L",
+      "rows": 9,
+      "columns": 28,
+      "public": true,
+      "source": "CURRENT_NATIVE.GAMEMODE public24-byte prefix; repeated pointer/vtable/getter controls; no method invocation",
+      "grain": "one Native GAMEMODE public prefix and verified current-stat selector observation"
+    },
+    {
+      "table": "native_player_stat_observations",
+      "domain": "RES-H",
+      "rows": 19916,
+      "columns": 49,
+      "public": true,
+      "source": "CURRENT_NATIVE_PLAYERSTATDATA_48_BYTE_FIELDS; raw award fields are not fabricated final award instances",
+      "grain": "one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate"
+    },
+    {
+      "table": "native_player_stat_links",
+      "domain": "RES-H",
+      "rows": 172890,
+      "columns": 7,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position"
+    },
+    {
+      "table": "gameplan_observations",
+      "domain": "RES-C",
+      "rows": 1740,
+      "columns": 21,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one stored owner/opponent GAMEPLAN observation; commit flag is not game-effect proof"
+    },
+    {
+      "table": "gameplan_rotation_observations",
+      "domain": "RES-C",
+      "rows": 40020,
+      "columns": 9,
+      "public": true,
+      "source": "GAMEPLAN +6, 23 four-byte entries; canonical link only to exact current own roster UID",
+      "grain": "one stored plan ordered rotation entry, including sentinel slots"
+    },
+    {
+      "table": "gameplan_defense_observations",
+      "domain": "RES-C",
+      "rows": 40020,
+      "columns": 28,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one stored plan defensive row, including empty sentinel rows"
+    },
+    {
+      "table": "player_training_slot_observations",
+      "domain": "RES-P",
+      "rows": 1572,
+      "columns": 10,
+      "public": true,
+      "source": "UNKNOWN",
+      "grain": "one profile-bounded training slot; window capacity is not active player count"
+    },
+    {
+      "table": "mentor_manager_observations",
+      "domain": "RES-C",
+      "rows": 60,
+      "columns": 8,
+      "public": true,
+      "source": "training.json franchise manager +0x132A8 first12 bytes; owner/count plausibility separate from effect",
+      "grain": "one observed mentorship header per current franchise team"
+    },
+    {
+      "table": "native_mentor_relation_observations",
+      "domain": "RES-C",
+      "rows": 122,
+      "columns": 10,
+      "public": true,
+      "source": "training.json relation entry204 first24 bytes; badge slots not read",
+      "grain": "one native mentorship relation header before canonical/effect claims"
+    }
+  ],
+  "domains": {
+    "RES-D": {
+      "tables": 14,
+      "columns": 143,
+      "rows": 93541
+    },
+    "RES-L": {
+      "tables": 6,
+      "columns": 129,
+      "rows": 2828
+    },
+    "RES-T": {
+      "tables": 8,
+      "columns": 68,
+      "rows": 13240
+    },
+    "RES-P": {
+      "tables": 16,
+      "columns": 450,
+      "rows": 760513
+    },
+    "RES-C": {
+      "tables": 19,
+      "columns": 397,
+      "rows": 98434
+    },
+    "RES-G": {
+      "tables": 8,
+      "columns": 134,
+      "rows": 51200
+    },
+    "RES-M": {
+      "tables": 14,
+      "columns": 225,
+      "rows": 38246
+    },
+    "RES-H": {
+      "tables": 12,
+      "columns": 203,
+      "rows": 411858
+    },
+    "RES-S": {
+      "tables": 3,
+      "columns": 26,
+      "rows": 1092
+    }
+  }
+}

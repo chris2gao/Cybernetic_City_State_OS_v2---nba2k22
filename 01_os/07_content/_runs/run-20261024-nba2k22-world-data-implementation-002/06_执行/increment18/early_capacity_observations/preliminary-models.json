@@ -1,0 +1,541 @@
+{
+  "status": "PROJECTIONS_NOT_100_SEASON_EXECUTION",
+  "annual_policy_source": "cadence.ANNUAL_FAMILIES; Human annual history/award instruction",
+  "excluded_superseded_bootstrap_sources": [
+    "BOUND_GAME_PLAYER_WORLD"
+  ],
+  "models": {
+    "20": {
+      "status": "LINEAR_FIXED_POPULATION_PROJECTION_NOT_EXECUTED_100_SEASON_TEST",
+      "years": 100,
+      "source_calls_per_season": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 20,
+        "BOUND_CORE_ORGANIZATION": 20,
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 1,
+        "BOUND_NATIVE_HONOR_STATS": 1,
+        "BOUND_NATIVE_MARKET_SOURCES": 20,
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 20,
+        "BOUND_PLANNING_AND_TRAINING": 20,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 20,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 20,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 20,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 20,
+        "BOUND_RECORD_BOOK": 1,
+        "BOUND_SETTINGS_AND_RULES": 20
+      },
+      "estimated_additional_database_bytes": 685904304463.6792,
+      "estimated_total_database_bytes": 686459521359.6792,
+      "recorded_raw_artifact_bytes_at_same_frequencies": 711208383600,
+      "tables": {
+        "award_recipients": {
+          "additional_rows": 231500,
+          "estimated_additional_allocated_bytes": 125337600.0
+        },
+        "capture_runs": {
+          "additional_rows": 20300,
+          "estimated_additional_allocated_bytes": 13858133.333333332
+        },
+        "capture_units": {
+          "additional_rows": 20300,
+          "estimated_additional_allocated_bytes": 27716266.666666664
+        },
+        "coach_preferences": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 40960000.0
+        },
+        "draft_pick_ownerships": {
+          "additional_rows": 600000,
+          "estimated_additional_allocated_bytes": 311296000.0
+        },
+        "draft_pool_slot_observations": {
+          "additional_rows": 180000,
+          "estimated_additional_allocated_bytes": 81920000.0
+        },
+        "game_news_entries": {
+          "additional_rows": 2562000,
+          "estimated_additional_allocated_bytes": 1507328000.0
+        },
+        "game_period_scores": {
+          "additional_rows": 3808000,
+          "estimated_additional_allocated_bytes": 1741674041.8410041
+        },
+        "game_setting_observations": {
+          "additional_rows": 1092000,
+          "estimated_additional_allocated_bytes": 720896000.0
+        },
+        "game_state_observations": {
+          "additional_rows": 2464000,
+          "estimated_additional_allocated_bytes": 1129579133.8199513
+        },
+        "gameplan_defense_observations": {
+          "additional_rows": 40020000,
+          "estimated_additional_allocated_bytes": 23281664000.0
+        },
+        "gameplan_observations": {
+          "additional_rows": 1740000,
+          "estimated_additional_allocated_bytes": 712704000.0
+        },
+        "gameplan_rotation_observations": {
+          "additional_rows": 40020000,
+          "estimated_additional_allocated_bytes": 21274624000.0
+        },
+        "league_rule_observations": {
+          "additional_rows": 70000,
+          "estimated_additional_allocated_bytes": 65536000.0
+        },
+        "market_state_observations": {
+          "additional_rows": 6780000,
+          "estimated_additional_allocated_bytes": 5259264000.0
+        },
+        "mentor_manager_observations": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 57344000.0
+        },
+        "mentorship_relations": {
+          "additional_rows": 122000,
+          "estimated_additional_allocated_bytes": 81920000.0
+        },
+        "native_award_matrix_observations": {
+          "additional_rows": 7500,
+          "estimated_additional_allocated_bytes": 3686400.0
+        },
+        "native_box_observations": {
+          "additional_rows": 12340000,
+          "estimated_additional_allocated_bytes": 6224267320.852163
+        },
+        "native_college_observations": {
+          "additional_rows": 644000,
+          "estimated_additional_allocated_bytes": 344064000.0
+        },
+        "native_identity_links": {
+          "additional_rows": 46100,
+          "estimated_additional_allocated_bytes": 21504000.0
+        },
+        "native_league_capture_controls": {
+          "additional_rows": 2100,
+          "estimated_additional_allocated_bytes": 17203200.0
+        },
+        "native_league_history_observations": {
+          "additional_rows": 676900,
+          "estimated_additional_allocated_bytes": 321945600.0
+        },
+        "native_mentor_relation_observations": {
+          "additional_rows": 122000,
+          "estimated_additional_allocated_bytes": 81920000.0
+        },
+        "native_player_sources": {
+          "additional_rows": 27459000,
+          "estimated_additional_allocated_bytes": 11269324800.0
+        },
+        "native_player_stat_links": {
+          "additional_rows": 8475000,
+          "estimated_additional_allocated_bytes": 4745625600.0
+        },
+        "native_player_stat_observations": {
+          "additional_rows": 977300,
+          "estimated_additional_allocated_bytes": 345907200.0
+        },
+        "native_social_message_observations": {
+          "additional_rows": 8000000,
+          "estimated_additional_allocated_bytes": 3751936000.0
+        },
+        "native_transaction_item_observations": {
+          "additional_rows": 19500000,
+          "estimated_additional_allocated_bytes": 10330112000.0
+        },
+        "native_transaction_observations": {
+          "additional_rows": 500000,
+          "estimated_additional_allocated_bytes": 188416000.0
+        },
+        "player_attribute_snapshots": {
+          "additional_rows": 7602000,
+          "estimated_additional_allocated_bytes": 5484876477.029279
+        },
+        "player_badge_values": {
+          "additional_rows": 664440000,
+          "estimated_additional_allocated_bytes": 515055615999.99994
+        },
+        "player_contract_observations": {
+          "additional_rows": 7602000,
+          "estimated_additional_allocated_bytes": 4936388829.326351
+        },
+        "player_game_boxes": {
+          "additional_rows": 12266000,
+          "estimated_additional_allocated_bytes": 6938639018.070712
+        },
+        "player_health_observations": {
+          "additional_rows": 6780000,
+          "estimated_additional_allocated_bytes": 4587520000.0
+        },
+        "player_morale_observations": {
+          "additional_rows": 6780000,
+          "estimated_additional_allocated_bytes": 5005312000.0
+        },
+        "player_play_type_slots": {
+          "additional_rows": 30408000,
+          "estimated_additional_allocated_bytes": 17040177054.986908
+        },
+        "player_season_totals": {
+          "additional_rows": 738000,
+          "estimated_additional_allocated_bytes": 421792744.1860465
+        },
+        "player_tendency_snapshots": {
+          "additional_rows": 7602000,
+          "estimated_additional_allocated_bytes": 5633116381.813854
+        },
+        "player_training_observations": {
+          "additional_rows": 912000,
+          "estimated_additional_allocated_bytes": 442368000.0
+        },
+        "player_training_slot_observations": {
+          "additional_rows": 1572000,
+          "estimated_additional_allocated_bytes": 573440000.0
+        },
+        "player_vitals_observations": {
+          "additional_rows": 14382000,
+          "estimated_additional_allocated_bytes": 12734703036.754051
+        },
+        "roster_memberships": {
+          "additional_rows": 1744000,
+          "estimated_additional_allocated_bytes": 746914616.3522013
+        },
+        "season_award_instances": {
+          "additional_rows": 76400,
+          "estimated_additional_allocated_bytes": 42188800.0
+        },
+        "season_record_entries": {
+          "additional_rows": 6904000,
+          "estimated_additional_allocated_bytes": 4738048000.0
+        },
+        "source_artifacts": {
+          "additional_rows": 10895100,
+          "estimated_additional_allocated_bytes": 4122402615.899334
+        },
+        "staff_contract_observations": {
+          "additional_rows": 480000,
+          "estimated_additional_allocated_bytes": 237568000.0
+        },
+        "staff_skill_observations": {
+          "additional_rows": 480000,
+          "estimated_additional_allocated_bytes": 229376000.0
+        },
+        "staff_team_assignments": {
+          "additional_rows": 480000,
+          "estimated_additional_allocated_bytes": 262144000.0
+        },
+        "team_finance_observations": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 57344000.0
+        },
+        "team_game_boxes": {
+          "additional_rows": 952000,
+          "estimated_additional_allocated_bytes": 464990259.41422594
+        },
+        "team_playbook_slots": {
+          "additional_rows": 4080000,
+          "estimated_additional_allocated_bytes": 1540096000.0
+        },
+        "team_season_totals": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 65536000.0
+        },
+        "team_seasons": {
+          "additional_rows": 128000,
+          "estimated_additional_allocated_bytes": 87381333.33333333
+        },
+        "team_state_observations": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 57344000.0
+        },
+        "team_tactic_settings": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 57344000.0
+        },
+        "team_training_settings": {
+          "additional_rows": 60000,
+          "estimated_additional_allocated_bytes": 40960000.0
+        },
+        "waived_salary_observations": {
+          "additional_rows": 444000,
+          "estimated_additional_allocated_bytes": 221184000.0
+        }
+      },
+      "excluded_costs": [
+        "population/draft/retirement and season/identity registry growth",
+        "future fields/text/identity transitions",
+        "B-tree allocation changes",
+        "backup retention policy and temporary recovery copies",
+        "raw artifact compression/retention changes and missing source byte counts",
+        "query/write latency extrapolation"
+      ],
+      "capacity_pass": false,
+      "human_resource_budget": "NOT_SPECIFIED"
+    },
+    "40": {
+      "status": "LINEAR_FIXED_POPULATION_PROJECTION_NOT_EXECUTED_100_SEASON_TEST",
+      "years": 100,
+      "source_calls_per_season": {
+        "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS": 40,
+        "BOUND_CORE_ORGANIZATION": 40,
+        "BOUND_LEAGUE_HISTORY_AND_AWARDS": 1,
+        "BOUND_NATIVE_HONOR_STATS": 1,
+        "BOUND_NATIVE_MARKET_SOURCES": 40,
+        "BOUND_NATIVE_NEWS_AND_TRANSACTIONS": 40,
+        "BOUND_PLANNING_AND_TRAINING": 40,
+        "BOUND_PLAYER_AFFILIATION_CLASSIFICATION": 40,
+        "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES": 40,
+        "BOUND_PLAYER_VITALS_HEALTH_MORALE": 40,
+        "BOUND_PUBLIC_PLAYER_SKILLS": 40,
+        "BOUND_RECORD_BOOK": 1,
+        "BOUND_SETTINGS_AND_RULES": 40
+      },
+      "estimated_additional_database_bytes": 1361321874962.631,
+      "estimated_total_database_bytes": 1361877091858.631,
+      "recorded_raw_artifact_bytes_at_same_frequencies": 1412721623600,
+      "tables": {
+        "award_recipients": {
+          "additional_rows": 231500,
+          "estimated_additional_allocated_bytes": 125337600.0
+        },
+        "capture_runs": {
+          "additional_rows": 40300,
+          "estimated_additional_allocated_bytes": 27511466.666666664
+        },
+        "capture_units": {
+          "additional_rows": 40300,
+          "estimated_additional_allocated_bytes": 55022933.33333333
+        },
+        "coach_preferences": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 81920000.0
+        },
+        "draft_pick_ownerships": {
+          "additional_rows": 1200000,
+          "estimated_additional_allocated_bytes": 622592000.0
+        },
+        "draft_pool_slot_observations": {
+          "additional_rows": 360000,
+          "estimated_additional_allocated_bytes": 163840000.0
+        },
+        "game_news_entries": {
+          "additional_rows": 5124000,
+          "estimated_additional_allocated_bytes": 3014656000.0
+        },
+        "game_period_scores": {
+          "additional_rows": 7616000,
+          "estimated_additional_allocated_bytes": 3483348083.6820083
+        },
+        "game_setting_observations": {
+          "additional_rows": 2184000,
+          "estimated_additional_allocated_bytes": 1441792000.0
+        },
+        "game_state_observations": {
+          "additional_rows": 4928000,
+          "estimated_additional_allocated_bytes": 2259158267.6399026
+        },
+        "gameplan_defense_observations": {
+          "additional_rows": 80040000,
+          "estimated_additional_allocated_bytes": 46563328000.0
+        },
+        "gameplan_observations": {
+          "additional_rows": 3480000,
+          "estimated_additional_allocated_bytes": 1425408000.0
+        },
+        "gameplan_rotation_observations": {
+          "additional_rows": 80040000,
+          "estimated_additional_allocated_bytes": 42549248000.0
+        },
+        "league_rule_observations": {
+          "additional_rows": 140000,
+          "estimated_additional_allocated_bytes": 131072000.0
+        },
+        "market_state_observations": {
+          "additional_rows": 13560000,
+          "estimated_additional_allocated_bytes": 10518528000.0
+        },
+        "mentor_manager_observations": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 114688000.0
+        },
+        "mentorship_relations": {
+          "additional_rows": 244000,
+          "estimated_additional_allocated_bytes": 163840000.0
+        },
+        "native_award_matrix_observations": {
+          "additional_rows": 7500,
+          "estimated_additional_allocated_bytes": 3686400.0
+        },
+        "native_box_observations": {
+          "additional_rows": 24680000,
+          "estimated_additional_allocated_bytes": 12448534641.704327
+        },
+        "native_college_observations": {
+          "additional_rows": 1288000,
+          "estimated_additional_allocated_bytes": 688128000.0
+        },
+        "native_identity_links": {
+          "additional_rows": 46100,
+          "estimated_additional_allocated_bytes": 21504000.0
+        },
+        "native_league_capture_controls": {
+          "additional_rows": 4100,
+          "estimated_additional_allocated_bytes": 33587200.0
+        },
+        "native_league_history_observations": {
+          "additional_rows": 676900,
+          "estimated_additional_allocated_bytes": 321945600.0
+        },
+        "native_mentor_relation_observations": {
+          "additional_rows": 244000,
+          "estimated_additional_allocated_bytes": 163840000.0
+        },
+        "native_player_sources": {
+          "additional_rows": 54579000,
+          "estimated_additional_allocated_bytes": 22399522133.333332
+        },
+        "native_player_stat_links": {
+          "additional_rows": 8475000,
+          "estimated_additional_allocated_bytes": 4745625600.0
+        },
+        "native_player_stat_observations": {
+          "additional_rows": 977300,
+          "estimated_additional_allocated_bytes": 345907200.0
+        },
+        "native_social_message_observations": {
+          "additional_rows": 16000000,
+          "estimated_additional_allocated_bytes": 7503872000.0
+        },
+        "native_transaction_item_observations": {
+          "additional_rows": 39000000,
+          "estimated_additional_allocated_bytes": 20660224000.0
+        },
+        "native_transaction_observations": {
+          "additional_rows": 1000000,
+          "estimated_additional_allocated_bytes": 376832000.0
+        },
+        "player_attribute_snapshots": {
+          "additional_rows": 15204000,
+          "estimated_additional_allocated_bytes": 10969752954.058558
+        },
+        "player_badge_values": {
+          "additional_rows": 1328880000,
+          "estimated_additional_allocated_bytes": 1030111231999.9999
+        },
+        "player_contract_observations": {
+          "additional_rows": 15204000,
+          "estimated_additional_allocated_bytes": 9872777658.652702
+        },
+        "player_game_boxes": {
+          "additional_rows": 24532000,
+          "estimated_additional_allocated_bytes": 13877278036.141424
+        },
+        "player_health_observations": {
+          "additional_rows": 13560000,
+          "estimated_additional_allocated_bytes": 9175040000.0
+        },
+        "player_morale_observations": {
+          "additional_rows": 13560000,
+          "estimated_additional_allocated_bytes": 10010624000.0
+        },
+        "player_play_type_slots": {
+          "additional_rows": 60816000,
+          "estimated_additional_allocated_bytes": 34080354109.973816
+        },
+        "player_season_totals": {
+          "additional_rows": 1476000,
+          "estimated_additional_allocated_bytes": 843585488.372093
+        },
+        "player_tendency_snapshots": {
+          "additional_rows": 15204000,
+          "estimated_additional_allocated_bytes": 11266232763.627708
+        },
+        "player_training_observations": {
+          "additional_rows": 1824000,
+          "estimated_additional_allocated_bytes": 884736000.0
+        },
+        "player_training_slot_observations": {
+          "additional_rows": 3144000,
+          "estimated_additional_allocated_bytes": 1146880000.0
+        },
+        "player_vitals_observations": {
+          "additional_rows": 28764000,
+          "estimated_additional_allocated_bytes": 25469406073.508102
+        },
+        "roster_memberships": {
+          "additional_rows": 3488000,
+          "estimated_additional_allocated_bytes": 1493829232.7044027
+        },
+        "season_award_instances": {
+          "additional_rows": 76400,
+          "estimated_additional_allocated_bytes": 42188800.0
+        },
+        "season_record_entries": {
+          "additional_rows": 6904000,
+          "estimated_additional_allocated_bytes": 4738048000.0
+        },
+        "source_artifacts": {
+          "additional_rows": 21785100,
+          "estimated_additional_allocated_bytes": 8242875533.737972
+        },
+        "staff_contract_observations": {
+          "additional_rows": 960000,
+          "estimated_additional_allocated_bytes": 475136000.0
+        },
+        "staff_skill_observations": {
+          "additional_rows": 960000,
+          "estimated_additional_allocated_bytes": 458752000.0
+        },
+        "staff_team_assignments": {
+          "additional_rows": 960000,
+          "estimated_additional_allocated_bytes": 524288000.0
+        },
+        "team_finance_observations": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 114688000.0
+        },
+        "team_game_boxes": {
+          "additional_rows": 1904000,
+          "estimated_additional_allocated_bytes": 929980518.8284519
+        },
+        "team_playbook_slots": {
+          "additional_rows": 8160000,
+          "estimated_additional_allocated_bytes": 3080192000.0
+        },
+        "team_season_totals": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 131072000.0
+        },
+        "team_seasons": {
+          "additional_rows": 256000,
+          "estimated_additional_allocated_bytes": 174762666.66666666
+        },
+        "team_state_observations": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 114688000.0
+        },
+        "team_tactic_settings": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 114688000.0
+        },
+        "team_training_settings": {
+          "additional_rows": 120000,
+          "estimated_additional_allocated_bytes": 81920000.0
+        },
+        "waived_salary_observations": {
+          "additional_rows": 888000,
+          "estimated_additional_allocated_bytes": 442368000.0
+        }
+      },
+      "excluded_costs": [
+        "population/draft/retirement and season/identity registry growth",
+        "future fields/text/identity transitions",
+        "B-tree allocation changes",
+        "backup retention policy and temporary recovery copies",
+        "raw artifact compression/retention changes and missing source byte counts",
+        "query/write latency extrapolation"
+      ],
+      "capacity_pass": false,
+      "human_resource_budget": "NOT_SPECIFIED"
+    }
+  }
+}

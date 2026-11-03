@@ -1,0 +1,33 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Trace Native staff-history storage consumers and expose evidence-backed
+    position/NextFree marker annotations with selective reference-position queries.
+  implementation_or_review_method: >-
+    Inspect bounded callers and fragmented Native read/add/write, allocation and
+    clear routines; verify9 exact code windows plus current stat/manager metadata
+    using a fresh read-only game handle. Compare all58800 stored reference rows
+    and217 resolved records through paged queries, CLI and observation cutoffs.
+  supportability_rationale: >-
+    Native code fixes the increment target at position0, visits positions0..38
+    in the clear path, and writes/checks NextFree65535 around free-list removal
+    and insertion. These storage roles do not establish calendar years, phase,
+    career totals, free-list reachability or historical subject ownership.
+  feasibility_rationale: >-
+    Reuse the existing v23 facts without schema migration or annual resampling.
+    Decoder-qualified annotations remain separate from raw columns and preserve
+    NULL years and original times.265 tests/SQLite smoke pass; the actual database
+    SHA stays exact and all40 existing successful units remain untouched.
+  exact_result_or_candidate_ref: d118dd8edaa683f792acfe8bf3e9d283de82d42a
+  verification_evidence:
+    - 06_执行/increment33/verification/operations_report.json
+    - 06_执行/increment33/native-code-proof.json
+    - 06_执行/increment33/worker-terminal.json
+    - 06_执行/increment33/actual-query-report.json
+    - 06_执行/increment33/queries/actual-cli-position-0-as-of.json
+  residual_risk_or_unproved_limits:
+    - Calendar year/phase/finalization and chronological meanings of positions remain UNKNOWN.
+    - Untouched position39 is not established as career totals or any other special category.
+    - NextFree marker equality does not prove free-list reachability or historical ownership.
+    - Static caller discovery is bounded and does not claim exhaustive Native control-flow coverage.
+    - Full-source coverage, full-season capacity and independent/Human acceptance remain open.

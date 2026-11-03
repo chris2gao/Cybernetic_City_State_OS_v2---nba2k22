@@ -1,0 +1,30 @@
+task_id: NBA2K22-VAE-NATIVE-METRIC-HARDENING-S0-20261101-001
+run_id: run-20261101-nba2k22-vae-native-metric-hardening-s0-001
+domain: nba2k22
+role: execution
+engineering_owner: Codex
+native_research_contributor: Gemini_optional_Human_relay
+lifecycle: completed
+branch: task/nba2k22-vae-native-metric-hardening-s0-20261101
+exact_base_sha: 3fdc1b3ae3870785fb8a070a9225382b01c529d4
+source_baseline_kind: candidate_WorldData_branch_not_master
+objective: "Repair material native-stat provenance and ID drift, finish a bounded WorldData Reader validation loop, then produce read-only VAE S0 pilot readiness."
+task_packet_ref: 01_任务输入/task_packet.json
+execution_dispatch_ref: 01_任务输入/execution_dispatch.md
+verification_plan_ref: 01_任务输入/verification_plan.json
+evidence_reconciliation_ref: 02_证据/critical_finding_reconciliation.md
+coverage_ref: 06_执行/accepted38_metric_coverage.json
+provenance_matrix_ref: 06_执行/native_capture_provenance_matrix.json
+pilot_readiness_ref: 06_执行/pilot_s0_data_readiness.json
+loop_log_ref: 06_执行/loop_increment_log.md
+checks_ref: 07_测试执行/reproducible_hardening_checks.json
+completion_ref: 08_结论/completion_pointer.md
+review_schedule:
+  review_mode: deferred_to_series
+  series_id: NBA2K22-VAE-SETTING-GAME-DATA-FEEDBACK
+  must_review_before: automatic_setting_adjustment_or_protected_master_integration
+  downstream_consumption: candidate_only
+game_write: NOT_AUTHORIZED
+save_write: NOT_AUTHORIZED
+model_autotuning: NOT_AUTHORIZED
+master_merge: NOT_AUTHORIZED
