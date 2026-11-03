@@ -59,3 +59,11 @@ Thumbs.db
 local_offline_archive/
 local_offline_archives/
 offline_worlddata_archive/
+
+# Auto-generated bulk query exports are local-only; small deterministic tests/fixtures
+# remain eligible for explicitly authorized commits outside raw 'queries' directories.
+**/06_执行/**/queries/*.json
+**/06_执行/**/queries/*.jsonl
+**/06_执行/**/queries/*.jsonl.gz
+**/06_执行/**/native_sources/*.jsonl
+**/06_执行/**/native_sources/*.jsonl.gz
