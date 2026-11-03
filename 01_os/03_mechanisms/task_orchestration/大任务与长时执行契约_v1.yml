@@ -227,3 +227,23 @@ review_boundary:
   executor_is_own_independent_reviewer: prohibited
   author_designs_own_verification: prohibited
   authority_ref: AGENT_WORKING_DISCIPLINE.md
+
+# Explicit opt-in: deterministic, read-only evidence accounting for development Loop.
+# This is not Workflow, PRMS, a runtime scheduler, or an authorization engine.
+loop_observability:
+  schema_version: core.development_loop.iteration.v1
+  schema_ref: 01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json
+  validator: 01_os/06_execution/task_orchestration/big_task/loop_observability.py
+  raw_jsonl_immutable: true
+  summary_derived_and_recomputable: true
+  allowed_modes:
+    - strict
+    - legacy_g2_s0
+    - legacy_season_host
+  legacy_missing_evidence: LEGACY_EVIDENCE_MISSING
+  independently_accepted_by_executor: false
+  protected_action_authority_effect: none
+  workflow_state_transition_authority_effect: none
+  evidence_driven_iteration_ref: evidence_driven_iteration
+  stop_classification_ref: closure_preflight
+  review_schedule_authority_ref: 01_os/开发入口与单窗口任务规范_v1.md#9
