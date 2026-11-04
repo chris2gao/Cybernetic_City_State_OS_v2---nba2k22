@@ -24,7 +24,7 @@ task_packet:
     - 01_os/06_execution/tools/rea/**
     - 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/**
   verification_plan: 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/verification_plan.json
-  required_tests: [workflow, project_context, rea, prms, static, task_loop]
+  required_tests: [workflow_prms, project_context, rea, static, task_loop]
   prohibitions: [merge_master, rewrite_history, other_domains, auto_install, elevate, game_attach, game_write, new_service, legacy_stage01_compatibility]
   required_completion_pointer: exact Core and NBA PR heads, managed verification and independent review inputs
   big_task: true

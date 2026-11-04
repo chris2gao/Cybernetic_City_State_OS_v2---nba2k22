@@ -2,10 +2,9 @@
   "schema_version": "citystate.verification_plan.v1",
   "task_packet": "01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/task_packet.yml",
   "checks": [
-    {"id":"workflow","argv":["@python","-B","-X","utf8","-m","pytest","01_os/06_execution/workflow/minimum_operational_loop","-q","-p","no:cacheprovider"],"timeout_seconds":600,"expected_exit_code":0},
+    {"id":"workflow_prms","argv":["@python","-B","-X","utf8","01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/verify_workflow_prms.py"],"timeout_seconds":1200,"expected_exit_code":0},
     {"id":"project_context","argv":["@python","-B","-X","utf8","-m","pytest","01_os/06_execution/task_discipline/project_context","-q","-p","no:cacheprovider"],"timeout_seconds":90,"expected_exit_code":0},
     {"id":"rea","argv":["@python","-B","-X","utf8","-m","pytest","01_os/06_execution/tools/rea","-q","-p","no:cacheprovider"],"timeout_seconds":90,"expected_exit_code":0},
-    {"id":"prms","argv":["@python","-B","-X","utf8","-m","pytest","01_os/06_execution/boot/context_management/prms/tests","-q","-p","no:cacheprovider"],"timeout_seconds":900,"expected_exit_code":0},
     {"id":"static","argv":["@python","-B","-X","utf8","01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py","static",".","--json-output"],"timeout_seconds":90,"expected_exit_code":0},
     {"id":"task_loop","argv":["@python","-B","-X","utf8","-m","pytest","01_os/06_execution/task_orchestration/big_task","-q","-p","no:cacheprovider"],"timeout_seconds":120,"expected_exit_code":0}
   ]
