@@ -4,6 +4,8 @@
 
 先读取项目基线和实际任务包，再从模块注册表选择相关模块。交接记录采用精确源码 SHA、影响模块、验证范围和未解缺口。修改模块时同步索引与对应记录。
 
+启动时记录 `affected_module_ids`、`source_refs_read` 和实际基线。代码变化所在 PR 同步更新本页及相关模块记录，附测试证据和剩余缺口。已有 Core 的 project_context 工具可检查对应候选。来源规则见 [PR #18 的固定同步合同](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/094f1aa641f93dec2277707ad9dbf5bdb0341247/08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_INDEX_SYNC_CONTRACT_V1.md)。
+
 [机器可读模块注册表](docs/development/PROJECT_MODULE_REGISTRY_V2.json) · [REA 领域 Profile 与操作说明](research/rea_core_profile/README.md)
 
 | 模块 | 责任 | 入口状态 |
