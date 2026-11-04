@@ -1,0 +1,66 @@
+{
+  "candidate": "31b5c2edcbad3c4840e2ff2c6621ad20a030b72a",
+  "plan_sha256": "8d6fb41b3403f44c8e44ee3ed05a1110c720744dacdd9ebaacf3332423e9e5ab",
+  "scope": "executor verification of the pinned source",
+  "checks": [
+    {
+      "command": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/verify_python_suites.py"
+      ],
+      "id": "python_suites",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793779277809825900,
+      "elapsed_seconds": 421.3450475999998,
+      "stdout_sha256": "d286c26d73b16300f165af2bc512ea8d326f2fb252189590f1b0c2a455254e70",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "python_suites.stdout.bin",
+      "stderr": "python_suites.stderr.bin",
+      "observed_summary": [
+        "workflow exit_code=0",
+        "48 passed, 155 subtests passed in 301.46s (0:05:01)",
+        "prms exit_code=0",
+        "77 passed in 418.18s (0:06:58)",
+        "task_loop exit_code=0",
+        "86 passed in 1.16s",
+        "project_context exit_code=0",
+        "10 passed in 8.66s",
+        "rea exit_code=0",
+        "10 passed, 2 subtests passed in 4.93s"
+      ]
+    },
+    {
+      "command": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+        "static",
+        ".",
+        "--json-output"
+      ],
+      "id": "static",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793779279779095700,
+      "elapsed_seconds": 1.6578045999995084,
+      "stdout_sha256": "5ea6828bebb625d92fd82851329b9e441c9c2e22dcbf075926ada84556a77faf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "static.stdout.bin",
+      "stderr": "static.stderr.bin",
+      "observed_summary": [
+        "{\"command\": \"static\", \"exit_code\": 0, \"findings\": []}"
+      ]
+    }
+  ],
+  "independent_review": "PENDING"
+}
