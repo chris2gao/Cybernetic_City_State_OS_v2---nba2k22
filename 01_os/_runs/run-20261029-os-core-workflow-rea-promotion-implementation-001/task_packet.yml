@@ -13,16 +13,16 @@ task_packet:
     - AGENT_WORKING_DISCIPLINE.md
     - 01_os/README.md
     - 01_os/开发入口与单窗口任务规范_v1.md
-    - 01_os/01_workflow/
-    - 01_os/02_boot/workflow_minimum_operational_loop/
-    - 01_os/03_mechanisms/context_management/
-    - 01_os/03_mechanisms/task_orchestration/
-    - 01_os/04_skills_and_tools/
-    - 01_os/05_registry/
-    - 01_os/06_execution/workflow/
-    - 01_os/06_execution/task_discipline/
-    - 01_os/06_execution/tools/rea/
-    - 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/
+    - 01_os/01_workflow/**
+    - 01_os/02_boot/workflow_minimum_operational_loop/**
+    - 01_os/03_mechanisms/context_management/**
+    - 01_os/03_mechanisms/task_orchestration/**
+    - 01_os/04_skills_and_tools/**
+    - 01_os/05_registry/**
+    - 01_os/06_execution/workflow/**
+    - 01_os/06_execution/task_discipline/**
+    - 01_os/06_execution/tools/rea/**
+    - 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/**
   verification_plan: 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/verification_plan.json
   required_tests: [workflow, project_context, rea, prms, static, task_loop]
   prohibitions: [merge_master, rewrite_history, other_domains, auto_install, elevate, game_attach, game_write, new_service, legacy_stage01_compatibility]
