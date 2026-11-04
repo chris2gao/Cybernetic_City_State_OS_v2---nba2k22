@@ -2,7 +2,7 @@ task_packet:
   task_id: OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001
   repository: chris2gao/Cybernetic_City_State_OS_v2---core
   risk_tier: T2_semantic
-  exact_base_sha: e075cdf288a765b7bfd2f4891c8f384404da16e1
+  exact_base_sha: d463b83c74c17d74cacf64c4d82e4abce5004b75
   branch: task/os-core-workflow-rea-promotion-20261029
   objective: Implement S1-S3 and S5 of the approved unified Workflow, development practice and optional REA upgrade; NBA S4 stays domain-owned.
   source_evidence:
@@ -24,7 +24,7 @@ task_packet:
     - 01_os/06_execution/tools/rea/
     - 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/
   verification_plan: 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/verification_plan.json
-  required_tests: [workflow, project_context, rea, prms, static, joint_domain]
+  required_tests: [workflow, project_context, rea, prms, static, task_loop]
   prohibitions: [merge_master, rewrite_history, other_domains, auto_install, elevate, game_attach, game_write, new_service, legacy_stage01_compatibility]
   required_completion_pointer: exact Core and NBA PR heads, managed verification and independent review inputs
   big_task: true
@@ -38,7 +38,7 @@ task_packet:
     publication_transport: local_git
     source_branch_publication: task_scope_default
     master_integration_confirmation: not_requested
-    expected_remote_master_head: e075cdf288a765b7bfd2f4891c8f384404da16e1
+    expected_remote_master_head: d463b83c74c17d74cacf64c4d82e4abce5004b75
   executor_profile:
     provider: OpenAI
     surface: codex_desktop
