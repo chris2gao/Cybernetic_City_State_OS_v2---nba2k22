@@ -2,8 +2,8 @@
 
 任务 `OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001`，S4 与 S5 跨仓静态验证。
 
-- NBA 基线 `45cc45cae0550ddcda192a2179ea48509b27f6ee`，测试源 `6cf71b771c24fc7bd7622680c9d16c4f208deae3`。
-- Core 测试源 `c5d181ffdd53212468cece1ca3a84be28a6212ae`，实际适配器固定到 `a668307405df1f932008ba27be073654878bb577`，适配器字节与 Core 测试源相同。
+- NBA 基线 `45cc45cae0550ddcda192a2179ea48509b27f6ee`，测试源 `228abf11fc15d34a0a3d71813581adc6797ef58d`。
+- Core 测试源 `f083ae685764e88e6f522cc91f2c58b7a33ee99f`，实际适配器固定到 `a668307405df1f932008ba27be073654878bb577`，适配器字节与 Core 测试源相同。
 - 来源为 PR #18 Draft `094f1aa641f93dec2277707ad9dbf5bdb0341247` 和 PR #26 源码候选 `aee5a9109ea5cd0a5c7bc4adb750c64a1603afec`。前者提供能力、绑定与历史逐例记录，后者提供业务 facade、Bulk、Outbox 的定位。
 
 交付包含项目索引、P03/P09 模块记录、领域 Profile 和可执行桥。桥校验静态工具的版本、目标 SHA256、读窗口和回执输出哈希。动作目录覆盖 62 项动作、38 项绑定及 12 组读取资料，保留原例证据分级。
