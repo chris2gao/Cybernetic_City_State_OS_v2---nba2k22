@@ -1,0 +1,35 @@
+{
+  "schema_version": "nba2k22.rea_core_profile.v1",
+  "domain_id": "nba2k22",
+  "task_id": "OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001",
+  "affected_module_ids": ["P03", "P09"],
+  "target": {
+    "mode": "PC NBA2K22 offline MyLEAGUE",
+    "sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "core": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+    "commit": "a668307405df1f932008ba27be073654878bb577",
+    "adapter_path": "01_os/06_execution/tools/rea/adapter.py",
+    "expected_rea_version": "6.8.0",
+    "static_operation": "inspect-byte-entropy",
+    "read_window_bytes": 4096
+  },
+  "native_research": {
+    "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
+    "publication_status": "PR18_DRAFT_SOURCE",
+    "directory": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control",
+    "action_catalog": "data/action_registry.json",
+    "binding_catalog": "data/native_bindings.json",
+    "read_catalog": "data/read_catalog.json",
+    "effect_evidence": "data/native_live_validation.json"
+  },
+  "native_executor_candidate": {
+    "commit": "aee5a9109ea5cd0a5c7bc4adb750c64a1603afec",
+    "publication_status": "PR26_SOURCE_ONLY_CANDIDATE",
+    "facade": "facade.py",
+    "bulk": "bulk_executor.py",
+    "outbox": "decision_outbox.py",
+    "dispatch_authorized_by_profile": false
+  }
+}
