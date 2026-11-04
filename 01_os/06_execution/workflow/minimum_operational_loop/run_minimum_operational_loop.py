@@ -130,6 +130,49 @@ def requirement_findings(payload:dict,artifact_version:int)->list[str]:
         covered_questions.update(qs)
     if seen!=set(criterion_ids) or covered_questions!=question_ids:return ["stage1_coverage_complete"]
     return []
+
+def evidence_findings(payload:dict,requirement:dict)->list[str]:
+    """Separate feasibility support from background and preserve exact source scope."""
+    import re
+    def text(v):return isinstance(v,str) and bool(v.strip())
+    def strings(v):return isinstance(v,list) and all(text(x) for x in v)
+    sources=payload.get("sources");claims=payload.get("claims")
+    if not isinstance(sources,list) or not sources or not all(isinstance(s,dict) for s in sources):return ["stage2_sources"]
+    source_ids=set()
+    for source in sources:
+        sid=source.get("source_id");ref=source.get("source_ref")
+        if not text(sid) or sid in source_ids or not isinstance(ref,dict):return ["stage2_source_identity"]
+        source_ids.add(sid)
+        if "repository" in ref:
+            if (not text(ref["repository"]) or not isinstance(ref.get("commit"),str)
+                    or re.fullmatch(r"[0-9a-f]{40}",ref["commit"]) is None or not text(ref.get("path"))):
+                return ["stage2_exact_source_ref"]
+        elif not all(text(ref.get(f)) for f in ("url","version","observed_at")):
+            return ["stage2_external_source_ref"]
+        if source.get("publication_status") not in {"MASTER_INCLUDED","SOURCE_BRANCH_NOT_MASTER","EXTERNAL_VERSIONED_SOURCE"}:
+            return ["stage2_source_publication_status"]
+    if not isinstance(claims,list) or not claims or not all(isinstance(c,dict) for c in claims):return ["stage2_claims"]
+    item_ids={x["result_item_id"] for x in requirement["requirement_result_A"]["result_items"]}
+    criteria={x["criterion_id"] for x in requirement["success_criteria"]}
+    kinds={"STATIC_SOURCE","OFFLINE_TEST","LIVE_TOOL_CALL","LIVE_TARGET_EFFECT","INDEPENDENT_REVIEW","UNKNOWN","BACKGROUND_REFERENCE"}
+    claim_ids=set();covered_items=set()
+    for claim in claims:
+        cid=claim.get("claim_id")
+        if not text(cid) or cid in claim_ids:return ["stage2_claim_identity"]
+        claim_ids.add(cid)
+        if claim.get("evidence_kind") not in kinds or claim.get("purpose") not in {"FEASIBILITY","BACKGROUND"}:
+            return ["stage2_evidence_classification"]
+        if not text(claim.get("limits")):return ["stage2_evidence_limits"]
+        if not strings(claim.get("source_ids")) or not claim["source_ids"] or not set(claim["source_ids"]).issubset(source_ids):
+            return ["stage2_claim_sources"]
+        for field,valid in (("result_item_ids",item_ids),("success_criterion_ids",criteria)):
+            if not strings(claim.get(field)) or not set(claim[field]).issubset(valid):return ["stage2_requirement_mapping"]
+            if claim["purpose"]=="FEASIBILITY" and not claim[field]:return ["stage2_feasibility_mapping"]
+        covered_items.update(claim["result_item_ids"])
+        if claim["evidence_kind"]=="UNKNOWN" and not text(claim.get("closure_evidence")):return ["stage2_unknown_closure"]
+        if claim["evidence_kind"]=="BACKGROUND_REFERENCE" and claim["purpose"]!="BACKGROUND":return ["stage2_background_not_feasibility"]
+    if covered_items!=item_ids:return ["stage2_result_coverage"]
+    return []
 def run_subvalidator(cmd:list[str],cwd:Path)->int:
     return subprocess.run(cmd,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False).returncode
 
@@ -492,17 +535,21 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
     p1,p2,p3,p4,p5,p6,p7=[artifacts[s]["payload"] for s in EXPECTED_STAGE_IDS]
     stage1_findings=requirement_findings(p1,artifacts[EXPECTED_STAGE_IDS[0]]["artifact_version"])
     if stage1_findings:return 33,stage1_findings
+    stage2_findings=evidence_findings(p2,p1)
+    if stage2_findings:return 33,stage2_findings
     source_ids={x.get("source_id") for x in p2.get("sources",[]) if isinstance(x,dict)}
     if any(not set(x.get("source_ids",[])) or not set(x.get("source_ids",[])).issubset(source_ids) for x in p2.get("claims",[])):
         return 33,["stage2_claim_sources"]
     c2=p2.get("completion",{})
     if c2.get("feasibility_basis_complete") is not True or c2.get("conflicts_resolved_or_durable") is not True:return 33,["stage2_completion"]
     evidence_ids={x.get("claim_id") for x in p2.get("claims",[]) if isinstance(x,dict)}
+    feasibility_ids={x["claim_id"] for x in p2["claims"] if x["purpose"]=="FEASIBILITY" and x["evidence_kind"] not in {"UNKNOWN","BACKGROUND_REFERENCE"}}
     result_ids=set()
     for claim in p3.get("claims",[]):
         result_ids.add(claim.get("result_claim_id"))
         ids=set(claim.get("evidence_claim_ids",[]))
         if not ids or not ids.issubset(evidence_ids):return 33,["stage3_claim_evidence"]
+        if not ids.intersection(feasibility_ids):return 33,["stage3_feasibility_support_required"]
     criteria={x.get("criterion_id") for x in p1.get("success_criteria",[]) if isinstance(x,dict)}
     mapped=set()
     for item in p3.get("requirement_satisfaction",[]):

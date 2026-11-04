@@ -113,6 +113,32 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(self.stage1_case(lambda p:p["requirement_result_A"]["result_items"][0].update(kind="document"),True)[0],0)
     def test_stage01_same_confirmation_reference_is_refused(self):
         self.assertEqual(self.stage1_case(lambda p:p["Human_confirmation"].update(confirmation_ref=p["consensus_Human_confirmation"]["confirmation_ref"]),True)[0],33)
+    def test_stage02_maturity_scope_and_exact_source_are_required(self):
+        mutations=[
+            lambda p:p["claims"][0].pop("evidence_kind"),
+            lambda p:p["claims"][0].update(evidence_kind="DONE"),
+            lambda p:p["claims"][0].update(limits=""),
+            lambda p:p["claims"][0].update(result_item_ids=["MISSING"]),
+            lambda p:p["sources"][0]["source_ref"].update(commit="master"),
+            lambda p:p["sources"][0].update(publication_status="published probably")]
+        for fn in mutations:
+            with self.subTest(fn=fn):
+                root=self.mutate("02_evidence.yml",lambda d:fn(d["payload"]))
+                self.assertEqual(loop.validate_structure(root)[0],33)
+    def test_stage02_background_cannot_be_only_feasibility_support(self):
+        def background(doc):
+            for c in doc["payload"]["claims"]:c.update(purpose="BACKGROUND",evidence_kind="BACKGROUND_REFERENCE")
+        code,findings=loop.validate_structure(self.mutate("02_evidence.yml",background))
+        self.assertEqual(code,33);self.assertIn("stage3_feasibility_support_required",findings)
+    def test_stage02_unknown_requires_closure_and_remains_insufficient(self):
+        def unknown(doc):
+            for c in doc["payload"]["claims"]:c.update(evidence_kind="UNKNOWN",closure_evidence="Required independent observation not yet available")
+        code,findings=loop.validate_structure(self.mutate("02_evidence.yml",unknown))
+        self.assertEqual(code,33);self.assertIn("stage3_feasibility_support_required",findings)
+    def test_stage02_external_reference_does_not_require_invented_git_commit(self):
+        def external(doc):
+            doc["payload"]["sources"][0].update(source_ref={"url":"https://example.invalid/versioned-spec","version":"v1","observed_at":"2026-10-29"},publication_status="EXTERNAL_VERSIONED_SOURCE")
+        self.assertEqual(loop.validate_structure(self.mutate("02_evidence.yml",external))[0],0)
     def test_every_schema_required_payload_field_is_consumed(self):
         repo=HERE.parents[3]
         contract=load(repo/loop.CONTRACT_PATH)

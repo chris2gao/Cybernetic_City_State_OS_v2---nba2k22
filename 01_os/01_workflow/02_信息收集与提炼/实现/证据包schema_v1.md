@@ -1,5 +1,10 @@
 # 信息收集与提炼 · 证据包 schema v1
 
+当前机器字段增量：sources逐项带source_ref(repository, commit, path)和publication_status；
+claims逐项带purpose、evidence_kind、limits、result_item_ids、success_criterion_ids。
+这落实下文已有来源/适用边界/与A关系的语义，不创建新证据机构。UNKNOWN需关闭证据，
+背景资料和UNKNOWN不能单独作为阶段03的可行性证明。准确结构由最小运行schema及统一runner检查。
+
 阶段二的耐久产物不是一份搜索报告，而是一个 `evidence/` 产物包。
 
 它必须让没有参与检索的机制 3 能直接回答：

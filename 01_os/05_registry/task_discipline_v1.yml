@@ -7,6 +7,15 @@ purpose: >-
   工具不扩大 task scope、不产生 Human confirmation；验证证据写在源仓库之外。
 origin_run: 01_os/_runs/run-20260809-任务纪律工具-001/
 entries:
+- path: 01_os/06_execution/task_discipline/project_context/**
+  purpose: Reuse frozen PRMS sources for task-selected project discovery, source status, same-candidate index sync and exact-head handoff checks
+  loader: task-directed project_context.py; tests use actual temporary Git histories
+  loader_class: in_repo_program
+  discovery: context-management project index contract and development entry
+  evidence: 01_os/06_execution/task_discipline/project_context/test_project_context.py
+  cache_dirs: []
+  failure_surfacing: exit 1 INDEX_SYNC_PENDING; exit 3 source or contract rejected
+  deletion_rule: protected
 - path: 01_os/06_execution/task_discipline/managed_verification/**
   purpose: 精确候选、任务包及必需检查绑定的前台执行、完整日志、结果复算与真进程/Git回归
   loader: 执行者显式调用 managed_verify.py；收尾消费者调用 inspect；pytest 发现测试
