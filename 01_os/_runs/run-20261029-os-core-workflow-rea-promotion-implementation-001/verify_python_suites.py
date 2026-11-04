@@ -1,4 +1,4 @@
-"""Run the independent Workflow and PRMS suites with isolated pytest temp roots."""
+"""Run the candidate's independent pytest suites with isolated temporary roots."""
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 import subprocess
@@ -9,6 +9,9 @@ import tempfile
 SUITES = {
     "workflow": "01_os/06_execution/workflow/minimum_operational_loop",
     "prms": "01_os/06_execution/boot/context_management/prms/tests",
+    "task_loop": "01_os/06_execution/task_orchestration/big_task",
+    "project_context": "01_os/06_execution/task_discipline/project_context",
+    "rea": "01_os/06_execution/tools/rea",
 }
 
 
@@ -21,7 +24,7 @@ def check_suite(name, target, temp_root):
 def main():
     outcomes = []
     with tempfile.TemporaryDirectory(prefix="workflow-rea-suites-") as directory:
-        with ThreadPoolExecutor(max_workers=len(SUITES)) as workers:
+        with ThreadPoolExecutor(max_workers=3) as workers:
             futures = {name: workers.submit(check_suite, name, target, Path(directory))
                        for name, target in SUITES.items()}
             for name, future in futures.items():
