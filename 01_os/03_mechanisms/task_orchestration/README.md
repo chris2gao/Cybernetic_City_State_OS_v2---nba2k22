@@ -37,6 +37,12 @@
 把它当 Human 门，会让每一个以 pushed completion pointer 收尾的实现任务都被误判为
 受保护动作。
 
+## 默认内部迭代与系列审核
+
+WorldData 的 Codex 工程任务 `nba2k22-world-data-full-implementation-01` 在同一大任务下记录 37 个增量：每轮交付一个有界可运行改进，保留 Native/SQLite 证据、单测/负例、候选SHA和未证缺口，继续选择下一最有价值的改进，最终按 Human 缩小的范围集中验证并冻结常规赛候选。其独立审核、全生命周期验收保持未完成。**复制的是“有证据的继续/停止决策”，不是固定37轮或无止境循环。**
+
+这一迭代原则统一记录在 `大任务与长时执行契约_v1.yml` 的 `evidence_driven_iteration`；新的长任务在任务包声明具体可测增量与收敛证据，默认施工内部修复与继续。**独立审核仍是最终验收岗位**，可按 `01_os/开发入口与单窗口任务规范_v1.md` 第9节安排系列里程碑集中审核，只有承重依赖、正式 Workflow 完成门、高影响边界等触发即时审核。二者不是不同审批体系。本契约不授予进程、游戏、存档、master 或 protected action 的额外权限。
+
 ## 大不等于危险
 
 任务规模本身不产生授权需求。`known_protected_actions: []` 是合法的闭合前检查结果。
@@ -56,3 +62,24 @@
 ```bash
 python -m pytest 01_os/06_execution/task_orchestration -q
 ```
+
+## Development Loop evidence (opt-in, read-only)
+
+`loop_iteration_schema_v1.json` is the strict per-iteration record. Run the deterministic
+`01_os/06_execution/task_orchestration/big_task/loop_observability.py` against
+an immutable JSONL with `--input LOG --format strict --report DERIVED.json`.
+It reports authority_effect=none and never modifies the source log. Exit codes:
+0 = strict validated; 1 = evidence/validation findings; 3 = malformed input or output error.
+A strict PASS is syntactic and internally consistent; it does not independently verify
+receipt authenticity or replace independent review or Human authorization.
+
+Historical read-only compatibility is `--format legacy_g2_s0` (2026-11-01 four rounds)
+and `--format legacy_season_host` (2026-11-02 eight rounds). `--format auto`
+detects homogeneous logs. Supply `--task-id` and `--source-ref` only as explicit
+provenance from immutable `run.yml`/Git SHA, never as invented original fields.
+Historical PASS/status or test-count assertions without actual exit codes remain
+`LEGACY_EVIDENCE_MISSING`; compatibility is not strict audit acceptance.
+See existing `closure_preflight.py` for the canonical `internal_continuation`,
+`genuine_stop` and lifecycle enums; this CLI creates no parallel stop gate.
+
+Tests: `python -m pytest 01_os/06_execution/task_orchestration -q`.

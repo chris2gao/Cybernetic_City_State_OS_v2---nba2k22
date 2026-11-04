@@ -1,0 +1,20 @@
+{
+  "task_id": "OS-PLANNER-ROLE-CONTINUITY-20261029-001",
+  "repository": "chris2gao/Cybernetic_City_State_OS_v2---core",
+  "scope": [
+    "01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md"
+  ],
+  "verification": {
+    "scope_and_owner": "Inspect actual diff contains only declared paths and domain never locally edits core-owned documents.",
+    "continuity_contract": "Confirm role instance is a label, OS role is existing decision_architecture, task records remain independent, no new PRMS state machine.",
+    "source_and_status_honesty": "Confirm fixed versions are historical anchors only, no auto-injection, no current platform deployment assumed.",
+    "transport_cas_and_readback": "Remote branch expected-head non-force CAS; confirm new head and changed files with GitHub readback.",
+    "independent_review_pending": "Different model/window to review source evidence and diff before master integration."
+  },
+  "not_run": [
+    "Local runtime tests",
+    "External platform PRMS deployment",
+    "Independent review"
+  ],
+  "publication_status": "task_branch_candidate"
+}

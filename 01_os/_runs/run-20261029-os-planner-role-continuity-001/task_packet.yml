@@ -1,0 +1,24 @@
+task_packet:
+  task_id: OS-PLANNER-ROLE-CONTINUITY-20261029-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T1_standard
+  exact_base_sha: e075cdf288a765b7bfd2f4891c8f384404da16e1
+  branch: task/os-planner-role-continuity-20261029
+  objective: "Reflect Human-approved rotating-planner workbench policy in the existing authoritative documentation; do not invent a parallel PRMS mechanism."
+  source_evidence:
+    - "Current Human instruction, 2026-10-29: update global OS / NBA 08 docs and synchronize both repositories."
+    - "Prior Human decision, 2026-10-29: stable OS_PUBLIC_DEVELOPMENT_PLANNER label, decision_architecture OS role, disposable GPT windows, per-task durable records."
+  allowed_changed_paths:
+    - "01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md"
+    - "01_os/_runs/run-20261029-os-planner-role-continuity-001/"
+  verification_plan: "01_os/_runs/run-20261029-os-planner-role-continuity-001/verification_plan.json"
+  required_tests: [scope_and_owner, continuity_contract, source_and_status_honesty, transport_cas_and_readback, independent_review_pending]
+  prohibitions: [force_push, rewrite_core_history, fabricate_PRMS_deployment, claim_independent_review, activate_runtime]
+  required_completion_pointer: "PR includes exact head SHA, changed paths, verification and explicit non-run/independent-review status."
+  big_task: false
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: current_Human_confirmed
+    expected_remote_master_head: "e075cdf288a765b7bfd2f4891c8f384404da16e1"
