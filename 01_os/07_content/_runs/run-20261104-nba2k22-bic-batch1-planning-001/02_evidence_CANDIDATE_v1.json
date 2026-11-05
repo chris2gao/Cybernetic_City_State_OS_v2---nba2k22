@@ -1,0 +1,366 @@
+{
+  "schema": "bic.stage02.evidence_candidate.v1",
+  "status": "CANDIDATE_NOT_FORMAL_OS_PASS",
+  "stage_id": "workflow_stage_02_information_collection",
+  "task": "NBA2K22-BIC-B1-DEV01-DEV03",
+  "source_p0_commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+  "Human_approved_A_blob": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+  "research_questions": [
+    {
+      "id": "RQ-01",
+      "text": "Can existing WorldData query entries yield coherent save/season/mode-scoped BIC player/team facts without creating a parallel database?",
+      "required_closure": "Authenticated real captured batch and scoped query negatives",
+      "status": "PARTIALLY_ANSWERED_STATIC"
+    },
+    {
+      "id": "RQ-02",
+      "text": "Are PC NBA2K22 offline MyLEAGUE badge qualification, XP and animation effects established by verified Native evidence?",
+      "required_closure": "Native/version-specific qualification and effect tests or explicitly UNKNOWN",
+      "status": "UNKNOWN"
+    },
+    {
+      "id": "RQ-03",
+      "text": "Can Calendar/REA data support controlled comparison without mode confusion, hidden confounding or unauthorized game operations?",
+      "required_closure": "Offline design and separately authorized actual mode-specific validation",
+      "status": "PARTIALLY_ANSWERED_STATIC"
+    },
+    {
+      "id": "RQ-04",
+      "text": "What are actual gaps and modification footprints before DEV01 read-only coding?",
+      "required_closure": "Stage03/05 evidence mapping plus Human scoped implementation authority",
+      "status": "OPEN_DESIGN"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "S-P0-MATRIX",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+      "path": "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/P0_REUSE_GAP_MATRIX.md",
+      "blob_sha": "ce2ec4dbd5627d45e2431a50fbdf35f88273f07f",
+      "evidence_kind": "STATIC_INSPECTION_REPORT",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-P0-RECEIPT",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+      "path": "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/verification_receipt.json",
+      "blob_sha": null,
+      "evidence_kind": "DOCUMENT_RESOLUTION_ONLY",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-QUERY",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py",
+      "blob_sha": "6b64c86f8729b77bd2d1aab18be74b146bf73299",
+      "evidence_kind": "STATIC_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-SCOPE",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py",
+      "blob_sha": "af9090b5ce5b65de5da1464163cb983a6106d6b3",
+      "evidence_kind": "STATIC_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-BADGE-CODEC",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_codec.py",
+      "blob_sha": "1cde70424f30f258dd421e150a7c72e127404179",
+      "evidence_kind": "STATIC_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-BADGE-PROFILE",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_native_profile.json",
+      "blob_sha": "93d9b418b948ca4f5f9d80ddf2cc87be4f9693eb",
+      "evidence_kind": "STATIC_PROFILE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-BADGE-REFERENCE",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json",
+      "blob_sha": "f3902a8e3f80296a2d790b24a2b989216d18315f",
+      "evidence_kind": "RESEARCH_REFERENCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-CALENDAR",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py",
+      "blob_sha": "19300d7da733aa4fb9990592c3f45291035602fa",
+      "evidence_kind": "STATIC_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-GAMEMODE",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/game_mode_reader.py",
+      "blob_sha": "e728486553e3f101c740d694fb310ba871da684e",
+      "evidence_kind": "STATIC_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-REA-BULK",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py",
+      "blob_sha": "4ace01e019f3ca389cd80212ed4cf1171ce28e04",
+      "evidence_kind": "STATIC_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-VAE-REPORT",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/07_测试执行/loop_verification_and_regression_report.json",
+      "blob_sha": "7d715ae0bbfc1253ddf690d0fc702ce20485a1a5",
+      "evidence_kind": "HISTORICAL_REPORT",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    },
+    {
+      "source_id": "S-A-APPROVED",
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "90d1801003e7a49531ef377137a2a975125bdd06",
+      "path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_candidate_v2.json",
+      "blob_sha": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+      "evidence_kind": "HUMAN_APPROVED_REQUIREMENT_SOURCE",
+      "publication_status": "SOURCE_AVAILABLE_IN_PINNED_COMMIT",
+      "current_live_verification": "NOT_PERFORMED_FOR_BIC"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "E-01",
+      "statement": "player_card/team_card and related queries can serve as DEV01 data entry points",
+      "source_ids": [
+        "S-QUERY",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "STATIC_SOURCE",
+      "limits": "Existing read-only query symbols, not yet a coherent BIC baseline interface",
+      "linked_result_item_ids": [
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-BASELINE-FOUNDATION"
+      ],
+      "linked_success_criteria": [
+        "SC-01",
+        "SC-07"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Reuse existing query module; no new datastore"
+    },
+    {
+      "claim_id": "E-02",
+      "statement": "per-field latest observations may originate in different source units",
+      "source_ids": [
+        "S-QUERY",
+        "S-SCOPE",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "STATIC_SOURCE",
+      "limits": "Per-field freshness required; cannot declare whole card one fresh batch",
+      "linked_result_item_ids": [
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-KNOWLEDGE-ADMISSION"
+      ],
+      "linked_success_criteria": [
+        "SC-07",
+        "SC-08"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Expose observation-unit provenance and fail on incompatible save/mode"
+    },
+    {
+      "claim_id": "E-03",
+      "statement": "native player identity has UniqueId and PreservedId with distinct linkage status",
+      "source_ids": [
+        "S-QUERY",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "STATIC_SOURCE",
+      "limits": "Not proof of cross-save or cross-season identity consistency",
+      "linked_result_item_ids": [
+        "RES-01B-NATIVE-BASELINE-COVERAGE"
+      ],
+      "linked_success_criteria": [
+        "SC-01",
+        "SC-07"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Bind save/time/season and explicitly reject mismatch"
+    },
+    {
+      "claim_id": "E-04",
+      "statement": "WorldData contains static badge-field definitions and decoder for native badge levels",
+      "source_ids": [
+        "S-BADGE-CODEC",
+        "S-BADGE-PROFILE",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "STATIC_SOURCE",
+      "limits": "80 LEVEL and 18 non-reserved BOOLEAN plus 1 reserved entry are profile definitions, not live player values",
+      "linked_result_item_ids": [
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE"
+      ],
+      "linked_success_criteria": [
+        "SC-01",
+        "SC-02",
+        "SC-07"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Read actual player observations via DEV01; do not treat catalog count as certified gameplay"
+    },
+    {
+      "claim_id": "E-05",
+      "statement": "R04 badge catalog is a research reference, not a PC22 MyLEAGUE eligibility/XP authority",
+      "source_ids": [
+        "S-BADGE-REFERENCE",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "RESEARCH_REFERENCE",
+      "limits": "May contain MyPLAYER-specific acquisition thresholds; all qualification / XP / effects UNKNOWN until PC22 evidence",
+      "linked_result_item_ids": [
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE"
+      ],
+      "linked_success_criteria": [
+        "SC-01",
+        "SC-02",
+        "SC-07"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Only generate qualification/XP hypotheses, not positive eligibility findings"
+    },
+    {
+      "claim_id": "E-06",
+      "statement": "calendar orchestration and mode read paths exist",
+      "source_ids": [
+        "S-CALENDAR",
+        "S-GAMEMODE",
+        "S-QUERY",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "STATIC_SOURCE",
+      "limits": "Presence of calls not current permission for game-date advancement; Fast Sim and 3D are distinct",
+      "linked_result_item_ids": [
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE"
+      ],
+      "linked_success_criteria": [
+        "SC-03",
+        "SC-04"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Use offline plans, require separate game/recording authority"
+    },
+    {
+      "claim_id": "E-07",
+      "statement": "REA native bulk executor source exists",
+      "source_ids": [
+        "S-REA-BULK",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "STATIC_SOURCE",
+      "limits": "CAS/readback design is historical; no new executable action or Native effect certification",
+      "linked_result_item_ids": [
+        "RES-01B-NATIVE-CAPABILITY-GAP-LOOP"
+      ],
+      "linked_success_criteria": [
+        "SC-02",
+        "SC-08"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Never treat file presence as approved write action"
+    },
+    {
+      "claim_id": "E-08",
+      "statement": "VAE historical verification reports 307 of 307 tests",
+      "source_ids": [
+        "S-VAE-REPORT",
+        "S-P0-MATRIX"
+      ],
+      "evidence_kind": "HISTORICAL_REPORTED_TEST",
+      "limits": "Prior report only; no current BIC tests or mechanism causality proven",
+      "linked_result_item_ids": [
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-EVIDENCE-QUALIFICATION"
+      ],
+      "linked_success_criteria": [
+        "SC-04",
+        "SC-07"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Preserve test provenance and avoid upgrading to live effect"
+    },
+    {
+      "claim_id": "E-09",
+      "statement": "no controlled BIC experimental design or real selected read-only two-player dataset is established by P0",
+      "source_ids": [
+        "S-P0-MATRIX",
+        "S-P0-RECEIPT"
+      ],
+      "evidence_kind": "LIMITED_SOURCE_INSPECTION",
+      "limits": "This is a scoped P0 gap, not proof absence from entire repository",
+      "linked_result_item_ids": [
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-NATIVE-BASELINE-COVERAGE"
+      ],
+      "linked_success_criteria": [
+        "SC-03",
+        "SC-04",
+        "SC-07"
+      ],
+      "feasibility_class": "FEASIBILITY_INDICATOR_NOT_CURRENT_LIVE_PROOF",
+      "engineering_disposition": "Stage03 plan for synthetic 2x2 demo and separately actual data comparability; real data selection pending"
+    }
+  ],
+  "conflicts": [
+    {
+      "question": "R04 badge IDs unknown vs later native badge profile has defined code fields",
+      "resolution": "Different dated/semantic source scope; neither is current MyLEAGUE qualification proof",
+      "status": "DURABLY_RETAINED"
+    },
+    {
+      "question": "VAE historical 307/307 vs current DEV03 causal readiness",
+      "resolution": "Different test scopes; historical regression does not attest present BIC experiment",
+      "status": "DURABLY_RETAINED"
+    }
+  ],
+  "completion": {
+    "feasibility_basis_complete": false,
+    "reason": "P0 provides rigorous fixed static evidence, but a real coherent BIC read-only batch, MyLEAGUE Native eligibility/XP and causal test feasibility remain unverified; formal Stage02 completion/acceptance requires additional sourced decision.",
+    "remaining_evidence": [
+      "Real save/batch/identity/mode scoped read-only demonstration",
+      "Native badge qualification/XP evidence",
+      "Controlled experiment feasibility and game permissions",
+      "Stage01 applicable gate and Core governed-run binding"
+    ],
+    "formal_stage_02_approval": "NOT_CLAIMED"
+  },
+  "no_game_action": true
+}
