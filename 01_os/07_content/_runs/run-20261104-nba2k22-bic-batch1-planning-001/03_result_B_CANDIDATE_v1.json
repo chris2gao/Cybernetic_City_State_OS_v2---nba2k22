@@ -1,0 +1,284 @@
+{
+  "schema": "nba2k22.bic.stage03.result_B_candidate.v1",
+  "status": "DRAFT_SUBJECT_TO_STAGE02_FORMAL_ACCEPTANCE",
+  "source_stage02_candidate": "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/02_evidence_CANDIDATE_v1.json",
+  "source_P0_commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+  "Human_approved_A_blob": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+  "result_id": "BIC-BATCH1-RESULT-B-CANDIDATE-001",
+  "claims": [
+    {
+      "id": "B01",
+      "owner": "DEV01",
+      "outcome": "Expose BIC baseline facts by composing existing player_card/team_card/observation_scope queries; no parallel WorldData, no cumulative-stat recomputation",
+      "interface": {
+        "name": "player_baseline",
+        "inputs": [
+          "player_identity",
+          "save_instance",
+          "as_of",
+          "game_mode"
+        ],
+        "outputs": [
+          "field/value/unit",
+          "observation_unit",
+          "observed_at/effective_at",
+          "source_quality",
+          "status",
+          "applicability"
+        ]
+      },
+      "evidence_claim_ids": [
+        "E-01",
+        "E-02",
+        "E-03"
+      ],
+      "result_ids": [
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-EVIDENCE-QUALIFICATION"
+      ],
+      "sc": [
+        "SC-01",
+        "SC-07"
+      ],
+      "gating": "Real save/season-scoped read-only batch for production-example acceptance; interface can be designed/offline tested independently"
+    },
+    {
+      "id": "B02",
+      "owner": "DEV01",
+      "outcome": "BIC team context attaches one coherent requested save and time scope to staff, lineups, playbook and team facts, with per-field staleness and missing semantics",
+      "interface": {
+        "name": "team_baseline",
+        "inputs": [
+          "team_identity",
+          "save_instance",
+          "as_of",
+          "game_mode"
+        ],
+        "outputs": [
+          "team/player relationships",
+          "staff/playbook/lineup facts",
+          "provenance_by_field",
+          "UNKNOWN/STALE/WITHHELD"
+        ]
+      },
+      "evidence_claim_ids": [
+        "E-01",
+        "E-02",
+        "E-03"
+      ],
+      "result_ids": [
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-KNOWLEDGE-ADMISSION"
+      ],
+      "sc": [
+        "SC-01",
+        "SC-07"
+      ],
+      "gating": "Team source observations must not be joined across saves or seasons without identity binding"
+    },
+    {
+      "id": "B03",
+      "owner": "DEV01",
+      "outcome": "Provide inspectable coverage, freshness, version and knowledge-status reports without treating all existing fields as currently verified",
+      "interface": {
+        "name": "coverage_report",
+        "inputs": [
+          "save_instance",
+          "capture_batch"
+        ],
+        "outputs": [
+          "REUSE/EXTEND/MISSING/UNVERIFIED",
+          "source_ref",
+          "version/mode",
+          "freshness",
+          "failed_prerequisite"
+        ]
+      },
+      "evidence_claim_ids": [
+        "E-02",
+        "E-03",
+        "E-09"
+      ],
+      "result_ids": [
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-KNOWLEDGE-ADMISSION"
+      ],
+      "sc": [
+        "SC-07",
+        "SC-08"
+      ],
+      "gating": "No conjectural values or source substitutions"
+    },
+    {
+      "id": "B04",
+      "owner": "DEV02",
+      "outcome": "Read and classify current native badge ownership and level from WorldData; evaluate PC22 MyLEAGUE unlock eligibility only for proven predicates; else explicit UNKNOWN",
+      "interface": {
+        "name": "badge_capability_report",
+        "inputs": [
+          "player_baseline",
+          "native_badge_evidence_version"
+        ],
+        "outputs": [
+          "owned/level",
+          "eligibility_verified/unknown",
+          "growth_potential_conditional",
+          "source/conflict/unknown"
+        ]
+      },
+      "evidence_claim_ids": [
+        "E-04",
+        "E-05"
+      ],
+      "result_ids": [
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE"
+      ],
+      "sc": [
+        "SC-01",
+        "SC-02",
+        "SC-07"
+      ],
+      "gating": "No MyPLAYER eligibility, XP or success-rate claims without PC22 MyLEAGUE Native proof"
+    },
+    {
+      "id": "B05",
+      "owner": "DEV03",
+      "outcome": "Plan and analyze controlled experiments with synthetic 2x2 test fixtures, independent and interaction estimates; distinguish synthetic tests from authentic game data and cannot-identify cases",
+      "interface": {
+        "name": "mechanism_experiment",
+        "inputs": [
+          "hypothesis",
+          "factors",
+          "blocking/units",
+          "mode",
+          "evidence_sources"
+        ],
+        "outputs": [
+          "contrast_design",
+          "estimated_effects_or_unidentifiable",
+          "confounders",
+          "qualification",
+          "negative_cases"
+        ]
+      },
+      "evidence_claim_ids": [
+        "E-06",
+        "E-08",
+        "E-09"
+      ],
+      "result_ids": [
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-EVIDENCE-QUALIFICATION"
+      ],
+      "sc": [
+        "SC-03",
+        "SC-04",
+        "SC-06"
+      ],
+      "gating": "Do not treat repeated games for the same roster or same season as independent random samples"
+    },
+    {
+      "id": "B06",
+      "owner": "DEV03",
+      "outcome": "Separate on-court tactical sequence evidence from Fast Sim box-score observations and native setting-readback; maintain data/behavior/source lineage",
+      "interface": {
+        "name": "tactical_behavior_record",
+        "inputs": [
+          "strategy_intent",
+          "native_setting_version",
+          "game_mode",
+          "3d_observation_optional"
+        ],
+        "outputs": [
+          "trigger_observed?",
+          "execution_observed?",
+          "advantage_created?",
+          "conversion_result?",
+          "unknowns"
+        ]
+      },
+      "evidence_claim_ids": [
+        "E-06",
+        "E-07",
+        "E-09"
+      ],
+      "result_ids": [
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING"
+      ],
+      "sc": [
+        "SC-03",
+        "SC-07"
+      ],
+      "gating": "No unobserved 3D execution claims from box score alone"
+    }
+  ],
+  "requirement_satisfaction": [
+    {
+      "criteria": [
+        "SC-01",
+        "SC-02"
+      ],
+      "results": [
+        "B01",
+        "B02",
+        "B04"
+      ],
+      "scope": "BIC baseline stage scope only; full offense/defense not implemented in this batch"
+    },
+    {
+      "criteria": [
+        "SC-03",
+        "SC-04",
+        "SC-05",
+        "SC-06"
+      ],
+      "results": [
+        "B05",
+        "B06"
+      ],
+      "scope": "Enable mechanism proof/controlled comparisons; full BIC competitive implementation belongs to later batches"
+    },
+    {
+      "criteria": [
+        "SC-07",
+        "SC-08"
+      ],
+      "results": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B06"
+      ],
+      "scope": "Provenance/knowledge admission and capability-gap data, not an already operational complete BIC"
+    }
+  ],
+  "alternatives_rejected": [
+    {
+      "alternative": "Build a new standalone database and retrace WorldData schemas",
+      "reason": "Existing Query/Reader/Scope source is available, duplicative and introduces divergent source-of-truth"
+    },
+    {
+      "alternative": "Use MyPLAYER badge-guide numeric qualification as PC22 offline MyLEAGUE rule",
+      "reason": "Reference expressly has mode applicability warning"
+    },
+    {
+      "alternative": "Infer tactical execution or causality solely from calendar box scores or victories",
+      "reason": "3D behavior and controlled confounding are separate evidence"
+    },
+    {
+      "alternative": "Directly invoke REA Native Writes or calendar simulation in offline batch",
+      "reason": "No game/save authorization; read-only source inventory cannot supply authority"
+    }
+  ],
+  "open_decisions": [
+    "Select a pinned actual existing BIC-capable save/batch for real card demonstration",
+    "Confirm canonical fact interface belongs to existing WorldData module; exact file ownership after active HEAD review",
+    "Resolve Stage01 normalized model acceptance, then formally approve Stage02 source feasibility as sufficient for staged read-only engineering"
+  ],
+  "engineering_authority": "NOT_GRANTED_BY_THIS_RESULT_MODEL",
+  "formal_completion": false
+}
