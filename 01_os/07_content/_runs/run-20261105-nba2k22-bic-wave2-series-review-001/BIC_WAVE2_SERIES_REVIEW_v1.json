@@ -1,0 +1,171 @@
+{
+  "schema": "nba2k22.bic.wave2.independent_series_review.v1",
+  "review_id": "NBA2K22-BIC-WAVE2-DEV04-DEV05-SERIES-REVIEW-20261105-001",
+  "reviewer_role": "independent_review",
+  "reviewer_model": "GPT-6",
+  "fixed_target": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "branch": "task/nba2k22-bic-wave2-dev04-dev05-20261104",
+    "commit": "b308660b3112738a4df52e412448d821c3d4b932",
+    "baseline": "aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b",
+    "comparison": {
+      "ahead_commits": 2,
+      "behind": 0,
+      "changed_files": 19
+    }
+  },
+  "verdict": {
+    "series_review": "TARGETED_REMEDIATION_REQUIRED",
+    "accepted": "OFFLINE_WAVE2_PROTOTYPE_WITH_RECORDER_AND_SOURCE_GUARDS",
+    "formal_complete": false,
+    "formal_OS_stage_gate": "NOT_VERIFIED",
+    "live_game_or_native_action_authority": "NONE",
+    "master_merge_authority": "NONE",
+    "reason": "Core architecture and archived regression are sound, but game-evidence confidence, intra-save scope joins and proposed Native plan readiness contain over-promotion paths. One bounded internal remediation Loop should close these; do not reopen Wave1."
+  },
+  "verified_positive": [
+    {
+      "id": "V01",
+      "result": "The fixed SHA exists; comparison is two commits ahead with 19 changed paths. Actual offline DEV04 diagnostics, DEV05 plan compiler, CLI, tests, and documents exist.",
+      "level": "REMOTE_GIT_VERIFIED"
+    },
+    {
+      "id": "V02",
+      "result": "DEV04 reuses BIC player/team baseline, knowledge_query, coverage and badge facts; does not implement autonomous on-court decision execution. Relative ratings remain codec hypotheses and mechanism list remains empty.",
+      "level": "SOURCE_INSPECTED"
+    },
+    {
+      "id": "V03",
+      "result": "DEV05 compiles data-only plans with execute=false and SEPARATE_HUMAN_LIVE_AUTHORIZATION_REQUIRED; historical catalog binding is pinned to PR18 draft source and current tool does not operate NBA2K22.",
+      "level": "SOURCE_INSPECTED"
+    },
+    {
+      "id": "V04",
+      "result": "Archived regression stdout contains 57 passed, 1 PytestReturnNotNoneWarning in 31.46s, wrapper exit_code=0 and 31.94s; 16 tests are new Wave2 cases. The warning matches prior known test_manifest issue.",
+      "level": "ARCHIVED_TEST_RECEIPT_INSPECTED_NOT_RERUN"
+    },
+    {
+      "id": "V05",
+      "result": "Four published evidence files were re-hashed independently and match delivery_manifest.json: tests.stdout.log, verification_receipt.json, ENGINEERING_HANDOFF.md, synthetic_validation.json.",
+      "level": "FILE_BYTES_SHA256_VERIFIED"
+    },
+    {
+      "id": "V06",
+      "result": "Historical Pascal Siakam and Nikola Jokic records are present, with UNBOUND/REAL_DATA_NOT_VERIFIED and unknown real-game mode; the historical sqlite readback hash equality is developer-reported and was not independently rerun.",
+      "level": "HISTORICAL_RECORD_INSPECTED_SOURCE_UNVERIFIED"
+    },
+    {
+      "id": "V07",
+      "result": "2x2 synthetic arithmetic reports A=7, B=5 and interaction=6; no Native actions or real causal effects are claimed by this code.",
+      "level": "SOURCE_INSPECTED_TEST_REPORT"
+    }
+  ],
+  "findings": [
+    {
+      "id": "BIC-W2-R01",
+      "severity": "P1",
+      "domain": "DEV05",
+      "title": "Historical exact-input LiveEffectVerified is improperly broadened to action-wide OFFLINE_PLAN_READY",
+      "refs": [
+        "world_data_prototype/bic_plans.py:90-131",
+        "research/rea_core_profile/bridge.py:34-64",
+        "research/rea_native_control/data/native_live_validation.json@094f1aa641f93dec2277707ad9dbf5bdb0341247",
+        "research/rea_native_control/data/action_registry.json@094f1aa641f93dec2277707ad9dbf5bdb0341247"
+      ],
+      "verified_counterexample": "Catalog action COACH_SET_KNOWN_CURRENT_SETTINGS has a LiveEffectVerified state only because exact historical evidence has team_id=20, settings RunPlayTendency=55, before=90. Yet the action's input schema accepts general settings and coach_settings.json includes enumerated POEOffense2 values 0 and 7. An intent with team_id=20, settings POEOffense2=7, expected_before {POEOffense2:0}, catalog matching build, matching asserted identity, mode FAST_SIM and arbitrary nonempty before_source passes visible branch checks and can receive OFFLINE_PLAN_READY without the verified exact-input effect.",
+      "risk": "The plan remains execute=false, so there is no current write. But a later coordinator may treat offline-plan readiness as evidence-qualified for an unverified setting or before-state. The string before_source is not a bound fresh Getter observation.",
+      "fix": "Preserve historical exact-input metadata at parameter-field level. Separate schema completeness from certified write/effect applicability, require a verifiable Getter/source identity/version/time binding before high-readiness statuses, and keep unverified settings in NEEDS_VALIDATION/SCHEMA_ONLY with execute=false.",
+      "acceptance": [
+        "Action-level maturity cannot authorize unverified field-value pairs.",
+        "A fabricated before_source cannot make a current plan evidence-qualified.",
+        "Historical RunPlayTendency exact tuple remains reported faithfully, without claiming general applicability.",
+        "All plans remain execute=false and Native transport is not introduced."
+      ],
+      "review_basis": "STATIC_CONTROL_FLOW_PLUS_FIXED_NATIVE_CATALOG; NO_REAL_NATIVE_EXECUTION"
+    },
+    {
+      "id": "BIC-W2-R02",
+      "severity": "P1",
+      "domain": "DEV04",
+      "title": "Unverified and synthetic stored observations are emitted as top-level FACT",
+      "refs": [
+        "world_data_prototype/bic_diagnostics.py:67-114",
+        "world_data_prototype/bic_baseline.py:190-248",
+        "historical_cases.json@b308660b3112738a4df52e412448d821c3d4b932"
+      ],
+      "verified_counterexample": "In both historical cases, six inspected diagnostic findings have classification FACT while their supporting knowledge_status is UNVERIFIED_OBSERVATION and data_status=REAL_DATA_NOT_VERIFIED. The role classification branch checks observation availability, numeric value and freshness, but not evidence-grade or source admission; its default requirements have no threshold.",
+      "risk": "Downstream consumers can read FACT as a verified real-game basketball fact, even though the value is only an unbound archive observation or synthetic fixture; this undermines the BIC epistemic separation.",
+      "fix": "Separate 'recorded raw value/comparison with caller assumption' from a qualified FACT label. Preserve the actual values, provenance and role-compatibility arithmetic, but expose an evidence-qualified status (e.g. OBSERVED_UNVERIFIED, SYNTHETIC_ONLY, or UNKNOWN for game truth) unless source maturity/identity matches an explicit admission contract. Avoid upgrading an assumption match to native mechanism evidence.",
+      "acceptance": [
+        "Existing historical cases keep raw values but no longer present unverified source as certified FACT.",
+        "Synthetic fixture comparisons are identified as synthetic.",
+        "Positive certified-source case (when provided) is distinguishable without claiming mechanism effect.",
+        "Relative codec hypotheses stay HYPOTHESIS."
+      ],
+      "review_basis": "STATIC_SOURCE_AND_FIXED_HISTORICAL_CASE_EXTRACT"
+    },
+    {
+      "id": "BIC-W2-R03",
+      "severity": "P1",
+      "domain": "DEV04",
+      "title": "Fixed-roster team joins do not bind the observation scope identity",
+      "refs": [
+        "world_data_prototype/bic_diagnostics.py:46-58",
+        "world_data_prototype/bic_diagnostics.py:187-209",
+        "world_data_prototype/observation_scope.py:22-41"
+      ],
+      "verified_counterexample": "_same_context compares save_id, season_id, observed_through, game_mode and game_build, but ignores observation_scope.scope_sha256. Two baselines from different capture-unit sets sharing those visible labels are accepted as a single fixed-roster diagnostic context.",
+      "risk": "Teams and players may be compared across distinct observations/world snapshots even if their identifiers and requested cutoff match, producing a misleading team/role association.",
+      "fix": "For a single fixed-world/snapshot diagnosis bind scope_sha256 and an available dataset/source identity; explicitly reject or mark incompatible/UNKNOWN when capture scopes diverge. Do not require matching per-field unit_id inside a legitimate shared scoped ledger, as fields are intentionally multi-unit.",
+      "acceptance": [
+        "Same save/season/cutoff but different scope_sha256 is not silently accepted.",
+        "A team and player from a legitimate common ledger scope still work.",
+        "Existing save, season, mode and build negative tests stay passing."
+      ],
+      "review_basis": "STATIC_SOURCE_DIRECT_CONTROL_FLOW"
+    },
+    {
+      "id": "BIC-W2-R04",
+      "severity": "P2",
+      "domain": "DEV04",
+      "title": "PlayType negative compatibility can be asserted from an incomplete non-null slot sample",
+      "refs": [
+        "world_data_prototype/bic_diagnostics.py:125-137",
+        "world_data_prototype/query.py:634-644"
+      ],
+      "verified_counterexample": "player_play_types returns the latest non-null observed value per slot, not an exhaustiveness proof. diagnose_player marks CONFLICT whenever any returned row is fresh and no returned code matches a requested code, even with partial capture completeness or omitted slots.",
+      "risk": "False negative player role fit when a required PlayType is simply not observed yet.",
+      "fix": "Separate verified positive registration from absence. Negative CONFLICT needs explicit complete same-scope slot capture or certified exhaustive slots; otherwise UNKNOWN. Preserve stale=UNKNOWN and sourced request assumptions.",
+      "acceptance": [
+        "Fresh partial one-slot sample lacking requested PlayType yields UNKNOWN.",
+        "Complete proven inventory with no matching code can yield CONFLICT.",
+        "Matching fresh code remains supported without implying a play was executed."
+      ],
+      "review_basis": "STATIC_SOURCE_CONTROL_FLOW_AND_QUERY_SEMANTICS"
+    }
+  ],
+  "accepted_limits_not_blocking": [
+    "Current work is explicitly offline: Native writes, game/calendar simulation and master integration are not authorized.",
+    "Historical SQLite (975,208,448 bytes) and its before/after SHA equality are present as a developer receipt; no independent re-open or in-game identification was undertaken.",
+    "Official PC22 MyLEAGUE badge XP/eligibility, 3D tactical effects, auto-coaching persistence and FastSim comparison remain UNKNOWN.",
+    "OS Stage01-07 completion and PRMS persistence are not implied by this code review.",
+    "The performance milliseconds exclude upstream baseline and catalog resolution; no full-volume performance claim is accepted.",
+    "Prior PytestReturnNotNoneWarning is known and requires no new repair in this scope."
+  ],
+  "next_action": {
+    "task_type": "ONE_TARGETED_INTERNAL_LOOP",
+    "owner": "Codex / execution",
+    "scope": "R01-R04 only with small, source-bound tests; preserve existing Wave1 interface and Wave2 architecture.",
+    "authority": "The previously approved bounded offline development scope applies; do not request repeat routine Human approval.",
+    "steps": [
+      "Repair evidence trust and plan readiness semantics (R01-R02)",
+      "Bind fixed-roster observation scope and PlayType absence (R03-R04)",
+      "Run targeted regression, then same 57-case related group or superset",
+      "Record exact command, exit code, raw logs, source SHA and historic gap labels",
+      "Push new fixed engineering SHA for short difference review"
+    ],
+    "no_game_operation": true,
+    "no_master_merge": true,
+    "stage_OS_gate_unchanged": true
+  }
+}
