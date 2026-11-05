@@ -1,0 +1,251 @@
+{
+  "requirement_id": "NBA2K22-BASKETBALL-INTELLIGENCE-CORE-REQUIREMENT-MODELING-20261104-001",
+  "model_kind": "requirement_result_A",
+  "model_id": "NBA2K22-BIC-A-001",
+  "version": 1,
+  "status": "DRAFT_PARTIAL_01B",
+  "last_human_decision_batch": "01b-round-1",
+  "stage": "workflow_stage_01_requirement_modeling/01b",
+  "objective": "将已获批 A0 的篮球智能目标细化为可观察的完整球队进攻、防守、人员使用、对手研究和反馈能力，不提前选定实现架构或认定任何 Native 效果已实证。",
+  "consensus_ref": {
+    "model_id": "NBA2K22-BIC-A0-001",
+    "version": 1,
+    "sha256": "4ad6958ede756f45552f0a4a8f3bfab8267a734db8d41289a579a586f74203fe",
+    "confirmation_ref": "current_conversation:2026-11-04:Human-confirm-Basketball-Intelligence-Core-01a-A0-v1",
+    "immutable": true
+  },
+  "human_decisions": [
+    {
+      "question_id": "01b-Q1",
+      "choice": "C",
+      "title": "完整进攻体系涵盖不同比赛情境",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q2",
+      "choice": "C",
+      "title": "完整对手针对性防守体系",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q3",
+      "choice": "C",
+      "title": "自主设计不同阵容组合与使用方案",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    }
+  ],
+  "result_items": [
+    {
+      "result_item_id": "RES-01B-OFFENSE",
+      "source_decision": "01b-Q1=C",
+      "title": "完整进攻决策能力（全队—球员—情境）",
+      "kind": "function",
+      "expected_end_state": "给定固定球员名单及其能力、球队战术现状与允许观察的对手资料，统一篮球决策主体能够设计协调的进攻体系，包括核心与球员职责、持球和无球方式、战术类型及手册、倾向与配合，并能提出针对首发、替补、比赛末段和不同对手的适配方案。",
+      "components": [
+        "全队进攻原则与战术目标",
+        "球员进攻职责与联动",
+        "战术手册、PlayTypes、Freelance、教练与倾向候选映射",
+        "首发/替补/末段/对手情境的方案差异"
+      ],
+      "relations": [
+        "进攻方案必须和球员角色及可用阵容组合相容",
+        "实际生效、可写入及持久性不是本裁决已认证的事实"
+      ],
+      "inputs_outputs": [
+        "示例输入：持球组织者、无球射手、顺下内线及本队战术配置；输出：一套进攻意图、球员分工与不同情境下的战术调整提案（具体字段及数值待 Stage02/03 核证）"
+      ],
+      "completeness_rule": "不存在只给整体体系标签而未给关键球员职责/协同及各约定情境处理的情况；若原生机制无法实现，则标记能力缺口而非假定可以生效。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q1=C：涵盖首发、替补、比赛末段和不同对手的完整进攻方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-OFF-01",
+          "scope": "在 Fast Sim 与 CPU vs CPU 3D 模式下不同战术设置实际怎样被调用、覆盖及表现",
+          "closure_evidence": "Native/3D 观察、分模式统计与可追溯设置状态",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-OFF-02",
+          "scope": "末段战术槽、轮换/阵容变更及 PlayTypes 是否能按需求稳定执行",
+          "closure_evidence": "原生读写权限、保存后读回及比赛行为验证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-DEFENSE",
+      "source_decision": "01b-Q2=C",
+      "title": "完整对手针对性防守决策能力",
+      "kind": "function",
+      "expected_end_state": "模型能够分析对手核心球员、首发/替补组合与进攻体系，在全队防守原则和合法个人防守设置间提出协调方案，覆盖对位、持球/无球、掩护、包夹、协防及不同阵容场景，供赛前配置、比赛验证和反馈使用。",
+      "components": [
+        "对手核心与进攻结构识别",
+        "整体防守原则与个人对手策略协同",
+        "不同阵容与关键对手的赛前防守方案",
+        "防守收益与代价及失败反馈"
+      ],
+      "relations": [
+        "遵守 A0 研究/竞技信息隔离",
+        "模型不接管实时临场防守",
+        "整体设置和个人设置可能存在覆盖及原生操作权限约束"
+      ],
+      "inputs_outputs": [
+        "示例输入：对手持球核心、外线射手、掩护人及本队可用防守资源；输出：相应防守意图和有条件的赛前原生设置提案"
+      ],
+      "completeness_rule": "防守提案不能只有保护篮下/限制三分等宽泛口号，须说明对手针对性、人员适配与主要取舍；对未知机制保留 UNKNOWN。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q2=C：需包括分析对手阵容进攻体系和设计首发/替补的针对性防守方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-DEF-01",
+          "scope": "整体和个人防守是否能够按期望并存、覆盖和持久化",
+          "closure_evidence": "独立原生配置认证与实战比较",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-DEF-02",
+          "scope": "不同对手情境下动态阵容匹配和目标个人防守设置的可靠作用",
+          "closure_evidence": "身份映射、合法设置枚举及比赛观察",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-05",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-ROSTER-USE",
+      "source_decision": "01b-Q3=C",
+      "title": "固定名单内的阵容组合及球员职责决策能力",
+      "kind": "function",
+      "expected_end_state": "模型能够在不改变球员成员构成的情况下，按技能互补与攻防优劣设计首发/替补、球员职责、轮换及不同情境使用方案，解释组合选择，并根据比赛和对手信息作出调整提案。",
+      "components": [
+        "球员能力与场上角色评估",
+        "人员互补与冲突分析",
+        "首发/替补、轮换深度与多套阵容候选",
+        "针对比赛情境与对手的使用取舍"
+      ],
+      "relations": [
+        "固定阵容不等于固定角色、首发、轮换和倾向",
+        "原版 AI 可覆盖上场时间或自行换人；不能假定外部完全控制五人阵容",
+        "训练、跨赛季发展和人员交易不属于首版"
+      ],
+      "inputs_outputs": [
+        "示例输入：固定15人名单、球员技术特征及本队进攻防守需要；输出：多个阵容组合的篮球理由、角色分工、预期收益与已知执行限制"
+      ],
+      "completeness_rule": "必须能够说明主要球员如何配合，以及什么情况下采取不同阵容；实际无法控制的上场组合须标注原生限制，不伪称已经实现。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q3=C：自主设计不同阵容组合、互补冲突和对手情境使用方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-ROT-01",
+          "scope": "首发、具体人员组合、轮换深度和分钟在 PC22 的合法可控程度",
+          "closure_evidence": "原生权限/写入回读/游戏自动覆盖验证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07"
+      ]
+    }
+  ],
+  "coverage_partial": [
+    {
+      "success_criterion_id": "SC-01",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-02",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-03",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-04",
+      "result_item_ids": [],
+      "state": "PENDING_MORE_01B_MODELING"
+    },
+    {
+      "success_criterion_id": "SC-05",
+      "result_item_ids": [
+        "RES-01B-DEFENSE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-06",
+      "result_item_ids": [],
+      "state": "PENDING_MORE_01B_MODELING"
+    },
+    {
+      "success_criterion_id": "SC-07",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-08",
+      "result_item_ids": [
+        "RES-01B-OFFENSE"
+      ],
+      "state": "PARTIAL"
+    }
+  ],
+  "status_rules": [
+    "Human 已分别确认 Q1、Q2、Q3；未确认完整 requirement_result_A",
+    "本草案不是 OS 机器 runner 的 complete 01_requirement.yml",
+    "每项源自 Human 决策的领域要求与 Native 可行性假设分离",
+    "A0 v1 作为 immutable prior，不得重写",
+    "禁止正式游戏写入或工程开发"
+  ],
+  "next_inquiry_scope": "机制知识输入、对手研究方法及攻防/人员取舍等尚未建模的决策能力"
+}
