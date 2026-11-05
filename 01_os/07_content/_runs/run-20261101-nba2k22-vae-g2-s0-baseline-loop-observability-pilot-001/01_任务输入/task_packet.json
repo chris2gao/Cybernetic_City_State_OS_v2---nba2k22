@@ -1,0 +1,106 @@
+{
+  "schema_version": "nba2k22.vae.g2_s0.pilot.v1",
+  "task_id": "NBA2K22-VAE-G2-S0-BASELINE-LOOP-OBSERVABILITY-20261101-001",
+  "domain": "nba2k22",
+  "os_role": "execution",
+  "executor_model": "Gemini (record actual model)",
+  "parent_branch": "task/nba2k22-vae-calendar-sim-g1g2-readiness-loop-20261101",
+  "exact_parent_sha": "63f86a26e8cee99f40eedc1312f045b5f60d0c37",
+  "branch": "task/nba2k22-vae-g2-s0-baseline-loop-observability-pilot-20261101",
+  "risk": "T2_semantic_candidate_only",
+  "objective": "Convert verified WorldData FULL one-shot capture into a save-bound, target-specific, provenance-qualified S0 Calendar Sim analysis and a G2 setting-effect readback-ready protocol; pioneer structured evidence-driven Loop observability.",
+  "primary_evidence": {
+    "live_capture": {
+      "source_sha": "63f86a26e8cee99f40eedc1312f045b5f60d0c37",
+      "batch_id": "3a75c0e19302",
+      "reported_reader_outcomes": "16 ACQUIRED + 4 ANNUAL_ALREADY_REFRESHED",
+      "reported_db_units": "42 -> 58",
+      "reported_calendar_games": 238,
+      "box_type": "36 fresh FULL_NATIVE_BOX; 202 REUSED_FROZEN_BOX",
+      "score_reconciliation": "222 exact /238; 228 within <=3 /238; 10 outside <=3",
+      "source_qualification": "partial source-unit completeness, anonymized per-batch GitHub evidence; actual 975MB database remains local"
+    },
+    "core_loop_observability": {
+      "core_candidate_branch": "task/core-development-loop-observability-model-20261101",
+      "approved_pilot_plan_sha": "f3ae6b83897c04f6ee7758a9b32fc8ea2d06cea5",
+      "contract_at": "01_os/_runs/run-20261101-core-development-loop-observability-model-001/06_执行/loop_observability_contract_candidate_v0.1.json",
+      "scope": "pilot observational requirement only; not a Core canonical integration"
+    }
+  },
+  "choices_and_limits": [
+    "Human has approved Loop observability pilot, not changes to Core master/Canonical state/Workflow/permissions.",
+    "Use Calendar Sim only for first-setting-effect protocol; no 3D pooled with the comparison.",
+    "FULL and INCREMENTAL cadence remains Human-approved; unchanged final game INCREMENTAL skip is acceptable.",
+    "Use existing WorldData v24 single-save SQLite, exact source-unit snapshot and authorized public query/read-only extraction. Do not build second database or capture stack.",
+    "No longer assume 238 total league games implies >=10 untreated comparable games for any specific target; calculate per actual player/team, period, game-mode, opponent, injury and setting epochs. No real S1 result can be claimed.",
+    "Do not assert the 16 score mismatches have established native cause; 222 exact, 228 within tolerance, 10 beyond tolerance; segregate/flag until evidence supports inclusion.",
+    "Do not mix user MC archive with currently reported bound MyLEAGUE0003, which Gemini called save_id nba2k22_test_01. No automatic save rebinding.",
+    "Do not treat a historical LIVE_READ somewhere in database as definitive of any current sample; audit actual source units used in each VAE comparison.",
+    "Do not change player/coach settings, original game files or save, advance calendar, start resident service, use RDC for ordinary SQL tasks, or merge protected branches.",
+    "No unauthorized REA Setter invocation. Read-only review of existing REA Getter/Setter contracts permissible; activation requires future Human authorization."
+  ],
+  "scope_write": [
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/"
+  ],
+  "work_packages": [
+    {
+      "id": "P0",
+      "goal": "Read fixed G1 source reports, discrepancy categories, old Stage02 M1-M5 pilot metric definitions, existing REA Getter/Setter/Coach contract references; do not re-research all native fields."
+    },
+    {
+      "id": "P1",
+      "goal": "Select exactly one first Pilot from original three on data source quality; automatically query per target S0 baseline (>=10 valid comparable Calendar Sim games if available) with settings and stable controls, preserve historical epochs. If not enough, downgrade to S0_PARTIAL with exact missing per-target denominator; do not manufacture matches."
+    },
+    {
+      "id": "P2",
+      "goal": "Implement/verify a small allowlisted reusable SQL+manifest extraction profile from existing single-save WorldData, pinned to same source unit per game; flag 16 score anomalies individually (10 outside <=3), unknown Touches, derived values, game modes and frozen-box provenance; no parallel database."
+    },
+    {
+      "id": "P3",
+      "goal": "Map one exact canonical setting field to existing REA safe Getter/native Setter research, identify readback availability and minimal experiment schema; do not invoke Setter. Replace arbitrary efficacy rules with measurable hypothesis, confidence, no causal claim."
+    },
+    {
+      "id": "P4",
+      "goal": "Execute real local read-only SQL checks on existing captured SQLite if present (no RDC), run targeted regressions; append one structured evidence-producing iteration JSONL record per genuine round, separate initial development and post-delivery amendment rounds, generate summary with actual stop reason/evidence; do not backfill fabricated rounds."
+    }
+  ],
+  "acceptance": [
+    "Data usage never assumes 238 season games are >=10 per selected team/player in relevant setting-stable window; actual counts and source-unit IDs recorded.",
+    "238 game provenance reconciled, scoring anomalies preserved and exclude/flag by metric relevance; 222/228/238 categories not conflated.",
+    "Existing library APIs/SQLite schema unchanged except minimum read-only extraction additions; separate save binding preserved.",
+    "One pilot only, S0 baseline with actual per-target counts or explicit incomplete; REA readback contract references original evidence (not fake write).",
+    "All claims tied to actual test receipts (command, exit code, SHA), code-grade vs live-verified vs missing separated.",
+    "Loop observability JSONL and task summary show true evidence-producing iterations, types and stop causality, not counting commands/tests/stage labels as iterations.",
+    "Model may end at EXTERNAL_EVIDENCE_PENDING if new Calendar Sim needed; an honest pause is allowed, not a fake G2 accepted state."
+  ],
+  "deliverables": [
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/06_执行/s0_selected_pilot_baseline_and_sources.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/06_执行/one_pilot_g2_rea_preflight.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/06_执行/score_discrepancy_scope.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/06_执行/loop_iterations.jsonl",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/08_结论/loop_summary.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/07_测试执行/s0_pilot_reconciliation_tests.json",
+    "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/08_结论/completion_pointer.md",
+    "Any minimal extraction code/tests under existing world_data_prototype/"
+  ],
+  "stop_and_review": {
+    "stop_authority": "Core canonical current §11, plus evidence_driven_iteration (candidate branch is proposal only)",
+    "review_mode": "deferred_to_series",
+    "must_review_before": "the chosen G2 setting/metric contract becomes a load-bearing authority for real setting writes, or master integration",
+    "prohibited": "No actual game modification/sim/calendar, no master change",
+    "completion_status": "candidate_only_not_independently_accepted"
+  },
+  "loop_observability": {
+    "enabled": true,
+    "loop_applicability": "iterative_development",
+    "schema_ref": "Core candidate: loop_observability_contract_candidate_v0.1.json",
+    "counting_unit": "bounded_evidence_producing_iteration",
+    "log_path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/06_执行/loop_iterations.jsonl",
+    "summary_path": "01_os/07_content/_runs/run-20261101-nba2k22-vae-g2-s0-baseline-loop-observability-pilot-001/08_结论/loop_summary.json",
+    "required": "Each real iteration include trigger type/reference, actions, SHA before/after, test receipt exit code, delta and next decision; append-only; final objective/stop evidence and how stop triggered",
+    "avoid": "Do not equate work_packages P0-P4, command count, test count, commit count or A0-A8 retrospective labels with actual iteration count",
+    "post_first_delivery_remediation": "count separately under existing Core canonical budget",
+    "timestamp_tokens": "only with real instrumented evidence else null"
+  }
+}

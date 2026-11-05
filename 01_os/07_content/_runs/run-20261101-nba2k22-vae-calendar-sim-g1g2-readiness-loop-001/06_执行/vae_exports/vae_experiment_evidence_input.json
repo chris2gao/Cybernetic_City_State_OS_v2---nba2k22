@@ -1,0 +1,89 @@
+{
+  "schema": "vae_experiment_evidence_input.v1",
+  "save_id": "nba2k22_test_01",
+  "contract_version": "20261101.v2",
+  "game_mutation_status": "NOT_AUTHORIZED; READ_ONLY",
+  "simulation_mode": "CALENDAR_SIM_ONLY",
+  "pilots": [
+    {
+      "pilot_id": "PILOT_01_SHOT_TOUCHES",
+      "objective": "Verify relationship between Shot tendency and Touches/Usage under Calendar Sim",
+      "s0_baseline_block": {
+        "game_count": 10,
+        "simulation_type": "CALENDAR_SIM",
+        "intervention_active": false
+      },
+      "s1_intervention_candidate": {
+        "target_player_id": "player:native:target",
+        "setting_field": "TENDENCY_NATIVE_001",
+        "canonical_id": "TENDENCY_NATIVE_001",
+        "setting_name": "ShotTendency",
+        "expected_intervention": "old_value + 15",
+        "rea_readback_field": "TENDENCY_NATIVE_001",
+        "rea_readback_status": "PENDING_HUMAN_GAMEPLAY",
+        "associated_metric_field": "TENDENCY_NATIVE_066",
+        "coach_play_setting": "COACH_DEFAULT_001"
+      },
+      "matched_control_team": "CONCURRENT_DIVISION_UNMODIFIED_ROSTER",
+      "falsification_criteria": "ABS(delta_usage - delta_shot) <= 5.0",
+      "metrics": [
+        "game_score_box_derived",
+        "true_shooting_pct",
+        "usage_pct",
+        "experimental_possession_load_index"
+      ]
+    },
+    {
+      "pilot_id": "PILOT_02_COACH_TEMPO",
+      "objective": "Verify Coach Tempo setting impact on team Pace and Fastbreak scoring in Calendar Sim",
+      "s0_baseline_block": {
+        "game_count": 10,
+        "simulation_type": "CALENDAR_SIM",
+        "intervention_active": false
+      },
+      "s1_intervention_candidate": {
+        "target_team_id": "team:native:target",
+        "setting_field": "COACH_DEFAULT_014",
+        "canonical_id": "COACH_DEFAULT_014",
+        "setting_name": "CoachTempo",
+        "expected_intervention": "old_value + 10",
+        "rea_readback_field": "COACH_DEFAULT_014",
+        "rea_readback_status": "PENDING_HUMAN_GAMEPLAY"
+      },
+      "matched_control_team": "CONCURRENT_CONFERENCE_UNMODIFIED_COACH",
+      "falsification_criteria": "Pace_S1 > Pace_S0 AND Fastbreak_S1 > Fastbreak_S0",
+      "metrics": [
+        "pace",
+        "possessions",
+        "fastbreak_pts",
+        "points_per_100_possessions"
+      ]
+    },
+    {
+      "pilot_id": "PILOT_03_HELP_DEFENSE",
+      "objective": "Verify Help Defense POE setting effect on team DefRtg and opponent eFG%",
+      "s0_baseline_block": {
+        "game_count": 10,
+        "simulation_type": "CALENDAR_SIM",
+        "intervention_active": false
+      },
+      "s1_intervention_candidate": {
+        "target_team_id": "team:native:target",
+        "setting_field": "COACH_DEFAULT_015",
+        "canonical_id": "COACH_DEFAULT_015",
+        "setting_name": "HelpDefense",
+        "expected_intervention": "old_value + 15",
+        "rea_readback_field": "COACH_DEFAULT_015",
+        "rea_readback_status": "PENDING_HUMAN_GAMEPLAY"
+      },
+      "matched_control_team": "CONCURRENT_DIVISION_MATCHED_DEFENSIVE_PROFILE",
+      "falsification_criteria": "DefRtg_S1 < DefRtg_S0 AND Opp_eFG_S1 < Opp_eFG_S0",
+      "metrics": [
+        "defensive_rating",
+        "steals",
+        "blocks",
+        "opponent_effective_fg_pct"
+      ]
+    }
+  ]
+}

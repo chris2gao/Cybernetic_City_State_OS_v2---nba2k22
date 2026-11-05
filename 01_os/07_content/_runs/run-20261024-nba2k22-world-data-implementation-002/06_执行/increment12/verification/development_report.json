@@ -1,0 +1,379 @@
+{
+  "task_id": "nba2k22-world-data-full-implementation-01",
+  "increment": "12_ANNUAL_HISTORY_AND_AWARD_REFRESH",
+  "candidate_code_head": "ad98f65ad32fd9e7ebc8bf97d4821156331337af",
+  "status": "DEVELOPMENT_INCREMENT_VERIFIED_FULL_GOAL_NOT_COMPLETE",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Windows"
+  },
+  "test_exit_code": 0,
+  "test_command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q",
+  "test_evidence": "tests.stderr.log",
+  "database": {
+    "save_id": "AG01D-RESEARCH-ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 16,
+    "box_observations": 16,
+    "attribute_observations": 1,
+    "capture_units": 30,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 14
+    },
+    "nonempty_fact_tables": [
+      "player_season_totals",
+      "games",
+      "game_state_observations",
+      "game_period_scores",
+      "players",
+      "player_attribute_snapshots",
+      "player_game_boxes",
+      "teams"
+    ]
+  },
+  "native_source_status": "HISTORICAL_AG01D_AND_RECORDED_OWNER_LIVE_SOURCE_REPLAY",
+  "check_scope": "This command replays fixtures; actual owner read calls are separately recorded in the Native source evidence",
+  "actual_owner_acquisition_evidence_ref": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment12/native_sources/source_manifest.json",
+  "season_observations": 13,
+  "observed_team_identities": 15,
+  "public_player_attributes_observed": 54,
+  "registered_player_families": {
+    "save_id": "AG01D-REGISTERED-PLAYERS",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 3,
+    "capture_units": 3,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "field_gaps",
+      "player_contract_observations",
+      "player_vitals_observations",
+      "player_play_type_slots",
+      "players",
+      "player_attribute_snapshots",
+      "player_tendency_snapshots"
+    ]
+  },
+  "owner_source_replay": {
+    "save_id": "OWNER_CAPTURE_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 1,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "native_box_observations",
+      "games",
+      "game_state_observations",
+      "field_gaps",
+      "game_period_scores",
+      "team_game_boxes",
+      "teams"
+    ]
+  },
+  "organization_replay": {
+    "save_id": "ORGANIZATION_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "team_season_totals",
+      "staff_members",
+      "team_state_observations",
+      "staff_contract_observations",
+      "field_gaps",
+      "team_playbook_slots",
+      "staff_skill_observations",
+      "team_seasons",
+      "staff_team_assignments",
+      "team_finance_observations",
+      "coach_preferences",
+      "team_tactic_settings",
+      "teams"
+    ]
+  },
+  "market_replay": {
+    "save_id": "MARKET_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "waived_salary_observations",
+      "draft_pool_slot_observations",
+      "field_gaps",
+      "draft_pick_assets",
+      "teams",
+      "draft_pick_ownerships"
+    ]
+  },
+  "planning_replay": {
+    "save_id": "PLANNING_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "mentorship_relations",
+      "gameplan_defense_observations",
+      "player_training_slot_observations",
+      "gameplan_rotation_observations",
+      "field_gaps",
+      "roster_memberships",
+      "player_training_observations",
+      "players",
+      "native_mentor_relation_observations",
+      "mentor_manager_observations",
+      "teams",
+      "team_training_settings",
+      "gameplan_observations"
+    ]
+  },
+  "settings_replay": {
+    "save_id": "SETTINGS_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "league_rule_observations",
+      "field_gaps",
+      "game_setting_observations"
+    ]
+  },
+  "records_replay": {
+    "save_id": "RECORDS_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "season_record_entries",
+      "field_gaps"
+    ]
+  },
+  "native_honors_replay": {
+    "save_id": "NATIVE_HONORS_RESEARCH_ONLY",
+    "schema_version": 11,
+    "table_count": 77,
+    "column_count": 1030,
+    "game_count": 0,
+    "box_observations": 0,
+    "attribute_observations": 0,
+    "capture_units": 1,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 1
+    },
+    "nonempty_fact_tables": [
+      "native_identity_links",
+      "native_player_stat_observations",
+      "native_player_stat_links",
+      "field_gaps",
+      "native_player_sources",
+      "players"
+    ]
+  },
+  "contract_bit_layout": {
+    "source": "config/memory_field_profile.json",
+    "source_grade": "REGISTERED_BIT_LAYOUT",
+    "original_contract_years": {
+      "definition": {
+        "name": "original_contract_years",
+        "offset": 833,
+        "bits": 3,
+        "start_bit": 4,
+        "group": "contract"
+      },
+      "absolute_bit_span": [
+        6668,
+        6670
+      ]
+    },
+    "extension_length": {
+      "definition": {
+        "name": "extension_length",
+        "offset": 833,
+        "bits": 3,
+        "start_bit": 7,
+        "group": "contract"
+      },
+      "absolute_bit_span": [
+        6671,
+        6673
+      ]
+    },
+    "registered_bits_overlap": false,
+    "current_game_semantics": "UNKNOWN_PENDING_TARGET_UI_OR_NATIVE_CONTROL",
+    "profile_sha256": "447269a5c7b3a04fcdf2b68e125cda4f949df19fb625da67284997380432efdb"
+  },
+  "queried_player_id": "player:AG01D:1612",
+  "queried_game_id": "season:2022:game:117",
+  "exported_box_rows": 16,
+  "schema_domains": [
+    "RES-C",
+    "RES-D",
+    "RES-G",
+    "RES-H",
+    "RES-L",
+    "RES-M",
+    "RES-P",
+    "RES-S",
+    "RES-T"
+  ],
+  "schema_mapping": {
+    "v1_tables_preserved": 16,
+    "approved_provisional_tables": 59,
+    "actual_tables": 77,
+    "additional_tables": [
+      "game_state_observations",
+      "season_finalizations",
+      "native_box_observations",
+      "team_state_observations",
+      "draft_pool_slot_observations",
+      "draft_prospect_attribute_snapshots",
+      "draft_prospect_tendency_snapshots",
+      "draft_prospect_play_type_slots",
+      "waived_salary_observations",
+      "gameplan_observations",
+      "gameplan_rotation_observations",
+      "gameplan_defense_observations",
+      "player_training_slot_observations",
+      "mentor_manager_observations",
+      "native_mentor_relation_observations",
+      "native_player_stat_observations",
+      "native_player_sources",
+      "native_player_stat_links"
+    ]
+  },
+  "code_hash_scope": "Actual executed working-tree bytes at candidate_code_head; generated artifacts preserve their bytes via local .gitattributes",
+  "code_sha256": {
+    "schema.sql": "2f7c185c26bd27e2ad2b9ff78bc4945378bb98604c3c644128ca0fcf52ca40c7",
+    "field_dictionary.json": "0612e694eade5f98160c8aabfcf7e93ed973c838ae712b60d5c7f4a6fca41be1",
+    "schema_model.py": "b58c01b7fcdf817338d4ba011c28aaef723f02e66ed504f2d171f74f7bb0bf43",
+    "engine.py": "3acc25d7ed8b8037c6f0722973d125f806b3754344ce69964d968123ffcab605",
+    "readers.py": "064b9c82d7bd65b42bec23abe3cd973bebe75e09a8bf65eb715422cf20b76b5c",
+    "query.py": "857c78190173c5f3c2f736c45267db9dae12415cd0f3db6601e0c7479b629d96",
+    "live_reader.py": "7f587e39985fcd563cc316b438e56f41c94bd11c4a8fad12745f35171446f4ac",
+    "family_codec.py": "eda7b786f40fe7169e3fa8a0446b5f7d846a62c138f95fe98b8833edb725edd4",
+    "owner_capture.py": "bc034624eec12b0c887533288c548a6eda7d0cd00350a334cf7f779a4e7f166e",
+    "live_world.py": "d3f73f4c671717ed99e167182d876598f333f750b149b0ba43a120e3a2c3d9d7",
+    "cli.py": "0b85b64796a5174b4512468269d45c5bd387eae5cb4cff2972af4c19bc668e0f",
+    "schedule_reader.py": "78da1dc2db32cae9c12c7e5f1855a196ffd727b5f748ccd5267a273baf777ed5",
+    "organization_reader.py": "07b70dc5deebe0929ba226ccf89670b2e29854402626d274213b991c2583cd7c",
+    "market_reader.py": "81663bbefe3e0ab9f8a985738bea8e30c0859ee7b0f8ae64821070e678752516",
+    "planning_reader.py": "e31bda029d7830590e02f7246486ced85c1f2b46ab1c776d9aed774b1ed8cd88",
+    "settings_reader.py": "22fb2030c047ae9888b96f61eebe43a91a28c8e0671e443e28c712d0e2d99a33",
+    "records_reader.py": "da3dc676aaed462196660dfe381fc658ae829d4a13ca104215fdafbf75d72f6d",
+    "award_reader.py": "29fce14eb039f18b797fa61fbeb26ebbf033808ca7720655718c0284992e3450",
+    "award_native_profile.json": "41aa727bb5e02d0c61a6148a112c095d35e8f3081d6be8861bce6459d9973c34",
+    "cadence.py": "2c72a26f5549461b75ba6ee103c38f80bc69909198e2c963fd3af948b45be391"
+  },
+  "artifact_sha256": {
+    "ag01d-world.sqlite": "ce0cd897fd04802417841375fd4b4f6fbec3b64a1cc65b844fe31b0e4b6f7f48",
+    "game-box.json": "75749ab7927ddd12463d8570408d789f338523d67f580438dddc8e1e34257d88",
+    "gameplan-card.json": "747f904459d48ecb50b0ed5a826f338157048ea65d4e9a346c2016a7b7e174ab",
+    "gm-player-card.json": "4c09866ec0cadd75aeae427c97e2b71ec2dba66427643f07a28686b11d6a2762",
+    "market-research.sqlite": "de6ce1d8955cf4ec7f88c5e2a1a6c918fd88b734cab5dbb22945b02f3192ec80",
+    "market-snapshot.json": "3a2600d5b367adedfdb9074b5e94d6b069a07307cffdd839afd898206d2da5d2",
+    "native-honor-source.json": "93525130140e3b3d2fbc06f841f66185f841538045c6d544577a006e1b6c0bb8",
+    "native-honors-research.sqlite": "9d077ae2ee76b59713268d4b02c9d852fd4804c9d46123bd8991af9fd49df396",
+    "native-mvp-source.json": "c0d2163e1e763a8352b951850bf82dd208cf5fb1f44c9b37ca3c18559cb47631",
+    "organization-research.sqlite": "99cb8ed5eeab862620f6693c13a9dd33edb209e7b8e39a8fbfa53f06c45a79f1",
+    "owner-capture-research.sqlite": "55f621bb8de23a69f4f3a1ce306fdf82b3022f6a8966996bdaf85458f51759ec",
+    "planning-research.sqlite": "a72e9d3038ef49c4d6f7419681fddf3787501aa96401c343e15cf1d62bac3767",
+    "planning-snapshot.json": "1e8a4a7321ba0e77972f57d45d310772de315845546a84554df03a089070bdc4",
+    "public-player-game-boxes.jsonl": "ef7e4e2439ff3106e1ee666dddb34181a6a66472d247b6a788eb7fbf4757a124",
+    "record-book-page.json": "c15c98a28d1841bfad33bdd1fedc6ce25d7e0d150aa92a5795253ff534332499",
+    "records-research.sqlite": "7c95b93b75d86628d2f43702b08ca9d8006fad243b77c3108ab7aa352ccc6268",
+    "registered-players.sqlite": "9402e5d6b78d11d974824489a2869ff30562646dd87f99db49f0ec6781aba47a",
+    "rules-snapshot.json": "29bddbfd2a8c745ed9cd287738e0309886806080e4fe2865def487ace7ed3127",
+    "settings-research.sqlite": "aa3948a57f6f645fa490661fe627e7cbc9408b62485312b1fb0a7ce989f568eb",
+    "settings-snapshot.json": "71a893a4bce5a264f76e323da5d7c20c17b9262c66480115f9fc68def59bb22f",
+    "staff-card.json": "a3f8ce5bf5cb71b14ddf234dc437f2a144093ae603e4fc77094a2711285f02d0",
+    "team-card.json": "1956760386e8a240bbe13e208b1c1751eb78af433a698c4c90a4b3e2069ed14d",
+    "tests.stderr.log": "563ed68c13d6afac29d918e65198b8d3171d79a34b0227849aa9cd0e481b8da7",
+    "tests.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "wilt-records.json": "d5541da528c76a6c4cd8af2dc771fc62b065bcc1a4a9fc877ab8877e20255c4c"
+  },
+  "not_run": [
+    "fresh live acquisition inside this verification command",
+    "full-domain native source acceptance",
+    "100-season capacity benchmark",
+    "final managed verification",
+    "independent review",
+    "Human full-candidate acceptance"
+  ],
+  "next_owner": "Codex continues engineering and can research Native directly; Human relays Gemini only for selected batch exploration",
+  "open_source_gaps": [
+    "four unresolved completed-game Native player IDs",
+    "calendar UI encoding",
+    "cross-session player/staff lifecycle identity; preserved vs unique ID canonical transition not inferred",
+    "contract/finance UI semantics",
+    "badge tier encoding",
+    "training focus/schedules and safe history fields",
+    "global rotation and committed-plan effect",
+    "mentor badge activity/effect",
+    "decoded play names",
+    "player/staff market availability",
+    "initialized prospect class/year and G League identities",
+    "pick protection/swaps and historical results",
+    "global setting NativeType descriptors, full UI names/ranges/scale and remaining league rules",
+    "record category/subject/scope/date semantics; native honor flag subjects/allocation/final-instance acceptance and news source"
+  ],
+  "q10_exceptions_approved": [],
+  "game_writes": false,
+  "game_process_access": false,
+  "master_modified": false
+}

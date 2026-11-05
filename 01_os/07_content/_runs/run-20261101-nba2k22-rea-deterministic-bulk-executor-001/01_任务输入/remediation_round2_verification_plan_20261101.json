@@ -1,0 +1,161 @@
+{
+  "schema_version": "nba2k22.rea.bulk_executor.round2.verification.v1",
+  "task_id": "NBA2K22-REA-DETERMINISTIC-BULK-EXECUTOR-20261101-001",
+  "pilot_sample_ref": "CORE_LOOP_OBSERVABILITY_V01_SAMPLE_4",
+  "dispatch_file": "01_任务输入/remediation_round2_function_level_dispatch_20261101.md",
+  "source_sha": "1a800563c0051999fb882cc7231f75ec724b832f",
+  "work_branch": "task/nba2k22-rea-deterministic-bulk-executor-20261101",
+  "os_role": "execution",
+  "intended_executor_model": "Gemini Flash 3.8",
+  "actual_executor_model": "MUST_BE_RECORDED_BY_EXECUTOR",
+  "post_first_delivery_remediation_round": 2,
+  "post_first_delivery_remediation_round_budget": 2,
+  "scope": "OFFLINE_ONLY",
+  "prohibited": [
+    "REAL_GAME_PROCESS_ATTACH",
+    "LIVE_NATIVE_SETTER",
+    "REAL_FRIDA_RUN",
+    "SAVE_MUTATION",
+    "GAMEPLAY_OR_CALENDAR_PROGRESS",
+    "WORLD_DATA_CAPTURE",
+    "MASTER_MERGE",
+    "AUTO_RETRY_ON_UNKNOWN"
+  ],
+  "packages": [
+    {
+      "id": "A",
+      "objective": "Parameter batch to fake transport to validated per-intent receipt to journal",
+      "code_anchors": [
+        "bulk_executor.py:BulkBatchPlanner",
+        "bulk_executor.py:BulkExecutorService",
+        "bulk_executor.py:ReaChunkTransportAdapter",
+        "bulk_executor.py:cli_execute_authorized",
+        "transport.py:ReaCliTransport.execute"
+      ],
+      "must_prove": [
+        "FAKE_TRANSPORT_EXECUTED",
+        "VALIDATED_CHUNK_AND_PLAN_DIGEST",
+        "REGISTERED_ACTION_ID",
+        "PER_INTENT_CONSERVATION",
+        "NO_LIVE_ENABLE_FROM_STRING_FLAG",
+        "CRASH_STOP_ON_UNKNOWN"
+      ]
+    },
+    {
+      "id": "B",
+      "objective": "Closed JS runtime with certified Player guard and honest Coach support/defer",
+      "code_anchors": [
+        "bulk_executor.py:BulkFridaScriptCompiler.compile_chunk",
+        "runtime_codegen.py:render_program",
+        "runtime/common.js",
+        "runtime/gui_once.js",
+        "runtime/player_stats.js",
+        "runtime/coach_settings.js",
+        "data/coach_settings.json",
+        "data/native_bindings.json"
+      ],
+      "must_prove": [
+        "NODE_VM_EXECUTES_CHUNK_ACTION",
+        "ONE_GUI_HOOK_AND_EXPECTED_THREAD",
+        "NO_UNRESOLVED_SYMBOL",
+        "CAS_PRECEDES_SETTER",
+        "PLAYER_156_BYTE_INVARIANT",
+        "ATTRIBUTE_CACHE_FLAG_INVARIANT",
+        "COACH_NATIVE_CONTRACT_OR_UNSUPPORTED_FOR_LIVE",
+        "COMPLETE_RECEIPT_MAP_AFTER_FAILURE"
+      ]
+    },
+    {
+      "id": "C",
+      "objective": "Durable claim before possible mutation and actual mock receipt-based stress statistics",
+      "code_anchors": [
+        "bulk_executor.py:ExecutionJournal",
+        "role_batches.py:ExecutionJournal",
+        "role_batches.py:NativeActionDispatcher",
+        "bulk_executor.py:run_10k_benchmark",
+        "tests/test_bulk_executor.py"
+      ],
+      "must_prove": [
+        "CLAIM_BEFORE_TRANSPORT",
+        "UNKNOWN_LOCK_ACROSS_RESTART",
+        "DAMAGED_JOURNAL_FAIL_CLOSED",
+        "INDEPENDENT_EVIDENCE_BOUND_RECONCILIATION",
+        "NOOP_EQUALITY_STRICT",
+        "ACTUAL_RECEIPT_COUNTS",
+        "EXPLICIT_ESTIMATE_VS_MEASURED"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "G1_DEFAULT_DENIAL",
+      "kind": "negative",
+      "expect": "No game transport instantiated or executed from flag, arbitrary authorization_ref, mismatched build or dry_run; executable mode only Fake in this task"
+    },
+    {
+      "id": "G2_E2E_FAKE",
+      "kind": "integration",
+      "expect": "At least 2 planned chunks plus mixed supported fields through validate-plan-compile-FakeTransport-parse-journal-summary; controlled Fake receives actual call"
+    },
+    {
+      "id": "G3_PROTOCOL",
+      "kind": "negative",
+      "expect": "Missing, duplicated, wrong-kind, wrong-chunk, wrong-request or wrong-digest result must fail closed; no automatic replay"
+    },
+    {
+      "id": "G4_NATIVE_CONTRACT",
+      "kind": "node_vm",
+      "expect": "Generated JS executes within isolated stub; one GUI-thread callback, full Player memory invariants; Coach path matches authoritative field spec or reports unsupported"
+    },
+    {
+      "id": "G5_RECOVERY",
+      "kind": "fault_injection",
+      "expect": "Crash before/after mutation, corrupted ledger, prior UNKNOWN and same intent with changed digest block unapproved repetition"
+    },
+    {
+      "id": "G6_BENCHMARK",
+      "kind": "synthetic",
+      "expect": "Recompute 1/10/100/1000/10000 outcomes from raw receipts, conservation and all percentiles; mock, estimate and projection distinctly labelled"
+    },
+    {
+      "id": "G7_REGRESSION",
+      "kind": "unit",
+      "expect": "Run bulk executor, role batches/capabilities, player stats/editor read plus new Node VM and FakeTransport test suites with exact raw command, exit code and tested SHA"
+    },
+    {
+      "id": "G8_LOOP_EVIDENCE",
+      "kind": "audit",
+      "expect": "Append-only iterations; explicit missing iter-005 discrepancy rather than invented row; exact internal/remediation counters and provenance; no third remediation round"
+    }
+  ],
+  "minimum_failures_to_inject": [
+    "CAS_MISMATCH_ZERO_SETTER",
+    "AFTER_SETTER_UNKNOWN",
+    "LOST_OR_DUPLICATE_MESSAGE",
+    "WRONG_PLAN_DIGEST",
+    "THREAD_NOT_ENTERED",
+    "JOURNAL_CRASH_WINDOW",
+    "CORRUPT_LOCK_LEDGER",
+    "CROSS_SAVE_OR_CHANGED_INTENT",
+    "COACH_UNSUPPORTED",
+    "UNREQUESTED_STAT_BYTE_CHANGED",
+    "AFTER_GETTER_MISMATCH"
+  ],
+  "expected_deliverables": [
+    "CODE_AND_TESTS",
+    "RAW_OFFLINE_TEST_RECEIPTS",
+    "ACTUAL_BENCHMARK_RECEIPTS_AND_METRICS",
+    "APPEND_ONLY_LOOP_ITERATIONS_JSONL",
+    "RECOMPUTABLE_LOOP_SUMMARY_JSON",
+    "FINAL_COMPLETION_POINTER_AND_SHA"
+  ],
+  "acceptance": "OFFLINE_END_TO_END_BATCH_EXECUTION_VERIFIED_ONLY",
+  "final_live_status": "NOT_AUTHORIZED_NOT_RUN",
+  "stop_authority": "Core 01_os/开发入口与单窗口任务规范_v1.md §11; do not bypass post-delivery budget with internal iteration naming",
+  "review_policy": "risk-driven series review, no new review gate; later protected/live adoption remains separately gated",
+  "separate_evaluations": {
+    "loop_observability": "truthfulness, reproducibility, resource cost, stopping causality",
+    "gemini_function_level_guidance": "measured remediation quality and remaining primary engineering defects",
+    "must_not_conflate": true
+  }
+}

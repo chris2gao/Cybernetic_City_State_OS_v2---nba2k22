@@ -1,0 +1,105 @@
+{
+  "task_id": "nba2k22-world-data-full-implementation-01",
+  "increment": "01_ALL_DOMAIN_DDL_AND_RESEARCH_ADAPTER",
+  "candidate_code_head": "5234cccbac7b0f484b4e3094f63be684f8385883",
+  "status": "DEVELOPMENT_INCREMENT_VERIFIED_FULL_GOAL_NOT_COMPLETE",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Windows"
+  },
+  "test_exit_code": 0,
+  "test_command": "python -m unittest discover -s 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests -p test_*.py -q",
+  "test_evidence": "tests.stderr.log",
+  "database": {
+    "save_id": "AG01D-RESEARCH-ONLY",
+    "schema_version": 2,
+    "table_count": 61,
+    "column_count": 632,
+    "game_count": 16,
+    "box_observations": 16,
+    "attribute_observations": 1,
+    "capture_units": 30,
+    "foreign_key_errors": 0,
+    "source_grades": {
+      "RESEARCH_FIXTURE": 14
+    },
+    "nonempty_fact_tables": [
+      "teams",
+      "players",
+      "games",
+      "player_attribute_snapshots",
+      "game_state_observations",
+      "game_period_scores",
+      "player_game_boxes",
+      "player_season_totals"
+    ]
+  },
+  "native_source_status": "HISTORICAL_RESEARCH_FIXTURE_REPLAY_NOT_CURRENT_LIVE",
+  "season_observations": 13,
+  "observed_team_identities": 15,
+  "public_player_attributes_observed": 54,
+  "queried_player_id": "player:AG01D:1612",
+  "queried_game_id": "season:2022:game:117",
+  "exported_box_rows": 16,
+  "implemented_domains": [
+    "RES-C",
+    "RES-D",
+    "RES-G",
+    "RES-H",
+    "RES-L",
+    "RES-M",
+    "RES-P",
+    "RES-S",
+    "RES-T"
+  ],
+  "schema_mapping": {
+    "v1_tables_preserved": 16,
+    "approved_provisional_tables": 59,
+    "actual_tables": 61,
+    "additional_tables": [
+      "game_state_observations",
+      "season_finalizations"
+    ]
+  },
+  "code_hash_scope": "Actual executed working-tree bytes at candidate_code_head; generated artifacts preserve their bytes via local .gitattributes",
+  "code_sha256": {
+    "schema.sql": "65ce3a5558e889719bfde44c515f8db9030bb41cd57798a017acb130705ee490",
+    "field_dictionary.json": "268b932d0546378406f630e062bd6916df5274fed1532813a02a6fc52fbce734",
+    "schema_model.py": "bdd6b428a022d9331da79a0c0a0418b408e91e309964578e74355e0b2f3db5a9",
+    "engine.py": "2c6aba16faa8d567601e6c0e4b6d8787c8bda9032d08e9bd9d59a5e1af6011e7",
+    "readers.py": "f9b575620f02a7fd2874820bf770e4c35dc354fcab149b141fc60622992f33fc",
+    "query.py": "044491c3bf32fcf40ae2ba11a804d722b996f8148878da8db89412517c5f7497",
+    "live_reader.py": "5976afd5d9671c8cd8595d992f42d770c2b5d5356ec10b4821bec410e36056fd"
+  },
+  "artifact_sha256": {
+    "ag01d-world.sqlite": "37a8ea02c38990c654d5b5c7e385273199a5d6170cd5c170c107b6e033b1f606",
+    "game-box.json": "75749ab7927ddd12463d8570408d789f338523d67f580438dddc8e1e34257d88",
+    "gm-player-card.json": "623e2c673bce2787923f0948163f12441683f296459077ac9c9cd40c113ed340",
+    "public-player-game-boxes.jsonl": "ef7e4e2439ff3106e1ee666dddb34181a6a66472d247b6a788eb7fbf4757a124",
+    "tests.stderr.log": "535d976179cb289a51371d03d1ce1eadedac2ac72662c835eeb7d7d9d520b9b3",
+    "tests.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "not_run": [
+    "live process acquisition",
+    "full-domain native source acceptance",
+    "100-season capacity benchmark",
+    "final managed verification",
+    "independent review",
+    "Human full-candidate acceptance"
+  ],
+  "next_owner": "Codex continues engineering and can research Native directly; Human relays Gemini only for selected batch exploration",
+  "open_source_gaps": [
+    "current process/build/save binding",
+    "full active schedule window and both-team Box participants",
+    "contract offset 833 ambiguity",
+    "badge tier encoding",
+    "staff-to-team and full coaching source",
+    "draft/G League native identities",
+    "all setting/rule UI fields",
+    "actual awards/records/news sources"
+  ],
+  "q10_exceptions_approved": [],
+  "game_writes": false,
+  "game_process_access": false,
+  "master_modified": false
+}

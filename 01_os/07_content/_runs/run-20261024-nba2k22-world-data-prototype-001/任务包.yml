@@ -1,0 +1,54 @@
+task_packet:
+  task_id: nba2k22-world-data-prototype-mainline-01
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  exact_base_sha: 977890d93210107a87acdce70b528065f82d49d0
+  current_master_at_dispatch: 977890d93210107a87acdce70b528065f82d49d0
+  branch: task/nba2k22-world-data-prototype-mainline-20261024
+  risk_tier: T2_semantic
+  objective: >-
+    Implement first executable per-save SQLite world-data prototype with
+    typed player field-family snapshots and relational badge/play-type children;
+    preserve append-only observations, reject cross-save fixtures, and use only
+    explicitly synthetic sample inputs. This is the new system-development mainline;
+    prior tasks serve as source evidence, not automatic execution prerequisites.
+  source_evidence:
+    - task/nba2k22-task1-01b-requirement-result-20261023@6c148d801ddc2a17490a1b29c4f57e0d52e882a5
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/schema.sql
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/native_access/AG_NATIVE_01D/ui_native_source_matrix.json
+    - Human current-turn confirmation of existing game data/process as dedicated development test environment
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/**
+    - 01_os/07_content/_runs/run-20261024-nba2k22-world-data-prototype-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-prototype-001/verification_plan.json
+  required_tests: [PYTHON_UNIT, SQLITE_SMOKE]
+  prohibitions:
+    - modify_master_or_merge
+    - modify_existing_production_schema_or_save
+    - write_live_game_or_attach_process
+    - claim_synthetic_fixtures_as_native_verified
+    - force_push_or_rewrite_history
+  big_task: false
+  required_completion_pointer: 01_os/07_content/_runs/run-20261024-nba2k22-world-data-prototype-001/completion_pointer.json
+  publisher:
+    principal_binding: connector_authenticated
+    publication_transport: github_api_connector
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 977890d93210107a87acdce70b528065f82d49d0
+    expected_remote_head: 977890d93210107a87acdce70b528065f82d49d0
+  executor_profile:
+    provider: OpenAI
+    model: GPT-6
+    reasoning_effort: high
+    mode: standard
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: separate_session_required
+    different_model_family: false
+    different_measurement_tool: true
+  minimum_work_unit_output:
+    role: execution
+    work_performed_or_requested: First executable isolated SQLite prototype
+    supportability_rationale: Existing verified plan and source inventory are used as inputs without altering existing game/code databases.
+    feasibility_rationale: Python stdlib sqlite3 can be executed in isolated container; current Desktop Commander device is offline.

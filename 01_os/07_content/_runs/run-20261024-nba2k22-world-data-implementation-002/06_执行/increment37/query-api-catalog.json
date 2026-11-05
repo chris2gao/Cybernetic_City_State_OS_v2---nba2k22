@@ -1,0 +1,226 @@
+{
+  "code_head": "cbdaba0cb263083ea04171f8222aab65a00e3d30",
+  "role_policy": "GM public endpoints; owner diagnostics and direct SQLite access require owner handling",
+  "functions": [
+    {
+      "name": "awards",
+      "signature": "(path, *, year=None, award_code=None, after_key='', limit=200)",
+      "module": "query"
+    },
+    {
+      "name": "current_coach_stats",
+      "signature": "(path, *, staff_id=None, subject_name=None, source_index=None, resolved_only=True, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "current_period_stats",
+      "signature": "(path, *, player_id=None, subject_name=None, source_index=None, current_roster_only=True, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "export_filtered_facts",
+      "signature": "(path, new_output_directory, table, *, columns=None, filters=None, max_rows=10000, role='GM')",
+      "module": "fact_queries"
+    },
+    {
+      "name": "export_jsonl",
+      "signature": "(path, destination, table, *, limit=10000)",
+      "module": "query"
+    },
+    {
+      "name": "fact_fields",
+      "signature": "(table, *, role='GM')",
+      "module": "fact_queries"
+    },
+    {
+      "name": "game_box",
+      "signature": "(path, game_id, *, unit_id=None)",
+      "module": "query"
+    },
+    {
+      "name": "game_mode",
+      "signature": "(path, *, season_id=None, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "gameplan_card",
+      "signature": "(path, team_id, opponent_team_id)",
+      "module": "query"
+    },
+    {
+      "name": "history",
+      "signature": "(path, table, *, entity_key=None, entity_id=None, limit=200, role='GM')",
+      "module": "query"
+    },
+    {
+      "name": "history_page",
+      "signature": "(path, table, *, entity_key=None, entity_id=None, limit=200, cursor=None)",
+      "module": "query"
+    },
+    {
+      "name": "league_calendar",
+      "signature": "(path, *, season_id=None, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "league_history",
+      "signature": "(path, *, year=None, type_label=None, unit_id=None, after_index=-1, limit=200)",
+      "module": "query"
+    },
+    {
+      "name": "league_standings",
+      "signature": "(path, season_id, *, phase_code=None, unit_id=None, offset=0, limit=30)",
+      "module": "league_views"
+    },
+    {
+      "name": "market_snapshot",
+      "signature": "(path, *, team_id=None, limit=10000)",
+      "module": "query"
+    },
+    {
+      "name": "native_affiliations",
+      "signature": "(path, *, subject_name=None, source_index=None, flag=None, flag_value=1, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "native_honors",
+      "signature": "(path, *, flag=None, year=None, subject_name=None, unit_id=None, after_index=-1, limit=200)",
+      "module": "query"
+    },
+    {
+      "name": "native_news",
+      "signature": "(path, *, event_label=None, unit_id=None, after_index=-1, limit=200)",
+      "module": "query"
+    },
+    {
+      "name": "native_player_details",
+      "signature": "(path, *, subject_name=None, source_index=None, unit_id=None, after_index=-1, limit=10)",
+      "module": "query"
+    },
+    {
+      "name": "native_player_rotation",
+      "signature": "(path, *, player_id=None, subject_name=None, source_index=None, current_roster_only=True, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "native_player_seasons",
+      "signature": "(path, *, player_id=None, subject_name=None, source_index=None, year=None, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "native_player_skills",
+      "signature": "(path, *, subject_name=None, source_index=None, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "native_player_state",
+      "signature": "(path, *, subject_name=None, source_index=None, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "native_staff",
+      "signature": "(path, *, staff_id=None, subject_name=None, source_index=None, person_type=None, status_label=None, team_id=None, current_core_only=True, include_details=False, unit_id=None, after_index=-1, limit=20)",
+      "module": "query"
+    },
+    {
+      "name": "native_staff_history",
+      "signature": "(path, *, staff_id=None, subject_name=None, source_index=None, unit_id=None, after_index=-1, limit=10, reference_position=None)",
+      "module": "query"
+    },
+    {
+      "name": "native_team_finance",
+      "signature": "(path, *, team_id=None, unit_id=None)",
+      "module": "query"
+    },
+    {
+      "name": "native_transactions",
+      "signature": "(path, *, unit_id=None)",
+      "module": "query"
+    },
+    {
+      "name": "planning_snapshot",
+      "signature": "(path, *, team_id=None, limit=5000)",
+      "module": "query"
+    },
+    {
+      "name": "player_badges",
+      "signature": "(path, player_id)",
+      "module": "query"
+    },
+    {
+      "name": "player_card",
+      "signature": "(path, player_id)",
+      "module": "query"
+    },
+    {
+      "name": "player_leaderboard",
+      "signature": "(path, season_id, *, metric='points_per_game', phase_code=None, team_scope=None, null_team_scope=False, team_id=None, min_games=1, min_attempts=0, ascending=False, unit_id=None, offset=0, limit=20)",
+      "module": "league_views"
+    },
+    {
+      "name": "player_play_types",
+      "signature": "(path, player_id)",
+      "module": "query"
+    },
+    {
+      "name": "player_seasons",
+      "signature": "(path, player_id, *, season_id=None, phase_code=None, limit=100)",
+      "module": "competition_views"
+    },
+    {
+      "name": "prospect_card",
+      "signature": "(path, prospect_id)",
+      "module": "query"
+    },
+    {
+      "name": "query_facts",
+      "signature": "(path, table, *, columns=None, filters=None, limit=100, cursor=None, role='GM')",
+      "module": "fact_queries"
+    },
+    {
+      "name": "record_book",
+      "signature": "(path, *, category_code=None, subject_name=None, unit_id=None, after_index=-1, limit=200)",
+      "module": "query"
+    },
+    {
+      "name": "rules_snapshot",
+      "signature": "(path, *, season_id=None, limit=2000)",
+      "module": "query"
+    },
+    {
+      "name": "schedule",
+      "signature": "(path, *, season_id=None, status_code=None, period_code=None, game_type_code=None, native_date_from=None, native_date_to=None, limit=2000)",
+      "module": "query"
+    },
+    {
+      "name": "season_summary",
+      "signature": "(path, season_id, *, phase_code=None, limit=1000)",
+      "module": "competition_views"
+    },
+    {
+      "name": "settings_snapshot",
+      "signature": "(path, *, scope_code=None, limit=2000)",
+      "module": "query"
+    },
+    {
+      "name": "staff_card",
+      "signature": "(path, staff_id)",
+      "module": "query"
+    },
+    {
+      "name": "staff_team_slots",
+      "signature": "(path, team_id, *, unit_id=None)",
+      "module": "query"
+    },
+    {
+      "name": "team_card",
+      "signature": "(path, team_id)",
+      "module": "query"
+    },
+    {
+      "name": "team_lineups",
+      "signature": "(path, team_id, *, unit_id=None, include_advanced=False)",
+      "module": "query"
+    }
+  ]
+}

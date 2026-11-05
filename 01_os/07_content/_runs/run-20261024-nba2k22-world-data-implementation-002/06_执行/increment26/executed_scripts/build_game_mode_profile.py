@@ -1,0 +1,17 @@
+import hashlib,json
+from pathlib import Path
+r=Path(__file__).resolve().parent;app=Path.cwd()/'08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype';metadata=json.loads((r/'stat-mode-metadata-labeled.json').read_bytes());entries=json.loads((r/'stat-mode-metadata-01/type_entries.json').read_bytes());bindings={};enums={}
+for t in metadata:
+    if 'fields' in t:
+        assert all(len(f['literal_names'])==1 for f in t['fields']);bindings[t['name']]={f['literal_names'][0]:f for f in t['fields']}
+        entry=next(e for e in entries if e['name']==t['name']);signature=sorted((f['name_crc'],f['offset'],f['size'],f['format'],f['words'][5]) for f in t['fields']);entry.update(expected_size=t['struct_size'],expected_field_count=len(t['fields']),field_signature_sha256=hashlib.sha256(json.dumps(signature,separators=(',',':')).encode()).hexdigest())
+    else:
+        assert all(len(v['literal_names'])==1 for v in t['values']);enums[t['name']]={str(v['value']):{'name_crc':v['name_crc'],'label':v['literal_names'][0]} for v in t['values']}
+calendar=json.loads((app/'calendar_native_profile.json').read_bytes());date_type=next(t for t in calendar['types'] if t['name']=='SCHEDULEDATE')
+assert bindings['GAMEMODE']['Today']['enum_pointer']==0x140000000+date_type['type_rva']
+consumers=json.loads((r/'stat-consumer-code.json').read_bytes())['targets'];switch=json.loads((r/'stat-mode-switch.json').read_bytes());getter=json.loads((r/'stat-mode-metadata-01/report.json').read_bytes());getter_code=(r/'stat-mode-metadata-01/virtual-getter.bin').read_bytes()[:11];assert getter_code.hex()=='488b0559c444058b400cc3'
+proofs=[{'rva':switch['selector_rva'],'code_hex':switch['selector_code_hex'],'role':'CURRENT_TIMEPERIOD_TO_INDEX_SELECTOR'},{'rva':getter['getter_rva'],'code_hex':getter_code.hex(),'role':'VIRTUAL_PERIOD_GETTER_GAMEMODE_ROOT_PLUS12'}]
+for target,role in (('0xf21710','NAMED_ADD_CURRENT_TIME_PERIOD_STAT_CALL_PATH'),('0xf224d0','NAMED_GET_OR_CREATE_ARRAY_SLOT_SELECTION')):proofs.append({'rva':int(target,16),'code_hex':next(t['code_hex'] for t in consumers if t['rva']==target),'role':role})
+for proof in proofs:proof['sha256']=hashlib.sha256(bytes.fromhex(proof['code_hex'])).hexdigest()
+profile={'format_version':1,'layout':'CURRENT_NATIVE_GAME_MODE_PERIOD_V1','types':entries,'bindings':bindings['GAMEMODE'],'enum_labels':enums,'game_mode_pointer_rva':0x632b470,'virtual_object_pointer_rva':switch['singleton_pointer_rva'],'virtual_period_slot_offset':0x338,'verified_virtual_getter_rva':getter['getter_rva'],'public_prefix_bytes':24,'shared_special_stat_period_codes':switch['one_result_inputs'],'current_year_field_semantics':'RAW_BYTE; SIGNED_CONSUMERS_AND_ABSOLUTE_YEAR_CONVERSION_NOT_GENERALIZED','code_proofs':proofs,'limits':['GAMEMODE_TIMEPERIOD and SEASON_TIMEPERIOD are distinct enums.','Array position24 is shared across several named periods and is not a unique postseason label.','Current period does not assign a phase to previously accumulated source totals.','No Native method invocation or game write.']}
+(app/'game_mode_native_profile.json').write_text(json.dumps(profile,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps({'types':len(entries),'period_labels':len(enums['GAMEMODE_TIMEPERIOD']),'shared_stat_periods':[enums['GAMEMODE_TIMEPERIOD'][str(v)]['label'] for v in switch['one_result_inputs']],'proof_bytes':sum(len(bytes.fromhex(p['code_hex'])) for p in proofs)}))

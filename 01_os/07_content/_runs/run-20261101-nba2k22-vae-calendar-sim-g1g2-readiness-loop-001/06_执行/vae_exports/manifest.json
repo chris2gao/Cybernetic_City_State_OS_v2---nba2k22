@@ -1,0 +1,50 @@
+{
+  "schema_version": "nba2k22.vae.standard_dataset_manifest.v1",
+  "sql_version": "vae.sql.v2",
+  "metric_dictionary_version": "Stage02.M3.Canonical38",
+  "db_schema_version": 24,
+  "save_id": "nba2k22_test_01",
+  "game_mode": "FRANCHISE",
+  "timestamp_bounds": {
+    "earliest": "2026-10-24T14:05:34.861140+00:00",
+    "latest": "2026-11-01T19:37:02.005957+00:00"
+  },
+  "total_capture_units": 58,
+  "evidence_grades": [
+    "LIVE_READ"
+  ],
+  "datasets": {
+    "calendar_sim_completed_game_player_team_metrics": {
+      "filename": "calendar_sim_completed_game_player_team_metrics.json",
+      "sha256": "fe626ac2b12db2780f13e885a011e802a24b643b953aa575b0dadd7a106384af",
+      "byte_count": 6317040,
+      "games_count": 238,
+      "status": "READY"
+    },
+    "vae_setting_context_snapshot": {
+      "filename": "vae_setting_context_snapshot.json",
+      "sha256": "d2ba4564cae9a1d3bb744008c92c23b41e6011a12081abdfa6c3d12014c431c1",
+      "byte_count": 3352152,
+      "status": "READY"
+    },
+    "vae_experiment_evidence_input": {
+      "filename": "vae_experiment_evidence_input.json",
+      "sha256": "25f74b3bca8794e9b6549906a3c8fa464b8e59656a4a701a15c025824fd6e9d5",
+      "byte_count": 3275,
+      "status": "READY"
+    }
+  },
+  "verified_native_gaps": [
+    "MET_TOUCHES_NATIVE_ABSENT_IN_STATIC_TABLE",
+    "REAL_GAMEPLAY_INTERVENTION_PENDING"
+  ],
+  "readiness_levels": {
+    "CLI_ORCHESTRATION_CODE": "VERIFIED",
+    "FIXTURE_SQL_REPLAY": "VERIFIED",
+    "CURRENT_NATIVE_READ": "VERIFIED",
+    "FULL_REGISTERED_FAMILIES_COMMITTED": "COMMITTED_SUCCESS_VERIFIED",
+    "STANDARD_DATASET_EXPORTED": "VERIFIED",
+    "POST_CALENDAR_NEW_GAME_VERIFIED": "PENDING_HUMAN_GAMEPLAY"
+  },
+  "gate_status": "G1_LIVE_VERIFIED; G2_PROTOCOL_READY"
+}

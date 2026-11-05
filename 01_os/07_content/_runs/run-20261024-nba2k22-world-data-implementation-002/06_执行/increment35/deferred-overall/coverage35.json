@@ -1,0 +1,615 @@
+{
+  "tables": 100,
+  "total_rows": 1470952,
+  "empty_tables": [
+    "fact_conflicts",
+    "playoff_series",
+    "playoff_series_games",
+    "external_transaction_events",
+    "transaction_components",
+    "draft_prospects",
+    "draft_prospect_attribute_snapshots",
+    "draft_prospect_tendency_snapshots",
+    "draft_prospect_play_type_slots",
+    "draft_results",
+    "worldline_config_versions",
+    "startup_config_checks",
+    "external_execution_receipts",
+    "external_readback_checks",
+    "player_restricted_observations",
+    "season_finalizations"
+  ],
+  "latest_sources": [
+    {
+      "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+      "unit_id": "live-world:62052310fffb4ca792946781",
+      "observed_at": "2026-10-25T18:56:18.428726+00:00"
+    },
+    {
+      "source_key": "BOUND_CORE_ORGANIZATION",
+      "unit_id": "organization:d89edd8d725f12db37509bed",
+      "observed_at": "2026-10-25T18:56:30.976320+00:00"
+    },
+    {
+      "source_key": "BOUND_GAME_PLAYER_WORLD",
+      "unit_id": "live-world:56808e9a15330710abd658d6",
+      "observed_at": "2026-10-24T14:07:29.116903+00:00"
+    },
+    {
+      "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS",
+      "unit_id": "native-league:9ee8f091b4ac4ad71fc6d31f",
+      "observed_at": "2026-10-25T06:28:28.651155+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_ANNUAL_STAFF_STATS",
+      "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+      "observed_at": "2026-10-26T09:13:49.850725+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL",
+      "unit_id": "native-staff:1102ee68991fd806a52698c3",
+      "observed_at": "2026-10-26T05:09:01.608667+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_CURRENT_COACH_STATS",
+      "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+      "observed_at": "2026-10-26T09:54:49.439609+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_CURRENT_PERIOD_PLAYER_STATS",
+      "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+      "observed_at": "2026-10-26T02:33:21.981683+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_GAME_MODE_PERIOD",
+      "unit_id": "native-game-mode:496e3e911bb214cfa21f65c1",
+      "observed_at": "2026-10-26T08:45:32.191756+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_HONOR_STATS",
+      "unit_id": "native-honors:100325e0dd8283cf68d85b19",
+      "observed_at": "2026-10-25T06:08:40.188991+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES",
+      "unit_id": "market:09a4f4bfa4be905bebdb2f86",
+      "observed_at": "2026-10-25T14:04:44.127195+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS",
+      "unit_id": "native-league:af7f124b4809df57492f3dc2",
+      "observed_at": "2026-10-25T14:07:44.145702+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION",
+      "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+      "observed_at": "2026-10-26T04:14:51.306543+00:00"
+    },
+    {
+      "source_key": "BOUND_NATIVE_TYPED_TEAM_FINANCE",
+      "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+      "observed_at": "2026-10-26T03:38:41.782375+00:00"
+    },
+    {
+      "source_key": "BOUND_PLANNING_AND_TRAINING",
+      "unit_id": "planning:1287cdfe3450c302cc1ea7db",
+      "observed_at": "2026-10-25T14:04:45.816445+00:00"
+    },
+    {
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION",
+      "unit_id": "player-affiliation:5d86083fcac950eedacac8b9",
+      "observed_at": "2026-10-25T14:07:24.266332+00:00"
+    },
+    {
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES",
+      "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+      "observed_at": "2026-10-25T14:05:05.784563+00:00"
+    },
+    {
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+      "unit_id": "player-state:71dac71c165a620f66b8a511",
+      "observed_at": "2026-10-25T14:07:12.564283+00:00"
+    },
+    {
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS",
+      "unit_id": "player-skill:49a3c3096537eea969ad8a96",
+      "observed_at": "2026-10-25T14:07:31.126181+00:00"
+    },
+    {
+      "source_key": "BOUND_RECORD_BOOK",
+      "unit_id": "records:385449b5f4470a90df76d8f9",
+      "observed_at": "2026-10-25T06:08:26.786660+00:00"
+    },
+    {
+      "source_key": "BOUND_SETTINGS_AND_RULES",
+      "unit_id": "settings:e5d19c4f77d4513c672b9d47",
+      "observed_at": "2026-10-25T14:05:05.325046+00:00"
+    }
+  ],
+  "latest_source_gap_declarations": [
+    {
+      "affected_domain": "RES-L",
+      "target_field": "CURRENT_SEASON_SCOPE",
+      "reason": "Current core rosters and available native Slot24 totals; phase/team splits and missing totals remain unknown",
+      "impact": "No old-year total relabeled as the new game season; no missing zeros invented",
+      "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "FINANCE_UI_UNITS_AND_CASH_SIGN",
+      "reason": "Registered TEAM uint32 fields read; current UI meaning/sign not observed",
+      "impact": "Keep unsigned raw values; no spending/cap inference",
+      "source_key": "BOUND_CORE_ORGANIZATION"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "CAP_SPACE_LUXURY_TAX_AND_HARD_CAP",
+      "reason": "No accepted current source offset in this adapter",
+      "impact": "Fields remain NULL; no external CBA arithmetic substituted",
+      "source_key": "BOUND_CORE_ORGANIZATION"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "PLAY_NAMES_FROM_NATIVE_CRCS",
+      "reason": "Ordered loaded book CRC slots observed, text labels not acquired",
+      "impact": "Keep native CRC text and NULL play_name",
+      "source_key": "BOUND_CORE_ORGANIZATION"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "TEAM_TRAINING_AND_MENTORSHIP",
+      "reason": "This unit reads assigned staff/default tactics, not training/mentor objects",
+      "impact": "No fabricated settings or relations",
+      "source_key": "BOUND_CORE_ORGANIZATION"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "STAFF_MARKET_AND_LIFECYCLE",
+      "reason": "Current assigned unique IDs/reciprocal roles proved; unassigned pool availability and lifecycle not certified",
+      "impact": "No free-agent status inferred from missing team",
+      "source_key": "BOUND_CORE_ORGANIZATION"
+    },
+    {
+      "affected_domain": "RES-G",
+      "target_field": "SCHEDULE_DATE_UI_ENCODING",
+      "reason": "Target UI calendar encoding not observed",
+      "impact": "Canonical game_date is NULL; native bytes retained",
+      "source_key": "BOUND_GAME_PLAYER_WORLD"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "BADGE_TIERS",
+      "reason": "Encoding/tier correspondence not established",
+      "impact": "No badge facts invented",
+      "source_key": "BOUND_GAME_PLAYER_WORLD"
+    },
+    {
+      "affected_domain": "RES-D",
+      "target_field": "CROSS_SESSION_NATIVE_ID_STABILITY",
+      "reason": "Unique active context is observed; lifecycle across reload/retirement not yet certified",
+      "impact": "Identity collisions reject ingestion; no name-based merge",
+      "source_key": "BOUND_GAME_PLAYER_WORLD"
+    },
+    {
+      "affected_domain": "RES-L",
+      "target_field": "SEASON_PHASE_AND_TEAM_SPLITS",
+      "reason": "Current Slot24 observed; phase/team split semantics not separately established",
+      "impact": "No finalization or split labels inferred",
+      "source_key": "BOUND_GAME_PLAYER_WORLD"
+    },
+    {
+      "affected_domain": "RES-L",
+      "target_field": "UNOBSERVED_CURRENT_PLAYER_TOTALS",
+      "reason": "[4100]",
+      "impact": "Players and game Boxes retained; no zero cumulative total substituted",
+      "source_key": "BOUND_GAME_PLAYER_WORLD"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "HISTORICAL_SUBJECT_LIFECYCLE",
+      "reason": "Inline historical identities are retained without binding current PLAYER/TEAM/STAFF",
+      "impact": "No name/ID-only canonical subject transition",
+      "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "HISTORY_WORLD_SCOPE",
+      "reason": "Native roster history is source-recorded archival history, not a claim of this save simulating old events",
+      "impact": "Award type/finality basis is explicit; current-year matrix is not final",
+      "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "LEAGUE_MANAGER_SLOT40_IDENTITY",
+      "reason": "Free-chain candidate is corroborative; exact manager slot identity is not yet independently proven",
+      "impact": "No allocator validity inferred solely from manager candidate",
+      "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "COACH_STAT_CALENDAR_YEAR_AND_POSITION_SEMANTICS",
+      "reason": "Native12-byte row has no year member;40-position calendar/current-slot mapping not proved",
+      "impact": "stat_year remains NULL; no invented year, phase, team or season-finalization",
+      "source_key": "BOUND_NATIVE_ANNUAL_STAFF_STATS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "COACH_STAT_ALLOCATION_AND_HISTORICAL_SUBJECT_OWNERSHIP",
+      "reason": "Native bounds prove pointer resolution; free-list lifecycle and shared references do not prove unique historic ownership",
+      "impact": "Keep NextFree raw and distinct-subject reference count; no canonical award event is fabricated",
+      "source_key": "BOUND_NATIVE_ANNUAL_STAFF_STATS"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "STAFF_POOL_ALLOCATION_LIFECYCLE_AND_HIRING",
+      "reason": "Descriptor slots, Native status enums, team pointers and role slots are independently observed",
+      "impact": "No unnamed slot is invented as a person; no absent core slot or NORMAL/RELEASED status is declared legally hireable",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "STAFF_UI_WAGES_GRADES_AND_BEHAVIOR",
+      "reason": "Native unsigned/bitfield values and exact enum labels; UI wages, grade presentation, legal hiring and behavior/effects remain separate",
+      "impact": "Raw fields/labels and signed-width interpretations remain separate from UI scale, sentinel meaning and game effects",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "STAFF_GROWTH_AND_SHARED_BYTE_PUBLIC_SCOPE",
+      "reason": "No PLAYER values are read. Existing generic Potential ingestion restriction is retained; staff growth/max-grade bytes and the shared TightLipped byte are excluded without renaming around it.",
+      "impact": "No Potential-key ingestion exception is introduced; omitted max/growth fields and shared TightLipped are not reconstructed",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "ANNUAL_STAFF_SEASON_STATS",
+      "reason": "SeasonStats s16 array references are not read by this ordinary source; annual staff history remains a separate gap",
+      "impact": "No ordinary source acquires/repopulates the annual historical stats family",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "STAFF_REFERENCED_PLAYER_AND_SIGNATURE_NAMESPACES",
+      "reason": "Stored player/signature/graphic/audio identifiers are raw Native values without accepted person/object namespace bindings",
+      "impact": "No name-based or numeric-only PLAYER link, rendered signature or portrait is fabricated",
+      "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "CURRENT_COACH_STAT_YEAR_PHASE_TEAM_AND_OWNERSHIP",
+      "reason": "Native position0 update role and signed bank resolution do not prove calendar year, phase, team scope, free-list reachability or historical ownership",
+      "impact": "Keep stat_year NULL and raw current win/loss fields source-qualified; no finalization or annual award event inferred",
+      "source_key": "BOUND_NATIVE_CURRENT_COACH_STATS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "NATIVE_AWARD_FLAGS_VS_ACCEPTED_INSTANCES",
+      "reason": "Native winner/selection fields are observed, but canonical subjects and final award-instance semantics need separate acceptance",
+      "impact": "No final award/recipient instances fabricated from incomplete identity or allocation semantics",
+      "source_key": "BOUND_NATIVE_HONOR_STATS"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "UNIQUE_ID_VS_PRESERVED_ID",
+      "reason": "Current PLAYERDATA.UniqueId is +244; old adapters used low16 of +760 PreservedId",
+      "impact": "Keep legacy opaque entity keys and history; append exact current-ID evidence only on matched current roster names",
+      "source_key": "BOUND_NATIVE_HONOR_STATS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "STAT_REFERENCE_ARRAY_SCOPE",
+      "reason": "Native SeasonStats has 25 fixed slots, including gaps and after-empty references",
+      "impact": "Preserve every position; no first-empty truncation or invented chronological order",
+      "source_key": "BOUND_NATIVE_HONOR_STATS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "NATIVE_STAT_ALLOCATION_AND_SHARED_OWNERS",
+      "reason": "ReferenceCount and shared/unowned source records are observed",
+      "impact": "Keep all source records; no arbitrary subject choice or unallocated-as-current inference",
+      "source_key": "BOUND_NATIVE_HONOR_STATS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "NATIVE_NEWS_SOURCE",
+      "reason": "Native stat flags are not a news source",
+      "impact": "News remains unobserved by this adapter",
+      "source_key": "BOUND_NATIVE_HONOR_STATS"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "PICK_PROTECTION_AND_SWAPS",
+      "reason": "Simple native getters/coverage verify owner/year/round; protection/swap semantics not acquired",
+      "impact": "Both statuses UNKNOWN; no tradeability assertion",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "NON_FUTURE_DRAFT_RECORDS",
+      "reason": "Only complete simple future-pick groups accepted; other source records remain raw evidence",
+      "impact": "No historical draft result inferred",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "PROSPECT_CLASS_YEAR_AND_INITIALIZATION",
+      "reason": "Allocated draft slots may be unnamed; actual class year not observed",
+      "impact": "No unnamed prospects or guessed draft_year created",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "WAIVED_CANONICAL_PLAYER_AND_YEAR_UNITS",
+      "reason": "136-byte source has candidate inline names/three salary buckets; no canonical person/absolute year association",
+      "impact": "PLAYER FK remains NULL; no cap-space sum or release event inferred",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "MARKET_AVAILABILITY",
+      "reason": "Pick/prospect/waived records do not establish free-agent or trade availability",
+      "impact": "No market status invented",
+      "source_key": "BOUND_NATIVE_MARKET_SOURCES"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "NEWS_RENDERED_TEXT_AND_PARAMETERS",
+      "reason": "Message enum and parameters are observed but localization/renderer and parameter meanings are not accepted",
+      "impact": "No generated headlines, player binding or generic raw parameter export",
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "NATIVE_SCHEDULEDATE_EPOCH_UI",
+      "reason": "Date bit components are verified; epoch/month/time UI mapping remains unpromoted",
+      "impact": "Keep components and raw word; occurrence_time NULL",
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "NATIVE_TRANSACTION_EVENT_SEMANTICS",
+      "reason": "Count/allocated storage and tagged values do not independently prove accepted external transactions",
+      "impact": "Keep native storage separate from external execution/receipt tables",
+      "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS"
+    },
+    {
+      "affected_domain": "RES-T",
+      "target_field": "PLAYING_TIME_UI_MINUTES_AND_ACTIVE_LINEUPS",
+      "reason": "Native PlayingTime seven-bit value; UI minutes, units and actual deployment are not independently observed",
+      "impact": "planned_minutes and role_code remain NULL; stored flags/arrays are not played-game effects",
+      "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION"
+    },
+    {
+      "affected_domain": "RES-T",
+      "target_field": "ADVANCED_ROTATION_AXIS_AND_ID_NAMESPACE",
+      "reason": "Native array axes/dimensions/strides only; period/minute/position labels are not inferred; UNVERIFIED; raw IDs are not canonical players",
+      "impact": "Retain every array coordinate/raw ID; no inferred period/minute/position or canonical player assignment",
+      "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION"
+    },
+    {
+      "affected_domain": "RES-T",
+      "target_field": "LINEUP_REFERENT_LIFECYCLE",
+      "reason": "Exact current PLAYER pointers and qualified reciprocal roster aliases are observations, not historical identity proof",
+      "impact": "Null/outside/misaligned/other-roster references remain explicit; no forced canonical match",
+      "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "FINANCE_UI_SCALE_ACCOUNTING_DURATION_AND_CAP_ARITHMETIC",
+      "reason": "Native representation; monetary scale, UI presentation, legal ranges, accounting duration and CBA arithmetic unproved",
+      "impact": "Keep Native signed/unsigned/float/enum representations; no inferred cap space, annual totals, legal spending or UI acceptance",
+      "source_key": "BOUND_NATIVE_TYPED_TEAM_FINANCE"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "GAMEPLAN_COMMIT_VS_EFFECT",
+      "reason": "Most source plans have native commit flag0; field observation is not a played-game effect",
+      "impact": "Retain flags; no activation or performance inference",
+      "source_key": "BOUND_PLANNING_AND_TRAINING"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "STALE_PLAN_PLAYER_IDS",
+      "reason": "Some stored plan IDs are not in the current corresponding roster",
+      "impact": "Keep raw IDs and NULL canonical player FK",
+      "source_key": "BOUND_PLANNING_AND_TRAINING"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "TRAINING_HISTORY_ARRAYS",
+      "reason": "Only native ID and five flag fields acquired; history may contain restricted attribute information",
+      "impact": "No training attribute/overall history read or exported",
+      "source_key": "BOUND_PLANNING_AND_TRAINING"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "TRAINING_SLOT_ACTIVE_COUNT",
+      "reason": "786 is a registered read bound, not a proven active count; duplicates/unmapped IDs cannot link",
+      "impact": "All slots classified; only unique current-roster IDs accepted",
+      "source_key": "BOUND_PLANNING_AND_TRAINING"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "MENTOR_ACTIVITY_AND_BADGE_EFFECT",
+      "reason": "Owner/header and current-roster pair IDs observed; badge slots/activity and outcome not acquired",
+      "impact": "Association only; no badge tier, consent or development-effect assertion",
+      "source_key": "BOUND_PLANNING_AND_TRAINING"
+    },
+    {
+      "affected_domain": "RES-C",
+      "target_field": "GLOBAL_ROTATION_AND_TRAINING_FOCUS",
+      "reason": "Opponent plans and registered training flags are not global rotation/focus schedules",
+      "impact": "Legacy focus/schedule/global rotation fields remain unobserved",
+      "source_key": "BOUND_PLANNING_AND_TRAINING"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "NATIVE_COLLEGE_COUNTRY_CATEGORY",
+      "reason": "COLLEGEDATA label, packed IDs and appearance-group enum are observed; category/nationality mapping not proven",
+      "impact": "Keep native referent separate from canonical college/country; no geography inferred from appearance group",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "NATIVE_FLAGS_VS_SIGNABILITY",
+      "reason": "Historic/active/hidden/G League/draft/waived/agency flags are independent source properties",
+      "impact": "Do not label unrostered or unrestricted-coded subjects as currently signable",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "G_LEAGUE_ASSIGNMENT_AND_TEAM_LIFECYCLE",
+      "reason": "Native GLeagueTeam enum and IsDLeague/SendDown flags are observed",
+      "impact": "Keep flags/code separate; no NBA-team FK or active assignment inferred solely from a nonzero code",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "AFFILIATION_SUBJECT_LIFECYCLE",
+      "reason": "Source IDs and qualified current roster links are not historical lifecycle proof",
+      "impact": "Preserve source-only subjects without creating canonical retired/generated players",
+      "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "EFFECTIVE_BADGE_CONTEXT_AND_UI",
+      "reason": "Stored base extraction and enum codes are verified; later native context/boost logic and UI activation remain separate",
+      "impact": "Do not present stored base badges as effective game-context levels",
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES"
+    },
+    {
+      "affected_domain": "RES-M",
+      "target_field": "CONTRACT_UNITS_SENTINELS_AND_LEGACY_ALIASES",
+      "reason": "Native widths/options/RosterType verified; salary scale/sentinels/UI duration remain unaccepted",
+      "impact": "Preserve full raw values; original_contract_years is ContractLength and contract_type is RosterType, without extra semantics",
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "NATIVE_SOURCE_SUBJECT_LIFECYCLE",
+      "reason": "Source-only pool subjects and exact current roster matches do not establish cross-session identity",
+      "impact": "Unbound source rows retained; existing opaque IDs/history unchanged",
+      "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "VITAL_UI_CALENDAR_WEIGHT_AND_ADDITIONAL_FIELDS",
+      "reason": "Raw birth components/positions and native float weight are read; weight UI unit, month convention, age, college/country remain incomplete",
+      "impact": "No canonical birth_date, age or country invented; appearance cm values derive only from named native units",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "HEALTH_AGGREGATE_AVAILABILITY_AND_RECOVERY",
+      "reason": "Both native injury slots/statuses/durations/progress are observed; status combination, current energy and remaining recovery days need separate native/UI proof",
+      "impact": "No single severity/availability or recovery-day conversion inferred",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "MORALE_UI_SCALE_AND_PLAYING_ROLE",
+      "reason": "Native morale float/event/s8 adjustment and OrgRole are observed; OrgRole is organizational and is not playing-time role or satisfaction",
+      "impact": "Keep float words and exact enum labels; legacy morale_raw/role_code/satisfaction remain unasserted",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "STATE_SUBJECT_LIFECYCLE",
+      "reason": "Current reciprocal roster matches are qualified observations, not lifecycle certification",
+      "impact": "Source-only pool subjects retained without invented canonical players",
+      "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "CURRENT_OVERALL_RATING",
+      "reason": "CachedOverall_NeverCall/validity/getter semantics are not established; PreviousOverallAbility is a different source",
+      "impact": "overall_raw is not filled or derived from previous/cached values",
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "SKILL_UI_UNITS_AND_EFFECTS",
+      "reason": "Exact bytes, field names and play enum are observed; rating transforms/UI acceptance and behavior remain separate",
+      "impact": "Do not treat byte storage width or sample maxima as UI legal ranges",
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS"
+    },
+    {
+      "affected_domain": "RES-P",
+      "target_field": "SKILL_SOURCE_LIFECYCLE",
+      "reason": "Complete native source pool and qualified current links do not prove historical/cross-session identities",
+      "impact": "Source-only subjects retain observations without new canonical people",
+      "source_key": "BOUND_PUBLIC_PLAYER_SKILLS"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "RECORD_SUBJECT_LIFECYCLE_IDENTITY",
+      "reason": "Inline record names and native IDs are not proven current save-local PLAYER identities",
+      "impact": "Keep observed names/raw ID; canonical holder FK remains NULL",
+      "source_key": "BOUND_RECORD_BOOK"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "RECORD_CATEGORY_FLAGS_AND_SCOPE",
+      "reason": "Most native category codes and trailing flags have no current accepted UI mapping",
+      "impact": "No team, scope, rank or season inference",
+      "source_key": "BOUND_RECORD_BOOK"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "RECORD_DATE_ENCODING_APPLICABILITY",
+      "reason": "1920-epoch date formula is a research candidate and invalid for many observed words",
+      "impact": "Keep packed word and qualified candidate; occurred_at remains NULL",
+      "source_key": "BOUND_RECORD_BOOK"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "ACTUAL_SEASON_AWARDS",
+      "reason": "Record-book observations do not establish award winners or final season honors",
+      "impact": "Award/recipient tables remain unobserved by this source",
+      "source_key": "BOUND_RECORD_BOOK"
+    },
+    {
+      "affected_domain": "RES-H",
+      "target_field": "NATIVE_NEWS_SOURCE",
+      "reason": "No actual news object/source is provided by the record book",
+      "impact": "Do not manufacture news from records or leading statistics",
+      "source_key": "BOUND_RECORD_BOOK"
+    },
+    {
+      "affected_domain": "RES-S",
+      "target_field": "GLOBAL_SETTINGS_NATIVE_TYPES",
+      "reason": "Registered global slots read successfully; current NativeType descriptors not resolved",
+      "impact": "No current descriptor-level layout certification",
+      "source_key": "BOUND_SETTINGS_AND_RULES"
+    },
+    {
+      "affected_domain": "RES-S",
+      "target_field": "UNNAMED_SLIDER_INDICES",
+      "reason": "Complete current/custom USER/CPU word tables acquired; most native index names unresolved",
+      "impact": "Unmapped indices are retained without invented labels",
+      "source_key": "BOUND_SETTINGS_AND_RULES"
+    },
+    {
+      "affected_domain": "RES-S",
+      "target_field": "SETTINGS_UI_SCALE_RANGE_AND_EFFECT",
+      "reason": "Catalog candidates and raw native words are distinct; no current UI/effect or persistence acceptance",
+      "impact": "No clamping, scaling, optimal-value choice, or execution",
+      "source_key": "BOUND_SETTINGS_AND_RULES"
+    },
+    {
+      "affected_domain": "RES-L",
+      "target_field": "LEAGUE_RULE_FULL_UI_COVERAGE",
+      "reason": "Only registered SLOT_TRADE words acquired; not every league/calendar rule has a mapped source",
+      "impact": "No inference from configured targets or external CBA rules",
+      "source_key": "BOUND_SETTINGS_AND_RULES"
+    },
+    {
+      "affected_domain": "RES-S",
+      "target_field": "OBSERVED_WORD_OUTSIDE_REGISTERED_CANDIDATE",
+      "reason": "At least one actual word lies outside its catalog candidate range",
+      "impact": "Keep actual bytes/value; investigate candidate range or layout before claiming UI meaning",
+      "source_key": "BOUND_SETTINGS_AND_RULES"
+    }
+  ],
+  "note": "Source-local gaps may be superseded by another family; no naive UNKNOWN count acceptance."
+}

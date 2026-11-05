@@ -1,0 +1,1 @@
+Historical exploratory observations of roughly one month of test data, completed before Human capacity deferral. These are not a complete-season baseline,100-season stress result or retention decision. Further capacity/A-B work is deferred. See ../../../human_capacity_cadence_20261025.md and world_data_prototype/CAPACITY_AND_RETENTION_POLICY.md.

@@ -1,0 +1,36 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Finish the active bounded public field-filter/query/export work, then freeze
+    the current regular-season engineering baseline under Human closeout scope.
+  implementation_or_review_method: >-
+    Add typed public predicates and projected columns with fixed-ledger keyset
+    paging and exclusive complete-manifest JSONL export. Run a single bounded
+    centralized regression, compare real filtered rows against independent SQL,
+    verify physical/generated DDL, dictionary, integrity/FKs and existing snapshot
+    hashes, inventory current source/field maturity, and publish reusable handoff.
+  supportability_rationale: >-
+    Approved RES-P/Q17 and RES-D/Q51 require field filtering and structured export.
+    Human2026-10-26 now requests completion of the active work followed by baseline
+    closeout, with lifecycle scenes and separate independent review left for later.
+    Stored values, Native evidence, UI semantics and acceptance stay distinct.
+  feasibility_rationale: >-
+    All checks consume the retained v24 bound database and existing source evidence;
+    no new game access, date advance, schema migration or complex Native research
+    is needed. The completed v24 snapshot remains byte-identical and source IDs
+    preserve annual cadence and restart-aware acquisition for the next task.
+  exact_result_or_candidate_ref: 06_执行/increment37/verification-report.json
+  verification_evidence:
+    - 06_执行/increment37/verification-report.json
+    - 06_执行/increment37/source-coverage.json
+    - 06_执行/increment37/field-maturity.json
+    - 06_执行/increment37/table-inventory.json
+    - 06_执行/increment37/snapshot-check.json
+    - 06_执行/increment37/verification/operations.json
+    - 06_执行/increment37/actual-filtered-export/manifest.json
+  residual_risk_or_unproved_limits:
+    - Complete underlying system and all target fields have not been accepted.
+    - Native raw labels/values and populated columns do not prove UI units/effects or historical lifecycle identity.
+    - Playoffs, offseason, cross-season scenes and full-season/100-year capacity remain future work.
+    - Independent review and master integration are separate and not performed by this closeout.
+    - No game writes, standalone agent decisions or Computer Use are introduced.

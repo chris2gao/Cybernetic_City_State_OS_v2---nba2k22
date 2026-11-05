@@ -1,0 +1,67 @@
+{
+  "schema_version": "nba2k22.rea.bulk_executor.benchmark.v1",
+  "benchmark_timestamp": "2026-11-02T02:23:35Z",
+  "test_machine": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 9, GenuineIntel",
+    "python_version": "3.14.6",
+    "node_version": "v24.22.1",
+    "rea_cli_version": "6.8.0",
+    "target_game_build": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "scale": {
+    "total_intents": 10000,
+    "teams_covered": 30,
+    "players_covered": 450,
+    "chunks_planned": 201,
+    "max_chunk_size": 50
+  },
+  "mock_execution_timings": {
+    "metric_type": "MEASURED_MOCK",
+    "batch_generation_and_parse_time_ms": 68.67,
+    "planning_and_validation_time_ms": 199.49,
+    "sample_frida_script_compile_time_ms": 5.21,
+    "compiled_script_bytes": 79345,
+    "total_mock_execution_time_ms": 164.67,
+    "mock_throughput_ops_per_sec": 60726.7,
+    "chunk_level_latency_ms": {
+      "p50": 0.751,
+      "p95": 1.1568,
+      "p99": 1.5436
+    },
+    "item_level_latency_ms": {
+      "p50": 0.015,
+      "p95": 0.0239,
+      "p99": 0.0345
+    }
+  },
+  "session_overhead_estimates": {
+    "metric_type": "ESTIMATED_THEORETICAL",
+    "unchunked_legacy_sessions": 10000,
+    "unchunked_estimated_overhead_seconds": 40000.0,
+    "unchunked_overhead_hours": 11.11,
+    "bounded_chunks_planned": 201,
+    "bounded_chunk_estimated_overhead_seconds": 804.0,
+    "bounded_chunk_overhead_minutes": 13.4,
+    "session_overhead_reduction_percent": 97.99
+  },
+  "projected_live_native_duration": {
+    "metric_type": "PROJECTED_NOT_RUN",
+    "basis_measurement": "Damian Lillard live execution receipt confirmed native Setter 0x990a10 + Getter 0x978360 takes < 50ms per call",
+    "estimated_live_native_call_seconds": 500.0,
+    "estimated_live_native_call_minutes": 8.33,
+    "projected_total_live_chunked_duration_minutes": 21.73,
+    "projected_unchunked_live_duration_hours": 11.25
+  },
+  "outcome_conservation": {
+    "metric_type": "DYNAMICALLY_AGGREGATED_RECEIPTS",
+    "num_planned": 10000,
+    "num_success": 9700,
+    "num_noop": 150,
+    "num_blocked": 2,
+    "num_unknown": 1,
+    "num_not_executed": 147,
+    "total_accounted": 10000,
+    "conservation_holds": true
+  }
+}

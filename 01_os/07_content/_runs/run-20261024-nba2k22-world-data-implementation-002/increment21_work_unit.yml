@@ -1,0 +1,36 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Connect all thirteen existing source adapters into one explicit manual serial
+    world refresh with verified unit receipts, annual skips and partial recovery.
+  implementation_or_review_method: >-
+    Recheck operator binding, fresh read-only process creation/build/root controls
+    and native year before/after every source. Match adapter claims to committed
+    LIVE_READ units and the annual ledger. Independently compare every old row,
+    source artifact hash, bounded API read and newly selected query source.
+  supportability_rationale: >-
+    Actual dedicated-save refresh acquires10 new units and skips3 annual sources,
+    passing26 context checkpoints. All843987 prior rows remain identical across84
+    tables; the database now has28 units and1318485 rows.5428 source artifacts,
+    431900 bounded reads and404106 private-interval overlap checks pass.
+  feasibility_rationale: >-
+    The controller reuses existing source adapters and atomic ingest without a
+    schema change, scheduler or global-snapshot claim.161 tests and SQLite smoke
+    pass. Partial failures preserve committed units and explicit commit uncertainty;
+    selected families can be rerun into a new directory. Source files and an exact
+    multipart SQLite snapshot are retained with hashes for independent inspection.
+  exact_result_or_candidate_ref: c5e0aef15c03fd9cd66eeadf27839cc9fe2b49d0
+  verification_evidence:
+    - 06_执行/increment21/actual-world-refresh-report.json
+    - 06_执行/increment21/refresh-report.json
+    - 06_执行/increment21/world-v16.snapshot.json
+    - 06_执行/increment21/native-sources.archive.json
+    - 06_执行/increment21/verification/operations_report.json
+    - 06_执行/increment21/verification/tests.stderr.log
+  residual_risk_or_unproved_limits:
+    - Independent atomic source units are not one global point-in-time snapshot.
+    - Completed adapters and annual skips do not close Native/UI/lifecycle gaps.
+    - Operator save declaration remains necessary; PID/module controls do not replace it.
+    - A failed unverified adapter may already have committed; no rollback is falsely asserted.
+    - Capacity and retention evaluation still wait for full real-season evidence.
+    - Whole-candidate independent review and Human final acceptance remain outstanding.

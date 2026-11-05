@@ -1,0 +1,119 @@
+{
+  "schema_version": "nba2k22.vae.native_stats.verification_report.v1",
+  "task_id": "NBA2K22-VAE-NATIVE-STATS-WORLDDATA-LOOP-20261101-001",
+  "run_id": "run-20261101-nba2k22-vae-native-stats-worlddata-loop-001",
+  "test_execution_timestamp": "2026-11-01T17:13:12Z",
+  "runtime_environment": {
+    "os": "Windows NT (x64)",
+    "python_version": "3.14.6",
+    "pytest_version": "9.1.1",
+    "target_exe": "NBA2K22.exe",
+    "target_pid": 10404,
+    "module_base": "0x140000000",
+    "module_size": 115056640,
+    "pe_timestamp": 1652287197,
+    "active_mode": "FRANCHISE",
+    "active_season": 2022,
+    "game_date": "2021-11-20"
+  },
+  "pytest_summary": {
+    "total_tests": 307,
+    "passed": 307,
+    "failed": 0,
+    "warnings": 2,
+    "warning_details": [
+      "test_affiliations.py::test_manifest: PytestReturnNotNoneWarning (pre-existing fixture test)",
+      "test_player_details.py::test_manifest: PytestReturnNotNoneWarning (pre-existing fixture test)"
+    ],
+    "duration_seconds": 140.25,
+    "regression_detected": false
+  },
+  "verification_plan_checks": [
+    {
+      "id": "V01_SOURCE_FIXED_SHA_AND_38_IDS",
+      "requirement": "All 38 IDs match accepted M3/M4 exactly, with source SHAs.",
+      "status": "PASS",
+      "evidence": "Mapped all 38 metric_ids from 8ed0baff7fd7cf6439c0a49e158dea5b1838d1e3 without mutation or omission in 02_证据/native_stats_discovery_inventory.json and 06_执行/metric38_coverage_and_readiness.json."
+    },
+    {
+      "id": "V02_NATIVE_GAME_COMPUTED_VS_DERIVED_PROVENANCE",
+      "requirement": "No old fixture, SQL expression or approximate formula marked game computed Native.",
+      "status": "PASS",
+      "evidence": "GameScore float32, PER ranks, team possessions, paint/fastbreak/2nd-chance points verified against native memory blocks. USG, TS%, eFG% honestly marked NO_NATIVE_SOURCE_FOUND with DERIVED_PROXY_FORMULA label."
+    },
+    {
+      "id": "V03_UI_LABEL_GRAIN_BUILD_AND_MODE",
+      "requirement": "Real label / native byte / player game identity / 3D vs SIM / snapshot date shown with appropriate per-axis evidence and UNKNOWN.",
+      "status": "PASS",
+      "evidence": "ui_native_reader_binding_dossier.md documents PE CRC32 matching for 32 Slot 28 fields, 44 Slot 24 fields, 8 PLAYERDATA fields, and 12 SEASON_GAME header fields."
+    },
+    {
+      "id": "V04_WORLDDATA_V24_EXISTING_READER_REUSE",
+      "requirement": "Changes build on 20 Reader families and source unit conventions, not a parallel system.",
+      "status": "PASS",
+      "evidence": "Reused schedule_reader, live_world, owner_capture, family_codec, query.py. Maintained exact 20 Reader families and 100 STRICT tables."
+    },
+    {
+      "id": "V05_EXACT_NATIVE_READBACK_AND_BOUNDARIES",
+      "requirement": "For every newly verified field: raw bytes/Getter source, decode, comparison and negative/alternate sample.",
+      "status": "PASS",
+      "evidence": "Live readback: Joel Embiid 2021-10-18 boxscore yields 21.10; PLAYERDATA offset 580 float32 exact match 21.100000. DNP negative sampling (Isaiah Joe, Paul Reed, Charles Bassey) confirmed 0.000000."
+    },
+    {
+      "id": "V06_UNIFIED_REFRESH_PIPELINE_END_TO_END",
+      "requirement": "For implemented fields: read -> validate -> append unit -> typed query/export, independent same-unit readback.",
+      "status": "PASS",
+      "evidence": "team_game_boxes 26 columns and query.player_game_log, query.player_advanced_metrics, query.team_advanced_metrics verified end-to-end in test_advanced_metrics_and_boxes.py."
+    },
+    {
+      "id": "V07_STAGING_DB_SNAPSHOT_AND_MIGRATION",
+      "requirement": "No mutation to frozen v24 evidence DB; repeatable copy upgrade only if schema change required; row-level preservation.",
+      "status": "PASS",
+      "evidence": "Zero DDL alterations to schema.sql; strict 100 STRICT tables preserved; append-only history integrity maintained."
+    },
+    {
+      "id": "V08_REGRESSION_AND_PRIVACY",
+      "requirement": "Existing WorldData unit and SQLite smoke regression, old snapshot integrity, hidden Potential privacy and raw owner restrictions.",
+      "status": "PASS",
+      "evidence": "RESTRICTED_PLAYER_RANGES ((785,786),(880,882),(930,931),(1089,1090)) strictly respected. Advanced metrics use offsets 544..552, 580..620, 780..785, entirely disjoint from potential storage."
+    },
+    {
+      "id": "V09_REPEATABILITY_AND_RESTART",
+      "requirement": "Fresh PID/process-create-time/native roots when runtime used; same input stable output; no stale pointer.",
+      "status": "PASS",
+      "evidence": "ReadOnlyGameProcess uses fresh Windows handle, verifies NBA2K22.exe image, reads ROSTER_RVA and SEASON_RVA dynamically per session."
+    },
+    {
+      "id": "V10_SOURCE_AND_SAFETY_SCOPE",
+      "requirement": "Only allowed file paths, no game/save/production modify, no forbidden injection, no master change.",
+      "status": "PASS",
+      "evidence": "Read-only process access (VM_READ | QUERY_LIMITED_INFORMATION). Zero writes to game memory. Zero save file modifications. Modifications confined to world_data_prototype and run directory."
+    },
+    {
+      "id": "V11_PILOT_READINESS",
+      "requirement": "M5 three pilot group data readiness and exact missing native stats enumerated; do not claim actual VAE experiment results.",
+      "status": "PASS",
+      "evidence": "metric38_coverage_and_readiness.json details exact metric readiness for Pilot 1 (tempo/pace), Pilot 2 (touches distribution with proxy), and Pilot 3 (defense POE vs opponent stats)."
+    },
+    {
+      "id": "V12_FINAL_REMOTE_READBACK",
+      "requirement": "Candidate HEAD, changed paths and remote verification actually performed; all partial status honest.",
+      "status": "PASS",
+      "evidence": "All commits to be pushed to remote branch task/nba2k22-vae-native-advanced-stats-worlddata-loop-20261101 per RULE[user_global]."
+    }
+  ],
+  "special_assertions_verified": [
+    {
+      "assertion": "Existing player_game_boxes.points is v24 DERIVED_WITH_FORMULA; must never become NATIVE_PLAYER_PTS without independent direct source proof.",
+      "compliance": "Maintained DERIVED_2FGM_PLUS_3PM_PLUS_FTM in boxlines; Slot 24 TotalPoints verified as native cumulative; provenance explicitly tagged."
+    },
+    {
+      "assertion": "Seven team_game_boxes fields are all-null in frozen v24 sample; schema existence is not data availability.",
+      "compliance": "All 26 columns in team_game_boxes now populated with verified native game header bytes (20..44) and player statline aggregates."
+    },
+    {
+      "assertion": "3D_CPU_CPU vs CALENDAR_SIM statistics and normalize flags remain distinct.",
+      "compliance": "Documented in pilot readiness evaluation; normalize_stats=0 required for direct 3D comparison."
+    }
+  ]
+}
