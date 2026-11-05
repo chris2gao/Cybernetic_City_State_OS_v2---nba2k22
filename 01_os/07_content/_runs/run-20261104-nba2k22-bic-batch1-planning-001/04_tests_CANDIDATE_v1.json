@@ -1,0 +1,286 @@
+{
+  "schema": "nba2k22.bic.stage04.test_design_candidate.v1",
+  "status": "DRAFT_NOT_FROZEN",
+  "scope": "BIC Batch1 DEV01-03, Stage04 preparatory tests",
+  "sources": [
+    "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/02_evidence_CANDIDATE_v1.json",
+    "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/03_result_B_CANDIDATE_v1.json"
+  ],
+  "frozen": false,
+  "freeze_authorization_ref": null,
+  "tests": [
+    {
+      "test_id": "T01",
+      "category": "real_capture",
+      "scenario": "An existing real read-only WorldData unit yields player card with source/identity/time/mode and fields drawn from the specified capture",
+      "result_claim_ids": [
+        "B01",
+        "B02"
+      ],
+      "evidence_claim_ids": [
+        "E-01",
+        "E-02",
+        "E-03"
+      ],
+      "expected_result": "PASS only when real linked source is provided; otherwise NOT_RUN",
+      "input_asset_status": "REQUIRES_REAL_CAPTURE_OR_IMPLEMENTATION",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T02",
+      "category": "missing_field",
+      "scenario": "Unknown/absent attribute returns NOT_OBSERVED or UNKNOWN and no invented value",
+      "result_claim_ids": [
+        "B01",
+        "B03"
+      ],
+      "evidence_claim_ids": [
+        "E-01",
+        "E-02"
+      ],
+      "expected_result": "Fail-closed",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T03",
+      "category": "mixed_observation_unit",
+      "scenario": "Card composed from multiple source units preserves per-field provenance; no false one-batch freshness",
+      "result_claim_ids": [
+        "B01",
+        "B02"
+      ],
+      "evidence_claim_ids": [
+        "E-02"
+      ],
+      "expected_result": "Different unit ids remain distinguishable",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T04",
+      "category": "save_and_season_mismatch",
+      "scenario": "Player/team record from another save/season is rejected or explicitly marked inapplicable",
+      "result_claim_ids": [
+        "B01",
+        "B02"
+      ],
+      "evidence_claim_ids": [
+        "E-03"
+      ],
+      "expected_result": "Mismatch blocked",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T05",
+      "category": "withheld_or_restricted_data",
+      "scenario": "Research full-sandbox visibility must not leak opponent hidden facts to a formal BIC competition query",
+      "result_claim_ids": [
+        "B01",
+        "B03"
+      ],
+      "evidence_claim_ids": [
+        "E-01",
+        "E-03"
+      ],
+      "expected_result": "WITHHELD is retained",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T06",
+      "category": "badge_owned_state",
+      "scenario": "Badge decoder recovers known current owned/level from fixture; unknown Native enum code stays UNKNOWN",
+      "result_claim_ids": [
+        "B04"
+      ],
+      "evidence_claim_ids": [
+        "E-04"
+      ],
+      "expected_result": "Level/ownership not confused",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T07",
+      "category": "badge_eligibility_unknown",
+      "scenario": "MyPLAYER research reference does not make PC22 MyLEAGUE eligibility true; XP/animation claims UNKNOWN",
+      "result_claim_ids": [
+        "B04"
+      ],
+      "evidence_claim_ids": [
+        "E-05"
+      ],
+      "expected_result": "No false eligibility",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T08",
+      "category": "badge_state_distinctions",
+      "scenario": "Owned vs qualified but absent vs potentially qualified after growth vs unknown are not conflated",
+      "result_claim_ids": [
+        "B04"
+      ],
+      "evidence_claim_ids": [
+        "E-04",
+        "E-05"
+      ],
+      "expected_result": "All four states separately represented; unsupported predicate UNKNOWN",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T09",
+      "category": "synthetic_2x2",
+      "scenario": "Labelled synthetic 2x2 factorial contrast calculates main/interaction differences with specified signs and confidence limits",
+      "result_claim_ids": [
+        "B05"
+      ],
+      "evidence_claim_ids": [
+        "E-09"
+      ],
+      "expected_result": "Offline deterministic sample only; never game evidence",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T10",
+      "category": "confounded_effect",
+      "scenario": "Same team repeat seasons, shifting roster/coach or no control arms yields NOT_CAUSALLY_IDENTIFIED",
+      "result_claim_ids": [
+        "B05"
+      ],
+      "evidence_claim_ids": [
+        "E-06",
+        "E-09"
+      ],
+      "expected_result": "Cannot claim isolated setting effect",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T11",
+      "category": "mode_separation",
+      "scenario": "3D CPU vs CPU, Human vs AI, Fast Sim have distinct mode tags and no automatic transfer of tactics evidence",
+      "result_claim_ids": [
+        "B05",
+        "B06"
+      ],
+      "evidence_claim_ids": [
+        "E-06"
+      ],
+      "expected_result": "Mode conflation prohibited",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T12",
+      "category": "tactical_execution_unknown",
+      "scenario": "Native setting successfully read/written plus box score does not prove observed triggers, actual execution or chance creation",
+      "result_claim_ids": [
+        "B06"
+      ],
+      "evidence_claim_ids": [
+        "E-06",
+        "E-07"
+      ],
+      "expected_result": "TACTICAL_EXECUTION_UNKNOWN",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T13",
+      "category": "source_reproducibility",
+      "scenario": "All facts/claims and analysis output point to exact source commit/blob, and reproducibility commands and exit codes",
+      "result_claim_ids": [
+        "B01",
+        "B03",
+        "B04",
+        "B05",
+        "B06"
+      ],
+      "evidence_claim_ids": [
+        "E-01",
+        "E-04",
+        "E-08"
+      ],
+      "expected_result": "No unsupported historical tests presented as current results",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T14",
+      "category": "authorization_negative",
+      "scenario": "Unapproved REA setter, calendar advance or training dispatch is not callable from offline baseline and returns blocked",
+      "result_claim_ids": [
+        "B04",
+        "B05",
+        "B06"
+      ],
+      "evidence_claim_ids": [
+        "E-07"
+      ],
+      "expected_result": "No Native operation",
+      "input_asset_status": "SYNTHETIC_FIXTURE_TO_BE_CREATED",
+      "test_executed": false,
+      "exit_code": null
+    },
+    {
+      "test_id": "T15",
+      "category": "performance_regression",
+      "scenario": "BIC fact wrapper does not repeatedly recreate capture/Frida sessions or recalculate native cumulative statistics; report actual timing",
+      "result_claim_ids": [
+        "B01",
+        "B02",
+        "B03"
+      ],
+      "evidence_claim_ids": [
+        "E-01"
+      ],
+      "expected_result": "Measured only when implementation authorized",
+      "input_asset_status": "REQUIRES_REAL_CAPTURE_OR_IMPLEMENTATION",
+      "test_executed": false,
+      "exit_code": null
+    }
+  ],
+  "test_package_sha256": null,
+  "preconditions": [
+    "Stage03 source claim map reviewed",
+    "Actual provenance-preserving queries are available or an explicit offline fixture is marked synthetic",
+    "No real game/saves/process access without separate Human approval"
+  ],
+  "negative_cases": [
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T07",
+    "T08",
+    "T10",
+    "T11",
+    "T12",
+    "T14"
+  ],
+  "integrity_rules": [
+    "When Stage04 is genuinely frozen, compute normalized_sha256 on the exact tests list with Core schema and bind a real authorized freeze reference",
+    "Do not mark test_run or PASSED before executing test commands",
+    "No invented real player attribute values",
+    "Game calendar simulation requires explicit live permission"
+  ],
+  "formal_stage04_acceptance": "NOT_CLAIMED"
+}
