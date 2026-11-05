@@ -1,5 +1,7 @@
 # Wave1/Wave2 scoped offline Run candidate
 
+This document records the preparation snapshot at a9a9a444907c6b35aa6bcd4da5c7f123cba522e9. The current review entry is [CHILD_A_CONFIRMATION_HANDOFF.md](CHILD_A_CONFIRMATION_HANDOFF.md).
+
 Task NBA2K22-BIC-W1-W2-OFFLINE-SCOPED-OS-RUN-20261105-001 stops at **PENDING_OWNER_ACCEPTANCE**, the authorized consolidated review checkpoint. The commit containing this handoff is the delivered child candidate. The full parent BIC remains INCOMPLETE, with SC-05 BIC-vs-BIC NOT_DELIVERED. No parent A0/A v2 or business source was modified.
 
 The execution contract, route approval and seven-criterion charter are copied byte-identically from eece048196e6e8077cc5c9a174a759d199aa5bb3. SOURCE_BINDINGS.json records exact source commit/path/blob/SHA-256 for those inputs, the original 12+8 evidence sources and four added route/integration sources. Previous reviewed code and all 83 historical engineering delta files remain identical to cdcb293f / the bb886c50 delivery. Prior independent reviews are inputs, not newly completed acceptance of this child.

@@ -1,0 +1,31 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/a0_binding_task_packet.yml",
+  "checks": [
+    {
+      "id": "child_a_binding",
+      "argv": [
+        "python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/bind_child_a0.py",
+        "--check"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "scoped_payload_and_integrity",
+      "argv": [
+        "python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/check_scoped_payloads.py"
+      ],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    }
+  ]
+}

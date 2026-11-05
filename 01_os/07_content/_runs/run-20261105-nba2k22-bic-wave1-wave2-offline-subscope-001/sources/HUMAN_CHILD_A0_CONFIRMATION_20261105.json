@@ -1,0 +1,62 @@
+{
+  "schema_version": "nba2k22.bic.scoped_stage01.consensus_A0.human_confirmation.v1",
+  "decision_id": "NBA2K22-BIC-W1-W2-OFFLINE-A0-HUMAN-CONFIRMATION-20261105-001",
+  "status": "HUMAN_CONFIRMED_FIXED_CHILD_A0_V1",
+  "explicit_human_statement": "批准子 A0 v1：NBA2K22-BIC-W1-W2-OFFLINE-A0-001，固定规范化 SHA-256 为 908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9。确认七项 OFF-SC 离线验收范围及排除边界；原完整 BIC 父任务保持未完成。不授权子 A、后续阶段自动通过、master 合并或真实游戏操作。",
+  "actor": "Human (explicit decision in current conversation)",
+  "recorded_by": "GPT-6 / decision_architecture",
+  "recorded_date": "2026-11-05",
+  "record_type": "Durable transcription of Human's explicit chat approval; not a cryptographic signature or a fabricated stage-control receipt",
+  "fixed_binding": {
+    "child_run_id": "run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001",
+    "child_candidate_commit": "a9a9a444907c6b35aa6bcd4da5c7f123cba522e9",
+    "model_kind": "consensus_A0",
+    "model_id": "NBA2K22-BIC-W1-W2-OFFLINE-A0-001",
+    "artifact_version": 1,
+    "normalized_sha256": "908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9",
+    "original_candidate_file": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/01_requirement.yml",
+    "original_digest_file": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/NORMALIZED_BINDINGS.json",
+    "acceptance_criterion_ids": [
+      "OFF-SC01",
+      "OFF-SC02",
+      "OFF-SC03",
+      "OFF-SC04",
+      "OFF-SC05",
+      "OFF-SC06",
+      "OFF-SC07"
+    ]
+  },
+  "approved_exact_scope": {
+    "objective": "Verify only previously reviewed Wave1/Wave2 offline BIC capabilities in an independent child OS Run.",
+    "accepted": "Fixed normalized A0 v1 scope, seven OFF-SC offline criteria and exclusion boundaries.",
+    "parent_requirement_status": "INCOMPLETE_UNCHANGED",
+    "excluded": [
+      "Full parent BIC completion and BIC-vs-BIC independent autonomous competition",
+      "Unverified production game save/build identity and actual game-mode causal behavior",
+      "PC22 MyLEAGUE badge XP, qualification and in-game effects certification",
+      "Native/REA Getter/Setter and live game/save modifications",
+      "Fast Sim/3D game-effect certification or calendar progression",
+      "Full production performance acceptance",
+      "master merge or PR auto-merge"
+    ]
+  },
+  "NOT_APPROVED": [
+    "Requirement Result A confirmation or the provisional A digest",
+    "Automatic Stage01 completion or Stage02-07 owner dispositions",
+    "Stage04 owner formal freeze; Stage06 new frozen-test execution; Stage07 independent acceptance",
+    "master integration, protected branch writes, game process access or Native/REA writes",
+    "Changes to approved parent BIC A0/A v2",
+    "New Wave3 business development"
+  ],
+  "next_binding_requirements": [
+    "Maintain original user-approved child A0 normalized digest and content unchanged.",
+    "Use exact Git reference to this decision receipt as consensus_Human_confirmation.confirmation_ref, subject to installed Core owner/identity policy.",
+    "Bind actual A0 confirmation_ref into requirement_result_A.consensus_ref; the formerly provisional A digest becomes invalid.",
+    "Recompute requirement_confirmation_digest for child A using fixed Core SHA 08d8e534a3438269aa7d7eb1b080ab11c172f462.",
+    "Prepare distinct new child A content and digest for a separate future Human approval; do not fill Human_confirmation.confirmed for child A yet.",
+    "Recompute affected Stage01 artifact hash and downstream manifest/input_refs; preserve revision history and run exact applicable Core requirement_findings."
+  ],
+  "stage01_os_state": "A0_HUMAN_CONFIRMED_A_CONFIRMATION_NOT_GRANTED_FORMAL_STAGE01_NOT_PASSED",
+  "approval_to_complete_stage01": false,
+  "prms": "NOT_SAVED_TO_PRMS_GIT_RECEIPT_ONLY"
+}

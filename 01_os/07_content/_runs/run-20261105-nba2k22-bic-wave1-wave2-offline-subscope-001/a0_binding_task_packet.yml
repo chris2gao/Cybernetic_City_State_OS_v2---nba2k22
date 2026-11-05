@@ -1,0 +1,12 @@
+task_packet:
+  task_id: NBA2K22-BIC-W1-W2-CHILD-A0-BIND-AND-A-PREPARE-20261105-001
+  branch: task/nba2k22-bic-wave1-wave2-offline-scoped-run-20261105
+  exact_base_sha: a9a9a444907c6b35aa6bcd4da5c7f123cba522e9
+  objective: Bind the fixed child A0 approval and prepare child A for its separate Human decision
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+  required_tests: [child_a_binding, scoped_payload_and_integrity]
+  verification_plan: 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/a0_binding_verification_plan.json
+  prohibitions: [master_merge, game_process_access, native_write, save_mutation, parent_requirement_edit, business_code_change, child_a_self_confirmation, formal_stage_acceptance]
+  publisher:
+    expected_remote_master_head: 66f8f73f1a91597f4562b834c2acad332ad9de5b

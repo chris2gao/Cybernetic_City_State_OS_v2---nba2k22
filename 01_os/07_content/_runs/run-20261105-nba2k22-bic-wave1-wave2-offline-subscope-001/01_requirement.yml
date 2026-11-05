@@ -58,13 +58,13 @@ payload:
       route_approval: Preparation only, never stage owner acceptance
       formal_freeze: Actual lawful owner disposition, not an existing technical SHA
   consensus_Human_confirmation:
-    confirmed: false
+    confirmed: true
     model_kind: consensus_A0
     model_id: NBA2K22-BIC-W1-W2-OFFLINE-A0-001
     artifact_version: 1
     content_sha256: 908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9
-    confirmation_ref: null
-    status: PENDING_ACTUAL_CHILD_A0_ACCEPTANCE
+    confirmation_ref: 7428864602f7d29ee9620db36b7b975f3e2b70c8:01_os/07_content/_runs/run-20261105-nba2k22-bic-scoped-a0-human-confirmation-001/HUMAN_CHILD_A0_CONFIRMATION_20261105.json
+    status: HUMAN_CONFIRMED_FIXED_CHILD_A0_V1
   parent_requirement_ref:
     model_id: NBA2K22-BIC-A-001
     git_blob_sha1: e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4
@@ -86,7 +86,7 @@ payload:
       model_id: NBA2K22-BIC-W1-W2-OFFLINE-A0-001
       version: 1
       sha256: 908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9
-      confirmation_ref: null
+      confirmation_ref: 7428864602f7d29ee9620db36b7b975f3e2b70c8:01_os/07_content/_runs/run-20261105-nba2k22-bic-scoped-a0-human-confirmation-001/HUMAN_CHILD_A0_CONFIRMATION_20261105.json
     result_items:
     - result_item_id: OFF-RES01
       title: Offline capability OFF-SC01
@@ -296,6 +296,6 @@ payload:
     model_kind: requirement_result_A
     model_id: NBA2K22-BIC-W1-W2-OFFLINE-A-001
     artifact_version: 1
-    content_sha256: c8184084a9229cedc67de04735a481d387f121561ea4e7be0de0592396ad5b93
+    content_sha256: 693fede10af802267f3657a4f961b812252449d3ebfc1135527f64b88afe2fda
     confirmation_ref: null
     status: PENDING_ACTUAL_CHILD_A_ACCEPTANCE
