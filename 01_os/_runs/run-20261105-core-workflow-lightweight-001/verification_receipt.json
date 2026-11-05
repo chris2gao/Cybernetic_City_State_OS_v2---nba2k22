@@ -1,0 +1,89 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "be6774e37b7ece6d3ecc401aa2701cb60dd2c4dc",
+  "plan_sha256": "0dde34ecee2eefb0bf43f87656a954c41fd727ea37f4237f7e7d3a5b0278102b",
+  "checks": [
+    {
+      "id": "workflow_and_authority",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793921449357362000,
+      "elapsed_seconds": 488.9434075999998,
+      "stdout_sha256": "3c396da774a5ef96ea5a84ded7961c3143746a62705ae1ccb78e42952ac09fbb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/_runs/run-20261105-core-workflow-lightweight-001/verify.py",
+        "standard"
+      ]
+    },
+    {
+      "id": "static",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793921450638435600,
+      "elapsed_seconds": 0.9327639000002819,
+      "stdout_sha256": "5ea6828bebb625d92fd82851329b9e441c9c2e22dcbf075926ada84556a77faf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "@python",
+        "-B",
+        "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+        "static",
+        ".",
+        "--json-output"
+      ]
+    },
+    {
+      "id": "publication_history",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793922060209986600,
+      "elapsed_seconds": 609.1559412999995,
+      "stdout_sha256": "669b3d1d38dbe28b645b5dcd7013cc658d6d55341a67d4ea07162b4da34ceed6",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/_runs/run-20261105-core-workflow-lightweight-001/verify.py",
+        "publication"
+      ]
+    }
+  ],
+  "status": "success",
+  "authority_effect": "none",
+  "inspection_exit_code": 0,
+  "checkpoint_exit_code": 0,
+  "pytest": {
+    "standard": 571,
+    "publication_history": 90,
+    "subtests": 426
+  },
+  "static_findings": [],
+  "publication_shards": [
+    "publication_gate/shard-3: exit_code=0",
+    "22 passed in 580.50s (0:09:40)",
+    "publication_gate/shard-4: exit_code=0",
+    "22 passed in 592.42s (0:09:52)",
+    "publication_gate/shard-2: exit_code=0",
+    "23 passed in 605.34s (0:10:05)",
+    "publication_gate/shard-1: exit_code=0",
+    "23 passed in 607.66s (0:10:07)"
+  ],
+  "previous_attempt": {
+    "candidate": "0100176fa5c6c32678ed4744c9fc374748e06fd1",
+    "status": "timeout",
+    "elapsed_seconds": 2400.1314976000003
+  }
+}
