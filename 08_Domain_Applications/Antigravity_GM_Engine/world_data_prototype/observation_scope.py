@@ -25,12 +25,19 @@ class ObservationScope:
     save_id:str
     schema_version:int
     unit_ids:tuple[str,...]
+    source_hashes:tuple=()
 
     @property
     def fingerprint(self):
         raw=json.dumps([self.save_id,self.schema_version,self.observed_through,self.unit_ids],separators=(',',':')).encode();return hashlib.sha256(raw).hexdigest()
 
-    def metadata(self):return {'time_basis':'CAPTURE_OBSERVED_AT_NOT_GAME_DATE','observed_through':self.observed_through,'save_id':self.save_id,'schema_version':self.schema_version,'committed_success_units':len(self.unit_ids),'scope_sha256':self.fingerprint}
+    def metadata(self):
+        return {'time_basis':'CAPTURE_OBSERVED_AT_NOT_GAME_DATE','observed_through':self.observed_through,
+                'save_id':self.save_id,'schema_version':self.schema_version,
+                'committed_success_units':len(self.unit_ids),'scope_sha256':self.fingerprint,
+                'database_locator_sha256':hashlib.sha256(str(self.database).casefold().encode()).hexdigest(),
+                'source_ledger_sha256':hashlib.sha256(json.dumps(self.source_hashes,separators=(',',':')).encode()).hexdigest(),
+                'database_identity_scope':'Physical locator and selected immutable unit payload hashes; not authenticated game save identity'}
 
 def current_scope():return _CURRENT.get()
 
@@ -42,7 +49,9 @@ def observed_as_of(database,observed_through,*,season_id=None):
         conn.execute('BEGIN');header=conn.execute('SELECT save_id,schema_version FROM saves WHERE singleton=1').fetchone()
         if header is None or header['schema_version']!=VERSION:raise ValueError('copy-upgrade facts to the current schema before historical queries')
         units=tuple(sorted(row['unit_id'] for row in conn.execute("SELECT u.unit_id,u.observed_at FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_status='success' AND (? IS NULL OR r.season_id=?)",(season_id,season_id)) if utc_stamp(row['observed_at'])<=cutoff))
-        scope=ObservationScope(database,cutoff,header['save_id'],header['schema_version'],units)
+        selected_units=set(units)
+        sources=tuple((row['unit_id'],row['payload_sha256']) for row in conn.execute('SELECT unit_id,payload_sha256 FROM capture_units ORDER BY unit_id') if row['unit_id'] in selected_units)
+        scope=ObservationScope(database,cutoff,header['save_id'],header['schema_version'],units,sources)
     token=_CURRENT.set(scope)
     try:yield scope
     finally:_CURRENT.reset(token)

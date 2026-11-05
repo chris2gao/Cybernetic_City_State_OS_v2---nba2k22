@@ -3,6 +3,7 @@ from bic_baseline import knowledge_query, coverage_report, badge_intelligence
 from bic_experiments import tactical_evidence_protocol, factorial_2x2
 from bic_plans import plan_adjustment
 import math
+from player_skill_codec import PROFILE as SKILL_PROFILE, LAYOUT as SKILL_LAYOUT
 
 INSPECTION_FIELDS = (
     'player_vitals_observations.height_raw',
@@ -44,6 +45,9 @@ def _relative_profile(baseline):
 
 
 def _same_context(first, second):
+    for key in ('scope_sha256', 'database_locator_sha256', 'source_ledger_sha256'):
+        if not first['observation_scope'].get(key) or first['observation_scope'].get(key) != second['observation_scope'].get(key):
+            raise ValueError('Diagnostic source scope mismatch: ' + key)
     for key in ('save_id', 'season_id'):
         if first[key] != second[key]:
             raise ValueError('Diagnostic context mismatch: ' + key)
@@ -77,6 +81,7 @@ def _role_findings(baseline, role_requirements, comparison_baselines=()):
         status = evidence['status']
         observation = evidence['sources'][0] if evidence['sources'] else {}
         freshness = observation.get('freshness') or {}
+        compatibility = 'UNKNOWN'
         if status == 'CONFLICT':
             verdict = 'CONFLICT'
         elif status != 'OBSERVATION_AVAILABLE' or freshness.get('status') != 'WITHIN_REQUESTED_AGE':
@@ -88,9 +93,14 @@ def _role_findings(baseline, role_requirements, comparison_baselines=()):
             else:
                 low, high = requirement.get('minimum'), requirement.get('maximum')
                 outside = low is not None and value < low or high is not None and value > high
-                verdict = 'CONFLICT' if outside else 'FACT'
+                compatibility = 'DOES_NOT_SATISFY' if outside else 'SATISFIES'
+                verdict = observation.get('knowledge_status', 'UNKNOWN')
         findings.append({'field': name, 'classification': verdict,
-                         'conflict_type': 'SOURCE_CONFLICT' if status == 'CONFLICT' else ('CANDIDATE_ROLE_CONFLICT' if verdict == 'CONFLICT' else None),
+                         'observed_value': observation.get('value'),
+                         'source_maturity': observation.get('knowledge_status', 'UNKNOWN'),
+                         'role_compatibility': compatibility,
+                         'mechanism_verification': 'UNKNOWN', 'causal_conclusion': 'UNKNOWN',
+                         'conflict_type': 'SOURCE_CONFLICT' if status == 'CONFLICT' else ('CANDIDATE_ROLE_CONFLICT' if compatibility == 'DOES_NOT_SATISFY' else None),
                          'problem': 'Compatibility with candidate role requirement: ' + requirement['rationale'],
                          'support': evidence, 'requirement': requirement,
                          'mechanism_explanations': [
@@ -127,10 +137,24 @@ def diagnose_player(baseline, *, role_requirements=(), comparison_baselines=(), 
         if not requirement.get('source'):
             raise ValueError('PlayType role requirement needs a source')
         observed = [row for row in play_types if row.get('native_play_code') is not None]
+        known_codes = SKILL_PROFILE['play_type_enum']
+        known_requirement = str(requirement['code']) in known_codes
         fresh = bool(observed) and all(row.get('freshness', {}).get('status') == 'WITHIN_REQUESTED_AGE' for row in observed)
         matches = [row for row in observed if str(row['native_play_code']) == str(requirement['code'])]
-        status = 'UNKNOWN' if not fresh else ('FACT' if matches else 'CONFLICT')
+        expected_slots = {int(key) for key in SKILL_PROFILE['play_types']}
+        source_units = {row.get('unit_id') for row in observed}
+        complete = (known_requirement and fresh and {row.get('slot_index') for row in observed} == expected_slots
+                    and len(observed) == len(expected_slots) and None not in source_units
+                    and len(source_units) == 1
+                    and all(str(row['native_play_code']) in known_codes
+                            and row.get('provenance', {}).get('completeness') == 'COMPLETE'
+                            and row.get('layout_version') == SKILL_LAYOUT for row in observed))
+        fresh_matches = [row for row in matches if known_requirement and row.get('freshness', {}).get('status') == 'WITHIN_REQUESTED_AGE']
+        status = 'OBSERVED_REGISTRATION' if fresh_matches else ('CONFLICT' if complete else 'UNKNOWN')
         play_type_fit.append({'classification': status, 'candidate_role_requirement': requirement,
+                              'negative_inference_complete': complete,
+                              'source_maturity': sorted({row.get('knowledge_status', 'UNKNOWN') for row in observed}),
+                              'negative_inference_scope': 'Complete stored registration only; no game behavior claim',
                               'observations': observed, 'registered_code_matches': matches,
                               'limit': 'Ordered PlayType registration does not prove a play was called or executed'})
     groups = {}
@@ -168,11 +192,11 @@ def diagnose_player(baseline, *, role_requirements=(), comparison_baselines=(), 
             'observed_play_types': baseline['facts'].get('families', {}).get('player_play_type_slots', []),
             'game_observations': baseline['facts'].get('season_observations', []),
             'native_plans': plans, 'status': 'DIAGNOSIS_WITH_UNKNOWNS',
-            'candidate_role_fit': {'supporting_fields': [f['field'] for f in findings if f['classification'] == 'FACT' and ('minimum' in f['requirement'] or 'maximum' in f['requirement'])],
-                                   'conflicting_fields': [f['field'] for f in findings if f['classification'] == 'CONFLICT'],
+            'candidate_role_fit': {'supporting_fields': [f['field'] for f in findings if f['role_compatibility'] == 'SATISFIES' and ('minimum' in f['requirement'] or 'maximum' in f['requirement'])],
+                                   'conflicting_fields': [f['field'] for f in findings if f['conflict_type'] is not None],
                                    'unresolved_fields': [f['field'] for f in findings if f['classification'] == 'UNKNOWN'],
                                    'scope': 'Compatibility with supplied assumptions; not a certified basketball optimum'},
-            'classification_contract': ['FACT', 'VERIFIED_MECHANISM', 'HYPOTHESIS', 'CONFLICT', 'UNKNOWN'],
+            'classification_contract': ['HISTORICAL_OBSERVATION', 'SYNTHETIC_ONLY', 'UNVERIFIED_OBSERVATION', 'RESEARCH_REFERENCE', 'HYPOTHESIS', 'CONFLICT', 'UNKNOWN'],
             'verified_mechanisms': [],
             'experiment_requirements': {'cells': ['00', '10', '01', '11'],
                 'controls': ['save/build/mode', 'team-season clusters', 'roster and coach',

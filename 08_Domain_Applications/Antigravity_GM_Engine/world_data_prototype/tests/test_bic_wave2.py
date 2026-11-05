@@ -36,7 +36,8 @@ class Wave2Tests(unittest.TestCase):
     def test_fact_role_conflict_and_alternative_explanations(self):
         result = diagnose_player(self.player, role_requirements=self.requirements)
         finding = result['findings'][0]
-        self.assertEqual(finding['classification'], 'CONFLICT')
+        self.assertEqual(finding['classification'], 'SYNTHETIC_ONLY')
+        self.assertEqual(finding['role_compatibility'], 'DOES_NOT_SATISFY')
         self.assertEqual(finding['support']['sources'][0]['value'], 90)
         self.assertGreaterEqual(len(finding['mechanism_explanations']), 2)
         self.assertEqual(result['verified_mechanisms'], [])
@@ -98,7 +99,8 @@ class Wave2Tests(unittest.TestCase):
             {'field': 'player_tendency_snapshots.shot_tendency_raw', 'minimum': 50,
              'source': 'SYNTHETIC_ROLE_ASSUMPTION', 'rationale': 'Candidate usage criterion'}]
         result = diagnose_player(player, role_requirements=requirements)
-        self.assertEqual([finding['classification'] for finding in result['findings']], ['FACT', 'CONFLICT'])
+        self.assertEqual([finding['role_compatibility'] for finding in result['findings']], ['SATISFIES', 'DOES_NOT_SATISFY'])
+        self.assertEqual([finding['classification'] for finding in result['findings']], ['SYNTHETIC_ONLY', 'SYNTHETIC_ONLY'])
 
     def test_certified_historical_subset_is_not_current_authority(self):
         intent = self.intent();intent['kind'] = 'COACH_SETTINGS';intent['action_id'] = 'COACH_SET_KNOWN_CURRENT_SETTINGS'
@@ -123,7 +125,7 @@ class Wave2Tests(unittest.TestCase):
     def test_play_type_mismatch_and_numeric_contract(self):
         fresh = player_baseline(self.fixture.db, 'p1', save_id='save', season_id='s1', as_of=fixture.T0, max_age_seconds=60)
         result = diagnose_player(fresh, required_play_codes=[{'code': 99, 'source': 'SYNTHETIC_ROLE_ASSUMPTION'}])
-        self.assertEqual(result['play_type_fit'][0]['classification'], 'CONFLICT')
+        self.assertEqual(result['play_type_fit'][0]['classification'], 'UNKNOWN')
         self.assertEqual(diagnose_player(self.player, required_play_codes=[{'code': 99, 'source': 'SYNTHETIC_ROLE_ASSUMPTION'}])['play_type_fit'][0]['classification'], 'UNKNOWN')
         with self.assertRaises(ValueError):
             diagnose_player(self.player, role_requirements=[{**self.requirements[0], 'minimum': float('nan')}])

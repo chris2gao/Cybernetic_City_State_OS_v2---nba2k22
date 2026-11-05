@@ -75,6 +75,20 @@ def plan_adjustment(intent, catalog):
         return {**result, 'status': 'NEEDS_VALIDATION', 'capability_state': 'UNKNOWN',
                 'unknowns': ['INTENT_ACTION_MISMATCH']}
     result['capability'] = capability
+    historical = capability.get('historical_example') or {}
+    exact = historical.get('exact_input') or {}
+    exact_before = historical.get('before')
+    requested_before = intent.get('expected_before')
+    if isinstance(exact.get('settings'), dict) and len(exact['settings']) == 1 and not isinstance(exact_before, dict):
+        exact_before = {next(iter(exact['settings'])): exact_before}
+    result['historical_validation'] = {
+        'action_id': action_id, 'game_build_sha256': catalog['game_build_sha256'],
+        'exact_input': exact, 'exact_before': exact_before,
+        'record': historical, 'source': catalog['source'],
+        'requested_tuple_matches': bool(exact) and intent.get('parameters') == exact
+            and requested_before == exact_before
+            and intent.get('game_build_sha256') == catalog['game_build_sha256'],
+        'current_fresh_getter_verified': False}
     result['input_contract'] = action['input_schema']
     result['native_evidence'] = action.get('evidence', [])
     result['call_sequence_reference'] = action.get('call_sequence', [])
@@ -115,6 +129,9 @@ def plan_adjustment(intent, catalog):
         findings.append('TARGET_TEAM_IDENTITY_NOT_BOUND')
     if not intent.get('before_source'):
         findings.append('BEFORE_SOURCE_NOT_BOUND')
+    findings.append('CURRENT_GETTER_EVIDENCE_NOT_VERIFIED')
+    if not result['historical_validation']['requested_tuple_matches']:
+        findings.append('OUTSIDE_EXACT_HISTORICAL_VALIDATION_SCOPE')
     if intent.get('mode') not in ('FAST_SIM', 'CPU_VS_CPU_3D', 'HUMAN_VS_AI_3D'):
         findings.append('MODE_NOT_BOUND')
     unknowns = action.get('unknowns', []) + action.get('coverage_unknowns', [])
@@ -126,6 +143,8 @@ def plan_adjustment(intent, catalog):
     result['capability_state'] = capability['evidence_level']
     result['maturity'] = {'read': 'UNKNOWN', 'write': capability['evidence_level'],
                           'effect': 'EXACT_HISTORICAL_EXAMPLE_ONLY' if capability['evidence_level'] == 'LiveEffectVerified' else 'UNKNOWN'}
+    result['maturity']['write'] = 'CURRENT_PLAN_NOT_VERIFIED'
+    result['schema_status'] = 'INVALID_OR_INCOMPLETE' if _parameter_findings(parameters, action['input_schema']) else 'SCHEMA_ONLY'
     result['status'] = 'NEEDS_VALIDATION' if findings else 'OFFLINE_PLAN_READY'
     result['effect_scope'] = 'Historical exact-input example only; proposed values and basketball effects remain unverified'
     return result

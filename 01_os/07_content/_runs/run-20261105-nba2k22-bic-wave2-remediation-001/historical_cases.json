@@ -1,0 +1,1896 @@
+[
+  {
+    "player": {
+      "player_id": "player:native:7236",
+      "display_name": "Pascal Siakam",
+      "native_player_id": "7236",
+      "native_identity_status": "UNVERIFIED"
+    },
+    "data_status": "REAL_DATA_NOT_VERIFIED",
+    "binding": {
+      "singleton": 1,
+      "save_id": "nba2k22_test_01",
+      "schema_version": 24,
+      "created_at": "2026-10-24T14:05:23.460494+00:00",
+      "source_grade": "UNBOUND",
+      "game_build": null,
+      "native_save_fingerprint": null,
+      "season_save_id": null,
+      "season_binding_status": "DATABASE_LOCAL_ONLY"
+    },
+    "observation_scope": {
+      "time_basis": "CAPTURE_OBSERVED_AT_NOT_GAME_DATE",
+      "observed_through": "2026-10-27T00:00:00.000000+00:00",
+      "save_id": "nba2k22_test_01",
+      "schema_version": 24,
+      "committed_success_units": 42,
+      "scope_sha256": "bc8c33e15c43b084fafda0e0f041b3bd18c9d96deb7a9cba66d9dd892685035f",
+      "database_locator_sha256": "3c755fe33f7091e76efd6f2cd48f3d9abedec6e671d0417caad48463c2669782",
+      "source_ledger_sha256": "01cc3ec8d1cb86d28230ef1a0f2465c1204069467dd6daf5ea2735e6f83658b4",
+      "database_identity_scope": "Physical locator and selected immutable unit payload hashes; not authenticated game save identity"
+    },
+    "findings": [
+      {
+        "field": "player_vitals_observations.height_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 20600,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_vitals_observations.height_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_vitals_observations",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 20600,
+              "field": "player_vitals_observations.height_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 121967.435717,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "player-state:71dac71c165a620f66b8a511",
+                "observed_at": "2026-10-25T14:07:12.564283+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+                "completeness": "PARTIAL",
+                "layout_version": "CURRENT_PLAYERDATA_VITALS_HEALTH_MORALE_V1",
+                "run_id": "player-state:71dac71c165a620f66b8a511",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_vitals_observations.height_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_vitals_observations.height_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_vitals_observations.height_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.shot_close_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 180,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.shot_close_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 180,
+              "field": "player_attribute_snapshots.shot_close_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.shot_close_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.shot_close_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.shot_close_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.mid_range_shot_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 165,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.mid_range_shot_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 165,
+              "field": "player_attribute_snapshots.mid_range_shot_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.mid_range_shot_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.mid_range_shot_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.mid_range_shot_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.passing_accuracy_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 141,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.passing_accuracy_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 141,
+              "field": "player_attribute_snapshots.passing_accuracy_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.passing_accuracy_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.passing_accuracy_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.passing_accuracy_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.interior_defense_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 183,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.interior_defense_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 183,
+              "field": "player_attribute_snapshots.interior_defense_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.interior_defense_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.interior_defense_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.interior_defense_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.perimeter_defense_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 162,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.perimeter_defense_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 162,
+              "field": "player_attribute_snapshots.perimeter_defense_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.perimeter_defense_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.perimeter_defense_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.perimeter_defense_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_tendency_snapshots.shot_tendency_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 85,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_tendency_snapshots.shot_tendency_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_tendency_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 85,
+              "field": "player_tendency_snapshots.shot_tendency_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_tendency_snapshots.shot_tendency_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_tendency_snapshots.shot_tendency_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_tendency_snapshots.shot_tendency_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 50,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_tendency_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 50,
+              "field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:7236"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      }
+    ],
+    "play_type_fit": [],
+    "verified_mechanisms": []
+  },
+  {
+    "player": {
+      "player_id": "player:native:4170",
+      "display_name": "Nikola Jokic",
+      "native_player_id": "4170",
+      "native_identity_status": "UNVERIFIED"
+    },
+    "data_status": "REAL_DATA_NOT_VERIFIED",
+    "binding": {
+      "singleton": 1,
+      "save_id": "nba2k22_test_01",
+      "schema_version": 24,
+      "created_at": "2026-10-24T14:05:23.460494+00:00",
+      "source_grade": "UNBOUND",
+      "game_build": null,
+      "native_save_fingerprint": null,
+      "season_save_id": null,
+      "season_binding_status": "DATABASE_LOCAL_ONLY"
+    },
+    "observation_scope": {
+      "time_basis": "CAPTURE_OBSERVED_AT_NOT_GAME_DATE",
+      "observed_through": "2026-10-27T00:00:00.000000+00:00",
+      "save_id": "nba2k22_test_01",
+      "schema_version": 24,
+      "committed_success_units": 42,
+      "scope_sha256": "bc8c33e15c43b084fafda0e0f041b3bd18c9d96deb7a9cba66d9dd892685035f",
+      "database_locator_sha256": "3c755fe33f7091e76efd6f2cd48f3d9abedec6e671d0417caad48463c2669782",
+      "source_ledger_sha256": "01cc3ec8d1cb86d28230ef1a0f2465c1204069467dd6daf5ea2735e6f83658b4",
+      "database_identity_scope": "Physical locator and selected immutable unit payload hashes; not authenticated game save identity"
+    },
+    "findings": [
+      {
+        "field": "player_vitals_observations.height_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 21100,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_vitals_observations.height_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_vitals_observations",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 21100,
+              "field": "player_vitals_observations.height_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 121967.435717,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "player-state:71dac71c165a620f66b8a511",
+                "observed_at": "2026-10-25T14:07:12.564283+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+                "completeness": "PARTIAL",
+                "layout_version": "CURRENT_PLAYERDATA_VITALS_HEALTH_MORALE_V1",
+                "run_id": "player-state:71dac71c165a620f66b8a511",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_vitals_observations.height_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_vitals_observations.height_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_vitals_observations.height_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.shot_close_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 210,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.shot_close_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 210,
+              "field": "player_attribute_snapshots.shot_close_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.shot_close_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.shot_close_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.shot_close_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.mid_range_shot_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 213,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.mid_range_shot_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 213,
+              "field": "player_attribute_snapshots.mid_range_shot_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.mid_range_shot_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.mid_range_shot_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.mid_range_shot_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.passing_accuracy_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 180,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.passing_accuracy_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 180,
+              "field": "player_attribute_snapshots.passing_accuracy_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.passing_accuracy_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.passing_accuracy_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.passing_accuracy_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.interior_defense_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 150,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.interior_defense_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 150,
+              "field": "player_attribute_snapshots.interior_defense_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.interior_defense_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.interior_defense_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.interior_defense_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_attribute_snapshots.perimeter_defense_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 75,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_attribute_snapshots.perimeter_defense_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_attribute_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 75,
+              "field": "player_attribute_snapshots.perimeter_defense_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_attribute_snapshots.perimeter_defense_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_attribute_snapshots.perimeter_defense_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_attribute_snapshots.perimeter_defense_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_tendency_snapshots.shot_tendency_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 93,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_tendency_snapshots.shot_tendency_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_tendency_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 93,
+              "field": "player_tendency_snapshots.shot_tendency_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_tendency_snapshots.shot_tendency_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_tendency_snapshots.shot_tendency_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_tendency_snapshots.shot_tendency_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      },
+      {
+        "field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+        "classification": "UNVERIFIED_OBSERVATION",
+        "observed_value": 85,
+        "source_maturity": "UNVERIFIED_OBSERVATION",
+        "role_compatibility": "SATISFIES",
+        "mechanism_verification": "UNKNOWN",
+        "causal_conclusion": "UNKNOWN",
+        "conflict_type": null,
+        "problem": "Compatibility with candidate role requirement: Inspect actual observation and source gap; no role threshold asserted",
+        "support": {
+          "query": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+          "status": "OBSERVATION_AVAILABLE",
+          "catalog": {
+            "registered_field": true,
+            "table": "player_tendency_snapshots",
+            "definition_is_observation": false
+          },
+          "sources": [
+            {
+              "value": 85,
+              "field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+              "status": "OBSERVED",
+              "freshness": {
+                "age_seconds": 104621.571274,
+                "max_age_seconds": 604800,
+                "status": "WITHIN_REQUESTED_AGE"
+              },
+              "provenance": {
+                "unit_id": "live-world:62052310fffb4ca792946781",
+                "observed_at": "2026-10-25T18:56:18.428726+00:00",
+                "effective_at": null,
+                "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+                "completeness": "PARTIAL",
+                "layout_version": "BOUND_SCHEDULE_AND_PUBLIC_PLAYER_V1",
+                "run_id": "live-world:62052310fffb4ca792946781",
+                "season_id": "season:native-year:2022",
+                "source_grade": "LIVE_READ",
+                "game_date": null,
+                "save_binding_ref": "HUMAN_DECLARED_SAVE:nba2k22_test_01:MyLEAGUE0003",
+                "save_id": "nba2k22_test_01"
+              },
+              "knowledge_status": "UNVERIFIED_OBSERVATION"
+            }
+          ],
+          "identity": {
+            "save_id": "nba2k22_test_01",
+            "season_id": "season:native-year:2022",
+            "entity_id": "player:native:4170"
+          },
+          "applicability": {
+            "requested_version": null,
+            "requested_mode": null,
+            "source_version": null,
+            "source_mode": "UNKNOWN"
+          },
+          "conflicts": [],
+          "unknowns": [],
+          "rejections": [],
+          "native_mechanism_verified": false
+        },
+        "requirement": {
+          "field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+          "source": "WorldData public field inspection",
+          "rationale": "Inspect actual observation and source gap; no role threshold asserted"
+        },
+        "mechanism_explanations": [
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Candidate role requirement may not match observed Native field"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "text": "Effective context, mode or unobserved mechanism may explain basketball outcome"
+          }
+        ],
+        "uncertainty": [
+          "Role threshold is a supplied assumption",
+          "Raw storage is not automatically a UI rating",
+          "Observed efficiency does not identify its cause"
+        ],
+        "candidate_adjustments": [
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "ROLE_OR_TACTICAL_FIT",
+            "target_field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+            "source": "WorldData public field inspection",
+            "description": "Review the role requirement against this observed field before selecting a lineup or tactical role",
+            "capability": "Role decision; no attribute or badge edit"
+          },
+          {
+            "classification": "HYPOTHESIS",
+            "direction": "CONTROLLED_MECHANISM_COMPARISON",
+            "target_field": "player_tendency_snapshots.dish_to_open_man_tendency_raw",
+            "description": "Compare usage/tendency and coach context in separate treatment cells while holding the fixed roster",
+            "native_intent_candidate": "OFFENSE_FOCUS",
+            "capability": "UNKNOWN until a bound Native plan is checked"
+          }
+        ],
+        "expected_impact": "HYPOTHESIS; no numeric effect promised",
+        "validation": {
+          "mode": "UNKNOWN",
+          "status": "TACTICAL_EXECUTION_UNKNOWN",
+          "required_observations": [
+            "save/build/game/possession identity",
+            "basketball intent",
+            "Native setting and readback source",
+            "timestamped player movement",
+            "advantage creation",
+            "shot/action outcome"
+          ],
+          "live_action_authorized": false
+        }
+      }
+    ],
+    "play_type_fit": [],
+    "verified_mechanisms": []
+  }
+]

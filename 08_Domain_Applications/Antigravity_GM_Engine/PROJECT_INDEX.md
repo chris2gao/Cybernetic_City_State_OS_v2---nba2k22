@@ -1,6 +1,6 @@
 # NBA2K22 项目资料与模块入口
 
-BIC Wave2 candidate adds P05 source-qualified player/team diagnosis and P09 offline Native plans, reusing the reviewed first-wave SHA `aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b`. Entry `world_data_prototype/BIC_WAVE2.md`; evidence `01_os/07_content/_runs/run-20261104-nba2k22-bic-wave2-001/` from repository root. No live action or formal OS acceptance is claimed.
+BIC Wave2 candidate adds P05 source-qualified player/team diagnosis and P09 offline Native plans, reusing the reviewed first-wave SHA `aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b`. Entry `world_data_prototype/BIC_WAVE2.md`; original evidence `01_os/07_content/_runs/run-20261104-nba2k22-bic-wave2-001/`. R01-R04 remediation also affects P02 observation-scope joins; current evidence is `01_os/07_content/_runs/run-20261105-nba2k22-bic-wave2-remediation-001/` from repository root. Difference review and formal OS acceptance remain pending.
 
 BIC series remediation extends P02 field/mechanism knowledge queries and detailed coverage, and P10 factorial mode validation. Fixed reviewed base `a3e28e186f198e731c76b74f939da2950b5d15bd`; evidence in repository-root `01_os/07_content/_runs/run-20261104-nba2k22-bic-series-remediation-001/`. Independent difference review remains pending.
 
