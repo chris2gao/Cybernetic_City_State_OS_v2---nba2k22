@@ -1,0 +1,1629 @@
+{
+  "requirement_id": "NBA2K22-BASKETBALL-INTELLIGENCE-CORE-REQUIREMENT-MODELING-20261104-001",
+  "model_kind": "requirement_result_A",
+  "model_id": "NBA2K22-BIC-A-001",
+  "version": 10,
+  "status": "DRAFT_READY_FOR_A_CANDIDATE",
+  "last_human_decision_batch": "01b-Q17-Q18; post-model semantic consistency normalization",
+  "stage": "workflow_stage_01_requirement_modeling/01b",
+  "objective": "将已获批 A0 的篮球智能目标细化为可观察的完整球队进攻、防守、人员使用、对手研究和反馈能力，不提前选定实现架构或认定任何 Native 效果已实证。",
+  "consensus_ref": {
+    "model_id": "NBA2K22-BIC-A0-001",
+    "version": 1,
+    "sha256": "4ad6958ede756f45552f0a4a8f3bfab8267a734db8d41289a579a586f74203fe",
+    "confirmation_ref": "current_conversation:2026-11-04:Human-confirm-Basketball-Intelligence-Core-01a-A0-v1",
+    "immutable": true
+  },
+  "human_decisions": [
+    {
+      "question_id": "01b-Q1",
+      "choice": "C",
+      "title": "完整进攻体系涵盖不同比赛情境",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q2",
+      "choice": "C",
+      "title": "完整对手针对性防守体系",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q3",
+      "choice": "C",
+      "title": "自主设计不同阵容组合与使用方案",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q4",
+      "choice": "C",
+      "title": "实验性篮球机制理解；理解设置、球员能力、数据、交互和证据强度",
+      "user_note": "无额外补充选项意见；另有本轮整体 Human 补充，见 baseline_priority_human_direction",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q5",
+      "choice": "C",
+      "title": "完整体系侦察、预测对手变化及反针对研究",
+      "user_note": "无单项额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q6",
+      "choice": "C",
+      "title": "协调攻防和阵容，比较多种完整方案及其收益代价",
+      "user_note": "无单项额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q7",
+      "choice": "B",
+      "title": "具备诊断能力的篮球基准",
+      "status": "HUMAN_DECIDED",
+      "human_note": "原版 AI 在 Human 与各队进行 3D 物理引擎比赛时出现丰富的战术配合；对比约基奇与西亚卡姆的真实出手过程和效率差异，怀疑徽章是影响因素。"
+    },
+    {
+      "question_id": "01b-Q8",
+      "choice": "B",
+      "title": "关键战术必须支持 3D 实际行为的分层诊断，不强制逐回合全覆盖",
+      "status": "HUMAN_DECIDED",
+      "human_note": "徽章的重要性及反向分析球员基础能力：取得徽章先满足能力值和身高等资格条件、再通过经验成长至不同等级；徽章可能参与动作动画和成功率。基准应分析当前徽章及成长资格/可能性。",
+      "requirement_scope": "具备关键行为链诊断与徽章能力判读，保持 A0 v1 中固定阵容、原生成长、不直接编辑基础能力和徽章的限制。"
+    },
+    {
+      "question_id": "01b-Q9",
+      "choice": "B",
+      "title": "球员基础能力采用多层证据联合判断，明确提高徽章权重",
+      "status": "HUMAN_DECIDED",
+      "verbatim": "Basketball Intelligence Core · 01b-Q9 Human 裁决：B。补充：提高徽章权重，并且如果球员有获得徽章的可能性进行培养，徽章获取的条件，就是游戏机制为我们提供的，对球员球技和能力的识别机制，引擎就是通过徽章来做智能处理的，这个我们要利用好，有的球员虽然没有某个徽章，但是它有获得徽章的条件，这其实就是它未来具有某种徽章对应的篮球技战术的能力的体现。",
+      "semantics": [
+        "Q9=B 确认直接能力值、身体条件、徽章、获得资格、倾向和比赛行为等证据联合判断",
+        "应提高徽章与获得资格在球员技战术判断中的优先级，但保留与直接读数和实验冲突检查",
+        "对满足已验证徽章资格或具备取得路径的球员，提出有依据的培养方向，而不是只关注当前拥有的徽章",
+        "培养涉及首版是否自动安排或执行训练的边界，尚待 Human 承重澄清"
+      ]
+    },
+    {
+      "question_id": "01b-Q10",
+      "choice": "B",
+      "title": "基准优先与原生培养支持，限已验证/获授权范围",
+      "status": "HUMAN_DECIDED",
+      "verbatim": "Basketball Intelligence Core · 01b-Q10 Human 裁决：B。无额外补充。 请写回 GitHub 01b 后继需求草案，检查与 A0 v1 的边界一致性。如涉及 A0 范围修订，先进入 Human 变更确认，不得擅自改动；继续按 OS 需求建模。",
+      "operational_interpretation": "首版以机制与球员能力基准为首要核心；可在已认证原生训练接口、预授权球队/字段/边界和安全控制内，使用训练作为辅助性的徽章潜力培养手段；原生引擎决定成长；不授权当下实际训练操作，也不扩大至跨赛季完整 Player Development Core。"
+    },
+    {
+      "question_id": "01b-Q11",
+      "choice": "B",
+      "title": "全面覆盖与篮球决策相关的 NBA2K22 原生信息",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirements": [
+        "球员卡属性、身体条件、徽章、倾向、战术、球队和教练设置、轮换、训练及相关原生比赛与历史事实都纳入基准知识覆盖",
+        "允许分批深度验证；每项未认证、缺失和受版本/比赛模式限制之处显式标记",
+        "本裁决不将合同、交易、选秀及财务提高为首版同等重点，亦不自动批准 GM 经营功能"
+      ]
+    },
+    {
+      "question_id": "01b-Q12",
+      "choice": "B",
+      "title": "理解原版 AI 如何实际调用和覆盖机制",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirements": [
+        "基准不止认识设置字段，须根据可验证证据理解原版 AI 战术调用、球员行为选择、防守反应和对外部设置覆盖/优先级",
+        "将原生 AI 自主行为、实际生效与外部提出的配置区别记录",
+        "允许无法解释的路径保留 UNKNOWN；首版不要求完整逆向每一条内部算法"
+      ]
+    },
+    {
+      "question_id": "01b-Q13",
+      "choice": "B",
+      "title": "知识有证据等级、适用条件与矛盾保留机制",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirements": [
+        "区分原生读数、代码/函数证据、3D 比赛观察、Fast Sim 统计、受控因果实验与推测",
+        "重要机制效果须有适当的验证与可复核依据才能升级为可信知识",
+        "知识冲突、证据不足和版本/比赛模式适用边界必须保留，不能用新摘要无痕覆盖旧事实"
+      ]
+    },
+    {
+      "question_id": "01b-Q14",
+      "choice": "B",
+      "title": "基准知识按可信程度分级准入",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirement": "已认证知识可支撑正式确定性判断；具有来源但尚未完全认证的知识只能支撑条件性推断/候选方案或研究假设；关键证据缺失时阻断受影响的确定性结论及未经认证的 Native 执行。"
+    },
+    {
+      "question_id": "01b-Q15",
+      "choice": "C",
+      "title": "受控对照并识别原生机制独立作用及交互",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirement": "在可比较条件下对照 NBA2K22 竞技与行为差异，尽可能区分球员能力、徽章、倾向、战术配置和组合交互的作用；日历模拟主要作大样本比较，关键 3D 行为分别补证；不能由单个胜率变化推定因果。"
+    },
+    {
+      "question_id": "01b-Q16",
+      "choice": "C",
+      "title": "重要证据冲突形成研究候选和知识修正闭环",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirement": "比赛证据与机制基准冲突时区分策略问题和机制认知问题，限制尚未验证主张、保留历史证据、形成机制研究候选；获得新证据后修订知识可信程度及受影响方案。"
+    },
+    {
+      "question_id": "01b-Q17",
+      "choice": "B",
+      "title": "原生能力缺口全程可追踪闭环",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirement": "保留原始篮球意图、未实现的机制与能力限制、已认证合法替代、研究证据和进度状态；新能力得到认证后重新评价受影响的篮球方案；不自行把研究候选升级为已批准执行或额外研发调度。"
+    },
+    {
+      "question_id": "01b-Q18",
+      "choice": "C",
+      "title": "原版 AI 与模型竞争形成可持续积累、可重新检验的篮球知识",
+      "status": "HUMAN_DECIDED",
+      "user_note": "无额外补充",
+      "requirement": "长期保留原版 AI 对照和独立 BIC 模型竞争的条件、模型决策版本、机制假说、实战战术行为、结果及正反证据；新机制知识出现后可以重新解释历史试验，不覆盖原始事实。"
+    }
+  ],
+  "result_items": [
+    {
+      "result_item_id": "RES-01B-OFFENSE",
+      "source_decision": "01b-Q1=C",
+      "title": "完整进攻决策能力（全队—球员—情境）",
+      "kind": "function",
+      "expected_end_state": "给定固定球员名单及其能力、球队战术现状与允许观察的对手资料，统一篮球决策主体能够设计协调的进攻体系，包括核心与球员职责、持球和无球方式、战术类型及手册、倾向与配合，并能提出针对首发、替补、比赛末段和不同对手的适配方案。",
+      "components": [
+        "全队进攻原则与战术目标",
+        "球员进攻职责与联动",
+        "战术手册、PlayTypes、Freelance、教练与倾向候选映射",
+        "首发/替补/末段/对手情境的方案差异"
+      ],
+      "relations": [
+        "进攻方案必须和球员角色及可用阵容组合相容",
+        "实际生效、可写入及持久性不是本裁决已认证的事实"
+      ],
+      "inputs_outputs": [
+        "示例输入：持球组织者、无球射手、顺下内线及本队战术配置；输出：一套进攻意图、球员分工与不同情境下的战术调整提案（具体字段及数值待 Stage02/03 核证）"
+      ],
+      "completeness_rule": "不存在只给整体体系标签而未给关键球员职责/协同及各约定情境处理的情况；若原生机制无法实现，则标记能力缺口而非假定可以生效。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q1=C：涵盖首发、替补、比赛末段和不同对手的完整进攻方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-OFF-01",
+          "scope": "在 Fast Sim 与 CPU vs CPU 3D 模式下不同战术设置实际怎样被调用、覆盖及表现",
+          "closure_evidence": "Native/3D 观察、分模式统计与可追溯设置状态",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-OFF-02",
+          "scope": "末段战术槽、轮换/阵容变更及 PlayTypes 是否能按需求稳定执行",
+          "closure_evidence": "原生读写权限、保存后读回及比赛行为验证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-DEFENSE",
+      "source_decision": "01b-Q2=C",
+      "title": "完整对手针对性防守决策能力",
+      "kind": "function",
+      "expected_end_state": "模型能够分析对手核心球员、首发/替补组合与进攻体系，在全队防守原则和合法个人防守设置间提出协调方案，覆盖对位、持球/无球、掩护、包夹、协防及不同阵容场景，供赛前配置、比赛验证和反馈使用。",
+      "components": [
+        "对手核心与进攻结构识别",
+        "整体防守原则与个人对手策略协同",
+        "不同阵容与关键对手的赛前防守方案",
+        "防守收益与代价及失败反馈"
+      ],
+      "relations": [
+        "遵守 A0 研究/竞技信息隔离",
+        "模型不接管实时临场防守",
+        "整体设置和个人设置可能存在覆盖及原生操作权限约束"
+      ],
+      "inputs_outputs": [
+        "示例输入：对手持球核心、外线射手、掩护人及本队可用防守资源；输出：相应防守意图和有条件的赛前原生设置提案"
+      ],
+      "completeness_rule": "防守提案不能只有保护篮下/限制三分等宽泛口号，须说明对手针对性、人员适配与主要取舍；对未知机制保留 UNKNOWN。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q2=C：需包括分析对手阵容进攻体系和设计首发/替补的针对性防守方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-DEF-01",
+          "scope": "整体和个人防守是否能够按期望并存、覆盖和持久化",
+          "closure_evidence": "独立原生配置认证与实战比较",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-DEF-02",
+          "scope": "不同对手情境下动态阵容匹配和目标个人防守设置的可靠作用",
+          "closure_evidence": "身份映射、合法设置枚举及比赛观察",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-05",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-ROSTER-USE",
+      "source_decision": "01b-Q3=C",
+      "title": "固定名单内的阵容组合及球员职责决策能力",
+      "kind": "function",
+      "expected_end_state": "模型能够在不改变球员成员构成的情况下，按技能互补与攻防优劣设计首发/替补、球员职责、轮换及不同情境使用方案，解释组合选择，并根据比赛和对手信息作出调整提案。",
+      "components": [
+        "球员能力与场上角色评估",
+        "人员互补与冲突分析",
+        "首发/替补、轮换深度与多套阵容候选",
+        "针对比赛情境与对手的使用取舍"
+      ],
+      "relations": [
+        "固定阵容不等于固定角色、首发、轮换和倾向",
+        "原版 AI 可覆盖上场时间或自行换人；不能假定外部完全控制五人阵容",
+        "训练、跨赛季发展和人员交易不属于首版"
+      ],
+      "inputs_outputs": [
+        "示例输入：固定15人名单、球员技术特征及本队进攻防守需要；输出：多个阵容组合的篮球理由、角色分工、预期收益与已知执行限制"
+      ],
+      "completeness_rule": "必须能够说明主要球员如何配合，以及什么情况下采取不同阵容；实际无法控制的上场组合须标注原生限制，不伪称已经实现。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q3=C：自主设计不同阵容组合、互补冲突和对手情境使用方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-ROT-01",
+          "scope": "首发、具体人员组合、轮换深度和分钟在 PC22 的合法可控程度",
+          "closure_evidence": "原生权限/写入回读/游戏自动覆盖验证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+      "source_decision": "01b-Q4=C + Human round-2 baseline priority",
+      "title": "篮球事实与机制基准理解（首要依赖能力）",
+      "kind": "function",
+      "expected_end_state": "统一篮球决策主体在进行任何策略判断之前，能够正确理解并区分本队及可观察对手的球员属性和能力、原生设置语义与作用条件、真实比赛数据、可能的交互/覆盖关系，以及被证实与尚未证实的机制影响；对错误、缺失或低可信证据不能作出确定性判断。 基准须可依已验证的游戏机制和真实球员能力，诊断方案适配、设置冲突、前置条件及证据缺陷；不能仅从比赛胜负或投篮命中率推断战术错误。 必须将徽章当前状态、获得资格、原生成长可能性作为球员真实能力理解的重要候选信号，能够基于已认证事实核对直接属性与其所指向的球技关系。",
+      "components": [
+        "球员能力、球风、身体与相关原生字段的真实理解",
+        "教练、球队、战术书、PlayTypes、倾向与阵容设置的语义和合法范围",
+        "比赛数据和可观察行为的真实解释",
+        "机制间作用条件、交互、覆盖与证据可靠性",
+        "前提/事实/假设/未知的可区分性",
+        "策略依赖的基准主张校验",
+        "策略适配与机制前置条件的可解释诊断",
+        "场上行为、创造投篮机会与最终命中结果的证据分离",
+        "徽章与属性/出手质量等机制假说需标识证据状态",
+        "徽章当前状态、等级、资格硬条件与成长可能性的只读分析",
+        "球员基础属性/身体条件/当前徽章/倾向/场上表现之间的交叉核验",
+        "以徽章现状和获得资格为高优先级复合技能证据，并明确联合分析和冲突解释",
+        "覆盖全部篮球决策相关原生事实并显示每个知识项的已采集、已验证或未知状态",
+        "理解原版 AI 战术调用、行为选择与原生覆盖，而非仅看设置面板",
+        "机制知识带来源、证据等级、适用模式和时点并保留冲突",
+        "分级证据准入与受影响结论的前提检查",
+        "受控对照下对球员能力、徽章、战术/倾向独立及交互效果的可证解释",
+        "重要机制反例下的知识追踪、研究候选与受影响方案复核"
+      ],
+      "relations": [
+        "作为 RES-01B-OFFENSE、RES-01B-DEFENSE、RES-01B-ROSTER-USE 及后续策略评估的先决质量基础",
+        "策略与比赛反馈用于检验及修正基准中的机制认识，不能将结果成功等同于所有因果假设均正确",
+        "Human Q7=B 和 Q14–Q16 已明确独立诊断、知识准入和修订目标；实际认证门槛属于后续证据与结果建模，而非仍缺 Human 基本意图",
+        "徽章是潜在的复合能力提示而非天然权威真值；缺乏认证时不得由徽章推断确切属性或必然出现特定动画",
+        "徽章机制读取及未来成长估计不授权修改徽章或改变原版成长",
+        "提高徽章权重为 Human 需求优先级，不预先宣布固定定量权重或已证因果优势",
+        "Q11 允许完整覆盖清单与分批逐项验证并行，不能把未验证机制当成已认证事实",
+        "Q12 的原版 AI 行为分析是基准的目标能力，但不要求无证据猜测整个算法",
+        "Q13 的证据治理是相关球员、徽章、设置、比赛与策略知识的共同约束"
+      ],
+      "inputs_outputs": [
+        "需求示例：输入球员真实数据、教练设置、候选战术意图和原生比赛观测；输出可检验的事实/机制解释、适用条件、证据强度与不确定性，供后续方案设计和复盘使用"
+      ],
+      "completeness_rule": "首版基准必须在相关决策之前提供可追溯的球员、数据和设置理解；如缺少机制认证则明确 UNKNOWN，并记录会阻断哪些策略结论；不得把原版默认值或固定最优值误认为基准。",
+      "known_facts": [
+        {
+          "item": "Human 强调：设置理解及球员能力/数据理解是最主要的基础；基准越强才涉及策略；优先开发基准，策略用于检验",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q7=B：基准应具备独立策略诊断能力",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 报告掘金配合及西亚卡姆/约基奇在 3D 中的不同出手行为和终结表现",
+          "evidence_status": "human_reported_observation"
+        },
+        {
+          "item": "徽章可能解释终结差异",
+          "evidence_status": "human_unverified_causal_hypothesis"
+        },
+        {
+          "item": "Human 01b-Q8=B：需要关键 3D 战术行为证据进行分层诊断，不要求每回合全量采集",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 提出徽章资格先决条件（属性/身高等）、经验/等级成长、动作与成功率加成的机制理解路径",
+          "evidence_status": "human_domain_assertion_unverified_this_session"
+        },
+        {
+          "item": "Human 01b-Q9=B 并要求提高徽章权重和对具资格球员提出培养方向",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q11=B：全面覆盖与篮球决策相关的 NBA2K22 原生信息",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q12=B：理解原版 AI 如何实际调用和覆盖机制",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q13=B：知识有证据等级、适用条件与矛盾保留机制",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q14=B：基准知识按可信程度分级准入",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q15=C：受控对照并识别原生机制独立作用及交互",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q16=C：重要证据冲突形成研究候选和知识修正闭环",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-BASE-02",
+          "scope": "各类原生设置/玩家能力字段/统计数据/实际影响的权威来源、覆盖范围及已证程度",
+          "closure_evidence": "Stage02 真实字段、Native Registry、采集、实机或对照实验结果",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BASE-05",
+          "scope": "徽章优先级如何在已证直接属性、倾向和场上行为冲突时被可靠校准",
+          "closure_evidence": "Stage02 徽章资格、机制作用及跨球员验证证据；01b 已确认高优先级但未设定固定权重",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BASE-06",
+          "scope": "当前全体原生篮球决策字段和机制知识的可证覆盖与新鲜度是否足以支持可信基准",
+          "closure_evidence": "Stage02 实际字段/能力/研究证据目录，对应缺失清单和分级认证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-OPPONENT-ADAPTATION",
+      "source_decision": "01b-Q5=C",
+      "title": "对手体系侦察、预测与反针对",
+      "kind": "function",
+      "expected_end_state": "依据正式竞技可获取的比赛证据分析对手体系、核心、阵容及弱点，形成有条件的对手可能调整判断、己方针对与反针对备选，并在后续比赛结果出现时更新假设。",
+      "components": [
+        "可观察对手事实",
+        "当前体系与风险分析",
+        "可能调整的有条件推测",
+        "赛前反针对候选",
+        "赛后对手行为反馈"
+      ],
+      "relations": [
+        "继承 A0 信息隔离和不接管比赛实时策略限制",
+        "依赖基准知识解释可观察对手事实"
+      ],
+      "inputs_outputs": [
+        "输入对手可观察球员数据和近期比赛；输出对手打法假设、反针对备选及不确定性说明"
+      ],
+      "completeness_rule": "不能因对手隐藏策略不可见而捏造精确设定；预测不是已知事实。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q5=C：对手研究含预测与反针对",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-OPP-01",
+          "scope": "WorldData 可观察比赛行为是否足以识别对手变化",
+          "closure_evidence": "Stage02 数据字段及可信行为样本检查",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-05",
+        "SC-06",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-INTEGRATED-TRADEOFF",
+      "source_decision": "01b-Q6=C",
+      "title": "进攻、防守与阵容的多方案统一权衡",
+      "kind": "function",
+      "expected_end_state": "面对已确认的篮球目标和资源限制，能够提出多种有篮球依据的完整攻防与阵容使用候选，比较收益、代价、适用对手、机制可信度，选择并保留赛后调整依据。",
+      "components": [
+        "完整方案一致性",
+        "球员与阵容互补/冲突",
+        "进攻防守之间的取舍",
+        "对手适配与不确定性",
+        "基于真实反馈的后续修正"
+      ],
+      "relations": [
+        "以已核验的基准机制和球员事实为依据，不以未经证据支持的固定评分表替代篮球判断",
+        "不要求每次穷举全部组合"
+      ],
+      "inputs_outputs": [
+        "输入同一阵容与对手条件；输出两个或更多有依据且可比较的篮球方案及选择理由，必要时保留不可比较原因"
+      ],
+      "completeness_rule": "方案必须交代主要取舍，而不是分别优化进攻/防守后忽略相互冲突；未证实机制和无法执行的环节必须显式标注。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q6=C：统一权衡并比较多种完整方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-TRD-01",
+          "scope": "评价候选方案所需的可观测球员、战术、人员组合数据与机制证据",
+          "closure_evidence": "Stage02 可用数据和机制证据核验",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-06",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+      "source_decision": "Human 01b-Q7=B gameplay observations + Human 01b-Q8=B",
+      "title": "关键战术的真实场上行为分层诊断",
+      "kind": "function",
+      "expected_end_state": "在关键、争议或需要机制认证的比赛情境中，能够明确区分战术意图、原生调用是否成功、实际球员配合及跑位、创造机会、动作/出手与终结结果；在资料不足时标注未知，不能用单纯 Box Score 推断战术被执行。",
+      "components": [
+        "可观察 3D 战术和原生游戏执行证据",
+        "跑位及出手机会",
+        "得分转化与可能影响变量",
+        "跨比赛模式证据来源隔离"
+      ],
+      "relations": [
+        "补充 RES-01B-BASELINE-FOUNDATION 的诊断事实基础",
+        "继承 A0 Q9=C 日历模拟主验证及 CPU vs CPU 3D 关键战术补证",
+        "不以 Human-vs-AI 3D 直接证明 CPU-vs-CPU 3D 或 Fast Sim 机制等价"
+      ],
+      "inputs_outputs": [
+        "例：西亚卡姆中距离晃出半个身位但投失，记录观察到的动作、创造的空间和结果，标注徽章/能力/干扰等候选原因，不能声称徽章因果已经证明。"
+      ],
+      "completeness_rule": "首版必须具备对选定关键战术的分层诊断能力，不要求完整比赛每回合全量追踪；可得证据与未观测事实、Human-vs-AI 与 CPU-vs-CPU 3D/日历模拟不能混同；采集技术属于后续阶段。",
+      "known_facts": [
+        {
+          "item": "Human 提供 3D 原版 AI 战术观察和两名球员终结差异",
+          "evidence_status": "human_reported_observation"
+        },
+        {
+          "item": "Human 01b-Q8=B：关键战术行为分层诊断是首版要求，非逐回合全量采集",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-3D-01",
+          "scope": "如何在适当比赛模式中证实挡拆、策应、无球跑动、出手机会与实际命中是否分别成立？",
+          "closure_evidence": "后续信息收集、真实观测及受控实验；不预设方法",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BADGE-01",
+          "scope": "徽章相对投篮能力、出手地点、干扰强度及其他因素对两个球员实际命中率的因果影响是什么？",
+          "closure_evidence": "后续信息收集、真实观测及受控实验；不预设方法",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-MODE-01",
+          "scope": "Human 与 AI 的 3D 比赛观察可否迁移至 CPU vs CPU 3D 及 Fast Sim？",
+          "closure_evidence": "后续信息收集、真实观测及受控实验；不预设方法",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-03",
+        "SC-04",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+      "source_decision": "Human 01b-Q8 supplemental baseline requirement",
+      "title": "徽章资格、现状与原生成长可能性的球员能力判读",
+      "kind": "function",
+      "expected_end_state": "基准能够将球员现有徽章类别/等级与直接能力值、身高等硬条件、相关篮球行为数据进行关联；对已有实证的徽章取得资格、经验/升级条件和预期自然成长路径进行有依据的可行性判读；说明徽章可能对应哪些技术能力及关键行为收益，并将可证事实、推断、未知严格区分。 对于当前没有某枚徽章、但已满足取得资格或有证据表明可能获得资格的球员，识别相应技术潜力，形成有依据的培养候选；不得把取得可能性误写为必然取得或已经具备对应行为加成。",
+      "components": [
+        "徽章当前种类、等级及是否具备的准确只读事实",
+        "徽章取得资格门槛：关联能力属性、身体条件及其他适用条件",
+        "经验、解锁、升级与自然成长可能性的证据驱动解释",
+        "徽章作为多项相关能力的概括性信号，与具体属性/倾向/实战表现联合理解",
+        "徽章可能影响动作/动画和成功率的机制证据与置信度",
+        "徽章条件、效果与技术诊断的未验证假设和冲突记录",
+        "徽章当前拥有 / 当前满足资格 / 可望满足资格 / XP 进度 / 实际触发的状态区分",
+        "提高徽章及资格在技术判断中的优先级，同时能与直接属性、倾向和 3D 行为交叉核验",
+        "针对未拥有但可能获得的徽章，提出与球员适配的培养目标及先决条件"
+      ],
+      "relations": [
+        "本结果是 RES-01B-BASELINE-FOUNDATION 的组成能力，供进攻/防守/人员使用诊断；不是自动改徽章或发展培养引擎",
+        "受 A0 限制：首版固定球员构成，比赛和自然成长由游戏原生引擎负责；禁止直接编辑基础能力、潜力或徽章",
+        "可根据已验证徽章规则推测未来可能资格，但不能将成长概率、经验进度、未来取得结果伪装为已知事实",
+        "徽章对动画与成功概率的具体影响是 Human 机制判断，Stage02 必须采集来源和独立验证，不能以一次观察证明因果",
+        "Human Q10=B 已明确：首版保留徽章潜力识别与有条件、经认证授权的原生训练支持；训练不成为与篮球基准并列的核心控制，成长仍归原生引擎。",
+        "定量权重、资格充分性、引擎是否通过徽章控制动画/成功率等需 Stage02 真实证据；不能编造通用规则"
+      ],
+      "inputs_outputs": [
+        "示例输入：某球员当前徽章及等级、身高、与徽章相关的能力值、可读取成长进度、倾向/实际 3D 行为；输出：相关技术强项的有条件判读、各徽章是否满足已证资格、潜在成长路径、证据不足和冲突列表。",
+        "西亚卡姆中距离投失的案例：只记录可能涉及的徽章/能力/干扰/动作等因素，不断言缺徽章就是失手原因，更不直接提升徽章。"
+      ],
+      "completeness_rule": "每种被纳入诊断的徽章必须能区分当前徽章事实、资格门槛、成长状态/可能性和经验证的比赛效果；不能得到证据的维度明确 UNKNOWN。必须可区分实际球员直接能力值与由徽章反推的推测。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q8 补充要求重视徽章及资格、经验、等级和球技判断",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 指出属性与身高门槛、经验成长、动作/动画与成功率加成的机制关系",
+          "evidence_status": "human_mechanism_claim_requires_verification"
+        },
+        {
+          "item": "Human Q9=B：多层证据联合判断并提高徽章权重",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human Q9：若球员具备取得徽章的可能性，应考虑培养该潜力",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 认为引擎通过徽章进行智能处理，徽章获取条件对应技能潜力",
+          "evidence_status": "human_mechanism_assertion_not_independently_verified"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-BADGE-ELIGIBILITY-01",
+          "scope": "不同徽章/等级的属性、身高及其他资格条件与原生读取路径",
+          "closure_evidence": "Stage02 逆向研究的固定版本与代码/内存/实机证据；逐徽章验证适用条件",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BADGE-GROWTH-01",
+          "scope": "徽章 XP、解锁、升级和取得资格是否为全徽章通用规则及是否可只读获取",
+          "closure_evidence": "Stage02 原生函数及成长进度/阈值的可复核证据",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BADGE-EFFECT-01",
+          "scope": "哪些徽章在何种模式下会触发哪些动作/动画并改变何种成功概率",
+          "closure_evidence": "Stage02 可核查原生证据和控制变量的真实比赛机制试验",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BADGE-ABILITY-01",
+          "scope": "如何在徽章指标与球员直接能力/身体条件/倾向之间建立可证的推断关系，不误用相关性",
+          "closure_evidence": "Stage02 规则数据、实际球员样本、规则反例与实验",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BADGE-POTENTIAL-01",
+          "scope": "资格已满足、可望满足、实际获得及在比赛中触发等状态的可观察区分和预测误差",
+          "closure_evidence": "Stage02 资格阈值、成长规则、Native 状态/实验样本及反例",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+      "source_decision": "Human 01b-Q9 supplementary cultivation requirement + Human 01b-Q10=B",
+      "title": "基准驱动的徽章潜力识别与受控原生培养支持",
+      "kind": "function",
+      "expected_end_state": "基准识别未持有但已达到或可能达到徽章资格的球员，形成基于已验证资格、成长条件和球队竞争目标的培养建议；对存在已认证的原生训练方式、获得 Human 预授权且满足安全边界的情形，可提出与执行受控训练，并能读回/记录训练配置与之后原生自然成长的可观察反馈；不保证必然获得徽章，不直接修改基础能力、潜力或徽章。",
+      "components": [
+        "未持有徽章的资格判断与成长潜力识别",
+        "资格缺口及进度不确定性",
+        "技能优势与培养机会识别",
+        "符合原生机制的培养方向与候选行动",
+        "培养效果反馈需求（是否纳入首版闭环待决）",
+        "已验证原生训练方式与资格/成长条件的映射（未验证则不可用）",
+        "预授权边界内的原生训练辅助执行和安全读回",
+        "培养前后当前徽章、资格/XP（若可读）及球员能力变化的原生观察，区分关联与因果",
+        "原生训练不可用或效果未知时保留培养建议及研究缺口"
+      ],
+      "relations": [
+        "以徽章机制知识为前提，依赖 RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE；不将徽章当作唯一技能依据",
+        "A0 固定球员构成，不直接改基础属性、潜力或徽章，成长仍由原生引擎决定",
+        "尚未证实的徽章门槛及 XP 规则不能被写成实际可执行的培养计划",
+        "Q10=B 已批准首版的辅助原生训练支持，不构成 A0 变更：训练/跨赛季发展不是首版核心控制手段，真实成长仍交给 NBA2K22 引擎",
+        "训练的真实执行依赖当前预授权、Native 接口认证、CAS/读回/收据及异常阻断，需求确认不等于可以立即调用",
+        "不得直接编辑属性、潜力或徽章，不用外部结果保证取代原生成长"
+      ],
+      "inputs_outputs": [
+        "输入：球员现有徽章、相关能力/身体条件、可认证徽章资格与成长规则；输出：当前具备的技能、潜在可获取徽章及其满足/尚缺的条件、培养候选与未知项。实际训练动作待授权范围确认。",
+        "示例：某人未持有徽章但已证实达到资格，输出技术潜力与训练方向；仅在相应原生训练动作已认证且 Human 授权时执行，读回配置并随原生比赛/成长观测徽章状态，否则只保留方案与 UNKNOWN。"
+      ],
+      "completeness_rule": "必须可区分徽章已拥有、取得资格已具备、资格可能成长达成、资格未知；每个培养提案需有机制依据、球队目标关联及原生执行资格状态；已授权执行须有前值检查与读回/日志，无法执行时不得伪称已培养或已获得徽章。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q9 要求提高徽章权重并对有取得徽章可能性的球员进行培养",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 指出徽章获取资格是球员球技能力的识别机制",
+          "evidence_status": "human_domain_assertion_requires_mechanism_verification"
+        },
+        {
+          "item": "Human 01b-Q10=B：首版基准优先，允许已验证且获授权的原生训练辅助培养，原生引擎负责成长",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-CULT-02",
+          "scope": "原生训练与徽章获得资格/XP/升级机制之间是否具有实际因果可控性",
+          "closure_evidence": "Stage02 训练/徽章机制研究与实际游戏验证",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-CULT-03",
+          "scope": "哪些原生训练配置能安全合法地被 REA/Host 编排和读回，是否会被原生 AI 覆盖",
+          "closure_evidence": "Stage02 当前 Native/REA/Host 证据、授权矩阵、真实存档读回与安全试验",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-CULT-04",
+          "scope": "哪些训练与徽章资格/经验/自然成长具有真实机制关联；哪些效果只能观察不能主动控制",
+          "closure_evidence": "Stage02 训练与徽章逆向成果，控制变量试验及不可用项目登记",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-06",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-NATIVE-BASELINE-COVERAGE",
+      "source_decision": "Human 01b-Q11=B",
+      "title": "篮球决策相关原生数据与设置的完整基准覆盖",
+      "kind": "data",
+      "expected_end_state": "基准能系统性解释 NBA2K22 离线 MyLEAGUE 中与球员和球队篮球决策有关的原生事实：球员卡属性与身体条件、徽章资格/状态/成长、倾向、PlayTypes、战术书/Freelance/ACE、教练与球队设置、轮换、原生训练、比赛与历史数据；以统一身份和时间上下文关联，能够明确哪些语义已验证、哪些未验证或未采集。",
+      "components": [
+        "篮球决策相关领域的覆盖清单与来源",
+        "球员/球队身份与赛季时点关联",
+        "原生能力/徽章/倾向/战术/教练/轮换/训练/比赛数据的语义理解",
+        "字段可用性、数据新鲜度与机制认证状态",
+        "缺失项及优先验证项目的可追踪列表"
+      ],
+      "relations": [
+        "作为 RES-01B-BASELINE-FOUNDATION 的覆盖完整性要求而非另建第二套原生数据库",
+        "对首版排除的交易签约选秀财务不施加同等覆盖任务，现有 WorldData 可读取相关事实不等于纳入经营决策",
+        "覆盖完整是领域目录与未知项管理要求，不等于所有机制效果已经通过测试",
+        "真实世界来源、字段可用性和查询交叉映射能力需 Stage02 查已有 WorldData/Registry 证据"
+      ],
+      "inputs_outputs": [
+        "输入：当前固定阵容的球员卡、教练及球队原生设置、原生比赛数据；输出：覆盖所需知识项、对应真实值及语义、已证/未知标记、适用时点与缺失问题。"
+      ],
+      "completeness_rule": "必须逐领域声明已覆盖/缺失/未验证/不适用，而不是因少量字段成功读取就宣称所有篮球机制已掌握；关键判断不能依赖无来源或过期数据。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q11=B：首版基准应纳入与篮球决策相关的完整原生信息，并分批深入验证",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-COVER-01",
+          "scope": "当前 NBA2K22 WorldData、Native Registry 与各类原生设置目录在具体版本上的全量覆盖程度",
+          "closure_evidence": "Stage02 读取当前真实 Schema、原生字段目录、缺口表及证据来源",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-COVER-02",
+          "scope": "赛季时间、新鲜度和不同来源的球员/球队身份是否足以可靠关联所有篮球决策要素",
+          "closure_evidence": "Stage02 数据采集、身份与时间戳的原生读回证据",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+      "source_decision": "Human 01b-Q12=B",
+      "title": "原版 AI 战术与球员行为决策的实际机制理解",
+      "kind": "function",
+      "expected_end_state": "基准能依据可复核原生或比赛证据说明在重要攻防情境中，哪些已配置的战术、球员倾向、对位和教练设置由原版 AI 调用、改变、覆盖或忽略，以及场上动作与最终结果有何不同；无法证明的内部决策逻辑按 UNKNOWN 处理。",
+      "components": [
+        "原生 AI 战术调用与人员角色选择的证据",
+        "原版 AI 攻防行为和情境反应",
+        "ACE、轮换与其他原生设置覆盖/优先关系",
+        "读回配置、3D 行为、Fast Sim 结果的分模式解释",
+        "原生 AI 自主决定与外部可控制参数的区分"
+      ],
+      "relations": [
+        "与 RES-01B-ONCOURT-EVIDENCE-CANDIDATE 联动，关键战术通过真实动作证据核查",
+        "不能从原生统计或设置已写入直接推断 AI 内部选择路径已掌握",
+        "不要求首版完整逆向原版 AI 的每个算法，也不授权赛中外部模型实时操作",
+        "Q12 的目标是理解并利用原版 AI 机制，不是另造一个取代原生物理引擎的比赛 AI"
+      ],
+      "inputs_outputs": [
+        "输入：球队已知原生配置和一次 3D 比赛中观察的挡拆、跑位、对位及原生读回；输出：候选触发条件、观察到的 AI 动作、证据等级、可能覆盖关系与 UNKNOWN。"
+      ],
+      "completeness_rule": "关键的原版 AI 战术和行为选择应能够区分已观察、已认证及未知的机制解释，识别至少存在的配置覆盖/忽略风险；不得把尚未逆向的动作称为已确定的引擎规则。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q12=B：不仅研究设置，也要理解原版 AI 实际调用战术、选择行为、处理防守及覆盖配置",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-NATIVEAI-01",
+          "scope": "各类重要 AI 攻防行为与实际触发源、优先级、ACE/轮换覆盖条件",
+          "closure_evidence": "Stage02 Native 逆向证据及有区分度的 3D 行为对照观察",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-NATIVEAI-02",
+          "scope": "Human 对战 AI 观察、CPU 对 CPU 3D 和 Fast Sim 的决策机制能否互相迁移",
+          "closure_evidence": "Stage02 分模式实测及原生机制路径对照",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-04",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-EVIDENCE-QUALIFICATION",
+      "source_decision": "Human 01b-Q13=B",
+      "title": "知识可信性、证据等级与争议保留",
+      "kind": "data",
+      "expected_end_state": "基准中的重要篮球知识声明具有可追溯的真实来源、证据种类、适用游戏版本/模式/时点、已证实程度及尚存限制；能够保留相互冲突的证据并要求进一步核验，不因某次胜负或单一观察自动升格为普遍因果规则。",
+      "components": [
+        "事实/原生读数/逆向机制/3D 观察/模拟统计/控制实验/推测等证据类别",
+        "每项机制声明的来源、时间、模式、版本与适用条件",
+        "矛盾、反例和未认证主张的保留与复核需要",
+        "证据升级、撤销或限制适用的可解释条件",
+        "基准诊断可明确引用已认证事实及不确定性",
+        "重要知识冲突触发的版本化修订以及受影响决策复核"
+      ],
+      "relations": [
+        "作为全部已建 01b 结果项的横向可靠性要求，特别约束徽章、AI 行为和竞争改善的主张",
+        "A0 Q11=B 的重要决策可追溯与 Q13 的知识可信性分别适用于决策记录与机制事实，不能混淆",
+        "不以单一权重或一套硬编码置信度公式替代实证；具体等级阈值及证据存储属于后续阶段",
+        "历史事实只追加或保留可复核修订轨迹，不能让后来的推测抹去旧观察",
+        "Q14=B 规定了证据不完整时的决策准入，Q16=C 规定重要冲突出现后的知识修订，两者具有不同触发条件"
+      ],
+      "inputs_outputs": [
+        "输入：某项徽章有利于中距离终结的研究主张、某次 3D 观察及对应比赛条件；输出：主张状态、支持/反对证据、适用范围、缺少的对照及能否作为策略先决条件。"
+      ],
+      "completeness_rule": "重要机制知识均能回答来源是什么、支持何种主张、适用哪些场景、与哪些观察冲突、仍未知什么；缺证据不等于可确认为真或假。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q13=B：知识须区分证据等级、保留适用条件和未知项，矛盾不能被无痕覆盖",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-EVID-01",
+          "scope": "现有项目记录能否为所有重要机制主张提供来源、适用版本、比赛模式与可复核证据",
+          "closure_evidence": "Stage02 现有 PRMS、VAE/REA 研究、WorldData 与实验报告核查",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-EVID-02",
+          "scope": "哪些证据组合足以认证具体机制效果，哪些仅支持相关性或待研究假说",
+          "closure_evidence": "Stage03 基于机制类别定义判定标准，Stage04/正式验证用真实样本检验",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-04",
+        "SC-06",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-KNOWLEDGE-ADMISSION",
+      "source_decision": "Human 01b-Q14=B",
+      "title": "分级证据下的篮球基准决策准入",
+      "kind": "function",
+      "expected_end_state": "统一篮球决策主体在依赖机制基准制定进攻、防守、轮换或训练方案时，能够区分已经认证、部分证据支持、矛盾、未知和不适用的前提；准许已认证知识进入正式确定性判断，未认证但有依据的内容仅产生标明条件的推断、研究与方案备选；在重要前提缺证时阻断受影响的确定结论，且不能执行未经认证或未授权的 Native 操作。",
+      "components": [
+        "决策前提与真实证据关联",
+        "机制知识可用程度分级",
+        "条件性判断与适用限制",
+        "关键缺证/冲突引发的结论限制",
+        "Native 执行认证与 Human 授权的独立约束"
+      ],
+      "relations": [
+        "基于 RES-01B-EVIDENCE-QUALIFICATION 的证据状态，并约束所有基于机制的攻防、阵容和培养判断",
+        "B 是允许有限度使用不完全知识，而非允许未经认证的原生写入；知识可信性与执行授权是两道不同的门",
+        "不会因某一非关键机制未知就停止全部篮球决策；只限制受该前提影响的确定性主张和相关操作",
+        "Q14=B 不要求每个未知问题自动立刻启动实验；Q16=C 对重要证据冲突形成受控研究候选"
+      ],
+      "inputs_outputs": [
+        "输入：候选挡拆策略及其依赖的已认证球员事实、未证实的徽章效果和未知 ACE 覆盖条件；输出：允许的基于事实判断、带条件的推断、不能确定的结论、被阻断的操作及仍需证据。"
+      ],
+      "completeness_rule": "能够追溯为何允许、限制或阻断某项具体决策与实际执行；不得以高可信度代替 Human 授权，也不得以 Native 可写入代替机制生效认证。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q14=B：知识按可信程度分级使用，关键证据不足时限制确定结论与未认证执行",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-ADMISSION-01",
+          "scope": "各类重要机制在何种证据充分性下可用于正式确定性判断，未知项如何与受影响结论关联",
+          "closure_evidence": "Stage03 基于经核查机制类别定义可审查的证据准入规则，Stage04 通过真实用例验证",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-ADMISSION-02",
+          "scope": "当前 Native Registry 与 REA 授权能否可靠区分机制认证、操作可写性和实际执行授权",
+          "closure_evidence": "Stage02 原生接口/权限矩阵及日志收据核查",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+      "source_decision": "Human 01b-Q15=C",
+      "title": "受控竞技对照与机制交互归因能力",
+      "kind": "function",
+      "expected_end_state": "对需要验证的篮球决策或原生设置效果，能够在可比较条件下评估与原版 AI 基线的差异、模型之间的竞争表现，区分行为变化与结果变化，尽量识别球员能力、徽章、倾向、战术设置及其交互对效果的独立贡献；在不能分辨机制时明确记录混杂与不可识别性。",
+      "components": [
+        "原版 AI 对照与两个独立 BIC 团队对抗的评价要求",
+        "对手/阵容/游戏条件/版本/模式等比较边界",
+        "单项因素变化、多个因素交互及混杂来源的区别",
+        "日历模拟大样本结果与关键 3D 观察的独立证据",
+        "正面、负面、零效果与不确定结果的保留"
+      ],
+      "relations": [
+        "依赖已证实的球员与设置基准，避免将球员徽章成长等时间变化误认为单次战术调整的影响",
+        "Q15=C 要求具备独立作用与交互识别的研究能力，不承诺任意复杂作用一定可辨识或有固定因果数值",
+        "与 A0 Q3、Q4、Q9 以及 Q5 探索原则一致：竞技改进必须以可比真实证据判定，失败不直接否定所有机制假设",
+        "实际实验批次、分组方法、参数和统计阈值由后续基于实机数据可行性决定；此处不预选试验算法"
+      ],
+      "inputs_outputs": [
+        "输入：同一阵容在控制条件下的若干设置候选、原版 AI 对照与模型对抗数据；输出：可支持的竞技表现差异、行为差异、独立/交互作用假设、混杂或随机波动说明及尚不能得出的因果结论。"
+      ],
+      "completeness_rule": "不以一场胜负、一项命中率或设置回读直接证明有效；需要说明对照条件、发生了什么变化、哪些机制可辨、哪些未辨，且模式间证据不混同。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q15=C：受控对照并识别独立机制作用及组合交互，是核心验证能力",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-CONTROL-01",
+          "scope": "现有日历模拟、3D 行为证据和世界数据能否支持可信的对照与关键机制交互归因",
+          "closure_evidence": "Stage02 当前 WorldData/Calendar/3D 证据条件核查及后续真实受控试验",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-CONTROL-02",
+          "scope": "模型间比赛、原版 AI 对照、模式与时点差异引入的混杂变量及统计可辨识边界",
+          "closure_evidence": "后续数据条件和统计实验设计的可审查说明",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-03",
+        "SC-04",
+        "SC-05",
+        "SC-06",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+      "source_decision": "Human 01b-Q16=C",
+      "title": "比赛反馈、机制争议与知识修正闭环",
+      "kind": "function",
+      "expected_end_state": "当游戏数据或关键 3D 行为证据与现有基准判断冲突时，能够追溯该判断的来源、作用条件和支撑策略，区分策略设计问题与机制知识错误或证据不足，限制有问题的确定结论，形成可复核的机制研究候选；新证据出现后更新知识状态、保留旧观察和修订原因，并重新评价受影响的策略与训练建议。",
+      "components": [
+        "异常或反例的识别及所针对的知识主张",
+        "战术执行、创造机会、终结和比赛效果的分层排查",
+        "受影响决策的暂缓/降级或有条件使用",
+        "机制研究候选的可追踪提出与反馈",
+        "新证据形成后的知识状态修订与历史事实保留",
+        "依赖被修订知识的攻防/阵容/培养方案复核"
+      ],
+      "relations": [
+        "在 Q14=B 的分级准入上，对重要证据冲突实行更积极的研究候选形成；不等于所有未知项自动进入执行队列",
+        "研究和试验属于受控范围；研究候选提交不授权 Native 执行，也不改变 Human 任务调度和 OS 七阶段检查点",
+        "仅在支持证据充分时升级或修正机制判断；冲突本身不是旧结论必然错误的证明",
+        "记录原始事实、旧解释、新证据与更新结论之间的区别，不能历史覆写"
+      ],
+      "inputs_outputs": [
+        "输入：原本预计某战术创造空位，但 3D 观察证据与旧判断冲突；输出：冲突涉及的球员/设置/机制主张、仍支持与反对的证据、暂时可做出的结论、待研究问题和新证据取得后的方案复核。"
+      ],
+      "completeness_rule": "每个重要知识冲突须能定位受影响的主张与后续决策，明确处置状态、缺少的证据及可能研究动作；不能静默删除旧结论或将实验任务视为已执行。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q16=C：重要机制冲突进入研究与知识修正闭环，并复核依赖该知识的方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-KLOOP-01",
+          "scope": "现有 PRMS、研究证据和历史事实保留机制能否支持知识主张的争议、修订与影响追踪",
+          "closure_evidence": "Stage02 Core OS 与 NBA 历史记录、PRMS 和实验报告核查",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-KLOOP-02",
+          "scope": "什么情况属于必须主动发起研究候选的重要冲突，以及怎样避免无效试验和重复研究",
+          "closure_evidence": "Stage03 证据/风险分层要求与 Stage04 真实迭代验收",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-02",
+        "SC-03",
+        "SC-04",
+        "SC-06",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-NATIVE-CAPABILITY-GAP-LOOP",
+      "source_decision": "Human A0 01a-Q12=B; Human 01b-Q17=B",
+      "title": "篮球意图、原生控制能力缺口与合法替代的追踪闭环",
+      "kind": "function",
+      "expected_end_state": "当 BIC 提出一项篮球意图却无法用已认证且获授权的原生设置可靠表达时，保留原始篮球目标、对应的缺失机制或权限、原生可控性证据、可用且适配的合法替代方案、未实现部分、研究候选与明确的当前状态；新能力经认证后重新检查原篮球方案是否可实现或仍需修订，且不将研究候选或设置读回冒充已完成的场上行为。",
+      "components": [
+        "原始篮球目标与适用球员/场景关联",
+        "所需原生控制、已认证能力及缺口/权限的分类",
+        "已获授权且有证据支持的替代方案及取舍",
+        "无法替代时的明确阻断与原因",
+        "研究或开发候选及证据需求、关联影响范围和进展状态",
+        "新能力认证后的原方案重估记录"
+      ],
+      "relations": [
+        "与 Q14=B 的知识分级准入相协调：机制不了解时可条件性分析，但未经认证或越权的 Native 写入必须阻断",
+        "与 Q16=C 的知识争议研究闭环相区分：能力缺口针对篮球目标无法实现，知识冲突针对既有机制解释与新证据矛盾，二者可关联但不强行合并",
+        "严格遵守 A0 Q12=B：保留意图、合法替代及研发反馈；Q17=B 不要求独立研发任务的自动优先级编排或不经 Human 批准执行",
+        "如果原意图只可部分满足，明确部分满足与未满足边界，且不得以替代方案成功证明原始目标已完全实现"
+      ],
+      "inputs_outputs": [
+        "示例输入：模型希望在某场景持续执行复杂无球交叉掩护，但已认证的 Playbook/Freelance/ACE 能力不足；输出：原篮球意图、经验证的替代配合与损失、不可实现部分、待研究 Native 路径、证据需求、状态和未来重新核验条件。"
+      ],
+      "completeness_rule": "每个重要原生能力缺口必须能够检索原始意图、能力限制、可实施的合法替代或阻断原因、研究候选、适用范围及关闭条件；未经认证的能力不能被记录为已执行，缺口只有在补证并重新评价后才能关闭。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q17=B：要求完整能力缺口追踪闭环",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human A0 Q12=B：保留篮球意图、合法替代与推动机制研发",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-GAP-01",
+          "scope": "当前 Native Registry、REA、Playbook、Freelance、ACE 和训练操作的认证证据是否可可靠支撑每类篮球意图的可行性判断",
+          "closure_evidence": "Stage02 真实控制面、读回和 3D 场上生效证据交叉核查",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-GAP-02",
+          "scope": "哪些无法表达的战术意图具有合理的原生替代以及替代行为是否改变竞技含义",
+          "closure_evidence": "Stage02/后续受控比赛对合法替代的关键动作及结果核对",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-COMPETITION-KNOWLEDGE-LEDGER",
+      "source_decision": "Human A0 01a-Q3=C/Q4=C/Q9=C; Human 01b-Q15=C; Human 01b-Q18=C",
+      "title": "可复核、可累积、可随知识演进重评的篮球竞争证据",
+      "kind": "data",
+      "expected_end_state": "能够把原版 AI 对照与至少两个独立 BIC 决策实例之间的真实比赛研究留存为可复核知识记录：比赛/对抗条件、参赛球队与固定阵容、正式竞技信息边界、决策版本和设定意图、场上观察与日历模拟统计的不同证据、竞技结果、机制假设、正反证据、混杂/不确定性，以及复评与修订历史；新的机制证据出现时重新审视旧结论但不抹去原记录。",
+      "components": [
+        "原版 AI vs BIC 与 BIC vs 独立 BIC 的比较身份和赛前设定",
+        "模型/篮球方案版本及涉及的基准知识快照或引用",
+        "阵容、对手、游戏版本、比赛模式、时间和对照条件",
+        "竞争结果、相应原生统计、关键战术 3D 行为及不一致解释",
+        "有利/不利/无显著支持的证据及未消除混杂",
+        "重新解释旧比赛知识的条件、反例和历史修订轨迹"
+      ],
+      "relations": [
+        "直接支撑 A0 SC-04 与 SC-05，但比赛记录和对照设计是知识基准的检验手段，不意味着策略开发成为基准之前的主目标",
+        "继承 Q15=C：记录变化的对照因素，允许在证据支持时解释独立或交互效果；不能只因赢球就宣称机制已证明",
+        "继承 A0 Q7=C：研究模式可全量核对，正式竞技实例的实际决策输入必须遵守对手信息隔离",
+        "区分日历模拟与 CPU 对 CPU 3D 的证据种类，不以任何单一场次或单一场上配合证明赛季层面竞技改进",
+        "数据记录可被后续新证据重新评价；本需求不是承诺后台持续监控或自动安排比赛"
+      ],
+      "inputs_outputs": [
+        "输入：使用固定阵容的 BIC 对原版 AI 基线进行多次对比，并在 CPU 对 CPU 3D 观察关键挡拆执行；输出：原始比赛及条件链接、决策版本、结果与行为差异、对照失配/混杂、可支持的结论及复评历史。",
+        "输入：两个独立 BIC 球队进行相互竞争；输出：双方决策和对手可见信息界限、各自体系变化的记录与比赛验证、可辨认的相互针对和未知项。"
+      ],
+      "completeness_rule": "比较结果必须同时说明参赛主体及信息规则、相应版本/阵容/模式、可比较条件、实际比赛结果、关键行为证据的可用程度、正反证据和不确定性；能在新知识出现时沿记录定位受影响结论，不覆写早期事实；不能凭单次胜率给出无根据机制因果结论。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q18=C：要求长期积累对照条件、决策版本、机制假设、正反证据与重评历史",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human A0 Q3=C/Q4=C：既要原版 AI 对照又要独立 BIC 竞争，评价体系及竞技效果",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-COMP-01",
+          "scope": "WorldData/Calendar 和真实 3D 观察是否足以关联比赛场次、设置/方案版本、AI 实例及比赛行为",
+          "closure_evidence": "Stage02 查询既有数据结构、可用原生采集和历史样本",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-COMP-02",
+          "scope": "如何在不泄露正式竞技对手隐藏数据的条件下形成研究模式完整的公平比较与可复核性",
+          "closure_evidence": "Stage02 数据可见性和可追溯输入核验，Stage03 设计具体隔离边界",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-COMP-03",
+          "scope": "何种样本及条件能够评价独立 BIC 竞争与模型改进，识别竞技变化和自然成长/阵容/对手变化的差异",
+          "closure_evidence": "Stage03/04 基于真实数据能力确定并验证统计对照要求",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-03",
+        "SC-04",
+        "SC-05",
+        "SC-06",
+        "SC-07"
+      ]
+    }
+  ],
+  "coverage_partial": [
+    {
+      "success_criterion_id": "SC-01",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-INTEGRATED-TRADEOFF",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-KNOWLEDGE-ADMISSION",
+        "RES-01B-NATIVE-CAPABILITY-GAP-LOOP",
+        "RES-01B-COMPETITION-KNOWLEDGE-LEDGER"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-02",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-KNOWLEDGE-ADMISSION",
+        "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+        "RES-01B-NATIVE-CAPABILITY-GAP-LOOP"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-03",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+        "RES-01B-NATIVE-CAPABILITY-GAP-LOOP",
+        "RES-01B-COMPETITION-KNOWLEDGE-LEDGER"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-04",
+      "result_item_ids": [
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+        "RES-01B-COMPETITION-KNOWLEDGE-LEDGER"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-05",
+      "result_item_ids": [
+        "RES-01B-DEFENSE",
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-COMPETITION-KNOWLEDGE-LEDGER"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-06",
+      "result_item_ids": [
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-INTEGRATED-TRADEOFF",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+        "RES-01B-COMPETITION-KNOWLEDGE-LEDGER"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-07",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-INTEGRATED-TRADEOFF",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-KNOWLEDGE-ADMISSION",
+        "RES-01B-CONTROLLED-CAUSAL-INTERACTION",
+        "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+        "RES-01B-NATIVE-CAPABILITY-GAP-LOOP",
+        "RES-01B-COMPETITION-KNOWLEDGE-LEDGER"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-08",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+        "RES-01B-NATIVE-BASELINE-COVERAGE",
+        "RES-01B-NATIVE-AI-BEHAVIOR-UNDERSTANDING",
+        "RES-01B-EVIDENCE-QUALIFICATION",
+        "RES-01B-KNOWLEDGE-ADMISSION",
+        "RES-01B-MECHANISM-KNOWLEDGE-CORRECTION",
+        "RES-01B-NATIVE-CAPABILITY-GAP-LOOP"
+      ],
+      "state": "PARTIAL"
+    }
+  ],
+  "status_rules": [
+    "Human 已逐项裁决 Q1–Q18；本文件为 01b 最新结构化草案，不是独立 Human 确认的完整 requirement_result_A。",
+    "必须生成带 A0 的精确来源引用和双向 SC/EVQ 映射的完整 A 候选，再由 Human 独立确认。",
+    "A0 v1 及其 Human 确认 immutable；没有 A0 范围修订。",
+    "知识可用性、Native 可写性、执行授权和真实比赛生效是四种不同的判据。",
+    "原生训练仅限已证实且受 Human 预授权的非核心辅助支持；外部模型不得直接修改能力值、潜力或徽章。",
+    "游戏与自然成长由原生 NBA2K22 引擎主导；研究/正式竞争的信息环境必须隔离。",
+    "当前不得进行工程开发、游戏写入、主线合并或宣称 OS Stage01 完成。"
+  ],
+  "next_inquiry_scope": "No more load-bearing Human Q currently required; prepare complete A candidate and request a distinct Human confirmation bound to exact content. Do not assert Stage01 completion or Native feasibility.",
+  "previous_version": {
+    "path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_draft_v9.json",
+    "blob_sha": "4fcd08b960b1e34da2e1f0b51b4bf30249925cc4",
+    "append_only": true
+  },
+  "baseline_priority_human_direction": {
+    "source": "Human 2026-11-04 01b round-2 supplementary statement",
+    "verbatim": "我觉得最主要的还是基准能力，就是对各种设置的理解，以及球员等能力和数据的理解，这个基础越强，才涉及到策略的问题，所以首先，也是最重要的，就是以建立基准为核心进行开发，而策略只是检验而已。因为基准如果有问题，策略再强也没用，策略如果有问题，用基准一验就知道了。",
+    "accepted_requirement": "基础的设置/球员能力/游戏数据及其机制理解是核心能力和开发优先依赖；不得把策略选型或胜率结果当成基础知识正确的证明；策略验证要反向检验基准理解。 已裁决 01b-Q7=B：基准应独立诊断方案与球员适配、设置冲突、机制先决条件和证据不足，比赛继续承担竞技结果验证。 人类 01b-Q8 指定徽章与资格/经验/成长条件是球员基础能力判断的重要信息源，但仍须核查底层数据与效果。",
+    "interpretation_status": "Q7_B_DIAGNOSTIC_BASELINE_CONFIRMED",
+    "load_bearing_ambiguity": "Q7–Q10 相关的诊断深度、徽章证据权重、自然成长和非核心训练支持范围均经 Human 已裁决；当前剩余问题均为机制与接口待证事实，不需要重复询问 Human。",
+    "ambiguity_disposition": "Q7=B、Q8=B、Q9=B、Q10=B 已完成语义裁决；保持 A0 v1 不变，相关真实能力及效果转入 Stage02+ 证据调查。",
+    "implication_to_a0": "细化 01b 优先关系；未修改或失效 A0 目标和成功判据"
+  },
+  "human_gameplay_evidence": {
+    "source": "Human 2026-11-04 01b-Q7 supplement",
+    "source_status": "USER_REPORTED_3D_OBSERVATION",
+    "context": "Human 表述为自己与各原版 AI 球队比赛的 3D 物理引擎模式。与 CPU vs CPU 3D 和日历模拟是否等价尚未验证。",
+    "observations": [
+      "原版 AI 可以在场上打出多种具有竞争性的组合、配合与战术，而非只能完成简单进攻。",
+      "Human 观察掘金约基奇与明星控卫间的挡拆、中锋策应、反跑三分、空切篮下等行动，与现实篮球策略相似。",
+      "Human 观察西亚卡姆经常中距离假动作后取得约半个身位，却仍有大量顶人投失。",
+      "Human 观察约基奇的篮下单打具有较高的终结效率。"
+    ],
+    "hypotheses": [
+      {
+        "claim": "约基奇和西亚卡姆的终结差异可能主要与当前徽章及成长有关",
+        "evidence_status": "HUMAN_HYPOTHESIS_UNVERIFIED",
+        "other_possible_factors": [
+          "投篮能力/射程与选择",
+          "出手位置与防守干扰",
+          "动作时机",
+          "疲劳",
+          "徽章与其他变量交互"
+        ]
+      },
+      {
+        "claim": "西亚卡姆徽章成长后原本投失的进攻可能有更高终结率",
+        "evidence_status": "HUMAN_HYPOTHESIS_UNVERIFIED",
+        "caution": "不得推断全部投失都将命中，亦不构成编辑徽章的权限"
+      }
+    ],
+    "analytical_requirement": "Q8=B 已确认：首版应能对关键或有争议的战术区分设计意图、原生调用、场上跑位/配合、机会创造与终结结果；3D 提供必要补证；无需逐回合采集全比赛。赛后 Box Score 不足以直接证明动作执行；徽章可能影响动作和终结，但需因果证据。",
+    "research_questions": [
+      {
+        "id": "EVQ-01B-3D-01",
+        "question": "如何在适当比赛模式中证实挡拆、策应、无球跑动、出手机会与实际命中是否分别成立？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-BADGE-01",
+        "question": "徽章相对投篮能力、出手地点、干扰强度及其他因素对两个球员实际命中率的因果影响是什么？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-MODE-01",
+        "question": "Human 与 AI 的 3D 比赛观察可否迁移至 CPU vs CPU 3D 及 Fast Sim？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-BADGE-ELIGIBILITY-01",
+        "question": "逐徽章的属性/身高及其他资格门槛是什么，是否依身份、位置、版本或模式变化？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-BADGE-GROWTH-01",
+        "question": "达到资格后经验、解锁、升级与各等级的实际状态机和原生数据源是什么？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-BADGE-EFFECT-01",
+        "question": "各徽章等级的动作/动画选择、机会创造和终结成功率作用是否可实证及如何区分其他变量？",
+        "status": "UNKNOWN"
+      }
+    ]
+  },
+  "badge_priority_human_direction": {
+    "source": "Human 2026-11-04 01b-Q8 supplement",
+    "verbatim": "徽章很重要，这就是为什么之前我让逆向ai的徽章成长条件和获得资格，因为徽章是需要首先具备对应的能力，球员身高等硬性条件的，在此基础上才会增长经验值，获得不同级别的徽章，而徽章提供的加成，会影响球员行为的成功率的，原因就是徽章带来不同的动画和结果成功率，徽章实际上能简化我们的分析，因为它对应的就是球员球技的关键节点，而徽章是否获得，就包含了能力值的组合，这导致我们可以直接分析球员的徽章成长可能，以及现有徽章，来推断它在某种基础上的能力。",
+    "priority": "BASELINE_FOUNDATION_HIGH_PRIORITY",
+    "human_domain_mechanism_assertions": [
+      "徽章获得之前存在能力值和身高等资格硬条件",
+      "满足资格后可通过经验积累获得并升级徽章",
+      "徽章加成可影响场上动作动画和成功概率",
+      "徽章及成长资格能作为多项基础能力与技术特征的压缩信号"
+    ],
+    "domain_claim_evidence_status": "HUMAN_RESEARCH_DIRECTION_AND_ASSERTIONS_NOT_INDEPENDENTLY_VERIFIED_IN_THIS_REQUIREMENT_SESSION",
+    "confirmed_requirements": [
+      "基准覆盖当前徽章种类、等级、状态，以及对应球员基础属性和身体条件",
+      "基准能够识别已被证实的徽章资格条件、经验/成长规则和可能达到的层级；证据不足时应保持 UNKNOWN",
+      "能够利用当前徽章及获得资格/成长可能性推断相关球技的可能范围，并与直接能力值、身高、倾向、球员表现核对",
+      "诊断时区分战术行为是否被触发/执行、创造机会、终结成败，并将徽章影响列为可能机制之一",
+      "不把徽章推断当作直接能力读数的替代，也不把推断出的动作动画或概率作为未经验证的事实",
+      "Human Q9=B：多层证据联合判断，但明确提高徽章及获得资格相对一般辅助指标的使用优先级，权重含义需证据支持而不机械预设固定系数",
+      "Human Q9 补充：对具备徽章资格或有明确达到资格可能性的球员，提出与该技术有关的培养方向；培养执行范围与 A0 首版边界通过后续问答澄清"
+    ],
+    "scope_guardrails": [
+      "A0 首版不允许直接修改徽章、基础能力或潜力；本条是只读分析和机制研究范围",
+      "Q10=B 已决定首版可提供非核心、已认证且已获预授权的原生训练辅助支持；不得直接加徽章、提升属性/潜力或改写自然成长机制。",
+      "徽章具体阈值、经验量、升级方式、动画触发与概率作用需 Stage02 查证；不能凭当前裁决直接宣布已验证",
+      "不将徽章成长潜力视为球员必然达到的能力，也不将某次投失归因为徽章不足",
+      "01b-Q10=B 已允许条件性辅助原生训练（已认证、获 Human 预授权且不违反 REA 前值/回读/日志/异常约束），但不意味着首版完整训练/跨赛季成长核心；未经证明不能直接写游戏。"
+    ],
+    "q9_human_weight_and_cultivation": {
+      "source": "Human 2026-11-04 01b-Q9",
+      "verbatim": "提高徽章权重，并且如果球员有获得徽章的可能性进行培养，徽章获取的条件，就是游戏机制为我们提供的，对球员球技和能力的识别机制，引擎就是通过徽章来做智能处理的，这个我们要利用好，有的球员虽然没有某个徽章，但是它有获得徽章的条件，这其实就是它未来具有某种徽章对应的篮球技战术的能力的体现。",
+      "status": "HUMAN_REQUIREMENT_WITH_SCOPE_QUESTION",
+      "resolved": {
+        "evidence_synthesis": "Q9=B：多层证据联合判断，不能只相信单一徽章或单一数值",
+        "higher_badge_priority": "徽章、徽章资格和自然成长可能性是高权重/高优先级的篮球技术线索，不得被一概视为低权重补充",
+        "development_intent": "对可能取得徽章的球员应识别并考虑适当培养，而不因当前没有徽章就排除其战术潜力"
+      },
+      "unverified_mechanism_assertions": [
+        {
+          "claim": "原生引擎通过徽章决定篮球智能动作或成功率",
+          "evidence_status": "HUMAN_MECHANISM_ASSERTION_REQUIRES_STAGE02_VERIFICATION",
+          "caution": "不能把所有 AI 策略行为与动作机制都归因于徽章"
+        },
+        {
+          "claim": "已满足/未来有望满足取得条件的球员具有对应技术潜力",
+          "evidence_status": "HUMAN_INTENDED_INFERENCE_REQUIRES_VERIFIED_ELIGIBILITY_AND_VALIDATION",
+          "caution": "资格可能是必要而非充分条件，且资格已满足、可望满足、徽章已拥有、徽章实际触发须分别标记"
+        }
+      ],
+      "scope_to_clarify": "CLOSED_BY_HUMAN_Q10_B: 首版允许非核心的原生训练支持，仅当机制已认证并具 Human 预授权；无直接徽章/属性/潜力写入。",
+      "a0_boundary": "A0 v1 不以训练/跨赛季发展作为首版核心控制手段，且禁止直接改基础能力、潜力和徽章；只读识别及候选培养建议不冲突；原生训练执行是否纳入首版附属支持需 Human Q10 明确。",
+      "q10_resolution": {
+        "decision": "B",
+        "state": "HUMAN_CONFIRMED",
+        "scope": "培养是篮球基准驱动的辅助支持功能，允许原生训练但不作为与基准并列的首版独立核心",
+        "no_current_write_authority": true
+      }
+    }
+  },
+  "scope_consistency_check_01b_Q10": {
+    "checked_against": "A0 v1 Human approved: first version excludes training and cross-season growth as CORE control means; game engine owns growth; no direct modifications to player base attributes, potential or badges",
+    "human_decision": "01b-Q10=B",
+    "semantic_resolution": "NO_A0_REVISION_NEEDED",
+    "reasoning": "辅助性、受控的原生训练支持不等于把训练或跨赛季成长升级成首版主要/核心控制功能；外部 AI 仅提出培养目标并在认证且授权的范围使用游戏原生训练，属性/徽章实际成长仍由原生引擎决定",
+    "conditions": [
+      "训练支持不取代篮球机制与数据基准的第一优先级",
+      "训练 API/字段/效果及持久性未经 Stage02 和 Native 证据验证不能宣称可用",
+      "如训练计划需要突破 A0 的首版非核心限制，须重新提交 Human 的 A0 范围修订，不得静默扩大",
+      "Q10=B 是需求允许，不是当前实际修改游戏、操作训练、启用调度器的授权",
+      "现有 Human 预授权框架、CAS、读回、审计与异常阻断及原生引擎自主成长原则继续有效"
+    ],
+    "verification_status": "SEMANTIC_CONSISTENCY_CHECK_ONLY_NOT_NATIVE_FEASIBILITY"
+  },
+  "knowledge_baseline_requirements_from_Q11_Q13": {
+    "coverage": "All basketball-decision-relevant native domains; explicitly map gaps; not all MyLEAGUE finance/transactions/draft",
+    "original_ai": "Evidence-grounded actual tactical call/behavior/override; no demand for exhaustive reverse engineering",
+    "evidence": "Traceable categories, mode/version/time conditions, conflicts, unknowns and upgrade gates; avoid automatic causal claims",
+    "principle": "The baseline is the primary knowledge deliverable; strategies and competitions validate/apply it; data coverage and factual reliability must not be inferred from winning results"
+  },
+  "completeness_gap_check_after_Q13": {
+    "state": "PARTIAL_REQUIREMENT_RESULT_A",
+    "closed_by_human": [
+      "Q11 full decision-relevant information coverage",
+      "Q12 native AI real decision behavior understanding",
+      "Q13 evidence level and knowledge conflict handling"
+    ],
+    "unresolved_requirement_level": [
+      {
+        "id": "GAP-01B-01",
+        "area": "基准投入使用时的最低可信条件与未知项处理",
+        "impact": "HIGH",
+        "reason": "Q11 B requires breadth but permits partial validation; need determine whether incomplete baseline may support guarded strategy decisions"
+      },
+      {
+        "id": "GAP-01B-02",
+        "area": "原版 AI 对照与 BIC 对抗的正式比较结果和因果归因",
+        "impact": "HIGH",
+        "reason": "SC04/SC05 still lack full independent result model; native behavior understanding alone cannot prove comparative improvement"
+      },
+      {
+        "id": "GAP-01B-03",
+        "area": "比赛—复盘—基准校验—知识修订的闭环输出",
+        "impact": "HIGH",
+        "reason": "SC06/SC07 require feedback and improvement, beyond simply providing evidence provenance"
+      },
+      {
+        "id": "GAP-01B-04",
+        "area": "需求无法映射已认证 Native 能力时的替代与研究回流",
+        "impact": "MEDIUM",
+        "reason": "SC08 requires evidence-based closure and no false success"
+      },
+      {
+        "id": "GAP-01B-05",
+        "area": "实际数据字段与机制、性能、模式限制和技术路线",
+        "impact": "POST_01B_EVIDENCE",
+        "reason": "Stage02/03 verify; not a new Human semantics question at this time"
+      }
+    ],
+    "stage_status": "IN_PROGRESS",
+    "gate_note": "8 A0 SCs are referenced by partial result items, but references are not completeness proof. No Human A confirmation and no OS runner gate."
+  },
+  "completeness_gap_check_after_Q16": {
+    "state": "PARTIAL_REQUIREMENT_RESULT_A",
+    "resolved_semantics": [
+      {
+        "id": "GAP-01B-01",
+        "from": "01b-Q14=B",
+        "resolved_requirement": "分级可信的知识使用与缺失关键前提时阻断对应结论或未经认证执行"
+      },
+      {
+        "id": "GAP-01B-02",
+        "from": "01b-Q15=C",
+        "resolved_requirement": "受控对照与原生机制独立/交互归因能力；实验方案具体分组待后续证据"
+      },
+      {
+        "id": "GAP-01B-03",
+        "from": "01b-Q16=C",
+        "resolved_requirement": "重要比赛证据冲突形成研究候选、知识修订与受影响决策重新检验的需求"
+      }
+    ],
+    "remaining_load_bearing": [
+      {
+        "id": "GAP-01B-04",
+        "area": "无法映射为已认证 Native 控制的篮球意图：首版应返回替代、阻断、研究候选还是三者的何种组合及后续追踪要求",
+        "impact": "HIGH",
+        "why": "A0 Q12=B 已明确保留意图与合法替代及推动研发，但 01b 尚缺可检查的结果边界；对应 SC-08"
+      },
+      {
+        "id": "GAP-01B-05",
+        "area": "原版 AI 基线、独立 BIC 实例间对照的结果如何交付/追溯，以及最少需要解释哪些评价维度",
+        "impact": "MEDIUM",
+        "why": "Q15=C 确认因果研究能力，但正式结果产出和评价边界可进一步明确，不需要提前规定数量门槛"
+      },
+      {
+        "id": "GAP-01B-06",
+        "area": "对于已发现的知识缺陷，何时允许策略继续使用、需要重验或收回，最低结果证据要素",
+        "impact": "MEDIUM",
+        "why": "Q14、Q16 给出原则，验收产物要素需核对，不能把研究问题当成实现完成"
+      },
+      {
+        "id": "GAP-01B-07",
+        "area": "实际字段目录、未知 Native 控制面、3D 证据方法、实验统计阈值",
+        "impact": "POST_01B_EVIDENCE",
+        "why": "应由 Stage02 核查当前项目和真实原生证据，Stage03/04 才决定实现/测试办法"
+      }
+    ],
+    "note": "8 A0 success criteria retain partial mappings only; Stage01 A not completed, no Human final A approval and no runner gate."
+  },
+  "completeness_gap_check_after_Q18": {
+    "state": "A_CANDIDATE_SEMANTIC_READINESS",
+    "newly_resolved": [
+      {
+        "id": "GAP-01B-04",
+        "by": "Q17=B",
+        "note": "已独立定义原始意图—合法替代—缺口证据—候选研究—认证后重评结果链"
+      },
+      {
+        "id": "GAP-01B-05",
+        "by": "Q18=C",
+        "note": "已定义原版/模型竞争知识的可复核条件、版本、行为、统计、正反证据及后续复评要求"
+      },
+      {
+        "id": "GAP-01B-06",
+        "by": "Q14=B, Q16=C, Q18=C",
+        "note": "结论降级、关键冲突研究、重新认证与依赖结果复评已具备结果项和可检查的最低内容"
+      }
+    ],
+    "semantic_contradictions": [],
+    "remaining_evidence_unknowns": [
+      {
+        "id": "GAP-01B-07",
+        "scope": "具体游戏版本下全量字段、Native 认证面、3D 战术观察和实验统计阈值仍未验证",
+        "disposition": "Stage02 evidence then Stage03 design / Stage04 testing; not Human requirement ambiguity"
+      },
+      {
+        "id": "LIMIT-01B-001",
+        "scope": "A0 H01-H06 均为待证假设，任何 Stage01 语义一致性不证明游戏机制效果",
+        "disposition": "preserve assumption and evidence grades"
+      },
+      {
+        "id": "LIMIT-01B-002",
+        "scope": "完整 OS runner 和 A 的不同 Human 确认尚未发生",
+        "disposition": "candidate only; no stage completion or final approval"
+      }
+    ],
+    "result_contract": "result items must have expected_end_state, components, relations, inputs_outputs, completeness_rule, known_facts, unknowns, acceptance_criterion_ids",
+    "candidate_gate": "PREPARE_FULL_A_FOR_HUMAN_CONFIRMATION_NOT_APPROVED",
+    "reason": "Q1–Q18 已定义篮球基准、攻防/阵容能力、辅助训练、双竞技比较、机制/因果验证、知识修正与原生能力缺口；剩余实际机制与数据可行性是证据验证，而非新的需求语义裁决。"
+  },
+  "post_model_normalization": {
+    "no_new_human_decision": true,
+    "corrected_historical_residues": [
+      {
+        "source": "Q9 supplementary relation in RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+        "prior_state": "Human Q10 pending",
+        "resolution": "Human Q10=B previously recorded; non-core authorized native-training support confirmed"
+      },
+      {
+        "source": "EVQ-01B-BADGE-CULTIVATION-SCOPE-01",
+        "prior_state": "HUMAN_DECISION_PENDING",
+        "resolution": "CLOSED_BY_01B_Q10_B; removed from active unknown evidence questions"
+      },
+      {
+        "source": "baseline_priority_human_direction.load_bearing_ambiguity",
+        "prior_state": "Human Q9 pending",
+        "resolution": "CLOSED_BY_01B_Q9_B"
+      },
+      {
+        "source": "badge_priority_human_direction.scope_guardrails",
+        "prior_state": "cultivation scope pending",
+        "resolution": "CLOSED_BY_01B_Q10_B"
+      }
+    ],
+    "historical_decision_records": "Human Q1–Q18 source decision objects retain their original at-the-time statements; an earlier note describing a pending future question is a historical note and not an active open decision.",
+    "evidence_unknowns": "Native badge eligibility, XP, training effects, AI tactical overrides and simulation-mode differences remain UNKNOWN pending Stage02 verification",
+    "scope": "No changes to frozen A0 v1, no fresh Human approval assumed, no game actions."
+  }
+}
