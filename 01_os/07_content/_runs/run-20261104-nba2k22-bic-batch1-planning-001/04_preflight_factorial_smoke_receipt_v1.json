@@ -1,0 +1,34 @@
+{
+  "task": "BIC-BATCH1-STAGE04-PREFREEZE-SMOKE",
+  "scope": "Synthetic arithmetic only; NOT a frozen Stage04 test and NOT an NBA2K22 game test",
+  "command": "python -B /mnt/data/bic_stage04_preflight_smoke.py",
+  "exit_code": 0,
+  "source_sha256": "858925ee5dc0d32d207eebf2ef50726cd51eb4e2bf806912378c23b809b7ed37",
+  "raw_stdout_sha256": "6208f42622c3f72e5f8d95100ecbe410d7e52dca69d85c583f0bd06e065bf3fb",
+  "data": {
+    "cells": {
+      "A0B0": 100,
+      "A0B1": 104,
+      "A1B0": 106,
+      "A1B1": 118
+    },
+    "effects": {
+      "A_when_B0": 6,
+      "B_when_A0": 4,
+      "A_by_B_interaction": 8,
+      "A_marginal": 10,
+      "B_marginal": 8
+    }
+  },
+  "checks": [
+    "known_2x2_contrast",
+    "marginals_consistent",
+    "missing_cell_not_identifiable",
+    "repeated_team_not_independent",
+    "no_real_game_data_claim"
+  ],
+  "environment": "isolated ChatGPT Python container; does not have NBA2K22 process or user save",
+  "actual_observation": "PASS_SYNTHETIC_ARITHMETIC_ONLY",
+  "stage04_frozen": false,
+  "real_native_effect": "NOT_TESTED"
+}
