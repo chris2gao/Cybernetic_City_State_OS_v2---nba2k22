@@ -1,0 +1,2047 @@
+{
+  "source_kind": "PINNED_PE_CALLBACK_REGISTRATION_NOT_REA_PROVIDER",
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "query": "^(void|bool|int|uint|float|string|[A-Z_]+@?) .*(Playbook|Freelance|Gameplan|Rotation|Minutes|Staff|Contract|Signing|Training).*\\(.*\\)$",
+  "string_limit": 100,
+  "matching_string_count": 50,
+  "string_selection_truncated": false,
+  "registration_pattern": "xor r9d,r9d; lea r8,callback; lea rdx,declaration; mov rcx,rbx; call0x1fbaf0",
+  "game_access_performed": false,
+  "callbacks": [
+    {
+      "declaration": "void SetPlayerSlotToSelectedFranchsieSigning()",
+      "declaration_rva": 43288776,
+      "registration_rva": 12399198,
+      "callback_rva": 16044416,
+      "callback_unwind_chain": [
+        {
+          "begin": 16044416,
+          "end": 16044444,
+          "unwind_rva": 49969004,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12399188,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12399191,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x379f22]"
+        },
+        {
+          "rva": 12399198,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d75663]"
+        },
+        {
+          "rva": 12399205,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12399208,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyLeagueMenu_Contract_Init()",
+      "declaration_rva": 43326664,
+      "registration_rva": 12421715,
+      "callback_rva": 7181760,
+      "callback_unwind_chain": [
+        {
+          "begin": 7181760,
+          "end": 7181900,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12421705,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12421708,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x4ff493]"
+        },
+        {
+          "rva": 12421715,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7926e]"
+        },
+        {
+          "rva": 12421722,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12421725,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyLeagueMenu_Contract_Deinit()",
+      "declaration_rva": 43326832,
+      "registration_rva": 12421829,
+      "callback_rva": 7181664,
+      "callback_unwind_chain": [
+        {
+          "begin": 7181664,
+          "end": 7181759,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12421819,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12421822,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x4ff565]"
+        },
+        {
+          "rva": 12421829,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d792a4]"
+        },
+        {
+          "rva": 12421836,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12421839,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractInit()",
+      "declaration_rva": 43333928,
+      "registration_rva": 12426047,
+      "callback_rva": 7682752,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12426037,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12426040,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x48607f]"
+        },
+        {
+          "rva": 12426047,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d79de2]"
+        },
+        {
+          "rva": 12426054,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12426057,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractBack()",
+      "declaration_rva": 43336480,
+      "registration_rva": 12427415,
+      "callback_rva": 7681312,
+      "callback_unwind_chain": [
+        {
+          "begin": 7681312,
+          "end": 7681395,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12427405,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12427408,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x486b77]"
+        },
+        {
+          "rva": 12427415,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a282]"
+        },
+        {
+          "rva": 12427422,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12427425,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractLeft()",
+      "declaration_rva": 43336680,
+      "registration_rva": 12427529,
+      "callback_rva": 7682768,
+      "callback_unwind_chain": [
+        {
+          "begin": 7682768,
+          "end": 7683150,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12427519,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12427522,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x486639]"
+        },
+        {
+          "rva": 12427529,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a2d8]"
+        },
+        {
+          "rva": 12427536,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12427539,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractRight()",
+      "declaration_rva": 43336888,
+      "registration_rva": 12427643,
+      "callback_rva": 7685536,
+      "callback_unwind_chain": [
+        {
+          "begin": 7685536,
+          "end": 7685918,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12427633,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12427636,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x485bdb]"
+        },
+        {
+          "rva": 12427643,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a336]"
+        },
+        {
+          "rva": 12427650,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12427653,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractDown()",
+      "declaration_rva": 43337104,
+      "registration_rva": 12427757,
+      "callback_rva": 7681760,
+      "callback_unwind_chain": [
+        {
+          "begin": 7681760,
+          "end": 7682129,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12427747,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12427750,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x486b0d]"
+        },
+        {
+          "rva": 12427757,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a39c]"
+        },
+        {
+          "rva": 12427764,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12427767,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractUp()",
+      "declaration_rva": 43337304,
+      "registration_rva": 12427871,
+      "callback_rva": 7686224,
+      "callback_unwind_chain": [
+        {
+          "begin": 7686224,
+          "end": 7686733,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12427861,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12427864,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x485a0f]"
+        },
+        {
+          "rva": 12427871,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a3f2]"
+        },
+        {
+          "rva": 12427878,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12427881,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractActivate()",
+      "declaration_rva": 43337512,
+      "registration_rva": 12427985,
+      "callback_rva": 7680576,
+      "callback_unwind_chain": [
+        {
+          "begin": 7680576,
+          "end": 7680971,
+          "unwind_rva": 49979772,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12427975,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12427978,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x487091]"
+        },
+        {
+          "rva": 12427985,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a450]"
+        },
+        {
+          "rva": 12427992,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12427995,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_ContractPrimary()",
+      "declaration_rva": 43337728,
+      "registration_rva": 12428099,
+      "callback_rva": 7683152,
+      "callback_unwind_chain": [
+        {
+          "begin": 7683152,
+          "end": 7683333,
+          "unwind_rva": 49968904,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428089,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428092,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x4866f3]"
+        },
+        {
+          "rva": 12428099,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a4b6]"
+        },
+        {
+          "rva": 12428106,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428109,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractUpdate()",
+      "declaration_rva": 43337952,
+      "registration_rva": 12428213,
+      "callback_rva": 7870640,
+      "callback_unwind_chain": [
+        {
+          "begin": 7870640,
+          "end": 7870667,
+          "unwind_rva": 50266760,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428203,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428206,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x458b05]"
+        },
+        {
+          "rva": 12428213,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a524]"
+        },
+        {
+          "rva": 12428220,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428223,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractLeft()",
+      "declaration_rva": 43338184,
+      "registration_rva": 12428327,
+      "callback_rva": 8448288,
+      "callback_unwind_chain": [
+        {
+          "begin": 8448288,
+          "end": 8448315,
+          "unwind_rva": 50266760,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428317,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428320,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3cbb07]"
+        },
+        {
+          "rva": 12428327,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a59a]"
+        },
+        {
+          "rva": 12428334,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428337,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractRight()",
+      "declaration_rva": 43338408,
+      "registration_rva": 12428441,
+      "callback_rva": 8448688,
+      "callback_unwind_chain": [
+        {
+          "begin": 8448688,
+          "end": 8448715,
+          "unwind_rva": 50266760,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428431,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428434,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3cb9e9]"
+        },
+        {
+          "rva": 12428441,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a608]"
+        },
+        {
+          "rva": 12428448,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428451,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractUp()",
+      "declaration_rva": 43338632,
+      "registration_rva": 12428555,
+      "callback_rva": 8448000,
+      "callback_unwind_chain": [
+        {
+          "begin": 8448000,
+          "end": 8448027,
+          "unwind_rva": 50266760,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428545,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428548,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3cbd0b]"
+        },
+        {
+          "rva": 12428555,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a676]"
+        },
+        {
+          "rva": 12428562,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428565,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractDown()",
+      "declaration_rva": 43338848,
+      "registration_rva": 12428669,
+      "callback_rva": 8448000,
+      "callback_unwind_chain": [
+        {
+          "begin": 8448000,
+          "end": 8448027,
+          "unwind_rva": 50266760,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428659,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428662,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3cbd7d]"
+        },
+        {
+          "rva": 12428669,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a6dc]"
+        },
+        {
+          "rva": 12428676,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428679,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractBack()",
+      "declaration_rva": 43339080,
+      "registration_rva": 12428783,
+      "callback_rva": 8447456,
+      "callback_unwind_chain": [
+        {
+          "begin": 8447456,
+          "end": 8447743,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428773,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428776,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3cc00f]"
+        },
+        {
+          "rva": 12428783,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a752]"
+        },
+        {
+          "rva": 12428790,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428793,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGm_Overlay_Conversation_StaffContractSubmit()",
+      "declaration_rva": 43339304,
+      "registration_rva": 12428897,
+      "callback_rva": 8448800,
+      "callback_unwind_chain": [
+        {
+          "begin": 8448800,
+          "end": 8448914,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12428887,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12428890,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3cbb41]"
+        },
+        {
+          "rva": 12428897,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7a7c0]"
+        },
+        {
+          "rva": 12428904,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12428907,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "int  MyGM_Staff_GetNumCoaches()",
+      "declaration_rva": 43341752,
+      "registration_rva": 12430151,
+      "callback_rva": 8309584,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12430141,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12430144,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3edff7]"
+        },
+        {
+          "rva": 12430151,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7ac6a]"
+        },
+        {
+          "rva": 12430158,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12430161,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool MyGM_Staff_IsFranchiseMode()",
+      "declaration_rva": 43341920,
+      "registration_rva": 12430265,
+      "callback_rva": 8309616,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12430255,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12430258,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3ee049]"
+        },
+        {
+          "rva": 12430265,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7aca0]"
+        },
+        {
+          "rva": 12430272,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12430275,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "int  MyGM_Staff_GetNumBadges()",
+      "declaration_rva": 43342096,
+      "registration_rva": 12430379,
+      "callback_rva": 8309568,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12430369,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12430372,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3ee0eb]"
+        },
+        {
+          "rva": 12430379,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7acde]"
+        },
+        {
+          "rva": 12430386,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12430389,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGM_Rotations_Init()",
+      "declaration_rva": 43344008,
+      "registration_rva": 12431633,
+      "callback_rva": 8303888,
+      "callback_unwind_chain": [
+        {
+          "begin": 8303888,
+          "end": 8304063,
+          "unwind_rva": 50256868,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12431623,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12431626,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3efc01]"
+        },
+        {
+          "rva": 12431633,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7af70]"
+        },
+        {
+          "rva": 12431640,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12431643,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGM_Rotations_Deinit()",
+      "declaration_rva": 43344168,
+      "registration_rva": 12431747,
+      "callback_rva": 8303712,
+      "callback_unwind_chain": [
+        {
+          "begin": 8303712,
+          "end": 8303732,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12431737,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12431740,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3efd23]"
+        },
+        {
+          "rva": 12431747,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7af9e]"
+        },
+        {
+          "rva": 12431754,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12431757,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool MyGM_Rotations_IsEditable()",
+      "declaration_rva": 43344328,
+      "registration_rva": 12431861,
+      "callback_rva": 2552304,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12431851,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12431854,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x96c005]"
+        },
+        {
+          "rva": 12431861,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7afcc]"
+        },
+        {
+          "rva": 12431868,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12431871,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void MyGM_Rotations_TouchMinutes()",
+      "declaration_rva": 43344496,
+      "registration_rva": 12431975,
+      "callback_rva": 8304064,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12431965,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12431968,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3efca7]"
+        },
+        {
+          "rva": 12431975,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7b002]"
+        },
+        {
+          "rva": 12431982,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12431985,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_Initialize(void)",
+      "declaration_rva": 43358464,
+      "registration_rva": 12440183,
+      "callback_rva": 22895024,
+      "callback_unwind_chain": [
+        {
+          "begin": 22895024,
+          "end": 22895107,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12440173,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440176,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9f8739]"
+        },
+        {
+          "rva": 12440183,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c682]"
+        },
+        {
+          "rva": 12440190,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440193,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_Deinitialize(void)",
+      "declaration_rva": 43358768,
+      "registration_rva": 12440297,
+      "callback_rva": 22831232,
+      "callback_unwind_chain": [
+        {
+          "begin": 22831232,
+          "end": 22831291,
+          "unwind_rva": 50358036,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12440287,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440290,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9e8d97]"
+        },
+        {
+          "rva": 12440297,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c740]"
+        },
+        {
+          "rva": 12440304,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440307,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_NextPlaybook(void)",
+      "declaration_rva": 43358976,
+      "registration_rva": 12440411,
+      "callback_rva": 22905968,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12440401,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440404,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9fb115]"
+        },
+        {
+          "rva": 12440411,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c79e]"
+        },
+        {
+          "rva": 12440418,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440421,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_PrevPlaybook(void)",
+      "declaration_rva": 43359184,
+      "registration_rva": 12440525,
+      "callback_rva": 22927024,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12440515,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440518,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0xa002e3]"
+        },
+        {
+          "rva": 12440525,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c7fc]"
+        },
+        {
+          "rva": 12440532,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440535,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_PopOverlay(void)",
+      "declaration_rva": 43359392,
+      "registration_rva": 12440639,
+      "callback_rva": 22925792,
+      "callback_unwind_chain": [
+        {
+          "begin": 22925792,
+          "end": 22925809,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12440629,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440632,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9ffda1]"
+        },
+        {
+          "rva": 12440639,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c85a]"
+        },
+        {
+          "rva": 12440646,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440649,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_RegisterPlaybookSpreadsheet(string_crc)",
+      "declaration_rva": 43359600,
+      "registration_rva": 12440753,
+      "callback_rva": 22934512,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12440743,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440746,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0xa01f3f]"
+        },
+        {
+          "rva": 12440753,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c8b8]"
+        },
+        {
+          "rva": 12440760,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440763,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_EditPlays_RegisterPlayCatalogSpreadsheet(string_crc)",
+      "declaration_rva": 43359888,
+      "registration_rva": 12440867,
+      "callback_rva": 2343072,
+      "callback_unwind_chain": [],
+      "registration_window": [
+        {
+          "rva": 12440857,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440860,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x9a1483]"
+        },
+        {
+          "rva": 12440867,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7c966]"
+        },
+        {
+          "rva": 12440874,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440877,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_AssignPlays_Initialize(void)",
+      "declaration_rva": 43360176,
+      "registration_rva": 12440981,
+      "callback_rva": 22894768,
+      "callback_unwind_chain": [
+        {
+          "begin": 22894768,
+          "end": 22895015,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12440971,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12440974,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9f831b]"
+        },
+        {
+          "rva": 12440981,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7ca14]"
+        },
+        {
+          "rva": 12440988,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12440991,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_AssignPlays_Update(void)",
+      "declaration_rva": 43360384,
+      "registration_rva": 12441095,
+      "callback_rva": 22969248,
+      "callback_unwind_chain": [
+        {
+          "begin": 22969248,
+          "end": 22969351,
+          "unwind_rva": 49969100,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441085,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441088,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0xa0a599]"
+        },
+        {
+          "rva": 12441095,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7ca72]"
+        },
+        {
+          "rva": 12441102,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441105,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_AssignPlays_Deinitialize(void)",
+      "declaration_rva": 43360584,
+      "registration_rva": 12441209,
+      "callback_rva": 22830896,
+      "callback_unwind_chain": [
+        {
+          "begin": 22830896,
+          "end": 22830958,
+          "unwind_rva": 50966940,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441199,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441202,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9e88b7]"
+        },
+        {
+          "rva": 12441209,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7cac8]"
+        },
+        {
+          "rva": 12441216,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441219,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void PlaybookMenu_AssignPlays_PopOverlay(void)",
+      "declaration_rva": 43360800,
+      "registration_rva": 12441323,
+      "callback_rva": 22925600,
+      "callback_unwind_chain": [
+        {
+          "begin": 22925600,
+          "end": 22925617,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441313,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441316,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9ffa35]"
+        },
+        {
+          "rva": 12441323,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7cb2e]"
+        },
+        {
+          "rva": 12441330,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441333,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool PlaybookMenu_AssignPlays_NextTeam(void)",
+      "declaration_rva": 43361008,
+      "registration_rva": 12441437,
+      "callback_rva": 22906160,
+      "callback_unwind_chain": [
+        {
+          "begin": 22906160,
+          "end": 22906278,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441427,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441430,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9fadd3]"
+        },
+        {
+          "rva": 12441437,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7cb8c]"
+        },
+        {
+          "rva": 12441444,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441447,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool PlaybookMenu_AssignPlays_PrevTeam(void)",
+      "declaration_rva": 43361208,
+      "registration_rva": 12441551,
+      "callback_rva": 22927216,
+      "callback_unwind_chain": [
+        {
+          "begin": 22927216,
+          "end": 22927333,
+          "unwind_rva": 49978072,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441541,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441544,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9fffa1]"
+        },
+        {
+          "rva": 12441551,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7cbe2]"
+        },
+        {
+          "rva": 12441558,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441561,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool PlaybookMenu_AssignPlays_NextPlayer(void)",
+      "declaration_rva": 43361416,
+      "registration_rva": 12441665,
+      "callback_rva": 22906000,
+      "callback_unwind_chain": [
+        {
+          "begin": 22906000,
+          "end": 22906160,
+          "unwind_rva": 50967060,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441655,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441658,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9fac4f]"
+        },
+        {
+          "rva": 12441665,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7cc40]"
+        },
+        {
+          "rva": 12441672,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441675,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool PlaybookMenu_AssignPlays_PrevPlayer(void)",
+      "declaration_rva": 43361632,
+      "registration_rva": 12441779,
+      "callback_rva": 22927056,
+      "callback_unwind_chain": [
+        {
+          "begin": 22927056,
+          "end": 22927201,
+          "unwind_rva": 50967080,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12441769,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12441772,
+          "mnemonic": "lea",
+          "operands": "r8, [rip + 0x9ffe1d]"
+        },
+        {
+          "rva": 12441779,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7cca6]"
+        },
+        {
+          "rva": 12441786,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12441789,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_AdjustRotationSlider()",
+      "declaration_rva": 43391824,
+      "registration_rva": 12458976,
+      "callback_rva": 8849904,
+      "callback_unwind_chain": [
+        {
+          "begin": 8849904,
+          "end": 8849987,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12458966,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12458969,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3711f0]"
+        },
+        {
+          "rva": 12458976,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7ff69]"
+        },
+        {
+          "rva": 12458983,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12458986,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_Init()",
+      "declaration_rva": 43392016,
+      "registration_rva": 12459083,
+      "callback_rva": 8831200,
+      "callback_unwind_chain": [
+        {
+          "begin": 8831200,
+          "end": 8831211,
+          "unwind_rva": 50083248,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459073,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459076,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x375b6b]"
+        },
+        {
+          "rva": 12459083,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7ffbe]"
+        },
+        {
+          "rva": 12459090,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459093,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_Deinit()",
+      "declaration_rva": 43392160,
+      "registration_rva": 12459190,
+      "callback_rva": 8659568,
+      "callback_unwind_chain": [
+        {
+          "begin": 8659568,
+          "end": 8659713,
+          "unwind_rva": 49968912,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459180,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459183,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x39fa46]"
+        },
+        {
+          "rva": 12459190,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d7ffe3]"
+        },
+        {
+          "rva": 12459197,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459200,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_Primary()",
+      "declaration_rva": 43392312,
+      "registration_rva": 12459297,
+      "callback_rva": 8955840,
+      "callback_unwind_chain": [
+        {
+          "begin": 8955840,
+          "end": 8955931,
+          "unwind_rva": 50001540,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459287,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459290,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x357561]"
+        },
+        {
+          "rva": 12459297,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d80010]"
+        },
+        {
+          "rva": 12459304,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459307,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_Left()",
+      "declaration_rva": 43392472,
+      "registration_rva": 12459404,
+      "callback_rva": 8849504,
+      "callback_unwind_chain": [
+        {
+          "begin": 8849504,
+          "end": 8849644,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459394,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459397,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x37152c]"
+        },
+        {
+          "rva": 12459404,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d80045]"
+        },
+        {
+          "rva": 12459411,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459414,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_Right()",
+      "declaration_rva": 43392624,
+      "registration_rva": 12459511,
+      "callback_rva": 9023280,
+      "callback_unwind_chain": [
+        {
+          "begin": 9023280,
+          "end": 9023429,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459501,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459504,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x346ec7]"
+        },
+        {
+          "rva": 12459511,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d80072]"
+        },
+        {
+          "rva": 12459518,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459521,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_NextTeam()",
+      "declaration_rva": 43392768,
+      "registration_rva": 12459618,
+      "callback_rva": 8734320,
+      "callback_unwind_chain": [
+        {
+          "begin": 8734320,
+          "end": 8734451,
+          "unwind_rva": 49968912,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459608,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459611,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x38d7f2]"
+        },
+        {
+          "rva": 12459618,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d80097]"
+        },
+        {
+          "rva": 12459625,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459628,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_PrevTeam()",
+      "declaration_rva": 43392920,
+      "registration_rva": 12459725,
+      "callback_rva": 8739648,
+      "callback_unwind_chain": [
+        {
+          "begin": 8739648,
+          "end": 8739779,
+          "unwind_rva": 49968912,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459715,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459718,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x38c38d]"
+        },
+        {
+          "rva": 12459725,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d800c4]"
+        },
+        {
+          "rva": 12459732,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459735,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "bool RotationMenu_CheckMinutes()",
+      "declaration_rva": 43393080,
+      "registration_rva": 12459832,
+      "callback_rva": 8622192,
+      "callback_unwind_chain": [
+        {
+          "begin": 8622192,
+          "end": 8622249,
+          "unwind_rva": 50317588,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459822,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459825,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3a8ec8]"
+        },
+        {
+          "rva": 12459832,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d800f9]"
+        },
+        {
+          "rva": 12459839,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459842,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    },
+    {
+      "declaration": "void RotationMenu_RebuildOnConfirm()",
+      "declaration_rva": 43393248,
+      "registration_rva": 12459939,
+      "callback_rva": 8984528,
+      "callback_unwind_chain": [
+        {
+          "begin": 8984528,
+          "end": 8984810,
+          "unwind_rva": 49986268,
+          "flags": 0
+        }
+      ],
+      "registration_window": [
+        {
+          "rva": 12459929,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 12459932,
+          "mnemonic": "lea",
+          "operands": "r8, [rip - 0x3507d3]"
+        },
+        {
+          "rva": 12459939,
+          "mnemonic": "lea",
+          "operands": "rdx, [rip + 0x1d80136]"
+        },
+        {
+          "rva": 12459946,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 12459949,
+          "mnemonic": "call",
+          "operands": "RVA+0x1fbaf0"
+        }
+      ],
+      "qualification": "STATIC_CALLBACK_CANDIDATE_NOT_ABI_OR_ROLE_EXECUTION_PROOF"
+    }
+  ],
+  "limitations": [
+    "Other registration templates are not covered",
+    "Callback may depend on UI globals, VM context or original editor state",
+    "Printed declaration does not independently prove actual ABI or safe Native business commit"
+  ]
+}

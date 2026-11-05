@@ -1,0 +1,35 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Verify Native calendar/date epoch and game period/type/status metadata, add
+    typed calendar observations and public filters, and support postponed games.
+  implementation_or_review_method: >-
+    Read eleven current native metadata types and exact enum/literal CRCs; match
+    two year-conversion code windows and1D capacities. Copy-upgrade v17 to v18,
+    acquire one live schedule/calendar unit and independently compare raw bitfields,
+    source times, old rows and exact query/filter results.
+  supportability_rationale: >-
+    Actual Native date2021-11-19 and REGULARSEASON are observed.1232 games have
+    1230 NORMAL,1 ALLSTAR and1 ROOKIE_SOPHOMORE classifications.39432 raw-byte
+    field comparisons pass; all1351190 prior rows remain preserved apart from
+    the schema-version header. Calendar is hidden before its real acquisition.
+  feasibility_rationale: >-
+    Schema v18 has86 STRICT tables and1376 columns, with182 tests plus SQLite
+    smoke passing. Native capacity1742 is independently verified while actual
+    count1232 is separately checked.202 frozen Boxes remain unread;36 incomplete
+    mappings receive full reads. Dates/periods keep distinct source units and
+    do not promote UI/timezone, cumulative phase or unobserved offseason semantics.
+  exact_result_or_candidate_ref: 44aa4615c2afeb639da7a5a9be5c1fb5264e6311
+  verification_evidence:
+    - 06_执行/increment23/actual-calendar-report.json
+    - 06_执行/increment23/queries/calendar.json
+    - 06_执行/increment23/queries/game-type-1.json
+    - 06_执行/increment23/queries/frozen-game-with-current-calendar.json
+    - 06_执行/increment23/native-sources.archive.json
+    - 06_执行/increment23/verification-corrected/operations_report.json
+  residual_risk_or_unproved_limits:
+    - Native civil components/enums do not imply UI localization or timezone acceptance.
+    - Current period does not establish cumulative-stat phase or franchise offseason substage.
+    - POSTPONED support is metadata/fixture verified; no actual S1 postponed sample is claimed.
+    - Old game identity dates and prior source observations are retained without rewrite.
+    - Full-season capacity, remaining Native/UI/lifecycle coverage and independent/Human acceptance remain open.

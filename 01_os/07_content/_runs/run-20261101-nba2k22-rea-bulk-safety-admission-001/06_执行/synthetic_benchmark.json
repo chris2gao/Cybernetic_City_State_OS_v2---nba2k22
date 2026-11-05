@@ -1,0 +1,201 @@
+{
+  "schema_version": "nba2k22.rea.bulk_executor.benchmark.v2",
+  "task_id": "NBA2K22-REA-BULK-SAFETY-ADMISSION-20261101-001",
+  "actual_execution_model": "Gemini 2.5 Pro (execution)",
+  "benchmark_timestamp": "2026-11-02T03:25:51Z",
+  "test_machine": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 9, GenuineIntel",
+    "python_version": "3.14.6",
+    "node_version": "v24.22.1",
+    "rea_cli_version": "6.8.0",
+    "target_game_build": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "scenarios": {
+    "1": {
+      "total_intents": 1,
+      "chunks_planned": 1,
+      "metrics": {
+        "planned": 1,
+        "success": 0,
+        "noop": 1,
+        "blocked": 0,
+        "unknown": 0,
+        "not_executed": 0,
+        "conservation_holds": true
+      },
+      "timings_ms": {
+        "metric_type": "MEASURED_MOCK",
+        "generation_ms": 16.14,
+        "planning_ms": 0.22,
+        "compile_sample_ms": 4.31,
+        "execution_ms": 0.05,
+        "journal_io_ms": 1.18,
+        "chunk_latency_p50_ms": 0.0466,
+        "chunk_latency_p95_ms": 0.0466,
+        "chunk_latency_p99_ms": 0.0466,
+        "item_latency_p50_ms": 0.0466,
+        "item_latency_p95_ms": 0.0466,
+        "item_latency_p99_ms": 0.0466
+      },
+      "session_overhead_estimates": {
+        "metric_type": "ESTIMATED_THEORETICAL",
+        "unchunked_legacy_sessions": 1,
+        "unchunked_estimated_overhead_seconds": 4.0,
+        "bounded_chunks_planned": 1,
+        "bounded_chunk_estimated_overhead_seconds": 4.0,
+        "session_overhead_reduction_percent": 0.0
+      }
+    },
+    "10": {
+      "total_intents": 10,
+      "chunks_planned": 1,
+      "metrics": {
+        "planned": 10,
+        "success": 0,
+        "noop": 10,
+        "blocked": 0,
+        "unknown": 0,
+        "not_executed": 0,
+        "conservation_holds": true
+      },
+      "timings_ms": {
+        "metric_type": "MEASURED_MOCK",
+        "generation_ms": 22.91,
+        "planning_ms": 0.71,
+        "compile_sample_ms": 5.65,
+        "execution_ms": 0.14,
+        "journal_io_ms": 1.61,
+        "chunk_latency_p50_ms": 0.1341,
+        "chunk_latency_p95_ms": 0.1341,
+        "chunk_latency_p99_ms": 0.1341,
+        "item_latency_p50_ms": 0.0134,
+        "item_latency_p95_ms": 0.0134,
+        "item_latency_p99_ms": 0.0134
+      },
+      "session_overhead_estimates": {
+        "metric_type": "ESTIMATED_THEORETICAL",
+        "unchunked_legacy_sessions": 10,
+        "unchunked_estimated_overhead_seconds": 40.0,
+        "bounded_chunks_planned": 1,
+        "bounded_chunk_estimated_overhead_seconds": 4.0,
+        "session_overhead_reduction_percent": 90.0
+      }
+    },
+    "100": {
+      "total_intents": 100,
+      "chunks_planned": 3,
+      "metrics": {
+        "planned": 100,
+        "success": 0,
+        "noop": 26,
+        "blocked": 2,
+        "unknown": 0,
+        "not_executed": 72,
+        "conservation_holds": true
+      },
+      "timings_ms": {
+        "metric_type": "MEASURED_MOCK",
+        "generation_ms": 12.63,
+        "planning_ms": 2.51,
+        "compile_sample_ms": 4.31,
+        "execution_ms": 1.19,
+        "journal_io_ms": 6.68,
+        "chunk_latency_p50_ms": 0.5302,
+        "chunk_latency_p95_ms": 0.5771,
+        "chunk_latency_p99_ms": 0.5813,
+        "item_latency_p50_ms": 0.0116,
+        "item_latency_p95_ms": 0.0116,
+        "item_latency_p99_ms": 0.012
+      },
+      "session_overhead_estimates": {
+        "metric_type": "ESTIMATED_THEORETICAL",
+        "unchunked_legacy_sessions": 100,
+        "unchunked_estimated_overhead_seconds": 400.0,
+        "bounded_chunks_planned": 3,
+        "bounded_chunk_estimated_overhead_seconds": 12.0,
+        "session_overhead_reduction_percent": 97.0
+      }
+    },
+    "1000": {
+      "total_intents": 1000,
+      "chunks_planned": 21,
+      "metrics": {
+        "planned": 1000,
+        "success": 789,
+        "noop": 150,
+        "blocked": 2,
+        "unknown": 1,
+        "not_executed": 58,
+        "conservation_holds": true
+      },
+      "timings_ms": {
+        "metric_type": "MEASURED_MOCK",
+        "generation_ms": 25.13,
+        "planning_ms": 21.98,
+        "compile_sample_ms": 4.52,
+        "execution_ms": 14.08,
+        "journal_io_ms": 99.52,
+        "chunk_latency_p50_ms": 0.7049,
+        "chunk_latency_p95_ms": 0.9515,
+        "chunk_latency_p99_ms": 0.958,
+        "item_latency_p50_ms": 0.0142,
+        "item_latency_p95_ms": 0.019,
+        "item_latency_p99_ms": 0.0192
+      },
+      "session_overhead_estimates": {
+        "metric_type": "ESTIMATED_THEORETICAL",
+        "unchunked_legacy_sessions": 1000,
+        "unchunked_estimated_overhead_seconds": 4000.0,
+        "bounded_chunks_planned": 21,
+        "bounded_chunk_estimated_overhead_seconds": 84.0,
+        "session_overhead_reduction_percent": 97.9
+      }
+    },
+    "10000": {
+      "total_intents": 10000,
+      "chunks_planned": 205,
+      "metrics": {
+        "planned": 10000,
+        "success": 9763,
+        "noop": 150,
+        "blocked": 2,
+        "unknown": 1,
+        "not_executed": 84,
+        "conservation_holds": true
+      },
+      "timings_ms": {
+        "metric_type": "MEASURED_MOCK",
+        "generation_ms": 63.51,
+        "planning_ms": 213.28,
+        "compile_sample_ms": 4.91,
+        "execution_ms": 145.8,
+        "journal_io_ms": 806.12,
+        "chunk_latency_p50_ms": 0.7058,
+        "chunk_latency_p95_ms": 0.9788,
+        "chunk_latency_p99_ms": 1.2283,
+        "item_latency_p50_ms": 0.0141,
+        "item_latency_p95_ms": 0.0199,
+        "item_latency_p99_ms": 0.0247
+      },
+      "session_overhead_estimates": {
+        "metric_type": "ESTIMATED_THEORETICAL",
+        "unchunked_legacy_sessions": 10000,
+        "unchunked_estimated_overhead_seconds": 40000.0,
+        "bounded_chunks_planned": 205,
+        "bounded_chunk_estimated_overhead_seconds": 820.0,
+        "session_overhead_reduction_percent": 97.95
+      }
+    }
+  },
+  "classification": {
+    "measured_mock": "In-memory simulated environment timings; excludes Frida injection overhead",
+    "estimated_theoretical": "Analytical projection based on 4.0s Frida process attach/script compile overhead per session",
+    "projected_not_run": "Hypothetical live execution time at ~50ms per native Setter/Getter call; NO real game process was attached"
+  },
+  "safety_assertion": {
+    "zero_real_game_process_attachment": true,
+    "live_mutation_authorized": false,
+    "release_candidate_status": "OFFLINE_SAFETY_ADMISSION_CANDIDATE"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "task_id": "NBA2K22-VAE-CALENDAR-SIM-G1G2-READINESS-20261101-001",
+  "evaluation_mode": "CALENDAR_SIM_FIRST",
+  "human_discipline_adherence": "All live settings changes deferred until explicit Human authorization. S0 establishes complete verification contracts.",
+  "pilot_gates": [
+    {
+      "pilot_id": "PILOT_01_SHOT_TOUCHES_COACH_PLAYS",
+      "mechanisms": [
+        "TENDENCY_NATIVE_001 (ShotTendency)",
+        "TENDENCY_NATIVE_066 (TouchesTendency)",
+        "COACH_DEFAULT_001 (CoachRunPlays)",
+        "COACH_DEFAULT_002 (POEOffense)",
+        "COACH_DEFAULT_003 (Freelance)"
+      ],
+      "gate_statuses": {
+        "CODE_READY": "READY - calendar_sim_orchestrator.py, family_codec.py, query.py implemented",
+        "LIVE_NATIVE_READY": "READY - live process PID 10404 verified with bounded safe offsets; live gameplay advancement pending Human play",
+        "SQL_INGEST_READY": "READY - player_game_boxes, games, period_scores ingest verified with deduplication",
+        "TRIGGER_READY": "READY - nonresident opt-in CalendarSimOrchestrator trigger verified",
+        "SETTING_EFFECT_PROTOCOL_READY": "READY - EXP_01 experiment contract formalized with FGA and load index thresholds",
+        "SETTING_EFFECT_LIVE_VERIFIED": "PENDING_HUMAN_AUTHORIZATION - Zero live setting writes performed in S0"
+      },
+      "overall_status": "G1_READY_G2_PROTOCOL_READY"
+    },
+    {
+      "pilot_id": "PILOT_02_TEMPO_POE_ROTATION",
+      "mechanisms": [
+        "COACH_DEFAULT_014 (CoachTempo: integer algorithm 10..70)",
+        "COACH_DEFAULT_005 (POEDefense2)",
+        "ROTATION_ACTUAL (Lineup and starter allocation)"
+      ],
+      "gate_statuses": {
+        "CODE_READY": "READY - team_advanced_metrics, team_game_boxes, active player filtering implemented",
+        "LIVE_NATIVE_READY": "READY - Slot 28 possessions, pace, transition points verified in live process memory",
+        "SQL_INGEST_READY": "READY - team_season_totals, team_game_boxes ingested with season qualification and deduplication",
+        "TRIGGER_READY": "READY - post-game auto-capture trigger verified",
+        "SETTING_EFFECT_PROTOCOL_READY": "READY - EXP_02 experiment contract formalized with pace and fastbreak thresholds",
+        "SETTING_EFFECT_LIVE_VERIFIED": "PENDING_HUMAN_AUTHORIZATION - Zero live setting writes performed in S0"
+      },
+      "overall_status": "G1_READY_G2_PROTOCOL_READY"
+    },
+    {
+      "pilot_id": "PILOT_03_HELP_DEFENSE_DEFENSIVE_POE",
+      "mechanisms": [
+        "COACH_DEFENSE_HELP (Help defense slider)",
+        "COACH_DEFENSE_POE (Defensive POE settings)",
+        "Attribute: Defensive IQ"
+      ],
+      "gate_statuses": {
+        "CODE_READY": "READY - opponent stats, defensive rating, steal/turnover query views implemented",
+        "LIVE_NATIVE_READY": "PARTIAL - Opponent FGA, 3PA, opponent points verified; paint FGA is unseparated in static memory",
+        "SQL_INGEST_READY": "READY - team_season_totals and game boxes ingested",
+        "TRIGGER_READY": "READY - post-game auto-capture trigger verified",
+        "SETTING_EFFECT_PROTOCOL_READY": "READY - EXP_03 experiment contract formalized with opponent FG% and DefRtg thresholds",
+        "SETTING_EFFECT_LIVE_VERIFIED": "PENDING_HUMAN_AUTHORIZATION - Zero live setting writes performed in S0"
+      },
+      "overall_status": "G1_READY_G2_PROTOCOL_READY_WITH_PAINT_GAP"
+    }
+  ]
+}

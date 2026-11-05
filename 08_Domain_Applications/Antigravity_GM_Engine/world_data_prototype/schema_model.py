@@ -1,0 +1,749 @@
+"""Executable, typed catalog. Native ranges stay UNKNOWN until evidenced.
+
+The SQL and complete field cards are generated from this module; persisted facts
+are relational columns, never an EAV/JSON substitute for the domain model.
+"""
+from __future__ import annotations
+from dataclasses import dataclass, field, replace
+import json
+import re
+from pathlib import Path
+
+BASE = Path(__file__).resolve().parent
+DOMAIN = BASE.parent
+VERSION = 24
+PROFILE_REF = 'config/memory_field_profile.json'
+PROFILE = json.loads((DOMAIN / PROFILE_REF).read_text(encoding='utf-8'))
+PLAYER_CONFIG = json.loads((DOMAIN / 'config/state_io_native/player.json').read_text(encoding='utf-8'))
+
+
+def ident(name):
+    if not re.fullmatch(r'[a-z][a-z0-9_]*', name):
+        raise ValueError('invalid SQL identifier: ' + name)
+    return '"' + name + '"'
+
+
+@dataclass
+class Column:
+    name: str
+    kind: str = 'TEXT'
+    meaning: str = ''
+    required: bool = False
+    ref: str | None = None
+    source: str = 'UNKNOWN: native mapping or UI semantics not yet evidenced'
+    unit: str = 'UNKNOWN/native representation'
+    check: str | None = None
+    default: str | None = None
+    visibility: str = 'GM_PUBLIC'
+    null_meaning: str | None = None
+
+    def sql(self):
+        parts = [ident(self.name), self.kind]
+        if self.required: parts.append('NOT NULL')
+        if self.ref: parts.append('REFERENCES ' + self.ref + ' ON DELETE RESTRICT')
+        if self.default is not None: parts.append('DEFAULT ' + self.default)
+        if self.check: parts.append('CHECK (' + self.check + ')')
+        return ' '.join(parts)
+
+
+@dataclass
+class Table:
+    name: str
+    key: str
+    domain: str
+    grain: str
+    columns: list[Column]
+    unique: list[tuple[str, ...]] = field(default_factory=list)
+    checks: list[str] = field(default_factory=list)
+    source: str = 'UNKNOWN'
+    observation: bool = True
+    public: bool = True
+
+
+TABLES: dict[str, Table] = {}
+
+
+def col(name, kind='TEXT', **kw):
+    return Column(name, kind, **kw)
+
+
+def ref(name, table, key=None, required=True):
+    return col(name, required=required, ref=f'{table}({key or name})',
+               source='ENGINEERING_IDENTITY_CONTRACT', unit='save-local identifier',
+               meaning='Reference to the evidenced ' + table + ' record')
+
+
+def fields(names, kind='INTEGER', source='UNKNOWN', unit='native raw value'):
+    return [col(n, kind, meaning=n.replace('_', ' '), source=source, unit=unit) for n in names.split()]
+
+
+def table(name, key, domain, grain, columns, *, unique=(), checks=(), source='UNKNOWN', observation=True, public=True):
+    TABLES[name] = Table(name, key, domain, grain, [col(key, required=True,
+        source='ENGINEERING_IDENTITY_CONTRACT', unit='save-local immutable row identifier', meaning=grain + ' identity')] + columns,
+        list(unique), list(checks), source, observation, public)
+
+
+U = lambda: ref('unit_id', 'capture_units')
+P = lambda: ref('player_id', 'players')
+T = lambda required=True: ref('team_id', 'teams', required=required)
+S = lambda: ref('season_id', 'seasons')
+F = lambda: ref('staff_id', 'staff_members')
+G = lambda: ref('game_id', 'games')
+SAVE = lambda: ref('save_id', 'saves')
+STATS = 'points fg_made fg_attempted three_made three_attempted ft_made ft_attempted offensive_rebounds defensive_rebounds assists steals blocks turnovers fouls minutes_raw plus_minus possessions_raw'
+STATS_SOURCE = 'AG_NATIVE_01D/decoders: research layout; fixture replay only, not current live acceptance'
+NATIVE_PLAYER_STAT_MAP=dict(zip(('PrimaryTeamId SecondaryTeamId JerseyNumber CompactYear NextFree GamesPlayed MVP TripleDoubles FieldGoalsAttempted AllNBATeamRank AllDefensiveTeamRank GamesStarted MinutesPlayed FieldGoalsMade Steals Blocks Fouls FreeThrowsMade FreeThrowsAttempted OffensiveRebounds ThreePointShotsAttempted Assists ThreePointShotsMade DefensiveRebounds Turnovers Champion FinalsMVP TotalPoints PlusMinus TotalPointsAllowed Possessions DefensiveFieldGoalsMade DefensiveFieldGoalsAttempted DoubleDoubles FortyPointGames FiftyPointGames AllRookieTeamRank AllStarStarter AllStarReserve RookieOfTheYear SixthManOfTheYear DefensivePlayerOfTheYear MostImprovedPlayer ReferenceCount').split(),
+    ('primary_team_id_raw secondary_team_id_raw jersey_number_raw compact_year_raw next_free_raw games_played_raw mvp_raw triple_doubles_raw fg_attempted_raw all_nba_rank_raw all_defensive_rank_raw games_started_raw minutes_raw fg_made_raw steals_raw blocks_raw fouls_raw ft_made_raw ft_attempted_raw offensive_rebounds_raw three_attempted_raw assists_raw three_made_raw defensive_rebounds_raw turnovers_raw champion_raw finals_mvp_raw points_raw plus_minus_word_raw points_allowed_raw possessions_raw defensive_fg_made_raw defensive_fg_attempted_raw double_doubles_raw forty_point_games_raw fifty_point_games_raw all_rookie_rank_raw all_star_starter_raw all_star_reserve_raw rookie_of_year_raw sixth_man_raw defensive_player_raw most_improved_raw reference_count_raw').split()))
+
+table('saves', 'singleton', 'RES-D', 'one independent game save per SQLite file', [
+    col('save_id', required=True, source='HUMAN_OR_EVIDENCED_SAVE_BINDING', unit='opaque save identity'),
+    col('schema_version', 'INTEGER', required=True, check=f'schema_version={VERSION}', source='ENGINEERING_SCHEMA_VERSION'),
+    col('created_at', required=True, source='SYSTEM_UTC_CLOCK', unit='ISO8601 UTC'),
+    col('source_grade', required=True, default="'SYNTHETIC_ONLY'", source='EVIDENCE_CLASSIFICATION'),
+    col('game_build'), col('native_save_fingerprint', visibility='OWNER_ONLY')],
+    unique=[('save_id',)], checks=['singleton=1'], observation=False, public=False)
+TABLES['saves'].columns[0].kind = 'INTEGER'
+table('seasons', 'season_id', 'RES-L', 'one save-local season', [col('season_code', required=True), col('save_id', ref='saves(save_id)')], unique=[('season_code',)], observation=False)
+table('teams', 'team_id', 'RES-T', 'stable save-local team identity', [col('display_name'), col('native_team_id'), col('native_identity_status', default="'UNKNOWN'")], observation=False)
+table('players', 'player_id', 'RES-P', 'stable save-local player instance', [col('display_name', required=True), col('native_player_id'), col('native_identity_status', default="'UNVERIFIED'", check="native_identity_status IN ('UNKNOWN','UNVERIFIED','VERIFIED')")], observation=False)
+table('staff_members', 'staff_id', 'RES-C', 'save-local staff identity', [col('display_name'), col('native_staff_id'), col('identity_state', default="'UNKNOWN'")], observation=False)
+table('games', 'game_id', 'RES-G', 'one identified season game, not its changing observed state', [S(), ref('home_team_id', 'teams', 'team_id'), ref('away_team_id', 'teams', 'team_id'), col('game_date'), col('native_game_id'), col('game_kind')], checks=['home_team_id<>away_team_id'], observation=False, source='SEASON_GAME 60-byte candidate')
+table('capture_runs', 'run_id', 'RES-D', 'one acquisition session', [S(), col('observed_at', required=True, unit='ISO8601 UTC', source='ACQUISITION_CLOCK'), col('source_grade', required=True, check="source_grade IN ('SYNTHETIC_FIXTURE','RESEARCH_FIXTURE','LIVE_READ')"), col('game_date'), col('decoder_version'), col('save_binding_ref')], public=False)
+table('capture_units', 'unit_id', 'RES-D', 'one immutable atomic source consistency unit', [ref('run_id','capture_runs'), col('source_key', required=True), col('payload_sha256', required=True), col('unit_status', required=True, check="unit_status IN ('success','failed')"), col('observed_at', required=True, unit='ISO8601 UTC'), col('effective_at'), col('layout_version'), col('completeness', default="'PARTIAL'", check="completeness IN ('COMPLETE','PARTIAL','FAILED')")], unique=[('run_id','source_key')], observation=False, public=False)
+TABLES['capture_runs'].columns.extend([
+    col('refresh_family',check="refresh_family IN ('RECORD_BOOK','NATIVE_HONOR_STATS','LEAGUE_HISTORY_AWARDS','STAFF_SEASON_HISTORY')",source='HUMAN_GAME_SEASON_ANNUAL_REFRESH_POLICY; NULL for ordinary captures/earlier engineering evidence'),
+    col('refresh_period_year','INTEGER',check='refresh_period_year BETWEEN 1 AND 9999',source='HUMAN_OR_NATIVE_GAME_SEASON_PERIOD; distinct from host calendar and source observation season',unit='game-season annual refresh bucket')])
+TABLES['capture_runs'].checks.append('(refresh_family IS NULL)=(refresh_period_year IS NULL)')
+table('source_artifacts', 'artifact_id', 'RES-D', 'one bounded source artifact hash, no public raw bytes', [U(), col('sha256', required=True), col('payload_kind', required=True), col('restricted','INTEGER',required=True,default='1',check='restricted IN (0,1)'), col('source_version'), col('payload_ref', visibility='OWNER_ONLY'), col('byte_count','INTEGER',check='byte_count>=0')], public=False)
+table('native_fields', 'field_id', 'RES-D', 'versioned source-field mapping metadata', [col('source_group',required=True), col('native_key',required=True), col('ui_label'), col('evidence_grade',required=True,default="'UNKNOWN'"), col('visibility',required=True,default="'UNKNOWN'"), col('min_native_value','INTEGER'),col('max_native_value','INTEGER'),col('table_name'),col('column_name'),col('codec'),col('layout_version'),col('source_ref'),col('unit'),col('legal_range_state',default="'UNKNOWN'"),col('null_meaning',default="'NOT_OBSERVED'")], checks=['min_native_value IS NULL OR max_native_value IS NULL OR min_native_value<=max_native_value'], public=False)
+table('field_gaps', 'gap_id', 'RES-D', 'one unresolved target-field gap or Human exception', [ref('field_id','native_fields',required=False),col('affected_domain',required=True),col('reason',required=True),col('impact',required=True),col('human_exception_ref'),col('target_field'),col('alternative'),col('status',default="'OPEN'",check="status IN ('OPEN','RESOLVED','HUMAN_EXCEPTION')")],public=False)
+table('fact_conflicts','conflict_id','RES-D','one quarantined conflict with an existing fact',[col('object_ref',required=True),col('evidence_a',required=True),col('evidence_b',required=True),col('review_status',default="'PENDING_HUMAN'"),col('human_decision_ref'),U()],public=False)
+table('team_seasons','team_season_id','RES-T','team participation in one season',[T(),S(),U(),col('conference'),col('division'),col('team_name')],unique=[('team_id','season_id','unit_id')])
+table('roster_memberships','membership_id','RES-T','observed player team membership; not a transfer event',[P(),T(False),U(),col('roster_status'),col('native_roster_slot','INTEGER')],unique=[('player_id','unit_id')])
+table('team_rotation_slots','slot_id','RES-T','one ordered team rotation setting',[T(),ref('player_id','players',required=False),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('planned_minutes','INTEGER'),col('role_code')],unique=[('team_id','unit_id','slot_index')])
+table('player_vitals_observations','observation_id','RES-P','one actual vitals observation',[P(),U()]+fields('first_name last_name nickname birth_date college country primary_position secondary_position handedness jersey_number','TEXT')+fields('height_raw weight_raw age_raw years_pro'),unique=[('player_id','unit_id')])
+
+ATTR_FIELDS = [r for r in PROFILE['fields']['PLAYER'] if r['group']=='attributes' and r['name']!='potential']
+attribute_cols = fields('overall_raw',source='UNKNOWN: overall field source not certified')
+for r in ATTR_FIELDS:
+    attribute_cols += fields(('three_point_shot' if r['name']=='3pt_shot' else r['name'])+'_raw', source=f'{PROFILE_REF} PLAYER +{r["offset"]} bytes={r["bytes"]}; REGISTRY_ONLY')
+table('player_attribute_snapshots','snapshot_id','RES-P','one player successful typed attribute family observation',[P(),U()]+attribute_cols,unique=[('player_id','unit_id')],source=PROFILE_REF)
+TENDENCY_FIELDS = PLAYER_CONFIG['TENDENCY_OFFSETS']
+tendency_cols = fields('shot_tendency_raw drive_tendency_raw',source='UNKNOWN: legacy synthetic aliases; not native-certified')
+for name, offset in TENDENCY_FIELDS.items():
+    clean = re.sub('[^a-z0-9_]', '_',name.lower())+'_raw'
+    existing=next((c for c in tendency_cols if c.name==clean),None)
+    if existing:
+        existing.source=f'config/state_io_native/player.json TENDENCY_OFFSETS.{name}={offset}; RESEARCH_LEAD'
+    else:
+        tendency_cols += fields(clean,source=f'config/state_io_native/player.json TENDENCY_OFFSETS.{name}={offset}; RESEARCH_LEAD')
+table('player_tendency_snapshots','snapshot_id','RES-P','one player named tendency family observation',[P(),U()]+tendency_cols,unique=[('player_id','unit_id')])
+table('player_badge_values','badge_observation_id','RES-P','one observed native base badge/boolean flag, canonical or source-only; absence is not unowned',[
+    ref('player_id','players',required=False),U(),col('badge_key',required=True),col('native_code','INTEGER'),col('tier_label'),col('owned_state',required=True,check="owned_state IN ('owned','not_owned','unknown')"),
+    ref('source_player_id','native_player_sources','player_source_id',False),ref('native_field_id','native_fields','field_id',False),
+    col('native_badge_id','INTEGER',check='native_badge_id BETWEEN 1 AND 98',source='CURRENT_NATIVE.PLAYERDATA_BADGE enum; NONE excluded'),
+    col('native_kind',check="native_kind IN ('BOOLEAN','LEVEL')",source='CURRENT_NATIVE.PLAYERDATA widths 1/3 + all native dispatch cases'),
+    col('native_level_status',source='Base level enum / boolean / unknown raw code; effective context/UI separate')],
+    unique=[('player_id','unit_id','badge_key'),('source_player_id','unit_id','badge_key')],checks=['player_id IS NOT NULL OR source_player_id IS NOT NULL'],
+    source='Current PLAYERDATA field CRCs, all99 base-dispatch cases and BADGE/BADGE_LEVEL enums; legacy research labels remain historical')
+table('player_play_type_slots','play_type_observation_id','RES-P','one ordered player play type slot',[P(),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('native_play_code')],unique=[('player_id','unit_id','slot_index')],source='config/state_io_native/player.json PLAY_TYPE_NAMES; research only')
+_skill_profile=json.loads((BASE/'player_skill_native_profile.json').read_bytes())
+for _group,_table_name in [('attributes','player_attribute_snapshots'),('tendencies','player_tendency_snapshots'),('play_types','player_play_type_slots')]:
+    _table=TABLES[_table_name]
+    for _c in _table.columns:
+        if _c.name=='player_id':_c.required=False
+    _table.columns.extend([ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version')])
+    _table.unique.append(('source_player_id','unit_id','slot_index') if _group=='play_types' else ('source_player_id','unit_id'))
+    _table.checks.append('player_id IS NOT NULL OR source_player_id IS NOT NULL')
+    if _group=='play_types':continue
+    for _name,_field in _skill_profile[_group].items():
+        _source=f'CURRENT_NATIVE.PLAYERDATA.{_field["native_name"]} +{_field["offset"]} bit={_field["start_bit"]} width={_field["width"]}; player_skill_native_profile.json; earlier snapshots retain their executed registry'
+        _existing=next((c for c in _table.columns if c.name==_name),None)
+        if _existing:_existing.source=_source;_existing.unit='native unsigned storage; UI range/transform separate'
+        else:_table.columns.append(col(_name,'INTEGER',check=f'{_name} BETWEEN 0 AND 255',source=_source,unit='native unsigned byte; UI range/transform separate'))
+TABLES['player_tendency_snapshots'].columns.append(col('is_play_initiator_raw','INTEGER',check='is_play_initiator_raw IN (0,1)',source='CURRENT_NATIVE.PLAYERDATA.IsPlayInitiator +360 bit18; not an ability or numeric tendency',unit='native independent boolean flag'))
+TABLES['player_play_type_slots'].columns.append(col('native_play_label',source='CURRENT_NATIVE.PLAYERDATA_PLAYTYPE exact enum; unknown storage code retains NULL label'))
+TABLES['player_play_type_slots'].source='Current PLAYERDATA.PlayType1..4 and PLAYERDATA_PLAYTYPE enum; ordered source slots, not playbook categories or effect proof'
+_detail_profile=json.loads((BASE/'player_detail_native_profile.json').read_bytes())
+contract_cols=[]
+for name,r in _detail_profile['contract_fields'].items():
+    key=name+'_raw';contract_cols.append(col(key,'INTEGER',check=f'{key} BETWEEN 0 AND {(1<<r["width"])-1}',
+        source=f'CURRENT_NATIVE.PLAYERDATA.{r["native_name"]} +{r["offset"]} bit={r["start_bit"]} width={r["width"]}; player_detail_native_profile.json; earlier observations retain their executed narrower registration',
+        unit='native unsigned storage; salary scale, sentinel and UI years separate'))
+table('player_contract_observations','contract_obs_id','RES-M','one actual contract source observation, not inferred signing event',[
+    ref('player_id','players',required=False),T(False),U()]+contract_cols+[
+    ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version'),col('native_contract_team_id_raw','INTEGER'),col('contract_team_status')],
+    unique=[('player_id','unit_id'),('source_player_id','unit_id')],checks=['player_id IS NOT NULL OR source_player_id IS NOT NULL'])
+table('player_health_observations','health_id','RES-P','observed health separate from attribute durability',[P(),U()]+fields('injury_code body_part severity availability recovery_text','TEXT')+fields('fatigue_raw energy_raw recovery_days'),unique=[('player_id','unit_id')])
+table('player_morale_observations','morale_id','RES-P','observed native morale/role, not AI personality',[P(),U(),col('role_code'),col('morale_raw','INTEGER'),col('role_satisfaction_raw','INTEGER')],unique=[('player_id','unit_id')])
+_state_profile=json.loads((BASE/'player_state_native_profile.json').read_bytes())
+for _group,_table_name in [('vitals','player_vitals_observations'),('health','player_health_observations'),('morale','player_morale_observations')]:
+    _table=TABLES[_table_name]
+    for _c in _table.columns:
+        if _c.name=='player_id':_c.required=False
+    _table.columns.extend([ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version')])
+    _table.unique.append(('source_player_id','unit_id'));_table.checks.append('player_id IS NOT NULL OR source_player_id IS NOT NULL')
+    for _name,_field in _state_profile['groups'][_group].items():
+        if _field['native_type']=='float':continue
+        _source=f'CURRENT_NATIVE.PLAYERDATA.{_field["native_name"]} offset={_field["offset"]} bit={_field["start_bit"]} width={_field["width"]}; player_state_native_profile.json'
+        _existing=next((c for c in _table.columns if c.name==_name),None)
+        if _existing:_existing.source=_source;_existing.unit='native unsigned storage; UI semantics separate'
+        else:_table.columns.append(col(_name,'INTEGER',check=f'{_name} BETWEEN 0 AND {(1<<_field["width"])-1}',source=_source,unit='native unsigned storage'))
+TABLES['player_vitals_observations'].columns.extend([
+    col('weight_real','REAL',source='CURRENT_NATIVE.PLAYERDATA.Weight float32; no UI unit assertion'),col('weight_value_text'),col('weight_value_status'),
+    col('wingspan_raw','INTEGER',check='wingspan_raw BETWEEN 0 AND 32767',source='CURRENT_NATIVE.APPEARANCEDATA.WingspanInTenthsOfMM',unit='tenths of millimeter'),
+    col('height_cm_native_derived','REAL',source='DERIVED HeightInTenthsOfMM /100; native named unit, not UI acceptance',unit='centimeter'),
+    col('wingspan_cm_native_derived','REAL',source='DERIVED WingspanInTenthsOfMM /100; native named unit, not UI acceptance',unit='centimeter'),
+    col('appearance_status'),col('tertiary_position'),col('best_dunk_hand_label')])
+for _c in TABLES['player_vitals_observations'].columns:
+    if _c.name=='height_raw':_c.source='CURRENT_NATIVE.APPEARANCEDATA.HeightInTenthsOfMM uint15';_c.unit='tenths of millimeter'
+    if _c.name=='weight_raw':_c.source='CURRENT_NATIVE.PLAYERDATA.Weight exact IEEE754 word';_c.unit='uint32 float bit pattern; UI weight unit separate'
+TABLES['player_health_observations'].columns.extend([col(f'injury{slot}_{kind}_label',source='CURRENT_NATIVE injury/status enum exact code/CRC') for slot in (1,2) for kind in ('type','status')])
+TABLES['player_morale_observations'].columns.extend([
+    col('morale_word_raw','INTEGER',check='morale_word_raw BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.PLAYERDATA.Morale_Private float32 bits'),
+    col('morale_real','REAL',source='CURRENT_NATIVE.PLAYERDATA.Morale_Private finite float32; no UI scale assertion'),col('morale_value_text'),col('morale_value_status'),
+    col('morale_event_adjustment_signed','INTEGER',check='morale_event_adjustment_signed BETWEEN -128 AND 127',source='CURRENT_NATIVE MoraleEventAdjustment s8; two-complement conversion'),
+    col('morale_event_label'),col('org_role_label',source='CURRENT_NATIVE.PLAYERDATA_ORG_ROLE; not playing-time role or satisfaction')])
+table('player_training_observations','training_id','RES-P','observed personal training settings',[P(),U(),T(False),col('focus_code'),col('intensity_raw','INTEGER'),col('schedule_code')],unique=[('player_id','unit_id')])
+table('game_state_observations','observation_id','RES-G','observed status and native score if actually available',[G(),U(),col('status_code',required=True)]+fields('home_points away_points overtime_count attendance was_simulated')+[col('score_provenance',default="'UNKNOWN'"),col('is_final','INTEGER',default='0',check='is_final IN (0,1)')],unique=[('game_id','unit_id')],source=STATS_SOURCE)
+table('game_period_scores','period_score_id','RES-G','one team one actual period score observation',[G(),T(),U(),col('period_index','INTEGER',required=True,check='period_index>=1'),col('period_points','INTEGER',required=True,check='period_points>=0')],unique=[('game_id','team_id','period_index','unit_id')],source='SEASON_GAME +44..51; OT byte is aggregate, not individually split')
+table('team_game_boxes','box_id','RES-G','one game team native box observation',[G(),T(),U()]+fields(STATS,source=STATS_SOURCE)+fields('fastbreak_points paint_points second_chance_points points_off_turnovers largest_lead',source=STATS_SOURCE),unique=[('game_id','team_id','unit_id')])
+table('player_game_boxes','box_id','RES-G','one game player native box observation',[G(),P(),T(),U()]+fields(STATS,source=STATS_SOURCE)+fields('defensive_fg_made defensive_fg_attempted defensive_points is_starter in_use',source=STATS_SOURCE)+[col('points_provenance',default="'UNKNOWN'")],unique=[('game_id','player_id','unit_id')],checks=['fg_made IS NULL OR fg_attempted IS NULL OR fg_made<=fg_attempted'])
+table('playoff_series','series_id','RES-G','one identified native playoff series',[S(),ref('team_a_id','teams','team_id'),ref('team_b_id','teams','team_id'),col('round_code'),U()],checks=['team_a_id<>team_b_id'])
+table('playoff_series_games','series_game_id','RES-G','evidenced series-to-game association',[ref('series_id','playoff_series'),G(),col('sequence_no','INTEGER'),U()],unique=[('series_id','game_id','unit_id')])
+table('player_season_totals','total_id','RES-L','native cumulative player season totals observation',[P(),S(),U(),T(False),col('team_scope'),col('phase_code'),col('is_final','INTEGER',default='0',check='is_final IN (0,1)')]+fields('games_played games_started '+STATS+' double_doubles triple_doubles',source='AG_NATIVE_01D Slot24 48-byte PLAYER_STATS candidate'),unique=[('player_id','season_id','unit_id')])
+table('team_season_totals','total_id','RES-L','native cumulative team season observation',[T(),S(),U(),col('phase_code'),col('is_final','INTEGER',default='0',check='is_final IN (0,1)')]+fields('wins losses '+STATS+' opponent_points',source='memory_field_profile.json TEAM_STATS; registry only'),unique=[('team_id','season_id','unit_id')])
+table('staff_team_assignments','assignment_id','RES-C','evidenced actual staff role assignment',[F(),T(False),U(),col('role_code',required=True)],unique=[('staff_id','unit_id','role_code')])
+table('staff_contract_observations','contract_obs_id','RES-C','one staff contract observation',[F(),U()]+fields('salary_raw years_left'),unique=[('staff_id','unit_id')])
+table('staff_skill_observations','skill_obs_id','RES-C','one staff typed skill family observation',[F(),U()]+fields('offense_raw defense_raw contracts_raw trading_raw scouting_raw training_raw business_raw',source='memory_field_profile.json STAFF; packed-bit fields require decoder'),unique=[('staff_id','unit_id')])
+table('coach_preferences','pref_id','RES-C','one coach preferences observation',[F(),U()]+fields('preferred_system_raw active_system_raw')+[col('personal_style')],unique=[('staff_id','unit_id')])
+table('team_tactic_settings','tactic_id','RES-C','one team actual tactics settings observation',[T(),U()]+fields('poe_code ace_code preferred_system_raw run_plays_raw help_defense_raw zone_usage_raw tempo_raw crash_offensive_glass_raw crash_defensive_glass_raw bench_depth_raw')+fields('freelance_slot_1 freelance_slot_2 freelance_slot_3 freelance_slot_4','TEXT'),unique=[('team_id','unit_id')])
+COACH_FIELD_COLUMNS={'POEDefense':'poe_defense_1_raw','POEDefense2':'poe_defense_2_raw','POEDefense3':'poe_defense_3_raw',
+    'POEOffense':'poe_offense_1_raw','POEOffense2':'poe_offense_2_raw','POEOffense3':'poe_offense_3_raw',
+    'SimPace':'sim_pace_raw','SimPress':'sim_pressure_raw','SimHelpDef':'sim_help_defense_raw',
+    'SimOffReb':'sim_offensive_rebounds_raw','SimDefReb':'sim_defensive_rebounds_raw',
+    'PreferredSystem':'preferred_system_raw','ActiveSystem':'active_system_raw','PlaybookID':'playbook_code_raw',
+    'BenchDepth':'bench_depth_raw','RunPlayTendency':'run_plays_raw','ZoneUsage':'zone_usage_raw',
+    'BenchUtilization':'bench_utilization_raw','Tempo':'tempo_raw','HelpDefense':'help_defense_raw',
+    'FreelanceType':'freelance_slot_1','FreelanceType2':'freelance_slot_2','FreelanceType3':'freelance_slot_3','FreelanceType4':'freelance_slot_4'}
+coach_profile=json.loads((DOMAIN/'config/coach_tactics_profile.json').read_bytes())
+for native_name,column_name in COACH_FIELD_COLUMNS.items():
+    spec=TABLES['team_tactic_settings'];existing=next((c for c in spec.columns if c.name==column_name),None)
+    if existing is None:
+        existing=col(column_name,'TEXT' if native_name.startswith('FreelanceType') else 'INTEGER',meaning='Observed native '+native_name)
+        spec.columns.append(existing)
+    f=coach_profile['fields'][native_name]
+    existing.source=f'config/coach_tactics_profile.json {native_name} offset={f["offset"]} bit={f["start_bit"]} width={f["width"]}; current COACHDATA metadata checked by adapter'
+    existing.unit='native code; target UI observation and effect separate'
+table('team_playbook_slots','slot_id','RES-C','one ordered actual team playbook entry',[T(),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('play_code'),col('play_name'),col('playbook_native_id')],unique=[('team_id','unit_id','slot_index')])
+table('team_training_settings','training_id','RES-C','one team actual training settings',[T(),U(),col('focus_code'),col('intensity_raw','INTEGER'),col('schedule_code')],unique=[('team_id','unit_id')])
+table('mentorship_relations','mentor_id','RES-C','observed actual mentor association',[P(),ref('mentor_player_id','players','player_id',False),T(False),U()],checks=['player_id<>mentor_player_id'],unique=[('player_id','unit_id')])
+table('team_finance_observations','finance_id','RES-M','native financial snapshot, not external CBA inference',[T(),U()]+fields('payroll_raw cap_space_raw luxury_tax_raw budget_raw salary_cap_raw hard_cap_raw'),unique=[('team_id','unit_id')])
+for name,offset in {'total_salary_raw':0xCBC,'payroll_raw':0xFF4,'budget_raw':0x1014,'staff_budget_raw':0x1018,
+    'cash_raw':0x1010,'gate_revenue_raw':0xFD8,'merch_revenue_raw':0xFDC,'media_revenue_raw':0xFE4}.items():
+    spec=TABLES['team_finance_observations'];c=next((c for c in spec.columns if c.name==name),None)
+    if c is None:
+        c=col(name,'INTEGER',meaning='Observed native '+name);spec.columns.append(c)
+    c.source=f'src/config.py and src/dump_teams_info.py TEAM +{offset:#x} uint32; registered meaning not target UI acceptance'
+    c.unit='legacy unsigned source word; Native int sign is represented only in native_team_finance_observations; no UI/CBA inference'
+
+_finance_profile=json.loads((BASE/'finance_native_profile.json').read_bytes())
+_finance_columns=[T(),U(),ref('observation_season_id','seasons','season_id')]
+for _native,_spec in _finance_profile['scalars'].items():
+    _column=_spec['column'];_primitive=_spec['primitive'];_f=_spec['binding']
+    _source=f'CURRENT_NATIVE.TEAMDATA.{_native} primitive={_primitive} CRC={_f["words"][1]:08x} offset={_f["offset"]}; finance_native_profile.json'
+    if _primitive=='float':
+        _finance_columns.extend([col(_column+'_word_u32','INTEGER',required=True,check=f'{_column}_word_u32 BETWEEN 0 AND 4294967295',source=_source,unit='original IEEE754 float32 bits; survives nonfinite values'),
+            col(_column+'_real','REAL',source=_source,unit='finite Native float32; UI scale unknown',null_meaning='NONFINITE_SOURCE_FLOAT32; original bits are retained in the required word_u32 column')])
+    else:
+        _bounds='0 AND 4294967295' if _primitive=='u32' else '-2147483648 AND 2147483647'
+        _finance_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} BETWEEN {_bounds}',source=_source,unit='Native '+_primitive+' representation; monetary scale/accounting period/legal ranges unproved'))
+for _native,_spec in _finance_profile['packed'].items():
+    _column=_spec['column'];_f=_spec['binding']
+    _finance_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',source=f'CURRENT_NATIVE.TEAMDATA.{_native} offset={_f["offset"]} bit={_f["start_bit"]} width={_f["width"]}',unit='named Native flag/enum; neighboring packed bits excluded'))
+    if 'enum' in _spec:_finance_columns.append(col(_column.removesuffix('_raw')+'_label',source='CURRENT_NATIVE '+_spec['enum']+' exact enum label',null_meaning='UNREGISTERED_NATIVE_ENUM_CODE; original raw code is retained'))
+table('native_team_finance_observations','native_finance_id','RES-M','one typed Native core TEAM finance projection; observation season is context, not accounting coverage',_finance_columns,unique=[('team_id','unit_id')],source='CURRENT_NATIVE_TEAMDATA_SIGNED_UNSIGNED_FLOAT_ENUM; same-unit game_mode_observations; no derived cap-space/profit/legal-spending assertion')
+_lineup_profile=json.loads((BASE/'lineup_native_profile.json').read_bytes())
+TABLES['team_rotation_slots'].columns.extend([ref('source_player_id','native_player_sources','player_source_id',False),col('source_kind',source='CURRENT_NATIVE.TEAMDATA.LineupPlayer pointer array; NULL for legacy observations'),col('pointer_status',source='EVIDENCE_POINTER_ALIGNMENT_POOL_RANGE_AND_RECIPROCAL_ROSTER'),col('native_playing_time_raw','INTEGER',check='native_playing_time_raw BETWEEN 0 AND 127',source='CURRENT_NATIVE.PLAYERDATA.PlayingTime unsigned7 bits at+248 bit18; same-unit source pointer',unit='Native value; UI minutes, units and actual deployment unproved')])
+TABLES['team_rotation_slots'].grain='one ordered global TEAM.LineupPlayer slot, or qualified legacy rotation observation; no inferred minutes/role'
+_lineup_columns=[T(),U(),ref('observation_season_id','seasons','season_id'),col('custom_lineup_name',source='CURRENT_NATIVE.TEAMDATA.CustomLineupName UTF16[12]',null_meaning='EMPTY_OR_INVALID_NATIVE_NAME; custom_name_status distinguishes cases'),col('custom_name_status',required=True,source='EVIDENCE_UTF16_PREFIX_VALIDATION'),col('number_of_lineup_players_raw','INTEGER',required=True,check='number_of_lineup_players_raw BETWEEN 0 AND 15',source='CURRENT_NATIVE.TEAMDATA.NumberOfLineupPlayers unsigned4 bits; not array extent'),col('advanced_axis0_count','INTEGER',required=True,source='CURRENT_NATIVE AdvancedRotationPlayerId dimension0 extent; no clock-unit inference'),col('advanced_axis1_count','INTEGER',required=True,source='CURRENT_NATIVE AdvancedRotationPlayerId dimension1 extent; no position-label inference')]
+for _native,_column in _lineup_profile['team_flag_columns'].items():
+    _f=_lineup_profile['team_flags'][_native];_lineup_columns.append(col(_column,'INTEGER',required=True,check=f'{_column} IN (0,1)',source=f'CURRENT_NATIVE.TEAMDATA.{_native} offset={_f["offset"]} bit={_f["start_bit"]}',unit='observed Native bool32 flag; no played-game effect asserted'))
+table('team_lineup_observations','lineup_observation_id','RES-T','one Native global lineup/control context for a core team',_lineup_columns,unique=[('team_id','unit_id')],source='CURRENT_NATIVE_TEAMDATA_POINTER_ARRAYS_DIMENSIONS_FLAGS_AND_CUSTOM_NAME')
+table('native_player_rotation_observations','player_rotation_id','RES-P','one public Native PLAYER rotation field pair, independent of a current lineup',[
+    U(),ref('source_player_id','native_player_sources','player_source_id'),ref('player_id','players',required=False),col('playing_time_raw','INTEGER',required=True,check='playing_time_raw BETWEEN 0 AND 127',source='CURRENT_NATIVE.PLAYERDATA.PlayingTime +248 bit18 width7',unit='Native unsigned value; no UI minutes conversion'),col('force_non_starter_raw','INTEGER',required=True,check='force_non_starter_raw BETWEEN 0 AND 3',source='CURRENT_NATIVE.PLAYERDATA.ForceNonStarter +764 bit26 width2'),col('force_non_starter_label',source='CURRENT_NATIVE PLAYERDATA_FORCE_NON_STARTER_TYPE exact enum',null_meaning='UNREGISTERED_NATIVE_ENUM_CODE; raw code retained')],unique=[('source_player_id','unit_id')])
+table('team_lineup_slots','lineup_slot_id','RES-T','one slot in each complete Native named five-player TEAM lineup',[
+    T(),U(),col('lineup_kind',required=True,source='CURRENT_NATIVE TEAMDATA field literal: Starter, LineupBench/Tall/Quick/Defense/3Pter/FreeThrow/Custom'),col('slot_index','INTEGER',required=True,check='slot_index BETWEEN 0 AND 4',source='zero-based Native pointer-array position; UI position names unproved'),ref('source_player_id','native_player_sources','player_source_id',False),ref('player_id','players',required=False),col('pointer_status',required=True,source='EVIDENCE_POINTER_ALIGNMENT_POOL_RANGE_AND_RECIPROCAL_ROSTER')],unique=[('team_id','unit_id','lineup_kind','slot_index')],source='CURRENT_NATIVE TEAMDATA named PLAYERDATA pointer arrays; actual pointer addresses remain restricted artifacts')
+table('team_advanced_rotation_slots','advanced_rotation_id','RES-T','one coordinate of complete Native AdvancedRotationPlayerId array, including zero/sentinel values',[
+    T(),U(),col('axis0_index','INTEGER',required=True,check='axis0_index BETWEEN 0 AND 47',source='CURRENT_NATIVE array dimension0/stride10; period/minute labels unproved'),col('axis1_index','INTEGER',required=True,check='axis1_index BETWEEN 0 AND 4',source='CURRENT_NATIVE array dimension1/stride2; position labels unproved'),col('native_player_id_raw','INTEGER',required=True,check='native_player_id_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.TEAMDATA.AdvancedRotationPlayerId uint16[48][5]'),col('namespace_status',required=True,source='UNVERIFIED Native ID namespace; no source/canonical player assigned')],unique=[('team_id','unit_id','axis0_index','axis1_index')])
+
+_staff_profile=json.loads((BASE/'staff_native_profile.json').read_bytes())
+table('native_staff_sources','staff_source_id','RES-C','one COACHDATA descriptor slot with current source identity and independently qualified role/pointer/status observations',[
+    U(),col('source_staff_index','INTEGER',required=True,check='source_staff_index>=0',source='CURRENT_NATIVE COACHDATA pool zero-based index; not a persistent person ID'),ref('staff_id','staff_members',required=False),col('native_staff_id_raw','INTEGER',required=True,check='native_staff_id_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.COACHDATA.UniqueId +216 uint16'),
+    col('first_name',source='CURRENT_NATIVE.COACHDATA.FirstName UTF16[20]'),col('last_name',source='CURRENT_NATIVE.COACHDATA.LastName UTF16[20]'),col('observed_name',source='EVIDENCE_EXACT_NATIVE_NAME_PREFIXES; not a name-only identity link'),col('name_status',required=True,source='EVIDENCE_NATIVE_UTF16_PREFIX_VALIDATION'),col('person_type_raw','INTEGER',required=True,check='person_type_raw BETWEEN 0 AND 15',source='CURRENT_NATIVE.COACHDATA.PersonType +268 bit18 width4; legacy position alias reads low3'),col('person_type_label',source='CURRENT_NATIVE.COACHDATA_PERSONTYPE exact label; unknown raw code retains NULL'),col('status_raw','INTEGER',required=True,check='status_raw BETWEEN 0 AND 3',source='CURRENT_NATIVE.COACHDATA.Status +272 bit14 width2; not a hiring decision'),col('status_label',source='CURRENT_NATIVE.COACHDATA_STATUS exact NORMAL/RELEASED/RETIRED/INACTIVE label')]+[
+    col(prefix+'_native_id_raw','INTEGER',check=prefix+'_native_id_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE '+native+' pointer qualified against same-unit TEAM directory; not historical lifecycle') for prefix,native in (('current_team','CurrentTeam_Internal'),('previous_team','PreviousTeam'),('myteam_team','MyTeamTeam'))]+[
+    col(prefix+'_pointer_status',required=True,source='EVIDENCE_NULL_ALIGNMENT_CURRENT_TEAM_DIRECTORY_AND_CORE_SET') for prefix in ('current_team','previous_team','myteam_team')]+[
+    ref('current_core_team_id','teams','team_id',False),ref('assigned_core_team_id','teams','team_id',False),col('assigned_role_slot','INTEGER',check='assigned_role_slot BETWEEN 0 AND 7',source='single reciprocal current TEAM.Coach_Internal slot; not inferred from PersonType alone'),col('core_slot_reference_count','INTEGER',required=True,check='core_slot_reference_count BETWEEN 0 AND 240',source='EVIDENCE_ALL_CURRENT_CORE_TEAM_ROLE_POINTERS'),col('assignment_status',required=True,source='EVIDENCE_POINTER_TEAM_FULL_PERSON_TYPE_AND_SLOT_RECIPROCITY; ambiguous sources not arbitrarily merged'),col('canonical_link_status',required=True,source='EVIDENCE_CURRENT_RECIPROCAL_ROLE_UNIQUE_POOL_ID_AND_EXACT_EXISTING_NAME; lifecycle unproved')],unique=[('unit_id','source_staff_index')])
+for _group,_table,_key in (('profile','native_staff_profile_observations','staff_profile_id'),('tactics','native_staff_tactic_observations','staff_tactic_id')):
+    _columns=[U(),ref('source_staff_id','native_staff_sources','staff_source_id')]
+    for _native,_spec in _staff_profile['fields'].items():
+        if _spec['group']!=_group:continue
+        _f=_spec['binding'];_column=_spec['column'];_source=f'CURRENT_NATIVE.COACHDATA.{_native} primitive={_spec["primitive"]} offset={_f["offset"]} bit={_f["start_bit"]} width={_f["width"]}; staff_native_profile.json'
+        if _spec['primitive']=='int':
+            _columns.append(col(_column+'_bits_raw','INTEGER',required=True,check=f'{_column}_bits_raw BETWEEN 0 AND {(1<<_f["width"])-1}',source=_source,unit='original signed-int bitfield bits; sentinel meaning unproved'))
+            _columns.append(col(_column+'_signed','INTEGER',required=True,check=f'{_column}_signed BETWEEN {-(1<<(_f["width"]-1))} AND {(1<<(_f["width"]-1))-1}',source=_source,unit='signed-width twos-complement interpretation of Native int; UI meaning unproved'))
+        else:_columns.append(col(_column+'_raw','INTEGER',required=True,check=f'{_column}_raw BETWEEN 0 AND {(1<<_f["width"])-1}',source=_source,unit='Native unsigned storage/enum/CRC/date word; UI scale, legal range and effects separate'))
+        if _spec['enum']:_columns.append(col(_column+'_label',source='CURRENT_NATIVE '+_spec['enum']+' exact enum literal',null_meaning='UNREGISTERED_NATIVE_CODE_OR_UNRESOLVED_LITERAL; raw code retained'))
+    table(_table,_key,'RES-C','one complete public Native staff '+_group+' field family; source-only identities retained',_columns,unique=[('unit_id','source_staff_id')],source='CURRENT_NATIVE_COACHDATA_PUBLIC_FIELDS; no growth/max-grade or annual SeasonStats acquisition')
+table('native_staff_team_slots','staff_slot_id','RES-C','one of eight complete current core TEAM.Coach_Internal pointer slots, including missing/unmatched references',[
+    T(),U(),col('role_slot_index','INTEGER',required=True,check='role_slot_index BETWEEN 0 AND 7',source='CURRENT_NATIVE.TEAMDATA.Coach_Internal pointer array extent8 stride8'),ref('source_staff_id','native_staff_sources','staff_source_id',False),col('pointer_status',required=True,source='EVIDENCE_NATIVE_STAFF_POOL_NULL_ALIGNMENT_AND_RANGE'),col('reciprocal_status',required=True,source='same-unit staff current-team pointer and full4-bit PersonType match; no hiring/effect inference')],unique=[('team_id','unit_id','role_slot_index')])
+
+table('native_staff_history_subjects','history_subject_id','RES-H','one annual staff descriptor identity, independent of ordinary staff acquisition',[
+    U(),ref('staff_id','staff_members',required=False),col('source_staff_index','INTEGER',required=True,check='source_staff_index>=0',source='CURRENT_NATIVE.COACHDATA descriptor index; capture-local'),col('native_staff_id_raw','INTEGER',required=True,check='native_staff_id_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.COACHDATA.UniqueId'),col('observed_name',source='CURRENT_NATIVE.COACHDATA.FirstName and LastName UTF16[20]'),col('name_status',required=True,source='EVIDENCE_UTF16_PREFIX_VALIDATION'),col('canonical_link_status',required=True,source='EVIDENCE_UNIQUE_CURRENT_POOL_ID_AND_EXACT_EXISTING_NAME; lifecycle unproved')],unique=[('unit_id','source_staff_index')])
+table('native_current_coach_stat_observations','current_coach_stat_id','RES-C','one staff source with exactly position0 Native increment-target reference and current win/loss observation, independent of annual history',[
+    U(),col('source_staff_index','INTEGER',required=True,check='source_staff_index>=0',source='CURRENT_NATIVE.COACHDATA bounded descriptor index'),ref('staff_id','staff_members',required=False),col('native_staff_id_raw','INTEGER',required=True,check='native_staff_id_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.COACHDATA.UniqueId'),col('observed_name',source='CURRENT_NATIVE.COACHDATA.FirstName/LastName UTF16[20]'),col('name_status',required=True,source='EVIDENCE_UTF16_PREFIX_VALIDATION'),col('canonical_link_status',required=True,source='EVIDENCE_CURRENT_UNIQUE_UID_AND_EXACT_EXISTING_NAME; lifecycle unproved'),col('native_stat_index_signed','INTEGER',required=True,check='native_stat_index_signed BETWEEN -32768 AND 32767',source='CURRENT_NATIVE.COACHDATA.SeasonStats[0] s16; only Native increment-target position'),col('link_status',required=True,source='EVIDENCE_NATIVE_SIGNED_INDEX_AND_CURRENT_BANK_BOUNDS'),col('source_stat_index','INTEGER',check='source_stat_index>=0',source='CURRENT_NATIVE resolved Slot21 index; NULL for rejected reference'),col('subject_reference_count','INTEGER',check='subject_reference_count>=1',source='EVIDENCE_SAME_UNIT_DISTINCT_SOURCE_SUBJECTS_SHARING_THIS_POSITION0_INDEX'),col('next_free_raw','INTEGER',check='next_free_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.COACHSTATDATA.NextFree uint16; allocation reachability unproved'),col('native_allocation_marker_status',required=True,source='EVIDENCE_NEXT_FREE_COMPARE_TO_VERIFIED_NATIVE_ALLOCATION_MARKER65535'),col('stat_year','INTEGER',check='stat_year IS NULL',source='UNKNOWN: calendar year not proved by position0 update role',null_meaning='NOT_PROVEN; observation season is independent')]+[
+    col(name,'INTEGER',check=f'{name} BETWEEN 0 AND 65535',source='CURRENT_NATIVE.COACHSTATDATA.'+native+' uint16; position0 only; annual award bytes excluded',unit='Native unsigned counter; current update role does not prove calendar year, finalization or team scope') for name,native in (('coach_wins_raw','CoachWins'),('coach_losses_raw','CoachLosses'),('coach_playoff_wins_raw','CoachPlayoffWins'),('coach_playoff_losses_raw','CoachPlayoffLosses'))],unique=[('unit_id','source_staff_index')],checks=["(source_stat_index IS NULL AND subject_reference_count IS NULL AND next_free_raw IS NULL AND coach_wins_raw IS NULL AND coach_losses_raw IS NULL AND coach_playoff_wins_raw IS NULL AND coach_playoff_losses_raw IS NULL) OR (source_stat_index IS NOT NULL AND source_stat_index=native_stat_index_signed AND native_stat_index_signed>=0 AND subject_reference_count IS NOT NULL AND next_free_raw IS NOT NULL AND coach_wins_raw IS NOT NULL AND coach_losses_raw IS NOT NULL AND coach_playoff_wins_raw IS NOT NULL AND coach_playoff_losses_raw IS NOT NULL)"])
+_staff_history=json.loads((BASE/'staff_history_native_profile.json').read_bytes())
+table('native_coach_stat_observations','coach_stat_id','RES-H','one referenced COACHSTATDATA bank row observed in an annual staff history source',[
+    U(),col('source_stat_index','INTEGER',required=True,check='source_stat_index>=0',source='CURRENT_NATIVE Slot21 bounded bank index; Native getter stride12'),col('stat_year','INTEGER',check='stat_year IS NULL',source='UNKNOWN: no year member or array-position calendar mapping proved',null_meaning='YEAR_NOT_PROVEN; capture-run refresh year is not a historical row year'),col('subject_reference_count','INTEGER',required=True,check='subject_reference_count>=1',source='EVIDENCE_DISTINCT_CURRENT_SOURCE_STAFF_REFERENCING_THIS_BANK_INDEX; shared referents do not prove unique ownership')]+[
+    col(s['column'],'INTEGER',required=True,check=f'{s["column"]} BETWEEN 0 AND {(1<<s["binding"]["width"])-1}',source='CURRENT_NATIVE.COACHSTATDATA.'+n+'; staff_history_native_profile.json',unit='Native unsigned storage; no allocation, finalized-season, UI or award-event inference') for n,s in _staff_history['stat_fields'].items()],unique=[('unit_id','source_stat_index')])
+table('native_staff_stat_links','staff_stat_link_id','RES-H','one of40 independent signed Native COACHDATA.SeasonStats references, including rejected indices',[
+    U(),ref('history_subject_id','native_staff_history_subjects','history_subject_id'),col('array_position','INTEGER',required=True,check='array_position BETWEEN 0 AND 39',source='CURRENT_NATIVE.COACHDATA.SeasonStats array position; chronological/current-position meaning unknown'),col('native_stat_index_signed','INTEGER',required=True,check='native_stat_index_signed BETWEEN -32768 AND 32767',source='CURRENT_NATIVE.COACHDATA.SeasonStats s16; code rejects every negative index independently'),ref('coach_stat_id','native_coach_stat_observations','coach_stat_id',False),col('link_status',required=True,source='EVIDENCE_NATIVE_GETTER_SIGNED_BOUND_CHECK; accepted zero retained; no stop-after-empty-slot rule')],unique=[('unit_id','history_subject_id','array_position')])
+
+table('team_state_observations','state_id','RES-T','one team observed native chemistry/fan state',[T(),U()]+
+    [col('chemistry_raw','REAL',source='src/config.py TEAM +0xEC4 float32',unit='native float; UI scale not newly observed'),
+     col('fan_interest_raw','REAL',source='src/config.py TEAM +0xF7C float32',unit='native float; no percentage conversion')],unique=[('team_id','unit_id')])
+TABLES['team_season_totals'].columns+=fields('points_off_turnovers second_chance_points paint_points bench_points pace_raw opponent_fg_made opponent_fg_attempted opponent_three_made opponent_three_attempted',
+    source='config/memory_field_profile.json TEAM_STATS 62-byte raw registry; current wins/losses/points/PA reconciled with schedule')
+for table_name,field_map in {
+    'staff_contract_observations':{'salary_raw':'salary','years_left':'years_left'},
+    'staff_skill_observations':{name+'_raw':name for name in ('offense','defense','contracts','trading','scouting','training','business')}
+}.items():
+    definitions={f['name']:f for f in PROFILE['fields']['STAFF']}
+    for c in TABLES[table_name].columns:
+        if c.name not in field_map:continue
+        f=definitions[field_map[c.name]]
+        c.source=f'config/memory_field_profile.json STAFF {f["name"]} +{f["offset"]} bit={f.get("start_bit",0)} width={f["bits"]}; current reciprocal TEAM role source'
+        c.unit='native grade code' if table_name=='staff_skill_observations' else 'native raw contract integer; UI units separate'
+for c in TABLES['coach_preferences'].columns:
+    if c.name in ('preferred_system_raw','active_system_raw'):
+        name='PreferredSystem' if c.name=='preferred_system_raw' else 'ActiveSystem'
+        c.source=f'config/coach_tactics_profile.json {name}; actual COACHDATA metadata uses four bits; old STAFF three-bit registration not used'
+for c in TABLES['staff_team_assignments'].columns:
+    if c.name=='role_code':c.source='STAFF +0x10E bit2 width3 plus TEAM +0xCE8+8*role reciprocal pointers; profile role labels 0..7'
+for c in TABLES['staff_members'].columns:
+    if c.name=='native_staff_id':c.source='Current COACHDATA UniqueId metadata field (observed +0xD8 uint16); unique in assigned source set'
+for c in TABLES['team_playbook_slots'].columns:
+    if c.name=='slot_index':c.source='PLAYBOOKDATA +0x58, ordered array of 68 uint32 CRCs';c.unit='zero-based native slot index'
+    elif c.name=='play_code':c.source='Native uint32 CRC from loaded PLAYBOOKDATA ordered slot';c.unit='eight lowercase hexadecimal digits, no decoded play name inferred'
+    elif c.name=='playbook_native_id':c.source='PLAYBOOKDATA +0x3E uint16 unique ID; differs from loaded enum code at +0x54'
+table('market_state_observations','market_id','RES-M','native or external market state with explicit origin',[ref('player_id','players',required=False),ref('staff_id','staff_members',required=False),U(),col('market_status',required=True),col('origin_type',required=True,check="origin_type IN ('NATIVE','EXTERNAL')")])
+_affiliation_profile=json.loads((BASE/'player_affiliation_native_profile.json').read_bytes())
+TABLES['market_state_observations'].columns.extend([
+    ref('source_player_id','native_player_sources','player_source_id',False),col('layout_version'),col('native_player_type_label'),col('g_league_team_label'),col('free_agency_type_label'),
+    col('availability_interpretation',source='Class/type/agency flags are not a proof of signability or current free-agent availability')])
+TABLES['market_state_observations'].checks.append('player_id IS NOT NULL OR staff_id IS NOT NULL OR source_player_id IS NOT NULL')
+TABLES['market_state_observations'].unique.append(('source_player_id','unit_id'))
+for _name,_field in _affiliation_profile['player_fields'].items():
+    TABLES['market_state_observations'].columns.append(col(_name,'INTEGER',check=f'{_name} BETWEEN 0 AND {(1<<_field["width"])-1}',
+        source=f'CURRENT_NATIVE.PLAYERDATA.{_field["native_name"]} offset={_field["offset"]} bit={_field["start_bit"]} width={_field["width"]}; player_affiliation_native_profile.json',unit='native unsigned storage; independent flags retained'))
+table('native_college_observations','college_observation_id','RES-P','one distinct pointed COLLEGEDATA referent in a capture unit',[
+    U(),col('source_object_index','INTEGER',required=True,check='source_object_index>=0'),col('native_label'),col('name_encoding_status'),
+    col('localized_name_crc_raw','INTEGER',check='localized_name_crc_raw BETWEEN 0 AND 4294967295'),
+    col('appearance_group_raw','INTEGER',check='appearance_group_raw BETWEEN 0 AND 65535'),col('appearance_group_label'),
+    col('region_id_raw','INTEGER',check='region_id_raw BETWEEN 0 AND 127'),col('college_id_raw','INTEGER',check='college_id_raw BETWEEN 0 AND 2047'),
+    col('is_high_school_raw','INTEGER',check='is_high_school_raw IN (0,1)'),col('source_scope_status')],unique=[('unit_id','source_object_index')],
+    source='Current COLLEGEDATA header/field signature; native name[34], CRC, group, packed raw IDs and high-school flag; no inferred nationality')
+TABLES['player_vitals_observations'].columns.extend([
+    ref('native_college_obs_id','native_college_observations','college_observation_id',False),col('college_source_status'),
+    col('college_country_semantics_status',source='Native referent label kept separate from canonical college/country until category mapping is proven')])
+table('external_transaction_events','transaction_id','RES-M','explicit completed external transaction, never roster-diff inference',[SAVE(),U(),col('event_type',required=True),col('occurred_at'),col('source_ref',required=True),col('status',required=True),col('producer_event_id',required=True)],unique=[('source_ref','producer_event_id')],public=False)
+table('draft_pick_assets','pick_id','RES-M','one actual draft pick identity',[SAVE(),col('draft_year','INTEGER',required=True),col('draft_round','INTEGER',required=True),ref('original_team_id','teams','team_id'),col('native_pick_id')],unique=[('draft_year','draft_round','original_team_id')],observation=False)
+table('transaction_components','component_id','RES-M','one evidenced external transaction component',[ref('transaction_id','external_transaction_events'),U(),ref('from_team_id','teams','team_id',False),ref('to_team_id','teams','team_id',False),ref('player_id','players',required=False),ref('staff_id','staff_members',required=False),ref('pick_id','draft_pick_assets',required=False),col('component_kind',required=True),col('salary_raw','INTEGER')],public=False)
+table('draft_pick_ownerships','ownership_id','RES-M','observed or explicit event-backed pick ownership',[ref('pick_id','draft_pick_assets'),ref('owner_team_id','teams','team_id'),U(),ref('event_ref','external_transaction_events','transaction_id',False),col('origin_type',required=True,check="origin_type IN ('NATIVE','EXTERNAL')")],unique=[('pick_id','unit_id')])
+TABLES['draft_pick_ownerships'].columns+=fields('source_row_index native_pick_index_raw',source='DRAFT_ASSETS 32-byte actual descriptor index and +28 metadata bits8..15; not a selection result')+[
+    col('protection_status',default="'UNKNOWN'",source='Protection semantics not decoded; absence is not unprotected'),
+    col('swap_status',default="'UNKNOWN'",source='Swap semantics not decoded; absence is not no swap')]
+table('draft_prospects','prospect_id','RES-M','one named prospect source observation, separate from PLAYER instance',[SAVE(),
+    col('draft_year','INTEGER',source='UNKNOWN unless actual class year source is acquired; never infer from next future-pick year'),
+    col('native_prospect_id',source='Public prospect record +0x2F8 uint16; not assumed unique in pool'),col('display_name'),
+    col('class_year_status',default="'UNKNOWN'"),U()])
+table('draft_pool_slot_observations','pool_slot_id','RES-M','one actual draft-pool slot observation, including uninitialized slots',[
+    U(),col('source_row_index','INTEGER',required=True),col('slot_state',required=True),col('native_prospect_id'),
+    col('display_name'),col('draft_year','INTEGER'),col('class_year_status',required=True)],unique=[('unit_id','source_row_index')],
+    source='ROSTERDATA Slot4 count/pointer, 1264-byte public template excluding Potential; allocated slots are not necessarily people')
+table('draft_prospect_attribute_snapshots','snapshot_id','RES-P','one named prospect public attribute observation',[
+    ref('prospect_id','draft_prospects'),U()]+[replace(c) for c in attribute_cols],unique=[('prospect_id','unit_id')])
+table('draft_prospect_tendency_snapshots','snapshot_id','RES-P','one named prospect registered tendency observation',[
+    ref('prospect_id','draft_prospects'),U()]+[replace(c) for c in tendency_cols if c.name in {name.lower()+'_raw' for name in TENDENCY_FIELDS}],unique=[('prospect_id','unit_id')])
+table('draft_prospect_play_type_slots','slot_id','RES-P','one named prospect ordered native play-type observation',[
+    ref('prospect_id','draft_prospects'),U(),col('slot_index','INTEGER',required=True,check='slot_index>=0'),col('native_play_code')],unique=[('prospect_id','unit_id','slot_index')])
+table('waived_salary_observations','waived_id','RES-M','one observed 136-byte native waived-salary source record; not an inferred release event',[
+    T(False),ref('player_id','players',required=False),U(),col('source_row_index','INTEGER',required=True),
+    col('owner_mapping_status',required=True),col('native_player_id','INTEGER'),col('observed_player_name'),
+    col('player_mapping_status',required=True),col('name_source_status',required=True)]+
+    fields('salary_year_1_raw salary_year_2_raw salary_year_3_raw',source='WAIVED_SALARY +16/+20/+24 uint32 research candidate, relative buckets; absolute season mapping and UI units unknown'),
+    unique=[('unit_id','source_row_index')],source='ROSTERDATA Slot61 stride136; TEAM pointer+8; candidate inline UTF16 surname+56/given+96')
+market_column_sources={
+    'draft_pick_assets':{'draft_year':'DRAFT_ASSETS +28 bits22..31 +2000; checked native getter profile and complete groups',
+        'draft_round':'DRAFT_ASSETS +28 bits3..7 +1; only verified future round codes0/1 accepted',
+        'original_team_id':'DRAFT_ASSETS +8 TEAM pointer; current named getter bytes checked',
+        'native_pick_id':'UNKNOWN: no stable unique Native pick ID is asserted from array index'},
+    'draft_pick_ownerships':{'owner_team_id':'DRAFT_ASSETS +0 TEAM pointer; current named getter bytes checked',
+        'origin_type':'EVIDENCE_CLASSIFICATION: observed native owner state, not a completed transaction'},
+    'draft_pool_slot_observations':{'source_row_index':'ENGINEERING_ARRAY_INDEX: actual Slot4 descriptor-bounded index',
+        'slot_state':'EVIDENCE_CLASSIFICATION: aligned UTF16 prefix presence; blank slot is not a person',
+        'native_prospect_id':'Slot4 public template +0x2F8 uint16; zero/duplicate IDs not promoted to identity',
+        'display_name':'Slot4 +0..39 surname and +40..79 given-name UTF16 candidate prefixes',
+        'draft_year':'UNKNOWN: actual class year not inferred from future pick base',
+        'class_year_status':'EVIDENCE_CLASSIFICATION: actual class year source missing'},
+    'waived_salary_observations':{'team_id':'WAIVED_SALARY +8 exact current TEAM pointer mapping; not economic active-status proof',
+        'source_row_index':'ENGINEERING_ARRAY_INDEX: actual Slot61 descriptor-bounded index',
+        'owner_mapping_status':'EVIDENCE_CLASSIFICATION: CORE_TEAM_POINTER or UNMAPPED_OR_EMPTY',
+        'native_player_id':'UNKNOWN: no Native person ID inferred from the first Q word or inline name',
+        'observed_player_name':'WAIVED_SALARY candidate inline UTF16 surname+56..95/given+96..135; no canonical association',
+        'player_mapping_status':'EVIDENCE_CLASSIFICATION: canonical PLAYER link not established',
+        'name_source_status':'EVIDENCE_CLASSIFICATION: candidate inline text decoding only'}}
+for table_name,mapping in market_column_sources.items():
+    for c in TABLES[table_name].columns:
+        if c.name in mapping:c.source=mapping[c.name]
+for table_name in ('draft_prospect_attribute_snapshots','draft_prospect_tendency_snapshots'):
+    for c in TABLES[table_name].columns:
+        if c.name.endswith('_raw'):c.source='Slot4 TEMPLATE_CANDIDATE; named initialized-class Native acceptance outstanding; '+c.source
+table('draft_results','result_id','RES-M','actual source-backed draft result',[ref('prospect_id','draft_prospects',required=False),ref('pick_id','draft_pick_assets',required=False),T(),ref('player_id','players',required=False),U(),col('source_ref',required=True),col('selection_number','INTEGER')])
+table('worldline_config_versions','config_id','RES-S','versioned desired configuration, never actual game state',[SAVE(),U(),col('config_version',required=True),col('config_hash',required=True),col('approval_ref')],unique=[('config_version',)],public=False)
+table('game_setting_observations','setting_obs_id','RES-S','one actual native setting word with typed value and qualified semantics',[
+    U(),ref('field_id','native_fields'),col('scope_code',required=True),col('integer_value','INTEGER'),col('real_value','REAL'),col('text_value'),col('display_value'),
+    col('logical_key',source='ENGINEERING_LAYOUT_IDENTITY; not an accepted UI label'),
+    col('raw_word_u32','INTEGER',check='raw_word_u32 BETWEEN 0 AND 4294967295',source='ACTUAL_NATIVE_FOUR_BYTE_WORD',unit='unsigned 32-bit bit pattern'),
+    col('value_status',source='EVIDENCE_FLOAT_OR_UINT32_DECODE_STATUS'),
+    col('semantic_status',source='EVIDENCE_REGISTERED_LAYOUT_VS_CURRENT_UI_SEMANTICS'),
+    col('registered_range_status',source='EVIDENCE_COMPARISON_WITH_CANDIDATE_RANGES; game range not certified'),
+    col('aliases_json',source='config/state_io_native/{world,settings,court}.json; names and candidate bounds only, no defaults/targets',unit='JSON list of registered aliases; not game facts')],
+    unique=[('unit_id','field_id','scope_code')],checks=['(integer_value IS NOT NULL)+(real_value IS NOT NULL)+(text_value IS NOT NULL)=1'])
+table('startup_config_checks','check_id','RES-S','desired-vs-observed configuration check',[ref('config_id','worldline_config_versions',required=False),ref('setting_obs_id','game_setting_observations',required=False),U(),col('result',required=True),col('dependency_ref')],public=False)
+table('league_rule_observations','rule_id','RES-L','one actual season rule observation, not external business policy',[
+    S(),U(),col('rule_key',required=True),col('integer_value','INTEGER'),col('text_value'),col('display_value'),
+    col('real_value','REAL',source='ACTUAL_NATIVE_FLOAT32_WHEN_REGISTERED'),
+    ref('setting_obs_id','game_setting_observations',required=False)],unique=[('season_id','unit_id','rule_key')])
+_league_profile=json.loads((BASE/'league_native_profile.json').read_bytes())
+HISTORY_NATIVE_MAP=dict(zip('Type PrimaryTeamID SecondaryTeamID NextFree PlayerID Year'.split(),
+    'native_type_code primary_team_id_raw secondary_team_id_raw next_free_raw player_id_raw native_year_raw'.split()))
+MESSAGE_NATIVE_MAP=dict(zip('Data1 Data2 Data3 Data4 Data5 TeamInvolvedId1 TeamInvolvedId2 SenderIndex MessageIndex GameId PlayerInvolvedIndex1 PlayerInvolvedIndex2 DataU32 SenderIndexOverride Event SenderType MessageUnread SenderActiveStatus Score RandomNumOfShares SenderLocation'.split(),
+    'data1_raw data2_raw data3_raw data4_raw data5_raw team_id1_raw team_id2_raw sender_index_raw message_index_raw game_id_raw player_index1_raw player_index2_raw data_u32_raw sender_index_override_raw event_code sender_type_raw unread_raw sender_active_raw score_raw random_shares_raw sender_location_raw'.split()))
+
+def _league_numeric(native_type,mapping):
+    result=[]
+    for native_name,column in mapping.items():
+        f=_league_profile['bindings'][native_type][native_name]
+        result.append(col(column,'INTEGER',required=True,check=f'{column} BETWEEN 0 AND {(1<<f["width"])-1}',
+            source=f'CURRENT_NATIVE.{native_type}.{native_name}; CRC={f["name_crc"]:08x} offset={f["offset"]} size={f["size"]} bit={f["start_bit"]} width={f["width"]}; league_native_profile.json',
+            unit='native unsigned representation; UI/lifetime semantics separate'))
+    return result
+
+def _native_date_columns():
+    return [col(n,'INTEGER',required=True,check=f'{n} BETWEEN 0 AND {maximum}',source='CURRENT_NATIVE.SCHEDULEDATE verified bit fields; epoch not promoted')
+        for n,maximum in [('date_word_raw',4294967295),('date_id_raw',31),('date_minutes_raw',2047),('date_day_raw',31),('date_month_raw',15),('date_year_offset_raw',127)]]
+
+table('native_league_history_observations','history_observation_id','RES-H','one native 152-byte league history slot per acquisition',[
+    U(),col('source_row_index','INTEGER',required=True,check='source_row_index>=0')]+_league_numeric('LEAGUEHISTORYDATA',HISTORY_NATIVE_MAP)+
+    [col(n,source='CURRENT_NATIVE.LEAGUEHISTORYDATA inline Latin1 name prefix; not current identity') for n in
+        'primary_team_name primary_team_city secondary_team_name secondary_team_city player_first_name player_last_name'.split()]+
+    [col('native_type_label',source='CURRENT_NATIVE.LEAGUEHISTORY_TYPE enum + literal identifier CRC'),
+     col('primary_stat_word_raw','INTEGER',required=True,check='primary_stat_word_raw BETWEEN 0 AND 4294967295'),col('primary_stat_real','REAL'),col('primary_stat_text',required=True),
+     col('secondary_stat_word_raw','INTEGER',required=True,check='secondary_stat_word_raw BETWEEN 0 AND 4294967295'),col('secondary_stat_real','REAL'),col('secondary_stat_text',required=True),
+     col('source_state',required=True),col('text_status',required=True),ref('award_id','season_award_instances',required=False),
+     col('award_link_status',required=True,source='NATIVE_HISTORY award category, closed source year, inline subject, immutable-event comparison; no PLAYER binding')],
+    unique=[('unit_id','source_row_index')],source='ROSTER Slot41 + current LEAGUEHISTORYDATA metadata; archived roster history, world occurrence not inferred')
+
+table('season_award_instances','award_id','RES-H','actual source-recorded awarded honor; scope and finality basis explicit; leaders are not winners',[
+    S(),U(),col('award_code',required=True),col('award_type',required=True),col('is_final','INTEGER',required=True,check='is_final=1'),
+    col('source_year_raw','INTEGER',check='source_year_raw BETWEEN 1 AND 4095',source='CURRENT_NATIVE.LEAGUEHISTORYDATA.Year; no synthetic season dates'),
+    col('source_fingerprint',source='SHA256 sorted semantic source recipient records; excludes slot/allocation and acquisition clock'),
+    col('finality_basis',source='NATIVE_ROSTER_HISTORY_ENTRY_FOR_CLOSED_SOURCE_YEAR; not current-world finalization or independent acceptance')],unique=[('season_id','award_code','award_type')])
+table('award_recipients','recipient_id','RES-H','one source-recorded award recipient, canonical or inline historical identity',[
+    ref('award_id','season_award_instances'),ref('player_id','players',required=False),T(False),col('rank_index','INTEGER'),U(),
+    ref('staff_id','staff_members',required=False),ref('source_history_id','native_league_history_observations','history_observation_id',False),
+    col('source_subject_type',check="source_subject_type IN ('PLAYER','TEAM','STAFF')",source='Native history award category; canonical identity not inferred')],
+    checks=['player_id IS NOT NULL OR team_id IS NOT NULL OR staff_id IS NOT NULL OR source_history_id IS NOT NULL'])
+
+table('native_social_message_observations','message_observation_id','RES-H','one native social-message bank slot, including inactive storage',[
+    U(),col('bank_index','INTEGER',required=True,check='bank_index BETWEEN 0 AND 1'),col('source_slot_index','INTEGER',required=True,check='source_slot_index BETWEEN 0 AND 1999')]+
+    _league_numeric('FRANCHISE_SOCIALMEDIA::MESSAGE',MESSAGE_NATIVE_MAP)+_native_date_columns()+[
+    col('event_label'),col('sender_type_label'),col('string1_fragment'),col('string2_fragment'),col('text_status',required=True),
+    col('source_state',required=True),col('active_prefix_status',required=True)],unique=[('unit_id','bank_index','source_slot_index')],public=False,
+    source='CURRENT_NATIVE.FRANCHISE.SocialMedia; generic parameters/text remain owner-only until rendered UI semantics verified')
+
+table('native_transaction_observations','native_transaction_id','RES-M','one allocated native transaction slot, not an accepted external execution',[
+    U(),col('source_slot_index','INTEGER',required=True,check='source_slot_index BETWEEN 0 AND 249')]+
+    _league_numeric('FRANCHISE_TRANSACTION',{'Type':'native_type_code','NumData':'data_count_raw'})+_native_date_columns()+[
+    col('native_type_label'),col('active_prefix_status',required=True)],unique=[('unit_id','source_slot_index')],public=False)
+table('native_transaction_item_observations','item_observation_id','RES-M','one native transaction parameter storage slot',[
+    U(),ref('native_transaction_id','native_transaction_observations'),col('source_item_index','INTEGER',required=True,check='source_item_index BETWEEN 0 AND 38')]+
+    _league_numeric('FRANCHISE_TRANSACTION_RECORD',{'Int':'integer_word_raw','Type':'native_type_code'}),
+    unique=[('unit_id','native_transaction_id','source_item_index')],public=False)
+table('native_award_matrix_observations','matrix_observation_id','RES-H','one current franchise award matrix cell, not a final award',[
+    U(),col('award_slot_index','INTEGER',required=True,check='award_slot_index BETWEEN 0 AND 14'),col('recipient_slot_index','INTEGER',required=True,check='recipient_slot_index BETWEEN 0 AND 4'),
+    col('native_player_index_raw','INTEGER',required=True,check='native_player_index_raw BETWEEN 0 AND 65535',source='CURRENT_NATIVE.FRANCHISE.SeasonAwardWinnerIndex uint16[15,5]; sentinel preserved')],
+    unique=[('unit_id','award_slot_index','recipient_slot_index')])
+table('native_league_capture_controls','control_id','RES-D','one source mode and allocator/count observations per acquisition',[
+    U(),col('source_mode',required=True,check="source_mode IN ('HISTORY_AWARDS','NEWS_TRANSACTIONS')"),
+    col('observation_year','INTEGER',required=True),col('history_slot_count','INTEGER'),col('manager_first_free_candidate','INTEGER'),col('free_chain_status'),col('free_chain_count','INTEGER'),
+    col('social_active_count0','INTEGER'),col('social_active_count1','INTEGER'),col('transaction_count','INTEGER'),col('matrix_cell_count','INTEGER')],unique=[('unit_id',)],public=False)
+table('season_record_entries','record_id','RES-H','one observed native record-book slot; source subjects and historical scopes need separate identity proof',[
+    ref('season_id','seasons',required=False),U(),col('record_key',required=True),ref('holder_player_id','players','player_id',False),ref('holder_team_id','teams','team_id',False),
+    col('value_raw',required=True,source='ACTUAL_NATIVE_FLOAT32_HEX_OR_NONFINITE_DIAGNOSTIC; never rounded'),col('source_ref',required=True),col('occurred_at'),
+    ref('observed_in_season_id','seasons','season_id',False),
+    col('source_row_index','INTEGER',check='source_row_index>=0',source='ROSTERDATA_SLOT39_CURRENT_NATIVE_INDEX; not a lifetime record identity'),
+    col('source_first_name',source='ROSTERDATA_SLOT39_RECORD52 +0..19 inline name prefix'),
+    col('source_last_name',source='ROSTERDATA_SLOT39_RECORD52 +20..39 inline name prefix'),
+    col('native_value_word_u32','INTEGER',check='native_value_word_u32 BETWEEN 0 AND 4294967295',source='ROSTERDATA_SLOT39_RECORD52 +40..43 raw bytes',unit='uint32 bit pattern'),
+    col('native_value_real','REAL',source='ROSTERDATA_SLOT39_RECORD52 +40 IEEE754 float32; no rounding or UI scaling'),
+    col('packed_date_raw','INTEGER',check='packed_date_raw BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +44 uint16'),
+    col('native_category_code','INTEGER',check='native_category_code BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +46 uint16'),
+    col('category_label_candidate',source='AG_NATIVE_01C/decoders/record_book_decoder.py CATEGORY_NAMES; research candidate not current UI certification'),
+    col('native_player_id_raw','INTEGER',check='native_player_id_raw BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +48 uint16; no current PLAYER binding'),
+    col('flags_raw','INTEGER',check='flags_raw BETWEEN 0 AND 65535',source='ROSTERDATA_SLOT39_RECORD52 +50 uint16; team/scope meaning UNKNOWN'),
+    col('decode_status',source='EVIDENCE_RECORD_SLOT_NAME_AND_FINITE_VALUE_CLASSIFICATION'),
+    col('name_encoding_status',source='EVIDENCE_INLINE_NAME_PREFIX_ENCODING; no name-based identity binding'),
+    col('record_date_candidate',source='AG_NATIVE_01C 1920 epoch candidate; Gregorian validation only, not occurred_at',unit='ISO date candidate'),
+    col('date_interpretation_status',source='EVIDENCE_1920_EPOCH_CANDIDATE_APPLICABILITY; packed word retained'),
+    col('source_scope_status',source='EVIDENCE_SCOPE_NOT_DERIVED_FROM_OBSERVATION_SEASON_OR_FLAGS')],
+    unique=[('unit_id','source_row_index')],source='ROSTERDATA Slot39; actual native getter count/pointer/52-byte stride, research field semantics')
+table('external_execution_receipts','receipt_id','RES-D','external executor report, not proof of readback',[SAVE(),ref('transaction_id','external_transaction_events',required=False),U(),col('attempted_at',required=True),col('write_status',required=True),col('source_ref',required=True),col('approval_ref')],public=False)
+table('external_readback_checks','check_id','RES-D','separate observed readback reconciliation',[ref('receipt_id','external_execution_receipts'),U(),col('expected_state',required=True),col('observed_state'),col('reconcile_status',required=True)],public=False)
+table('native_identity_links','link_id','RES-D','one versioned native ID to actual save-local entity link',[SAVE(),U(),col('entity_type',required=True,check="entity_type IN ('player','team','game','staff')"),col('entity_id',required=True),col('native_id'),col('valid_from'),col('identity_state',required=True)],public=False)
+table('player_restricted_observations','observation_id','RES-P','restricted external-storage metadata; raw Potential never in world facts',[P(),U(),col('restricted_field_key',required=True,visibility='OWNER_ONLY'),col('protected_value_ref',required=True,visibility='OWNER_ONLY'),col('authorization_scope',required=True,visibility='OWNER_ONLY')],public=False)
+table('game_news_entries','news_id','RES-H','one source-observed native news item observation',[ref('season_id','seasons',required=False),U(),col('native_news_id'),col('text_body'),col('occurrence_time'),
+    ref('source_message_id','native_social_message_observations','message_observation_id',False),col('content_status',source='NATIVE_EVENT_ONLY; rendered headline/localization and active UI semantics separate')],public=False)
+# Added to the 59-table proposal: explicit season freeze boundary instead of
+# treating the last observed cumulative snapshot as an accepted final season.
+table('season_finalizations','finalization_id','RES-D','explicit evidenced season closure boundary',[S(),U(),col('source_ref',required=True),col('finalized_at',required=True)],unique=[('season_id',)],public=False)
+table('native_box_observations','box_observation_id','RES-D','one captured Box row before canonical player identity is proven',
+      [G(),U(),col('side',required=True,check="side IN ('HOME','AWAY')"),
+       col('row_index','INTEGER',required=True,check='row_index>=0'),col('native_player_id','INTEGER',required=True),
+       col('native_team_id','INTEGER',required=True),col('in_use','INTEGER',required=True,check='in_use IN (0,1)')]+
+      fields(STATS,source='OWNER_CAPTURED_24_BYTE_BOX_RECORD; candidate decode, not canonical identity')+
+      [col('points_provenance',required=True),col('identity_status',required=True,default="'UNRESOLVED'")],
+      unique=[('game_id','unit_id','side','row_index')],public=False)
+
+table('game_source_checks','check_id','RES-G','one current game-header check and explicit Box acquisition/reuse decision',[
+    G(),U(),col('header_sha256',required=True,check='length(header_sha256)=64',source='SHA256 of the actually read 60-byte SEASON game header'),
+    col('box_sha256',check='box_sha256 IS NULL OR length(box_sha256)=64',source='SHA256 of actually read Native Box bytes; NULL when not read'),
+    col('box_mode',required=True,check="box_mode IN ('FULL_NATIVE_BOX','REUSED_FROZEN_BOX','HEADER_ONLY_NOT_FINAL')"),
+    ref('prior_full_unit_id','capture_units','unit_id',False),col('game_status_raw','INTEGER',required=True,check='game_status_raw IN (0,1,2,3)'),
+    col('reuse_basis',required=True,source='Explicit header check/frozen-source reuse; never asserts that unread Native Box bytes were unchanged')],
+    unique=[('game_id','unit_id')],checks=["(box_mode='FULL_NATIVE_BOX' AND box_sha256 IS NOT NULL AND prior_full_unit_id IS NULL AND game_status_raw=2) OR (box_mode='REUSED_FROZEN_BOX' AND box_sha256 IS NULL AND prior_full_unit_id IS NOT NULL AND game_status_raw=2) OR (box_mode='HEADER_ONLY_NOT_FINAL' AND box_sha256 IS NULL AND prior_full_unit_id IS NULL AND game_status_raw IN (0,1,3))"])
+
+from calendar_codec import PROFILE as CALENDAR_PROFILE,DATE_FIELDS as CALENDAR_DATE_FIELDS,DATE_TEXT as CALENDAR_DATE_TEXT,GAME_FIELDS as CALENDAR_GAME_FIELDS,GAME_LABELS as CALENDAR_GAME_LABELS
+def _calendar_date_columns(prefix):
+    return [col(prefix+name,'INTEGER',check=f'{prefix+name} BETWEEN 0 AND {(1<<width)-1}',source='CURRENT_NATIVE.SCHEDULEDATE; calendar_native_profile.json',unit='native packed date component') for name,width in CALENDAR_DATE_FIELDS.items()]+[
+        col(prefix+name,source='Native month enum / derived named date components; epoch2000 code verified; no UI/timezone assertion',meaning='NULL normalized strings mean invalid/unset source date or time; raw components remain available') for name in CALENDAR_DATE_TEXT]
+for _prefix in ('scheduled_','played_'):TABLES['game_source_checks'].columns+=_calendar_date_columns(_prefix)
+for _column,_name in CALENDAR_GAME_FIELDS.items():
+    _f=CALENDAR_PROFILE['bindings']['SEASON_GAME'][_name];TABLES['game_source_checks'].columns.append(col(_column,'INTEGER',check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',source=f'CURRENT_NATIVE.SEASON_GAME.{_name}',unit='native unsigned storage'))
+TABLES['game_source_checks'].columns += [col(name,source='Current exact native enum; unknown code retains NULL label') for name in (*CALENDAR_GAME_LABELS,'status_label')]
+table('season_calendar_observations','calendar_id','RES-L','one observed SEASON calendar/period and native schedule-control window',[
+    S(),U()]+_calendar_date_columns('current_')+[
+    col('period_raw','INTEGER',check='period_raw BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.SEASON.Period; SEASON_TIMEPERIOD enum'),col('period_label',source='Exact native SEASON_TIMEPERIOD label, not a franchise offseason substage'),
+    *[col(name,'INTEGER',check=f'{name} BETWEEN 0 AND 4294967295',source='CURRENT_NATIVE.SEASON / SEASON_SCHEDULE / BOXSCORE_STATBANK named scalar; no sentinel or index semantics inferred') for name in ('current_index_raw','next_index_raw','declared_game_count_raw','source_slot10_count_raw','game_capacity_verified','next_game_id_raw','allstar_game_index_raw','rookie_sophomore_game_index_raw','box_current_stat_line_raw','box_stat_capacity_verified')]],unique=[('season_id','unit_id')])
+
+_mode_profile=json.loads((BASE/'game_mode_native_profile.json').read_bytes())
+_mode_fields={'num_teams_raw':'NumTeams','num_draft_teams_raw':'NumDraftTeams','current_year_byte_raw':'CurrentYear','draft_year_byte_raw':'DraftYear','mode_raw':'Mode','league_raw':'League','period_raw':'Period','previous_period_raw':'PreviousPeriod'}
+table('game_mode_observations','mode_observation_id','RES-L','one Native GAMEMODE public prefix and verified current-stat selector observation',[
+    S(),U()]+[col(column,'INTEGER',required=True,check=f'{column} BETWEEN 0 AND {(1<<_mode_profile["bindings"][name]["width"])-1}',source='CURRENT_NATIVE.GAMEMODE.'+name,unit='native unsigned storage; year bytes have no generalized absolute-year conversion') for column,name in _mode_fields.items()]+[
+    col(name,source='Exact Native GAMEMODE_MODE / GAMEMODE_LEAGUE / GAMEMODE_TIMEPERIOD enum label; NULL for an unregistered raw code') for name in ('mode_label','league_label','period_label','previous_period_label')]+_calendar_date_columns('today_')+[
+    col('current_stat_array_position','INTEGER',required=True,check='current_stat_array_position IN (0,24)',source='CURRENT_NATIVE current-timeperiod selector and GetOrCreate path; index24 is shared across multiple periods',unit='zero-based SeasonStats array position; not a cumulative-phase label'),
+    col('stat_selector_rule',required=True,source='game_mode_native_profile.json verified switch/getter/call path'),col('stat_selector_status',required=True,source='Native named period or explicit default-zero selector for an unregistered period')],unique=[('unit_id',)],source='CURRENT_NATIVE.GAMEMODE public24-byte prefix; repeated pointer/vtable/getter controls; no method invocation')
+
+_native_stat_profile=json.loads((BASE/'award_native_profile.json').read_bytes())
+_native_stat_cols=[]
+for _native_name,_column in NATIVE_PLAYER_STAT_MAP.items():
+    _f=_native_stat_profile['stat_fields'][_native_name]
+    _native_stat_cols.append(col(_column,'INTEGER',check=f'{_column} BETWEEN 0 AND {(1<<_f["width"])-1}',
+        source=f'CURRENT_PLAYERSTATDATA.{_native_name} CRC={_f["name_crc"]:08x} offset={_f["offset"]} size={_f["size"]} start={_f["start_bit"]} width={_f["width"]}; award_native_profile.json',
+        unit='native unsigned field representation; UI/award-instance acceptance separate'))
+table('native_player_stat_observations','stat_observation_id','RES-H','one Native PLAYERSTATDATA source slot; ordinary period units withhold annual award fields; allocation separate',[
+    U(),col('source_stat_index','INTEGER',required=True,check='source_stat_index>=0'),
+    col('stat_year','INTEGER',source='PLAYERSTATDATA.CompactYear unsigned byte +1900; not season finalization'),
+    col('scoring_identity_status',source='EVIDENCE_RAW_POINTS_COMPARISON; inconsistent source retained')]+_native_stat_cols,
+    unique=[('unit_id','source_stat_index')],source='CURRENT_NATIVE_PLAYERSTATDATA_48_BYTE_FIELDS; raw award fields are not fabricated final award instances')
+table('native_player_sources','player_source_id','RES-D','one PLAYER pool source projection with both native identity fields and optional current canonical match',[
+    U(),col('source_player_index','INTEGER',required=True,check='source_player_index>=0'),
+    col('native_unique_id_raw','INTEGER',check='native_unique_id_raw BETWEEN 0 AND 65535',source='CURRENT_PLAYERDATA.UniqueId +244 uint16'),
+    col('preserved_id_raw','INTEGER',check='preserved_id_raw BETWEEN 0 AND 4294967295',source='CURRENT_PLAYERDATA.PreservedId +760 uint32; old adapters used low16'),
+    col('observed_name',source='PLAYERDATA public UTF16 name prefixes'),col('name_status',source='EVIDENCE_UTF16_PREFIX_VALIDATION'),
+    col('native_team_id','INTEGER',source='CurrentTeam_Internal reciprocal current core TEAM pointer'),
+    col('current_core_roster_status',source='EVIDENCE_CURRENT_TEAM_POINTER_AND_ROSTER_SLOT'),col('current_roster_slot','INTEGER'),
+    ref('player_id','players',required=False),col('canonical_link_status',source='EVIDENCE_CURRENT_MATCH_ONLY; not historical lifecycle certification')],
+    unique=[('unit_id','source_player_index')])
+table('native_player_stat_links','stat_link_id','RES-H','one captured Native SeasonStats reference; annual units capture all25 positions and ordinary units the selected position',[
+    U(),ref('player_source_id','native_player_sources'),col('history_slot_index','INTEGER',required=True,check='history_slot_index>=0'),
+    col('native_stat_index_raw','INTEGER',required=True,check='native_stat_index_raw BETWEEN 0 AND 65535'),
+    ref('stat_observation_id','native_player_stat_observations',required=False),col('link_status',required=True,source='EVIDENCE_FIXED_25_ELEMENT_ARRAY_REFERENCE; no contiguous-history assumption')],
+    unique=[('unit_id','player_source_id','history_slot_index')])
+
+GAMEPLAN_HEADER_MAP={'POEOffense':'poe_offense_1_raw','POEOffense2':'poe_offense_2_raw','POEOffense3':'poe_offense_3_raw',
+    'POEDefense':'poe_defense_1_raw','POEDefense2':'poe_defense_2_raw','POEDefense3':'poe_defense_3_raw',
+    'HelpDefense':'help_defense_raw','RunPlayTendency':'run_plays_raw','ZoneUsage':'zone_usage_raw','BenchDepth':'bench_depth_raw',
+    'BenchUtilization':'bench_utilization_raw','LineupFormFactor':'lineup_form_factor_raw','PlaybookID':'playbook_code_raw','FreelanceType':'freelance_code_raw'}
+DEFENSE_COLUMN_MAP={'PressureOnball':'pressure_onball_raw','PressureOffball':'pressure_offball_raw','ForceDirection':'force_direction_raw',
+    'ScreenDefenseOnBall':'screen_defense_onball_raw','ScreenDefenseHedge':'screen_defense_hedge_raw','OffballScreenDefense':'offball_screen_defense_raw',
+    'PostDefense':'post_defense_raw','DoubleTeamPerimeter':'double_team_perimeter_raw','DoubleTeamPost':'double_team_post_raw',
+    'ScreenDefenseOnBall5':'screen_defense_onball5_raw','ScreenDefenseHedge5':'screen_defense_hedge5_raw','SwitchRule':'switch_rule_raw',
+    'OnballHelp':'onball_help_raw','ScreenHelp':'screen_help_raw','ExtendPressure':'extend_pressure_raw','TagOnRoll':'tag_on_roll_raw',
+    'StayAttached':'stay_attached_raw','PreRotate':'pre_rotate_raw'}
+table('gameplan_observations','plan_id','RES-C','one stored owner/opponent GAMEPLAN observation; commit flag is not game-effect proof',[
+    T(),ref('opponent_team_id','teams','team_id'),U(),col('source_slot_index','INTEGER',required=True),
+    col('is_in_use_raw','INTEGER',required=True),col('is_tainted_raw','INTEGER',required=True)]+
+    fields(' '.join(GAMEPLAN_HEADER_MAP.values()),source='src/gameplan_codec.py unpacked GAMEPLAN +0x17E..0x18B; native type metadata anchors checked; distinct from packed COACHDATA'),
+    unique=[('team_id','opponent_team_id','unit_id')],checks=['team_id<>opponent_team_id'])
+table('gameplan_rotation_observations','rotation_id','RES-C','one stored plan ordered rotation entry, including sentinel slots',[
+    ref('plan_id','gameplan_observations'),U(),col('slot_index','INTEGER',required=True),col('native_rotation_id_raw','INTEGER',required=True),
+    ref('player_id','players',required=False),col('rotation_spot_raw','INTEGER'),col('playing_time_raw','INTEGER'),col('identity_status',required=True)],
+    unique=[('plan_id','slot_index','unit_id')],source='GAMEPLAN +6, 23 four-byte entries; canonical link only to exact current own roster UID')
+table('gameplan_defense_observations','defense_id','RES-C','one stored plan defensive row, including empty sentinel rows',[
+    ref('plan_id','gameplan_observations'),U(),col('slot_index','INTEGER',required=True),col('native_matchup_id_raw','INTEGER',required=True),
+    col('native_defender_id_raw','INTEGER',required=True),ref('opponent_player_id','players','player_id',False),ref('defender_player_id','players','player_id',False),
+    col('slot_status',required=True),col('identity_status',required=True)]+
+    fields(' '.join(DEFENSE_COLUMN_MAP.values()),source='Current GAMEPLAN_MATCHUP_DEFENSIVE_SETTINGS native metadata; packed eight-byte row +0x64+12*i+4'),
+    unique=[('plan_id','slot_index','unit_id')])
+training_flags='position_raw player_type_raw intensity_raw injury_recovery_raw is_intensity_overriden_raw'
+table('player_training_slot_observations','training_slot_id','RES-P','one profile-bounded training slot; window capacity is not active player count',[
+    U(),col('source_slot_index','INTEGER',required=True),col('native_player_id_raw','INTEGER',required=True),col('identity_status',required=True)]+
+    fields(training_flags,source='training.json PLAYER_TRAINING ID+0 / flags+0x318; stride796 bound786; history arrays not read'),unique=[('unit_id','source_slot_index')])
+TABLES['team_training_settings'].columns+=fields('home_intensity_raw away_intensity_raw automate_intensity_raw rest_before_b2b_raw rest_after_b2b_raw injury_recovery_raw',
+    source='training.json TEAM_TRAINING flags+0x53/+0x54; current franchise slot maps to training root +88*slot')
+TABLES['player_training_observations'].columns+=fields('position_raw player_type_raw injury_recovery_raw is_intensity_overriden_raw source_slot_index',
+    source='training.json PLAYER_TRAINING +0x318 packed flags; exact unique current roster UID match')+[col('identity_status')]
+table('mentor_manager_observations','manager_id','RES-C','one observed mentorship header per current franchise team',[
+    T(),U(),col('franchise_slot','INTEGER'),col('header_team_id_raw','INTEGER'),col('first_badge_raw','INTEGER'),
+    col('relation_count_raw','INTEGER'),col('layout_status',required=True)],unique=[('team_id','unit_id')],source='training.json franchise manager +0x132A8 first12 bytes; owner/count plausibility separate from effect')
+table('native_mentor_relation_observations','native_relation_id','RES-C','one native mentorship relation header before canonical/effect claims',[
+    T(),U(),col('source_slot_index','INTEGER'),col('mentee_id_raw','INTEGER'),col('mentor_id_raw','INTEGER'),
+    col('duration_days_raw','INTEGER'),col('compatibility_word_raw','INTEGER'),col('badge_count_raw','INTEGER'),col('identity_status',required=True)],
+    unique=[('team_id','unit_id','source_slot_index')],source='training.json relation entry204 first24 bytes; badge slots not read')
+TABLES['mentorship_relations'].columns+=fields('source_slot_index duration_days_raw compatibility_word_raw badge_count_raw',
+    source='Current native mentorship relation header plus both exact own-roster UID links; compatibility word not converted')+[
+    col('association_status',default="'OBSERVED_PAIR_ACTIVITY_NOT_VERIFIED'",source='EVIDENCE_CLASSIFICATION: association source/identity only, not actor consent or badge effect')]
+
+# Field-level evidence annotations for the implemented sample adapter. Never
+# promote a native legal game/UI range from its packed integer storage width.
+for name in ('player_game_boxes','team_game_boxes','player_season_totals','team_season_totals'):
+    for c in TABLES[name].columns:
+        if c.name in STATS.split() or c.name in ('games_played','games_started'):
+            c.unit='minutes (research decoder)' if c.name=='minutes_raw' else 'count or signed count; native/UI range UNKNOWN'
+            if c.name not in ('plus_minus',):
+                c.check=f'{ident(c.name)} IS NULL OR {ident(c.name)}>=0'
+for c in TABLES['player_game_boxes'].columns:
+    if c.name=='points':c.source='DERIVED_WITH_FORMULA: 2*fg_made+three_made+ft_made; AG01D fixture replay'
+for c in TABLES['game_period_scores'].columns:
+    if c.name=='period_points':c.source='AG_NATIVE_01D SEASON_GAME +44..51 bytes; regulation periods only; RESEARCH_FIXTURE'
+
+
+# Detail children require the already-declared native subject row during insert;
+# move that source parent ahead of badges/contracts for DDL, ingest and migration.
+_ordered={}
+for _name,_table in TABLES.items():
+    if _name=='team_rotation_slots':
+        _ordered['native_player_sources']=TABLES['native_player_sources'];_ordered['native_college_observations']=TABLES['native_college_observations']
+    if _name=='team_lineup_slots':_ordered['team_rotation_slots']=TABLES['team_rotation_slots']
+    if _name not in ('native_player_sources','native_college_observations','team_rotation_slots'):_ordered[_name]=_table
+TABLES=_ordered
+
+
+def schema_sql():
+    out=['-- Generated: approved catalog + explicit game/finalization/source staging and team state observations.\nPRAGMA foreign_keys=ON;']
+    for t in TABLES.values():
+        definitions=[c.sql()+(' PRIMARY KEY' if c.name==t.key else '') for c in t.columns]
+        definitions += ['UNIQUE ('+','.join(map(ident, cols))+')' for cols in t.unique]
+        definitions += ['CHECK ('+expr+')' for expr in t.checks]
+        out.append(f'CREATE TABLE {ident(t.name)} (\n  '+',\n  '.join(definitions)+'\n) STRICT;')
+        for c in t.columns:
+            if c.ref: out.append(f'CREATE INDEX "idx_{t.name}_{c.name}" ON {ident(t.name)} ({ident(c.name)});')
+        for op in ['UPDATE','DELETE']:
+            out.append(f'CREATE TRIGGER "{t.name}_no_{op.lower()}" BEFORE {op} ON {ident(t.name)} BEGIN SELECT RAISE(ABORT,\'immutable history\'); END;')
+        if t.observation and any(c.name=='unit_id' for c in t.columns):
+            out.append(f'CREATE TRIGGER "{t.name}_successful_unit" BEFORE INSERT ON {ident(t.name)} WHEN NOT EXISTS (SELECT 1 FROM capture_units WHERE unit_id=NEW.unit_id AND unit_status=\'success\') BEGIN SELECT RAISE(ABORT,\'capture unit is not successful\'); END;')
+    out.append('''CREATE TRIGGER "league_rule_setting_same_unit" BEFORE INSERT ON league_rule_observations WHEN NEW.setting_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM game_setting_observations s WHERE s.setting_obs_id=NEW.setting_obs_id AND s.unit_id=NEW.unit_id AND s.integer_value IS NEW.integer_value AND s.real_value IS NEW.real_value AND s.text_value IS NEW.text_value) BEGIN SELECT RAISE(ABORT,'rule lacks same-unit matching setting word'); END;''')
+    out.append('''CREATE TRIGGER native_stat_link_source_unit BEFORE INSERT ON native_player_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.player_source_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native player source'); END;''')
+    out.append('''CREATE TRIGGER staff_history_link_subject_unit BEFORE INSERT ON native_staff_stat_links WHEN NOT EXISTS(SELECT 1 FROM native_staff_history_subjects s WHERE s.history_subject_id=NEW.history_subject_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit staff history subject'); END;''')
+    out.append('''CREATE TRIGGER staff_history_link_stat_unit BEFORE INSERT ON native_staff_stat_links WHEN NEW.coach_stat_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_coach_stat_observations s WHERE s.coach_stat_id=NEW.coach_stat_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_signed) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched coach stat'); END;''')
+    out.append('''CREATE TRIGGER native_stat_link_record_unit BEFORE INSERT ON native_player_stat_links WHEN NEW.stat_observation_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_stat_observations s WHERE s.stat_observation_id=NEW.stat_observation_id AND s.unit_id=NEW.unit_id AND s.source_stat_index=NEW.native_stat_index_raw) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native stat record'); END;''')
+    out.append('''CREATE TRIGGER annual_refresh_once BEFORE INSERT ON capture_units WHEN NEW.unit_status='success' AND EXISTS(SELECT 1 FROM capture_runs n JOIN capture_runs r ON r.refresh_family=n.refresh_family AND r.refresh_period_year=n.refresh_period_year JOIN capture_units u ON u.run_id=r.run_id AND u.unit_status='success' WHERE n.run_id=NEW.run_id AND n.refresh_family IS NOT NULL AND n.source_grade='LIVE_READ' AND r.source_grade='LIVE_READ') BEGIN SELECT RAISE(ABORT,'annual refresh already captured for this save family and game-season year'); END;''')
+    out.append('''CREATE TRIGGER game_source_reuse_origin BEFORE INSERT ON game_source_checks WHEN NEW.box_mode='REUSED_FROZEN_BOX' AND NOT EXISTS(SELECT 1 FROM game_source_checks o JOIN game_state_observations s ON s.game_id=o.game_id AND s.unit_id=o.unit_id JOIN capture_units u ON u.unit_id=o.unit_id WHERE o.game_id=NEW.game_id AND o.unit_id=NEW.prior_full_unit_id AND o.box_mode='FULL_NATIVE_BOX' AND o.header_sha256=NEW.header_sha256 AND s.is_final=1 AND u.unit_status='success') BEGIN SELECT RAISE(ABORT,'game reuse lacks matching frozen full source'); END;''')
+    out.append('''CREATE TRIGGER native_award_recipient_source BEFORE INSERT ON award_recipients WHEN NEW.source_history_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_league_history_observations h JOIN season_award_instances a ON a.award_id=NEW.award_id WHERE h.history_observation_id=NEW.source_history_id AND h.unit_id=NEW.unit_id AND a.unit_id=NEW.unit_id AND h.award_id=a.award_id AND h.native_type_label=a.award_code AND h.native_year_raw=a.source_year_raw AND a.award_type='NATIVE_ROSTER_HISTORY') BEGIN SELECT RAISE(ABORT,'award recipient lacks matching same-unit native history'); END;''')
+    out.append('''CREATE TRIGGER native_transaction_item_source BEFORE INSERT ON native_transaction_item_observations WHEN NOT EXISTS(SELECT 1 FROM native_transaction_observations p WHERE p.native_transaction_id=NEW.native_transaction_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native transaction item'); END;''')
+    out.append('''CREATE TRIGGER native_news_message_source BEFORE INSERT ON game_news_entries WHEN NEW.source_message_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_social_message_observations m WHERE m.message_observation_id=NEW.source_message_id AND m.unit_id=NEW.unit_id AND m.event_code>0) BEGIN SELECT RAISE(ABORT,'news lacks same-unit nonzero native message'); END;''')
+    for name in ('player_badge_values','player_contract_observations','player_vitals_observations','player_health_observations','player_morale_observations','market_state_observations','player_attribute_snapshots','player_tendency_snapshots','player_play_type_slots'):
+        out.append(f'''CREATE TRIGGER {name}_native_source_unit BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched native player detail subject'); END;''')
+    out.append('''CREATE TRIGGER player_vitals_college_source_unit BEFORE INSERT ON player_vitals_observations WHEN NEW.native_college_obs_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_college_observations c WHERE c.college_observation_id=NEW.native_college_obs_id AND c.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit native college referent'); END;''')
+    for name in ('native_staff_profile_observations','native_staff_tactic_observations','native_staff_team_slots'):
+        out.append(f'''CREATE TRIGGER {name}_source_unit BEFORE INSERT ON {name} WHEN NEW.source_staff_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_staff_sources s WHERE s.staff_source_id=NEW.source_staff_id AND s.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,'cross-unit Native staff source'); END;''')
+    for name in ('native_player_rotation_observations','team_rotation_slots','team_lineup_slots'):
+        out.append(f'''CREATE TRIGGER {name}_native_rotation_subject BEFORE INSERT ON {name} WHEN NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_sources p WHERE p.player_source_id=NEW.source_player_id AND p.unit_id=NEW.unit_id AND p.player_id IS NEW.player_id) BEGIN SELECT RAISE(ABORT,'cross-unit or mismatched Native rotation subject'); END;''')
+    for name in ('team_lineup_slots','team_advanced_rotation_slots'):
+        out.append(f'''CREATE TRIGGER {name}_lineup_context BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) BEGIN SELECT RAISE(ABORT,'Native lineup slot lacks same-unit team context'); END;''')
+    out.append('''CREATE TRIGGER native_global_lineup_context BEFORE INSERT ON team_rotation_slots WHEN NEW.source_kind='LineupPlayer' AND (NOT EXISTS(SELECT 1 FROM team_lineup_observations s WHERE s.unit_id=NEW.unit_id AND s.team_id=NEW.team_id) OR NEW.planned_minutes IS NOT NULL OR NEW.role_code IS NOT NULL OR (NEW.source_player_id IS NOT NULL AND NOT EXISTS(SELECT 1 FROM native_player_rotation_observations r WHERE r.unit_id=NEW.unit_id AND r.source_player_id=NEW.source_player_id AND r.playing_time_raw IS NEW.native_playing_time_raw))) BEGIN SELECT RAISE(ABORT,'Native global lineup lacks matching source or invents minutes/role'); END;''')
+    for name in ('gameplan_rotation_observations','gameplan_defense_observations'):
+        out.append(f'CREATE TRIGGER "{name}_same_unit" BEFORE INSERT ON {name} WHEN NOT EXISTS(SELECT 1 FROM gameplan_observations p WHERE p.plan_id=NEW.plan_id AND p.unit_id=NEW.unit_id) BEGIN SELECT RAISE(ABORT,\'cross-unit gameplan child\'); END;')
+    for name,column,owner in [('gameplan_rotation_observations','player_id','team_id'),('gameplan_defense_observations','opponent_player_id','opponent_team_id'),('gameplan_defense_observations','defender_player_id','team_id')]:
+        out.append(f'CREATE TRIGGER "{name}_{column}_roster" BEFORE INSERT ON {name} WHEN NEW.{column} IS NOT NULL AND NOT EXISTS(SELECT 1 FROM gameplan_observations p JOIN roster_memberships r ON r.unit_id=NEW.unit_id AND r.team_id=p.{owner} AND r.player_id=NEW.{column} WHERE p.plan_id=NEW.plan_id) BEGIN SELECT RAISE(ABORT,\'gameplan player lacks same-unit roster owner\'); END;')
+    for name in ['player_game_boxes','team_game_boxes','game_period_scores']:
+        out.append(f'CREATE TRIGGER "{name}_participant" BEFORE INSERT ON {name} WHEN NOT EXISTS (SELECT 1 FROM games WHERE game_id=NEW.game_id AND NEW.team_id IN (home_team_id,away_team_id)) BEGIN SELECT RAISE(ABORT,\'team is not a game participant\'); END;')
+    # Once a game is final, fill formerly unobserved fields but never silently
+    # accept a different value for an already observed historical stat.
+    for name, keys in [('player_game_boxes',['game_id','player_id']),('team_game_boxes',['game_id','team_id']),('game_period_scores',['game_id','team_id','period_index']),('game_state_observations',['game_id'])]:
+        spec=TABLES[name]
+        compare=[c.name for c in spec.columns if c.name not in {spec.key,'unit_id',*keys}]
+        match=' AND '.join(f'old.{ident(k)}=NEW.{ident(k)}' for k in keys)
+        diff=' OR '.join(f'(old.{ident(k)} IS NOT NULL AND NEW.{ident(k)} IS NOT NULL AND old.{ident(k)}<>NEW.{ident(k)})' for k in compare)
+        # Scheduled/in-progress observations remain historical observations;
+        # only a final observation is an immutable final-value baseline.
+        final_old='old.is_final=1' if name=='game_state_observations' else 'EXISTS(SELECT 1 FROM game_state_observations fs WHERE fs.game_id=old.game_id AND fs.unit_id=old.unit_id AND fs.is_final=1)'
+        out.append(f'CREATE TRIGGER "{name}_frozen_conflict" BEFORE INSERT ON {name} WHEN EXISTS(SELECT 1 FROM game_state_observations WHERE game_id=NEW.game_id AND is_final=1) AND EXISTS(SELECT 1 FROM {name} old WHERE {match} AND ({final_old}) AND ({diff})) BEGIN SELECT RAISE(ABORT,\'frozen game conflict; quarantine required\'); END;')
+    for kind, target, key in [('player','players','player_id'),('team','teams','team_id'),('game','games','game_id'),('staff','staff_members','staff_id')]:
+        out.append(f'CREATE TRIGGER "identity_{kind}_fk" BEFORE INSERT ON native_identity_links WHEN NEW.entity_type=\'{kind}\' AND NOT EXISTS(SELECT 1 FROM {target} WHERE {key}=NEW.entity_id) BEGIN SELECT RAISE(ABORT,\'unresolved native identity\'); END;')
+    for name, entities in [('player_season_totals',['player_id','season_id']),('team_season_totals',['team_id','season_id'])]:
+        where=' AND '.join(f'{c}=NEW.{c}' for c in entities)
+        out.append(f'CREATE TRIGGER "{name}_final_once" BEFORE INSERT ON {name} WHEN EXISTS (SELECT 1 FROM {name} WHERE {where} AND is_final=1) OR EXISTS(SELECT 1 FROM season_finalizations WHERE season_id=NEW.season_id) BEGIN SELECT RAISE(ABORT,\'season totals already finalized; quarantine conflict\'); END;')
+    out += [
+        '''CREATE VIEW gm_player_observations AS SELECT p.player_id,p.display_name,a.*,u.observed_at,r.source_grade FROM player_attribute_snapshots a JOIN players p USING(player_id) JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE u.unit_status='success';''',
+        '''CREATE VIEW gm_game_box AS SELECT g.game_id,g.season_id,g.game_date,p.display_name,b.*,u.observed_at,r.source_grade FROM player_game_boxes b JOIN games g USING(game_id) JOIN players p USING(player_id) JOIN capture_units u USING(unit_id) JOIN capture_runs r USING(run_id) WHERE u.unit_status='success';''',
+        '''CREATE VIEW derived_game_scores AS SELECT game_id,unit_id,team_id,SUM(period_points) AS regulation_points,'DERIVED_SUM_PERIODS' AS provenance FROM game_period_scores GROUP BY game_id,unit_id,team_id;''',
+        '''CREATE VIEW derived_player_box_metrics AS SELECT box_id,CASE WHEN fg_attempted>0 THEN 1.0*(fg_made+0.5*three_made)/fg_attempted END AS efg_pct,CASE WHEN fg_attempted+0.44*ft_attempted>0 THEN points/(2.0*(fg_attempted+0.44*ft_attempted)) END AS ts_pct,'DERIVED_WITH_FORMULA_V1' AS provenance FROM player_game_boxes;'''
+    ]
+    return '\n\n'.join(out)+'\n'
+
+
+def dictionary():
+    result={'schema_version':VERSION,'table_count':len(TABLES),'evidence_policy':'Native legal ranges UNKNOWN unless separately certified; registration and fixture replay are not live acceptance', 'tables':[]}
+    for t in TABLES.values():
+        row={'name':t.name,'domain':t.domain,'grain':t.grain,'reason_for_table':t.grain+'; independent identity/lifecycle or consistency unit',
+             'primary_key':t.key,'unique_keys':[list(u) for u in t.unique],'checks':t.checks,'append_only':True,'gm_queryable':t.public,
+             'source_status':t.source,'v1_mapping':'EXTEND_PRESERVE' if t.name in LEGACY_TABLES else 'ADD', 'columns':[]}
+        for c in t.columns:
+            row['columns'].append({'name':c.name,'sqlite_type':c.kind,'meaning':c.meaning or c.name.replace('_',' '),
+                'required':c.required,'default':c.default,'null_meaning':None if c.required else c.null_meaning or 'NOT_OBSERVED in this unit; not zero or previous value',
+                'unit':c.unit,'foreign_key':c.ref,'sql_constraint':c.check,'legal_game_range':'NOT_APPLICABLE' if c.source.startswith(('ENGINEERING_','SYSTEM_','ACQUISITION_','EVIDENCE_','HUMAN_')) else 'UNKNOWN',
+                'source':c.source,'visibility':c.visibility if t.public else 'OWNER_ONLY',
+                'time_semantics':'observation time from unit_id; effective game time separately recorded' if t.observation else 'immutable identity or metadata'})
+        result['tables'].append(row)
+    return result
+
+
+LEGACY_TABLES = set('saves seasons teams players games capture_runs capture_units source_artifacts native_fields field_gaps game_state_observations player_game_boxes player_attribute_snapshots player_tendency_snapshots player_badge_values player_play_type_slots'.split())
+
+
+if __name__=='__main__':
+    (BASE/'schema.sql').write_text(schema_sql(),encoding='utf-8',newline='\n')
+    (BASE/'field_dictionary.json').write_text(json.dumps(dictionary(),ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+    cards=['# Executable world table cards (development candidate)', '',
+        'Generated from `schema_model.py`. Column-level types, constraints, units, null semantics, visibility and source evidence are in `field_dictionary.json`.',
+        '',f'Actual tables: **{len(TABLES)}**. Every table is STRICT and append-only. A SQLite owner can still replace a database; ordinary roles receive query results, never direct file access.','',
+        '| Table | Domain | One row / reason | Primary key | Foreign keys | v1 mapping |','|---|---|---|---|---|---|']
+    for t in TABLES.values():
+        fks='; '.join(c.name+' -> '+c.ref for c in t.columns if c.ref)
+        cards.append(f'| `{t.name}` | {t.domain} | {t.grain} | `{t.key}` | {fks} | '+('EXTEND/PRESERVE' if t.name in LEGACY_TABLES else 'ADD')+' |')
+    (BASE/'TABLE_CARDS.md').write_text('\n'.join(cards)+'\n',encoding='utf-8',newline='\n')
+    print(json.dumps({'tables':len(TABLES),'columns':sum(len(t.columns) for t in TABLES.values())}))

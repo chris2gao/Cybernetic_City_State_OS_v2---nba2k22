@@ -1,0 +1,107 @@
+{
+  "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
+  "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
+  "actual_executor_model": "Gemini 2.5 Pro (execution)",
+  "total_iterations": 11,
+  "all_offline_gates_satisfied": true,
+  "gpt6_audit_remediation": {
+    "audit_commit_sha": "bf4f044e9f83665eb573638425f44cd97d7e7d93",
+    "review_status": "OFFLINE_HOST_SCAFFOLD_ACCEPTED",
+    "remediated_findings": {
+      "P0_1_initialization_and_worldline": "RESOLVED: Real process PID dynamically resolved; live memory calendar date decoded via collect_schedule; fail-closed FULL capture required before BASELINE_CAPTURED; save.json atomically routes child DB to guarantee refresh_world persistence without overwriting old facts; dynamic context season_id/phase from DB.",
+      "P0_2_calendar_and_capture_cycle": "RESOLVED: start_cycle checks live process calendar progress, fails closed on INCOMPLETE_GAME_IN_PROGRESS, skips redundant on SAME_STATE_REPEAT, decodes memory date, and triggers INCREMENTAL capture when game completes; advance_calendar_check fails closed on unadvanced in-game calendar.",
+      "P0_3_rea_execution_safety": "RESOLVED: seal_cycle_decisions requires real-time live Getter for CAS preflight; dynamic PID resolution; authorize_and_execute enforces dynamic PID, requires live Getter-after, fails closed to STOPPED_PARTIAL (preserving active plan) on readback mismatch, and locks host to UNKNOWN_LOCKED on UNKNOWN outcome.",
+      "P1_minor_hygiene": "RESOLVED: Outbox DB cycle status marked SEALED on empty cycles to align with Host state; pause/resume preserves previous status and blocks resume if UNKNOWN_LOCKED; state file updated via atomic .tmp and replace."
+    }
+  },
+  "gates_status": {
+    "G01": "PASS (Selective source integration from a231708d without branch clobbering; 337 world_data tests pass)",
+    "G02": "PASS (Save/worldline isolation creates child branch DB on backward game date; preserves prior facts)",
+    "G03": "PASS (Thin CLI season_cycle_cli.py implements all playbook commands without asking to re-enter PID)",
+    "G04": "PASS (Capture chronology and SAME_STATE_REPEAT verified without redundant acquisition)",
+    "G05": "PASS (Role profile authorization & phase grants enforced; target conflicts detected)",
+    "G06": "PASS (Sealed plan CAS preflight fails closed on getter mismatch; cycle remains unsealed)",
+    "G07": "PASS (Strict live receipt bridge: item identity, journal, and independent readback mapped back to Outbox)",
+    "G08": "PASS (4 offline cycles executed: standard adjustment, NO_CHANGE, conflicts/unsupported, CAS fail-closed)",
+    "G09": "AWAITING_HUMAN_PROMPT_TRIGGER (Live pilot entrypoint prepared; strictly no unprompted live writes)",
+    "G10": "READY_FOR_EXPANSION (Cadence policy defined for 20-40 observations; pause/resume supported)"
+  },
+  "deliverables": {
+    "season_cycle_host": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py",
+    "season_cycle_cli": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_cli.py",
+    "season_cadence_policy": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cadence_policy.json",
+    "integration_source_matrix": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/07_测试执行/integration_source_matrix.json",
+    "offline_4_cycle_receipts": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/07_测试执行/offline_4_cycle_receipts.json",
+    "live_4_cycle_receipts_if_authorized": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/07_测试执行/live_4_cycle_receipts_if_authorized.json",
+    "season_run_ledger": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/07_测试执行/season_run_ledger.jsonl",
+    "human_trigger_playbook": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/01_任务输入/human_trigger_playbook.md",
+    "loop_iterations": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/06_执行/loop_iterations.jsonl",
+    "completion_pointer": "01_os/07_content/_runs/run-20261102-nba2k22-live-host-closed-loop-integration-001/08_结论/completion_pointer.md"
+  },
+  "test_metrics": {
+    "host_integration_tests": "26 passed, 0 failed in 42.06s (test_season_cycle_host.py)",
+    "host_full_pipeline_tests": "49 passed, 0 failed in 6.15s",
+    "world_data_prototype_tests": "337 passed, 2 warnings, 103 subtests passed in 147.21s",
+    "regressions_detected": 0,
+    "gold_100_offline_replay": "PASS (100 receipts replayed and verified via validate_stage_directory)",
+    "f1_f2_targeted_tests": "8 passed, 0 failed (test_f1_f2_saves_identity_and_worldline_rebind.py)",
+    "it11_state_consistency_tests": "8 passed, 0 failed (test_f2_worldline_state_consistency.py)",
+    "total_tests_passing": "91 (26 host + 8 f1f2 + 8 it11 + 49 pipeline)"
+  },
+  "governance_adherence": {
+    "created_new_native_setter": false,
+    "overwrote_production_worlddata": false,
+    "deleted_old_worldlines": false,
+    "autonomous_calendar_advance": false,
+    "unapproved_live_mutations": false,
+    "marked_fake_as_live": false,
+    "merged_diverged_old_task_branches": false
+  },
+  "gpt6_post_remediation_audit": {
+    "audit_commit_sha": "25eae0063cfe72cab595263bc57c0ceb8fc22889",
+    "review_document": "08_结论/gpt6_post_remediation_live_guard_review_20261102.md",
+    "review_status": "POST_REMEDIATION_ACCEPTED_READY_FOR_ENABLEMENT",
+    "critical_interface_remediations": {
+      "1_fresh_live_getter": "RESOLVED: _get_fresh_live_getter dynamically connects to NBA2K22 memory via ReadOnlyGameProcess post-execution, strictly isolated from preflight cache; verifies expected PID fail-closed (PID_MISMATCH_FRESH_GETTER).",
+      "2_unknown_outcome_consistency": "RESOLVED: UNKNOWN_EXECUTION_OUTCOME triggers synchronized UNKNOWN_LOCKED across Host state, Outbox cycle, and Journal; preserves active plan and strictly blocks calendar advance.",
+      "3_multi_layer_batch_validation": "RESOLVED: Multi-layer validation (validate_batch_execution) checks batch plan digest, chunk digests, raw REA messages, journal receipts, and independent readback; non-matching items mapped to READBACK_MISMATCH_FAILED, Host routed to STOPPED_PARTIAL preserving plan, and VERIFIED_SUCCESS only granted on complete verification.",
+      "4_mock_physical_isolation": "RESOLVED: Mock mode requires fake transport (OFFLINE_MOCK_CANNOT_EXECUTE_WITHOUT_FAKE_TRANSPORT); Live mode strictly rejects fake transport (LIVE_MODE_REJECTS_FAKE_TRANSPORT).",
+      "5_certified_live_scope_and_role_registry": "RESOLVED: Live execution restricted to PLAYER_PATCH_TENDENCIES and SHOT_TENDENCY (LIVE_SCOPE_VIOLATION); TrustedRoleRegistry validates GM and Coach actors per team at cycle entry.",
+      "6_worldline_manifest_and_rollback": "RESOLVED: worldlines_manifest.json tracks parent/child worldlines, deterministic date fork reuse, target_worldline_id switching, and atomic save.json write with immediate readback verification and rollback."
+    }
+  },
+  "load_bearing_pre_live_remediation": {
+    "role_registry_save_provenance_and_database_verification": "RESOLVED: Eliminated hardcoded actor and team IDs. TrustedRoleRegistry binds directly to active save directory (save_dir / role_authorizations.json) with provenance 'SAVE_DB_VERIFIED_DELEGATION', dynamically verifies team scopes against the active world database teams table, and rejects unauthenticated roles or unregistered teams fail-closed.",
+    "native_transport_evidence_disambiguation": "RESOLVED: Replaced host-reconstructed synthetic chunk messages with authentic Frida/REA IPC transport evidence (r_dir / */evidence.json). Live mode strictly requires genuine evidence and rejects synthetic envelopes (RECONSTRUCTED_MOCK_CANNOT_SATISFY_NATIVE_TRANSPORT_EVIDENCE). Mock mode accurately reports OFFLINE_MOCK_TRANSPORT_SKIPPED without falsely claiming independent raw transport verification."
+  },
+  "h_live_authorization_closeout": {
+    "task_id": "NBA2K22-HOST-LIVE-AUTHORIZATION-CLOSEOUT-20261102-002",
+    "input_head": "45231bede30d75d83565d80696cad4a8320bdaf1",
+    "final_candidate_status": "OFFLINE_HOST_REMEDIATION_READY_FOR_REVIEW",
+    "live_pilot_status": "LIVE_PILOT_NOT_EXECUTED",
+    "h1_default_deny": "RESOLVED: TrustedRoleRegistry has no hardcoded default actors; missing authorization file generates non-executable role_authorizations.template.json; mock authorization injection is strictly blocked in Live mode (LIVE_MODE_REJECTS_MOCK_AUTHORIZATION).",
+    "h2_database_team_verification": "RESOLVED: parse_team_numeric_id parses team:native:<ID>, team:<ID>, and int; _verify_team_in_database and _get_teams_from_database fail closed on missing DB, unreadable DB, query error, empty teams table, or save_id mismatch.",
+    "h3_context_binding_integrity": "RESOLVED: bind_save_context enforces exact match for save_id, worldline_id, bound_database_file, and requires human_authorization_ref / provenance; context mismatches fail closed.",
+    "h4_dynamic_phase_grants_and_disambiguation": "RESOLVED: start_cycle and seal_cycle_decisions use role_registry.get_phase_grants(); get_profiles raises AMBIGUOUS_MULTIPLE_ACTORS_FOR_ROLE on multiple GM/Coach actors; unregistered teams or missing actor_uid rejected fail closed.",
+    "native_evidence_compatibility": "RESOLVED: Verified authentic evidence.json schema from mutation_100 with chunk-execution-result messages; Live mode strictly enforces authentic Frida transport evidence; synthetic or mock messages rejected fail closed."
+  },
+  "f1_f2_final_closeout": {
+    "input_head": "f3a1031988201d2e43bed9de3a6f4abe996fe27b",
+    "task_id": "NBA2K22-HOST-LIVE-AUTHORIZATION-FINAL-CLOSEOUT-20261102-003",
+    "live_pilot_status": "NOT_EXECUTED",
+    "f2_worldline_rebind_after_branch": "RESOLVED: initialize_season(force_new_worldline=True) calls role_registry.bind_save_context(save_dir, wl_info['save_id'], wl_info['worldline_id'], target_path) immediately after branch DB creation and save.json update. Registry is re-bound to new worldline ID and new branch DB. Old worldline auth cannot carry over. Verified by 3 dedicated tests.",
+    "final_candidate_status": "OFFLINE_HOST_REMEDIATION_READY_FOR_SERIES_REVIEW",
+    "f1_saves_strict_failclosed": "RESOLVED: _get_teams_from_database() saves table check extracted outside swallowing except block. OperationalError on missing saves table immediately returns set() (fail-closed). Empty singleton row, null save_id, or save_id mismatch all return set(). Verified by 5 dedicated tests including positive control.",
+    "timestamp": "2026-11-02T17:46:10Z",
+    "wildcard_scope_guard": "RESOLVED: bind_save_context() wildcard guard now requires explicit allow_wildcard_scope, wildcard_authorization_purpose, wildcard_scope_declaration, or WILDCARD keyword in human_authorization_ref/provenance. Test fixture updated with allow_wildcard_scope=True. All 26 existing tests continue to pass."
+  },
+  "it11_f2_state_consistency_closeout": {
+    "final_candidate_status": "OFFLINE_HOST_REMEDIATION_READY_FOR_SERIES_REVIEW",
+    "timestamp": "2026-11-03T01:33:47Z",
+    "fixes": "manifest registration, save.json worldline_id, receipt status distinction, seal_cycle_decisions PID logic",
+    "task_id": "Iteration 11 F2 State Consistency",
+    "root_cause": "force_new_worldline block did not register new worldline in manifest or update save.json worldline_id",
+    "live_pilot_status": "NOT_EXECUTED",
+    "tests_passed": "26+8+8+49=91"
+  }
+}

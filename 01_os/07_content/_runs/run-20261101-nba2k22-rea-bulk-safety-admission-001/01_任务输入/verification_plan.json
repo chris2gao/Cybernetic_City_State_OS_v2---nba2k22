@@ -1,0 +1,150 @@
+{
+  "schema_version": "nba2k22.rea.bulk_safety_admission.verification_plan.v1",
+  "task_id": "NBA2K22-REA-BULK-SAFETY-ADMISSION-20261101-001",
+  "target_release": "OFFLINE_SAFETY_ADMISSION_CANDIDATE",
+  "scope": "OFFLINE_ONLY_NO_LIVE_AUTHORIZATION",
+  "source_sha": "04c378151c576140b5e347c94a1b0952b15903cd",
+  "gates": [
+    {
+      "id": "G1_OFFLINE_DENIAL",
+      "type": "safety",
+      "tests": [
+        "CLI flag and freeform authorization_ref never enable actual ReaCliTransport",
+        "No import-time attach/process discovery",
+        "Fake and Node VM only",
+        "Live adapter denied regardless of flag"
+      ],
+      "pass_condition": "Zero real-game attach or native Setter invocations; live denial cannot be overridden by input text"
+    },
+    {
+      "id": "G2_UNKNOWN_RESUME",
+      "type": "fault_injection",
+      "tests": [
+        "UNKNOWN same intent replay blocked with zero Fake Transport calls",
+        "STARTED without receipt after crash blocks same/different intent on resource",
+        "same intent with different save, plan, value, field or action rejected",
+        "partial receipt write and concurrent process attempts fail closed",
+        "claim identity cannot collide on chunk-0001 across batches"
+      ],
+      "pass_condition": "At-most-once attempt invariant from durable evidence; no execution on ambiguous state"
+    },
+    {
+      "id": "G3_RECONCILIATION_PROVENANCE",
+      "type": "negative",
+      "tests": [
+        "applied boolean only rejected and original UNKNOWN lock retained",
+        "missing/contradictory independent observation metadata rejected",
+        "tampered claim or stale epoch rejected",
+        "known readback is observation not automatically origin proof",
+        "lock removal only under documented independently reviewed reconciliation eligibility"
+      ],
+      "pass_condition": "No unauthenticated UNKNOWN unlock and no fabricated unaltered fields confirmation"
+    },
+    {
+      "id": "G4_CANONICAL_ACTION_AND_DIGEST",
+      "type": "planning",
+      "tests": [
+        "same-team tendencies and attributes become distinct chunks",
+        "Coach unsupported remains declared and not promoted",
+        "dependence cycle and dependency across chunks resolved or explicitly denied",
+        "subchunk digest recomputed after locked/completed filtering",
+        "plan digest contains build and save/epoch/budget identities"
+      ],
+      "pass_condition": "Action/field/plan/chunk digests match actual executable intent set"
+    },
+    {
+      "id": "G5_ENVELOPE_AND_RECEIPT_BINDING",
+      "type": "protocol",
+      "tests": [
+        "missing plan_digest or chunk_digest rejected",
+        "wrong message kind, wrong action/save/batch and extra/missing receipt IDs rejected",
+        "equal count but wrong intent IDs produces UNKNOWN receipt not KeyError",
+        "success without getter_before/after, field preservation or matching target rejected",
+        "failure outcome with CHUNK_SUCCESS still stops next chunk",
+        "no unsupported outcome values accepted"
+      ],
+      "pass_condition": "Every attempted item receives one conservative terminal receipt and no unverified success"
+    },
+    {
+      "id": "G6_NODE_VM_AND_COACH_FAIL_CLOSED",
+      "type": "runtime_stub",
+      "tests": [
+        "Node VM runs Player CAS positive and zero-Setter mismatch cases",
+        "delegate, 156-byte, attribute cache, thread-once and timeout checks",
+        "Coach not implemented for live is rejected regardless synthetic is_live flag",
+        "No new unverified Native RVAs"
+      ],
+      "pass_condition": "Synthetic Frida execution only, with truthful unsupported paths"
+    },
+    {
+      "id": "G7_10K_MOCK_REPRODUCIBLE",
+      "type": "benchmark",
+      "tests": [
+        "1,10,100,1000,10000 scenarios",
+        "actual receipts dynamically drive counts without hardcoding",
+        "failure injection and full conservation",
+        "p50/p95/p99 and preparation, planner, Journal I/O separated",
+        "MEASURED_MOCK and ESTIMATED_THEORETICAL and PROJECTED_NOT_RUN distinct"
+      ],
+      "pass_condition": "Raw synthetic input and receipt provenance supports every reported number"
+    },
+    {
+      "id": "G8_REGRESSION_EVIDENCE",
+      "type": "regression",
+      "tests": [
+        "test_bulk_executor.py",
+        "test_role_batches.py",
+        "test_role_capabilities.py",
+        "test_player_stats.py",
+        "test_player_editor_read.py",
+        "new safety tests and Node VM"
+      ],
+      "pass_condition": "Exact command, exit code, version, source SHA and diff in test receipts, no invalidated previous safeguards"
+    },
+    {
+      "id": "G9_LOOP_OBSERVABILITY_CONSISTENT",
+      "type": "governance",
+      "tests": [
+        "Each meaningful increment has stable ID, trigger, objective, affected files, evidence and model",
+        "JSONL preserves failures and unknowns",
+        "Summary is derived programmatically and conservation enforced",
+        "No backfill or reclassify prior Bulk task 2 remediation rounds",
+        "Exits on §11 stop conditions"
+      ],
+      "pass_condition": "Machine check of submitted Loop summary matches append-only iteration log"
+    }
+  ],
+  "failure_injections": [
+    "SAME_INTENT_PRIOR_UNKNOWN",
+    "CROSS_SAVE_IDENTICAL_INTENT_ID",
+    "PRESTART_CLAIM_CRASH",
+    "PARTIAL_RECEIPT_FILE",
+    "DUPLICATE_CHUNK_ID_DIFFERENT_PLAN",
+    "CORRUPT_LOCK_LEDGER",
+    "MISSING_LOCK_INDEX",
+    "APPLIED_ONLY_RECONCILE",
+    "NO_OR_WRONG_DIGEST",
+    "SAME_COUNT_WRONG_RECEIPT_IDS",
+    "FAKE_SUCCESS_MISSING_GETTER_AFTER",
+    "FALSE_UNALTERED_FIELDS",
+    "CHUNK_SUCCESS_WITH_ITEM_FAILURE",
+    "MIXED_ACTION_SINGLE_TEAM",
+    "DEP_CYCLE",
+    "COACH_LIVE_UNSUPPORTED",
+    "UNREQUESTED_STAT_BYTE_CHANGED"
+  ],
+  "evidence_path_prefix": "01_os/07_content/_runs/run-20261101-nba2k22-rea-bulk-safety-admission-001/",
+  "required_evidence_files": [
+    "06_执行/loop_iterations.jsonl",
+    "06_执行/loop_summary_validation.json",
+    "07_测试执行/safety_admission_test_receipts.json",
+    "06_执行/synthetic_benchmark.json",
+    "08_结论/live_authorization_gate_design.md",
+    "08_结论/completion_pointer.md"
+  ],
+  "source_of_truth": "Exact GitHub SHA and machine receipts; editor self-reported SUCCESS cannot prove objective completion",
+  "success_measure": "Actual safety boundary is correct and durable under injected failures; not test count alone",
+  "live_process_checks_performed": false,
+  "live_mutation_authorized": false,
+  "core_integration_authorized": false
+}

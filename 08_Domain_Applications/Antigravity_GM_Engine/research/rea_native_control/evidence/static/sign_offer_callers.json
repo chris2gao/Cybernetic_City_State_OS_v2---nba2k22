@@ -1,0 +1,638 @@
+{
+  "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "target_rva": 19649728,
+  "source_kind": "STATIC_BINARY",
+  "direct_call_or_tailjump_refs": [
+    {
+      "callsite_rva": 19615148,
+      "kind": "call",
+      "unwind_chain": [
+        {
+          "begin": 19614547,
+          "end": 19616861,
+          "unwind_rva": 50799196,
+          "flags": 4
+        },
+        {
+          "begin": 19614513,
+          "end": 19614547,
+          "unwind_rva": 50799176,
+          "flags": 4
+        },
+        {
+          "begin": 19614421,
+          "end": 19614513,
+          "unwind_rva": 50799152,
+          "flags": 4
+        },
+        {
+          "begin": 19614368,
+          "end": 19614421,
+          "unwind_rva": 50799140,
+          "flags": 0
+        }
+      ],
+      "window": [
+        {
+          "rva": 19615099,
+          "mnemonic": "and",
+          "operands": "dword ptr [rax + 0x28], 0xffffe0ff"
+        },
+        {
+          "rva": 19615106,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x30], r15d"
+        },
+        {
+          "rva": 19615111,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x28], r13d"
+        },
+        {
+          "rva": 19615116,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rax + 0x24], r13d"
+        },
+        {
+          "rva": 19615120,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x20], r13d"
+        },
+        {
+          "rva": 19615125,
+          "mnemonic": "call",
+          "operands": "RVA+0x12b7290"
+        },
+        {
+          "rva": 19615130,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x12b4d9f"
+        },
+        {
+          "rva": 19615132,
+          "mnemonic": "xor",
+          "operands": "r13d, r13d"
+        },
+        {
+          "rva": 19615135,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 19615138,
+          "mnemonic": "mov",
+          "operands": "rdx, r12"
+        },
+        {
+          "rva": 19615141,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 19615144,
+          "mnemonic": "lea",
+          "operands": "r8d, [r9 + 1]"
+        },
+        {
+          "rva": 19615148,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bd4c0"
+        },
+        {
+          "rva": 19615153,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 19615155,
+          "mnemonic": "je",
+          "operands": "RVA+0x12b4dd4"
+        },
+        {
+          "rva": 19615157,
+          "mnemonic": "call",
+          "operands": "RVA+0x12b81a0"
+        },
+        {
+          "rva": 19615162,
+          "mnemonic": "cmp",
+          "operands": "r14d, eax"
+        }
+      ]
+    },
+    {
+      "callsite_rva": 19624467,
+      "kind": "call",
+      "unwind_chain": [
+        {
+          "begin": 19623792,
+          "end": 19624589,
+          "unwind_rva": 50797796,
+          "flags": 0
+        }
+      ],
+      "window": [
+        {
+          "rva": 19624414,
+          "mnemonic": "add",
+          "operands": "rcx, rcx"
+        },
+        {
+          "rva": 19624417,
+          "mnemonic": "mov",
+          "operands": "qword ptr [rax + rcx*8], 0"
+        },
+        {
+          "rva": 19624425,
+          "mnemonic": "movsxd",
+          "operands": "rcx, dword ptr [rsi]"
+        },
+        {
+          "rva": 19624428,
+          "mnemonic": "mov",
+          "operands": "rax, qword ptr [r14]"
+        },
+        {
+          "rva": 19624431,
+          "mnemonic": "add",
+          "operands": "rcx, rcx"
+        },
+        {
+          "rva": 19624434,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rax + rcx*8 + 8], 0"
+        },
+        {
+          "rva": 19624442,
+          "mnemonic": "mov",
+          "operands": "eax, 1"
+        },
+        {
+          "rva": 19624447,
+          "mnemonic": "jmp",
+          "operands": "RVA+0x12b726b"
+        },
+        {
+          "rva": 19624449,
+          "mnemonic": "mov",
+          "operands": "rdx, qword ptr [rsp + 0xb8]"
+        },
+        {
+          "rva": 19624457,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 19624460,
+          "mnemonic": "mov",
+          "operands": "rcx, r15"
+        },
+        {
+          "rva": 19624463,
+          "mnemonic": "lea",
+          "operands": "r8d, [r9 + 1]"
+        },
+        {
+          "rva": 19624467,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bd4c0"
+        },
+        {
+          "rva": 19624472,
+          "mnemonic": "mov",
+          "operands": "r8d, eax"
+        },
+        {
+          "rva": 19624475,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 19624477,
+          "mnemonic": "je",
+          "operands": "RVA+0x12b7264"
+        },
+        {
+          "rva": 19624479,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [rsi]"
+        }
+      ]
+    },
+    {
+      "callsite_rva": 19644506,
+      "kind": "call",
+      "unwind_chain": [
+        {
+          "begin": 19642698,
+          "end": 19644703,
+          "unwind_rva": 50801656,
+          "flags": 4
+        },
+        {
+          "begin": 19642413,
+          "end": 19642698,
+          "unwind_rva": 50801624,
+          "flags": 4
+        },
+        {
+          "begin": 19642368,
+          "end": 19642413,
+          "unwind_rva": 50801612,
+          "flags": 0
+        }
+      ],
+      "window": [
+        {
+          "rva": 19644465,
+          "mnemonic": "mov",
+          "operands": "r9d, 1"
+        },
+        {
+          "rva": 19644471,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x20], r12d"
+        },
+        {
+          "rva": 19644476,
+          "mnemonic": "mov",
+          "operands": "edx, r9d"
+        },
+        {
+          "rva": 19644479,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 19644482,
+          "mnemonic": "mov",
+          "operands": "rcx, rsi"
+        },
+        {
+          "rva": 19644485,
+          "mnemonic": "call",
+          "operands": "RVA+0x12b4380"
+        },
+        {
+          "rva": 19644490,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 19644492,
+          "mnemonic": "je",
+          "operands": "RVA+0x12bc05f"
+        },
+        {
+          "rva": 19644494,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 19644497,
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 19644499,
+          "mnemonic": "mov",
+          "operands": "rcx, rsi"
+        },
+        {
+          "rva": 19644502,
+          "mnemonic": "lea",
+          "operands": "r8d, [r9 + 1]"
+        },
+        {
+          "rva": 19644506,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bd4c0"
+        },
+        {
+          "rva": 19644511,
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 19644513,
+          "mnemonic": "mov",
+          "operands": "rcx, r15"
+        },
+        {
+          "rva": 19644516,
+          "mnemonic": "inc",
+          "operands": "r13d"
+        },
+        {
+          "rva": 19644519,
+          "mnemonic": "call",
+          "operands": "RVA+0x944630"
+        }
+      ]
+    },
+    {
+      "callsite_rva": 19651791,
+      "kind": "call",
+      "unwind_chain": [
+        {
+          "begin": 19651611,
+          "end": 19651804,
+          "unwind_rva": 50799088,
+          "flags": 4
+        },
+        {
+          "begin": 19651195,
+          "end": 19651219,
+          "unwind_rva": 50799028,
+          "flags": 4
+        },
+        {
+          "begin": 19651152,
+          "end": 19651195,
+          "unwind_rva": 50799012,
+          "flags": 0
+        }
+      ],
+      "window": [
+        {
+          "rva": 19651735,
+          "mnemonic": "and",
+          "operands": "dword ptr [rax + 0x20], 0xff"
+        },
+        {
+          "rva": 19651742,
+          "mnemonic": "mov",
+          "operands": "byte ptr [rax + 0x28], r12b"
+        },
+        {
+          "rva": 19651746,
+          "mnemonic": "and",
+          "operands": "dword ptr [rax + 0x28], 0xffffe0ff"
+        },
+        {
+          "rva": 19651753,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x30], r12d"
+        },
+        {
+          "rva": 19651758,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x28], r12d"
+        },
+        {
+          "rva": 19651763,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rax + 0x24], r12d"
+        },
+        {
+          "rva": 19651767,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x20], 3"
+        },
+        {
+          "rva": 19651775,
+          "mnemonic": "call",
+          "operands": "RVA+0x12b7290"
+        },
+        {
+          "rva": 19651780,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 19651783,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 19651786,
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 19651788,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 19651791,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bd4c0"
+        },
+        {
+          "rva": 19651796,
+          "mnemonic": "mov",
+          "operands": "rbx, qword ptr [rsp + 0xa0]"
+        }
+      ]
+    },
+    {
+      "callsite_rva": 21485370,
+      "kind": "call",
+      "unwind_chain": [
+        {
+          "begin": 21485280,
+          "end": 21485652,
+          "unwind_rva": 50044404,
+          "flags": 0
+        }
+      ],
+      "window": [
+        {
+          "rva": 21485335,
+          "mnemonic": "mov",
+          "operands": "r8d, edi"
+        },
+        {
+          "rva": 21485338,
+          "mnemonic": "test",
+          "operands": "edi, edi"
+        },
+        {
+          "rva": 21485340,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 21485343,
+          "mnemonic": "sete",
+          "operands": "dl"
+        },
+        {
+          "rva": 21485346,
+          "mnemonic": "xor",
+          "operands": "r9d, r9d"
+        },
+        {
+          "rva": 21485349,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bc4a0"
+        },
+        {
+          "rva": 21485354,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 21485356,
+          "mnemonic": "jne",
+          "operands": "RVA+0x147d79e"
+        },
+        {
+          "rva": 21485358,
+          "mnemonic": "lea",
+          "operands": "r9d, [rax + 1]"
+        },
+        {
+          "rva": 21485362,
+          "mnemonic": "mov",
+          "operands": "r8d, edi"
+        },
+        {
+          "rva": 21485365,
+          "mnemonic": "xor",
+          "operands": "edx, edx"
+        },
+        {
+          "rva": 21485367,
+          "mnemonic": "mov",
+          "operands": "rcx, rbx"
+        },
+        {
+          "rva": 21485370,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bd4c0"
+        },
+        {
+          "rva": 21485375,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 21485377,
+          "mnemonic": "je",
+          "operands": "RVA+0x147d841"
+        },
+        {
+          "rva": 21485383,
+          "mnemonic": "lea",
+          "operands": "rax, [rip + 0x15b3f1e]"
+        },
+        {
+          "rva": 21485390,
+          "mnemonic": "mov",
+          "operands": "dword ptr [rsp + 0x40], 0"
+        }
+      ]
+    },
+    {
+      "callsite_rva": 21739503,
+      "kind": "call",
+      "unwind_chain": [
+        {
+          "begin": 21739440,
+          "end": 21740004,
+          "unwind_rva": 50903116,
+          "flags": 0
+        }
+      ],
+      "window": [
+        {
+          "rva": 21739455,
+          "mnemonic": "push",
+          "operands": "rdi"
+        },
+        {
+          "rva": 21739456,
+          "mnemonic": "sub",
+          "operands": "rsp, 0x630"
+        },
+        {
+          "rva": 21739463,
+          "mnemonic": "mov",
+          "operands": "rax, qword ptr [rip + 0x4e6fcca]"
+        },
+        {
+          "rva": 21739470,
+          "mnemonic": "mov",
+          "operands": "esi, 1"
+        },
+        {
+          "rva": 21739475,
+          "mnemonic": "mov",
+          "operands": "rdi, rcx"
+        },
+        {
+          "rva": 21739478,
+          "mnemonic": "cmp",
+          "operands": "dword ptr [rax + 0x208], esi"
+        },
+        {
+          "rva": 21739484,
+          "mnemonic": "jne",
+          "operands": "RVA+0x14bb7fc"
+        },
+        {
+          "rva": 21739486,
+          "mnemonic": "call",
+          "operands": "RVA+0xbaa7e0"
+        },
+        {
+          "rva": 21739491,
+          "mnemonic": "mov",
+          "operands": "rdx, rax"
+        },
+        {
+          "rva": 21739494,
+          "mnemonic": "mov",
+          "operands": "r9d, esi"
+        },
+        {
+          "rva": 21739497,
+          "mnemonic": "xor",
+          "operands": "r8d, r8d"
+        },
+        {
+          "rva": 21739500,
+          "mnemonic": "mov",
+          "operands": "rcx, rdi"
+        },
+        {
+          "rva": 21739503,
+          "mnemonic": "call",
+          "operands": "RVA+0x12bd4c0"
+        },
+        {
+          "rva": 21739508,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "rva": 21739510,
+          "mnemonic": "je",
+          "operands": "RVA+0x14bb9c9"
+        },
+        {
+          "rva": 21739516,
+          "mnemonic": "movzx",
+          "operands": "ecx, word ptr [rdi + 2]"
+        },
+        {
+          "rva": 21739520,
+          "mnemonic": "call",
+          "operands": "RVA+0xf40eb0"
+        }
+      ]
+    }
+  ],
+  "image_pointer_refs": [],
+  "limits": {
+    "direct_refs": 48,
+    "pointer_refs": 32,
+    "unwind_bytes": 32768
+  },
+  "limitations": [
+    "static caller identity does not establish AI runtime dispatch",
+    "indirect computed callers may be absent"
+  ]
+}

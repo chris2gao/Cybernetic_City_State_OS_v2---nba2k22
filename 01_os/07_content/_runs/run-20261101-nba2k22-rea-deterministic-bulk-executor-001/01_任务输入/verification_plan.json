@@ -1,0 +1,34 @@
+{
+  "schema_version": "nba2k22.rea.bulk_executor.verification_plan.v1",
+  "status": "NOT_EXECUTED",
+  "tests": [
+    "Exact qualified field IDs and value bounds, cross-save/pid/EXE/role/phase fail-closed",
+    "Expected-before mismatch rejects before setter; partial or UNKNOWN never silent retry",
+    "Synthetic 10k rows multi-team deterministic receipts and strict conservation",
+    "Duplicate same/different intent plan hashes; stale plan & conflict, dependency, resources",
+    "One controlled attached session per bounded chunk (design/mock execution), not one per field",
+    "Read budget, game call budget, per-chunk max duration, no main thread unbounded execution",
+    "Coached and player qualified handlers only; unsupported domains explicit",
+    "Process restart/crash, abort, journal corruption, resume without double-write",
+    "Independent FULL capture protocol: Human triggered and fresh player-skills source unit required; no new game prerequisite",
+    "Source/fixtures/test logs/outputs do not upload DB, raw memory, backups; no master change"
+  ],
+  "scope": "OFFLINE_ONLY",
+  "minimum_performance_receipts": [
+    "preparation and parse time",
+    "planner time",
+    "compiled batch size",
+    "expected Frida attaches per chunk",
+    "mock setter+getter time and journal overhead",
+    "p50 p95 p99 synthetic latency",
+    "tested machine details"
+  ],
+  "release_gates": [
+    "OFFLINE_ENGINE_READY",
+    "SMALL_LIVE_PILOT_HUMAN_AUTHORIZED",
+    "BATCH_LIVE_VERIFIED",
+    "MULTI_DOMAIN_LIVE_VERIFIED",
+    "LARGE_SCALE_LIVE_ACCEPTED"
+  ],
+  "release_current": "NO_LIVE_BATCH_AUTHORIZATION"
+}

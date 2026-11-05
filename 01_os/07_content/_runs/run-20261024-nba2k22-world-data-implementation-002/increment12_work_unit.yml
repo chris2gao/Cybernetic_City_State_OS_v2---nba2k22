@@ -1,0 +1,30 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Apply Human policy to refresh historical records and awards once per save
+    and game-season year while keeping ordinary current-data cadence unchanged.
+  implementation_or_review_method: >-
+    Resolve native year from small rechecked controls; skip completed annual
+    source acquisition; enforce successful live uniqueness in SQLite;
+    copy-upgrade schema10 to schema11 and test real first/repeat captures.
+  supportability_rationale: >-
+    PID2132 real annual captures ingested 69040 record slots and complete native
+    honor sources for year2022. Each repeat made only 12 control reads totaling
+    90 bytes. Audit compared 167468 source-to-typed rows and retained all 263662
+    old rows; the old database hash is unchanged. Fixtures cannot consume a live period.
+  feasibility_rationale: >-
+    Existing bound-save readers, acquisition receipts and atomic append-only
+    ingest support the cadence without a background scheduler or game mutation.
+    Five new behavioral tests cover failures, fixtures, year/family/save scope,
+    race rejection and early source skipping; full development suite has 85 tests.
+  exact_result_or_candidate_ref: ad98f65ad32fd9e7ebc8bf97d4821156331337af
+  verification_evidence:
+    - 06_执行/increment12/annual_world_report.json
+    - 06_执行/increment12/migration-report.json
+    - 06_执行/increment12/native_sources/source_manifest.json
+    - 06_执行/increment12/verification/development_report.json
+    - 06_执行/increment12/verification/tests.stderr.log
+  residual_risk_or_unproved_limits:
+    - Annual cadence is not certification of current-year award finality.
+    - League-history annual family awaits its typed ingestion adapter; social/news must remain independently captured.
+    - Remaining native domains and whole-candidate capacity/recovery and independent/Human acceptance remain incomplete.

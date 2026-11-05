@@ -1,0 +1,35 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Implement verified owner fact-database backup and recovery to a new file,
+    retaining complete single-save schema, facts and provenance ledgers.
+    Record Human deferral of capacity work until complete-season data exists.
+  implementation_or_review_method: >-
+    Use SQLite online backup through a read-only source, validate file checksum,
+    complete schema and ordered per-table row digests plus integrity/FKs, then
+    validate the same inventory and public query results after exclusive recovery.
+  supportability_rationale: >-
+    The actual 555216896-byte v16 database with 84 tables and 843987 total rows
+    was backed up in35.1 seconds and recovered in54.1 seconds including checks.
+    All seven selected public query results match; original file hash and active
+    binding remain unchanged. Complete unit suite passes127 tests; eight operation
+    cases also pass under the bundled runtime with dbstat.
+  feasibility_rationale: >-
+    Standard SQLite backup preserves committed WAL state and the existing typed
+    schema without altering game/save data or source history. Complete manifests,
+    save-identity checks and new-file recovery reject corrupt/incomplete/cross-save
+    backups and avoid overwriting existing targets. Schema remains v16/84/1306.
+  exact_result_or_candidate_ref: d372d86da0cfd52a7eb4a51196efc285d0b43c46
+  verification_evidence:
+    - 06_执行/increment18/actual-recovery-report.json
+    - 06_执行/increment18/backup_manifest.json
+    - 06_执行/increment18/restore-receipt.json
+    - 06_执行/increment18/verification/operations_report.json
+    - 06_执行/increment18/verification/tests.stderr.log
+    - human_capacity_cadence_20261025.md
+  residual_risk_or_unproved_limits:
+    - External raw source files remain separately retained owner evidence; fact snapshots do not bundle them.
+    - Recovery does not imply current live-game alignment or an actual power-loss acceptance test.
+    - Capacity stress and storage optimization are deferred per Human until actual complete-season evidence.
+    - Early one-month allocation/models do not determine a retention horizon or authorize history deletion.
+    - Remaining Native/UI coverage and final independent/Human acceptance remain open.

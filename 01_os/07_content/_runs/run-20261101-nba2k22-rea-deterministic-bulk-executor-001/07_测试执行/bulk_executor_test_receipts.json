@@ -1,0 +1,159 @@
+{
+  "schema_version": "nba2k22.rea.bulk_executor.test_receipts.v1",
+  "task_id": "NBA2K22-REA-DETERMINISTIC-BULK-EXECUTOR-20261101-001",
+  "execution_timestamp": "2026-11-02T02:23:27Z",
+  "remediation_round": 2,
+  "test_environment": {
+    "os": "Windows 10/Server x64",
+    "python": "3.14.6",
+    "pytest": "9.1.1",
+    "node": "v24.22.1",
+    "rea_cli": "6.8.0",
+    "game_build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5"
+  },
+  "overall_summary": {
+    "total_tests_executed": 60,
+    "bulk_executor_specific_tests": 21,
+    "regression_tests": 39,
+    "passed": 60,
+    "failed": 0,
+    "skipped": 0,
+    "total_duration_seconds": 10.16,
+    "status": "ALL_TESTS_PASSED"
+  },
+  "verification_plan_gate_receipts": [
+    {
+      "gate_id": "GATE_01_EXACT_QUALIFIED_FIELDS_AND_BOUNDS",
+      "test_name": "test_exact_qualified_fields_and_bounds_fail_closed",
+      "status": "PASSED",
+      "evidence": "Tested tendencies (0..100) and attributes (25..99); verified that values 101, 20, unknown fields ('NON_EXISTENT_MAGIC_STAT'), and invalid build SHA256 fail-closed immediately."
+    },
+    {
+      "gate_id": "GATE_02_HARD_CAS_MISMATCH_REJECTION",
+      "test_name": "test_hard_cas_mismatch_blocks_setter_and_halts_chunk",
+      "status": "PASSED",
+      "evidence": "Observed Native value 95 vs declared expected_before 90; blocked setter invocation, preserved mock memory at 95, recorded CAS_EXPECTED_BEFORE_MISMATCH receipt, halted chunk, and marked followup as NOT_EXECUTED."
+    },
+    {
+      "gate_id": "GATE_03_NOOP_DETECTION_UNCHANGED_ALREADY_TARGET",
+      "test_name": "test_noop_detection_unchanged_already_target",
+      "status": "PASSED",
+      "evidence": "Observed value 80 equals requested 80 with expected_before 80; marked UNCHANGED_ALREADY_TARGET, skipped Setter call, verified unrequested fields invariant."
+    },
+    {
+      "gate_id": "GATE_04_DUPLICATE_AND_CONFLICTING_INTENTS",
+      "test_name": "test_duplicate_and_conflicting_intents",
+      "status": "PASSED",
+      "evidence": "Detected duplicate intent_id 'I-DUP', detected CONTRADICTORY_INTENT on same player/field with conflicting values (80 vs 85), and detected MISSING_DEPENDENCY."
+    },
+    {
+      "gate_id": "GATE_05_BOUNDED_SESSION_CHUNKING",
+      "test_name": "test_bounded_chunking_and_call_budgets",
+      "status": "PASSED",
+      "evidence": "Partitioned 120 intents across 2 teams (70 + 50) into 3 bounded chunks (50, 20, 50). All chunks have call budgets <= 200 and duration estimates <= 5000ms."
+    },
+    {
+      "gate_id": "GATE_06_SCRIPT_COMPILATION_AND_SAFETY",
+      "test_name": "test_chunk_script_compilation",
+      "status": "PASSED",
+      "evidence": "Compiled chunk Frida script verified: embeds PeekMessageA hook, Native UI Getter 0x978360, Native UI Setter 0x990a10, CAS mismatch halt, and roster player pointer resolution."
+    },
+    {
+      "gate_id": "GATE_07_UNSUPPORTED_DOMAINS_EXPLICIT",
+      "test_name": "test_unsupported_domains_explicitly_rejected",
+      "status": "PASSED",
+      "evidence": "Missing player_id on player tendency rejected; raw memory writer requests explicitly rejected with UNSUPPORTED_DOMAIN."
+    },
+    {
+      "gate_id": "GATE_08_FAILURE_INJECTION_AND_RESUME",
+      "test_name": "test_failure_injection_and_resume_without_double_write",
+      "status": "PASSED",
+      "evidence": "Injected simulated thread timeout/crash; intent recorded as UNKNOWN_EXECUTION_OUTCOME; subsequent items preserved as NOT_EXECUTED; journal confirms intent cannot be marked completed without reconciliation."
+    },
+    {
+      "gate_id": "GATE_09_STRICT_CONSERVATION_LAW",
+      "test_name": "test_strict_conservation_law_under_mixed_stress",
+      "status": "PASSED",
+      "evidence": "Mixed 10-item batch evaluated: 4 success, 3 noop, 1 CAS blocked, 0 unknown, 2 not_executed. num_planned (10) == sum of outcomes (10). Conservation holds strictly."
+    },
+    {
+      "gate_id": "GATE_10_PLAN_DIGEST_IMMUTABILITY",
+      "test_name": "test_plan_digest_immutability",
+      "status": "PASSED",
+      "evidence": "Deterministic SHA256 digest verified. Identical content produces identical digest; 1-value modification produces completely distinct digest."
+    },
+    {
+      "gate_id": "GATE_11_COACH_AND_PLAYER_ROUTING",
+      "test_name": "test_coach_and_player_script_generation_routing",
+      "status": "PASSED",
+      "evidence": "Verified generated script contains dual routing: Player items route to rosterPlayer and player UI getter/setter; Coach items route to franchiseRecord and coach.apply_gameplan."
+    },
+    {
+      "gate_id": "GATE_12_UNKNOWN_RESOURCE_LOCKING_AND_RECONCILIATION",
+      "test_name": "test_unknown_resource_locking_and_reconciliation",
+      "status": "PASSED",
+      "evidence": "Verified that UNKNOWN intent locks resource target; subsequent intent targeting same resource is BLOCKED_BY_PRIOR_UNKNOWN_CLAIM; reconciliation unlocks resource, allowing subsequent operations to proceed."
+    },
+    {
+      "gate_id": "GATE_13_AT_MOST_ONCE_RESUME",
+      "test_name": "test_at_most_once_execution_and_resume",
+      "status": "PASSED",
+      "evidence": "Completed intent is recognized on rerun and marked REUSED_HISTORICAL_RECEIPT without re-executing Native setter, guaranteeing at-most-once semantics."
+    },
+    {
+      "gate_id": "GATE_14_CHECKPOINT014_TRANSPORT_FAIL_CLOSED",
+      "test_name": "test_rea_chunk_transport_adapter_default_prohibits_live",
+      "status": "PASSED",
+      "evidence": "ReaChunkTransportAdapter verified to raise PermissionError('LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE') by default, preventing unauthorized live process attachment."
+    },
+    {
+      "gate_id": "GATE_15_BENCHMARK_AUTO_GENERATION",
+      "test_name": "test_10k_synthetic_benchmark_auto_generation",
+      "status": "PASSED",
+      "evidence": "10,000-item synthetic benchmark automatically executed and generated from pytest; verified 3-way separation of mock timings, session overhead estimates, and live native projections."
+    },
+    {
+      "gate_id": "GATE_R2_G1_DEFAULT_DENIAL",
+      "test_name": "test_gate_g1_default_denial",
+      "status": "PASSED",
+      "evidence": "Default invocation without authorization raises PermissionError('LIVE_AUTHORIZATION_VERIFIER_NOT_AVAILABLE') fail-closed."
+    },
+    {
+      "gate_id": "GATE_R2_G2_E2E_FAKE_TRANSPORT",
+      "test_name": "test_gate_g2_e2e_fake_transport",
+      "status": "PASSED",
+      "evidence": "End-to-end execution of mixed player and coach batch across teams with pluggable fake transport producing valid receipts and conservation."
+    },
+    {
+      "gate_id": "GATE_R2_G3_PROTOCOL_NEGATIVE_HANDLING",
+      "test_name": "test_gate_g3_protocol_negative_handling",
+      "status": "PASSED",
+      "evidence": "Verified protocol validation catches non-dict responses, error envelopes, wrong kind, mismatched chunk_id/digests, and duplicate receipts."
+    },
+    {
+      "gate_id": "GATE_R2_G4_NODE_VM_NATIVE_CONTRACTS",
+      "test_name": "test_gate_g4_node_vm_native_contracts_and_fault_injections",
+      "status": "PASSED",
+      "evidence": "Verified synthetic Node VM executes Frida chunk script with common.js, gui_once.js, FNV-32 signatures, vtable, 156-byte snapshot check, and fault injections."
+    },
+    {
+      "gate_id": "GATE_R2_G5_RECOVERY_CRASH_WINDOW",
+      "test_name": "test_gate_g5_recovery_and_journal_fault_injection",
+      "status": "PASSED",
+      "evidence": "Simulated process crash before receipts, verified startup recovery marks claim UNKNOWN and locks resource; verified corrupt lock ledger and reused intent ID detection."
+    },
+    {
+      "gate_id": "GATE_R2_G6_BENCHMARK_DYNAMIC_AGGREGATION",
+      "test_name": "test_gate_g6_benchmark_dynamic_aggregation",
+      "status": "PASSED",
+      "evidence": "Verified benchmark dynamically computes outcome_conservation from actual receipt items and labels metrics clearly across 3 tiers."
+    }
+  ],
+  "regression_suite": [
+    {"file": "test_role_batches.py", "tests": 16, "status": "PASSED"},
+    {"file": "test_role_capabilities.py", "tests": 4, "status": "PASSED"},
+    {"file": "test_player_stats.py", "tests": 9, "status": "PASSED"},
+    {"file": "test_player_editor_read.py", "tests": 10, "status": "PASSED"},
+    {"file": "test_bulk_executor.py", "tests": 21, "status": "PASSED"}
+  ]
+}

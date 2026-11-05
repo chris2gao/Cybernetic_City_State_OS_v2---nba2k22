@@ -1,0 +1,127 @@
+{
+  "schema_version": "nba2k22.live_host_closed_loop.verification.v1",
+  "task_id": "NBA2K22-LIVE-HOST-CLOSED-LOOP-INTEGRATION-20261102-001",
+  "run_id": "run-20261102-nba2k22-live-host-closed-loop-integration-001",
+  "status": "DISPATCHED_NOT_EXECUTED",
+  "planner_model": "GPT-6",
+  "executor_model": "Codex (actual required)",
+  "fixed_sources": {
+    "rea_outbox_audit_sha": "6f3a04fd62368aca261a9f0179e081ffee7be6fb",
+    "worlddata_source_sha": "a231708df8255a9f2ccf1087c736325a3f606afb",
+    "worlddata_final_review_sha": "341e9f9395649cf44e93a40093bd4789be47310a"
+  },
+  "human_control": {
+    "initial_pilot_cycles": 4,
+    "regular_cadence_game_days": 7,
+    "season_observation_target_min": 20,
+    "season_observation_target_max": 40,
+    "initial_new_or_restored_save": "DETECT_AND_BIND_NOT_ASSUME",
+    "calendar_advance": "HUMAN_MANUAL_UNTIL_NATIVE_APPROVED",
+    "new_live_write_authority": "ONE_CYCLE_DIGEST_AND_EXACT_ACTIONS_ONLY",
+    "auto_simulate": false,
+    "auto_retry_unknown": false
+  },
+  "acceptance_gates": [
+    {
+      "id": "G01",
+      "name": "Source integration",
+      "criterion": "Minimal imported WorldData optimized reader+SQLite changes; same refresh interface and source hashes; REA/WorldData tests pass",
+      "phase": "S1"
+    },
+    {
+      "id": "G02",
+      "name": "Save/worldline isolation",
+      "criterion": "Restored old save with backward game date and fresh save each produce distinct bound history without deleting old facts",
+      "phase": "S1"
+    },
+    {
+      "id": "G03",
+      "name": "Human CLI protocol",
+      "criterion": "Each command triggers only documented operation, produces status/receipt without asking to re-enter PID",
+      "phase": "S1"
+    },
+    {
+      "id": "G04",
+      "name": "Capture chronology",
+      "criterion": "Initial FULL, weekly INCREMENTAL, post-mutation TARGETED_READBACK, event capture and annual skip all preserve provenance",
+      "phase": "S1"
+    },
+    {
+      "id": "G05",
+      "name": "Role authorization",
+      "criterion": "Trusted host supplies role profiles/phase grants; proposed decisions cannot self-authenticate or grant write scope",
+      "phase": "S2"
+    },
+    {
+      "id": "G06",
+      "name": "Sealed plan and CAS",
+      "criterion": "Digest+live Getter+game epoch binding, mismatch fail closed; no implicit partial execution",
+      "phase": "S2"
+    },
+    {
+      "id": "G07",
+      "name": "Strict live receipt bridge",
+      "criterion": "Raw messages, chunk identity/digest, per-item outcome, journal and independent readback required before outbox success feedback",
+      "phase": "S2"
+    },
+    {
+      "id": "G08",
+      "name": "Four offline cycles",
+      "criterion": "4 7-day transitions, one NO_CHANGE, conflicting role intents, partial/unknown, restart/retry tests; no real game writes",
+      "phase": "S2"
+    },
+    {
+      "id": "G09",
+      "name": "Four Human-triggered live cycles",
+      "criterion": "Only after user prompts; separate live evidence and game effects, manual sim, no unsupported writer",
+      "phase": "S3"
+    },
+    {
+      "id": "G10",
+      "name": "Season-scale run",
+      "criterion": "Human may extend after pilot; 20-40 observation cadence; per-cycle ledger and event checkpoints; stop and resume safe",
+      "phase": "S4"
+    }
+  ],
+  "must_not": [
+    "Create new Native Setter",
+    "Overwrite production WorldData history",
+    "Delete old worldline",
+    "Infer game date/PID from old logs",
+    "Autonomous game calendar advance",
+    "Unapproved live trades/contracts/coach settings",
+    "Mark Fake as Live",
+    "Merge diverged old task branches into master by default"
+  ],
+  "artifacts": [
+    "season_cycle_host.py",
+    "season_cycle_cli.py",
+    "season_cadence_policy.json",
+    "human_trigger_playbook.md",
+    "integration_source_matrix.json",
+    "offline_4_cycle_receipts.json",
+    "live_4_cycle_receipts_if_authorized.json",
+    "season_run_ledger.jsonl",
+    "loop_iterations.jsonl",
+    "loop_summary.json",
+    "completion_pointer.md"
+  ],
+  "observability": {
+    "every_cycle_fields": [
+      "cycle_id",
+      "snapshot_ref",
+      "game_progress",
+      "save_instance",
+      "worldline",
+      "capability_grants",
+      "plan_digest",
+      "outbox_summary",
+      "native_receipts",
+      "readback_summary",
+      "relevant_game_outcomes",
+      "elapsed"
+    ],
+    "provenance_grade_required": true
+  },
+  "game_state_execution_scope": "Initial offline engineering only. Human will trigger actual live cycles separately; no automatic real gameplay testing in new task without current context."
+}

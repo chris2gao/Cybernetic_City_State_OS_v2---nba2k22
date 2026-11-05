@@ -1,0 +1,31 @@
+minimum_work_unit_output:
+  role: execution
+  work_performed_or_requested: >-
+    Apply the Human's explicit overall-rating deferral, remove unfinished overall
+    integration from the active application, retain bounded static research and
+    establish a final difficult-item list for Human scheduling.
+  implementation_or_review_method: >-
+    Save the owned uncommitted patch and new files outside the app, restore only
+    the enumerated owned changes, remove the three inactive app modules/profile,
+    verify import/source/schema absence, run player-skill tests and SQLite smoke,
+    and compare the actual bound database hash before/after.
+  supportability_rationale: >-
+    Human2026-10-26 explicitly allows omitting overall rating and asks for difficult
+    items at final delivery. This changes the scope for overall only; no other
+    unknown source is silently accepted, no old observations are rewritten and
+    no derived score is invented from prior/cached or offense/defense fields.
+  feasibility_rationale: >-
+    No new overall game values or database migration were executed. The active
+    application returns to v24/100 tables/1775 columns/20 source families, retaining
+    the completed ordinary coach-counter work. Deferred static findings remain
+    labeled untested/unintegrated outside the runtime app for future Human choice.
+  exact_result_or_candidate_ref: 06_执行/increment35/verification-report.json
+  verification_evidence:
+    - 06_执行/increment35/verification-report.json
+    - 06_执行/increment35/deferred-overall/README.md
+    - 06_执行/increment35/verification/player_skills.stderr.log
+    - 06_执行/increment35/verification/sqlite_smoke.stdout.log
+  residual_risk_or_unproved_limits:
+    - Overall cache/getter/conversion findings are static research only and are not live/UI verification.
+    - Other difficult items remain unresolved or pending Human scheduling; this list is not blanket final acceptance.
+    - Full-season capacity and complete-system independent/Human acceptance remain open.
