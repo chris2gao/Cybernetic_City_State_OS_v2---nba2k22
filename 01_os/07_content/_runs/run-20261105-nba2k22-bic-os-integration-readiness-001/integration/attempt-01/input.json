@@ -1,0 +1,83 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "a1f95d5176cb7ddf9148f0ef55ab11ddbc7e44b3",
+  "plan_path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verification_plan.json",
+  "plan_sha256": "71f942e8c4c4fb349fcc30cd3de91cfc7c8c6dc7325714931de2db01e1eb5b77",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "plan": {
+    "schema_version": "citystate.verification_plan.v1",
+    "task_packet": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/task_packet.yml",
+    "checks": [
+      {
+        "id": "bic_regression",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "-m",
+          "pytest",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_baseline.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_experiments.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_observation_scope.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_player_details.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_remediation.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2_remediation.py",
+          "-q",
+          "-W",
+          "always"
+        ],
+        "timeout_seconds": 300,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "cli_and_integrity",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verify_cli_integrity.py",
+          "C:/Users/gk/.codex/worktrees/nba2k22-bic-batch1/integration-smoke-20261105"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      }
+    ]
+  },
+  "task_id": "NBA2K22-BIC-W1-W2-OS-INTEGRATION-READINESS-20261105-001",
+  "task_packet_sha256": "f344905c5c37ce76ba23b90e4a9f169c59b17fc75768cd1ae122d09257bc42ff",
+  "source_base": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+  "changed_paths": [
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/.gitattributes",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/EXECUTION_CONTRACT.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/PRECHECK_ACTUAL.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/engineering_diff.name-status.txt",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/large_database_audit.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/preflight.stderr.log",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/preflight.stdout.log",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/preflight_receipt.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/prepare_integration.py",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/review_sources.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/reviews/wave1_DIFFERENCE_REVIEW_HUMAN_CLOSEOUT.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/reviews/wave2_BIC_WAVE2_DIFFERENCE_REVIEW_CLOSEOUT_v1.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/reviews/wave2_DIFFERENCE_REVIEW_HUMAN_CLOSEOUT.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/source_inventory.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/technical_test_freeze.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verification_plan.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verify_cli_integrity.py",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/task_packet.yml"
+  ],
+  "source_before": {
+    "head": "a1f95d5176cb7ddf9148f0ef55ab11ddbc7e44b3",
+    "tree": "8499f01c82f82860b625e465ae9e1da014ef40d5",
+    "clean": true
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "executable": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "runner_file_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "commands": [
+    {
+      "name": "player",
+      "command": [
+        "python",
+        "-B",
+        "-X",
+        "utf8",
+        "C:\\Users\\gk\\.codex\\worktrees\\nba2k22-bic-batch1\\Cybernetic_City_State_OS_v2 - nba2k22\\08_Domain_Applications\\Antigravity_GM_Engine\\world_data_prototype\\bic_cli.py",
+        "player",
+        "<synthetic-temp>\\world.sqlite",
+        "p1",
+        "--save-id",
+        "save",
+        "--season-id",
+        "s1",
+        "--as-of",
+        "2026-10-25T01:00:00+00:00"
+      ],
+      "exit_code": 0,
+      "output_sha256": "590f4a9ba1eebd8ffc775077331dfd218099f1c43f09ecb6f630e88191affd53"
+    },
+    {
+      "name": "team",
+      "command": [
+        "python",
+        "-B",
+        "-X",
+        "utf8",
+        "C:\\Users\\gk\\.codex\\worktrees\\nba2k22-bic-batch1\\Cybernetic_City_State_OS_v2 - nba2k22\\08_Domain_Applications\\Antigravity_GM_Engine\\world_data_prototype\\bic_cli.py",
+        "team",
+        "<synthetic-temp>\\world.sqlite",
+        "t1",
+        "--save-id",
+        "save",
+        "--season-id",
+        "s1",
+        "--as-of",
+        "2026-10-25T01:00:00+00:00"
+      ],
+      "exit_code": 0,
+      "output_sha256": "8c748273991e7de50f511dd14459147be9dfe36bf4432fb7ce920ded13acbb93"
+    },
+    {
+      "name": "diagnosis",
+      "command": [
+        "python",
+        "-B",
+        "-X",
+        "utf8",
+        "C:\\Users\\gk\\.codex\\worktrees\\nba2k22-bic-batch1\\Cybernetic_City_State_OS_v2 - nba2k22\\08_Domain_Applications\\Antigravity_GM_Engine\\world_data_prototype\\bic_wave2_cli.py",
+        "<synthetic-temp>\\world.sqlite",
+        "p1",
+        "--team-id",
+        "t1",
+        "--save-id",
+        "save",
+        "--season-id",
+        "s1",
+        "--as-of",
+        "2026-10-25T01:00:00+00:00"
+      ],
+      "exit_code": 0,
+      "output_sha256": "618e0cdd0d5757eb53dfb08048155829e3eee11ec7139b1e9fdf59c47b9da32f"
+    }
+  ],
+  "synthetic_database_unchanged": true,
+  "synthetic_only": true,
+  "query_at_legacy_isolation": "PASS: cutoff 80 vs current 90",
+  "reviewed_changed_files_identical": 83,
+  "formal_os_pass": false,
+  "game_operations": false,
+  "technical_freeze_package_sha256": "71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906",
+  "formal_stage04_freeze_approved": false
+}

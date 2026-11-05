@@ -16,7 +16,7 @@ input_refs:
 - stage_id: workflow_stage_06_execution
   path: 06_execution.yml
   artifact_version: 1
-  sha256: 1ae13454243a8d35be27e397bb9faa579c9e8fcb95c1a59a30a3afb25495c70f
+  sha256: 56561c12b364a3c1b0f3822492f0e9aff6fecad2ff4ca375515b6b9540370d4a
 stage_control:
   action_id: OS-STAGE-07
   current_model_ref: null
@@ -41,4 +41,10 @@ payload:
     path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave2-series-review-001/BIC_WAVE2_DIFFERENCE_REVIEW_CLOSEOUT_v1.json
   scope: OFFLINE_W1_W2_ONLY
   full_BIC_completion: false
-  post_freeze_integration_results: PENDING_WORKSTREAM_B_RECEIPT
+  post_freeze_integration_results:
+    report: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/INTEGRATION_CANDIDATE_REPORT.json
+    tested_candidate: 4998a43a3f9f94d1013e574e99d29b4c3d666de4
+    technical_freeze_package_sha256: 71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906
+    result: 65 passed, 1 existing warning; CLI and source integrity passed
+    formal_freeze_approved: false
+    independent_OS_acceptance: false

@@ -1,0 +1,193 @@
+{
+  "task_id": "NBA2K22-BIC-W1-W2-OS-INTEGRATION-READINESS-20261105-001",
+  "status": "INTEGRATION_CANDIDATE_TESTED",
+  "candidate_tested": "4998a43a3f9f94d1013e574e99d29b4c3d666de4",
+  "engineering_sha": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+  "wave1_sha": "aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b",
+  "master_base": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+  "technical_freeze_package_sha256": "71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906",
+  "post_technical_freeze_test_result": "65 passed, 1 existing warning in 32.33s",
+  "formal_stage04_freeze_approved": false,
+  "checks": [
+    {
+      "id": "bic_regression",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793869648808387300,
+      "elapsed_seconds": 32.81947509999736,
+      "stdout_sha256": "705755613852f6a38a8d63efb2fa12e6fecd85a3a917bd45a015d562895920a2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "cli_and_integrity",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793869651158795400,
+      "elapsed_seconds": 2.125597699996433,
+      "stdout_sha256": "ae3734eef8e1f9716524978cee54ab7c938666aa8a3a5fb30fda56a90f6ac4e3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "candidate": "a1f95d5176cb7ddf9148f0ef55ab11ddbc7e44b3",
+      "result": {
+        "schema_version": "citystate.verification_attempt.v1",
+        "candidate": "a1f95d5176cb7ddf9148f0ef55ab11ddbc7e44b3",
+        "plan_sha256": "71f942e8c4c4fb349fcc30cd3de91cfc7c8c6dc7325714931de2db01e1eb5b77",
+        "checks": [
+          {
+            "id": "bic_regression",
+            "status": "success"
+          },
+          {
+            "id": "cli_and_integrity",
+            "status": "failure"
+          }
+        ],
+        "status": "failure",
+        "authority_effect": "none"
+      },
+      "files": [
+        {
+          "name": "001.finished.json",
+          "sha256": "eaf04cec5e2f6dd4b7f58b847aae2fba16f4532db59531301330e128c4ce677d"
+        },
+        {
+          "name": "001.source.json",
+          "sha256": "513539be7f47e68bb233af7506b1f90d7044ab5b186cc8f75dd677b2d0e77e6c"
+        },
+        {
+          "name": "001.started.json",
+          "sha256": "b1608efc35b5bd0135ef3d46cb96221d4137f4885f82938fbedc4cc59643fd7d"
+        },
+        {
+          "name": "001.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "001.stdout.bin",
+          "sha256": "2eebf298ee505cd19e41f9e1a43e6b3c10f1f843753452d57c9acbeba5e953f1"
+        },
+        {
+          "name": "002.finished.json",
+          "sha256": "e57b5825f93ab4c3a44106d09e51c37d740e3816594457801ef5dbb0930bd78f"
+        },
+        {
+          "name": "002.source.json",
+          "sha256": "513539be7f47e68bb233af7506b1f90d7044ab5b186cc8f75dd677b2d0e77e6c"
+        },
+        {
+          "name": "002.started.json",
+          "sha256": "fb1e0679ea27ee97c256f46a749afd4a49b826088f9671fcecd2e026c369577d"
+        },
+        {
+          "name": "002.stderr.bin",
+          "sha256": "d21b2d2592e2a071a7d9fc839b6f8f3277f448f937bc5e8c6c75feb99f041b96"
+        },
+        {
+          "name": "002.stdout.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "input.json",
+          "sha256": "764be3f4d44e2da1b1cdec38e7919d17d5ffed1bba9c6dbbd7a23e744cd7912d"
+        },
+        {
+          "name": "result.json",
+          "sha256": "89a05b66e65b984ed74854ccb91bc65df9672c5ea0ea433750b00daec1ed0af1"
+        },
+        {
+          "name": "source_after.json",
+          "sha256": "513539be7f47e68bb233af7506b1f90d7044ab5b186cc8f75dd677b2d0e77e6c"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "candidate": "4998a43a3f9f94d1013e574e99d29b4c3d666de4",
+      "result": {
+        "schema_version": "citystate.verification_attempt.v1",
+        "candidate": "4998a43a3f9f94d1013e574e99d29b4c3d666de4",
+        "plan_sha256": "71f942e8c4c4fb349fcc30cd3de91cfc7c8c6dc7325714931de2db01e1eb5b77",
+        "checks": [
+          {
+            "id": "bic_regression",
+            "status": "success"
+          },
+          {
+            "id": "cli_and_integrity",
+            "status": "success"
+          }
+        ],
+        "status": "success",
+        "authority_effect": "none"
+      },
+      "files": [
+        {
+          "name": "001.finished.json",
+          "sha256": "396d4975d278788ae600797a94fb911e60c96dfda348af5017bbfe4119e962c7"
+        },
+        {
+          "name": "001.source.json",
+          "sha256": "84d8ae05e0133c67f77a8266632d3f2b880ed20ed27c3aaa76ab5f9ae0d5a297"
+        },
+        {
+          "name": "001.started.json",
+          "sha256": "ddd314293c3e947538824e6a49fff813565604eff8e6be8cb72ddc6fef873315"
+        },
+        {
+          "name": "001.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "001.stdout.bin",
+          "sha256": "705755613852f6a38a8d63efb2fa12e6fecd85a3a917bd45a015d562895920a2"
+        },
+        {
+          "name": "002.finished.json",
+          "sha256": "86e6cea49fa92de9abad4767c5bde900bf147e0321c83e3b121ae7fa1e19bed9"
+        },
+        {
+          "name": "002.source.json",
+          "sha256": "84d8ae05e0133c67f77a8266632d3f2b880ed20ed27c3aaa76ab5f9ae0d5a297"
+        },
+        {
+          "name": "002.started.json",
+          "sha256": "0b222b721f86983798514d99c763f072ffb750ce430450c56cccbd3be6a6817a"
+        },
+        {
+          "name": "002.stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "name": "002.stdout.bin",
+          "sha256": "ae3734eef8e1f9716524978cee54ab7c938666aa8a3a5fb30fda56a90f6ac4e3"
+        },
+        {
+          "name": "input.json",
+          "sha256": "2d8cd479bd1fbe8a9a3a82f28472909ac6e259858db5e44856ddc99601039106"
+        },
+        {
+          "name": "result.json",
+          "sha256": "703390312cfc3215e3cef4acd9b8033b43f55a6a0e492f512999ec5c59630b1e"
+        },
+        {
+          "name": "source_after.json",
+          "sha256": "84d8ae05e0133c67f77a8266632d3f2b880ed20ed27c3aaa76ab5f9ae0d5a297"
+        }
+      ]
+    }
+  ],
+  "cli_receipt": "integration/cli/cli_integrity_receipt.json",
+  "master_merged": false,
+  "game_access": false,
+  "source_change_since_test": "Only task Run evidence; no business source or test changes",
+  "final_delivery_sha_binding": "Commit containing this report; test candidate remains explicitly named, not replaced by a self-referential final SHA",
+  "prms": "NOT_SAVED_GIT_FALLBACK"
+}
