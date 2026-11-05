@@ -1,0 +1,27 @@
+task_packet:
+  task_id: OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: 45cc45cae0550ddcda192a2179ea48509b27f6ee
+  branch: task/nba-rea-core-adapter-20261029
+  objective: Deliver S4 of the unified task and its S5 cross-repository verification.
+  source_evidence:
+    - nba2k22@15d664405330cd38e04fee5980a89ada36376d14
+    - nba2k22@094f1aa641f93dec2277707ad9dbf5bdb0341247
+    - nba2k22@aee5a9109ea5cd0a5c7bc4adb750c64a1603afec
+    - core@a668307405df1f932008ba27be073654878bb577
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_core_profile/**
+    - 08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_MODULE_REGISTRY_V2.json
+    - 01_os/07_content/_runs/run-20261029-nba-rea-core-adapter-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261029-nba-rea-core-adapter-001/verification_plan.json
+  required_tests: [profile]
+  affected_module_ids: [P03, P09]
+  prohibitions: [merge_master, import_PR26, game_attach, game_write, auto_install, elevate]
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 45cc45cae0550ddcda192a2179ea48509b27f6ee

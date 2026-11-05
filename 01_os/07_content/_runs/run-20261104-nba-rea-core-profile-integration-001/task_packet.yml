@@ -1,0 +1,15 @@
+task_id: OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001
+role: execution
+scope: Integrate existing NBA PR 27 on current master and hand off for independent review.
+base_commit: dfa08af8bb6e4abf1cd8ad304f47b096ecc38167
+affected_module_ids: [P01, P02, P03, P06, P08, P09, P10, P12]
+source_refs_read:
+  nba_pr27: 400c998be89ab2c8b902e50667af500f0fda178e
+  core_master: 08d8e534a3438269aa7d7eb1b080ab11c172f462
+  core_adapter: a668307405df1f932008ba27be073654878bb577
+  nba_pr18: 094f1aa641f93dec2277707ad9dbf5bdb0341247
+  nba_pr26: aee5a9109ea5cd0a5c7bc4adb750c64a1603afec
+  nba_pr28_merge: dfa08af8bb6e4abf1cd8ad304f47b096ecc38167
+planned_changes: Merge current NBA master into PR 27, synchronize navigation, and verify fixed sources.
+protected_actions: []
+review_status: pending_independent_review
