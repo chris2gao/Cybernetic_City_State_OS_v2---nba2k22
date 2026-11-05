@@ -27,7 +27,7 @@ try:
         public=[arg.replace(str(fixture.root),'<synthetic-temp>') for arg in command]
         public[0]='python'
         commands.append({'name':name,'command':public,'exit_code':result.returncode,'output_sha256':hashlib.sha256(result.stdout).hexdigest()})
-    old=query_at(fixture.db,T0,'player_card','p1')
+    old=query_at(fixture.db,T0,'player_card','p1')['result']
     latest=player_card(fixture.db,'p1')
     assert old['families']['player_attribute_snapshots']['overall_raw']['value']==80
     assert latest['families']['player_attribute_snapshots']['overall_raw']['value']==90
