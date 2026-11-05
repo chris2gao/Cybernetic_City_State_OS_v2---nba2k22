@@ -1,0 +1,88 @@
+{
+  "task": "E02-R3",
+  "checked_at": "2026-11-05T05:23:09.881925+00:00",
+  "source_refs": [
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py",
+      "blob": "19300d7da733aa4fb9990592c3f45291035602fa"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/game_mode_reader.py",
+      "blob": "e728486553e3f101c740d694fb310ba871da684e"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py",
+      "blob": "6b64c86f8729b77bd2d1aab18be74b146bf73299"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py",
+      "blob": "4ace01e019f3ca389cd80212ed4cf1171ce28e04"
+    }
+  ],
+  "synthetic_2x2": {
+    "label": "SYNTHETIC_ARITHMETIC_ONLY",
+    "cells": {
+      "00": 10,
+      "10": 14,
+      "01": 12,
+      "11": 22
+    },
+    "factor_A_marginal_mean_difference": 7.0,
+    "factor_B_marginal_mean_difference": 5.0,
+    "interaction_difference_in_differences": 6,
+    "interaction_convention": "Difference of A effect at B=1 and B=0. With +/-1 coding regression AB coefficient is this contrast /4.",
+    "zero_effect_cells": {
+      "00": 10,
+      "10": 10,
+      "01": 10,
+      "11": 10
+    },
+    "zero_effect_interaction": 0,
+    "uncertainty": "No replication or variance model; no CI or p-value estimated",
+    "exit_code": 0
+  },
+  "comparable_units": [
+    "same save and season with explicit observation cutoff and source unit",
+    "completed game with team/opponent and player identity, game-mode evidence and final status",
+    "team/season clusters for repeated players and games"
+  ],
+  "unsupported_controls": [
+    "No verified RNG seed or controlled independent replication",
+    "No clone/restore operation performed",
+    "Roster, coach, injuries, fatigue, schedule/opponent and natural growth remain potential confounders"
+  ],
+  "negative_designs": [
+    {
+      "scenario": "Only diagonal cells 00 and 11 observed",
+      "result": "NOT_CAUSALLY_IDENTIFIED",
+      "reason": "A and B perfectly co-vary"
+    },
+    {
+      "scenario": "Repeated players in same team-season treated as independent treatment units",
+      "result": "NOT_CAUSALLY_IDENTIFIED",
+      "reason": "Shared assignment and schedule cluster"
+    },
+    {
+      "scenario": "FRANCHISE tag substituted for Fast Sim vs CPU3D vs HumanAI per-game tag",
+      "result": "MODE_NOT_ESTABLISHED",
+      "reason": "League context is not game simulation mode"
+    },
+    {
+      "scenario": "Setter readback and Box score used to infer off-ball behavior",
+      "result": "TACTICAL_EXECUTION_UNKNOWN",
+      "reason": "No timestamped observed behavior/animation/possession trace"
+    }
+  ],
+  "future_live_authorization": [
+    "exact save/build and team/player/field bounds",
+    "before values, CAS/readback, immutable receipts, failure rollback and unknown outcome handling",
+    "explicit date advancement and restore permissions",
+    "mode-specific behavior observation/recording scope"
+  ],
+  "historical_report": "307-pass VAE report remains original scope; source definition is in Stage02 planning S-VAE-REPORT",
+  "formal_stage02_pass": false
+}

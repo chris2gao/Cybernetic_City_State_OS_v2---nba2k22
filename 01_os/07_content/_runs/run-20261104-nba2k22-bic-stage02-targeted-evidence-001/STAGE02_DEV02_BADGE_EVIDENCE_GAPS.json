@@ -1,0 +1,82 @@
+{
+  "task": "E02-R2",
+  "checked_at": "2026-11-05T05:23:09.881925+00:00",
+  "sources": [
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_codec.py",
+      "blob": "1cde70424f30f258dd421e150a7c72e127404179"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_native_profile.json",
+      "blob": "93d9b418b948ca4f5f9d80ddf2cc87be4f9693eb"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py",
+      "blob": "6b64c86f8729b77bd2d1aab18be74b146bf73299"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/fixtures/player_details_20261025/source_manifest.json",
+      "blob": "04fce4dbb24c68a12966f0383e16fdd5f6d2c166"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json",
+      "blob": "f3902a8e3f80296a2d790b24a2b989216d18315f"
+    }
+  ],
+  "profile_status": "CURRENT_NATIVE_FIELDS_ENUMS_LITERAL_CRCS_AND_ALL_BASE_BADGE_DISPATCH_CASES_VERIFIED; EFFECTIVE_CONTEXT_AND_UI_SEPARATE",
+  "field_counts": {
+    "BOOLEAN_RESERVED": 1,
+    "BOOLEAN": 18,
+    "LEVEL": 80
+  },
+  "fact_path": "PLAYERDATA packed bitfield -> native_badges native_code/owned_state/tier_label -> player_badge_values capture unit -> query.player_badges latest per badge",
+  "read_evidence": "R1 badge examples are historical persisted observations with their original source_grade and unit; no current game claim",
+  "historical_fixture": {
+    "files": {
+      "manifest.json.gz": "21173d8c365ef6fe66d917cfee87390953875c2cc0d6ce5cdf1c749a3bfd8d36"
+    },
+    "actual_manifest_sha256": "4c3eeac520713e4240020ebe0decfa6ad76858a1bbcd583f17c6ff42d7871821",
+    "actual_report_sha256": "ddda1bfad226ccd835d733284dd901e6b791ad07d2a13b69a7e4aa7051f8cf8c",
+    "curation": "Complete native pool, all 17 contract fields and all 98 nonreserved base badges; metadata omitted; exact raw source retained in increment14.",
+    "replay_grade": "RESEARCH_FIXTURE"
+  },
+  "research_scope_notice": "BADGE_LIST_MAY_INCLUDE_MYPLAYER_REQUIREMENTS; DONT_TRANSPLANT_BADGE_POINT_UNLOCK_RULES_INTO_MYLEAGUE",
+  "rules": [
+    {
+      "rule": "Current base ownership and level decode",
+      "grade": "STATIC_SOURCE",
+      "support": "Literal bit widths, enum dispatch and UNKNOWN fallback; R1 supplies persisted examples",
+      "limits": "Effective context and UI remain separate"
+    },
+    {
+      "rule": "Historical capture of badge pool",
+      "grade": "HISTORICAL_LIVE_OBSERVATION",
+      "support": "source_manifest asserts complete native pool and 98 nonreserved fields",
+      "limits": "Curated fixture is RESEARCH_FIXTURE; original live raw/receipt not independently reconstructed here"
+    },
+    {
+      "rule": "Badge basketball descriptions / MyPLAYER thresholds",
+      "grade": "RESEARCH_REFERENCE",
+      "support": "R04 reference and scope warnings",
+      "limits": "No PC22 MyLEAGUE acquisition proof"
+    },
+    {
+      "rule": "MyLEAGUE eligibility, XP, natural upgrade predicates",
+      "grade": "UNKNOWN",
+      "support": null,
+      "limits": "No verified predicate identified in inspected codec/profile/reference; this is not an exhaustive absence proof"
+    },
+    {
+      "rule": "Animation trigger and success-rate causal effects",
+      "grade": "UNKNOWN",
+      "support": null,
+      "limits": "Base level and card values alone cannot establish effect; controlled mode-specific trials required"
+    }
+  ],
+  "closure": "Per badge and level, fix build/mode, identify qualification/XP consumer and counterexamples; separately observe effective context/UI/behavior under authorized trials"
+}

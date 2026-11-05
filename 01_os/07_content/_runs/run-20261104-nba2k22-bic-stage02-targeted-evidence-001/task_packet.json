@@ -1,0 +1,16 @@
+{
+  "task_id": "NBA2K22-BIC-B1-STAGE02-TARGETED-EVIDENCE-20261104-001",
+  "role": "execution/read-only evidence",
+  "base_commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+  "source_master": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+  "branch": "task/nba2k22-bic-batch1-p0-20261104",
+  "authority_commit": "760af05a62e33553b66ab87fc9752dba9893b523",
+  "resume_index_commit": "c075aa200acf7bf7b4c6fe248f9264d57aa4afa8",
+  "authority_path": "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/STAGE02_ACTIVE_READONLY_TASK.md",
+  "allowed_changed_paths": ["01_os/07_content/_runs/run-20261104-nba2k22-bic-stage02-targeted-evidence-001/"],
+  "plan": ["R1 inspect one known historical dataset through read-only queries", "R2 trace badge facts and scope limitations", "R3 inspect mode/comparability and compute a synthetic factorial example", "R4 adjudicate E01-E09 against B01-B06"],
+  "verification": "Targeted offline checks, exact source blobs and dataset hash, report validation, normal local_git publication and remote readback",
+  "scope": "Read-only SQLite, source analysis and small synthetic checks. Business implementation and formal OS Stage02 acceptance remain outside this research task.",
+  "recovery_source": "Git Run at published commit",
+  "independent_acceptance": "PENDING"
+}

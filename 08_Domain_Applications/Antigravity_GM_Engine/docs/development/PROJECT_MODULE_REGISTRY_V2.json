@@ -68,6 +68,7 @@
     },
     {
       "id": "P02",
+      "bic_candidate": "AUTHORIZED_OFFLINE_IMPLEMENTATION_IN_PROGRESS; see world_data_prototype/BIC_READONLY.md and run-20261104-nba2k22-bic-offline-engineering-001",
       "name": "Existing SQLite ingestion/query/publishing",
       "domain": "DATA_PLATFORM",
       "status": "LEGACY_EXISTING_IMPLEMENTATION_SCOPE_LIMITED",
@@ -76,6 +77,9 @@
         "docs/29_SIMPLE_DATABASE_SYNC.md"
       ],
       "artifacts": [
+        "world_data_prototype/bic_baseline.py",
+        "world_data_prototype/bic_cli.py",
+        "world_data_prototype/observation_scope.py",
         "src/auto_pipeline_ingest.py",
         "src/gm_state_io/",
         "src/gm_data_access/",
@@ -200,6 +204,7 @@
     },
     {
       "id": "P07",
+      "bic_candidate": "Badge facts reuse P02 baseline; eligibility/XP/effects remain UNKNOWN; run-20261104-nba2k22-bic-offline-engineering-001",
       "name": "Player profile/persona",
       "domain": "PLAYER_PERSONA",
       "status": "PLAYER_PROFILE_RESEARCH_PERSONA_PENDING",
@@ -313,11 +318,13 @@
     },
     {
       "id": "P10",
+      "bic_candidate": "Offline synthetic factorial analysis at world_data_prototype/bic_experiments.py; actual game causality unverified; run-20261104-nba2k22-bic-offline-engineering-001",
       "name": "Role action inventory/batched native execution",
       "domain": "ROLE_BATCH_EXECUTION_DESIGN",
       "status": "HUMAN_REVIEW_REQUIREMENTS_FIRST_PASS",
       "docs": [],
       "artifacts": [
+        "world_data_prototype/bic_experiments.py",
         "research/rea_native_control/role_batches.py",
         "research/rea_native_control/bulk_executor.py",
         "research/rea_native_control/decision_outbox.py"

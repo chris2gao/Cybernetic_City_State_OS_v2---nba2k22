@@ -35,13 +35,13 @@ class ObservationScope:
 def current_scope():return _CURRENT.get()
 
 @contextmanager
-def observed_as_of(database,observed_through):
+def observed_as_of(database,observed_through,*,season_id=None):
     """Freeze eligible committed unit IDs once, including nested query calls."""
     database=Path(database).resolve();cutoff=utc_stamp(observed_through)
     with closing(open_database(database,True)) as conn:
         conn.execute('BEGIN');header=conn.execute('SELECT save_id,schema_version FROM saves WHERE singleton=1').fetchone()
         if header is None or header['schema_version']!=VERSION:raise ValueError('copy-upgrade facts to the current schema before historical queries')
-        units=tuple(sorted(row['unit_id'] for row in conn.execute("SELECT unit_id,observed_at FROM capture_units WHERE unit_status='success'") if utc_stamp(row['observed_at'])<=cutoff))
+        units=tuple(sorted(row['unit_id'] for row in conn.execute("SELECT u.unit_id,u.observed_at FROM capture_units u JOIN capture_runs r USING(run_id) WHERE u.unit_status='success' AND (? IS NULL OR r.season_id=?)",(season_id,season_id)) if utc_stamp(row['observed_at'])<=cutoff))
         scope=ObservationScope(database,cutoff,header['save_id'],header['schema_version'],units)
     token=_CURRENT.set(scope)
     try:yield scope

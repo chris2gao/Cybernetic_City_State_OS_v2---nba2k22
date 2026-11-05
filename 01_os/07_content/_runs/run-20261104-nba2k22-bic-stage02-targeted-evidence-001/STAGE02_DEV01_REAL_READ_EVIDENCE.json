@@ -1,0 +1,623 @@
+{
+  "task": "E02-R1",
+  "checked_at": "2026-11-05T05:23:09.881925+00:00",
+  "database_relative_locator": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/_runtime/world-saves/nba2k22_test_01/world-v24.sqlite",
+  "access": "SQLite mode=ro, query_only=ON; existing query APIs use mode=ro",
+  "code_sources": [
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py",
+      "blob": "6b64c86f8729b77bd2d1aab18be74b146bf73299"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py",
+      "blob": "af9090b5ce5b65de5da1464163cb983a6106d6b3"
+    },
+    {
+      "commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/engine.py",
+      "blob": "c4c882fd12b2440811d0a2d54f1487fab125791f"
+    }
+  ],
+  "fresh_capture": false,
+  "game_access": false,
+  "status": "HISTORICAL_DATASET_READ_WITH_BINDING_GAPS",
+  "database_sha256": "f76b943e4c716748b4df1c8f6c94779fb57ebb312bbeeb9e4d4dfd97a024b218",
+  "database_bytes": 975208448,
+  "historical_manifest": {
+    "relative_path": "01_os/07_content/_runs/run-20261024-nba2k22-world-data-implementation-002/06_执行/increment37/baseline-manifest.json",
+    "sha256": "35a78eddfd187c59a0cff829f5d04c1d5d3f9fff9748bcf1c067531f5ad3987b",
+    "claimed_code_head": "cbdaba0cb263083ea04171f8222aab65a00e3d30",
+    "recorded_database_sha256": "f76b943e4c716748b4df1c8f6c94779fb57ebb312bbeeb9e4d4dfd97a024b218"
+  },
+  "matches_historical_manifest": true,
+  "header": {
+    "singleton": 1,
+    "save_id": "nba2k22_test_01",
+    "schema_version": 24,
+    "created_at": "2026-10-24T14:05:23.460494+00:00",
+    "source_grade": "UNBOUND",
+    "game_build": null,
+    "native_save_fingerprint": null
+  },
+  "cutoff": "2026-10-26T09:54:49.439609+00:00",
+  "players": [
+    {
+      "identity": {
+        "player_id": "player:native:4170",
+        "display_name": "Nikola Jokic",
+        "native_player_id": "4170",
+        "native_identity_status": "UNVERIFIED"
+      },
+      "native_identity_observation": {
+        "native_unique_id_raw": 4170,
+        "preserved_id_raw": 4170,
+        "canonical_link_status": "CURRENT_ROSTER_PRESERVED_ID_AND_NAME_MATCH; UNIQUE_ID_LIFECYCLE_UNVERIFIED",
+        "observed_at": "2026-10-26T04:14:51.306543+00:00",
+        "source_grade": "LIVE_READ"
+      },
+      "observation_scope": {
+        "time_basis": "CAPTURE_OBSERVED_AT_NOT_GAME_DATE",
+        "observed_through": "2026-10-26T09:54:49.439609+00:00",
+        "save_id": "nba2k22_test_01",
+        "schema_version": 24,
+        "committed_success_units": 42,
+        "scope_sha256": "ff87adc0c25b18bf79799caa70235d66873f67a788f5df9b752c8117f88f951d"
+      },
+      "card_elapsed_seconds": 0.2123922999999195,
+      "restricted_fields": "WITHHELD",
+      "scalar_field_count": 281,
+      "missing_fields": [
+        "player_vitals_observations.nickname",
+        "player_vitals_observations.birth_date",
+        "player_vitals_observations.college",
+        "player_vitals_observations.country",
+        "player_vitals_observations.jersey_number",
+        "player_vitals_observations.age_raw",
+        "player_attribute_snapshots.overall_raw",
+        "player_health_observations.injury_code",
+        "player_health_observations.body_part",
+        "player_health_observations.severity",
+        "player_health_observations.availability",
+        "player_health_observations.recovery_text",
+        "player_health_observations.energy_raw",
+        "player_health_observations.recovery_days",
+        "player_morale_observations.role_code",
+        "player_morale_observations.morale_raw",
+        "player_morale_observations.role_satisfaction_raw",
+        "player_training_observations.focus_code",
+        "player_training_observations.schedule_code"
+      ],
+      "representative_observations": [
+        {
+          "field": "player_vitals_observations.first_name",
+          "value": "Nikola",
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "observed_at": "2026-10-25T18:56:18.428726+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "field": "player_vitals_observations.last_name",
+          "value": "Jokic",
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "observed_at": "2026-10-25T18:56:18.428726+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "field": "player_vitals_observations.primary_position",
+          "value": "CENTER",
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "observed_at": "2026-10-25T14:07:12.564283+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "field": "player_vitals_observations.secondary_position",
+          "value": "NONE",
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "observed_at": "2026-10-25T14:07:12.564283+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "scalar_unit_ids": [
+        "live-world:62052310fffb4ca792946781",
+        "planning:1287cdfe3450c302cc1ea7db",
+        "player-affiliation:5d86083fcac950eedacac8b9",
+        "player-detail:4fe1c92fc8d5a5a43b944c0b",
+        "player-skill:49a3c3096537eea969ad8a96",
+        "player-state:71dac71c165a620f66b8a511"
+      ],
+      "badge_count": 98,
+      "badge_examples": [
+        {
+          "badge_observation_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player_badge_values:26362",
+          "player_id": "player:native:4170",
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "badge_key": "AlphaDog",
+          "native_code": 1,
+          "tier_label": null,
+          "owned_state": "owned",
+          "source_player_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player:269",
+          "native_field_id": "CURRENT_PLAYERDATA_BADGE_V1:167179080",
+          "native_badge_id": 1,
+          "native_kind": "BOOLEAN",
+          "native_level_status": "NATIVE_BOOLEAN_BADGE_FLAG",
+          "observed_at": "2026-10-25T14:05:05.784563+00:00",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "badge_observation_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player_badge_values:26363",
+          "player_id": "player:native:4170",
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "badge_key": "CatchAndShoot",
+          "native_code": 3,
+          "tier_label": "GOLD",
+          "owned_state": "owned",
+          "source_player_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player:269",
+          "native_field_id": "CURRENT_PLAYERDATA_BADGE_V1:3451642532",
+          "native_badge_id": 2,
+          "native_kind": "LEVEL",
+          "native_level_status": "NATIVE_BASE_LEVEL_ENUM; EFFECTIVE_CONTEXT_AND_UI_SEPARATE",
+          "observed_at": "2026-10-25T14:05:05.784563+00:00",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "badge_observation_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player_badge_values:26364",
+          "player_id": "player:native:4170",
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "badge_key": "CornerSpecialist",
+          "native_code": 0,
+          "tier_label": "UNEQUIPPED",
+          "owned_state": "not_owned",
+          "source_player_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player:269",
+          "native_field_id": "CURRENT_PLAYERDATA_BADGE_V1:1569008462",
+          "native_badge_id": 3,
+          "native_kind": "LEVEL",
+          "native_level_status": "NATIVE_BASE_LEVEL_ENUM; EFFECTIVE_CONTEXT_AND_UI_SEPARATE",
+          "observed_at": "2026-10-25T14:05:05.784563+00:00",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "team_summary": {
+        "identity": {
+          "team_id": "team:native:19",
+          "display_name": "Denver Nuggets"
+        },
+        "field_units": [
+          "organization:d89edd8d725f12db37509bed"
+        ],
+        "playbook_slots": 68,
+        "staff_count": 8,
+        "lineup_result_type": "dict"
+      },
+      "mode_observations": [
+        {
+          "unit_id": "native-current-coach:3fbb2144f1ef34529cf6720a",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-game-mode:221d2152a26a0c213fcbecad",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-game-mode:496e3e911bb214cfa21f65c1",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        }
+      ],
+      "mode_same_unit_scalar_matches": []
+    },
+    {
+      "identity": {
+        "player_id": "player:native:7236",
+        "display_name": "Pascal Siakam",
+        "native_player_id": "7236",
+        "native_identity_status": "UNVERIFIED"
+      },
+      "native_identity_observation": {
+        "native_unique_id_raw": 7236,
+        "preserved_id_raw": 7236,
+        "canonical_link_status": "CURRENT_ROSTER_PRESERVED_ID_AND_NAME_MATCH; UNIQUE_ID_LIFECYCLE_UNVERIFIED",
+        "observed_at": "2026-10-26T04:14:51.306543+00:00",
+        "source_grade": "LIVE_READ"
+      },
+      "observation_scope": {
+        "time_basis": "CAPTURE_OBSERVED_AT_NOT_GAME_DATE",
+        "observed_through": "2026-10-26T09:54:49.439609+00:00",
+        "save_id": "nba2k22_test_01",
+        "schema_version": 24,
+        "committed_success_units": 42,
+        "scope_sha256": "ff87adc0c25b18bf79799caa70235d66873f67a788f5df9b752c8117f88f951d"
+      },
+      "card_elapsed_seconds": 0.18879509999896982,
+      "restricted_fields": "WITHHELD",
+      "scalar_field_count": 281,
+      "missing_fields": [
+        "player_vitals_observations.nickname",
+        "player_vitals_observations.birth_date",
+        "player_vitals_observations.college",
+        "player_vitals_observations.country",
+        "player_vitals_observations.jersey_number",
+        "player_vitals_observations.age_raw",
+        "player_attribute_snapshots.overall_raw",
+        "player_health_observations.injury_code",
+        "player_health_observations.body_part",
+        "player_health_observations.severity",
+        "player_health_observations.availability",
+        "player_health_observations.recovery_text",
+        "player_health_observations.energy_raw",
+        "player_health_observations.recovery_days",
+        "player_morale_observations.role_code",
+        "player_morale_observations.morale_raw",
+        "player_morale_observations.role_satisfaction_raw",
+        "player_training_observations.focus_code",
+        "player_training_observations.schedule_code"
+      ],
+      "representative_observations": [
+        {
+          "field": "player_vitals_observations.first_name",
+          "value": "Pascal",
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "observed_at": "2026-10-25T18:56:18.428726+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "field": "player_vitals_observations.last_name",
+          "value": "Siakam",
+          "unit_id": "live-world:62052310fffb4ca792946781",
+          "observed_at": "2026-10-25T18:56:18.428726+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "field": "player_vitals_observations.primary_position",
+          "value": "POWER_FORWARD",
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "observed_at": "2026-10-25T14:07:12.564283+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "field": "player_vitals_observations.secondary_position",
+          "value": "CENTER",
+          "unit_id": "player-state:71dac71c165a620f66b8a511",
+          "observed_at": "2026-10-25T14:07:12.564283+00:00",
+          "effective_at": null,
+          "completeness": "PARTIAL",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "scalar_unit_ids": [
+        "live-world:62052310fffb4ca792946781",
+        "planning:1287cdfe3450c302cc1ea7db",
+        "player-affiliation:5d86083fcac950eedacac8b9",
+        "player-detail:4fe1c92fc8d5a5a43b944c0b",
+        "player-skill:49a3c3096537eea969ad8a96",
+        "player-state:71dac71c165a620f66b8a511"
+      ],
+      "badge_count": 98,
+      "badge_examples": [
+        {
+          "badge_observation_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player_badge_values:32340",
+          "player_id": "player:native:7236",
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "badge_key": "AlphaDog",
+          "native_code": 0,
+          "tier_label": null,
+          "owned_state": "not_owned",
+          "source_player_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player:330",
+          "native_field_id": "CURRENT_PLAYERDATA_BADGE_V1:167179080",
+          "native_badge_id": 1,
+          "native_kind": "BOOLEAN",
+          "native_level_status": "NATIVE_BOOLEAN_BADGE_FLAG",
+          "observed_at": "2026-10-25T14:05:05.784563+00:00",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "badge_observation_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player_badge_values:32341",
+          "player_id": "player:native:7236",
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "badge_key": "CatchAndShoot",
+          "native_code": 0,
+          "tier_label": "UNEQUIPPED",
+          "owned_state": "not_owned",
+          "source_player_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player:330",
+          "native_field_id": "CURRENT_PLAYERDATA_BADGE_V1:3451642532",
+          "native_badge_id": 2,
+          "native_kind": "LEVEL",
+          "native_level_status": "NATIVE_BASE_LEVEL_ENUM; EFFECTIVE_CONTEXT_AND_UI_SEPARATE",
+          "observed_at": "2026-10-25T14:05:05.784563+00:00",
+          "source_grade": "LIVE_READ"
+        },
+        {
+          "badge_observation_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player_badge_values:32342",
+          "player_id": "player:native:7236",
+          "unit_id": "player-detail:4fe1c92fc8d5a5a43b944c0b",
+          "badge_key": "CornerSpecialist",
+          "native_code": 0,
+          "tier_label": "UNEQUIPPED",
+          "owned_state": "not_owned",
+          "source_player_id": "player-detail:4fe1c92fc8d5a5a43b944c0b:player:330",
+          "native_field_id": "CURRENT_PLAYERDATA_BADGE_V1:1569008462",
+          "native_badge_id": 3,
+          "native_kind": "LEVEL",
+          "native_level_status": "NATIVE_BASE_LEVEL_ENUM; EFFECTIVE_CONTEXT_AND_UI_SEPARATE",
+          "observed_at": "2026-10-25T14:05:05.784563+00:00",
+          "source_grade": "LIVE_READ"
+        }
+      ],
+      "team_summary": {
+        "identity": {
+          "team_id": "team:native:22",
+          "display_name": "Toronto Raptors"
+        },
+        "field_units": [
+          "organization:d89edd8d725f12db37509bed"
+        ],
+        "playbook_slots": 68,
+        "staff_count": 8,
+        "lineup_result_type": "dict"
+      },
+      "mode_observations": [
+        {
+          "unit_id": "native-current-coach:3fbb2144f1ef34529cf6720a",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-current-coach:8f256bfd653ddfb7e7182e60",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-finance:4e05cdc88e5ea0e9c3df9ed4",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-game-mode:221d2152a26a0c213fcbecad",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-game-mode:496e3e911bb214cfa21f65c1",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-lineups:5a40fe8ac5ba9af13d8dc077",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-period-stats:475d7d5e954147a08a1fa850",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        },
+        {
+          "unit_id": "native-staff-history:bbfad4dcf2acda8b0c224761",
+          "season_id": "season:native-year:2022",
+          "mode_label": "FRANCHISE",
+          "league_label": "NBA",
+          "period_label": "REGULARSEASON",
+          "today_native_iso_date": "2021-11-20"
+        }
+      ],
+      "mode_same_unit_scalar_matches": []
+    }
+  ],
+  "negatives": [
+    {
+      "name": "missing_player",
+      "returned": {
+        "player_id": "player:STAGE02_NONEXISTENT",
+        "status": "NOT_OBSERVED"
+      },
+      "exit": "RETURNED"
+    },
+    {
+      "name": "invalid_naive_cutoff",
+      "exception": "ValueError",
+      "message": "observation cutoff requires a timezone-aware ISO timestamp",
+      "exit": "EXPECTED_REJECTION"
+    },
+    {
+      "name": "restricted_table",
+      "exception": "PermissionError",
+      "message": "owner-only or unknown dataset",
+      "exit": "EXPECTED_REJECTION"
+    },
+    {
+      "name": "before_first_observation",
+      "returned": {
+        "scope": {
+          "time_basis": "CAPTURE_OBSERVED_AT_NOT_GAME_DATE",
+          "observed_through": "2000-01-01T00:00:00.000000+00:00",
+          "save_id": "nba2k22_test_01",
+          "schema_version": 24,
+          "committed_success_units": 0,
+          "scope_sha256": "f81f14d62b9d2da64e946d0485f6b826148249c63e335f3277cf9bc1161534b2"
+        },
+        "status": "NOT_OBSERVED"
+      },
+      "exit": "RETURNED"
+    }
+  ],
+  "capture_grades": [
+    {
+      "source_grade": "LIVE_READ",
+      "count": 42
+    }
+  ],
+  "season_ids": [
+    "season:native-year:1947",
+    "season:native-year:1948",
+    "season:native-year:1949",
+    "season:native-year:1950",
+    "season:native-year:1951",
+    "season:native-year:1952",
+    "season:native-year:1953",
+    "season:native-year:1954",
+    "season:native-year:1955",
+    "season:native-year:1956",
+    "season:native-year:1957",
+    "season:native-year:1958",
+    "season:native-year:1959",
+    "season:native-year:1960",
+    "season:native-year:1961",
+    "season:native-year:1962",
+    "season:native-year:1963",
+    "season:native-year:1964",
+    "season:native-year:1965",
+    "season:native-year:1966",
+    "season:native-year:1967",
+    "season:native-year:1968",
+    "season:native-year:1969",
+    "season:native-year:1970",
+    "season:native-year:1971",
+    "season:native-year:1972",
+    "season:native-year:1973",
+    "season:native-year:1974",
+    "season:native-year:1975",
+    "season:native-year:1976",
+    "season:native-year:1977",
+    "season:native-year:1978",
+    "season:native-year:1979",
+    "season:native-year:1980",
+    "season:native-year:1981",
+    "season:native-year:1982",
+    "season:native-year:1983",
+    "season:native-year:1984",
+    "season:native-year:1985",
+    "season:native-year:1986",
+    "season:native-year:1987",
+    "season:native-year:1988",
+    "season:native-year:1989",
+    "season:native-year:1990",
+    "season:native-year:1991",
+    "season:native-year:1992",
+    "season:native-year:1993",
+    "season:native-year:1994",
+    "season:native-year:1995",
+    "season:native-year:1996",
+    "season:native-year:1997",
+    "season:native-year:1998",
+    "season:native-year:1999",
+    "season:native-year:2000",
+    "season:native-year:2001",
+    "season:native-year:2002",
+    "season:native-year:2003",
+    "season:native-year:2004",
+    "season:native-year:2005",
+    "season:native-year:2006",
+    "season:native-year:2007",
+    "season:native-year:2008",
+    "season:native-year:2009",
+    "season:native-year:2010",
+    "season:native-year:2011",
+    "season:native-year:2012",
+    "season:native-year:2013",
+    "season:native-year:2014",
+    "season:native-year:2015",
+    "season:native-year:2016",
+    "season:native-year:2017",
+    "season:native-year:2018",
+    "season:native-year:2019",
+    "season:native-year:2020",
+    "season:native-year:2021",
+    "season:native-year:2022"
+  ],
+  "direct_sql_command": "SELECT * FROM saves; SELECT * FROM players WHERE display_name IN ('Nikola Jokic','Pascal Siakam'); bounded capture-unit and game-mode queries as retained in inspect_evidence.py",
+  "limitations": [
+    "Header source_grade=UNBOUND and null build/fingerprint require independent save-binding provenance before authenticated production admission",
+    "Player native_identity_status and canonical linkage must retain their actual states",
+    "FRANCHISE/REGULARSEASON describes league context; not proof that each game is Fast Sim or 3D",
+    "Per-field unit and time differ; mode from another unit cannot silently certify a field"
+  ],
+  "database_sha256_after": "f76b943e4c716748b4df1c8f6c94779fb57ebb312bbeeb9e4d4dfd97a024b218",
+  "database_unchanged": true
+}
