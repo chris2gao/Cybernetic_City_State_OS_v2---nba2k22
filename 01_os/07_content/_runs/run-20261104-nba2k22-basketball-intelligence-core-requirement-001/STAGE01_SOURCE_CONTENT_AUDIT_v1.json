@@ -1,0 +1,77 @@
+{
+  "audit_id": "NBA2K22-BIC-STAGE01-APPROVED-CONTENT-STATIC-AUDIT-v1",
+  "audit_scope": "Content/structure and evidence label normalization readiness. Not Core normalized_sha256 validation, StageControl acceptance, or seven-stage runner PASS.",
+  "frozen_source_commit": "90d1801003e7a49531ef377137a2a975125bdd06",
+  "source_blobs": {
+    "01a_A0_consensus_v1.json": "d87eb0385fe359661f3efd4d88f3dfa903972ab1",
+    "01a_Human_confirmation_v1.json": "c0092663d590903e0d2779ebe79b1459a2d23480",
+    "01b_requirement_result_A_candidate_v2.json": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+    "01b_Human_confirmation_v2.json": "0deae6d2e841d6674e91a81cedd5a221f1f0647f"
+  },
+  "approved_A_model": "NBA2K22-BIC-A-001",
+  "approved_A_version": 2,
+  "human_approvals": {
+    "a0_confirmed": true,
+    "a_confirmed": true,
+    "distinct": true,
+    "a_blob_bound": true
+  },
+  "counts": {
+    "success_criteria": 8,
+    "result_items": 17,
+    "unknown_questions": 38,
+    "unique_questions": 38,
+    "noncanonical_evidence_statuses": 7
+  },
+  "noncanonical_status_mapping": [
+    {
+      "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+      "source_status": "human_reported_observation",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    },
+    {
+      "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+      "source_status": "human_unverified_causal_hypothesis",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    },
+    {
+      "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+      "source_status": "human_domain_assertion_unverified_this_session",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    },
+    {
+      "result_item_id": "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+      "source_status": "human_reported_observation",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    },
+    {
+      "result_item_id": "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+      "source_status": "human_mechanism_claim_requires_verification",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    },
+    {
+      "result_item_id": "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+      "source_status": "human_mechanism_assertion_not_independently_verified",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    },
+    {
+      "result_item_id": "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+      "source_status": "human_domain_assertion_requires_mechanism_verification",
+      "mapping_to": "candidate_inference",
+      "note": "Conservative machine-compatible projection; retain original source label"
+    }
+  ],
+  "static_content_findings": [],
+  "static_content_result": "PASS_SOURCE_CONTENT_STRUCTURE_SUBSET",
+  "Core_stage01_requirement_findings_executed": false,
+  "normative_PyYAML_normalized_sha256_computed": false,
+  "stage_control_complete": false,
+  "formal_stage01_gate": "NOT_PASSED",
+  "next_blocking_action": "Run pinned Stage01 canonicalizer against exact Core runner and required Git objects; create/gate actual stage_control/acceptance from verified outputs, no fabricated PASS."
+}
