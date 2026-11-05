@@ -1,4 +1,4 @@
-"""Applicable preparation checks; expected absent confirmation never becomes PASS."""
+"""Check the confirmed requirement payload and pending stage owner state."""
 import hashlib,importlib.util,json,subprocess
 from pathlib import Path
 import yaml
@@ -15,19 +15,27 @@ for item in manifest['artifacts']:
     p=OUT/item['path'];assert digest(p)==item['sha256']
     art=yaml.safe_load(p.read_bytes());payloads.append(art['payload'])
     assert art['status']=='candidate_pending_owner_acceptance'
-    assert art['stage_control']['plan_acceptance'] is None and art['stage_control']['completion_acceptance'] is None
+    assert all(value is None for value in art['stage_control'].values())
     for ref in art['input_refs']:assert digest(OUT/ref['path'])==ref['sha256']
 req,p2,p3,p4,p5,p6,p7=payloads
 actual_req=core.requirement_findings(req,1);actual_evidence=core.evidence_findings(p2,req)
-assert actual_req==['stage1_confirmation_binding:requirement_result_A']
+assert actual_req==[]
 assert actual_evidence==[]
-assert req['Human_confirmation']['confirmed'] is False and req['Human_confirmation']['confirmation_ref'] is None
+assert req['Human_confirmation']['confirmed'] is True
 assert req['consensus_Human_confirmation']['confirmed'] is True
 binding=read('NORMALIZED_BINDINGS.json')
 assert req['requirement_result_A']['consensus_ref']=={
     'model_id':req['consensus_A0']['model_id'],'version':req['consensus_A0']['version'],
     'sha256':binding['child_A0_sha256'],'confirmation_ref':binding['child_A0_confirmation_ref']}
 assert req['consensus_Human_confirmation']['confirmation_ref']==binding['child_A0_confirmation_ref']
+assert req['Human_confirmation']['confirmation_ref']==binding['child_A_confirmation_ref']
+assert binding['child_A_confirmation_ref']!=binding['child_A0_confirmation_ref']
+for source in (binding['child_A0_approval_source'],binding['child_A_approval_source']):
+    ref=source['commit']+':'+source['path']
+    raw=subprocess.check_output(['git','show',ref],cwd=ROOT)
+    assert raw==(OUT/source['copy']).read_bytes()
+    assert hashlib.sha256(raw).hexdigest()==source['sha256']
+    assert subprocess.check_output(['git','rev-parse',ref],cwd=ROOT).decode().strip()==source['git_blob']
 assert req['Human_confirmation']['content_sha256']==binding['child_A_payload_sha256']
 assert req['Human_confirmation']['content_sha256']==core.requirement_confirmation_digest(req)
 assert req['consensus_Human_confirmation']['content_sha256']==core.normalized_sha256(req['consensus_A0'])
@@ -55,4 +63,4 @@ prior=ROOT/'01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readi
 inventory=json.loads((prior/'integration/source_inventory.json').read_bytes())
 for item in inventory['changed_files']:assert digest(ROOT/item['path'])==item['sha256']
 parent_map=json.loads((prior/'os/stage01/FIELD_EQUIVALENCE_MAP.json').read_bytes());assert len(parent_map['differences'])==23
-print(json.dumps({'check_scope':'Preparation payload consistency and evidence integrity only','preparation_check':'PASS','actual_core_requirement_findings':actual_req,'actual_core_evidence_findings':actual_evidence,'stage01_formal_status':'PENDING_CHILD_A_CONFIRMATION','official_complete_run_validate':'NOT_RUN_PENDING_CHILD_A_CONFIRMATION','seven_criteria_mapped':7,'source_refs_verified':len(bindings['evidence_sources']),'reviewed_files_identical':len(inventory['changed_files']),'post_formal_freeze_execution':'NOT_RUN','parent_status':'INCOMPLETE_UNCHANGED','core_sha':'08d8e534a3438269aa7d7eb1b080ab11c172f462','core_runner_sha256':digest(CORE/RUNNER)}))
+print(json.dumps({'check_scope':'Preparation payload consistency and evidence integrity only','preparation_check':'PASS','actual_core_requirement_findings':actual_req,'actual_core_evidence_findings':actual_evidence,'stage01_formal_status':'PENDING_STAGE01_OWNER_ACCEPTANCE','official_complete_run_validate':'NOT_RUN_PENDING_STAGE01_OWNER_ACCEPTANCE','seven_criteria_mapped':7,'source_refs_verified':len(bindings['evidence_sources']),'human_approval_refs_verified':2,'reviewed_files_identical':len(inventory['changed_files']),'post_formal_freeze_execution':'NOT_RUN','parent_status':'INCOMPLETE_UNCHANGED','core_sha':'08d8e534a3438269aa7d7eb1b080ab11c172f462','core_runner_sha256':digest(CORE/RUNNER)}))

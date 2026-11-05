@@ -1,0 +1,12 @@
+task_packet:
+  task_id: NBA2K22-BIC-W1-W2-CHILD-A-BIND-STAGE01-ADMISSION-20261105-001
+  branch: task/nba2k22-bic-wave1-wave2-offline-scoped-run-20261105
+  exact_base_sha: b96fab3684e39062f073abac5e83a930d485ed62
+  objective: Bind the approved child A and prepare the Stage01 owner decision package
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+  required_tests: [child_a_and_admission_package, scoped_payload_and_integrity]
+  verification_plan: 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/stage01_admission_verification_plan.json
+  prohibitions: [master_merge, game_process_access, native_write, save_mutation, parent_requirement_edit, business_code_change, fabricated_stage_acceptance, formal_test_freeze]
+  publisher:
+    expected_remote_master_head: 66f8f73f1a91597f4562b834c2acad332ad9de5b

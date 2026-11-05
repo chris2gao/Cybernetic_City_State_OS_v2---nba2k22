@@ -1,5 +1,7 @@
 # Child A v1 Human decision
 
+This document records the earlier candidate at b96fab3684e39062f073abac5e83a930d485ed62. The current review entry is [STAGE01_OWNER_ADMISSION_HANDOFF.md](STAGE01_OWNER_ADMISSION_HANDOFF.md).
+
 The fixed child A0 v1 approval is bound. The current checkpoint is **PENDING_CHILD_A_CONFIRMATION**.
 
 The single next Human decision is whether to approve the complete child A v1 model `NBA2K22-BIC-W1-W2-OFFLINE-A-001` with normalized Requirement payload SHA-256 `693fede10af802267f3657a4f961b812252449d3ebfc1135527f64b88afe2fda`. Review [the complete child A candidate](01_requirement.yml) and [the seven OFF-SC mappings](ACCEPTANCE_MATRIX.json) together. Its confirmation slot is false with a null reference. The previous provisional digest is superseded.

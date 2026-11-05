@@ -1,0 +1,79 @@
+{
+  "status": "PENDING_STAGE01_OWNER_ACCEPTANCE",
+  "run_task_id": "NBA2K22-BIC-W1-W2-OFFLINE-SCOPED-OS-RUN-20261105-001",
+  "stage_id": "workflow_stage_01_requirement_modeling",
+  "dual_requirement_evidence": "CHILD_A_BINDING_INTEGRITY.json",
+  "stage01_candidate": {
+    "stage_id": "workflow_stage_01_requirement_modeling",
+    "path": "01_requirement.yml",
+    "artifact_version": 1,
+    "sha256": "2c4cc1b4e851658650ae1d4eddb4a9298b2b24de145e337998261c5d1f48f73d"
+  },
+  "manifest_sha256": "d16b25265fa4bf064da51889d160699a2fe45415bfd55607468b2de70eb2363b",
+  "core_revision": "08d8e534a3438269aa7d7eb1b080ab11c172f462",
+  "applicable_findings": {
+    "requirement_findings": [],
+    "evidence_findings": []
+  },
+  "next_decision": "Stage01 formal plan acceptance after binding its exact Current_Model",
+  "review_material": [
+    "01_requirement.yml",
+    "ACCEPTANCE_MATRIX.json",
+    "NORMALIZED_BINDINGS.json",
+    "STAGE01_ADMISSION_VERIFICATION.json"
+  ],
+  "authority": {
+    "formal_record_actor_class_required_by_pinned_core": "current_Human",
+    "review_coordination": "GPT-6 / decision_architecture",
+    "stage_action_and_owner_context": "Use run.yml task_packet_ref and the packet's unique stage_actions entry for the actual Stage01 action. Bind the action ID and exact scope before recording either decision.",
+    "policy_refs": [
+      "01_os/01_workflow/实现/七阶段最小运行契约_v1.yml",
+      "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+      "01_os/03_mechanisms/stage_collaborative_deliberation/实现/README.md",
+      "01_os/06_execution/workflow/publication_gate/workflow_publication_gate.py",
+      "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py"
+    ]
+  },
+  "required_history": [
+    {
+      "phase": "M",
+      "required": "Committed Current_Model for exact run task and Stage01 with scoped action, complete model and feasibility basis."
+    },
+    {
+      "phase": "P",
+      "required": "Separate actual Human plan acceptance of M by commit/path/blob, under the stage acceptance validator. Stage01 predecessor_completion_commit is null."
+    },
+    {
+      "phase": "W",
+      "required": "Commit the actual authorized Stage01 output after P. The exact output blob must be absent at P."
+    },
+    {
+      "phase": "V",
+      "required": "Record verification_result as exact commit/path/blob in a commit distinct from W. Current preparation logs cover the candidate only."
+    },
+    {
+      "phase": "C",
+      "required": "Separate actual Human completion acceptance bound to W and its verification result. Its record is absent at W. Stage02 plan later binds this C."
+    }
+  ],
+  "missing_control_bindings": [
+    "action_id",
+    "current_model_ref",
+    "deliberation_receipt_ref",
+    "plan_acceptance",
+    "completion_acceptance"
+  ],
+  "strict_git_ancestry": [
+    "M->P",
+    "P->W",
+    "W->C"
+  ],
+  "stage_control": {
+    "action_id": null,
+    "current_model_ref": null,
+    "deliberation_receipt_ref": null,
+    "plan_acceptance": null,
+    "completion_acceptance": null
+  },
+  "formal_full_run": "NOT_RUN_PENDING_STAGE01_OWNER_ACCEPTANCE"
+}
