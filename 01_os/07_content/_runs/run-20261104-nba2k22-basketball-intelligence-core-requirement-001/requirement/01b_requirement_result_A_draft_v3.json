@@ -1,0 +1,561 @@
+{
+  "requirement_id": "NBA2K22-BASKETBALL-INTELLIGENCE-CORE-REQUIREMENT-MODELING-20261104-001",
+  "model_kind": "requirement_result_A",
+  "model_id": "NBA2K22-BIC-A-001",
+  "version": 3,
+  "status": "DRAFT_PARTIAL_01B",
+  "last_human_decision_batch": "01b-Q7",
+  "stage": "workflow_stage_01_requirement_modeling/01b",
+  "objective": "将已获批 A0 的篮球智能目标细化为可观察的完整球队进攻、防守、人员使用、对手研究和反馈能力，不提前选定实现架构或认定任何 Native 效果已实证。",
+  "consensus_ref": {
+    "model_id": "NBA2K22-BIC-A0-001",
+    "version": 1,
+    "sha256": "4ad6958ede756f45552f0a4a8f3bfab8267a734db8d41289a579a586f74203fe",
+    "confirmation_ref": "current_conversation:2026-11-04:Human-confirm-Basketball-Intelligence-Core-01a-A0-v1",
+    "immutable": true
+  },
+  "human_decisions": [
+    {
+      "question_id": "01b-Q1",
+      "choice": "C",
+      "title": "完整进攻体系涵盖不同比赛情境",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q2",
+      "choice": "C",
+      "title": "完整对手针对性防守体系",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q3",
+      "choice": "C",
+      "title": "自主设计不同阵容组合与使用方案",
+      "user_note": "无额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q4",
+      "choice": "C",
+      "title": "实验性篮球机制理解；理解设置、球员能力、数据、交互和证据强度",
+      "user_note": "无额外补充选项意见；另有本轮整体 Human 补充，见 baseline_priority_human_direction",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q5",
+      "choice": "C",
+      "title": "完整体系侦察、预测对手变化及反针对研究",
+      "user_note": "无单项额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q6",
+      "choice": "C",
+      "title": "协调攻防和阵容，比较多种完整方案及其收益代价",
+      "user_note": "无单项额外补充",
+      "status": "HUMAN_DECIDED"
+    },
+    {
+      "question_id": "01b-Q7",
+      "choice": "B",
+      "title": "具备诊断能力的篮球基准",
+      "status": "HUMAN_DECIDED",
+      "human_note": "原版 AI 在 Human 与各队进行 3D 物理引擎比赛时出现丰富的战术配合；对比约基奇与西亚卡姆的真实出手过程和效率差异，怀疑徽章是影响因素。"
+    }
+  ],
+  "result_items": [
+    {
+      "result_item_id": "RES-01B-OFFENSE",
+      "source_decision": "01b-Q1=C",
+      "title": "完整进攻决策能力（全队—球员—情境）",
+      "kind": "function",
+      "expected_end_state": "给定固定球员名单及其能力、球队战术现状与允许观察的对手资料，统一篮球决策主体能够设计协调的进攻体系，包括核心与球员职责、持球和无球方式、战术类型及手册、倾向与配合，并能提出针对首发、替补、比赛末段和不同对手的适配方案。",
+      "components": [
+        "全队进攻原则与战术目标",
+        "球员进攻职责与联动",
+        "战术手册、PlayTypes、Freelance、教练与倾向候选映射",
+        "首发/替补/末段/对手情境的方案差异"
+      ],
+      "relations": [
+        "进攻方案必须和球员角色及可用阵容组合相容",
+        "实际生效、可写入及持久性不是本裁决已认证的事实"
+      ],
+      "inputs_outputs": [
+        "示例输入：持球组织者、无球射手、顺下内线及本队战术配置；输出：一套进攻意图、球员分工与不同情境下的战术调整提案（具体字段及数值待 Stage02/03 核证）"
+      ],
+      "completeness_rule": "不存在只给整体体系标签而未给关键球员职责/协同及各约定情境处理的情况；若原生机制无法实现，则标记能力缺口而非假定可以生效。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q1=C：涵盖首发、替补、比赛末段和不同对手的完整进攻方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-OFF-01",
+          "scope": "在 Fast Sim 与 CPU vs CPU 3D 模式下不同战术设置实际怎样被调用、覆盖及表现",
+          "closure_evidence": "Native/3D 观察、分模式统计与可追溯设置状态",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-OFF-02",
+          "scope": "末段战术槽、轮换/阵容变更及 PlayTypes 是否能按需求稳定执行",
+          "closure_evidence": "原生读写权限、保存后读回及比赛行为验证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-DEFENSE",
+      "source_decision": "01b-Q2=C",
+      "title": "完整对手针对性防守决策能力",
+      "kind": "function",
+      "expected_end_state": "模型能够分析对手核心球员、首发/替补组合与进攻体系，在全队防守原则和合法个人防守设置间提出协调方案，覆盖对位、持球/无球、掩护、包夹、协防及不同阵容场景，供赛前配置、比赛验证和反馈使用。",
+      "components": [
+        "对手核心与进攻结构识别",
+        "整体防守原则与个人对手策略协同",
+        "不同阵容与关键对手的赛前防守方案",
+        "防守收益与代价及失败反馈"
+      ],
+      "relations": [
+        "遵守 A0 研究/竞技信息隔离",
+        "模型不接管实时临场防守",
+        "整体设置和个人设置可能存在覆盖及原生操作权限约束"
+      ],
+      "inputs_outputs": [
+        "示例输入：对手持球核心、外线射手、掩护人及本队可用防守资源；输出：相应防守意图和有条件的赛前原生设置提案"
+      ],
+      "completeness_rule": "防守提案不能只有保护篮下/限制三分等宽泛口号，须说明对手针对性、人员适配与主要取舍；对未知机制保留 UNKNOWN。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q2=C：需包括分析对手阵容进攻体系和设计首发/替补的针对性防守方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-DEF-01",
+          "scope": "整体和个人防守是否能够按期望并存、覆盖和持久化",
+          "closure_evidence": "独立原生配置认证与实战比较",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-DEF-02",
+          "scope": "不同对手情境下动态阵容匹配和目标个人防守设置的可靠作用",
+          "closure_evidence": "身份映射、合法设置枚举及比赛观察",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-05",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-ROSTER-USE",
+      "source_decision": "01b-Q3=C",
+      "title": "固定名单内的阵容组合及球员职责决策能力",
+      "kind": "function",
+      "expected_end_state": "模型能够在不改变球员成员构成的情况下，按技能互补与攻防优劣设计首发/替补、球员职责、轮换及不同情境使用方案，解释组合选择，并根据比赛和对手信息作出调整提案。",
+      "components": [
+        "球员能力与场上角色评估",
+        "人员互补与冲突分析",
+        "首发/替补、轮换深度与多套阵容候选",
+        "针对比赛情境与对手的使用取舍"
+      ],
+      "relations": [
+        "固定阵容不等于固定角色、首发、轮换和倾向",
+        "原版 AI 可覆盖上场时间或自行换人；不能假定外部完全控制五人阵容",
+        "训练、跨赛季发展和人员交易不属于首版"
+      ],
+      "inputs_outputs": [
+        "示例输入：固定15人名单、球员技术特征及本队进攻防守需要；输出：多个阵容组合的篮球理由、角色分工、预期收益与已知执行限制"
+      ],
+      "completeness_rule": "必须能够说明主要球员如何配合，以及什么情况下采取不同阵容；实际无法控制的上场组合须标注原生限制，不伪称已经实现。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q3=C：自主设计不同阵容组合、互补冲突和对手情境使用方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-ROT-01",
+          "scope": "首发、具体人员组合、轮换深度和分钟在 PC22 的合法可控程度",
+          "closure_evidence": "原生权限/写入回读/游戏自动覆盖验证",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+      "source_decision": "01b-Q4=C + Human round-2 baseline priority",
+      "title": "篮球事实与机制基准理解（首要依赖能力）",
+      "kind": "function",
+      "expected_end_state": "统一篮球决策主体在进行任何策略判断之前，能够正确理解并区分本队及可观察对手的球员属性和能力、原生设置语义与作用条件、真实比赛数据、可能的交互/覆盖关系，以及被证实与尚未证实的机制影响；对错误、缺失或低可信证据不能作出确定性判断。 基准须可依已验证的游戏机制和真实球员能力，诊断方案适配、设置冲突、前置条件及证据缺陷；不能仅从比赛胜负或投篮命中率推断战术错误。",
+      "components": [
+        "球员能力、球风、身体与相关原生字段的真实理解",
+        "教练、球队、战术书、PlayTypes、倾向与阵容设置的语义和合法范围",
+        "比赛数据和可观察行为的真实解释",
+        "机制间作用条件、交互、覆盖与证据可靠性",
+        "前提/事实/假设/未知的可区分性",
+        "策略依赖的基准主张校验",
+        "策略适配与机制前置条件的可解释诊断",
+        "场上行为、创造投篮机会与最终命中结果的证据分离",
+        "徽章与属性/出手质量等机制假说需标识证据状态"
+      ],
+      "relations": [
+        "作为 RES-01B-OFFENSE、RES-01B-DEFENSE、RES-01B-ROSTER-USE 及后续策略评估的先决质量基础",
+        "策略与比赛反馈用于检验及修正基准中的机制认识，不能将结果成功等同于所有因果假设均正确",
+        "具体怎样将基准用于独立判错尚待 Human 明确定义；不预设为某个算法或新数据库"
+      ],
+      "inputs_outputs": [
+        "需求示例：输入球员真实数据、教练设置、候选战术意图和原生比赛观测；输出可检验的事实/机制解释、适用条件、证据强度与不确定性，供后续方案设计和复盘使用"
+      ],
+      "completeness_rule": "首版基准必须在相关决策之前提供可追溯的球员、数据和设置理解；如缺少机制认证则明确 UNKNOWN，并记录会阻断哪些策略结论；不得把原版默认值或固定最优值误认为基准。",
+      "known_facts": [
+        {
+          "item": "Human 强调：设置理解及球员能力/数据理解是最主要的基础；基准越强才涉及策略；优先开发基准，策略用于检验",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 01b-Q7=B：基准应具备独立策略诊断能力",
+          "evidence_status": "human_requirement"
+        },
+        {
+          "item": "Human 报告掘金配合及西亚卡姆/约基奇在 3D 中的不同出手行为和终结表现",
+          "evidence_status": "human_reported_observation"
+        },
+        {
+          "item": "徽章可能解释终结差异",
+          "evidence_status": "human_unverified_causal_hypothesis"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-BASE-02",
+          "scope": "各类原生设置/玩家能力字段/统计数据/实际影响的权威来源、覆盖范围及已证程度",
+          "closure_evidence": "Stage02 真实字段、Native Registry、采集、实机或对照实验结果",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BASE-03",
+          "scope": "战术触发/执行/机会创造/终结效率的诊断深度是否属于首版必需能力",
+          "closure_evidence": "01b-Q8 Human 裁决",
+          "status": "HUMAN_CLARIFICATION_PENDING"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-02",
+        "SC-03",
+        "SC-07",
+        "SC-08"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-OPPONENT-ADAPTATION",
+      "source_decision": "01b-Q5=C",
+      "title": "对手体系侦察、预测与反针对",
+      "kind": "function",
+      "expected_end_state": "依据正式竞技可获取的比赛证据分析对手体系、核心、阵容及弱点，形成有条件的对手可能调整判断、己方针对与反针对备选，并在后续比赛结果出现时更新假设。",
+      "components": [
+        "可观察对手事实",
+        "当前体系与风险分析",
+        "可能调整的有条件推测",
+        "赛前反针对候选",
+        "赛后对手行为反馈"
+      ],
+      "relations": [
+        "继承 A0 信息隔离和不接管比赛实时策略限制",
+        "依赖基准知识解释可观察对手事实"
+      ],
+      "inputs_outputs": [
+        "输入对手可观察球员数据和近期比赛；输出对手打法假设、反针对备选及不确定性说明"
+      ],
+      "completeness_rule": "不能因对手隐藏策略不可见而捏造精确设定；预测不是已知事实。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q5=C：对手研究含预测与反针对",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-OPP-01",
+          "scope": "WorldData 可观察比赛行为是否足以识别对手变化",
+          "closure_evidence": "Stage02 数据字段及可信行为样本检查",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-05",
+        "SC-06",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-INTEGRATED-TRADEOFF",
+      "source_decision": "01b-Q6=C",
+      "title": "进攻、防守与阵容的多方案统一权衡",
+      "kind": "function",
+      "expected_end_state": "面对已确认的篮球目标和资源限制，能够提出多种有篮球依据的完整攻防与阵容使用候选，比较收益、代价、适用对手、机制可信度，选择并保留赛后调整依据。",
+      "components": [
+        "完整方案一致性",
+        "球员与阵容互补/冲突",
+        "进攻防守之间的取舍",
+        "对手适配与不确定性",
+        "基于真实反馈的后续修正"
+      ],
+      "relations": [
+        "以已核验的基准机制和球员事实为依据，不以未经证据支持的固定评分表替代篮球判断",
+        "不要求每次穷举全部组合"
+      ],
+      "inputs_outputs": [
+        "输入同一阵容与对手条件；输出两个或更多有依据且可比较的篮球方案及选择理由，必要时保留不可比较原因"
+      ],
+      "completeness_rule": "方案必须交代主要取舍，而不是分别优化进攻/防守后忽略相互冲突；未证实机制和无法执行的环节必须显式标注。",
+      "known_facts": [
+        {
+          "item": "Human 01b-Q6=C：统一权衡并比较多种完整方案",
+          "evidence_status": "human_requirement"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-TRD-01",
+          "scope": "评价候选方案所需的可观测球员、战术、人员组合数据与机制证据",
+          "closure_evidence": "Stage02 可用数据和机制证据核验",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-06",
+        "SC-07"
+      ]
+    },
+    {
+      "result_item_id": "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+      "source_decision": "Human 01b-Q7=B and accompanying gameplay observation; detailed diagnostic scope subject to 01b-Q8",
+      "title": "实际比赛行为与结果差异的诊断证据",
+      "kind": "function",
+      "expected_end_state": "在可观察且证据允许时，把战术意图、游戏内战术调用、球员场上配合、形成的出手机会及投篮命中/失败分别描述，不把真实 3D 战术执行问题简单压缩成赛后投篮数据。",
+      "components": [
+        "可观察 3D 战术和原生游戏执行证据",
+        "跑位及出手机会",
+        "得分转化与可能影响变量",
+        "跨比赛模式证据来源隔离"
+      ],
+      "relations": [
+        "补充 RES-01B-BASELINE-FOUNDATION 的诊断事实基础",
+        "继承 A0 Q9=C 日历模拟主验证及 CPU vs CPU 3D 关键战术补证",
+        "不以 Human-vs-AI 3D 直接证明 CPU-vs-CPU 3D 或 Fast Sim 机制等价"
+      ],
+      "inputs_outputs": [
+        "例：西亚卡姆中距离晃出半个身位但投失，记录观察到的动作、创造的空间和结果，标注徽章/能力/干扰等候选原因，不能声称徽章因果已经证明。"
+      ],
+      "completeness_rule": "具体诊断分层是否强制属于下一轮 Q8 待决事项；可得证据与未观测事实不能混同。",
+      "known_facts": [
+        {
+          "item": "Human 提供 3D 原版 AI 战术观察和两名球员终结差异",
+          "evidence_status": "human_reported_observation"
+        }
+      ],
+      "unknowns": [
+        {
+          "question_id": "EVQ-01B-3D-01",
+          "scope": "如何在适当比赛模式中证实挡拆、策应、无球跑动、出手机会与实际命中是否分别成立？",
+          "closure_evidence": "后续信息收集、真实观测及受控实验；不预设方法",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-BADGE-01",
+          "scope": "徽章相对投篮能力、出手地点、干扰强度及其他因素对两个球员实际命中率的因果影响是什么？",
+          "closure_evidence": "后续信息收集、真实观测及受控实验；不预设方法",
+          "status": "UNKNOWN"
+        },
+        {
+          "question_id": "EVQ-01B-MODE-01",
+          "scope": "Human 与 AI 的 3D 比赛观察可否迁移至 CPU vs CPU 3D 及 Fast Sim？",
+          "closure_evidence": "后续信息收集、真实观测及受控实验；不预设方法",
+          "status": "UNKNOWN"
+        }
+      ],
+      "acceptance_criterion_ids": [
+        "SC-01",
+        "SC-03",
+        "SC-04",
+        "SC-07"
+      ]
+    }
+  ],
+  "coverage_partial": [
+    {
+      "success_criterion_id": "SC-01",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-INTEGRATED-TRADEOFF",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-02",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-03",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-04",
+      "result_item_ids": [
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-05",
+      "result_item_ids": [
+        "RES-01B-DEFENSE",
+        "RES-01B-OPPONENT-ADAPTATION"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-06",
+      "result_item_ids": [
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-INTEGRATED-TRADEOFF"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-07",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-DEFENSE",
+        "RES-01B-ROSTER-USE",
+        "RES-01B-BASELINE-FOUNDATION",
+        "RES-01B-OPPONENT-ADAPTATION",
+        "RES-01B-INTEGRATED-TRADEOFF",
+        "RES-01B-ONCOURT-EVIDENCE-CANDIDATE"
+      ],
+      "state": "PARTIAL"
+    },
+    {
+      "success_criterion_id": "SC-08",
+      "result_item_ids": [
+        "RES-01B-OFFENSE",
+        "RES-01B-BASELINE-FOUNDATION"
+      ],
+      "state": "PARTIAL"
+    }
+  ],
+  "status_rules": [
+    "Human 已分别确认 Q1、Q2、Q3；未确认完整 requirement_result_A",
+    "本草案不是 OS 机器 runner 的 complete 01_requirement.yml",
+    "每项源自 Human 决策的领域要求与 Native 可行性假设分离",
+    "A0 v1 作为 immutable prior，不得重写",
+    "禁止正式游戏写入或工程开发"
+  ],
+  "next_inquiry_scope": "Q8：针对篮球基准，原生战术执行、创造机会和结果转化的分层诊断是否必需。后续具体采集/自动视频工具属于 Stage02/03，不在 01b 预选。",
+  "previous_version": {
+    "path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_draft_v2.json",
+    "blob_sha": "3d660c28516db69b772baa7480727448014bb6b2",
+    "append_only": true
+  },
+  "baseline_priority_human_direction": {
+    "source": "Human 2026-11-04 01b round-2 supplementary statement",
+    "verbatim": "我觉得最主要的还是基准能力，就是对各种设置的理解，以及球员等能力和数据的理解，这个基础越强，才涉及到策略的问题，所以首先，也是最重要的，就是以建立基准为核心进行开发，而策略只是检验而已。因为基准如果有问题，策略再强也没用，策略如果有问题，用基准一验就知道了。",
+    "accepted_requirement": "基础的设置/球员能力/游戏数据及其机制理解是核心能力和开发优先依赖；不得把策略选型或胜率结果当成基础知识正确的证明；策略验证要反向检验基准理解。 已裁决 01b-Q7=B：基准应独立诊断方案与球员适配、设置冲突、机制先决条件和证据不足，比赛继续承担竞技结果验证。",
+    "interpretation_status": "Q7_B_DIAGNOSTIC_BASELINE_CONFIRMED",
+    "load_bearing_ambiguity": "是否要求基准明确诊断战术设计、原生触发、实际动作执行、创造机会与终结结果的分层差异（待 Q8 Human 裁决）",
+    "ambiguity_disposition": "Q7 职责已裁决 B；对观察行为的诊断粒度在 Q8 进行单问题澄清；不修改已批准的 A0。",
+    "implication_to_a0": "细化 01b 优先关系；未修改或失效 A0 目标和成功判据"
+  },
+  "human_gameplay_evidence": {
+    "source": "Human 2026-11-04 01b-Q7 supplement",
+    "source_status": "USER_REPORTED_3D_OBSERVATION",
+    "context": "Human 表述为自己与各原版 AI 球队比赛的 3D 物理引擎模式。与 CPU vs CPU 3D 和日历模拟是否等价尚未验证。",
+    "observations": [
+      "原版 AI 可以在场上打出多种具有竞争性的组合、配合与战术，而非只能完成简单进攻。",
+      "Human 观察掘金约基奇与明星控卫间的挡拆、中锋策应、反跑三分、空切篮下等行动，与现实篮球策略相似。",
+      "Human 观察西亚卡姆经常中距离假动作后取得约半个身位，却仍有大量顶人投失。",
+      "Human 观察约基奇的篮下单打具有较高的终结效率。"
+    ],
+    "hypotheses": [
+      {
+        "claim": "约基奇和西亚卡姆的终结差异可能主要与当前徽章及成长有关",
+        "evidence_status": "HUMAN_HYPOTHESIS_UNVERIFIED",
+        "other_possible_factors": [
+          "投篮能力/射程与选择",
+          "出手位置与防守干扰",
+          "动作时机",
+          "疲劳",
+          "徽章与其他变量交互"
+        ]
+      },
+      {
+        "claim": "西亚卡姆徽章成长后原本投失的进攻可能有更高终结率",
+        "evidence_status": "HUMAN_HYPOTHESIS_UNVERIFIED",
+        "caution": "不得推断全部投失都将命中，亦不构成编辑徽章的权限"
+      }
+    ],
+    "analytical_requirement": "必须将战术已被调用、战术实际形成跑位/机会、投篮是否命中和真实竞技收益分开解释；不可只通过赛后 Box Score 判断战术是否发生。具体首版必需分层程度待 Human Q8。",
+    "research_questions": [
+      {
+        "id": "EVQ-01B-3D-01",
+        "question": "如何在适当比赛模式中证实挡拆、策应、无球跑动、出手机会与实际命中是否分别成立？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-BADGE-01",
+        "question": "徽章相对投篮能力、出手地点、干扰强度及其他因素对两个球员实际命中率的因果影响是什么？",
+        "status": "UNKNOWN"
+      },
+      {
+        "id": "EVQ-01B-MODE-01",
+        "question": "Human 与 AI 的 3D 比赛观察可否迁移至 CPU vs CPU 3D 及 Fast Sim？",
+        "status": "UNKNOWN"
+      }
+    ]
+  }
+}
