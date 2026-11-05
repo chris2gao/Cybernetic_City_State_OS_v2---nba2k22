@@ -1,0 +1,43 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_06_execution
+artifact_kind: execution_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 0d0b336f93f3e7efba507b13183083187052bac07d04857a7a3487012832098f
+- stage_id: workflow_stage_05_step_decomposition
+  path: 05_steps.yml
+  artifact_version: 1
+  sha256: 4db75a0e6ddbde61e5a7d96c9cbac080a16f10ce9de09de9149e0265325c1aa8
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  executor_role: execution
+  frozen_test_package_sha256: 158cf3700a5a31ab6fec12089e06c931feb8cff9dd2efe01e80a6c40216553e6
+  allowed_write_paths:
+  - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+  actual_write_paths: []
+  unauthorized_write_attempts: []
+  attempts: []
+  formal_execution: NOT_RUN_PENDING_ACCEPTANCE_AND_FREEZE
+  historical_engineering_sources:
+    wave1_reviewed_sha: aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b
+    wave2_reviewed_sha: cdcb293f8a690725cf9168225cc2046ab0574b2b
+    integration_test_candidate: 4998a43a3f9f94d1013e574e99d29b4c3d666de4
+    integration_delivery: bb886c50028e8332849f5b03ad54711a16870cfa
+    accepted_independent_reviews:
+    - 3f27b421e0c1813dbfb890c4583c97e76dfd6f98
+    - 13414798d5992336e28ae1df7e14bf17fbae6a04
+    integration_review: 980ad8c713e06f118d645a6a0bb6dc114b8aacb1
+    core_sha: 08d8e534a3438269aa7d7eb1b080ab11c172f462
+  preparation_is_not_stage06_execution: true

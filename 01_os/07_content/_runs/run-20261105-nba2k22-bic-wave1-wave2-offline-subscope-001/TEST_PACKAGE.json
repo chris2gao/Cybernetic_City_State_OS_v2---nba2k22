@@ -1,0 +1,321 @@
+{
+  "tests": [
+    {
+      "test_id": "OFF-T01",
+      "success_criterion_ids": [
+        "OFF-SC01"
+      ],
+      "result_claim_ids": [
+        "OFF-B01"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E01"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_baseline.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_observation_scope.py"
+      ],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Cross-save/season identity conflict",
+        "Different acquisition batches do not become one fresh snapshot",
+        "Historical cutoff and stale/missing values"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE"
+    },
+    {
+      "test_id": "OFF-T02",
+      "success_criterion_ids": [
+        "OFF-SC02"
+      ],
+      "result_claim_ids": [
+        "OFF-B02"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E02"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_baseline.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_remediation.py"
+      ],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Unknown badge code or qualification",
+        "Withheld or absent sources",
+        "MyPLAYER research cannot certify MyLEAGUE effects"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE"
+    },
+    {
+      "test_id": "OFF-T03",
+      "success_criterion_ids": [
+        "OFF-SC03"
+      ],
+      "result_claim_ids": [
+        "OFF-B03"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E03"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2_remediation.py"
+      ],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Different scope/database/build/mode rejection",
+        "Partial/stale/unknown PlayType cannot prove absence",
+        "Synthetic or unverified source cannot become FACT"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE"
+    },
+    {
+      "test_id": "OFF-T04",
+      "success_criterion_ids": [
+        "OFF-SC04"
+      ],
+      "result_claim_ids": [
+        "OFF-B04"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E04"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2.py",
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2_remediation.py"
+      ],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Changed historical field/before/target cannot inherit validation",
+        "Fake Getter cannot authenticate",
+        "Player edit/trade/draft remain forbidden and execute false"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE"
+    },
+    {
+      "test_id": "OFF-T05",
+      "success_criterion_ids": [
+        "OFF-SC05"
+      ],
+      "result_claim_ids": [
+        "OFF-B05"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E05"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [
+        "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_experiments.py"
+      ],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Missing factorial cells",
+        "Nonfinite numbers and mode contradiction",
+        "Confounded real data stays NOT_CAUSALLY_IDENTIFIED"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE"
+    },
+    {
+      "test_id": "OFF-T06",
+      "success_criterion_ids": [
+        "OFF-SC06"
+      ],
+      "result_claim_ids": [
+        "OFF-B06"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E06"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Historical query_at wrapper isolation vs current query",
+        "Synthetic DB before/after identical",
+        "CLI unknown build/save and source limitations remain visible"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE",
+      "harness_ref": {
+        "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+        "commit": "bb886c50028e8332849f5b03ad54711a16870cfa",
+        "path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verify_cli_integrity.py",
+        "git_blob": "789aec87c946e79e22e15720dda1228078c94650",
+        "sha256": "0be7f4d738ff08b7e166918757323999f2727d63b13956948c24c0b2792caded"
+      }
+    },
+    {
+      "test_id": "OFF-T07",
+      "success_criterion_ids": [
+        "OFF-SC07"
+      ],
+      "result_claim_ids": [
+        "OFF-B07"
+      ],
+      "evidence_claim_ids": [
+        "OFF-E07"
+      ],
+      "kind": "OFFLINE_SYNTHETIC_AND_INTEGRITY",
+      "source_files": [],
+      "expected": "All applicable assertions pass with source, freshness, identity and maturity limitations preserved",
+      "negative_cases": [
+        "Changed source/test hash or damaged archive rejected",
+        "Prior failed attempt retained",
+        "No claim of formal freeze, Human confirmation or independent child acceptance"
+      ],
+      "historical_only": true,
+      "new_formal_execution": "NOT_RUN_PENDING_FORMAL_FREEZE",
+      "harness": "check_scoped_payloads.py with exact historical managed-verification inspection"
+    }
+  ],
+  "test_sources": [
+    {
+      "test_id": "OFFLINE-01",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_baseline.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "5a4c969b138645ab5e79d656cd53d3c4458165b38f5961ff3ad62c7a20136fb2",
+      "discovered_test_functions": [
+        "test_player_keeps_old_field_age_and_mixed_units",
+        "test_team_uses_cutoff",
+        "test_wrong_save_and_season_are_rejected",
+        "test_missing_player_and_invalid_age",
+        "test_badge_absence_keeps_eligibility_unknown",
+        "test_other_season_does_not_override_fields",
+        "test_explicit_native_identity_needs_observation",
+        "test_conflicting_native_identity_is_rejected",
+        "test_cli_normal_entrypoint",
+        "test_unknown_badge_code_is_retained"
+      ]
+    },
+    {
+      "test_id": "OFFLINE-02",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_experiments.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "10a5ef667591b46c296cf33d3b0ec030c3f78631400e86318bf0f9eadc79e409",
+      "discovered_test_functions": [
+        "test_main_and_interaction_contrasts",
+        "test_zero_and_additive",
+        "test_missing_cells_and_confounded_real_data",
+        "test_bad_numbers_and_mode"
+      ]
+    },
+    {
+      "test_id": "OFFLINE-03",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_observation_scope.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "37702445c478ed1da356f660125609a6b8875ae4ce0d0a0021a0181af8d07ace",
+      "discovered_test_functions": [
+        "test_timezone_microseconds_and_partial_field_freshness",
+        "test_future_entities_and_failed_units_are_not_visible",
+        "test_badges_and_ordered_slots_select_current_values_at_the_cutoff",
+        "test_team_staff_and_game_read_the_same_historical_scope",
+        "test_source_key_snapshots_settings_rules_and_market_obey_cutoff",
+        "test_explicit_future_native_unit_pin_cannot_bypass_cutoff",
+        "test_history_keyset_paging_is_complete_through_equal_timestamps",
+        "test_scope_freezes_units_and_cursor_rejects_late_backfill",
+        "test_nested_scope_cross_database_refusal_and_reset",
+        "test_export_filters_before_limit_and_original_file_is_unchanged",
+        "test_all_scoped_table_views_are_executable_and_timestamps_require_timezone",
+        "test_cli_as_of_envelope_and_current_default"
+      ]
+    },
+    {
+      "test_id": "OFFLINE-04",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_player_details.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "8fb373c49acdf15f367cce9489880d7b75bc8405b82567977b00bf50b631d2bc",
+      "discovered_test_functions": [
+        "test_manifest",
+        "test_full_contract_widths_and_distinct_packed_lengths",
+        "test_base_badge_boolean_levels_zero_unknown_and_reserved",
+        "test_public_projection_and_decoding_ignore_all_private_intervals",
+        "test_full_source_only_and_matched_canonical_queries",
+        "test_cross_unit_detail_child_rejects_and_rolls_back",
+        "test_duplicate_native_identity_withholds_canonical_binding",
+        "test_missing_badge_is_not_silently_unowned"
+      ]
+    },
+    {
+      "test_id": "OFFLINE-05",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_remediation.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "8f19e54c88a0909b41e7163172e0114271f297bc26ece90854cecf7edc121cd6",
+      "discovered_test_functions": [
+        "test_observed_and_missing_fields",
+        "test_research_and_unknown_mechanisms",
+        "test_applicability",
+        "test_conflicts_and_identity",
+        "test_empty_and_absent_badge_family",
+        "test_details_and_restricted",
+        "test_mode_contradictions"
+      ]
+    },
+    {
+      "test_id": "OFFLINE-06",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "ba2603ca2f9fd01297bd171cf719c8aecbb06b141f49a47c2a1cff70acf76607",
+      "discovered_test_functions": [
+        "test_fact_role_conflict_and_alternative_explanations",
+        "test_missing_stale_and_conflicting_evidence",
+        "test_badges_and_game_data_never_certify_effect",
+        "test_team_context_and_mode_isolation",
+        "test_end_to_end_plan_is_offline",
+        "test_invalid_value_before_build_and_unavailable_action",
+        "test_forbidden_and_incomplete_capability",
+        "test_ability_tendency_role_disagreement",
+        "test_certified_historical_subset_is_not_current_authority",
+        "test_cli_and_team_role_evidence",
+        "test_play_type_mismatch_and_numeric_contract",
+        "test_intent_mismatch_and_missing_identity_before_source",
+        "test_finding_drives_candidate_plan_and_synthetic_validation",
+        "test_missing_catalog_keeps_partial_diagnosis",
+        "test_relative_profile_remains_a_codec_hypothesis",
+        "test_low_historical_efficiency_is_not_a_causal_rule"
+      ]
+    },
+    {
+      "test_id": "OFFLINE-07",
+      "path": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2_remediation.py",
+      "source_commit": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+      "sha256": "935491064a7ce7c96f7ae089f9ac9d697d62dcb1a00942ac5f4029bc57aed2b8",
+      "discovered_test_functions": [
+        "test_exact_historical_tuple_and_other_fields",
+        "test_fake_or_structured_getter_does_not_self_authenticate",
+        "test_observation_maturity_is_separate_from_role_match",
+        "test_same_labels_different_scope_or_payload_rejected",
+        "test_distinct_database_with_same_labels_rejected",
+        "test_partial_positive_complete_and_stale_playtypes",
+        "test_mixed_units_or_incomplete_coverage_cannot_prove_absence",
+        "test_transaction_draft_and_player_edit_stay_forbidden"
+      ]
+    }
+  ],
+  "technical_tests_sha256": "71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906",
+  "cli_integrity_verifier_ref": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "commit": "bb886c50028e8332849f5b03ad54711a16870cfa",
+    "path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verify_cli_integrity.py",
+    "git_blob": "789aec87c946e79e22e15720dda1228078c94650",
+    "sha256": "0be7f4d738ff08b7e166918757323999f2727d63b13956948c24c0b2792caded"
+  },
+  "existing_plan_ref": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "commit": "bb886c50028e8332849f5b03ad54711a16870cfa",
+    "path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verification_plan.json",
+    "git_blob": "bf797e91d8351e16587f69dc20b094c04fbf3f71",
+    "sha256": "71f942e8c4c4fb349fcc30cd3de91cfc7c8c6dc7325714931de2db01e1eb5b77"
+  },
+  "formal_freeze": false,
+  "formal_freeze_authorization_ref": null,
+  "run_after_freeze": "All seven original pytest files (65 collected tests) plus CLI integrity check once owner freezes this scoped package; actual argv/source metadata retained, no historic reclassification"
+}

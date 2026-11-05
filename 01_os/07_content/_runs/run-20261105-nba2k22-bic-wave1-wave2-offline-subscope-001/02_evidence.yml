@@ -1,0 +1,427 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_02_information_collection
+artifact_kind: evidence_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: d27399a1bd042689b8fb8f2bbff0a4764ed53c6eacb32100089673f9c6b0df09
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  sources:
+  - source_id: S-P0-MATRIX
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 17bca5c5e34a4bc3b153c38634681962e1600ec7
+    path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/P0_REUSE_GAP_MATRIX.md
+    blob_sha: ce2ec4dbd5627d45e2431a50fbdf35f88273f07f
+    evidence_kind: STATIC_INSPECTION_REPORT
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 17bca5c5e34a4bc3b153c38634681962e1600ec7
+      path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/P0_REUSE_GAP_MATRIX.md
+  - source_id: S-P0-RECEIPT
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 17bca5c5e34a4bc3b153c38634681962e1600ec7
+    path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/verification_receipt.json
+    blob_sha: null
+    evidence_kind: DOCUMENT_RESOLUTION_ONLY
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 17bca5c5e34a4bc3b153c38634681962e1600ec7
+      path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/verification_receipt.json
+  - source_id: S-QUERY
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+    blob_sha: 6b64c86f8729b77bd2d1aab18be74b146bf73299
+    evidence_kind: STATIC_SOURCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/query.py
+  - source_id: S-SCOPE
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+    blob_sha: af9090b5ce5b65de5da1464163cb983a6106d6b3
+    evidence_kind: STATIC_SOURCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+  - source_id: S-BADGE-CODEC
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_codec.py
+    blob_sha: 1cde70424f30f258dd421e150a7c72e127404179
+    evidence_kind: STATIC_SOURCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_codec.py
+  - source_id: S-BADGE-PROFILE
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_native_profile.json
+    blob_sha: 93d9b418b948ca4f5f9d80ddf2cc87be4f9693eb
+    evidence_kind: STATIC_PROFILE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/player_detail_native_profile.json
+  - source_id: S-BADGE-REFERENCE
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json
+    blob_sha: f3902a8e3f80296a2d790b24a2b989216d18315f
+    evidence_kind: RESEARCH_REFERENCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json
+  - source_id: S-CALENDAR
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py
+    blob_sha: 19300d7da733aa4fb9990592c3f45291035602fa
+    evidence_kind: STATIC_SOURCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py
+  - source_id: S-GAMEMODE
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/game_mode_reader.py
+    blob_sha: e728486553e3f101c740d694fb310ba871da684e
+    evidence_kind: STATIC_SOURCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/game_mode_reader.py
+  - source_id: S-REA-BULK
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py
+    blob_sha: 4ace01e019f3ca389cd80212ed4cf1171ce28e04
+    evidence_kind: STATIC_SOURCE
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/bulk_executor.py
+  - source_id: S-VAE-REPORT
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+    path: 01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/07_测试执行/loop_verification_and_regression_report.json
+    blob_sha: 7d715ae0bbfc1253ddf690d0fc702ce20485a1a5
+    evidence_kind: HISTORICAL_REPORT
+    publication_status: MASTER_INCLUDED
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+      path: 01_os/07_content/_runs/run-20261101-nba2k22-vae-native-stats-worlddata-loop-001/07_测试执行/loop_verification_and_regression_report.json
+  - source_id: S-A-APPROVED
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: 90d1801003e7a49531ef377137a2a975125bdd06
+    path: 01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_candidate_v2.json
+    blob_sha: e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4
+    evidence_kind: HUMAN_APPROVED_REQUIREMENT_SOURCE
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    current_live_verification: NOT_PERFORMED_FOR_BIC
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 90d1801003e7a49531ef377137a2a975125bdd06
+      path: 01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_candidate_v2.json
+  - source_id: S-BIC-CODE
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: cdcb293f8a690725cf9168225cc2046ab0574b2b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_baseline.py
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: bd4abe370b20bcf5b670503b354b3f5879c34b50dfab64dfd1775258506205b1
+  - source_id: S-W2-CODE
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: cdcb293f8a690725cf9168225cc2046ab0574b2b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_diagnostics.py
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: 4cbfd1722c34e29488ad4444f7cf42321665648cb9677b4c35825e0943378618
+  - source_id: S-W2-PLANS
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: cdcb293f8a690725cf9168225cc2046ab0574b2b
+      path: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_plans.py
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: 159be87bbe48770e336e922ae298145ac7f68c7f4074cce4d0d32368283cef7f
+  - source_id: S-W1-TESTS
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b
+      path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-series-remediation-001/verification_receipt.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: ad39f65145dd66e6970ee5642f0e14da1684398770fe39df6f77352d6052e3b0
+  - source_id: S-W2-TESTS
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: cdcb293f8a690725cf9168225cc2046ab0574b2b
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave2-remediation-001/verification_receipt.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: e902d8b9536936d8fd247c2ad827cf9f184ff52f091ad64d0672b4a08bbee5dd
+  - source_id: S-W2-HISTORY
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: cdcb293f8a690725cf9168225cc2046ab0574b2b
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave2-remediation-001/historical_cases.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: 670c7670c5b0a79f78a04c6b63e52f2c11baec565080da4ab4892484f6f1b879
+  - source_id: S-W1-REVIEW
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 3f27b421e0c1813dbfb890c4583c97e76dfd6f98
+      path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-series-review-001/BIC_BATCH1_DIFFERENCE_REVIEW_CLOSEOUT_v1.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: fee99f679abcee5d4c2d98517cb04632a94847b623f2b07ac298f775dbe08773
+  - source_id: S-W2-REVIEW
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 13414798d5992336e28ae1df7e14bf17fbae6a04
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave2-series-review-001/BIC_WAVE2_DIFFERENCE_REVIEW_CLOSEOUT_v1.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+    sha256: bab3e509c66730576a05eb058ac3de6e30884f01eeeb2a7f63db18be2ffb6770
+  - source_id: S-SUB-CHARTER
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: eece048196e6e8077cc5c9a174a759d199aa5bb3
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/W1_W2_SCOPED_RUN_CHARTER_CANDIDATE_v1.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+  - source_id: S-ROUTE
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: eece048196e6e8077cc5c9a174a759d199aa5bb3
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+  - source_id: S-INTEGRATION
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: bb886c50028e8332849f5b03ad54711a16870cfa
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/INTEGRATION_CANDIDATE_REPORT.json
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+  - source_id: S-INTEGRATION-REVIEW
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 980ad8c713e06f118d645a6a0bb6dc114b8aacb1
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-independent-review-001/INDEPENDENT_REVIEW_HUMAN_REPORT.md
+    publication_status: SOURCE_BRANCH_NOT_MASTER
+  claims:
+  - claim_id: OFF-E01
+    statement: Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES01
+    success_criterion_ids:
+    - OFF-SC01
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E02
+    statement: Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES02
+    success_criterion_ids:
+    - OFF-SC02
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E03
+    statement: Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES03
+    success_criterion_ids:
+    - OFF-SC03
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E04
+    statement: Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES04
+    success_criterion_ids:
+    - OFF-SC04
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E05
+    statement: Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES05
+    success_criterion_ids:
+    - OFF-SC05
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E06
+    statement: Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES06
+    success_criterion_ids:
+    - OFF-SC06
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E07
+    statement: Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access.
+    source_ids:
+    - S-BIC-CODE
+    - S-W2-CODE
+    - S-W2-PLANS
+    - S-W1-TESTS
+    - S-W2-TESTS
+    - S-INTEGRATION
+    - S-W1-REVIEW
+    - S-W2-REVIEW
+    evidence_kind: OFFLINE_TEST
+    purpose: FEASIBILITY
+    limits: Recorded execution before this child formal freeze; supports candidate feasibility, not child completion or live effect
+    result_item_ids:
+    - OFF-RES07
+    success_criterion_ids:
+    - OFF-SC07
+    source_classifications:
+    - STATIC_INSPECTED
+    - RECORDED_TEST
+    - INDEPENDENT_SOURCE_REVIEW
+  - claim_id: OFF-E-LIVE-UNKNOWN
+    statement: Game source authentication, badge/XP and real game causal effects remain unknown and excluded
+    source_ids:
+    - S-W2-HISTORY
+    evidence_kind: UNKNOWN
+    purpose: BACKGROUND
+    limits: UNBOUND/REAL_DATA_NOT_VERIFIED; unknown mode; no live authority
+    result_item_ids: []
+    success_criterion_ids: []
+    closure_evidence: Separately authorized exact-context Native and game experiments outside this child
+    source_classifications:
+    - UNKNOWN_LIVE_EFFECT
+  research_questions:
+  - question_id: OFF-LIVE-EXCLUDED
+    status: UNKNOWN
+    scope: Excluded live identity, game-mode and effect authentication
+    closure_evidence: Separate authorized research, never inferred from this offline subscope
+  completion:
+    feasibility_basis_complete: true
+    conflicts_resolved_or_durable: true
+    scope: Child offline feasibility only; full BIC feasibility never asserted
+  historical_parent_evidence_candidate_ref:
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: bb886c50028e8332849f5b03ad54711a16870cfa
+    path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/os/stage_candidates/02_evidence.yml
+    git_blob: 1e6f211a9c371ba4ae924bd5ee1d941a57dab533
+    sha256: 4b50e31830b37f77776d5c3fb64a1364dfd3530cb5f7ddbebf753b038f265527

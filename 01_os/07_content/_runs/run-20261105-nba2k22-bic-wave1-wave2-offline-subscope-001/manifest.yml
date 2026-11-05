@@ -1,0 +1,36 @@
+schema_version: citystate.workflow.run_manifest.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+workflow_id: citystate_seven_stage_minimum_operational_loop
+workflow_version: 1
+route: normal
+artifacts:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: d27399a1bd042689b8fb8f2bbff0a4764ed53c6eacb32100089673f9c6b0df09
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: c93353e1c43aa267ad5f97a551f40019b699c0f68ea2f632f0cb5383acd14458
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 29ab80b2c8d381356f3040399d8a90aceec919fc910f5e2f1c70e48f5e6a15bd
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 0d0b336f93f3e7efba507b13183083187052bac07d04857a7a3487012832098f
+- stage_id: workflow_stage_05_step_decomposition
+  path: 05_steps.yml
+  artifact_version: 1
+  sha256: 4db75a0e6ddbde61e5a7d96c9cbac080a16f10ce9de09de9149e0265325c1aa8
+- stage_id: workflow_stage_06_execution
+  path: 06_execution.yml
+  artifact_version: 1
+  sha256: f67a31cbc0ea5d477b6b1aae33706f89dfce38b4ca02f48f5fb50cb7b8c616ce
+- stage_id: workflow_stage_07_test_execution
+  path: 07_verification.yml
+  artifact_version: 1
+  sha256: cf172e58130f88603fdf7c7dc0052f8b5bd852c9c2e850809e6501e01402a3f0
+candidate_only: true
+completion_expected: false

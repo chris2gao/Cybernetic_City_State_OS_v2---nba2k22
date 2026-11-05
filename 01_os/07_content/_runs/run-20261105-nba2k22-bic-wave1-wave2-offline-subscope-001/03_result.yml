@@ -1,0 +1,154 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_03_result_modeling
+artifact_kind: result_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: d27399a1bd042689b8fb8f2bbff0a4764ed53c6eacb32100089673f9c6b0df09
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: c93353e1c43aa267ad5f97a551f40019b699c0f68ea2f632f0cb5383acd14458
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  result_id: NBA2K22-BIC-W1-W2-OFFLINE-B-001
+  claims:
+  - result_claim_id: OFF-B01
+    outcome: Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch.
+    evidence_claim_ids:
+    - OFF-E01
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - test_bic_baseline.py
+    - test_observation_scope.py
+    - bic_cli.py
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  - result_claim_id: OFF-B02
+    outcome: Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts.
+    evidence_claim_ids:
+    - OFF-E02
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - test_bic_baseline.py
+    - test_bic_remediation.py
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  - result_claim_id: OFF-B03
+    outcome: Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof.
+    evidence_claim_ids:
+    - OFF-E03
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - test_bic_wave2.py
+    - test_bic_wave2_remediation.py
+    - bic_wave2_cli.py
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  - result_claim_id: OFF-B04
+    outcome: Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false.
+    evidence_claim_ids:
+    - OFF-E04
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - test_bic_wave2.py
+    - test_bic_wave2_remediation.py
+    - bic_plans.py
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  - result_claim_id: OFF-B05
+    outcome: Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED.
+    evidence_claim_ids:
+    - OFF-E05
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - test_bic_experiments.py
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  - result_claim_id: OFF-B06
+    outcome: Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance.
+    evidence_claim_ids:
+    - OFF-E06
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - integration/cli/cli_integrity_receipt.json
+    - integration/attempt-02/result.json
+    - integration/managed_inspect_receipt.json
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  - result_claim_id: OFF-B07
+    outcome: Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access.
+    evidence_claim_ids:
+    - OFF-E07
+    inputs:
+    - Reviewed Wave1/Wave2 source at fixed SHA and synthetic fixture inputs
+    outputs:
+    - INTEGRATION_CANDIDATE_REPORT.json
+    - integration/technical_test_freeze.json
+    - delivery_manifest.json
+    - CHECKPOINT.json
+    reproduction: TEST_PACKAGE.json and prior RUN_REPRODUCIBILITY.md
+    scope: OFFLINE_CHILD_ONLY
+  requirement_satisfaction:
+  - criterion_id: OFF-SC01
+    result_claim_ids:
+    - OFF-B01
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  - criterion_id: OFF-SC02
+    result_claim_ids:
+    - OFF-B02
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  - criterion_id: OFF-SC03
+    result_claim_ids:
+    - OFF-B03
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  - criterion_id: OFF-SC04
+    result_claim_ids:
+    - OFF-B04
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  - criterion_id: OFF-SC05
+    result_claim_ids:
+    - OFF-B05
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  - criterion_id: OFF-SC06
+    result_claim_ids:
+    - OFF-B06
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  - criterion_id: OFF-SC07
+    result_claim_ids:
+    - OFF-B07
+    status: CANDIDATE_EVIDENCE_AVAILABLE_NOT_FORMALLY_ACCEPTED
+    parent_satisfied: false
+  alternatives_rejected:
+  - Reimplementing reviewed code
+  - Borrowing parent Human approval as child acceptance
+  - Treating historical test archives as child post-formal-freeze execution
+  prior_six_plus_two_results_ref:
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: bb886c50028e8332849f5b03ad54711a16870cfa
+    path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/os/stage_candidates/03_result.yml
+    git_blob: 323adee479565b83de4e5a4eff7934db1a77e1bb
+    sha256: 6e883aec7d312854e61092c0324aa0a981f1880322c3548127f1a66e3a3ee88a

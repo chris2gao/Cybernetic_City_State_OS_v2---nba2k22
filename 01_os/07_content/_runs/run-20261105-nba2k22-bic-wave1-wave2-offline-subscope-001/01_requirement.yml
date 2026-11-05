@@ -1,0 +1,301 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_01_requirement_modeling
+artifact_kind: requirement_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs: []
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  requirement_id: NBA2K22-BIC-W1-W2-OFFLINE-A-001
+  objective: Verify only the reviewed Wave1/Wave2 offline capabilities in a separate child Run
+  success_criteria:
+  - criterion_id: OFF-SC01
+    statement: Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch.
+    observable: true
+  - criterion_id: OFF-SC02
+    statement: Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts.
+    observable: true
+  - criterion_id: OFF-SC03
+    statement: Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof.
+    observable: true
+  - criterion_id: OFF-SC04
+    statement: Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false.
+    observable: true
+  - criterion_id: OFF-SC05
+    statement: Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED.
+    observable: true
+  - criterion_id: OFF-SC06
+    statement: Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance.
+    observable: true
+  - criterion_id: OFF-SC07
+    statement: Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access.
+    observable: true
+  constraints: &id001
+  - BIC-vs-BIC independent autonomous game competition SC-05
+  - Actual real-save build/identity certification
+  - PC22 MyLEAGUE badge eligibility/XP or animated effect verification
+  - Native Getter certification, SETTER/REA game writes, coach setting game changes
+  - Fast Sim/3D behavioral causal validation
+  - Full parent SC01-SC08 completion
+  - Production environment and performance scaling acceptance
+  - Master merge or PR auto-merge
+  consensus_A0:
+    model_id: NBA2K22-BIC-W1-W2-OFFLINE-A0-001
+    version: 1
+    objective: Verify only the reviewed Wave1/Wave2 offline capabilities in a separate child Run
+    success_direction: Seven OFF-SC criteria reproducible without claiming parent completion or live game effects
+    boundaries: *id001
+    terms:
+      child_run: Offline evidence subscope; parent remains incomplete
+      route_approval: Preparation only, never stage owner acceptance
+      formal_freeze: Actual lawful owner disposition, not an existing technical SHA
+  consensus_Human_confirmation:
+    confirmed: false
+    model_kind: consensus_A0
+    model_id: NBA2K22-BIC-W1-W2-OFFLINE-A0-001
+    artifact_version: 1
+    content_sha256: 908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9
+    confirmation_ref: null
+    status: PENDING_ACTUAL_CHILD_A0_ACCEPTANCE
+  parent_requirement_ref:
+    model_id: NBA2K22-BIC-A-001
+    git_blob_sha1: e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4
+    status: HUMAN_APPROVED_REQUIREMENTS_FULL_PARENT_INCOMPLETE
+    relationship: CHILD_VERIFICATION_SUBSCOPE_ONLY
+    no_parent_mutation: true
+  route_approval_ref:
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: eece048196e6e8077cc5c9a174a759d199aa5bb3
+    path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json
+    git_blob: 2ae93f3538be6d2a04c3c8c0c64e49d5942e1a67
+    sha256: 72737b03469e420b130ed909c053d75f802a845f49a34d1ec4f9d25451837f3b
+    copy: sources/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json
+  parent_confirmations_are_not_child_confirmations: true
+  requirement_result_A:
+    model_id: NBA2K22-BIC-W1-W2-OFFLINE-A-001
+    version: 1
+    consensus_ref:
+      model_id: NBA2K22-BIC-W1-W2-OFFLINE-A0-001
+      version: 1
+      sha256: 908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9
+      confirmation_ref: null
+    result_items:
+    - result_item_id: OFF-RES01
+      title: Offline capability OFF-SC01
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - test_bic_baseline.py
+      - test_observation_scope.py
+      - bic_cli.py
+      relations:
+      - Supports parent SC-01 without satisfying it
+      - Supports parent SC-07 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC01
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q01
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    - result_item_id: OFF-RES02
+      title: Offline capability OFF-SC02
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - test_bic_baseline.py
+      - test_bic_remediation.py
+      relations:
+      - Supports parent SC-02 without satisfying it
+      - Supports parent SC-07 without satisfying it
+      - Supports parent SC-08 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC02
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q02
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    - result_item_id: OFF-RES03
+      title: Offline capability OFF-SC03
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - test_bic_wave2.py
+      - test_bic_wave2_remediation.py
+      - bic_wave2_cli.py
+      relations:
+      - Supports parent SC-01 without satisfying it
+      - Supports parent SC-07 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC03
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q03
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    - result_item_id: OFF-RES04
+      title: Offline capability OFF-SC04
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - test_bic_wave2.py
+      - test_bic_wave2_remediation.py
+      - bic_plans.py
+      relations:
+      - Supports parent SC-02 without satisfying it
+      - Supports parent SC-08 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC04
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q04
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    - result_item_id: OFF-RES05
+      title: Offline capability OFF-SC05
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - test_bic_experiments.py
+      relations:
+      - Supports parent SC-03 without satisfying it
+      - Supports parent SC-04 without satisfying it
+      - Supports parent SC-06 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC05
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q05
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    - result_item_id: OFF-RES06
+      title: Offline capability OFF-SC06
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - integration/cli/cli_integrity_receipt.json
+      - integration/attempt-02/result.json
+      - integration/managed_inspect_receipt.json
+      relations:
+      - Supports parent SC-07 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC06
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q06
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    - result_item_id: OFF-RES07
+      title: Offline capability OFF-SC07
+      kind: OFFLINE_VERIFICATION_RESULT
+      expected_end_state: Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access.
+      completeness_rule: Exact evidence and tests support this scoped criterion, followed by lawful owner and independent acceptance; no parent satisfaction inferred
+      components:
+      - INTEGRATION_CANDIDATE_REPORT.json
+      - integration/technical_test_freeze.json
+      - delivery_manifest.json
+      - CHECKPOINT.json
+      relations:
+      - Supports parent SC-07 without satisfying it
+      - Supports parent SC-08 without satisfying it
+      inputs_outputs:
+      - 'Input: fixed reviewed code and synthetic fixtures; output: source-qualified result and actual bounded validation receipts'
+      acceptance_criterion_ids:
+      - OFF-SC07
+      known_facts:
+      - item: Reviewed source and archived regression exist on fixed independent refs
+        evidence_status: static_source
+      unknowns:
+      - question_id: OFF-Q07
+        scope: Current child criteria, stage acceptance and formal frozen execution are pending
+        closure_evidence: Actual owner records then frozen-package execution and independent child acceptance
+        status: UNKNOWN
+    coverage:
+    - success_criterion_id: OFF-SC01
+      result_item_ids:
+      - OFF-RES01
+      evidence_questions:
+      - OFF-Q01
+    - success_criterion_id: OFF-SC02
+      result_item_ids:
+      - OFF-RES02
+      evidence_questions:
+      - OFF-Q02
+    - success_criterion_id: OFF-SC03
+      result_item_ids:
+      - OFF-RES03
+      evidence_questions:
+      - OFF-Q03
+    - success_criterion_id: OFF-SC04
+      result_item_ids:
+      - OFF-RES04
+      evidence_questions:
+      - OFF-Q04
+    - success_criterion_id: OFF-SC05
+      result_item_ids:
+      - OFF-RES05
+      evidence_questions:
+      - OFF-Q05
+    - success_criterion_id: OFF-SC06
+      result_item_ids:
+      - OFF-RES06
+      evidence_questions:
+      - OFF-Q06
+    - success_criterion_id: OFF-SC07
+      result_item_ids:
+      - OFF-RES07
+      evidence_questions:
+      - OFF-Q07
+  Human_confirmation:
+    confirmed: false
+    model_kind: requirement_result_A
+    model_id: NBA2K22-BIC-W1-W2-OFFLINE-A-001
+    artifact_version: 1
+    content_sha256: c8184084a9229cedc67de04735a481d387f121561ea4e7be0de0592396ad5b93
+    confirmation_ref: null
+    status: PENDING_ACTUAL_CHILD_A_ACCEPTANCE

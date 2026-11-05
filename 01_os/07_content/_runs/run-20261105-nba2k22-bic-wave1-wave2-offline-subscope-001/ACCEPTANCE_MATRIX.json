@@ -1,0 +1,148 @@
+[
+  {
+    "criterion_id": "OFF-SC01",
+    "candidate_statement": "Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch.",
+    "parent_support": [
+      "SC-01",
+      "SC-07"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES01",
+    "evidence_claim": "OFF-E01",
+    "result_claim": "OFF-B01",
+    "test_id": "OFF-T01",
+    "step_id": "OFF-STEP01",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "test_bic_baseline.py",
+      "test_observation_scope.py",
+      "bic_cli.py"
+    ]
+  },
+  {
+    "criterion_id": "OFF-SC02",
+    "candidate_statement": "Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts.",
+    "parent_support": [
+      "SC-02",
+      "SC-07",
+      "SC-08"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES02",
+    "evidence_claim": "OFF-E02",
+    "result_claim": "OFF-B02",
+    "test_id": "OFF-T02",
+    "step_id": "OFF-STEP02",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "test_bic_baseline.py",
+      "test_bic_remediation.py"
+    ]
+  },
+  {
+    "criterion_id": "OFF-SC03",
+    "candidate_statement": "Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof.",
+    "parent_support": [
+      "SC-01",
+      "SC-07"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES03",
+    "evidence_claim": "OFF-E03",
+    "result_claim": "OFF-B03",
+    "test_id": "OFF-T03",
+    "step_id": "OFF-STEP03",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "test_bic_wave2.py",
+      "test_bic_wave2_remediation.py",
+      "bic_wave2_cli.py"
+    ]
+  },
+  {
+    "criterion_id": "OFF-SC04",
+    "candidate_statement": "Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false.",
+    "parent_support": [
+      "SC-02",
+      "SC-08"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES04",
+    "evidence_claim": "OFF-E04",
+    "result_claim": "OFF-B04",
+    "test_id": "OFF-T04",
+    "step_id": "OFF-STEP04",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "test_bic_wave2.py",
+      "test_bic_wave2_remediation.py",
+      "bic_plans.py"
+    ]
+  },
+  {
+    "criterion_id": "OFF-SC05",
+    "candidate_statement": "Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED.",
+    "parent_support": [
+      "SC-03",
+      "SC-04",
+      "SC-06"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES05",
+    "evidence_claim": "OFF-E05",
+    "result_claim": "OFF-B05",
+    "test_id": "OFF-T05",
+    "step_id": "OFF-STEP05",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "test_bic_experiments.py"
+    ]
+  },
+  {
+    "criterion_id": "OFF-SC06",
+    "candidate_statement": "Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance.",
+    "parent_support": [
+      "SC-07"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES06",
+    "evidence_claim": "OFF-E06",
+    "result_claim": "OFF-B06",
+    "test_id": "OFF-T06",
+    "step_id": "OFF-STEP06",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "integration/cli/cli_integrity_receipt.json",
+      "integration/attempt-02/result.json",
+      "integration/managed_inspect_receipt.json"
+    ]
+  },
+  {
+    "criterion_id": "OFF-SC07",
+    "candidate_statement": "Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access.",
+    "parent_support": [
+      "SC-07",
+      "SC-08"
+    ],
+    "parent_satisfied": false,
+    "requirement_item": "OFF-RES07",
+    "evidence_claim": "OFF-E07",
+    "result_claim": "OFF-B07",
+    "test_id": "OFF-T07",
+    "step_id": "OFF-STEP07",
+    "stage06": "NOT_RUN_PENDING_FORMAL_FREEZE",
+    "stage07": "NOT_RUN_PENDING_INDEPENDENT_ACCEPTANCE",
+    "historical_evidence": [
+      "INTEGRATION_CANDIDATE_REPORT.json",
+      "integration/technical_test_freeze.json",
+      "delivery_manifest.json",
+      "CHECKPOINT.json"
+    ]
+  }
+]

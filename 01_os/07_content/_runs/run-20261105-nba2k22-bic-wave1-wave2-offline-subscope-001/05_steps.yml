@@ -1,0 +1,171 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_05_step_decomposition
+artifact_kind: step_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 0d0b336f93f3e7efba507b13183083187052bac07d04857a7a3487012832098f
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  steps:
+  - step_id: OFF-STEP01
+    description: Resolve scoped source/identity facts
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B01
+    test_ids:
+    - OFF-T01
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on: []
+  - step_id: OFF-STEP02
+    description: Review source maturity, badge unknowns and coverage
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B02
+    test_ids:
+    - OFF-T02
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on:
+    - OFF-STEP01
+  - step_id: OFF-STEP03
+    description: Bind player/team diagnostics and negative scope cases
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B03
+    test_ids:
+    - OFF-T03
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on:
+    - OFF-STEP02
+  - step_id: OFF-STEP04
+    description: Bind conservative Native plan semantics
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B04
+    test_ids:
+    - OFF-T04
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on:
+    - OFF-STEP03
+  - step_id: OFF-STEP05
+    description: Bind offline 2x2 and confounded negatives
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B05
+    test_ids:
+    - OFF-T05
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on:
+    - OFF-STEP04
+  - step_id: OFF-STEP06
+    description: Run approved frozen offline regression and CLI isolation
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B06
+    test_ids:
+    - OFF-T06
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on:
+    - OFF-STEP05
+  - step_id: OFF-STEP07
+    description: Collect scoped independent acceptance and complete-run gate
+    responsibility: execution for authorized preparation; lawful owner for disposition; independent_review for child acceptance
+    result_claim_ids:
+    - OFF-B07
+    test_ids:
+    - OFF-T07
+    allowed_write_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/**
+    retry_budget: 3
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    checkpoint: CHECKPOINT.json
+    stop_gate: Single pending owner decision package; no invented predecessor/freeze/acceptance history
+    preparation_status: CANDIDATE_PREPARED
+    historical_business_implementation: ALREADY_REVIEWED_NOT_REEXECUTED
+    depends_on:
+    - OFF-STEP06
+  upstream_invalidation_targets:
+  - workflow_stage_01_requirement_modeling
+  - workflow_stage_02_information_collection
+  - workflow_stage_03_result_modeling
+  - workflow_stage_04_test_generation
+  prior_seven_step_plan_ref:
+    repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+    commit: bb886c50028e8332849f5b03ad54711a16870cfa
+    path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/os/stage_candidates/05_steps.yml
+    git_blob: d0d1aaead7f435f78f532eb0584ce9f5acea5563
+    sha256: c5cb68bc8cb175d20c0feb9ba8b612e629118a4f51c3795ea80aa052b7485a2c

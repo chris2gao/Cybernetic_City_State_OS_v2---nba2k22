@@ -1,0 +1,163 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_04_test_generation
+artifact_kind: frozen_test_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 1
+  sha256: d27399a1bd042689b8fb8f2bbff0a4764ed53c6eacb32100089673f9c6b0df09
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: c93353e1c43aa267ad5f97a551f40019b699c0f68ea2f632f0cb5383acd14458
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 29ab80b2c8d381356f3040399d8a90aceec919fc910f5e2f1c70e48f5e6a15bd
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  frozen: false
+  freeze_authorization_ref: null
+  tests:
+  - test_id: OFF-T01
+    success_criterion_ids:
+    - OFF-SC01
+    result_claim_ids:
+    - OFF-B01
+    evidence_claim_ids:
+    - OFF-E01
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_baseline.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_observation_scope.py
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Cross-save/season identity conflict
+    - Different acquisition batches do not become one fresh snapshot
+    - Historical cutoff and stale/missing values
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+  - test_id: OFF-T02
+    success_criterion_ids:
+    - OFF-SC02
+    result_claim_ids:
+    - OFF-B02
+    evidence_claim_ids:
+    - OFF-E02
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_baseline.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_remediation.py
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Unknown badge code or qualification
+    - Withheld or absent sources
+    - MyPLAYER research cannot certify MyLEAGUE effects
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+  - test_id: OFF-T03
+    success_criterion_ids:
+    - OFF-SC03
+    result_claim_ids:
+    - OFF-B03
+    evidence_claim_ids:
+    - OFF-E03
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2_remediation.py
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Different scope/database/build/mode rejection
+    - Partial/stale/unknown PlayType cannot prove absence
+    - Synthetic or unverified source cannot become FACT
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+  - test_id: OFF-T04
+    success_criterion_ids:
+    - OFF-SC04
+    result_claim_ids:
+    - OFF-B04
+    evidence_claim_ids:
+    - OFF-E04
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_wave2_remediation.py
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Changed historical field/before/target cannot inherit validation
+    - Fake Getter cannot authenticate
+    - Player edit/trade/draft remain forbidden and execute false
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+  - test_id: OFF-T05
+    success_criterion_ids:
+    - OFF-SC05
+    result_claim_ids:
+    - OFF-B05
+    evidence_claim_ids:
+    - OFF-E05
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_bic_experiments.py
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Missing factorial cells
+    - Nonfinite numbers and mode contradiction
+    - Confounded real data stays NOT_CAUSALLY_IDENTIFIED
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+  - test_id: OFF-T06
+    success_criterion_ids:
+    - OFF-SC06
+    result_claim_ids:
+    - OFF-B06
+    evidence_claim_ids:
+    - OFF-E06
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files: []
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Historical query_at wrapper isolation vs current query
+    - Synthetic DB before/after identical
+    - CLI unknown build/save and source limitations remain visible
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+    harness_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: bb886c50028e8332849f5b03ad54711a16870cfa
+      path: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verify_cli_integrity.py
+      git_blob: 789aec87c946e79e22e15720dda1228078c94650
+      sha256: 0be7f4d738ff08b7e166918757323999f2727d63b13956948c24c0b2792caded
+  - test_id: OFF-T07
+    success_criterion_ids:
+    - OFF-SC07
+    result_claim_ids:
+    - OFF-B07
+    evidence_claim_ids:
+    - OFF-E07
+    kind: OFFLINE_SYNTHETIC_AND_INTEGRITY
+    source_files: []
+    expected: All applicable assertions pass with source, freshness, identity and maturity limitations preserved
+    negative_cases:
+    - Changed source/test hash or damaged archive rejected
+    - Prior failed attempt retained
+    - No claim of formal freeze, Human confirmation or independent child acceptance
+    historical_only: true
+    new_formal_execution: NOT_RUN_PENDING_FORMAL_FREEZE
+    harness: check_scoped_payloads.py with exact historical managed-verification inspection
+  test_package_sha256: 158cf3700a5a31ab6fec12089e06c931feb8cff9dd2efe01e80a6c40216553e6
+  technical_source_package_sha256: 71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906
+  scoped_package_file_sha256: 984c826a29706b600e8972ae7862a4365f4f7c57590d1da217b7cff3955c0cba
+  formal_freeze_required: true

@@ -1,0 +1,320 @@
+{
+  "task_id": "NBA2K22-BIC-W1-W2-OFFLINE-SCOPED-OS-RUN-20261105-001",
+  "status": "PENDING_OWNER_ACCEPTANCE",
+  "single_gate": "Obtain lawful scoped stage dispositions, in actual predecessor order; no execution self-acceptance",
+  "route_approval": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "commit": "eece048196e6e8077cc5c9a174a759d199aa5bb3",
+    "path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json",
+    "git_blob": "2ae93f3538be6d2a04c3c8c0c64e49d5942e1a67",
+    "sha256": "72737b03469e420b130ed909c053d75f802a845f49a34d1ec4f9d25451837f3b",
+    "copy": "sources/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json"
+  },
+  "charter_ref": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "commit": "eece048196e6e8077cc5c9a174a759d199aa5bb3",
+    "path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/W1_W2_SCOPED_RUN_CHARTER_CANDIDATE_v1.json",
+    "git_blob": "ea9c57f4bf1e9addd2594581cb45a1342da3ad25",
+    "sha256": "cc8360cda1ac92919c07a0397d73dc468fa08d399f383beb345b31d9cd347889",
+    "copy": "sources/W1_W2_SCOPED_RUN_CHARTER_CANDIDATE_v1.json"
+  },
+  "criteria": [
+    {
+      "id": "OFF-SC01",
+      "required": "Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch."
+    },
+    {
+      "id": "OFF-SC02",
+      "required": "Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts."
+    },
+    {
+      "id": "OFF-SC03",
+      "required": "Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof."
+    },
+    {
+      "id": "OFF-SC04",
+      "required": "Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false."
+    },
+    {
+      "id": "OFF-SC05",
+      "required": "Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED."
+    },
+    {
+      "id": "OFF-SC06",
+      "required": "Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance."
+    },
+    {
+      "id": "OFF-SC07",
+      "required": "Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access."
+    }
+  ],
+  "candidate_artifacts": [
+    {
+      "stage_id": "workflow_stage_01_requirement_modeling",
+      "path": "01_requirement.yml",
+      "artifact_version": 1,
+      "sha256": "d27399a1bd042689b8fb8f2bbff0a4764ed53c6eacb32100089673f9c6b0df09"
+    },
+    {
+      "stage_id": "workflow_stage_02_information_collection",
+      "path": "02_evidence.yml",
+      "artifact_version": 1,
+      "sha256": "c93353e1c43aa267ad5f97a551f40019b699c0f68ea2f632f0cb5383acd14458"
+    },
+    {
+      "stage_id": "workflow_stage_03_result_modeling",
+      "path": "03_result.yml",
+      "artifact_version": 1,
+      "sha256": "29ab80b2c8d381356f3040399d8a90aceec919fc910f5e2f1c70e48f5e6a15bd"
+    },
+    {
+      "stage_id": "workflow_stage_04_test_generation",
+      "path": "04_tests.yml",
+      "artifact_version": 1,
+      "sha256": "0d0b336f93f3e7efba507b13183083187052bac07d04857a7a3487012832098f"
+    },
+    {
+      "stage_id": "workflow_stage_05_step_decomposition",
+      "path": "05_steps.yml",
+      "artifact_version": 1,
+      "sha256": "4db75a0e6ddbde61e5a7d96c9cbac080a16f10ce9de09de9149e0265325c1aa8"
+    },
+    {
+      "stage_id": "workflow_stage_06_execution",
+      "path": "06_execution.yml",
+      "artifact_version": 1,
+      "sha256": "f67a31cbc0ea5d477b6b1aae33706f89dfce38b4ca02f48f5fb50cb7b8c616ce"
+    },
+    {
+      "stage_id": "workflow_stage_07_test_execution",
+      "path": "07_verification.yml",
+      "artifact_version": 1,
+      "sha256": "cf172e58130f88603fdf7c7dc0052f8b5bd852c9c2e850809e6501e01402a3f0"
+    }
+  ],
+  "normalization_bindings": "NORMALIZED_BINDINGS.json",
+  "parent_mapping_review": {
+    "exact_ref": {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "bb886c50028e8332849f5b03ad54711a16870cfa",
+      "path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/os/stage01/FIELD_EQUIVALENCE_MAP.json",
+      "git_blob": "4a2f4300c1413c513d6d7660c0fc55b889aefcb7",
+      "sha256": "79f1e2593b705be5895021577b0f47bcc5efb9842573d3cdf5d96174fc35c38c"
+    },
+    "differences": [
+      {
+        "path": "/requirement_result_A/consensus_ref/immutable",
+        "before": true,
+        "after": null,
+        "classification": "Representation binding to normalized A0 digest/reference"
+      },
+      {
+        "path": "/requirement_result_A/consensus_ref/sha256",
+        "before": "4ad6958ede756f45552f0a4a8f3bfab8267a734db8d41289a579a586f74203fe",
+        "after": "b46cd2e8ebbc1f8cae2a22ec6f56ca15a3a6b4d666b09855ce8c6ca3cc0981a8",
+        "classification": "Representation binding to normalized A0 digest/reference"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/2/evidence_status",
+        "before": "human_reported_observation",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/2/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/2/original_evidence_status",
+        "before": null,
+        "after": "human_reported_observation",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/3/evidence_status",
+        "before": "human_unverified_causal_hypothesis",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/3/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/3/original_evidence_status",
+        "before": null,
+        "after": "human_unverified_causal_hypothesis",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/5/evidence_status",
+        "before": "human_domain_assertion_unverified_this_session",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/5/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/3/known_facts/5/original_evidence_status",
+        "before": null,
+        "after": "human_domain_assertion_unverified_this_session",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/6/known_facts/0/evidence_status",
+        "before": "human_reported_observation",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/6/known_facts/0/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/6/known_facts/0/original_evidence_status",
+        "before": null,
+        "after": "human_reported_observation",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/7/known_facts/1/evidence_status",
+        "before": "human_mechanism_claim_requires_verification",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/7/known_facts/1/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/7/known_facts/1/original_evidence_status",
+        "before": null,
+        "after": "human_mechanism_claim_requires_verification",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/7/known_facts/4/evidence_status",
+        "before": "human_mechanism_assertion_not_independently_verified",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/7/known_facts/4/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/7/known_facts/4/original_evidence_status",
+        "before": null,
+        "after": "human_mechanism_assertion_not_independently_verified",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/8/known_facts/1/evidence_status",
+        "before": "human_domain_assertion_requires_mechanism_verification",
+        "after": "candidate_inference",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/8/known_facts/1/normalization_note",
+        "before": null,
+        "after": "Conservative status for a Human-reported observation or unverified mechanism assertion. Original provenance retained; no independent Native proof inferred.",
+        "classification": "Conservative enum representation with lossless original status"
+      },
+      {
+        "path": "/requirement_result_A/result_items/8/known_facts/1/original_evidence_status",
+        "before": null,
+        "after": "human_domain_assertion_requires_mechanism_verification",
+        "classification": "Conservative enum representation with lossless original status"
+      }
+    ],
+    "approval_claimed": false
+  },
+  "technical_test_package_sha256": "71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906",
+  "scoped_test_package_file_sha256": "984c826a29706b600e8972ae7862a4365f4f7c57590d1da217b7cff3955c0cba",
+  "scoped_normalized_tests_sha256": "158cf3700a5a31ab6fec12089e06c931feb8cff9dd2efe01e80a6c40216553e6",
+  "decisions": [
+    {
+      "id": "OWNER-01",
+      "stages": [
+        "01"
+      ],
+      "request": "Accept or reject scoped A0 and criteria; then record actual A0 confirmation, regenerate child A binding/digest and obtain distinct actual A confirmation. Inspect parent normalization equivalence without substituting parent approval for child approval.",
+      "current_disposition": "NOT_ISSUED"
+    },
+    {
+      "id": "OWNER-02",
+      "stages": [
+        "02",
+        "03"
+      ],
+      "request": "Accept scoped source maturity and Result B mappings on the seven OFF-SC criteria after valid predecessor acceptance.",
+      "current_disposition": "NOT_ISSUED"
+    },
+    {
+      "id": "OWNER-03",
+      "stages": [
+        "04"
+      ],
+      "request": "Review negative-case adequacy and formally freeze this exact child tests/package digest under valid owner context, not the old technical digest alone.",
+      "current_disposition": "NOT_ISSUED"
+    },
+    {
+      "id": "OWNER-04",
+      "stages": [
+        "05"
+      ],
+      "request": "Accept seven scoped steps, source boundary, retry/stop/invalidation rules after frozen-package predecessor.",
+      "current_disposition": "NOT_ISSUED"
+    },
+    {
+      "id": "OWNER-05",
+      "stages": [
+        "06"
+      ],
+      "request": "After predecessor/freeze records exist, perform actual offline frozen tests and retain new attempts/commands/results in real chronological commits.",
+      "current_disposition": "NOT_RUN"
+    },
+    {
+      "id": "OWNER-06",
+      "stages": [
+        "07"
+      ],
+      "request": "Independent reviewer checks this child OFF-SC output, not merely prior code; then consume exact committed official Core validate and history gate.",
+      "current_disposition": "NOT_RUN"
+    }
+  ],
+  "lawful_owner_resolution": {
+    "review_coordination": "GPT-6 / decision_architecture per task contract",
+    "decision_authority": "Human or applicable lawful owner bound by real installed Core task context, never inferred from execution role/provider name",
+    "policy_refs": [
+      "01_os/01_workflow/实现/七阶段最小运行契约_v1.yml",
+      "01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml",
+      "01_os/03_mechanisms/stage_collaborative_deliberation/实现/README.md"
+    ],
+    "exact_owner_endpoint_or_delegation": "NOT_SUPPLIED_DO_NOT_FABRICATE",
+    "required_stage_control_refs": [
+      "current_model_ref",
+      "deliberation_receipt_ref",
+      "plan_acceptance",
+      "completion_acceptance"
+    ],
+    "formal_action_context": "Must be resolved from actual task/owner records before progression; this package is not a formal cross-endpoint message"
+  },
+  "parent_full_BIC": "INCOMPLETE_SC05_NOT_DELIVERED",
+  "formal_freeze": false,
+  "formal_full_run": "NOT_RUN_PENDING_OWNER_ACCEPTANCE"
+}

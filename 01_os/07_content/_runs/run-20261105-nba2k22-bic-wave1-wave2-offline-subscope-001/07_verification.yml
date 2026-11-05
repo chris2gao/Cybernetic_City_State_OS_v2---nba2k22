@@ -1,0 +1,39 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001
+stage_id: workflow_stage_07_test_execution
+artifact_kind: verification_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 29ab80b2c8d381356f3040399d8a90aceec919fc910f5e2f1c70e48f5e6a15bd
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 0d0b336f93f3e7efba507b13183083187052bac07d04857a7a3487012832098f
+- stage_id: workflow_stage_06_execution
+  path: 06_execution.yml
+  artifact_version: 1
+  sha256: f67a31cbc0ea5d477b6b1aae33706f89dfce38b4ca02f48f5fb50cb7b8c616ce
+stage_control:
+  action_id: null
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+deliberation_receipt:
+  status: NOT_ISSUED_PENDING_OWNER_CONTEXT
+payload:
+  reviewer_role: independent_review
+  verdict: PENDING_OWNER_ACCEPTANCE
+  test_results: []
+  implementation_claims: []
+  completion: false
+  upstream_invalidation: null
+  historical_independent_code_reviews:
+  - 3f27b421e0c1813dbfb890c4583c97e76dfd6f98
+  - 13414798d5992336e28ae1df7e14bf17fbae6a04
+  child_independent_review: NOT_RUN
+  parent_status: INCOMPLETE_UNCHANGED
