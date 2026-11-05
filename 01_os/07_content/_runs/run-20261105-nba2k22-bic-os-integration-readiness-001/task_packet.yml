@@ -1,0 +1,14 @@
+task_packet:
+  task_id: NBA2K22-BIC-W1-W2-OS-INTEGRATION-READINESS-20261105-001
+  branch: task/nba2k22-bic-wave1-wave2-integration-candidate-20261105
+  exact_base_sha: cdcb293f8a690725cf9168225cc2046ab0574b2b
+  integration_master_base: 66f8f73f1a91597f4562b834c2acad332ad9de5b
+  objective: Normalize OS evidence and test independent Wave1/Wave2 integration candidate
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/**
+  required_tests: [bic_regression, cli_and_integrity]
+  prohibitions: [master_merge, real_game_process, native_write, save_mutation, approved_requirement_semantic_change, business_code_change, database_upload]
+  verification_plan: 01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verification_plan.json
+  completion_pointer: GOVERNANCE_AND_INTEGRATION_HANDOFF.md
+  publisher:
+    expected_remote_master_head: 66f8f73f1a91597f4562b834c2acad332ad9de5b

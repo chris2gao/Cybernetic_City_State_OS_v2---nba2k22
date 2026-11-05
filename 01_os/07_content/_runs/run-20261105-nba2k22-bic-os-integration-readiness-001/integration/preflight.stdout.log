@@ -1,0 +1,41 @@
+{
+  "report": {
+    "task_id": "NBA2K22-BIC-W1-W2-OS-INTEGRATION-READINESS-20261105-001",
+    "packet_format": "wrapped_v1",
+    "normalized_fields": [],
+    "branch_declared": "task/nba2k22-bic-wave1-wave2-integration-candidate-20261105",
+    "base_declared": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+    "branch_actual": "task/nba2k22-bic-wave1-wave2-integration-candidate-20261105",
+    "local_head": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+    "hooks_path": ".githooks",
+    "quotepath": "false",
+    "allowlist": [
+      "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/**"
+    ],
+    "prohibitions": [
+      "master_merge",
+      "real_game_process",
+      "native_write",
+      "save_mutation",
+      "approved_requirement_semantic_change",
+      "business_code_change",
+      "database_upload"
+    ],
+    "required_tests": [
+      "bic_regression",
+      "cli_and_integrity"
+    ],
+    "big_task": false,
+    "big_task_confirmation_closure": null,
+    "dirty_path_count": 15,
+    "head_descends_from_base": true,
+    "commits_since_base": [],
+    "remote_master": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+    "remote_branch": null,
+    "expected_remote_master": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+    "master_unchanged": true,
+    "master_verification": "verified_unchanged"
+  },
+  "gate": null,
+  "hard_failures": []
+}
