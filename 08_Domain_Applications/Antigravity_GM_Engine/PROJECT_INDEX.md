@@ -1,5 +1,7 @@
 # NBA2K22 项目资料与模块入口
 
+BIC series remediation extends P02 field/mechanism knowledge queries and detailed coverage, and P10 factorial mode validation. Fixed reviewed base `a3e28e186f198e731c76b74f939da2950b5d15bd`; evidence in repository-root `01_os/07_content/_runs/run-20261104-nba2k22-bic-series-remediation-001/`. Independent difference review remains pending.
+
 BIC offline candidate (P02/P07/P10) adds scoped player/team baselines, badge fact interpretation and synthetic factorial contrasts. Entry `world_data_prototype/BIC_READONLY.md`, evidence `01_os/07_content/_runs/run-20261104-nba2k22-bic-offline-engineering-001/` from repository root. This is Human-authorized offline implementation with formal OS and independent acceptance pending.
 
 本索引随 PR #27 提交主线审核。P00–P12 继承 PR #18 固定版本的导航分类，逐项区分当前树内入口与固定研究来源。正式 G2 以其独立目录和发布记录为准。

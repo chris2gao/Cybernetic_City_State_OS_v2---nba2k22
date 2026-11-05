@@ -1,0 +1,65 @@
+{
+  "fixture": "SYNTHETIC_HISTORY_SCOPE",
+  "timings": {
+    "reviewed": {
+      "iterations": 3,
+      "total_seconds": 0.5275962999985495
+    },
+    "remediated": {
+      "iterations": 3,
+      "total_seconds": 0.5572788999998011
+    }
+  },
+  "limits": "Small fixture and three warm process iterations; not a full-world benchmark",
+  "example_knowledge_query": {
+    "query": "player_attribute_snapshots.overall_raw",
+    "status": "OBSERVATION_AVAILABLE",
+    "catalog": {
+      "registered_field": true,
+      "table": "player_attribute_snapshots",
+      "definition_is_observation": false
+    },
+    "sources": [
+      {
+        "value": 90,
+        "field": "player_attribute_snapshots.overall_raw",
+        "status": "OBSERVED",
+        "freshness": {
+          "age_seconds": 0.0,
+          "max_age_seconds": 86400,
+          "status": "WITHIN_REQUESTED_AGE"
+        },
+        "provenance": {
+          "unit_id": "unit-b",
+          "observed_at": "2026-10-25T01:00:00.000000+00:00",
+          "effective_at": null,
+          "source_key": "SYNTHETIC_HISTORY_SCOPE",
+          "completeness": "PARTIAL",
+          "layout_version": null,
+          "run_id": "unit-b",
+          "season_id": "s1",
+          "source_grade": "SYNTHETIC_FIXTURE",
+          "game_date": null,
+          "save_binding_ref": null,
+          "save_id": "save"
+        },
+        "knowledge_status": "SYNTHETIC_ONLY"
+      }
+    ],
+    "identity": {
+      "save_id": "save",
+      "season_id": "s1",
+      "entity_id": "p1"
+    },
+    "applicability": {
+      "requested_version": null,
+      "requested_mode": null,
+      "source_version": null,
+      "source_mode": "UNKNOWN"
+    },
+    "conflicts": [],
+    "unknowns": [],
+    "rejections": [],
+    "native_mechanism_verified": false
+  }
+}

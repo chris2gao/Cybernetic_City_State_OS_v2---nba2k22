@@ -2,10 +2,14 @@
 from contextlib import closing
 from datetime import datetime
 import math
+import hashlib
+import json
+from pathlib import Path
 
 import query
 from engine import connect
 from observation_scope import observed_as_of, query_connection, utc_stamp
+from schema_model import TABLES
 
 
 def knowledge_status(source_grade=None, *, observed=False):
@@ -16,6 +20,9 @@ def knowledge_status(source_grade=None, *, observed=False):
         'SYNTHETIC_FIXTURE': 'SYNTHETIC_ONLY',
         'RESEARCH_FIXTURE': 'RESEARCH_REFERENCE',
         'VERIFIED_OBSERVED_SAME_BATCH': 'HISTORICAL_OBSERVATION',
+        'MODEL_INFERENCE': 'CANDIDATE_INFERENCE',
+        'DERIVED_PROXY_FORMULA': 'CANDIDATE_INFERENCE',
+        'STATIC_SOURCE': 'STATIC_DEFINITION',
     }.get(source_grade, 'UNVERIFIED_OBSERVATION')
 
 
@@ -122,10 +129,146 @@ def coverage_report(baseline):
                 if key not in ('provenance', 'freshness', 'applicability'):
                     visit(item)
     visit(baseline['facts'])
-    return {'counts': counts, 'observation_units': sorted(units),
+    return {'counts': counts, 'domains': _coverage_domains(baseline),
+            'mixed_observation_units': len(units) > 1,
+            'observation_units': sorted(units),
             'single_observation_unit': len(units) == 1, 'game_mode': baseline['game_mode'],
             'data_status': baseline['data_status'], 'restricted_fields': 'WITHHELD',
             'save_id': baseline['save_id'], 'season_id': baseline['season_id']}
+
+
+def _coverage_domains(baseline):
+    domains = {}
+    for name, family in baseline['facts'].get('families', {}).items():
+        spec = TABLES.get(name)
+        if spec is not None and not spec.public:
+            domains[name] = {'status': 'WITHHELD', 'fields': []}
+            continue
+        fields = []
+        if isinstance(family, dict):
+            for key, observation in family.items():
+                if not isinstance(observation, dict):
+                    continue
+                status = observation.get('status', 'UNKNOWN')
+                if observation.get('value') is not None:
+                    status = 'OBSERVED'
+                fields.append({'field': name + '.' + key, 'status': status,
+                               'freshness': observation.get('freshness'),
+                               'provenance': observation.get('provenance'),
+                               'knowledge_status': observation.get('knowledge_status', 'UNKNOWN')})
+        elif isinstance(family, list):
+            for index, observation in enumerate(family):
+                if not isinstance(observation, dict):
+                    continue
+                fields.append({'field': name + '[' + str(index) + ']',
+                               'status': 'OBSERVED' if observation.get('provenance') else 'UNKNOWN',
+                               'freshness': observation.get('freshness'),
+                               'provenance': observation.get('provenance'),
+                               'knowledge_status': observation.get('knowledge_status', 'UNKNOWN')})
+        states = [entry['status'] for entry in fields]
+        domain_status = 'OBSERVATIONS_WITH_GAPS'
+        if not fields or all(state == 'NOT_OBSERVED' for state in states):
+            domain_status = 'NOT_OBSERVED'
+        elif all(state == 'OBSERVED' for state in states):
+            domain_status = 'OBSERVED'
+        elif all(state == 'NOT_APPLICABLE' for state in states):
+            domain_status = 'NOT_APPLICABLE'
+        domains[name] = {'status': domain_status,
+                         'observed_fields': sum(state == 'OBSERVED' for state in states),
+                         'missing_fields': [entry['field'] for entry in fields if entry['status'] == 'NOT_OBSERVED'],
+                         'unknown_fields': [entry['field'] for entry in fields if entry['status'] == 'UNKNOWN'],
+                         'stale_fields': [entry['field'] for entry in fields if (entry['freshness'] or {}).get('status') == 'STALE'],
+                         'fields': fields}
+    required = ('player_attribute_snapshots', 'player_tendency_snapshots', 'player_badge_values') if baseline['entity_kind'] == 'player' else ('team_tactic_settings',)
+    for name in required:
+        domains.setdefault(name, {'status': 'NOT_OBSERVED', 'fields': [], 'reason': 'Family absent from card'})
+    if baseline['facts'].get('restricted_fields') == 'WITHHELD':
+        domains['restricted_fields'] = {'status': 'WITHHELD', 'fields': []}
+    return domains
+
+
+def knowledge_query(field_or_mechanism, *, baseline, version=None, mode=None, comparison_baselines=()):
+    """Resolve a public field or known research mechanism in this scoped baseline.
+
+    Requested applicability is checked against evidence, never inferred from a
+    field definition. Source grades retain the original mapper's semantics.
+    """
+    if not isinstance(field_or_mechanism, str) or not field_or_mechanism:
+        raise ValueError('A nonempty field or mechanism name is required')
+    observations = []
+    domains = _coverage_domains(baseline)
+    family, separator, field = field_or_mechanism.partition('.')
+    spec = TABLES.get(family)
+    column = next((c for c in spec.columns if c.name == field), None) if spec else None
+    if spec is not None and (not spec.public or column is not None and column.visibility != 'GM_PUBLIC'):
+        return {'query': field_or_mechanism, 'status': 'WITHHELD', 'sources': []}
+    domain = domains.get(family, {})
+    for entry in domain.get('fields', []):
+        if entry['field'] == field_or_mechanism:
+            observation = baseline['facts']['families'][family][field]
+            if observation.get('value') is not None:
+                observations.append({'value': observation['value'], **entry})
+    for other in comparison_baselines:
+        if any(other[key] != baseline[key] for key in ('save_id', 'season_id', 'entity_id', 'entity_kind')):
+            raise ValueError('Comparison identity mismatch')
+        if other['observation_scope']['observed_through'] != baseline['observation_scope']['observed_through']:
+            raise ValueError('Comparison cutoff mismatch; historical change is not source conflict')
+        if other['binding'].get('game_build') != baseline['binding'].get('game_build') or other.get('game_mode') != baseline.get('game_mode'):
+            raise ValueError('Comparison applicability mismatch')
+        other_family = other['facts'].get('families', {}).get(family, {})
+        other_observation = other_family.get(field, {}) if isinstance(other_family, dict) else {}
+        if other_observation.get('value') is not None:
+            observations.append({'value': other_observation['value'],
+                                 'provenance': other_observation.get('provenance'),
+                                 'knowledge_status': other_observation.get('knowledge_status', 'UNKNOWN')})
+    references = []
+    if field_or_mechanism in ('badge_eligibility', 'badge_xp', 'badge_growth', 'badge_effect'):
+        path = Path(__file__).parents[1] / 'docs/game_mechanics/catalogs/PLAYER_BADGES_R04_A_REFERENCE.json'
+        raw = path.read_bytes()
+        reference = json.loads(raw)
+        references.append({'path': 'docs/game_mechanics/catalogs/' + path.name,
+                           'sha256': hashlib.sha256(raw).hexdigest(),
+                           'evidence_status': 'RESEARCH_REFERENCE',
+                           'limits': reference['source_scope_notice']})
+    available_version = baseline['binding'].get('game_build')
+    available_mode = baseline.get('game_mode', 'UNKNOWN')
+    mismatches = []
+    unknowns = []
+    if references and (version is not None or mode is not None):
+        unknowns.append('Research reference applicability is not certified by baseline build/mode')
+    for name, requested, available in (('version', version, available_version), ('mode', mode, available_mode)):
+        if requested is not None:
+            if available in (None, 'UNKNOWN'):
+                unknowns.append(name + '_applicability_unknown')
+            elif requested != available:
+                mismatches.append(name + '_mismatch')
+    conflicts = []
+    if len({json.dumps(o['value'], sort_keys=True) for o in observations}) > 1:
+        conflicts.append('conflicting_observation_values')
+    status = 'UNKNOWN'
+    if observations:
+        status = 'OBSERVATION_AVAILABLE'
+    elif references:
+        status = 'RESEARCH_REFERENCE'
+    if unknowns:
+        status = 'UNKNOWN'
+    if mismatches:
+        status = 'NOT_APPLICABLE'
+    if conflicts:
+        status = 'CONFLICT'
+    if not observations and not references:
+        unknowns.append('No observation or supported reference in this scoped query')
+    return {'query': field_or_mechanism, 'status': status,
+            'catalog': {'registered_field': column is not None,
+                        'table': family if spec is not None else None,
+                        'definition_is_observation': False},
+            'sources': observations + references,
+            'identity': {'save_id': baseline['save_id'], 'season_id': baseline['season_id'],
+                         'entity_id': baseline['entity_id']},
+            'applicability': {'requested_version': version, 'requested_mode': mode,
+                              'source_version': available_version, 'source_mode': available_mode},
+            'conflicts': conflicts, 'unknowns': unknowns,
+            'rejections': mismatches, 'native_mechanism_verified': False}
 
 
 def badge_intelligence(baseline):

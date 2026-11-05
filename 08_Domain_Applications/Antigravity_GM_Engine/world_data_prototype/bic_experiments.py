@@ -13,6 +13,8 @@ def factorial_2x2(cells, *, synthetic, mode, confounders=(), independent_assignm
         raise ValueError('Evidence and assignment flags must be boolean')
     if mode not in ('SYNTHETIC', 'FAST_SIM', 'CPU_VS_CPU_3D', 'HUMAN_VS_AI_3D', 'UNKNOWN'):
         raise ValueError('Unknown mode label')
+    if synthetic != (mode == 'SYNTHETIC'):
+        raise ValueError('Synthetic data requires SYNTHETIC mode; real data requires a game mode or UNKNOWN')
     if set(cells) != {'00', '10', '01', '11'}:
         return {'status': 'NOT_CAUSALLY_IDENTIFIED', 'reason': 'Four treatment cells required'}
     averages = {}
