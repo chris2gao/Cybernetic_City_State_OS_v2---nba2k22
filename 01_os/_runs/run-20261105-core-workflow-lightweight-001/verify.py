@@ -1,5 +1,6 @@
 """Run the actual regression suites with a private pytest temporary root."""
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import argparse
 from pathlib import Path
 import subprocess
 import sys
@@ -19,12 +20,17 @@ PUBLICATION = "01_os/06_execution/workflow/publication_gate/test_publication_gat
 PYTEST = [sys.executable, "-B", "-X", "utf8", "-m", "pytest", "-q", "-p", "no:cacheprovider"]
 
 
-def test_jobs():
+def publication_jobs():
     collected = subprocess.run([*PYTEST, "--collect-only", PUBLICATION],
                                capture_output=True, check=True, encoding="utf-8")
     tests = [line for line in collected.stdout.splitlines() if line.startswith(PUBLICATION + "::")]
     if not tests or len(tests) != len(set(tests)):
         raise RuntimeError("publication regression collection is empty or contains duplicates")
+    return {f"publication_gate/shard-{shard + 1}": (tests[shard::4], None)
+            for shard in range(4)}
+
+
+def standard_jobs():
     jobs = {}
     for suite in SUITES:
         if suite == ACTIVATION:
@@ -33,8 +39,6 @@ def test_jobs():
             jobs[suite] = ([suite, "--ignore", PUBLICATION], None)
         else:
             jobs[suite] = ([suite], None)
-    for shard in range(4):
-        jobs[f"publication_gate/shard-{shard + 1}"] = (tests[shard::4], None)
     return jobs
 
 
@@ -46,11 +50,15 @@ def run_suite(name, args, cwd, temp_root):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("suite_group", choices=("standard", "publication"))
+    args = parser.parse_args()
+    jobs = standard_jobs() if args.suite_group == "standard" else publication_jobs()
     exit_codes = []
     with tempfile.TemporaryDirectory(prefix="core-workflow-lightweight-") as root:
         with ThreadPoolExecutor(max_workers=4) as pool:
             runs = {pool.submit(run_suite, name, args, cwd, Path(root)): name
-                    for name, (args, cwd) in test_jobs().items()}
+                    for name, (args, cwd) in jobs.items()}
             for future in as_completed(runs):
                 result = future.result()
                 print(f"{runs[future]}: exit_code={result.returncode}", flush=True)
