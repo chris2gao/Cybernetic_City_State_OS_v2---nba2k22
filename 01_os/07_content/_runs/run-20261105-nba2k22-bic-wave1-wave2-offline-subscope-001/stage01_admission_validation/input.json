@@ -1,0 +1,76 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "c4208c8bb9c8ae8c35e476751627ad844a185043",
+  "plan_path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/stage01_admission_verification_plan.json",
+  "plan_sha256": "753dc7c530be9ef82ca3a6c3ff6251180e5ed82817987754881528d83913dc07",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "plan": {
+    "schema_version": "citystate.verification_plan.v1",
+    "task_packet": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/stage01_admission_task_packet.yml",
+    "checks": [
+      {
+        "id": "child_a_and_admission_package",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/bind_child_a.py",
+          "--check"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "scoped_payload_and_integrity",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/check_scoped_payloads.py"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      }
+    ]
+  },
+  "task_id": "NBA2K22-BIC-W1-W2-CHILD-A-BIND-STAGE01-ADMISSION-20261105-001",
+  "task_packet_sha256": "b6ca61a5bd69d5d2d2aa45eace129d8b4d951420f5812cd3a7be77bed116d424",
+  "source_base": "b96fab3684e39062f073abac5e83a930d485ed62",
+  "changed_paths": [
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/01_requirement.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/02_evidence.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/03_result.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/04_tests.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/05_steps.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/06_execution.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/07_verification.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/CANDIDATE_SCHEMA_CHECKS.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/CHECKPOINT.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/CHILD_A_BINDING_INTEGRITY.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/CHILD_A_CONFIRMATION_HANDOFF.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/NORMALIZED_BINDINGS.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/OWNER_DECISION_PACKAGE.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/STAGE01_OWNER_ADMISSION_HANDOFF.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/STAGE01_OWNER_ADMISSION_PACKAGE.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/bind_child_a.py",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/check_scoped_payloads.py",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/manifest.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/run.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/sources/HUMAN_CHILD_A_CONFIRMATION_20261105.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/stage01_admission_task_packet.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/stage01_admission_verification_plan.json"
+  ],
+  "source_before": {
+    "head": "c4208c8bb9c8ae8c35e476751627ad844a185043",
+    "tree": "e49ec3ef5955848c71cba35c6c42f2919413f7b0",
+    "clean": true
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "executable": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "runner_file_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997"
+  }
+}
