@@ -1,0 +1,96 @@
+{
+  "tested_candidate": "0c32c61416205ac5314aa8b53129a56461bd2101",
+  "status": "PENDING_CHILD_A_CONFIRMATION",
+  "run_result": {
+    "schema_version": "citystate.verification_attempt.v1",
+    "candidate": "0c32c61416205ac5314aa8b53129a56461bd2101",
+    "plan_sha256": "2a413f74513ab0cd06182e6b1870cfe46acf7a0f0067a1273e95367a8b3a5e6b",
+    "checks": [
+      {
+        "id": "child_a_binding",
+        "status": "success"
+      },
+      {
+        "id": "scoped_payload_and_integrity",
+        "status": "success"
+      }
+    ],
+    "status": "success",
+    "authority_effect": "none"
+  },
+  "inspect": {
+    "argv": [
+      "python",
+      "-B",
+      "-X",
+      "utf8",
+      "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+      "inspect",
+      "--repo-root",
+      ".",
+      "--candidate",
+      "0c32c61416205ac5314aa8b53129a56461bd2101",
+      "--plan",
+      "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/a0_binding_verification_plan.json",
+      "--attempt",
+      "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/a0_binding_validation"
+    ],
+    "exit_code": 0,
+    "result": {
+      "schema_version": "citystate.verification_attempt.v1",
+      "candidate": "0c32c61416205ac5314aa8b53129a56461bd2101",
+      "plan_sha256": "2a413f74513ab0cd06182e6b1870cfe46acf7a0f0067a1273e95367a8b3a5e6b",
+      "checks": [
+        {
+          "id": "child_a_binding",
+          "status": "success"
+        },
+        {
+          "id": "scoped_payload_and_integrity",
+          "status": "success"
+        }
+      ],
+      "status": "success",
+      "authority_effect": "none"
+    }
+  },
+  "checks": [
+    {
+      "id": "child_a_binding",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793912584907821000,
+      "elapsed_seconds": 1.0735921000000417,
+      "stdout_sha256": "3eb70a46da0a5676286dcfe39e7247f07ed81363ea28faa002f2a5bc1f1e18ab",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "scoped_payload_and_integrity",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793912586146334700,
+      "elapsed_seconds": 0.9837215999998534,
+      "stdout_sha256": "1a89442d1a5c48ec6621179160efcf5ee22de9b5e4b40aeb4821e79d0e41412e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "actual_core_findings": {
+    "requirement_findings": [
+      "stage1_confirmation_binding:requirement_result_A"
+    ],
+    "evidence_findings": []
+  },
+  "binding": {
+    "mode": "check",
+    "child_A0_sha256": "908827305fd94f67a902e79830f08bebaea5f26dc0aade073f5fe647748a46c9",
+    "child_A_sha256": "693fede10af802267f3657a4f961b812252449d3ebfc1135527f64b88afe2fda",
+    "artifact_count": 7,
+    "status": "PENDING_CHILD_A_CONFIRMATION"
+  },
+  "formal_complete_run": "NOT_RUN_PENDING_CHILD_A_CONFIRMATION",
+  "raw_records": "a0_binding_validation/"
+}
