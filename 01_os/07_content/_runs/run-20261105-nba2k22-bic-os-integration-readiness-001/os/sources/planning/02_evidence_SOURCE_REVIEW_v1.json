@@ -1,0 +1,147 @@
+{
+  "report_id": "NBA2K22-BIC-BATCH1-STAGE02-SOURCE-REVIEW-20261104-v1",
+  "role": "decision_architecture/GPT-6",
+  "source_task": "NBA2K22-BIC-B1-P0-EVIDENCE-20261104-001",
+  "source_commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+  "base_source_commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+  "source_level": "REMOTE_PINNED_CODE_AND_P0_RECEIPTS",
+  "review_type": "INDEPENDENT_STATIC_SOURCE_REVIEW_NOT_LIVE_BIC_VALIDATION",
+  "evidence": [
+    {
+      "id": "E-01",
+      "domain": "DEV01",
+      "outcome": "SUPPORTED_STATIC",
+      "source": [
+        "query.py@6b64c86f8729b77bd2d1aab18be74b146bf73299"
+      ],
+      "observed": "player_card and team_card entrypoints exist. player_card documents latest actual per-field observation and never refreshes the timestamp of a stale field via a newer partial capture.",
+      "boundary": "Source read proves intended query implementation, not a fresh/live player_card value, query performance or coherent current capture across fields.",
+      "next": "Read one pinned existing SQLite capture (readonly) and verify returned unit_id/age/source_grade."
+    },
+    {
+      "id": "E-02",
+      "domain": "DEV01",
+      "outcome": "SUPPORTED_STATIC",
+      "source": [
+        "query.py@6b64c86f8729b77bd2d1aab18be74b146bf73299",
+        "observation_scope.py@af9090b5ce5b65de5da1464163cb983a6106d6b3"
+      ],
+      "observed": "query_at enforces PUBLIC_QUERIES and scopes reads to explicitly selected observation units. player_card keeps per-field source and age.",
+      "boundary": "Any downstream BIC facade must not imply one uniform freshness or present an independently refreshed field as belonging to a different batch.",
+      "next": "Cross-unit and stale-data negative fixtures; actual read-only dataset when available."
+    },
+    {
+      "id": "E-03",
+      "domain": "DEV01",
+      "outcome": "SUPPORTED_STATIC",
+      "source": [
+        "query.py@6b64c86f8729b77bd2d1aab18be74b146bf73299"
+      ],
+      "observed": "player_card exposes native_unique_id_raw, preserved_id_raw and canonical_link_status with age/source; legacy low16 PreservedId key documented as distinct from UniqueId.",
+      "boundary": "Identifiers alone do not establish save_instance and season link across independent captures.",
+      "next": "Use explicit save+season+mode scope; fail closed on conflict."
+    },
+    {
+      "id": "E-04",
+      "domain": "DEV02",
+      "outcome": "SUPPORTED_STATIC_ONLY",
+      "source": [
+        "player_detail_codec.py@1cde70424f30f258dd421e150a7c72e127404179",
+        "player_detail_native_profile.json@93d9b418b948ca4f5f9d80ddf2cc87be4f9693eb"
+      ],
+      "observed": "native_badges has explicit 1264-byte record validation, BOOLEAN and LEVEL branches, including unknown native enum codes. P0 reports 80 LEVEL, 18 non-reserved BOOLEAN and 1 reserved BOOLEAN profile fields.",
+      "boundary": "Not proof of PC22 MyLEAGUE unlock thresholds, badge XP, effective animation or a particular player's present badge values.",
+      "next": "Read actual captured badge values and retain UNKNOWN for unverified acquisition predicates."
+    },
+    {
+      "id": "E-05",
+      "domain": "DEV02",
+      "outcome": "RESEARCH_REFERENCE_ONLY",
+      "source": [
+        "PLAYER_BADGES_R04_A_REFERENCE.json@f3902a8e3f80296a2d790b24a2b989216d18315f"
+      ],
+      "observed": "P0 identifies an explicit warning: reference material may include MyPLAYER badges or requirements; native MyLEAGUE rules not certified.",
+      "boundary": "No numeric badges criteria, native XP or causality may be imported as confirmed PC22 MyLEAGUE facts.",
+      "next": "Separate hypotheses from game-version-specific Native evidence and list unresolved predicates."
+    },
+    {
+      "id": "E-06",
+      "domain": "DEV03",
+      "outcome": "SUPPORTED_STATIC_ONLY",
+      "source": [
+        "calendar_sim_orchestrator.py@19300d7da733aa4fb9990592c3f45291035602fa",
+        "game_mode_reader.py@e728486553e3f101c740d694fb310ba871da684e",
+        "query.py@6b64c86f8729b77bd2d1aab18be74b146bf73299"
+      ],
+      "observed": "CalendarSimOrchestrator constructor binds existing save and DB, confirms DB version. decode_game_mode reads a Native 24-byte prefix with distinct period labels and stat selector.",
+      "boundary": "No authority for game process attachment, calendar advancement, save modification, or equivalence between 3D and Fast Sim.",
+      "next": "Build mode-separated offline comparisons; live control feasibility remains separately gated."
+    },
+    {
+      "id": "E-07",
+      "domain": "DEV03",
+      "outcome": "SUPPORTED_STATIC_ONLY",
+      "source": [
+        "bulk_executor.py@4ace01e019f3ca389cd80212ed4cf1171ce28e04"
+      ],
+      "observed": "Bulk executor source exists and is reusable for design integration; P0 only inspected its source location.",
+      "boundary": "Does not certify current build's Native Setter effect, CAS runtime integrity or authorized writes.",
+      "next": "Retain native execution as out of scope for DEV03 offline experiments."
+    },
+    {
+      "id": "E-08",
+      "domain": "DEV03",
+      "outcome": "HISTORICAL_REPORTED_TEST",
+      "source": [
+        "loop_verification_and_regression_report.json@7d715ae0bbfc1253ddf690d0fc702ce20485a1a5"
+      ],
+      "observed": "Historical VAE report records 307/307 tests, two warnings, duration 140.25 seconds; not rerun under current BIC task.",
+      "boundary": "Neither current DEV03 regression pass nor evidence of causal mechanism effects.",
+      "next": "Reuse historical setup as known fixture references with strict time-bound evidence labels."
+    },
+    {
+      "id": "E-09",
+      "domain": "CROSS_TASK",
+      "outcome": "LIMITED_SCOPE_GAP",
+      "source": [
+        "P0_REUSE_GAP_MATRIX.md@ce2ec4dbd5627d45e2431a50fbdf35f88273f07f",
+        "P0_STAGE02_INPUT_POINTER.md@9bb63088f5eb5715950b464b9fe8377ffd430dce"
+      ],
+      "observed": "P0 inspected sources; no real BIC player/team demo dataset was opened and no controlled BIC experiment run. This is a P0-scope observation.",
+      "boundary": "Cannot infer repository-wide absence or claim existing DB/saves unavailable.",
+      "next": "Target one authorized existing read-only capture; offline factorial synthetic tests can proceed independently if implementation stage is authorized."
+    }
+  ],
+  "feasibility_by_scope": [
+    {
+      "scope": "DEV01 reusable read-only query facade using existing data and synthetic fixtures",
+      "decision": "STATIC_TECHNICAL_FEASIBILITY_SUPPORTED",
+      "not_satisfied": "no pinned real BIC read-only batch or actual baseline test, so implementation acceptance cannot be claimed"
+    },
+    {
+      "scope": "DEV02 badge status decoder and knowledge UNKNOWN reporting",
+      "decision": "STATIC_TECHNICAL_FEASIBILITY_SUPPORTED",
+      "not_satisfied": "MyLEAGUE badge unlock/XP/potential effect proof not established; only conditionally supported"
+    },
+    {
+      "scope": "DEV03 offline factorial design and mode-aware evidence protocol",
+      "decision": "OFFLINE_DESIGN_FEASIBILITY_SUPPORTED",
+      "not_satisfied": "no game causal effect proven; real simulation and 3D observational evidence unverified"
+    }
+  ],
+  "cross_cutting": [
+    "WorldData native facts, legacy research reference, historical VAE report, human anecdote and model hypothesis remain separate evidence kinds.",
+    "Player/Team per-field recency can diverge. A BIC snapshot must show mixed provenance and not silently assert fresh batch consistency.",
+    "Knowledge evidence maturity and Native action authority are separate gates.",
+    "Each missing real dataset or mechanism only blocks that claim, not unrelated read-only investigations.",
+    "Stage02 evidence evaluation is not Stage02 formal acceptance or a new authorization to modify NBA2K22."
+  ],
+  "completion": {
+    "structural_crosswalk_review": "COMPLETE",
+    "static_feasibility_for_bounded_offline_design": "SUPPORTED",
+    "live_feasibility": "NOT_ESTABLISHED",
+    "formal_stage02_gate": "NOT_PASSED_OR_RUN",
+    "requirements_cleared_for_unconditional_DEV01_implementation": false
+  },
+  "followup": "Formal Stage02 artifact must carry source version/maturity and properly record scoped feasibility. Real-world card acceptance requires a traceable read-only capture; do not delay independent negative fixtures merely due unavailable live game."
+}

@@ -1,0 +1,269 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-os-integration-readiness-001
+stage_id: workflow_stage_05_step_decomposition
+artifact_kind: step_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 49a4fddb0a4a5addcaed120f214a5a890b8ce77ea91cf0d4c823f0d3ef90b8d4
+stage_control:
+  action_id: OS-STAGE-05
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+  status: NOT_GRANTED_CANDIDATE_ONLY
+deliberation_receipt:
+  receipt_status: NOT_GRANTED
+  reason: No fabricated stage disposition; actual owner acceptance history required
+payload:
+  schema: nba2k22.bic.stage05.steps_candidate.v2
+  status: DRAFT_NOT_FORMAL_STAGE05_COMPLETE
+  upstream_candidates:
+    stage02: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/02_evidence_CANDIDATE_v1.json
+    stage03: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/03_result_B_CANDIDATE_v2.json
+    stage04: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/04_tests_CANDIDATE_v2.json
+  steps:
+  - step_id: S01
+    workstream: DEV01
+    owner: Codex
+    deliverable: Reuse existing scoped WorldData query sources and create minimal read-only baseline interface with per-field unit/identity/mode provenance
+    result_claim_ids:
+    - B01
+    - B02
+    test_ids:
+    - T01
+    - T02
+    - T03
+    - T04
+    - T05
+    depends_on: []
+    start_gate: Stage01-05 entry accepted and bounded offline source changes approved
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  - step_id: S02
+    workstream: DEV01
+    owner: Codex
+    deliverable: Implement knowledge_status and coverage report from observed/query provenance; unsupported fact must be UNKNOWN
+    result_claim_ids:
+    - B03
+    test_ids:
+    - T02
+    - T03
+    - T13
+    depends_on:
+    - S01
+    start_gate: No parallel data store or cumulative stat engine
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  - step_id: S03
+    workstream: DEV01
+    owner: Codex
+    deliverable: Build two real, traceable player/team baseline samples and negative-case tests on a preselected read-only dataset
+    result_claim_ids:
+    - B01
+    - B02
+    - B03
+    test_ids:
+    - T01
+    - T04
+    - T13
+    - T15
+    depends_on:
+    - S01
+    - S02
+    start_gate: If no real dataset, record BLOCKED_DATASET; do not invent data or claim acceptance
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  - step_id: S04
+    workstream: DEV02
+    owner: Gemini research / Codex implementation
+    deliverable: Audit PC22-specific Native badge predicates, XP and qualification separately; provide current owned/level pass-through and high-priority UNKNOWN categorization
+    result_claim_ids:
+    - B04
+    test_ids:
+    - T06
+    - T07
+    - T08
+    depends_on:
+    - S01
+    start_gate: Research may proceed without game; code only after authorization and proven source
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  - step_id: S05
+    workstream: DEV03
+    owner: Codex
+    deliverable: Create synthetic-only 2x2 factorial plan, effect/interactions output, stratification and confounder flags; no game actions
+    result_claim_ids:
+    - B05
+    test_ids:
+    - T09
+    - T10
+    - T13
+    depends_on:
+    - S01
+    start_gate: Synthetic calculations cannot claim current game effect
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  - step_id: S06
+    workstream: DEV03
+    owner: Codex + optional Gemini research
+    deliverable: Build protocol/record for 3D tactical trigger, observed actual behavior, chance creation, conversion; preserve Fast Sim/3D semantics
+    result_claim_ids:
+    - B06
+    test_ids:
+    - T11
+    - T12
+    - T14
+    depends_on:
+    - S01
+    start_gate: No video automation or real game use without explicit permission
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  - step_id: S07
+    workstream: BATCH1
+    owner: Codex
+    deliverable: End-of-series offline regression, factual provenance, performance and unknown/bad evidence receipts with checkpoint
+    result_claim_ids:
+    - B01
+    - B02
+    - B03
+    - B04
+    - B05
+    - B06
+    test_ids:
+    - T01
+    - T02
+    - T03
+    - T04
+    - T05
+    - T06
+    - T07
+    - T08
+    - T09
+    - T10
+    - T11
+    - T12
+    - T13
+    - T14
+    - T15
+    depends_on:
+    - S02
+    - S03
+    - S04
+    - S05
+    - S06
+    start_gate: Only claim tests actually executed; record exact commands/exit codes
+    loop_policy:
+      dev_test_analyze_fix_checkpoint: true
+      ordinary_series_review: true
+      stop_for_major_numeric_logic_safety_error: true
+    retry_budget: 2
+    exits:
+    - pass
+    - retry
+    - invalidate_upstream
+    actual_delivery_status: OFFLINE_IMPLEMENTATION_REVIEWED_NOT_FORMAL_STAGE05_ACCEPTANCE
+    engineering_authority: Human offline engineering authorization overrides prior P0-only restriction; does not approve OS gates
+  upstream_invalidation_targets:
+  - stage02_badge_source_scope
+  - stage03_BIC_fact_contract
+  - stage04_frozen_test_semantics
+  scope_guards:
+  - No source-code work until formal stage/Human authorization
+  - No Native write, calendar advancement, real save change, process attach
+  - Stage05 candidate does not itself assign edit permission
+  - No new database/REA/Calendar parallel engines
+  - No master merge
+  formal_stage05_acceptance: NOT_CLAIMED
+  supersedes:
+    path: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/05_steps_CANDIDATE_v1.json
+    blob: 679ffc82be40a8604c201327aa090c637a48f3c3
+    reason: Stage03 result scope corrected and Stage04 test candidate updated; preserve ordinary Loop cadence.
+  source_review: 01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-planning-001/02_evidence_SOURCE_REVIEW_v1.json
+  stage01_status: PAYLOAD_NORMALIZER_PUBLISHED_NOT_EXECUTED; NO_FORMAL_STAGE01_ACCEPTANCE
+  workflow_entry_rule: OS predecessor acceptance is required for authorized source implementation. This step plan is not an implementation grant; read-only evidence and pure arithmetic preflight may be performed independently.
+  operational_unblock_path:
+  - Actual Stage01 normalized payload and stage-specific acceptance evidence
+  - Review Stage02 bounded static feasibility and unresolved real read evidence
+  - Approve Stage03 B batch1 scope under the Human-approved A v2
+  - Freeze Stage04 tests with real authorization/reference and test package digest
+  - Accept Stage05 path ownership and step plan
+  - Then permit one bounded continuous DEV01 offline engineering Loop under current Human task scope if Core policy accepts it; separate live-game gate
+  wave2_steps:
+  - step_id: W2-DIAGNOSE
+    depends_on:
+    - S01
+    - S02
+    module: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_diagnostics.py
+    result_claim_ids:
+    - B-W2-DIAGNOSIS
+    test_ids:
+    - OFFLINE-06
+    - OFFLINE-07
+  - step_id: W2-PLAN
+    depends_on:
+    - W2-DIAGNOSE
+    module: 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_plans.py
+    result_claim_ids:
+    - B-W2-PLANS
+    test_ids:
+    - OFFLINE-06
+    - OFFLINE-07

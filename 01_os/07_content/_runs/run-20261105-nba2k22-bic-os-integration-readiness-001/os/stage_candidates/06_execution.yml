@@ -1,0 +1,43 @@
+schema_version: citystate.workflow.artifact.v1
+run_id: run-20261105-nba2k22-bic-os-integration-readiness-001
+stage_id: workflow_stage_06_execution
+artifact_kind: execution_package
+artifact_version: 1
+status: candidate_pending_owner_acceptance
+input_refs:
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 49a4fddb0a4a5addcaed120f214a5a890b8ce77ea91cf0d4c823f0d3ef90b8d4
+- stage_id: workflow_stage_05_step_decomposition
+  path: 05_steps.yml
+  artifact_version: 1
+  sha256: c5cb68bc8cb175d20c0feb9ba8b612e629118a4f51c3795ea80aa052b7485a2c
+stage_control:
+  action_id: OS-STAGE-06
+  current_model_ref: null
+  deliberation_receipt_ref: null
+  plan_acceptance: null
+  completion_acceptance: null
+  status: NOT_GRANTED_CANDIDATE_ONLY
+deliberation_receipt:
+  receipt_status: NOT_GRANTED
+  reason: No fabricated stage disposition; actual owner acceptance history required
+payload:
+  executor_role: execution
+  allowed_write_paths:
+  - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/
+  actual_write_paths:
+  - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_baseline.py
+  - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_experiments.py
+  - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_diagnostics.py
+  - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/bic_plans.py
+  - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+  unauthorized_write_attempts: []
+  frozen_test_package_sha256: null
+  attempts: []
+  reviewed_code_commit: cdcb293f8a690725cf9168225cc2046ab0574b2b
+  scope: OFFLINE_W1_W2_ONLY
+  status: HISTORICAL_IMPLEMENTATION_EVIDENCE_NOT_RECONSTRUCTED_FORMAL_EXECUTION
+  performance_limit: Five warm synthetic diagnostic calls exclude baseline/database IO; no whole-database performance acceptance
+  formal_execution_against_approved_frozen_package: false

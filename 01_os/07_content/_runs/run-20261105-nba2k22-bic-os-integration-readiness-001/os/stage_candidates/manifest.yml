@@ -1,0 +1,38 @@
+schema_version: citystate.workflow.run_manifest.v1
+run_id: run-20261105-nba2k22-bic-os-integration-readiness-001
+workflow_id: citystate_seven_stage_minimum_operational_loop
+workflow_version: 1
+route: normal
+deliberation_default_route: dormant
+completion_expected: true
+artifacts:
+- stage_id: workflow_stage_01_requirement_modeling
+  path: 01_requirement.yml
+  artifact_version: 2
+  sha256: a834a988eca33453eec9d3daff5c5f2367d5d3794e11ab47d7975423563dd587
+- stage_id: workflow_stage_02_information_collection
+  path: 02_evidence.yml
+  artifact_version: 1
+  sha256: 4b50e31830b37f77776d5c3fb64a1364dfd3530cb5f7ddbebf753b038f265527
+- stage_id: workflow_stage_03_result_modeling
+  path: 03_result.yml
+  artifact_version: 1
+  sha256: 6e883aec7d312854e61092c0324aa0a981f1880322c3548127f1a66e3a3ee88a
+- stage_id: workflow_stage_04_test_generation
+  path: 04_tests.yml
+  artifact_version: 1
+  sha256: 49a4fddb0a4a5addcaed120f214a5a890b8ce77ea91cf0d4c823f0d3ef90b8d4
+- stage_id: workflow_stage_05_step_decomposition
+  path: 05_steps.yml
+  artifact_version: 1
+  sha256: c5cb68bc8cb175d20c0feb9ba8b612e629118a4f51c3795ea80aa052b7485a2c
+- stage_id: workflow_stage_06_execution
+  path: 06_execution.yml
+  artifact_version: 1
+  sha256: 1ae13454243a8d35be27e397bb9faa579c9e8fcb95c1a59a30a3afb25495c70f
+- stage_id: workflow_stage_07_test_execution
+  path: 07_verification.yml
+  artifact_version: 1
+  sha256: e778d1cdcf216f721e7eb640ddd3a144a18667379515eac7e08f3446ecef55bb
+candidate_only: true
+full_BIC_completion_claimed: false

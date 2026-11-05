@@ -1,0 +1,43 @@
+{
+  "record_kind": "Human_confirmation_source_receipt",
+  "schema_status": "SOURCE_BOUND_RECEIPT_NOT_YET_OS_RUNNER_CANONICAL_BINDING",
+  "confirmed": true,
+  "model_kind": "requirement_result_A",
+  "model_id": "NBA2K22-BIC-A-001",
+  "artifact_version": 2,
+  "confirmation_ref": "current_conversation:2026-11-04:Human-confirm-BIC-requirement-result-A-v2-fixed-git-blob-e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+  "human_statement": "Human 确认 Basketball Intelligence Core · 01b 完整需求结果 A v2（model_id=NBA2K22-BIC-A-001，version=2），以 GitHub 分支 task/nba2k22-basketball-intelligence-core-requirement-modeling-20261104 中 01b_requirement_result_A_candidate_v2.json 的固定内容（Git blob e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4）为准。请按 OS 规范生成独立 Human 确认凭证并执行 Stage 01 完成门检查；本确认不授权工程开发、游戏写入或 master 合并。",
+  "approved_content": {
+    "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+    "branch_at_confirmation": "task/nba2k22-basketball-intelligence-core-requirement-modeling-20261104",
+    "path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_candidate_v2.json",
+    "git_blob_sha1": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+    "raw_file_sha256": "5ba770bc4aedfad433d2d19bb7721fc2d65873c238b6690a59573cb78d6b6743",
+    "hash_semantics": "SHA-256 of exact Git blob UTF-8 file bytes, verified by SHA-256 self test and independently matched by file path and Git blob lookup",
+    "model_id": "NBA2K22-BIC-A-001",
+    "version": 2,
+    "confirmed_original_candidate_Human_confirmation_field": false,
+    "reason": "The user confirmed the frozen candidate while its embedded Human_confirmation was still pending; this external independent receipt preserves that approval without rewriting approved content."
+  },
+  "prerequisite_consensus_confirmation": {
+    "model_kind": "consensus_A0",
+    "model_id": "NBA2K22-BIC-A0-001",
+    "version": 1,
+    "confirmation_ref": "current_conversation:2026-11-04:Human-confirm-Basketball-Intelligence-Core-01a-A0-v1",
+    "content_sha256_raw_file": "4ad6958ede756f45552f0a4a8f3bfab8267a734db8d41289a579a586f74203fe",
+    "evidence_path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01a_Human_confirmation_v1.json"
+  },
+  "canonical_os_payload_binding": {
+    "normalized_sha256": null,
+    "status": "PENDING_CANONICAL_STAGE01_PAYLOAD_ASSEMBLY_AND_REAL_RUNNER_CHECK",
+    "explanation": "OS Stage01 validator binds normalized_sha256 of full payload excluding both confirmation fields, whereas this Human approval cites the exact frozen JSON Git blob. The digest is not fabricated or substituted with the raw-file hash."
+  },
+  "permission_limits": [
+    "No engineering development authorization",
+    "No game or Native write authorization",
+    "No GitHub master merge authorization",
+    "No implicit authorization to alter the content of the frozen A v2 or A0 v1",
+    "Human approval of A v2 is not by itself a passing Stage01 formal runner verdict"
+  ],
+  "audit_note": "This record is a separately stored, source-bound Human approval. Canonical Stage01 packaging and validation status must be determined and reported separately; do not convert source receipt into a machine PASS without proof."
+}
