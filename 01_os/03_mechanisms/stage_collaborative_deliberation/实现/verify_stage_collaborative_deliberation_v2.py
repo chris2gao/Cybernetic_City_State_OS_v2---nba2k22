@@ -247,7 +247,7 @@ def validate_static_repo(repo_root: Path) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("static", "instance", "legacy_instance", "material_event", "review_execution"))
+    parser.add_argument("mode", choices=("static", "instance", "ordinary-work", "legacy_instance", "material_event", "review_execution"))
     parser.add_argument("target")
     parser.add_argument("--case-id")
     parser.add_argument("--json-output", action="store_true")
@@ -259,7 +259,7 @@ def main() -> int:
         if args.mode == "static" and target.is_dir():
             code = validate_static_repo(target)
         else:
-            loader = base.load_task_scope_doc if args.mode == "instance" else base.load_doc
+            loader = base.load_task_scope_doc if args.mode in {"instance", "ordinary-work"} else base.load_doc
             data = base.select_case(loader(target), args.case_id)
             if not isinstance(data, dict):
                 code = 11
@@ -267,8 +267,9 @@ def main() -> int:
                 payload = data.get("data", data)
                 if args.mode == "static":
                     code = validate_static_fixture(payload)
-                elif args.mode == "instance":
-                    code = base.validate_task_scope_instance(payload, args.repo_root, args.candidate)
+                elif args.mode in {"instance", "ordinary-work"}:
+                    code = base.validate_task_scope_instance(payload, args.repo_root, args.candidate,
+                                                             ordinary_work=args.mode == "ordinary-work")
                 elif args.mode == "legacy_instance":
                     code = base.validate_instance(payload, args.repo_root)
                 elif args.mode == "material_event":

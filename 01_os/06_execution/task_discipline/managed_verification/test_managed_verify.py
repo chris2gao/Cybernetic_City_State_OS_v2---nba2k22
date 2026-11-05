@@ -99,6 +99,22 @@ def test_expected_nonzero_is_actual_execution(build):
     assert record(attempt, "001.finished.json")["exit_code"] == 7
 
 
+def test_checkpoint_derives_results_from_existing_attempt(build):
+    repo, head, attempt = build([command("raise SystemExit(7)", expected=7)])
+    assert invoke(repo, head, attempt)[0] == 0
+    before = {path.name: path.read_bytes() for path in attempt.iterdir()}
+    checkpoint = mv.inspect(repo, head, "plan.json", attempt, checkpoint=("test increment", ["open item"]))
+    assert checkpoint["candidate"] == head
+    assert checkpoint["tests"][0]["exit_code"] == 7
+    assert checkpoint["tests"][0]["status"] == "success"
+    assert checkpoint["resume"]["attempt"] == str(attempt)
+    assert checkpoint["open_issues"] == ["open item"]
+    assert before == {path.name: path.read_bytes() for path in attempt.iterdir()}
+    (attempt / "001.stdout.bin").write_bytes(b"changed")
+    with pytest.raises(mv.VerificationError, match="log_digest_mismatch"):
+        mv.inspect(repo, head, "plan.json", attempt, checkpoint=("test increment", []))
+
+
 def test_failure_stops_remaining_checks_and_cannot_forge_summary(build):
     repo, head, attempt = build([command("raise SystemExit(2)"), command(name="later")])
     code, result = invoke(repo, head, attempt)

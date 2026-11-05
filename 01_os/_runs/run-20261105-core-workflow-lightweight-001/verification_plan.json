@@ -1,0 +1,18 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/_runs/run-20261105-core-workflow-lightweight-001/task_packet.yml",
+  "checks": [
+    {
+      "id": "workflow_and_authority",
+      "argv": ["@python", "-B", "-X", "utf8", "01_os/_runs/run-20261105-core-workflow-lightweight-001/verify.py"],
+      "timeout_seconds": 2400,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "static",
+      "argv": ["@python", "-B", "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py", "static", ".", "--json-output"],
+      "timeout_seconds": 120,
+      "expected_exit_code": 0
+    }
+  ]
+}

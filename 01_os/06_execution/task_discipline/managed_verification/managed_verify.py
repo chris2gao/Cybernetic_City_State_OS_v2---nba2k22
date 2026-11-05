@@ -339,7 +339,7 @@ def derive_status(statuses, after):
     return "error"
 
 
-def inspect(repo: Path, candidate: str, plan_path: str, attempt: Path):
+def inspect(repo: Path, candidate: str, plan_path: str, attempt: Path, *, checkpoint=None):
     binding = expected_input(repo.resolve(), candidate, plan_path)
     inputs = read_record(attempt / "input.json")
     exact_keys(inputs, set(binding) | {"source_before", "runtime"}, "input")
@@ -357,11 +357,13 @@ def inspect(repo: Path, candidate: str, plan_path: str, attempt: Path):
     after = read_record(attempt / "source_after.json")
     validate_observation(after, expected_state)
     statuses, stopped = [], False
+    observed_checks = []
     expected_files = {"input.json", "source_after.json", "result.json"}
     for index, check in enumerate(binding["plan"]["checks"], 1):
         prefix = f"{index:03d}"
         if stopped:
             statuses.append({"id": check["id"], "status": "not_run"})
+            observed_checks.append({**statuses[-1], "argv": check["argv"]})
             continue
         expected_files.update(f"{prefix}.{suffix}" for suffix in ("started.json", "finished.json", "source.json", "stdout.bin", "stderr.bin"))
         start = read_record(attempt / f"{prefix}.started.json")
@@ -403,6 +405,7 @@ def inspect(repo: Path, candidate: str, plan_path: str, attempt: Path):
         if observation["error"] is not None:
             status = "error"
         statuses.append({"id": check["id"], "status": status})
+        observed_checks.append({**statuses[-1], "argv": check["argv"], "exit_code": end["exit_code"]})
         stopped = status != "success"
     if {p.name for p in attempt.iterdir()} != expected_files:
         raise VerificationError("unexpected_or_missing_attempt_files")
@@ -412,20 +415,32 @@ def inspect(repo: Path, candidate: str, plan_path: str, attempt: Path):
                        "status": status, "authority_effect": "none"}
     if not same_json(read_record(attempt / "result.json"), expected_result):
         raise VerificationError("result_derivation_mismatch")
+    if checkpoint is not None:
+        change, gaps = checkpoint
+        return {"candidate": candidate, "change": change, "tests": observed_checks,
+                "open_issues": gaps, "resume": {"plan": plan_path, "attempt": str(attempt)},
+                "status": status, "authority_effect": "none"}
     return expected_result
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("action", choices=["run", "inspect"])
+    parser.add_argument("action", choices=["run", "inspect", "checkpoint"])
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--plan", required=True, help="candidate-tracked repository-relative JSON path")
     parser.add_argument("--attempt", required=True, help="external directory, new for every run")
+    parser.add_argument("--change", help="checkpoint summary of this increment")
+    parser.add_argument("--open-issue", action="append", default=[], help="unresolved engineering issue")
     args = parser.parse_args(argv)
+    if args.action == "checkpoint" and not (args.change and args.change.strip()):
+        parser.error("checkpoint requires --change")
+    if args.action != "checkpoint" and (args.change is not None or args.open_issue):
+        parser.error("--change and --open-issue require checkpoint")
     try:
         operation = execute if args.action == "run" else inspect
-        result = operation(Path(args.repo_root).resolve(), args.candidate, args.plan, Path(args.attempt).absolute())
+        options = {"checkpoint": (args.change, args.open_issue)} if args.action == "checkpoint" else {}
+        result = operation(Path(args.repo_root).resolve(), args.candidate, args.plan, Path(args.attempt).absolute(), **options)
         print(json.dumps(result, ensure_ascii=False))
         return {"success": 0, "failure": 1, "error": 3}[result["status"]]
     except (VerificationError, OSError, UnicodeError, ValueError, RecursionError) as exc:

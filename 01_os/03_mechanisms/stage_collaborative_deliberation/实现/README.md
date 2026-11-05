@@ -23,7 +23,9 @@ python verify_stage_collaborative_deliberation_v2.py instance INSTANCE.json --re
 
 `instance` 必须使用外部实例中的 `task_scope`，其封闭字段和动作结构见 `../阶段profile契约_v1.yml` 的 `task_scope_execution_contract`。任务包须为规范 `task_packet` 包装；任务包、profile、publisher policy、动作确认和决定依据从候选的普通 Git blob 读取，不用 mutable worktree 同名文件。候选/基线必须是真实完整 commit，全部候选 diff 受任务 allowlist 约束，动作 paths 和阶段再作精确绑定。源码缺失、类型错误、读取失败均非通过。
 
-普通动作是任务包中预先声明的 `ordinary_task_work`，目标必须为该任务的非 master 分支；不是外部输入写一个 `ordinary: true` 就可放行。完整 common model、当前阶段必需字段、未知项处置与 typed receipt 在 dormant/full/incremental 中都保留。既定任务作用域已经覆盖的动作不增加逐阶段确认或固定提问轮数。
+普通动作由任务包预先声明为 `ordinary_task_work`，目标必须为该任务的非 master 分支。正式 `instance` 入口在 dormant/full/incremental 中均保留完整 common model、当前阶段必需字段、未知项处置与 typed receipt。既定任务作用域已经覆盖的动作不增加逐阶段确认或固定提问轮数。
+
+普通开发检查点可调用 `verify_stage_collaborative_deliberation_v2.py ordinary-work <instance.json> --repo-root <checkout> --candidate <sha> --json-output`。使用同一耐久任务包的 `ordinary_task_work` 和当前候选版本，以 dormant 或 incremental 校验 common Current Model、可行性、实际候选范围和承重决定。此入口接受精简实例，省去 stage projection 和正式 receipt，并拒绝正式阶段推进或完成声明。正式阶段仍使用 `instance`、Workflow runner 与原发布门。
 
 承重决定使用明确 `decision_id`：已委托决定绑定精确任务包、选中动作及其 `covered_decision_ids`；新决定绑定候选中的明确记录及完整任务/动作作用域。裸 `ref`、actor 标签或推断不是依据。受保护动作仍须匹配 publisher policy 和明确确认；`expected_target_head` 是声明值，不是假装读过实时远端。core 历史改写仍被禁止。
 

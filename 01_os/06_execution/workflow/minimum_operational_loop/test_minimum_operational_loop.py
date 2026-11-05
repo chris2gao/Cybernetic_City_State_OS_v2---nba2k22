@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import hashlib, importlib.util, shutil, tempfile, unittest
+import hashlib, importlib.util, shutil, subprocess, tempfile, unittest
 from pathlib import Path
 import yaml
 
@@ -49,6 +49,46 @@ def resign_requirement_fixture(payload):
     payload["Human_confirmation"]["content_sha256"]=digest({k:v for k,v in payload.items() if k not in {"Human_confirmation","consensus_Human_confirmation"}})
 
 class MinimumLoopTests(unittest.TestCase):
+    def test_candidate_sync_preview_apply_and_formal_history_refusal(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder).resolve()
+            subprocess.run(["git", "init", "-q", str(repo)], check=True)
+            run = repo / "draft"
+            shutil.copytree(FIXTURE, run)
+            for entry in load(run / "manifest.yml")["artifacts"]:
+                path = run / entry["path"]
+                draft = load(path)
+                draft["stage_control"].pop("plan_acceptance", None)
+                draft["stage_control"].pop("completion_acceptance", None)
+                save(path, draft)
+            stage = run / "05_steps.yml"
+            artifact = load(stage)
+            artifact["artifact_version"] += 1
+            save(stage, artifact)
+            original = {p.name: p.read_bytes() for p in run.iterdir()}
+            code, diff = loop.sync_candidate(run, repo)
+            self.assertEqual(code, 1, diff)
+            self.assertIn("06_execution.yml", "".join(diff))
+            self.assertEqual(original, {p.name: p.read_bytes() for p in run.iterdir()})
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (0, diff))
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (0, []))
+            self.assertEqual(next(ref["sha256"] for ref in load(run / "06_execution.yml")["input_refs"]
+                                  if ref["path"] == "05_steps.yml"),
+                             hashlib.sha256(stage.read_bytes()).hexdigest())
+            manifest = load(run / "manifest.yml")
+            self.assertEqual(manifest["artifacts"][4]["artifact_version"], 2)
+            self.assertEqual(manifest["artifacts"][6]["sha256"],
+                             hashlib.sha256((run / "07_verification.yml").read_bytes()).hexdigest())
+
+            artifact["stage_control"]["completion_acceptance"] = {"commit": "recorded"}
+            save(stage, artifact)
+            subprocess.run(["git", "-C", str(repo), "add", "draft"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", str(repo), "-c", "user.name=Fixture",
+                            "-c", "user.email=fixture@example.invalid", "commit", "-qm", "formal record"], check=True)
+            del artifact["stage_control"]["completion_acceptance"]
+            save(stage, artifact)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (33, ["candidate_sync:formal_history_present"]))
+
     def copy_contract(self,repo):
         source=HERE.parents[3]
         contract=load(source/loop.CONTRACT_PATH)

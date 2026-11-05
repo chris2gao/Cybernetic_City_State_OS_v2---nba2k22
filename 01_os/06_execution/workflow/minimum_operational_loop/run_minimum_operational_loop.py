@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate declared seven-stage artifacts; do not execute their business work."""
 from __future__ import annotations
-import argparse, hashlib, importlib.util, json, shutil, subprocess, sys
+import argparse, difflib, hashlib, importlib.util, json, os, shutil, subprocess, sys, tempfile
 from pathlib import Path
 from typing import Any
 import yaml
@@ -28,6 +28,11 @@ STAGE01_SPEC="01_os/01_workflow/01_需求建模/方法论_v1.md"
 STAGE01_TEMPLATE="01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml"
 EXPECTED_MECHANISM_ID="stage_collaborative_deliberation_and_incremental_reconfirmation"
 EXPECTED_WORKFLOW_ID="citystate_seven_stage_minimum_operational_loop"
+PREDECESSORS = dict(zip(EXPECTED_STAGE_IDS, (
+    [], EXPECTED_STAGE_IDS[:1], EXPECTED_STAGE_IDS[:2], EXPECTED_STAGE_IDS[:3],
+    EXPECTED_STAGE_IDS[3:4], EXPECTED_STAGE_IDS[3:5],
+    [EXPECTED_STAGE_IDS[i] for i in (2, 3, 5)],
+)))
 
 def load_yaml(path:Path)->Any:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
@@ -495,11 +500,6 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
     # not checked here would be exactly the declared-but-unenforced defect this
     # work exists to remove, so the contract and the checker change together.
     required={"stage_control","schema_version","run_id","stage_id","artifact_kind","artifact_version","status","input_refs","deliberation_receipt","payload"}
-    predecessors={
-      EXPECTED_STAGE_IDS[0]:[],EXPECTED_STAGE_IDS[1]:[EXPECTED_STAGE_IDS[0]],
-      EXPECTED_STAGE_IDS[2]:EXPECTED_STAGE_IDS[:2],EXPECTED_STAGE_IDS[3]:EXPECTED_STAGE_IDS[:3],
-      EXPECTED_STAGE_IDS[4]:[EXPECTED_STAGE_IDS[3]],EXPECTED_STAGE_IDS[5]:EXPECTED_STAGE_IDS[3:5],
-      EXPECTED_STAGE_IDS[6]:[EXPECTED_STAGE_IDS[2],EXPECTED_STAGE_IDS[3],EXPECTED_STAGE_IDS[5]]}
     kinds=dict(zip(EXPECTED_STAGE_IDS,["requirement_package","evidence_package","result_package","frozen_test_package","step_package","execution_package","verification_package"]))
     run_id=manifest.get("run_id")
     run_doc=read_yaml(run_root/"run.yml") if is_file(run_root/"run.yml") else {}
@@ -527,8 +527,8 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
         refs=art.get("input_refs",[])
         if not isinstance(refs,list):return 32,[f"refs:{sid}"]
         by_id={x.get("stage_id"):x for x in refs if isinstance(x,dict)}
-        if set(by_id)!=set(predecessors[sid]):return 32,[f"predecessors:{sid}"]
-        for pred in predecessors[sid]:
+        if set(by_id)!=set(PREDECESSORS[sid]):return 32,[f"predecessors:{sid}"]
+        for pred in PREDECESSORS[sid]:
             ref=by_id[pred]
             if ref.get("path")!=paths[pred].name or ref.get("sha256")!=hashes[pred] or ref.get("artifact_version")!=artifacts[pred].get("artifact_version"):
                 return 32,[f"binding:{sid}:{pred}"]
@@ -610,6 +610,106 @@ def prohibited_output(repo_root:Path,output_root:Path)->bool:
     except ValueError:return False
     return any(rel.startswith(prefix) for prefix in PROHIBITED_OUTPUT_PREFIXES)
 
+def sync_candidate(run_root: Path, repo_root: Path, *, apply: bool = False) -> tuple[int, list[str]]:
+    """Rebind draft artifact bytes only. This command never validates acceptance."""
+    try:
+        repo_root = repo_root.resolve()
+        run_root = run_root.absolute()
+        relative = run_root.relative_to(repo_root).as_posix()
+        if relative == "." or run_root.resolve() != run_root or prohibited_output(repo_root, run_root):
+            raise ValueError("unsafe_candidate_directory")
+        git = load_deliberation_validator(Path(__file__).resolve().parents[4]).task_scope_support()
+        if Path(git.git(repo_root, "rev-parse", "--show-toplevel").decode().strip()).resolve() != repo_root:
+            raise ValueError("repository_root_required")
+        # Search reachable history too: removing a receipt in the working tree
+        # must not turn an accepted Run back into a writable draft.
+        protected = r'(plan_acceptance|completion_acceptance|final_stage_completion_commit)["\x27]?[[:space:]]*:'
+        if git.git(repo_root, "log", "--all", "-1", "--format=%H", "-G", protected, "--", relative).strip():
+            raise ValueError("formal_history_present")
+        if any(p.name in {"plan_acceptance.yml", "completion_acceptance.yml", "workflow_completion.yml"}
+               for p in run_root.rglob("*.yml")):
+            raise ValueError("formal_record_present")
+
+        original = {}
+        updated = {}
+
+        def read(name):
+            if not isinstance(name, str) or Path(name).name != name or "/" in name or "\\" in name or ":" in name:
+                raise ValueError("artifact_path_must_be_local")
+            path = run_root / name
+            if path.is_symlink() or path.resolve() != path or not path.is_file() or path in original:
+                raise ValueError(f"invalid_or_duplicate_artifact:{name}")
+            original[path] = path.read_bytes()
+            doc = yaml.safe_load(original[path].decode("utf-8"))
+            if not isinstance(doc, dict):
+                raise ValueError(f"artifact_mapping:{name}")
+            return path, doc
+
+        def refresh(path, before, after):
+            if before != after:
+                updated[path] = yaml.safe_dump(after, allow_unicode=True, sort_keys=False, width=120).encode("utf-8")
+            return hashlib.sha256(updated.get(path, original[path])).hexdigest()
+
+        manifest_path, manifest = read("manifest.yml")
+        if manifest.get("schema_version") != "citystate.workflow.run_manifest.v1" or (
+            manifest.get("workflow_id"), manifest.get("workflow_version")
+        ) != (EXPECTED_WORKFLOW_ID, 1) or not manifest.get("run_id"):
+            raise ValueError("manifest_identity")
+        entries = manifest["artifacts"]
+        stage_ids = [entry["stage_id"] for entry in entries]
+        if not stage_ids or stage_ids != EXPECTED_STAGE_IDS[:len(stage_ids)]:
+            raise ValueError("manifest_stage_order")
+        bindings = {}
+        for entry in entries:
+            sid = entry["stage_id"]
+            path, artifact = read(entry["path"])
+            version = artifact["artifact_version"]
+            if (artifact.get("schema_version"), artifact.get("run_id"), artifact.get("stage_id")) != (
+                "citystate.workflow.artifact.v1", manifest["run_id"], sid
+            ):
+                raise ValueError(f"artifact_identity:{sid}")
+            if not positive_int(version) or not positive_int(entry["artifact_version"]) or version < entry["artifact_version"]:
+                raise ValueError(f"artifact_version_regression_or_invalid:{sid}")
+            control = artifact.get("stage_control", {})
+            if not isinstance(control, dict) or {"plan_acceptance", "completion_acceptance"} & control.keys():
+                raise ValueError(f"formal_stage_control:{sid}")
+            refs = artifact["input_refs"]
+            if not isinstance(refs, list) or sorted(ref["stage_id"] for ref in refs) != sorted(PREDECESSORS[sid]):
+                raise ValueError(f"predecessors:{sid}")
+            for ref in refs:
+                expected = bindings[ref["stage_id"]]
+                if ref["path"] != expected["path"] or not positive_int(ref["artifact_version"]) or ref["artifact_version"] > expected["artifact_version"]:
+                    raise ValueError(f"dependency_identity_or_version:{sid}:{ref['stage_id']}")
+            new_refs = [ref | bindings[ref["stage_id"]] for ref in refs]
+            digest = refresh(path, artifact, artifact | {"input_refs": new_refs})
+            bindings[sid] = {"path": path.name, "artifact_version": version, "sha256": digest}
+        refresh(manifest_path, manifest, manifest | {"artifacts": [
+            entry | bindings[entry["stage_id"]] for entry in entries
+        ]})
+        diff = ["".join(difflib.unified_diff(
+            original[path].decode().splitlines(keepends=True), new.decode().splitlines(keepends=True),
+            fromfile=path.name, tofile=path.name,
+        )) for path, new in updated.items()]
+        if not apply:
+            return (1 if updated else 0), diff
+        if any(path.is_symlink() or path.resolve() != path or path.read_bytes() != data
+               for path, data in original.items()):
+            raise ValueError("candidate_changed_during_sync")
+        # Each replacement is atomic. Manifest goes last so an interrupted run
+        # cannot advertise hashes for replacements that have not yet happened.
+        for path, data in updated.items():
+            with tempfile.NamedTemporaryFile(dir=run_root, delete=False) as tmp:
+                temporary = Path(tmp.name)
+                try:
+                    tmp.write(data)
+                    tmp.close()
+                    os.replace(temporary, path)
+                finally:
+                    temporary.unlink(missing_ok=True)
+        return 0, diff
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, yaml.YAMLError, RuntimeError) as exc:
+        return 33, [f"candidate_sync:{exc}"]
+
 def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
     if prohibited_output(repo_root,output_root):return 40,["canonical_output_root"]
     source=repo_root/PILOT_PATH
@@ -629,16 +729,20 @@ def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
 
 def main()->int:
     parser=argparse.ArgumentParser()
-    parser.add_argument("command",choices=("static","validate","materialize-pilot"))
+    parser.add_argument("command",choices=("static","validate","materialize-pilot","sync-candidate"))
     parser.add_argument("target");parser.add_argument("output",nargs="?")
     parser.add_argument("--json-output",action="store_true");parser.add_argument("--skip-subvalidators",action="store_true",help=argparse.SUPPRESS)
     parser.add_argument("--repo-root",type=Path,default=None)
+    parser.add_argument("--apply",action="store_true",help="apply sync-candidate changes; default previews only")
     parser.add_argument("--candidate",default=None,
                         help="exact commit whose run artifacts and acceptance history are judged; "
                              "required for full validation, independent of dirty checkout bytes")
     args=parser.parse_args()
+    if args.apply and args.command!="sync-candidate":parser.error("--apply requires sync-candidate")
     if args.command=="static":code,findings=validate_static(Path(args.target),not args.skip_subvalidators)
     elif args.command=="validate":code,findings=validate_run(Path(args.target),args.repo_root,args.candidate)
+    elif args.command=="sync-candidate":
+        code,findings=sync_candidate(Path(args.target),args.repo_root or Path.cwd(),apply=args.apply)
     else:
         if not args.output:parser.error("materialize-pilot requires output")
         code,findings=materialize_pilot(Path(args.target),Path(args.output))
