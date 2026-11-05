@@ -28,7 +28,14 @@ payload_required_fields:
 - objective
 - success_criteria
 - constraints
+- consensus_A0
+- consensus_Human_confirmation
+- requirement_result_A
 - Human_confirmation
 stage_specific_rules:
-- Human_confirmation.confirmed_must_be_true
-- Human_confirmation.artifact_version_must_match
+- consensus_A0_and_requirement_result_A_have_distinct_model_id_and_versioned_content
+- two_distinct_Human_confirmations_bind_exact_model_kind_id_version_and_content_sha256
+- requirement_result_A_binds_confirmed_consensus_A0
+- nonempty_result_items_map_all_success_criteria_and_unknown_evidence_questions
+- exact_coverage_agrees_with_result_item_criterion_and_question_links
+- structural_binding_does_not_authenticate_Human_or_prove_semantic_sufficiency

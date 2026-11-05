@@ -2,6 +2,15 @@ schema_version: citystate.registry.v1
 registry_id: context_management_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml
+    purpose: Task-selected project/module discovery, source evidence and index synchronization contract
+    loader: task executor and project_context.py
+    loader_class: in_repo_program
+    discovery: context_management README and development entry
+    evidence: 01_os/06_execution/task_discipline/project_context/test_project_context.py
+    cache_dirs: []
+    failure_surfacing: next task discovery or completion sync
+    deletion_rule: protected
   - path: 01_os/03_mechanisms/context_management/{README.md,方法论_v1.md,文件隔离与产物生命周期_v1.md}
     purpose: 上下文管理 canonical 定义
     loader: 01_os/06_execution/boot/context_management/README.md

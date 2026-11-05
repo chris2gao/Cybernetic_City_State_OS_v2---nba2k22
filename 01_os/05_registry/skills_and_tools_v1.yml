@@ -2,6 +2,24 @@ schema_version: citystate.registry.v1
 registry_id: skills_and_tools_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/04_skills_and_tools/rea/README.md
+    purpose: REA local static tool usage and evidence boundaries
+    loader: explicit task-directed tool selection
+    loader_class: external_tool_convention
+    discovery: 01_os/04_skills_and_tools/README.md
+    evidence: 01_os/06_execution/tools/rea/test_adapter.py
+    cache_dirs: []
+    failure_surfacing: current invocation
+    deletion_rule: protected
+  - path: 01_os/06_execution/tools/rea/**
+    purpose: Bounded opt-in REA CLI discovery, static invocation, and local evidence receipts
+    loader: task-directed adapter.py and offline pytest
+    loader_class: in_repo_program
+    discovery: REA on-demand registry entry
+    evidence: 01_os/06_execution/tools/rea/test_adapter.py
+    cache_dirs: []
+    failure_surfacing: typed receipt and nonzero invocation exit
+    deletion_rule: protected
   - path: 01_os/04_skills_and_tools/模型与供应商能力清单_v1.md
     purpose: 供 Human 做任务路由时参考的模型、产品、环境与 capability inventory，不授予 authority
     loader: Human-directed task routing review
@@ -211,6 +229,14 @@ tools:
       target configuration or test-semantics change, rerun run-014 calibration,
       timeout, real target, wrapper matrix and repository-state validation.
     canonical_wrapper: 01_os/06_execution/tools/cosmic_ray/invoke.sh
+  - name: rea
+    status: verified_on_demand_static_scope
+    mount: on_demand_local_cli
+    default_loaded: false
+    mcp_exposed: false
+    expected_version: task_selected_exact_runtime_version
+    canonical_wrapper: 01_os/06_execution/tools/rea/adapter.py
+    evidence: 01_os/06_execution/tools/rea/test_adapter.py
 excluded:
   - candidate packages, runtimes, MCP servers, and skills not explicitly listed under tools
   - 01_os/_runs/**

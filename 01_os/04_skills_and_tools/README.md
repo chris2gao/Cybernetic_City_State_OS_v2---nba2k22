@@ -38,6 +38,8 @@ that check is part of the entry rather than a note beside it.
 
 ## Verified on-demand tools
 
+- [REA](rea/README.md) offers an explicit local static adapter with runtime version, schema and provider discovery. Tool availability is established per host and operation.
+
 - [check-jsonschema](check-jsonschema/README.md)：`0.37.4`，通过 run-012
   独立安装真实性、正负例、重复性与 fail-closed wrapper 验证。
 - [mutmut](mutmut/README.md)：`3.6.0`，通过 run-013 在 WSL Linux 文件系统、

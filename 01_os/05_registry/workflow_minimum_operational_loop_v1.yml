@@ -4,6 +4,15 @@ workflow_id: citystate_seven_stage_minimum_operational_loop
 workflow_version: 1
 status: minimum_operational
 entries:
+- path: 01_os/01_workflow/01_需求建模/{README.md,方法论_v1.md,实现/需求建模schema_v1.md,实现/需求结果模型模板_v1.yml}
+  purpose: 唯一活动双层需求A0/A语义、八槽说明和机器结果结构模板
+  loader: workflow boot and task-directed Stage01 modeling
+  loader_class: in_repo_program
+  discovery: stage01_active_semantic_spec and stage01_result_model_template in Boot
+  evidence: 01_os/06_execution/workflow/minimum_operational_loop/test_minimum_operational_loop.py
+  cache_dirs: []
+  failure_surfacing: next workflow static or Stage01 validation
+  deletion_rule: protected
 - path: 01_os/01_workflow/实现/{README.md,七阶段最小运行契约_v1.yml}
   purpose: 七阶段最小运行闭环的跨阶段机器契约与语义边界
   loader: 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py

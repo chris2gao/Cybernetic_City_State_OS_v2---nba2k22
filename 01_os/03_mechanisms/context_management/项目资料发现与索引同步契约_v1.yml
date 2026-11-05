@@ -1,0 +1,32 @@
+schema_version: citystate.project_context.v1
+authority_effect: none
+owner: context_management
+discovery:
+  project_entry: explicit_task_selected_index_and_module_registry
+  source: existing_PRMS_GitSource_at_exact_repository_commit
+  body_loading: selected_module_docs_only
+  publication: determine_master_ancestry_separately_from_source_presence
+  no_project_catalog: report_PROJECT_CATALOG_NOT_DECLARED_do_not_invent_modules
+  domain_structure: owner_defined_not_NBA_module_ids
+task_fields: [affected_module_ids, source_refs_read]
+source_fields: [repository, commit, path, publication_status]
+index_sync:
+  affected: implementation_paths_declared_in_module_artifacts
+  completion: changed_project_index_and_registry_and_affected_module_records_in_same_candidate
+  incomplete_status: INDEX_SYNC_PENDING
+handoff:
+  required: [source_head, result, remaining_gaps, next_steps, plan_actual_deltas, reproduction, evidence_scope]
+  shared_workspace: one_write_owner_and_explicit_next_owner_before_transfer
+  independent_review: isolated_session_from_primary_evidence_not_private_executor_context
+failure:
+  repair_budget_per_signature: 3
+  diagnosis_consumes_attempt: false
+  repeated_remedy_without_new_evidence: reject
+  unknown_external_outcome: no_automatic_replay
+  exhausted: preserve_evidence_and_joint_research_question_in_failure_log
+implementation: 01_os/06_execution/task_discipline/project_context/project_context.py
+existing_owners:
+  task_scope: 01_os/开发入口与单窗口任务规范_v1.md
+  continuity: 01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md
+  action_and_publication: 01_os/05_registry/repository_publisher_authority_v1.yml
+  independent_review: AGENT_WORKING_DISCIPLINE.md

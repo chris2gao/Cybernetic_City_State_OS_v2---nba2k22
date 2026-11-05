@@ -24,6 +24,8 @@ EXPECTED_STAGE_IDS=[
 "workflow_stage_07_test_execution"]
 PROHIBITED_OUTPUT_PREFIXES=("01_os/01_workflow/","01_os/02_boot/","01_os/03_mechanisms/","01_os/05_registry/","01_os/06_execution/")
 ACCEPTED_VERDICTS={"PASS","PASS_WITH_NON_BLOCKING_NOTES"}
+STAGE01_SPEC="01_os/01_workflow/01_需求建模/方法论_v1.md"
+STAGE01_TEMPLATE="01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml"
 EXPECTED_MECHANISM_ID="stage_collaborative_deliberation_and_incremental_reconfirmation"
 EXPECTED_WORKFLOW_ID="citystate_seven_stage_minimum_operational_loop"
 
@@ -36,6 +38,141 @@ def normalized_sha256(value:Any)->str:
     return hashlib.sha256(raw).hexdigest()
 def positive_int(v:Any)->bool:
     return isinstance(v,int) and not isinstance(v,bool) and v>0
+
+def requirement_confirmation_digest(payload:dict)->str:
+    """Bind the full proposed requirement, including criteria, not just its title."""
+    return normalized_sha256({k:v for k,v in payload.items()
+                              if k not in {"Human_confirmation","consensus_Human_confirmation"}})
+
+def requirement_findings(payload:dict,artifact_version:int)->list[str]:
+    """The one active Stage01 structural contract. Not Human authentication."""
+    def text(x):return isinstance(x,str) and bool(x.strip())
+    def strings(x,nonempty=False):
+        return isinstance(x,list) and (bool(x) or not nonempty) and all(text(v) for v in x)
+    def rows(x,nonempty=False):
+        return isinstance(x,list) and (bool(x) or not nonempty) and all(isinstance(v,dict) for v in x)
+    if not text(payload.get("requirement_id")) or not text(payload.get("objective")):
+        return ["stage1_identity"]
+    criteria=payload.get("success_criteria")
+    if not rows(criteria,True) or any(not text(c.get("criterion_id")) or not text(c.get("statement")) for c in criteria):
+        return ["stage1_success_criteria"]
+    criterion_ids=[c["criterion_id"] for c in criteria]
+    if len(set(criterion_ids))!=len(criterion_ids):return ["stage1_duplicate_criterion"]
+    if not strings(payload.get("constraints")):return ["stage1_constraints"]
+    a0=payload.get("consensus_A0");a=payload.get("requirement_result_A")
+    if not isinstance(a0,dict) or not isinstance(a,dict):return ["stage1_dual_models_required"]
+    if not positive_int(a0.get("version")) or not text(a0.get("model_id")):
+        return ["stage1_consensus_identity"]
+    for field in ("objective","success_direction"):
+        if not text(a0.get(field)):return [f"stage1_consensus:{field}"]
+    if not strings(a0.get("boundaries"),True) or not isinstance(a0.get("terms"),dict):
+        return ["stage1_consensus_scope"]
+    if any(not text(k) or not text(v) for k,v in a0["terms"].items()):return ["stage1_consensus_terms"]
+    if a.get("version")!=artifact_version or not positive_int(a.get("version")) or not text(a.get("model_id")) or a["model_id"]==a0["model_id"]:
+        return ["stage1_result_identity"]
+    h0=payload.get("consensus_Human_confirmation");ha=payload.get("Human_confirmation")
+    if not isinstance(h0,dict) or not isinstance(ha,dict):return ["stage1_dual_confirmations_required"]
+    for confirmation,model,kind,digest in (
+        (h0,a0,"consensus_A0",normalized_sha256(a0)),
+        (ha,a,"requirement_result_A",requirement_confirmation_digest(payload))):
+        if (confirmation.get("confirmed") is not True or confirmation.get("model_kind")!=kind
+                or confirmation.get("model_id")!=model["model_id"]
+                or type(confirmation.get("artifact_version")) is not int
+                or confirmation["artifact_version"]!=model["version"]
+                or confirmation.get("content_sha256")!=digest
+                or not text(confirmation.get("confirmation_ref"))):
+            return [f"stage1_confirmation_binding:{kind}"]
+    if h0["confirmation_ref"]==ha["confirmation_ref"]:return ["stage1_distinct_confirmations"]
+    expected_ref={"model_id":a0["model_id"],"version":a0["version"],
+                  "sha256":normalized_sha256(a0),"confirmation_ref":h0["confirmation_ref"]}
+    if a.get("consensus_ref")!=expected_ref:return ["stage1_consensus_ref"]
+    items=a.get("result_items")
+    if not rows(items,True):return ["stage1_result_items"]
+    ids=[];question_ids=set();item_criteria={}
+    for item in items:
+        identifier=item.get("result_item_id")
+        if not text(identifier) or identifier in ids:return ["stage1_result_item_identity"]
+        ids.append(identifier)
+        for field in ("title","kind","expected_end_state","completeness_rule"):
+            value=item.get(field)
+            if not text(value) or value.strip().casefold() in {"tbd","todo","complete system","完成一个系统","待定"} or value.strip().startswith("<"):
+                return [f"stage1_result_item:{identifier}:{field}"]
+        for field,nonempty in (("components",True),("relations",False),("inputs_outputs",True),("acceptance_criterion_ids",True)):
+            if not strings(item.get(field),nonempty):return [f"stage1_result_item:{identifier}:{field}"]
+        mapped=item["acceptance_criterion_ids"]
+        if len(mapped)!=len(set(mapped)) or not set(mapped).issubset(criterion_ids):return ["stage1_result_criterion_mapping"]
+        item_criteria[identifier]=set(mapped)
+        facts=item.get("known_facts");unknowns=item.get("unknowns")
+        if not rows(facts) or not rows(unknowns):return ["stage1_result_evidence"]
+        if any(not text(f.get("item")) or f.get("evidence_status") not in {"human_requirement","source_observed","static_source","offline_verified","live_effect_verified","independently_reviewed","candidate_inference"} for f in facts):
+            return ["stage1_known_fact_evidence"]
+        for q in unknowns:
+            if (not text(q.get("question_id")) or q["question_id"] in question_ids
+                    or not text(q.get("scope")) or not text(q.get("closure_evidence"))
+                    or q.get("status")!="UNKNOWN"):
+                return ["stage1_unknown_evidence_question"]
+            question_ids.add(q["question_id"])
+    if set().union(*item_criteria.values())!=set(criterion_ids):return ["stage1_criterion_coverage"]
+    coverage=a.get("coverage")
+    if not rows(coverage,True):return ["stage1_coverage"]
+    seen=set();covered_questions=set()
+    for row in coverage:
+        criterion=row.get("success_criterion_id")
+        if not text(criterion) or criterion in seen or criterion not in criterion_ids:return ["stage1_coverage_criterion"]
+        seen.add(criterion)
+        refs=row.get("result_item_ids");qs=row.get("evidence_questions")
+        if not strings(refs,True) or not strings(qs) or len(refs)!=len(set(refs)) or len(qs)!=len(set(qs)):
+            return ["stage1_coverage_references"]
+        if set(refs)!={identifier for identifier,mapped in item_criteria.items() if criterion in mapped}:
+            return ["stage1_coverage_result_binding"]
+        expected_questions={q["question_id"] for item in items if item["result_item_id"] in refs for q in item["unknowns"]}
+        if set(qs)!=expected_questions:return ["stage1_coverage_question_binding"]
+        covered_questions.update(qs)
+    if seen!=set(criterion_ids) or covered_questions!=question_ids:return ["stage1_coverage_complete"]
+    return []
+
+def evidence_findings(payload:dict,requirement:dict)->list[str]:
+    """Separate feasibility support from background and preserve exact source scope."""
+    import re
+    def text(v):return isinstance(v,str) and bool(v.strip())
+    def strings(v):return isinstance(v,list) and all(text(x) for x in v)
+    sources=payload.get("sources");claims=payload.get("claims")
+    if not isinstance(sources,list) or not sources or not all(isinstance(s,dict) for s in sources):return ["stage2_sources"]
+    source_ids=set()
+    for source in sources:
+        sid=source.get("source_id");ref=source.get("source_ref")
+        if not text(sid) or sid in source_ids or not isinstance(ref,dict):return ["stage2_source_identity"]
+        source_ids.add(sid)
+        if "repository" in ref:
+            if (not text(ref["repository"]) or not isinstance(ref.get("commit"),str)
+                    or re.fullmatch(r"[0-9a-f]{40}",ref["commit"]) is None or not text(ref.get("path"))):
+                return ["stage2_exact_source_ref"]
+        elif not all(text(ref.get(f)) for f in ("url","version","observed_at")):
+            return ["stage2_external_source_ref"]
+        if source.get("publication_status") not in {"MASTER_INCLUDED","SOURCE_BRANCH_NOT_MASTER","EXTERNAL_VERSIONED_SOURCE"}:
+            return ["stage2_source_publication_status"]
+    if not isinstance(claims,list) or not claims or not all(isinstance(c,dict) for c in claims):return ["stage2_claims"]
+    item_ids={x["result_item_id"] for x in requirement["requirement_result_A"]["result_items"]}
+    criteria={x["criterion_id"] for x in requirement["success_criteria"]}
+    kinds={"STATIC_SOURCE","OFFLINE_TEST","LIVE_TOOL_CALL","LIVE_TARGET_EFFECT","INDEPENDENT_REVIEW","UNKNOWN","BACKGROUND_REFERENCE"}
+    claim_ids=set();covered_items=set()
+    for claim in claims:
+        cid=claim.get("claim_id")
+        if not text(cid) or cid in claim_ids:return ["stage2_claim_identity"]
+        claim_ids.add(cid)
+        if claim.get("evidence_kind") not in kinds or claim.get("purpose") not in {"FEASIBILITY","BACKGROUND"}:
+            return ["stage2_evidence_classification"]
+        if not text(claim.get("limits")):return ["stage2_evidence_limits"]
+        if not strings(claim.get("source_ids")) or not claim["source_ids"] or not set(claim["source_ids"]).issubset(source_ids):
+            return ["stage2_claim_sources"]
+        for field,valid in (("result_item_ids",item_ids),("success_criterion_ids",criteria)):
+            if not strings(claim.get(field)) or not set(claim[field]).issubset(valid):return ["stage2_requirement_mapping"]
+            if claim["purpose"]=="FEASIBILITY" and not claim[field]:return ["stage2_feasibility_mapping"]
+        covered_items.update(claim["result_item_ids"])
+        if claim["evidence_kind"]=="UNKNOWN" and not text(claim.get("closure_evidence")):return ["stage2_unknown_closure"]
+        if claim["evidence_kind"]=="BACKGROUND_REFERENCE" and claim["purpose"]!="BACKGROUND":return ["stage2_background_not_feasibility"]
+    if covered_items!=item_ids:return ["stage2_result_coverage"]
+    return []
 def run_subvalidator(cmd:list[str],cwd:Path)->int:
     return subprocess.run(cmd,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False).returncode
 
@@ -80,6 +217,8 @@ def validate_static(repo_root:Path,run_subvalidators:bool=True)->tuple[int,list[
     if boot.get("contract")!=CONTRACT_PATH or boot.get("runner")!=RUNNER_PATH or boot.get("registry")!=REGISTRY_PATH:
         findings.append("boot_binding")
     if boot.get("stage_schemas")!=[item.get("schema_path") for item in stages]:findings.append("boot_stage_schemas")
+    for key,path in (("stage01_active_semantic_spec",STAGE01_SPEC),("stage01_result_model_template",STAGE01_TEMPLATE)):
+        if boot.get(key)!=path or not (repo_root/path).is_file():findings.append(f"boot_{key}")
     if boot.get("default_deliberation_route")!="dormant" or boot.get("create_live_session_by_default") is not False:
         findings.append("boot_policy")
     if boot.get("canonical_live_instance_state")!="prohibited":findings.append("boot_canonical_state")
@@ -394,20 +533,23 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
             if ref.get("path")!=paths[pred].name or ref.get("sha256")!=hashes[pred] or ref.get("artifact_version")!=artifacts[pred].get("artifact_version"):
                 return 32,[f"binding:{sid}:{pred}"]
     p1,p2,p3,p4,p5,p6,p7=[artifacts[s]["payload"] for s in EXPECTED_STAGE_IDS]
-    hc=p1.get("Human_confirmation",{})
-    if hc.get("confirmed") is not True or hc.get("artifact_version")!=artifacts[EXPECTED_STAGE_IDS[0]].get("artifact_version") or not p1.get("success_criteria"):
-        return 33,["stage1"]
+    stage1_findings=requirement_findings(p1,artifacts[EXPECTED_STAGE_IDS[0]]["artifact_version"])
+    if stage1_findings:return 33,stage1_findings
+    stage2_findings=evidence_findings(p2,p1)
+    if stage2_findings:return 33,stage2_findings
     source_ids={x.get("source_id") for x in p2.get("sources",[]) if isinstance(x,dict)}
     if any(not set(x.get("source_ids",[])) or not set(x.get("source_ids",[])).issubset(source_ids) for x in p2.get("claims",[])):
         return 33,["stage2_claim_sources"]
     c2=p2.get("completion",{})
     if c2.get("feasibility_basis_complete") is not True or c2.get("conflicts_resolved_or_durable") is not True:return 33,["stage2_completion"]
     evidence_ids={x.get("claim_id") for x in p2.get("claims",[]) if isinstance(x,dict)}
+    feasibility_ids={x["claim_id"] for x in p2["claims"] if x["purpose"]=="FEASIBILITY" and x["evidence_kind"] not in {"UNKNOWN","BACKGROUND_REFERENCE"}}
     result_ids=set()
     for claim in p3.get("claims",[]):
         result_ids.add(claim.get("result_claim_id"))
         ids=set(claim.get("evidence_claim_ids",[]))
         if not ids or not ids.issubset(evidence_ids):return 33,["stage3_claim_evidence"]
+        if not ids.intersection(feasibility_ids):return 33,["stage3_feasibility_support_required"]
     criteria={x.get("criterion_id") for x in p1.get("success_criteria",[]) if isinstance(x,dict)}
     mapped=set()
     for item in p3.get("requirement_satisfaction",[]):

@@ -1,0 +1,58 @@
+# Shape template, not a fabricated Human approval. Replace placeholders and bind actual sources.
+requirement_id: <requirement-id>
+objective: <observable final outcome>
+success_criteria:
+  - criterion_id: SC-001
+    statement: <observable success criterion>
+constraints: []
+consensus_A0:
+  model_id: A0-001
+  version: 1
+  objective: <agreed purpose>
+  boundaries: [<scope boundary>]
+  terms: {}
+  success_direction: <agreed success direction>
+consensus_Human_confirmation:
+  confirmed: false
+  model_kind: consensus_A0
+  model_id: A0-001
+  artifact_version: 1
+  content_sha256: <normalized_sha256 of consensus_A0>
+  confirmation_ref: <actual Human A0 confirmation source>
+requirement_result_A:
+  model_id: A-001
+  version: 1
+  consensus_ref:
+    model_id: A0-001
+    version: 1
+    sha256: <normalized_sha256 of consensus_A0>
+    confirmation_ref: <same actual A0 confirmation source>
+  result_items:
+    - result_item_id: RES-001
+      title: <concrete deliverable>
+      kind: <function|interface|document|data|other>
+      expected_end_state: <observable final state and behavior>
+      components: [<known components>]
+      relations: []
+      inputs_outputs: [<concrete input and output example>]
+      completeness_rule: <how completeness is checked>
+      known_facts:
+        - item: <requirement or evidence>
+          evidence_status: human_requirement
+      unknowns:
+        - question_id: EVQ-001
+          scope: <precise unknown>
+          closure_evidence: <what would close it>
+          status: UNKNOWN
+      acceptance_criterion_ids: [SC-001]
+  coverage:
+    - success_criterion_id: SC-001
+      result_item_ids: [RES-001]
+      evidence_questions: [EVQ-001]
+Human_confirmation:
+  confirmed: false
+  model_kind: requirement_result_A
+  model_id: A-001
+  artifact_version: 1
+  content_sha256: <full payload excluding both confirmation fields, normalized_sha256>
+  confirmation_ref: <different actual Human complete A confirmation source>

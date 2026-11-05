@@ -39,6 +39,15 @@ def rebind(root:Path):
         item["sha256"]=hashes[item["stage_id"]]
     save(root/"manifest.yml",manifest)
 
+def resign_requirement_fixture(payload):
+    """Synthetic test bindings only; never manufacture a real Human decision."""
+    def digest(value):
+        return hashlib.sha256(yaml.safe_dump(value,allow_unicode=True,sort_keys=True,width=4096).encode("utf-8")).hexdigest()
+    a0=payload["consensus_A0"]
+    payload["consensus_Human_confirmation"]["content_sha256"]=digest(a0)
+    payload["requirement_result_A"]["consensus_ref"]["sha256"]=digest(a0)
+    payload["Human_confirmation"]["content_sha256"]=digest({k:v for k,v in payload.items() if k not in {"Human_confirmation","consensus_Human_confirmation"}})
+
 class MinimumLoopTests(unittest.TestCase):
     def copy_contract(self,repo):
         source=HERE.parents[3]
@@ -51,6 +60,85 @@ class MinimumLoopTests(unittest.TestCase):
     def mutate(self,name,fn):
         root=self.copy_fixture();p=root/name;data=load(p);fn(data);save(p,data);rebind(root);return root
     def test_positive_fixture(self):self.assertEqual(loop.validate_structure(FIXTURE)[0],0)
+    def stage1_case(self,fn,resign=False):
+        def change(doc):
+            fn(doc["payload"])
+            if resign:resign_requirement_fixture(doc["payload"])
+        return loop.validate_structure(self.mutate("01_requirement.yml",change))
+    def test_stage01_only_consensus_or_old_single_layer_refused(self):
+        for fields in (("Human_confirmation",),("consensus_A0","consensus_Human_confirmation","requirement_result_A")):
+            with self.subTest(fields=fields):
+                self.assertEqual(self.stage1_case(lambda p:[p.pop(f) for f in fields])[0],33)
+    def test_stage01_copied_A0_confirmation_is_not_complete_A(self):
+        self.assertEqual(self.stage1_case(lambda p:p.update(Human_confirmation=dict(p["consensus_Human_confirmation"])))[0],33)
+    def test_stage01_confirmation_versions_and_kinds_are_exact(self):
+        for field in ("Human_confirmation","consensus_Human_confirmation"):
+            for mutation in ({"artifact_version":2},{"artifact_version":True},{"model_kind":"other"},{"model_id":"other"},{"confirmed":1},{"confirmation_ref":""}):
+                with self.subTest(field=field,mutation=mutation):
+                    self.assertEqual(self.stage1_case(lambda p:p[field].update(mutation))[0],33)
+    def test_stage01_content_and_criteria_changes_invalidate_confirmations(self):
+        for fn in (
+            lambda p:p["consensus_A0"].update(objective="changed objective"),
+            lambda p:p["requirement_result_A"]["result_items"][0].update(expected_end_state="changed output"),
+            lambda p:p["success_criteria"][0].update(statement="changed acceptance"),
+            lambda p:p["constraints"].append("new constraint")):
+            with self.subTest(fn=fn):self.assertEqual(self.stage1_case(fn)[0],33)
+    def test_stage01_result_items_cannot_be_empty_or_generic(self):
+        cases=[lambda p:p["requirement_result_A"].update(result_items=[]),
+               lambda p:p["requirement_result_A"]["result_items"][0].update(expected_end_state="完成一个系统")]
+        for fn in cases:self.assertEqual(self.stage1_case(fn,True)[0],33)
+    def test_stage01_missing_result_specification_is_rejected(self):
+        for field in ("components","relations","inputs_outputs","completeness_rule","known_facts","unknowns","acceptance_criterion_ids"):
+            with self.subTest(field=field):
+                self.assertEqual(self.stage1_case(lambda p:p["requirement_result_A"]["result_items"][0].pop(field),True)[0],33)
+    def test_stage01_success_criteria_and_coverage_are_bidirectional(self):
+        for fn in (
+            lambda p:p["requirement_result_A"]["result_items"][0].update(acceptance_criterion_ids=["SC-1"]),
+            lambda p:p["requirement_result_A"]["coverage"].pop(),
+            lambda p:p["requirement_result_A"]["coverage"][0].update(result_item_ids=["MISSING"]),
+            lambda p:p["requirement_result_A"].update(coverage=[])):
+            with self.subTest(fn=fn):self.assertEqual(self.stage1_case(fn,True)[0],33)
+    def test_stage01_unknown_requires_closure_and_coverage(self):
+        def add(p):
+            p["requirement_result_A"]["result_items"][0]["unknowns"]=[{"question_id":"EVQ-1","scope":"Unknown platform separator behavior","closure_evidence":"Compare an actual platform observation","status":"UNKNOWN"}]
+            for c in p["requirement_result_A"]["coverage"]:c["evidence_questions"]=["EVQ-1"]
+        self.assertEqual(self.stage1_case(add,True)[0],0)
+        def missing_closure(p):
+            add(p);p["requirement_result_A"]["result_items"][0]["unknowns"][0].pop("closure_evidence")
+        self.assertEqual(self.stage1_case(missing_closure,True)[0],33)
+        def missing_coverage(p):
+            add(p);p["requirement_result_A"]["coverage"][0]["evidence_questions"]=[]
+        self.assertEqual(self.stage1_case(missing_coverage,True)[0],33)
+    def test_stage01_non_database_document_result_needs_no_sql(self):
+        self.assertEqual(self.stage1_case(lambda p:p["requirement_result_A"]["result_items"][0].update(kind="document"),True)[0],0)
+    def test_stage01_same_confirmation_reference_is_refused(self):
+        self.assertEqual(self.stage1_case(lambda p:p["Human_confirmation"].update(confirmation_ref=p["consensus_Human_confirmation"]["confirmation_ref"]),True)[0],33)
+    def test_stage02_maturity_scope_and_exact_source_are_required(self):
+        mutations=[
+            lambda p:p["claims"][0].pop("evidence_kind"),
+            lambda p:p["claims"][0].update(evidence_kind="DONE"),
+            lambda p:p["claims"][0].update(limits=""),
+            lambda p:p["claims"][0].update(result_item_ids=["MISSING"]),
+            lambda p:p["sources"][0]["source_ref"].update(commit="master"),
+            lambda p:p["sources"][0].update(publication_status="published probably")]
+        for fn in mutations:
+            with self.subTest(fn=fn):
+                root=self.mutate("02_evidence.yml",lambda d:fn(d["payload"]))
+                self.assertEqual(loop.validate_structure(root)[0],33)
+    def test_stage02_background_cannot_be_only_feasibility_support(self):
+        def background(doc):
+            for c in doc["payload"]["claims"]:c.update(purpose="BACKGROUND",evidence_kind="BACKGROUND_REFERENCE")
+        code,findings=loop.validate_structure(self.mutate("02_evidence.yml",background))
+        self.assertEqual(code,33);self.assertIn("stage3_feasibility_support_required",findings)
+    def test_stage02_unknown_requires_closure_and_remains_insufficient(self):
+        def unknown(doc):
+            for c in doc["payload"]["claims"]:c.update(evidence_kind="UNKNOWN",closure_evidence="Required independent observation not yet available")
+        code,findings=loop.validate_structure(self.mutate("02_evidence.yml",unknown))
+        self.assertEqual(code,33);self.assertIn("stage3_feasibility_support_required",findings)
+    def test_stage02_external_reference_does_not_require_invented_git_commit(self):
+        def external(doc):
+            doc["payload"]["sources"][0].update(source_ref={"url":"https://example.invalid/versioned-spec","version":"v1","observed_at":"2026-10-29"},publication_status="EXTERNAL_VERSIONED_SOURCE")
+        self.assertEqual(loop.validate_structure(self.mutate("02_evidence.yml",external))[0],0)
     def test_every_schema_required_payload_field_is_consumed(self):
         repo=HERE.parents[3]
         contract=load(repo/loop.CONTRACT_PATH)

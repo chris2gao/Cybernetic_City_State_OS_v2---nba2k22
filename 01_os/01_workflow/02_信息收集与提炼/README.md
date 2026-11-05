@@ -25,6 +25,15 @@
 
 目标始终指向下一阶段的结果建模 B。搜索的终点不是知识，是**判断的依据**。
 
+按完整A的RES/SC/EVQ逐项查证，领域背景只在理解当前问题时加载。
+机器claim使用`purpose: FEASIBILITY | BACKGROUND`，并分别标记STATIC_SOURCE、
+OFFLINE_TEST、LIVE_TOOL_CALL、LIVE_TARGET_EFFECT、INDEPENDENT_REVIEW、UNKNOWN或
+BACKGROUND_REFERENCE。每条保留limits、result_item_ids、success_criterion_ids和source_ids；
+UNKNOWN必须说明closure_evidence，不能独自支撑阶段03实现主张。
+source_ref记录repository、精确40位commit和path，publication_status单独表达；
+历史实测、条目数量和Draft文件存在均不能自行升级成熟度。真实来源状态可通过现有
+`task_discipline/project_context`的PRMS来源读取和祖先检查复核。
+
 ## 两类研究问题
 
 - **开放发现**：问“有什么”，可通过独立路线完整清单测量重合；
