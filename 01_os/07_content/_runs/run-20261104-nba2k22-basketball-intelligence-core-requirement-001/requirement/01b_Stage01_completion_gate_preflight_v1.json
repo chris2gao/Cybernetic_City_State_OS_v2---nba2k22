@@ -1,0 +1,102 @@
+{
+  "report_kind": "stage01_requirement_completion_gate_preflight",
+  "report_version": 1,
+  "task_id": "NBA2K22-BASKETBALL-INTELLIGENCE-CORE-REQUIREMENT-MODELING-20261104-001",
+  "target_stage": "workflow_stage_01_requirement_modeling",
+  "candidate_repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "branch": "task/nba2k22-basketball-intelligence-core-requirement-modeling-20261104",
+  "exact_human_approved_git_blob": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+  "distinct_Human_receipt": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_Human_confirmation_v2.json",
+  "checks": {
+    "fixed_git_blob_approved": true,
+    "distinct_human_A_and_A0": true,
+    "decision_count_18": true,
+    "result_count_17": true,
+    "bidirectional_SC_RES": true,
+    "bidirectional_SC_EVQ": true,
+    "all_unknowns_machine_enum": true,
+    "OS_machine_evidence_statuses": false,
+    "OS_exact_consensus_ref_shape": false,
+    "embedded_A_confirmation_true": false,
+    "machine_normalized_A_digest_bound": false,
+    "machine_normalized_A0_digest_bound": false,
+    "formal_01_requirement_artifact_exists": false,
+    "formal_run_manifest_exists": false
+  },
+  "status": "NOT_PASSED_BLOCKED_BY_OS_MACHINE_CONTRACT",
+  "formal_core_runner_invoked": false,
+  "formal_runner_reason": "The task branch lacks the canonical 01_requirement.yml and governed-run manifest/stage-control, and is not a validated seven-stage candidate commit; no local Core runtime checkout was used.",
+  "primary_blockers": [
+    {
+      "id": "B01",
+      "type": "MISSING_CANONICAL_ARTIFACT",
+      "detail": "01_requirement.yml, run.yml, stage_control, canonical deliberation and acceptance bindings have not been assembled. Core runner validate requires full committed-run inputs and --candidate commit."
+    },
+    {
+      "id": "B02",
+      "type": "APPROVAL_SOURCE_VS_CANONICAL_BINDING",
+      "detail": "Human confirmed exact JSON Git Blob; current standalone receipt binds Git Blob SHA-1 and exact raw-file SHA-256. Official Stage01 requires PyYAML normalized_sha256 of the full canonical payload excluding both confirmations, and normalized_sha256(consensus_A0). Those normative hashes were not computed/attached; raw-file SHA256 must not be substituted."
+    },
+    {
+      "id": "B03",
+      "type": "EMBEDDED_APPROVAL_STILL_PENDING",
+      "detail": "Frozen approved candidate remains unchanged and contains Human_confirmation.confirmed=false. Independent Human receipt is valid provenance but not yet serialized into an approved OS canonical requirement payload."
+    },
+    {
+      "id": "B04",
+      "type": "CONSENSUS_REF_MACHINE_SHAPE",
+      "detail": "Exact expected four keys are model_id/version/sha256/confirmation_ref; frozen candidate consensus_ref has an extra immutable key and uses the legacy A0 raw-file digest, not the runner's normalized A0 digest."
+    },
+    {
+      "id": "B05",
+      "type": "FACT_CLASSIFICATION_VALUES",
+      "detail": "Seven known_facts use evidence_status labels outside the Core runner's closed enum; they must be losslessly mapped with original labels preserved in provenance before formal Stage01 package may validate.",
+      "invalid_rows": [
+        {
+          "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+          "evidence_status": "human_reported_observation"
+        },
+        {
+          "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+          "evidence_status": "human_unverified_causal_hypothesis"
+        },
+        {
+          "result_item_id": "RES-01B-BASELINE-FOUNDATION",
+          "evidence_status": "human_domain_assertion_unverified_this_session"
+        },
+        {
+          "result_item_id": "RES-01B-ONCOURT-EVIDENCE-CANDIDATE",
+          "evidence_status": "human_reported_observation"
+        },
+        {
+          "result_item_id": "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+          "evidence_status": "human_mechanism_claim_requires_verification"
+        },
+        {
+          "result_item_id": "RES-01B-BADGE-CAPABILITY-AND-GROWTH-BASELINE",
+          "evidence_status": "human_mechanism_assertion_not_independently_verified"
+        },
+        {
+          "result_item_id": "RES-01B-BADGE-ELIGIBLE-PLAYER-CULTIVATION-CANDIDATE",
+          "evidence_status": "human_domain_assertion_requires_mechanism_verification"
+        }
+      ]
+    }
+  ],
+  "passed_requirements": [
+    "A0 and complete A have distinct Human confirmations with independently grounded conversation references",
+    "A v2 approved blob exactly matches the repository file",
+    "18 Human Q1–Q18 decisions and 17 result items are registered",
+    "Eight A0 success criteria have exact bidirectional SC↔RES↔EVQ mappings",
+    "38 unique unknown evidence questions are active and all use UNKNOWN status",
+    "No actual game operation, master merge or direct Native execution occurred"
+  ],
+  "expected_next_steps": [
+    "Create a lossless, separately versioned canonical Stage01 01_requirement.yml with explicit mapping to fixed A0 and A v2 and exact source blobs; do not alter the approved candidate.",
+    "Reconcile normalized SHA256 calculations and closed evidence_status enumerations; preserve original values as provenance, document normalization deltas.",
+    "Bind the original A0 and Human A approvals to the actual canonical model content; if the canonical content diverges materially, obtain new Human decision instead of reusing approval silently.",
+    "Build the governed run's stage_control, plan/completion acceptance, deliberation receipt, run manifest and valid candidate commit as required by Core OS.",
+    "Execute the official Core runner against that committed candidate and inspect exit code plus gate evidence; publish PASS only after actual success."
+  ],
+  "conclusion": "Human approvals are durably recorded, but the deterministic OS Stage01 machine completion gate is NOT PASSED. This preflight is an actual remote-source integrity and static structure check, not execution of the canonical Python runner."
+}
