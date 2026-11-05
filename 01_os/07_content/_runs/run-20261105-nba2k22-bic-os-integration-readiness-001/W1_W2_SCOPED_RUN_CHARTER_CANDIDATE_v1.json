@@ -1,0 +1,162 @@
+{
+  "schema": "nba2k22.bic.wave1_wave2.scoped_run_charter.v1",
+  "scope_id": "NBA2K22-BIC-W1-W2-OFFLINE-SUBSCOPE-001",
+  "task_id": "NBA2K22-BIC-W1-W2-OFFLINE-SCOPED-OS-RUN-20261105-001",
+  "proposed_run_id": "run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001",
+  "status": "HUMAN_ROUTE_APPROVED_CRITERIA_CANDIDATE_PENDING_OWNER_ACCEPTANCE",
+  "approval_ref": "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json",
+  "parent_requirement": {
+    "model_id": "NBA2K22-BIC-A-001",
+    "git_blob_sha1": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+    "status": "HUMAN_APPROVED_REQUIREMENTS_FULL_PARENT_INCOMPLETE",
+    "relationship": "CHILD_VERIFICATION_SUBSCOPE_ONLY",
+    "no_parent_mutation": true
+  },
+  "code_sources": {
+    "wave1_reviewed_sha": "aec3dbaacd1d56b0c7cc1d40c2f70607493b9a4b",
+    "wave2_reviewed_sha": "cdcb293f8a690725cf9168225cc2046ab0574b2b",
+    "integration_test_candidate": "4998a43a3f9f94d1013e574e99d29b4c3d666de4",
+    "integration_delivery": "bb886c50028e8332849f5b03ad54711a16870cfa",
+    "accepted_independent_reviews": [
+      "3f27b421e0c1813dbfb890c4583c97e76dfd6f98",
+      "13414798d5992336e28ae1df7e14bf17fbae6a04"
+    ],
+    "integration_review": "980ad8c713e06f118d645a6a0bb6dc114b8aacb1",
+    "core_sha": "08d8e534a3438269aa7d7eb1b080ab11c172f462"
+  },
+  "acceptance_criteria_candidate": [
+    {
+      "id": "OFF-SC01",
+      "required": "Read-only player_baseline and team_baseline use explicit source/save/season/cutoff scope and per-field provenance/staleness, fail closed on scope/identity mismatch.",
+      "evidence": [
+        "test_bic_baseline.py",
+        "test_observation_scope.py",
+        "bic_cli.py"
+      ],
+      "parent_support": [
+        "SC-01",
+        "SC-07"
+      ],
+      "parent_satisfied": false
+    },
+    {
+      "id": "OFF-SC02",
+      "required": "Knowledge and coverage correctly classify missing/stale/conflicting/withheld sources, badges held vs native eligibility, and never upgrade unbound archive/MyPLAYER research to verified 2K22 game facts.",
+      "evidence": [
+        "test_bic_baseline.py",
+        "test_bic_remediation.py"
+      ],
+      "parent_support": [
+        "SC-02",
+        "SC-07",
+        "SC-08"
+      ],
+      "parent_satisfied": false
+    },
+    {
+      "id": "OFF-SC03",
+      "required": "Player and fixed-roster diagnosis use compatible capture Scope and database/source identities; role assumptions and relative-rating conversions remain labeled hypotheses/unverified observations; partial PlayType absence cannot cause negative proof.",
+      "evidence": [
+        "test_bic_wave2.py",
+        "test_bic_wave2_remediation.py",
+        "bic_wave2_cli.py"
+      ],
+      "parent_support": [
+        "SC-01",
+        "SC-07"
+      ],
+      "parent_satisfied": false
+    },
+    {
+      "id": "OFF-SC04",
+      "required": "Native/REA plan compiler only maps candidate actions against pinned catalog and exact historical evidence scope; no fresh Getter authentication is claimed and all plans remain NEEDS_VALIDATION or FORBIDDEN, execute=false.",
+      "evidence": [
+        "test_bic_wave2.py",
+        "test_bic_wave2_remediation.py",
+        "bic_plans.py"
+      ],
+      "parent_support": [
+        "SC-02",
+        "SC-08"
+      ],
+      "parent_satisfied": false
+    },
+    {
+      "id": "OFF-SC05",
+      "required": "Offline synthetic 2x2 main/interaction effect arithmetic and confounders/missing-cells negative cases are correct and labeled synthetic, while real game causality remains NOT_CAUSALLY_IDENTIFIED.",
+      "evidence": [
+        "test_bic_experiments.py"
+      ],
+      "parent_support": [
+        "SC-03",
+        "SC-04",
+        "SC-06"
+      ],
+      "parent_satisfied": false
+    },
+    {
+      "id": "OFF-SC06",
+      "required": "Deterministic CLI and BIC integration offline fixtures execute with non-mutating source checks and historical query_at isolation, and report real source build/save unknown without inventing provenance.",
+      "evidence": [
+        "integration/cli/cli_integrity_receipt.json",
+        "integration/attempt-02/result.json",
+        "integration/managed_inspect_receipt.json"
+      ],
+      "parent_support": [
+        "SC-07"
+      ],
+      "parent_satisfied": false
+    },
+    {
+      "id": "OFF-SC07",
+      "required": "Reviewed offline source integrity, test-source SHA256, recorded regression/CLI exit codes, reproducible Git checkpoints and retained failure attempts are traceable; no protected master, native/save write or game process access.",
+      "evidence": [
+        "INTEGRATION_CANDIDATE_REPORT.json",
+        "integration/technical_test_freeze.json",
+        "delivery_manifest.json",
+        "CHECKPOINT.json"
+      ],
+      "parent_support": [
+        "SC-07",
+        "SC-08"
+      ],
+      "parent_satisfied": false
+    }
+  ],
+  "explicit_exclusions": [
+    "BIC-vs-BIC independent autonomous game competition SC-05",
+    "Actual real-save build/identity certification",
+    "PC22 MyLEAGUE badge eligibility/XP or animated effect verification",
+    "Native Getter certification, SETTER/REA game writes, coach setting game changes",
+    "Fast Sim/3D behavioral causal validation",
+    "Full parent SC01-SC08 completion",
+    "Production environment and performance scaling acceptance",
+    "Master merge or PR auto-merge"
+  ],
+  "evidence_boundary": {
+    "technical_test_package_sha256": "71d421a1a95263a5cb8ed0a6ab8144817f3d62103bf735ebc2275cb43d016906",
+    "recorded_regression": "65 passed, 1 historically traced warning, pytest 32.33s, exit 0",
+    "formal_stage04_freeze": false,
+    "historical_database": "UNBOUND/REAL_DATA_NOT_VERIFIED",
+    "full_os_validator": "exit 33: identity:workflow_stage_01_requirement_modeling on old unaccepted full-BIC candidate",
+    "note": "Archived tests are input evidence, not proof that a newly scoped Run has been formally executed and accepted."
+  },
+  "stage_owner_boundaries": {
+    "Stage01": "Prepare child A/requirement package with explicit scoped success criteria, parent A crosswalk, source blob refs and separate owner disposition for new normalized representation; route approval does not sign stage_complete.",
+    "Stage02": "Evidence maturity source list, 12+8 pinned sources, negative and real-history limits; owner stage acceptance remains distinct.",
+    "Stage03": "Scoped delivered result B, each OFF-SC evidence crosswalk and full parent SC not satisfied.",
+    "Stage04": "Owner approval of scoped frozen test package required in proper order. Technical freeze already exists but is not formal freeze.",
+    "Stage05": "Scoped seven steps are candidate; capture legitimate owner stage plan/completion and stop gates without backdating.",
+    "Stage06": "Implementation code is already reviewed; record genuine execution after approval and never manufacture historical attempts.",
+    "Stage07": "Independent verifier conducts scoped acceptance after valid stage predecessors; engineering code reviews do not automatically equal new OS acceptance."
+  },
+  "continuing_work_rule": "Build all safe candidate materials and run structural validators in an internal Loop; stop only specific formal gate that needs ungranted owner action; do not mark downstream complete merely due route approval.",
+  "owner_decisions_pending": [
+    "Actual scoped criteria and machine confirmation binding",
+    "Stage-specific owner plan/completion acceptance and applicable formal freeze",
+    "Independent Stage07 acceptance with exact committed candidate"
+  ],
+  "game_authority": "NONE",
+  "merge_authority": "NONE",
+  "status_machine_full_pass": "NOT_CLAIMED"
+}
