@@ -1,0 +1,56 @@
+{
+  "schema_version": "nba2k22.bic.batch1.task_publication.v1",
+  "task_id": "NBA2K22-BIC-BATCH1-DISPATCH-20261104-001",
+  "domain": "NBA2K22",
+  "role": "decision_architecture",
+  "planning_model": "GPT-6",
+  "approval_basis": "Human 2026-11-04 approved the proposed first batch DEV-01/DEV-02/DEV-03 task arrangement and explicitly requested publishing this batch.",
+  "scope_of_approval": "PUBLISH TASK CONTRACTS ONLY; does not authorize game access, Native writes, a new engineering implementation stage, or master merge.",
+  "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+  "base_commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+  "publication_branch": "task/nba2k22-bic-batch1-dev01-dev03-dispatch-20261104",
+  "allowed_changed_paths": [
+    "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-dispatch-001/"
+  ],
+  "publication_status": "PUBLISHED_CONDITIONAL_WAITING_OS_ENTRY_GATES",
+  "task_ids": [
+    "NBA2K22-BIC-B1-DEV01-BASELINE-DATA-20261104",
+    "NBA2K22-BIC-B1-DEV02-BADGE-INTELLIGENCE-20261104",
+    "NBA2K22-BIC-B1-DEV03-MECHANISM-EXPERIMENT-20261104"
+  ],
+  "authoritative_input": {
+    "requirement_branch": "task/nba2k22-basketball-intelligence-core-requirement-modeling-20261104",
+    "A0_model": "NBA2K22-BIC-A0-001 v1 (Human approved, frozen)",
+    "A_model": "NBA2K22-BIC-A-001 v2 (Human approved, frozen)",
+    "approved_A_blob": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+    "approved_A_path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_requirement_result_A_candidate_v2.json",
+    "A_approval_receipt_path": "01_os/07_content/_runs/run-20261104-nba2k22-basketball-intelligence-core-requirement-001/requirement/01b_Human_confirmation_v2.json",
+    "stage01_preflight": "NOT_PASSED_BLOCKED_BY_OS_MACHINE_CONTRACT; canonical 01_requirement.yml, normalized hash binding, governing receipt and runner still unresolved."
+  },
+  "phases": {
+    "phase0": "Task receipt, scope verification, source/read-only capability inventory, baseline gap analysis and offline evidence plan (docs-only/read-only).",
+    "phase1": "Technical implementation and non-game offline validation ONLY after Human-authorized OS workflow entry gates, evidence/result/test/step prerequisites, accepted branch/paths and explicit execution contract.",
+    "phase2": "Actual NBA2K22 process access, game setting changes, live simulation, or save effects require a separate Human live-game authorization bound to specific save/team/fields/bounds and rollback, not granted here."
+  },
+  "ownership": {
+    "DEV01": "Codex · execution engineering (read-only first); GPT-6 decision_architecture acceptance contract",
+    "DEV02": "Gemini · evidence/research of PC22 badge mechanism (read-only); Codex · later deterministic implementation after evidence; GPT-6 owns release/acceptance",
+    "DEV03": "Codex · engineering for offline experiment plan, fixture and analysis; game execution must use separate authorization"
+  },
+  "dependencies": {
+    "DEV01": "First common data/identity/provenance foundation; inventory and selected read-only demonstration before downstream interface freeze.",
+    "DEV02": "Mechanism research may progress read-only in parallel; any actual evaluator or native claim requires verified DEV01 facts.",
+    "DEV03": "Offline test methodology can be drafted in parallel; controlled comparison must use DEV01 baseline and DEV02 verified badge predicates; live test gate independent."
+  },
+  "prohibited": [
+    "editing or merging master/protected branches",
+    "modifying approved A0 v1 or approved A v2",
+    "rebuilding a second WorldData database, REA executor, Calendar simulator or parallel PRMS",
+    "modifying NBA2K22 processes, saves, player attributes, potential, badges or training settings without separate Human authority",
+    "asserting MyPLAYER badge thresholds govern PC22 offline MyLEAGUE without native proof",
+    "asserting simulation statistics alone prove exact 3D tactical execution",
+    "publishing large historical SQLite blobs, backups or duplicate compressed snapshots on GitHub"
+  ],
+  "review_gate": "Risk-based internal development Loop is the default once execution is authorized; collective end-of-series review for ordinary changes; immediate halt/escalation for major evidence, safety, numerical or logical defects.",
+  "start_status": "NOT_IMPLEMENTATION_AUTHORIZED"
+}
