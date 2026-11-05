@@ -1,0 +1,102 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "0707933b1a8827b6652e301971a4d2d8396efdd9",
+  "plan_path": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/verification_plan.json",
+  "plan_sha256": "b464c740cae401608fcb025ed7b9956dba1a3054bad2415e42c611660746cbe5",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "plan": {
+    "schema_version": "citystate.verification_plan.v1",
+    "task_packet": "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/task_packet.yml",
+    "checks": [
+      {
+        "id": "core_static",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "C:/Users/gk/.codex/worktrees/nba2k22-bic-os-core-08d8e534/01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+          "static",
+          "C:/Users/gk/.codex/worktrees/nba2k22-bic-os-core-08d8e534",
+          "--json-output"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "scoped_payload_and_integrity",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/check_scoped_payloads.py"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "historical_evidence_inspection",
+        "argv": [
+          "python",
+          "-B",
+          "-X",
+          "utf8",
+          "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+          "inspect",
+          "--repo-root",
+          ".",
+          "--candidate",
+          "4998a43a3f9f94d1013e574e99d29b4c3d666de4",
+          "--plan",
+          "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/verification_plan.json",
+          "--attempt",
+          "01_os/07_content/_runs/run-20261105-nba2k22-bic-os-integration-readiness-001/integration/attempt-02"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      }
+    ]
+  },
+  "task_id": "NBA2K22-BIC-W1-W2-OFFLINE-SCOPED-OS-RUN-20261105-001",
+  "task_packet_sha256": "6f2b3a44e3173d4236e75a328723f0340c3ddcdaca43842f1fa112780d08aeab",
+  "source_base": "bb886c50028e8332849f5b03ad54711a16870cfa",
+  "changed_paths": [
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/.gitattributes",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/01_requirement.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/02_evidence.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/03_result.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/04_tests.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/05_steps.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/06_execution.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/07_verification.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/ACCEPTANCE_MATRIX.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/CANDIDATE_SCHEMA_CHECKS.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/CHECKPOINT.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/NORMALIZED_BINDINGS.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/OWNER_DECISION_PACKAGE.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/SCOPED_RUN_HANDOFF.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/SOURCE_BINDINGS.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/TEST_PACKAGE.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/build_scoped_run.py",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/check_scoped_payloads.py",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/manifest.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/run.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/sources/EXECUTION_CONTRACT_SCOPED_RUN_20261105.md",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/sources/HUMAN_SCOPED_RUN_ROUTE_APPROVAL_20261105.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/sources/W1_W2_SCOPED_RUN_CHARTER_CANDIDATE_v1.json",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/task_packet.yml",
+    "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/verification_plan.json"
+  ],
+  "source_before": {
+    "head": "0707933b1a8827b6652e301971a4d2d8396efdd9",
+    "tree": "dc6618b5bdff5918e8cfdefe829632693ee6edaa",
+    "clean": true
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "executable": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "runner_file_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997"
+  }
+}

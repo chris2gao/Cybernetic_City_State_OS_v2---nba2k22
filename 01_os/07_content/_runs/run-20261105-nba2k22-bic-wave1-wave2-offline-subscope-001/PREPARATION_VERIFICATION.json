@@ -1,0 +1,125 @@
+{
+  "task_id": "NBA2K22-BIC-W1-W2-OFFLINE-SCOPED-OS-RUN-20261105-001",
+  "checked_at": "2026-11-05T11:38:03.050136+00:00",
+  "tested_preparation_candidate": "0707933b1a8827b6652e301971a4d2d8396efdd9",
+  "final_delivery": "Commit containing this receipt; later changes are task evidence only",
+  "managed_run_result": {
+    "schema_version": "citystate.verification_attempt.v1",
+    "candidate": "0707933b1a8827b6652e301971a4d2d8396efdd9",
+    "plan_sha256": "b464c740cae401608fcb025ed7b9956dba1a3054bad2415e42c611660746cbe5",
+    "checks": [
+      {
+        "id": "core_static",
+        "status": "success"
+      },
+      {
+        "id": "scoped_payload_and_integrity",
+        "status": "success"
+      },
+      {
+        "id": "historical_evidence_inspection",
+        "status": "success"
+      }
+    ],
+    "status": "success",
+    "authority_effect": "none"
+  },
+  "managed_inspect": {
+    "command": [
+      "python",
+      "-B",
+      "-X",
+      "utf8",
+      "01_os/06_execution/task_discipline/managed_verification/managed_verify.py",
+      "inspect",
+      "--repo-root",
+      ".",
+      "--candidate",
+      "0707933b1a8827b6652e301971a4d2d8396efdd9",
+      "--plan",
+      "01_os/07_content/_runs/run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001/verification_plan.json",
+      "--attempt",
+      "C:\\Users\\gk\\.codex\\worktrees\\nba2k22-bic-batch1\\Cybernetic_City_State_OS_v2 - nba2k22\\01_os\\07_content\\_runs\\run-20261105-nba2k22-bic-wave1-wave2-offline-subscope-001\\validation"
+    ],
+    "exit_code": 0,
+    "result": {
+      "schema_version": "citystate.verification_attempt.v1",
+      "candidate": "0707933b1a8827b6652e301971a4d2d8396efdd9",
+      "plan_sha256": "b464c740cae401608fcb025ed7b9956dba1a3054bad2415e42c611660746cbe5",
+      "checks": [
+        {
+          "id": "core_static",
+          "status": "success"
+        },
+        {
+          "id": "scoped_payload_and_integrity",
+          "status": "success"
+        },
+        {
+          "id": "historical_evidence_inspection",
+          "status": "success"
+        }
+      ],
+      "status": "success",
+      "authority_effect": "none"
+    }
+  },
+  "checks": [
+    {
+      "id": "core_static",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793878637595375400,
+      "elapsed_seconds": 0.9229558000006364,
+      "stdout_sha256": "5ea6828bebb625d92fd82851329b9e441c9c2e22dcbf075926ada84556a77faf",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "scoped_payload_and_integrity",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793878638749078800,
+      "elapsed_seconds": 0.9224411999966833,
+      "stdout_sha256": "fa968f78b6338049b5db8c3c0df54f54930b98bc2376e1b1602d52da8fb7632e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "historical_evidence_inspection",
+      "status": "success",
+      "exit_code": 0,
+      "error": null,
+      "termination": "not_needed",
+      "finished_ns": 1793878639381473200,
+      "elapsed_seconds": 0.39312990000325954,
+      "stdout_sha256": "a673fbdcff644f44a17e9ca0ca92cab0567850502755ca03f91cca4e0dce6362",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "applicable_core_results": {
+    "check_scope": "Preparation payload consistency and evidence integrity only",
+    "preparation_check": "PASS",
+    "actual_core_requirement_findings": [
+      "stage1_confirmation_binding:consensus_A0"
+    ],
+    "actual_core_evidence_findings": [],
+    "stage01_formal_status": "PENDING_CHILD_A0_AND_A_ACCEPTANCE",
+    "official_complete_run_validate": "NOT_RUN_NOT_READY_PENDING_OWNER",
+    "seven_criteria_mapped": 7,
+    "source_refs_verified": 24,
+    "reviewed_files_identical": 83,
+    "post_formal_freeze_execution": "NOT_RUN",
+    "parent_status": "INCOMPLETE_UNCHANGED",
+    "core_sha": "08d8e534a3438269aa7d7eb1b080ab11c172f462",
+    "core_runner_sha256": "e0bec3f978d6df6619afa8699bea620c6ecf209906a7d0d6952ed11773cf00e8"
+  },
+  "formal_run": "NOT_RUN_PENDING_OWNER_ACCEPTANCE",
+  "formal_stage04_freeze": false,
+  "new_business_regression": "NOT_RUN_PENDING_FORMAL_FREEZE",
+  "historical_regression": "Original recorded 65 passed / one warning; archive re-inspected, not rerun or reclassified",
+  "parent_BIC": "INCOMPLETE_UNCHANGED",
+  "raw_logs": "validation/ retains exact managed input/source/started/finished/stdout/stderr records"
+}
