@@ -1,0 +1,16 @@
+{
+  "task_id": "NBA2K22-BIC-B1-P0-EVIDENCE-20261104-001",
+  "parent_task_id": "NBA2K22-BIC-B1-GATE-RECOVERY-20261104-001",
+  "role": "execution",
+  "objective": "Persist existing P0 observations and Stage02 source pointers under recovery work item section 1B.",
+  "base_commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+  "branch": "task/nba2k22-bic-batch1-p0-20261104",
+  "recovery_commit": "238d3e963146bbe66ae32a54873ab005111726ea",
+  "recovery_path": "01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-dispatch-001/GATE_RECOVERY_TASK_20261104.md",
+  "allowed_changed_paths": ["01_os/07_content/_runs/run-20261104-nba2k22-bic-batch1-p0-001/"],
+  "verification": ["parse JSON and YAML", "resolve exact source blobs", "check reports and changed paths", "normal local Git publication gate and remote readback"],
+  "scope": "Documentation of previously observed sources. Stage01 remains with the requirement-modeling task. DEV01 implementation awaits its execution contract.",
+  "publication_transport": "local_git",
+  "next_owner": "decision_architecture via Human relay",
+  "independent_acceptance": "PENDING"
+}
