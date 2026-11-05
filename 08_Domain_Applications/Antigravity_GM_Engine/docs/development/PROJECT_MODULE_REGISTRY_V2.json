@@ -1,7 +1,7 @@
 {
   "schema_version": "nba2k22.project_module_registry.v2",
   "project": "NBA2K22_Cybernetic_City_State_OS_v2",
-  "date": "2026-11-03",
+  "date": "2026-11-04",
   "status": "SOURCE_BRANCH_CANDIDATE_NOT_FORMAL_G2",
   "index_entry": "08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md",
   "module_base": "08_Domain_Applications/Antigravity_GM_Engine/",
@@ -13,9 +13,11 @@
     "planning_pr": 18,
     "rea_handoff_source_commit": "b7e0f51e8e00be4c3233af2c73c26c73b4958e80",
     "rea_handoff_blob": "4cc0b2c487315cc26bd6f25419e0afea63f94ddc",
-    "current_task_base": "45cc45cae0550ddcda192a2179ea48509b27f6ee",
+    "current_task_base": "dfa08af8bb6e4abf1cd8ad304f47b096ecc38167",
     "reused_draft_commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-    "native_executor_candidate": "aee5a9109ea5cd0a5c7bc4adb750c64a1603afec"
+    "native_executor_candidate": "aee5a9109ea5cd0a5c7bc4adb750c64a1603afec",
+    "native_executor_merged_as": "4aadb736eeb4ed67ed12f79da150aa431d8c9d8d",
+    "archive_source_mapping_pr": 28
   },
   "module_count": 13,
   "modules": [
@@ -50,16 +52,18 @@
         "docs/development/NBA2K22_TASK1_REQUIREMENT_RESULT_MODEL_V0_1.md"
       ],
       "artifacts": [
-        "docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md"
+        "docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md",
+        "world_data_prototype/schema.sql"
       ],
-      "notes": "Logical identity/history design exists; do not imply final schema deployed. Also check external_branch_assets for world_data_prototype absent from current branch.",
+      "notes": "Logical design is separate from deployed schema acceptance. PR #26 merged source-only WorldData engineering into the current tree.",
       "last_verified_evidence": null,
       "latest_task_refs": [
         "PARALLEL_WORLD_ARCHITECTURE_V2_DESIGN_20261022",
         "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
-        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1"
+        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1",
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
       ],
-      "last_update": "2026-10-28",
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true
     },
     {
@@ -75,22 +79,25 @@
         "src/auto_pipeline_ingest.py",
         "src/gm_state_io/",
         "src/gm_data_access/",
-        "published/index.json"
+        "published/index.json",
+        "world_data_prototype/cli.py",
+        "world_data_prototype/calendar_reader.py"
       ],
-      "notes": "Keep data flow unchanged in current execution redesign. Also check external_branch_assets for world_data_prototype absent from current branch.",
+      "notes": "Legacy ingestion remains available alongside PR #26 WorldData and Calendar sources. Initialization and runtime acceptance are separate.",
       "last_verified_evidence": null,
       "latest_task_refs": [
         "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
-        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1"
+        "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1",
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
       ],
-      "last_update": "2026-10-28",
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true
     },
     {
       "id": "P03",
       "name": "Native game data source and decoding",
       "domain": "NATIVE_READER",
-      "status": "OFFLINE_PROFILE_CANDIDATE",
+      "status": "STATIC_PROFILE_INTEGRATION_CANDIDATE",
       "docs": [
         "config/source_catalog.json",
         "docs/development/NATIVE_GAME_DATA_SYSTEM_RECONSTRUCTION_AND_IO_BLUEPRINT_V2.md",
@@ -109,9 +116,10 @@
       "latest_task_refs": [
         "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
         "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1",
-        "OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001 S4"
+        "OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001 S4",
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
       ],
-      "last_update": "2026-11-03",
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true
     },
     {
@@ -177,14 +185,16 @@
         "19 setting candidates / 18 opponent defense settings; only specific real-game examples verified."
       ],
       "last_verified_evidence": null,
-      "latest_task_refs": [],
-      "last_update": "2026-10-28",
+      "latest_task_refs": [
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
+      ],
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true,
       "external_source_refs": [
         {
           "path": "research/rea_native_control/",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         }
       ]
     },
@@ -225,14 +235,16 @@
         "Distinguish one-for-one trade and existing scout goal proof from untested asset classes."
       ],
       "last_verified_evidence": null,
-      "latest_task_refs": [],
-      "last_update": "2026-10-28",
+      "latest_task_refs": [
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
+      ],
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true,
       "external_source_refs": [
         {
           "path": "research/rea_native_control/",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         }
       ]
     },
@@ -240,59 +252,62 @@
       "id": "P09",
       "name": "REA native-action controller",
       "domain": "REA_NATIVE_CONTROL",
-      "status": "OFFLINE_PROFILE_CANDIDATE",
+      "status": "STATIC_PROFILE_INTEGRATION_CANDIDATE",
       "docs": [
         "research/rea_core_profile/README.md"
       ],
       "artifacts": [
-        "research/rea_core_profile/"
+        "research/rea_core_profile/",
+        "research/rea_native_control/facade.py",
+        "research/rea_native_control/season_cycle_host.py"
       ],
       "notes": [
-        "Core static bridge and domain evidence catalog are delivered here. The facade, Bulk and Outbox remain referenced at the exact PR26 candidate."
+        "Facade, Bulk, Outbox and SeasonCycleHost are already in master via PR #26. Profile inputs remain pinned to the original PR #18 and PR #26 objects."
       ],
       "last_verified_evidence": null,
       "latest_task_refs": [
         "PR#16@7c970db264809ef0c82c978fd13953cdee00fb24",
         "PR#17@84195f471354400a75877f16c3c3de8a3af6b5b2",
-        "OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001 S4"
+        "OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001 S4",
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
       ],
-      "last_update": "2026-11-03",
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true,
       "external_source_refs": [
         {
           "path": "research/rea_native_control/REA_WINDOW_CONTEXT_HANDOFF_20261028.md",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "research/rea_native_control/ROLE_MODEL_MECHANISM_GUIDE.md",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "research/rea_native_control/VALIDATION_RESULTS.md",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "research/rea_native_control/facade.py",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "research/rea_native_control/data/action_registry.json",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "research/rea_native_control/data/native_bindings.json",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "research/rea_native_control/data/read_catalog.json",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         }
       ]
     },
@@ -302,31 +317,37 @@
       "domain": "ROLE_BATCH_EXECUTION_DESIGN",
       "status": "HUMAN_REVIEW_REQUIREMENTS_FIRST_PASS",
       "docs": [],
-      "artifacts": [],
+      "artifacts": [
+        "research/rea_native_control/role_batches.py",
+        "research/rea_native_control/bulk_executor.py",
+        "research/rea_native_control/decision_outbox.py"
+      ],
       "notes": [
-        "183 initial heterogeneous actions/requests/world controls, 50 mapped, 133 not explicit matched."
+        "183 initial heterogeneous actions/requests/world controls, 50 mapped, 133 not explicit matched.",
+        "PR #26 supplies engineering entry points. Role design and runtime acceptance have their own evidence."
       ],
       "last_verified_evidence": null,
       "latest_task_refs": [
-        "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1"
+        "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1",
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
       ],
-      "last_update": "2026-10-28",
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true,
       "external_source_refs": [
         {
           "path": "docs/development/ROLE_BATCH_NATIVE_EXECUTION_ARCHITECTURE_V2.md",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_ONLY"
         },
         {
           "path": "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/02_角色执行能力建模/GM教练球员_可执行能力盘点_A_v1.md",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         },
         {
           "path": "../../01_os/07_content/_runs/run-20261028-nba2k22-role-native-execution-model-001/",
           "commit": "094f1aa641f93dec2277707ad9dbf5bdb0341247",
-          "status": "DRAFT_SOURCE_NOT_PRESENT_IN_CANDIDATE_TREE"
+          "status": "FIXED_PR18_REFERENCE_WITH_CURRENT_TREE_ENTRY"
         }
       ]
     },
@@ -358,18 +379,22 @@
       "status": "LEGACY_LEDGER_ARCHIVED_NEEDS_FRESH_EVIDENCE",
       "docs": [
         "docs/development/NBA2K22_DOCUMENT_AUTHORITY_INDEX_V1.md",
-        "docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json"
+        "docs/development/PROJECT_CAPABILITY_AND_DELIVERY_LEDGER_V1.json",
+        "research/history_source_resolution/README.md"
       ],
       "artifacts": [
         "docs/development/NBA2K22_HISTORICAL_TASK_REGISTER_V1.json",
-        "../../01_os/07_content/_runs/"
+        "../../01_os/07_content/_runs/",
+        "research/history_source_resolution/source_index.json"
       ],
       "notes": [
         "Past snapshots are not up-to-date proof of live state."
       ],
       "last_verified_evidence": null,
-      "latest_task_refs": [],
-      "last_update": "2026-10-28",
+      "latest_task_refs": [
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
+      ],
+      "last_update": "2026-11-04",
       "update_required_on_task_completion": true
     }
   ],
@@ -441,6 +466,22 @@
         "P12"
       ],
       "status": "DRAFT_PR_ACTIVE"
+    },
+    {
+      "task_id": "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001",
+      "pr": 27,
+      "source_head": "400c998be89ab2c8b902e50667af500f0fda178e",
+      "module_ids": [
+        "P01",
+        "P02",
+        "P03",
+        "P06",
+        "P08",
+        "P09",
+        "P10",
+        "P12"
+      ],
+      "status": "MAINLINE_INTEGRATION_CANDIDATE"
     }
   ],
   "sync_contract": "PROJECT_INDEX.md",
@@ -471,23 +512,19 @@
     ],
     "no_game_automatic_authorization": true
   },
-  "external_branch_assets": [
+  "world_data_sources": [
     {
       "id": "WORLD_DATA_ENGINEERING_BASELINE",
-      "branch": "task/nba2k22-world-data-full-implementation-20261024",
-      "head_sha": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
+      "historical_commit": "17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
       "entry": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/README.md",
       "handoff": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/BASELINE_HANDOFF.md",
-      "status": "INDEPENDENT_ENGINEERING_CANDIDATE_NOT_IN_THIS_PR_TREE",
-      "facts": "v24 100 tables 1775 columns 20 source Reader families, regular-season bound world and evidence. Not full acceptance."
+      "status": "SOURCE_ONLY_IMPLEMENTATION_IN_MASTER_PR26"
     },
     {
       "id": "WORLD_DATA_REVIEW_FIXES",
-      "branch": "task/nba2k22-world-data-review-fixes-20261026",
-      "head_sha": "a3927fb150a213201e404cca043ced4f57409bd1",
-      "entry": "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/REVIEW_FIXES_F01_F02_F03.md",
-      "status": "UNMERGED_SEPARATE_BRANCH_PENDING_ACCEPTANCE",
-      "facts": "v25 101 tables 1789 columns, annual additions, Box consistency, conflict receipt isolation."
+      "historical_commit": "a3927fb150a213201e404cca043ced4f57409bd1",
+      "entry": "08_Domain_Applications/Antigravity_GM_Engine/research/history_source_resolution/source_index.json",
+      "status": "HISTORICAL_SOURCE_RESOLVER_IN_MASTER_PR28"
     }
   ]
 }
