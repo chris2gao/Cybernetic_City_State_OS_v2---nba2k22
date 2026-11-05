@@ -1,0 +1,96 @@
+{
+  "id": "NBA2K22-BIC-BATCH1-ADMISSION-LEDGER-20261104-v1",
+  "planning_role": "decision_architecture/GPT-6",
+  "frozen_inputs": {
+    "P0_commit": "17bca5c5e34a4bc3b153c38634681962e1600ec7",
+    "NBA_base_commit": "66f8f73f1a91597f4562b834c2acad332ad9de5b",
+    "approved_A_model": "NBA2K22-BIC-A-001",
+    "approved_A_version": 2,
+    "approved_A_blob": "e16fdf6c4ef69b0a90b8c4abd3856617030a7ae4",
+    "Core_profile_baseline": "08d8e534a3438269aa7d7eb1b080ab11c172f462"
+  },
+  "scope": "Stage01-05 BIC batch1 DEV01/02/03 planning and limited offline preflight, not complete BIC SC01-SC08 implementation",
+  "stages": [
+    {
+      "stage": "01",
+      "human_semantic_confirmation": "A0v1_APPROVED_AND_Av2_APPROVED",
+      "source_static_audit": "PASS_SOURCE_CONTENT_STRUCTURE_SUBSET",
+      "source_static_audit_blob": "7c71ddbad1d253ab35a51f26b577c52747005a44",
+      "canonical_PyYAML_hash": "NOT_COMPUTED_IN_THIS_ENVIRONMENT",
+      "official_Core_requirement_findings": "NOT_EXECUTED_IN_THIS_ENVIRONMENT",
+      "stage_control_and_completion_acceptance": "NOT_ASSEMBLED",
+      "formal_stage_status": "NOT_PASSED",
+      "next": "Execute pinned script stage01_canonicalize_v1.py against source commit and exact Core runner, keep command/exit code; then bind real stage acceptance."
+    },
+    {
+      "stage": "02",
+      "sources": 12,
+      "claims": 9,
+      "source_review": "INDEPENDENT_STATIC_SOURCE_REVIEW_COMPLETED",
+      "source_review_blob": "c353fbb2b10757173d831b2d8d1eff52750b99c3",
+      "bounded_readonly_implementation_feasibility": "SUPPORTED_FROM_STATIC_CODE",
+      "real_data_demonstration": "NOT_PERFORMED",
+      "badge_eligibility": "UNKNOWN",
+      "formal_stage_status": "CANDIDATE_NOT_PASSED",
+      "next": "Use P0 scoped facts and real existing read-only batch if available; record missing dataset as local test limit, not a reason to repeat P0."
+    },
+    {
+      "stage": "03",
+      "result_claims": 6,
+      "model_version": 2,
+      "model_blob": "05f8ef71bcd340580a896a5d545ab54a1d89b8f8",
+      "full_A0_sc_satisfied": [],
+      "SC05": "NOT_IN_BATCH1",
+      "formal_stage_status": "DRAFT_NOT_PASSED",
+      "next": "Review six batch1 result interfaces as partial scope under approved A; do not claim full BIC-vs-BIC."
+    },
+    {
+      "stage": "04",
+      "test_cases": 15,
+      "frozen": false,
+      "tests_executed_under_frozen_bundle": 0,
+      "offline_prefreeze_smoke": {
+        "status": "PASS_SYNTHETIC_ARITHMETIC_ONLY",
+        "exit_code": 0,
+        "script_sha256": "858925ee5dc0d32d207eebf2ef50726cd51eb4e2bf806912378c23b809b7ed37",
+        "git_receipt_blob": "8d847410ccfe3c56ddc6ac744960f69a4e98a1ff",
+        "real_game_effect": "NOT_TESTED"
+      },
+      "formal_stage_status": "DRAFT_NOT_PASSED",
+      "next": "Once upstream accepted, bind true freeze authorization, exact 15-test package digest and relevant input fixtures; preserve smoke as separate prefreeze evidence."
+    },
+    {
+      "stage": "05",
+      "steps": 7,
+      "formal_stage_status": "DRAFT_NOT_PASSED",
+      "next": "After frozen tests and accepted B, bind actual allowed changed paths/ownership/Loop and acceptance; do not silently authorize code or game execution."
+    }
+  ],
+  "authority_reconciliation": {
+    "Core_existing_scope_policy": "Current Human task input plus candidate-bound durable scope can satisfy ordinary-work authorization; do not ask Human again merely because a model window changes or another internal Loop begins.",
+    "prior_task_packet_limit": "Previous dispatch packet was marked publish-only/P0; it cannot be retroactively treated as implementation approval without actual bounded OS entry evidence.",
+    "instruction": "After actual stage gates, check already approved first batch and current Human directives against current Core authority policy, then activate one bounded DEV01 offline engineering Loop if genuinely within scope; request new Human decision only for undelegated material change.",
+    "game_authority": "NO_PERMISSION_FOR_NATIVE_GAME_WRITES_OR_REAL_SAVE_EFFECTS"
+  },
+  "unblock_decision": "NOT_YET_AUTHORIZED_FOR_DEV01_BUSINESS_CODE",
+  "critical_path": [
+    "Stage01 exact normative PyYAML digest and applicable source/confirmation acceptance",
+    "Stage02 scoped feasibility acceptance for DEV01 offline interface",
+    "Stage03/04/05 actual entry version and frozen tests with no fabricated verdict",
+    "Bounded source edit task_scope consistent with existing Human approval and Core policy"
+  ],
+  "noncritical_to_initial_offline_interface": [
+    "Live NBA2K22 process access",
+    "Verified badge XP/unlock probabilities",
+    "3D tactical behavior effects",
+    "Real controlled 30-team simulation",
+    "Full BIC-vs-BIC competition"
+  ],
+  "safety": [
+    "No changes to approved A0/A v2 originals",
+    "No master merge",
+    "No game process/save/Native setting writes",
+    "No false Stage01-05 PASS",
+    "No repeated P0 listing or historical test reruns"
+  ]
+}
