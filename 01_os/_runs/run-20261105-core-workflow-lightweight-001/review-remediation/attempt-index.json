@@ -1,0 +1,102 @@
+{
+  "candidate": "40d5c71064be9184f4fa543208757ed57b8af69a",
+  "plan": "01_os/_runs/run-20261105-core-workflow-lightweight-001/verification_plan.json",
+  "plan_sha256": "0dde34ecee2eefb0bf43f87656a954c41fd727ea37f4237f7e7d3a5b0278102b",
+  "archive": {
+    "path": "attempt.zip",
+    "bytes": 5913,
+    "sha256": "db4060ac8d1fea6000cab865068558f8ae26b215387573bc9680f1fff4cafd95"
+  },
+  "records": {
+    "001.finished.json": {
+      "bytes": 379,
+      "sha256": "231c88576fee1bc460b3c70b939ac3574c9c387936eef3b9d9bb340dc95420e1"
+    },
+    "001.source.json": {
+      "bytes": 168,
+      "sha256": "e7f1d9cefcf2721b4da4f0f143c6fee9b6cab2b9e57c06585ddb0faf30594351"
+    },
+    "001.started.json": {
+      "bytes": 287,
+      "sha256": "70d469a6ac32aabebfe504c5fd7c8124bdc50e918e94c7c55e9324a8dcfbda17"
+    },
+    "001.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "001.stdout.bin": {
+      "bytes": 1518,
+      "sha256": "ef1f6af505fcb9f642e2c8632c81733e2533bed0ead5170cee14a9e0c44b56ea"
+    },
+    "002.finished.json": {
+      "bytes": 363,
+      "sha256": "9addc75a75171fcc8d9a72ee491ee4fd024d2197b0b2e06783e91b7116de92a5"
+    },
+    "002.source.json": {
+      "bytes": 168,
+      "sha256": "e7f1d9cefcf2721b4da4f0f143c6fee9b6cab2b9e57c06585ddb0faf30594351"
+    },
+    "002.started.json": {
+      "bytes": 297,
+      "sha256": "72f9aea1da644460d3a3b0cac079f4587f4a82975f2249d1b304220cffda2f0c"
+    },
+    "002.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "002.stdout.bin": {
+      "bytes": 55,
+      "sha256": "5ea6828bebb625d92fd82851329b9e441c9c2e22dcbf075926ada84556a77faf"
+    },
+    "003.finished.json": {
+      "bytes": 375,
+      "sha256": "aa16ad33551df218c4a897bb158dcdfe53db4f3fba8f3f7c7a592f9b847471c1"
+    },
+    "003.source.json": {
+      "bytes": 168,
+      "sha256": "e7f1d9cefcf2721b4da4f0f143c6fee9b6cab2b9e57c06585ddb0faf30594351"
+    },
+    "003.started.json": {
+      "bytes": 287,
+      "sha256": "3f2febab978f8eb9bb04453a7aefa2ca3192e13e607374ac71e5d454367f5fbe"
+    },
+    "003.stderr.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "003.stdout.bin": {
+      "bytes": 608,
+      "sha256": "439c31b3ac0c97f996068c5922db41a83c3256cb866a270e0a50d7a727199819"
+    },
+    "input.json": {
+      "bytes": 4355,
+      "sha256": "492a57bff947914c14f3c7fd4a7246c603efe8272da52afff9bf9c269ba4ad57"
+    },
+    "result.json": {
+      "bytes": 487,
+      "sha256": "d0903e8101958814555cbf91af540e9e094981acd641d234909f36645a074aa6"
+    },
+    "source_after.json": {
+      "bytes": 168,
+      "sha256": "e7f1d9cefcf2721b4da4f0f143c6fee9b6cab2b9e57c06585ddb0faf30594351"
+    }
+  },
+  "restoration": {
+    "byte_roundtrip": "exact",
+    "inspect_exit_code": 0,
+    "checkpoint_exit_code": 0
+  },
+  "screening": {
+    "scope": "all original records",
+    "patterns": [
+      "credential_patterns",
+      "secret_assignment",
+      "credential_url",
+      "protected_source_reference"
+    ],
+    "matches": 0,
+    "stderr": "empty",
+    "host_metadata": "raw Python executable path and platform retained in private repository"
+  },
+  "evidence_scope": "attempt_internal_consistency"
+}
