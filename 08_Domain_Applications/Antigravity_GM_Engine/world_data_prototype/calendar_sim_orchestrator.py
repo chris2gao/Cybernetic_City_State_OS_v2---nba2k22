@@ -174,6 +174,7 @@ class CalendarSimOrchestrator:
                     'latest_memory_game_id': mem_game_id,
                     'native_game_id': latest_mem_game['native_game_id'],
                     'latest_db_game_id': db_game_id,
+                    'latest_db_native_game_id': db_native_id,
                     'total_final_games_in_memory': len(final_games),
                     'liveness': liveness,
                     'reason': 'Latest memory game matches latest database game; no fresh final game observed'

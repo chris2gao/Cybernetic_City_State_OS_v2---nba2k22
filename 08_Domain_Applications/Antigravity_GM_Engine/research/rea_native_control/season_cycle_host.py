@@ -1118,8 +1118,9 @@ class SeasonCycleHost:
             try:
                 prog = orchestrator.inspect_calendar_progress(live_reader_instance)
                 if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
-                    self.state["status"] = HostState.CONTEXT_STALE
-                    self._save_state()
+                    if not use_baseline:
+                        self.state["status"] = HostState.CONTEXT_STALE
+                        self._save_state()
                     return {
                         "status": "REJECTED_GAME_IN_PROGRESS",
                         "cycle_id": cycle_id,
@@ -1138,12 +1139,20 @@ class SeasonCycleHost:
                 sched = collect_schedule(live_reader_instance, with_calendar=True, read_final_boxes=False)
                 cal = sched.get("calendar") or {}
                 mem_date = cal.get("current_native_iso_date")
-                if use_baseline and (
-                    not mem_date or mem_date != self.state["current_game_date"]
-                    or prog.get("new_final_game_detected")
-                ):
-                    return {"status": "BASELINE_CONTEXT_CHANGED", "cycle_id": cycle_id,
-                            "reason": "Live date or completed game changed after the initial capture."}
+                if use_baseline:
+                    db_game_id = prog.get("latest_db_game_id")
+                    native_game_id = prog.get("native_game_id")
+                    if (
+                        not mem_date or mem_date != self.state["current_game_date"]
+                        or prog.get("status") != "SAME_STATE_REPEAT"
+                        or prog.get("new_final_game_detected") is not False
+                        or not isinstance(db_game_id, str) or not db_game_id
+                        or prog.get("latest_memory_game_id") != db_game_id
+                        or type(native_game_id) not in (int, str) or not str(native_game_id).isdecimal()
+                        or str(native_game_id) != prog.get("latest_db_native_game_id")
+                    ):
+                        return {"status": "BASELINE_CONTEXT_CHANGED", "cycle_id": cycle_id,
+                                "reason": "Live date and matching Native/SQLite finals are required to reuse the initial capture."}
                 if mem_date:
                     self.state["current_game_date"] = mem_date
 

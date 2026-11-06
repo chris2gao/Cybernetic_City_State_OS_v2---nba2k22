@@ -19,8 +19,9 @@ CODE = {
     ENGINE + "world_data_prototype/calendar_sim_orchestrator.py",
 }
 CODE_CORRECTIONS = {
-    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py": "958051580ac7a240ef1809a6789b398d539d00f3",
-    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py": "2e4898ced93cbe10a7589806cc03381aa72402f7",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py": "87ef31465a8257094068db5c5fd3d244b044903f",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py": "b36246717c513ffa183957d1ff9fc603d5769dfe",
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/calendar_sim_orchestrator.py": "dd3b05f46a6c501e9c63cb54cc54058b335d1041",
 }
 PATH = re.compile(rb'(?<![A-Za-z0-9])(?:[A-Za-z]:[\\/]|\\\\[A-Za-z0-9_.-]+\\)[^"\r\n<>|?*]+')
 SECRET_SIGNATURE = re.compile(rb'gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----')
@@ -107,7 +108,7 @@ def main():
         assert (audit["new_finals"], audit["final_games"], audit["outbox_intents"]) == (225, 463, 0)
         assert audit["native_write_path"] == "NOT_EXERCISED_ZERO_INTENTS"
     print(f"{len(source_paths)} fixed source files; {len(redacted)} sanitized pilot files; "
-          "1 exact Calendar blob, 2 pinned Host/concurrency regression blobs")
+          "3 pinned S3 integration code and regression blobs")
 
 
 if __name__ == "__main__":
