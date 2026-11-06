@@ -17,8 +17,33 @@ from live_world import read_binding, bound_database
 from live_reader import ReadOnlyGameProcess, SEASON_RVA, ROSTER_RVA, GAME_OFFSET, RESEARCH_GAME_CAPACITY
 from calendar_codec import GAME_CAPACITY
 from refresh import refresh_world, RefreshFailed, _context
+from readers import _module
 from schedule_reader import collect_schedule
 from schema_model import VERSION
+
+
+def captured_game_headers(capture_directory, refresh_report):
+    """Index the bounded schedule artifact for exact-unit score checks."""
+    source = next((item for item in refresh_report.get('sources', []) if item['family'] == 'schedule'), None)
+    if source is None:
+        return {}
+    directory = source['directory']
+    if Path(directory).name != directory:
+        raise ValueError('schedule source directory is not local to the capture')
+    path = Path(capture_directory) / directory / 'schedule-games.bin'
+    size = path.stat().st_size
+    if size % 60 or not 0 < size <= GAME_CAPACITY * 60:
+        raise ValueError('invalid captured schedule header window size')
+    data = path.read_bytes()
+    decode = _module('boxscore_decoder').BoxScoreDecoder.decode_game_header
+    headers = {}
+    for start in range(0, size, 60):
+        header = data[start:start + 60]
+        native_id = str(decode(header)['game_id'])
+        if native_id in headers:
+            raise ValueError('duplicate native game ID in captured headers')
+        headers[native_id] = header
+    return headers
 
 
 class CalendarSimOrchestrator:
@@ -255,7 +280,8 @@ class CalendarSimOrchestrator:
         target_game_id = progress.get('latest_memory_game_id')
         sql_ver = None
         if target_game_id:
-            sql_ver = self.verify_game_sql_integrity(target_game_id)
+            header = captured_game_headers(out_dir, refresh_result).get(str(progress.get('native_game_id')))
+            sql_ver = self.verify_game_sql_integrity(target_game_id, native_header=header)
             if not sql_ver.get('verified_in_db'):
                 return {
                     'status': 'SQL_VERIFICATION_FAILED_FAIL_CLOSED',
@@ -288,7 +314,7 @@ class CalendarSimOrchestrator:
         """Opt-in trigger alias forwarding to trigger_world_capture(mode='INCREMENTAL')."""
         return self.trigger_world_capture(reader_or_pid, output_directory, mode='INCREMENTAL', families=families, force=force)
 
-    def verify_game_sql_integrity(self, game_id, *, expected_unit_id=None):
+    def verify_game_sql_integrity(self, game_id, *, expected_unit_id=None, native_header=None):
         """Perform deterministic SQL readback validation on a specific game in the SQLite database.
 
         Requires:
@@ -297,7 +323,7 @@ class CalendarSimOrchestrator:
         - If expected_unit_id is provided, observation unit_id matches.
         - Both home and away team boxes exist in team_game_boxes.
         - At least one player box exists in player_game_boxes.
-        - Period scores exist for both teams, and period sums match team box points exactly.
+        - Period scores match team box totals, including aggregate overtime from a hash-bound header.
         """
         with closing(connect(self.database, True)) as conn:
             # 1. Game record (lookup by game_id or native_game_id)
@@ -371,6 +397,30 @@ class CalendarSimOrchestrator:
 
             home_q_sum = sum(p['period_points'] for p in home_periods)
             away_q_sum = sum(p['period_points'] for p in away_periods)
+            overtime = obs.get('overtime_count') or 0
+            home_ot = away_ot = 0
+            header_sha = None
+            if overtime:
+                check = conn.execute(
+                    "SELECT header_sha256 FROM game_source_checks WHERE game_id=? AND unit_id=? AND box_mode='FULL_NATIVE_BOX'",
+                    (game_id, obs_unit),
+                ).fetchone()
+                if not isinstance(native_header, bytes) or len(native_header) != 60 or not check:
+                    return {'verified_in_db': False, 'reason': 'Overtime requires the bound native game header'}
+                header_sha = hashlib.sha256(native_header).hexdigest()
+                if header_sha != check['header_sha256']:
+                    return {'verified_in_db': False, 'reason': 'Native overtime header hash mismatch'}
+                decoded = _module('boxscore_decoder').BoxScoreDecoder.decode_game_header(native_header)
+                if (str(decoded['game_id']) != str(game['native_game_id']) or decoded['status'] != 2
+                        or decoded['overtime_count'] != overtime or not decoded['was_simulated']):
+                    return {'verified_in_db': False, 'reason': 'Native overtime header game/state mismatch'}
+                for side, sql_periods in (('home', home_periods), ('away', away_periods)):
+                    if {p['period_index']: p['period_points'] for p in sql_periods} != {
+                        period: decoded['linescore'][side][f'q{period}'] for period in range(1, 5)
+                    }:
+                        return {'verified_in_db': False, 'reason': 'SQL regulation periods differ from native header'}
+                home_ot = decoded['linescore']['home']['ot']
+                away_ot = decoded['linescore']['away']['ot']
 
             home_pts = home_box.get('points')
             away_pts = away_box.get('points')
@@ -382,12 +432,12 @@ class CalendarSimOrchestrator:
                 home_pts = home_p_sum if home_pts is None else home_pts
                 away_pts = away_p_sum if away_pts is None else away_pts
 
-            score_conservation = (home_pts == home_q_sum and away_pts == away_q_sum)
+            score_conservation = (home_pts == home_q_sum + home_ot and away_pts == away_q_sum + away_ot)
             if not score_conservation:
                 return {
                     'verified_in_db': False,
                     'score_conservation': False,
-                    'reason': f'score conservation mismatch: home {home_pts} vs periods {home_q_sum}, away {away_pts} vs periods {away_q_sum}',
+                    'reason': f'score conservation mismatch: home {home_pts} vs periods plus OT {home_q_sum + home_ot}, away {away_pts} vs periods plus OT {away_q_sum + away_ot}',
                     'game_id': game_id,
                     'home_points': home_pts,
                     'away_points': away_pts
@@ -402,6 +452,10 @@ class CalendarSimOrchestrator:
                 'score_conservation': True,
                 'home_points': home_pts,
                 'away_points': away_pts,
+                'overtime_count': overtime,
+                'home_overtime_points': home_ot,
+                'away_overtime_points': away_ot,
+                'overtime_header_sha256': header_sha,
                 'team_boxes_count': len(team_boxes),
                 'player_boxes_count': len(player_boxes),
             }

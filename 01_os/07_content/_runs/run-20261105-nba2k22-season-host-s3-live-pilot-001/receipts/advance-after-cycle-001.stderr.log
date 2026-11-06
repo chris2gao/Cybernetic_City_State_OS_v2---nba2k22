@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<LOCAL_PATH>/advance_verified_round.py", line 128, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "<LOCAL_PATH>/advance_verified_round.py", line 108, in main
+    assert all(item["verified_in_db"] for item in readbacks), "New game readback failed"
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: New game readback failed

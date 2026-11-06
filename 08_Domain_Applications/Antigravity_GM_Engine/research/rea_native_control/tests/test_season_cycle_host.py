@@ -92,6 +92,39 @@ def temp_environment(tmp_path):
     }
 
 
+@pytest.mark.parametrize("live_date", ["2021-11-05", "2021-11-06"])
+def test_first_live_decision_reuses_only_matching_baseline(temp_environment, monkeypatch, live_date):
+    from calendar_sim_orchestrator import CalendarSimOrchestrator
+    import refresh
+    import schedule_reader
+
+    host = temp_environment["host"]
+    host.initialize_season(str(temp_environment["save_dir"]), "MyLEAGUE0003", mock_game_date="2021-11-05")
+    host.state["is_offline_mock"] = False
+    monkeypatch.setattr(refresh, "resolve_pid", lambda _: 8536)
+    monkeypatch.setattr(CalendarSimOrchestrator, "inspect_calendar_progress",
+                        lambda *_: {"status": "SAME_STATE_REPEAT", "new_final_game_detected": False})
+    monkeypatch.setattr(schedule_reader, "collect_schedule",
+                        lambda *args, **kwargs: {"calendar": {"current_native_iso_date": live_date}})
+
+    def unexpected(*args, **kwargs):
+        pytest.fail("Empty first round attempted a recapture or Native Getter")
+
+    monkeypatch.setattr(CalendarSimOrchestrator, "trigger_world_capture", unexpected)
+    monkeypatch.setattr(host, "_get_live_getter", unexpected)
+    result = host.start_cycle("cycle-001", reader=object())
+    if live_date != "2021-11-05":
+        assert result["status"] == "BASELINE_CONTEXT_CHANGED"
+        assert host.outbox.get_cycle("cycle-001") is None
+        return
+    assert result["progress_status"] == "INITIAL_BASELINE_REUSED"
+    sealed = host.seal_cycle_decisions("cycle-001")
+    assert sealed["status"] == "NO_CHANGE_WAITING_HUMAN_CALENDAR_ADVANCE"
+    assert sealed["executable_intents_count"] == 0
+    assert host.state["status"] == HostState.WAITING_CALENDAR_ADVANCE
+    assert host.outbox.get_cycle("cycle-001")["status"] == "COMPLETED"
+
+
 def test_g02_worldline_backward_date_isolation(temp_environment):
     """Gate G02: When game date regresses (restored old save), host creates isolated worldline branch DB without deleting old facts."""
     env = temp_environment
