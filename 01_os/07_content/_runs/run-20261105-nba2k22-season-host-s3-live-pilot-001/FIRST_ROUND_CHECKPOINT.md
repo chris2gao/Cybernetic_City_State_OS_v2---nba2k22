@@ -1,5 +1,7 @@
 # S3 initial full capture and cycle-001 decision
 
+This file records the initial FULL and cycle-001 seal. The current handoff is [ROUND_PROGRESS.md](ROUND_PROGRESS.md).
+
 Current state **WAITING_HUMAN_CALENDAR_ADVANCE**. Human identified MyLEAGUE0003. L0–L2 completed in the same process epoch. Cycle-001 has no executable targets. The first Human seven-day calendar trigger is pending and the four-round live pilot remains active.
 
 | Binding | Observed |
