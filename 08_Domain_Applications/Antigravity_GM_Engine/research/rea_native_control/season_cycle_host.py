@@ -1364,6 +1364,16 @@ class SeasonCycleHost:
             cycle_status = "COMPLETED" if live_no_change else "SEALED"
             with self.outbox._get_connection() as conn:
                 cur = conn.cursor()
+                if live_no_change:
+                    # Serialize the final emptiness check with add_intent, which uses the same write lock.
+                    cur.execute("BEGIN IMMEDIATE")
+                    cur.execute("SELECT status FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+                    current = cur.fetchone()
+                    if not current or current["status"] != "COLLECTING":
+                        raise RuntimeError("NO_CHANGE_CYCLE_CHANGED: cycle is no longer collecting")
+                    cur.execute("SELECT 1 FROM decision_intents WHERE cycle_id = ? LIMIT 1", (cycle_id,))
+                    if cur.fetchone() is not None:
+                        raise RuntimeError("NO_CHANGE_INTENTS_CHANGED: no-change closure refused")
                 cur.execute("SELECT revision FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
                 row = cur.fetchone()
                 rev = (row["revision"] if row else 0) + 1

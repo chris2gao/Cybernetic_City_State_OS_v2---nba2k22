@@ -125,6 +125,38 @@ def test_first_live_decision_reuses_only_matching_baseline(temp_environment, mon
     assert host.outbox.get_cycle("cycle-001")["status"] == "COMPLETED"
 
 
+def test_live_no_change_does_not_close_over_a_concurrent_intent(temp_environment, monkeypatch):
+    from season_cycle_host import ActionIntent
+
+    host = temp_environment["host"]
+    cycle_id = "cycle-001"
+    host.initialize_season(str(temp_environment["save_dir"]), "MyLEAGUE0003", mock_game_date="2021-11-05")
+    host.start_cycle(cycle_id, mock_game_date="2021-11-05")
+    profile, _ = host._make_profiles(host._make_context(cycle_id))
+    intent = ActionIntent.decided(
+        "late-intent", "gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH",
+        {"team_id": 1, "player_id": 2459, "field_id": "SHOT_TENDENCY",
+         "value": 85, "expected_before": 80, "values": {"SHOT_TENDENCY": 85}},
+    )
+    phase_grants = host.role_registry.get_phase_grants()
+    host.state["is_offline_mock"] = False
+    list_intents = host.outbox.list_intents
+
+    def insert_after_empty_snapshot(requested_cycle, *, status=None):
+        result = list_intents(requested_cycle, status=status)
+        if status is None and not result:
+            host.outbox.add_intent(cycle_id, intent, profile, phase_grants)
+        return result
+
+    monkeypatch.setattr(host.outbox, "list_intents", insert_after_empty_snapshot)
+    monkeypatch.setattr(host, "_get_live_getter", lambda: pytest.fail("No Native Getter expected"))
+    with pytest.raises(RuntimeError, match="NO_CHANGE_INTENTS_CHANGED"):
+        host.seal_cycle_decisions(cycle_id)
+    assert host.state["status"] == HostState.DECISION_OPEN
+    assert host.outbox.get_cycle(cycle_id)["status"] == "COLLECTING"
+    assert [row["intent_id"] for row in list_intents(cycle_id, status="DRAFT")] == ["late-intent"]
+
+
 def test_g02_worldline_backward_date_isolation(temp_environment):
     """Gate G02: When game date regresses (restored old save), host creates isolated worldline branch DB without deleting old facts."""
     env = temp_environment

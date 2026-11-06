@@ -4,6 +4,8 @@ import hashlib
 import json
 import re
 import subprocess
+import sys
+import tempfile
 from pathlib import Path, PureWindowsPath
 
 BASE = "66f8f73f1a91597f4562b834c2acad332ad9de5b"
@@ -15,6 +17,10 @@ CODE = {
     ENGINE + "research/rea_native_control/season_cycle_host.py",
     ENGINE + "research/rea_native_control/tests/test_season_cycle_host.py",
     ENGINE + "world_data_prototype/calendar_sim_orchestrator.py",
+}
+CODE_CORRECTIONS = {
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py": "958051580ac7a240ef1809a6789b398d539d00f3",
+    "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py": "2e4898ced93cbe10a7589806cc03381aa72402f7",
 }
 PATH = re.compile(rb'(?<![A-Za-z0-9])(?:[A-Za-z]:[\\/]|\\\\[A-Za-z0-9_.-]+\\)[^"\r\n<>|?*]+')
 SECRET_SIGNATURE = re.compile(rb'gh[pousr]_[A-Za-z0-9]{20,}|-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----')
@@ -51,6 +57,11 @@ def portable_pilot_initializer(data):
 
 
 def main():
+    if sys.argv[1:2] == ["--pytest"]:
+        # An exclusive base avoids pytest's shared Windows junction cleanup.
+        with tempfile.TemporaryDirectory(prefix="nba2k22-s3-verify-") as scratch:
+            return subprocess.call([sys.executable, "-B", "-X", "utf8", "-m", "pytest",
+                                    "--basetemp", str(Path(scratch) / "pytest"), *sys.argv[2:]])
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--prepare-redactions", action="store_true")
     args = p.parse_args()
@@ -62,7 +73,10 @@ def main():
         source = git("show", f"{SOURCE}:{path}")
         if path in CODE:
             if not args.prepare_redactions:
-                assert git("show", f"{head}:{path}") == source, path
+                if path in CODE_CORRECTIONS:
+                    assert git("rev-parse", f"{head}:{path}").decode().strip() == CODE_CORRECTIONS[path], path
+                else:
+                    assert git("show", f"{head}:{path}") == source, path
             continue
         assert not SECRET_SIGNATURE.search(source) and b"\0" not in source and len(source) < 64_000, path
         target = portable(source) if "/receipts/" in path else (
@@ -92,8 +106,9 @@ def main():
         assert sum(r["overtime_games"] for r in audit["rounds"]) == 10
         assert (audit["new_finals"], audit["final_games"], audit["outbox_intents"]) == (225, 463, 0)
         assert audit["native_write_path"] == "NOT_EXERCISED_ZERO_INTENTS"
-    print(f"{len(source_paths)} fixed source files; {len(redacted)} sanitized pilot files; 3 byte-identical code files")
+    print(f"{len(source_paths)} fixed source files; {len(redacted)} sanitized pilot files; "
+          "1 exact Calendar blob, 2 pinned Host/concurrency regression blobs")
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
