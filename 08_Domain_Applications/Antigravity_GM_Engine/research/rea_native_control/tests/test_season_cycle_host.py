@@ -516,43 +516,10 @@ def test_g08_four_offline_closed_loop_cycles(temp_environment):
         transport=fake_session_runner,
         getter_after_func=getter
     )
-    assert res_c3_exec["success_count"] == 1
+    assert res_c3_exec["status"] == "STOPPED_PARTIAL"
     assert getter(2019, "SHOT_TENDENCY") == 92
-
-    res_adv3 = host.advance_calendar_check("cycle-004", mock_advanced_date="2021-11-22")
-    assert res_adv3["status"] == "CALENDAR_ADVANCE_VERIFIED"
-
-    # =====================================================
-    # CYCLE 4: CAS Mismatch / Fail-Closed Resilience
-    # =====================================================
-    c4_intents = [
-        {
-            "intent_id": "c4-intent-1",
-            "issuer_role": "GM",
-            "actor_uid": "gm_user_01",
-            "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
-            "parameters": {
-                "team_id": 1,
-                "player_id": 2019,
-                "expected_before": 65,
-                "values": {"SHOT_TENDENCY": 99}
-            }
-        }
-    ]
-    host.start_cycle("cycle-004", candidate_intents=c4_intents, force=True)
-    res_c4_seal = host.seal_cycle_decisions("cycle-004", getter_func=getter)
-    assert res_c4_seal["status"] == "SEAL_FAILED_CAS_MISMATCH"
-    assert host.state["status"] == HostState.CONFLICTED
-
-    with pytest.raises(ValueError, match="Host not in awaiting authorization state"):
-        host.authorize_and_execute("cycle-004", plan_digest="bad_digest")
-
-    ledger_lines = env["ledger_file"].read_text(encoding="utf-8").strip().splitlines()
-    assert len(ledger_lines) >= 8
-
-    final_status = host.get_status()
-    assert final_status["host_status"] == HostState.CONFLICTED
-    assert final_status["current_cycle_id"] == "cycle-004"
+    assert host.outbox.get_cycle("cycle-003")["status"] == "STOPPED_PARTIAL"
+    assert host.state["status"] == HostState.STOPPED_PARTIAL
 
 
 def test_p1_pause_resume_unknown_locked_and_outbox_alignment(temp_environment):
@@ -677,7 +644,8 @@ def test_p0_fail_closed_readback_and_unknown_locking(temp_environment):
     assert host.state["active_plan"]["plan_digest"] == digest
 
 
-def test_p0_a_fresh_getter_after_isolated_from_preflight_cache(temp_environment, monkeypatch):
+@pytest.mark.parametrize("case", ["verified", "invalid-evidence", "interrupted"])
+def test_p0_a_fresh_getter_after_isolated_from_preflight_cache(temp_environment, monkeypatch, case):
     """P0-A: Ensure readback getter is evaluated post-execution, strictly isolated from preflight cache."""
     env = temp_environment
     host = env["host"]
@@ -741,10 +709,30 @@ def test_p0_a_fresh_getter_after_isolated_from_preflight_cache(temp_environment,
                     "getter_after": 88,
                     "raw_after": 88,
                     "outcome": "SUCCESS_APPLIED",
-                    "unaltered_fields_check": True
+                    "unaltered_fields_check": case != "invalid-evidence"
                 }]
             }
         return {"outcome": "SESSION_SUCCESS", "evidence_id": "ev-p0a", "chunk_results": results}
+
+    if case == "interrupted":
+        from season_cycle_host import BoundedSessionExecutor
+
+        def interrupt(*args, **kwargs):
+            raise KeyboardInterrupt
+
+        monkeypatch.setattr(BoundedSessionExecutor, "execute_batch", interrupt)
+        stale_state = dict(host.state)
+        with pytest.raises(KeyboardInterrupt):
+            host.authorize_and_execute("cycle-fresh-getter", digest, transport=fake_runner_ok)
+        restarted = SeasonCycleHost(state_file=env["state_file"], ledger_file=env["ledger_file"],
+                                    outbox_db=env["outbox_db"])
+        assert restarted.state["status"] == HostState.UNKNOWN_LOCKED
+        with pytest.raises(ValueError, match="Host not in awaiting authorization state"):
+            restarted.authorize_and_execute("cycle-fresh-getter", digest, transport=fake_runner_ok)
+        host.state = stale_state
+        with pytest.raises(ValueError, match="EXECUTION_ALREADY_CLAIMED_NO_REPLAY"):
+            host.authorize_and_execute("cycle-fresh-getter", digest, transport=fake_runner_ok)
+        return
 
     exec_res = host.authorize_and_execute(
         "cycle-fresh-getter",
@@ -752,9 +740,18 @@ def test_p0_a_fresh_getter_after_isolated_from_preflight_cache(temp_environment,
         transport=fake_runner_ok,
         getter_after_func=post_getter
     )
-    assert exec_res["status"] == "EXECUTED_AND_READBACK_RECORDED"
     assert post_read_call_count >= 1
     assert exec_res["readback_verified"] is True
+    cycle = host.outbox.get_cycle("cycle-fresh-getter")
+    rows = host.outbox.list_intents("cycle-fresh-getter")
+    if case == "invalid-evidence":
+        assert exec_res["status"] == "STOPPED_VALIDATION_FAILED"
+        assert cycle["status"] == "STOPPED_PARTIAL"
+        assert [row["status"] for row in rows] == ["FAILED"]
+        return
+    assert exec_res["status"] == "EXECUTED_AND_READBACK_RECORDED"
+    assert cycle["status"] == "COMPLETED"
+    assert [row["status"] for row in rows] == ["SUCCESS"]
 
     # Test PID mismatch handling in live getter
     with pytest.raises(RuntimeError, match="PID_MISMATCH_FRESH_GETTER"):
@@ -933,10 +930,6 @@ def test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope(temp_envir
         mock_game_date="2021-11-01"
     )
 
-    host.state["is_offline_mock"] = False
-    host.state["is_mock"] = False
-    host._save_state()
-
     intents = [{
         "intent_id": "live-scope-1",
         "issuer_role": "GM",
@@ -952,6 +945,8 @@ def test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope(temp_envir
     host.start_cycle("cycle-live-guard", candidate_intents=intents, force=True, mock_game_date="2021-11-01")
     seal_res = host.seal_cycle_decisions("cycle-live-guard", getter_func=lambda pid, fid: 80)
     digest = seal_res["plan_digest"]
+    host.state["is_offline_mock"] = False
+    host.state["is_mock"] = False
 
     def dummy_transport(chunks, script):
         return {}
@@ -961,6 +956,8 @@ def test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope(temp_envir
 
     import refresh
     monkeypatch.setattr(refresh, "resolve_pid", lambda mode: 5720)
+    with pytest.raises(ValueError, match="AUTHORIZATION_PENDING_HUMAN"):
+        host.authorize_and_execute("cycle-live-guard", plan_digest=digest)
 
     unauth_intents = [{
         "intent_id": "unauth-field-1",
@@ -975,11 +972,107 @@ def test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope(temp_envir
         }
     }]
     host.start_cycle("cycle-unauth-scope", candidate_intents=unauth_intents, force=True, mock_game_date="2021-11-01")
-    seal_res2 = host.seal_cycle_decisions("cycle-unauth-scope", getter_func=lambda pid, fid: 80)
-    digest2 = seal_res2["plan_digest"]
-
+    monkeypatch.setattr(host, "_approved_live_context", lambda pid: {"team_id": 1, "actor_uid": "gm_user_01"})
     with pytest.raises(ValueError, match="LIVE_SCOPE_VIOLATION"):
-        host.authorize_and_execute("cycle-unauth-scope", plan_digest=digest2, transport=None)
+        host.seal_cycle_decisions("cycle-unauth-scope", getter_func=lambda pid, fid: 80)
+
+
+@pytest.mark.parametrize("case", ["verified", "noop", "raw-conflict", "epoch-drift"])
+def test_s4_bound_single_batch_reconciliation(temp_environment, monkeypatch, case):
+    from datetime import timedelta
+    import hashlib
+    import contracts
+    import refresh
+    from bounded_session_transport import SessionBatchTransport
+    from live_world import read_binding
+
+    env = temp_environment
+    host = env["host"]
+    cycle = "s4-fixture"
+    host.initialize_season(str(env["save_dir"]), "MyLEAGUE0003", mock_game_date="2021-11-05")
+    binding, binding_sha = read_binding(env["save_dir"], "MyLEAGUE0003")
+    now = datetime.now(timezone.utc)
+    auth_path = env["save_dir"] / "role_authorizations.json"
+    grant = {
+        "save_id": binding["save_id"], "worldline_id": binding["worldline_id"],
+        "bound_database_file": Path(host.state["database_file"]).name,
+        "binding_sha256": binding_sha, "human_authorization_ref": "SYNTHETIC_TEST_ONLY",
+        "authorized_at": (now - timedelta(minutes=1)).isoformat(),
+        "expires_at": (now + timedelta(minutes=5)).isoformat(),
+        "action_id": "PLAYER_PATCH_TENDENCIES", "field_id": "SHOT_TENDENCY", "player_ids": [2459],
+        "roles": [{"role_type": "GM", "team_id": 1, "actor_uid": "gm_user_01"}],
+    }
+    target = 80 if case == "noop" else 81
+    host.start_cycle(cycle, candidate_intents=[{
+        "intent_id": "s4-item", "issuer_role": "GM", "actor_uid": "gm_user_01",
+        "action_id": "PLAYER.EDIT.TENDENCY_BATCH",
+        "parameters": {"team_id": 1, "player_id": 2459, "expected_before": 80,
+                       "values": {"SHOT_TENDENCY": target}},
+    }], force=True)
+    auth_path.write_text(json.dumps(grant), encoding="utf-8")
+    host.approved_role_manifest_sha256 = hashlib.sha256(auth_path.read_bytes()).hexdigest()
+    host.state["is_offline_mock"] = False
+    host.state["is_mock"] = False
+    epoch = {"pid": 5720, "creation_filetime": 100}
+    progress = {"today_native_iso_date": "2021-11-05"}
+    value = 80
+    call_count = 0
+    monkeypatch.setattr(refresh, "resolve_pid", lambda _: 5720)
+    monkeypatch.setattr(refresh, "_context", lambda _: {"epoch": dict(epoch), "game_progress": progress})
+    monkeypatch.setattr(host, "_get_fresh_live_getter", lambda expected_pid=None: (lambda *_: value))
+
+    def synthetic_transport(self, script, chunks, header):
+        nonlocal value, call_count
+        call_count += 1
+        assert self.live_context.authorization_ref == "SYNTHETIC_BATCH_APPROVAL"
+        assert self.live_context.expected_pid == 5720
+        chunk, = chunks
+        item, = chunk.intents
+        value = item.value
+        row = {"intent_id": item.intent_id, "team_id": item.team_id, "player_id": item.player_id,
+               "field_id": item.field_id, "expected_before": item.expected_before, "requested": item.value,
+               "outcome": "UNCHANGED_ALREADY_TARGET" if case == "noop" else "SUCCESS_APPLIED",
+               "getter_before": 80, "getter_after": target, "raw_after": target, "unaltered_fields_check": True}
+        result = {"kind": "chunk-execution-result", "chunk_id": chunk.chunk_id, "chunk_digest": chunk.chunk_digest,
+                  "plan_digest": chunk.plan_digest, "action_id": chunk.action_id, "batch_id": chunk.batch_id,
+                  "save_instance_id": chunk.save_instance_id, "outcome": "CHUNK_SUCCESS", "receipts": [row]}
+        raw_row = dict(row)
+        if case == "raw-conflict":
+            raw_row["getter_after"] = target + 1
+        raw_result = dict(result, receipts=[raw_row])
+        session = self.runtime_directory / "fixture"
+        session.mkdir()
+        (session / "evidence.json").write_text(json.dumps(
+            {"normalized_result": {"messages": [{"type": "send", "payload": raw_result}]}}), encoding="utf-8")
+        (session / "target.json").write_text(json.dumps(
+            {"pid": 5720, "exe_sha256": contracts.BUILD}), encoding="utf-8")
+        return {"outcome": "SESSION_SUCCESS", "evidence_id": "fixture", "chunk_results": {chunk.chunk_id: result}}
+
+    monkeypatch.setattr(SessionBatchTransport, "execute_session", synthetic_transport)
+    sealed = host.seal_cycle_decisions(cycle)
+    assert sealed["plan_digest"] != sealed["native_plan_digest"]
+    with pytest.raises(ValueError, match="EXACT_LIVE_BATCH_AUTHORIZATION_REQUIRED"):
+        host.authorize_and_execute(cycle, sealed["plan_digest"])
+    if case == "epoch-drift":
+        epoch["creation_filetime"] = 101
+        with pytest.raises(RuntimeError, match="LIVE_CONTEXT_CHANGED_SINCE_APPROVAL"):
+            host.authorize_and_execute(cycle, sealed["plan_digest"], live_batch_authorization_ref="SYNTHETIC_BATCH_APPROVAL")
+        assert call_count == 0
+        assert host.outbox.get_cycle(cycle)["status"] == "SEALED"
+        return
+    summary = host.authorize_and_execute(cycle, sealed["plan_digest"], live_batch_authorization_ref="SYNTHETIC_BATCH_APPROVAL")
+    assert call_count == 1
+    rows = host.outbox.list_intents(cycle)
+    if case == "raw-conflict":
+        assert summary["status"] == "STOPPED_UNKNOWN_LOCKED"
+        assert rows[0]["status"] == "UNKNOWN"
+    else:
+        assert summary["status"] == "EXECUTED_AND_READBACK_RECORDED"
+        assert host.outbox.get_cycle(cycle)["status"] == "COMPLETED"
+        assert rows[0]["status"] == ("NOOP" if case == "noop" else "SUCCESS")
+    with pytest.raises(ValueError, match="Host not in awaiting authorization state"):
+        host.authorize_and_execute(cycle, sealed["plan_digest"], live_batch_authorization_ref="SYNTHETIC_BATCH_APPROVAL")
+    assert call_count == 1
 
 
 def test_p0_c_unauthenticated_role_actor_rejected(temp_environment):

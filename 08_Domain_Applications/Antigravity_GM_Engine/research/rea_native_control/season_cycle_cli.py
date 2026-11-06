@@ -29,6 +29,8 @@ from season_cycle_host import SeasonCycleHost
 
 def main():
     parser = argparse.ArgumentParser(description="NBA2K22 Human Season Host CLI")
+    parser.add_argument("--approved-role-manifest-sha256",
+                        help="Digest of the exact role manifest approved separately by the Human")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # init
@@ -54,6 +56,7 @@ def main():
     p_auth = subparsers.add_parser("authorize", help="Authorize execution with exact plan_digest")
     p_auth.add_argument("--cycle-id", required=True, help="Cycle identifier")
     p_auth.add_argument("--digest", required=True, help="Exact plan_digest returned by seal")
+    p_auth.add_argument("--live-batch-authorization-ref", help="Human approval reference for this exact live batch")
 
     # advance-check
     p_adv = subparsers.add_parser("advance-check", help="Verify game calendar advance after in-game sim")
@@ -70,7 +73,7 @@ def main():
     p_resume = subparsers.add_parser("resume", help="Resume season closed loop")
 
     args = parser.parse_args()
-    host = SeasonCycleHost()
+    host = SeasonCycleHost(approved_role_manifest_sha256=args.approved_role_manifest_sha256)
 
     try:
         if args.command == "init":
@@ -102,7 +105,8 @@ def main():
         elif args.command == "authorize":
             res = host.authorize_and_execute(
                 cycle_id=args.cycle_id,
-                plan_digest=args.digest
+                plan_digest=args.digest,
+                live_batch_authorization_ref=args.live_batch_authorization_ref,
             )
             print(json.dumps(res, indent=2, ensure_ascii=False))
 

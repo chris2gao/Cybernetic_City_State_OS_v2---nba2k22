@@ -480,3 +480,23 @@ def test_b1_record_execution_receipts_validation(temp_db):
             {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"},
             {"intent_id": "I-2", "outcome": "SUCCESS_APPLIED"}
         ])
+
+
+def test_s4_unresolved_claim_reserves_resource_across_cycles(temp_db):
+    outbox = DecisionOutbox(temp_db)
+    gm, _ = make_profiles()
+    grants = {("gm_user_01", "PLAYER_PATCH_TENDENCIES")}
+    for cycle in ("first", "later"):
+        outbox.open_cycle(cycle, make_context())
+        outbox.add_intent(cycle, ActionIntent.decided(
+            f"{cycle}-intent", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+            {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 71},
+        ), gm, grants)
+        outbox.seal_cycle(cycle, aggregate_batch_id=f"batch-{cycle}")
+    outbox.claim_execution("first", "a" * 64)
+    reopened = DecisionOutbox(temp_db)
+    with pytest.raises(ValueError, match="EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM"):
+        reopened.claim_execution("later", "b" * 64)
+    reopened.record_execution_receipts("first", [{"intent_id": "first-intent", "outcome": "UNKNOWN_EXECUTION_OUTCOME"}])
+    with pytest.raises(ValueError, match="EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM"):
+        reopened.claim_execution("later", "b" * 64)

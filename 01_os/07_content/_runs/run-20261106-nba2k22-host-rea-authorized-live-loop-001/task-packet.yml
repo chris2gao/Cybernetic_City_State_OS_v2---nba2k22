@@ -1,0 +1,40 @@
+task_packet:
+  task_id: NBA2K22-HOST-REA-AUTHORIZED-LIVE-LOOP-20261106-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  exact_base_sha: 20ff460792bdf0b44b21f8c8422bc6a2a74a0996
+  branch: task/nba2k22-host-rea-authorized-live-loop-20261106
+  risk_tier: T3_high_risk
+  objective: Verify the bounded Host to REA single batch with fresh readback and conservative Outbox reconciliation.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/32
+    - Core 877077c16bad41cfa97c1ebc9862a70ce610ff0b sections 7.2, 8.1 and 9
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_cli.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_decision_outbox.py
+    - 01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/verification-plan.json
+  required_tests: [host_targeted, outbox_targeted, transport_targeted]
+  prohibitions: [unapproved_live_delegation, unapproved_native_write, save_edit_or_restore, calendar_advance, unknown_replay, master_merge]
+  required_completion_pointer: 01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/CHECKPOINT.md
+  big_task: true
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: [live_role_delegation, exact_native_batch, master_integration]
+    preconfirmed_actions: []
+    uncovered_actions: [live_role_delegation, exact_native_batch, master_integration]
+  executor_profile:
+    provider: Codex
+    surface: Codex Desktop
+    model: not_observable
+    reasoning_effort: not_observable
+    mode: standard
+    routing_basis: Human assigned execution in Issue 32
+    authority: routing_only
