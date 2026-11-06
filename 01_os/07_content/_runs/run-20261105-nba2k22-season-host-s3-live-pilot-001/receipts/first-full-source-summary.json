@@ -1,0 +1,606 @@
+{
+  "refresh_status": "COMPLETED_REQUESTED_SOURCES",
+  "batch_id": "3c48559bcd02",
+  "raw_report_sha256": "1530b61efda219f82e2707dce93fbcd53264b0132f8470c19007938e043165b4",
+  "raw_report_local": "C:\\Users\\gk\\.codex\\worktrees\\nba2k22-bic-batch1\\s3-live-private\\world\\vae_capture_5b36b52e5c\\refresh-report.json",
+  "consistency_scope": "INDEPENDENT_ATOMIC_SOURCE_UNITS_WITHIN_ONE_CHECKED_PROCESS_AND_GAME_SEASON; NOT_ONE_GLOBAL_SNAPSHOT",
+  "verified_sources": 20,
+  "adapter_reported_rows_sum": 740869,
+  "full_refresh_wall_seconds": 118.144321,
+  "host_init_wall_seconds": 119.47612409999783,
+  "source_families": [
+    {
+      "family": "schedule",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 23369,
+      "counts": {
+        "teams": 34,
+        "team_seasons": 34,
+        "players": 455,
+        "player_attribute_snapshots": 455,
+        "player_tendency_snapshots": 455,
+        "player_vitals_observations": 455,
+        "player_contract_observations": 455,
+        "player_play_type_slots": 1820,
+        "roster_memberships": 455,
+        "player_season_totals": 370,
+        "field_gaps": 1,
+        "games": 1232,
+        "game_state_observations": 1232,
+        "game_period_scores": 1904,
+        "team_game_boxes": 476,
+        "player_game_boxes": 6133,
+        "native_box_observations": 6170,
+        "game_source_checks": 1232,
+        "season_calendar_observations": 1
+      },
+      "wall_seconds": 4.109,
+      "unit": {
+        "unit_id": "live-world:a9c014f6807f8bf00795eb48",
+        "source_key": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
+        "payload_sha256": "cf1307e4573e9d41268e5f859d06bb79c28d97621f6ec9a18aeaa70b19260867",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:26.653349+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "game-mode",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 1,
+      "counts": {
+        "game_mode_observations": 1
+      },
+      "wall_seconds": 0.076,
+      "unit": {
+        "unit_id": "native-game-mode:491f36da291c8ac732a26e40",
+        "source_key": "BOUND_NATIVE_GAME_MODE_PERIOD",
+        "payload_sha256": "369387d5841507a8fdc2243cb50e72babfcb463ff989b133cea410a16596a5d3",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:30.770939+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "period-stats",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 7151,
+      "counts": {
+        "native_player_sources": 3390,
+        "native_player_stat_links": 3390,
+        "native_player_stat_observations": 370,
+        "game_mode_observations": 1
+      },
+      "wall_seconds": 2.091,
+      "unit": {
+        "unit_id": "native-period-stats:b2a633fdd9ae36cf8ffa9027",
+        "source_key": "BOUND_NATIVE_CURRENT_PERIOD_PLAYER_STATS",
+        "payload_sha256": "1c95fc85aceb479573d675429e42113ac96e777e3233d3f917704a901fd663fd",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:30.869856+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "organization",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 3216,
+      "counts": {
+        "teams": 30,
+        "team_seasons": 30,
+        "team_finance_observations": 30,
+        "team_state_observations": 30,
+        "team_season_totals": 30,
+        "staff_members": 240,
+        "staff_team_assignments": 240,
+        "staff_contract_observations": 240,
+        "staff_skill_observations": 240,
+        "coach_preferences": 30,
+        "team_tactic_settings": 30,
+        "team_playbook_slots": 2040,
+        "season_calendar_observations": 1,
+        "field_gaps": 5
+      },
+      "wall_seconds": 0.769,
+      "unit": {
+        "unit_id": "organization:b146852460bd4bcf71ad490d",
+        "source_key": "BOUND_CORE_ORGANIZATION",
+        "payload_sha256": "4d46184cac6c58699e62385fd75195945702128051e8168fda9bd6ed85fceed5",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:32.973908+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "staff",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 4686,
+      "counts": {
+        "teams": 30,
+        "native_staff_sources": 1470,
+        "native_staff_profile_observations": 1470,
+        "native_staff_tactic_observations": 1470,
+        "native_staff_team_slots": 240,
+        "game_mode_observations": 1,
+        "field_gaps": 5
+      },
+      "wall_seconds": 2.297,
+      "unit": {
+        "unit_id": "native-staff:bf8637bb26800394ac068ddf",
+        "source_key": "BOUND_NATIVE_COMPLETE_PUBLIC_STAFF_POOL",
+        "payload_sha256": "50a2e63b2ceec45cb5ea2ae9e3abf66b722c741cbf36d26f74fa983e2e72594e",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:33.752104+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "coach-stats",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 1472,
+      "counts": {
+        "native_current_coach_stat_observations": 1470,
+        "game_mode_observations": 1,
+        "field_gaps": 1
+      },
+      "wall_seconds": 1.154,
+      "unit": {
+        "unit_id": "native-current-coach:1a3de809bd1eac7439248f89",
+        "source_key": "BOUND_NATIVE_CURRENT_COACH_STATS",
+        "payload_sha256": "b9736ffc5ae26f03490706b4e22e36b8bbd75e171ca54b5bd1bb953b03414fb1",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:36.063343+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "lineups",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 15634,
+      "counts": {
+        "teams": 30,
+        "native_player_sources": 3390,
+        "native_player_rotation_observations": 3390,
+        "team_rotation_slots": 390,
+        "team_lineup_observations": 30,
+        "team_lineup_slots": 1200,
+        "team_advanced_rotation_slots": 7200,
+        "game_mode_observations": 1,
+        "field_gaps": 3
+      },
+      "wall_seconds": 2.449,
+      "unit": {
+        "unit_id": "native-lineups:af6316b8824e82507dd9ee88",
+        "source_key": "BOUND_NATIVE_TEAM_LINEUPS_AND_PLAYER_ROTATION",
+        "payload_sha256": "9e19a3ad55ab6466f9fda577f55cc929aaba58799540b1ea93b593c9e18b6ebe",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:37.227672+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "finance",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 62,
+      "counts": {
+        "teams": 30,
+        "native_team_finance_observations": 30,
+        "game_mode_observations": 1,
+        "field_gaps": 1
+      },
+      "wall_seconds": 0.141,
+      "unit": {
+        "unit_id": "native-finance:627f201d4fcf71fa18bb234c",
+        "source_key": "BOUND_NATIVE_TYPED_TEAM_FINANCE",
+        "payload_sha256": "7ced51c9b35b339afa43ff2f2d019cda57f4ff8f4c728fb0ca103e61f5aac070",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:39.692328+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "market",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 947,
+      "counts": {
+        "teams": 30,
+        "draft_pick_assets": 300,
+        "draft_pick_ownerships": 300,
+        "waived_salary_observations": 222,
+        "draft_pool_slot_observations": 90,
+        "draft_prospects": 0,
+        "draft_prospect_attribute_snapshots": 0,
+        "draft_prospect_tendency_snapshots": 0,
+        "draft_prospect_play_type_slots": 0,
+        "field_gaps": 5
+      },
+      "wall_seconds": 1.025,
+      "unit": {
+        "unit_id": "market:d6ae47f5f3e8234f59d2b38d",
+        "source_key": "BOUND_NATIVE_MARKET_SOURCES",
+        "payload_sha256": "c3bd87cd3b293f9b20f35ca881ccaeea32cf52d4c30dfa0253466963e0672b57",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:39.845401+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "planning",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 43271,
+      "counts": {
+        "teams": 30,
+        "players": 461,
+        "roster_memberships": 461,
+        "gameplan_observations": 870,
+        "gameplan_rotation_observations": 20010,
+        "gameplan_defense_observations": 20010,
+        "team_training_settings": 30,
+        "player_training_slot_observations": 786,
+        "player_training_observations": 456,
+        "mentor_manager_observations": 30,
+        "native_mentor_relation_observations": 61,
+        "mentorship_relations": 60,
+        "field_gaps": 6
+      },
+      "wall_seconds": 7.29,
+      "unit": {
+        "unit_id": "planning:2255977d63318b70368d3390",
+        "source_key": "BOUND_PLANNING_AND_TRAINING",
+        "payload_sha256": "5ab0cb641ab92711c7798bab739eeee054660d105329e7b64ff283c03264cc9e",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:40.946591+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "settings",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 754,
+      "counts": {
+        "native_fields": 168,
+        "game_setting_observations": 546,
+        "league_rule_observations": 35,
+        "field_gaps": 5
+      },
+      "wall_seconds": 0.176,
+      "unit": {
+        "unit_id": "settings:d54d8fb23df2e59c8a2ed962",
+        "source_key": "BOUND_SETTINGS_AND_RULES",
+        "payload_sha256": "4a8760073c8ac30facdcb5cd6a747366eeb380d9e1dba17a9699f8cf488511f9",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:48.241402+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "player-details",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 339118,
+      "counts": {
+        "native_fields": 115,
+        "native_player_sources": 3390,
+        "player_contract_observations": 3390,
+        "player_badge_values": 332220,
+        "field_gaps": 3
+      },
+      "wall_seconds": 49.031,
+      "unit": {
+        "unit_id": "player-detail:70698977ec7bb441299b93cd",
+        "source_key": "BOUND_PLAYER_CONTRACT_AND_BASE_BADGES",
+        "payload_sha256": "8288684abb3bb282d1a65e468b8f08b998fad75175dcbf9ded3c51564a644d9e",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:42:48.420052+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "player-state",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 13604,
+      "counts": {
+        "native_fields": 40,
+        "native_player_sources": 3390,
+        "player_vitals_observations": 3390,
+        "player_health_observations": 3390,
+        "player_morale_observations": 3390,
+        "field_gaps": 4
+      },
+      "wall_seconds": 5.839,
+      "unit": {
+        "unit_id": "player-state:77cc0029ba0b6b544c5f35ca",
+        "source_key": "BOUND_PLAYER_VITALS_HEALTH_MORALE",
+        "payload_sha256": "e868bc641eff686937a5422fe631a15845dcf934024e3100aef48046c8b3ae99",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:43:37.471034+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "affiliations",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 10513,
+      "counts": {
+        "native_fields": 17,
+        "native_player_sources": 3390,
+        "native_college_observations": 322,
+        "market_state_observations": 3390,
+        "player_vitals_observations": 3390,
+        "field_gaps": 4
+      },
+      "wall_seconds": 3.481,
+      "unit": {
+        "unit_id": "player-affiliation:a1915c6a054495c9da275474",
+        "source_key": "BOUND_PLAYER_AFFILIATION_CLASSIFICATION",
+        "payload_sha256": "36b3cfc734da7fee17ac070e40f4a42cb0da71212ab657445f1a7d4a1934c627",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:43:43.322218+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "player-skills",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 23893,
+      "counts": {
+        "native_fields": 160,
+        "native_player_sources": 3390,
+        "player_attribute_snapshots": 3390,
+        "player_tendency_snapshots": 3390,
+        "player_play_type_slots": 13560,
+        "field_gaps": 3
+      },
+      "wall_seconds": 5.193,
+      "unit": {
+        "unit_id": "player-skill:a70d94c844e0e3a1c7562c1c",
+        "source_key": "BOUND_PUBLIC_PLAYER_SKILLS",
+        "payload_sha256": "10bb62076b7cc484987723d60a7a0d93fd495051a58bdc4c719b09669d72f8bf",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:43:46.816867+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "news",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 15293,
+      "counts": {
+        "native_social_message_observations": 4000,
+        "game_news_entries": 1289,
+        "native_transaction_observations": 250,
+        "native_transaction_item_observations": 9750,
+        "native_league_capture_controls": 1,
+        "field_gaps": 3
+      },
+      "wall_seconds": 1.973,
+      "unit": {
+        "unit_id": "native-league:21669c838753551745e347a1",
+        "source_key": "BOUND_NATIVE_NEWS_AND_TRANSACTIONS",
+        "payload_sha256": "3ccb3188bd192945bddd1a878f5c1983bf7743fe881b450c252edb9014cf0253",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:43:52.031592+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": null,
+        "refresh_period_year": null,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "records",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 69045,
+      "counts": {
+        "season_record_entries": 69040,
+        "field_gaps": 5
+      },
+      "wall_seconds": 11.552,
+      "unit": {
+        "unit_id": "records:52090d48bcc54f85be035c31",
+        "source_key": "BOUND_RECORD_BOOK",
+        "payload_sha256": "61ec9f0a23eff6dcd253cb380724bc9ba340614a989ff1fd4b143c4f8250d97c",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:43:54.014402+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": "RECORD_BOOK",
+        "refresh_period_year": 2022,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "honors",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 98423,
+      "counts": {
+        "native_fields": 44,
+        "native_player_stat_observations": 9773,
+        "native_player_sources": 3390,
+        "native_player_stat_links": 84750,
+        "native_identity_links": 461,
+        "field_gaps": 5
+      },
+      "wall_seconds": 11.158,
+      "unit": {
+        "unit_id": "native-honors:a056300d4af4f71cc5998311",
+        "source_key": "BOUND_NATIVE_HONOR_STATS",
+        "payload_sha256": "f6bfa923c2ebff4afa5a73015ae7b63779a7722c4308a746ce6dd5c4b3bc75f5",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:44:05.573337+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": "NATIVE_HONOR_STATS",
+        "refresh_period_year": 2022,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "league-history",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 9927,
+      "counts": {
+        "native_league_history_observations": 6769,
+        "season_award_instances": 764,
+        "award_recipients": 2315,
+        "fact_conflicts": 0,
+        "native_award_matrix_observations": 75,
+        "native_league_capture_controls": 1,
+        "field_gaps": 3
+      },
+      "wall_seconds": 1.601,
+      "unit": {
+        "unit_id": "native-league:65517452d212a6d573d53b42",
+        "source_key": "BOUND_LEAGUE_HISTORY_AND_AWARDS",
+        "payload_sha256": "9ba0ff287739de2e8947d55c8181aebb2ea6f4a5b6bf350c0ec4c7ebf22085d2",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:44:16.745775+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": "LEAGUE_HISTORY_AWARDS",
+        "refresh_period_year": 2022,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    },
+    {
+      "family": "staff-history",
+      "status": "ACQUIRED",
+      "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+      "adapter_reported_rows": 60490,
+      "counts": {
+        "native_staff_history_subjects": 1470,
+        "native_coach_stat_observations": 217,
+        "native_staff_stat_links": 58800,
+        "field_gaps": 2,
+        "game_mode_observations": 1
+      },
+      "wall_seconds": 6.405,
+      "unit": {
+        "unit_id": "native-staff-history:0b9875528fddd425bb074543",
+        "source_key": "BOUND_NATIVE_ANNUAL_STAFF_STATS",
+        "payload_sha256": "e3f6531a701d9168b6c66d4211d09e2cfeb11b4b18e51c1a2b0b68150d2bca31",
+        "unit_status": "success",
+        "observed_at": "2026-11-06T03:44:18.358988+00:00",
+        "completeness": "PARTIAL",
+        "source_grade": "LIVE_READ",
+        "refresh_family": "STAFF_SEASON_HISTORY",
+        "refresh_period_year": 2022,
+        "season_id": "season:native-year:2022",
+        "season_code": "NATIVE_YEAR:2022"
+      }
+    }
+  ],
+  "old_database_sha256_readback": "f76b943e4c716748b4df1c8f6c94779fb57ebb312bbeeb9e4d4dfd97a024b218",
+  "old_binding_sha256_readback": "2e6c79ebf97034976682cf914713a3a784a7919f53e1014fd10a25f1e6855908",
+  "old_history_unchanged": true,
+  "game_save_unchanged_through_l2": true,
+  "isolated_persistent_outputs": [
+    "new facts DB",
+    "save.json",
+    "worldlines_manifest.json",
+    "role authorization template",
+    "local disk backup",
+    "Host state",
+    "Host ledger",
+    "Outbox",
+    "per-family capture artifacts",
+    "VAE exports"
+  ]
+}

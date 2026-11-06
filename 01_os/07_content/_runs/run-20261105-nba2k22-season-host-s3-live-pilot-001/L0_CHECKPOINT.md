@@ -1,5 +1,7 @@
 # S3 live pilot checkpoint
 
+Historical L0 snapshot. The current handoff is [FIRST_ROUND_CHECKPOINT.md](FIRST_ROUND_CHECKPOINT.md).
+
 Status **WAITING_HUMAN_SAVE_IDENTITY**. The live process/calendar probe succeeded. L1 FULL and L2 remain pending the loaded filename. The supported Reader explicitly requires a Human-declared filename in live_world.py. The prior binding, disk hash and file modification time are evidence about files and cannot prove which one is loaded. The only input requested is the current filename. Calendar simulation is not due yet.
 
 | Evidence | Observed |
