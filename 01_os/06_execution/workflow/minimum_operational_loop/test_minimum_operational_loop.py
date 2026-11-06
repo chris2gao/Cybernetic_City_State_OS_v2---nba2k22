@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import hashlib, importlib.util, shutil, subprocess, tempfile, unittest
+import hashlib, importlib.util, os, shutil, subprocess, tempfile, unittest
 from pathlib import Path
 import yaml
 
@@ -49,18 +49,49 @@ def resign_requirement_fixture(payload):
     payload["Human_confirmation"]["content_sha256"]=digest({k:v for k,v in payload.items() if k not in {"Human_confirmation","consensus_Human_confirmation"}})
 
 class MinimumLoopTests(unittest.TestCase):
+    @staticmethod
+    def git(repo, *args):
+        return subprocess.run(["git", "-C", str(repo), "-c", "core.autocrlf=false",
+                               "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", *args],
+                              check=True, capture_output=True, text=True).stdout.strip()
+
+    def draft_fixture(self, repo, *, rel="01_os/_runs/draft", allowed=None, stages=7):
+        self.git(repo, "init", "-qb", "fixture")
+        self.copy_contract(repo)
+        self.git(repo, "add", "01_os")
+        self.git(repo, "commit", "-qm", "contract")
+        base = self.git(repo, "rev-parse", "HEAD")
+        save(repo / "task_packet.yml", {"task_packet": {
+            "task_id": "fixture", "branch": "fixture", "exact_base_sha": base,
+            "allowed_changed_paths": allowed or [f"{rel}/**"], "required_tests": ["fixture"],
+            "prohibitions": [],
+        }})
+        self.git(repo, "add", "task_packet.yml")
+        self.git(repo, "commit", "-qm", "authorized draft scope")
+        run = repo / rel
+        shutil.copytree(FIXTURE, run)
+        run_id = run.name
+        manifest = load(run / "manifest.yml")
+        manifest.update(run_id=run_id, artifacts=manifest["artifacts"][:stages])
+        save(run / "manifest.yml", manifest)
+        save(run / "run.yml", {"run_id": run_id, "task_id": "fixture",
+                              "lifecycle": "candidate_pending_validation", "task_packet_ref": {
+                                  "path": "task_packet.yml",
+                                  "blob_sha": self.git(repo, "rev-parse", "HEAD:task_packet.yml"),
+                              }})
+        for entry in manifest["artifacts"]:
+            path = run / entry["path"]
+            draft = load(path)
+            draft.update(run_id=run_id, status="planned")
+            draft["stage_control"].pop("plan_acceptance", None)
+            draft["stage_control"].pop("completion_acceptance", None)
+            save(path, draft)
+        return run
+
     def test_candidate_sync_preview_apply_and_formal_history_refusal(self):
         with tempfile.TemporaryDirectory() as folder:
             repo = Path(folder).resolve()
-            subprocess.run(["git", "init", "-q", str(repo)], check=True)
-            run = repo / "draft"
-            shutil.copytree(FIXTURE, run)
-            for entry in load(run / "manifest.yml")["artifacts"]:
-                path = run / entry["path"]
-                draft = load(path)
-                draft["stage_control"].pop("plan_acceptance", None)
-                draft["stage_control"].pop("completion_acceptance", None)
-                save(path, draft)
+            run = self.draft_fixture(repo)
             stage = run / "05_steps.yml"
             artifact = load(stage)
             artifact["artifact_version"] += 1
@@ -82,12 +113,82 @@ class MinimumLoopTests(unittest.TestCase):
 
             artifact["stage_control"]["completion_acceptance"] = {"commit": "recorded"}
             save(stage, artifact)
-            subprocess.run(["git", "-C", str(repo), "add", "draft"], check=True, capture_output=True)
-            subprocess.run(["git", "-C", str(repo), "-c", "user.name=Fixture",
-                            "-c", "user.email=fixture@example.invalid", "commit", "-qm", "formal record"], check=True)
+            self.git(repo, "add", stage.relative_to(repo).as_posix())
+            self.git(repo, "commit", "-qm", "formal record")
             del artifact["stage_control"]["completion_acceptance"]
             save(stage, artifact)
             self.assertEqual(loop.sync_candidate(run, repo, apply=True), (33, ["candidate_sync:formal_history_present"]))
+
+    def test_candidate_sync_rejects_unsafe_or_unauthorized_drafts(self):
+        cases = (
+            (".git/scratch-probe", None, "unsafe_candidate_directory"),
+            ("01_os/04_skills_and_tools/scratch-probe", None, "candidate_run_root_required"),
+            ("01_os/_runs/unlisted", ["01_os/_runs/some-other-draft/**"], "candidate_path_not_authorized"),
+        )
+        for rel, allowed, reason in cases:
+            with self.subTest(rel=rel), tempfile.TemporaryDirectory() as folder:
+                repo = Path(folder).resolve()
+                run = self.draft_fixture(repo, rel=rel, allowed=allowed, stages=1)
+                before = (run / "manifest.yml").read_bytes()
+                code, findings = loop.sync_candidate(run, repo, apply=True)
+                self.assertEqual(code, 33)
+                self.assertIn(reason, findings[0])
+                self.assertEqual((run / "manifest.yml").read_bytes(), before)
+
+    def test_candidate_sync_uses_committed_version_floor_for_partial_draft(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo, stages=1)
+            manifest_path = run / "manifest.yml"
+            manifest = load(manifest_path)
+            entry = manifest["artifacts"][0]
+            artifact_path = run / entry["path"]
+            artifact = load(artifact_path)
+            def version(value):
+                artifact["artifact_version"] = entry["artifact_version"] = value
+                save(artifact_path, artifact)
+                save(manifest_path, manifest)
+            version(3)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True)[0], 0)
+            self.git(repo, "add", manifest_path.relative_to(repo).as_posix(), artifact_path.relative_to(repo).as_posix())
+            self.git(repo, "commit", "-qm", "draft v3")
+            version(1)
+            code, findings = loop.sync_candidate(run, repo, apply=True)
+            self.assertEqual(code, 33)
+            self.assertIn("artifact_version_regression_or_invalid", findings[0])
+            version(4)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True)[0], 0)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (0, []))
+
+    def test_candidate_sync_rejects_outside_and_linked_run(self):
+        with tempfile.TemporaryDirectory() as folder, tempfile.TemporaryDirectory() as external:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo, stages=1)
+            outside = Path(external).resolve()
+            self.assertEqual(loop.sync_candidate(outside, repo, apply=True)[0], 33)
+            link = run.parent / "linked"
+            if os.name == "nt":
+                from _winapi import CreateJunction
+                CreateJunction(str(outside), str(link))
+            else:
+                link.symlink_to(outside, target_is_directory=True)
+            self.assertEqual(loop.sync_candidate(link, repo, apply=True),
+                             (33, ["candidate_sync:unsafe_candidate_directory"]))
+
+    def test_candidate_sync_rejects_non_draft_status_and_wrong_kind(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo, stages=1)
+            path = run / load(run / "manifest.yml")["artifacts"][0]["path"]
+            artifact = load(path)
+            for changes in ({"status": "published"}, {"status": "complete"}, {"artifact_kind": "step_package"}):
+                with self.subTest(changes=changes):
+                    save(path, artifact | changes)
+                    before = path.read_bytes()
+                    code, findings = loop.sync_candidate(run, repo, apply=True)
+                    self.assertEqual(code, 33)
+                    self.assertIn("planned_artifact_identity", findings[0])
+                    self.assertEqual(path.read_bytes(), before)
 
     def copy_contract(self,repo):
         source=HERE.parents[3]

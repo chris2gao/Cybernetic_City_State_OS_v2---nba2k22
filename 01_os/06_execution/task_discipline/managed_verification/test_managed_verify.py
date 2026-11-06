@@ -105,6 +105,7 @@ def test_checkpoint_derives_results_from_existing_attempt(build):
     before = {path.name: path.read_bytes() for path in attempt.iterdir()}
     checkpoint = mv.inspect(repo, head, "plan.json", attempt, checkpoint=("test increment", ["open item"]))
     assert checkpoint["candidate"] == head
+    assert checkpoint["evidence_scope"] == "attempt_internal_consistency"
     assert checkpoint["tests"][0]["exit_code"] == 7
     assert checkpoint["tests"][0]["status"] == "success"
     assert checkpoint["resume"]["attempt"] == str(attempt)

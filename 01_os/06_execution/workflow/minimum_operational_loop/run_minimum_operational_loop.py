@@ -610,37 +610,117 @@ def prohibited_output(repo_root:Path,output_root:Path)->bool:
     except ValueError:return False
     return any(rel.startswith(prefix) for prefix in PROHIBITED_OUTPUT_PREFIXES)
 
+def _draft_run(run_doc, run_id):
+    if (run_doc.get("run_id") != run_id or run_doc.get("lifecycle") != "candidate_pending_validation"
+            or {"closure_record", "final_stage_completion_commit", "completion_pointer",
+                "human_acceptance", "status"} & run_doc.keys()):
+        raise ValueError("draft_run_required")
+
+
+def _draft_artifact(artifact, run_id, sid, schemas):
+    if (artifact.get("schema_version"), artifact.get("run_id"), artifact.get("stage_id"),
+            artifact.get("artifact_kind"), artifact.get("status")) != (
+            "citystate.workflow.artifact.v1", run_id, sid, schemas[sid]["artifact_kind"], "planned"):
+        raise ValueError(f"planned_artifact_identity:{sid}")
+    if not positive_int(artifact.get("artifact_version")):
+        raise ValueError(f"artifact_version_invalid:{sid}")
+    control = artifact.get("stage_control", {})
+    if not isinstance(control, dict) or {"plan_acceptance", "completion_acceptance"} & control.keys():
+        raise ValueError(f"formal_stage_control:{sid}")
+
+
+def _draft_manifest_entries(manifest, run_id):
+    if (manifest.get("schema_version"), manifest.get("workflow_id"), manifest.get("workflow_version"),
+            manifest.get("run_id")) != ("citystate.workflow.run_manifest.v1", EXPECTED_WORKFLOW_ID, 1, run_id):
+        raise ValueError("manifest_identity")
+    if {"status", "final_stage_completion_commit", "completion_acceptance", "plan_acceptance"} & manifest.keys():
+        raise ValueError("draft_manifest_required")
+    entries = manifest["artifacts"]
+    stages = [entry["stage_id"] for entry in entries]
+    if not stages or stages != EXPECTED_STAGE_IDS[:len(stages)]:
+        raise ValueError("manifest_stage_order")
+    return entries
+
+
+def _draft_version_floors(repo, head, relative, run_id, owner, source, schemas):
+    if source.git(repo, "rev-parse", "--is-shallow-repository").strip() != b"false":
+        raise ValueError("full_candidate_history_required")
+    floors = {}
+    commits = source.git(repo, "log", "--full-history", "--format=%H", head, "--", relative).decode().splitlines()
+    for commit in commits:
+        def read_optional(name):
+            path = f"{relative}/{name}"
+            if not source.git(repo, "ls-tree", "-z", commit, "--", path):
+                return None
+            return source.load_yaml_text(source.tracked_blob(repo, commit, path).decode("utf-8"))
+
+        historical_run = read_optional("run.yml")
+        if historical_run is not None:
+            _draft_run(historical_run, run_id)
+        manifest = read_optional("manifest.yml")
+        if manifest is None:
+            continue
+        for entry in _draft_manifest_entries(manifest, run_id):
+            sid, name, version = entry["stage_id"], entry["path"], entry["artifact_version"]
+            if not owner._scope_path(name) or "/" in name or not positive_int(version):
+                raise ValueError(f"historical_artifact_binding:{sid}")
+            artifact = read_optional(name)
+            if artifact is None:
+                raise ValueError(f"historical_artifact_absent:{sid}")
+            _draft_artifact(artifact, run_id, sid, schemas)
+            floors[sid] = max(floors.get(sid, 0), version, artifact["artifact_version"])
+    return floors
+
+
 def sync_candidate(run_root: Path, repo_root: Path, *, apply: bool = False) -> tuple[int, list[str]]:
     """Rebind draft artifact bytes only. This command never validates acceptance."""
+    source_errors = ()
     try:
         repo_root = repo_root.resolve()
         run_root = run_root.absolute()
         relative = run_root.relative_to(repo_root).as_posix()
         if relative == "." or run_root.resolve() != run_root or prohibited_output(repo_root, run_root):
             raise ValueError("unsafe_candidate_directory")
-        git = load_deliberation_validator(Path(__file__).resolve().parents[4]).task_scope_support()
+        owner = load_deliberation_validator(Path(__file__).resolve().parents[4])
+        git = owner.task_scope_support()
+        source_errors = (git.VerificationError,)
+        if not owner._scope_path(relative):
+            raise ValueError("unsafe_candidate_directory")
         if Path(git.git(repo_root, "rev-parse", "--show-toplevel").decode().strip()).resolve() != repo_root:
             raise ValueError("repository_root_required")
+        head = git.git(repo_root, "rev-parse", "HEAD").decode().strip()
+        git.candidate_id(repo_root, head)
+        def committed_yaml(path):
+            return yaml.safe_load(git.tracked_blob(repo_root, head, path.relative_to(repo_root).as_posix()))
+
+        roots = committed_yaml(repo_root / CONTRACT_PATH)["run_roots"]
+        parents = {roots[key].split("/<run-id>/")[0] for key in ("shared_os_development", "domain_workflow")}
+        if relative.rpartition("/")[0] not in parents or run_root.name.casefold() == "_runtime":
+            raise ValueError("candidate_run_root_required")
+        schemas = payload_schemas(repo_root, committed_yaml)
         # Search reachable history too: removing a receipt in the working tree
         # must not turn an accepted Run back into a writable draft.
         protected = r'(plan_acceptance|completion_acceptance|final_stage_completion_commit)["\x27]?[[:space:]]*:'
         if git.git(repo_root, "log", "--all", "-1", "--format=%H", "-G", protected, "--", relative).strip():
             raise ValueError("formal_history_present")
-        if any(p.name in {"plan_acceptance.yml", "completion_acceptance.yml", "workflow_completion.yml"}
-               for p in run_root.rglob("*.yml")):
+        formal_names = {"plan_acceptance.yml", "completion_acceptance.yml", "workflow_completion.yml"}
+        formal_paths = [f":(glob){relative}/**/{name}" for name in sorted(formal_names)]
+        if git.git(repo_root, "log", "--all", "--full-history", "-1", "--format=%H", "--", *formal_paths).strip():
+            raise ValueError("formal_history_present")
+        if any(p.name.casefold() in formal_names for p in run_root.rglob("*")):
             raise ValueError("formal_record_present")
 
         original = {}
         updated = {}
 
         def read(name):
-            if not isinstance(name, str) or Path(name).name != name or "/" in name or "\\" in name or ":" in name:
+            if not owner._scope_path(name) or "/" in name:
                 raise ValueError("artifact_path_must_be_local")
             path = run_root / name
             if path.is_symlink() or path.resolve() != path or not path.is_file() or path in original:
                 raise ValueError(f"invalid_or_duplicate_artifact:{name}")
             original[path] = path.read_bytes()
-            doc = yaml.safe_load(original[path].decode("utf-8"))
+            doc = git.load_yaml_text(original[path].decode("utf-8"))
             if not isinstance(doc, dict):
                 raise ValueError(f"artifact_mapping:{name}")
             return path, doc
@@ -650,29 +730,35 @@ def sync_candidate(run_root: Path, repo_root: Path, *, apply: bool = False) -> t
                 updated[path] = yaml.safe_dump(after, allow_unicode=True, sort_keys=False, width=120).encode("utf-8")
             return hashlib.sha256(updated.get(path, original[path])).hexdigest()
 
+        _, run_doc = read("run.yml")
+        _draft_run(run_doc, run_root.name)
+        normalized = git.normalize_packet(git.load_yaml_text(
+            owner._scope_blob(repo_root, head, run_doc.get("task_packet_ref"), git).decode("utf-8")))
+        packet = normalized.body
+        branch = git.git(repo_root, "symbolic-ref", "HEAD").decode().strip()
+        if (normalized.source_format != "wrapped_v1" or packet["task_id"] != run_doc.get("task_id")
+                or not owner._scope_path(packet["branch"]) or packet["branch"] in {"master", "main"}
+                or branch != f"refs/heads/{packet['branch']}"):
+            raise ValueError("draft_task_scope_mismatch")
+        git.git(repo_root, "merge-base", "--is-ancestor", packet["exact_base_sha"], head)
+        allowed = packet["allowed_changed_paths"]
+        if not all(owner._scope_path(path, pattern=True) for path in allowed):
+            raise ValueError("invalid_candidate_allowlist")
         manifest_path, manifest = read("manifest.yml")
-        if manifest.get("schema_version") != "citystate.workflow.run_manifest.v1" or (
-            manifest.get("workflow_id"), manifest.get("workflow_version")
-        ) != (EXPECTED_WORKFLOW_ID, 1) or not manifest.get("run_id"):
-            raise ValueError("manifest_identity")
-        entries = manifest["artifacts"]
-        stage_ids = [entry["stage_id"] for entry in entries]
-        if not stage_ids or stage_ids != EXPECTED_STAGE_IDS[:len(stage_ids)]:
-            raise ValueError("manifest_stage_order")
+        entries = _draft_manifest_entries(manifest, run_root.name)
+        for path in [manifest_path.name, *(entry["path"] for entry in entries)]:
+            if not owner._scope_path(path) or "/" in path or not owner._scope_allowed(f"{relative}/{path}", allowed):
+                raise ValueError(f"candidate_path_not_authorized:{path}")
+        floors = _draft_version_floors(repo_root, head, relative, run_root.name, owner, git, schemas)
         bindings = {}
         for entry in entries:
             sid = entry["stage_id"]
             path, artifact = read(entry["path"])
             version = artifact["artifact_version"]
-            if (artifact.get("schema_version"), artifact.get("run_id"), artifact.get("stage_id")) != (
-                "citystate.workflow.artifact.v1", manifest["run_id"], sid
-            ):
-                raise ValueError(f"artifact_identity:{sid}")
-            if not positive_int(version) or not positive_int(entry["artifact_version"]) or version < entry["artifact_version"]:
+            _draft_artifact(artifact, run_root.name, sid, schemas)
+            if (not positive_int(entry["artifact_version"])
+                    or version < max(entry["artifact_version"], floors.get(sid, 0))):
                 raise ValueError(f"artifact_version_regression_or_invalid:{sid}")
-            control = artifact.get("stage_control", {})
-            if not isinstance(control, dict) or {"plan_acceptance", "completion_acceptance"} & control.keys():
-                raise ValueError(f"formal_stage_control:{sid}")
             refs = artifact["input_refs"]
             if not isinstance(refs, list) or sorted(ref["stage_id"] for ref in refs) != sorted(PREDECESSORS[sid]):
                 raise ValueError(f"predecessors:{sid}")
@@ -692,8 +778,10 @@ def sync_candidate(run_root: Path, repo_root: Path, *, apply: bool = False) -> t
         )) for path, new in updated.items()]
         if not apply:
             return (1 if updated else 0), diff
-        if any(path.is_symlink() or path.resolve() != path or path.read_bytes() != data
-               for path, data in original.items()):
+        if (git.git(repo_root, "rev-parse", "HEAD").decode().strip() != head
+                or git.git(repo_root, "symbolic-ref", "HEAD").decode().strip() != branch or any(
+               path.is_symlink() or path.resolve() != path or path.read_bytes() != data
+               for path, data in original.items())):
             raise ValueError("candidate_changed_during_sync")
         # Each replacement is atomic. Manifest goes last so an interrupted run
         # cannot advertise hashes for replacements that have not yet happened.
@@ -707,7 +795,7 @@ def sync_candidate(run_root: Path, repo_root: Path, *, apply: bool = False) -> t
                 finally:
                     temporary.unlink(missing_ok=True)
         return 0, diff
-    except (OSError, ValueError, TypeError, KeyError, AttributeError, yaml.YAMLError, RuntimeError) as exc:
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, yaml.YAMLError, RuntimeError, *source_errors) as exc:
         return 33, [f"candidate_sync:{exc}"]
 
 def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:

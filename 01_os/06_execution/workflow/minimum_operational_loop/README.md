@@ -4,7 +4,9 @@
 
 `sync-candidate <draft-run-root> --repo-root <checkout>` 预览实际 unified diff，退出码 1 表示有待同步的文件。加 `--apply` 才写入。它按已有阶段顺序从实际 Artifact 字节刷新下游 `input_refs`、Manifest 哈希和版本。初次同步后再预览应返回 0 且差异为空。输入错误返回 33。
 
-此命令服务尚未进入正式接受历史的草稿目录，允许仅物化连续的前几个阶段。发现正式签收或完成记录时拒绝，原有已接受阶段的后继处理走正式失效与再确认。命令不创建 Artifact、版本、Human 确认或完成记录，也不执行 `validate`。用户编辑 Artifact 时负责确定语义版本及受影响的 Human 确认，正式门仍复核冻结、签收和历史。单文件原子替换，最后写 Manifest，重新运行可修复未完成的绑定同步。
+仅接收 canonical Run 根中的 `candidate_pending_validation` Run 和按阶段 schema 标为 `planned` 的 Artifact，允许仅物化连续的前几个阶段。Run 的 `task_packet_ref` 必须绑定当前任务分支 HEAD 中的任务包 blob，且 Manifest 与每个 Artifact 都要在该任务的 `allowed_changed_paths` 内。完整的提交祖先历史为同一 Run 的 Artifact 与 Manifest 版本提供下限。检测到正式签收、完成或已发布状态时拒绝，后继处理走正式失效与再确认。
+
+命令不创建 Artifact、版本、Human 确认或完成记录，也不执行 `validate`。用户编辑 Artifact 时负责确定语义版本及受影响的 Human 确认，正式门仍复核冻结、签收和历史。单文件原子替换，最后写 Manifest，重新运行可修复未完成的绑定同步。
 
 `run_minimum_operational_loop.py` 提供 `static`、`validate` 和 `materialize-pilot` 三个入口。
 它验证 boot、registry、七阶段 schema、上下文管理、协同推演激活状态、runtime guard、

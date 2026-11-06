@@ -419,7 +419,8 @@ def inspect(repo: Path, candidate: str, plan_path: str, attempt: Path, *, checkp
         change, gaps = checkpoint
         return {"candidate": candidate, "change": change, "tests": observed_checks,
                 "open_issues": gaps, "resume": {"plan": plan_path, "attempt": str(attempt)},
-                "status": status, "authority_effect": "none"}
+                "status": status, "evidence_scope": "attempt_internal_consistency",
+                "authority_effect": "none"}
     return expected_result
 
 
