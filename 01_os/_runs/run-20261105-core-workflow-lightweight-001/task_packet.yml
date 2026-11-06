@@ -1,0 +1,50 @@
+task_packet:
+  task_id: OS-CORE-WORKFLOW-LIGHTWEIGHT-IMPLEMENTATION-20261105-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  exact_base_sha: 08d8e534a3438269aa7d7eb1b080ab11c172f462
+  branch: task/core-workflow-lightweight-20261105
+  risk_tier: T2_semantic
+  objective: Streamline ordinary development and candidate binding maintenance while preserving formal Workflow gates.
+  source_evidence: [08d8e534a3438269aa7d7eb1b080ab11c172f462, current Human task dispatch]
+  allowed_changed_paths:
+    - 01_os/06_execution/workflow/minimum_operational_loop/**
+    - 01_os/06_execution/task_discipline/managed_verification/**
+    - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    - 01_os/01_workflow/**
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/test_task_scope_readiness.py
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/README.md
+    - 01_os/_runs/run-20261105-core-workflow-lightweight-001/**
+  verification_plan: 01_os/_runs/run-20261105-core-workflow-lightweight-001/verification_plan.json
+  required_tests: [workflow_and_authority, static, publication_history]
+  prohibitions: [master_integration, history_rewrite, weakening_formal_gates, native_or_game_access]
+  required_completion_pointer: REVIEW_HANDOFF.md
+  big_task: true
+  development_loop:
+    mode: iterative_development
+    progress_evidence: Git checkpoints and actual test results
+    convergence_condition: Requested positive and negative regressions pass
+    series_id: OS-CORE-WORKFLOW-LIGHTWEIGHT-IMPLEMENTATION-20261105-001
+    review_mode: immediate_required
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 08d8e534a3438269aa7d7eb1b080ab11c172f462
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    mode: standard
+    routing_basis: Human assigned execution to Codex
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: GPT-6
+    different_model_family: false
+    different_measurement_tool: false
