@@ -1,0 +1,180 @@
+{
+  "status": "LIVE_HOST_REA_WRITEBACK_VERIFIED",
+  "candidate_commit": "d006c3ba38e2477b7044fbf31a0f3b5479a10d14",
+  "cycle_id": "cycle-005",
+  "plan_digest": "1d7236c9c8157f8e1107f8cb76f690a887aef567d0d4b6d2887f3b7ac4126f8b",
+  "native_plan_digest": "db9f341b1a996e7fb621ed12241cbbf1908e5b91b1f4b053cf97ed68ebedd601",
+  "save_file": "MyLEAGUE0003",
+  "save_id": "nba2k22_test_01",
+  "worldline_id": "worldline-nba2k22_test_01-branch-34a775",
+  "database": "world-worldline-nba2k22_test_01-branch-34a775.sqlite",
+  "build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "role_manifest_sha256": "f77013f9c2bb3416792d85b8cedf0c3feb44ae830ec927b590a5abb68eae53d5",
+  "epoch": {
+    "pid": 8536,
+    "creation_filetime": 134383891808812670,
+    "module_base": "0x140000000",
+    "module_size": 115056640,
+    "pe_timestamp": 1652287197,
+    "game_season_year": 2022
+  },
+  "role": {
+    "actor_uid": "human:s4-operator",
+    "role_type": "GM",
+    "expires_at": "2026-11-07T09:00:00Z"
+  },
+  "target": {
+    "team_id": 28,
+    "player_id": 2459,
+    "preserved_id": 2459,
+    "name": "Damian Lillard",
+    "roster_slot": 0,
+    "field_id": "SHOT_TENDENCY",
+    "expected_before": 95,
+    "proposed_value": 96
+  },
+  "execution_exit_code": 0,
+  "host": {
+    "status": "EXECUTED_AND_READBACK_RECORDED",
+    "cycle_id": "cycle-005",
+    "plan_digest": "1d7236c9c8157f8e1107f8cb76f690a887aef567d0d4b6d2887f3b7ac4126f8b",
+    "elapsed_seconds": 6.9707,
+    "executed_count": 1,
+    "success_count": 1,
+    "noop_count": 0,
+    "failure_count": 0,
+    "readback_verified": true,
+    "batch_validation_passed": true,
+    "readback_details": [
+      {
+        "intent_id": "s4-lillard-2459-shot-tendency-01-0",
+        "player_id": 2459,
+        "team_id": 28,
+        "field_id": "SHOT_TENDENCY",
+        "expected_before": 95,
+        "target_value": 96,
+        "observed_after": 96,
+        "matched": true,
+        "read_timestamp": "2026-11-06T09:20:32.080166+00:00",
+        "source": "NBA2K22_POST_EXECUTION_MEMORY"
+      }
+    ]
+  },
+  "native_call_stages": [
+    {
+      "kind": "native-call-stage",
+      "action_id": "MULTI_CHUNK_BOUNDED_SESSION",
+      "binding_id": "player.get_stat_ui",
+      "stage": "STARTED",
+      "call_number": 1
+    },
+    {
+      "kind": "native-call-stage",
+      "action_id": "MULTI_CHUNK_BOUNDED_SESSION",
+      "binding_id": "player.get_stat_ui",
+      "stage": "RETURNED",
+      "call_number": 1,
+      "result": 95
+    },
+    {
+      "kind": "native-call-stage",
+      "action_id": "MULTI_CHUNK_BOUNDED_SESSION",
+      "binding_id": "player.set_stat_ui",
+      "stage": "STARTED",
+      "call_number": 2
+    },
+    {
+      "kind": "native-call-stage",
+      "action_id": "MULTI_CHUNK_BOUNDED_SESSION",
+      "binding_id": "player.set_stat_ui",
+      "stage": "RETURNED",
+      "call_number": 2,
+      "result": null
+    },
+    {
+      "kind": "native-call-stage",
+      "action_id": "MULTI_CHUNK_BOUNDED_SESSION",
+      "binding_id": "player.get_stat_ui",
+      "stage": "STARTED",
+      "call_number": 3
+    },
+    {
+      "kind": "native-call-stage",
+      "action_id": "MULTI_CHUNK_BOUNDED_SESSION",
+      "binding_id": "player.get_stat_ui",
+      "stage": "RETURNED",
+      "call_number": 3,
+      "result": 96
+    }
+  ],
+  "verified_setter_count": 1,
+  "execution_journal_item": {
+    "chunk_id": "chunk-0001-team-28-player-patch-tendencies",
+    "execution_evidence_id": "ev_570e17071b9d895c2009a4e09ef69fe830ec6b485aba2951dacae1fefaaaad46",
+    "expected_before": 95,
+    "field_id": "SHOT_TENDENCY",
+    "getter_after": 96,
+    "getter_before": 95,
+    "intent_id": "s4-lillard-2459-shot-tendency-01-0",
+    "outcome": "SUCCESS_APPLIED",
+    "player_id": 2459,
+    "raw_after": 96,
+    "reason": null,
+    "requested": 96,
+    "reused_historical_receipt": false,
+    "team_id": 28,
+    "timestamp": "2026-11-06T09:20:31Z",
+    "unaltered_fields_check": true
+  },
+  "validation": {
+    "checks": {
+      "conservation_holds": true,
+      "expected_chunk_count": 1,
+      "missing_intents_count": 0,
+      "native_transport_evidence_verified": true,
+      "outcomes_breakdown": {
+        "SUCCESS_APPLIED": 1
+      },
+      "plan_digest_verified": true,
+      "planned_intent_count": 1,
+      "raw_chunk_messages_count": 1,
+      "raw_evidence_is_reconstructed": false,
+      "readback_all_persisted": true,
+      "readback_evaluated": true,
+      "readback_missed_count": 0,
+      "receipt_count": 1,
+      "recomputed_plan_digest": "db9f341b1a996e7fb621ed12241cbbf1908e5b91b1f4b053cf97ed68ebedd601",
+      "unexpected_intents_count": 0,
+      "unknown_count": 0
+    },
+    "errors": [],
+    "schema_version": "nba2k22.rea.generic_batch_validation.v1",
+    "validation_passed": true
+  },
+  "outbox": {
+    "cycle_status": "COMPLETED",
+    "items": [
+      {
+        "intent_id": "s4-lillard-2459-shot-tendency-01",
+        "status": "SUCCESS",
+        "reason": "OK"
+      }
+    ],
+    "execution_claim_count": 1
+  },
+  "host_state": "WAITING_CALENDAR_ADVANCE",
+  "disk_save_sha256_before": "07472695a83d6ae42ca696c734dd6a062825212f6d79260701bf1b22a1936a24",
+  "disk_save_sha256_after": "07472695a83d6ae42ca696c734dd6a062825212f6d79260701bf1b22a1936a24",
+  "wall_seconds": 9.766,
+  "private_original_sha256": {
+    "result": "21eceb0128bc3d9958c858bd2c97efe8cd1aded534c22164924dee07bebe3507",
+    "plan": "451225d6ddc5be0ec3baa45c830bcd68578079aecd65fca9249dcf659a8a2383",
+    "approval": "e1a993504be09f5454106c4cc2afaea1efcf275cea6e0990cb9837b915de95f1",
+    "roleApproval": "5d21b3a186198c5d0403fd2a08a6a749ae47935df404560a58ab7097b5816ef4",
+    "rea": "da3d3b315a31ac0958ce702005d511f1d6dceed955545af486633f4c961965c3",
+    "validation": "e3f4f4bdd51c025c32bc6d53a1851cb1d16aa6c44605407fdbb2dc786df150b6",
+    "getter": "2a3b4edfa1bcec4679bb01dc432c21cf42880abed7c3906851e2b063214efdb1",
+    "journal": "eb1c24456dd23c892bfe49126f71de4649b7ed9ca03a6185b443cd08251a2204"
+  },
+  "scope": "Live process memory only. Reload persistence and gameplay effects are not verified."
+}
