@@ -1,0 +1,31 @@
+task_packet:
+  task_id: OS-CORE-HUMAN-TASK-DECISION-COMPARISON-20261105-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  exact_base_sha: 2a488127db7e77545e23de8b8bc5e05a8f8d1df8
+  branch: task/core-human-task-decision-comparison-20261105
+  risk_tier: T2_semantic
+  objective: Add risk-proportionate pre-approval implementation comparison to the existing task decision and confirmation rules.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/16
+  allowed_changed_paths:
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/_runs/run-20261105-human-task-decision-comparison-001/**
+  verification_plan: 01_os/_runs/run-20261105-human-task-decision-comparison-001/verification_plan.json
+  required_tests: [contract_scope, workflow_static]
+  prohibitions: [new_approval_mechanism, change_workflow_gates, change_native_rea_or_prms, bypass_protected_integration]
+  required_completion_pointer: REVIEW_HANDOFF.md
+  big_task: false
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 2a488127db7e77545e23de8b8bc5e05a8f8d1df8
+  executor_profile:
+    provider: Codex
+    mode: standard
+    routing_basis: Issue 16 and current Human dispatch assign execution to Codex
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: Human-assigned isolated reviewer
