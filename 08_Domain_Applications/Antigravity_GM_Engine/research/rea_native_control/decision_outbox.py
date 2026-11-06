@@ -618,6 +618,46 @@ class DecisionOutbox:
 
         return sealed_batch
 
+    def claim_execution(self, cycle_id: str, plan_digest: str) -> None:
+        """Reserve a sealed cycle once before dispatch, including across Host restarts."""
+        with self._get_connection() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            cycle = conn.execute(
+                "SELECT status, revision, context_json FROM decision_cycles WHERE cycle_id = ?", (cycle_id,)
+            ).fetchone()
+            if not cycle or cycle["status"] != "SEALED":
+                raise ValueError("EXECUTION_CLAIM_REQUIRES_SEALED_CYCLE")
+            prior = conn.execute(
+                "SELECT 1 FROM outbox_events WHERE cycle_id = ? AND event_type = 'EXECUTION_CLAIMED'",
+                (cycle_id,),
+            ).fetchone()
+            if prior:
+                raise ValueError("EXECUTION_ALREADY_CLAIMED_NO_REPLAY")
+            context = json.loads(cycle["context_json"])
+            conflict = conn.execute("""
+                SELECT 1
+                  FROM decision_intents next
+                  JOIN decision_intents prior USING(target_resource_key)
+                  JOIN decision_cycles old ON old.cycle_id = prior.cycle_id
+                 WHERE next.cycle_id = ? AND old.cycle_id != next.cycle_id
+                   AND json_extract(old.context_json, '$.world_id') = ?
+                   AND json_extract(old.context_json, '$.save_instance_id') = ?
+                   AND (prior.status = 'UNKNOWN' OR (old.status = 'SEALED' AND EXISTS (
+                       SELECT 1 FROM outbox_events e
+                        WHERE e.cycle_id = old.cycle_id AND e.event_type = 'EXECUTION_CLAIMED'
+                   )))
+                 LIMIT 1
+            """, (cycle_id, context["world_id"], context["save_instance_id"])).fetchone()
+            if conflict:
+                raise ValueError("EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM")
+            conn.execute("""
+                INSERT INTO outbox_events
+                    (cycle_id, event_type, prev_state, new_state, revision, payload_json, timestamp)
+                VALUES (?, 'EXECUTION_CLAIMED', 'SEALED', 'SEALED', ?, ?, ?)
+            """, (cycle_id, cycle["revision"], json.dumps({"plan_digest": plan_digest}),
+                  time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())))
+            conn.commit()
+
     def record_execution_receipts(
         self,
         cycle_id: str,
@@ -679,7 +719,7 @@ class DecisionOutbox:
                 reason = r.get("reason", "")
 
                 # Map outcome
-                if outcome in ("SUCCESS", "SUCCESS_APPLIED"):
+                if outcome in ("SUCCESS", "SUCCESS_APPLIED", "VERIFIED_SUCCESS"):
                     status = "SUCCESS"
                 elif outcome in ("UNCHANGED_ALREADY_TARGET", "NOOP", "REUSED_HISTORICAL_RECEIPT"):
                     status = "NOOP"

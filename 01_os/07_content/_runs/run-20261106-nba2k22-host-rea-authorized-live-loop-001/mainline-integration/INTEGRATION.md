@@ -1,0 +1,11 @@
+# S4 mainline integration candidate
+
+Issue #33 fixes the scope. Base `20ff460792bdf0b44b21f8c8422bc6a2a74a0996`, immutable S4 delivery `27588b82b7ce24cd0a6985abef8161a6afc9351d`, live execution code `d006c3ba38e2477b7044fbf31a0f3b5479a10d14`. This branch starts at master and selectively applies five code and test paths. [Source mapping](source-mapping.json) records all ten original evidence file hashes and the portable hashes of the two projections. Private approval, original REA and journal bytes, save data, and SQLite are retained only at the original evidence boundary.
+
+The source version accepted any nonempty live batch authorization reference. The integration requires an operator-pinned private receipt and binds its exact bytes to the cycle, Host and Native plan digests, role/context, exact targets, and validity window. Live dispatch also repeats the sealed actor/team/player scope check. The reference now serves as an audit label. The operator remains the trust boundary for obtaining both pins from the genuine Human approvals. Hash comparison does not authenticate an operator who controls all local inputs.
+
+The historical S4 evidence covers one running-memory mutation of UID 2459 on team 28, SHOT_TENDENCY 95→96, one Setter call, fresh Getter 96 and completed Outbox. The disk file hash matched across that operation. This integration did not repeat the mutation, advance the calendar, or install a new live grant. Reload persistence and game effects are unverified.
+
+`NATIVE_SETTER_SCOPE` is the existing `PLAYER_PATCH_TENDENCIES / SHOT_TENDENCY` Host capability, 1–3 distinct players on one approved team, with independent approval of each exact batch. The historical successful single item predates the integration hardening and is not evidence that the new receipt path ran live.
+
+[Verification plan](verification-plan.json) defines the exact offline checks. [Portable historical closeout](portable-live-closeout.json) and [read-only preflight projection](portable-preflight.json) are derived views. The PR body binds the independent review endpoint to the exact candidate, base and source. Protected integration requires current independent admission and the applicable Human confirmation.

@@ -37,6 +37,7 @@ from bulk_executor import (
     BulkBatchPlanner,
     ExecutionJournal,
     ItemReceipt,
+    atomic_write_json,
     sha256_digest,
     canonical_encode
 )
@@ -59,6 +60,7 @@ from role_batches import (
 from role_capabilities import RoleCapabilityProfile, RoleCapabilityService
 from schema_model import VERSION
 from validate_batch_execution import validate_batch_execution
+from transport import LiveExecutionContext
 
 
 def parse_team_numeric_id(raw_val: Any) -> Optional[int]:
@@ -563,7 +565,9 @@ class SeasonCycleHost:
         workspace_root: Optional[Path] = None,
         state_file: Optional[Path] = None,
         ledger_file: Optional[Path] = None,
-        outbox_db: Optional[Path] = None
+        outbox_db: Optional[Path] = None,
+        *,
+        approved_role_manifest_sha256: Optional[str] = None,
     ):
         self.workspace_root = Path(workspace_root).resolve() if workspace_root else _DIR.parents[3]
         self.state_file = Path(state_file).resolve() if state_file else _DIR / "runtime/season_host_state.json"
@@ -578,6 +582,7 @@ class SeasonCycleHost:
         self.bridge = DecisionBatchBridge(self.capability_service)
         self.outbox = DecisionOutbox(self.outbox_db, capability_service=self.capability_service)
         self.role_registry = TrustedRoleRegistry()
+        self.approved_role_manifest_sha256 = approved_role_manifest_sha256
 
         self.state: Dict[str, Any] = self._load_state()
 
@@ -612,6 +617,53 @@ class SeasonCycleHost:
         record["recorded_at"] = datetime.now(timezone.utc).isoformat()
         with open(self.ledger_file, "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+    def _approved_live_context(self, pid: int) -> Dict[str, Any]:
+        """Recheck the operator-pinned, bounded delegation and current process/binding."""
+        from refresh import _context
+
+        save_dir = Path(self.state["save_directory"])
+        db = Path(self.state["database_file"])
+        manifest_file = save_dir / "role_authorizations.json"
+        if not self.approved_role_manifest_sha256 or not manifest_file.is_file():
+            raise ValueError("AUTHORIZATION_PENDING_HUMAN: require the operator-approved role manifest hash")
+        raw = manifest_file.read_bytes()
+        digest = hashlib.sha256(raw).hexdigest()
+        if digest != self.approved_role_manifest_sha256:
+            raise ValueError("APPROVED_ROLE_MANIFEST_HASH_MISMATCH")
+        grant = json.loads(raw)
+        roles = grant.get("roles")
+        player_ids = grant.get("player_ids")
+        if (not isinstance(roles, list) or len(roles) != 1
+                or not isinstance(player_ids, list) or not 1 <= len(player_ids) <= 3
+                or any(type(pid) is not int or not 1 <= pid <= 65535 for pid in player_ids)
+                or len(set(player_ids)) != len(player_ids)
+                or grant.get("save_id") != self.state["save_id"]
+                or grant.get("worldline_id") != self.state["worldline_id"]
+                or grant.get("bound_database_file") != db.name
+                or grant.get("authorized_worldlines") or grant.get("authorized_databases")
+                or grant.get("allow_wildcard_scope")
+                or grant.get("action_id") != "PLAYER_PATCH_TENDENCIES"
+                or grant.get("field_id") != "SHOT_TENDENCY"
+                or not grant.get("human_authorization_ref")):
+            raise ValueError("LIVE_DELEGATION_SCOPE_INVALID")
+        now = datetime.now(timezone.utc)
+        if not datetime.fromisoformat(grant["authorized_at"]) <= now < datetime.fromisoformat(grant["expires_at"]):
+            raise ValueError("LIVE_DELEGATION_OUTSIDE_APPROVED_TIME")
+        binding, binding_sha = read_binding(save_dir, self.state["loaded_filename"])
+        if (binding.get("save_id") != self.state["save_id"] or binding.get("worldline_id") != self.state["worldline_id"]
+                or bound_database(save_dir, binding) != db.resolve()
+                or grant.get("binding_sha256") != binding_sha):
+            raise ValueError("LIVE_SAVE_BINDING_CHANGED")
+        if (not self.role_registry.bind_save_context(save_dir, self.state["save_id"], self.state["worldline_id"], db,
+                                                     is_mock=False)
+                or manifest_file.read_bytes() != raw):
+            raise ValueError("LIVE_DELEGATION_NOT_VERIFIED")
+        context = _context(pid)
+        return {"role_manifest_sha256": digest, "binding_sha256": binding_sha, "epoch": context["epoch"],
+                "game_progress": context["game_progress"], "team_id": parse_team_numeric_id(roles[0].get("team_id")),
+                "actor_uid": roles[0].get("actor_uid"), "role_type": str(roles[0].get("role_type", "")).upper(),
+                "player_ids": player_ids}
 
     def _make_context(self, cycle_id: str) -> BatchContext:
         season_id = "2021-22"
@@ -657,8 +709,15 @@ class SeasonCycleHost:
             try:
                 m, _ = collect_player_skills(reader)
                 player_tendencies = {}
+                seen = set()
                 for p in m["players"]:
                     uid = p["native_unique_id_raw"]
+                    if uid in seen:
+                        player_tendencies.pop(uid, None)
+                        continue
+                    seen.add(uid)
+                    if p["current_core_roster_status"] != "CURRENT_CORE_ROSTER":
+                        continue
                     s_idx = p["source_player_index"]
                     player_tendencies[uid] = m["skill_rows"][s_idx]["tendencies"]
 
@@ -1066,14 +1125,15 @@ class SeasonCycleHost:
         reader: Any = None
     ) -> Dict[str, Any]:
         """Initiates a cycle, verifies calendar progression, triggers capture, and registers draft intents."""
-        use_baseline = self.state["status"] == HostState.BASELINE_CAPTURED and not force
+        reuse_next_capture = self.state["status"] == HostState.NEXT_CAPTURED and bool(candidate_intents)
+        use_baseline = (self.state["status"] == HostState.BASELINE_CAPTURED or reuse_next_capture) and not force
         if self.state["status"] not in (
             HostState.BASELINE_CAPTURED,
             HostState.EXECUTED_AND_READBACK,
             HostState.NEXT_CAPTURED,
             HostState.WAITING_CALENDAR_ADVANCE
         ):
-            if not force:
+            if not force or (not self.state.get("is_offline_mock") and mock_game_date is None):
                 raise ValueError(f"Cannot start cycle from state: {self.state['status']}")
 
         save_dir = Path(self.state["save_directory"])
@@ -1166,12 +1226,16 @@ class SeasonCycleHost:
                     if cap_res.get("status") in ("REJECTED_GAME_IN_PROGRESS", "FAILED", "REFRESH_FAILED_FAIL_CLOSED", "SQL_VERIFICATION_FAILED_FAIL_CLOSED"):
                         raise RuntimeError(f"INCREMENTAL_CAPTURE_FAILED: {cap_res}")
 
-                progress_status = "INITIAL_BASELINE_REUSED" if use_baseline else prog.get("status", "DATE_ADVANCED")
+                progress_status = prog.get("status", "DATE_ADVANCED")
+                if use_baseline:
+                    progress_status = "NEXT_CAPTURE_REUSED" if reuse_next_capture else "INITIAL_BASELINE_REUSED"
             finally:
                 if should_close_reader and hasattr(live_reader_instance, "close"):
                     live_reader_instance.close()
 
         # Open Outbox for cycle with BatchContext
+        if not is_mock and candidate_intents:
+            self._approved_live_context(actual_pid)
         ctx = self._make_context(cycle_id)
         gm_profile, coach_profile = self._make_profiles(ctx)
         phase_grants = self.role_registry.get_phase_grants()
@@ -1292,6 +1356,7 @@ class SeasonCycleHost:
         is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
         draft_intent_dicts = self.outbox.list_intents(cycle_id, status="DRAFT")
         live_no_change = not is_mock and not self.outbox.list_intents(cycle_id)
+        live_context = None
         if not is_mock and not live_no_change:
             # LIVE MODE: Mandatory real-time Getter and dynamic PID
             if getter_func is None:
@@ -1317,6 +1382,8 @@ class SeasonCycleHost:
             if expected_pid is None:
                 expected_pid = 5720
 
+        if not is_mock and not live_no_change:
+            live_context = self._approved_live_context(expected_pid)
         ctx = self._make_context(cycle_id)
         gm_profile, coach_profile = self._make_profiles(ctx)
         profiles = (gm_profile, coach_profile)
@@ -1466,6 +1533,16 @@ class SeasonCycleHost:
 
         unsupported_count = len(bridge_res.unsupported_intents)
 
+        native_plan_digest = plan_digest
+        if live_context:
+            if (not 1 <= executable_count <= 3 or unsupported_count or len(sealed_batch.intents) != executable_count
+                    or any(i.issuer_uid != live_context["actor_uid"] for i in sealed_batch.intents)
+                    or any(i.team_id != live_context["team_id"] or i.action_id != "PLAYER_PATCH_TENDENCIES"
+                           or i.field_id != "SHOT_TENDENCY" or i.player_id not in live_context["player_ids"]
+                           for i in bridge_res.bulk_batch.intents)):
+                raise ValueError("LIVE_SCOPE_VIOLATION: sealed batch exceeds the approved S4 delegation")
+            plan_digest = sha256_digest({"native_plan_digest": native_plan_digest, "live_context": live_context})
+
         self.state.update({
             "status": HostState.WAITING_HUMAN_EXECUTION_AUTH,
             "active_plan": {
@@ -1473,6 +1550,7 @@ class SeasonCycleHost:
                 "plan_digest": plan_digest,
                 "executable_count": executable_count,
                 "unsupported_count": unsupported_count,
+                "live_context": live_context,
                 "sealed_at": datetime.now(timezone.utc).isoformat()
             }
         })
@@ -1487,6 +1565,9 @@ class SeasonCycleHost:
             "unsupported_details": [u.get("reason") for u in bridge_res.unsupported_intents],
             "next_required_step": f"Authorize with exact plan_digest: '{plan_digest}'"
         }
+        if live_context:
+            result.update(live_context=live_context, native_plan_digest=native_plan_digest,
+                          items=[asdict(i) for i in bridge_res.bulk_batch.intents])
         self._append_ledger({"action": "SEAL_CYCLE", **result})
         return result
 
@@ -1497,23 +1578,28 @@ class SeasonCycleHost:
         transport: Optional[Any] = None,
         journal_dir: Optional[Path] = None,
         getter_after_func: Optional[Any] = None,
-        expected_pid: Optional[int] = None
+        expected_pid: Optional[int] = None,
+        *,
+        live_batch_approval: Optional[Path] = None,
+        approved_live_batch_sha256: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Strictly verifies authorization digest, executes batch, verifies readback, and backfills Outbox (Gate G07)."""
         if self.state["status"] not in (HostState.WAITING_HUMAN_EXECUTION_AUTH, HostState.DECISION_SEALED):
             raise ValueError(f"Host not in awaiting authorization state (current: {self.state['status']})")
 
         active_plan = self.state.get("active_plan")
-        if not active_plan or active_plan.get("plan_digest") != plan_digest:
+        if (not active_plan or active_plan.get("cycle_id") != cycle_id
+                or active_plan.get("plan_digest") != plan_digest):
             raise ValueError(f"DIGEST_MISMATCH_AUTHORIZATION_DENIED: provided '{plan_digest}' != sealed '{active_plan.get('plan_digest') if active_plan else None}'")
 
-        if not self.role_registry.is_authorized:
+        is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
+        if is_mock and not self.role_registry.is_authorized:
             raise ValueError(
                 f"ROLE_AUTHORIZATION_REQUIRED: Active save has no verified role authorizations "
                 f"(status: {self.role_registry.authorization_status}). Execution aborted fail-closed."
             )
 
-        is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
+        live_context = None
         if is_mock:
             if transport is None:
                 raise RuntimeError(
@@ -1534,18 +1620,24 @@ class SeasonCycleHost:
                 actual_pid = resolve_pid("auto")
             except Exception as e:
                 raise RuntimeError(f"LIVE_PROCESS_NOT_FOUND: NBA2K22.exe is not running ({e})")
+            if expected_pid is not None and actual_pid != expected_pid:
+                raise RuntimeError("LIVE_PROCESS_CHANGED_SINCE_APPROVAL")
             expected_pid = actual_pid
+            live_context = self._approved_live_context(expected_pid)
+            if live_context != active_plan.get("live_context"):
+                raise RuntimeError("LIVE_CONTEXT_CHANGED_SINCE_APPROVAL")
+            if live_batch_approval is None or not approved_live_batch_sha256:
+                raise ValueError("EXACT_LIVE_BATCH_AUTHORIZATION_REQUIRED")
 
         if expected_pid is None:
             expected_pid = 5720
 
         j_dir = Path(journal_dir) if journal_dir else (self.state_file.parent / "journals" / cycle_id)
         r_dir = j_dir / "runtime"
-        j_dir.mkdir(parents=True, exist_ok=True)
-        r_dir.mkdir(parents=True, exist_ok=True)
-
         # 1. No-change cycle handling
         if active_plan.get("executable_count", 0) == 0:
+            if active_plan.get("unsupported_count", 0):
+                raise ValueError("UNSUPPORTED_INTENTS_CANNOT_COMPLETE_AS_NO_CHANGE")
             self.state["status"] = HostState.WAITING_CALENDAR_ADVANCE
             self.state["active_plan"] = None
             self._save_state()
@@ -1576,7 +1668,8 @@ class SeasonCycleHost:
             expected_pid=expected_pid
         )
         bulk_batch = bridge_res.bulk_batch
-        assert bulk_batch is not None, "bulk_batch must exist for executable plan"
+        if bulk_batch is None:
+            raise ValueError("SEALED_EXECUTABLE_BATCH_MISSING")
 
         # Enforce certified live scope allowlist (P0-C)
         if not is_mock:
@@ -1587,13 +1680,99 @@ class SeasonCycleHost:
                     raise ValueError(f"LIVE_SCOPE_VIOLATION: action '{it.action_id}' is not in certified live allowlist (PLAYER_PATCH_TENDENCIES only)")
                 if fid != "SHOT_TENDENCY":
                     raise ValueError(f"LIVE_SCOPE_VIOLATION: field '{it.field_id}' is not in certified live allowlist (SHOT_TENDENCY only)")
+            if (not 1 <= len(bulk_batch.intents) <= 3
+                    or len({it.player_id for it in bulk_batch.intents}) != len(bulk_batch.intents)
+                    or any(it.team_id != live_context["team_id"] or it.player_id not in live_context["player_ids"]
+                           for it in bulk_batch.intents)
+                    or any(it.issuer_uid != live_context["actor_uid"] for it in sealed_batch.intents)
+                    or len(sealed_batch.intents) != len(bulk_batch.intents)
+                    or bridge_res.unsupported_intents):
+                raise ValueError("LIVE_SCOPE_VIOLATION: require 1–3 fully bridged single-team intents")
+        rebuilt_digest = bulk_batch.plan_digest
+        if live_context:
+            rebuilt_digest = sha256_digest({"native_plan_digest": rebuilt_digest, "live_context": live_context})
+        if (rebuilt_digest != plan_digest or len(bulk_batch.intents) != active_plan["executable_count"]
+                or len(bridge_res.unsupported_intents) != active_plan["unsupported_count"]):
+            raise ValueError("REBUILT_BATCH_DOES_NOT_MATCH_APPROVED_PLAN")
+        if live_context:
+            live_batch_authorization_ref = self._verify_live_batch_approval(
+                live_batch_approval, approved_live_batch_sha256, cycle_id, plan_digest, bulk_batch, live_context
+            )
+            getter_before = self._get_fresh_live_getter(expected_pid=expected_pid)
+            if getter_before is None or any(
+                getter_before(item.player_id, item.field_id) != item.expected_before for item in bulk_batch.intents
+            ):
+                raise RuntimeError("LIVE_CAS_CHANGED_SINCE_APPROVAL")
+            if self._approved_live_context(expected_pid) != live_context:
+                raise RuntimeError("LIVE_CONTEXT_CHANGED_DURING_CAS")
 
         # 3. Execute via BoundedSessionExecutor
+        native_context = None
+        verifier = None
+        j_dir.mkdir(parents=True, exist_ok=True)
+        r_dir.mkdir(parents=True, exist_ok=True)
+        if live_context:
+            native_context = LiveExecutionContext(
+                authorization_ref=live_batch_authorization_ref,
+                allowed_action_ids=frozenset({"PLAYER_PATCH_TENDENCIES", "MULTI_CHUNK_BOUNDED_SESSION"}),
+                maximum_game_calls=500,
+                enabled=True,
+                expected_pid=expected_pid,
+            )
+            verifier = {"game_build_sha256": contracts.BUILD, "plan_digest": bulk_batch.plan_digest}
         executor = BoundedSessionExecutor(
             journal_dir=j_dir,
             runtime_dir=r_dir,
-            fake_runner=transport if transport else None
+            fake_runner=transport,
+            live_context=native_context,
+            verifier=verifier,
         )
+        self.outbox.claim_execution(cycle_id, plan_digest)
+        self.state["status"] = HostState.UNKNOWN_LOCKED
+        self._save_state()
+        try:
+            return self._execute_claimed(cycle_id, plan_digest, bulk_batch, bridge_res, executor,
+                                         r_dir, is_mock, expected_pid, getter_after_func, live_context)
+        except Exception as exc:
+            cycle = self.outbox.get_cycle(cycle_id)
+            if cycle and cycle["status"] == "SEALED":
+                uncertain = [{"intent_id": row["intent_id"], "outcome": "UNKNOWN_EXECUTION_OUTCOME",
+                              "reason": f"Execution or verification interrupted: {type(exc).__name__}"}
+                             for row in self.outbox.list_intents(cycle_id, status="SEALED")]
+                self.outbox.record_execution_receipts(cycle_id, uncertain, evidence_ref=f"evidence-{cycle_id}")
+            raise
+
+    @staticmethod
+    def _verify_live_batch_approval(path, approved_sha, cycle_id, plan_digest, batch, context):
+        """Check the private receipt against a digest provided by the Human operator.
+
+        The caller supplies the trusted pin out of band. This checks exact bytes and
+        scope; it does not authenticate a Human from a self-declared reference.
+        """
+        raw = Path(path).read_bytes()
+        if hashlib.sha256(raw).hexdigest() != approved_sha:
+            raise ValueError("LIVE_BATCH_APPROVAL_HASH_MISMATCH")
+        approval = json.loads(raw)
+        expected = {
+            "schema_version": "nba2k22.s4.batch_approval.v1",
+            "cycle_id": cycle_id,
+            "plan_digest": plan_digest,
+            "native_plan_digest": batch.plan_digest,
+            "live_context": context,
+            "items": json.loads(canonical_encode([asdict(item) for item in batch.intents])),
+        }
+        if canonical_encode({key: approval.get(key) for key in expected}) != canonical_encode(expected):
+            raise ValueError("LIVE_BATCH_APPROVAL_SCOPE_MISMATCH")
+        ref = approval.get("approval_ref")
+        if not isinstance(ref, str) or not ref.strip():
+            raise ValueError("LIVE_BATCH_APPROVAL_REFERENCE_MISSING")
+        now = datetime.now(timezone.utc)
+        if not datetime.fromisoformat(approval["approved_at"]) <= now < datetime.fromisoformat(approval["expires_at"]):
+            raise ValueError("LIVE_BATCH_APPROVAL_OUTSIDE_APPROVED_TIME")
+        return ref
+
+    def _execute_claimed(self, cycle_id, plan_digest, bulk_batch, bridge_res, executor,
+                         r_dir, is_mock, expected_pid, getter_after_func, live_context):
         t0 = time.perf_counter()
         session_summary = executor.execute_batch(bulk_batch, max_chunk_size=50)
         elapsed_s = time.perf_counter() - t0
@@ -1606,8 +1785,8 @@ class SeasonCycleHost:
             fresh_getter_func = getter_after_func
         else:
             fresh_getter_func = self._get_fresh_live_getter(expected_pid=expected_pid)
-            if fresh_getter_func is None:
-                raise RuntimeError("LIVE_POST_RUN_GETTER_FAILED: Could not establish fresh connection to read back post-execution memory.")
+            if self._approved_live_context(expected_pid) != live_context:
+                raise RuntimeError("LIVE_CONTEXT_CHANGED_DURING_EXECUTION")
 
         readback_passed = True
         readback_details = []
@@ -1628,7 +1807,7 @@ class SeasonCycleHost:
                     "observed_after": observed_after,
                     "matched": matched,
                     "read_timestamp": fresh_timestamp,
-                    "source": "NBA2K22_POST_EXECUTION_MEMORY"
+                    "source": "OFFLINE_FIXTURE" if is_mock else "NBA2K22_POST_EXECUTION_MEMORY"
                 })
                 if not matched:
                     readback_passed = False
@@ -1657,7 +1836,8 @@ class SeasonCycleHost:
 
         # Retrieve authentic raw Native REA messages from runtime directory (evidence.json)
         genuine_raw_messages: List[Dict[str, Any]] = []
-        for ev_path in r_dir.glob("*/evidence.json"):
+        evidence_paths = list(r_dir.glob("*/evidence.json"))
+        for ev_path in evidence_paths:
             try:
                 ev_data = json.loads(ev_path.read_text(encoding="utf-8-sig"))
                 genuine_raw_messages.extend(ev_data.get("normalized_result", {}).get("messages", []))
@@ -1686,7 +1866,20 @@ class SeasonCycleHost:
             independent_readback=independent_readback_report,
             require_native_transport_evidence=require_native_transport
         )
-        batch_validation_passed = validation_res.get("validation_passed", False)
+        if not is_mock:
+            errors = validation_res["errors"]
+            if len(evidence_paths) != 1 or session_summary.get("frida_attach_count") != 1:
+                errors.append("Expected one fresh REA evidence envelope and one attachment")
+            else:
+                target = json.loads(evidence_paths[0].with_name("target.json").read_text(encoding="utf-8-sig"))
+                if target.get("pid") != expected_pid or target.get("exe_sha256") != contracts.BUILD:
+                    errors.append("REA target PID or executable build does not match the approved plan")
+            self._check_live_journal(executor.journal, bulk_batch, planned_chunks, genuine_raw_messages,
+                                     journal_receipts, errors)
+            validation_res["validation_passed"] = not errors
+        batch_validation_passed = validation_res.get("validation_passed") is True
+        atomic_write_json(r_dir / "independent-readback.json", independent_readback_report)
+        atomic_write_json(r_dir / "batch-validation.json", validation_res)
 
         # 6. Map receipts back to Outbox (Gate G07)
         outbox_receipts = self.bridge.map_receipts_to_outbox(journal_receipts, bridge_res)
@@ -1696,19 +1889,26 @@ class SeasonCycleHost:
             or session_summary.get("metrics", {}).get("num_unknown", 0) > 0
         )
 
-        if not readback_passed or not batch_validation_passed:
-            readback_map = {d["intent_id"]: d["matched"] for d in readback_details}
-            for obr in outbox_receipts:
-                iid = obr.get("intent_id")
-                if iid in readback_map and not readback_map[iid]:
-                    if "UNKNOWN" not in str(obr.get("outcome", "")).upper():
-                        obr["outcome"] = "READBACK_MISMATCH_FAILED"
-                        obr["reason"] = "Independent readback observed value does not match target"
-
-        if batch_validation_passed and readback_passed and not has_unknown:
-            for obr in outbox_receipts:
-                if obr.get("outcome") in ("SUCCESS", "SUCCESS_APPLIED"):
-                    obr["outcome"] = "VERIFIED_SUCCESS"
+        successful_outcomes = {"SUCCESS", "SUCCESS_APPLIED", "VERIFIED_SUCCESS",
+                               "UNCHANGED_ALREADY_TARGET", "NOOP", "REUSED_HISTORICAL_RECEIPT"}
+        all_reconciled = (
+            batch_validation_passed and readback_passed and not has_unknown
+            and all(obr.get("outcome") in successful_outcomes for obr in outbox_receipts)
+        )
+        for obr in outbox_receipts:
+            if not is_mock and not batch_validation_passed:
+                obr["outcome"] = "UNKNOWN_UNVERIFIED_EXECUTION"
+                obr["reason"] = "Live batch evidence is incomplete or invalid"
+                has_unknown = True
+                continue
+            if obr.get("outcome") not in successful_outcomes:
+                continue
+            if not all_reconciled:
+                obr["outcome"] = "UNVERIFIED_EXECUTION_FAILED" if is_mock else "UNKNOWN_UNVERIFIED_EXECUTION"
+                obr["reason"] = "Batch evidence or fresh readback did not establish verified completion"
+                has_unknown = has_unknown or not is_mock
+            elif obr["outcome"] in ("SUCCESS", "SUCCESS_APPLIED"):
+                obr["outcome"] = "VERIFIED_SUCCESS"
 
         # Record execution receipts into Outbox DB
         self.outbox.record_execution_receipts(
@@ -1734,11 +1934,12 @@ class SeasonCycleHost:
             self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **summary})
             return summary
 
-        if not readback_passed or not batch_validation_passed:
+        if not all_reconciled:
             self.state["status"] = HostState.STOPPED_PARTIAL
             self._save_state()
             summary = {
-                "status": "STOPPED_READBACK_FAILED" if not readback_passed else "STOPPED_VALIDATION_FAILED",
+                "status": ("STOPPED_READBACK_FAILED" if not readback_passed else
+                           "STOPPED_VALIDATION_FAILED" if not batch_validation_passed else "STOPPED_PARTIAL"),
                 "cycle_id": cycle_id,
                 "plan_digest": plan_digest,
                 "elapsed_seconds": round(elapsed_s, 4),
@@ -1752,7 +1953,7 @@ class SeasonCycleHost:
             return summary
 
         success_count = sum(1 for r in outbox_receipts if r.get("outcome") in ("SUCCESS", "SUCCESS_APPLIED", "VERIFIED_SUCCESS"))
-        failure_count = sum(1 for r in outbox_receipts if r.get("outcome") not in ("SUCCESS", "SUCCESS_APPLIED", "VERIFIED_SUCCESS"))
+        noop_count = len(outbox_receipts) - success_count
 
         self.state.update({
             "status": HostState.WAITING_CALENDAR_ADVANCE,
@@ -1767,13 +1968,52 @@ class SeasonCycleHost:
             "elapsed_seconds": round(elapsed_s, 4),
             "executed_count": len(outbox_receipts),
             "success_count": success_count,
-            "failure_count": failure_count,
+            "noop_count": noop_count,
+            "failure_count": 0,
             "readback_verified": True,
             "batch_validation_passed": True,
             "readback_details": readback_details[:5]
         }
         self._append_ledger({"action": "AUTHORIZE_AND_EXECUTE", **result})
         return result
+
+    @staticmethod
+    def _check_live_journal(journal, batch, chunks, raw_messages, receipts, errors):
+        """Check that the single fresh REA session, its claims, and journal agree."""
+        manifest = json.loads((journal.root / f"batch_{batch.header.batch_id}.json").read_text(encoding="utf-8-sig"))
+        if (manifest.get("plan_digest") != batch.plan_digest
+                or manifest.get("header") != asdict(batch.header)
+                or manifest.get("intent_count") != len(batch.intents)):
+            errors.append("Execution journal manifest differs from the approved native batch")
+        claims = [json.loads(path.read_text(encoding="utf-8-sig")) for path in journal.claims_dir.glob("claim_*.json")]
+        claim_map = {claim.get("chunk_id"): claim for claim in claims}
+        if len(claims) != len(chunks) or set(claim_map) != {chunk.chunk_id for chunk in chunks}:
+            errors.append("Execution journal claims do not cover exactly the approved chunks")
+        for chunk in chunks:
+            claim = claim_map.get(chunk.chunk_id, {})
+            if (claim.get("state") != "COMPLETED" or claim.get("plan_digest") != batch.plan_digest
+                    or claim.get("chunk_digest") != chunk.chunk_digest
+                    or claim.get("batch_id") != batch.header.batch_id
+                    or claim.get("save_instance_id") != batch.header.save_instance_id
+                    or [(i.get("intent_id"), i.get("expected_before"), i.get("value")) for i in claim.get("intents", [])]
+                    != [(i.intent_id, i.expected_before, i.value) for i in chunk.intents]):
+                errors.append(f"Execution journal claim differs from approved chunk {chunk.chunk_id}")
+        raw_receipts = [
+            (payload.get("chunk_id"), row)
+            for msg in raw_messages
+            for payload in [msg.get("payload", msg)]
+            if payload.get("kind") == "chunk-execution-result"
+            for row in payload.get("receipts", [])
+        ]
+        raw_by_id = {row.get("intent_id"): (chunk_id, row) for chunk_id, row in raw_receipts}
+        if len(raw_receipts) != len(receipts) or len(raw_by_id) != len(receipts):
+            errors.append("Raw REA receipts do not match journal receipt count or uniqueness")
+        for item in receipts:
+            chunk_id, raw = raw_by_id.get(item.intent_id, (None, {}))
+            fields = ("team_id", "player_id", "field_id", "expected_before", "requested", "outcome",
+                      "getter_before", "getter_after", "raw_after", "unaltered_fields_check")
+            if chunk_id != item.chunk_id or any(raw.get(field) != getattr(item, field) for field in fields):
+                errors.append(f"Raw REA receipt differs from journal item {item.intent_id}")
 
     def advance_calendar_check(
         self,
