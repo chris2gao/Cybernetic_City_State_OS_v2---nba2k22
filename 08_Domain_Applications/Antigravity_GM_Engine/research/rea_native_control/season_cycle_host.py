@@ -1066,6 +1066,7 @@ class SeasonCycleHost:
         reader: Any = None
     ) -> Dict[str, Any]:
         """Initiates a cycle, verifies calendar progression, triggers capture, and registers draft intents."""
+        use_baseline = self.state["status"] == HostState.BASELINE_CAPTURED and not force
         if self.state["status"] not in (
             HostState.BASELINE_CAPTURED,
             HostState.EXECUTED_AND_READBACK,
@@ -1117,15 +1118,16 @@ class SeasonCycleHost:
             try:
                 prog = orchestrator.inspect_calendar_progress(live_reader_instance)
                 if prog.get("status") == "INCOMPLETE_GAME_IN_PROGRESS":
-                    self.state["status"] = HostState.CONTEXT_STALE
-                    self._save_state()
+                    if not use_baseline:
+                        self.state["status"] = HostState.CONTEXT_STALE
+                        self._save_state()
                     return {
                         "status": "REJECTED_GAME_IN_PROGRESS",
                         "cycle_id": cycle_id,
                         "reason": "Game is currently underway in memory; cannot start cycle."
                     }
 
-                if prog.get("status") == "SAME_STATE_REPEAT" and not force:
+                if prog.get("status") == "SAME_STATE_REPEAT" and not force and not use_baseline:
                     return {
                         "status": "SAME_STATE_REPEAT",
                         "cycle_id": cycle_id,
@@ -1137,6 +1139,20 @@ class SeasonCycleHost:
                 sched = collect_schedule(live_reader_instance, with_calendar=True, read_final_boxes=False)
                 cal = sched.get("calendar") or {}
                 mem_date = cal.get("current_native_iso_date")
+                if use_baseline:
+                    db_game_id = prog.get("latest_db_game_id")
+                    native_game_id = prog.get("native_game_id")
+                    if (
+                        not mem_date or mem_date != self.state["current_game_date"]
+                        or prog.get("status") != "SAME_STATE_REPEAT"
+                        or prog.get("new_final_game_detected") is not False
+                        or not isinstance(db_game_id, str) or not db_game_id
+                        or prog.get("latest_memory_game_id") != db_game_id
+                        or type(native_game_id) not in (int, str) or not str(native_game_id).isdecimal()
+                        or str(native_game_id) != prog.get("latest_db_native_game_id")
+                    ):
+                        return {"status": "BASELINE_CONTEXT_CHANGED", "cycle_id": cycle_id,
+                                "reason": "Live date and matching Native/SQLite finals are required to reuse the initial capture."}
                 if mem_date:
                     self.state["current_game_date"] = mem_date
 
@@ -1150,7 +1166,7 @@ class SeasonCycleHost:
                     if cap_res.get("status") in ("REJECTED_GAME_IN_PROGRESS", "FAILED", "REFRESH_FAILED_FAIL_CLOSED", "SQL_VERIFICATION_FAILED_FAIL_CLOSED"):
                         raise RuntimeError(f"INCREMENTAL_CAPTURE_FAILED: {cap_res}")
 
-                progress_status = prog.get("status", "DATE_ADVANCED")
+                progress_status = "INITIAL_BASELINE_REUSED" if use_baseline else prog.get("status", "DATE_ADVANCED")
             finally:
                 if should_close_reader and hasattr(live_reader_instance, "close"):
                     live_reader_instance.close()
@@ -1274,7 +1290,9 @@ class SeasonCycleHost:
             raise ValueError(f"Cycle {cycle_id} is not in DECISION_OPEN status (current: {self.state['status']})")
 
         is_mock = bool(self.state.get("is_offline_mock", False) and self.state.get("is_mock", True))
-        if not is_mock:
+        draft_intent_dicts = self.outbox.list_intents(cycle_id, status="DRAFT")
+        live_no_change = not is_mock and not self.outbox.list_intents(cycle_id)
+        if not is_mock and not live_no_change:
             # LIVE MODE: Mandatory real-time Getter and dynamic PID
             if getter_func is None:
                 # No external getter supplied — fetch one internally and require live PID
@@ -1294,7 +1312,7 @@ class SeasonCycleHost:
                 # Caller supplied getter_func — PID sentinel; real PID check in authorize_and_execute
                 if expected_pid is None:
                     expected_pid = 0
-        else:
+        elif is_mock:
             # Mock mode
             if expected_pid is None:
                 expected_pid = 5720
@@ -1305,7 +1323,6 @@ class SeasonCycleHost:
         phase_grants = self.role_registry.get_phase_grants()
 
         # Inspect draft intents before sealing for CAS preflight
-        draft_intent_dicts = self.outbox.list_intents(cycle_id, status="DRAFT")
         cas_mismatches = []
         for it in draft_intent_dicts:
             params = json.loads(it["parameters_json"]) if isinstance(it.get("parameters_json"), str) else it.get("parameters", {})
@@ -1345,30 +1362,48 @@ class SeasonCycleHost:
 
         # Handle NO_CHANGE cycle cleanly
         if not draft_intent_dicts:
-            plan_digest = sha256_digest(f"EMPTY_NO_CHANGE_CYCLE_{cycle_id}".encode("utf-8"))
+            if not is_mock and not live_no_change:
+                raise RuntimeError("NO_DRAFTS_WITH_EXISTING_INTENTS: no-change closure refused")
+            plan_digest = sha256_digest(
+                canonical_encode({"disposition": "NO_CHANGE", "context": asdict(ctx)})
+                if live_no_change else f"EMPTY_NO_CHANGE_CYCLE_{cycle_id}".encode("utf-8")
+            )
             batch_id = f"NOOP-BATCH-{cycle_id}"
             now_iso = datetime.now(timezone.utc).isoformat()
+            cycle_status = "COMPLETED" if live_no_change else "SEALED"
             with self.outbox._get_connection() as conn:
                 cur = conn.cursor()
+                if live_no_change:
+                    # Serialize the final emptiness check with add_intent, which uses the same write lock.
+                    cur.execute("BEGIN IMMEDIATE")
+                    cur.execute("SELECT status FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
+                    current = cur.fetchone()
+                    if not current or current["status"] != "COLLECTING":
+                        raise RuntimeError("NO_CHANGE_CYCLE_CHANGED: cycle is no longer collecting")
+                    cur.execute("SELECT 1 FROM decision_intents WHERE cycle_id = ? LIMIT 1", (cycle_id,))
+                    if cur.fetchone() is not None:
+                        raise RuntimeError("NO_CHANGE_INTENTS_CHANGED: no-change closure refused")
                 cur.execute("SELECT revision FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
                 row = cur.fetchone()
                 rev = (row["revision"] if row else 0) + 1
                 cur.execute("""
                     UPDATE decision_cycles SET
-                        status = 'SEALED',
+                        status = ?,
                         sealed_batch_id = ?,
                         sealed_digest = ?,
                         sealed_at = ?,
                         revision = ?,
                         updated_at = ?
                     WHERE cycle_id = ?
-                """, (batch_id, plan_digest, now_iso, rev, now_iso, cycle_id))
+                """, (cycle_status, batch_id, plan_digest, now_iso, rev, now_iso, cycle_id))
                 cur.execute("""
                     INSERT INTO outbox_events (
                         cycle_id, intent_id, event_type, prev_state, new_state, revision, payload_json, timestamp
-                    ) VALUES (?, NULL, 'CYCLE_SEALED', 'COLLECTING', 'SEALED', ?, ?, ?)
+                    ) VALUES (?, NULL, ?, 'COLLECTING', ?, ?, ?, ?)
                 """, (
                     cycle_id,
+                    "CYCLE_CLOSED_NO_CHANGE" if live_no_change else "CYCLE_SEALED",
+                    cycle_status,
                     rev,
                     json.dumps({
                         "sealed_batch_id": batch_id,
@@ -1378,6 +1413,15 @@ class SeasonCycleHost:
                     now_iso
                 ))
                 conn.commit()
+
+            if live_no_change:
+                self.state.update(status=HostState.WAITING_CALENDAR_ADVANCE, active_plan=None)
+                self._save_state()
+                result = {"status": "NO_CHANGE_WAITING_HUMAN_CALENDAR_ADVANCE", "cycle_id": cycle_id,
+                          "plan_digest": plan_digest, "executable_intents_count": 0,
+                          "unsupported_intents_count": 0, "game_writes": False}
+                self._append_ledger({"action": "SEAL_CYCLE", **result})
+                return result
 
             self.state.update({
                 "status": HostState.WAITING_HUMAN_EXECUTION_AUTH,
