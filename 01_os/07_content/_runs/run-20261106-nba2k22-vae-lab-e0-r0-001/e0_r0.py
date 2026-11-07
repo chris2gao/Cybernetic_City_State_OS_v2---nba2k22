@@ -92,8 +92,8 @@ def control_start(manifest, inventory, binding, db_path):
     }
 
 
-def freeze_controls(left, right, source, left_save, right_save):
-    """Bind two independently captured starts to three distinct, byte-identical disk files."""
+def freeze_controls(left, right, left_save, right_save, *, source=None, origin_sha256=None):
+    """Bind two independently captured starts to a verified common disk image."""
     common = ("initial_state_sha256", "mode", "window_start", "window_end_exclusive", "expected_native_game_ids")
     distinct = ("worldline", "save_identity", "db_identity", "start_source_report_sha256")
     if (any(not left.get(k) or left[k] != right.get(k) for k in common)
@@ -106,13 +106,14 @@ def freeze_controls(left, right, source, left_save, right_save):
         left["save_identity"].casefold(), right["save_identity"].casefold()
     ):
         raise ValueError("Disk slot names differ from the observed save bindings")
-    paths = (source, left_save, right_save)
+    if (source is None) == (origin_sha256 is None):
+        raise ValueError("Supply either a preserved source file or a previously recorded origin digest")
+    paths = (left_save, right_save) if source is None else (source, left_save, right_save)
     if len({file_identity(path) for path in paths}) != len(paths):
         raise ValueError("W0 source and copies must be separate disk files")
-    hashes = {file_sha256(path) for path in paths}
-    if len(hashes) != 1:
-        raise ValueError("W0 copies do not match the untouched source bytes")
-    origin = hashes.pop()
+    origin = file_sha256(source) if source is not None else origin_sha256
+    if any(file_sha256(path) != origin for path in (left_save, right_save)):
+        raise ValueError("W0 copies do not match the frozen origin bytes")
     return [dict(row, frozen_origin_sha256=origin) for row in (left, right)]
 
 
@@ -439,14 +440,18 @@ def build(conn, report, binding, binding_bytes):
 def main():
     if sys.argv[1:2] == ["freeze-controls"]:
         parser = argparse.ArgumentParser(description="Verify and freeze two private W0 start captures")
-        for name in ("left", "right", "source", "left_save", "right_save", "output"):
+        for name in ("left", "right", "left_save", "right_save", "output"):
             parser.add_argument(name, type=Path)
+        origin = parser.add_mutually_exclusive_group(required=True)
+        origin.add_argument("--source", type=Path, help="Preserved original disk image")
+        origin.add_argument("--origin-sha256", help="Common digest recorded before either simulation")
         args = parser.parse_args(sys.argv[2:])
         out = args.output.resolve()
         if out.is_relative_to(ROOT) or out.exists():
             parser.error("Output must be a new private directory outside the checkout")
         anchors = freeze_controls(json.loads(args.left.read_bytes()), json.loads(args.right.read_bytes()),
-                                  args.source, args.left_save, args.right_save)
+                                  args.left_save, args.right_save, source=args.source,
+                                  origin_sha256=args.origin_sha256)
         out.mkdir()
         for name, anchor in zip(("W0-A", "W0-B"), anchors):
             (out / f"{name}.json").write_bytes((encode(anchor) + "\n").encode())

@@ -169,18 +169,23 @@ def test_freeze_controls_verifies_distinct_disk_copies_and_equal_observed_starts
     left = control_start(manifest, inventory, dict(save_id="A", native_save_filename="SaveA"), db_a)
     right = control_start(dict(manifest, source_report_sha256="c" * 64), inventory,
                           dict(save_id="B", native_save_filename="SaveB"), db_b)
-    a, b = freeze_controls(left, right, source, save_a, save_b)
+    a, b = freeze_controls(left, right, save_a, save_b, source=source)
     assert a["frozen_origin_sha256"] == b["frozen_origin_sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
     assert a["expected_native_game_ids"] == ["12"]
     assert "no_intervention" not in a
     for bad in (dict(right, db_identity=left["db_identity"]), dict(right, initial_state_sha256="d" * 64)):
         with pytest.raises(ValueError, match="same start in separate saves"):
-            freeze_controls(left, bad, source, save_a, save_b)
+            freeze_controls(left, bad, save_a, save_b, source=source)
     with pytest.raises(ValueError, match="separate disk files"):
-        freeze_controls(left, right, save_a, save_a, save_b)
+        freeze_controls(left, right, save_a, save_b, source=save_a)
+    source.write_bytes(b"original slot later changed")
+    assert freeze_controls(left, right, save_a, save_b, origin_sha256=a["frozen_origin_sha256"]) == [a, b]
     save_b.write_bytes(b"changed")
-    with pytest.raises(ValueError, match="untouched source"):
-        freeze_controls(left, right, source, save_a, save_b)
+    with pytest.raises(ValueError, match="frozen origin"):
+        freeze_controls(left, right, save_a, save_b, origin_sha256=a["frozen_origin_sha256"])
+    save_a.write_bytes(b"changed")
+    with pytest.raises(ValueError, match="frozen origin"):
+        freeze_controls(left, right, save_a, save_b, origin_sha256=a["frozen_origin_sha256"])
 
 
 def test_standalone_worlddata_init_produces_isolated_r0_bindings(tmp_path):
