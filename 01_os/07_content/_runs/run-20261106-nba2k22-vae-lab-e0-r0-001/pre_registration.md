@@ -11,3 +11,5 @@
 ## Observed R0 coverage clarification
 
 Two actual control captures exposed NULL literal state scores and nine paired games lacking fully resolved canonical participants on at least one side. Reuse WorldData's existing qualified score view. Compare complete qualified scores only where both sides qualify; leave other scores unavailable. Retain raw Native captured-window fingerprints separately, without attributing unresolved Native IDs to canonical players or upgrading partial coverage to full-game score acceptance. This clarification preserves the frozen game set, start pool, window, treatment proposal and dependence assumptions.
+
+On 2026-11-06, Human closed R0 at two verified control repetitions after observing variation. The four-repeat proposal remains part of the original protocol record and was not executed. The resulting evidence supports observed variation across the two worldlines and leaves broader repeatability and power estimates open.
