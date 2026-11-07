@@ -1,0 +1,73 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/mainline-integration/task-packet.yml",
+  "checks": [
+    {
+      "id": "host_targeted",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261105-nba2k22-season-host-s3-live-pilot-001/mainline-integration/verify_integration_evidence.py",
+        "--pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py",
+        "-k",
+        "first_live or live_no_change or g05 or g06 or g08 or p0 or h1 or h2 or h3 or h4 or raw_transport or s4_bound"
+      ],
+      "expected_exit_code": 0,
+      "timeout_seconds": 120
+    },
+    {
+      "id": "outbox_targeted",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261105-nba2k22-season-host-s3-live-pilot-001/mainline-integration/verify_integration_evidence.py",
+        "--pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_decision_outbox.py",
+        "-k",
+        "not g10"
+      ],
+      "expected_exit_code": 0,
+      "timeout_seconds": 120
+    },
+    {
+      "id": "transport_targeted",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261105-nba2k22-season-host-s3-live-pilot-001/mainline-integration/verify_integration_evidence.py",
+        "--pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_bounded_session_executor.py"
+      ],
+      "expected_exit_code": 0,
+      "timeout_seconds": 120
+    },
+    {
+      "id": "evidence_scope",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/mainline-integration/verify_evidence.py"
+      ],
+      "expected_exit_code": 0,
+      "timeout_seconds": 60
+    }
+  ]
+}

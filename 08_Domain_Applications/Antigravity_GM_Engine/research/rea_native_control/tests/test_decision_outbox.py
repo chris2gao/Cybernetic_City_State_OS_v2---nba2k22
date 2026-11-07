@@ -1,11 +1,13 @@
 """Unit, lifecycle, and benchmark tests for DecisionOutbox (Gates G1, G2, G3, G4, G5, G8, G10)."""
-from dataclasses import asdict
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import asdict, replace
 import json
 import os
 from pathlib import Path
 import shutil
 import sys
 import tempfile
+from threading import Barrier
 import time
 import pytest
 
@@ -480,3 +482,116 @@ def test_b1_record_execution_receipts_validation(temp_db):
             {"intent_id": "I-1", "outcome": "SUCCESS_APPLIED"},
             {"intent_id": "I-2", "outcome": "SUCCESS_APPLIED"}
         ])
+
+
+def test_s4_unresolved_claim_reserves_resource_across_cycles(temp_db):
+    outbox = DecisionOutbox(temp_db)
+    gm, _ = make_profiles()
+    grants = {("gm_user_01", "PLAYER_PATCH_TENDENCIES")}
+    for cycle in ("first", "later"):
+        outbox.open_cycle(cycle, make_context())
+        outbox.add_intent(cycle, ActionIntent.decided(
+            f"{cycle}-intent", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+            {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "expected_before": 70, "value": 71},
+        ), gm, grants)
+        outbox.seal_cycle(cycle, aggregate_batch_id=f"batch-{cycle}")
+    outbox.claim_execution("first", "a" * 64)
+    reopened = DecisionOutbox(temp_db)
+    with pytest.raises(ValueError, match="EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM"):
+        reopened.claim_execution("later", "b" * 64)
+    reopened.record_execution_receipts("first", [{"intent_id": "first-intent", "outcome": "UNKNOWN_EXECUTION_OUTCOME"}])
+    with pytest.raises(ValueError, match="EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM"):
+        reopened.claim_execution("later", "b" * 64)
+
+
+@pytest.mark.parametrize("prior_state", ["legacy-claim", "legacy-unknown", "completed", "ambiguous-unknown"])
+@pytest.mark.parametrize(("later_uid", "later_field", "later_world"), [
+    (1607, "shot_tendency", "WORLD-001"),
+    (1607, "DRIVING_LAYUP_TENDENCY", "WORLD-001"),
+    (2492, "SHOT_TENDENCY", "WORLD-001"),
+    (1607, "SHOT_TENDENCY", "WORLD-002"),
+])
+def test_s4_native_resource_lock_across_encodings(temp_db, prior_state, later_uid, later_field, later_world):
+    outbox = DecisionOutbox(temp_db)
+    gm, _ = make_profiles()
+    grants = {("gm_user_01", action) for action in ("PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES")}
+    outbox.open_cycle("old", make_context())
+    outbox.add_intent("old", ActionIntent.decided(
+        "old-item", "gm_user_01", "PLAYER.EDIT.TENDENCY_BATCH",
+        {"team_id": 1, "player_id": 1607, "values": {"SHOT_TENDENCY": 71, "DUNK_TENDENCY": 72}},
+    ), gm, grants)
+    outbox.seal_cycle("old", aggregate_batch_id="old-batch")
+    # Preserve the old event and resource-key format rather than issuing a new claim.
+    with outbox._get_connection() as conn:
+        conn.execute("""
+            INSERT INTO outbox_events (cycle_id,event_type,revision,payload_json,timestamp)
+            VALUES ('old','EXECUTION_CLAIMED',1,'{"plan_digest":"legacy"}','2026-11-06T00:00:00Z')
+        """)
+    if prior_state != "legacy-claim":
+        outcome = "VERIFIED_SUCCESS" if prior_state == "completed" else "UNKNOWN_EXECUTION_OUTCOME"
+        outbox.record_execution_receipts("old", [{"intent_id": "old-item", "outcome": outcome}])
+    if prior_state == "ambiguous-unknown":
+        with outbox._get_connection() as conn:
+            conn.execute("UPDATE decision_intents SET parameters_json='{}' WHERE intent_id='old-item'")
+    outbox.open_cycle("new", replace(make_context(), world_id=later_world))
+    outbox.add_intent("new", ActionIntent.decided(
+        "new-item", "gm_user_01", "PLAYER_PATCH_TENDENCIES",
+        {"team_id": 28, "player_id": later_uid, "field_id": later_field, "expected_before": 70, "value": 72},
+    ), replace(gm, world_id=later_world), grants)
+    outbox.seal_cycle("new", aggregate_batch_id="new-batch")
+    if prior_state == "ambiguous-unknown" and later_world == "WORLD-001":
+        with pytest.raises(ValueError, match="UNRESOLVED_OUTBOX_RESOURCE_UNDECODABLE: reconcile cycle old"):
+            outbox.claim_execution("new", "b" * 64)
+    elif prior_state in ("legacy-claim", "legacy-unknown") and later_field == "shot_tendency":
+        with pytest.raises(ValueError, match="EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM"):
+            outbox.claim_execution("new", "b" * 64)
+    else:
+        outbox.claim_execution("new", "b" * 64)
+
+
+def test_s4_concurrent_claims_across_encodings_have_one_winner(temp_db):
+    first, second = DecisionOutbox(temp_db), DecisionOutbox(temp_db)
+    gm, _ = make_profiles()
+    action = "PLAYER_PATCH_TENDENCIES"
+    for cycle, params in (
+        ("a", {"team_id": 1, "player_id": 1607, "field_id": "SHOT_TENDENCY", "value": 72}),
+        ("b", {"team_id": 28, "player_id": 1607, "values": {"SHOT_TENDENCY": 73}}),
+    ):
+        first.open_cycle(cycle, make_context())
+        first.add_intent(cycle, ActionIntent.decided(cycle, "gm_user_01", action, params),
+                         gm, {("gm_user_01", action)})
+        first.seal_cycle(cycle, aggregate_batch_id=f"batch-{cycle}")
+    barrier = Barrier(2)
+
+    def compete(outbox, cycle):
+        barrier.wait(timeout=5)
+        try:
+            outbox.claim_execution(cycle, cycle * 64)
+        except ValueError as exc:
+            return str(exc)
+        return "CLAIMED"
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        a = pool.submit(compete, first, "a")
+        b = pool.submit(compete, second, "b")
+        assert sorted([a.result(timeout=10), b.result(timeout=10)]) == [
+            "CLAIMED", "EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM",
+        ]
+    with first._get_connection() as conn:
+        assert conn.execute("SELECT count(*) FROM outbox_events WHERE event_type='EXECUTION_CLAIMED'").fetchone()[0] == 1
+
+
+def test_s4_duplicate_physical_target_cannot_be_claimed(temp_db):
+    outbox = DecisionOutbox(temp_db)
+    gm, _ = make_profiles()
+    action = "PLAYER_PATCH_TENDENCIES"
+    outbox.open_cycle("duplicate", make_context())
+    for iid, params in (
+        ("direct", {"team_id": 1, "player_id": 1607, "field_id": "shot_tendency", "value": 71}),
+        ("map", {"team_id": 28, "player_id": 1607, "values": {"SHOT_TENDENCY": 71}}),
+    ):
+        outbox.add_intent("duplicate", ActionIntent.decided(iid, "gm_user_01", action, params),
+                          gm, {("gm_user_01", action)})
+    outbox.seal_cycle("duplicate", aggregate_batch_id="duplicate-batch")
+    with pytest.raises(ValueError, match="DUPLICATE_NATIVE_EXECUTION_RESOURCE"):
+        outbox.claim_execution("duplicate", "a" * 64)

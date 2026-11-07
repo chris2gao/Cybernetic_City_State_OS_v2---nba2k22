@@ -1,0 +1,38 @@
+task_packet:
+  task_id: NBA2K22-S4-HOST-REA-MAINLINE-INTEGRATION-20261106-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T3_high_risk
+  exact_base_sha: 20ff460792bdf0b44b21f8c8422bc6a2a74a0996
+  branch: task/nba2k22-s4-mainline-integration-20261106
+  objective: Integrate the bounded S4 Host and REA writeback and publish portable historical evidence.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/33
+    - 27588b82b7ce24cd0a6985abef8161a6afc9351d
+    - Core 877077c16bad41cfa97c1ebc9862a70ce610ff0b sections 7.2, 8.1 and 9
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_cli.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_decision_outbox.py
+    - 01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/mainline-integration/**
+  verification_plan: 01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/mainline-integration/verification-plan.json
+  required_tests: [host_targeted, outbox_targeted, transport_targeted, evidence_scope]
+  prohibitions: [new_live_native_write, new_live_grant, calendar_advance, save_edit_or_restore, private_runtime_publication, unrelated_integration, master_before_review_and_confirmation]
+  required_completion_pointer: 01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop-001/mainline-integration/INTEGRATION.md and PR merge/master readback
+  big_task: false
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: conditional_per_issue_33
+  executor_profile:
+    provider: Codex
+    surface: Codex Desktop
+    model: not_observable
+    reasoning_effort: not_observable
+    mode: standard
+    routing_basis: Human assigned execution in Issue 33
+    authority: routing_only
+  verification_profile:
+    independent_reviewer: separate nondispatcher GPT-6 session per Core section 9
