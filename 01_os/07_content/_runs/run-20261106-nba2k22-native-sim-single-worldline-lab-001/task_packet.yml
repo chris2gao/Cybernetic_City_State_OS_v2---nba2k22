@@ -1,0 +1,29 @@
+task_packet:
+  task_id: NBA2K22-VAE-NATIVE-SIMULATION-AND-SINGLE-WORLDLINE-LAB-20261106-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: bb73a06e710158c538caf809a771eca291eee028
+  core_reference: 877077c16bad41cfa97c1ebc9862a70ce610ff0b
+  branch: task/nba2k22-native-sim-single-worldline-37
+  objective: Recover the native calendar simulation boundary and deliver an offline control candidate and single-worldline screening design.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/37
+    - de874b64f40808269f8d68e3474989197d47e8fa
+    - 87826a88acd9bf927c97a74dee36c56f7e31c887
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261106-nba2k22-native-sim-single-worldline-lab-001/
+  affected_module_ids: [P01, P03, P09, P10]
+  verification_plan: 01_os/07_content/_runs/run-20261106-nba2k22-native-sim-single-worldline-lab-001/verification-plan.json
+  required_tests: [offline_safety, matrix_replay, scope]
+  prohibitions: [live_sim, game_write, save_restore, unattended_runtime, modify_pr36, merge_master, publish_raw_capture]
+  required_completion_pointer: HANDOFF.md
+  executor_profile: {provider: Codex, mode: standard, authority: routing_only}
+  big_task: true
+  development_loop:
+    mode: iterative_development
+    convergence_condition: Evidence-bound calendar chain and offline gates, reproducible matrix, and bounded live admission.
+  publisher:
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: bb73a06e710158c538caf809a771eca291eee028
