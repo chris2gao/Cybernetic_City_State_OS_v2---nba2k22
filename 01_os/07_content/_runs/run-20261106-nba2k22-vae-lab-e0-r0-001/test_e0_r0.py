@@ -3,11 +3,13 @@ import copy
 import hashlib
 import json
 import sqlite3
+import subprocess
+import sys
 
 import pytest
 
 from e0_r0 import (
-    FAMILIES, assign, bound_units, compare_controls, control_result, control_start,
+    FAMILIES, ROOT, assign, binding_worldline, bound_units, compare_controls, control_result, control_start,
     field_registry, file_identity, freeze_controls, opportunity,
 )
 
@@ -136,7 +138,7 @@ def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path
     manifest = dict(window_start="2021-12-28", source_report_sha256="a" * 64,
                     units={"schedule": dict(unit_id="post", season_id="season", observed_at="2026-11-06T09:00:00Z")})
     inventory = {"sim_mode": "CALENDAR_SIM_ONLY"}
-    binding = dict(worldline_id="A", native_save_filename="SaveA")
+    binding = dict(save_id="standalone-id", worldline_id="A", native_save_filename="SaveA")
     args = (inventory, binding, db, anchor)
     actual = control_result(conn, manifest, *args)
     assert actual["games"][0]["native_game_id"] == "12"
@@ -164,9 +166,9 @@ def test_freeze_controls_verifies_distinct_disk_copies_and_equal_observed_starts
                     observable_start_fingerprint="a" * 64, source_report_sha256="b" * 64,
                     units={"schedule": {"observed_at": "2026-11-06T08:00:00Z"}})
     inventory = dict(fixtures=[{"native_game_id": 12}], sim_mode="CALENDAR_SIM_ONLY")
-    left = control_start(manifest, inventory, dict(worldline_id="A", native_save_filename="SaveA"), db_a)
+    left = control_start(manifest, inventory, dict(save_id="A", native_save_filename="SaveA"), db_a)
     right = control_start(dict(manifest, source_report_sha256="c" * 64), inventory,
-                          dict(worldline_id="B", native_save_filename="SaveB"), db_b)
+                          dict(save_id="B", native_save_filename="SaveB"), db_b)
     a, b = freeze_controls(left, right, source, save_a, save_b)
     assert a["frozen_origin_sha256"] == b["frozen_origin_sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
     assert a["expected_native_game_ids"] == ["12"]
@@ -179,3 +181,19 @@ def test_freeze_controls_verifies_distinct_disk_copies_and_equal_observed_starts
     save_b.write_bytes(b"changed")
     with pytest.raises(ValueError, match="untouched source"):
         freeze_controls(left, right, source, save_a, save_b)
+
+
+def test_standalone_worlddata_init_produces_isolated_r0_bindings(tmp_path):
+    cli = ROOT / "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/cli.py"
+    bindings, identities = [], []
+    for name in ("A", "B"):
+        native = tmp_path / f"Save{name}"
+        native.write_bytes(b"synthetic origin")
+        world = tmp_path / name
+        subprocess.run([sys.executable, "-B", "-X", "utf8", str(cli), "init-save",
+                        str(world), name, str(native)], check=True, capture_output=True)
+        binding = json.loads((world / "save.json").read_bytes())
+        bindings.append(binding_worldline(binding))
+        identities.append(file_identity(world / "world.sqlite"))
+    assert bindings == ["A", "B"]
+    assert identities[0] != identities[1]

@@ -72,12 +72,17 @@ def file_sha256(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def binding_worldline(binding):
+    # Standalone WorldData binds one save ID to one database without a Host worldline.
+    return binding.get("worldline_id", binding["save_id"])
+
+
 def control_start(manifest, inventory, binding, db_path):
     game_ids = sorted(str(row["native_game_id"]) for row in inventory["fixtures"])
     if not game_ids or len(set(game_ids)) != len(game_ids):
         raise ValueError("Control start requires a nonempty unique Native schedule")
     return {
-        "worldline": binding["worldline_id"], "save_identity": binding["native_save_filename"],
+        "worldline": binding_worldline(binding), "save_identity": binding["native_save_filename"],
         "db_identity": file_identity(db_path), "mode": inventory["sim_mode"],
         "initial_state_sha256": manifest["observable_start_fingerprint"],
         "pre_capture_observed_at": manifest["units"]["schedule"]["observed_at"],
@@ -113,7 +118,7 @@ def freeze_controls(left, right, source, left_save, right_save):
 
 def bound_units(conn, report, binding, binding_bytes):
     if (report["status"] != "COMPLETED_REQUESTED_SOURCES" or report.get("game_writes") is not False
-            or report["save_id"] != binding["save_id"] or report["database_file"] != binding["database_file"]
+            or report["save_id"] != binding["save_id"] or report["database_file"] != binding.get("database_file", "world.sqlite")
             or report["native_save_filename"] != binding["native_save_filename"]
             or hashlib.sha256(binding_bytes).hexdigest() != report["binding_sha256"]):
         raise ValueError("Refresh evidence does not bind the requested no-write database")
@@ -261,7 +266,7 @@ def control_games(conn, season, schedule_unit, start, end):
 def control_result(conn, manifest, inventory, binding, db_path, anchor):
     start, end = anchor["window_start"], anchor["window_end_exclusive"]
     if (anchor["no_intervention"] is not True
-            or anchor["worldline"] != binding["worldline_id"]
+            or anchor["worldline"] != binding_worldline(binding)
             or anchor["save_identity"] != binding["native_save_filename"]
             or anchor["db_identity"] != file_identity(db_path)
             or manifest["window_start"] != end
@@ -405,7 +410,7 @@ def build(conn, report, binding, binding_bytes):
               "player_boxes_by_opportunity": statuses, "same_game_unit_team_shot_share_available": sharing,
               "exclusions_nonexclusive": exclusions}
     manifest = {"status": "HISTORICAL_BASELINE_NOT_CURRENT_W0", "save_id": binding["save_id"],
-                "worldline": binding["worldline_id"], "batch_id": report["batch_id"],
+                "worldline": binding_worldline(binding), "batch_id": report["batch_id"],
                 "basis": "retained no-write WorldData; current S4 process cannot stand in for pristine W0",
                 "window_start": today.isoformat(), "window_end_exclusive": end,
                 "units": units, "counts": counts, "R0_completed_repeats": 0, "worldline_independence": "NOT_VERIFIED"}
@@ -473,7 +478,7 @@ def main():
     if hashlib.sha256(raw_report).hexdigest() != args.report_sha256:
         parser.error("Report hash mismatch")
     binding = json.loads(raw_binding)
-    if args.database.resolve() != (args.binding.resolve().parent / binding["database_file"]).resolve():
+    if args.database.resolve() != (args.binding.resolve().parent / binding.get("database_file", "world.sqlite")).resolve():
         parser.error("Database path differs from the binding")
     with closing(sqlite3.connect(args.database.resolve().as_uri() + "?mode=ro", uri=True)) as conn:
         conn.row_factory = sqlite3.Row
