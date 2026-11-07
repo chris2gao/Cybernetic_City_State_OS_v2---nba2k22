@@ -59,6 +59,15 @@ def receipt(frozen):
 
 
 class CalendarTests(unittest.TestCase):
+    def test_worlddata_imports_resolve_to_worlddata(self):
+        import live_world
+        import readers
+        import refresh
+
+        self.assertEqual(Path(readers.__file__).resolve().parent, cli.WORLD)
+        self.assertTrue(callable(live_world.read_binding))
+        self.assertTrue(callable(refresh._context))
+
     def test_date_rollover_and_readonly_source(self):
         frozen = plan()
         cli.validate_plan(frozen)

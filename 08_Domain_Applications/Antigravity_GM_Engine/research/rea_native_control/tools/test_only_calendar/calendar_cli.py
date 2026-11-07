@@ -13,7 +13,7 @@ REA_ROOT = HERE.parents[1]
 DOMAIN = HERE.parents[3]
 WORLD = DOMAIN / "world_data_prototype"
 DECODERS = DOMAIN / "research/native_access/AG_NATIVE_01D/decoders"
-sys.path[:0] = [str(REA_ROOT), str(WORLD), str(DECODERS)]
+sys.path[:0] = [str(WORLD), str(REA_ROOT), str(DECODERS)]
 
 from boxscore_decoder import BoxScoreDecoder
 from contracts import BUILD
