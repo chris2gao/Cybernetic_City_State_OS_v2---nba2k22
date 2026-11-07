@@ -9,12 +9,67 @@ from build_ledger import build
 from build_observed_round import FEATURES, assign_blocks
 from experiment_round import analyze, fixture, plan
 from read_observed_window import player_opportunity
+from verify_round_application import bind_round, verified_item
 from window_harness import FixturePort, Journal, execute_fixture, fixture_permit, reconcile_fixture
 
 HERE = Path(__file__).resolve().parent
 
 
 class LongrunTests(unittest.TestCase):
+    def test_s4_result_requires_exact_native_getter(self):
+        from experiment_round import digest
+
+        context = {"team_id": 2, "player_ids": [3], "epoch": {"pid": 4},
+                   "binding_sha256": "binding", "game_progress": {"today_native_iso_date": "2022-01-07"}}
+        exact = digest({"native_plan_digest": "native", "live_context": context})
+        seal = {"status": "PLAN_PREFLIGHTED_WAITING_AUTH", "live_context": context,
+                "native_plan_digest": "native", "plan_digest": exact, "cycle_id": "cycle",
+                "executable_intents_count": 1, "unsupported_intents_count": 0,
+                "items": [{"intent_id": "intent", "action_id": "PLAYER_PATCH_TENDENCIES", "team_id": 2,
+                           "player_id": 3, "field_id": "SHOT_TENDENCY", "expected_before": 60, "value": 65}]}
+        timestamp = "2026-11-07T20:01:00+00:00"
+        result = {"status": "EXECUTED_AND_READBACK_RECORDED", "plan_digest": exact, "cycle_id": "cycle",
+                  "readback_verified": True, "batch_validation_passed": True, "executed_count": 1,
+                  "success_count": 1, "noop_count": 0, "failure_count": 0,
+                  "readback_details": [{"intent_id": "intent", "team_id": 2, "player_id": 3,
+                                        "field_id": "SHOT_TENDENCY", "source": "NBA2K22_POST_EXECUTION_MEMORY",
+                                        "matched": True, "expected_before": 60, "target_value": 65,
+                                        "observed_after": 65, "read_timestamp": timestamp}]}
+        getter = {"schema_version": "nba2k22.rea.independent_readback.v1", "timestamp": timestamp,
+                  "pid": 4, "intent_count": 1, "missed_count": 0,
+                  "verified_items": [{"intent_id": "intent", "player_id": 3, "readback_getter": 65,
+                                      "target_tendency": 65, "confirmed": True}]}
+        self.assertEqual(verified_item(seal, result, getter)["observed_after"], 65)
+        with self.assertRaisesRegex(ValueError, "fully verified"):
+            verified_item(seal, {**result, "status": "STOPPED_UNKNOWN_LOCKED"}, getter)
+        with self.assertRaisesRegex(ValueError, "Getter file differs"):
+            verified_item(seal, result, {**getter, "pid": 5})
+
+    def test_round_application_refuses_missing_extra_and_stale_receipts(self):
+        from experiment_round import digest
+
+        source = fixture()
+        source["evidence_scope"] = "FRESH_WORLDDATA_CANDIDATE_NOT_AUTHORIZED"
+        source["identity"].update(binding_sha256="binding", epoch={"pid": 4})
+        current = plan(source, 20261107)
+        receipts = [{**row, "action": "PLAYER_PATCH_TENDENCIES", "today": current["start"],
+                     "binding_sha256": "binding", "epoch": {"pid": 4}, "host_cycle_id": str(index),
+                     "observed_after": row["target"]}
+                    for index, row in enumerate(current["write_candidates"])]
+        self.assertFalse(bind_round(current, receipts)["analysis_authority"])
+        with self.assertRaisesRegex(ValueError, "Missing, extra or duplicate"):
+            bind_round(current, receipts[:-1])
+        with self.assertRaisesRegex(ValueError, "Missing, extra or duplicate"):
+            bind_round(current, receipts + receipts[:1])
+        with self.assertRaisesRegex(ValueError, "different bound scene"):
+            bind_round(current, [{**receipts[0], "epoch": {"pid": 5}}, *receipts[1:]])
+        with self.assertRaisesRegex(ValueError, "Observed dose differs"):
+            bind_round(current, [{**receipts[0], "observed_after": 0}, *receipts[1:]])
+        historical = {key: value for key, value in current.items() if key != "research_plan_digest"}
+        historical["evidence_scope"] = "HISTORICAL_R0_REPLAY_NOT_AUTHORIZED"
+        with self.assertRaisesRegex(ValueError, "current observed"):
+            bind_round({**historical, "research_plan_digest": digest(historical)}, receipts)
+
     def test_worlddata_box_missing_or_zero_does_not_impute_dnp(self):
         self.assertEqual(player_opportunity(None), {"disposition": "UNOBSERVED", "minutes": None, "fga": None})
         self.assertEqual(player_opportunity({"in_use": 1, "minutes_raw": 0, "fg_attempted": 0})["disposition"],
