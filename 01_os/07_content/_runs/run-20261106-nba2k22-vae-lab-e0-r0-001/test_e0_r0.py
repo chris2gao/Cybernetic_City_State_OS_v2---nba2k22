@@ -6,7 +6,10 @@ import sqlite3
 
 import pytest
 
-from e0_r0 import FAMILIES, assign, bound_units, compare_controls, control_result, field_registry, opportunity
+from e0_r0 import (
+    FAMILIES, assign, bound_units, compare_controls, control_result, control_start,
+    field_registry, file_identity, freeze_controls, opportunity,
+)
 
 
 def test_r0_separates_zero_minutes_and_missing():
@@ -127,18 +130,52 @@ def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path
         INSERT INTO player_game_boxes(game_id,unit_id,player_id,team_id,fg_attempted,minutes_raw)
             VALUES('g','post','p1','H',5,25),('g','post','p2','A',4,22),('g','pre','p2','A',99,47);
     """)
-    anchor = control(pre_capture_observed_at="2026-11-06T08:00:00Z")
+    db = tmp_path / "a.sqlite"
+    db.touch()
+    anchor = control(pre_capture_observed_at="2026-11-06T08:00:00Z", db_identity=file_identity(db))
     manifest = dict(window_start="2021-12-28", source_report_sha256="a" * 64,
                     units={"schedule": dict(unit_id="post", season_id="season", observed_at="2026-11-06T09:00:00Z")})
     inventory = {"sim_mode": "CALENDAR_SIM_ONLY"}
     binding = dict(worldline_id="A", native_save_filename="SaveA")
-    args = (inventory, binding, tmp_path / "a.sqlite", anchor)
+    args = (inventory, binding, db, anchor)
     actual = control_result(conn, manifest, *args)
     assert actual["games"][0]["native_game_id"] == "12"
     conn.execute("UPDATE player_game_boxes SET fg_attempted=42 WHERE unit_id='pre'")
     assert control_result(conn, manifest, *args) == actual
     with pytest.raises(ValueError, match="stop date"):
         control_result(conn, dict(manifest, window_start="2021-12-29"), *args)
+    replaced_db = tmp_path / "replacement.sqlite"
+    replaced_db.touch()
+    with pytest.raises(ValueError, match="frozen control"):
+        control_result(conn, manifest, inventory, binding, replaced_db, anchor)
     conn.execute("UPDATE team_game_boxes SET unit_id='pre' WHERE team_id='A'")
     with pytest.raises(ValueError, match="exact-unit boxes"):
         control_result(conn, manifest, *args)
+
+
+def test_freeze_controls_verifies_distinct_disk_copies_and_equal_observed_starts(tmp_path):
+    source, save_a, save_b = [tmp_path / name for name in ("Source", "SaveA", "SaveB")]
+    for save in (source, save_a, save_b):
+        save.write_bytes(b"identical frozen origin")
+    db_a, db_b = tmp_path / "a.sqlite", tmp_path / "b.sqlite"
+    db_a.touch()
+    db_b.touch()
+    manifest = dict(window_start="2021-12-21", window_end_exclusive="2021-12-28",
+                    observable_start_fingerprint="a" * 64, source_report_sha256="b" * 64,
+                    units={"schedule": {"observed_at": "2026-11-06T08:00:00Z"}})
+    inventory = dict(fixtures=[{"native_game_id": 12}], sim_mode="CALENDAR_SIM_ONLY")
+    left = control_start(manifest, inventory, dict(worldline_id="A", native_save_filename="SaveA"), db_a)
+    right = control_start(dict(manifest, source_report_sha256="c" * 64), inventory,
+                          dict(worldline_id="B", native_save_filename="SaveB"), db_b)
+    a, b = freeze_controls(left, right, source, save_a, save_b)
+    assert a["frozen_origin_sha256"] == b["frozen_origin_sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
+    assert a["expected_native_game_ids"] == ["12"]
+    assert "no_intervention" not in a
+    for bad in (dict(right, db_identity=left["db_identity"]), dict(right, initial_state_sha256="d" * 64)):
+        with pytest.raises(ValueError, match="same start in separate saves"):
+            freeze_controls(left, bad, source, save_a, save_b)
+    with pytest.raises(ValueError, match="separate disk files"):
+        freeze_controls(left, right, save_a, save_a, save_b)
+    save_b.write_bytes(b"changed")
+    with pytest.raises(ValueError, match="untouched source"):
+        freeze_controls(left, right, source, save_a, save_b)

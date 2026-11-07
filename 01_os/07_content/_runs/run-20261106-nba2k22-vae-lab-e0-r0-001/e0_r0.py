@@ -60,6 +60,57 @@ def fingerprint(data):
     return hashlib.sha256(encode(data).encode()).hexdigest()
 
 
+def file_identity(path):
+    stat = path.stat()
+    if not stat.st_ino:
+        raise ValueError("Filesystem cannot verify a distinct file identity")
+    return fingerprint([stat.st_dev, stat.st_ino])
+
+
+def file_sha256(path):
+    with path.open("rb") as stream:
+        return hashlib.file_digest(stream, "sha256").hexdigest()
+
+
+def control_start(manifest, inventory, binding, db_path):
+    game_ids = sorted(str(row["native_game_id"]) for row in inventory["fixtures"])
+    if not game_ids or len(set(game_ids)) != len(game_ids):
+        raise ValueError("Control start requires a nonempty unique Native schedule")
+    return {
+        "worldline": binding["worldline_id"], "save_identity": binding["native_save_filename"],
+        "db_identity": file_identity(db_path), "mode": inventory["sim_mode"],
+        "initial_state_sha256": manifest["observable_start_fingerprint"],
+        "pre_capture_observed_at": manifest["units"]["schedule"]["observed_at"],
+        "start_source_report_sha256": manifest["source_report_sha256"],
+        "window_start": manifest["window_start"], "window_end_exclusive": manifest["window_end_exclusive"],
+        "expected_native_game_ids": game_ids,
+    }
+
+
+def freeze_controls(left, right, source, left_save, right_save):
+    """Bind two independently captured starts to three distinct, byte-identical disk files."""
+    common = ("initial_state_sha256", "mode", "window_start", "window_end_exclusive", "expected_native_game_ids")
+    distinct = ("worldline", "save_identity", "db_identity", "start_source_report_sha256")
+    if (any(not left.get(k) or left[k] != right.get(k) for k in common)
+            or any(not left.get(k) or not right.get(k) or left[k] == right[k] for k in distinct)
+            or left["mode"] != "CALENDAR_SIM_ONLY"
+            or date.fromisoformat(left["window_end_exclusive"]) - date.fromisoformat(left["window_start"])
+            != timedelta(days=7)):
+        raise ValueError("W0 captures do not show the same start in separate saves and databases")
+    if (left_save.name.casefold(), right_save.name.casefold()) != (
+        left["save_identity"].casefold(), right["save_identity"].casefold()
+    ):
+        raise ValueError("Disk slot names differ from the observed save bindings")
+    paths = (source, left_save, right_save)
+    if len({file_identity(path) for path in paths}) != len(paths):
+        raise ValueError("W0 source and copies must be separate disk files")
+    hashes = {file_sha256(path) for path in paths}
+    if len(hashes) != 1:
+        raise ValueError("W0 copies do not match the untouched source bytes")
+    origin = hashes.pop()
+    return [dict(row, frozen_origin_sha256=origin) for row in (left, right)]
+
+
 def bound_units(conn, report, binding, binding_bytes):
     if (report["status"] != "COMPLETED_REQUESTED_SOURCES" or report.get("game_writes") is not False
             or report["save_id"] != binding["save_id"] or report["database_file"] != binding["database_file"]
@@ -212,6 +263,7 @@ def control_result(conn, manifest, inventory, binding, db_path, anchor):
     if (anchor["no_intervention"] is not True
             or anchor["worldline"] != binding["worldline_id"]
             or anchor["save_identity"] != binding["native_save_filename"]
+            or anchor["db_identity"] != file_identity(db_path)
             or manifest["window_start"] != end
             or date.fromisoformat(end) - date.fromisoformat(start) != timedelta(days=7)
             or inventory["sim_mode"] != "CALENDAR_SIM_ONLY"):
@@ -226,8 +278,7 @@ def control_result(conn, manifest, inventory, binding, db_path, anchor):
     expected = anchor["expected_native_game_ids"]
     if not expected or sorted(r["native_game_id"] for r in games) != sorted(expected):
         raise ValueError("Post-capture full boxes do not cover the frozen game IDs")
-    return {**anchor, "db_identity": fingerprint(str(db_path.resolve())),
-            "mode": "CALENDAR_SIM_ONLY", "schedule_unit": schedule["unit_id"],
+    return {**anchor, "mode": "CALENDAR_SIM_ONLY", "schedule_unit": schedule["unit_id"],
             "source_report_sha256": manifest["source_report_sha256"], "games": games}
 
 
@@ -381,6 +432,23 @@ def build(conn, report, binding, binding_bytes):
 
 
 def main():
+    if sys.argv[1:2] == ["freeze-controls"]:
+        parser = argparse.ArgumentParser(description="Verify and freeze two private W0 start captures")
+        for name in ("left", "right", "source", "left_save", "right_save", "output"):
+            parser.add_argument(name, type=Path)
+        args = parser.parse_args(sys.argv[2:])
+        out = args.output.resolve()
+        if out.is_relative_to(ROOT) or out.exists():
+            parser.error("Output must be a new private directory outside the checkout")
+        anchors = freeze_controls(json.loads(args.left.read_bytes()), json.loads(args.right.read_bytes()),
+                                  args.source, args.left_save, args.right_save)
+        out.mkdir()
+        for name, anchor in zip(("W0-A", "W0-B"), anchors):
+            (out / f"{name}.json").write_bytes((encode(anchor) + "\n").encode())
+        print(encode({"window_start": anchors[0]["window_start"],
+                      "window_end_exclusive": anchors[0]["window_end_exclusive"],
+                      "scheduled_games": len(anchors[0]["expected_native_game_ids"])}))
+        return
     if sys.argv[1:2] == ["compare"]:
         parser = argparse.ArgumentParser(description="Compare two private, verified R0 control results")
         parser.add_argument("left", type=Path)
@@ -394,7 +462,9 @@ def main():
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--report-sha256", required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--control-start", type=Path, help="Verified private W0 start anchor for a post-window capture")
+    controls = parser.add_mutually_exclusive_group()
+    controls.add_argument("--control-preflight", action="store_true", help="Export a bound W0 pre-simulation start")
+    controls.add_argument("--control-start", type=Path, help="Verified private W0 start anchor for a post-window capture")
     args = parser.parse_args()
     out = args.output.resolve()
     if out.is_relative_to(ROOT) or out.exists():
@@ -419,6 +489,8 @@ def main():
             "experiment_field_registry.json": encode(field_registry()) + "\n"}
     if control:
         data["R0_control_result.json"] = encode(control) + "\n"
+    if args.control_preflight:
+        data["R0_start_capture.json"] = encode(control_start(manifest, inventory, binding, args.database)) + "\n"
     manifest["artifact_sha256"] = {name: hashlib.sha256(body.encode()).hexdigest() for name, body in data.items()}
     data["R0_baseline_manifest.json"] = encode(manifest) + "\n"
     out.mkdir()
