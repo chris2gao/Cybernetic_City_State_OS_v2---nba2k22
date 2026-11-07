@@ -1,0 +1,60 @@
+{
+  "schema": "nba2k22.vae.e0_r0_historical_summary.v1",
+  "status": "HISTORICAL_BASELINE_NOT_CURRENT_W0",
+  "source_master": "bb73a06e710158c538caf809a771eca291eee028",
+  "source_design": "de874b64f40808269f8d68e3474989197d47e8fa",
+  "source_batch": "ad3a1f320e86",
+  "source_report_sha256": "980551d76acdc538d7e8eba730434a71885ca60f8c9d8866b4d2932474485d1a",
+  "historical_window_start": "2021-12-21",
+  "historical_window_end_exclusive": "2021-12-28",
+  "counts": {
+    "eligible": 302,
+    "eligible_teams": 30,
+    "exclusions_nonexclusive": {
+      "HEALTH_NOT_CONFIRMED": 30,
+      "RECENT_OPPORTUNITY_INSUFFICIENT": 144,
+      "WRITER_ROSTER_SLOT_UNVERIFIED": 18
+    },
+    "historical_final_games": 463,
+    "player_boxes_by_opportunity": {
+      "DNP_OR_ZERO_RECORDED_MINUTES": 2144,
+      "OBSERVED": 9739
+    },
+    "roster_players": 461,
+    "rotation_observed": 461,
+    "same_game_unit_team_shot_share_available": 9739,
+    "scheduled_games_7d": 44,
+    "shot_tendency_observed": 461,
+    "team_count": 30,
+    "unique_native_uids": 461
+  },
+  "observed_anchor_sha256": "284baec0bbcf1e98bbe3e28472c4e55ea4426ca6d1499d926be5dd68fd864309",
+  "private_artifact_sha256": {
+    "WP_candidate_assignment.json": "ab6fd3cd7ef9bf910a09f3143b5349833d6bf6f50193e944ead069e5b64c04b9",
+    "eligibility_pool.jsonl": "5a7fe70f8402b785c656abe1ade7c02421c2d8d3dcc7403ec3c8b6e30ba0f4c6",
+    "experiment_field_registry.json": "8d8e4432e25e482c0d5f0e974033f9dea3242229712e4d0f52dd5f44b0729f52",
+    "observation_inventory.json": "843b5771c6db356fff1758c0878ffa65b85c613aa2919d4f905eda6d3c4a4939",
+    "R0_baseline_manifest.json": "6b2887d85ed11d5a90139b9a0d4ddab9eb47d668b545e7cdb54ac6a433c5a0d7"
+  },
+  "artifact_reproducibility": "TWO_READ_ONLY_EXPORTS_BYTE_IDENTICAL",
+  "r0_repeats": 0,
+  "worldline_independence": "NOT_VERIFIED",
+  "writer_scope": "HISTORICAL_SHOT_TENDENCY_ONLY_NO_AUTHORIZED_E0_WRITES",
+  "historical_wp_proposal": {
+    "arms": [
+      "H",
+      "L",
+      "C"
+    ],
+    "distinct_teams": 3,
+    "position": "CENTER",
+    "doses": [
+      5,
+      -5,
+      0
+    ],
+    "seed": "E0-SHOT-TENDENCY-WP-V1-20261106",
+    "games_with_two_assigned_teams_in_historical_window": 0,
+    "power": "UNDERPOWERED_SCREEN_ONLY"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/07_content/_runs/run-20261106-nba2k22-vae-lab-e0-r0-001/task-packet.yml",
+  "checks": [
+    {
+      "id": "e0_r0_fixture",
+      "argv": [
+        "@python",
+        "-B",
+        "-X",
+        "utf8",
+        "01_os/07_content/_runs/run-20261105-nba2k22-season-host-s3-live-pilot-001/mainline-integration/verify_integration_evidence.py",
+        "--pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "01_os/07_content/_runs/run-20261106-nba2k22-vae-lab-e0-r0-001/test_e0_r0.py"
+      ],
+      "expected_exit_code": 0,
+      "timeout_seconds": 60
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+task_packet:
+  task_id: NBA2K22-VAE-LAB-E0-R0-EXPERIMENT-READINESS-20261106-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T2_semantic
+  exact_base_sha: bb73a06e710158c538caf809a771eca291eee028
+  branch: task/nba2k22-vae-lab-e0-r0-20261106
+  objective: Reuse WorldData to build a reproducible historical eligibility inventory and prepare the two no-write R0 control runs and first WP screening proposal.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/35
+    - de874b64f40808269f8d68e3474989197d47e8fa
+  allowed_changed_paths: [01_os/07_content/_runs/run-20261106-nba2k22-vae-lab-e0-r0-001/**]
+  verification_plan: 01_os/07_content/_runs/run-20261106-nba2k22-vae-lab-e0-r0-001/verification-plan.json
+  required_tests: [e0_r0_fixture]
+  prohibitions: [native_write, automatic_calendar_advance, save_edit_or_restore, grant_or_seal, raw_data_publication, master_merge]
+  required_completion_pointer: 01_os/07_content/_runs/run-20261106-nba2k22-vae-lab-e0-r0-001/CHECKPOINT.md
+  big_task: false
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
