@@ -26,6 +26,8 @@
 
 P03 与 P09 通过领域 Profile 对接固定 Core 静态工具。P01、P02 可从当前树加载 WorldData Schema、初始化 CLI 和 Calendar Reader。P09、P10 可从当前树加载 facade、Bulk、Outbox 和 SeasonCycleHost。P12 的历史数据恢复走 [来源迁移索引](research/history_source_resolution/README.md)。
 
+P09/P10 的 [Native Calendar 测试专用入口](research/rea_native_control/tools/test_only_calendar/README.md) 关联 Issue #39。归档候选含有界授权与同一 Outbox 互斥，现场写入和持久化仍待该任务验证。
+
 - PR #18 Draft 来源 `094f1aa641f93dec2277707ad9dbf5bdb0341247`，提供导航、动作目录、绑定、Reader 和逐例验证。
 - PR #26 已合并至 NBA master。Profile 保留其测试过的原始源码引用 `aee5a9109ea5cd0a5c7bc4adb750c64a1603afec`。
 - PR #28 已合并历史来源解析入口，其 WorldData 归档映射与 Profile 的 PR #18 固定研究目录分开。
