@@ -1,6 +1,6 @@
 {
   "task_id": "NBA2K22-VAE-LAB-E0-R0-EXPERIMENT-READINESS-20261106-001",
-  "status": "R0_READY_FOR_HUMAN_CONTROL_SIM",
+  "status": "R0_TWO_REPEATS_VARIATION_OBSERVED_PARTIAL_SCORES",
   "capture_authority": "Human explicitly authorized current and subsequent in-scope tests in this chat",
   "loaded_slot_basis": "HUMAN_CONFIRMED_MyLEAGUE0005",
   "worldline": "vae-r0-w0-a-0005",
@@ -19,7 +19,31 @@
   "rotation_observed": 455,
   "historical_final_games": 463,
   "historical_player_box_opportunities": 9739,
-  "R0_completed_repeats": 0,
+  "R0_completed_repeats": 2,
+  "post_window_reports": {
+    "W0_A_sha256": "6faf614c9bcc6e6ca6b2a9bbbe734ae0c6b3e69f9efda2b620c98de5bdb665e8",
+    "W0_B_sha256": "2e7803cfa8c10af007349ea538c1b1c2d7fa2eecafcb0aa9bcff8434fd873e7d",
+    "status": "Both completed the six requested sources; game_writes=false",
+    "observed_stop_today": "2021-12-28",
+    "A_return_start_recheck_sha256": "31d385d53a9b42a09560cb7b0cf3ea5ac039b201e521018191bdc0c2d392495d",
+    "A_return_start_fingerprint_matches": true
+  },
+  "paired_comparison": {
+    "games": 44,
+    "played_date_differences": 0,
+    "native_box_differences": 44,
+    "canonical_player_box_differences": 44,
+    "both_sides_qualified_score_games": 35,
+    "qualified_score_differences": 35,
+    "unqualified_score_games": 9,
+    "qualified_winner_disagreements": 16,
+    "mean_absolute_home_points_difference": 11.771428571428572,
+    "mean_absolute_away_points_difference": 16.65714285714286,
+    "interpretation": "VARIATION_OBSERVED",
+    "score_calibration_status": "INCOMPLETE_CANONICAL_COVERAGE",
+    "recommended_total_control_repeats": 4
+  },
+  "extraction_correction": "The initial strict extractor rejected NULL state score fields. Reused competition_views.game_box_snapshot to retain qualified derived scores and explicit unknown canonical coverage. Raw Native window fingerprints remain separately comparable without inventing complete scores or unresolved player identities.",
   "worldline_pair_status": "DISTINCT_DISK_FILES_AND_DATABASES_WITH_MATCHING_OBSERVED_START",
   "W0_B_start": {
     "loaded_slot_basis": "HUMAN_CONFIRMED_MyLEAGUE0006",
@@ -35,5 +59,5 @@
   "origin_status": "Human confirms both copies from 0003; 0005 and 0006 matched before simulation; current 0003 differs",
   "disk_source_identity": "Retained privately; no source hash promoted to pristine-gameplay proof",
   "collection_recovery": "Initial ordinary-user capture exited 1 with WinError 5 before acquisition. Existing read-only CLI then ran with the authorized administrator worker and exited 0.",
-  "next_action": "Human manually simulates currently loaded 0006 until Today 2021-12-28, ending all 2021-12-27 games and excluding 2021-12-28 games; report completion for the authorized post-window read"
+  "next_action": "Human creates two further independent slots from the still-frozen disk copy, loads the first at the calendar and reports actual names. Then repeat verified starts and the same seven-day manual window."
 }

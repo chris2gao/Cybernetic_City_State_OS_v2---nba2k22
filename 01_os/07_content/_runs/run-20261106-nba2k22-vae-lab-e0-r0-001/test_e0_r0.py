@@ -7,6 +7,7 @@ import subprocess
 import sys
 
 import pytest
+import e0_r0
 
 from e0_r0 import (
     FAMILIES, ROOT, assign, binding_worldline, bound_units, compare_controls, control_result, control_start,
@@ -114,7 +115,7 @@ def test_only_shot_tendency_has_historical_live_writer_grade():
     assert all(not r["allowed_doses"] for r in registry if r["field_id"] != "SHOT_TENDENCY")
 
 
-def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path):
+def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path, monkeypatch):
     conn = sqlite3.connect(":memory:")
     conn.row_factory = sqlite3.Row
     conn.executescript("""
@@ -131,7 +132,16 @@ def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path
         INSERT INTO team_game_boxes VALUES('g','post','H',100),('g','post','A',98);
         INSERT INTO player_game_boxes(game_id,unit_id,player_id,team_id,fg_attempted,minutes_raw)
             VALUES('g','post','p1','H',5,25),('g','post','p2','A',4,22),('g','pre','p2','A',99,47);
+        CREATE TABLE native_box_observations AS
+            SELECT CASE team_id WHEN 'H' THEN 'HOME' ELSE 'AWAY' END AS side,
+                   rowid AS row_index,player_id AS native_player_id,team_id AS native_team_id,
+                   1 AS in_use,p.* FROM player_game_boxes p WHERE unit_id='post';
     """)
+    scores = dict(home_points=100, away_points=98, value_status="DERIVED_CANONICAL_BOX_SUM_MATCHING_CAPTURED_NATIVE_WINDOW",
+                  captured_native_points={"HOME": 100, "AWAY": 98})
+    monkeypatch.setattr(e0_r0, "game_box_snapshot", lambda *args, **kwargs: {
+        "scores": scores, "coverage": {side: {"status": "ALL_CAPTURED_NATIVE_PARTICIPANTS_RESOLVED"}
+                                      for side in ("HOME", "AWAY")}})
     db = tmp_path / "a.sqlite"
     db.touch()
     anchor = control(pre_capture_observed_at="2026-11-06T08:00:00Z", db_identity=file_identity(db))
@@ -142,6 +152,8 @@ def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path
     args = (inventory, binding, db, anchor)
     actual = control_result(conn, manifest, *args)
     assert actual["games"][0]["native_game_id"] == "12"
+    conn.execute("UPDATE game_state_observations SET home_points=NULL,away_points=NULL")
+    assert control_result(conn, manifest, *args)["games"][0]["home_points"] == 100
     conn.execute("UPDATE player_game_boxes SET fg_attempted=42 WHERE unit_id='pre'")
     assert control_result(conn, manifest, *args) == actual
     with pytest.raises(ValueError, match="stop date"):
@@ -153,6 +165,25 @@ def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path
     conn.execute("UPDATE team_game_boxes SET unit_id='pre' WHERE team_id='A'")
     with pytest.raises(ValueError, match="exact-unit boxes"):
         control_result(conn, manifest, *args)
+
+
+def test_r0_unknown_canonical_scores_preserve_raw_comparison_and_incomplete_status():
+    left = control()
+    right = control(worldline="B", save_identity="SaveB", db_identity="DB-B")
+    for row in (left, right):
+        row["games"][0].update(home_points=None, away_points=None,
+                               score_status="NO_COMPLETE_QUALIFIED_SCORE", native_box_sha256="d" * 64)
+    result = compare_controls(left, right)
+    assert result["paired_qualified_scores"] == 0
+    assert result["unqualified_score_games"] == 1
+    assert result["score_calibration_status"] == "INCOMPLETE_CANONICAL_COVERAGE"
+    assert result["interpretation"] == "MATCHED_THIS_PAIR_ONLY"
+    right["games"][0]["native_box_sha256"] = "e" * 64
+    assert compare_controls(left, right)["native_box_differences"] == 1
+    assert compare_controls(left, right)["interpretation"] == "VARIATION_OBSERVED"
+    right["games"][0]["home_points"] = -1
+    with pytest.raises(ValueError, match="Incomplete score"):
+        compare_controls(left, right)
 
 
 def test_freeze_controls_verifies_distinct_disk_copies_and_equal_observed_starts(tmp_path):

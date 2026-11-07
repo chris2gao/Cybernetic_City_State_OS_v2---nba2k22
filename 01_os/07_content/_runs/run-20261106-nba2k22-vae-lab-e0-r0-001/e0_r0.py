@@ -12,6 +12,9 @@ import sys
 
 SEED = "E0-SHOT-TENDENCY-WP-V1-20261106"
 ROOT = Path(__file__).resolve().parents[4]
+sys.path.insert(0, str(ROOT / "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype"))
+from competition_views import game_box_snapshot
+
 FAMILIES = {
     "schedule": "BOUND_COMPLETE_DESCRIPTOR_SCHEDULE_AND_PLAYERS",
     "player-skills": "BOUND_PUBLIC_PLAYER_SKILLS",
@@ -209,26 +212,45 @@ def compare_controls(left, right):
                 raise ValueError("Duplicate or wrong-mode game")
             if not row["window_start"] <= game["played_date"] < row["window_end_exclusive"]:
                 raise ValueError("Game outside the frozen window")
-            if (any(type(game[k]) is not int or game[k] < 0 for k in ("home_points", "away_points"))
+            qualified = all(type(game[k]) is int and game[k] >= 0 for k in ("home_points", "away_points"))
+            unavailable = (game.get("score_status") == "NO_COMPLETE_QUALIFIED_SCORE"
+                           and game["home_points"] is None and game["away_points"] is None
+                           and bool(game.get("native_box_sha256")))
+            if ((not qualified and not unavailable)
                     or len(game["player_box_sha256"]) != 64
                     or any(c not in "0123456789abcdef" for c in game["player_box_sha256"])):
                 raise ValueError("Incomplete score or player-box evidence")
-            values[gid] = (game["home_points"], game["away_points"], game["player_box_sha256"], game["played_date"])
+            native_hash = game.get("native_box_sha256", game["player_box_sha256"])
+            if len(native_hash) != 64 or any(c not in "0123456789abcdef" for c in native_hash):
+                raise ValueError("Invalid Native box fingerprint")
+            values[gid] = (game["home_points"], game["away_points"], game["player_box_sha256"],
+                           game["played_date"], native_hash, qualified)
         return values
     a, b = results(left), results(right)
     expected = set(left["expected_native_game_ids"])
     if not a or len(expected) != len(left["expected_native_game_ids"]) or set(a) != expected or set(b) != expected:
         raise ValueError("Exact completed game coverage differs; calibration not comparable")
-    score_diff = sum(a[k][:2] != b[k][:2] for k in a)
+    qualified = [k for k in a if a[k][5] and b[k][5]]
+    score_diff = sum(a[k][:2] != b[k][:2] for k in qualified)
     box_diff = sum(a[k][2] != b[k][2] for k in a)
     date_diff = sum(a[k][3] != b[k][3] for k in a)
+    native_diff = sum(a[k][4] != b[k][4] for k in a)
     return {"paired_games": len(a), "score_differences": score_diff, "player_box_differences": box_diff,
+            "paired_qualified_scores": len(qualified), "unqualified_score_games": len(a) - len(qualified),
+            "native_box_differences": native_diff,
+            "score_calibration_status": "COMPLETE" if len(qualified) == len(a) else "INCOMPLETE_CANONICAL_COVERAGE",
+            "qualified_score_difference_summary": {
+                "mean_absolute_home_points": sum(abs(a[k][0] - b[k][0]) for k in qualified) / len(qualified) if qualified else None,
+                "mean_absolute_away_points": sum(abs(a[k][1] - b[k][1]) for k in qualified) / len(qualified) if qualified else None,
+                "winner_disagreements": sum((a[k][0] > a[k][1]) != (b[k][0] > b[k][1]) for k in qualified),
+                "scope": "Descriptive paired games from two worldlines; no independent-game power estimate",
+            },
             "played_date_differences": date_diff,
-            "interpretation": "VARIATION_OBSERVED" if score_diff or box_diff or date_diff else "MATCHED_THIS_PAIR_ONLY",
+            "interpretation": "VARIATION_OBSERVED" if score_diff or box_diff or native_diff or date_diff else "MATCHED_THIS_PAIR_ONLY",
             "control_repeats": 2, "suggested_repeats_if_variable": 4}
 
 
-def control_games(conn, season, schedule_unit, start, end):
+def control_games(conn, season, schedule_unit, start, end, db_path):
     """Project verified full boxes from the exact post-window capture unit."""
     results = []
     for game in conn.execute("""
@@ -251,14 +273,29 @@ def control_games(conn, season, schedule_unit, start, end):
         team_scores = {row["team_id"]: row["points"] for row in conn.execute("""
             SELECT team_id,points FROM team_game_boxes WHERE game_id=? AND unit_id=?
         """, (game["game_id"], schedule_unit))}
+        snapshot = game_box_snapshot(db_path, game["game_id"], unit_id=schedule_unit)
+        scores = snapshot["scores"]
+        native = [dict(row) for row in conn.execute("""
+            SELECT side,native_player_id,native_team_id,in_use,points,fg_made,fg_attempted,
+                   three_made,three_attempted,ft_made,ft_attempted,offensive_rebounds,
+                   defensive_rebounds,assists,steals,blocks,turnovers,fouls,minutes_raw
+            FROM native_box_observations WHERE game_id=? AND unit_id=?
+            ORDER BY side,native_player_id,row_index
+        """, (game["game_id"], schedule_unit))]
+        expected_scores = {game["home_team_id"]: scores["captured_native_points"]["HOME"],
+                           game["away_team_id"]: scores["captured_native_points"]["AWAY"]}
         if ({r["team_id"] for r in boxes} != teams or not all(r["player_id"] for r in boxes)
                 or len({r["player_id"] for r in boxes}) != len(boxes)
-                or team_scores != {game["home_team_id"]: game["home_points"],
-                                   game["away_team_id"]: game["away_points"]}):
+                or {r["side"] for r in native} != {"HOME", "AWAY"}
+                or any(value is None for value in expected_scores.values())
+                or team_scores != expected_scores):
             raise ValueError("Missing, duplicate or inconsistent exact-unit boxes")
         results.append({
             "native_game_id": str(game["native_game_id"]), "played_date": game["played_date"],
-            "home_points": game["home_points"], "away_points": game["away_points"],
+            "home_points": scores["home_points"], "away_points": scores["away_points"],
+            "score_status": scores["value_status"],
+            "canonical_coverage": {side: row["status"] for side, row in snapshot["coverage"].items()},
+            "native_box_sha256": fingerprint(native),
             "player_box_sha256": fingerprint(boxes), "simulation_mode": "CALENDAR_SIM_ONLY",
         })
     return results
@@ -280,7 +317,7 @@ def control_result(conn, manifest, inventory, binding, db_path, anchor):
     if (post_observed_at.utcoffset() is None or pre_observed_at.utcoffset() is None
             or post_observed_at <= pre_observed_at):
         raise ValueError("Post-window schedule unit must be newer than the frozen baseline")
-    games = control_games(conn, schedule["season_id"], schedule["unit_id"], start, end)
+    games = control_games(conn, schedule["season_id"], schedule["unit_id"], start, end, db_path)
     expected = anchor["expected_native_game_ids"]
     if not expected or sorted(r["native_game_id"] for r in games) != sorted(expected):
         raise ValueError("Post-capture full boxes do not cover the frozen game IDs")
@@ -494,6 +531,10 @@ def main():
             manifest["status"] = "W0_START_CAPTURE_AWAITING_PAIR_VERIFICATION"
             manifest["basis"] = "Fresh bound no-write capture; identical-start pair verification pending"
             assignment["status"] = "W0_CANDIDATE_ONLY_PAIR_NOT_VERIFIED_NO_SEAL"
+        elif args.control_start:
+            manifest["status"] = "W0_POST_WINDOW_CAPTURE"
+            manifest["basis"] = "Actual no-write post-window capture; frozen eligibility remains at the pre-simulation start"
+            assignment["status"] = "POST_WINDOW_EXPLORATORY_ONLY_NOT_FROZEN_WP"
         control = (control_result(conn, manifest, inventory, binding, args.database,
                                   json.loads(args.control_start.read_bytes()))
                    if args.control_start else None)
