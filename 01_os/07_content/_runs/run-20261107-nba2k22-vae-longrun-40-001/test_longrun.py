@@ -8,12 +8,20 @@ from copy import deepcopy
 from build_ledger import build
 from build_observed_round import FEATURES, assign_blocks
 from experiment_round import analyze, fixture, plan
+from read_observed_window import player_opportunity
 from window_harness import FixturePort, Journal, execute_fixture, fixture_permit, reconcile_fixture
 
 HERE = Path(__file__).resolve().parent
 
 
 class LongrunTests(unittest.TestCase):
+    def test_worlddata_box_missing_or_zero_does_not_impute_dnp(self):
+        self.assertEqual(player_opportunity(None), {"disposition": "UNOBSERVED", "minutes": None, "fga": None})
+        self.assertEqual(player_opportunity({"in_use": 1, "minutes_raw": 0, "fg_attempted": 0})["disposition"],
+                         "UNOBSERVED")
+        self.assertEqual(player_opportunity({"in_use": 1, "minutes_raw": 15, "fg_attempted": 0}),
+                         {"disposition": "PLAYED", "minutes": 15, "fga": 0})
+
     def setUp(self):
         self.plan = plan(fixture(), 20261107)
         self.permit = fixture_permit(self.plan)
