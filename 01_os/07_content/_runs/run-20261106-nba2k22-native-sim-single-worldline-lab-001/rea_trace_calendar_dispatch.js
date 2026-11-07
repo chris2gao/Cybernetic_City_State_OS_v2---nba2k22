@@ -30,7 +30,8 @@ function payloadType(payload) {
     if (payload.isNull()) return {kind: 'null'};
     try {
         const vtable = rva(payload.readPointer());
-        return {kind: vtable ? 'module_vtable' : 'external_vtable', vtable_rva: vtable};
+        return {kind: vtable ? 'module_vtable' : 'external_vtable', vtable_rva: vtable,
+            ...(vtable === '0x2479e30' ? {selected_date_word: payload.add(8).readU32(), selector: payload.add(16).readU32()} : {})};
     } catch (_) {
         return {kind: 'unreadable'};
     }
@@ -72,4 +73,5 @@ Interceptor.attach(wrapper, {
         if (this.frame) emit('REA_SIM_WRAPPER_RETURN', {...this.frame, eax: result.toUInt32()});
     },
 });
-send({event: 'REA_DISPATCH_TRACE_ARMED', pid: Process.id, limit});
+send({event: 'REA_DISPATCH_TRACE_ARMED', pid: Process.id, limit, window_ms: 150000});
+setTimeout(() => { Interceptor.detachAll(); send({event:'REA_DISPATCH_TRACE_EXPIRED'}); }, 150000);

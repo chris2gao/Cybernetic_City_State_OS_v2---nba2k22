@@ -1,14 +1,37 @@
 {
   "action_id": "SIM_THROUGH_DATE",
   "default": "DISABLED",
-  "status": "SIM_CALL_UNVERIFIED",
-  "evidence_grade": "PE_STATIC_CANDIDATE",
+  "status": "NATIVE_EXTERNAL_CALL_UNVERIFIED",
+  "evidence_grade": "CALENDAR_UI_LIVE_WINDOW_VERIFIED",
   "build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
-  "abi": "Win64 x86_64, observed argument locations only",
+  "abi": "Win64 x86_64, correlated calendar command and downstream arguments",
   "static_chain_rvas": ["0xbd956e", "0x8258e0", "0x7ed990", "0x11be250", "0x11be290"],
   "wrapper_code_sha256": "0dc7c3ce6eb4f394701405d48510f5d4605627cc9f8c0f21cc3c969c52da16d7",
   "internal_code_sha256": "3da6f3df5779fa6c4b8d62a37db36b11d5775a207d3a419a747a5242cde5cc35",
-  "runtime_correlation": "NOT_RUN",
-  "live_call": "NOT_RUN",
-  "unknown": ["button-to-overlay transition", "exact MyLEAGUE branch", "flag and context lifetime", "civil endpoint mapping", "thread/async rules", "save and completion events"]
+  "runtime_correlation": {
+    "status": "UI_TO_NATIVE_RUNTIME_CORRELATED",
+    "evidence_id": "ev_4687222e18e18770ac782d795c9aeddb981319d39a0e4535b7f9ad1209429abb",
+    "menu_caller_rva": "0x7e9b80",
+    "dispatcher_callsite_rva": "0x7e9f46",
+    "dispatcher_rva": "0x1268320",
+    "command_ecx": 17,
+    "payload_rdx": {
+      "vtable_pointer_at_0_rva": "0x2479e30",
+      "selected_schedule_date_u32_at_8": "0x2b7d0000",
+      "selector_u32_at_16": 1
+    },
+    "wrapper_callsite_rva": "0x12690dc",
+    "wrapper_target_word": "0x2b7e0000",
+    "selected_day": "2021-12-29",
+    "observed_stop_today": "2021-12-30T00:00:00",
+    "observed_wrapper_returns": [0, 1],
+    "observed_thread_id": 3128,
+    "thread_id_scope": "one process epoch, never reuse as a routing constant",
+    "expected_game_ids": [516, 517, 518, 519, 520, 521, 522, 523, 524],
+    "final_simulated_count": 9,
+    "score_conserved_box_count": 9,
+    "next_day_pending_count": 4
+  },
+  "live_call": "HUMAN_UI_TRIGGERED_ONLY",
+  "unknown": ["safe external command submission and owning thread execution point", "exact cause of first return 0", "save reload persistence"]
 }

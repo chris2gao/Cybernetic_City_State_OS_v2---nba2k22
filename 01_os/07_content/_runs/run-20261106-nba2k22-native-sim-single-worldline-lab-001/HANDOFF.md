@@ -1,5 +1,7 @@
 # Issue #37 candidate handoff
 
+Later REA live evidence resolves the actual calendar command as dispatcher command 17, with an independently read back nine-game window. See [current native mechanism](rea-native-calendar-automation.md) and [current candidate record](sim-candidate.json). The bullets below describe the original offline delivery checkpoint.
+
 - Fixed NBA base `bb73a06e710158c538caf809a771eca291eee028`. Tested source `87c95a66b15c9546f461bbfe0d5cc8161ecc0117`. This follow-up records evidence only.
 - `NATIVE_SIM_STATIC_BOUNDARY_MAPPED`: [dossier](native-calendar-dossier.md), [disabled registry](sim-candidate.json) and [disassembly](static-instruction-evidence.txt). The PE path is overlay registration → dispatch → `0x7ed990` → `0x11be250` → `0x11be290`. Exact Calendar UI button, ABI semantic flags, game thread and completion remain runtime questions.
 - `NATIVE_SIM_OFFLINE_HARNESS_READY`: [controller](sim_control.py), [state machine and guard matrix](state-machine-contract.md), [receipt](verification-receipt.json). Twelve focused tests passed; unknown outcomes reserve the save/worldline journal against replay. There is no live adapter.
