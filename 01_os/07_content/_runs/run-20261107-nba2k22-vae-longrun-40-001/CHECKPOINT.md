@@ -37,4 +37,6 @@ python -B -X utf8 "$run/window_harness.py" one-window --journal "$run/_runtime/f
 
 ## 下一项安全动作
 
-继续同一母任务。先在 #39 把原生日历入口定向归档，修正 Box 日期标签并回归，保留原始 66 场、前台和异常证据。然后为只读真实计划绑定新鲜存档、原生 roster、赛季、赛程和 WorldData 单元，冻结 30 队候选及首个短窗。准备 #39 短窗实机测试封套及独立日历/Setter 决策材料。Human 只在有完整候选摘要后裁决，或在赛季/危险停止门处理游戏。
+继续同一母任务。[#39 草稿 PR #42](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/42) 已发布测试专用归档候选，固定提交 `2a1623a7397b5fec97b7e71aa929f15607245fbb`。归档版的 Native Today 和帧观察有实机只读证据，修正 Box 日期标签并通过 10 项日历测试和 87 项 Host/Outbox 回归。新归档版写入、保存重载和季委托尚未执行。
+
+下一步用现有获准 WorldData 采集环境读取存档、赛季、名单和赛程，完成与只读 REA 的同现场绑定。普通权限采集返回 WinError 5，第一阶段的 30 队计划仍为合成 fixture。#39 已提出 1 月 7 日 9 场短窗，需绑定实际世界线、数据库、共享 Outbox、备份与可用批准后再运行。Human 在有完整候选摘要后裁决，或在赛季/危险停止门处理游戏。
