@@ -1,6 +1,6 @@
 {
   "task_id": "NBA2K22-VAE-LAB-E0-R0-EXPERIMENT-READINESS-20261106-001",
-  "status": "W0_A_START_CAPTURE_VERIFIED_PAIR_PENDING",
+  "status": "R0_READY_FOR_HUMAN_CONTROL_SIM",
   "capture_authority": "Human explicitly authorized current and subsequent in-scope tests in this chat",
   "loaded_slot_basis": "HUMAN_CONFIRMED_MyLEAGUE0005",
   "worldline": "vae-r0-w0-a-0005",
@@ -20,9 +20,20 @@
   "historical_final_games": 463,
   "historical_player_box_opportunities": 9739,
   "R0_completed_repeats": 0,
-  "worldline_pair_status": "WAITING_FOR_HUMAN_LOAD_0006",
+  "worldline_pair_status": "DISTINCT_DISK_FILES_AND_DATABASES_WITH_MATCHING_OBSERVED_START",
+  "W0_B_start": {
+    "loaded_slot_basis": "HUMAN_CONFIRMED_MyLEAGUE0006",
+    "worldline": "vae-r0-w0-b-0006",
+    "capture_batch": "3d5ae4f8163b",
+    "source_report_sha256": "f29ff11979f18d429f7e79c17a1fba25b848f8be9bfe879f1eb61e760598cc9f",
+    "capture_result": "COMPLETED_REQUESTED_SOURCES",
+    "game_writes": false,
+    "observed_today": "2021-12-21"
+  },
+  "freeze_controls_exit_code": 0,
+  "pair_verification_scope": "Common pre-simulation disk digest, distinct file and DB identities, separate capture reports, matching observed-state fingerprints and 44 predeclared Native game IDs. This does not prove independent RNG or full latent game state.",
   "origin_status": "Human confirms both copies from 0003; 0005 and 0006 matched before simulation; current 0003 differs",
   "disk_source_identity": "Retained privately; no source hash promoted to pristine-gameplay proof",
   "collection_recovery": "Initial ordinary-user capture exited 1 with WinError 5 before acquisition. Existing read-only CLI then ran with the authorized administrator worker and exited 0.",
-  "next_action": "Human loads 0006 without saving or simulating; continue authorized read-only capture and verify paired starts"
+  "next_action": "Human manually simulates currently loaded 0006 until Today 2021-12-28, ending all 2021-12-27 games and excluding 2021-12-28 games; report completion for the authorized post-window read"
 }
