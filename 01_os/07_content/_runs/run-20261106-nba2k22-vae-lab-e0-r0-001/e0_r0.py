@@ -490,6 +490,10 @@ def main():
         conn.execute("BEGIN")
         manifest, pool, inventory, assignment = build(conn, json.loads(raw_report), binding, raw_binding)
         manifest["source_report_sha256"] = args.report_sha256
+        if args.control_preflight:
+            manifest["status"] = "W0_START_CAPTURE_AWAITING_PAIR_VERIFICATION"
+            manifest["basis"] = "Fresh bound no-write capture; identical-start pair verification pending"
+            assignment["status"] = "W0_CANDIDATE_ONLY_PAIR_NOT_VERIFIED_NO_SEAL"
         control = (control_result(conn, manifest, inventory, binding, args.database,
                                   json.loads(args.control_start.read_bytes()))
                    if args.control_start else None)
