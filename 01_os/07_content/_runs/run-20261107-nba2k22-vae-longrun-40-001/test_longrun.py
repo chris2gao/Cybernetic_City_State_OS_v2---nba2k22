@@ -6,6 +6,7 @@ from collections import Counter
 from copy import deepcopy
 
 from build_ledger import build
+from build_observed_round import FEATURES, assign_blocks
 from experiment_round import analyze, fixture, plan
 from window_harness import FixturePort, Journal, execute_fixture, fixture_permit, reconcile_fixture
 
@@ -16,6 +17,14 @@ class LongrunTests(unittest.TestCase):
     def setUp(self):
         self.plan = plan(fixture(), 20261107)
         self.permit = fixture_permit(self.plan)
+
+    def test_observed_blocking_is_repeatable_and_covers_all_teams(self):
+        features = {team: {feature: team + offset for offset, feature in enumerate(FEATURES)}
+                    for team in range(30)}
+        candidates = {team: {"position": "CENTER"} for team in features}
+        groups, _, _ = assign_blocks(features, candidates)
+        self.assertEqual(groups, [list(range(start, start + 5)) for start in range(0, 30, 5)])
+        self.assertEqual(groups, assign_blocks(dict(reversed(list(features.items()))), candidates)[0])
 
     def test_pinned_ledger_and_eligibility(self):
         ledger = build()
