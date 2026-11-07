@@ -1,0 +1,11 @@
+# Issue #37 candidate handoff
+
+- Fixed NBA base `bb73a06e710158c538caf809a771eca291eee028`. Tested source `87c95a66b15c9546f461bbfe0d5cc8161ecc0117`. This follow-up records evidence only.
+- `NATIVE_SIM_STATIC_BOUNDARY_MAPPED`: [dossier](native-calendar-dossier.md), [disabled registry](sim-candidate.json) and [disassembly](static-instruction-evidence.txt). The PE path is overlay registration → dispatch → `0x7ed990` → `0x11be250` → `0x11be290`. Exact Calendar UI button, ABI semantic flags, game thread and completion remain runtime questions.
+- `NATIVE_SIM_OFFLINE_HARNESS_READY`: [controller](sim_control.py), [state machine and guard matrix](state-machine-contract.md), [receipt](verification-receipt.json). Twelve focused tests passed; unknown outcomes reserve the save/worldline journal against replay. There is no live adapter.
+- `SINGLE_WORLDLINE_PLAN_READY`: [plan and old-design comparison](single-worldline-lab-plan.md), [reproducible 30-team example](single-worldline-matrix.json). Native Setter authority remains the pre-existing scoped S4 authority and is not used here.
+- `LIVE_SIM_AUTHORIZATION_REQUIRED`: [one-shot admission](live-admission.md). The historical 2021-12-21 to 2021-12-28 stop and 44 matches are a conditional replay candidate. A fresh disposable-slot identity and schedule freeze are prerequisites before requesting authorization for the actual trigger.
+
+Internal Loop: (1) REA build admission; whole-image provider timeout; bounded PE fallback; recovered registration, ABI slots and divergent branches. (2) Built isolated preflight, scripted readback, and one-shot journal; added positive and negative tests, including an empty reservation after crash. (3) Generated the league fixture and exposure graph, replayed both matrix and bounded instructions, checked exact source scope. Work remaining concerns the physical input and live evidence, not another offline replay of the same inputs.
+
+Scope is the domain Run only. R0 remains referenced at `87826a88acd9bf927c97a74dee36c56f7e31c887`. No game process, save, Native write, legacy PR or shared OS code was changed. The verified source and this receipt are prepared for independent review before any load-bearing Native call or integration.
