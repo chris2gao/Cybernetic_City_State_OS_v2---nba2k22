@@ -2,12 +2,13 @@
 import argparse
 from collections import Counter, defaultdict
 from contextlib import closing
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import hashlib
 import itertools
 import json
 from pathlib import Path
 import sqlite3
+import sys
 
 SEED = "E0-SHOT-TENDENCY-WP-V1-20261106"
 ROOT = Path(__file__).resolve().parents[4]
@@ -170,6 +171,66 @@ def compare_controls(left, right):
             "control_repeats": 2, "suggested_repeats_if_variable": 4}
 
 
+def control_games(conn, season, schedule_unit, start, end):
+    """Project verified full boxes from the exact post-window capture unit."""
+    results = []
+    for game in conn.execute("""
+        SELECT g.game_id,g.native_game_id,g.home_team_id,g.away_team_id,
+               x.played_native_iso_date AS played_date,s.home_points,s.away_points
+        FROM game_source_checks x JOIN games g USING(game_id)
+        JOIN game_state_observations s ON s.game_id=x.game_id AND s.unit_id=x.unit_id
+        WHERE x.unit_id=? AND g.season_id=? AND x.game_type_label='NORMAL'
+          AND x.box_mode='FULL_NATIVE_BOX' AND s.is_final=1 AND s.was_simulated=1
+          AND x.played_native_iso_date>=? AND x.played_native_iso_date<?
+        ORDER BY g.native_game_id
+    """, (schedule_unit, season, start, end)):
+        boxes = [dict(row) for row in conn.execute("""
+            SELECT player_id,team_id,points,fg_made,fg_attempted,three_made,three_attempted,
+                   ft_made,ft_attempted,offensive_rebounds,defensive_rebounds,assists,
+                   steals,blocks,turnovers,fouls,minutes_raw
+            FROM player_game_boxes WHERE game_id=? AND unit_id=? ORDER BY player_id
+        """, (game["game_id"], schedule_unit))]
+        teams = {game["home_team_id"], game["away_team_id"]}
+        team_scores = {row["team_id"]: row["points"] for row in conn.execute("""
+            SELECT team_id,points FROM team_game_boxes WHERE game_id=? AND unit_id=?
+        """, (game["game_id"], schedule_unit))}
+        if ({r["team_id"] for r in boxes} != teams or not all(r["player_id"] for r in boxes)
+                or len({r["player_id"] for r in boxes}) != len(boxes)
+                or team_scores != {game["home_team_id"]: game["home_points"],
+                                   game["away_team_id"]: game["away_points"]}):
+            raise ValueError("Missing, duplicate or inconsistent exact-unit boxes")
+        results.append({
+            "native_game_id": str(game["native_game_id"]), "played_date": game["played_date"],
+            "home_points": game["home_points"], "away_points": game["away_points"],
+            "player_box_sha256": fingerprint(boxes), "simulation_mode": "CALENDAR_SIM_ONLY",
+        })
+    return results
+
+
+def control_result(conn, manifest, inventory, binding, db_path, anchor):
+    start, end = anchor["window_start"], anchor["window_end_exclusive"]
+    if (anchor["no_intervention"] is not True
+            or anchor["worldline"] != binding["worldline_id"]
+            or anchor["save_identity"] != binding["native_save_filename"]
+            or manifest["window_start"] != end
+            or date.fromisoformat(end) - date.fromisoformat(start) != timedelta(days=7)
+            or inventory["sim_mode"] != "CALENDAR_SIM_ONLY"):
+        raise ValueError("Post-capture save, worldline, no-write declaration or stop date differs from frozen control")
+    schedule = manifest["units"]["schedule"]
+    post_observed_at = datetime.fromisoformat(schedule["observed_at"])
+    pre_observed_at = datetime.fromisoformat(anchor["pre_capture_observed_at"])
+    if (post_observed_at.utcoffset() is None or pre_observed_at.utcoffset() is None
+            or post_observed_at <= pre_observed_at):
+        raise ValueError("Post-window schedule unit must be newer than the frozen baseline")
+    games = control_games(conn, schedule["season_id"], schedule["unit_id"], start, end)
+    expected = anchor["expected_native_game_ids"]
+    if not expected or sorted(r["native_game_id"] for r in games) != sorted(expected):
+        raise ValueError("Post-capture full boxes do not cover the frozen game IDs")
+    return {**anchor, "db_identity": fingerprint(str(db_path.resolve())),
+            "mode": "CALENDAR_SIM_ONLY", "schedule_unit": schedule["unit_id"],
+            "source_report_sha256": manifest["source_report_sha256"], "games": games}
+
+
 def build(conn, report, binding, binding_bytes):
     units = bound_units(conn, report, binding, binding_bytes)
     ids = {k: v["unit_id"] for k, v in units.items()}
@@ -320,12 +381,20 @@ def build(conn, report, binding, binding_bytes):
 
 
 def main():
+    if sys.argv[1:2] == ["compare"]:
+        parser = argparse.ArgumentParser(description="Compare two private, verified R0 control results")
+        parser.add_argument("left", type=Path)
+        parser.add_argument("right", type=Path)
+        args = parser.parse_args(sys.argv[2:])
+        print(encode(compare_controls(json.loads(args.left.read_bytes()), json.loads(args.right.read_bytes()))))
+        return
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--database", type=Path, required=True)
     parser.add_argument("--binding", type=Path, required=True)
     parser.add_argument("--report", type=Path, required=True)
     parser.add_argument("--report-sha256", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--control-start", type=Path, help="Verified private W0 start anchor for a post-window capture")
     args = parser.parse_args()
     out = args.output.resolve()
     if out.is_relative_to(ROOT) or out.exists():
@@ -340,11 +409,16 @@ def main():
         conn.row_factory = sqlite3.Row
         conn.execute("BEGIN")
         manifest, pool, inventory, assignment = build(conn, json.loads(raw_report), binding, raw_binding)
-    manifest["source_report_sha256"] = args.report_sha256
+        manifest["source_report_sha256"] = args.report_sha256
+        control = (control_result(conn, manifest, inventory, binding, args.database,
+                                  json.loads(args.control_start.read_bytes()))
+                   if args.control_start else None)
     data = {"eligibility_pool.jsonl": "".join(encode(r) + "\n" for r in pool),
             "observation_inventory.json": encode(inventory) + "\n",
             "WP_candidate_assignment.json": encode(assignment) + "\n",
             "experiment_field_registry.json": encode(field_registry()) + "\n"}
+    if control:
+        data["R0_control_result.json"] = encode(control) + "\n"
     manifest["artifact_sha256"] = {name: hashlib.sha256(body.encode()).hexdigest() for name, body in data.items()}
     data["R0_baseline_manifest.json"] = encode(manifest) + "\n"
     out.mkdir()

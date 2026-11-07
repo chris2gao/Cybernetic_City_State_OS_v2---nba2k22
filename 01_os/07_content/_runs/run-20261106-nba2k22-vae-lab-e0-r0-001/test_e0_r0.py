@@ -6,7 +6,7 @@ import sqlite3
 
 import pytest
 
-from e0_r0 import FAMILIES, assign, bound_units, compare_controls, field_registry, opportunity
+from e0_r0 import FAMILIES, assign, bound_units, compare_controls, control_result, field_registry, opportunity
 
 
 def test_r0_separates_zero_minutes_and_missing():
@@ -107,3 +107,38 @@ def test_only_shot_tendency_has_historical_live_writer_grade():
     assert len([r for r in registry if r["unit"] == "team"]) == 10
     assert [r["field_id"] for r in registry if r["action_grade"] == "LIVE_SETTER_VERIFIED"] == ["SHOT_TENDENCY"]
     assert all(not r["allowed_doses"] for r in registry if r["field_id"] != "SHOT_TENDENCY")
+
+
+def test_control_result_requires_exact_post_capture_boxes_and_stop_date(tmp_path):
+    conn = sqlite3.connect(":memory:")
+    conn.row_factory = sqlite3.Row
+    conn.executescript("""
+        CREATE TABLE games(game_id,native_game_id,home_team_id,away_team_id,season_id);
+        CREATE TABLE game_source_checks(game_id,unit_id,played_native_iso_date,game_type_label,box_mode);
+        CREATE TABLE game_state_observations(game_id,unit_id,home_points,away_points,is_final,was_simulated);
+        CREATE TABLE team_game_boxes(game_id,unit_id,team_id,points);
+        CREATE TABLE player_game_boxes(game_id,unit_id,player_id,team_id,points,fg_made,fg_attempted,
+            three_made,three_attempted,ft_made,ft_attempted,offensive_rebounds,defensive_rebounds,
+            assists,steals,blocks,turnovers,fouls,minutes_raw);
+        INSERT INTO games VALUES('g','12','H','A','season');
+        INSERT INTO game_source_checks VALUES('g','post','2021-12-22','NORMAL','FULL_NATIVE_BOX');
+        INSERT INTO game_state_observations VALUES('g','post',100,98,1,1);
+        INSERT INTO team_game_boxes VALUES('g','post','H',100),('g','post','A',98);
+        INSERT INTO player_game_boxes(game_id,unit_id,player_id,team_id,fg_attempted,minutes_raw)
+            VALUES('g','post','p1','H',5,25),('g','post','p2','A',4,22),('g','pre','p2','A',99,47);
+    """)
+    anchor = control(pre_capture_observed_at="2026-11-06T08:00:00Z")
+    manifest = dict(window_start="2021-12-28", source_report_sha256="a" * 64,
+                    units={"schedule": dict(unit_id="post", season_id="season", observed_at="2026-11-06T09:00:00Z")})
+    inventory = {"sim_mode": "CALENDAR_SIM_ONLY"}
+    binding = dict(worldline_id="A", native_save_filename="SaveA")
+    args = (inventory, binding, tmp_path / "a.sqlite", anchor)
+    actual = control_result(conn, manifest, *args)
+    assert actual["games"][0]["native_game_id"] == "12"
+    conn.execute("UPDATE player_game_boxes SET fg_attempted=42 WHERE unit_id='pre'")
+    assert control_result(conn, manifest, *args) == actual
+    with pytest.raises(ValueError, match="stop date"):
+        control_result(conn, dict(manifest, window_start="2021-12-29"), *args)
+    conn.execute("UPDATE team_game_boxes SET unit_id='pre' WHERE team_id='A'")
+    with pytest.raises(ValueError, match="exact-unit boxes"):
+        control_result(conn, manifest, *args)
