@@ -47,6 +47,47 @@ def _derive_resource_key(action_id: str, parameters: Dict[str, Any]) -> str:
     return f"{action_id}/{ident}"
 
 
+_PLAYER_STAT_ACTIONS = {
+    "PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES",
+    "PLAYER.EDIT.ATTR_BATCH", "PLAYER_PATCH_ATTRIBUTES",
+}
+
+
+def _native_player_field(uid, field):
+    if type(uid) is str and uid.isascii() and uid.isdecimal() and len(uid) <= 5:
+        uid = int(uid)
+    if (type(uid) is not int or not 0 < uid < 65535 or not isinstance(field, str)
+            or not field.isascii() or not field.replace("_", "").isalnum()):
+        raise ValueError("Invalid Native player UID or field")
+    return ("native-player-field", uid, field.upper())
+
+
+def _execution_resources(row):
+    """Decode physical targets from the immutable intent, including legacy rows."""
+    if row["action_id"].upper() not in _PLAYER_STAT_ACTIONS:
+        return {("outbox", row["target_resource_key"])}
+    params = json.loads(row["parameters_json"])
+    if not isinstance(params, dict):
+        raise ValueError("Missing Native player parameters")
+    uid = params.get("player_id", params.get("player_uid"))
+    if "player_id" in params and "player_uid" in params:
+        if _native_player_field(uid, "ID") != _native_player_field(params["player_uid"], "ID"):
+            raise ValueError("Conflicting Native player identifiers")
+    maps = [params[key] for key in ("values", "tendency_map", "attribute_map") if key in params]
+    if "field_id" in params and "value" in params:
+        if maps:
+            raise ValueError("Mixed direct and map Native field encodings")
+        fields = [params["field_id"]]
+    elif len(maps) == 1 and isinstance(maps[0], dict) and maps[0]:
+        fields = list(maps[0])
+    else:
+        raise ValueError("Ambiguous Native player field encoding")
+    resources = {_native_player_field(uid, field) for field in fields}
+    if len(resources) != len(fields):
+        raise ValueError("Duplicate Native player fields")
+    return resources
+
+
 class DecisionOutbox:
     """SQLite-backed Decision Outbox container."""
 
@@ -618,7 +659,7 @@ class DecisionOutbox:
 
         return sealed_batch
 
-    def claim_execution(self, cycle_id: str, plan_digest: str) -> None:
+    def claim_execution(self, cycle_id: str, plan_digest: str, *, native_items=None) -> None:
         """Reserve a sealed cycle once before dispatch, including across Host restarts."""
         with self._get_connection() as conn:
             conn.execute("BEGIN IMMEDIATE")
@@ -634,27 +675,47 @@ class DecisionOutbox:
             if prior:
                 raise ValueError("EXECUTION_ALREADY_CLAIMED_NO_REPLAY")
             context = json.loads(cycle["context_json"])
-            conflict = conn.execute("""
-                SELECT 1
-                  FROM decision_intents next
-                  JOIN decision_intents prior USING(target_resource_key)
-                  JOIN decision_cycles old ON old.cycle_id = prior.cycle_id
-                 WHERE next.cycle_id = ? AND old.cycle_id != next.cycle_id
+            resources = set()
+            for item in conn.execute("""
+                SELECT action_id, parameters_json, target_resource_key FROM decision_intents
+                 WHERE cycle_id = ? AND status = 'SEALED'
+            """, (cycle_id,)):
+                item_resources = _execution_resources(item)
+                if any(key[0] == "native-player-field" for key in resources & item_resources):
+                    raise ValueError("DUPLICATE_NATIVE_EXECUTION_RESOURCE")
+                resources.update(item_resources)
+            if not resources:
+                raise ValueError("EXECUTION_CLAIM_REQUIRES_SEALED_INTENTS")
+            if native_items is not None:
+                actual = [_native_player_field(item.player_id, item.field_id) for item in native_items]
+                if len(actual) != len(resources) or set(actual) != resources:
+                    raise ValueError("SEALED_AND_BRIDGED_NATIVE_RESOURCES_DIFFER")
+            unresolved = conn.execute("""
+                SELECT old.cycle_id, prior.action_id, prior.parameters_json, prior.target_resource_key
+                  FROM decision_cycles old
+                  LEFT JOIN decision_intents prior ON old.cycle_id = prior.cycle_id
+                 WHERE old.cycle_id != ?
                    AND json_extract(old.context_json, '$.world_id') = ?
                    AND json_extract(old.context_json, '$.save_instance_id') = ?
                    AND (prior.status = 'UNKNOWN' OR (old.status = 'SEALED' AND EXISTS (
                        SELECT 1 FROM outbox_events e
                         WHERE e.cycle_id = old.cycle_id AND e.event_type = 'EXECUTION_CLAIMED'
                    )))
-                 LIMIT 1
-            """, (cycle_id, context["world_id"], context["save_instance_id"])).fetchone()
-            if conflict:
-                raise ValueError("EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM")
+            """, (cycle_id, context["world_id"], context["save_instance_id"]))
+            for held in unresolved:
+                try:
+                    held_resources = _execution_resources(held)
+                except (AttributeError, TypeError, ValueError) as exc:
+                    raise ValueError(
+                        f"UNRESOLVED_OUTBOX_RESOURCE_UNDECODABLE: reconcile cycle {held['cycle_id']} before execution"
+                    ) from exc
+                if resources & held_resources:
+                    raise ValueError("EXECUTION_RESOURCE_HELD_BY_UNRESOLVED_OUTBOX_CLAIM")
             conn.execute("""
                 INSERT INTO outbox_events
                     (cycle_id, event_type, prev_state, new_state, revision, payload_json, timestamp)
                 VALUES (?, 'EXECUTION_CLAIMED', 'SEALED', 'SEALED', ?, ?, ?)
-            """, (cycle_id, cycle["revision"], json.dumps({"plan_digest": plan_digest}),
+            """, (cycle_id, cycle["revision"], json.dumps({"plan_digest": plan_digest, "resources": sorted(resources)}),
                   time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())))
             conn.commit()
 

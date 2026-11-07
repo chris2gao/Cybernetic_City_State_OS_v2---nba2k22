@@ -697,8 +697,11 @@ class SeasonCycleHost:
         """Provides a real-time player tendency getter from NBA2K22 memory (pure ReadProcessMemory)."""
         return self._get_fresh_live_getter(expected_pid)
 
-    def _get_fresh_live_getter(self, expected_pid: Optional[int] = None) -> Optional[Any]:
-        """Connects fresh to NBA2K22 memory post-execution and returns a live reader function."""
+    def _get_fresh_live_getter(
+        self, expected_pid: Optional[int] = None, *, expected_team: Optional[int] = None,
+        expected_players: Optional[Set[int]] = None, expected_creation_filetime: Optional[int] = None,
+    ) -> Optional[Any]:
+        """Read fresh values, optionally bound to the actual Native roster and process epoch."""
         try:
             from refresh import resolve_pid
             from player_skill_reader import collect_player_skills
@@ -707,11 +710,22 @@ class SeasonCycleHost:
                 raise RuntimeError(f"PID_MISMATCH_FRESH_GETTER: expected {expected_pid}, found {actual_pid}")
             reader = ReadOnlyGameProcess(actual_pid)
             try:
+                if expected_creation_filetime is not None and reader.creation_filetime != expected_creation_filetime:
+                    return None
                 m, _ = collect_player_skills(reader)
+                if expected_team is not None:
+                    team_pointers = [address for address, tid in m["core_team_pointer_map"].items()
+                                     if type(tid) is int and tid == expected_team]
+                    if len(team_pointers) != 1:
+                        return None
+                    team_pointer = team_pointers[0]
+                    player_pool = m["descriptors"][1]
                 player_tendencies = {}
                 seen = set()
                 for p in m["players"]:
                     uid = p["native_unique_id_raw"]
+                    if type(uid) is not int or (expected_players is not None and uid not in expected_players):
+                        continue
                     if uid in seen:
                         player_tendencies.pop(uid, None)
                         continue
@@ -719,6 +733,18 @@ class SeasonCycleHost:
                     if p["current_core_roster_status"] != "CURRENT_CORE_ROSTER":
                         continue
                     s_idx = p["source_player_index"]
+                    if expected_team is not None:
+                        slot = p["current_roster_slot"]
+                        team_id = p["native_team_id"]
+                        if (type(team_id) is not int or team_id != expected_team
+                                or type(slot) is not int or not 0 <= slot < 15):
+                            continue
+                        # The reader already verified reciprocal current-team membership.
+                        # Match Native rosterPlayer's additional contract-team guard.
+                        address = player_pool["address"] + s_idx * player_pool["stride"]
+                        contract_team = int.from_bytes(reader.read(address + 0xa8, 8, "S4_CONTRACT_TEAM"), "little")
+                        if contract_team != team_pointer:
+                            continue
                     player_tendencies[uid] = m["skill_rows"][s_idx]["tendencies"]
 
                 def fresh_getter(player_id: int, field_id: str) -> Optional[int]:
@@ -1698,11 +1724,15 @@ class SeasonCycleHost:
             live_batch_authorization_ref = self._verify_live_batch_approval(
                 live_batch_approval, approved_live_batch_sha256, cycle_id, plan_digest, bulk_batch, live_context
             )
-            getter_before = self._get_fresh_live_getter(expected_pid=expected_pid)
+            getter_before = self._get_fresh_live_getter(
+                expected_pid=expected_pid, expected_team=live_context["team_id"],
+                expected_players={item.player_id for item in bulk_batch.intents},
+                expected_creation_filetime=live_context["epoch"]["creation_filetime"],
+            )
             if getter_before is None or any(
                 getter_before(item.player_id, item.field_id) != item.expected_before for item in bulk_batch.intents
             ):
-                raise RuntimeError("LIVE_CAS_CHANGED_SINCE_APPROVAL")
+                raise RuntimeError("LIVE_CAS_CHANGED_SINCE_APPROVAL: Native UID, roster, contract team or value differs")
             if self._approved_live_context(expected_pid) != live_context:
                 raise RuntimeError("LIVE_CONTEXT_CHANGED_DURING_CAS")
 
@@ -1727,7 +1757,7 @@ class SeasonCycleHost:
             live_context=native_context,
             verifier=verifier,
         )
-        self.outbox.claim_execution(cycle_id, plan_digest)
+        self.outbox.claim_execution(cycle_id, plan_digest, native_items=bulk_batch.intents if live_context else None)
         self.state["status"] = HostState.UNKNOWN_LOCKED
         self._save_state()
         try:
@@ -1784,7 +1814,11 @@ class SeasonCycleHost:
         if is_mock:
             fresh_getter_func = getter_after_func
         else:
-            fresh_getter_func = self._get_fresh_live_getter(expected_pid=expected_pid)
+            fresh_getter_func = self._get_fresh_live_getter(
+                expected_pid=expected_pid, expected_team=live_context["team_id"],
+                expected_players={item.player_id for item in bulk_batch.intents},
+                expected_creation_filetime=live_context["epoch"]["creation_filetime"],
+            )
             if self._approved_live_context(expected_pid) != live_context:
                 raise RuntimeError("LIVE_CONTEXT_CHANGED_DURING_EXECUTION")
 

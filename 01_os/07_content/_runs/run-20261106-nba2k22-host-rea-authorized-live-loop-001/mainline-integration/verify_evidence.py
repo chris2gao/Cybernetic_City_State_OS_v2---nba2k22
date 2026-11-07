@@ -12,9 +12,6 @@ RUN = "01_os/07_content/_runs/run-20261106-nba2k22-host-rea-authorized-live-loop
 INTEGRATION = RUN + "/mainline-integration"
 ROOT = Path(__file__).resolve().parents[5]
 CODE = {"08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_cli.py", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_season_cycle_host.py", "08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_decision_outbox.py"}
-CHANGED_FROM_S4 = {path for path in CODE if path.endswith((
-    "/season_cycle_host.py", "/season_cycle_cli.py", "/test_season_cycle_host.py",
-))}
 PORTABLE = {"live-closeout.json": "portable-live-closeout.json", "readonly-preflight.json": "portable-preflight.json"}
 SENSITIVE = re.compile(rb'(?<![A-Za-z0-9])[A-Za-z]:[\\/]|\\\\[A-Za-z0-9_.-]+\\|-----BEGIN (?:[A-Z]+ )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{20,}')
 FORBIDDEN_NAMES = {"role_authorizations.json", "delegation-proposal.json", "evidence.json", "receipts.jsonl"}
@@ -107,7 +104,7 @@ def main():
         INTEGRATION + "/" + name for name in
         ("INTEGRATION.md", "task-packet.yml", "run.yml", "verification-plan.json", "verify_evidence.py")
     }
-    assert changes(SOURCE, head) & CODE == CHANGED_FROM_S4
+    assert changes(SOURCE, head) & CODE == CODE
     for path, data in generated.items():
         assert blob(head, path) == data, path
     for path in candidate_paths:

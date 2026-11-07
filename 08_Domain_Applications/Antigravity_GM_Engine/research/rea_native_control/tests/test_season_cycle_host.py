@@ -980,12 +980,15 @@ def test_p0_c_live_mode_rejects_fake_transport_and_unauthorized_scope(temp_envir
 @pytest.mark.parametrize("case", [
     "verified", "noop", "raw-conflict", "raw-missing", "epoch-drift",
     "approval-hash", "approval-scope", "approval-expired", "cas-drift", "role-expired",
+    "team-drift", "contract-drift", "free-agent", "identity-drift", "duplicate-uid", "roster-unreadable", "slot-drift",
 ])
 def test_s4_bound_single_batch_reconciliation(temp_environment, monkeypatch, case):
     from datetime import timedelta
     import hashlib
     import contracts
+    import player_skill_reader
     import refresh
+    import season_cycle_host
     from bounded_session_transport import SessionBatchTransport
     from live_world import read_binding
 
@@ -1020,9 +1023,35 @@ def test_s4_bound_single_batch_reconciliation(temp_environment, monkeypatch, cas
     progress = {"today_native_iso_date": "2021-11-05"}
     value = 80
     call_count = 0
+    player = {"native_unique_id_raw": 2459, "observed_name": "Fixture Player",
+              "current_core_roster_status": "CURRENT_CORE_ROSTER", "source_player_index": 0,
+              "current_roster_slot": 0, "native_team_id": 1}
+    players = [player]
+    contract_team = 0x20000
+    roster_unreadable = False
     monkeypatch.setattr(refresh, "resolve_pid", lambda _: 5720)
     monkeypatch.setattr(refresh, "_context", lambda _: {"epoch": dict(epoch), "game_progress": progress})
-    monkeypatch.setattr(host, "_get_fresh_live_getter", lambda expected_pid=None: (lambda *_: value))
+
+    class FixtureReader:
+        def __init__(self, pid):
+            assert pid == epoch["pid"]
+            self.creation_filetime = epoch["creation_filetime"]
+
+        def read(self, address, size, label):
+            assert (address, size, label) == (0x100a8, 8, "S4_CONTRACT_TEAM")
+            if roster_unreadable:
+                raise OSError("fixture contract-team read failed")
+            return contract_team.to_bytes(size, "little")
+
+        def close(self):
+            pass
+
+    monkeypatch.setattr(season_cycle_host, "ReadOnlyGameProcess", FixtureReader)
+    monkeypatch.setattr(player_skill_reader, "collect_player_skills", lambda reader: ({
+        "players": players, "skill_rows": [{"tendencies": {"shot_tendency_raw": value}}],
+        "core_team_pointer_map": {0x20000: 1, 0x30000: 28},
+        "descriptors": {1: {"address": 0x10000, "stride": 1264}},
+    }, {}))
 
     def synthetic_transport(self, script, chunks, header):
         nonlocal value, call_count
@@ -1092,11 +1121,31 @@ def test_s4_bound_single_batch_reconciliation(temp_environment, monkeypatch, cas
             host.authorize_and_execute(cycle, sealed["plan_digest"], **kwargs)
         assert call_count == 0 and host.outbox.get_cycle(cycle)["status"] == "SEALED"
         return
-    if case == "cas-drift":
-        value = 79
+    if case in ("cas-drift", "team-drift", "contract-drift", "free-agent", "identity-drift",
+                "duplicate-uid", "roster-unreadable", "slot-drift"):
+        if case == "cas-drift":
+            value = 79
+        elif case == "team-drift":
+            player["native_team_id"] = 28
+            contract_team = 0x30000
+        elif case == "contract-drift":
+            contract_team = 0x30000
+        elif case == "free-agent":
+            player.update(native_team_id=None, current_roster_slot=None,
+                          current_core_roster_status="NOT_CURRENT_CORE_ROSTER")
+        elif case == "identity-drift":
+            player["native_unique_id_raw"] = 2460
+        elif case == "duplicate-uid":
+            players.append(dict(player))
+        elif case == "roster-unreadable":
+            roster_unreadable = True
+        elif case == "slot-drift":
+            player["current_roster_slot"] = 15
         with pytest.raises(RuntimeError, match="LIVE_CAS_CHANGED_SINCE_APPROVAL"):
             host.authorize_and_execute(cycle, sealed["plan_digest"], **kwargs)
         assert call_count == 0 and host.outbox.get_cycle(cycle)["status"] == "SEALED"
+        with host.outbox._get_connection() as conn:
+            assert conn.execute("SELECT count(*) FROM outbox_events WHERE event_type='EXECUTION_CLAIMED'").fetchone()[0] == 0
         return
     summary = host.authorize_and_execute(cycle, sealed["plan_digest"], **kwargs)
     assert call_count == 1
