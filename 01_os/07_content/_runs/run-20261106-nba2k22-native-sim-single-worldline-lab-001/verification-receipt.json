@@ -1,0 +1,33 @@
+{
+  "tested_source": "87c95a66b15c9546f461bbfe0d5cc8161ecc0117",
+  "base": "bb73a06e710158c538caf809a771eca291eee028",
+  "checks": [
+    {
+      "id": "offline_safety",
+      "command": "python -B -m unittest discover -s 01_os/07_content/_runs/run-20261106-nba2k22-native-sim-single-worldline-lab-001 -p test_offline.py -v",
+      "exit_code": 0,
+      "passed": 12,
+      "scope": "scripted observations and fixture grant only"
+    },
+    {
+      "id": "matrix_replay",
+      "command": "python -B 01_os/07_content/_runs/run-20261106-nba2k22-native-sim-single-worldline-lab-001/screening_matrix.py",
+      "exit_code": 0,
+      "comparison": "matches committed matrix after CRLF normalization and final newline normalization"
+    },
+    {
+      "id": "static_pe_replay",
+      "command": "python -B 01_os/07_content/_runs/run-20261106-nba2k22-native-sim-single-worldline-lab-001/pe_calendar_xrefs.py <fixed PE> 0xbd956e 0x7edb2c 0x7edbf5 0x11be2f4 0x11be536 0x11be674 --dump --around",
+      "exit_code": 0,
+      "comparison": "matches committed bounded disassembly after CRLF normalization and final newline normalization"
+    },
+    {
+      "id": "scope",
+      "command": "git diff --check bb73a06e710158c538caf809a771eca291eee028 HEAD; git diff --name-only bb73a06e710158c538caf809a771eca291eee028 HEAD",
+      "exit_code": 0,
+      "comparison": "all candidate paths inside the approved Run prefix"
+    }
+  ],
+  "independent_review": "PENDING",
+  "live": "NOT_RUN"
+}
