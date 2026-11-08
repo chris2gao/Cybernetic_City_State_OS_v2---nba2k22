@@ -11,6 +11,7 @@ from analyze_bound_round import exposure_readback, screen
 from build_observed_round import FEATURES, assign_blocks
 from experiment_round import analyze, fixture, plan
 from read_observed_window import player_opportunity
+from season_checkpoint import make_checkpoint, verify_rebind
 from verify_round_application import bind_round, verified_item
 from window_harness import FixturePort, Journal, execute_fixture, fixture_permit, reconcile_fixture
 
@@ -18,6 +19,49 @@ HERE = Path(__file__).resolve().parent
 
 
 class LongrunTests(unittest.TestCase):
+    def test_season_handoff_verifies_next_regular_season_with_no_inherited_authority(self):
+        scene = {"save": "save", "worldline": "worldline", "season": 2022, "loaded_filename": "slot",
+                 "binding_sha256": "a" * 64, "disk_sha256": "b" * 64, "source_report_sha256": "c" * 64,
+                 "database_identity": "db", "epoch": {"pid": 1}, "today": "2022-04-11",
+                 "mode_raw": 1, "period_raw": 29, "league_raw": 0}
+        checkpoint = make_checkpoint(scene, last_regular_day="2022-04-10", stop_reason="REGULAR_SEASON_BOUNDARY",
+                                     research_intent="FOLLOW_DEVELOPMENT", frozen_backup_sha256="d" * 64, windows=[])
+        self.assertEqual(checkpoint["recommended_human_action"], "CONTINUE_NEXT_REGULAR_SEASON")
+        decision = {"checkpoint_digest": checkpoint["checkpoint_digest"], "human_ref": "fixture",
+                    "action": "CONTINUE_NEXT_REGULAR_SEASON", "confirmed_loaded_filename": "slot"}
+        fresh = dict(scene, season=2023, today="2022-10-18", source_report_sha256="e" * 64)
+        self.assertFalse(verify_rebind(checkpoint, decision, fresh)["live_write_authorized"])
+        with self.assertRaisesRegex(ValueError, "does not continue"):
+            verify_rebind(checkpoint, decision, dict(fresh, season=2022))
+        with self.assertRaisesRegex(ValueError, "fresh Human-confirmed"):
+            verify_rebind(checkpoint, decision, dict(fresh, source_report_sha256=scene["source_report_sha256"]))
+
+    def test_season_stop_preserves_unknown_and_checks_restore_isolation(self):
+        scene = {"save": "save", "worldline": "worldline", "season": 2022, "loaded_filename": "slot",
+                 "binding_sha256": "a" * 64, "disk_sha256": "b" * 64, "source_report_sha256": "c" * 64,
+                 "database_identity": "db", "epoch": {"pid": 1}, "today": "2022-01-07",
+                 "mode_raw": 1, "period_raw": 29, "league_raw": 0}
+        unknown = {"plan_digest": "e" * 64, "receipt_sha256": "f" * 64, "verified_game_ids": [100],
+                   "status": "UNKNOWN_NO_REPLAY", "save": "save", "worldline": "worldline", "season": 2022}
+        options = {"last_regular_day": "2022-04-10", "stop_reason": "UNKNOWN_DISPATCH",
+                   "research_intent": "FOLLOW_DEVELOPMENT", "frozen_backup_sha256": "d" * 64}
+        checkpoint = make_checkpoint(scene, windows=[unknown], **options)
+        self.assertEqual(checkpoint["status"], "STOPPED_RECONCILIATION_REQUIRED")
+        self.assertEqual(checkpoint["unresolved_windows"], 1)
+        decision = {"checkpoint_digest": checkpoint["checkpoint_digest"], "human_ref": "fixture",
+                    "action": "RESTORE_FROZEN_BASELINE", "confirmed_loaded_filename": "restored",
+                    "expected_restored_season": 2022, "expected_restored_today": "2021-12-21"}
+        fresh = dict(scene, loaded_filename="restored", disk_sha256="d" * 64, source_report_sha256="e" * 64,
+                     today="2021-12-21", database_identity="new-db", worldline="restored-worldline")
+        with self.assertRaisesRegex(ValueError, "reconciliation must precede"):
+            verify_rebind(checkpoint, decision, fresh)
+        decision["reconciliation_ref"] = "fixture-read-only-reconciliation"
+        with self.assertRaisesRegex(ValueError, "isolated worldline"):
+            verify_rebind(checkpoint, decision, dict(fresh, database_identity="db"))
+        self.assertFalse(verify_rebind(checkpoint, decision, fresh)["live_write_authorized"])
+        with self.assertRaisesRegex(ValueError, "different season"):
+            make_checkpoint(scene, windows=[dict(unknown, season=2023)], **options)
+
     def test_pre_window_requires_observed_doses_and_untouched_controls(self):
         frozen = plan(fixture(), 20261107)
         rows = [{"team_id": row["team_id"], "uid": row["uid"], "value": row["planned_value"]}

@@ -6,6 +6,7 @@
 - [单存档实验规则](experiment_rules.md) · [首轮 H/L/C 离线计划](round_fixture_plan.json) · [真实赛程只读快照](current_schedule_observation.json)
 - [§7.2 委托变更对比](season_delegation_review.md) · [机器合同候选](season_research_delegation.json)
 - [66 场原始回执复核摘要](native_calendar_receipt_audit.json) · [验证收据](verification_receipt.json)
+- [赛季停止与重绑定验收](season_checkpoint.py)
 
 ## 续接点
 
