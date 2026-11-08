@@ -79,7 +79,7 @@ def windows_for_schedule(fixtures, teams, first, final_regular_day):
         for path in search(date.fromisoformat(first))]
 
 
-def allocate_window(study, window, factor_ids, values, history, *, worldline, seed):
+def allocate_window(study, window, factor_ids, values, history, *, worldline, seed, qualifications=None):
     """Allocate distinct same-family factors; qualified amounts and actual exposure remain separate."""
     factors = [study.factors[key] for key in factor_ids]
     if not 1 <= len(factors) <= 5 or len(set(factor_ids)) != len(factors):
@@ -136,7 +136,8 @@ def allocate_window(study, window, factor_ids, values, history, *, worldline, se
         _, uid, value, target = min(scored, key=lambda row: row[0])
         return {"factor_id": factor.factor_id, "team_id": team, "uid": uid, "arm": arm, "baseline": value,
                 "target": target, "opportunities": opportunities[team],
-                "reference_only": True, "live_writer_qualified": factor.live_qualified,
+                "reference_only": True, "live_writer_qualified": factor.live_qualified or (
+                    qualifications is not None and factor.factor_id in qualifications.factor_ids),
                 "prior_team_treatments": [exposure.__dict__ for exposure in team_prior[team]],
                 "prior_uid_treatment_count": treated_uids[uid]}
 
@@ -175,7 +176,7 @@ def allocate_window(study, window, factor_ids, values, history, *, worldline, se
                                                          if item.applies(worldline, row["date"])],
                       "active_previous_away_treatments": [item.__dict__ for item in team_prior[away_team]
                                                          if item.applies(worldline, row["date"])]})
-    return {"worldline_id": worldline, "start": window["start"], "stop_exclusive": window["stop_exclusive"],
+    result = {"worldline_id": worldline, "start": window["start"], "stop_exclusive": window["stop_exclusive"],
             "factors": list(factor_ids), "teams": assignments, "games": games, "subwindows": window["subwindows"],
             "cross_factor_opponent_games": cross_factor,
             "treatment_slots": sum(item["arm"] != "C" for item in assignments.values()),
@@ -183,6 +184,9 @@ def allocate_window(study, window, factor_ids, values, history, *, worldline, se
                 not item["live_writer_qualified"] or item["target"] is None) for item in assignments.values()),
             "estimand": "EXPLORATORY_WITH_CARRYOVER" if prior else "EXPLORATORY_SCREEN",
             "live_authorized": False}
+    if qualifications is not None:
+        result["qualification_sha256"] = qualifications.sha256
+    return result
 
 
 def event_study(record, worldlines, event_refs):

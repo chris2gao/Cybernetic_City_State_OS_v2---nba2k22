@@ -38,7 +38,8 @@ class FactorWorldDataPort:
                       directory, families=("schedule", "game-mode", "player-skills"))
         report_sha = hashlib.sha256((directory / "refresh-report.json").read_bytes()).hexdigest()
         if phase == "pre":
-            return capture_treatment_readback(orchestrator, directory, report_sha, plan, self.binding, setters)
+            return capture_treatment_readback(orchestrator, directory, report_sha, plan, self.binding, setters,
+                                              raw_reader=self.host.read_factor_qualification_snapshot)
         return capture_game_outcomes(orchestrator, directory, report_sha, plan, self.binding)
 
 
@@ -77,12 +78,13 @@ def _bound_report(host, directory, report_sha256, plan, binding):
     return report
 
 
-def capture_treatment_readback(host, directory, report_sha256, plan, binding, setters):
+def capture_treatment_readback(host, directory, report_sha256, plan, binding, setters, *, raw_reader=None):
     from factor_runner import digest, window_operations
-    from native_factor_slots import require_s4_live_tendency, resolve_tendency_slot
+    from native_factor_slots import resolve_tendency_slot
 
     report = _bound_report(host, directory, report_sha256, plan, binding)
     applied = {}
+    raw_observations = {}
     with closing(connect(host.database, True)) as conn:
         units = _source_units(conn, report, binding["season_id"])
         mode = conn.execute("""
@@ -93,19 +95,40 @@ def capture_treatment_readback(host, directory, report_sha256, plan, binding, se
         for operation, receipt in zip(window_operations(plan), setters, strict=True):
             if receipt["status"] not in ("APPLIED", "NOOP"):
                 continue
-            field = require_s4_live_tendency(resolve_tendency_slot(operation["factor_id"]).native_key)
-            column = field.native_key.lower() + "_raw"
+            field = resolve_tendency_slot(operation["factor_id"])
+            column = "p." + field.native_key.lower() + "_raw" if field.named else "n.native_unique_id_raw"
             observed = conn.execute(f"""
-                SELECT p.{column} FROM native_player_sources n
+                SELECT {column} FROM native_player_sources n
                 JOIN player_tendency_snapshots p ON p.source_player_id=n.player_source_id AND p.unit_id=n.unit_id
                 WHERE n.unit_id=? AND n.native_unique_id_raw=? AND n.native_team_id=?
                   AND n.current_core_roster_status='CURRENT_CORE_ROSTER' AND n.player_id IS NOT NULL
             """, (units["player-skills"], operation["uid"], operation["team_id"])).fetchall()
-            if len(observed) != 1 or observed[0][0] != operation["target"]:
+            if len(observed) != 1:
+                raise ValueError("FACTOR_PRE_WINDOW_ROSTER_IDENTITY_NOT_OBSERVED")
+            key = digest(operation)
+            value = observed[0][0]
+            if not field.named:
+                if raw_reader is None:
+                    raise ValueError("FACTOR_UNKNOWN_SLOT_REQUIRES_INDEPENDENT_RAW_READ")
+                snapshot = raw_reader(pid=binding["pid"], epoch=binding["epoch"], team_id=operation["team_id"],
+                                      uid=operation["uid"], field=field.native_key, binding_sha256=binding["binding_sha256"])
+                image = bytes.fromhex(snapshot["neighborhood_hex"])
+                if (snapshot["status"] != "READ_ONLY_SLOT_OBSERVED"
+                        or any(snapshot[key] != binding[key] for key in ("save_id", "worldline_id", "loaded_filename",
+                                                                        "binding_sha256", "epoch"))
+                        or (snapshot["today"], snapshot["minutes"], snapshot["uid"], snapshot["team_id"], snapshot["factor_id"])
+                           != (plan["start"], 0, operation["uid"], operation["team_id"], field.factor_id)
+                        or hashlib.sha256(image).hexdigest() != snapshot["neighborhood_sha256"]
+                        or field.decode(image) != snapshot["raw_value"]):
+                    raise ValueError("FACTOR_PRE_WINDOW_RAW_SLOT_SOURCE_MISMATCH")
+                value = snapshot["raw_value"]
+                raw_observations[key] = snapshot
+            if value != operation["target"]:
                 raise ValueError("FACTOR_PRE_WINDOW_EXPOSURE_NOT_OBSERVED")
-            applied[digest(operation)] = observed[0][0]
+            applied[key] = value
     return {"mode": "LIVE", "worldline_id": binding["worldline_id"], "today": plan["start"],
-            "source_unit": units["player-skills"], "report_sha256": report_sha256, "applied_values": applied}
+            "source_unit": units["player-skills"], "report_sha256": report_sha256, "applied_values": applied,
+            "raw_slot_observations": raw_observations}
 
 
 def capture_game_outcomes(host, directory, report_sha256, plan, binding):

@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import json
 from pathlib import Path
+import sqlite3
 import struct
 import sys
 from types import SimpleNamespace
@@ -16,8 +17,8 @@ from factor_inventory import StudyInputs
 from factor_lab_cli import report
 from factor_progress import ProgressEvent, ProgressLedger
 from factor_runner import (LiveEnvelope, NativeCalendarPort, QualificationDelegation, QualificationEnvelope,
-                           WindowRunner, digest, window_operations)
-from native_factor_slots import resolve_tendency_slot, require_s4_live_tendency, tendency_slots
+                           WindowDelegation, WindowRunner, digest, window_operations)
+from native_factor_slots import AcceptedTendencyQualifications, resolve_tendency_slot, require_s4_live_tendency, tendency_slots
 from bulk_executor import BulkBatch, BulkBatchHeader, BulkBatchPlanner, BulkFridaScriptCompiler, BulkIntentItem
 from contracts import BUILD
 import season_cycle_host
@@ -268,6 +269,132 @@ def test_matching_raw_value_cannot_hide_unknown_native_result(tmp_path):
     assert factor_runner._execute_host_setter(host, "fixture-cycle", operation, delegation.binding) == {
         "status": "UNKNOWN", "source_ref": SHA,
     }
+
+
+def accepted_registry_fixture(operations):
+    slots = []
+    for op in operations:
+        before = op["before"]
+        slot = resolve_tendency_slot(op["factor_id"])
+        image = slot.expected_image(bytes.fromhex(before["neighborhood_hex"]), op["expected_before"], op["target"])
+        after = dict(before, raw_value=op["target"], neighborhood_hex=image.hex(),
+                     neighborhood_sha256=sha256(image).hexdigest())
+        slots.append({"mode": "LIVE", "outcome": "CONFIRMED_APPLIED", "factor_id": slot.factor_id,
+                      "independent_review_ref": "test-only-review", "native_plan_sha256": SHA,
+                      "native_evidence_sha256": SHA, "independent_readback_sha256": SHA, "before": before, "after": after})
+    return {"schema": "nba2k22.vae.accepted_tendency_qualifications.v1", "build_sha256": BUILD, "slots": slots}
+
+
+def test_window_rechecks_independent_evidence_and_separate_authority(tmp_path, study, monkeypatch):
+    pilot, operations = qualification_fixture(tmp_path)
+    source = accepted_registry_fixture(operations)
+    raw = json.dumps(source).encode()
+    pin = sha256(raw).hexdigest()
+    accepted = AcceptedTendencyQualifications.load(raw, pin)
+    assert accepted.factor_ids == {op["factor_id"] for op in operations}
+
+    reference = study.reference["windows"][0]
+    allocation = allocate_window(study, reference, reference["fields"], {}, (), worldline="world",
+                                 seed=study.reference["seed"], qualifications=accepted)
+    assert allocation["qualification_sha256"] == pin and allocation["live_authorized"] is False
+    unknown = resolve_tendency_slot("UNKNOWN_RAW_BYTE_016")
+    assert all(row["live_writer_qualified"] for row in allocation["teams"].values() if row["factor_id"] == unknown.factor_id)
+
+    plan = fixture_plan()
+    plan.update(worldline_id="world", qualification_sha256=pin)
+    for item in plan["teams"].values():
+        item["live_writer_qualified"] = True
+    binding = dict(pilot.binding, last_regular_date="2022-04-10")
+    window_ops = window_operations(plan)
+    now = datetime.now(timezone.utc)
+    approval = {"schema": "nba2k22.vae.live_envelope.v1", "revoked": False, "human_decision_ref": "test-only-window",
+                "build_sha256": BUILD, "binding": binding, "qualification_sha256": pin, "plan_digest": digest(plan),
+                "operation_digests": [digest(op) for op in window_ops],
+                "calendar_digests": [digest(window) for window in plan["subwindows"]],
+                "max_setters": len(window_ops), "max_calendar": len(plan["subwindows"]),
+                "valid_from": (now - timedelta(minutes=1)).isoformat(), "expires_at": (now + timedelta(minutes=1)).isoformat()}
+    signed = json.dumps(approval).encode()
+    envelope = LiveEnvelope(signed, sha256(signed).hexdigest())
+    delegation = WindowDelegation(envelope, plan, binding, tmp_path / "window", qualification_raw=raw)
+    for op in window_ops:
+        delegation.bind(op)
+        slot = resolve_tendency_slot(op["factor_id"])
+        assert delegation.active_slot(slot.native_key) == slot
+        with pytest.raises(PermissionError, match="DELEGATED_FIELD_DIFFERS"):
+            delegation.active_slot("SHOT_TENDENCY")
+
+    host = SeasonCycleHost.__new__(SeasonCycleHost)
+    database = tmp_path / binding["bound_database_file"]
+    host.state = dict(binding, save_directory=str(tmp_path), database_file=str(database))
+    host.research_delegation = delegation
+    host.role_registry = SimpleNamespace(bind_save_context=lambda *_, **__: True)
+    monkeypatch.setattr(season_cycle_host, "read_binding", lambda *_: (binding, SHA))
+    monkeypatch.setattr(season_cycle_host, "bound_database", lambda *_: database)
+    monkeypatch.setattr(refresh, "_context", lambda _: {"epoch": binding["epoch"], "game_progress": {
+        "today_native_iso_date": plan["start"], "today_minutes_since_midnight_raw": 0, "period_raw": 29, "mode_raw": 1}})
+    scope = host._approved_live_context(binding["pid"])
+    assert scope["field_id"] == unknown.native_key and scope["player_ids"] == [window_ops[-1]["uid"]]
+    assert "qualification_neighborhood_hex" not in scope
+
+    missing = WindowDelegation(envelope, plan, binding, tmp_path / "missing")
+    with pytest.raises(PermissionError, match="WINDOW_QUALIFICATION_RECEIPT_REQUIRED"):
+        missing.bind(window_ops[0])
+    tampered = WindowDelegation(envelope, plan, binding, tmp_path / "tampered", qualification_raw=raw + b" ")
+    with pytest.raises(PermissionError, match="ACCEPTED_QUALIFICATION_PIN_MISMATCH"):
+        tampered.bind(window_ops[0])
+    approval.pop("qualification_sha256")
+    unsigned_pin = json.dumps(approval).encode()
+    wrong_envelope = LiveEnvelope(unsigned_pin, sha256(unsigned_pin).hexdigest())
+    with pytest.raises(ValueError, match="HUMAN_ENVELOPE_SCOPE_OR_TIME_MISMATCH"):
+        WindowDelegation(wrong_envelope, plan, binding, tmp_path / "no-pin", qualification_raw=raw).bind(window_ops[0])
+
+    source["slots"][0]["mode"] = "FIXTURE"
+    fixture = json.dumps(source).encode()
+    with pytest.raises(ValueError, match="ACCEPTED_QUALIFICATION_EVIDENCE_SCOPE_MISMATCH"):
+        AcceptedTendencyQualifications.load(fixture, sha256(fixture).hexdigest())
+    source["slots"][0]["mode"] = "LIVE"
+    after = source["slots"][0]["after"]
+    bad = b"\x00" + bytes.fromhex(after["neighborhood_hex"])[1:]
+    after.update(neighborhood_hex=bad.hex(), neighborhood_sha256=sha256(bad).hexdigest())
+    corrupt = json.dumps(source).encode()
+    with pytest.raises(ValueError, match="NEIGHBOR"):
+        AcceptedTendencyQualifications.load(corrupt, sha256(corrupt).hexdigest())
+
+
+def test_pre_window_unknown_slot_requires_bound_raw_and_sql_identity(tmp_path, monkeypatch):
+    pilot, (known, _, unknown) = qualification_fixture(tmp_path)
+    binding = dict(pilot.binding, season_id="season")
+    plan = {"start": binding["today"], "worldline_id": binding["worldline_id"], "teams": {}}
+    for op in (known, unknown):
+        plan["teams"][op["team_id"]] = {**op, "baseline": op["expected_before"], "arm": "H",
+                                        "live_writer_qualified": True}
+    db = tmp_path / "capture.sqlite"
+    with sqlite3.connect(db) as conn:
+        conn.executescript("""
+            CREATE TABLE game_mode_observations (unit_id, today_native_iso_date, mode_label, league_label);
+            INSERT INTO game_mode_observations VALUES ('mode', '2022-01-01', 'FRANCHISE', 'NBA');
+            CREATE TABLE native_player_sources (unit_id, player_source_id, native_unique_id_raw,
+                                                 native_team_id, current_core_roster_status, player_id);
+            INSERT INTO native_player_sources VALUES ('skills', 'p1', 101, 1, 'CURRENT_CORE_ROSTER', 'player1'),
+                                                     ('skills', 'p3', 103, 3, 'CURRENT_CORE_ROSTER', 'player3');
+            CREATE TABLE player_tendency_snapshots (unit_id, source_player_id, shot_three_tendency_raw);
+            INSERT INTO player_tendency_snapshots VALUES ('skills', 'p1', 51), ('skills', 'p3', 99);
+        """)
+    monkeypatch.setattr(factor_readback, "_bound_report", lambda *_: {})
+    monkeypatch.setattr(factor_readback, "_source_units", lambda *_: {"player-skills": "skills", "game-mode": "mode"})
+    setters = [{"status": "APPLIED"}, {"status": "APPLIED"}]
+    host = SimpleNamespace(database=db)
+    snapshot = accepted_registry_fixture([unknown])["slots"][0]["after"]
+    with pytest.raises(ValueError, match="REQUIRES_INDEPENDENT_RAW_READ"):
+        factor_readback.capture_treatment_readback(host, tmp_path, SHA, plan, binding, setters)
+    result = factor_readback.capture_treatment_readback(host, tmp_path, SHA, plan, binding, setters,
+                                                       raw_reader=lambda **_: snapshot)
+    known_op, unknown_op = window_operations(plan)
+    assert result["applied_values"] == {digest(known_op): 51, digest(unknown_op): 51}
+    assert list(result["raw_slot_observations"]) == [digest(unknown_op)]
+    with pytest.raises(ValueError, match="RAW_SLOT_SOURCE_MISMATCH"):
+        factor_readback.capture_treatment_readback(host, tmp_path, SHA, plan, binding, setters,
+                                                   raw_reader=lambda **_: dict(snapshot, uid=102))
 
 
 def test_real_windows_and_two_sided_multi_factor_plan(study):

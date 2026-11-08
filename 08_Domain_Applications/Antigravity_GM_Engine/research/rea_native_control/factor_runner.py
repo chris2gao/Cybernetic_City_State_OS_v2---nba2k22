@@ -9,7 +9,7 @@ from types import SimpleNamespace
 
 from contracts import BUILD
 from factor_inventory import EXPERIMENT_SAVE_SLOT
-from native_factor_slots import require_s4_live_tendency, resolve_tendency_slot
+from native_factor_slots import AcceptedTendencyQualifications, require_s4_live_tendency, resolve_tendency_slot
 
 
 def digest(value):
@@ -37,6 +37,7 @@ class LiveEnvelope:
         if (source["schema"] != "nba2k22.vae.live_envelope.v1" or source["revoked"] is not False
                 or not source["human_decision_ref"] or source["build_sha256"] != BUILD
                 or source["binding"] != binding or source["plan_digest"] != digest(plan)
+                or source.get("qualification_sha256") != plan.get("qualification_sha256")
                 or source["operation_digests"] != [digest(item) for item in operations]
                 or source["calendar_digests"] != [digest(item) for item in windows]
                 or type(source["max_setters"]) is not int or not len(operations) <= source["max_setters"] <= 168
@@ -61,7 +62,7 @@ def window_operations(plan):
 
 class WindowDelegation:
     """Derive exact S4 sub-batches from the same pinned Human window envelope."""
-    def __init__(self, envelope, plan, binding, journal):
+    def __init__(self, envelope, plan, binding, journal, *, qualification_raw=None):
         self.envelope = envelope
         self.plan = plan
         self.binding = binding
@@ -69,6 +70,7 @@ class WindowDelegation:
         self._operations = window_operations(plan)
         self._active = None
         self._verified = None
+        self._qualification_raw = qualification_raw
 
     def approval(self):
         if (self.journal / "REVOKED").exists():
@@ -79,6 +81,7 @@ class WindowDelegation:
         self.approval()
         if operation not in self._operations or not operation["live_writer_qualified"]:
             raise PermissionError("SETTER_NOT_IN_QUALIFIED_WINDOW")
+        self.slot_for(operation)
         self._active = dict(operation)
         self._verified = None
 
@@ -96,7 +99,24 @@ class WindowDelegation:
                 "roles": [{"role_type": "GM", "team_id": op["team_id"], "actor_uid": f"vae-factor-{op['team_id']}"}]}
 
     def slot_for(self, operation):
-        return require_s4_live_tendency(resolve_tendency_slot(operation["factor_id"]).native_key)
+        root = self.approval()
+        slot = resolve_tendency_slot(operation["factor_id"])
+        pin = root.get("qualification_sha256")
+        if (self._qualification_raw is None) != (pin is None):
+            raise PermissionError("WINDOW_QUALIFICATION_RECEIPT_REQUIRED")
+        if pin is not None:
+            registry = AcceptedTendencyQualifications.load(self._qualification_raw, pin)
+            if slot.factor_id in registry.factor_ids:
+                return slot
+        return require_s4_live_tendency(slot.native_key)
+
+    def active_slot(self, field):
+        if self._active is None:
+            raise PermissionError("NO_ACTIVE_SETTER_SUBPLAN")
+        slot = self.slot_for(self._active)
+        if slot.native_key != field:
+            raise PermissionError("DELEGATED_FIELD_DIFFERS_FROM_ACTIVE_SLOT")
+        return slot
 
     @property
     def epoch(self):
@@ -411,12 +431,13 @@ class WindowRunner:
                     or not isinstance(self.port.calendar_dispatch, NativeCalendarPort)
                     or self.port.calendar_dispatch.delegation is not delegation
                     or not isinstance(self.port.capture, FactorWorldDataPort)
+                    or self.port.capture.host is not self.port.host
                     or self.port.capture.binding != self.port.binding
                     or Path(self.port.calendar_dispatch.outbox).resolve() != self.port.host.outbox_db
                     or any(not op["live_writer_qualified"] for op in operations)):
                 raise PermissionError("LIVE_MULTI_FACTOR_QUALIFICATION_AND_DELEGATION_REQUIRED")
             for op in operations:
-                require_s4_live_tendency(resolve_tendency_slot(op["factor_id"]).native_key)
+                delegation.slot_for(op)
             self.live_envelope.verify(plan, self.port.binding, operations, windows)
         elif self.live_envelope is not None:
             raise ValueError("FIXTURE_PORT_CANNOT_CONSUME_REAL_AUTHORITY")

@@ -1,6 +1,8 @@
 """Exact PLAYER tendency storage and staged, independently checked setter contracts."""
 from dataclasses import dataclass
 from functools import lru_cache
+from hashlib import sha256
+import json
 from types import MappingProxyType
 
 from contracts import BUILD
@@ -88,3 +90,55 @@ def require_s4_live_tendency(native_key: str):
     if slot.factor_id not in _S4_LIVE_QUALIFIED or native_key != slot.native_key:
         raise ValueError("S4_TENDENCY_SLOT_NOT_LIVE_QUALIFIED")
     return slot
+
+
+def _sha256_hex(value):
+    return isinstance(value, str) and len(value) == 64 and all(c in "0123456789abcdef" for c in value)
+
+
+@dataclass(frozen=True)
+class AcceptedTendencyQualifications:
+    """Validated, build-scoped field evidence. A separate window approval authorizes use."""
+    sha256: str
+    factor_ids: frozenset[str]
+
+    @classmethod
+    def load(cls, raw: bytes, approved_sha256: str):
+        if sha256(raw).hexdigest() != approved_sha256:
+            raise PermissionError("ACCEPTED_QUALIFICATION_PIN_MISMATCH")
+        source = json.loads(raw)
+        if (source["schema"] != "nba2k22.vae.accepted_tendency_qualifications.v1"
+                or source["build_sha256"] != BUILD or not source["slots"]):
+            raise ValueError("ACCEPTED_QUALIFICATION_BUILD_OR_SCHEMA_MISMATCH")
+        factors = set()
+        for evidence in source["slots"]:
+            slot = resolve_tendency_slot(evidence["factor_id"])
+            before, after = evidence["before"], evidence["after"]
+            identity = ("profile_build_sha256", "factor_id", "native_key", "index", "offset", "width_bits",
+                        "legal_domain", "save_id", "loaded_filename", "worldline_id", "binding_sha256",
+                        "epoch", "today", "minutes", "uid", "team_id")
+            if (slot.factor_id in factors or evidence["mode"] != "LIVE" or evidence["outcome"] != "CONFIRMED_APPLIED"
+                    or evidence["factor_id"] != slot.factor_id or not evidence["independent_review_ref"]
+                    or not all(_sha256_hex(evidence[key]) for key in ("native_plan_sha256", "native_evidence_sha256",
+                                                                     "independent_readback_sha256"))
+                    or any(before[key] != after[key] for key in identity)
+                    or any(row["status"] != "READ_ONLY_SLOT_OBSERVED" or row["write_qualified"] is not False
+                           for row in (before, after))
+                    or (before["profile_build_sha256"], before["factor_id"], before["native_key"],
+                        before["index"], before["offset"], before["width_bits"], before["legal_domain"])
+                       != (BUILD, slot.factor_id, slot.native_key, slot.index, slot.offset, 8, [slot.minimum, slot.maximum])
+                    or before["loaded_filename"] != "MyLEAGUE0005" or not before["save_id"] or not before["worldline_id"]
+                    or not _sha256_hex(before["binding_sha256"])
+                    or type(before["epoch"]["pid"]) is not int or before["epoch"]["pid"] <= 0
+                    or type(before["epoch"]["creation_filetime"]) is not int or before["epoch"]["creation_filetime"] <= 0
+                    or type(before["uid"]) is not int or not 1 <= before["uid"] <= 65535
+                    or type(before["team_id"]) is not int or not 0 <= before["team_id"] <= 29):
+                raise ValueError("ACCEPTED_QUALIFICATION_EVIDENCE_SCOPE_MISMATCH")
+            old, new = (bytes.fromhex(row["neighborhood_hex"]) for row in (before, after))
+            if (sha256(old).hexdigest() != before["neighborhood_sha256"]
+                    or sha256(new).hexdigest() != after["neighborhood_sha256"]
+                    or abs(after["raw_value"] - before["raw_value"]) != 1
+                    or slot.verify_readback(old, new, before["raw_value"], after["raw_value"], after["raw_value"]) != "VERIFIED"):
+                raise ValueError("ACCEPTED_QUALIFICATION_NEIGHBORHOOD_MISMATCH")
+            factors.add(slot.factor_id)
+        return cls(approved_sha256, frozenset(factors))

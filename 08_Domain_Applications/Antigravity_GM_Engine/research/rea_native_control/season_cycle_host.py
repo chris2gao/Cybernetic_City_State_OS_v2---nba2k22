@@ -32,7 +32,7 @@ sys.path.insert(0, str(_PROTOTYPE_DIR))
 
 import contracts
 from factor_inventory import EXPERIMENT_SAVE_SLOT
-from factor_runner import QualificationDelegation
+from factor_runner import QualificationDelegation, WindowDelegation
 from native_factor_slots import require_s4_live_tendency, resolve_tendency_slot
 from bulk_executor import (
     BulkBatch,
@@ -640,7 +640,8 @@ class SeasonCycleHost:
             raise ValueError("APPROVED_ROLE_MANIFEST_HASH_MISMATCH")
         grant = json.loads(raw)
         qualification = type(self.research_delegation) is QualificationDelegation
-        field = (resolve_tendency_slot(grant.get("field_id")) if qualification
+        delegated = type(self.research_delegation) in (QualificationDelegation, WindowDelegation)
+        field = (self.research_delegation.active_slot(grant.get("field_id")) if delegated
                  else require_s4_live_tendency(grant.get("field_id"))).native_key
         roles = grant.get("roles")
         player_ids = grant.get("player_ids")
