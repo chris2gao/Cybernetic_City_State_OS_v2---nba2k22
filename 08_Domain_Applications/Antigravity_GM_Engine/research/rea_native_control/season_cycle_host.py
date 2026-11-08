@@ -31,7 +31,8 @@ sys.path.insert(0, str(_DIR))
 sys.path.insert(0, str(_PROTOTYPE_DIR))
 
 import contracts
-from native_factor_slots import require_s4_live_tendency
+from factor_inventory import EXPERIMENT_SAVE_SLOT
+from native_factor_slots import require_s4_live_tendency, resolve_tendency_slot
 from bulk_executor import (
     BulkBatch,
     BulkIntentItem,
@@ -714,10 +715,56 @@ class SeasonCycleHost:
         tendency_field: Optional[str] = None,
     ) -> Optional[Any]:
         """Read fresh values, optionally bound to the actual Native roster and process epoch."""
+        slot = require_s4_live_tendency(tendency_field) if tendency_field is not None else None
+        result = self._read_fresh_tendency_roster(expected_pid, expected_team, expected_players,
+                                                  expected_creation_filetime, slot)
+        if result is not None:
+            getter, _ = result
+            return getter
+        return None
+
+    def read_factor_qualification_snapshot(self, *, pid, epoch, team_id, uid, field, binding_sha256):
+        """Capture one public slot and its neighbors without granting or executing a write."""
+        from refresh import _context
+
+        slot = resolve_tendency_slot(field)
+        save_dir = Path(self.state["save_directory"])
+        filename = self.state["loaded_filename"]
+        if filename != EXPERIMENT_SAVE_SLOT or pid != epoch["pid"]:
+            raise ValueError("QUALIFICATION_SNAPSHOT_REQUIRES_EXACT_DISPOSABLE_SLOT")
+        binding, binding_sha = read_binding(save_dir, filename)
+        if (binding_sha != binding_sha256 or binding["save_id"] != self.state["save_id"]
+                or binding["worldline_id"] != self.state["worldline_id"]
+                or bound_database(save_dir, binding) != Path(self.state["database_file"]).resolve()):
+            raise ValueError("QUALIFICATION_SNAPSHOT_SAVE_BINDING_MISMATCH")
+        scene = _context(pid)
+        progress = scene["game_progress"]
+        if (scene["epoch"] != epoch or progress["mode_raw"] != 1 or progress["period_raw"] != 29
+                or not progress.get("today_native_iso_date")):
+            raise ValueError("QUALIFICATION_SNAPSHOT_EPOCH_OR_SCENE_MISMATCH")
+        result = self._read_fresh_tendency_roster(pid, team_id, {uid}, epoch["creation_filetime"], slot)
+        after = _context(pid)
+        if (result is None or uid not in result[1] or after["epoch"] != epoch
+                or after["game_progress"] != progress
+                or read_binding(save_dir, filename)[1] != binding_sha):
+            raise ValueError("QUALIFICATION_SNAPSHOT_ROSTER_OR_SCENE_CHANGED")
+        neighborhood = result[1][uid]
+        value = slot.decode(neighborhood)
+        if not slot.minimum <= value <= slot.maximum:
+            raise ValueError("QUALIFICATION_SNAPSHOT_OBSERVED_VALUE_OUTSIDE_DOMAIN")
+        return {"status": "READ_ONLY_SLOT_OBSERVED", "profile_build_sha256": contracts.BUILD,
+                "save_id": binding["save_id"], "loaded_filename": filename, "binding_sha256": binding_sha,
+                "worldline_id": binding["worldline_id"], "epoch": epoch, "today": progress["today_native_iso_date"],
+                "factor_id": slot.factor_id, "native_key": slot.native_key, "uid": uid, "team_id": team_id,
+                "index": slot.index, "offset": slot.offset, "width_bits": 8, "legal_domain": [slot.minimum, slot.maximum],
+                "raw_value": value, "neighborhood_hex": neighborhood.hex(),
+                "neighborhood_sha256": hashlib.sha256(neighborhood).hexdigest(), "write_qualified": False}
+
+    def _read_fresh_tendency_roster(self, expected_pid, expected_team, expected_players,
+                                    expected_creation_filetime, tendency_slot):
         try:
             from refresh import resolve_pid
             from player_skill_reader import collect_player_skills, read_tendency_neighborhood
-            tendency_slot = require_s4_live_tendency(tendency_field) if tendency_field is not None else None
             if tendency_slot is not None and (expected_team is None or not expected_players):
                 raise ValueError("TENDENCY_RAW_READBACK_REQUIRES_BOUND_ROSTER_UID")
             actual_pid = resolve_pid("auto")
@@ -736,6 +783,7 @@ class SeasonCycleHost:
                         return None
                     team_pointer = team_pointers[0]
                 player_tendencies = {}
+                neighborhoods = {}
                 seen = set()
                 for p in m["players"]:
                     uid = p["native_unique_id_raw"]
@@ -743,6 +791,7 @@ class SeasonCycleHost:
                         continue
                     if uid in seen:
                         player_tendencies.pop(uid, None)
+                        neighborhoods.pop(uid, None)
                         continue
                     seen.add(uid)
                     if p["current_core_roster_status"] != "CURRENT_CORE_ROSTER":
@@ -762,8 +811,8 @@ class SeasonCycleHost:
                             continue
                     values = dict(m["skill_rows"][s_idx]["tendencies"])
                     if tendency_slot is not None:
-                        values[tendency_slot.native_key.lower() + "_raw"] = tendency_slot.decode(
-                            read_tendency_neighborhood(reader, player_pool, s_idx))
+                        neighborhoods[uid] = read_tendency_neighborhood(reader, player_pool, s_idx)
+                        values[tendency_slot.native_key.lower() + "_raw"] = tendency_slot.decode(neighborhoods[uid])
                     player_tendencies[uid] = values
 
                 def fresh_getter(player_id: int, field_id: str) -> Optional[int]:
@@ -776,7 +825,7 @@ class SeasonCycleHost:
                         val = tdict.get(field_id)
                     return val
 
-                return fresh_getter
+                return fresh_getter, neighborhoods
             finally:
                 reader.close()
         except RuntimeError as e:

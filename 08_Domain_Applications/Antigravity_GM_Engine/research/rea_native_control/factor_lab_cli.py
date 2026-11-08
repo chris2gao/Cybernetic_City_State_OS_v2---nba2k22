@@ -7,6 +7,7 @@ from pathlib import Path
 from factor_adapters import adapter_contract
 from factor_assignment import allocate_window, windows_for_schedule
 from factor_inventory import StudyInputs
+from native_factor_slots import resolve_tendency_slot
 
 
 def report(plan_dir, retained_path):
@@ -34,8 +35,18 @@ def report(plan_dir, retained_path):
     reference = [window for window in study.reference["windows"] if window["worldline_id"] == "WL-TENDENCY-01"]
     if [(w["start"], set(w["real_game_ids"])) for w in windows] != [(w["start"], set(w["real_game_ids"])) for w in reference]:
         raise ValueError("ENGINEERING_REBUILD_CHANGED_REFERENCE_CAPACITY")
-    first_window = allocate_window(study, windows[0], reference[0]["fields"], values, (),
+    reference_first = reference[0]["fields"]
+    # Keep the original unknown-slot assignment in the full reference series.
+    # Use a separately identified same-GameID example with observed doses on all five fields.
+    unknown_slot = resolve_tendency_slot("UNKNOWN_RAW_BYTE_016").factor_id
+    named_slot = resolve_tendency_slot("SHOT_THREE_TENDENCY").factor_id
+    first_factors = [named_slot if factor == unknown_slot else factor for factor in reference_first]
+    first_window = allocate_window(study, windows[0], first_factors, values, (),
                                    worldline="WL-TENDENCY-01", seed=study.reference["seed"])
+    if any(row["baseline"] is None or row["target"] is None for row in first_window["teams"].values()):
+        raise ValueError("OBSERVED_FIRST_WINDOW_REQUIRES_ALL_EXACT_DOSES")
+    first_window["purpose"] = "OBSERVED_DOSE_ALTERNATIVE_FOR_THE_SAME_GAME_IDS"
+    first_window["reference_factor_replacement"] = {"reference": unknown_slot, "alternative": named_slot}
     replay = []
     for reference_window in study.reference["windows"]:
         if "team_assignments" not in reference_window:

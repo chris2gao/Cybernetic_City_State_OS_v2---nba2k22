@@ -3,8 +3,9 @@ from contextlib import closing
 import hashlib
 import json
 
-from calendar_sim_orchestrator import captured_game_headers
+from calendar_sim_orchestrator import CalendarSimOrchestrator, captured_game_headers
 from engine import connect
+from live_world import bound_database
 
 _BOX_METRICS = {
     "FGA": "fg_attempted", "FG3A": "three_attempted", "FTA": "ft_attempted", "MIN": "minutes_raw",
@@ -21,14 +22,24 @@ class FactorWorldDataPort:
 
     def __call__(self, phase, plan, setters):
         from refresh import refresh_world
+        if phase not in ("pre", "post"):
+            raise ValueError("FACTOR_CAPTURE_UNKNOWN_PHASE")
+        state = self.host.state
+        orchestrator = CalendarSimOrchestrator(state["save_directory"], state["loaded_filename"], state["database_file"])
+        if (orchestrator.save_id != self.binding["save_id"]
+                or orchestrator.loaded_filename != self.binding["loaded_filename"]
+                or orchestrator.binding_hash != self.binding["binding_sha256"]
+                or orchestrator.binding["worldline_id"] != self.binding["worldline_id"]
+                or orchestrator.database != bound_database(orchestrator.save_directory, orchestrator.binding)):
+            raise ValueError("FACTOR_CAPTURE_HOST_SAVE_BINDING_MISMATCH")
         directory = self.runtime / phase
         self.runtime.mkdir(parents=True, exist_ok=True)
-        refresh_world(self.binding["pid"], self.host.save_directory, self.host.loaded_filename,
+        refresh_world(self.binding["pid"], orchestrator.save_directory, orchestrator.loaded_filename,
                       directory, families=("schedule", "game-mode", "player-skills"))
         report_sha = hashlib.sha256((directory / "refresh-report.json").read_bytes()).hexdigest()
         if phase == "pre":
-            return capture_treatment_readback(self.host, directory, report_sha, plan, self.binding, setters)
-        return capture_game_outcomes(self.host, directory, report_sha, plan, self.binding)
+            return capture_treatment_readback(orchestrator, directory, report_sha, plan, self.binding, setters)
+        return capture_game_outcomes(orchestrator, directory, report_sha, plan, self.binding)
 
 
 def _source_units(conn, report, season):

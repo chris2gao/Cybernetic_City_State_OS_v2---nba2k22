@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import struct
 import sys
+from types import SimpleNamespace
 
 import pytest
 
@@ -12,11 +13,17 @@ from factor_adapters import adapter_contract, coach_field, prepare_coach_patch, 
 from factor_analysis import adjust_fdr, compare_independent_worldlines, screen_game_window, screen_settled_events
 from factor_assignment import Exposure, allocate_window, event_study, windows_for_schedule
 from factor_inventory import StudyInputs
+from factor_lab_cli import report
 from factor_progress import ProgressEvent, ProgressLedger
 from factor_runner import LiveEnvelope, WindowRunner, digest, window_operations
 from native_factor_slots import resolve_tendency_slot, require_s4_live_tendency, tendency_slots
 from bulk_executor import BulkBatch, BulkBatchHeader, BulkBatchPlanner, BulkFridaScriptCompiler, BulkIntentItem
 from contracts import BUILD
+import season_cycle_host
+from season_cycle_host import SeasonCycleHost
+import factor_readback
+import player_skill_reader
+import refresh
 
 ROOT = Path(__file__).resolve().parents[5]
 INPUTS = ROOT / "01_os/07_content/_runs/run-20261108-nba2k22-full-factor-plan-001"
@@ -61,6 +68,82 @@ def test_disposable_save_binding_excludes_cold_backup(filename):
         assert envelope.verify(plan, binding, [], [], now)["binding"] == binding
 
 
+def test_unknown_slot_read_only_qualification_binds_roster_and_epoch(tmp_path, monkeypatch):
+    host = SeasonCycleHost.__new__(SeasonCycleHost)
+    database = tmp_path / "world.sqlite"
+    binding = {"save_id": "save", "worldline_id": "world"}
+    host.state = dict(binding, save_directory=str(tmp_path), loaded_filename="MyLEAGUE0005",
+                      database_file=str(database))
+    epoch = {"pid": 1, "creation_filetime": 10}
+    progress = {"mode_raw": 1, "period_raw": 29, "today_native_iso_date": "2022-01-01"}
+    monkeypatch.setattr(season_cycle_host, "read_binding", lambda *_: (binding, SHA))
+    monkeypatch.setattr(season_cycle_host, "bound_database", lambda *_: database)
+    monkeypatch.setattr(refresh, "_context", lambda _: {"epoch": epoch, "game_progress": dict(progress)})
+    monkeypatch.setattr(refresh, "resolve_pid", lambda _: 1)
+    reader = SimpleNamespace(creation_filetime=10, close=lambda: None)
+    reads = []
+
+    def read(address, width, label):
+        reads.append(label)
+        if address == 0x1000 + 0xa8 and width == 8:
+            return (0x2000).to_bytes(8, "little")
+        assert address == 0x1000 + 0x458 and width == 99
+        return bytes([44] * 99)
+
+    reader.read = read
+    monkeypatch.setattr(season_cycle_host, "ReadOnlyGameProcess", lambda _: reader)
+    player = {"native_unique_id_raw": 101, "current_core_roster_status": "CURRENT_CORE_ROSTER",
+              "source_player_index": 0, "current_roster_slot": 1, "native_team_id": 2}
+    model = {"descriptors": [None, {"address": 0x1000, "stride": 0x800, "count": 1}],
+             "core_team_pointer_map": {0x2000: 2}, "players": [player], "skill_rows": [{"tendencies": {}}]}
+    monkeypatch.setattr(player_skill_reader, "collect_player_skills", lambda _: (model, None))
+    request = {"pid": 1, "epoch": epoch, "team_id": 2, "uid": 101,
+               "field": "UNKNOWN_RAW_BYTE_016", "binding_sha256": SHA}
+    result = host.read_factor_qualification_snapshot(**request)
+    assert result["raw_value"] == 44 and result["factor_id"] == "TENDENCY_NATIVE_016"
+    assert result["neighborhood_sha256"] == sha256(bytes([44] * 99)).hexdigest()
+    assert result["write_qualified"] is False
+    assert reads == ["S4_CONTRACT_TEAM", "PUBLIC_PLAYER_TENDENCY_NEIGHBORHOOD"]
+    model["players"].append(dict(player))
+    with pytest.raises(ValueError, match="QUALIFICATION_SNAPSHOT_ROSTER_OR_SCENE_CHANGED"):
+        host.read_factor_qualification_snapshot(**request)
+
+
+def test_worlddata_port_routes_host_state_through_calendar_orchestrator(tmp_path, monkeypatch):
+    database = tmp_path / "world.sqlite"
+    binding = {"save_id": "save", "worldline_id": "world", "loaded_filename": "MyLEAGUE0005",
+               "pid": 1, "binding_sha256": SHA}
+    state = {"save_directory": str(tmp_path), "loaded_filename": binding["loaded_filename"],
+             "database_file": str(database)}
+    orchestrator = SimpleNamespace(save_directory=tmp_path, loaded_filename=binding["loaded_filename"],
+                                   database=database, binding=binding, save_id="save", binding_hash=SHA)
+
+    def make_orchestrator(directory, filename, database_path):
+        assert (directory, filename, database_path) == tuple(state.values())
+        return orchestrator
+
+    def refresh_fixture(pid, directory, filename, output, *, families):
+        assert (pid, directory, filename) == (1, tmp_path, binding["loaded_filename"])
+        assert families == ("schedule", "game-mode", "player-skills")
+        output.mkdir()
+        (output / "refresh-report.json").write_bytes(b"fixture")
+
+    def capture(owner, directory, report_sha, plan, bound):
+        assert owner is orchestrator and directory.name == "post" and bound is binding
+        assert report_sha == sha256(b"fixture").hexdigest()
+        return {"today": plan["stop_exclusive"]}
+
+    monkeypatch.setattr(factor_readback, "CalendarSimOrchestrator", make_orchestrator)
+    monkeypatch.setattr(factor_readback, "bound_database", lambda *_: database)
+    monkeypatch.setattr(factor_readback, "capture_game_outcomes", capture)
+    monkeypatch.setattr(refresh, "refresh_world", refresh_fixture)
+    port = factor_readback.FactorWorldDataPort(SimpleNamespace(state=state), binding, tmp_path / "capture")
+    assert port("post", {"stop_exclusive": "2022-01-02"}, []) == {"today": "2022-01-02"}
+    orchestrator.binding_hash = "b" * 64
+    with pytest.raises(ValueError, match="FACTOR_CAPTURE_HOST_SAVE_BINDING_MISMATCH"):
+        port("pre", {}, [])
+
+
 def test_real_windows_and_two_sided_multi_factor_plan(study):
     teams = {int(row["native_team_id"]) for row in study.players if row["eligible_now"] == "True"}
     windows = windows_for_schedule(study.fixtures, teams, "2021-11-16", "2022-04-10")
@@ -80,6 +163,17 @@ def test_real_windows_and_two_sided_multi_factor_plan(study):
     assert result["teams"][1]["prior_team_treatments"][0]["receipt_ref"] == "test-receipt"
     assert not result["teams"][2]["prior_team_treatments"]
     assert not result["live_authorized"]
+
+
+def test_export_has_five_exact_factors_and_keeps_original_unknown_slot():
+    retained = INPUTS.parent / "run-20261108-nba2k22-full-factor-engineering-001/REFERENCE_TENDENCY_VALUES.json"
+    result = report(INPUTS, retained)
+    first = result["first_window"]
+    original = result["recompiled_team_windows"][0]
+    assert len(first["factors"]) == 5
+    assert all(row["baseline"] is not None and row["target"] is not None for row in first["teams"].values())
+    assert {game["game_id"] for game in first["games"]} == {game["game_id"] for game in original["games"]}
+    assert "TENDENCY_NATIVE_016" in original["fields"] and "TENDENCY_NATIVE_016" not in first["factors"]
 
 
 @pytest.mark.parametrize("key", ["SHOT_TENDENCY", "SHOT_THREE_TENDENCY", "TOUCHES_TENDENCY", "UNKNOWN_RAW_BYTE_016"])

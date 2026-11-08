@@ -12,4 +12,6 @@
 
 已知项来自 [0005 保留的倾向源单元](REFERENCE_TENDENCY_VALUES.json)。候选 UID 来自 [合格球员池](../run-20261108-nba2k22-full-factor-plan-001/eligible_player_pool.csv)。表中是待审的候选矩阵，实际当前值和进程 epoch 要以一次新的只读预检为准。
 
-新字段目前被 S4 实机资格门拒绝。上述范围供后续审议，仍需独立的有界资格验证入口与绑定到确切计划和来源的 Human 授权。通过资格验证也只说明字段读写与邻域一致性。
+只读入口 `SeasonCycleHost.read_factor_qualification_snapshot` 可读取上述三槽，包括 WorldData 命名视图未覆盖的未知槽。入口检查存档绑定、进程 epoch、前后日期与模式、Native UID 和球队归属，返回 99 字节邻域和指纹。该入口已用替身测试，尚未在游戏进程调用。
+
+新字段目前被 S4 实机资格门拒绝。上述范围供后续审议，仍需独立的有界写资格入口与绑定到确切计划和来源的 Human 授权。通过资格验证也只说明字段读写与邻域一致性。
