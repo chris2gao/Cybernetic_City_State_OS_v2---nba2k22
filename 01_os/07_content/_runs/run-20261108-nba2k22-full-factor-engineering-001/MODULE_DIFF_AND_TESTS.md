@@ -24,4 +24,6 @@ Draft 后追加的接线核对覆盖两处。未知槽走同一份公开 PLAYER 
 
 经营事件接入 `capture_management_event`。它将经独立解码的事件与 `news` 事务的原始类型、日期字和参数序列逐一比对，要求匹配在前快照不存在、后快照唯一，并从 `player-details` 验证球员 Native UID、名单归属与合同归属。合同观察保留原始字段尺度，交易使用归属变化指标。适配器覆盖已结算且可绑定名单球员的记录，未成交机会、选秀、无名单身份的签约和原始字段语义仍需补证。全因素、SQLite 结算和交易替身组合回归通过 49 项。
 
+I6 的 `ProgressLedger` 支持独立 SQLite 持久化，以 223 项固定库存指纹绑定数据库。进度事件只追加，批次写入原子提交。`factor_progress.py` 提供 `coverage`、`queue`、`history`、`query`、`ingest-qualifications` 和 `ingest-window`。导入普通窗口需要外部固定的结果 SHA，并逐项核对计划、setter、日历、前后采集及分析重放。同一计划的失败尝试留在队列，已核验重复导入幂等，缺少前置资格时不会推进阶段。LIVE 和 FIXTURE 分开计数。实机复证只有绑定独立审核和 Human 接纳才进入可供角色决策的状态。全因素与分类结算回归通过 38 项，CLI 查询确认新库的未知槽 016 为 `UNCONFIRMED`。
+
 固定日历依赖为 PR #42 的 `ada6f30051eb9a2f17193af6985497eeb789ea1c`，用于测试入口。主工作线固定为 PR #41 的 `cdb2a3b2b9f9de79fe068b1644c6ba147d05d8e5`。本候选需要独立工程审核与后续实机资格裁决。

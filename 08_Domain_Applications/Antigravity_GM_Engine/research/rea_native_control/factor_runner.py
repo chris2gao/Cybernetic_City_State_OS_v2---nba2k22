@@ -535,7 +535,13 @@ class WindowRunner:
                   "setter_success": sum(row["status"] == "APPLIED" for row in setters),
                   "setter_unreturned": claimed_setters - len(setters),
                   "calendar_attempts": claimed_calendar, "calendar_unreturned": claimed_calendar - len(calendar),
-                  "analysis": analysis, "applied_exposures": exposures}
+                  "analysis": analysis, "applied_exposures": exposures,
+                  "plan_digest": run.name, "plan_file_sha256": hashlib.sha256((run / "plan.json").read_bytes()).hexdigest()}
+        if status == "ANALYSIS_RECORDED":
+            files = ["pre.json", "post.json"]
+            for kind, receipts in (("setter", setters), ("calendar", calendar)):
+                files.extend(f"vae-{run.name[:20]}-{kind}-{index:03d}-receipt.json" for index in range(len(receipts)))
+            result["evidence_files"] = {name: hashlib.sha256((run / name).read_bytes()).hexdigest() for name in files}
         record_once(run / "result.json", result)
         return result
 

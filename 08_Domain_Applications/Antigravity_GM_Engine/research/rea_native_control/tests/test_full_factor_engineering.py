@@ -649,3 +649,80 @@ def test_event_factorial_and_no_replication_promotion(study):
     with pytest.raises(ValueError, match="CANNOT_SKIP"):
         ledger.record(ProgressEvent(field.factor_id, "BROAD_SCREENED", "LIVE", SHA, {
             "worldline_id": "W", "effect": 2, "analysis_ref": "a", "limitations": []}))
+
+
+def test_persistent_progress_replays_receipts_without_promoting_fixture(tmp_path, study):
+    plan = fixture_plan()
+    journal = tmp_path / "journal"
+    result = WindowRunner(FixturePort("partial"), journal).run(plan, screen_game_window)
+    directory = journal / result["plan_digest"]
+    pin = sha256((directory / "result.json").read_bytes()).hexdigest()
+    database = tmp_path / "progress.sqlite"
+    ledger = ProgressLedger(study, database=database)
+    for factor in plan["factors"]:
+        ledger.record_many([
+            ProgressEvent(factor, "NATIVE_LOCATED", "FIXTURE", SHA, {"build_sha256": SHA, "location": "fixture"}),
+            ProgressEvent(factor, "WRITE_READBACK_QUALIFIED", "FIXTURE", SHA,
+                          {"build_sha256": SHA, "identity": "fixture", "legal_domain": [0, 100], "readback_ref": SHA}),
+        ])
+    with pytest.raises(ValueError, match="WINDOW_PROGRESS_MODE_OR_PLAN_MISMATCH"):
+        ledger.ingest_window(directory, pin, mode="LIVE")
+    receipt = ledger.ingest_window(directory, pin, mode="FIXTURE")
+    assert receipt["result_sha256"] == pin
+    assert ledger.ingest_window(directory, pin, mode="FIXTURE") == receipt
+    reopened = ProgressLedger(study, database=database)
+    assert reopened.coverage()["counts"] == {"INVENTORIED": 223}
+    assert reopened.coverage("FIXTURE")["counts"]["BROAD_SCREENED"] == 3
+    assert len(reopened.next_queue()) == 223
+    factor = plan["factors"][0]
+    query = reopened.query(factor, "COACH", mode="FIXTURE")
+    assert query["source"] == pin and query["observed_effect"] and query["game_ids"]
+    assert not query["decision_usable"] and reopened.query(factor, "GM")["source"] is None
+    rows = {row["factor_id"]: row for row in reopened.queue_details("FIXTURE")}
+    assert rows[factor]["last_window"]["result_sha256"] == pin
+    with sqlite3.connect(database) as conn, pytest.raises(sqlite3.IntegrityError, match="immutable progress"):
+        conn.execute("DELETE FROM progress_events")
+    pre = directory / "pre.json"
+    pre.write_bytes(pre.read_bytes() + b" ")
+    with pytest.raises(ValueError, match="WINDOW_PROGRESS_SOURCE_HASH_MISMATCH"):
+        reopened.ingest_window(directory, pin, mode="FIXTURE")
+
+
+def test_failed_window_stays_in_queue_and_atomic_event_batch_rolls_back(tmp_path, study):
+    plan = fixture_plan()
+    journal = tmp_path / "journal"
+    result = WindowRunner(FixturePort("neighbor"), journal).run(plan, screen_game_window)
+    directory = journal / result["plan_digest"]
+    pin = sha256((directory / "result.json").read_bytes()).hexdigest()
+    database = tmp_path / "progress.sqlite"
+    ledger = ProgressLedger(study, database=database)
+    factor = plan["factors"][0]
+    with pytest.raises(ValueError, match="PROGRESS_CANNOT_SKIP_EVIDENCE_STAGE"):
+        ledger.record_many([
+            ProgressEvent(factor, "NATIVE_LOCATED", "FIXTURE", SHA, {"build_sha256": SHA, "location": "fixture"}),
+            ProgressEvent(factor, "SCHEDULED", "FIXTURE", SHA, {"worldline_id": "fixture", "plan_digest": SHA, "opportunities": 1}),
+        ])
+    ledger.ingest_window(directory, pin, mode="FIXTURE")
+    reopened = ProgressLedger(study, database=database)
+    assert reopened.coverage("FIXTURE")["counts"] == {"INVENTORIED": 223}
+    rows = {row["factor_id"]: row for row in reopened.queue_details("FIXTURE")}
+    assert rows[factor]["last_window"]["status"] == "STOPPED_UNKNOWN_NO_REPLAY"
+
+
+def test_progress_qualification_import_pins_source_and_restores_physical_evidence(tmp_path, study):
+    _, operations = qualification_fixture(tmp_path)
+    raw = json.dumps(accepted_registry_fixture(operations)).encode()
+    pin = sha256(raw).hexdigest()
+    database = tmp_path / "progress.sqlite"
+    ledger = ProgressLedger(study, database=database)
+    other_view = ProgressLedger(study, database=database)
+    result = ledger.ingest_qualifications(raw, pin)
+    assert ledger.ingest_qualifications(raw, pin) == result
+    assert other_view.coverage()["counts"] == {"INVENTORIED": 220, "WRITE_READBACK_QUALIFIED": 3}
+    factor = operations[-1]["factor_id"]
+    located, qualified = other_view.history(factor)
+    assert located["evidence"]["native_index"] == 72
+    assert qualified["source_sha256"] == pin and qualified["evidence"]["identity"]["uid"] == 103
+    assert not other_view.query(factor, "PLAYER")["decision_usable"]
+    with pytest.raises(PermissionError, match="ACCEPTED_QUALIFICATION_PIN_MISMATCH"):
+        ledger.ingest_qualifications(raw + b" ", pin)
