@@ -1,0 +1,126 @@
+{
+  "scope": "PLANNING_ONLY",
+  "protocols": [
+    {
+      "protocol_id": "TENDENCY_NAMED",
+      "object": "球队分配，处理落在每队一个可核验的Native UID",
+      "intervention": "五组各六队时每字段2H/2L/2C。原生基线取同一采集单元，首选±5，合法范围与最小可辨剂量逐字段冻结。",
+      "control": "每字段的两支同期C队。每个队只承受一个主处理，记载队友、对手与跨窗残留。",
+      "period": "最多7日，原生子窗1–2日。未来开窗前重读名单、健康、值、日期及完整待赛GameID。",
+      "observations": "球员FGA、FG3A、FTA、篮板、助攻、失误、犯规、分钟、队内份额；DNP须有证据，缺测不填0。",
+      "analysis": "球队群集对照，区分意向处理与实际剂量；机会为预登记赛程；小样本探索、多终点FDR和群集区间。",
+      "replication": "独立恢复重随机，位置/轮换/初始剂量分层；固定候选主要终点后再确认。",
+      "completion": "位置、读写、剂量及赛果同单元均通过；预设最小效应与精度满足，或有功效的无检出结论。"
+    },
+    {
+      "protocol_id": "TENDENCY_UNKNOWN",
+      "object": "按构建、PLAYER槽位偏移与Native UID编号的球员，球队群集",
+      "intervention": "先证明独立Getter、字节/位掩码、合法非保留剂量和准确读回，进行单槽邻域差分。只在资格通过后启用H/L。",
+      "control": "同槽C、非目标槽哨兵及固定对手暴露。配额只占计划，不授予未知物理槽执行权限。",
+      "period": "短窗原生日历对齐，另行验证3D使用；先小剂量安全探针，再多队初筛。",
+      "observations": "广谱Box向量、出场、犯规、球权代理、队友/对手溢出；没有原生触球和区域数据时留空。",
+      "analysis": "分层多终点探索，先反证邻域变化、位置/分钟变化；篮球解释属于待验假说。",
+      "replication": "保留原槽编号在新世界线重随机。新提名语义在独立样本验。",
+      "completion": "所有槽都有可追溯资格结果；语义可以仍未知，科学终态须附可检测边界与来源。"
+    },
+    {
+      "protocol_id": "COACH",
+      "object": "球队，原生COACH与TEAM_GAMEPLAN投影",
+      "intervention": "数值按真实范围做剂量对照，枚举用同一合法槽内的候选策略。分开核验默认、激活和对手特定GamePlan。",
+      "control": "同期球队C、固定轮换/名单与战术本、标记双边暴露。",
+      "period": "同一策略持续一个事件自由窗口，必要时加3D模式对照。",
+      "observations": "球队Box、阵容、球员上场分钟、队形/打法可证标签。",
+      "analysis": "球队或比赛的群集估计。对手处理进入设计矩阵，队内球员只作机制读回。",
+      "replication": "队伍轮换并恢复独立世界线。对enum用同一对策略复验。",
+      "completion": "策略原生读回与活动投影一致，至少有实际可观测指标和重复证据。"
+    },
+    {
+      "protocol_id": "TRAINING",
+      "object": "球队训练日或球员训练周期，具体TEAM/PLAYER/day key",
+      "intervention": "比较合法强度、休息/训练计划、原生日内记录；定位实际训练动作、执行和成长结算。",
+      "control": "独立休息/同基础计划，匹配赛程密度、原始疲劳、伤病与上场时间。",
+      "period": "真实训练日、背靠背、周/月或休赛期结算，以已解码事件为准。",
+      "observations": "前后公开技能、能力变化、疲劳、伤病、训练暴露、成长时间；原生受保护字段排除。",
+      "analysis": "对齐事件的重复测量和变化差，处理非训练活动及未结算。",
+      "replication": "从冻结基线复跑相同训练周期并验证长周期状态。",
+      "completion": "准确施用和结算实证、可重复效应或明确界定的不可观测结算。"
+    },
+    {
+      "protocol_id": "GLOBAL_CALENDAR",
+      "object": "一个独立的MyLEAGUE世界线",
+      "intervention": "独立H/L/C或开关A/B，仅改变一个共享设置。优先模拟节长和统计归一化。",
+      "control": "从同一已验证冻结点恢复的基线世界，不用同一世界里的球队作未处理对照。",
+      "period": "固定真实GameID窗口，先证明原生模拟消费设置。",
+      "observations": "分节比分、球员分钟、每场/每分钟Box、正常完赛。",
+      "analysis": "按世界线、同GameID作配对，检查字段差异和RNG不一致。",
+      "replication": "至少以独立恢复重复两批，未验证冻结点指纹的结果分开。",
+      "completion": "独立世界处理和完整回执，效果区间达到预先登记标准。"
+    },
+    {
+      "protocol_id": "GLOBAL_MODE",
+      "object": "模式与独立世界线",
+      "intervention": "数值或枚举对照。对USER/CPU和3D字段，先做模式消费证据。",
+      "control": "同基线同模式独立对照，必要时分别验证不同用户角色。",
+      "period": "证实日历消费后使用GameID窗口，若仅3D有效则用3D专用验证周期。",
+      "observations": "模式分离的时间、节奏、命中、规则实际触发。",
+      "analysis": "检查模式×设置交互，保留非适用模式的证据。",
+      "replication": "同模式独立恢复复验。",
+      "completion": "明确模式边界、阈值、观察结果和排除原因。"
+    },
+    {
+      "protocol_id": "HEALTH_MORALE",
+      "object": "独立世界线，健康与化学在球员和球队层读回",
+      "intervention": "独立强度/开关组，保持名单、疲劳起点和日历一致。",
+      "control": "同起点C，区分USER/CPU及训练负荷。",
+      "period": "完整暴露天数、伤病发生与恢复、背靠背周期。",
+      "observations": "伤病频率/严重度/持续、疲劳、士气、化学、出场，缺失保留。",
+      "analysis": "机会或暴露天数分母，竞争风险与删失。",
+      "replication": "独立恢复复验不同负荷条件。",
+      "completion": "明确统计功效和稀有事件界，记录机制或有根据的未识别。"
+    },
+    {
+      "protocol_id": "TRADE_DRAFT",
+      "object": "独立世界线与真实交易/选秀机会",
+      "intervention": "单一规则或频率合法对照，固定输入的交易场景和资格事件。",
+      "control": "匹配截止日/阶段的独立C，不主动改变GM选择。",
+      "period": "真实交易窗口、交易截止、选秀；事件日期待Native/source解码。",
+      "observations": "报价、CPU成交、被规则拒绝、名单和选秀权变动。",
+      "analysis": "按机会归一化，稀有事件报告精度及未触发。",
+      "replication": "重新冻结相同合法机会，从新世界线复跑。",
+      "completion": "实际事件轨迹覆盖所需机会，未触发与设置无效分开。"
+    },
+    {
+      "protocol_id": "CONTRACT",
+      "object": "独立世界线和真实合同或续约机会",
+      "intervention": "单字段对照，冻结同一球员/球队/合同快照，核验上下限。",
+      "control": "独立C，对齐财务与年龄等前置状态。",
+      "period": "续约截止、自由市场或签约结算。",
+      "observations": "报价、成交、薪资、合同长度、剩余帽空间和原生规则。",
+      "analysis": "机会级匹配及世界线级复验，报告右删失。",
+      "replication": "独立恢复同阶段同基线，手动移交跨季。",
+      "completion": "合同实际事件与可比基线齐全，效应及边界可复核。"
+    },
+    {
+      "protocol_id": "PROGRESSION",
+      "object": "独立世界线和球员成长事件",
+      "intervention": "一个参数剂量对照，冻结年龄、技能、轮换、训练和健康。",
+      "control": "同起点C，训练和休赛期独立交互设计。",
+      "period": "真实月度/季末或休赛期结算。",
+      "observations": "公开技能、成长/衰退、健康、分钟、训练强度；保留未支持来源。",
+      "analysis": "结算点变化差、年龄分层、重复对照。",
+      "replication": "跨季由Human交接后用恢复匹配复验。",
+      "completion": "可验证前后差、事件发生、结果可重复或明确无机会。"
+    },
+    {
+      "protocol_id": "INTERACTION_2X2",
+      "object": "四个分别绑定和捕获的独立恢复世界",
+      "intervention": "预登记同一个候选UID、一个SHOT剂量和一个TOUCHES剂量。四个角C/C、H/C、C/H、H/H，逐角Getter核验。",
+      "control": "C/C与两个单因素臂，四条世界线固定相同GameID和原生阶段。",
+      "period": "独立事件自由窗口。先通过两个单字段的物理资格与效应初筛。",
+      "observations": "同场出手、出场、队内球权、队友与对手Box。",
+      "analysis": "差中差 Y11−Y10−Y01+Y00，世界线级重复及预登记交互族。",
+      "replication": "至少另一次四角恢复，换匹配对象并记录carryover。",
+      "completion": "交互估计和依赖结构有可复核证据，随机共存只作暴露。"
+    }
+  ]
+}
