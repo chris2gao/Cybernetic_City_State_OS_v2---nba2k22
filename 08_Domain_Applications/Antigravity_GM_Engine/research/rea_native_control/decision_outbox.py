@@ -3,6 +3,7 @@ Lightweight SQLite-backed append-only decision container supporting incremental 
 superseding, dependency/collision detection, immutable sealing, and closed-loop receipt feedback.
 """
 from dataclasses import asdict
+from contextlib import closing
 import hashlib
 import json
 from pathlib import Path
@@ -105,7 +106,7 @@ class DecisionOutbox:
         return conn
 
     def _init_db(self):
-        with self._get_connection() as conn:
+        with closing(self._get_connection()) as conn, conn:
             conn.executescript("""
             CREATE TABLE IF NOT EXISTS decision_cycles (
                 cycle_id TEXT PRIMARY KEY,
@@ -157,7 +158,138 @@ class DecisionOutbox:
             CREATE INDEX IF NOT EXISTS idx_intents_resource ON decision_intents(cycle_id, target_resource_key);
             CREATE INDEX IF NOT EXISTS idx_intents_status ON decision_intents(cycle_id, status);
             CREATE INDEX IF NOT EXISTS idx_events_cycle ON outbox_events(cycle_id);
+
+            CREATE TABLE IF NOT EXISTS test_calendar_claims (
+                plan_digest TEXT PRIMARY KEY,
+                world_id TEXT NOT NULL,
+                save_instance_id TEXT NOT NULL,
+                epoch TEXT NOT NULL,
+                start_day TEXT NOT NULL,
+                status TEXT NOT NULL CHECK(status IN ('CLAIMED','UNKNOWN','VERIFIED_IN_MEMORY','NOT_EXECUTED')),
+                receipt_ref TEXT
+            );
+            CREATE TABLE IF NOT EXISTS test_calendar_reconciliations (
+                plan_digest TEXT PRIMARY KEY REFERENCES test_calendar_claims(plan_digest),
+                prior_receipt_ref TEXT NOT NULL,
+                proof_ref TEXT NOT NULL,
+                disposition TEXT NOT NULL CHECK(disposition IN
+                    ('INTERRUPTED_NO_CALENDAR_EFFECT','HUMAN_ADVANCED_PAST_REQUEST'))
+            );
+            DROP INDEX IF EXISTS idx_calendar_scene_once;
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_calendar_active_scene_once
+                ON test_calendar_claims(save_instance_id, epoch, start_day)
+                WHERE status IN ('CLAIMED','VERIFIED_IN_MEMORY');
             """)
+
+    def claim_test_calendar(self, plan_digest, world_id, save_instance_id, epoch, start_day):
+        """Fence one test-only calendar attempt against both calendar and S4 work."""
+        with closing(self._get_connection()) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            if conn.execute("""
+                SELECT 1 FROM test_calendar_claims c
+                 WHERE (world_id = ? OR save_instance_id = ?) AND status IN ('CLAIMED','UNKNOWN')
+                   AND NOT EXISTS (SELECT 1 FROM test_calendar_reconciliations r WHERE r.plan_digest=c.plan_digest)
+            """, (world_id, save_instance_id)).fetchone():
+                raise ValueError("TEST_CALENDAR_UNRESOLVED_NO_REPLAY")
+            if conn.execute("""
+                SELECT 1 FROM decision_cycles c
+                 WHERE (json_extract(c.context_json, '$.world_id') = ?
+                        OR json_extract(c.context_json, '$.save_instance_id') = ?)
+                   AND (EXISTS (SELECT 1 FROM decision_intents i WHERE i.cycle_id = c.cycle_id
+                                AND i.status = 'UNKNOWN')
+                        OR (c.status = 'SEALED' AND EXISTS (
+                            SELECT 1 FROM outbox_events e WHERE e.cycle_id = c.cycle_id
+                              AND e.event_type = 'EXECUTION_CLAIMED')))
+            """, (world_id, save_instance_id)).fetchone():
+                raise ValueError("S4_EXECUTION_UNRESOLVED")
+            conn.execute("""
+                INSERT INTO test_calendar_claims (plan_digest, world_id, save_instance_id, epoch, start_day, status)
+                VALUES (?, ?, ?, ?, ?, 'CLAIMED')
+            """, (plan_digest, world_id, save_instance_id, epoch, start_day))
+
+    def finish_test_calendar(self, plan_digest, status, receipt_ref):
+        """Record a terminal observation. UNKNOWN still fences the native scene."""
+        if status not in {"UNKNOWN", "VERIFIED_IN_MEMORY", "NOT_EXECUTED"} or not receipt_ref:
+            raise ValueError("TEST_CALENDAR_RECEIPT_REQUIRED")
+        with closing(self._get_connection()) as conn, conn:
+            if conn.execute("""
+                UPDATE test_calendar_claims SET status = ?, receipt_ref = ?
+                 WHERE plan_digest = ? AND status = 'CLAIMED'
+            """, (status, receipt_ref, plan_digest)).rowcount != 1:
+                raise ValueError("TEST_CALENDAR_CLAIM_NOT_OPEN")
+
+    def record_test_calendar_no_effect(self, plan_digest, prior_receipt_ref, proof_ref):
+        """Keep the consumed request locked and record verified interruption without calendar effect."""
+        self._record_test_calendar_reconciliation(plan_digest, prior_receipt_ref, proof_ref,
+                                                  "INTERRUPTED_NO_CALENDAR_EFFECT")
+
+    def record_test_calendar_human_advance(self, plan_digest, prior_receipt_ref, proof_ref):
+        """Keep the consumed request and separately record Human progression past it."""
+        self._record_test_calendar_reconciliation(plan_digest, prior_receipt_ref, proof_ref,
+                                                  "HUMAN_ADVANCED_PAST_REQUEST")
+
+    def _record_test_calendar_reconciliation(self, plan_digest, prior_receipt_ref, proof_ref, disposition):
+        if not proof_ref or not prior_receipt_ref:
+            raise ValueError("TEST_CALENDAR_RECONCILIATION_EVIDENCE_REQUIRED")
+        with closing(self._get_connection()) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            schema = conn.execute("SELECT sql FROM sqlite_master WHERE name='test_calendar_reconciliations'").fetchone()[0]
+            if "HUMAN_ADVANCED_PAST_REQUEST" not in schema:
+                conn.execute("""
+                    CREATE TABLE test_calendar_reconciliations_v2 (
+                        plan_digest TEXT PRIMARY KEY REFERENCES test_calendar_claims(plan_digest),
+                        prior_receipt_ref TEXT NOT NULL, proof_ref TEXT NOT NULL,
+                        disposition TEXT NOT NULL CHECK(disposition IN
+                            ('INTERRUPTED_NO_CALENDAR_EFFECT','HUMAN_ADVANCED_PAST_REQUEST'))
+                    )
+                """)
+                conn.execute("INSERT INTO test_calendar_reconciliations_v2 SELECT * FROM test_calendar_reconciliations")
+                conn.execute("DROP TABLE test_calendar_reconciliations")
+                conn.execute("ALTER TABLE test_calendar_reconciliations_v2 RENAME TO test_calendar_reconciliations")
+            if conn.execute("""
+                INSERT INTO test_calendar_reconciliations
+                SELECT plan_digest, receipt_ref, ?, ?
+                FROM test_calendar_claims WHERE plan_digest=? AND status='UNKNOWN' AND receipt_ref=?
+            """, (proof_ref, disposition, plan_digest, prior_receipt_ref)).rowcount != 1:
+                raise ValueError("TEST_CALENDAR_UNKNOWN_RECEIPT_CHANGED")
+
+    @staticmethod
+    def inspect_test_calendar(db_path, plan_digest):
+        """Read a claim without initializing or mutating the Outbox."""
+        with closing(sqlite3.connect(Path(db_path).resolve().as_uri() + "?mode=ro", uri=True)) as conn:
+            conn.row_factory = sqlite3.Row
+            row = conn.execute("SELECT * FROM test_calendar_claims WHERE plan_digest = ?",
+                               (plan_digest,)).fetchone()
+            return dict(row) if row else None
+
+    def reconcile_rejected_research_setter(self, cycle_id, plan_digest, proof_ref):
+        """Retain the execution claim and attach a proved pre-dispatch rejection."""
+        if not proof_ref:
+            raise ValueError("RESEARCH_SETTER_PROOF_REQUIRED")
+        now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        with closing(self._get_connection()) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            cycle = conn.execute("SELECT status, revision FROM decision_cycles WHERE cycle_id=?", (cycle_id,)).fetchone()
+            claims = conn.execute("""
+                SELECT json_extract(payload_json,'$.plan_digest') FROM outbox_events
+                WHERE cycle_id=? AND event_type='EXECUTION_CLAIMED'
+            """, (cycle_id,)).fetchall()
+            intents = conn.execute("SELECT intent_id,status FROM decision_intents WHERE cycle_id=?", (cycle_id,)).fetchall()
+            if (not cycle or cycle["status"] != "UNKNOWN_LOCKED" or len(claims) != 1 or claims[0][0] != plan_digest
+                    or len(intents) != 1 or intents[0]["status"] != "UNKNOWN"):
+                raise ValueError("RESEARCH_SETTER_UNKNOWN_CLAIM_MISMATCH")
+            conn.execute("""
+                UPDATE decision_intents SET status='NOT_EXECUTED', outcome_reason=?, updated_at=? WHERE cycle_id=?
+            """, ("RECONCILED_PLANNER_REJECTED_BEFORE_NATIVE_DISPATCH", now, cycle_id))
+            revision = cycle["revision"] + 1
+            conn.execute("""
+                UPDATE decision_cycles SET status='STOPPED_PARTIAL', revision=?, updated_at=? WHERE cycle_id=?
+            """, (revision, now, cycle_id))
+            conn.execute("""
+                INSERT INTO outbox_events (cycle_id, intent_id, event_type, prev_state, new_state, revision, payload_json, timestamp)
+                VALUES (?, ?, 'RECONCILED_NO_NATIVE_DISPATCH', 'UNKNOWN_LOCKED', 'STOPPED_PARTIAL', ?, ?, ?)
+            """, (cycle_id, intents[0]["intent_id"], revision,
+                  json.dumps({"plan_digest": plan_digest, "proof_ref": proof_ref}), now))
 
     def open_cycle(self, cycle_id: str, context: BatchContext) -> Dict[str, Any]:
         """Opens a new decision cycle bound to an immutable BatchContext."""
@@ -166,7 +298,7 @@ class DecisionOutbox:
         ctx_json = encode(ctx_dict)
         ctx_digest = digest(ctx_dict)
 
-        with self._get_connection() as conn:
+        with closing(self._get_connection()) as conn, conn:
             cur = conn.cursor()
             cur.execute("SELECT * FROM decision_cycles WHERE cycle_id = ?", (cycle_id,))
             row = cur.fetchone()
@@ -661,7 +793,7 @@ class DecisionOutbox:
 
     def claim_execution(self, cycle_id: str, plan_digest: str, *, native_items=None) -> None:
         """Reserve a sealed cycle once before dispatch, including across Host restarts."""
-        with self._get_connection() as conn:
+        with closing(self._get_connection()) as conn, conn:
             conn.execute("BEGIN IMMEDIATE")
             cycle = conn.execute(
                 "SELECT status, revision, context_json FROM decision_cycles WHERE cycle_id = ?", (cycle_id,)
@@ -675,6 +807,13 @@ class DecisionOutbox:
             if prior:
                 raise ValueError("EXECUTION_ALREADY_CLAIMED_NO_REPLAY")
             context = json.loads(cycle["context_json"])
+            if conn.execute("""
+                SELECT 1 FROM test_calendar_claims c
+                 WHERE (world_id = ? OR save_instance_id = ?)
+                   AND status IN ('CLAIMED','UNKNOWN')
+                   AND NOT EXISTS (SELECT 1 FROM test_calendar_reconciliations r WHERE r.plan_digest=c.plan_digest)
+            """, (context["world_id"], context["save_instance_id"])).fetchone():
+                raise ValueError("TEST_CALENDAR_UNRESOLVED")
             resources = set()
             for item in conn.execute("""
                 SELECT action_id, parameters_json, target_resource_key FROM decision_intents

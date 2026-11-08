@@ -1,0 +1,97 @@
+{
+  "schema": "nba2k22.vae.season_research_delegation.proposal.v1",
+  "status": "PROPOSED_NOT_APPROVED_NOT_ACTIVATABLE",
+  "issue": 40,
+  "operational_authority": false,
+  "binding": {
+    "disposable_save_id": null,
+    "loaded_filename": null,
+    "worldline_id": null,
+    "binding_sha256": null,
+    "baseline_save_sha256": null,
+    "save_revision": null,
+    "database_identity": null,
+    "season_id": null,
+    "build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+    "pid_epoch": null,
+    "fresh_minimum_today": null,
+    "last_regular_season_day": null
+  },
+  "calendar": {
+    "action": "TEST_ONLY_SIM_THROUGH_DATE",
+    "max_window_days": 7,
+    "max_windows": 14,
+    "max_dispatches_per_window": 1,
+    "max_total_game_days": 98,
+    "proposed_latest_stop_exclusive": "2022-04-11",
+    "actual_stop": "earliest of proposal cap, frozen regular-season boundary, and event stop line",
+    "focus": "FOREGROUND_VISIBLE_REQUIRED_BY_POLICY",
+    "required_authority": "separate Human calendar decision binding exact envelope digest",
+    "approval_ref": null
+  },
+  "setter": {
+    "action": "PLAYER_PATCH_TENDENCIES",
+    "fields": [
+      "SHOT_TENDENCY"
+    ],
+    "doses_from_preregistered_baseline": [
+      -5,
+      5
+    ],
+    "target_min": 0,
+    "target_max": 100,
+    "eligible_uid_policy": "Human-reviewed frozen roster UID/role/team allowlist; R0-style health/slot/minutes/opportunity filter with a fresh Getter before seal",
+    "eligible_uid_set_digest": null,
+    "teams_per_batch": 1,
+    "items_per_batch": 1,
+    "max_batches_per_window": 12,
+    "max_total_writes": 168,
+    "current_s4_per_batch_native_limit": 3,
+    "required_authority": "distinct Human decision approving exact delegation and Host implementation; exact existing batch approval remains enforced until then",
+    "approval_ref": null,
+    "adaptive_scope": "reallocate or exclude only eligible prebound candidates between preregistered windows; no new field, team scope, dose, endpoint or silent baseline restore"
+  },
+  "controls": {
+    "max_wall_hours_after_activation": 48,
+    "hard_expiry_utc": null,
+    "max_window_observation_seconds": 120,
+    "max_automatic_unknown_retries": 0,
+    "finalization_requires": [
+      "exact identity and fresh Getter/roster",
+      "Host exact digest and CAS with resource lock",
+      "same-unit final schedule and score-conserved team/player Boxes",
+      "verified save/reload persistence checkpoint before autonomous multi-window mode"
+    ],
+    "hard_stop": [
+      "crash",
+      "unexplained RaiseException",
+      "unknown dispatch or CAS state",
+      "stale or expired authority",
+      "partial or conflicting capture",
+      "focus or process epoch drift",
+      "save or worldline change",
+      "out-of-envelope calendar or event",
+      "qualification drift affecting treatment validity",
+      "regular-season boundary"
+    ],
+    "revoke": "Human revocation denies new claims and leaves existing claims fenced until exact read-only reconciliation",
+    "reconcile": "Original Host/Outbox and calendar journal readback only, exact Save/worldline/epoch/game set/source units, Human disposition if unknown",
+    "season_handoff": [
+      "CONTINUE_NEXT_REGULAR_SEASON",
+      "RESTORE_FROZEN_BASELINE"
+    ]
+  },
+  "activation_requirements": [
+    "populate all binding and authority values in private copy",
+    "Issue #39 archived test-only commands and bounded safety proof",
+    "approved current short-window proof and Save/reload evidence",
+    "approved and verified Host grant derivation preserving original S4 CAS, scopes and native locks",
+    "Human binds exact final envelope digest and distinct permissions",
+    "repo branch independent review for protected integration"
+  ],
+  "human_approval": {
+    "decision_ref": null,
+    "approved_contract_digest": null,
+    "revoked": false
+  }
+}
