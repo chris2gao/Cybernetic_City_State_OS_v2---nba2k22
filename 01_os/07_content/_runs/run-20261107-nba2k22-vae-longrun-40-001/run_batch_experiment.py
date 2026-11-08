@@ -10,7 +10,7 @@ import sys
 from types import SimpleNamespace
 
 from build_observed_round import build
-from experiment_round import analyze, plan as make_plan
+from experiment_round import analyze, digest, plan as make_plan
 from live_research_authority import FIELD, MAX_CALENDAR, MAX_CYCLES, MAX_SETTERS, SLOT
 from live_research_authority import ResearchAuthority, freeze, require
 from read_observed_window import readback
@@ -310,9 +310,12 @@ def recover_round_two_setters(args, cal, authority, plan, host):
     return outcomes
 
 
-def recover_after_allstar(args, cal, authority, template, snapshot, host):
-    old = args.resume_post_allstar
-    original = cal.load(old / "round-05-sim-01.json")
+def unpack_day(word):
+    return date(2000 + (word >> 25), ((word >> 21) & 15) + 1, (word >> 16) & 31).isoformat()
+
+
+def reconcile_human_event(args, cal, authority, template, snapshot, host, old, round_number, subwindow):
+    original = cal.load(old / f"round-{round_number:02d}-sim-{subwindow:02d}.json")
     folder = Path(original["private_receipt"])
     raw = cal.load(folder / "evidence.json")
     manifest = cal.load(folder / "request.json")
@@ -326,35 +329,49 @@ def recover_after_allstar(args, cal, authority, template, snapshot, host):
             and manifest["script_sha256"] == cal.sha_file(folder / "program.js")
             and manifest["maximum_game_calls"] == 1 and native["pid"] == authority.epoch["pid"]
             and not native["messages_truncated"] and native["cleanup_error"] is None
-            and payloads == [{"event": "WILL_DISPATCH_ONCE", "command": 17, "thread": packed["thread"],
-                              "selected": packed["selected"]}], "Post-event original dispatch is ambiguous")
-    require(authority.next_start >= date(2022, 2, 21) and cal.word(authority.next_start) > packed["stop"],
-            "Native Today is not beyond the Human-handled event and original request")
-    historical = dict(snapshot, start="2022-02-05")
+            and payloads[0] == {"event": "WILL_DISPATCH_ONCE", "command": 17, "thread": packed["thread"],
+                                "selected": packed["selected"]}
+            and payloads[1:] in ([], [{"event": "NATIVE_EXCEPTION_OBSERVED", "source": "Frida", "type": "system"}]),
+            "Post-event original dispatch is ambiguous")
+    current = authority.next_start.isoformat()
+    original_start, original_stop = unpack_day(packed["today"]), unpack_day(packed["stop"])
+    require(current >= original_stop, "Native Today has not reached the original interrupted target")
+    historical = dict(snapshot, start=original_start)
     schedule = schedule_for(Path(template["database"]), historical)
     planned = {(row["id"], row["day"], row["home"], row["away"]) for row in packed["games"]}
-    recovered = [row for row in schedule if row["day"] <= "2022-02-07"]
+    recovered = [row for row in schedule if row["day"] <= original_stop]
     require(planned == {(int(row["id"]), cal.word(date.fromisoformat(row["day"])), int(row["home"]), int(row["away"]))
                         for row in recovered}
-            and all(row["is_final"] == 1 and row["played"] == row["day"] for row in recovered),
+            and all((row["is_final"] == 1 and row["played"] == row["day"]) if row["day"] < current
+                    else (row["is_final"] == 0 and row["played"] is None and row["status_code"] == "0")
+                    for row in recovered),
             "WorldData did not prove the old window closed")
-    roots = (args.prior_setters, args.prior_second_run, old)
+    proof = args.output / f"round-{round_number:02d}-human-event-reconciliation.json"
+    assisted_ids = sorted(int(row["id"]) for row in recovered if row["day"] < original_stop)
+    freeze(proof, {"status": "HUMAN_ADVANCED_PAST_REQUEST", "today": current,
+                   "prior_plan_digest": original["plan_digest"], "prior_evidence": raw["evidence_id"],
+                   "worlddata_report_sha256": snapshot["identity"]["source_report_sha256"],
+                   "original_window_closed_game_ids": assisted_ids,
+                   "attribution": "EXCLUDED_HUMAN_ASSISTED_EVENT_INTERVAL"})
+    host.outbox.record_test_calendar_human_advance(original["plan_digest"], original["private_receipt"],
+                                                  f"sha256:{cal.sha_file(proof)}")
+    return assisted_ids
+
+
+def restore_budget(args, cal, authority, *roots):
     setters = [cal.load(path) for root in roots for path in root.glob("vae-v2-*-reservation.json")]
     authority.setter_count = len(setters)
     authority.reserved_players = {row["target"]["uid"] for row in setters}
     authority.calendar_count = sum(len(list(root.glob("calendar-*-reservation.json"))) for root in roots)
-    require(authority.setter_count == 60 and authority.calendar_count == 18, "Original V2 budgets are not conserved")
-    authority.round_count = 5
     authority.season_stop = min(authority.season_stop, date(2022, 4, 16))
-    proof = args.output / "round-05-human-event-reconciliation.json"
-    freeze(proof, {"status": "HUMAN_ADVANCED_PAST_REQUEST", "today": authority.next_start.isoformat(),
-                   "prior_plan_digest": original["plan_digest"], "prior_evidence": raw["evidence_id"],
-                   "worlddata_report_sha256": snapshot["identity"]["source_report_sha256"],
-                   "original_window_closed_game_ids": sorted(int(row["id"]) for row in recovered),
-                   "attribution": "EXCLUDED_HUMAN_ASSISTED_EVENT_INTERVAL", "setter_reservations": authority.setter_count,
-                   "calendar_reservations": authority.calendar_count})
-    host.outbox.record_test_calendar_human_advance(original["plan_digest"], original["private_receipt"],
-                                                  f"sha256:{cal.sha_file(proof)}")
+
+
+def read_recovered_prefix(plan, date_text, capture, report_sha, template):
+    prefix = {key: value for key, value in plan.items() if key != "research_plan_digest"}
+    prefix["stop"] = date_text
+    prefix["games"] = [row for row in plan["games"] if row["day"] < date_text]
+    prefix["research_plan_digest"] = digest(prefix)
+    return readback(prefix, capture, Path(template["save_directory"]), SLOT, report_sha)[1]["games"]
 
 
 def advance_empty_days(args, cal, authority, template, schedule, season_stop):
@@ -421,7 +438,11 @@ def run(args):
                             effects=merged["contrasts"]))
     try:
         if args.resume_post_allstar is not None:
-            recover_after_allstar(args, cal, authority, template, snapshot, host)
+            require(authority.next_start >= date(2022, 2, 21), "All-Star recovery date not verified")
+            restore_budget(args, cal, authority, args.prior_setters, args.prior_second_run, args.resume_post_allstar)
+            require(authority.setter_count == 60 and authority.calendar_count == 18, "Original V2 budgets are not conserved")
+            reconcile_human_event(args, cal, authority, template, snapshot, host, args.resume_post_allstar, 5, 1)
+            authority.round_count = 5
             starting_round = 6
             results = cal.load(args.resume_post_allstar / "STOP.json")["completed"]
             transit_capture = advance_empty_days(args, cal, authority, template, schedule, season_stop)
@@ -435,15 +456,27 @@ def run(args):
                 export_pool(args.r0, template, capture, report_sha, pool)
             snapshot = build(pool, Path(template["database"]), capture_receipt, excluded_uids=authority.reserved_players)
             schedule = schedule_for(Path(template["database"]), snapshot)
+        if args.resume_deadline is not None:
+            require(authority.next_start == date(2022, 3, 2), "Deadline recovery Today differs from original target")
+            starting_round = 6
+            authority.round_count = 5
+            results = cal.load(args.resume_deadline / "STOP.json")["completed"]
         for number in range(starting_round, MAX_CYCLES + 1):
             if authority.next_start + timedelta(days=7) > authority.season_stop:
                 break
             resuming = args.resume is not None and number == 1
             resume_treatments = args.resume_round_two is not None and number == 2
+            resume_deadline = args.resume_deadline is not None and number == 6
+            assisted_ids = []
+            prefix_games = []
             if resuming:
                 round_plan = cal.load(args.resume / "round-01-plan.json")
             elif resume_treatments:
                 round_plan = cal.load(args.resume_round_two / "round-02-plan.json")
+            elif resume_deadline:
+                round_plan = cal.load(args.resume_deadline / "round-06-plan.json")
+                recovered_today = authority.next_start
+                authority.next_start = date.fromisoformat(round_plan["start"])
             else:
                 round_plan = make_plan(snapshot, 20261107 + number - 1, writable_teams=range(30))
             authority.bind_round(round_plan)
@@ -455,6 +488,26 @@ def run(args):
                 windows = subplans(template, round_plan, schedule, authority, season_stop, cal,
                                    resume_from=authority.next_start)
                 windows[0]["today_raw"] = recovered_word
+            elif resume_deadline:
+                authority.next_start = recovered_today
+                restore_budget(args, cal, authority, args.prior_setters, args.prior_second_run,
+                               args.prior_fifth_run, args.resume_deadline)
+                require(authority.setter_count == 72 and authority.calendar_count == 22,
+                        "Deadline recovery budget differs")
+                assisted_ids = reconcile_human_event(args, cal, authority, template, snapshot, host,
+                                                     args.resume_deadline, 6, 3)
+                prefix_games = read_recovered_prefix(round_plan, recovered_today.isoformat(), capture, report_sha, template)
+                prior = [cal.load(args.resume_deadline / f"round-06-sim-{index:02d}.json") for index in (1, 2)]
+                require(all(row["status"] == "VERIFIED_IN_MEMORY" for row in prior), "Missing Native prefix")
+                outcomes = []
+                for index, target in enumerate(round_plan["write_candidates"], 1):
+                    item = cal.load(args.resume_deadline / f"vae-v2-r06-s{index:02d}-result.json")
+                    require(item["success_count"] == 1 and item["readback_verified"] is True,
+                            "Missing verified treatment at deadline recovery")
+                    outcomes.append(dict(uid=target["uid"], **item))
+                windows = subplans(template, round_plan, schedule, authority, season_stop, cal,
+                                   resume_from=authority.next_start)
+                thread, frame_ref = read_frame(cal, authority, windows[0], args.output / "deadline-resume-frame")
             else:
                 windows = subplans(template, round_plan, schedule, authority, season_stop, cal)
                 thread, frame_ref = read_frame(cal, authority, windows[0], args.output / f"frame-{number:02d}")
@@ -468,19 +521,21 @@ def run(args):
             require(treated, "No verified treatment in this cycle")
             finals = [game for item in prior for game in item["final_game_ids"]]
             calls = [item["evidence_id"] for item in prior]
-            for index, window in enumerate(windows, 4 if resuming else 1):
+            for index, window in enumerate(windows, 4 if (resuming or resume_deadline) else 1):
                 result = run_calendar(cal, authority, template, window,
                                       args.output / f"round-{number:02d}-sim-{index:02d}")
                 finals.extend(result["final_game_ids"])
                 calls.append(result["evidence_id"])
-            require(sorted(finals) == round_plan["planned_expected_game_ids"], "Window schedule mismatch")
+            require(sorted(finals + assisted_ids) == round_plan["planned_expected_game_ids"], "Window schedule mismatch")
             capture = args.output / f"round-{number:02d}-post"
             status = capture_world(capture, template, authority)
             capture_receipt = capture.with_suffix(".json")
             freeze(capture_receipt, status)
             report_sha = status["source_report_sha256"]
             audit, data = readback(round_plan, capture, Path(template["save_directory"]), SLOT, report_sha)
-            game_ids = set(audit["verified_game_ids"])
+            eligible = {row["game_id"]: row for row in prefix_games + data["games"] if row["game_id"] not in assisted_ids}
+            data["games"] = list(eligible.values())
+            game_ids = set(eligible)
             screened = dict(round_plan, games=[game for game in round_plan["games"] if game["game_id"] in game_ids])
             # For the per-protocol screen, exclude entire strata with a missed treatment.
             dropped = {row["stratum"] for row in round_plan["assignments"]
@@ -493,6 +548,7 @@ def run(args):
             effect = analyze(screened, data) if game_ids else {"classification": "NO_QUALIFIED_WORLDDATA", "contrasts": {}}
             summary = {"cycle": number, "today": authority.next_start.isoformat(), "setter_success": len(treated),
                        "setter_candidates": len(outcomes), "calendar_calls": len(calls), "final_games": len(finals),
+                       "human_assisted_games_excluded": len(assisted_ids),
                        "qualified_worlddata_games": len(game_ids), "effects": effect["contrasts"],
                        "classification": effect["classification"], "persistence": "IN_MEMORY_ONLY"}
             freeze(args.output / f"round-{number:02d}-analysis.json", dict(summary=summary, audit=audit, effect=effect,
@@ -526,5 +582,7 @@ if __name__ == "__main__":
     parser.add_argument("--prior-setters", type=Path)
     parser.add_argument("--prior-second-run", type=Path)
     parser.add_argument("--resume-post-allstar", type=Path)
+    parser.add_argument("--resume-deadline", type=Path)
+    parser.add_argument("--prior-fifth-run", type=Path)
     parser.add_argument("--goal-sha", required=True)
     run(parser.parse_args())
