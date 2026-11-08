@@ -74,6 +74,11 @@ def report(plan_dir, retained_path):
         if study.factors[key].protocol in ("TRAINING", "PROGRESSION"):
             row["settlement_reader"] = "capture_development_event"
             row["settlement_evidence"] = "INDEPENDENT_NATIVE_SETTLEMENT_NOT_YET_VERIFIED"
+        elif study.factors[key].protocol in ("CONTRACT", "TRADE_DRAFT"):
+            row["settlement_reader"] = "capture_management_event"
+            row["settlement_scope"] = ("PLAYER_TRADE_ONLY_DRAFT_UNBOUND" if study.factors[key].protocol == "TRADE_DRAFT"
+                                       else "RECORDED_CONTRACT_CHANGE_WITH_CURRENT_ROSTER_IDENTITY")
+            row["settlement_evidence"] = "INDEPENDENT_NATIVE_TRANSACTION_SEMANTICS_NOT_YET_VERIFIED"
     seats = [item for window in reference for item in window["team_assignments"].values() if item["arm"] in ("H", "L")]
     unique = len({row["uid"] for row in seats})
     return {"reference_save": {"experiment_slot": study.baseline["loaded_slot"],

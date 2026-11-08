@@ -12,6 +12,7 @@ WORLDDATA = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(WORLDDATA), str(WORLDDATA.parent / "research/rea_native_control")]
 from factor_analysis import screen_settled_events
 from factor_assignment import event_study
+from factor_management import MANAGEMENT_CAPTURE_FAMILIES, _TERMS, capture_management_event
 from factor_settlement import DEVELOPMENT_CAPTURE_FAMILIES, capture_development_event
 
 
@@ -25,6 +26,28 @@ SCHEMA = """
     CREATE TABLE player_attribute_snapshots(source_player_id,unit_id,player_id,stamina_raw);
     CREATE TABLE player_health_observations(source_player_id,unit_id,player_id,fatigue_raw,wear_and_tear_raw);
 """
+
+
+def write_source_report(conn, directory, bound, index, families):
+    directory.mkdir()
+    units = {}
+    for family in families:
+        unit = f"{bound['worldline_id']}-{index}-{family}"
+        row = {"unit_id": unit, "payload_sha256": SHA, "unit_status": "success",
+               "observed_at": f"2026-01-01T00:00:0{index}Z", "source_key": family,
+               "source_grade": "LIVE_READ", "season_id": bound["season_id"]}
+        conn.execute("INSERT INTO capture_runs VALUES (?,?,?)", (unit, row["source_grade"], row["season_id"]))
+        conn.execute("INSERT INTO capture_units VALUES (?,?,?,?,?,?)", (
+            unit, SHA, "success", row["observed_at"], family, unit))
+        units[family] = row
+    report = {"status": "COMPLETED_REQUESTED_SOURCES", "game_writes": False, "save_id": bound["save_id"],
+              "native_save_filename": bound["loaded_filename"], "binding_sha256": bound["binding_sha256"],
+              "process_epoch": bound["epoch"],
+              "sources": [{"family": family, "status": "ACQUIRED", "commit_status": "COMMITTED_SUCCESS_VERIFIED",
+                           "unit": unit} for family, unit in units.items()]}
+    raw = json.dumps(report).encode()
+    (directory / "refresh-report.json").write_bytes(raw)
+    return sha256(raw).hexdigest(), {family: row["unit_id"] for family, row in units.items()}
 
 
 def settlement_fixture(tmp_path, arm, *, progression=False):
@@ -43,21 +66,11 @@ def settlement_fixture(tmp_path, arm, *, progression=False):
     with closing(sqlite3.connect(host.database)) as conn, conn:
         conn.executescript(SCHEMA)
         for index, (directory, bound) in enumerate(zip(paths, (before_binding, after_binding), strict=True)):
-            directory.mkdir()
-            units = {}
-            for family in DEVELOPMENT_CAPTURE_FAMILIES:
-                unit = f"{arm}-{index}-{family}"
-                row = {"unit_id": unit, "payload_sha256": SHA, "unit_status": "success",
-                       "observed_at": f"2026-01-01T00:00:0{index}Z", "source_key": family,
-                       "source_grade": "LIVE_READ", "season_id": bound["season_id"]}
-                conn.execute("INSERT INTO capture_runs VALUES (?,?,?)", (unit, row["source_grade"], row["season_id"]))
-                conn.execute("INSERT INTO capture_units VALUES (?,?,?,?,?,?)", (
-                    unit, SHA, "success", row["observed_at"], family, unit))
-                units[family] = row
+            pin, units = write_source_report(conn, directory, bound, index, DEVELOPMENT_CAPTURE_FAMILIES)
             conn.execute("INSERT INTO game_mode_observations VALUES (?,?,?,?,?)",
-                         (units["game-mode"]["unit_id"], "2022-06-30", 600 + index * 20, "FRANCHISE", "NBA"))
+                         (units["game-mode"], "2022-06-30", 600 + index * 20, "FRANCHISE", "NBA"))
             for family in ("player-skills", "player-state"):
-                unit = units[family]["unit_id"]
+                unit = units[family]
                 conn.execute("INSERT INTO native_player_sources VALUES (?,?,?,?,?,?)",
                              (unit + "-player", unit, "player:101", 101, 4, "CURRENT_CORE_ROSTER"))
                 if family == "player-skills":
@@ -66,14 +79,7 @@ def settlement_fixture(tmp_path, arm, *, progression=False):
                 else:
                     conn.execute("INSERT INTO player_health_observations VALUES (?,?,?,?,?)",
                                  (unit + "-player", unit, "player:101", None, 10 + index))
-            report = {"status": "COMPLETED_REQUESTED_SOURCES", "game_writes": False, "save_id": host.save_id,
-                      "native_save_filename": host.loaded_filename, "binding_sha256": host.binding_hash,
-                      "process_epoch": bound["epoch"],
-                      "sources": [{"family": family, "status": "ACQUIRED", "commit_status": "COMMITTED_SUCCESS_VERIFIED",
-                                   "unit": unit} for family, unit in units.items()]}
-            raw = json.dumps(report).encode()
-            (directory / "refresh-report.json").write_bytes(raw)
-            pins.append(sha256(raw).hexdigest())
+            pins.append(pin)
     factor = SimpleNamespace(factor_id="TEST_FACTOR", protocol="PROGRESSION" if progression else "TRAINING")
     proof = {"schema": "nba2k22.vae.development_settlement.v1", "mode": "LIVE", "factor_id": factor.factor_id,
              "protocol": factor.protocol, "binding": binding, "before_season_id": before_binding["season_id"],
@@ -108,7 +114,7 @@ def test_training_reads_sql_and_keeps_fatigue_missing(tmp_path):
     assert skill["effects"] == {"H_minus_C": 2} and skill["status"] == "UNDERPOWERED"
     assert fatigue["effects"] == {} and fatigue["status"] == "NO_MEASURABLE_ENDPOINT"
     assert rows[0]["before"]["health.wear_and_tear_raw"] == 10
-    assert rows[0]["before_source_units"]["player-state"]["unit_id"] == "H-0-player-state"
+    assert rows[0]["before_source_units"]["player-state"]["unit_id"] == "world-H-0-player-state"
     with pytest.raises(ValueError, match="EVENT_WORLDLINES_REQUIRE_DISTINCT_SETTLEMENT_SOURCES"):
         refs["world-C"]["source_unit"] = refs["world-H"]["source_unit"]
         screen_settled_events(plan, rows, "skill.stamina_raw", mode="LIVE")
@@ -126,7 +132,7 @@ def test_configuration_or_calendar_cannot_substitute_for_settlement(tmp_path, in
     if invalid == "day_advanced":
         proof["settlement"]["kind"] = "CALENDAR_ADVANCED"
     elif invalid == "source_reuse":
-        proof["settlement"]["source_unit"] = "H-1-game-mode"
+        proof["settlement"]["source_unit"] = "world-H-1-game-mode"
     elif invalid == "outside":
         proof["settlement"]["minutes"] = 625
     elif invalid == "report_sha":
@@ -146,3 +152,88 @@ def test_growth_accepts_year_rollover_with_same_process_and_player(tmp_path):
     assert capture()["setter_verified"] is False
     with pytest.raises(PermissionError, match="PROOF_PIN_MISMATCH"):
         capture(approved_proof_sha256=SHA)
+
+
+def management_fixture(tmp_path, trade):
+    binding = {"save_id": "save", "worldline_id": "world", "loaded_filename": "MyLEAGUE0005", "binding_sha256": SHA}
+    epoch = {"pid": 7, "creation_filetime": 100, "module_base": "0x140000000", "module_size": 1000, "pe_timestamp": 1652287197}
+    bound = dict(binding, epoch=epoch, season_id="2021-22")
+    host = SimpleNamespace(save_id="save", loaded_filename=binding["loaded_filename"], binding_hash=SHA, binding=binding,
+                           database=tmp_path / "world.sqlite")
+    paths = [tmp_path / "before", tmp_path / "after"]
+    pins = []
+    with closing(sqlite3.connect(host.database)) as conn, conn:
+        conn.executescript(SCHEMA + f"""
+            CREATE TABLE player_contract_observations(source_player_id,unit_id,player_id,
+                 native_contract_team_id_raw,contract_team_status,{','.join(_TERMS)});
+            CREATE TABLE native_transaction_observations(native_transaction_id,unit_id,native_type_code,
+                 date_word_raw,data_count_raw,active_prefix_status);
+            CREATE TABLE native_transaction_item_observations(unit_id,native_transaction_id,source_item_index,
+                 native_type_code,integer_word_raw);
+        """)
+        for index, directory in enumerate(paths):
+            pin, units = write_source_report(conn, directory, bound, index, MANAGEMENT_CAPTURE_FAMILIES)
+            pins.append(pin)
+            team = 4 + index if trade else 4
+            unit = units["player-details"]
+            conn.execute("INSERT INTO game_mode_observations VALUES (?,?,?,?,?)",
+                         (units["game-mode"], "2022-02-01", 600 + index * 20, "FRANCHISE", "NBA"))
+            conn.execute("INSERT INTO native_player_sources VALUES (?,?,?,?,?,?)",
+                         (unit + "-player", unit, "player:101", 101, team, "CURRENT_CORE_ROSTER"))
+            terms = [1] * len(_TERMS)
+            terms[_TERMS.index("extension_length_raw")] = 1 + index if not trade else 0
+            conn.execute("INSERT INTO player_contract_observations VALUES (" + ",".join("?" * (len(_TERMS) + 5)) + ")",
+                         (unit + "-player", unit, "player:101", team, "NATIVE_CORE_TEAM_POINTER_OBSERVED", *terms))
+        conn.execute("INSERT INTO native_transaction_observations VALUES (?,?,?,?,?,?)",
+                     ("transaction-after", units["news"], 7, 123, 2, "WITHIN_DECLARED_COUNT_PREFIX_CANDIDATE"))
+        conn.executemany("INSERT INTO native_transaction_item_observations VALUES (?,?,?,?,?)",
+                         [(units["news"], "transaction-after", 0, 3, 98), (units["news"], "transaction-after", 1, 4, 17)])
+    factor = SimpleNamespace(factor_id="TEST_MANAGEMENT", protocol="TRADE_DRAFT" if trade else "CONTRACT")
+    proof = {"schema": "nba2k22.vae.management_settlement.v1", "mode": "LIVE", "factor_id": factor.factor_id,
+             "protocol": factor.protocol, "binding": binding, "before_season_id": bound["season_id"],
+             "after_season_id": bound["season_id"], "origin_sha256": SHA, "uid": 101, "team_id": 4, "arm": "H",
+             "endpoints": ["ownership_moved"] if trade else ["extension_length_raw"],
+             "before_report_sha256": pins[0], "after_report_sha256": pins[1],
+             "settlement": {"kind": "NATIVE_PLAYER_TRADE_SETTLED" if trade else "NATIVE_CONTRACT_EXTENDED",
+                            "verified": True, "independent_review_ref": "synthetic test", "event_id": "event",
+                            "source_unit": "independent-event-source", "source_sha256": SHA,
+                            "event_date": "2022-02-01", "minutes": 610, "after_team_id": 5 if trade else 4,
+                            "native_transaction_id": "transaction-after",
+                            "transaction_signature": {"type_code": 7, "date_word": 123, "items": [[3, 98], [4, 17]]}},
+             "treatment": {"status": "APPLIED_VERIFIED", "source_sha256": SHA, "requested": 51, "observed": 51}}
+
+    def capture():
+        raw = json.dumps(proof).encode()
+        return capture_management_event(host, factor, proof_raw=raw, approved_proof_sha256=sha256(raw).hexdigest(),
+                                        before_directory=paths[0], after_directory=paths[1],
+                                        before_binding=bound, after_binding=bound)
+
+    return host, proof, capture
+
+
+@pytest.mark.parametrize("trade", [False, True])
+def test_management_joins_exact_new_transaction_to_native_roster_and_contract(tmp_path, trade):
+    _, proof, capture = management_fixture(tmp_path, trade)
+    row = capture()
+    assert row["native_transaction_id"] == "transaction-after"
+    assert row["before_identity"] == row["after_identity"] == "player:101"
+    assert row["after_team_id"] == (5 if trade else 4)
+    assert row["after"] == ({"ownership_moved": 1} if trade else {"extension_length_raw": 2})
+    proof["settlement"]["transaction_signature"]["items"][0][1] = 97
+    with pytest.raises(ValueError, match="MANAGEMENT_TRANSACTION_NOT_NEW_UNIQUE_AND_EXACT"):
+        capture()
+
+
+def test_management_rejects_reused_transaction_and_owner_disagreement(tmp_path):
+    host, _, capture = management_fixture(tmp_path, True)
+    with closing(sqlite3.connect(host.database)) as conn, conn:
+        conn.execute("INSERT INTO native_transaction_observations VALUES (?,?,?,?,?,?)",
+                     ("transaction-before", "world-0-news", 7, 123, 2, "WITHIN_DECLARED_COUNT_PREFIX_CANDIDATE"))
+        conn.executemany("INSERT INTO native_transaction_item_observations VALUES (?,?,?,?,?)",
+                         [("world-0-news", "transaction-before", 0, 3, 98), ("world-0-news", "transaction-before", 1, 4, 17)])
+    with pytest.raises(ValueError, match="MANAGEMENT_TRANSACTION_NOT_NEW_UNIQUE_AND_EXACT"):
+        capture()
+    with closing(sqlite3.connect(host.database)) as conn, conn:
+        conn.execute("UPDATE player_contract_observations SET native_contract_team_id_raw=4 WHERE unit_id='world-1-player-details'")
+    with pytest.raises(ValueError, match="MANAGEMENT_CONTRACT_OWNER_AND_ROSTER_DISAGREE"):
+        capture()
