@@ -38,10 +38,10 @@ python -B -X utf8 "$run/window_harness.py" one-window --journal "$run/_runtime/f
 
 ## 下一项安全动作
 
-[MyLEAGUE0005 当前实测规划检查点](FRESH_0005_CHECKPOINT.md) 记录已确认槽的六来源采集、30 队七日候选与 #39 一日预检。现场状态以该记录为准。
+[MyLEAGUE0005 实测检查点](FRESH_0005_CHECKPOINT.md) 记录六来源采集、30 队七日候选及 #39 单日实机回执。1 月 7 日的 9 场已完赛，1 月 8 日的 6 场仍待赛。该结果仅覆盖内存状态。
 
-[WorldData 接入进度](WORLDDATA_CHECKPOINT.md) 保留管理员只读进程核对和真实历史样本的 30 队复算。最新现场绑定状态以该记录为准。
+[WorldData 接入进度](WORLDDATA_CHECKPOINT.md) 保留管理员只读进程核对和真实历史样本的 30 队复算。
 
-继续同一母任务。[#39 草稿 PR #42](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/42) 已发布测试专用归档候选，固定提交 `2a1623a7397b5fec97b7e71aa929f15607245fbb`。归档版的 Native Today 和帧观察有实机只读证据，修正 Box 日期标签并通过 10 项日历测试和 87 项 Host/Outbox 回归。新归档版写入、保存重载和季委托尚未执行。
+继续同一母任务。[#39 草稿 PR #42](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/42) 的固定提交 `be0d7f65a767274830cb9644a42b96f53e025d3a` 提供测试专用归档。该版本已在限定窗口内完成一次原生模拟并通过离线原始回执复核。保存重载与赛季委托仍待验证或批准。
 
-已完成现场绑定和首轮规划。下一项现场动作是只读确认当前进程的前台日历执行帧，再将 #39 一日窗口的精确摘要提交 Human 裁决。七日处理候选与单日日历安全验证分开保留。
+恢复现场工作时，先只读核对槽、进程、日期与赛程，再按新状态冻结新的处理窗口。禁止重用 1 月 7 日七日候选或已消费的单日许可。赛季自动多批次仍须通过 Save/reload 验证和明确的分项授权。
