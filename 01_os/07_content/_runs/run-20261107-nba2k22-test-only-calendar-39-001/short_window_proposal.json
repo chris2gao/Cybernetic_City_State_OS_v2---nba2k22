@@ -1,0 +1,107 @@
+{
+  "status": "CANDIDATE_NOT_AUTHORIZED_NOT_RUN",
+  "test_scope": "ONE_DISPOSABLE_REGULAR_SEASON_WINDOW_NO_SETTERS",
+  "date_from": "2022-01-07",
+  "target_inclusive": "2022-01-07",
+  "expected_today": "2022-01-08",
+  "expected_games": [
+    {
+      "id": 582,
+      "home": 0,
+      "away": 25
+    },
+    {
+      "id": 583,
+      "home": 18,
+      "away": 1
+    },
+    {
+      "id": 584,
+      "home": 22,
+      "away": 12
+    },
+    {
+      "id": 585,
+      "home": 3,
+      "away": 2
+    },
+    {
+      "id": 586,
+      "home": 23,
+      "away": 17
+    },
+    {
+      "id": 587,
+      "home": 24,
+      "away": 27
+    },
+    {
+      "id": 588,
+      "home": 19,
+      "away": 13
+    },
+    {
+      "id": 589,
+      "home": 15,
+      "away": 9
+    },
+    {
+      "id": 590,
+      "home": 28,
+      "away": 4
+    }
+  ],
+  "untouched_next_day": [
+    {
+      "id": 591,
+      "home": 6,
+      "away": 8
+    },
+    {
+      "id": 592,
+      "home": 31,
+      "away": 1
+    },
+    {
+      "id": 593,
+      "home": 21,
+      "away": 16
+    },
+    {
+      "id": 594,
+      "home": 20,
+      "away": 12
+    },
+    {
+      "id": 595,
+      "home": 5,
+      "away": 14
+    },
+    {
+      "id": 596,
+      "home": 26,
+      "away": 10
+    }
+  ],
+  "schedule_evidence": "ev_866f926ecc471e4a506e4e9106c6e26c58614ee59677610fc3aff08e7fa19274",
+  "archived_today_evidence": "ev_76458e092cb418a53bf374dbab3e16a6191e8bc52b13479d7847099f55d428a6",
+  "read_only_frame_evidence": "ev_1c07b3fa019ca0dc951dd10f3a0ce136b3f5eaee827b495df6064ac5d54a3d04",
+  "max_native_dispatches": 1,
+  "observation_ceiling_seconds": 120,
+  "conditions": [
+    "freshly confirm exact loaded disposable slot and independent cold backup hashes",
+    "bind WorldData save ID, worldline, database, regular-season event window, process epoch and known shared Host Outbox",
+    "confirm foreground engine-thread frame before issuing immutable plan",
+    "bind Human decision to exact plan digest plus approval file SHA256"
+  ],
+  "stops": [
+    "any exception",
+    "crash",
+    "focus or epoch drift",
+    "timeout",
+    "partial or mixed Box",
+    "outbox conflict",
+    "state or save mismatch"
+  ],
+  "follow_up_persistence": "Separate proposal for intentional Save and reload on the same exact disposable scope after verified in-memory result."
+}
