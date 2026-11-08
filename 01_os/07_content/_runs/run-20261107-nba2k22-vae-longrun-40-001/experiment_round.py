@@ -24,7 +24,7 @@ def rank(seed, domain, value):
     return digest([seed, domain, value])
 
 
-def plan(snapshot, seed, *, writable_teams=None):
+def plan(snapshot, seed, *, writable_teams=None, minimum_opportunities=2):
     start, stop = (date.fromisoformat(snapshot[key]) for key in ("start", "stop"))
     if not 1 <= (stop - start).days <= 7:
         raise ValueError("Window must contain one to seven game days")
@@ -67,7 +67,7 @@ def plan(snapshot, seed, *, writable_teams=None):
                     or type(player["slot"]) is not int or not 0 <= player["slot"] <= 14
                     or player["recent_10min_appearances"] < 3 or not player["position"]
                     or type(baseline) is not int or not 5 <= baseline <= 95
-                    or opportunity[team["team_id"]] < 2):
+                    or opportunity[team["team_id"]] < minimum_opportunities):
                 raise ValueError(f"Preselected candidate ineligible: {team['team_id']}")
             assignments[team["team_id"]] = {
                 "team_id": team["team_id"], "uid": player["uid"], "stratum": stratum,
@@ -98,6 +98,8 @@ def plan(snapshot, seed, *, writable_teams=None):
                             "reassign_after_randomization": False, "effect_gate": "SCREENING_ONLY",
                             "multiple_testing": "prespecify confirmatory family and dependence-aware FDR in follow-up"},
     }
+    if minimum_opportunities != 2:
+        payload["preregistration"]["minimum_scheduled_opportunities"] = minimum_opportunities
     return dict(payload, research_plan_digest=digest(payload))
 
 

@@ -358,7 +358,7 @@ def reconcile_human_event(args, cal, authority, template, snapshot, host, old, r
     return assisted_ids
 
 
-def restore_budget(args, cal, authority, *roots):
+def restore_budget(cal, authority, *roots):
     setters = [cal.load(path) for root in roots for path in root.glob("vae-v2-*-reservation.json")]
     authority.setter_count = len(setters)
     authority.reserved_players = {row["target"]["uid"] for row in setters}
@@ -439,7 +439,7 @@ def run(args):
     try:
         if args.resume_post_allstar is not None:
             require(authority.next_start >= date(2022, 2, 21), "All-Star recovery date not verified")
-            restore_budget(args, cal, authority, args.prior_setters, args.prior_second_run, args.resume_post_allstar)
+            restore_budget(cal, authority, args.prior_setters, args.prior_second_run, args.resume_post_allstar)
             require(authority.setter_count == 60 and authority.calendar_count == 18, "Original V2 budgets are not conserved")
             reconcile_human_event(args, cal, authority, template, snapshot, host, args.resume_post_allstar, 5, 1)
             authority.round_count = 5
@@ -461,8 +461,23 @@ def run(args):
             starting_round = 6
             authority.round_count = 5
             results = cal.load(args.resume_deadline / "STOP.json")["completed"]
+        if args.resume_tail is not None:
+            prior_stop = cal.load(args.resume_tail / "STOP.json")
+            require(prior_stop["status"] == "BOUND_REACHED" and prior_stop["today"] == authority.next_start.isoformat(),
+                    "Season tail requires an exact completed automatic checkpoint")
+            results = prior_stop["completed"]
+            starting_round = results[-1]["cycle"] + 1
+            authority.round_count = starting_round - 1
+            restore_budget(cal, authority, args.prior_setters, args.prior_second_run, args.prior_fifth_run,
+                           args.prior_sixth_run, args.resume_tail)
+            last_safe_today = season_stop - timedelta(days=1)
+            require(0 < (last_safe_today - authority.next_start).days < 7,
+                    "No shortened regular-season window with next-day controls")
+            snapshot = build(pool, Path(template["database"]), capture_receipt,
+                             excluded_uids=authority.reserved_players, stop_override=last_safe_today.isoformat())
+            schedule = schedule_for(Path(template["database"]), snapshot)
         for number in range(starting_round, MAX_CYCLES + 1):
-            if authority.next_start + timedelta(days=7) > authority.season_stop:
+            if args.resume_tail is None and authority.next_start + timedelta(days=7) > authority.season_stop:
                 break
             resuming = args.resume is not None and number == 1
             resume_treatments = args.resume_round_two is not None and number == 2
@@ -478,7 +493,8 @@ def run(args):
                 recovered_today = authority.next_start
                 authority.next_start = date.fromisoformat(round_plan["start"])
             else:
-                round_plan = make_plan(snapshot, 20261107 + number - 1, writable_teams=range(30))
+                round_plan = make_plan(snapshot, 20261107 + number - 1, writable_teams=range(30),
+                                       minimum_opportunities=1 if args.resume_tail is not None else 2)
             authority.bind_round(round_plan)
             host.state["current_game_date"] = round_plan["start"]
             prior = []
@@ -490,7 +506,7 @@ def run(args):
                 windows[0]["today_raw"] = recovered_word
             elif resume_deadline:
                 authority.next_start = recovered_today
-                restore_budget(args, cal, authority, args.prior_setters, args.prior_second_run,
+                restore_budget(cal, authority, args.prior_setters, args.prior_second_run,
                                args.prior_fifth_run, args.resume_deadline)
                 require(authority.setter_count == 72 and authority.calendar_count == 22,
                         "Deadline recovery budget differs")
@@ -555,7 +571,8 @@ def run(args):
                                                                          calls=calls, setter_outcomes=outcomes))
             results.append(summary)
             print(json.dumps(summary), flush=True)
-            if (number == MAX_CYCLES or authority.setter_count == MAX_SETTERS or authority.calendar_count == MAX_CALENDAR
+            if (args.resume_tail is not None or number == MAX_CYCLES
+                    or authority.setter_count == MAX_SETTERS or authority.calendar_count == MAX_CALENDAR
                     or authority.next_start + timedelta(days=7) > authority.season_stop):
                 break
             pool = args.output / f"round-{number:02d}-next-pool"
@@ -584,5 +601,7 @@ if __name__ == "__main__":
     parser.add_argument("--resume-post-allstar", type=Path)
     parser.add_argument("--resume-deadline", type=Path)
     parser.add_argument("--prior-fifth-run", type=Path)
+    parser.add_argument("--prior-sixth-run", type=Path)
+    parser.add_argument("--resume-tail", type=Path)
     parser.add_argument("--goal-sha", required=True)
     run(parser.parse_args())
