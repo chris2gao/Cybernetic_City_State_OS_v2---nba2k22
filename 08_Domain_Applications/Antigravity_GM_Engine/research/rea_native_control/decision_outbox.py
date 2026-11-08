@@ -239,6 +239,35 @@ class DecisionOutbox:
                                (plan_digest,)).fetchone()
             return dict(row) if row else None
 
+    def reconcile_rejected_research_setter(self, cycle_id, plan_digest, proof_ref):
+        """Retain the execution claim and attach a proved pre-dispatch rejection."""
+        if not proof_ref:
+            raise ValueError("RESEARCH_SETTER_PROOF_REQUIRED")
+        now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+        with closing(self._get_connection()) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            cycle = conn.execute("SELECT status, revision FROM decision_cycles WHERE cycle_id=?", (cycle_id,)).fetchone()
+            claims = conn.execute("""
+                SELECT json_extract(payload_json,'$.plan_digest') FROM outbox_events
+                WHERE cycle_id=? AND event_type='EXECUTION_CLAIMED'
+            """, (cycle_id,)).fetchall()
+            intents = conn.execute("SELECT intent_id,status FROM decision_intents WHERE cycle_id=?", (cycle_id,)).fetchall()
+            if (not cycle or cycle["status"] != "UNKNOWN_LOCKED" or len(claims) != 1 or claims[0][0] != plan_digest
+                    or len(intents) != 1 or intents[0]["status"] != "UNKNOWN"):
+                raise ValueError("RESEARCH_SETTER_UNKNOWN_CLAIM_MISMATCH")
+            conn.execute("""
+                UPDATE decision_intents SET status='NOT_EXECUTED', outcome_reason=?, updated_at=? WHERE cycle_id=?
+            """, ("RECONCILED_PLANNER_REJECTED_BEFORE_NATIVE_DISPATCH", now, cycle_id))
+            revision = cycle["revision"] + 1
+            conn.execute("""
+                UPDATE decision_cycles SET status='STOPPED_PARTIAL', revision=?, updated_at=? WHERE cycle_id=?
+            """, (revision, now, cycle_id))
+            conn.execute("""
+                INSERT INTO outbox_events (cycle_id, intent_id, event_type, prev_state, new_state, revision, payload_json, timestamp)
+                VALUES (?, ?, 'RECONCILED_NO_NATIVE_DISPATCH', 'UNKNOWN_LOCKED', 'STOPPED_PARTIAL', ?, ?, ?)
+            """, (cycle_id, intents[0]["intent_id"], revision,
+                  json.dumps({"plan_digest": plan_digest, "proof_ref": proof_ref}), now))
+
     def open_cycle(self, cycle_id: str, context: BatchContext) -> Dict[str, Any]:
         """Opens a new decision cycle bound to an immutable BatchContext."""
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())

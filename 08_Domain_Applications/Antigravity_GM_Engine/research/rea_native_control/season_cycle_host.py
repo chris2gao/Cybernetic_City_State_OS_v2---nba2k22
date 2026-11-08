@@ -1775,6 +1775,9 @@ class SeasonCycleHost:
             verifier=verifier,
         )
         if live_context and self.research_delegation is not None:
+            issues = executor.planner.validate(bulk_batch)
+            if issues:
+                raise ValueError(f"LIVE_RESEARCH_PLANNER_REJECTED_BEFORE_CLAIM: {issues}")
             self.research_delegation.reserve_setter(cycle_id, plan_digest)
         self.outbox.claim_execution(cycle_id, plan_digest, native_items=bulk_batch.intents if live_context else None)
         self.state["status"] = HostState.UNKNOWN_LOCKED

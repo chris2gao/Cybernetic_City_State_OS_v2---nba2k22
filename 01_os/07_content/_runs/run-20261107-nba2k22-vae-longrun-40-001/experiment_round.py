@@ -24,7 +24,7 @@ def rank(seed, domain, value):
     return digest([seed, domain, value])
 
 
-def plan(snapshot, seed):
+def plan(snapshot, seed, *, writable_teams=None):
     start, stop = (date.fromisoformat(snapshot[key]) for key in ("start", "stop"))
     if not 1 <= (stop - start).days <= 7:
         raise ValueError("Window must contain one to seven game days")
@@ -53,6 +53,12 @@ def plan(snapshot, seed):
     assignments = {}
     for stratum, group in sorted(strata.items()):
         ordered = sorted(group, key=lambda team: (rank(seed, stratum, team["team_id"]), team["team_id"]))
+        if writable_teams is not None:
+            eligible = [team for team in ordered if team["team_id"] in writable_teams]
+            if len(eligible) < 2:
+                raise ValueError(f"No eligible H/L pair in {stratum}")
+            treated = eligible[:2]
+            ordered = treated + [team for team in ordered if team not in treated]
         for arm, team in zip(ARMS, ordered, strict=True):
             player = team["candidate"]
             baseline = player["shot_tendency"]

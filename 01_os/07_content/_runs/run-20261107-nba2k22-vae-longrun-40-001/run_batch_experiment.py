@@ -232,6 +232,56 @@ def reconcile_interruption(args, cal, authority, round_plan, database, outbox):
     return schedule, frame["thread"], frame_receipt["evidence_id"], outcomes, prior, recovered_today["raw"]
 
 
+def recover_round_two_setters(args, cal, authority, plan, host):
+    directory = args.resume_round_two
+    outcomes = []
+    for index, target in enumerate(plan["write_candidates"], 1):
+        cycle = f"vae-v2-r02-s{index:02d}"
+        path = directory / f"{cycle}-result.json"
+        if path.exists():
+            result = cal.load(path)
+            reservation = cal.load(directory / f"{cycle}-reservation.json")
+            require(result["success_count"] == 1 and result["readback_verified"] is True
+                    and reservation["target"] == target and reservation["plan_digest"] == result["plan_digest"],
+                    "Previous S4 reservation and verified result differ")
+            outcomes.append(dict(uid=target["uid"], **result))
+            authority.reserved_players.add(target["uid"])
+        else:
+            reservation = cal.load(directory / f"{cycle}-reservation.json")
+            seal = cal.load(directory / f"{cycle}-seal.json")
+            runtime = directory / cycle / "runtime"
+            claims = directory / cycle / "claims"
+            error_path = directory.with_suffix(".stderr.log")
+            error = error_path.read_text(encoding="utf-8")
+            require(reservation["target"] == target and reservation["plan_digest"] == seal["plan_digest"]
+                    and not 0 <= target["team_id"] <= 29
+                    and runtime.is_dir() and claims.is_dir() and not any(runtime.iterdir()) and not any(claims.iterdir())
+                    and "chunks = self.planner.plan(batch, max_chunk_size=max_chunk_size)" in error
+                    and f"team_id must be integer in range 0..29, got {target['team_id']}" in error,
+                    "Missing or unresolved previous setter")
+            getter = host._get_fresh_live_getter(expected_pid=authority.epoch["pid"], expected_team=target["team_id"],
+                                                expected_players={target["uid"]},
+                                                expected_creation_filetime=authority.epoch["creation_filetime"])
+            require(getter is not None and getter(target["uid"], FIELD) == target["expected_before"],
+                    "Unchanged Native Getter value could not reconcile the rejected setter")
+            proof = args.output / f"{cycle}-reconciled.json"
+            freeze(proof, dict(status="PLANNER_REJECTED_BEFORE_NATIVE_DISPATCH", plan_digest=seal["plan_digest"],
+                               stderr_sha256=cal.sha_file(error_path), unchanged_getter=target["expected_before"]))
+            host.outbox.reconcile_rejected_research_setter(cycle, seal["plan_digest"], f"sha256:{cal.sha_file(proof)}")
+            outcomes.append(dict(uid=target["uid"], status="LOCAL_WRITER_TEAM_OUTSIDE_CERTIFIED_RANGE"))
+    first_setters = [cal.load(path) for path in args.prior_setters.glob("vae-v2-r01-s*-reservation.json")]
+    require(len(first_setters) == 12 and len(authority.reserved_players) == 11,
+            "Verified setter history is incomplete")
+    authority.reserved_players.update(row["target"]["uid"] for row in first_setters)
+    authority.setter_count = len(first_setters) + len(list(directory.glob("vae-v2-r02-s*-reservation.json")))
+    authority.calendar_count = len(list(args.prior_setters.glob("calendar-*-reservation.json"))) + len(
+        list(directory.glob("calendar-*-reservation.json")))
+    require(authority.setter_count == 24 and len(authority.reserved_players) == 23 and authority.calendar_count == 5,
+            "Cumulative recovered V2 budget differs")
+    freeze(args.output / "round-02-recovered-setters.json", outcomes)
+    return outcomes
+
+
 def run(args):
     sys.path[:0] = [str(WORLD), str(NATIVE), str(args.calendar)]
     from refresh import _context
@@ -263,12 +313,27 @@ def run(args):
                       is_offline_mock=False, is_mock=False, current_cycle_id=None, active_plan=None)
     host._save_state()
     results = []
+    starting_round = 1
+    if args.resume_round_two is not None:
+        starting_round = 2
+        authority.round_count = 1
+        authority.season_stop = min(authority.season_stop, date(2022, 4, 16))
+        previous = cal.load(args.resume_round_two / "round-01-analysis.json")["summary"]
+        merged = cal.load(args.resume_round_two / "round-01-reconciled-analysis.json")["summary"]
+        results.append(dict(previous, qualified_worlddata_games=merged["qualified_worlddata_games"],
+                            effects=merged["contrasts"]))
     try:
-        for number in range(1, MAX_CYCLES + 1):
+        for number in range(starting_round, MAX_CYCLES + 1):
             if authority.next_start + timedelta(days=7) > authority.season_stop:
                 break
             resuming = args.resume is not None and number == 1
-            round_plan = cal.load(args.resume / "round-01-plan.json") if resuming else make_plan(snapshot, 20261107 + number - 1)
+            resume_treatments = args.resume_round_two is not None and number == 2
+            if resuming:
+                round_plan = cal.load(args.resume / "round-01-plan.json")
+            elif resume_treatments:
+                round_plan = cal.load(args.resume_round_two / "round-02-plan.json")
+            else:
+                round_plan = make_plan(snapshot, 20261107 + number - 1, writable_teams=range(30))
             authority.bind_round(round_plan)
             host.state["current_game_date"] = round_plan["start"]
             prior = []
@@ -295,7 +360,10 @@ def run(args):
                 frame, = [row["payload"] for row in native["messages"] if row["type"] == "send"
                           and row["payload"].get("event") == "FRAME_GATE_OBSERVED"]
                 thread, frame_ref = frame["thread"], frame_receipt["evidence_id"]
-                outcomes = apply_setters(host, authority, round_plan, args.output)
+                if resume_treatments:
+                    outcomes = recover_round_two_setters(args, cal, authority, round_plan, host)
+                else:
+                    outcomes = apply_setters(host, authority, round_plan, args.output)
             for window in windows:
                 window.update(engine_thread=thread, engine_thread_evidence=frame_ref)
             treated = {row["uid"] for row in outcomes if row.get("success_count") == 1}
@@ -361,5 +429,7 @@ if __name__ == "__main__":
         parser.add_argument(f"--{name}", type=Path, required=True)
     for name in ("resume", "recovery-capture", "recovery-receipt", "recovery-original", "recovery-frame", "recovery-raw"):
         parser.add_argument(f"--{name}", type=Path)
+    parser.add_argument("--resume-round-two", type=Path)
+    parser.add_argument("--prior-setters", type=Path)
     parser.add_argument("--goal-sha", required=True)
     run(parser.parse_args())
