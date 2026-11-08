@@ -108,7 +108,7 @@ def assign_blocks(features, candidates):
     return groups, centers, scales
 
 
-def build(directory, database, capture_status):
+def build(directory, database, capture_status, *, excluded_uids=frozenset()):
     sources = {name: (directory / name).read_bytes() for name in SOURCE_FILES}
     manifest = json.loads(sources[SOURCE_FILES[0]])
     inventory = json.loads(sources[SOURCE_FILES[1]])
@@ -118,7 +118,8 @@ def build(directory, database, capture_status):
     team_ids = {team for game in games for team in (game["home"], game["away"])}
     candidates = {}
     for row in pool:
-        if row["team"] not in team_ids or not row["eligible"] or not 5 <= row["shot_tendency"] <= 95:
+        if (row["team"] not in team_ids or row["uid"] in excluded_uids
+                or not row["eligible"] or not 5 <= row["shot_tendency"] <= 95):
             continue
         prior = candidates.get(row["team"])
         if prior is None or (-row["mean_minutes"], row["uid"]) < (-prior["mean_minutes"], prior["uid"]):

@@ -12,6 +12,10 @@ task_packet:
     - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/39
   allowed_changed_paths:
     - 01_os/07_content/_runs/run-20261107-nba2k22-vae-longrun-40-001/
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py
+  current_human_scope: V2 direct active Codex goal for MyLEAGUE0005 current regular season, SHOT_TENDENCY only
+  v2_bounds: {cycles: 14, players_per_cycle: 12, field_writes: 168, calendar_calls: 56, game_days: 98}
   required_tests: [inventory_source_recompute, deterministic_round, offline_window_faults, native_receipt_readback, scope]
   known_protected_actions: [season_delegation_activation, master_integration]
   big_task: true
