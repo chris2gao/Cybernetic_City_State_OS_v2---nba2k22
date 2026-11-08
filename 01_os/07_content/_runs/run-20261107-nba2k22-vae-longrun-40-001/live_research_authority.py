@@ -160,12 +160,17 @@ class ResearchAuthority:
                         ("loaded_filename", "binding_sha256", "worldline_id", "save_id", "database"))
                 and plan["epoch"] == self.epoch and plan["authorization_scope"] == self.ref
                 and plan["start"] == self.next_start.isoformat()
-                and plan["stop_exclusive"] <= self.round["stop"], "Calendar plan is outside delegated round")
+                and date.fromisoformat(plan["stop_exclusive"]) <= self.season_stop, "Calendar plan is outside delegated round")
         final = {(r["id"], r["day"], r["home"], r["away"]) for r in plan["games"]
                  if r["day"] < plan["stop_exclusive"]}
-        expected = {(r["game_id"], r["day"], r["home"], r["away"]) for r in self.round["games"]
-                    if plan["start"] <= r["day"] < plan["stop_exclusive"]}
-        require(final and final == expected, "Calendar finals do not match pre-registered window")
+        if plan.get("empty_transit") is True:
+            require(not final and self.round is None, "Empty calendar transit cannot contain a research window")
+        else:
+            require(self.round is not None and plan["stop_exclusive"] <= self.round["stop"],
+                    "Calendar extends beyond the pre-registered round")
+            expected = {(r["game_id"], r["day"], r["home"], r["away"]) for r in self.round["games"]
+                        if plan["start"] <= r["day"] < plan["stop_exclusive"]}
+            require(final and final == expected, "Calendar finals do not match pre-registered window")
         return {"expires_at": min(self.expires_at, utc_now() + timedelta(minutes=3)).isoformat(),
                 "human_decision_ref": self.ref}
 

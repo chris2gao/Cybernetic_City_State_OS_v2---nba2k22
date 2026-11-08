@@ -162,6 +162,34 @@ function observe() {{
 """
 
 
+def read_frame(cal, authority, window, runtime):
+    front = SimpleNamespace(runtime=runtime, node=None, rea=None)
+    probe = dict(window, engine_thread=0, engine_thread_evidence=None, observation_ms=60000)
+    observation = cal.invoke(front, foreground_probe(cal, probe, authority.expires_at),
+                             "TEST_ONLY_OBSERVE_FRAME", authority.ref, 0, probe["observation_ms"],
+                             authority.epoch["pid"], cal.digest(probe))
+    require(observation.get("status") == "FRAME_GATE_OBSERVED",
+            f"REA frame observation stopped: {observation.get('status', observation.get('code', 'NO_STATUS'))}")
+    frame_receipt = cal.load(Path(observation["runtime_directory"]) / "evidence.json")
+    native = frame_receipt["normalized_result"]
+    require(native["pid"] == authority.epoch["pid"] and not native["messages_truncated"]
+            and native["cleanup_error"] is None and observation["plan_digest"] == cal.digest(probe),
+            "Foreground frame receipt differs from plan")
+    frame, = [row["payload"] for row in native["messages"] if row["type"] == "send"
+              and row["payload"].get("event") == "FRAME_GATE_OBSERVED"]
+    return frame["thread"], frame_receipt["evidence_id"]
+
+
+def run_calendar(cal, authority, template, window, runtime):
+    authority.bind_calendar(window)
+    sim = SimpleNamespace(runtime=runtime, node=None, rea=None, outbox=template["outbox_db"],
+                          execute_once=True, approval=None, approved_sha=None)
+    result = cal.simulate_to_native_date(sim, window, research_delegation=authority)
+    freeze(runtime.with_suffix(".json"), result)
+    authority.advance(result)
+    return result
+
+
 def reconcile_interruption(args, cal, authority, round_plan, database, outbox):
     old = args.resume
     plan = cal.load(args.recovery_original)
@@ -282,6 +310,75 @@ def recover_round_two_setters(args, cal, authority, plan, host):
     return outcomes
 
 
+def recover_after_allstar(args, cal, authority, template, snapshot, host):
+    old = args.resume_post_allstar
+    original = cal.load(old / "round-05-sim-01.json")
+    folder = Path(original["private_receipt"])
+    raw = cal.load(folder / "evidence.json")
+    manifest = cal.load(folder / "request.json")
+    js = (folder / "program.js").read_text(encoding="utf-8")
+    packed = json.loads(next(line for line in js.splitlines() if line.startswith("const calendarPlan = "))
+                        .removeprefix("const calendarPlan = ").removesuffix(";"))
+    native = raw["normalized_result"]
+    payloads = [row["payload"] for row in native["messages"] if row["type"] == "send"]
+    require(original["status"] == "UNKNOWN_NO_REPLAY"
+            and manifest["request_id"] == packed["plan_digest"] == original["plan_digest"]
+            and manifest["script_sha256"] == cal.sha_file(folder / "program.js")
+            and manifest["maximum_game_calls"] == 1 and native["pid"] == authority.epoch["pid"]
+            and not native["messages_truncated"] and native["cleanup_error"] is None
+            and payloads == [{"event": "WILL_DISPATCH_ONCE", "command": 17, "thread": packed["thread"],
+                              "selected": packed["selected"]}], "Post-event original dispatch is ambiguous")
+    require(authority.next_start >= date(2022, 2, 21) and cal.word(authority.next_start) > packed["stop"],
+            "Native Today is not beyond the Human-handled event and original request")
+    historical = dict(snapshot, start="2022-02-05")
+    schedule = schedule_for(Path(template["database"]), historical)
+    planned = {(row["id"], row["day"], row["home"], row["away"]) for row in packed["games"]}
+    recovered = [row for row in schedule if row["day"] <= "2022-02-07"]
+    require(planned == {(int(row["id"]), cal.word(date.fromisoformat(row["day"])), int(row["home"]), int(row["away"]))
+                        for row in recovered}
+            and all(row["is_final"] == 1 and row["played"] == row["day"] for row in recovered),
+            "WorldData did not prove the old window closed")
+    roots = (args.prior_setters, args.prior_second_run, old)
+    setters = [cal.load(path) for root in roots for path in root.glob("vae-v2-*-reservation.json")]
+    authority.setter_count = len(setters)
+    authority.reserved_players = {row["target"]["uid"] for row in setters}
+    authority.calendar_count = sum(len(list(root.glob("calendar-*-reservation.json"))) for root in roots)
+    require(authority.setter_count == 60 and authority.calendar_count == 18, "Original V2 budgets are not conserved")
+    authority.round_count = 5
+    authority.season_stop = min(authority.season_stop, date(2022, 4, 16))
+    proof = args.output / "round-05-human-event-reconciliation.json"
+    freeze(proof, {"status": "HUMAN_ADVANCED_PAST_REQUEST", "today": authority.next_start.isoformat(),
+                   "prior_plan_digest": original["plan_digest"], "prior_evidence": raw["evidence_id"],
+                   "worlddata_report_sha256": snapshot["identity"]["source_report_sha256"],
+                   "original_window_closed_game_ids": sorted(int(row["id"]) for row in recovered),
+                   "attribution": "EXCLUDED_HUMAN_ASSISTED_EVENT_INTERVAL", "setter_reservations": authority.setter_count,
+                   "calendar_reservations": authority.calendar_count})
+    host.outbox.record_test_calendar_human_advance(original["plan_digest"], original["private_receipt"],
+                                                  f"sha256:{cal.sha_file(proof)}")
+
+
+def advance_empty_days(args, cal, authority, template, schedule, season_stop):
+    first_game = min(date.fromisoformat(row["day"]) for row in schedule if row["type"] == "NORMAL")
+    if first_game == authority.next_start:
+        return None
+    while authority.next_start < first_game:
+        start = authority.next_start
+        end = min(first_game, start + timedelta(days=2))
+        rows = [row for row in schedule if start.isoformat() <= row["day"] <= end.isoformat()]
+        require(all(row["day"] == end.isoformat() and row["type"] == "NORMAL" and row["status_code"] == "0"
+                    and row["is_final"] == 0 and row["played"] is None for row in rows),
+                "Empty-day transit intersects a game or event")
+        window = dict(template, start=start.isoformat(), stop_exclusive=end.isoformat(), today_raw=cal.word(start),
+                      empty_transit=True, season_stop_exclusive=season_stop.isoformat(),
+                      authorization_scope=authority.ref,
+                      games=[{k: int(row[k]) if k != "day" else row[k] for k in ("id", "day", "home", "away")}
+                             for row in rows])
+        thread, ref = read_frame(cal, authority, window, args.output / f"transit-frame-{start}")
+        window.update(engine_thread=thread, engine_thread_evidence=ref)
+        run_calendar(cal, authority, template, window, args.output / f"transit-calendar-{start}")
+    return args.output / "post-transit-capture"
+
+
 def run(args):
     sys.path[:0] = [str(WORLD), str(NATIVE), str(args.calendar)]
     from refresh import _context
@@ -323,6 +420,21 @@ def run(args):
         results.append(dict(previous, qualified_worlddata_games=merged["qualified_worlddata_games"],
                             effects=merged["contrasts"]))
     try:
+        if args.resume_post_allstar is not None:
+            recover_after_allstar(args, cal, authority, template, snapshot, host)
+            starting_round = 6
+            results = cal.load(args.resume_post_allstar / "STOP.json")["completed"]
+            transit_capture = advance_empty_days(args, cal, authority, template, schedule, season_stop)
+            if transit_capture is not None:
+                capture = transit_capture
+                capture_receipt = capture.with_suffix(".json")
+                status = capture_world(capture, template, authority)
+                freeze(capture_receipt, status)
+                report_sha = status["source_report_sha256"]
+                pool = args.output / "post-transit-pool"
+                export_pool(args.r0, template, capture, report_sha, pool)
+            snapshot = build(pool, Path(template["database"]), capture_receipt, excluded_uids=authority.reserved_players)
+            schedule = schedule_for(Path(template["database"]), snapshot)
         for number in range(starting_round, MAX_CYCLES + 1):
             if authority.next_start + timedelta(days=7) > authority.season_stop:
                 break
@@ -345,21 +457,7 @@ def run(args):
                 windows[0]["today_raw"] = recovered_word
             else:
                 windows = subplans(template, round_plan, schedule, authority, season_stop, cal)
-                front = SimpleNamespace(runtime=args.output / f"frame-{number:02d}", node=None, rea=None)
-                probe = dict(windows[0], engine_thread=0, engine_thread_evidence=None, observation_ms=60000)
-                observation = cal.invoke(front, foreground_probe(cal, probe, authority.expires_at),
-                                         "TEST_ONLY_OBSERVE_FRAME", authority.ref, 0, probe["observation_ms"],
-                                         authority.epoch["pid"], cal.digest(probe))
-                require(observation.get("status") == "FRAME_GATE_OBSERVED",
-                        f"REA frame observation stopped: {observation.get('status', observation.get('code', 'NO_STATUS'))}")
-                frame_receipt = cal.load(Path(observation["runtime_directory"]) / "evidence.json")
-                native = frame_receipt["normalized_result"]
-                require(native["pid"] == authority.epoch["pid"] and not native["messages_truncated"]
-                        and native["cleanup_error"] is None and observation["plan_digest"] == cal.digest(probe),
-                        "Foreground frame receipt differs from plan")
-                frame, = [row["payload"] for row in native["messages"] if row["type"] == "send"
-                          and row["payload"].get("event") == "FRAME_GATE_OBSERVED"]
-                thread, frame_ref = frame["thread"], frame_receipt["evidence_id"]
+                thread, frame_ref = read_frame(cal, authority, windows[0], args.output / f"frame-{number:02d}")
                 if resume_treatments:
                     outcomes = recover_round_two_setters(args, cal, authority, round_plan, host)
                 else:
@@ -371,13 +469,8 @@ def run(args):
             finals = [game for item in prior for game in item["final_game_ids"]]
             calls = [item["evidence_id"] for item in prior]
             for index, window in enumerate(windows, 4 if resuming else 1):
-                authority.bind_calendar(window)
-                sim = SimpleNamespace(runtime=args.output / f"round-{number:02d}-sim-{index:02d}",
-                                      node=None, rea=None, outbox=template["outbox_db"], execute_once=True,
-                                      approval=None, approved_sha=None)
-                result = cal.simulate_to_native_date(sim, window, research_delegation=authority)
-                freeze(args.output / f"round-{number:02d}-sim-{index:02d}.json", result)
-                authority.advance(result)
+                result = run_calendar(cal, authority, template, window,
+                                      args.output / f"round-{number:02d}-sim-{index:02d}")
                 finals.extend(result["final_game_ids"])
                 calls.append(result["evidence_id"])
             require(sorted(finals) == round_plan["planned_expected_game_ids"], "Window schedule mismatch")
@@ -431,5 +524,7 @@ if __name__ == "__main__":
         parser.add_argument(f"--{name}", type=Path)
     parser.add_argument("--resume-round-two", type=Path)
     parser.add_argument("--prior-setters", type=Path)
+    parser.add_argument("--prior-second-run", type=Path)
+    parser.add_argument("--resume-post-allstar", type=Path)
     parser.add_argument("--goal-sha", required=True)
     run(parser.parse_args())

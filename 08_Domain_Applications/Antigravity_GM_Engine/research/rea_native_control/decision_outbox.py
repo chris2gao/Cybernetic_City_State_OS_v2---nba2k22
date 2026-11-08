@@ -172,7 +172,8 @@ class DecisionOutbox:
                 plan_digest TEXT PRIMARY KEY REFERENCES test_calendar_claims(plan_digest),
                 prior_receipt_ref TEXT NOT NULL,
                 proof_ref TEXT NOT NULL,
-                disposition TEXT NOT NULL CHECK(disposition = 'INTERRUPTED_NO_CALENDAR_EFFECT')
+                disposition TEXT NOT NULL CHECK(disposition IN
+                    ('INTERRUPTED_NO_CALENDAR_EFFECT','HUMAN_ADVANCED_PAST_REQUEST'))
             );
             DROP INDEX IF EXISTS idx_calendar_scene_once;
             CREATE UNIQUE INDEX IF NOT EXISTS idx_calendar_active_scene_once
@@ -219,15 +220,37 @@ class DecisionOutbox:
 
     def record_test_calendar_no_effect(self, plan_digest, prior_receipt_ref, proof_ref):
         """Keep the consumed request locked and record verified interruption without calendar effect."""
+        self._record_test_calendar_reconciliation(plan_digest, prior_receipt_ref, proof_ref,
+                                                  "INTERRUPTED_NO_CALENDAR_EFFECT")
+
+    def record_test_calendar_human_advance(self, plan_digest, prior_receipt_ref, proof_ref):
+        """Keep the consumed request and separately record Human progression past it."""
+        self._record_test_calendar_reconciliation(plan_digest, prior_receipt_ref, proof_ref,
+                                                  "HUMAN_ADVANCED_PAST_REQUEST")
+
+    def _record_test_calendar_reconciliation(self, plan_digest, prior_receipt_ref, proof_ref, disposition):
         if not proof_ref or not prior_receipt_ref:
             raise ValueError("TEST_CALENDAR_RECONCILIATION_EVIDENCE_REQUIRED")
         with closing(self._get_connection()) as conn, conn:
             conn.execute("BEGIN IMMEDIATE")
+            schema = conn.execute("SELECT sql FROM sqlite_master WHERE name='test_calendar_reconciliations'").fetchone()[0]
+            if "HUMAN_ADVANCED_PAST_REQUEST" not in schema:
+                conn.execute("""
+                    CREATE TABLE test_calendar_reconciliations_v2 (
+                        plan_digest TEXT PRIMARY KEY REFERENCES test_calendar_claims(plan_digest),
+                        prior_receipt_ref TEXT NOT NULL, proof_ref TEXT NOT NULL,
+                        disposition TEXT NOT NULL CHECK(disposition IN
+                            ('INTERRUPTED_NO_CALENDAR_EFFECT','HUMAN_ADVANCED_PAST_REQUEST'))
+                    )
+                """)
+                conn.execute("INSERT INTO test_calendar_reconciliations_v2 SELECT * FROM test_calendar_reconciliations")
+                conn.execute("DROP TABLE test_calendar_reconciliations")
+                conn.execute("ALTER TABLE test_calendar_reconciliations_v2 RENAME TO test_calendar_reconciliations")
             if conn.execute("""
                 INSERT INTO test_calendar_reconciliations
-                SELECT plan_digest, receipt_ref, ?, 'INTERRUPTED_NO_CALENDAR_EFFECT'
+                SELECT plan_digest, receipt_ref, ?, ?
                 FROM test_calendar_claims WHERE plan_digest=? AND status='UNKNOWN' AND receipt_ref=?
-            """, (proof_ref, plan_digest, prior_receipt_ref)).rowcount != 1:
+            """, (proof_ref, disposition, plan_digest, prior_receipt_ref)).rowcount != 1:
                 raise ValueError("TEST_CALENDAR_UNKNOWN_RECEIPT_CHANGED")
 
     @staticmethod
