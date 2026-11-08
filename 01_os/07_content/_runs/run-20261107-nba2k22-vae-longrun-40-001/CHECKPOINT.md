@@ -38,8 +38,10 @@ python -B -X utf8 "$run/window_harness.py" one-window --journal "$run/_runtime/f
 
 ## 下一项安全动作
 
+[MyLEAGUE0005 当前实测规划检查点](FRESH_0005_CHECKPOINT.md) 记录已确认槽的六来源采集、30 队七日候选与 #39 一日预检。现场状态以该记录为准。
+
 [WorldData 接入进度](WORLDDATA_CHECKPOINT.md) 保留管理员只读进程核对和真实历史样本的 30 队复算。最新现场绑定状态以该记录为准。
 
 继续同一母任务。[#39 草稿 PR #42](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/pull/42) 已发布测试专用归档候选，固定提交 `2a1623a7397b5fec97b7e71aa929f15607245fbb`。归档版的 Native Today 和帧观察有实机只读证据，修正 Box 日期标签并通过 10 项日历测试和 87 项 Host/Outbox 回归。新归档版写入、保存重载和季委托尚未执行。
 
-管理员权限已验证可读取新进程。确认实际加载槽后，使用获准 WorldData 环境完成六来源采集，再用同一日期和世界线生成真实首轮候选。#39 已提出 1 月 7 日 9 场短窗，需绑定实际世界线、数据库、共享 Outbox、备份与可用批准后再运行。Human 在有完整候选摘要后裁决，或在赛季/危险停止门处理游戏。
+已完成现场绑定和首轮规划。下一项现场动作是只读确认当前进程的前台日历执行帧，再将 #39 一日窗口的精确摘要提交 Human 裁决。七日处理候选与单日日历安全验证分开保留。
